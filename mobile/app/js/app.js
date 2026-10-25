@@ -152,6 +152,61 @@
     return useNativeRadio() ? plugin('RadioPlayback') : null;
   }
 
+  /* Cast natif (Android, saveur full) : plugin LeRadarCast. Pas d'AirPlay
+     sur Android ; saveur F-Droid : plugin factice, bouton caché. */
+  const castState = { available: false, connected: false, device: '' };
+  function castPlugin() {
+    return isNative() && nativePlatform() === 'android' ? plugin('LeRadarCast') : null;
+  }
+  function castStation() {
+    const radio = radioById(barStationId());
+    return radio && radio.stream ? radio : null;
+  }
+  function castPayload(radio) {
+    return { url: radio.stream, title: radio.name, artist: player.now || radio.institution || '' };
+  }
+  function castLoad(radio) {
+    const p = castPlugin();
+    if (p && radio) Promise.resolve(p.load(castPayload(radio))).catch(() => {});
+  }
+  function syncCastButton() {
+    const btn = document.getElementById('player-cast');
+    if (!btn) return;
+    btn.hidden = !castState.available;
+    btn.setAttribute('aria-pressed', castState.connected ? 'true' : 'false');
+    btn.classList.toggle('is-casting', castState.connected);
+    btn.setAttribute('aria-label', castState.connected
+      ? uiText(`Diffusion sur ${castState.device || 'un appareil Cast'} : gérer`)
+      : uiText('Diffuser sur un appareil Cast'));
+  }
+  async function setupCast() {
+    const p = castPlugin();
+    if (!p) return;
+    try {
+      const r = await p.isAvailable();
+      castState.available = Boolean(r && r.available);
+      castState.connected = Boolean(r && r.connected);
+    } catch { castState.available = false; }
+    syncCastButton();
+    if (!castState.available || typeof p.addListener !== 'function') return;
+    p.addListener('cast', (d) => {
+      const was = castState.connected;
+      castState.connected = Boolean(d && d.connected);
+      castState.device = (d && d.device) || '';
+      if (castState.connected && !was) {
+        // Bascule : la lecture locale s'arrête (le service natif est mis en
+        // pause côté Java), le direct continue sur l'appareil Cast.
+        releaseStream();
+        if (player.id) { player.status = 'playing'; }
+        announce(uiText(`Diffusion sur ${castState.device || 'l’appareil Cast'}.`));
+      } else if (!castState.connected && was) {
+        if (player.id) player.status = 'paused';
+        announce(uiText('Diffusion Cast terminée.'));
+      }
+      syncCastButton();
+      syncPlayer();
+    });
+  }
   function haptic() {
     const haptics = plugin('Haptics');
     try {
@@ -274,6 +329,7 @@
     state.sources = core().sourceCatalog(sourcesResult && sourcesResult.data, state.items);
     state.radios = core().radioCatalog(radiosResult && radiosResult.data);
     pushNativeStations();
+    setupCast();
     try { syncPlayer(); } catch { /* DOM pas prêt */ }
     state.brand = (brandResult && brandResult.data) || {};
   }
@@ -899,6 +955,16 @@
       const sub = document.getElementById('tuner-now-sub');
       if (sub) sub.textContent = OFFLINE_NOTICE;
     }
+    if (castState.connected) {
+      // Session Cast active : le flux part sur le téléviseur, rien en local.
+      releaseStream();
+      player.id = id;
+      player.status = 'playing';
+      syncPlayer();
+      ensureNowPlaying();
+      castLoad(radio);
+      return;
+    }
     const native = radioNative();
     if (native) {
       // Couper tout <audio> résiduel : une seule source de son.
@@ -972,6 +1038,7 @@
   }
 
   function stopRadio() {
+    if (castState.connected) { const p = castPlugin(); if (p) Promise.resolve(p.end()).catch(() => {}); }
     player.status = 'idle';
     player.id = '';
     const native = radioNative();
@@ -988,6 +1055,7 @@
   function toggleRadio(id) {
     const target = id || player.id || barStationId();
     if (!target) return;
+    if (target === player.id && playerBusy() && castState.connected) { stopRadio(); return; }
     if (target === player.id && playerBusy()) pauseRadio();
     else playRadio(target);
   }
@@ -1928,6 +1996,13 @@
         event.preventDefault();
         toggleRadio(action === 'radio-toggle' ? el.dataset.id : barStationId());
         haptic();
+        return;
+      }
+      if (action === 'player-cast') {
+        event.preventDefault();
+        const p = castPlugin();
+        const radio = castStation();
+        if (p) Promise.resolve(p.showPicker(radio ? castPayload(radio) : {})).catch(() => {});
         return;
       }
       if (action === 'player-stop') {

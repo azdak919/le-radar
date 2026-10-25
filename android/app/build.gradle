@@ -33,6 +33,14 @@ android {
         }
     }
 
+    // Saveurs : « fdroid » (100 % libre, sans Cast) et « full » (Google Cast).
+    // Le SDK Cast (play-services-cast-framework) est non libre : il n'entre
+    // QUE dans la saveur full ; F-Droid construit la saveur fdroid.
+    flavorDimensions "store"
+    productFlavors {
+        fdroid { dimension "store"; isDefault true }
+        full { dimension "store" }
+    }
     buildTypes {
         release {
             if (keystorePropertiesFile.exists()) {
@@ -63,6 +71,9 @@ dependencies {
     // WorkManager (Apache-2.0) : sondage local des nouveaux articles, sans service Google.
     implementation "androidx.work:work-runtime:$androidxWorkVersion"
     implementation project(':capacitor-android')
+    // Cast natif : saveur full seulement (non libre, exclu de F-Droid).
+    fullImplementation "com.google.android.gms:play-services-cast-framework:22.1.0"
+    fullImplementation "androidx.mediarouter:mediarouter:1.7.0"
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.json:json:20240303"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"

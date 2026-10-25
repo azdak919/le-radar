@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.getcapacitor.BridgeActivity;
 
+import ca.leradar.app.cast.CastPlugin;
 import ca.leradar.app.crash.CrashLogger;
 import ca.leradar.app.crash.CrashReportActivity;
 import ca.leradar.app.news.NewsAlertsPlugin;
@@ -17,6 +18,8 @@ public class MainActivity extends BridgeActivity {
     String pending = CrashReportActivity.takePending(this);
     registerPlugin(RadioPlaybackPlugin.class);
     registerPlugin(NewsAlertsPlugin.class);
+    // Après un plantage : Cast n'est pas enregistré (surface réduite), on montre le rapport.
+    if (pending == null) registerPlugin(CastPlugin.class);
     NewsAlertsPlugin.handleIntent(getIntent());
     super.onCreate(savedInstanceState);
     if (pending != null) {

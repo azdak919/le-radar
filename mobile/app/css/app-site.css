@@ -318,3 +318,8 @@ body:not(.is-home) .wordmark-logo { margin-right: 4px; }
 /* Rangée de sources (comme le site mobile) : liens-cartes sans soulignement. */
 #news-filters .filter-btn,
 #news-filters .filter-btn * { text-decoration: none; }
+
+/* Bouton Cast (Android, saveur full) dans la barre radio. */
+.player-cast { width: 40px; border-color: transparent; background: transparent; color: var(--ink); }
+.player-cast svg { width: 22px; height: 22px; }
+.player-cast.is-casting { color: #6fc3ff; }
