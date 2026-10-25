@@ -588,5 +588,21 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     season: "ete",
     season6: "ukiaqsaaq",
     tags: ["mat", "pomo", "nations"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/6/67/ManawanOct2016_12.jpg",
+    credit: "Seeris",
+    link: "https://commons.wikimedia.org/wiki/File:ManawanOct2016%2012.jpg",
+    license: "CC BY-SA 4.0",
+    title: "ManawanOct2016 12",
+    focalY: 0.465,
+    width: 3264,
+    height: 2448,
+    place: "Manawan",
+    nationId: "atikamekw",
+    nation: "Atikamekw",
+    season: "hiver",
+    season6: "ukiuq",
+    tags: ["mat", "pomo", "nations"],
   }
 ];
