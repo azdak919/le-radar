@@ -945,6 +945,35 @@ function dropSharedSourceImages(items = [], minUses = 3) {
   return dropped;
 }
 
+/**
+ * Règle « jamais la même image sur deux cartes » : quand la même photo reste
+ * sur plusieurs billets après enrichissement (série d'articles, ex. Le Délit
+ * « Huîtres »), seul le billet le plus récent la garde ; les autres passent
+ * au repli (stock libre pertinent, puis campus) via ensure-lead-images.
+ */
+function keepNewestSharedImage(items = []) {
+  const byKey = new Map();
+  for (const it of items) {
+    if (!it || !it.image) continue;
+    const k = normalizeImagePath(it.image) || it.image;
+    if (!byKey.has(k)) byKey.set(k, []);
+    byKey.get(k).push(it);
+  }
+  let dropped = 0;
+  for (const group of byKey.values()) {
+    if (group.length < 2) continue;
+    group.sort((a, b) => (Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0));
+    for (const it of group.slice(1)) {
+      it.image = '';
+      clearMirroredLead(it);
+      delete it.leadImageReady;
+      for (const key of Object.keys(it)) if (key.startsWith('sourceImageCredit')) delete it[key];
+      dropped += 1;
+    }
+  }
+  return dropped;
+}
+
 function cardFitBonus(width = 0, height = 0) {
   if (!width || !height) return 0;
   const r = width / height;
@@ -1295,6 +1324,7 @@ module.exports = {
   LEAD_CROP_MIN_RATIO,
   clearMirroredLead,
   dropSharedSourceImages,
+  keepNewestSharedImage,
   linksToOtherArticle,
   insideOtherPostArticle,
   stripOtherPostArticles,

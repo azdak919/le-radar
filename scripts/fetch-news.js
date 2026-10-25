@@ -42,6 +42,7 @@ const {
   articleBodyHtml,
   imageFromArticleHtml,
   dropSharedSourceImages,
+  keepNewestSharedImage,
   isCandidateImageUrl,
   isWeakImageUrl,
   needsImageEnrichment,
@@ -1087,6 +1088,8 @@ async function main() {
   await enrichItems(all, feedDefaults, sourceByName);
   const sharedAfter = dropSharedSourceImages(all);
   if (sharedAfter) console.log(`↻ ${sharedAfter} images génériques retirées après enrichissement`);
+  const sharedPairs = keepNewestSharedImage(all);
+  if (sharedPairs) console.log(`↻ ${sharedPairs} photo(s) déjà sur une autre carte → repli`);
 
   const pageAuthors = new Map();
   for (const item of all) {

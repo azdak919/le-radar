@@ -48,4 +48,13 @@ const mirror = require('../scripts/mirror-news-images.js');
 const c = mirror.resizedCandidates('https://www.delitfrancais.com/wp-content/uploads/2026/10/x.png');
 assert.match(c[0].url, /^https:\/\/wsrv\.nl\/\?url=/);
 assert.match(c[1].url, /^https:\/\/i0\.wp\.com\/www\.delitfrancais\.com\/wp-content\/uploads\/2026\/10\/x\.png\?w=1200/);
+// Jamais la même image sur deux cartes : le plus récent garde la photo.
+const { keepNewestSharedImage } = require('../scripts/article-image-lib.js');
+const pair = [
+  { source: 'Le Délit', date: '2026-09-20T12:00:00Z', image: 'https://x/wp-content/uploads/2026/09/Huitres.png' },
+  { source: 'Le Délit', date: '2026-09-27T12:00:00Z', image: 'https://x/wp-content/uploads/2026/09/Huitres.png' },
+];
+assert.equal(keepNewestSharedImage(pair), 1);
+assert.equal(pair[0].image, '');
+assert.ok(pair[1].image);
 console.log('source-health: OK');
