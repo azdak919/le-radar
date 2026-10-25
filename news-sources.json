@@ -522,40 +522,6 @@
       "_lastItemDate": "2026-10-19T18:52:25.000Z",
       "_lastChecked": "2026-10-25T18:28:59.870Z",
       "_lastFetchOk": "2026-10-25T18:28:59.870Z"
-    },
-    {
-      "name": "Bandersnatch",
-      "institution": "John Abbott College",
-      "region": "Montréal",
-      "type": "cegep",
-      "lang": "en",
-      "url": "https://bandersnatch.ca/feed/",
-      "site": "https://bandersnatch.ca/",
-      "popularity": 5,
-      "botHints": {
-        "authors": {
-          "forcePageAuthor": true,
-          "ignoreRssAuthor": true
-        },
-        "images": {
-          "preferSizeFull": true,
-          "validateOnPage": true,
-          "rejectPathPatterns": [
-            "logo",
-            "favicon",
-            "cropped-",
-            "placeholder",
-            "default-image",
-            "cropped-.*-32x32"
-          ]
-        }
-      },
-      "_note": "Ajout automatique (2026-10-25) par discover-news-sources — John Abbott College, bandersnatch.ca. Repli images : banque campus John Abbott College. Retrait : data/source-blocklist.json.",
-      "_autoAdded": "2026-10-25T18:24:38.755Z",
-      "_status": "stale",
-      "_failCount": 1,
-      "_lastItemDate": "2026-10-12T14:00:00.000Z",
-      "_lastChecked": "2026-10-25T18:29:00.103Z"
     }
   ],
   "candidates": [
@@ -590,6 +556,41 @@
       "lang": "fr",
       "site": "https://www.cegep-rimouski.qc.ca/le-pretexte",
       "_note": "Staged — journal de l'association étudiante, imprimé seulement ; aucun flux RSS (2026-10)."
+    },
+    {
+      "name": "Bandersnatch",
+      "institution": "John Abbott College",
+      "region": "Montréal",
+      "type": "cegep",
+      "lang": "en",
+      "url": "https://bandersnatch.ca/feed/",
+      "site": "https://bandersnatch.ca/",
+      "popularity": 5,
+      "botHints": {
+        "authors": {
+          "forcePageAuthor": true,
+          "ignoreRssAuthor": true
+        },
+        "images": {
+          "preferSizeFull": true,
+          "validateOnPage": true,
+          "rejectPathPatterns": [
+            "logo",
+            "favicon",
+            "cropped-",
+            "placeholder",
+            "default-image",
+            "cropped-.*-32x32"
+          ]
+        }
+      },
+      "_note": "Ajout automatique (2026-10-25) par discover-news-sources — John Abbott College, bandersnatch.ca. Repli images : banque campus John Abbott College. Retrait : data/source-blocklist.json.",
+      "_autoAdded": "2026-10-25T18:24:38.755Z",
+      "_status": "retired",
+      "_failCount": 1,
+      "_lastItemDate": "2026-10-12T14:00:00.000Z",
+      "_lastChecked": "2026-10-25T18:29:00.103Z",
+      "_retiredReason": "liste de blocage : captcha SiteGround (sgcaptcha)"
     }
   ],
   "_lastRun": "2026-10-25T18:28:33.160Z",
