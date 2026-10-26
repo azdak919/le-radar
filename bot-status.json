@@ -1,92 +1,32 @@
 {
-  "updated": "2026-10-26T17:59:20.547Z",
+  "updated": "2026-10-26T19:10:19.043Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
-      "step": "Institutions catalogue",
-      "ok": true,
-      "ms": 615
-    },
-    {
-      "step": "Media scanner (gaps)",
-      "ok": true,
-      "ms": 9698
-    },
-    {
-      "step": "News source maintainer",
-      "ok": true,
-      "ms": 282888
-    },
-    {
-      "step": "Stream tracker + radio promotion",
-      "ok": true,
-      "ms": 818212
-    },
-    {
-      "step": "Radio now-playing metadata",
-      "ok": true,
-      "ms": 39379
-    },
-    {
-      "step": "RSEQ sports league catalog",
-      "ok": true,
-      "ms": 2124
-    },
-    {
-      "step": "RSEQ sports results",
-      "ok": true,
-      "ms": 46336
-    },
-    {
-      "step": "Radio schedule drift",
-      "ok": true,
-      "ms": 20097
-    },
-    {
-      "step": "News sources verify",
-      "ok": true,
-      "ms": 23638
-    },
-    {
-      "step": "News aggregator",
-      "ok": true,
-      "ms": 41529
-    },
-    {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 223252
+      "ms": 174531
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 97836
+      "ms": 100445
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 161102
+      "ms": 116605
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 102167
+      "ms": 104901
     },
     {
       "step": "Quebec photo bank pixel audit (report)",
       "ok": true,
-      "ms": 335393
-    },
-    {
-      "step": "Social feed",
-      "ok": true,
-      "ms": 3423
-    },
-    {
-      "step": "RSS export",
-      "ok": true,
-      "ms": 98
+      "ms": 346980
     }
   ],
   "summary": {
@@ -101,14 +41,14 @@
       "withExcerpt": 175,
       "authorQc": {
         "ok": true,
-        "mismatches": 17
+        "mismatches": 18
       },
       "leadImageQc": {
         "fullyCovered": 175,
         "withPhoto": 157,
         "withStock": 39,
-        "leadReadyPhotos": 133,
-        "pageScraped": 31,
+        "leadReadyPhotos": 139,
+        "pageScraped": 28,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
@@ -122,32 +62,32 @@
     "backgrounds": {
       "masthead": {
         "count": 113,
-        "maxBank": 50,
-        "lastSessionCleanup": null,
-        "lastSessionId": null
+        "maxBank": 200,
+        "lastSessionCleanup": "2026-09-01",
+        "lastSessionId": "automne"
       },
       "universities": {
         "count": 129,
-        "maxBank": 50,
-        "lastSessionCleanup": null,
-        "lastSessionId": null
+        "maxBank": 200,
+        "lastSessionCleanup": "2026-09-01",
+        "lastSessionId": "automne"
       },
       "pomo": {
         "count": 84,
-        "maxBank": 50,
-        "lastSessionCleanup": null,
-        "lastSessionId": null
+        "maxBank": 200,
+        "lastSessionCleanup": "2026-09-01",
+        "lastSessionId": "automne"
       },
       "nations": {
         "count": 37,
-        "maxBank": 50,
-        "lastSessionCleanup": null,
-        "lastSessionId": null
+        "maxBank": 200,
+        "lastSessionCleanup": "2026-09-01",
+        "lastSessionId": "automne"
       },
       "count": 113,
-      "maxBank": 50,
-      "lastSessionCleanup": null,
-      "lastSessionId": null
+      "maxBank": 200,
+      "lastSessionCleanup": "2026-09-01",
+      "lastSessionId": "automne"
     },
     "radios": {
       "listed": 6,
@@ -214,7 +154,7 @@
     {
       "level": "info",
       "code": "schedule_drift",
-      "message": "Hors programmation : choq (+1 −1)"
+      "message": "Hors programmation : cism (+15 −15)"
     }
   ]
 }

@@ -1,7 +1,31 @@
 {
   "version": 1,
   "profile": "pomo",
-  "updated": "2026-10-26T17:59:21.504Z",
+  "lastFaceDetect": "2026-10-26T18:55:34.016Z",
+  "maxBank": 200,
+  "seasonInventory": {
+    "floors": {
+      "printemps": 18,
+      "ete": 24,
+      "automne": 18,
+      "hiver": 18
+    },
+    "counts": {
+      "printemps": 8,
+      "ete": 36,
+      "automne": 27,
+      "hiver": 13,
+      "untagged": 0
+    },
+    "gaps": [
+      "printemps",
+      "hiver"
+    ],
+    "updated": "2026-10-26T19:02:47.103Z"
+  },
+  "lastSessionCleanup": "2026-09-01",
+  "lastSessionId": "automne",
+  "updated": "2026-10-26T19:10:20.052Z",
   "photos": [
     {
       "id": "1eb2382981cc",

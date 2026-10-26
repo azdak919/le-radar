@@ -1,7 +1,28 @@
 {
   "version": 1,
   "profile": "universities",
-  "updated": "2026-10-26T17:59:21.481Z",
+  "lastFaceDetect": "2026-10-26T18:55:18.175Z",
+  "maxBank": 200,
+  "seasonInventory": {
+    "floors": {
+      "printemps": 8,
+      "ete": 12,
+      "automne": 8,
+      "hiver": 8
+    },
+    "counts": {
+      "printemps": 10,
+      "ete": 22,
+      "automne": 20,
+      "hiver": 20,
+      "untagged": 57
+    },
+    "gaps": [],
+    "updated": "2026-10-26T19:00:50.496Z"
+  },
+  "lastSessionCleanup": "2026-09-01",
+  "lastSessionId": "automne",
+  "updated": "2026-10-26T19:10:20.027Z",
   "photos": [
     {
       "id": "186769a5aeb5",

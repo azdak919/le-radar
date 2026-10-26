@@ -1,7 +1,31 @@
 {
   "version": 1,
   "profile": "masthead",
-  "updated": "2026-10-26T17:59:21.446Z",
+  "lastFaceDetect": "2026-10-26T18:51:21.078Z",
+  "maxBank": 200,
+  "seasonInventory": {
+    "floors": {
+      "printemps": 22,
+      "ete": 30,
+      "automne": 22,
+      "hiver": 22
+    },
+    "counts": {
+      "printemps": 14,
+      "ete": 39,
+      "automne": 30,
+      "hiver": 20,
+      "untagged": 10
+    },
+    "gaps": [
+      "printemps",
+      "hiver"
+    ],
+    "updated": "2026-10-26T18:59:10.051Z"
+  },
+  "lastSessionCleanup": "2026-09-01",
+  "lastSessionId": "automne",
+  "updated": "2026-10-26T19:10:19.988Z",
   "photos": [
     {
       "id": "1eb2382981cc",

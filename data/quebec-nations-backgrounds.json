@@ -1,7 +1,96 @@
 {
   "version": 1,
   "profile": "nations",
-  "updated": "2026-10-26T17:59:21.516Z",
+  "lastFaceDetect": "2026-10-26T18:56:07.700Z",
+  "maxBank": 200,
+  "seasonInventory": {
+    "floors": {
+      "ukiuq": 6,
+      "upingaksaaq": 4,
+      "upingaaq": 4,
+      "aujaq": 6,
+      "ukiaqsaaq": 4,
+      "ukiaq": 4
+    },
+    "counts": {
+      "untagged": 2,
+      "ukiuq": 10,
+      "upingaksaaq": 4,
+      "upingaaq": 4,
+      "aujaq": 7,
+      "ukiaqsaaq": 4,
+      "ukiaq": 5
+    },
+    "gaps": [],
+    "updated": "2026-10-26T19:04:32.007Z"
+  },
+  "nationCoverage": {
+    "rows": [
+      {
+        "id": "abenaki",
+        "label": "Abénaquis (W8banaki)",
+        "count": 7
+      },
+      {
+        "id": "algonquin",
+        "label": "Algonquins (Anishinaabeg)",
+        "count": 3
+      },
+      {
+        "id": "atikamekw",
+        "label": "Atikamekw",
+        "count": 11
+      },
+      {
+        "id": "cree",
+        "label": "Cris (Eeyou / Eenou)",
+        "count": 2
+      },
+      {
+        "id": "wendat",
+        "label": "Hurons-Wendat",
+        "count": 2
+      },
+      {
+        "id": "innu",
+        "label": "Innus (Ilnu / Innu)",
+        "count": 3
+      },
+      {
+        "id": "maliseet",
+        "label": "Malécites (Wolastoqiyik)",
+        "count": 0
+      },
+      {
+        "id": "migmaq",
+        "label": "Mi'gmaq",
+        "count": 3
+      },
+      {
+        "id": "mohawk",
+        "label": "Mohawks (Kanien'kehá:ka)",
+        "count": 2
+      },
+      {
+        "id": "naskapi",
+        "label": "Naskapis",
+        "count": 0
+      },
+      {
+        "id": "inuit",
+        "label": "Inuit (Nunavik)",
+        "count": 3
+      }
+    ],
+    "missing": [
+      "Malécites (Wolastoqiyik)",
+      "Naskapis"
+    ],
+    "totalNations": 11
+  },
+  "lastSessionCleanup": "2026-09-01",
+  "lastSessionId": "automne",
+  "updated": "2026-10-26T19:10:20.065Z",
   "photos": [
     {
       "id": "fa60bc1368e9",
