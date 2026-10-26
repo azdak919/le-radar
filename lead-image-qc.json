@@ -1,19 +1,25 @@
 {
-  "updated": "2026-10-26T17:33:28.026Z",
-  "total": 175,
-  "withPhoto": 157,
+  "updated": "2026-10-26T19:15:10.477Z",
+  "total": 178,
+  "withPhoto": 160,
   "withStock": 39,
   "withCampusBank": 27,
-  "fullyCovered": 175,
-  "leadReadyPhotos": 139,
-  "pageScraped": 28,
-  "photosRecovered": 28,
-  "imagesCleared": 10,
-  "stockSearches": 41,
-  "stockFound": 34,
+  "fullyCovered": 178,
+  "leadReadyPhotos": 136,
+  "pageScraped": 32,
+  "photosRecovered": 32,
+  "imagesCleared": 14,
+  "stockSearches": 43,
+  "stockFound": 33,
   "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Bulletin La Pige radio 26 octobre",
+      "link": "https://lapige.atmjonquiere.com/2026/10/26/bulletin-la-pige-radio-26-octobre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-26-octobre",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+    },
     {
       "title": "Letters from the Editors October 2026",
       "link": "https://theplantnews.com/2026/10/25/letters-from-the-editors-october-2026/",
@@ -25,12 +31,6 @@
       "link": "https://lapige.atmjonquiere.com/2026/10/23/loktoberfest-du-club-lions-celebre-sa-7e-edition/?utm_source=rss&utm_medium=rss&utm_campaign=loktoberfest-du-club-lions-celebre-sa-7e-edition",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image.jpeg"
-    },
-    {
-      "title": "Reportages radio du 19 octobre 2026",
-      "link": "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-radio-du-19-octobre-2026",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg"
     },
     {
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
@@ -45,16 +45,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     },
     {
-      "title": "Creative Writing September 2026",
-      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
+      "title": "Festivals au Québec : la fête à quel prix ?",
+      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
+      "reason": "stock-too-small",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
     },
     {
-      "title": "CSU fails to reach quorum at special council meeting",
-      "link": "https://thelinknewspaper.ca/article/16488",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -63,28 +63,28 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
+      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "A Tradition on the Edge: The Future of Homecoming",
       "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
+      "title": "CSU fails to reach quorum at special council meeting",
+      "link": "https://thelinknewspaper.ca/article/16488",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     }
   ]
 }

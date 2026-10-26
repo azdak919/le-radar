@@ -1,23 +1,72 @@
 {
-  "updated": "2026-10-26T17:34:08.124Z",
-  "total": 175,
-  "withImage": 156,
-  "withCredit": 156,
-  "cited": 103,
-  "pending": 38,
+  "updated": "2026-10-26T19:16:46.515Z",
+  "total": 178,
+  "withImage": 159,
+  "withCredit": 159,
+  "cited": 106,
+  "pending": 37,
   "missingHero": 0,
   "ok": false,
-  "checked": 44,
-  "updatedCount": 7,
-  "citedNew": 5,
+  "checked": 52,
+  "updatedCount": 17,
+  "citedNew": 13,
   "fallbackNew": 39,
   "samples": [
     {
-      "title": "The Price of Staying Home",
-      "source": "The McGill Daily",
-      "credit": "Photo: The McGill Daily",
+      "title": "« The Unraveled Tour », une tournée mondiale exceptionnelle d’Olivia Rodrigo",
+      "source": "La Griffe",
+      "credit": "Photo : La Griffe",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "« Je peux découvrir des talents » : la Convention DJAM fait briller les danseurs du Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Merlin Restoux–Pinglot",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Une récolte record de bleuets sauvages dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Facebook – Bleuets Savard",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Exo en compression, étudiant(e)s sous pression",
+      "source": "Montréal Campus",
+      "credit": "Photo : Mention photo, Renaud Vaillancourt",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Matrec investit 15 millions de dollars pour un site d’enfouissement",
+      "source": "La Pige",
+      "credit": "Photo : Zachary Rivard",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Bulletin La Pige radio 26 octobre",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Trente minutes avec le recteur",
+      "source": "Montréal Campus",
+      "credit": "Photo : Éloi Duquette",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "The Price of Staying Home",
+      "source": "The McGill Daily",
+      "credit": "Photo : Kara Fan",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "More Than a Game",
@@ -27,11 +76,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
+      "title": "Marie-Karlynn Laflamme au ministère de la Santé, de la Prévention et des Aînés",
+      "source": "La Pige",
+      "credit": "Photo : Julianne Landry",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -41,25 +90,11 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
-      "source": "The Plant",
-      "credit": "Image via Pinterest",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
+      "source": "La Griffe",
+      "credit": "Photo : La Griffe",
+      "cited": false,
+      "method": null
     }
   ]
 }
