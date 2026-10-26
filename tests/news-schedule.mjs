@@ -67,7 +67,7 @@ function expandCron(expr) {
 const workflow = readFileSync(new URL('../.github/workflows/update-news.yml', import.meta.url), 'utf8');
 assert.match(
   workflow,
-  /group:\s*data-writers\n\s*cancel-in-progress:\s*false\n\s*queue:\s*max/,
+  /group:\s*data-writers-[a-z-]+\n\s*cancel-in-progress:\s*false\n\s*queue:\s*max/,
   'groupe partagé data-writers en file : aucune passe (filet :20 ou manuelle) n’en annule une autre',
 );
 assert.match(

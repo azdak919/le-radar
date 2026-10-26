@@ -27,8 +27,8 @@ on:
 # radio/sports ne doit pas tuer un fetch déjà parti. Manuel = groupe à part
 # pour ne jamais attendre derrière le cron.
 concurrency:
-  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
-  group: data-writers
+  # Un seul écrivain à la fois par famille de fichiers (file FIFO) ; carte dans scripts/data-writer-groups.json.
+  group: data-writers-site
   cancel-in-progress: false
   queue: max
 

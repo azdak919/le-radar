@@ -2,8 +2,9 @@ name: Weekly Maintenance (full pipeline)
 
 on:
   schedule:
-    # Monday 08:00 UTC — after daily stream check, before news discovery
-    - cron: '0 8 * * 1'
+    # Lundi 06:30 UTC = 2 h 30 HAE / 1 h 30 HNE : nuit de Toronto (1 h-5 h)
+    # avec les deux décalages, avant les grosses passes nouvelles (09:25 UTC).
+    - cron: '30 6 * * 1'
   workflow_dispatch:
     inputs:
       full_visual:
@@ -197,7 +198,7 @@ jobs:
     timeout-minutes: 10
     concurrency:
       # Un seul écrivain de données à la fois sur main (file FIFO), le temps du push.
-      group: data-writers
+      group: data-writers-maintenance
       cancel-in-progress: false
       queue: max
     permissions:

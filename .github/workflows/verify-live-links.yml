@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
-  group: data-writers
+  # Un seul écrivain à la fois par famille de fichiers (file FIFO) ; carte dans scripts/data-writer-groups.json.
+  group: data-writers-live-links
   cancel-in-progress: false
   queue: max
 

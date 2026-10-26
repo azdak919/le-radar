@@ -49,7 +49,7 @@ try {
     // Un `git add a b c || true` saute en entier si un chemin manque (news.json perdu, f680ad880).
     assert.doesNotMatch(y, /git add[^\n]*(?:\\\n[^\n]*)*\|\| true/, `${f} : git add masqué par || true`);
     assert.doesNotMatch(y, /\n\s*git push\s*(\n|\|\|)/, `${f} : push direct sans bot-push.sh`);
-    if (f !== 'update-sports-live.yml') assert.match(y, /group: data-writers\n\s*cancel-in-progress: false\n\s*queue: max/, f);
+    if (f !== 'update-sports-live.yml') assert.match(y, /group: data-writers-[a-z-]+\n\s*cancel-in-progress: false\n\s*queue: max/, f);
   }
   console.log('OK bot-push');
 } finally {
@@ -80,4 +80,29 @@ try {
   assert.match(rest, /bash scripts\/bot-push\.sh/);
   assert.doesNotMatch(head, /bash scripts\/bot-push\.sh/, 'maintain ne pousse pas lui-même');
   console.log('OK maintain publish séparé');
+}
+
+// Groupes data-writers par famille de fichiers : deux workflows qui publient
+// un même fichier doivent partager le groupe.
+{
+  const dir = new URL('../.github/workflows/', import.meta.url);
+  const owners = new Map();
+  for (const f of readdirSync(dir)) {
+    const y = readFileSync(new URL(f, dir), 'utf8');
+    const g = (y.match(/group: (data-writers-[a-z-]+)/) || [])[1];
+    if (!g) continue;
+    const paths = new Set();
+    for (const m of y.matchAll(/(?:git add(?: -A)?(?: --)?|for [pf] in|DATA_FILES=\(|SEO_FILES=\()([^;\n]*(?:\\\n[^;\n]*)*)/g)) {
+      for (const t of m[1].replace(/\\\n/g, ' ').split(/\s+/)) if (/^[a-z0-9][\w./-]*$/i.test(t) && (/[./]/.test(t) || /^(radios|journaux|etablissements|medias|horaires|en|archives|sports)$/.test(t))) paths.add(t.replace(/\/$/, ''));
+    }
+    for (const p of paths) {
+      if (!owners.has(p)) owners.set(p, new Map());
+      owners.get(p).set(f, g);
+    }
+  }
+  for (const [p, m] of owners) {
+    const groups = new Set(m.values());
+    assert.equal(groups.size, 1, `${p} écrit par ${[...m.keys()].join(', ')} dans des groupes différents (${[...groups].join(', ')})`);
+  }
+  console.log('OK groupes data-writers par fichiers');
 }

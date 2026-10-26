@@ -1,0 +1,37 @@
+{
+ "_doc": "Lot A révisé (26 oct. 2026) : un groupe de concurrence par famille de fichiers. Deux workflows qui écrivent un même fichier partagent le groupe (tests/bot-push.mjs).",
+ "groups": {
+  "archive-status": [
+   "archive-articles.yml"
+  ],
+  "historical": [
+   "retro-crawl-historical.yml",
+   "verify-historical-links.yml"
+  ],
+  "indigenous-mt": [
+   "probe-indigenous-mt.yml"
+  ],
+  "live-links": [
+   "verify-live-links.yml"
+  ],
+  "maintenance": [
+   "maintain.yml"
+  ],
+  "radio-drift": [
+   "detect-schedule-drift.yml"
+  ],
+  "site": [
+   "discover-news-sources.yml",
+   "guard-harvest-freshness.yml",
+   "update-institutions.yml",
+   "update-news.yml",
+   "update-radio-nowplaying.yml",
+   "update-radio-schedules.yml",
+   "update-sports.yml",
+   "update-streams.yml"
+  ]
+ },
+ "exempt": {
+  "update-sports-live.yml": "groupe propre (update-sports-live) ; sports.json partagé, rebase par bot-push.sh"
+ }
+}
