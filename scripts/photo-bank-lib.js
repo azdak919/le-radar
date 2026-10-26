@@ -379,13 +379,19 @@ function materializeLegacySlices(root = DEFAULT_ROOT) {
   ];
   for (const s of slices) {
     const list = photos.filter(s.pred);
+    const dest = path.join(root, s.rel);
+    // Garder les métadonnées du bot (lastSessionCleanup, seasonInventory…) :
+    // les perdre relançait le ménage de session (~20 min) à chaque passage.
+    let prev = {};
+    try { prev = JSON.parse(fs.readFileSync(dest, 'utf8')) || {}; } catch { prev = {}; }
+    const { photos: _old, updated: _u, version: _v, profile: _p, ...meta } = prev;
     const data = {
       version: 1,
       profile: s.profile,
+      ...meta,
       updated: new Date().toISOString(),
       photos: list,
     };
-    const dest = path.join(root, s.rel);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.writeFileSync(dest, JSON.stringify(data, null, 2) + '\n', 'utf8');
   }

@@ -809,7 +809,11 @@ async function searchCommonsCategory(category, limit = 12) {
  * @param {number} [limit]
  * @param {{ source?: string }} [opts] — ex. source=flickr|wikimedia
  */
+// Disjoncteur : Openverse qui expire (45 s par requête) a fait durer un
+// profil 22 min. Après 2 échecs de suite on ne l'interroge plus de ce passage.
+let openverseFailures = 0;
 async function searchOpenverseMulti(query, limit = 10, opts = {}) {
+  if (openverseFailures >= 2) return [];
   const params = new URLSearchParams({
     q: query,
     page_size: String(Math.min(limit, 20)),
@@ -820,6 +824,7 @@ async function searchOpenverseMulti(query, limit = 10, opts = {}) {
   const url = `https://api.openverse.org/v1/images/?${params}`;
   try {
     const data = await fetchJson(url);
+    openverseFailures = 0;
     const results = Array.isArray(data?.results) ? data.results : [];
     return results
       .map((r) => {
@@ -854,7 +859,9 @@ async function searchOpenverseMulti(query, limit = 10, opts = {}) {
       })
       .filter(Boolean);
   } catch (e) {
+    openverseFailures += 1;
     console.warn('  openverse multi fail', query, e.message);
+    if (openverseFailures === 2) console.warn('  openverse : disjoncteur ouvert pour ce passage');
     return [];
   }
 }
