@@ -3473,6 +3473,12 @@ function currentTuning() {
 function onAudioPlaying() {
   reconnectTries = 0;
   setBuffering(false);
+  // Le flux joue : le « Hors ligne » du bot (sondage horaire) ne tient plus.
+  if (currentStation && isStationOffline(currentStation)) {
+    markStationHeardLive(currentStation.id);
+    document.getElementById('tuner')?.classList.remove('is-station-offline');
+    if (isDialCompactLayout()) setTunerNameText(compactDialTitleLine(currentStation));
+  }
   scheduleLoudnessProbe();
   mobilePlayback?.onPlaying();
   updatePlayUI();

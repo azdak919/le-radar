@@ -41,3 +41,22 @@ assert.match(readFileSync(new URL('../radar-tuner.js', import.meta.url), 'utf8')
 assert.match(readFileSync(new URL('../mobile/app/js/app.js', import.meta.url), 'utf8'), /Station hors ligne pour le moment/);
 assert.match(readFileSync(new URL('../.github/workflows/update-streams.yml', import.meta.url), 'utf8'), /ffmpeg/);
 console.log('stream-silence: ok');
+
+// CHOQ (26 oct. 2026) : le bot marque « silent », mais le flux joue chez
+// l'auditeur → l'étiquette « Hors ligne » tombe dès l'événement `playing`.
+{
+  const vm = await import('node:vm');
+  const ctx = { location: { protocol: 'https:' } };
+  vm.createContext(ctx);
+  vm.runInContext(readFileSync(new URL('../radar-utils.js', import.meta.url), 'utf8'), ctx);
+  const silent = { id: 'choq', _streamStatus: 'silent' };
+  assert.equal(vm.runInContext('isStationOffline', ctx)(silent), true);
+  vm.runInContext('markStationHeardLive', ctx)('choq');
+  assert.equal(vm.runInContext('isStationOffline', ctx)(silent), false, 'poste entendu : pas « Hors ligne »');
+  assert.equal(vm.runInContext('isStationOffline', ctx)({ id: 'cism', _streamStatus: 'silent' }), true);
+  const tuner = readFileSync(new URL('../radar-tuner.js', import.meta.url), 'utf8');
+  const play = tuner.slice(tuner.indexOf('function onAudioPlaying'), tuner.indexOf('function onAudioEnded'));
+  assert.match(play, /markStationHeardLive\(currentStation\.id\)/);
+  assert.match(play, /classList\.remove\('is-station-offline'\)/);
+  console.log('OK stream-silence (entendu en direct)');
+}

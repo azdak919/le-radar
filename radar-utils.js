@@ -69,9 +69,21 @@ function getPlayableStream(radio) {
   return `${PROXY_BASE}/?url=${encodeURIComponent(url)}`;
 }
 
+/**
+ * Postes qu'on entend vraiment dans CE navigateur (événement `playing`).
+ * Le bot ne sonde le son qu'une fois l'heure : un creux (-85 dB entre deux
+ * émissions) peut laisser « Hors ligne » des heures sur un poste qui joue
+ * (CHOQ, 26 oct. 2026). Ce que l'auditeur entend l'emporte sur le bot.
+ */
+const STATIONS_HEARD_LIVE = new Set();
+function markStationHeardLive(id) {
+  if (id) STATIONS_HEARD_LIVE.add(String(id));
+}
+
 /** Flux muet confirmé par le bot (2 contrôles) : affiché « Hors ligne », revient seul. */
 function isStationOffline(radio) {
-  return radio?._streamStatus === 'silent';
+  if (!radio || radio._streamStatus !== 'silent') return false;
+  return !STATIONS_HEARD_LIVE.has(String(radio.id || ''));
 }
 
 function getListenUrl(radio) {
