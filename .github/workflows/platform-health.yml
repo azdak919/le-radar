@@ -1,0 +1,47 @@
+name: Platform Health
+# Hebdomadaire, la nuit : ce que les bots ne savent pas réparer seuls
+# (taille du dépôt, certificat Pages, PR Dependabot bloquées, workflows
+# désactivés, actions en fin de vie). Une seule issue, mise à jour puis fermée.
+on:
+  schedule:
+    - cron: '15 7 * * 3'   # mercredi ~3 h Toronto
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+  actions: read
+  checks: read
+  pages: read
+  pull-requests: read
+concurrency:
+  group: platform-health
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - id: health
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/platform-health.js
+      - name: Issue unique
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROBLEMS: ${{ steps.health.outputs.problems }}
+        run: |
+          TITLE="Santé de la plateforme (bot)"
+          NUM=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
+          if [ "${PROBLEMS:-0}" -gt 0 ]; then
+            if [ -n "$NUM" ]; then
+              gh issue edit "$NUM" --repo "${{ github.repository }}" --body-file data/platform-health.md
+            else
+              gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file data/platform-health.md
+            fi
+          elif [ -n "$NUM" ]; then
+            gh issue close "$NUM" --repo "${{ github.repository }}" --comment "Réglé automatiquement : plus aucun problème détecté."
+          fi

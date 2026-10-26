@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const lib = require('../scripts/platform-health-lib.js');
+const now = Date.parse('2026-10-26T12:00:00Z');
+const ok = { repoSizeMb: 1300, pages: { status: 'built', https_enforced: true, https_certificate: { state: 'approved', expires_at: '2026-12-20' } }, dependabotPrs: [], workflows: [{ name: 'x', state: 'active' }] };
+assert.deepEqual(lib.evaluate(ok, now), []);
+const bad = lib.evaluate({ ...ok, repoSizeMb: 4000, pages: { status: 'errored', https_certificate: { state: 'approved', expires_at: '2026-11-01' } }, dependabotPrs: [{ number: 9, title: 't', createdAt: '2026-09-01' }], workflows: [{ name: 'News', state: 'disabled_inactivity' }], deprecations: ['Node 20'] }, now);
+assert.equal(bad.length, 6);
+assert.match(lib.renderBody([]), /aucun/);
+console.log('platform-health ok');
