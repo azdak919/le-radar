@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-26T20:43:49.743Z",
+  "updated": "2026-10-26T20:49:07.749Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 12,
+  "incomplete": 10,
   "withLeadExcerpt": 119,
-  "candidates": 12,
-  "enriched": 4,
+  "candidates": 10,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -19,30 +19,12 @@
       "changed": false
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
       "ok": true,
       "score": 96,
-      "chars": 217,
-      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
-      "changed": true
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
-      "ok": true,
-      "score": 94,
-      "chars": 249,
-      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
-      "changed": true
-    },
-    {
-      "title": "Halloween : une fête seulement pour les petits?",
-      "link": "https://lapige.atmjonquiere.com/2026/10/26/halloween-une-fete-seulement-pour-les-petits/?utm_source=rss&utm_medium=rss&utm_campaign=halloween-une-fete-seulement-pour-les-petits",
-      "ok": true,
-      "score": 100,
-      "chars": 213,
-      "sample": "La fête de l’Halloween, qui a toujours été fêtée le 31 octobre, est de plus en plus souvent célébrée",
+      "chars": 377,
+      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
       "changed": true
     },
     {
@@ -52,7 +34,7 @@
       "score": 86,
       "chars": 400,
       "sample": "Depuis sa victoire aux 21 e Francouvertes en 2017 et la parution de son premier album studio, Premie",
-      "changed": true
+      "changed": false
     },
     {
       "title": "The Price of Staying Home",
@@ -79,6 +61,24 @@
       "score": 76,
       "chars": 400,
       "sample": "The light shone in my eyes as I looked up at Santiago de Compostela’s cathedral on May 13, 2026. I h",
+      "changed": false
+    },
+    {
+      "title": "Bulletin La Pige radio 26 octobre",
+      "link": "https://lapige.atmjonquiere.com/2026/10/26/bulletin-la-pige-radio-26-octobre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-26-octobre",
+      "ok": true,
+      "score": 68,
+      "chars": 171,
+      "sample": "Plusieurs cas de facultés affaiblies à Saguenay cette fin de semaine, c’est jour d’élection dans plu",
+      "changed": false
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-13/",
+      "ok": true,
+      "score": 84,
+      "chars": 130,
+      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
       "changed": false
     }
   ]
