@@ -2497,6 +2497,22 @@ function syncNowPlayingPoll() {
   }
 }
 
+function tunerOptionLabel(r) {
+  return `${r.name} · ${formatInstitutionDisplay(r.institution)}${isStationOffline(r) ? ' — Hors ligne' : ''}`;
+}
+
+function applyTunerOptionLabel(opt, r) {
+  opt.textContent = tunerOptionLabel(r);
+  opt.classList.toggle('is-offline', isStationOffline(r));
+}
+
+/** Rafraîchit l'option de la liste d'un poste (ex. entendu en direct). */
+function refreshTunerOption(r) {
+  if (!r || !TUNER_SELECT) return;
+  const opt = Array.from(TUNER_SELECT.options).find((o) => o.value === r.id);
+  if (opt) applyTunerOptionLabel(opt, r);
+}
+
 function buildTunerOptions() {
   TUNER_SELECT.innerHTML = '';
 
@@ -2520,8 +2536,7 @@ function buildTunerOptions() {
     inGroup.forEach(r => {
       const opt = document.createElement('option');
       opt.value = r.id;
-      opt.textContent = `${r.name} · ${formatInstitutionDisplay(r.institution)}${isStationOffline(r) ? ' — Hors ligne' : ''}`;
-      if (isStationOffline(r)) opt.classList.add('is-offline');
+      applyTunerOptionLabel(opt, r);
       og.appendChild(opt);
     });
     TUNER_SELECT.appendChild(og);
@@ -3478,6 +3493,7 @@ function onAudioPlaying() {
     markStationHeardLive(currentStation.id);
     document.getElementById('tuner')?.classList.remove('is-station-offline');
     if (isDialCompactLayout()) setTunerNameText(compactDialTitleLine(currentStation));
+    refreshTunerOption(currentStation);
   }
   scheduleLoudnessProbe();
   mobilePlayback?.onPlaying();

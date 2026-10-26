@@ -60,3 +60,20 @@ console.log('stream-silence: ok');
   assert.match(play, /classList\.remove\('is-station-offline'\)/);
   console.log('OK stream-silence (entendu en direct)');
 }
+
+// L'option de la liste déroulante perd « — Hors ligne » quand le poste joue.
+{
+  const vm = await import('node:vm');
+  const utils = readFileSync(new URL('../radar-utils.js', import.meta.url), 'utf8');
+  const tuner = readFileSync(new URL('../radar-tuner.js', import.meta.url), 'utf8');
+  const grab = (name) => tuner.match(new RegExp(`function ${name}\\([^]*?\\n}\\n`))[0];
+  const opt = { value: 'choq', textContent: '', _c: new Set(), classList: { toggle(c, on) { on ? opt._c.add(c) : opt._c.delete(c); } } };
+  const ctx = vm.createContext({ TUNER_SELECT: { options: [opt] }, formatInstitutionDisplay: (x) => x });
+  vm.runInContext(utils + '\n' + grab('tunerOptionLabel') + grab('applyTunerOptionLabel') + grab('refreshTunerOption'), ctx);
+  const choq = { id: 'choq', name: 'CHOQ.ca', institution: 'UQAM', stream: 'https://x', _streamStatus: 'silent' };
+  ctx.refreshTunerOption(choq);
+  assert.equal(opt.textContent, 'CHOQ.ca · UQAM — Hors ligne'); assert.ok(opt._c.has('is-offline'));
+  ctx.markStationHeardLive('choq'); ctx.refreshTunerOption(choq);
+  assert.equal(opt.textContent, 'CHOQ.ca · UQAM', 'option rafraîchie à la lecture'); assert.ok(!opt._c.has('is-offline'));
+  assert.match(grab('onAudioPlaying'), /refreshTunerOption\(currentStation\)/);
+}
