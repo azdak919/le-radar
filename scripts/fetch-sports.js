@@ -877,8 +877,7 @@ async function fetchSailingTeams(reg) {
       } catch (_) { /* premier passage */ }
       const built = Cicsa.buildCicsaQcTeams(scoresCsv, scheduleCsv, {
         resultsSeenBefore,
-        seasonStartYear: cicsaCfg.seasonStartYear,
-        seasonLabel: cicsaCfg.seasonLabel,
+        ...Cicsa.resolveSeason(cicsaCfg),
         clubs: cicsaCfg.clubs,
         absences: cicsaCfg.absences,
         resultsUrl: cicsaCfg.resultsUrl,

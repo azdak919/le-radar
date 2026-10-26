@@ -171,3 +171,12 @@ test('libellé court et resultsSeenAt figé à la première détection', () => {
     for (const g of team.results) assert.ok(g.opponentShort && g.competitionShort === 'CICSA');
   }
 });
+
+test('saison voile : bascule automatique en août', () => {
+  const { currentSeasonStartYear, resolveSeason } = require(join(dirname(fileURLToPath(import.meta.url)), '..', 'scripts/cicsa-sailing-lib.js'));
+  assert.equal(currentSeasonStartYear(new Date('2027-07-15T12:00:00Z')), 2026);
+  assert.equal(currentSeasonStartYear(new Date('2027-08-15T12:00:00Z')), 2027);
+  const cfg = { seasonStartYear: 2026, seasonLabel: '2026-2027' };
+  assert.deepEqual(resolveSeason(cfg, new Date('2026-10-26T12:00:00Z')), { seasonStartYear: 2026, seasonLabel: '2026-2027', stale: false });
+  assert.deepEqual(resolveSeason(cfg, new Date('2027-09-01T12:00:00Z')), { seasonStartYear: 2027, seasonLabel: '2027-2028', stale: true });
+});

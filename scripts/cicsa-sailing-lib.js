@@ -719,7 +719,26 @@ function parseIcsaRegattaDates(html) {
   return { start, end, label: txt };
 }
 
+/**
+ * Saison courante (août → juillet) : évite qu'une année codée en dur
+ * dans sports-sailing.json fige les dates après le changement de saison.
+ */
+function currentSeasonStartYear(now = new Date()) {
+  const [y, m] = torontoYmd(now).split('-').map(Number);
+  return m >= 8 ? y : y - 1;
+}
+
+function resolveSeason(cfg = {}, now = new Date()) {
+  const current = currentSeasonStartYear(now);
+  const cfgYear = Number(cfg.seasonStartYear) || 0;
+  const startYear = Math.max(cfgYear, current);
+  const label = startYear === cfgYear && cfg.seasonLabel ? cfg.seasonLabel : `${startYear}-${startYear + 1}`;
+  return { seasonStartYear: startYear, seasonLabel: label, stale: cfgYear > 0 && cfgYear < current };
+}
+
 module.exports = {
+  currentSeasonStartYear,
+  resolveSeason,
   parseIcsaRegattaDates,
   sailingNameFr,
   sailingNameShort,
