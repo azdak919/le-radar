@@ -3327,9 +3327,31 @@ function getCandidateImage(src = '', { forThumb = false } = {}) {
  * surtout les vignettes En bref, qui chargeaient l'original et tombaient
  * dans le timeout 2,5 s → plus de photo.
  */
+/**
+ * Miroir local (le-radar.ca) d'une photo de repli Commons. upload.wikimedia.org
+ * répond 429 en rafale sur mobile : la carte restait vide (McGill Daily,
+ * MUNACA). Vignettes seulement ; l'original Commons reste le repli onerror.
+ */
+function localStockMirror(src = '') {
+  try {
+    const map = typeof RADAR_STOCK_LOCAL === 'object' && RADAR_STOCK_LOCAL ? RADAR_STOCK_LOCAL : null;
+    if (!map) return '';
+    const u = new URL(src, location.href);
+    if (u.hostname !== 'upload.wikimedia.org') return '';
+    const local = map[`${u.origin}${u.pathname}`];
+    return local ? new URL(local, location.href).href : '';
+  } catch {
+    return '';
+  }
+}
+
 function displaySizedImageUrl(raw = '', role = 'lead') {
   const src = getCandidateImage(raw) || String(raw || '').trim();
   if (!src || isFallbackImageUrl(src)) return src;
+  if (isThumbRoleName(role)) {
+    const local = localStockMirror(src);
+    if (local) return local;
+  }
   try {
     const u = new URL(src, location.href);
     const host = u.hostname.toLowerCase();
@@ -4085,6 +4107,16 @@ function applyDocumentContentCrop(img) {
 
 function showArticleImage(article, media, img, kind, item) {
   media.replaceChildren(img);
+  // Garde-fou : si l'image affichée casse plus tard (cache évincé, 429 au
+  // rechargement), jamais de carré vide — repli campus/SVG ou mode texte.
+  img.addEventListener('error', () => {
+    if (!media.isConnected || img.dataset.radarDropped) return;
+    img.dataset.radarDropped = '1';
+    media.querySelectorAll('figcaption').forEach((el) => el.remove());
+    article.classList.remove('has-image', 'article--stock-image', 'article--fallback-image');
+    if (kind === 'stock' && item?.imageProvider === 'campus-bank') markDeadCampusPhoto(item.stockImage);
+    dropArticleImage(article, media, article.classList.contains('article--lead') ? 'lead' : 'compact', kind === 'stock' ? { ...item, stockImage: '' } : item);
+  }, { once: true });
   if (kind === 'photo') applyDocumentContentCrop(img);
   // Photo / dessin d'article en hauteur (jugé recadrable par le bot) : cover
   // 3:2 sans bandes, cadré au tiers haut — visages et sujet restent visibles.
@@ -4125,7 +4157,10 @@ function dropArticleImage(article, media, role, item) {
       img.loading = 'eager';
       img.referrerPolicy = 'no-referrer';
       img.alt = '';
-      img.onload = () => showArticleImage(article, media, img, alt.kind, item);
+      img.onload = () => {
+        if (!img.naturalWidth) { img.onerror?.(); return; }
+        showArticleImage(article, media, img, alt.kind, item);
+      };
       img.onerror = () => {
         media.remove();
         article.classList.add('article--text');
@@ -4174,6 +4209,11 @@ function attachArticleImage(article, item, role) {
     };
 
     img.onload = () => {
+      // Réponse décodée vide (0×0) : traiter comme une erreur.
+      if (!img.naturalWidth || !img.naturalHeight) {
+        img.onerror?.();
+        return;
+      }
       if (kind === 'photo' && !isUsableArticleImage(img, role)) {
         const w = img.naturalWidth || 0;
         const h = img.naturalHeight || 0;

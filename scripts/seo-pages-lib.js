@@ -1148,6 +1148,7 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}bg-rotation-lib.js" defer></script>
     <script src="${up}photo-bank-data.js" defer></script>
     <script src="${up}quebec-backgrounds-data.js" defer></script>
+    <script src="${up}stock-images-map.js" defer></script>
     <script src="${up}quebec-university-backgrounds-data.js" defer></script>
     <script src="${up}scripts/campus-fallback-lib.js" defer></script>
     <script src="${up}scripts/media-channels-lib.js" defer></script>

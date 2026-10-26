@@ -157,6 +157,22 @@ jobs:
           CI: true
         continue-on-error: true
 
+      # Photos de repli Commons servies depuis le site (Wikimedia répond 429
+      # en rafale sur mobile → cartes vides), puis balayage de toutes les
+      # images des cartes : URL mortes retirées, rapport data/image-health.json
+      # repris par Source health (issue automatique).
+      - name: Mirror stock images
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 8
+        run: node scripts/mirror-stock-images.js --update
+        continue-on-error: true
+
+      - name: Check card images
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 5
+        run: node scripts/check-news-images.js --update
+        continue-on-error: true
+
       # Surveillance : flux en échec, sources muettes hors congés, taux
       # d'échecs d'images. Met aussi les sources muettes > 120 j en sommeil
       # (toujours sondées, réveillées au premier nouvel article).
@@ -242,7 +258,7 @@ jobs:
             author-qc.json lead-excerpt-qc.json social-feed.json
             lead-image-qc.json photo-credit-qc.json feed.xml
             news-sources.json data/byline-ledger.json data/image-mirror-stats.json
-            assets/news-images
+            assets/news-images assets/stock-images stock-images-map.js data/image-health.json
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)
           git add "${DATA_FILES[@]}" 2>/dev/null || true

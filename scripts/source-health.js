@@ -15,6 +15,7 @@ const registry = read('news-sources.json', { active: [] });
 const archive = read('news-archive.json', { records: [] });
 const news = read('news.json', { items: [] });
 const imageStats = read('data/image-mirror-stats.json', null);
+const imageHealthRaw = read('data/image-health.json', null);
 
 const yearAgo = Date.now() - 365 * 86400000;
 const datesBySource = {};
@@ -27,7 +28,8 @@ for (const i of news.items || []) push(i.source, i.date);
 
 // Ignorer des stats d'images périmées (> 1 jour).
 const stats = imageStats && Date.now() - Date.parse(imageStats.at || 0) < 86400000 ? imageStats : null;
-const result = lib.evaluateHealth({ registry, datesBySource, imageStats: stats });
+const imageHealth = imageHealthRaw && Date.now() - Date.parse(imageHealthRaw.at || 0) < 86400000 ? imageHealthRaw : null;
+const result = lib.evaluateHealth({ registry, datesBySource, imageStats: stats, imageHealth });
 const body = lib.renderIssueBody(result);
 fs.mkdirSync(path.join(ROOT, 'data'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, 'data', 'source-health.md'), body);

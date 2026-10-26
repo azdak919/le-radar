@@ -67,7 +67,7 @@ function silenceThreshold(medianGap) {
  * Évalue le registre. Mute `registry` (champ _dormantSince) et retourne
  * { problems: [...], dormant: [...] }.
  */
-function evaluateHealth({ registry, datesBySource = {}, imageStats = null, now = new Date() }) {
+function evaluateHealth({ registry, datesBySource = {}, imageStats = null, imageHealth = null, now = new Date() }) {
   const nowMs = now.getTime();
   const problems = [];
   const dormant = [];
@@ -104,6 +104,18 @@ function evaluateHealth({ registry, datesBySource = {}, imageStats = null, now =
         kind: 'images',
         source: 'miroir d’images',
         detail: `${imageStats.failed}/${imageStats.targets} échecs (${Math.round(rate * 100)} %)${reasons ? ` — ${reasons}` : ''}`,
+      });
+    }
+  }
+  // Balayage des images des cartes (check-news-images.js) : toute image
+  // encore cassée après réparation automatique (hors 429/5xx passagers).
+  if (imageHealth && Array.isArray(imageHealth.items)) {
+    const persistent = imageHealth.items.filter((i) => !i.transient && i.field !== 'stockImage-mirror');
+    if (persistent.length) {
+      problems.push({
+        kind: 'images-cartes',
+        source: 'images des cartes',
+        detail: `${persistent.length} image(s) cassée(s) : ${persistent.slice(0, 5).map((i) => `${i.source} [${i.status}] ${i.url}`).join(' ; ')}`,
       });
     }
   }
