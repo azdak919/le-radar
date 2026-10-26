@@ -302,38 +302,22 @@ async function main() {
   const flag = doUpdate ? '--update' : '';
   const steps = [];
 
+  // Depuis le 26 oct. 2026, la maintenance ne fait QUE ce qu'aucun autre bot
+  // ne fait : les banques photo (fonds du mât, universités, pomo, nations) et
+  // leur audit, puis bot-status.json. Institutions, sources, flux radio,
+  // now-playing, sports, dérive des horaires, nouvelles, social et RSS ont
+  // chacun leur workflow (update-institutions, discover-news-sources,
+  // update-streams, update-radio-*, update-sports*, update-news) : les refaire
+  // ici doublait ~25 min et faisait entrer la maintenance en conflit avec
+  // news-archive.json / sports.json. bot-status lit les JSON qu'ils publient.
   const pipeline = [
-    ...(skipInstitutions ? [] : [['Institutions catalogue', `node scripts/update-institutions.js ${flag}`.trim()]]),
-    ['Media scanner (gaps)', `node scripts/scan-media.js ${flag}`.trim()],
-    ['News source maintainer', `node scripts/discover-news-sources.js ${flag}`.trim()],
-    ['Stream tracker + radio promotion', `node scripts/discover-streams.js ${flag}`.trim()],
-    ['Radio now-playing metadata', `node scripts/fetch-radio-nowplaying.js ${flag}`.trim()],
-    ['RSEQ sports league catalog', `node scripts/discover-sports.js ${flag}`.trim()],
-    ['RSEQ sports results', `node scripts/fetch-sports.js ${flag}`.trim()],
-    // Après le now-playing : le rapport de dérive est lu par buildStatus() plus
-    // bas, il doit donc être écrit dans la même passe.
-    ['Radio schedule drift', `node scripts/detect-schedule-drift.js ${flag}`.trim()],
-    ['News sources verify', 'node scripts/verify-news-sources.js'],
-    ['News aggregator', `node scripts/fetch-news.js ${flag}`.trim()],
-    // Auteurs / extraits / photos : déjà dans update-news.yml (10×/jour).
-    // Les relancer ici faisait timeout le job 50 min (6 lundis cancelled,
-    // bot-status figé au 27 juillet). Le résumé lit les JSON laissés par
-    // le bot news.
-    // Wallpaper compartimenté + nations partagée (mât + pomo)
     ['Quebec masthead landscape bank', `node scripts/maintain-quebec-backgrounds.js --profile masthead ${flag}`.trim()],
     ['Quebec masthead university bank', `node scripts/maintain-quebec-backgrounds.js --profile universities ${flag}`.trim()],
     ['Quebec pomo landscape bank', `node scripts/maintain-quebec-backgrounds.js --profile pomo ${flag}`.trim()],
     ['Quebec nations/Inuit bank (shared)', `node scripts/maintain-quebec-backgrounds.js --profile nations ${flag}`.trim()],
     // Audit pixel des banques — le seul contrôle qui REGARDE les images.
-    // Les étapes ci-dessus ne filtrent que sur le titre, la résolution et le
-    // ratio : une église intitulée « Vieux-Québec en hiver » leur échappe.
-    // Rapport seulement (jamais bloquant) : les seuils sur-déclenchent encore
-    // (54 à 79 % de rejets sur des banques curées, mesuré le 2026-07-26), donc
-    // on publie le constat sans purger automatiquement. Voir docs/maintenance.md.
-    // ~3 min pour 127 vignettes de 900 px — acceptable en hebdomadaire, pas par push.
+    // Rapport seulement (jamais bloquant) : voir docs/maintenance.md.
     ['Quebec photo bank pixel audit (report)', 'python3 scripts/audit-quebec-backgrounds.py --width 900 --delay 0.5 || true'],
-    ['Social feed', `node scripts/fetch-social.js ${flag}`.trim()],
-    ['RSS export', `node scripts/generate-feed.js ${flag}`.trim()],
   ];
 
   for (const [label, cmd] of pipeline) {

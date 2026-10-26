@@ -107,25 +107,24 @@ assert.match(fetchSports, /preserveHarvestCatalogStats/);
 assert.match(fetchSports, /if \(liveOnly\) \{\s*\n\s*payload = preserveHarvestCatalogStats/m);
 
 const maintain = readFileSync(join(ROOT, 'scripts/maintain.js'), 'utf8');
-assert.match(maintain, /discover-sports\.js/);
-assert.match(maintain, /fetch-sports\.js/);
+// Depuis le 26 oct. 2026 : la maintenance ne refait plus le travail des
+// autres bots (sports, nouvelles, radio, institutions).
+for (const other of ['discover-sports', 'fetch-sports', 'fetch-news', 'discover-streams', 'discover-news-sources', 'update-institutions', 'fetch-social', 'generate-feed']) {
+  assert.doesNotMatch(maintain, new RegExp(`${other}\\.js`), `hebdo : ${other} a son propre bot`);
+}
+assert.match(maintain, /maintain-quebec-backgrounds\.js/);
 assert.doesNotMatch(maintain, /ensure-lead-images\.js/, 'hebdo : QC photos déjà dans update-news');
 assert.doesNotMatch(maintain, /verify-authors\.js/, 'hebdo : QC auteurs déjà dans update-news');
 
 const maintainYml = readFileSync(join(ROOT, '.github/workflows/maintain.yml'), 'utf8');
-assert.match(maintainYml, /timeout-minutes:\s*90/);
-assert.doesNotMatch(maintainYml, /timeout-minutes:\s*50/);
+assert.match(maintainYml, /timeout-minutes:\s*45/);
+assert.doesNotMatch(maintainYml, /news-archive\.json|news\.json|sports\.json|feed\.xml/, 'hebdo : ne publie que ses fichiers');
 const maintainPrepush = maintainYml.indexOf('bash scripts/bot-prepush-check.sh');
 const bankSyncAt = maintainYml.indexOf('npm run bank:sync');
 const swBumpAt = maintainYml.indexOf('npm run sw:bump');
-const maintainFeedAt = maintainYml.indexOf('node scripts/generate-feed.js --update');
 assert.ok(
   bankSyncAt >= 0 && bankSyncAt < swBumpAt && swBumpAt < maintainPrepush,
   'hebdo : bank:sync puis sw:bump avant le gate, sinon le miroir JS ou le shell divergent',
-);
-assert.ok(
-  maintainFeedAt >= 0 && maintainFeedAt < maintainPrepush,
-  'hebdo : feed.xml régénéré avant le gate',
 );
 assert.match(maintainYml, /quebec-university-backgrounds-data\.js/);
 assert.match(maintainYml, /sw-shell-lock\.json/);

@@ -45,7 +45,6 @@ try {
   for (const f of readdirSync('.github/workflows')) {
     const y = readFileSync(join('.github/workflows', f), 'utf8');
     if (!/git push|bot-push\.sh/.test(y)) continue;
-    if (f === 'maintain.yml') continue; // migré avec la refonte de la maintenance (lot B)
     assert.doesNotMatch(y, /-X theirs/, f);
     assert.doesNotMatch(y, /\n\s*git push\s*(\n|\|\|)/, `${f} : push direct sans bot-push.sh`);
     if (f !== 'update-sports-live.yml') assert.match(y, /group: data-writers\n\s*cancel-in-progress: false\n\s*queue: max/, f);

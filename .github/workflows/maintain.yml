@@ -7,16 +7,19 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: maintain-${{ github.ref }}
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
   cancel-in-progress: false
+  queue: max
 
 jobs:
   maintain:
     runs-on: ubuntu-24.04
-    # Mesuré 2026-07-27 : ~47 min. Face-detect + QC images poussaient à 50+
-    # → 6 lundis cancelled, bot-status figé. QC auteurs/photos = bots news
-    # quotidiens. Plafond 90 min = filet zombie, pas une cible de durée.
-    timeout-minutes: 90
+    # Depuis le 26 oct. 2026 : banques photo + audit + bot-status seulement
+    # (~25 min mesurées avant la garde « rien à faire »). Les nouvelles, la
+    # radio, les sports et les institutions ont leurs propres bots.
+    # Plafond 45 min = filet zombie, pas une cible de durée.
+    timeout-minutes: 45
     permissions:
       contents: write
       issues: write
@@ -71,14 +74,11 @@ jobs:
             npm run sw:bump
           fi
 
-      - name: Rebuild RSS from news.json
-        run: node scripts/generate-feed.js --update
-
       - name: Check for file changes
         id: check
         run: |
           CHANGED=false
-          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/photo-bank.json data/quebec-backgrounds.json data/quebec-university-backgrounds.json data/quebec-pomo-backgrounds.json data/quebec-nations-backgrounds.json data/quebec-favorites-backgrounds.json photo-bank-data.js quebec-backgrounds-data.js quebec-university-backgrounds-data.js quebec-pomo-backgrounds-data.js quebec-nations-backgrounds-data.js quebec-favorites-backgrounds-data.js sw.js pomo/sw.js solitaire/sw.js sports/sw.js sw-shell-lock.json sports.json sports-masthead.json sports-leagues.json sports-teams.json sports-sailing.json sports/index.html; do
+          for f in bot-status.json data/photo-bank.json data/quebec-backgrounds.json data/quebec-university-backgrounds.json data/quebec-pomo-backgrounds.json data/quebec-nations-backgrounds.json data/quebec-favorites-backgrounds.json photo-bank-data.js quebec-backgrounds-data.js quebec-university-backgrounds-data.js quebec-pomo-backgrounds-data.js quebec-nations-backgrounds-data.js quebec-favorites-backgrounds-data.js sw.js pomo/sw.js solitaire/sw.js sports/sw.js sw-shell-lock.json; do
             # git status voit aussi les fichiers pas encore suivis (bot-status.json
             # à sa première écriture), contrairement à git diff.
             if [ -n "$(git status --porcelain -- "$f")" ]; then
@@ -87,14 +87,6 @@ jobs:
             fi
           done
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
-
-      # Référencement : prérendu du fil + sitemap + llms.txt, régénérés à partir
-      # des registres que le pipeline vient de rafraîchir. Après le contrôle de
-      # changement, pour ne pas déclencher un commit à vide.
-      - name: Regenerate SEO artefacts
-        if: steps.check.outputs.changed == 'true'
-        run: node scripts/generate-seo.js --update
-        continue-on-error: true
 
       - name: Pre-push integrity (bot gate)
         if: steps.check.outputs.changed == 'true'
@@ -113,30 +105,13 @@ jobs:
           # `-e` et non `-f` : la liste contient aussi les DOSSIERS de pages
           # d'entités, que `-f` (fichier régulier) rejetterait silencieusement.
           # `git add -A` pour que la suppression d'une page soit stagée.
-          for f in institutions.json news-sources.json news.json radios.json radios-candidates.json radio-nowplaying.json bot-status.json feed.xml data/photo-bank.json data/quebec-backgrounds.json data/quebec-university-backgrounds.json data/quebec-pomo-backgrounds.json data/quebec-nations-backgrounds.json data/quebec-favorites-backgrounds.json photo-bank-data.js quebec-backgrounds-data.js quebec-university-backgrounds-data.js quebec-pomo-backgrounds-data.js quebec-nations-backgrounds-data.js quebec-favorites-backgrounds-data.js sw.js pomo/sw.js solitaire/sw.js sports/sw.js sw-shell-lock.json sports.json sports-masthead.json sports-leagues.json sports-teams.json sports-sailing.json sports/index.html index.html sitemap.xml llms.txt radios journaux etablissements medias horaires en; do
+          for f in bot-status.json data/photo-bank.json data/quebec-backgrounds.json data/quebec-university-backgrounds.json data/quebec-pomo-backgrounds.json data/quebec-nations-backgrounds.json data/quebec-favorites-backgrounds.json photo-bank-data.js quebec-backgrounds-data.js quebec-university-backgrounds-data.js quebec-pomo-backgrounds-data.js quebec-nations-backgrounds-data.js quebec-favorites-backgrounds-data.js sw.js pomo/sw.js solitaire/sw.js sports/sw.js sw-shell-lock.json; do
             [ -e "$f" ] && git add -A "$f"
           done
           git commit -m "bot: weekly maintenance run (auto)"
-          # Les fichiers modifiés par le pipeline mais hors de la liste
-          # ci-dessus (ex. news-archive.json, écrit par fetch-news.js) ne sont
-          # jamais publiés par ce bot. Les jeter avant le pull : sinon
-          # --autostash les réapplique après le rebase et, si un autre bot a
-          # touché le même fichier, laisse un conflit (« unmerged files ») qui
-          # fait échouer les trois tentatives (run 40355155279, 26 oct. 2026).
-          git reset -q --hard HEAD
-          # Fichiers générés : en cas de conflit avec un commit concurrent,
-          # -X theirs garde la version fraîchement produite par ce bot, et un
-          # rebase interrompu est abandonné avant la tentative suivante —
-          # sinon les retries échouent tous sur « unmerged files ».
-          for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs && git push && exit 0
-            git rebase --abort 2>/dev/null || true
-            git reset -q --hard HEAD
-            echo "push attempt $i failed, retrying…"
-            sleep $((i * 3))
-          done
-          echo "::error::could not push maintenance update after retries"
-          exit 1
+          # Seuls les fichiers des banques et bot-status.json sont publiés ;
+          # bot-push.sh met de côté le reste pendant le rebase.
+          bash scripts/bot-push.sh
 
       - name: Open GitHub issue when human attention needed
         if: steps.pipeline.outcome != 'success' && steps.pipeline.outcome != 'skipped'
