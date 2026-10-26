@@ -117,6 +117,13 @@ jobs:
             [ -e "$f" ] && git add -A "$f"
           done
           git commit -m "bot: weekly maintenance run (auto)"
+          # Les fichiers modifiés par le pipeline mais hors de la liste
+          # ci-dessus (ex. news-archive.json, écrit par fetch-news.js) ne sont
+          # jamais publiés par ce bot. Les jeter avant le pull : sinon
+          # --autostash les réapplique après le rebase et, si un autre bot a
+          # touché le même fichier, laisse un conflit (« unmerged files ») qui
+          # fait échouer les trois tentatives (run 40355155279, 26 oct. 2026).
+          git reset -q --hard HEAD
           # Fichiers générés : en cas de conflit avec un commit concurrent,
           # -X theirs garde la version fraîchement produite par ce bot, et un
           # rebase interrompu est abandonné avant la tentative suivante —
@@ -124,6 +131,7 @@ jobs:
           for i in 1 2 3; do
             git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs && git push && exit 0
             git rebase --abort 2>/dev/null || true
+            git reset -q --hard HEAD
             echo "push attempt $i failed, retrying…"
             sleep $((i * 3))
           done
