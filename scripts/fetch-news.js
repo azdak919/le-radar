@@ -82,7 +82,7 @@ const {
 } = require('./live-link-health-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
-const ARCHIVE_PATH = path.join(__dirname, '..', 'news-archive.json');
+const { readArchive, writeArchive } = require('./archive-store');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 const HIST_CONFIG_PATH = path.join(__dirname, '..', 'historical-catalog.config.json');
 
@@ -939,8 +939,8 @@ async function main() {
     priorByLink = new Map();
     priorBySource = new Map();
   }
-  try { priorArchive = JSON.parse(fs.readFileSync(ARCHIVE_PATH, 'utf8')); } catch { /* première collecte */ }
-  // Seul écrivain de news-archive.json : on fusionne d'abord les boîtes
+  try { priorArchive = readArchive(); } catch { /* première collecte */ }
+  // Seul écrivain du catalogue (data/archives/AAAA-MM.json) : on fusionne d'abord les boîtes
   // d'envoi des autres bots (data/archive-inbox/*.json).
   const inbox = applyBatches(priorArchive, pendingBatches());
   priorArchive = inbox.catalog;
@@ -1248,7 +1248,8 @@ async function main() {
   if (doUpdate) {
     applyLeadImagePins(news.items || []);
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
-    fs.writeFileSync(ARCHIVE_PATH, serializeHistoricalCatalog(archiveResult.catalog, histConfig).text);
+    const archiveWrite = writeArchive(serializeHistoricalCatalog(archiveResult.catalog, histConfig).catalog);
+    console.log(`✅ Catalogue mensuel : ${archiveWrite.months} mois, ${archiveWrite.written.length} réécrit(s) [${archiveWrite.written.join(', ')}], ${archiveWrite.removed.length} retiré(s), ${archiveWrite.bytes} octets`);
     writeApplied(inbox.applied);
     registry._lastFetchRun = news.updated;
     writeRegistry(registry);

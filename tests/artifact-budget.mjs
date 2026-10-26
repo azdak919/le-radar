@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { statSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('../', import.meta.url).pathname;
@@ -27,7 +27,13 @@ function trackedDirSize(rel) {
   }, 0);
 }
 
-const archive = fileSize('news-archive.json');
+// Lot E : catalogue mensuel (repli sur l'ancien fichier pendant la transition).
+const archive = existsSync(join(root, 'data/archives/index.json'))
+  ? trackedDirSize('data/archives')
+  : fileSize('news-archive.json');
+const archiveMonthMax = existsSync(join(root, 'data/archives'))
+  ? Math.max(0, ...readdirSync(join(root, 'data/archives')).map((f) => fileSize(`data/archives/${f}`)))
+  : 0;
 const sports = fileSize('sports.json');
 const images = trackedDirSize('assets/news-images');
 const kit = trackedDirSize('assets/kit');
@@ -50,7 +56,8 @@ try {
   unlinkSync(ignoredProbe);
 }
 
-assert(archive <= 16 * MB, `news-archive.json ${archive} > 16 Mo`);
+assert(archive <= 16 * MB, `catalogue historique ${archive} > 16 Mo`);
+assert(archiveMonthMax <= 2 * MB, `un mois du catalogue dépasse 2 Mo (${archiveMonthMax})`);
 // sports.json est « packed » (scripts/sports-payload-lib.js) : ~1,9 Mo début
 // octobre, ~3 Mo projeté au pire en fin de saison RSEQ (avril). Le plafond
 // 8 Mio laisse de la marge sans masquer un retour au format verbeux
