@@ -1104,50 +1104,52 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
  * 390 / 430 : précédent et suivant en onglets symétriques collés au cadran
  * (pas de carrés 42 px). Le précédent revient à gauche (retiré en 602ea40d2).
  * Pas de « ▾ » sur mobile : le cadran reste un menu déroulant accessible.
- * Embed kiosque inchangé.
+ * Même rendu dans les embeds Pomo/Solitaire ; embed kiosque inchangé.
  */
 @media (max-width: 430.98px) {
-  html:not([data-embed="tuner"]) #tuner-prev.tuner-step,
-  html:not([data-embed="tuner"]) #tuner-next.tuner-step {
+  html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step,
+  html:not([data-surface="kiosque-v1"]) #tuner-next.tuner-step {
     width: 32px;
+    min-width: 32px;
     height: auto;
     min-height: 36px;
     align-self: stretch;
     background: rgba(255, 255, 255, 0.12);
     box-shadow: none;
   }
-  html:not([data-embed="tuner"]) #tuner-prev.tuner-step {
+  html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step {
     margin-right: -6px;
     border-radius: 9px 0 0 9px;
     border-right: 0;
   }
-  html:not([data-embed="tuner"]) #tuner-next.tuner-step {
+  html:not([data-surface="kiosque-v1"]) #tuner-next.tuner-step {
     margin-left: -6px;
     border-radius: 0 9px 9px 0;
     border-left: 0;
   }
-  html:not([data-embed="tuner"]) #tuner-prev.tuner-step:active,
-  html:not([data-embed="tuner"]) #tuner-next.tuner-step:active {
+  html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step:active,
+  html:not([data-surface="kiosque-v1"]) #tuner-next.tuner-step:active {
     transform: none;
     background: rgba(255, 255, 255, 0.2);
   }
   @media (hover: hover) and (pointer: fine) {
-  html:not([data-embed="tuner"]) #tuner-prev.tuner-step:hover,
-  html:not([data-embed="tuner"]) #tuner-next.tuner-step:hover {
+  html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step:hover,
+  html:not([data-surface="kiosque-v1"]) #tuner-next.tuner-step:hover {
     transform: none;
     background: rgba(255, 255, 255, 0.2);
   }
   }
-  html:not([data-embed="tuner"]) #tuner-prev.tuner-step svg,
-  html:not([data-embed="tuner"]) #tuner-next.tuner-step svg {
+  html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step svg,
+  html:not([data-surface="kiosque-v1"]) #tuner-next.tuner-step svg {
     width: 18px;
     height: 18px;
   }
-  html:not([data-embed="tuner"]) .tuner-dial .tuner-now {
+  html:not([data-surface="kiosque-v1"]) .tuner-dial .tuner-now {
     border-radius: 0;
+    background: rgba(255, 255, 255, 0.05);
     padding-right: 10px;
   }
-  html:not([data-embed="tuner"]) .tuner-now::after {
+  html:not([data-surface="kiosque-v1"]) .tuner-now::after {
     content: none;
     display: none;
   }
