@@ -64,14 +64,36 @@ public class CastPlugin extends Plugin {
     try {
       int gms = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
       if (gms != ConnectionResult.SUCCESS) return cast = null;
-      CastContext ctx = CastContext.getSharedInstance(getContext().getApplicationContext());
-      ctx.getSessionManager().addSessionManagerListener(listener, CastSession.class);
-      cast = ctx;
+      // API asynchrone : les rappels internes du SDK (onComplete) tournent sur
+      // l'exécuteur fourni ; on l'enveloppe pour qu'un Throwable désactive
+      // Cast au lieu de planter le fil principal.
+      java.util.concurrent.Executor safe = r -> mainHandler.post(() -> {
+        try { r.run(); } catch (Throwable t) { disable("rappel Cast", t); }
+      });
+      CastContext.getSharedInstance(getContext().getApplicationContext(), safe)
+          .addOnSuccessListener(safe, ctx -> {
+            try {
+              ctx.getSessionManager().addSessionManagerListener(listener, CastSession.class);
+              cast = ctx;
+              if (pendingPicker != null) { PluginCall c = pendingPicker; pendingPicker = null; openPicker(c); }
+            } catch (Throwable t) { disable("session", t); }
+          })
+          .addOnFailureListener(safe, e -> disable("init", e));
     } catch (Throwable t) {
-      Log.w("LeRadarCast", "Cast indisponible", t);
-      cast = null;
+      disable("init sync", t);
     }
     return cast;
+  }
+
+  private final android.os.Handler mainHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+  private PluginCall pendingPicker;
+
+  private void disable(String where, Throwable t) {
+    Log.w("LeRadarCast", "Cast désactivé (" + where + ")", t);
+    cast = null;
+    if (pendingPicker != null) { pendingPicker.reject("cast unavailable"); pendingPicker = null; }
+    JSObject d = new JSObject(); d.put("connected", false); d.put("available", false);
+    try { notifyListeners("cast", d); } catch (Throwable ignored) { }
   }
 
   private CastSession session() {
@@ -139,9 +161,16 @@ public class CastPlugin extends Plugin {
     pendingUrl = call.getString("url");
     pendingTitle = call.getString("title", "");
     pendingArtist = call.getString("artist", "");
-    getActivity().runOnUiThread(() -> { try {
+    getActivity().runOnUiThread(() -> {
+      if (cast != null) { openPicker(call); return; }
+      if (initTried) { call.reject("cast unavailable"); return; }
+      pendingPicker = call;
       castContext();
-      if (cast == null) { call.reject("cast unavailable"); return; }
+    });
+  }
+
+  private void openPicker(PluginCall call) {
+    try {
       MediaRouteSelector selector = cast.getMergedSelector();
       if (selector == null) { call.reject("no selector"); return; }
       CastSession s = session();
@@ -154,7 +183,7 @@ public class CastPlugin extends Plugin {
         dialog.show();
       }
       call.resolve();
-    } catch (Throwable t) { Log.w("LeRadarCast", "sélecteur", t); call.reject("cast error"); } });
+    } catch (Throwable t) { Log.w("LeRadarCast", "sélecteur", t); call.reject("cast error"); }
   }
 
   @PluginMethod

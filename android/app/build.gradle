@@ -73,8 +73,10 @@ dependencies {
     implementation project(':capacitor-android')
     // Cast natif : saveur full seulement (non libre, exclu de F-Droid).
     fullImplementation "com.google.android.gms:play-services-cast-framework:22.1.0"
-    // Stable épinglé : le SDK Cast 22.1 tirait mediarouter 1.8.0-beta01.
-    fullImplementation("androidx.mediarouter:mediarouter") { version { strictly "1.7.0" } }
+    // cast-framework 22.1.0 exige mediarouter >= 1.8.0-beta01 (POM) : il appelle
+    // MediaRouterParams.Builder.setMediaTransferRestrictedToSelfProviders, absente
+    // de 1.7.0 (NoSuchMethodError au lancement de test4). 1.8.1 = stable compatible.
+    fullImplementation "androidx.mediarouter:mediarouter:1.8.1"
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.json:json:20240303"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
