@@ -86,7 +86,6 @@ public class RadioPlaybackService extends MediaLibraryService {
   private static final String STATION_PREFIX = "station:";
   private static final String CMD_STOP = "ca.leradar.app.radio.CMD_STOP";
   /** Pause plus longue : on coupe la connexion (pas de données en pause). */
-  private static final long DROP_AFTER_PAUSE_MS = 60_000L;
   /** Au-delà, la reprise repart du direct au lieu d'un vieux tampon. */
   private static final long LIVE_EDGE_AFTER_MS = 5_000L;
 
@@ -123,7 +122,7 @@ public class RadioPlaybackService extends MediaLibraryService {
     DefaultMediaNotificationProvider provider = new DefaultMediaNotificationProvider.Builder(this)
       .setChannelName(R.string.radio_notification_channel)
       .build();
-    provider.setSmallIcon(R.drawable.ic_radio_notification);
+    provider.setSmallIcon(R.drawable.ic_stat_radar); // antenne-radar du logo, monochrome
     setMediaNotificationProvider(provider);
 
     AudioAttributes attrs = new AudioAttributes.Builder()
@@ -321,8 +320,10 @@ public class RadioPlaybackService extends MediaLibraryService {
 
   private void afterPause() {
     if (pausedAt == 0L) pausedAt = System.currentTimeMillis();
+    // Radio en direct : « pause » = arrêt réel du flux (rien n'est mis en
+    // tampon). La notification reste, et Lecture reprend le direct.
     handler.removeCallbacks(dropConnection);
-    handler.postDelayed(dropConnection, DROP_AFTER_PAUSE_MS);
+    handler.post(dropConnection);
   }
 
   private void playStation(String stationId, @Nullable Station fallback) {

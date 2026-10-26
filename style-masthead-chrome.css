@@ -205,7 +205,7 @@
  */
 :root {
   /* LE-RADAR.ca : un cran au-dessus de l’ancien « LE RADAR » */
-  --radar-wordmark-size: clamp(2.05rem, 6.8vw + 0.3rem, 4.25rem);
+  --radar-wordmark-size: clamp(2.46rem, 8.16vw + 0.36rem, 5.1rem); /* +20 % (25 oct. 2026) */
   --radar-lead-title-size: clamp(1.55rem, 4.1vw + 0.15rem, 2.55rem);
 }
 /* block (pas flex) : le texte traduit (ex. inuktitut) peut se couper
@@ -354,7 +354,7 @@ html[data-script-dir="rtl"] .wordmark-full {
 
 @media (max-width: 720px) {
   :root {
-    --radar-wordmark-size: clamp(1.85rem, 7.6vw, 2.95rem);
+    --radar-wordmark-size: clamp(2.22rem, 9.12vw, 3.54rem); /* +20 % */
     /* Plancher > .wire-title (1.4rem) et < --radar-wordmark-size. */
     --radar-lead-title-size: clamp(1.55rem, 4.8vw, 1.85rem);
   }
@@ -379,7 +379,7 @@ html[data-script-dir="rtl"] .wordmark-full {
 
 @media (min-width: 721px) and (max-width: 1024px) {
   :root {
-    --radar-wordmark-size: clamp(2.15rem, 4.8vw, 3.6rem);
+    --radar-wordmark-size: clamp(2.58rem, 5.76vw, 4.32rem); /* +20 % */
     --radar-lead-title-size: clamp(1.45rem, 2.8vw, 2.35rem);
   }
   html[lang="iu"] .wordmark-mark,

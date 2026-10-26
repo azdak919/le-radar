@@ -323,3 +323,91 @@ body:not(.is-home) .wordmark-logo { margin-right: 4px; }
 .player-cast { width: 40px; border-color: transparent; background: transparent; color: var(--ink); }
 .player-cast svg { width: 22px; height: 22px; }
 .player-cast.is-casting { color: #6fc3ff; }
+
+/* ─── Cartes d'article encadrées (app seulement) ───────────────────────
+   Même langage que la barre radio en verre : carte arrondie, filet 1 px,
+   ombre douce, 12 px des bords de l'écran (le fil est à 18 px → −6 px).
+   Pas de backdrop-filter ici (des dizaines de cartes ralentiraient le
+   défilement) : surface semi-opaque ; le flou reste sur la barre radio. */
+#screen article.card {
+  margin: 0 -6px 12px;
+  padding: 14px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+/* Séparateurs entre articles retirés : la carte fait le cadre. */
+#screen article.card > .article { border-bottom: 0 !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+#screen article.card .article-media,
+#screen article.card img { border-radius: 12px; }
+
+/* ─── Zone sûre (edge-to-edge Android 15+) ──────────────────────────────
+   Plus de vue article interne : toucher un article ouvre l'original (Custom
+   Tab). La zone sûre reste nécessaire partout : env() ou, sur les WebView
+   qui ne l'exposent pas, la variable injectée par Capacitor (SystemBars). */
+:root {
+  --safe-top: max(env(safe-area-inset-top, 0px), var(--safe-area-inset-top, 0px));
+}
+.masthead-inner {
+  padding-top: calc(8px + var(--safe-top)) !important;
+}
+/* Pendant le défilement du fil : la barre radio se colle SOUS l'heure, et
+   une coiffe opaque masque le contenu qui passe sous la barre d'état. */
+.shell > .player { top: calc(var(--safe-top) + 8px) !important; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--safe-top);
+  background: var(--bg, #fff);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Bouton « Enregistrer » discret dans chaque carte du fil. */
+#screen article.card { position: relative; }
+#screen article.card .card-save {
+  display: block;
+  margin: 8px 0 0 auto;
+  min-height: 32px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--lr-card-line, rgb(20 22 30 / 0.08));
+  background: transparent;
+  color: var(--muted, inherit);
+  font: inherit;
+  font-size: 0.82rem;
+}
+#screen article.card .card-save[aria-pressed="true"] { color: var(--accent, inherit); font-weight: 600; }
+
+/* Surfaces « carte » de l'app (fil, fiche, pastille retour). */
+:root {
+  --lr-card-bg: rgb(255 255 255 / 0.88);
+  --lr-card-line: rgb(20 22 30 / 0.08);
+  --lr-card-shadow: 0 6px 18px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.06);
+}
+:root[data-theme="dark"] {
+  --lr-card-bg: rgb(30 32 40 / 0.86);
+  --lr-card-line: rgb(255 255 255 / 0.10);
+  --lr-card-shadow: 0 8px 22px rgb(0 0 0 / 0.30), inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lr-card-bg: rgb(30 32 40 / 0.86);
+    --lr-card-line: rgb(255 255 255 / 0.10);
+    --lr-card-shadow: 0 8px 22px rgb(0 0 0 / 0.30), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+}
+#screen article.card {
+  border: 1px solid var(--lr-card-line) !important;
+  background: var(--lr-card-bg) !important;
+  box-shadow: var(--lr-card-shadow) !important;
+}
+
+/* Lecture : le bouton principal devient ■ (arrêt) ; plus de × séparé. */
+.shell > .player .player-stop { display: none !important; }
+
+/* « En ondes » trop long : défilement continu (respecte reduced-motion). */
+#player-now.is-marquee { text-overflow: clip; overflow: hidden; }
+#player-now .player-now__run { display: inline-block; white-space: nowrap; animation: lr-marquee 16s linear infinite; }
+@keyframes lr-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { #player-now .player-now__run { animation: none; } }

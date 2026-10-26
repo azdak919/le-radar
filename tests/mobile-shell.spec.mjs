@@ -13,8 +13,11 @@ test.describe('application mobile', () => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     const title = (await page.locator('.card-site .article-title').first().innerText()).trim();
-    await page.locator('.card-site a[href^="#/article/"]').first().click();
-    await page.getByRole('button', { name: 'Enregistrer' }).first().click();
+    // Plus de vue article : la carte pointe vers l'original ; on enregistre depuis la carte.
+    const href = await page.locator('.card-site a.card-open').first().getAttribute('href');
+    expect(href).toMatch(/^https?:\/\//);
+    await page.locator('.card-site .card-save').first().click();
+    await expect(page.locator('.card-site .card-save').first()).toHaveAttribute('aria-pressed', 'true');
     await page.goto('/mobile/app/#/enregistres', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.card-site .article-title', { hasText: title }).first()).toBeVisible();
     await page.getByRole('link', { name: 'Explorer' }).click();
@@ -42,6 +45,32 @@ test.describe('application mobile', () => {
     await expect(read).toBeVisible();
     await expect(read).toHaveAttribute('href', /^https:\/\//);
     await expect(read).toHaveAttribute('target', '_blank');
+  });
+
+  test('cartes du fil et zone sûre sous la barre d’état', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/mobile/app/#/accueil', { waitUntil: 'domcontentloaded' });
+    await page.addStyleTag({ content: ':root{--safe-top:40px !important}' });
+    await expect(page.locator('#screen article.card').first()).toBeVisible();
+    const m = await page.evaluate(() => {
+      const card = document.querySelector('#screen article.card');
+      const r = card.getBoundingClientRect();
+      const cs = getComputedStyle(card);
+      const inner = card.querySelector('.article');
+      return {
+        left: Math.round(r.left), right: Math.round(innerWidth - r.right),
+        radius: parseFloat(cs.borderTopLeftRadius), blur: cs.backdropFilter || '',
+        sep: inner ? parseFloat(getComputedStyle(inner).borderBottomWidth) : 0,
+        pad: parseFloat(getComputedStyle(document.querySelector('.masthead-inner')).paddingTop),
+        cap: parseFloat(getComputedStyle(document.body, '::before').height),
+      };
+    });
+    expect(m.left).toBe(12); expect(m.right).toBe(12);
+    expect(m.radius).toBeGreaterThanOrEqual(16);
+    expect(m.blur === '' || m.blur === 'none').toBe(true);
+    expect(m.sep).toBe(0);
+    expect(m.pad).toBeGreaterThanOrEqual(48);
+    expect(m.cap).toBe(40);
   });
 
   test('barre radio persistante entre les onglets @ci-critical', async ({ page }) => {
@@ -111,19 +140,19 @@ test.describe('application mobile', () => {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     expect(overflow).toBe(false);
 
-    // Pause et lecture par les boutons de la barre.
+    // Pendant la lecture : bouton principal ■ (arrêt), pas de × séparé.
+    await expect(page.locator('#player .player-stop')).toBeHidden();
+    await expect(page.locator('#player-toggle')).toHaveAttribute('aria-label', /^Arrêter /);
+    await expect(page.locator('#player-toggle .icon-stop')).toBeVisible();
+    // Un appui arrête le flux et remet la barre à « Prête à écouter ».
     await page.locator('#player-toggle').click();
-    await expect(bar).toHaveAttribute('data-state', 'paused');
+    await expect(bar).toHaveAttribute('data-state', 'idle');
     await expect(bar).toBeVisible();
+    await expect(page.locator('#player-now')).toContainText('Prête à écouter');
     expect(await page.evaluate(() => document.getElementById('player-audio').getAttribute('src'))).toBeNull();
     await page.locator('#player-toggle').click();
     await expect(bar).toHaveAttribute('data-state', /loading|playing/);
     await expect(bar).toHaveAttribute('data-state', 'playing');
-
-    // Arrêter ramène la barre au repos sans la faire disparaître.
-    await page.locator('#player .player-stop').click();
-    await expect(bar).toBeVisible();
-    await expect(bar).toHaveAttribute('data-state', 'idle');
   });
 
   test('slogan du site et anglais sans service de traduction @ci-critical', async ({ page }) => {

@@ -532,7 +532,10 @@
     const show = clean((station.current && station.current.title) || station.showTitle);
     const track = clean(station.track);
     if (show && track && fold(track) !== fold(show)) return `${show} · ${track}`;
-    return show || track;
+    if (show || track) return show || track;
+    // Rien à l'antenne connu : la prochaine émission, comme sur le site.
+    const next = clean(station.next && station.next.title);
+    return next ? `À venir · ${next}` : '';
   }
 
   function institutionColor(brand, institution) {

@@ -22,7 +22,12 @@ assert.match(alerts.html(null, []), /application Android/);
 
 // Aucune bibliothèque Google / Firebase dans le build F-Droid.
 const gradle = readFileSync(`${root}android/app/build.gradle`, 'utf8');
-assert.ok(!/firebase|play-services|com\.google\.android\.gms/i.test(gradle));
+// Seule la saveur `full` peut tirer le SDK Cast (fullImplementation) ;
+// aucune autre ligne (commentaires exclus) ne doit citer Google/Firebase.
+const gradleCode = gradle.split('\n').filter((l) => !/^\s*(\/\/|\*)/.test(l));
+const offending = gradleCode.filter((l) => /firebase|play-services|com\.google\.android\.gms/i.test(l) && !/^\s*fullImplementation\s/.test(l));
+assert.deepEqual(offending, [], 'Google/Firebase hors saveur full');
+assert.ok(!/firebase/i.test(gradleCode.join('\n')), 'jamais Firebase');
 const worker = readFileSync(`${root}android/app/src/main/java/ca/leradar/app/news/NewsAlertsWorker.java`, 'utf8');
 assert.match(worker, /https:\/\/le-radar\.ca\/news\.json/);
 console.log('news-alerts OK');

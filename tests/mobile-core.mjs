@@ -166,6 +166,7 @@ assert.equal(core.nowPlayingLabel(nowPayload, 'ckut', nowMs), 'Même');
 assert.equal(core.nowPlayingLabel(nowPayload, 'absente', nowMs), '');
 assert.equal(core.nowPlayingLabel(nowPayload, 'chyz', Date.parse('2026-10-06T03:00:00Z')), '', 'grille périmée ignorée');
 assert.equal(core.nowPlayingLabel(null, 'chyz', nowMs), '');
+assert.equal(core.nowPlayingLabel({ stations: { x: { checkedAt: new Date(nowMs).toISOString(), next: { title: 'Kongossa na UQAM' } } } }, 'x', nowMs), 'À venir · Kongossa na UQAM', 'émission à venir comme sur le site');
 assert.equal(core.institutionColor({ institutions: { UQAM: { color: '#0079BE' } } }, 'UQAM'), '#0079BE');
 assert.equal(core.institutionColor({ institutions: { X: { color: 'red' } } }, 'X'), '');
 assert.equal(core.homeMode('', ['la-pige']), 'suivis');

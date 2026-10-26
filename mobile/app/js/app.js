@@ -463,10 +463,15 @@
     if (hasMedia) classes.push('has-image');
     else classes.push('article--text');
     if (hasMedia && role !== 'lead') classes.push('article--thumb');
+    // Toucher un article ouvre directement l'original (Custom Tab Android via
+    // @capacitor/browser, sinon navigateur) : plus de vue article interne.
+    const original = core().publisherAction(meta);
+    const isSaved = core().isFavorite(loadLibrary(), meta.id);
     return `<article class="card card-site card--${role}${role === 'lead' ? ' card-lead' : ''}">
-      <a class="${classes.join(' ')}" href="#/article/${meta.id}" style="--c:${esc(color)}">
+      <a class="${classes.join(' ')}" data-action="read" data-id="${meta.id}" href="${esc(original.url)}" target="_blank" rel="noopener noreferrer" style="--c:${esc(color)}">
         ${cardSlots(role, hasMedia).map((slot) => slotHtml[slot]).join('\n        ')}
       </a>
+      <button type="button" class="card-save" data-action="save" data-id="${meta.id}" aria-pressed="${isSaved ? 'true' : 'false'}" aria-label="${isSaved ? 'Enregistré' : 'Enregistrer'}">${isSaved ? 'Enregistré' : 'Enregistrer'}</button>
     </article>`;
   }
 
@@ -786,14 +791,29 @@
         if (!activeRadio) line = uiText(player.now ? `Prête à écouter · ${player.now}` : 'Prête à écouter');
         else if (player.status === 'loading') line = uiText('Connexion au direct…');
         else if (player.status === 'error') line = uiText('Flux indisponible. Touchez lecture pour réessayer.');
-        now.textContent = line;
+        if (now.dataset.line !== line) {
+          now.dataset.line = line;
+          now.textContent = line;
+          now.classList.remove('is-marquee');
+          // Trop long (« À venir · … », titre – artiste) : défilement doux.
+          requestAnimationFrame(() => {
+            if (now.dataset.line === line && now.scrollWidth > now.clientWidth + 2) {
+              const span = document.createElement('span');
+              span.className = 'player-now__run';
+              span.textContent = `${line}\u2003\u2003\u2003${line}\u2003\u2003\u2003`;
+              now.textContent = '';
+              now.appendChild(span);
+              now.classList.add('is-marquee');
+            }
+          });
+        }
       }
       if (info) {
         info.setAttribute('href', '#/explorer?section=radios');
         info.setAttribute('aria-label', uiText(`${radio.name} : choisir une autre station`));
       }
       if (toggle) {
-        toggle.setAttribute('aria-label', uiText(playerBusy() ? `Mettre ${radio.name} en pause` : `Écouter ${radio.name}`));
+        toggle.setAttribute('aria-label', uiText(playerBusy() ? `Arrêter ${radio.name}` : `Écouter ${radio.name}`));
         if (player.status === 'loading') toggle.setAttribute('aria-busy', 'true');
         else toggle.removeAttribute('aria-busy');
       }
@@ -1056,7 +1076,8 @@
     const target = id || player.id || barStationId();
     if (!target) return;
     if (target === player.id && playerBusy() && castState.connected) { stopRadio(); return; }
-    if (target === player.id && playerBusy()) pauseRadio();
+    // Radio en direct : le bouton principal ARRÊTE (■), comme sur le site.
+    if (target === player.id && playerBusy()) stopRadio();
     else playRadio(target);
   }
 
@@ -1071,7 +1092,12 @@
         player.id = '';
       } else {
         if (stationId) player.id = stationId;
-        if (status === 'playing' || status === 'loading' || status === 'paused' || status === 'error') {
+        if (status === 'paused') {
+          // Pause native (notification, volant, Android Auto) = flux arrêté :
+          // la barre revient à « Prête à écouter ».
+          player.status = 'idle';
+          player.id = '';
+        } else if (status === 'playing' || status === 'loading' || status === 'error') {
           player.status = status;
         }
       }
@@ -1181,12 +1207,17 @@
       if (document.visibilityState !== 'visible' || !player.id) return;
       // Retour au premier plan : si le système a gelé l’écoute HTML, l’afficher.
       if (!useNativeRadio() && playerBusy() && audio.paused) player.status = 'paused';
-      if (playerBusy()) ensureNowPlaying();
+      ensureNowPlaying();
       syncPlayer();
     });
     setInterval(() => {
-      if (player.id && playerBusy() && document.visibilityState === 'visible') ensureNowPlaying();
+      // En lecture native, on continue en arrière-plan : notification, Android
+      // Auto et autoradio reçoivent l'émission à jour.
+      // Au repos, la barre affiche aussi l'émission en cours ou à venir.
+      const visible = document.visibilityState === 'visible';
+      if (visible || (player.id && playerBusy() && useNativeRadio())) ensureNowPlaying();
     }, NOW_PLAYING_TTL_MS);
+    ensureNowPlaying();
   }
 
   function viewSearch(route) {
@@ -1523,34 +1554,6 @@
       <p class="note"><span>Version </span><span class="notranslate">${esc(core().APP_VERSION)}</span><span> · application de découverte, distincte du site.</span></p>`;
   }
 
-  function viewArticle(route) {
-    const meta = findArticle(route.id);
-    if (!meta) {
-      return `<p class="back"><a href="#/accueil">Retour au fil</a></p>
-        <h1>Fiche introuvable</h1>
-        <p class="empty">Cet article n’est plus dans le fil chargé, ni dans les favoris.</p>`;
-    }
-    const action = core().publisherAction(meta);
-    const saved = core().isFavorite(loadLibrary(), meta.id);
-    const followed = meta.source ? followIds().includes(core().slugify(meta.source)) : false;
-    return `<p class="back"><a href="#/accueil">Retour au fil</a></p>
-      <article class="fiche">
-        <p class="card-source">${swatch(meta.institution)}<span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'Publication')}</span></p>
-        <h1>${esc(displayTitle(meta.title))}</h1>
-        <p class="card-meta"><time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${meta.author ? ` · <span class="article-author">${esc(meta.author)}</span>` : ''}</p>
-        ${imageHtml(meta)}
-        ${displayExcerpt(meta) ? `<p class="excerpt">${esc(displayExcerpt(meta))}</p>` : ''}
-        <p class="attribution"><span>Cet article est publié par </span><span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'la publication d’origine')}</span><span>. </span><span>LE-RADAR ne le reproduit pas et n’en est pas l’auteur.</span></p>
-        <a class="wide primary" data-action="read" data-id="${meta.id}" href="${esc(action.url)}" target="_blank" rel="noopener noreferrer">${esc(action.label)}</a>
-        <div class="row-actions">
-          <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
-          <button type="button" data-action="share-original" data-id="${meta.id}">Partager l’original</button>
-          <button type="button" data-action="share-discovery" data-id="${meta.id}">Partager la fiche</button>
-          ${meta.source ? `<button type="button" data-action="follow" data-name="${esc(meta.source)}" aria-pressed="${followed ? 'true' : 'false'}">${followed ? 'Suivi' : 'Suivre'}</button>` : ''}
-        </div>
-      </article>`;
-  }
-
   function tabId(route) {
     if (route.kind === 'home' || route.kind === 'article') return 'accueil';
     if (route.kind === 'search') return 'recherche';
@@ -1800,7 +1803,13 @@
     else if (route.kind === 'saved') html = viewSaved(route);
     else if (route.kind === 'settings') html = viewSettings();
     else if (route.kind === 'sports') html = viewSports();
-    else if (route.kind === 'article') html = viewArticle(route);
+    else if (route.kind === 'article') {
+      // Anciens liens #/article/… : on ouvre l'original et on revient au fil.
+      const legacy = findArticle(route.id);
+      if (legacy) openExternal(core().publisherAction(legacy).url);
+      history.replaceState(null, '', '#/accueil');
+      html = viewHome(core().parseDeepLink(location.href));
+    }
     else html = viewHome(route);
     if (screen) screen.innerHTML = html;
     if (route.kind === 'settings' && window.RadarNewsAlerts && window.RadarNewsAlerts.mount) window.RadarNewsAlerts.mount();
@@ -1970,6 +1979,7 @@
         if (action === 'read') {
           const article = findArticle(el.dataset.id);
           const info = article && core().publisherAction(article);
+          if (article) saveLibrary(core().recordView(loadLibrary(), article));
           if (info) await openExternal(info.url);
           return;
         }

@@ -3,7 +3,7 @@
 Ce fichier suit l'état des trois canaux de diffusion du Radar. À mettre à jour à chaque
 déploiement notable, changement de cache du service worker ou étiquette Android.
 
-_Dernière mise à jour : 23 octobre 2026._
+_Dernière mise à jour : 25 octobre 2026._
 
 ## 1. Web (GitHub Pages, le-radar.ca)
 
@@ -50,27 +50,38 @@ Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmé
 | `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.3` | 2026-10-23 | ⏳ étiquetée (versionCode 8) ; en attente de la détection F-Droid (`^android-v`) |
+| `android-v1.2.4` | 2026-10-25 | ⏳ à étiqueter (versionCode 9) ; recette : saveur `fdroid` (`gradle: [fdroid]`) |
 
 Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-23) :
-**1.1.0 (versionCode 3)**. `main` est à **1.2.3 (versionCode 8)**.
+**1.1.0 (versionCode 3)**. `main` est à **1.2.4 (versionCode 9)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
 
-### Changements web pas encore dans l'APK (après `android-v1.2.3`)
+### Changements web pas encore dans l'APK (après `android-v1.2.4`)
 
 Aucun pour l'instant.
 
-### Préparée, non étiquetée : `1.2.4` (versionCode 9)
+### Contenu de `android-v1.2.4` (versionCode 9)
 
-Barre radio de l'app en haut (le syntoniseur du site, en double, est masqué dans l'app
-seulement). Lecteur Media3 réparé : session ajoutée au service et filtres d'intention
-`MediaLibraryService`/`MediaSessionService`/`MediaBrowserService` (la notification et
-l'écran verrouillé n'apparaissaient pas), pause sans perdre la notification. Liste de
-lecture des stations : suivante/précédente au volant, métadonnées AVRCP (station,
-émission, « Le Radar », logo). Android Auto : `MediaLibraryService` + `automotive_app_desc`
-(stations suivies, toutes, par ville). Aucune bibliothèque Google.
+Deux saveurs : `fdroid` (par défaut, aucune bibliothèque Google, 0 classe `com.google.android.gms`)
+et `full` (Cast natif : `play-services-cast-framework` 22.1.0 + `androidx.mediarouter` 1.8.1,
+CastContext créé au premier appui seulement, rappels protégés). Barre radio en verre dépoli
+(carte flottante, coins arrondis, flou d'arrière-plan, repli opaque), collée sous le mât puis
+sous la barre d'état. Logos officiels des stations (notification, écran verrouillé, AVRCP,
+Android Auto). Rapport de plantage local (ContentProvider `initOrder` max → fichier ; page
+« Rapport de plantage » avec Copier/Partager ; rien n'est envoyé). Bouton masqué = vraiment
+masqué (`.player [hidden]`). Lecteur Media3, notification, Android Auto (préparés pour 1.2.4).
+Bouton principal ■ Arrêt pendant la lecture (plus de ×) ; la pause native (notification, Auto)
+coupe le flux. Ligne « en ondes » : émission en cours, sinon « À venir · … » (défilement si trop
+long), poussée à la MediaSession. Petite icône `ic_stat_radar` (antenne du logo, monochrome).
+Articles du fil en cartes arrondies ; plus de vue article interne : toucher une carte ouvre
+l'original (Custom Tab via `@capacitor/browser`), bouton « Enregistrer » sur la carte. Zone
+sûre sous la barre d'état partout (mât, barre radio collée, coiffe). Logo du mât +20 % (site
+et app).
+La recette F-Droid construit `gradle: [fdroid]` →
+`build/outputs/apk/fdroid/release/app-fdroid-release-unsigned.apk`.
 
 ### Contenu de `android-v1.2.3` (versionCode 8)
 
