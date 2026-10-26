@@ -268,7 +268,13 @@ jobs:
             assets/news-images assets/stock-images stock-images-map.js data/image-health.json
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)
-          git add "${DATA_FILES[@]}" 2>/dev/null || true
+          # Un seul chemin absent (ex. data/archive-inbox-applied.json tant
+          # qu'aucune boîte d'envoi n'a été fusionnée) fait échouer tout le
+          # `git add` : news.json et feed.xml restaient alors hors du commit
+          # alors que index.html partait (JSON-LD ≠ news.json, Vérification rouge).
+          for f in "${DATA_FILES[@]}"; do
+            if [ -e "$f" ]; then git add -- "$f"; fi
+          done
           # Toujours publier le prérendu / JSON-LD quand generate-seo a réussi.
           # Un échec artifact-budget (image purgée encore listée par git) ne
           # doit plus laisser news.json diverger de index.html — Guard échoue
