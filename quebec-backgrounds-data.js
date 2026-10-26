@@ -1526,5 +1526,16 @@ const QUEBEC_BACKGROUNDS = [
     season: "automne",
     surfaces: ["masthead"],
     tags: ["mat", "pomo"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Rivi%C3%A8re_en_d%C3%A9gel_%283469838816%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "peupleloup",
+    link: "https://commons.wikimedia.org/wiki/File:Rivi%C3%A8re%20en%20d%C3%A9gel%20(3469838816).jpg",
+    license: "CC BY-SA 2.0",
+    title: "Rivière en dégel (3469838816)",
+    width: 3008,
+    height: 1960,
+    season: "printemps",
+    tags: ["mat"],
   }
 ];

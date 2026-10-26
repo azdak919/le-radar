@@ -1733,5 +1733,17 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     place: "UQTR",
     campus: true,
     tags: ["mat", "campus"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Jean Gagnon",
+    link: "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2013.JPG",
+    license: "CC BY-SA 3.0",
+    title: "McGill University downtown campus 13",
+    width: 4000,
+    height: 3000,
+    place: "McGill",
+    campus: true,
+    tags: ["mat", "campus"],
   }
 ];
