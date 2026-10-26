@@ -3,17 +3,17 @@
 Ce fichier suit l'état des trois canaux de diffusion du Radar. À mettre à jour à chaque
 déploiement notable, changement de cache du service worker ou étiquette Android.
 
-_Dernière mise à jour : 25 octobre 2026._
+_Dernière mise à jour : 26 octobre 2026._
 
 ## 1. Web (GitHub Pages, le-radar.ca)
 
 | Élément | Valeur |
 |---|---|
-| Dernier commit `main` déployé | `324deea06` — bot : mise à jour du fil (auto), 23 oct. 2026, 9 h 29 (HAE) |
-| Dernier changement de code déployé | `0e56639e4` — fix(news) : n'afficher que la session en cours ou ≤ 45 jours |
-| Déploiement GitHub Pages | ✅ réussi (`pages-build-deployment`, run 39961702958) |
-| Date du déploiement | 23 octobre 2026, 9 h 30 (HAE) |
-| le-radar.ca | ✅ HTTP 200 (vérifié le 23 oct. 2026, 9 h 35 HAE) |
+| Dernier commit `main` déployé | `33ff6e5ea` — bot : métadonnées historiques (auto), 26 oct. 2026, 9 h 34 (HAE) |
+| Dernier changement de code déployé | `16b517d38` — fix(pomo) : carte citation compacte sur téléphone, rien sous le pied de page (26 oct., 8 h 59 HAE) |
+| Déploiement GitHub Pages | ✅ réussi (`pages-build-deployment`, run 40331826633) |
+| Date du déploiement | 26 octobre 2026, 9 h 36 (HAE) |
+| le-radar.ca | ✅ HTTP 200 (vérifié le 26 oct. 2026, 9 h 45 HAE) |
 
 Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier avec
 `gh run list -w pages-build-deployment -L 1`.
@@ -22,13 +22,19 @@ Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier ave
 
 | Service worker | Cache actuel en ligne |
 |---|---|
-| `sw.js` (site) | `radar-shell-v924` (+ `radar-offline-v22`) — introduit par `0e56639e4` |
-| `sports/sw.js` (Sports) | `sports-shell-v291` — introduit par `0e56639e4` |
+| `sw.js` (site) | `radar-shell-v973` (+ `radar-offline-v22`) — introduit par `16b517d38` |
+| `sports/sw.js` (Sports) | `sports-shell-v333` — introduit par `16b517d38` |
 
 Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmée).
 
 ### Historique récent des correctifs PWA
 
+- 2026-10-26 — `16b517d38` : carte citation du Pomo compacte sur téléphone (v973 / v333).
+- 2026-10-26 — `c69af7581` : barre radio du Pomo et du Solitaire identique au Radar.
+- 2026-10-26 — `3dacbb807` : fin de période du Pomo fiable en arrière-plan (notification).
+- 2026-10-26 — `b301e5265`, `ec64eaf4d` : régates sur plusieurs jours (vraie plage de dates),
+  voile compacte dans le bandeau.
+- 2026-10-25 — `7ad018a8d`, `f530b23d8` : contours radio, Pomo/Solitaire retouchés.
 - 2026-10-23 — `0e56639e4` : fraîcheur des nouvelles (session en cours ou ≤ 45 jours);
   `news.json` élagué, caches montés à v924 / v291.
 - **2026-10-23 — `5fce3112c`** : retrait du rechargement automatique sur `controllerchange`.
@@ -45,15 +51,15 @@ Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmé
 | `android-v1.0.0` | 2026-09-21 | — (antérieure à F-Droid) |
 | `android-v1.0.1` | 2026-10-05 | — (antérieure à F-Droid) |
 | `android-v1.1.0` | 2026-10-07 | ✅ publiée (MR fdroiddata 49671 fusionnée le 2026-10-15) |
-| `android-v1.1.1` | 2026-10-21 | ⏳ recette fdroiddata mise à jour le 2026-10-22 (`bba9c08a`, CurrentVersion 1.1.1 / 4), pas encore construite ni publiée |
+| `android-v1.1.1` | 2026-10-21 | ✅ publiée (recette `bba9c08a` du 2026-10-22 ; APK sur f-droid.org le 2026-10-25, 9 h 08 HAE) |
 | `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
-| `android-v1.2.3` | 2026-10-23 | ⏳ étiquetée (versionCode 8) ; en attente de la détection F-Droid (`^android-v`) |
-| `android-v1.2.4` | 2026-10-25 | ✅ étiqueté (versionCode 9) ; recette : saveur `fdroid` (`gradle: [fdroid]`) |
+| `android-v1.2.3` | 2026-10-23 | ⏳ recette mise à jour le 2026-10-24 (`fa454f12`, versionCode 8), pas encore publiée |
+| `android-v1.2.4` | 2026-10-25 | ⏳ recette mise à jour le 2026-10-26 (MR 54228 fusionnée, `4ee66bdb`, saveur `fdroid`) ; CurrentVersion 1.2.4 / 9 ; pas encore publiée |
 
-Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-23) :
-**1.1.0 (versionCode 3)**. `main` est à **1.2.4 (versionCode 9)**.
+Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-26) :
+**1.1.1 (versionCode 4)** (suggérée ; 1.1.0 / 3 encore listée). Recette fdroiddata : CurrentVersion **1.2.4 (9)**. `main` est à **1.2.4 (versionCode 9)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
@@ -61,7 +67,14 @@ le-radar.ca en direct.
 
 ### Changements web pas encore dans l'APK (après `android-v1.2.4`)
 
-Aucun pour l'instant.
+Aucun changement dans `mobile/` ni `android/` depuis l'étiquette : les changements suivants
+touchent le site seulement (Pomo, Solitaire, page Sports, radios du site).
+
+- `16b517d38` — carte citation du Pomo compacte sur téléphone.
+- `c69af7581` — barre radio du Pomo et du Solitaire identique au Radar.
+- `3dacbb807` — fin de période du Pomo fiable en arrière-plan.
+- `ec64eaf4d`, `b301e5265` — régates de voile : plages de dates, bandeau compact, résultats 24 h.
+- `7ad018a8d` — contours radio plus visibles, minuterie Pomo agrandie sur téléphone.
 
 ### Contenu de `android-v1.2.4` (versionCode 9)
 
