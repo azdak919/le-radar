@@ -90,21 +90,21 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@capacitor/cli": "^8.5.2",
-    "@playwright/test": "^1.61.1"
+    "@capacitor/cli": "^8.5.3",
+    "@playwright/test": "^1.64.1"
   },
   "dependencies": {
-    "@capacitor/android": "^8.5.2",
-    "@capacitor/app": "^8.1.1",
-    "@capacitor/browser": "^8.0.4",
-    "@capacitor/core": "^8.5.2",
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/browser": "^8.0.5",
+    "@capacitor/core": "^8.5.3",
     "@capacitor/haptics": "^8.0.2",
-    "@capacitor/ios": "^8.5.2",
-    "@capacitor/keyboard": "^8.0.5",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/keyboard": "^8.0.6",
     "@capacitor/network": "^8.0.1",
-    "@capacitor/share": "^8.0.2",
+    "@capacitor/share": "^8.0.3",
     "@capacitor/splash-screen": "^8.0.2",
-    "@capacitor/status-bar": "^8.0.3"
+    "@capacitor/status-bar": "^8.0.4"
   },
   "overrides": {
     "xcode": {
