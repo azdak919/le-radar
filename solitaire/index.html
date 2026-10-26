@@ -20,7 +20,7 @@
   <meta name="theme-color" content="#8b6f4e" id="meta-theme-color">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <script>
+  <script nonce="ataraxia-sol">
   /* Appliquer le thème avant paint (même clé que Le Radar : radar-theme) */
   (function () {
     try {
@@ -473,17 +473,21 @@
       flex-shrink: 0;
       transition: background 0.2s ease, color 0.2s ease;
     }
-    .toolbar-btn:hover,
-    .lang-btn:hover {
+    @media (hover: hover) and (pointer: fine) {
+.toolbar-btn:hover,
+.lang-btn:hover {
       background: var(--chrome-hover);
       color: var(--chrome-text-strong);
     }
+}
     @media (hover: none) {
-      .toolbar-btn:hover,
-      .lang-btn:hover:not([aria-expanded="true"]) {
+      @media (hover: hover) and (pointer: fine) {
+.toolbar-btn:hover,
+.lang-btn:hover:not([aria-expanded="true"]) {
         background: transparent;
         color: var(--chrome-text);
       }
+}
     }
     .toolbar-btn:active { transform: scale(0.96); }
     .toolbar-btn svg,
@@ -552,7 +556,9 @@
       padding: 0.24rem 0.52rem;
       color: var(--chrome-text);
     }
-    .toolbar-btn--sub:hover { color: var(--chrome-text-strong); }
+    @media (hover: hover) and (pointer: fine) {
+.toolbar-btn--sub:hover { color: var(--chrome-text-strong); }
+}
     .toolbar-btn--sub svg {
       width: 13px;
       height: 13px;
@@ -599,7 +605,9 @@
       cursor: pointer;
       transition: background 0.15s;
     }
-    .lang-option:hover { background: var(--accent-glow); }
+    @media (hover: hover) and (pointer: fine) {
+.lang-option:hover { background: var(--accent-glow); }
+}
     .lang-option.active { color: var(--accent); font-weight: 500; }
 
     .lang-translating {
@@ -865,11 +873,13 @@
       transition: all 0.25s ease;
       animation: winSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
     }
-    .win-btn:hover {
+    @media (hover: hover) and (pointer: fine) {
+.win-btn:hover {
       background: var(--accent);
       color: #fff;
       box-shadow: 0 4px 20px var(--accent-glow);
     }
+}
 
     /* ════════════════════════════════════════
        CASCADE WIN ANIMATION
@@ -1012,7 +1022,9 @@
       cursor: pointer;
       transition: opacity 0.2s;
     }
-    #autocomplete-btn:hover { opacity: 0.85; }
+    @media (hover: hover) and (pointer: fine) {
+#autocomplete-btn:hover { opacity: 0.85; }
+}
 
     /* ════════════════════════════════════════
        NO MORE MOVES TOAST
@@ -1125,7 +1137,9 @@
       opacity: var(--credits-opacity-visible);
       animation: creditsEnter 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-    .bottom-badges:hover { opacity: 1; background: var(--chrome-surface-hover); }
+    @media (hover: hover) and (pointer: fine) {
+.bottom-badges:hover { opacity: 1; background: var(--chrome-surface-hover); }
+}
 
     .bottom-badges .credits-divider { margin: 0 0.35rem; opacity: 0.4; }
 
@@ -1138,7 +1152,9 @@
       min-width: 0;
     }
     .img-credit a { color: var(--credits-text-strong); text-decoration: none; }
-    .img-credit a:hover { text-decoration: underline; }
+    @media (hover: hover) and (pointer: fine) {
+.img-credit a:hover { text-decoration: underline; }
+}
 
     .license-badge {
       display: inline-flex;
@@ -1149,7 +1165,9 @@
       white-space: nowrap;
       cursor: pointer;
     }
-    .license-badge:hover { color: var(--credits-text-strong); }
+    @media (hover: hover) and (pointer: fine) {
+.license-badge:hover { color: var(--credits-text-strong); }
+}
 
     .copyleft-symbol {
       font-size: 0.75rem;
@@ -1173,6 +1191,22 @@
         max-width: 100%;
       }
       .bottom-badges .img-credit + .credits-divider { display: none; }
+    }
+
+    /* Compaction téléphone : barre d'icônes sur une seule rangée, cibles ≥ 44 px */
+    @media (max-width: 599px) {
+      .game-toolbar-chrome { gap: 0; justify-content: space-between; }
+      .game-toolbar-main { flex-wrap: nowrap !important; gap: 0 !important; justify-content: space-evenly; }
+      .game-toolbar .toolbar-btn,
+      .game-toolbar .lang-btn { min-height: 44px; min-width: 36px; padding-block: 0; padding-inline: 0.3rem; gap: 0.25rem; }
+      .game-toolbar .install-menu__toggle #install-btn-label,
+      .game-toolbar .toolbar-btn--coffee #coffee-btn-label,
+      .game-toolbar .translate-toggle__label,
+      .game-toolbar .translate-toggle__chev { display: none; }
+      .game-toolbar-divider { margin: 0; }
+    }
+    @media (max-width: 374px) {
+      #radar-btn-label, #back-pomodoro-label { display: none; }
     }
   </style>
   <script defer src="../analytics-preferences.js"></script>
@@ -4481,7 +4515,7 @@ function updateWinStats() {
 loadGameStats();
 </script>
 
-<script>
+<script nonce="ataraxia-sol">
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('SW registration failed:', err));

@@ -65,27 +65,7 @@
      page interdit les styles inline (voir l’en-tête d’install-chrome.css). -->
 <link rel="stylesheet" href="../install-chrome.css">
 <script src="js/layout.js"></script>
-<script>
-(function () {
-  const root = document.documentElement;
-  const coarse = matchMedia('(pointer: coarse)').matches;
-  const noHover = matchMedia('(hover: none)').matches;
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const touch = (coarse && (w <= 1024 || h <= 520)) || (noHover && w <= 900);
-  root.dataset.layout = touch ? 'touch' : 'wide';
-  if (touch) {
-    try {
-      const saved = localStorage.getItem('ataraxia_scene')
-        || localStorage.getItem('ataraxia_focus_scene')
-        || 'timer';
-      root.dataset.scene = saved === 'quote' ? 'quote' : 'timer';
-    } catch (e) {
-      root.dataset.scene = 'timer';
-    }
-  }
-})();
-</script>
+<!-- Disposition posée par js/layout-boot.js (un script inline serait bloqué par la CSP). -->
   <script defer src="../analytics-preferences.js"></script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="32751d96-0b15-4e05-9b08-a04a333a1cde"></script>
 </head>
@@ -233,7 +213,7 @@
       <button class="pomo-btn pomo-btn--primary" id="pomo-play" aria-label="Start timer">
         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </button>
-      <button class="pomo-btn pomo-btn--primary" id="pomo-pause" aria-label="Stop timer" style="display:none">
+      <button class="pomo-btn pomo-btn--primary" id="pomo-pause" aria-label="Stop timer" hidden>
         <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
       </button>
       <button class="pomo-btn pomo-btn--secondary" id="pomo-settings-btn" aria-label="Timer settings" aria-expanded="false" aria-controls="pomo-settings-panel">
@@ -359,7 +339,7 @@
           <button class="pomo-btn pomo-btn--primary" id="pomo-fp-play" aria-label="Start timer">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
-          <button class="pomo-btn pomo-btn--primary" id="pomo-fp-pause" aria-label="Stop timer" style="display:none">
+          <button class="pomo-btn pomo-btn--primary" id="pomo-fp-pause" aria-label="Stop timer" hidden>
             <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
           </button>
           <button class="pomo-btn pomo-btn--secondary" id="pomo-fp-settings-btn" aria-label="Timer settings">

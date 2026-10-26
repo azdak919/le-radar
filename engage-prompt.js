@@ -1227,8 +1227,19 @@
     a.dataset.installFdroid = '1';
     let src = 'assets/badges/get-it-on-fdroid-fr.png';
     try { src = new URL(src, SITE_BASE).href; } catch {}
-    a.innerHTML = `<img src="${src}" width="646" height="250" alt="Disponible sur F-Droid" decoding="async" style="display:block;width:auto;height:${android ? 44 : 22}px;max-width:100%;opacity:${android ? 1 : 0.85}">`
-      + (android ? '' : '<span style="font-size:.8em;opacity:.75">App Android</span>');
+    // Styles posés via CSSOM : un attribut style= dans innerHTML est bloqué
+    // par la CSP des apps (style-src sans 'unsafe-inline').
+    const img = document.createElement('img');
+    img.src = src; img.width = 646; img.height = 250;
+    img.alt = 'Disponible sur F-Droid'; img.decoding = 'async';
+    Object.assign(img.style, { display: 'block', width: 'auto', height: `${android ? 44 : 22}px`, maxWidth: '100%', opacity: String(android ? 1 : 0.85) });
+    a.appendChild(img);
+    if (!android) {
+      const lbl = document.createElement('span');
+      lbl.textContent = 'App Android';
+      Object.assign(lbl.style, { fontSize: '.8em', opacity: '.75' });
+      a.appendChild(lbl);
+    }
     a.style.textDecoration = 'none';
     const radar = panel.querySelector('[data-install-app="radar"]');
     if (android && radar) radar.after(a);

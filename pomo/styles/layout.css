@@ -882,3 +882,115 @@ html[data-booting] .top-right-actions {
   html[data-booting] .page-layout,
   html[data-booting] .top-right-actions { opacity: 1; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   Compaction téléphone (≤ 599 px) — tout l'essentiel tient
+   sur un écran de 390 × 844 sans défiler. Cibles tactiles ≥ 44 px.
+   ═══════════════════════════════════════════════════════ */
+:root { --mat-gap: 12px; }
+@media (max-width: 599px) {
+  :root { --mat-gap: 8px; }
+  /* En-tête : une seule rangée d'icônes, centrée */
+  .app-toolbar-row,
+  .app-toolbar-chrome { gap: 0; justify-content: space-between; }
+  .app-toolbar-main { flex-wrap: nowrap; gap: 0; justify-content: space-evenly; }
+  .top-right-actions .toolbar-btn,
+  .top-right-actions .lang-btn {
+    min-height: 44px;
+    min-width: 38px;
+    padding: 0 0.4rem;
+    gap: 0.25rem;
+  }
+  .toolbar-btn--home { padding: 0 0.4rem; }
+  .install-menu--toolbar .install-menu__toggle #install-btn-label { display: none; }
+  .install-menu--toolbar .install-menu__toggle { gap: 0; }
+  .app-toolbar-divider { margin: 0; height: 1.1rem; }
+  .app-toolbar-tuner { margin-top: 0.15rem; }
+  .app-toolbar-weather { margin-top: 0.1rem; min-height: 0; padding: 0.2rem 0.1rem; }
+  .pomo-weather-city { min-height: 1.6rem; }
+
+  /* Carte minuterie : plus d'espace vide */
+  .pomo-widget,
+  html[data-layout="touch"] .pomo-widget {
+    padding: 0.45rem 0.6rem 0.55rem;
+    gap: 0.3rem;
+    border-radius: 20px;
+    max-height: none;
+  }
+  .pomo-widget .pomo-ring-wrapper,
+  html[data-layout="touch"] .pomo-widget .pomo-ring-wrapper {
+    width: min(44vw, 176px, calc(100dvh - 40rem));
+    height: min(44vw, 176px, calc(100dvh - 40rem));
+    min-width: 136px;
+    min-height: 136px;
+  }
+  .pomo-widget .pomo-controls,
+  html[data-layout="touch"] .pomo-widget .pomo-controls { gap: 0.6rem; margin-top: 0; }
+  .pomo-widget .pomo-btn { width: 46px; height: 46px; }
+  .pomo-widget .pomo-btn--primary { width: 52px; height: 52px; }
+  .pomo-corner-btn { width: 44px; height: 44px; }
+
+  /* Citation : texte et boutons à l'échelle */
+  .quote-card,
+  html[data-layout="touch"] .quote-card { padding: 0.7rem 0.8rem 0.6rem; border-radius: 20px; }
+  .quote-text,
+  html[data-layout="touch"] .quote-text { font-size: clamp(1rem, 4.3vw, 1.15rem); line-height: 1.4; }
+  .quote-mark { display: none; }
+  .quote-inner { gap: 0.4rem; }
+  .quote-body { gap: 0.35rem; }
+  .quote-action-row .btn,
+  html[data-layout="touch"] .quote-action-row .btn { min-height: 44px; padding: 0.4rem 0.8rem; }
+  html[data-layout="touch"] .quote-action-row { margin-top: 0.35rem; }
+  .content,
+  html[data-layout="touch"] .content { gap: var(--mat-gap); justify-content: flex-start; }
+}
+@media (max-width: 374px) {
+  #radar-btn-label, #solitaire-btn-label { display: none; }
+}
+
+/* Boutons de coin (réduire / plein écran) : fond visible en thème clair */
+html:not([data-theme="dark"]) .pomo-corner-btn {
+  background: rgba(92, 76, 58, 0.12);
+  color: var(--text-primary);
+}
+@media (max-width: 599px) {
+  .quote-card,
+  html[data-layout="touch"] .quote-card { flex: 0 0 auto; }
+  html[data-layout="touch"] .quote-body { flex: 0 1 auto; }
+  .content,
+  html[data-layout="touch"] .content { justify-content: center; }
+  html[data-layout="touch"] .pomo-container { flex: 0 0 auto; }
+}
+@media (max-width: 599px) {
+  .content,
+  html[data-layout="touch"] .content { justify-content: flex-start; }
+  .quote-body { padding-inline: 2.4rem; }
+}
+
+/* Bureau large : minuterie et citation côte à côte, sans étirer */
+@media (min-width: 1000px) and (min-height: 560px) {
+  html[data-layout="wide"] .content:not(:has(.is-minimized)) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--mat-gap);
+    max-width: min(800px, calc(100vw - 2rem));
+    width: 100%;
+    margin-inline: auto;
+  }
+  html[data-layout="wide"] .content:not(:has(.is-minimized)) .pomo-container {
+    flex: 0 0 auto;
+    width: 300px;
+    max-width: 300px;
+    max-height: none;
+    align-self: center;
+  }
+  html[data-layout="wide"] .content:not(:has(.is-minimized)) .quote-card {
+    flex: 0 1 480px;
+    width: 480px;
+    max-width: 480px;
+    min-height: 0;
+    max-height: none;
+    align-self: center;
+  }
+}

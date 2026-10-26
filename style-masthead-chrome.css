@@ -452,8 +452,9 @@ html[data-script-dir="rtl"] .wordmark-full {
 
 /* Mât empilé : un seul espacement vertical entre date, logo, slogan,
    boutons et crédit photo (--mat-gap), porté par `gap`, sans marges. */
+/* --mat-gap : 12 px par défaut, 8 px sous 600 px (bloc « version serrée »). */
+.masthead { --mat-gap: 12px; }
 @media (max-width: 599.98px) {
-  .masthead { --mat-gap: 12px; }
   .masthead-inner { gap: var(--mat-gap); padding-top: var(--mat-gap); }
   .masthead-inner > .masthead-brand,
   .masthead:has(#bg-photo-layer.loaded) .masthead-inner > .masthead-brand {

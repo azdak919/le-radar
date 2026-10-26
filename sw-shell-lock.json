@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v967",
+    "cache": "radar-shell-v968",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -9,9 +9,9 @@
       "dev/midwidth-preview.js": "084e3f5a6af6f825",
       "dev/wide-desktop-preview.css": "13925c143124ff27",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
-      "embed.css": "cb0559f70312e19b",
+      "embed.css": "04c07d152758caf8",
       "embed.js": "7f01f6c142b5fde8",
-      "engage-prompt.js": "2d703365a2647978",
+      "engage-prompt.js": "2996b51d1b94f5a4",
       "feeds-page.js": "7fe5f8e4afaa576e",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "08126a03961125dd",
@@ -41,7 +41,7 @@
       "seo-page-theme.js": "8d32dcb10d24af89",
       "style-chrome.css": "0571adb5921175b0",
       "style-feed.css": "1209e7332679564f",
-      "style-masthead-chrome.css": "5711a3da711c2fb4",
+      "style-masthead-chrome.css": "4c1088406c55cb38",
       "style-masthead.css": "88bce9788c070034",
       "style-sports-strip.css": "81d564ba1e598583",
       "style-translate-overlay.css": "51298bec3a3a6654",
@@ -54,7 +54,7 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v166",
+    "cache": "pomo-shell-v167",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
@@ -76,8 +76,8 @@
       "pomo/js/toast.js": "b4eececf730afb98",
       "pomo/js/translate.js": "ded41e2932ed1d02",
       "pomo/js/weather.js": "bb03d6c0d4642dca",
-      "pomo/styles/base.css": "b2d504bbe64c9141",
-      "pomo/styles/layout.css": "4b95b06510b73283",
+      "pomo/styles/base.css": "dbe438a6abad478d",
+      "pomo/styles/layout.css": "cf83450ad41a60b2",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "88571ba7993b82c0",
       "quebec-pomo-backgrounds-data.js": "e8a54cff8c8b9915",
@@ -88,7 +88,7 @@
     }
   },
   "solitaire/sw.js": {
-    "cache": "solitaire-shell-v103",
+    "cache": "solitaire-shell-v104",
     "assets": {
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "9653f55cb28d8936",
@@ -101,7 +101,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v327",
+    "cache": "sports-shell-v328",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -110,7 +110,7 @@
       "dev/midwidth-preview.js": "084e3f5a6af6f825",
       "dev/wide-desktop-preview.css": "13925c143124ff27",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
-      "engage-prompt.js": "2d703365a2647978",
+      "engage-prompt.js": "2996b51d1b94f5a4",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "08126a03961125dd",
@@ -131,7 +131,7 @@
       "sports-board.js": "4ab31c94449b9937",
       "style-chrome.css": "0571adb5921175b0",
       "style-feed.css": "1209e7332679564f",
-      "style-masthead-chrome.css": "5711a3da711c2fb4",
+      "style-masthead-chrome.css": "4c1088406c55cb38",
       "style-masthead.css": "88bce9788c070034",
       "style-sports-strip.css": "81d564ba1e598583",
       "style-tuner.css": "ecee4651df4f3a72",

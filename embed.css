@@ -1964,3 +1964,43 @@ html[data-embed="tuner"][data-surface="bar"] .tuner-step {
     color: var(--embed-radio);
   }
 }
+
+/* ── Pomo / Solitaire : barre radio #252830 dans les deux thèmes ─────────
+   Règle du site : barre radio et syntoniseur = même couleur (#252830) en
+   clair et en sombre. Avant, l’embed legacy restait transparent sur le
+   chrome clair translucide → nom du poste flou, boutons délavés (oct. 2026).
+   Texte net : aucun filtre ni flou, encre blanche contrastée. Pas de « ▾ »
+   (aligné sur 391428eb5). Kiosque (data-surface) inchangé. */
+html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) {
+  --embed-ink: #fff;
+  --embed-muted: rgba(255, 255, 255, 0.62);
+  --embed-muted-strong: rgba(255, 255, 255, 0.86);
+  --embed-control-bg: rgba(255, 255, 255, 0.08);
+  --embed-control-bg-hover: rgba(255, 255, 255, 0.14);
+  --embed-control-border: rgba(255, 255, 255, 0.16);
+  --embed-control-border-hover: rgba(255, 255, 255, 0.28);
+  --embed-radio: #8eb8ff;
+  --tuner-onair-live: #ff7d6e;
+  --embed-live-border: rgba(255, 125, 110, 0.7);
+  --embed-live-bg: rgba(200, 16, 46, 0.1);
+  --embed-live-ring: rgba(200, 16, 46, 0.22);
+}
+html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) .tuner {
+  background: #252830 !important;
+  border-radius: 12px;
+  --tuner-onair-live: #ff7d6e;
+}
+html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) .tuner,
+html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) .tuner * {
+  filter: none !important;
+  text-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) .tuner-now::after {
+  content: none !important;
+  display: none !important;
+}
+html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) .tuner-now {
+  padding-right: 11px;
+}
