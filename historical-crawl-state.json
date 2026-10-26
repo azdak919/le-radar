@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-25T11:59:11.344Z",
+  "updated": "2026-10-26T13:34:19.617Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -208,6 +208,18 @@
       "error": "wordpress_http_403",
       "retryAt": "2026-11-22T12:07:17.279Z",
       "windowStart": "2023-10-23T18:07:00.656Z",
+      "windowYears": 3
+    },
+    "la-griffe": {
+      "strategy": "wordpress-rest",
+      "nextPage": null,
+      "totalPages": 3,
+      "lastAttemptAt": "2026-10-26T13:34:19.231Z",
+      "lastSuccessAt": "2026-10-26T13:34:19.231Z",
+      "retryAt": null,
+      "error": null,
+      "completedAt": "2026-10-26T13:34:19.231Z",
+      "windowStart": "2023-10-26T19:34:15.526Z",
       "windowYears": 3
     }
   }
