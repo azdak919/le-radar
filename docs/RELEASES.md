@@ -50,7 +50,7 @@ Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmé
 | `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.3` | 2026-10-23 | ⏳ étiquetée (versionCode 8) ; en attente de la détection F-Droid (`^android-v`) |
-| `android-v1.2.4` | 2026-10-25 | ⏳ à étiqueter (versionCode 9) ; recette : saveur `fdroid` (`gradle: [fdroid]`) |
+| `android-v1.2.4` | 2026-10-25 | ✅ étiqueté (versionCode 9) ; recette : saveur `fdroid` (`gradle: [fdroid]`) |
 
 Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-23) :
 **1.1.0 (versionCode 3)**. `main` est à **1.2.4 (versionCode 9)**.

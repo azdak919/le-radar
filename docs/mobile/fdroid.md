@@ -39,8 +39,8 @@ La copie de la recette est [ca.leradar.app.yml](ca.leradar.app.yml). Dans le dé
 - `commit: 81774e4ab824c8c8a03afa106e81459c661c7d1a`
 - `subdir: android/app` (modèle F-Droid React Native, adapté à Capacitor : pas d’Expo ni de stub Firebase)
 - `nodejs` et `npm` de Debian forky, installés ensemble (Node 24). `@capacitor/cli` 8.5.2 exige Node >= 22, trixie livre Node 20, et le paquet `npm` de forky dépend de `nodejs:any` : l’installer seul peut laisser Node 20. Ensuite `npm ci` et `npm run mobile:sync`
-- `gradle: yes`
-- APK : `build/outputs/apk/release/app-release-unsigned.apk`
+- `gradle: [fdroid]` (depuis 1.2.4 : saveur sans bibliothèque Google ; sortie `build/outputs/apk/fdroid/release/app-fdroid-release-unsigned.apk`)
+- APK : `build/outputs/apk/release/app-release-unsigned.apk` (jusqu’à 1.2.3), puis `build/outputs/apk/fdroid/release/app-fdroid-release-unsigned.apk`
 - mises à jour : `AutoUpdateMode: Version` et `UpdateCheckMode: Tags ^android-v`
 
 F-Droid signe lui-même. La clé d’envoi Play ne sert pas.
