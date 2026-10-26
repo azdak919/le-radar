@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T19:11:58.244Z",
+  "updatedAt": "2026-10-26T19:47:54.547Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-26T19:11:11.885Z"
+      "checkedAt": "2026-10-26T19:47:29.810Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-26T19:11:13.516Z"
+      "checkedAt": "2026-10-26T19:47:31.698Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-26T19:11:16.773Z"
+      "checkedAt": "2026-10-26T19:47:33.958Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Whip Appeal",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/whip-appeal"
       },
       "next": {
         "title": "Dreamscapes",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/dreamscapes"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Whip Appeal",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-26T19:11:39.249Z"
+      "checkedAt": "2026-10-26T19:47:35.967Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-26T19:11:40.285Z"
+      "checkedAt": "2026-10-26T19:47:37.052Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-26T19:11:57.894Z"
+      "checkedAt": "2026-10-26T19:47:54.197Z"
     }
   }
 }
