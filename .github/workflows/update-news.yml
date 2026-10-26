@@ -268,10 +268,16 @@ jobs:
             assets/news-images assets/stock-images stock-images-map.js data/image-health.json
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)
-          git add "${DATA_FILES[@]}" 2>/dev/null || true
+          # Un seul chemin absent (ex. data/archive-inbox-applied.json tant
+          # qu'aucune boîte d'envoi n'a été fusionnée) fait échouer tout le
+          # `git add` : news.json et feed.xml restaient alors hors du commit
+          # alors que index.html partait (JSON-LD ≠ news.json, Vérification rouge).
+          for f in "${DATA_FILES[@]}"; do
+            if [ -e "$f" ]; then git add -- "$f"; fi
+          done
           # Lot E : catalogue mensuel data/archives/ ; -A publie aussi un mois retiré
           # et la suppression de l'ancien news-archive.json monolithique.
-          git add -A data/archives 2>/dev/null || true
+          if [ -d data/archives ]; then git add -A -- data/archives; fi
           git rm -q --cached --ignore-unmatch news-archive.json
           # Toujours publier le prérendu / JSON-LD quand generate-seo a réussi.
           # Un échec artifact-budget (image purgée encore listée par git) ne
@@ -282,10 +288,10 @@ jobs:
             SEO_OK=true
           fi
           if [ "$SEO_OK" = true ]; then
-            git add "${SEO_FILES[@]}" 2>/dev/null || true
+            for f in "${SEO_FILES[@]}"; do if [ -e "$f" ]; then git add -- "$f"; fi; done
             # Pages d'entités : dossiers entièrement régénérés. `-A` est
             # indispensable — sans lui, une fiche retirée resterait en ligne.
-            git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
+            for d in radios journaux etablissements medias horaires en archives; do if [ -e "$d" ]; then git add -A -- "$d"; fi; done
           fi
           if [ "${{ steps.prepush.outcome }}" = "success" ]; then
             MSG='bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)'

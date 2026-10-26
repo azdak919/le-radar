@@ -40,4 +40,11 @@ for (const f of ['guard-harvest-freshness.yml', 'discover-news-sources.yml', 've
   }
   assert.doesNotMatch(y, /fetch-news\.js|generate-feed\.js/, `${f} ne récolte pas les nouvelles`);
 }
+// Update Student News : un fichier de données absent ne doit pas faire
+// sauter tout le `git add` (news.json resterait hors du commit).
+{
+  const y = fs.readFileSync(path.join(W, 'update-news.yml'), 'utf8');
+  assert.doesNotMatch(y, /git add "\$\{DATA_FILES\[@\]\}"/, 'update-news.yml ajoute DATA_FILES un par un (chemins existants seulement)');
+  assert.match(y, /for f in "\$\{DATA_FILES\[@\]\}"; do\s*if \[ -e "\$f" \]; then git add -- "\$f"; fi/, 'boucle git add sur les chemins existants');
+}
 console.log('OK archive-inbox');

@@ -38,7 +38,7 @@ assert.deepEqual(readArchive(fs.mkdtempSync(path.join(os.tmpdir(), 'arch-')), { 
 // Contrat : seul Update Student News écrit et publie data/archives/.
 const here = path.join(path.dirname(new URL(import.meta.url).pathname), '..');
 const yml = fs.readFileSync(path.join(here, '.github/workflows/update-news.yml'), 'utf8');
-assert.match(yml, /git add -A data\/archives/);
+assert.match(yml, /git add -A -- data\/archives/);
 assert.match(yml, /git rm -q --cached --ignore-unmatch news-archive\.json/);
 const fetch = fs.readFileSync(path.join(here, 'scripts/fetch-news.js'), 'utf8');
 assert.match(fetch, /writeArchive\(/);
