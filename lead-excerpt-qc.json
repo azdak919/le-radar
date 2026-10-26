@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-26T03:54:48.559Z",
+  "updated": "2026-10-26T06:15:54.107Z",
   "total": 175,
   "pool": 58,
-  "incomplete": 8,
+  "incomplete": 10,
   "withLeadExcerpt": 118,
-  "candidates": 8,
-  "enriched": 0,
+  "candidates": 10,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -17,6 +17,24 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "ok": true,
+      "score": 96,
+      "chars": 377,
+      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
+      "changed": true
+    },
+    {
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "ok": true,
+      "score": 100,
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "changed": true
     },
     {
       "title": "Say “Coffee” Again! I Dare You.",
@@ -61,24 +79,6 @@
       "score": 84,
       "chars": 130,
       "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": false
-    },
-    {
-      "title": "QUICKSPIN: Remi Wolf — Mud",
-      "link": "https://theconcordian.com/2026/10/remi-wolf-mud-quickspin-album-review/",
-      "ok": true,
-      "score": 100,
-      "chars": 158,
-      "sample": "The cover of Remi Wolf ’s third album features the singer covered in mud. The true mud, however, is ",
-      "changed": false
-    },
-    {
-      "title": "Stingers men’s soccer team earns first win of the season",
-      "link": "https://theconcordian.com/2026/10/stingers-mens-soccer-first-win/",
-      "ok": true,
-      "score": 100,
-      "chars": 175,
-      "sample": "Pouring rain fell on the Stingers’ field as the final whistle blew on Oct. 7. The players, in a cine",
       "changed": false
     }
   ]
