@@ -49,7 +49,7 @@ html[data-embed="tuner"][data-theme="dark"] {
   --embed-muted-strong: rgba(255, 255, 255, 0.78);
   --embed-control-bg: rgba(255, 255, 255, 0.06);
   --embed-control-bg-hover: rgba(255, 255, 255, 0.12);
-  --embed-control-border: rgba(255, 255, 255, 0.16);
+  --embed-control-border: rgba(255, 255, 255, 0.28);
   --embed-control-border-hover: rgba(255, 255, 255, 0.28);
   --embed-radio: #8eb8ff;
   --tuner-onair-live: #ff7d6e;
@@ -1046,7 +1046,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] {
   --embed-muted-strong: rgba(255, 255, 255, 0.78);
   --embed-control-bg: rgba(255, 255, 255, 0.06);
   --embed-control-bg-hover: rgba(255, 255, 255, 0.12);
-  --embed-control-border: rgba(255, 255, 255, 0.16);
+  --embed-control-border: rgba(255, 255, 255, 0.28);
   --embed-control-border-hover: rgba(255, 255, 255, 0.28);
   --embed-radio: #8eb8ff;
   /* Coral live = même soft que le site (--status-live-soft ≈ #ff7d6e). */
@@ -1193,7 +1193,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn {
   padding: 0;
   margin: 0;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   background: rgba(255, 255, 255, 0.06);
   color: rgba(255, 255, 255, 0.72);
 }
@@ -1977,7 +1977,7 @@ html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) {
   --embed-muted-strong: rgba(255, 255, 255, 0.86);
   --embed-control-bg: rgba(255, 255, 255, 0.08);
   --embed-control-bg-hover: rgba(255, 255, 255, 0.14);
-  --embed-control-border: rgba(255, 255, 255, 0.16);
+  --embed-control-border: rgba(255, 255, 255, 0.28);
   --embed-control-border-hover: rgba(255, 255, 255, 0.28);
   --embed-radio: #8eb8ff;
   --tuner-onair-live: #ff7d6e;

@@ -907,7 +907,7 @@ html[data-booting] .top-right-actions {
   .app-toolbar-divider { margin: 0; height: 1.1rem; }
   .app-toolbar-tuner { margin-top: 0.15rem; }
   .app-toolbar-weather { margin-top: 0.1rem; min-height: 0; padding: 0.2rem 0.1rem; }
-  .pomo-weather-city { min-height: 1.6rem; }
+  .pomo-weather-city { min-height: 29px; }
 
   /* Carte minuterie : plus d'espace vide */
   .pomo-widget,
@@ -992,5 +992,74 @@ html:not([data-theme="dark"]) .pomo-corner-btn {
     min-height: 0;
     max-height: none;
     align-self: center;
+  }
+}
+
+/* Téléphone : la minuterie occupe la hauteur libre (anneau, chiffres et
+   boutons proportionnels), sans défilement de 640 à 844 px de haut. */
+@media (max-width: 599px) {
+  :root { --pomo-ring: clamp(132px, calc(100dvh - 31rem), min(74vw, 300px)); }
+  .pomo-widget .pomo-ring-wrapper,
+  html[data-layout="touch"] .pomo-widget .pomo-ring-wrapper {
+    width: var(--pomo-ring);
+    height: var(--pomo-ring);
+    min-width: 0;
+    min-height: 0;
+  }
+  .pomo-widget .pomo-time-inside,
+  html[data-layout="touch"] .pomo-widget .pomo-time-inside,
+  html:not([data-pomo-scale="wide"]) .pomo-widget .pomo-time-inside { font-size: calc(var(--pomo-ring) * 0.3); }
+  html:not([data-pomo-scale="wide"]) .pomo-widget .pomo-label,
+  .pomo-widget .pomo-label { font-size: clamp(0.62rem, calc(var(--pomo-ring) * 0.055), 0.95rem); }
+  .pomo-widget .pomo-btn,
+  html:not([data-pomo-scale="wide"]) .pomo-widget .pomo-btn--secondary {
+    width: clamp(44px, calc(var(--pomo-ring) * 0.2), 58px);
+    height: clamp(44px, calc(var(--pomo-ring) * 0.2), 58px);
+    min-width: 44px; min-height: 44px;
+  }
+  .pomo-widget .pomo-btn--primary,
+  html:not([data-pomo-scale="wide"]) .pomo-widget .pomo-btn--primary {
+    width: clamp(48px, calc(var(--pomo-ring) * 0.23), 66px);
+    height: clamp(48px, calc(var(--pomo-ring) * 0.23), 66px);
+    min-width: 48px; min-height: 48px;
+  }
+}
+
+/* Téléphone, une carte réduite : l'autre prend la place libérée. */
+@media (max-width: 599px) {
+  /* Citation réduite → minuterie agrandie, collée sous l'en-tête */
+  html .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) {
+    --pomo-ring: clamp(132px, calc(100dvh - 24rem), min(84vw, 330px));
+    justify-content: flex-start;
+  }
+  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget .pomo-ring-wrapper {
+    width: var(--pomo-ring);
+    height: var(--pomo-ring);
+    max-height: none;
+  }
+  html .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget {
+    max-height: none;
+    justify-content: center;
+    align-content: center;
+  }
+  /* Minuterie réduite → citation centrée et plus grande */
+  html .content:has(.pomo-container.is-minimized):not(:has(.quote-card.is-minimized)) .quote-inner { justify-content: center; }
+  html .content:has(.pomo-container.is-minimized):not(:has(.quote-card.is-minimized)) .quote-body { flex: 0 1 auto; }
+  html .content:has(.pomo-container.is-minimized):not(:has(.quote-card.is-minimized)) .quote-text { font-size: clamp(1.25rem, 6vw, 1.6rem); }
+}
+@media (max-width: 599px) {
+  html .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-container { align-items: stretch; }
+  html .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget { height: auto; min-height: 0; flex: 1 1 auto; }
+}
+@media (max-width: 599px) {
+  html:not([data-pomo-scale="wide"]) .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) .pomo-widget {
+    max-height: none;
+    min-height: 0;
+    height: auto;
+  }
+  /* Anneau borné par la hauteur réellement libre (en-tête ≈ 11.5rem,
+     pastille citation + crédits + commandes ≈ 12rem). */
+  html .content:has(.quote-card.is-minimized):not(:has(.pomo-container.is-minimized)) {
+    --pomo-ring: clamp(132px, calc(100dvh - 26.5rem), min(84vw, 330px));
   }
 }

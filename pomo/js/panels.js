@@ -26,8 +26,12 @@
     const restoreBtn = document.getElementById(
       panel === 'pomo' ? 'pomo-restore-btn' : 'quote-restore-btn'
     );
-    if (minimizeBtn) minimizeBtn.hidden = minimized;
-    if (restoreBtn) restoreBtn.hidden = !minimized;
+    // aria-expanded sur les deux commandes ; le focus suit la commande
+    // visible pour ne pas rester sur un bouton masqué.
+    const hadFocus = document.activeElement === minimizeBtn || document.activeElement === restoreBtn;
+    if (minimizeBtn) { minimizeBtn.hidden = minimized; minimizeBtn.setAttribute('aria-expanded', String(!minimized)); }
+    if (restoreBtn) { restoreBtn.hidden = !minimized; restoreBtn.setAttribute('aria-expanded', String(!minimized)); }
+    if (hadFocus) (minimized ? restoreBtn : minimizeBtn)?.focus({ preventScroll: true });
 
     if (panel === 'quote' && !minimized && typeof window.scheduleQuoteLayout === 'function') {
       window.scheduleQuoteLayout();
@@ -55,6 +59,11 @@
   }
 
   function initPanelMinimize() {
+    [['pomo-minimize-btn', 'pomo-widget', 'true'], ['pomo-restore-btn', 'pomo-widget', 'true'],
+     ['quote-minimize-btn', 'quote-card', 'true'], ['quote-restore-btn', 'quote-card', 'true']].forEach(([id, ctl, exp]) => {
+      const b = document.getElementById(id);
+      if (b) { b.setAttribute('aria-controls', ctl); b.setAttribute('aria-expanded', exp); }
+    });
     restoreFromStorage();
 
     document.getElementById('pomo-minimize-btn')?.addEventListener('click', () => {

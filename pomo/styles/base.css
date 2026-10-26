@@ -1944,3 +1944,18 @@ html[data-theme="dark"] .phase-chip:hover { background: var(--accent); color: #1
     }
 }
   }
+
+/* Pastilles météo : même disposition que .masthead-weather__city du Radar
+   (icône 15 px, nom puis température collée, gap 5 px, rayon 5 px). */
+.pomo-weather-city {
+  gap: 5px;
+  padding: 0 7px;
+  min-height: 29px;
+  border-radius: 5px;
+  font-size: 11px;
+  justify-content: flex-start;
+}
+.pomo-weather-icon { flex: 0 0 15px; }
+.pomo-weather-icon .weather-icon-meteocon { width: 15px; height: 15px; }
+.pomo-weather-name { flex: 0 1 auto; padding-right: 1px; }
+.pomo-weather-temp { margin-left: 0; flex: 0 0 auto; }

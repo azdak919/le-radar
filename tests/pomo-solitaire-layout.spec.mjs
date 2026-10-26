@@ -131,3 +131,102 @@ for (const locale of ['fr-CA', 'en-US']) {
     });
   }
 }
+
+// Pomo : la minuterie remplit la hauteur libre, sans chevauchement, y compris
+// sur un écran court (360 × 640).
+for (const [width, height, minRing] of [[360, 640, 132], [360, 780, 200], [390, 844, 240], [412, 915, 260]]) {
+  test(`pomo ${width}×${height} : minuterie agrandie, rien ne se chevauche @ci-critical`, async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width, height }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+    const page = await ctx.newPage();
+    await page.goto('/pomo/', { waitUntil: 'load' });
+    await page.waitForTimeout(1500);
+    const r = await page.evaluate(() => {
+      const R = (s) => document.querySelector(s).getBoundingClientRect();
+      return { sh: document.documentElement.scrollHeight, sw: document.documentElement.scrollWidth, vh: innerHeight,
+        nav: R('nav').bottom, w: R('#pomo-widget'), ring: R('#pomo-widget .pomo-ring-wrapper'), ctl: R('#pomo-widget .pomo-controls'),
+        q: R('#quote-card'), ft: R('.bottom-badges').top };
+    });
+    expect(r.sh).toBeLessThanOrEqual(r.vh);
+    expect(r.sw).toBeLessThanOrEqual(width);
+    expect(r.ring.width).toBeGreaterThanOrEqual(minRing);
+    expect(r.w.top).toBeGreaterThanOrEqual(r.nav);
+    expect(r.ring.top).toBeGreaterThanOrEqual(r.w.top);
+    expect(r.ctl.top).toBeGreaterThanOrEqual(r.ring.bottom - 1);
+    expect(r.ctl.bottom).toBeLessThanOrEqual(r.w.bottom + 1);
+    expect(r.q.top).toBeGreaterThanOrEqual(r.w.bottom);
+    expect(r.q.bottom).toBeLessThanOrEqual(r.ft + 1);
+    await ctx.close();
+  });
+}
+
+// Pomo : réduction / rouverture des cartes, aria-expanded, sens des chevrons,
+// persistance au rechargement, plein écran, espace récupéré.
+for (const [width, height] of [[360, 640], [390, 844], [412, 915], [1280, 800]]) {
+  test(`pomo ${width}px : réduire et rouvrir les cartes @ci-critical`, async ({ browser }) => {
+    const touch = width < 1000;
+    const ctx = await browser.newContext({ viewport: { width, height }, isMobile: touch, hasTouch: touch, serviceWorkers: 'block' });
+    const page = await ctx.newPage();
+    await page.goto('/pomo/', { waitUntil: 'load' });
+    await page.waitForTimeout(1500);
+    const act = async (sel) => { await (touch ? page.tap(sel) : page.click(sel)); await page.waitForTimeout(600); };
+    const st = () => page.evaluate(() => {
+      const vis = (s) => { const e = document.querySelector(s); return !!e && !e.hidden && e.getBoundingClientRect().height > 0; };
+      const R = (s) => { const e = document.querySelector(s); const b = e.getBoundingClientRect(); return { top: b.top, bottom: b.bottom, h: b.height }; };
+      const up = (s) => /15\.41/.test(document.querySelector(`${s} path`).getAttribute('d'));
+      const ae = (s) => document.querySelector(s).getAttribute('aria-expanded');
+      return {
+        sh: document.documentElement.scrollHeight, vh: innerHeight, sw: document.documentElement.scrollWidth, vw: innerWidth,
+        pomoOpen: vis('#pomo-widget'), quoteOpen: vis('.quote-inner'),
+        pChip: vis('#pomo-restore-btn'), qChip: vis('#quote-restore-btn'),
+        ae: [ae('#pomo-minimize-btn'), ae('#pomo-restore-btn'), ae('#quote-minimize-btn'), ae('#quote-restore-btn')],
+        up: [up('#pomo-minimize-btn'), up('#pomo-restore-btn'), up('#quote-minimize-btn'), up('#quote-restore-btn')],
+        ring: vis('#pomo-widget') ? R('#pomo-widget .pomo-ring-wrapper').h : 0,
+        quoteH: R('#quote-card').h,
+        nav: R('nav').bottom, ft: R('.bottom-badges').top,
+      };
+    });
+    const sane = (s) => {
+      expect(s.sh).toBeLessThanOrEqual(s.vh);
+      expect(s.sw).toBeLessThanOrEqual(s.vw);
+      // Réduire la minuterie : ⌃ ; la rouvrir : ⌄. Citation (en bas) : ⌄ / ⌃.
+      expect(s.up).toEqual([true, false, false, true]);
+    };
+    const s0 = await st();
+    sane(s0);
+    expect(s0.ae).toEqual(['true', 'true', 'true', 'true']);
+
+    await act('#pomo-minimize-btn');
+    const s1 = await st(); sane(s1);
+    expect([s1.pomoOpen, s1.pChip, s1.quoteOpen]).toEqual([false, true, true]);
+    expect(s1.ae.slice(0, 2)).toEqual(['false', 'false']);
+    expect(s1.quoteH).toBeGreaterThan(s0.quoteH);
+
+    await act('#quote-minimize-btn');
+    const s2 = await st(); sane(s2);
+    expect([s2.pChip, s2.qChip]).toEqual([true, true]);
+    expect(s2.ae).toEqual(['false', 'false', 'false', 'false']);
+
+    await act('#pomo-restore-btn');
+    const s3 = await st(); sane(s3);
+    expect([s3.pomoOpen, s3.qChip]).toEqual([true, true]);
+    expect(s3.ring).toBeGreaterThan(s0.ring);
+
+    await page.reload({ waitUntil: 'load' });
+    await page.waitForTimeout(1500);
+    const s4 = await st(); sane(s4);
+    expect([s4.pomoOpen, s4.qChip]).toEqual([true, true]);
+    expect(s4.ae.slice(2)).toEqual(['false', 'false']);
+
+    await act('#pomo-fullscreen-btn');
+    expect(await page.locator('#pomo-fullpage.open').count()).toBe(1);
+    await act('#pomo-fullpage-close');
+    expect(await page.locator('#pomo-fullpage.open').count()).toBe(0);
+    sane(await st());
+
+    await act('#quote-restore-btn');
+    const s5 = await st(); sane(s5);
+    expect([s5.pomoOpen, s5.quoteOpen, s5.pChip, s5.qChip]).toEqual([true, true, false, false]);
+    expect(s5.ae).toEqual(['true', 'true', 'true', 'true']);
+    await ctx.close();
+  });
+}
