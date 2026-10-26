@@ -92,8 +92,9 @@ try {
     const g = (y.match(/group: (data-writers-[a-z-]+)/) || [])[1];
     if (!g) continue;
     const paths = new Set();
-    for (const m of y.matchAll(/(?:git add(?: -A)?(?: --)?|for [pf] in|DATA_FILES=\(|SEO_FILES=\()([^;\n]*(?:\\\n[^;\n]*)*)/g)) {
-      for (const t of m[1].replace(/\\\n/g, ' ').split(/\s+/)) if (/^[a-z0-9][\w./-]*$/i.test(t) && (/[./]/.test(t) || /^(radios|journaux|etablissements|medias|horaires|en|archives|sports)$/.test(t))) paths.add(t.replace(/\/$/, ''));
+    const flat = y.replace(/\\\n\s*/g, ' ').replace(/(DATA_FILES|SEO_FILES)=\(([^)]*)\)/g, (_, k, v) => `${k}=( ${v.replace(/\n/g, ' ')}`);
+    for (const m of flat.matchAll(/(?:git add(?: -A)?(?: --)?|for [pf] in|DATA_FILES=\(|SEO_FILES=\()([^;\n]*)/g)) {
+      for (const t of m[1].split(/\s+/)) if (/^[a-z0-9][\w./-]*$/i.test(t) && (/[./]/.test(t) || /^(radios|journaux|etablissements|medias|horaires|en|archives|sports)$/.test(t))) paths.add(t.replace(/\/$/, ''));
     }
     for (const p of paths) {
       if (!owners.has(p)) owners.set(p, new Map());
