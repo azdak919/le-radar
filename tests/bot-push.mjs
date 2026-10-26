@@ -53,3 +53,16 @@ try {
 } finally {
   rmSync(root, { recursive: true, force: true });
 }
+
+// Les écrivains en file partent du main actuel, pas du sha de l'événement.
+{
+  const { readFileSync, readdirSync } = await import('node:fs');
+  const dir = new URL('../.github/workflows/', import.meta.url);
+  for (const f of readdirSync(dir)) {
+    const y = readFileSync(new URL(f, dir), 'utf8');
+    if (!/group: data-writers/.test(y) && f !== 'update-sports-live.yml') continue;
+    if (!/actions\/checkout@/.test(y)) continue;
+    if (!/actions\/checkout@[^\n]*\n\s+with:\n(?:\s+[a-z-]+:[^\n]*\n)*?\s+ref: main/.test(y)) throw new Error(`${f} : checkout sans ref: main`);
+  }
+  console.log('OK checkout ref main');
+}
