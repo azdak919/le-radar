@@ -943,8 +943,16 @@ async function translateUIStrings(lang) {
 }
 
 function applyUIStrings(strings) {
-  document.getElementById('btn-new').textContent = strings.newQuote;
-  document.getElementById('btn-bg').textContent = strings.newScene;
+  // Boutons icône + libellé : le libellé est masqué sur téléphone, l'aria-label
+  // et le title gardent l'action nommée et traduite.
+  [['btn-new', strings.newQuote], ['btn-bg', strings.newScene]].forEach(([id, label]) => {
+    const btn = document.getElementById(id);
+    if (!btn || !label) return;
+    const span = btn.querySelector('.btn-label');
+    if (span) span.textContent = label; else btn.textContent = label;
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
+  });
   const solitaireLabel = document.getElementById('solitaire-btn-label');
   const radarLabel = document.getElementById('radar-btn-label');
   const solitaireBtn = document.getElementById('solitaire-btn');

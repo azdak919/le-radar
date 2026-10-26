@@ -1063,3 +1063,71 @@ html:not([data-theme="dark"]) .pomo-corner-btn {
     --pomo-ring: clamp(132px, calc(100dvh - 26.5rem), min(84vw, 330px));
   }
 }
+
+
+/* ── Téléphone : carte citation compacte (texte libre, actions en icônes) ──
+   Le chevron de réduction quitte le coin du texte et rejoint la rangée
+   d'actions (en bas à droite) ; les deux pilules deviennent des icônes de
+   44 px (libellés traduits en aria-label/title). La minuterie se borne à la
+   place réellement libre (--pomo-ring-fit, calculé par app.js) pour que la
+   citation ne passe jamais sous le pied de page. */
+@media (max-width: 599px) {
+  html .quote-card,
+  html[data-layout="touch"] .quote-card { position: relative; padding: 0.7rem 0.75rem 0.45rem; }
+  html .quote-body,
+  html[data-layout="touch"] .quote-body { padding-inline: 0.35rem; gap: 0.25rem; overflow: visible; }
+  html .quote-text,
+  html[data-layout="touch"] .quote-text { font-size: clamp(0.98rem, 4.2vw, 1.12rem); line-height: 1.38; margin: 0; }
+  html .quote-author,
+  html[data-layout="touch"] .quote-author { font-size: 0.78rem; letter-spacing: 0.06em; margin-top: 0.15rem; }
+  html .quote-action-row,
+  html[data-layout="touch"] .quote-action-row {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+    padding: 0 48px;
+    min-height: 44px;
+  }
+  html .quote-action-row .btn.quote-action-btn,
+  html[data-layout="touch"] .quote-action-row .btn.quote-action-btn {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    letter-spacing: 0;
+  }
+  .quote-action-btn .btn-label {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+  .quote-action-btn .quote-action-icon { display: block; width: 22px; height: 22px; fill: currentColor; }
+  html .quote-card > .panel-minimize-btn,
+  html[data-layout="touch"] .quote-card > .panel-minimize-btn {
+    top: auto;
+    bottom: 0.45rem;
+    right: 0.6rem;
+  }
+  html .pomo-widget .pomo-ring-wrapper,
+  html[data-layout="touch"] .pomo-widget .pomo-ring-wrapper,
+  html:not([data-pomo-scale="wide"]) .content .pomo-widget .pomo-ring-wrapper {
+    max-width: var(--pomo-ring-fit, none);
+    max-height: var(--pomo-ring-fit, none);
+  }
+}
+.quote-action-icon { display: none; }
+@media (max-width: 599px) { .quote-action-btn .quote-action-icon { display: block; } }
+/* Aucun bouton ne reste coloré après un toucher */
+@media (hover: none) {
+  .quote-action-row .btn:hover,
+  .quote-action-row .btn:active:not(:focus-visible),
+  .quote-action-row .btn:focus:not(:focus-visible) {
+    background: var(--panel-bg);
+    color: var(--text-secondary);
+  }
+}

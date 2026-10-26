@@ -338,8 +338,13 @@
 }
 /* L'audio reste actif en arrière-plan; seules les animations de lecture sont
    suspendues. Au retour, app.js recrée volontairement un cycle calme. */
+/* Mise en pause (app en arrière-plan) : on retire l'animation au lieu de la
+   figer. Figée en plein défilement, la ligne restait décalée et rognée au
+   début (« ntenne · … »). Au repos, elle repart du début avec « … » à la fin. */
+html.is-tuner-presentation-paused .is-marquee { text-overflow: ellipsis; }
 html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
-  animation-play-state: paused;
+  animation: none;
+  transform: none;
 }
 @keyframes tunerMarquee {
   0%, 18%   { transform: translate3d(0, 0, 0); }

@@ -454,6 +454,17 @@ html[data-embed="tuner"] .tuner-now .is-marquee > .tuner-now-sub-text {
   transform: translateZ(0);
 }
 
+/* App en arrière-plan (Pomo, Solitaire) : animation retirée, pas figée.
+   Figée en plein défilement, la ligne restait rognée au début
+   (« ntenne · … ») ; au repos elle repart du début avec « … » à la fin. */
+html[data-embed="tuner"].is-tuner-presentation-paused .tuner-now .is-marquee {
+  text-overflow: ellipsis;
+}
+html[data-embed="tuner"].is-tuner-presentation-paused .tuner-now .is-marquee > .tuner-now-sub-text {
+  animation: none;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html[data-embed="tuner"] .tuner-now .is-marquee {
     text-overflow: ellipsis;

@@ -191,3 +191,48 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('SW registration failed:', err));
   });
 }
+
+/*
+ * Téléphone (< 600 px) : borne l'anneau de la minuterie à la place réellement
+ * libre au-dessus du pied de page (crédits en position fixe). Avec la barre
+ * d'adresse de Chrome ou une longue citation, la minuterie rétrécit au lieu de
+ * pousser la citation sous le pied. Variable CSS --pomo-ring-fit (px).
+ */
+(function initPomoRingFit() {
+  const root = document.documentElement;
+  const GAP = 8;
+  let raf = 0;
+  function fit(pass = 0) {
+    const ring = document.querySelector('#pomo-widget .pomo-ring-wrapper');
+    const card = document.getElementById('quote-card');
+    const foot = document.querySelector('.bottom-badges');
+    if (!ring || !card || !foot || innerWidth >= 600) { root.style.removeProperty('--pomo-ring-fit'); return; }
+    const fs = getComputedStyle(foot);
+    if (fs.display === 'none' || fs.position !== 'fixed') { root.style.removeProperty('--pomo-ring-fit'); return; }
+    const ringH = ring.getBoundingClientRect().height;
+    if (!ringH) return;
+    const overflow = card.getBoundingClientRect().bottom + GAP - foot.getBoundingClientRect().top;
+    const cur = parseFloat(root.style.getPropertyValue('--pomo-ring-fit')) || 0;
+    if (overflow > 0.5) {
+      root.style.setProperty('--pomo-ring-fit', `${Math.max(96, Math.floor(ringH - overflow))}px`);
+    } else if (cur && overflow < -1.5) {
+      // De la place s'est libérée : on relâche la borne (la règle dvh reprend).
+      const next = Math.floor(ringH - overflow);
+      if (next > cur + 400) root.style.removeProperty('--pomo-ring-fit');
+      else root.style.setProperty('--pomo-ring-fit', `${next}px`);
+    } else return;
+    if (pass < 4) requestAnimationFrame(() => fit(pass + 1));
+  }
+  const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => fit(0)); };
+  const start = () => {
+    schedule();
+    addEventListener('resize', schedule);
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(schedule);
+      ['quote-card', 'pomo-container'].forEach((id) => { const el = document.getElementById(id); if (el) ro.observe(el); });
+      const foot = document.querySelector('.bottom-badges'); if (foot) ro.observe(foot);
+    }
+    setTimeout(schedule, 1200);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();

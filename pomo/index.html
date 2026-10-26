@@ -239,8 +239,14 @@
         <a class="quote-author" id="quote-author">Seneca</a>
       </div>
       <div class="quote-action-row">
-        <button class="btn" id="btn-new" aria-label="New quote">New Quote</button>
-        <button class="btn" id="btn-bg" aria-label="Change background">New Scene</button>
+        <button class="btn quote-action-btn" id="btn-new" type="button" aria-label="New Quote" title="New Quote">
+          <svg class="quote-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.65 6.35A7.96 7.96 0 0012 4a8 8 0 108 8h-2a6 6 0 11-1.76-4.24L13 11h7V4l-2.35 2.35z"/></svg>
+          <span class="btn-label" id="btn-new-label">New Quote</span>
+        </button>
+        <button class="btn quote-action-btn" id="btn-bg" type="button" aria-label="New Scene" title="New Scene">
+          <svg class="quote-action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
+          <span class="btn-label" id="btn-bg-label">New Scene</span>
+        </button>
       </div>
     </div>
     <button class="panel-restore-chip" id="quote-restore-btn" type="button" aria-label="Restore quote" hidden>

@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v972",
+    "cache": "radar-shell-v973",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -9,7 +9,7 @@
       "dev/midwidth-preview.js": "084e3f5a6af6f825",
       "dev/wide-desktop-preview.css": "13925c143124ff27",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
-      "embed.css": "285a3f0c5b361920",
+      "embed.css": "208bfc885966dea6",
       "embed.js": "7f01f6c142b5fde8",
       "engage-prompt.js": "2996b51d1b94f5a4",
       "feeds-page.js": "7fe5f8e4afaa576e",
@@ -45,7 +45,7 @@
       "style-masthead.css": "88bce9788c070034",
       "style-sports-strip.css": "81d564ba1e598583",
       "style-translate-overlay.css": "51298bec3a3a6654",
-      "style-tuner.css": "9cc40023e689a204",
+      "style-tuner.css": "1b2d426bd859e9c0",
       "style.css": "a20a2d2dbde0d6a9",
       "translate-menu.css": "fd0e95a4bc5b20c2",
       "translate-menu.js": "2f70f0aa5ff76db2",
@@ -54,13 +54,13 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v170",
+    "cache": "pomo-shell-v171",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "9653f55cb28d8936",
       "photo-bank-data.js": "ff44817bf79eebef",
-      "pomo/js/app.js": "a8138a1bc0e114d6",
+      "pomo/js/app.js": "aee4d88f8d5943d8",
       "pomo/js/backgrounds-data.js": "2d0226d859a86c4a",
       "pomo/js/backgrounds.js": "583851988a59e754",
       "pomo/js/layout-boot.js": "f99ed7e90cdc3cbb",
@@ -74,10 +74,10 @@
       "pomo/js/quotes.js": "4c8bc872dffc39d6",
       "pomo/js/storage.js": "7513ec5ed55e96ff",
       "pomo/js/toast.js": "b4eececf730afb98",
-      "pomo/js/translate.js": "ded41e2932ed1d02",
+      "pomo/js/translate.js": "f8e97207c97ec13b",
       "pomo/js/weather.js": "bb03d6c0d4642dca",
       "pomo/styles/base.css": "f7054bc5ac3af6b2",
-      "pomo/styles/layout.css": "f05069f3ed86bd97",
+      "pomo/styles/layout.css": "6f1388c645884657",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "88571ba7993b82c0",
       "quebec-pomo-backgrounds-data.js": "e8a54cff8c8b9915",
@@ -101,7 +101,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v332",
+    "cache": "sports-shell-v333",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -134,7 +134,7 @@
       "style-masthead-chrome.css": "4c1088406c55cb38",
       "style-masthead.css": "88bce9788c070034",
       "style-sports-strip.css": "81d564ba1e598583",
-      "style-tuner.css": "9cc40023e689a204",
+      "style-tuner.css": "1b2d426bd859e9c0",
       "style.css": "a20a2d2dbde0d6a9",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
