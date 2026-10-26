@@ -1,9 +1,9 @@
 name: Dependabot auto-merge
 # Fusionne les PR Dependabot mineures/correctives une fois Vérification verte
-# sur la PR. Les majeures restent ouvertes (issue d'alerte unique).
+# ET tous les autres contrôles (Mobile inclus) verts sur la PR. Les majeures restent ouvertes (issue d'alerte unique).
 on:
   workflow_run:
-    workflows: ["Vérification"]
+    workflows: ["Vérification", "Mobile"]
     types: [completed]
 permissions:
   contents: write
@@ -27,6 +27,12 @@ jobs:
           set -euo pipefail
           pr=$(gh pr list -R "$REPO" --head "$BRANCH" --state open --json number,headRefOid,title --jq ".[] | select(.headRefOid==\"$SHA\") | .number")
           [ -n "$pr" ] || { echo "Aucune PR ouverte pour $SHA"; exit 0; }
+          # Tous les contrôles doivent être terminés et verts (Mobile compris).
+          states=$(gh pr view "$pr" -R "$REPO" --json statusCheckRollup --jq '[.statusCheckRollup[] | (.conclusion // .state // "PENDING")] | unique | join(",")')
+          echo "Contrôles PR #$pr : $states"
+          if echo "$states" | grep -Eqv '^(SUCCESS|SKIPPED|NEUTRAL)(,(SUCCESS|SKIPPED|NEUTRAL))*$'; then
+            echo "Pas encore tout vert : on attend le prochain workflow_run."; exit 0
+          fi
           title=$(gh pr view "$pr" -R "$REPO" --json title --jq .title)
           # Majeure = premier chiffre change (« from 6.x to 7.x »).
           if echo "$title" | grep -Eq 'from v?([0-9]+)\.[^ ]* to v?\1\.'; then
