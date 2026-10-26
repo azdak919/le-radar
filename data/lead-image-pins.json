@@ -2,6 +2,7 @@
   "_doc": "Corrections d'image persistantes, appliquées à chaque collecte (scripts/lead-image-pins-lib.js). rejectImages : URL jamais réutilisées comme photo de une (affiches-texte, captures d'écran). pins : photo imposée pour un billet (lien canonique).",
   "rejectImages": [
     "https://cdn.impactcampus.ca/wp-content/uploads/2026/10/22163152/Capture-decran-le-2026-10-22-a-16.27.40.png",
+    "https://cdn.impactcampus.ca/wp-content/uploads/2026/10/22163152/Capture-decran-le-2026-10-22-a-16.27.40-scaled.png",
     "https://journallagriffe.ca/wp-content/uploads/2026/10/generique_tablette.png"
   ],
   "pins": {
@@ -18,6 +19,12 @@
       "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1-1.png",
       "keepSourceImage": true,
       "leadImageReady": true
+    },
+    "https://theplantnews.com/2026/10/25/mens-clothing-ill-wear-on-gender-roles-and-expression-in-the-british-ballad/": {
+      "image": "https://theplantnews.com/wp-content/uploads/2026/10/simon-ballad-article-1.jpeg",
+      "keepSourceImage": true,
+      "sourceImageCredit": "Photo : The Plant",
+      "sourceImageCreditFrom": "media"
     }
   }
 }

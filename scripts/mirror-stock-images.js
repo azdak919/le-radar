@@ -92,6 +92,13 @@ async function main() {
     total += fs.statSync(file).size;
     map[key] = `assets/stock-images/${name}`;
   }
+  // Champ lu par l'app Android (pas de banque campus côté app).
+  for (const item of news.items || []) {
+    const k = item.stockImage && originalKey(item.stockImage);
+    const local = k && map[k.key];
+    if (local) item.stockImageLocal = local; else delete item.stockImageLocal;
+  }
+  if (doUpdate) fs.writeFileSync(path.join(ROOT, 'news.json'), `${JSON.stringify(news, null, 2)}\n`);
   // Ménage : fichiers plus référencés.
   const keep = new Set(Object.values(map).map((p) => path.basename(p)));
   if (doUpdate) for (const f of fs.readdirSync(DIR)) if (!keep.has(f)) fs.unlinkSync(path.join(DIR, f));

@@ -320,13 +320,17 @@
   }
 
   function imageHtml(meta) {
-    if (!meta.image && !meta.imageLocal) return '';
-    const src = meta.imageLocal ? `https://le-radar.ca/${meta.imageLocal}` : meta.image;
+    if (!meta.image && !meta.imageLocal && !meta.stockLocal) return '';
+    const src = meta.imageLocal ? `https://le-radar.ca/${meta.imageLocal}`
+      : (meta.image || `https://le-radar.ca/${meta.stockLocal}`);
     return `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
   }
 
   /* Crédit photo sous la vignette, comme sur le site (.article-media-credit). */
   function creditHtml(meta) {
+    if (!meta.image && !meta.imageLocal && meta.stockLocal && meta.stockCreator) {
+      return `<figcaption class="article-media-credit notranslate" translate="no">Photo : <span class="article-media-credit__creator">${esc(meta.stockCreator)}</span></figcaption>`;
+    }
     if (!meta.imageCreator) return '';
     return `<figcaption class="article-media-credit notranslate" translate="no">Photo : <span class="article-media-credit__creator">${esc(meta.imageCreator)}</span></figcaption>`;
   }
@@ -375,7 +379,7 @@
     const en = meta.lang === 'en';
     const lang = en ? '<span class="lang notranslate" translate="no">EN</span>' : '';
     const color = core().institutionColor(state.brand, meta.institution) || 'var(--accent)';
-    const hasMedia = Boolean(meta.image || meta.imageLocal);
+    const hasMedia = Boolean(meta.image || meta.imageLocal || meta.stockLocal);
     const excerpt = displayExcerpt(meta);
     const readMore = en ? 'Read more →' : 'Lire la suite →';
     const byLabel = en ? 'By' : 'Par';

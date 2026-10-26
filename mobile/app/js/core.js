@@ -109,6 +109,10 @@
       image: safeHttpUrl(item.image),
       // Photo mirroirée par le site (assets/news-images/…) : même image que le-radar.ca.
       imageLocal: /^assets\/news-images\/[a-z0-9]+\.(?:jpe?g|png|webp|gif)$/i.test(String(item.imageLocal || '')) ? String(item.imageLocal) : '',
+      // Photo de repli (thématique libre ou campus), servie par le site : la
+      // carte ne reste plus sans image quand l'article n'a pas de photo.
+      stockLocal: /^assets\/stock-images\/[a-f0-9]+\.(?:jpe?g|png|webp)$/i.test(String(item.stockImageLocal || '')) ? String(item.stockImageLocal) : '',
+      stockCreator: String(item.imageCreator || '').trim(),
       imageCreator: String(item.sourceImageCreator || '').trim(),
       imageCreditUrl: safeHttpUrl(item.sourceImageCreditUrl) || '',
       institution: String(item.institution || '').trim(),
