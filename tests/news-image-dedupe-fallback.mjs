@@ -62,3 +62,18 @@ console.log('news-image-dedupe-fallback: OK');
 for (const f of ['../data/quebec-university-backgrounds.json', '../quebec-university-backgrounds-data.js']) {
   assert.ok(!/campus_map/i.test(fs.readFileSync(new URL(f, import.meta.url), 'utf8')), `${f} : plan du campus`);
 }
+
+// 6) Découverte : la maintenance refuse les plans/cartes (ex. « Concordia campus map-2 »).
+{
+  const src = fs.readFileSync(new URL('../scripts/maintain-quebec-backgrounds.js', import.meta.url), 'utf8');
+  const m = src.match(/const MAP_PLAN_RE =\s*(\/.*\/i);/);
+  assert.ok(m, 'MAP_PLAN_RE présent');
+  const re = eval(m[1]);
+  for (const bad of ['Concordia campus map-2', 'File:Campus_map.jpg', 'Plan du campus UdeM', 'Carte du campus', 'Loyola site plan', 'Map of campus']) {
+    assert.ok(re.test(' ' + bad), `plan non filtré : ${bad}`);
+  }
+  for (const good of ['Maple trees and sunset light', 'Gros plan sur la façade', 'Pavillon Casault en automne', 'Mapleton campus']) {
+    assert.ok(!re.test(' ' + good), `faux positif : ${good}`);
+  }
+  console.log('news-image-dedupe-fallback (plans): OK');
+}

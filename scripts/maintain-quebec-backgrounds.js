@@ -554,7 +554,21 @@ function looksPeopleHeavy(entry) {
 const CAMPUS_LIFE_WORD_RE =
   /\b(?:night|nuit|dark|interior|int[eé]rieur|interieur|indoor|cr[eé]puscule|crepuscule|twilight|after[\s-]?dark|dawn or dusk)\b/gi;
 
+// Plans / cartes (ex. « Concordia campus map-2 », Campus_map.jpg) : jamais un fond.
+// `\b` ne coupe pas sur « _ », d'où des délimiteurs explicites.
+const MAP_PLAN_RE =
+  /(?:^|[\s_\-/(.,])(?:campus[\s_-]?)?(?:maps?|plans?[\s_-]+(?:du|de|of)[\s_-]+(?:campus|site|l['’]universit)|cartes?[\s_-]+(?:du|de)[\s_-]+(?:campus|site)|site[\s_-]?plan|floor[\s_-]?plan|campus[\s_-]?plan)(?=[\s_\-.,)]|\d|$)/i;
+
+function looksMapOrPlan(entry) {
+  const hay = [entry.title, entry.url, entry.link, entry.description, entry.categories]
+    .filter(Boolean)
+    .map((v) => { try { return decodeURIComponent(String(v)); } catch { return String(v); } })
+    .join(' ');
+  return MAP_PLAN_RE.test(hay);
+}
+
 function looksBadSceneTitle(entry, { campus = false } = {}) {
+  if (looksMapOrPlan(entry)) return true;
   const hay = [entry.title, entry.url, entry.link, entry.description, entry.categories]
     .filter(Boolean)
     .join(' ');
