@@ -8,7 +8,7 @@
      • Anything else same-origin under scope → stale-while-revalidate
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'pomo-shell-v168';
+const SHELL_CACHE  = 'pomo-shell-v170';
 const FONT_CACHE   = 'pomo-fonts-v26';
 const CACHE_PREFIX = 'pomo-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -171,3 +171,15 @@ async function staleWhileRevalidate(cacheName, request) {
 
   return cached || networkFetch;
 }
+
+// Pomodoro : un toucher sur la notification ramène la page /pomo/.
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = (event.notification.data && event.notification.data.url) || self.registration.scope;
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+    for (const c of list) {
+      if (c.url.startsWith(self.registration.scope) && 'focus' in c) return c.focus();
+    }
+    return self.clients.openWindow ? self.clients.openWindow(url) : undefined;
+  }));
+});

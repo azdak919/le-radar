@@ -322,17 +322,9 @@
       } catch (e) {}
     } else {
       try {
-        const ctx = await resumeAudioCtx();
-        if (ctx?.state === 'running') {
-          _keepaliveGain = ctx.createGain();
-          _keepaliveGain.gain.value = 0.001;
-          _keepaliveGain.connect(ctx.destination);
-          _keepaliveOsc = ctx.createOscillator();
-          _keepaliveOsc.type = 'sine';
-          _keepaliveOsc.frequency.value = 19500;
-          _keepaliveOsc.connect(_keepaliveGain);
-          _keepaliveOsc.start();
-        }
+        // Pas d'oscillateur « silencieux » en boucle : on prépare seulement le
+        // contexte pour que le carillon de fin parte sans délai.
+        await resumeAudioCtx();
       } catch (e) {}
     }
 

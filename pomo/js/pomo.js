@@ -273,27 +273,143 @@ function PomoUI() {
   }
 }
 
+// ── Notifications de fin de période ─────────────────────────────────────────
+const POMO_NOTIF_TAG = 'le-radar-pomo';
+const POMO_NOTIF_ICON = new URL('icon-192.png', location.href).href;
+const POMO_NOTIF_BADGE = new URL('favicon-96x96.png', location.href).href;
+let _pomoTriggerScheduledFor = null;
+
+function pomoNotifText(wasBreak) {
+  try {
+    const st = typeof getTranslatedPomoStrings === 'function' ? getTranslatedPomoStrings() : null;
+    if (st && st.breakOver && st.sessionDone) {
+      return { title: wasBreak ? st.breakOver : st.sessionDone, body: 'Le Radar · Pomodoro' };
+    }
+  } catch (e) {}
+  return wasBreak
+    ? { title: 'Break over — time to focus!', body: 'Le Radar · Pomodoro' }
+    : { title: 'Session complete — take a break!', body: 'Le Radar · Pomodoro' };
+}
+
+function pomoNotifOptions(wasBreak, extra) {
+  const t = pomoNotifText(wasBreak);
+  return Object.assign({
+    body: t.body,
+    icon: POMO_NOTIF_ICON,
+    badge: POMO_NOTIF_BADGE,
+    tag: POMO_NOTIF_TAG,
+    renotify: true,
+    requireInteraction: true,
+    silent: false,
+    vibrate: wasBreak ? [150, 80, 150] : [200, 100, 200, 100, 400],
+    data: { url: location.href },
+  }, extra || {});
+}
+
+function pomoNotifGranted() {
+  return 'Notification' in window && Notification.permission === 'granted';
+}
+
+function pomoSwRegistration() {
+  if (!('serviceWorker' in navigator)) return Promise.resolve(null);
+  return navigator.serviceWorker.getRegistration().then((r) => r || navigator.serviceWorker.ready).catch(() => null);
+}
+
+function pomoTriggersSupported() {
+  return typeof window.TimestampTrigger === 'function'
+    && 'Notification' in window && 'showTrigger' in Notification.prototype;
+}
+
+function pomoNotifyNow(wasBreak) {
+  if (!pomoNotifGranted()) return;
+  // Le déclencheur programmé a déjà affiché la notification pour cette fin.
+  if (_pomoTriggerScheduledFor && Math.abs(Date.now() - _pomoTriggerScheduledFor) < 120000) {
+    _pomoTriggerScheduledFor = null;
+    return;
+  }
+  _pomoTriggerScheduledFor = null;
+  const t = pomoNotifText(wasBreak);
+  pomoSwRegistration().then((reg) => {
+    if (reg && reg.showNotification) return reg.showNotification(t.title, pomoNotifOptions(wasBreak));
+    try { new Notification(t.title, pomoNotifOptions(wasBreak)); } catch (e) {}
+  }).catch(() => {});
+}
+
+/** Programme la notification de fin au niveau du système (Chrome, si pris en charge). */
+function pomoScheduleEndNotification() {
+  pomoCancelScheduledNotification();
+  if (!pomo.isRunning || !pomo.startedAt || !pomoNotifGranted() || !pomoTriggersSupported()) return;
+  const endAt = pomo.startedAt + pomo.totalSeconds * 1000;
+  const wasBreak = pomo.isBreak;
+  const t = pomoNotifText(wasBreak);
+  pomoSwRegistration().then((reg) => {
+    if (!reg || !reg.showNotification) return;
+    return reg.showNotification(t.title, pomoNotifOptions(wasBreak, {
+      showTrigger: new window.TimestampTrigger(endAt),
+    })).then(() => { _pomoTriggerScheduledFor = endAt; });
+  }).catch(() => {});
+}
+
+function pomoCancelScheduledNotification() {
+  _pomoTriggerScheduledFor = null;
+  pomoSwRegistration().then((reg) => {
+    if (!reg || !reg.getNotifications) return;
+    return reg.getNotifications({ tag: POMO_NOTIF_TAG, includeTriggered: true })
+      .then((list) => list.forEach((n) => { if (n.showTrigger) n.close(); }));
+  }).catch(() => {});
+}
+
+function pomoUpdateNotifHint() {
+  const el = document.getElementById('pomo-notif-hint');
+  if (!el) return;
+  const perm = 'Notification' in window ? Notification.permission : 'unsupported';
+  el.hidden = perm === 'granted' || perm === 'default';
+  const fr = typeof currentLang === 'string' && currentLang.startsWith('fr');
+  el.textContent = perm === 'denied'
+    ? (fr ? 'Notifications bloquées : autorisez-les dans les réglages du navigateur pour être averti à la fin de la minuterie.'
+          : 'Notifications blocked — enable them in your browser settings to be alerted when a timer ends.')
+    : (fr ? 'Notifications non prises en charge ici : gardez cette page ouverte pour entendre le carillon.'
+          : 'Notifications are not supported here — keep this page open to hear the chime.');
+}
+
+function pomoWarnNoNotif() {
+  if (typeof showToast !== 'function') return;
+  const fr = typeof currentLang === 'string' && currentLang.startsWith('fr');
+  try { showToast(fr ? 'Notifications bloquées : la minuterie sonnera seulement si la page est ouverte.' : 'Notifications blocked — the timer will only ring while this page is open.'); } catch (e) {}
+}
+
+/** Demande la permission au premier démarrage (geste utilisateur). */
+function pomoRequestNotifPermission() {
+  if (!('Notification' in window) || Notification.permission !== 'default') {
+    pomoUpdateNotifHint();
+    const perm = 'Notification' in window ? Notification.permission : 'unsupported';
+    if (perm !== 'granted') pomoWarnNoNotif();
+    return Promise.resolve(perm);
+  }
+  let p;
+  try { p = Notification.requestPermission(); } catch (e) { p = null; }
+  return Promise.resolve(p).then((perm) => {
+    pomoUpdateNotifHint();
+    if (perm === 'granted') pomoScheduleEndNotification();
+    else pomoWarnNoNotif();
+    return perm;
+  });
+}
+
 function onSegmentComplete() {
   pomo.isRunning = false;
   PomoAudio()?.releaseWakeLock();
   // Ne pas stopTimerAudio ici — le chime iOS est dans le WAV ou joué juste après.
   const wasBreak = pomo.isBreak; // capture before phase flip
 
-  // Notification — requireInteraction keeps it visible on Android lock screen
-  if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification(wasBreak ? 'Break over — time to focus!' : 'Session complete — take a break!', {
-      icon: 'icon-192.png',
-      badge: 'favicon-96x96.png',
-      tag: 'le-radar-pomo',
-      requireInteraction: true,
-      silent: false
-    });
-  }
+  // Chrome Android refuse `new Notification()` (TypeError) : passer par le SW.
+  // Si un déclencheur programmé (TimestampTrigger) a déjà notifié, ne pas doubler.
+  try { pomoNotifyNow(wasBreak); } catch (e) {}
 
   // Haptic feedback — works even when AudioContext is suspended on mobile
-  if (navigator.vibrate) navigator.vibrate(wasBreak ? [150, 80, 150] : [200, 100, 200, 100, 400]);
+  try { if (navigator.vibrate) navigator.vibrate(wasBreak ? [150, 80, 150] : [200, 100, 200, 100, 400]); } catch (e) {}
 
-  PomoAudio()?.playCompletionChime(wasBreak);
+  try { PomoAudio()?.playCompletionChime(wasBreak); } catch (e) {}
 
   if (!pomo.isBreak) {
     pomo.completedSessions++;
@@ -331,13 +447,13 @@ function startPomo() {
     });
   }
 
-  // Request notification permission
-  if ('Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission();
-  }
+  // Permission au premier démarrage (geste), puis notification programmée.
+  pomoRequestNotifPermission();
+  pomoScheduleEndNotification();
 }
 
 function stopPomo() {
+  pomoCancelScheduledNotification();
   pomo.isRunning = false;
   pomo.startedAt = null;
   // Reset to the beginning of the current phase
@@ -351,6 +467,7 @@ function stopPomo() {
 }
 
 function resetPomo() {
+  pomoCancelScheduledNotification();
   pomo.isRunning = false;
   pomo.startedAt = null;
   pomo.isBreak = false;
@@ -366,6 +483,7 @@ function resetPomo() {
 }
 
 function jumpToPhase(phase) {
+  pomoCancelScheduledNotification();
   const wasRunning = pomo.isRunning;
   pomo.isRunning = false;
   pomo.startedAt = null;
@@ -705,6 +823,8 @@ function initPomoHandlers() {
   document.getElementById('chip-break')?.addEventListener('click', (e) => { e.stopPropagation(); jumpToPhase('break'); });
   document.getElementById('chip-long')?.addEventListener('click', (e) => { e.stopPropagation(); jumpToPhase('long'); });
 
+  pomoUpdateNotifHint();
+
   function tick() {
     try { PomoUI(); } catch(e) {}
     requestAnimationFrame(tick);
@@ -728,6 +848,13 @@ function initPomoHandlers() {
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
+      pomoUpdateNotifHint();
+      // Rattrapage : la fin est passée pendant que la page était gelée.
+      if (pomo.isRunning && getRemaining() <= 0) {
+        const audio = PomoAudio();
+        const doComplete = () => { if (pomo.isRunning) onSegmentComplete(); };
+        if (audio) audio.resumeAudioCtx().then(doComplete, doComplete); else doComplete();
+      }
       PomoAudio()?.resumeAudioCtx();
       PomoUI();
       if (pomo.isRunning) PomoAudio()?.requestWakeLock();
