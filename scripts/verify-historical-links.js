@@ -12,7 +12,7 @@ const path = require('path');
 const { isAllowedFetchUrl } = require('./url-security-lib');
 
 const { withPendingInboxes, queueArchiveChanges } = require('./archive-inbox-lib');
-const ARCHIVE = path.join(__dirname, '..', 'news-archive.json');
+const { readArchive } = require('./archive-store');
 const update = process.argv.includes('--update');
 const limitArg = process.argv.find((arg) => arg.startsWith('--limit='));
 const limit = Math.max(0, Math.min(100, Number(limitArg?.slice(8) || 20) || 20));
@@ -56,8 +56,8 @@ function due(record) {
 }
 
 async function main() {
-  // Lecture seule : news-archive.json appartient à Update Student News.
-  const catalog = withPendingInboxes(JSON.parse(fs.readFileSync(ARCHIVE, 'utf8')));
+  // Lecture seule : le catalogue (data/archives/) appartient à Update Student News.
+  const catalog = withPendingInboxes(readArchive());
   const before = JSON.parse(JSON.stringify(catalog));
   const dueRecords = (catalog.records || []).filter((record) => {
     if (!record?.originalUrl || !due(record)) return false;

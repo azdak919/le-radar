@@ -49,7 +49,7 @@ const LLMS_PATH = path.join(ROOT, 'llms.txt');
 const INSTITUTIONS_PATH = path.join(ROOT, 'institutions.json');
 const SCHEDULES_PATH = path.join(ROOT, 'radio-schedules.json');
 const SPORTS_PATH = path.join(ROOT, 'sports.json');
-const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
+const { readArchive } = require('./archive-store');
 const ARCHIVE_CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
 const SOCIAL_PATH = path.join(ROOT, 'social-feed.json');
 
@@ -534,7 +534,7 @@ function main() {
   const sources = loadSources();
   const radios = loadRadios();
   const archiveConfig = readJson(ARCHIVE_CONFIG_PATH, { mode: 'off', partial: {} });
-  const historicalCatalog = readJson(ARCHIVE_PATH, { records: [] });
+  const historicalCatalog = readArchive(ROOT, { records: [] });
   const archive = buildHistoricalArchivePages({
     catalog: historicalCatalog,
     config: archiveConfig,

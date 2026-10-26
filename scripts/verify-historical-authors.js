@@ -12,7 +12,7 @@ const { fetchText } = require('./article-image-lib');
 const { authorFromArticleHtml, normalizeAuthor } = require('./author-lib');
 const { loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 
-const ARCHIVE = path.join(__dirname, '..', 'news-archive.json');
+const { readArchive, writeArchive } = require('./archive-store');
 const update = process.argv.includes('--update');
 const force = process.argv.includes('--force');
 const limitArg = process.argv.find((arg) => arg.startsWith('--limit='));
@@ -30,7 +30,7 @@ function due(record) {
 }
 
 async function main() {
-  const catalog = JSON.parse(fs.readFileSync(ARCHIVE, 'utf8'));
+  const catalog = readArchive();
   const sourceMap = loadSourceRegistryMap();
   const candidates = (catalog.records || [])
     .filter((record) => record?.originalUrl && due(record))
@@ -61,7 +61,7 @@ async function main() {
 
   catalog.updated = new Date().toISOString();
   console.log(`Auteurs historiques${sourceFilter ? ` (${sourceFilter})` : ''} : ${candidates.length} contrôlé(s); ${found} signature(s) trouvée(s), ${unavailable} sans signature fiable.`);
-  if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(catalog) + '\n');
+  if (update) writeArchive(catalog);
   else console.log('Dry-run — utilisez --update pour enregistrer les résultats.');
 }
 

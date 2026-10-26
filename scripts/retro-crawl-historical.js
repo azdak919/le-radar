@@ -32,7 +32,7 @@ const { isAllowedFetchUrl } = require('./url-security-lib');
 
 const ROOT = path.join(__dirname, '..');
 const SOURCES_PATH = path.join(ROOT, 'news-sources.json');
-const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
+const { readArchive } = require('./archive-store');
 const CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
 const STATE_PATH = path.join(ROOT, 'historical-crawl-state.json');
 const USER_AGENT = 'LE-RADAR-HistoryCrawler/1.0 (+https://le-radar.ca/)';
@@ -207,9 +207,9 @@ async function main() {
   options.afterIso = new Date(Date.now() - retentionYears * 365.25 * 86400000).toISOString();
   const sourceFile = readJson(SOURCES_PATH, { active: [] });
   const sources = Array.isArray(sourceFile.active) ? sourceFile.active : [];
-  // Lecture seule : news-archive.json appartient à Update Student News. On part
+  // Lecture seule : le catalogue (data/archives/) appartient à Update Student News. On part
   // du catalogue tel qu'il sera après fusion de nos lots encore en attente.
-  const originalCatalog = withPendingInboxes(readJson(ARCHIVE_PATH, { schemaVersion: 1, records: [] }));
+  const originalCatalog = withPendingInboxes(readArchive(ROOT, { schemaVersion: 1, records: [] }));
   const state = readJson(STATE_PATH, { schemaVersion: 1, updated: null, sources: {} });
   state.sources = state.sources || {};
   if (restart) resetStateFor(state, requestedSource);

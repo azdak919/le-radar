@@ -9,10 +9,11 @@ const path = require('path');
 const lib = require('./source-health-lib');
 
 const ROOT = path.join(__dirname, '..');
+const { readArchive } = require('./archive-store');
 const read = (p, fb) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8')); } catch { return fb; } };
 
 const registry = read('news-sources.json', { active: [] });
-const archive = read('news-archive.json', { records: [] });
+const archive = readArchive(ROOT, { records: [] });
 const news = read('news.json', { items: [] });
 const imageStats = read('data/image-mirror-stats.json', null);
 const imageHealthRaw = read('data/image-health.json', null);
