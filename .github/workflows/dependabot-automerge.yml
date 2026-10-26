@@ -1,0 +1,38 @@
+name: Dependabot auto-merge
+# Fusionne les PR Dependabot mineures/correctives une fois Vérification verte
+# sur la PR. Les majeures restent ouvertes (issue d'alerte unique).
+on:
+  workflow_run:
+    workflows: ["Vérification"]
+    types: [completed]
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+concurrency:
+  group: dependabot-automerge
+  cancel-in-progress: false
+jobs:
+  merge:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.actor.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fusionner si mineure ou corrective
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          pr=$(gh pr list -R "$REPO" --head "$BRANCH" --state open --json number,headRefOid,title --jq ".[] | select(.headRefOid==\"$SHA\") | .number")
+          [ -n "$pr" ] || { echo "Aucune PR ouverte pour $SHA"; exit 0; }
+          title=$(gh pr view "$pr" -R "$REPO" --json title --jq .title)
+          # Majeure = premier chiffre change (« from 6.x to 7.x »).
+          if echo "$title" | grep -Eq 'from v?([0-9]+)\.[^ ]* to v?\1\.'; then
+            gh pr merge "$pr" -R "$REPO" --squash --delete-branch
+          elif echo "$title" | grep -Eqi '^.*bump the .* group'; then
+            gh pr merge "$pr" -R "$REPO" --squash --delete-branch
+          else
+            echo "PR #$pr : mise à jour majeure, laissée à la revue."
+          fi
