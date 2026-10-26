@@ -78,7 +78,7 @@ jobs:
           git config user.name "LE-RADAR Stream Bot"
           git config user.email "actions@users.noreply.github.com"
           git add radios.json radios-candidates.json index.html sitemap.xml llms.txt
-          git add -A radios journaux etablissements medias horaires en 2>/dev/null || true
+          for p in radios journaux etablissements medias horaires en; do if [ -e "$p" ]; then git add -A -- "$p"; fi; done
           git commit -m "bot: update discovered streams (auto)"
           # Rebase onto any work pushed since checkout so the bot never
           # clobbers manual commits and never fails on a fast-forward race.

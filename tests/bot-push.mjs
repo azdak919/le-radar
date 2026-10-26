@@ -46,6 +46,8 @@ try {
     const y = readFileSync(join('.github/workflows', f), 'utf8');
     if (!/git push|bot-push\.sh/.test(y)) continue;
     assert.doesNotMatch(y, /-X theirs/, f);
+    // Un `git add a b c || true` saute en entier si un chemin manque (news.json perdu, f680ad880).
+    assert.doesNotMatch(y, /git add[^\n]*(?:\\\n[^\n]*)*\|\| true/, `${f} : git add masqué par || true`);
     assert.doesNotMatch(y, /\n\s*git push\s*(\n|\|\|)/, `${f} : push direct sans bot-push.sh`);
     if (f !== 'update-sports-live.yml') assert.match(y, /group: data-writers\n\s*cancel-in-progress: false\n\s*queue: max/, f);
   }

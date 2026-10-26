@@ -10,6 +10,7 @@ on:
     paths-ignore:
       - 'news.json'
       - 'news-archive.json'
+      - 'data/archives/**'
       - 'news-sources.json'
       - 'author-qc.json'
       - 'lead-excerpt-qc.json'

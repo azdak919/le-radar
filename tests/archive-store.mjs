@@ -35,4 +35,19 @@ assert.deepEqual(readArchive(root).records.map((x) => x.id), ['d', 'a', 'c']);
 
 // Rien → fallback.
 assert.deepEqual(readArchive(fs.mkdtempSync(path.join(os.tmpdir(), 'arch-')), { records: [] }), { records: [] });
+// Contrat : seul Update Student News écrit et publie data/archives/.
+const here = path.join(path.dirname(new URL(import.meta.url).pathname), '..');
+const yml = fs.readFileSync(path.join(here, '.github/workflows/update-news.yml'), 'utf8');
+assert.match(yml, /git add -A -- data\/archives/);
+assert.match(yml, /git rm -q --cached --ignore-unmatch news-archive\.json/);
+const fetch = fs.readFileSync(path.join(here, 'scripts/fetch-news.js'), 'utf8');
+assert.match(fetch, /writeArchive\(/);
+assert.doesNotMatch(fetch, /news-archive\.json'/);
+for (const f of ['generate-seo.js', 'source-health.js', 'retro-crawl-historical.js', 'verify-historical-links.js']) {
+  const s = fs.readFileSync(path.join(here, 'scripts', f), 'utf8');
+  assert.match(s, /readArchive\(/, `${f} lit via archive-store`);
+  assert.doesNotMatch(s, /writeArchive\(/, `${f} n'écrit pas le catalogue`);
+}
+const ver = fs.readFileSync(path.join(here, '.github/workflows/verification.yml'), 'utf8');
+assert.match(ver, /data\/archives\/\*\*/);
 console.log('archive-store: OK');

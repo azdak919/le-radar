@@ -35,7 +35,7 @@ const W = path.join(path.dirname(new URL(import.meta.url).pathname), '..', '.git
 for (const f of ['guard-harvest-freshness.yml', 'discover-news-sources.yml', 'verify-live-links.yml', 'retro-crawl-historical.yml', 'verify-historical-links.yml', 'maintain.yml']) {
   const y = fs.readFileSync(path.join(W, f), 'utf8');
   const adds = [...y.matchAll(/git add[^\n]*(?:\\\n[^\n]*)*/g)].map((m) => m[0]).join('\n');
-  for (const owned of ['news.json', 'news-archive.json', 'feed.xml', 'sitemap.xml', 'llms.txt']) {
+  for (const owned of ['news.json', 'news-archive.json', 'data/archives', 'feed.xml', 'sitemap.xml', 'llms.txt']) {
     assert.ok(!new RegExp(`(^|[\\s/])${owned.replace('.', '\\.')}`).test(adds), `${f} ne publie pas ${owned}`);
   }
   assert.doesNotMatch(y, /fetch-news\.js|generate-feed\.js/, `${f} ne récolte pas les nouvelles`);
