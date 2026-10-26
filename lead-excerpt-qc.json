@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-26T16:12:33.054Z",
+  "updated": "2026-10-26T17:32:33.431Z",
   "total": 175,
   "pool": 58,
   "incomplete": 10,
   "withLeadExcerpt": 118,
   "candidates": 10,
-  "enriched": 4,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -26,6 +26,15 @@
       "chars": 400,
       "sample": "When thinking about the “McGill Experience,” a plethora of feelings and images spring into mind: see",
       "changed": false
+    },
+    {
+      "title": "More Than a Game",
+      "link": "https://www.mcgilldaily.com/2026/10/more-than-a-game/",
+      "ok": true,
+      "score": 96,
+      "chars": 309,
+      "sample": "This season, the Martlets were the only McGill varsity team to host a Pride match. The team encourag",
+      "changed": true
     },
     {
       "title": "Say “Coffee” Again! I Dare You.",
@@ -55,15 +64,6 @@
       "changed": false
     },
     {
-      "title": "Fin de la saison de chasse à l’orignal 2026 au Saguenay-Lac-Saint-Jean",
-      "link": "https://lapige.atmjonquiere.com/2026/10/19/fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean",
-      "ok": true,
-      "score": 100,
-      "chars": 313,
-      "sample": "Les dix zones d’exploitation contrôlées (ZEC) au Saguenay accueillent chaque année plusieurs chasseu",
-      "changed": true
-    },
-    {
       "title": "Grabuge au Minotaure avec Have No Heroes et Fair Do’S",
       "link": "https://journallagriffe.ca/2026/10/grabuge-au-minotaure-avec-have-no-heroes-et-fair-dos/",
       "ok": true,
@@ -79,7 +79,7 @@
       "score": 84,
       "chars": 130,
       "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": true
+      "changed": false
     }
   ]
 }

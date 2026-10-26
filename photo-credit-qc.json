@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26T16:13:52.790Z",
+  "updated": "2026-10-26T17:34:08.124Z",
   "total": 175,
   "withImage": 156,
   "withCredit": 156,
@@ -8,10 +8,24 @@
   "missingHero": 0,
   "ok": false,
   "checked": 44,
-  "updatedCount": 6,
+  "updatedCount": 7,
   "citedNew": 5,
   "fallbackNew": 39,
   "samples": [
+    {
+      "title": "The Price of Staying Home",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "More Than a Game",
+      "source": "The McGill Daily",
+      "credit": "Photo : Eva Marriott-Fabre",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
       "source": "La Griffe",
@@ -25,13 +39,6 @@
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
-    },
-    {
-      "title": "The Price of Staying Home",
-      "source": "The McGill Daily",
-      "credit": "Photo : Kara Fan",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
