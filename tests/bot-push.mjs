@@ -68,3 +68,16 @@ try {
   }
   console.log('OK checkout ref main');
 }
+
+// Le long job de maintenance ne tient PAS data-writers : seul « publish » le prend.
+{
+  const y = readFileSync(new URL('../.github/workflows/maintain.yml', import.meta.url), 'utf8');
+  const [head, rest] = y.split(/\n  publish:\n/);
+  assert.ok(rest, 'maintain.yml : job publish séparé');
+  assert.doesNotMatch(head, /group: data-writers/, 'job maintain sans verrou data-writers');
+  assert.match(rest, /needs: maintain/);
+  assert.match(rest, /group: data-writers/);
+  assert.match(rest, /bash scripts\/bot-push\.sh/);
+  assert.doesNotMatch(head, /bash scripts\/bot-push\.sh/, 'maintain ne pousse pas lui-même');
+  console.log('OK maintain publish séparé');
+}

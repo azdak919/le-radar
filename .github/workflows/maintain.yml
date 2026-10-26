@@ -11,11 +11,13 @@ on:
         type: boolean
         default: false
 
+# Verrou data-writers tenu SEULEMENT par le job « publish » (quelques
+# secondes) : le long job « maintain » (~25-45 min) tourne sans verrou, pour
+# ne pas bloquer la file — GitHub ne garde qu'un run en attente par groupe et
+# remplacerait les passes des autres bots. Une maintenance à la fois :
 concurrency:
-  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
-  group: data-writers
+  group: maintain
   cancel-in-progress: false
-  queue: max
 
 jobs:
   maintain:
@@ -26,8 +28,10 @@ jobs:
     # Plafond 45 min = filet zombie, pas une cible de durée.
     timeout-minutes: 45
     permissions:
-      contents: write
+      contents: read
       issues: write
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
 
     steps:
       # Partir du main ACTUEL : en file data-writers, le sha de l'événement
@@ -142,9 +146,16 @@ jobs:
             [ -e "$f" ] && git add -A "$f"
           done
           git commit -m "bot: weekly maintenance run (auto)"
-          # Seuls les fichiers des banques et bot-status.json sont publiés ;
-          # bot-push.sh met de côté le reste pendant le rebase.
-          bash scripts/bot-push.sh
+          # Publication déléguée au job « publish » (seul à tenir data-writers).
+          git bundle create maintain.bundle "HEAD^..HEAD"
+
+      - name: Hand commit to publish job
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: maintain-commit
+          path: maintain.bundle
+          retention-days: 1
 
       - name: Open GitHub issue when human attention needed
         if: steps.pipeline.outcome != 'success' && steps.pipeline.outcome != 'skipped'
@@ -178,3 +189,33 @@ jobs:
               --title "LE-RADAR maintenance alert — vérification humaine suggérée" \
               --body "$BODY"
           }
+
+  publish:
+    needs: maintain
+    if: needs.maintain.outputs.changed == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      # Un seul écrivain de données à la fois sur main (file FIFO), le temps du push.
+      group: data-writers
+      cancel-in-progress: false
+      queue: max
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: maintain-commit
+      - name: Push maintenance commit
+        run: |
+          git config user.name "LE-RADAR Maintenance Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch -q maintain.bundle HEAD:refs/maint
+          rm -f maintain.bundle
+          git checkout -q refs/maint
+          # bot-push.sh rebase sur le main actuel et réessaie.
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh
