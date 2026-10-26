@@ -76,7 +76,7 @@ La barre JS reste la source de vérité UI : un événement `state` du plugin me
 
 Au lancement, l’application tente `https://le-radar.ca/news.json` (HTTP natif de Capacitor, donc sans CORS), puis la copie embarquée par `npm run mobile:sync`, puis la dernière copie locale. Les images distantes ne sont pas mises en cache : un éditeur peut les retirer, et plusieurs hôtes refusent le cache cross-origin. Hors ligne, la fiche garde le titre, la source, l’extrait et le lien.
 
-`news-archive.json` n’est pas embarqué.
+Le catalogue historique (`data/archives/`, ex-`news-archive.json`) n’est pas embarqué.
 
 ## Notifications
 

@@ -87,7 +87,7 @@ retiré du registre ne laisse pas de page orpheline indexée derrière lui.
 
 `news.json` reste le **fil vivant** : la règle de fraîcheur y retire les
 articles qui ne doivent plus occuper l’accueil. En parallèle,
-`news-archive.json` conserve les métadonnées des articles réellement découverts
+Le catalogue `data/archives/AAAA-MM.json` (ex-`news-archive.json`, découpé par mois de publication au lot E) conserve les métadonnées des articles réellement découverts
 par les bots, avant ce filtrage. Il peut aussi être enrichi par un
 **rétro-crawl lent, séquentiel et reprenable** des listes publiques paginées.
 Ce passage ne consulte jamais une page d’article une à une et sa projection

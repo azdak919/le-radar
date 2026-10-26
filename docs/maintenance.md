@@ -26,7 +26,7 @@ Mesures du 2026-08-26. Un « à revoir plus tard » n’est pas une conclusion.
 
 | Artefact | Pourquoi il reste | Garde-fou |
 |---|---|---|
-| `news-archive.json` (~10 Mo, ~8 k notices) | Métadonnées de conservation, **sans** corps ni images. Le public reste à `partial.maxRecords` (120). | JSON compact ; `storage.maxRecords` 20 000 ; `storage.maxFileBytes` 16 Mo ; `tests/artifact-budget.mjs` |
+| `data/archives/AAAA-MM.json` + `index.json` (lot E ; ~13 Mo au total, ≤ ~0,7 Mo par mois, ~10 k notices) | Métadonnées de conservation, **sans** corps ni images. Le public reste à `partial.maxRecords` (120). | JSON compact ; `storage.maxRecords` 20 000 ; `storage.maxFileBytes` 16 Mo ; `tests/artifact-budget.mjs` |
 | `sports.json` (~3,5 Mo) | Catalogue RSEQ vivant. Le HTML `/sports/` est un **prérendu SEO** volontaire, writer unique `generate-seo`. | Test 5 Mo |
 | `assets/news-images/` (~48 Mo) | Miroir des unes, hors ligne et Pages. | Test 50 Mo ; prune du bot miroir |
 | `assets/kit/` (~87 Mo) | Affiches campus **600 dpi**, 7 établissements. Qualité d’impression. | Test 100 Mo ; pas de campus supplémentaire sans go humain |
