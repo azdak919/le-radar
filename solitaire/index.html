@@ -1208,6 +1208,15 @@
     @media (max-width: 374px) {
       #radar-btn-label, #back-pomodoro-label { display: none; }
     }
+    /* Contrôles de partie sur téléphone : une seule rangée — cinq icônes
+       (44 × 44 px, nom dans aria-label/title) puis coups · temps. */
+    @media (max-width: 599px) {
+      .game-toolbar-game { flex-wrap: nowrap; justify-content: space-between; gap: 0.25rem; margin-top: 0.15rem; }
+      .game-toolbar-game-actions { flex-wrap: nowrap; gap: 0; flex: 1 1 auto; justify-content: space-between; min-width: 0; }
+      .game-toolbar-game-actions .toolbar-btn { min-width: 44px; min-height: 44px; padding: 0; gap: 0; justify-content: center; }
+      .game-toolbar-game-actions .toolbar-btn > span { display: none; }
+      .toolbar-stats { min-width: 0; gap: 0.25rem; flex-shrink: 0; padding-right: 0.2rem; }
+    }
   </style>
   <script defer src="../analytics-preferences.js"></script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="32751d96-0b15-4e05-9b08-a04a333a1cde"></script>
@@ -3899,6 +3908,17 @@ function applyUIStrings(strings) {
   if (streakLabel) streakLabel.textContent = strings.streak;
   if (bestLabel) bestLabel.textContent = strings.best;
   if (shuffleBgLabel) shuffleBgLabel.textContent = strings.shuffleBg || SOL_UI_EN.shuffleBg;
+
+  // Sur téléphone, ces boutons n'affichent que l'icône : le nom traduit
+  // passe par aria-label et title (lecteurs d'écran, appui long, survol).
+  [['new-game-btn', strings.newGame || SOL_UI_EN.newGame],
+   ['restart-deal-btn', strings.restartDeal || SOL_UI_EN.restartDeal],
+   ['shuffle-bg-btn', strings.shuffleBg || SOL_UI_EN.shuffleBg],
+   ['undo-btn', strings.undo || SOL_UI_EN.undo],
+   ['hint-btn', strings.hint || SOL_UI_EN.hint]].forEach(([id, label]) => {
+    const b = document.getElementById(id);
+    if (b && label) { b.setAttribute('aria-label', label); b.title = label; }
+  });
 
 
   const backLabel = document.getElementById('back-pomodoro-label');

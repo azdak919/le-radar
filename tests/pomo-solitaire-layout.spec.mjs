@@ -97,3 +97,37 @@ test('pomo bureau : minuterie et citation côte à côte @ci-critical', async ({
   expect(r.sh).toBeLessThanOrEqual(r.vh);
   await ctx.close();
 });
+
+// Contrôles de partie du Solitaire : une seule rangée (actions + coups/temps),
+// cibles ≥ 44 px, nom accessible, en français et en anglais.
+for (const locale of ['fr-CA', 'en-US']) {
+  for (const width of [360, 390, 412]) {
+    test(`solitaire ${locale} ${width}px : contrôles sur une seule rangée @ci-critical`, async ({ browser }) => {
+      const ctx = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true, locale, serviceWorkers: 'block' });
+      const page = await ctx.newPage();
+      await page.goto('/solitaire/', { waitUntil: 'load' });
+      await page.waitForTimeout(1200);
+      const r = await page.evaluate(() => {
+        const els = [...document.querySelectorAll('.game-toolbar-game-actions .toolbar-btn'), document.querySelector('#toolbar-stats')];
+        const boxes = els.map((e) => e.getBoundingClientRect());
+        const mids = boxes.map((b) => b.top + b.height / 2);
+        return {
+          n: els.length,
+          spread: Math.max(...mids) - Math.min(...mids),
+          minBtn: Math.min(...boxes.slice(0, -1).map((b) => Math.min(b.width, b.height))),
+          maxRight: Math.max(...boxes.map((b) => b.right)),
+          names: els.slice(0, -1).map((e) => e.getAttribute('aria-label') || ''),
+          lang: document.documentElement.lang,
+        };
+      });
+      expect(r.n).toBe(6);
+      expect(r.spread, 'contrôles sur plusieurs rangées').toBeLessThanOrEqual(4);
+      expect(r.minBtn).toBeGreaterThanOrEqual(44);
+      expect(r.maxRight).toBeLessThanOrEqual(width);
+      for (const name of r.names) expect(name.length).toBeGreaterThan(0);
+      if (locale === 'fr-CA') expect(r.names).toContain('Indice');
+      else expect(r.names).toContain('Hint');
+      await ctx.close();
+    });
+  }
+}
