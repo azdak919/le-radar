@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-25T22:34:56.687Z",
+  "updated": "2026-10-26T00:28:52.223Z",
   "total": 175,
   "withPhoto": 156,
   "withStock": 39,
   "withCampusBank": 28,
   "fullyCovered": 175,
-  "leadReadyPhotos": 135,
-  "pageScraped": 29,
-  "photosRecovered": 29,
+  "leadReadyPhotos": 133,
+  "pageScraped": 30,
+  "photosRecovered": 30,
   "imagesCleared": 12,
   "stockSearches": 43,
-  "stockFound": 34,
+  "stockFound": 35,
   "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
@@ -39,12 +39,6 @@
       "image": "https://i0.wp.com/journallagriffe.ca/wp-content/uploads/2026/10/Article1.png?fit=601%2C403&ssl=1"
     },
     {
-      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
-      "link": "https://journallagriffe.ca/2026/10/un-changement-daile-qui-pourrait-faire-senvoler-les-griffons-du-cegep-de-loutaouais/",
-      "reason": "no-stock-match",
-      "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1-1.png"
-    },
-    {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "link": "https://journallagriffe.ca/2026/10/gatineau-est-represente-dans-les-nominations-du-gala-de-ladisq/",
       "reason": "no-stock-match",
@@ -57,28 +51,34 @@
       "image": "https://i0.wp.com/journallagriffe.ca/wp-content/uploads/2026/10/Thomas1.jpg?fit=288%2C216&ssl=1"
     },
     {
+      "title": "The Honey Bank: CSU’s sustainability initiatives",
+      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "CSU fails to reach quorum at special council meeting",
       "link": "https://thelinknewspaper.ca/article/16488",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Searching For a Third Space",
-      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
-      "link": "https://theplantnews.com/2026/10/25/mens-clothing-ill-wear-on-gender-roles-and-expression-in-the-british-ballad/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/96/Dawson_College_11.JPG"
+      "title": "Festivals au Québec : la fête à quel prix ?",
+      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
+      "reason": "stock-too-small",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
