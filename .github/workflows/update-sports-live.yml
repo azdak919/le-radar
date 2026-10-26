@@ -69,17 +69,46 @@ jobs:
           LIVE_PASSES: '110'
           LIVE_LOOKAHEAD_MIN: '75'
           LIVE_SLEEP_SECONDS: '180'
+          LIVE_MIN_PUSH_SECONDS: '900'
+          LIVE_HEARTBEAT_SECONDS: '3600'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Push seulement sur vrai changement (scripts/sports-live-change.js) :
+          #  - urgent (pointage, résultat, En cours / Final) : tout de suite ;
+          #  - data (calendrier, fenêtre live) : au plus 1× / LIVE_MIN_PUSH_SECONDS ;
+          #  - none (horodatages seuls) : pas de push, sauf battement si le tampon
+          #    publié a plus de LIVE_HEARTBEAT_SECONDS (le gardien de fraîcheur
+          #    relancerait sinon une récolte complète à 90 min).
+          last_push=0
           push_live() {
+            local force="${1:-}"
+            local kind
+            kind="$(node scripts/sports-live-change.js)"
+            local now; now=$(date +%s)
+            local published; published=$(git log -1 --format=%ct -- sports.json 2>/dev/null || echo 0)
+            case "$kind" in
+              urgent) echo "Changement de pointage / d’état : push immédiat." ;;
+              data)
+                if [ -z "$force" ] && [ $((now - last_push)) -lt "$LIVE_MIN_PUSH_SECONDS" ]; then
+                  echo "Changement de données : regroupé (dernier push il y a $((now - last_push)) s)."
+                  return 0
+                fi ;;
+              *)
+                if [ $((now - published)) -lt "$LIVE_HEARTBEAT_SECONDS" ]; then
+                  echo "Horodatages seulement : pas de push."
+                  return 0
+                fi
+                echo "Battement : tampon publié vieux de $((now - published)) s." ;;
+            esac
             git add sports.json sports-masthead.json sports-live-window.json
             if git diff --staged --quiet; then
               echo "No live sports changes."
               return 0
             fi
-            git commit -m "chore(sports): refresh live RSEQ scores"
-            bash scripts/bot-push.sh --redo "node scripts/fetch-sports.js --update --live && git add sports.json sports-masthead.json sports-live-window.json && { git diff --staged --quiet || git commit -qm 'chore(sports): refresh live RSEQ scores'; }"
+            git commit -q -m "chore(sports): refresh live RSEQ scores"
+            bash scripts/bot-push.sh --redo "node scripts/fetch-sports.js --update --live && git add sports.json sports-masthead.json sports-live-window.json && { git diff --staged --quiet || git commit -qm 'chore(sports): refresh live RSEQ scores'; }" || return 1
+            last_push=$(date +%s)
           }
           pass=1
           fails=0
@@ -101,8 +130,13 @@ jobs:
             fi
             pass=$((pass + 1))
             sleep "$LIVE_SLEEP_SECONDS"
+            # Un changement regroupé non poussé sera reproduit par la passe
+            # suivante (la collecte est complète) : on repart de main propre.
+            git checkout -q -- sports.json sports-masthead.json sports-live-window.json 2>/dev/null || true
             git pull -q --rebase origin "${GITHUB_REF_NAME}" || git rebase --abort 2>/dev/null || true
           done
+          # Fin de boucle : publier un changement regroupé encore en attente.
+          push_live force || true
           echo "LIVE_PASSES_RUN=$pass" >> "$GITHUB_ENV"
           echo "LIVE_SOURCE_FAILS=$fails" >> "$GITHUB_ENV"
 

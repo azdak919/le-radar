@@ -5,6 +5,11 @@ on:
     # Monday 08:00 UTC — after daily stream check, before news discovery
     - cron: '0 8 * * 1'
   workflow_dispatch:
+    inputs:
+      full_visual:
+        description: "Forcer l'audit pixel et la détection de visages"
+        type: boolean
+        default: false
 
 concurrency:
   # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
@@ -32,30 +37,54 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Run full maintenance pipeline
+        id: pipeline
+        run: node scripts/maintain.js --update
+        continue-on-error: true
+
+      # Garde « rien à faire » (lot C) : les passes visuelles ne regardent que
+      # les images. Sans nouvelle photo dans une banque, on ne les refait
+      # qu'une fois par mois (premier lundi) ou sur demande.
+      - name: Decide visual passes
+        id: visual
+        env:
+          FULL_VISUAL: ${{ inputs.full_visual }}
+        run: |
+          due=false
+          for f in data/quebec-backgrounds.json data/quebec-university-backgrounds.json data/quebec-pomo-backgrounds.json data/quebec-nations-backgrounds.json data/quebec-favorites-backgrounds.json; do
+            if [ -n "$(git status --porcelain -- "$f")" ]; then due=true; echo "banque modifiée : $f"; fi
+          done
+          if [ "$(date -u +%d)" -le 7 ]; then due=true; echo "passe mensuelle"; fi
+          if [ "$FULL_VISUAL" = "true" ]; then due=true; echo "forcé"; fi
+          echo "due=$due" >> "$GITHUB_OUTPUT"
+
       # Passes visuelles des banques photo (saisons, visages). Sans elles le
       # pipeline tourne quand même : les scripts Python sortent en 2 et les
       # portes Node lisent les annotations déjà persistées. On les installe pour
       # que le bot annote les NOUVELLES photos, sinon un visage n'est jamais
       # mesuré avant d'atterrir en banque.
       - name: Setup Python (analyse d'image des banques)
+        if: steps.visual.outputs.due == 'true'
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.11'
 
       - name: Install image deps
+        if: steps.visual.outputs.due == 'true'
         # OpenCV 5 a retiré les cascades de Haar (cv2.CascadeClassifier) :
         # la borne majeure est fonctionnelle, pas cosmétique.
         run: pip install --quiet "opencv-python-headless<5" Pillow
         continue-on-error: true
 
       - name: Detect faces in photo banks
+        if: steps.visual.outputs.due == 'true'
         run: node scripts/detect-photo-faces.js --update --sync
         continue-on-error: true
 
-      - name: Run full maintenance pipeline
-        id: pipeline
-        run: node scripts/maintain.js --update
-        continue-on-error: true
+      # Audit pixel — le seul contrôle qui REGARDE les images. Rapport seulement.
+      - name: Quebec photo bank pixel audit (report)
+        if: steps.visual.outputs.due == 'true'
+        run: python3 scripts/audit-quebec-backgrounds.py --width 900 --delay 0.5 || true
 
       # maintain.js écrit les JSON des banques et s'arrête. Les *-data.js
       # sont la copie que le site charge, et ce sont des assets du shell SW.

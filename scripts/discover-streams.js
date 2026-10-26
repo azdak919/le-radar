@@ -18,6 +18,9 @@
  *   node scripts/discover-streams.js
  *   node scripts/discover-streams.js --update
  *   node scripts/discover-streams.js --radio ckut
+ *   node scripts/discover-streams.js --update --failing-only
+ *     (passe quotidienne : seulement les flux absents, silencieux ou en
+ *      panne ; la passe complète + candidats tourne le lundi)
  */
 
 const fs = require('fs');
@@ -624,6 +627,7 @@ async function main() {
   const args = process.argv.slice(2);
   const doUpdate = args.includes('--update');
   const specific = args.find((a) => a.startsWith('--radio='))?.split('=')[1];
+  const failingOnly = args.includes('--failing-only');
 
   const radios = JSON.parse(fs.readFileSync(RADIOS_PATH, 'utf8'));
   let candidateRegistry = { candidates: [] };
@@ -641,6 +645,7 @@ async function main() {
 
   for (const radio of radios) {
     if (specific && radio.id !== specific) continue;
+    if (failingOnly && radio.stream && radio._streamStatus === 'working') continue;
 
     console.log(`→ ${radio.fullName || radio.name} (${radio.id})`);
 
@@ -675,7 +680,7 @@ async function main() {
   }
 
   // Probe radio candidates → auto-promote when a direct stream validates
-  const candidates = candidateRegistry.candidates || [];
+  const candidates = failingOnly ? [] : (candidateRegistry.candidates || []);
   if (candidates.length) {
     console.log('▸ Radio candidates\n');
   }
@@ -708,15 +713,17 @@ async function main() {
     }
   }
 
-  candidateRegistry.candidates = stillCandidates;
-  candidateRegistry._lastRun = new Date().toISOString();
+  if (!failingOnly) {
+    candidateRegistry.candidates = stillCandidates;
+    candidateRegistry._lastRun = new Date().toISOString();
+  }
 
   if (promoted) console.log(`Promoted ${promoted} radio candidate(s) to radios.json.`);
 
   if (doUpdate) {
     fs.writeFileSync(RADIOS_PATH, JSON.stringify(updatedRadios, null, 2) + '\n');
-    fs.writeFileSync(CANDIDATES_PATH, JSON.stringify(candidateRegistry, null, 2) + '\n');
-    console.log('✅ radios.json + radios-candidates.json updated.');
+    if (!failingOnly) fs.writeFileSync(CANDIDATES_PATH, JSON.stringify(candidateRegistry, null, 2) + '\n');
+    console.log(failingOnly ? '✅ radios.json updated (flux en panne seulement).' : '✅ radios.json + radios-candidates.json updated.');
   } else {
     console.log('Dry-run complete. Use --update to persist changes.');
   }

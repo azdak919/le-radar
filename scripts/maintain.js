@@ -315,9 +315,8 @@ async function main() {
     ['Quebec masthead university bank', `node scripts/maintain-quebec-backgrounds.js --profile universities ${flag}`.trim()],
     ['Quebec pomo landscape bank', `node scripts/maintain-quebec-backgrounds.js --profile pomo ${flag}`.trim()],
     ['Quebec nations/Inuit bank (shared)', `node scripts/maintain-quebec-backgrounds.js --profile nations ${flag}`.trim()],
-    // Audit pixel des banques — le seul contrôle qui REGARDE les images.
-    // Rapport seulement (jamais bloquant) : voir docs/maintenance.md.
-    ['Quebec photo bank pixel audit (report)', 'python3 scripts/audit-quebec-backgrounds.py --width 900 --delay 0.5 || true'],
+    // L'audit pixel et la détection de visages tournent dans maintain.yml,
+    // seulement si une banque a changé ou une fois par mois (lot C).
   ];
 
   for (const [label, cmd] of pipeline) {
