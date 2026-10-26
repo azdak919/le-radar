@@ -1,5 +1,5 @@
 # Dependencies (scripts are plain Node — no package.json required)
-node_modules/
+node_modules
 
 # Application native — artefacts générés (npm run mobile:sync)
 mobile/www/
