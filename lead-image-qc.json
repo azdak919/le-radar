@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-26T00:28:52.223Z",
+  "updated": "2026-10-26T03:55:14.544Z",
   "total": 175,
-  "withPhoto": 156,
+  "withPhoto": 157,
   "withStock": 39,
   "withCampusBank": 28,
   "fullyCovered": 175,
-  "leadReadyPhotos": 133,
-  "pageScraped": 30,
-  "photosRecovered": 30,
+  "leadReadyPhotos": 140,
+  "pageScraped": 29,
+  "photosRecovered": 29,
   "imagesCleared": 12,
-  "stockSearches": 43,
-  "stockFound": 35,
-  "campusBankFound": 24,
+  "stockSearches": 40,
+  "stockFound": 31,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -39,6 +39,12 @@
       "image": "https://i0.wp.com/journallagriffe.ca/wp-content/uploads/2026/10/Article1.png?fit=601%2C403&ssl=1"
     },
     {
+      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
+      "link": "https://journallagriffe.ca/2026/10/un-changement-daile-qui-pourrait-faire-senvoler-les-griffons-du-cegep-de-loutaouais/",
+      "reason": "no-stock-match",
+      "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1-1.png"
+    },
+    {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "link": "https://journallagriffe.ca/2026/10/gatineau-est-represente-dans-les-nominations-du-gala-de-ladisq/",
       "reason": "no-stock-match",
@@ -51,40 +57,34 @@
       "image": "https://i0.wp.com/journallagriffe.ca/wp-content/uploads/2026/10/Thomas1.jpg?fit=288%2C216&ssl=1"
     },
     {
-      "title": "The Honey Bank: CSU’s sustainability initiatives",
-      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     },
     {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "title": "Shawarm-off!",
+      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "CSU fails to reach quorum at special council meeting",
-      "link": "https://thelinknewspaper.ca/article/16488",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "La femme parfaite est un objet",
-      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
       "link": "https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
+      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     }
   ]
 }
