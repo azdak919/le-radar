@@ -631,6 +631,7 @@ function sportsUrgency(mode, game, now = Date.now()) {
   }
 
   // Résultat
+  if (sportsResultSpotlight(game, now)) return { tier: 0, sortMs: -t };
   if (sportsResultIsRecent(game, now)) {
     return { tier: 2, sortMs: -t }; // plus récent d’abord
   }
@@ -671,6 +672,8 @@ function sportsResultSlide(team, now = Date.now()) {
 
 function sportsNextStillUpcoming(game, now = Date.now()) {
   if (sportsGameIsLive(game, now)) return true;
+  // Régate sur plusieurs jours : encore « En cours » jusqu’à eventEnd.
+  if (game?.eventEnd && sportsMultiDayPhase(game, torontoDayKey(now)) === 'during') return true;
   const t = sportsGameMs(game);
   if (!Number.isFinite(t)) return true;
   return t >= now - SPORTS_LIVE_AFTER_MS;
@@ -1186,6 +1189,7 @@ function buildSportsSlides(data) {
         }
         continue;
       }
+      if (sportsSailAwaitingHidden(g, now)) continue;
       const n = sportsNextSlideFromGame(team, g, now);
       if (n) nexts.push(n);
     }
@@ -1193,6 +1197,9 @@ function buildSportsSlides(data) {
 
   // Résultats : plus récents d’abord (fraîcheur d’affichage).
   results.sort((a, b) => {
+    const sa = sportsResultSpotlight(a.game, now) ? 1 : 0;
+    const sb = sportsResultSpotlight(b.game, now) ? 1 : 0;
+    if (sa !== sb) return sb - sa;
     const ma = sportsGameMs(a.game) || 0;
     const mb = sportsGameMs(b.game) || 0;
     if (mb !== ma) return mb - ma;
@@ -1227,6 +1234,7 @@ function sportsNextSlidesSorted() {
     .filter((s) => s && s.mode === 'next')
     .filter((s) => {
       const ms = sportsGameMs(s.game);
+      if (s.game?.eventEnd && sportsMultiDayPhase(s.game, torontoDayKey(now)) === 'during') return true;
       return Number.isFinite(ms) && ms >= now - SPORTS_LIVE_AFTER_MS;
     })
     .slice()
@@ -1791,7 +1799,8 @@ function sportsChipTeamShort(team) {
   const sport = String(team?.sport || '').toLowerCase();
   const sailing = sport === 'sailing' || sport === 'voile';
   if (sailing) {
-    const club = String(team?.name || team?.shortName || '').trim();
+    const club = String(team?.shortName || team?.name || '').trim()
+      .replace(/\s+(sailing|voile)\s*$/i, '').trim();
     if (club) return club;
   }
   const args = {
@@ -1817,7 +1826,7 @@ function sportsChipTeamShort(team) {
 /** Adversaire sur puce — surnom + (sigle), comme l’équipe à domicile. */
 function sportsChipOpponentLabel(game) {
   if (sportsIsSailingGame(null, game)) {
-    return String(game?.opponent || game?.opponentFullName || 'Régate').trim();
+    return sportsSailEventShort(game) || 'Régate';
   }
   const full = String(game?.opponentFullName || '');
   const code = String(game?.opponentCode || '').toUpperCase();
@@ -1851,6 +1860,43 @@ function sportsPlaceEventShort(game) {
   if (comp) return comp;
   const opp = sportsPlainOpponentName(game);
   return opp;
+}
+
+/**
+ * Régate — libellé court pour les puces d’accueil (champ `opponentShort`
+ * du collecteur, sinon abrégé ici). Les noms complets restent dans /sports/.
+ */
+function sportsSailEventShort(game) {
+  const given = String(game?.opponentShort || '').trim();
+  if (given) return given;
+  let t = String(game?.opponent || game?.opponentFullName || '').replace(/\s+·\s+.*$/, '').trim();
+  t = t
+    .replace(/^championnats?\s+canadiens?\b/i, 'Canadiens')
+    .replace(/^championnats?\s+en\s+(\S)/i, (_, c) => c.toUpperCase())
+    .replace(/^championnats?\s+(régionaux|régional)\b/i, 'Régionaux')
+    .replace(/^championnats?\s+/i, 'Ch. ')
+    .replace(/\s+(de course\s+)?par\s+équipes?\b/i, ' équipes')
+    .replace(/\s+de course\b/i, '')
+    .replace(/^Canadiens\s+(de|en)\s+/, 'Canadiens ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  return t;
+}
+
+/** Résultats de régate détectés il y a moins de 24 h → priorité bandeau. */
+const SPORTS_SAIL_SPOTLIGHT_MS = 24 * 60 * 60 * 1000;
+function sportsResultSpotlight(game, now = Date.now()) {
+  const seen = Date.parse(String(game?.resultsSeenAt || ''));
+  if (!Number.isFinite(seen)) return false;
+  const age = now - seen;
+  return age >= 0 && age < SPORTS_SAIL_SPOTLIGHT_MS;
+}
+
+/** Régate terminée sans résultats publiés : pas choisie dans le bandeau. */
+function sportsSailAwaitingHidden(game, now = Date.now()) {
+  if (!game?.awaitingResults) return false;
+  const end = String(game?.eventEnd || game?.date || '').slice(0, 10);
+  return !!end && end < torontoDayKey(now);
 }
 
 function sportsIsSailingGame(team, game) {
@@ -2242,6 +2288,15 @@ function sportsWhenWord(slide) {
 
 function sportsMatchSubLine(slide) {
   const g = slide?.game || {};
+  if (sportsIsSailingGame(slide?.team, g)) {
+    // Régate : très court — la date vit dans la pastille.
+    const org = String(g.competitionShort || 'CICSA');
+    if (slide?.mode === 'result') {
+      return [sportsPlaceScoreText(g), org].filter(Boolean).join(' · ');
+    }
+    const pending = sportsMultiDayPhase(g, torontoDayKey()) === 'after' ? 'Résultats à venir' : '';
+    return [org, pending || sportsKickoffClock(g)].filter(Boolean).join(' · ');
+  }
   const tag = sportsMatchWhenTag(slide);
   const clock = sportsKickoffClock(g);
   let when = '';
@@ -2967,6 +3022,7 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
   const day = sportsGameDayKey(g, now) || sportsSlideDayKey(slide);
   if (slide.mode === 'next') {
     if (!sportsNextStillUpcoming(g, now) && !sportsGameIsLive(g, now)) return 99;
+    if (g.eventEnd && sportsMultiDayPhase(g, today) === 'during') return SPORTS_OPEN_TODAY_NEXT;
     if (day === today || sportsCtaKickoffWithinHour(g, now)) return SPORTS_OPEN_TODAY_NEXT;
     if (day === tomorrow) return SPORTS_OPEN_TOMORROW_NEXT;
     const ahead = sportsCivilDaysBetween(today, day);
@@ -2979,6 +3035,8 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
     return 99;
   }
   if (slide.mode === 'result') {
+    // Régate : résultats détectés il y a < 24 h → réaffichée en priorité.
+    if (sportsResultSpotlight(g, now)) return SPORTS_OPEN_TODAY_RESULT;
     if (day === today) return SPORTS_OPEN_TODAY_RESULT;
     if (day === yesterday) return SPORTS_OPEN_YESTERDAY;
     if (sportsResultIsRecent(g, now)) return SPORTS_OPEN_OLDER_RESULT;
@@ -3444,6 +3502,7 @@ function fillSportsCtaLayer(layer, slide) {
     const opp = sportsChipOpponentLabel(g);
     text.innerHTML = sportsIsSailingGame(src.team, g)
       ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__vs">·</span> `
         + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
       : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + sportsVsHtml(g)
@@ -4011,8 +4070,12 @@ function paintSportsChip(slide, animate = false) {
       // Régate / place : ne pas coller « McGill Sailing 7/12 ICSA Regional… »
       // en une ligne. Haut = équipe + place ; bas = date · compétition.
       const placeTxt = sportsPlaceScoreText(g);
-      inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-        + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
+      inner.innerHTML = sportsIsSailingGame(team, g)
+        ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+          + `<span class="sports-chip__vs">·</span> `
+          + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
+        : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+          + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {
       const scoreTxt = sportsLiveScoreText(g);
       inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
@@ -4040,6 +4103,7 @@ function paintSportsChip(slide, animate = false) {
     // Régate : club + épreuve, sans verbe de rencontre.
     inner.innerHTML = sportsIsSailingGame(team, g)
       ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__vs">·</span> `
         + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
       : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + sportsVsHtml(g)

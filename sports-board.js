@@ -209,6 +209,8 @@
 
   function armLiveRow(row) {
     if (!row) return;
+    // Régate terminée (résultats à venir) : jamais de scorebug « en direct ».
+    if (row.getAttribute('data-event-state') === 'awaiting') return;
     const score = row.querySelector('.sports-result__score');
     const badge = row.querySelector('.sports-result__badge');
     if (score && !score.hasAttribute('data-idle-html')) {

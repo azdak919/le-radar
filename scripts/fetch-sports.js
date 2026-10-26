@@ -559,6 +559,22 @@ function parseSailingDate(label, seasonHint = '') {
   return `${year}-${String(mon).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
 
+/** Ajoute eventStart / eventEnd (source officielle) aux régates d’une équipe ICSA. */
+async function enrichIcsaRegattaDates(team, cache) {
+  const games = [...(team.results || []), team.nextGame].filter(Boolean);
+  for (const g of games) {
+    const url = String(g.url || '');
+    if (!/^https:\/\/scores\.collegesailing\.org\/[fs]\d{2}\/[^/]+\/?$/.test(url)) continue;
+    if (!cache.has(url)) {
+      cache.set(url, fetchText(url).then(Cicsa.parseIcsaRegattaDates).catch(() => null));
+    }
+    const dates = await cache.get(url);
+    if (!dates) continue;
+    g.eventStart = dates.start;
+    g.eventEnd = dates.end;
+  }
+}
+
 function parseSailingSchoolPage(html, school) {
   const seasonHint = (html.match(/\/schools\/[^/]+\/([fs]\d{2})\//i) || [])[1]
     || (html.match(/Spring\s+(20\d{2})|Fall\s+(20\d{2})/i) || [])[0]
@@ -772,7 +788,11 @@ function mergeSailingResults(base, extra) {
   for (const game of [...(base.results || []), ...(extra.results || [])]) {
     if (!game) continue;
     const key = game.gameId || `${game.date}|${game.opponent}|${game.scoreFor}|${game.url}`;
-    if (seen.has(key)) continue;
+    if (seen.has(key)) {
+      const kept = results.find((g) => (g.gameId || '') === (game.gameId || '') && game.gameId);
+      if (kept && !kept.resultsSeenAt && game.resultsSeenAt) kept.resultsSeenAt = game.resultsSeenAt;
+      continue;
+    }
     seen.add(key);
     results.push(game);
   }
@@ -804,6 +824,7 @@ async function fetchSailingTeams(reg) {
   const out = {};
   const errors = [];
 
+  const icsaDateCache = new Map();
   for (const school of schools) {
     process.stderr.write(`sports: voile ${school.slug} (ICSA QC)… `);
     try {
@@ -818,6 +839,7 @@ async function fetchSailingTeams(reg) {
         continue;
       }
       team.province = 'QC';
+      await enrichIcsaRegattaDates(team, icsaDateCache);
       if (school.registryId) team.registryId = school.registryId;
       applyRegistryToTeam(team, reg);
       // McGill Sailing etc. : association étudiante, pas Redbirds/varsity.
@@ -845,7 +867,16 @@ async function fetchSailingTeams(reg) {
         fetchText(scoresUrl),
         fetchText(scheduleUrl),
       ]);
+      let resultsSeenBefore = {};
+      try {
+        resultsSeenBefore = Cicsa.collectResultsSeen((() => {
+          const prevRaw = JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'));
+          const P = require('./sports-payload-lib');
+          return P.isPacked(prevRaw) ? P.unpackSportsPayload(prevRaw) : prevRaw;
+        })());
+      } catch (_) { /* premier passage */ }
       const built = Cicsa.buildCicsaQcTeams(scoresCsv, scheduleCsv, {
+        resultsSeenBefore,
         seasonStartYear: cicsaCfg.seasonStartYear,
         seasonLabel: cicsaCfg.seasonLabel,
         clubs: cicsaCfg.clubs,

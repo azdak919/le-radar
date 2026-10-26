@@ -1017,6 +1017,34 @@ function sportsAddDaysYmd(ymd, days) {
   return dt.toISOString().slice(0, 10);
 }
 
+/**
+ * Régate sur plusieurs jours : « 24-25 oct. » / « 31 oct.-1 nov. » d’après
+ * eventStart / eventEnd (source officielle). Vide si un seul jour.
+ */
+function sportsEventRangeLabel(game, lang = 'fr') {
+  const a = String(game?.eventStart || '').slice(0, 10);
+  const b = String(game?.eventEnd || '').slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(a) || !/^\d{4}-\d{2}-\d{2}$/.test(b) || b <= a) return '';
+  const fa = formatSportsDate(a, lang);
+  const fb = formatSportsDate(b, lang);
+  if (a.slice(0, 7) === b.slice(0, 7)) {
+    const dayA = String(Number(a.slice(8, 10)));
+    return lang === 'en' ? fb.replace(/(\d+)/, `${dayA}-$1`) : fb.replace(/^(\d+)/, `${dayA}-$1`);
+  }
+  return `${fa}-${fb}`;
+}
+
+/** 'before' | 'during' | 'after' pour une régate datée par plage, sinon ''. */
+function sportsEventPhase(game) {
+  const a = String(game?.eventStart || '').slice(0, 10);
+  const b = String(game?.eventEnd || '').slice(0, 10);
+  if (!a || !b) return '';
+  const today = sportsYmdToronto();
+  if (today < a) return 'before';
+  if (today > b) return 'after';
+  return 'during';
+}
+
 /** Aujourd’hui / Hier / Demain si le jour civil Québec colle, sinon vide. */
 function sportsDayWord(iso, t) {
   const day = String(iso || '').slice(0, 10);
@@ -1351,7 +1379,8 @@ function sportsResultRows(team, t, lang) {
     const scoreAria = placeKind
       ? `${t.sportsPlace} ${sportsPlaceScoreText(last, lang) || `${last.scoreFor} / ${last.scoreAgainst}`}`
       : label;
-    const when = sportsDayWord(last.date, t) || formatSportsDate(last.date, lang);
+    const when = sportsEventRangeLabel(last, lang)
+      || sportsDayWord(last.date, t) || formatSportsDate(last.date, lang);
     const prior = !!(last.priorSeason || (!isSailing && team.lastGamePriorSeason));
     const priorClass = prior ? ' sports-result--prior-season' : '';
     const kindClass = placeKind ? 'place' : escapeHtml(last.result || 'D');
@@ -1369,10 +1398,14 @@ function sportsResultRows(team, t, lang) {
   <span class="${badgeClass}" title="${escapeHtml(label)}">${badge}</span>${priorMeta}
 </li>`);
   }
-  const next = team.nextGame;
+  const next = team.nextGame
+    ? { ...team.nextGame, opponent: String(team.nextGame.opponent || '').replace(/\s*·\s*résultats à venir\s*$/i, '') }
+    : null;
   if (next) {
     const live = sportsNextIsLive(next);
-    const dayWord = sportsDayWord(next.date, t);
+    const rangeLabel = sportsEventRangeLabel(next, lang);
+    const phase = sportsEventPhase(next);
+    const dayWord = rangeLabel || (phase ? '' : sportsDayWord(next.date, t));
     const kickClock = formatSportsClock(next.time, lang);
     const liveClock = live
       ? [kickClock, next.period].filter(Boolean).join(' · ')
@@ -1400,11 +1433,17 @@ function sportsResultRows(team, t, lang) {
   <span class="sports-result__badge" title="${escapeHtml(liveLabel)}"></span>
 </li>`);
     } else {
-      rows.push(`<li class="sports-result sports-result--next"${nextGid}>
-  <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
-  <span class="sports-result__score sports-result__score--next" aria-label="${escapeHtml(t.sportsUpcoming)}">${escapeHtml(t.sportsUpcoming)}</span>
+      // Régate terminée sans résultats / en cours : jamais « À venir ».
+      const state = phase === 'after' || next.awaitingResults
+        ? (t.sportsAwaitingResults || 'Résultats à venir')
+        : phase === 'during' ? (t.sportsInProgress || 'En cours') : t.sportsUpcoming;
+      const stateKey = phase === 'after' || next.awaitingResults ? ' data-event-state="awaiting"'
+        : phase === 'during' ? ' data-event-state="during"' : '';
+      rows.push(`<li class="sports-result sports-result--next"${nextGid}${stateKey}>
+  <time class="sports-result__time" datetime="${escapeHtml(next.eventStart || next.date || '')}">${timeHtml}</time>
+  <span class="sports-result__score sports-result__score--next" aria-label="${escapeHtml(state)}">${escapeHtml(state)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
-  <span class="sports-result__badge sports-result__badge--next" title="${escapeHtml(t.sportsUpcoming)}">→</span>
+  <span class="sports-result__badge sports-result__badge--next" title="${escapeHtml(state)}">→</span>
 </li>`);
     }
   }
@@ -1976,4 +2015,4 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, spor
   return { pages, model };
 }
 
-module.exports = { buildEntityPages, ROUTES };
+module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase };

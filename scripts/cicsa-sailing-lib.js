@@ -146,6 +146,27 @@ function qcBoat(raw) {
   return { registryId, boat: boat === '1' ? '' : boat };
 }
 
+/**
+ * Libellé très court d’une régate pour la puce d’accueil :
+ * « Championnat canadien par équipes » → « Canadiens équipes ».
+ */
+function sailingNameShort(frName) {
+  let t = String(frName || '').replace(/\s+·\s+équipage.*$/i, '').trim();
+  t = t
+    .replace(/^championnats?\s+canadiens?\b/i, 'Canadiens')
+    .replace(/^championnats?\s+(nord-américains?|nord-americains?)\b/i, 'Nord-Am.')
+    .replace(/^championnats?\s+en\s+(\S)/i, (_, c) => c.toUpperCase())
+    .replace(/^championnats?\s+(régionaux|régional)\b/i, 'Régionaux')
+    .replace(/^championnats?\s+/i, 'Ch. ')
+    .replace(/\s+(de course\s+)?par\s+équipes?\b/i, ' équipes')
+    .replace(/\s+de course\b/i, '')
+    .replace(/^Canadiens\s+(de|en)\s+/, 'Canadiens ')
+    .replace(/\s+(du|de la|des|de)\s+Québec\b/i, ' QC')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  return t || String(frName || '').trim();
+}
+
 function eventFr(name) {
   return sailingNameFr(name);
 }
@@ -437,6 +458,12 @@ function resultEntry(event, boatRow, club, urls) {
     scoreFor: place,
     scoreAgainst: field,
     notScored: boatRow.notScored || undefined,
+    // Vraie plage de l’épreuve (en-tête de la feuille CICSA).
+    eventStart: event.start || undefined,
+    eventEnd: event.end || undefined,
+    // Libellés courts pour la puce d’accueil (noms complets ailleurs).
+    opponentShort: sailingNameShort(fr),
+    competitionShort: 'CICSA',
   };
   if (place <= 3) entry.result = 'W';
   else if (place <= Math.ceil(field / 2)) entry.result = 'D';
@@ -466,6 +493,8 @@ function nextEntry(event, club, urls) {
     sport: 'sailing',
     scoreKind: 'place',
     competition: 'Voile universitaire · CICSA',
+    opponentShort: sailingNameShort(fr),
+    competitionShort: 'CICSA',
     url: urls.schedule,
     // Régate sur plusieurs jours : vraie plage (jamais la date de collecte).
     eventStart: event.start,
@@ -507,6 +536,9 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
     schedule: options.scheduleUrl || 'https://cicsailing.ca/season-schedule',
   };
   const clubs = clubById(options.clubs);
+  const seenBefore = options.resultsSeenBefore && typeof options.resultsSeenBefore === 'object'
+    ? options.resultsSeenBefore : {};
+  const nowIso = options.nowIso || new Date().toISOString();
   const scoreRows = parseCsv(scoresCsv);
   const scheduleRows = parseCsv(scheduleCsv);
   const standings = parseSeasonTables(scoreRows);
@@ -546,6 +578,10 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
       ensure(boatRow.boat.registryId);
       const club = clubs[boatRow.boat.registryId] || { registryId: boatRow.boat.registryId };
       const entry = resultEntry(enriched, { ...boatRow, boat: boatRow.boat.boat }, club, urls);
+      if (entry) {
+        // Première détection des résultats : horodatage figé (jamais réinitialisé).
+        entry.resultsSeenAt = seenBefore[entry.gameId] || nowIso;
+      }
       if (entry && entry.date && entry.date <= today) results[boatRow.boat.registryId].push(entry);
     }
   }
@@ -644,8 +680,50 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
   return { teams, standings, events, schedule };
 }
 
+/** gameId → resultsSeenAt d’un sports.json précédent (pour ne pas réinitialiser). */
+function collectResultsSeen(data) {
+  const out = {};
+  for (const team of Object.values(data?.teams || {})) {
+    for (const g of [team?.lastGame, ...(team?.results || [])]) {
+      if (!g || !g.gameId || out[g.gameId]) continue;
+      if (g.resultsSeenAt) out[g.gameId] = g.resultsSeenAt;
+      // Résultat déjà connu avant l’horodatage : fin de journée de l’épreuve,
+      // pour ne pas remettre en vedette d’anciennes régates au déploiement.
+      else if (/^cicsa:/.test(g.gameId) && /^\d{4}-\d{2}-\d{2}/.test(String(g.date || ''))) {
+        out[g.gameId] = `${String(g.date).slice(0, 10)}T23:59:00-04:00`;
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * Page d’une régate ICSA (techscore) : champ officiel « Date »
+ * (« September 12-13, 2026 », « October 31-November 1, 2026 », « October 3, 2026 »).
+ * Fin seulement si la source la donne — jamais devinée.
+ */
+function parseIcsaRegattaDates(html) {
+  const m = String(html || '').match(/page-info-key">Date<\/span>\s*<span[^>]*>\s*<time[^>]*>([^<]+)<\/time>/i);
+  if (!m) return null;
+  const txt = String(m[1]).replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+  const r = txt.match(/^([A-Za-z]+)\.?\s+(\d{1,2})(?:\s*[-–]\s*(?:([A-Za-z]+)\.?\s+)?(\d{1,2}))?,\s*(\d{4})$/);
+  if (!r) return null;
+  const m1 = MONTHS[r[1].toLowerCase()];
+  const m2 = r[3] ? MONTHS[r[3].toLowerCase()] : m1;
+  if (!m1 || !m2) return null;
+  const y = Number(r[5]);
+  const y2 = m2 < m1 ? y + 1 : y;
+  const iso = (yy, mm, dd) => `${yy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+  const start = iso(y, m1, Number(r[2]));
+  const end = r[4] ? iso(y2, m2, Number(r[4])) : start;
+  return { start, end, label: txt };
+}
+
 module.exports = {
+  parseIcsaRegattaDates,
   sailingNameFr,
+  sailingNameShort,
+  collectResultsSeen,
   parseCsv,
   torontoYmd,
   qcBoat,

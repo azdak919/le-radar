@@ -152,3 +152,22 @@ test('absence confirmée par rapport de régate : pas de résultat', () => {
   for (const [en, fr] of Object.entries(cases)) assert.equal(sailingNameFr(en), fr);
   console.log('sailing FR names OK');
 }
+
+test('libellé court et resultsSeenAt figé à la première détection', () => {
+  const { sailingNameShort, collectResultsSeen } = require(join(dirname(fileURLToPath(import.meta.url)), '..', 'scripts/cicsa-sailing-lib.js'));
+  assert.equal(sailingNameShort('Championnat canadien par équipes'), 'Canadiens équipes');
+  assert.equal(sailingNameShort('Championnat canadien par équipes · équipage B'), 'Canadiens équipes');
+  const first = buildCicsaQcTeams(SCORES, SCHEDULE, { clubs: CLUBS, today: '2026-10-26', nowIso: '2026-10-26T10:00:00Z' });
+  const prev = collectResultsSeen(first);
+  const ids = Object.keys(prev);
+  assert.ok(ids.length > 0, 'des résultats horodatés');
+  assert.ok(Object.values(prev).every((v) => v === '2026-10-26T10:00:00Z'));
+  const again = buildCicsaQcTeams(SCORES, SCHEDULE, {
+    clubs: CLUBS, today: '2026-10-27', nowIso: '2026-10-27T10:00:00Z', resultsSeenBefore: prev,
+  });
+  const after = collectResultsSeen(again);
+  for (const id of ids) assert.equal(after[id], '2026-10-26T10:00:00Z', 'jamais réinitialisé');
+  for (const team of Object.values(again.teams)) {
+    for (const g of team.results) assert.ok(g.opponentShort && g.competitionShort === 'CICSA');
+  }
+});

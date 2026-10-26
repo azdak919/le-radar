@@ -219,3 +219,28 @@ assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
   assert.equal(ctx.api.sportsDayRangeShort('2026-10-24', '2026-10-25'), '24-25 oct.');
   assert.equal(ctx.api.sportsDayRangeShort('2026-10-31', '2026-11-01'), '31 oct.-1 nov.');
 }
+
+// Voile 2026-10-26 : régate terminée sans résultats → hors bandeau ;
+// résultats détectés → priorité 24 h depuis resultsSeenAt, puis normal.
+{
+  const ctx = { Date, Number, String, torontoDayKey: (v = Date.now()) => new Date(v).toISOString().slice(0, 10) };
+  vm.runInNewContext(
+    `${sourceBetween('function sportsSailEventShort', 'function sportsIsSailingGame')}
+     this.api = { sportsSailEventShort, sportsResultSpotlight, sportsSailAwaitingHidden };`,
+    ctx,
+  );
+  const seen = '2026-10-27T14:00:00Z';
+  const at = (h) => Date.parse(seen) + h * 3600 * 1000;
+  const g = { resultsSeenAt: seen, scoreFor: 3, scoreAgainst: 14 };
+  assert.equal(ctx.api.sportsResultSpotlight(g, at(0)), true, '0 h : prioritaire');
+  assert.equal(ctx.api.sportsResultSpotlight(g, at(23)), true, '23 h : encore prioritaire');
+  assert.equal(ctx.api.sportsResultSpotlight(g, at(25)), false, '25 h : redevenu normal');
+  assert.equal(ctx.api.sportsResultSpotlight({ scoreFor: 3 }, at(0)), false, 'sans horodatage : jamais');
+  const awaiting = { awaitingResults: true, eventStart: '2026-10-24', eventEnd: '2026-10-25' };
+  assert.equal(ctx.api.sportsSailAwaitingHidden(awaiting, Date.parse('2026-10-26T15:00:00Z')), true);
+  assert.equal(ctx.api.sportsSailAwaitingHidden({ ...awaiting, awaitingResults: false }, Date.parse('2026-10-25T15:00:00Z')), false);
+  assert.equal(ctx.api.sportsSailEventShort({ opponent: 'Championnat canadien par équipes' }), 'Canadiens équipes');
+  assert.equal(ctx.api.sportsSailEventShort({ opponent: 'X', opponentShort: 'Court' }), 'Court');
+  assert.ok(sportsSrc.includes('if (sportsSailAwaitingHidden(g, now)) continue;'), 'bandeau : régate en attente non choisie');
+  assert.ok(sportsSrc.includes('if (sportsResultSpotlight(game, now)) return { tier: 0'), 'bandeau : spotlight 24 h prioritaire');
+}
