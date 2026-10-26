@@ -1,11 +1,13 @@
 {
-  "checkedAt": "2026-10-25T01:03:58.176Z",
+  "checkedAt": "2026-10-26T01:06:32.286Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 5,
+    "drift": [
+      "cism"
+    ],
     "overhaul": [],
     "unreachable": []
   },
@@ -24,11 +26,43 @@
       "id": "cism",
       "published": 110,
       "fresh": 110,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "added": [
+        "dim 01:00–06:00 Mix franco",
+        "dim 06:00–07:00 Genre de bleu",
+        "dim 07:00–08:00 Par mots et par vaux",
+        "dim 08:00–09:00 Le 120e parallèle",
+        "dim 09:00–10:00 Ya Raï",
+        "dim 10:00–11:00 Effets sonores",
+        "dim 11:00–13:00 Les sirènes",
+        "dim 13:00–15:00 Le char de marge",
+        "dim 15:00–16:00 La Grapevine",
+        "dim 16:00–17:00 Le grand repos",
+        "dim 17:00–19:00 Symbiose",
+        "dim 19:00–20:30 London café (reprise)",
+        "dim 20:30–23:00 Mix Anglo",
+        "dim 23:00–01:00 Basses fréquences (reprise)",
+        "sam 00:00–01:00 Rythmologie (reprise)"
+      ],
+      "removed": [
+        "dim 00:00–02:00 Basses fréquences (reprise)",
+        "dim 02:00–07:00 Mix franco",
+        "dim 07:00–08:00 Genre de bleu",
+        "dim 08:00–09:00 Par mots et par vaux",
+        "dim 09:00–10:00 Le 120e parallèle",
+        "dim 10:00–11:00 Ya Raï",
+        "dim 11:00–12:00 Effets sonores",
+        "dim 12:00–14:00 Les sirènes",
+        "dim 14:00–16:00 Le char de marge",
+        "dim 16:00–17:00 La Grapevine",
+        "dim 17:00–18:00 Le grand repos",
+        "dim 18:00–20:00 Symbiose",
+        "dim 20:00–21:30 London café (reprise)",
+        "dim 21:30–00:00 Mix Anglo",
+        "sam 00:00–02:00 Rythmologie (reprise)"
+      ],
+      "changed": 30,
+      "ratio": 0.273,
+      "status": "drift"
     },
     {
       "id": "ckut",
