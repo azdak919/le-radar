@@ -1,32 +1,27 @@
 {
-  "updated": "2026-10-26T19:10:19.043Z",
+  "updated": "2026-10-26T20:53:59.592Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 174531
+      "ms": 130579
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 100445
+      "ms": 42720
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 116605
+      "ms": 86302
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 104901
-    },
-    {
-      "step": "Quebec photo bank pixel audit (report)",
-      "ok": true,
-      "ms": 346980
+      "ms": 81834
     }
   ],
   "summary": {
@@ -36,26 +31,26 @@
       "dead": 0,
       "stale": 5,
       "candidates": 5,
-      "articles": 175,
-      "withAuthor": 175,
-      "withExcerpt": 175,
+      "articles": 178,
+      "withAuthor": 178,
+      "withExcerpt": 178,
       "authorQc": {
         "ok": true,
         "mismatches": 18
       },
       "leadImageQc": {
-        "fullyCovered": 175,
-        "withPhoto": 157,
+        "fullyCovered": 178,
+        "withPhoto": 160,
         "withStock": 39,
-        "leadReadyPhotos": 139,
-        "pageScraped": 28,
+        "leadReadyPhotos": 137,
+        "pageScraped": 33,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": false,
-        "withCredit": 156,
-        "cited": 103,
-        "pending": 38,
+        "withCredit": 159,
+        "cited": 106,
+        "pending": 37,
         "missingHero": 0
       }
     },
@@ -67,7 +62,7 @@
         "lastSessionId": "automne"
       },
       "universities": {
-        "count": 129,
+        "count": 130,
         "maxBank": 200,
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
@@ -91,7 +86,7 @@
     },
     "radios": {
       "listed": 6,
-      "withStream": 5,
+      "withStream": 6,
       "candidates": 4
     },
     "coverage": {

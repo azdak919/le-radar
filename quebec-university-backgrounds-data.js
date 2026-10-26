@@ -1745,5 +1745,17 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     place: "McGill",
     campus: true,
     tags: ["mat", "campus"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/d/d2/Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_%28UQAM%29_-_Montreal%2C_Canada_-_DSC08309.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Daderot",
+    link: "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20du%20Qu%C3%A9bec%20%C3%A0%20Montr%C3%A9al%20(UQAM)%20-%20Montreal%2C%20Canada%20-%20DSC08309.jpg",
+    license: "CC0",
+    title: "Université du Québec à Montréal (UQAM) - Montreal, Canada - DSC08309",
+    width: 3648,
+    height: 5472,
+    place: "UQAM",
+    campus: true,
+    tags: ["mat", "campus"],
   }
 ];
