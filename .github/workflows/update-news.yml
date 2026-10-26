@@ -268,7 +268,20 @@ jobs:
             assets/news-images assets/stock-images stock-images-map.js data/image-health.json
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)
-          git add "${DATA_FILES[@]}" 2>/dev/null || true
+          # Un seul chemin absent (ex. data/archive-inbox-applied.json avant
+          # le premier lot fusionné) fait échouer tout `git add` (pathspec) :
+          # news.json partait alors sans être indexé alors que index.html,
+          # lui, était commité (JSON-LD ≠ news.json, Vérification rouge).
+          # On n'ajoute donc que les chemins qui existent ou sont suivis.
+          add_existing() {
+            local path
+            for path in "$@"; do
+              if [ -e "$path" ] || git ls-files --error-unmatch -- "$path" >/dev/null 2>&1; then
+                git add -A -- "$path"
+              fi
+            done
+          }
+          add_existing "${DATA_FILES[@]}"
           # Lot E : catalogue mensuel data/archives/ ; -A publie aussi un mois retiré
           # et la suppression de l'ancien news-archive.json monolithique.
           git add -A data/archives 2>/dev/null || true
@@ -282,7 +295,7 @@ jobs:
             SEO_OK=true
           fi
           if [ "$SEO_OK" = true ]; then
-            git add "${SEO_FILES[@]}" 2>/dev/null || true
+            add_existing "${SEO_FILES[@]}"
             # Pages d'entités : dossiers entièrement régénérés. `-A` est
             # indispensable — sans lui, une fiche retirée resterait en ligne.
             git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
