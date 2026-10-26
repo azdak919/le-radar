@@ -951,16 +951,6 @@
       "via": "resize-proxy",
       "nameKey": "image-article-multi-ludovic-dufresne.jpeg"
     },
-    "989d7323d3b01955": {
-      "local": "assets/news-images/989d7323d3b01955.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_0207.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 141764,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-25T17:19:13.118Z",
-      "via": "resize-proxy",
-      "nameKey": "img_0207.jpg"
-    },
     "71e1ca02eb9d08be": {
       "local": "assets/news-images/71e1ca02eb9d08be.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/10-11_Illu-place-ecologie-.jpg",
@@ -1550,10 +1540,30 @@
       "updatedAt": "2026-10-26T13:09:15.342Z",
       "via": "resize-proxy",
       "nameKey": "translaw4.jpeg"
+    },
+    "2b6092140aa402cc": {
+      "local": "assets/news-images/2b6092140aa402cc.png",
+      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/Screenshot-2026-10-24-at-8.08.38-PM-724x620.png",
+      "host": "www.mcgilldaily.com",
+      "bytes": 151595,
+      "contentType": "image/png",
+      "updatedAt": "2026-10-26T16:13:07.192Z",
+      "via": "origin",
+      "nameKey": "screenshot-2026-10-24-at-8.08.38-pm.png"
+    },
+    "24a6185287e92457": {
+      "local": "assets/news-images/24a6185287e92457.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/photo-troisioo.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 947938,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-26T16:13:07.372Z",
+      "via": "origin",
+      "nameKey": "photo-troisioo.jpg"
     }
   },
-  "updatedAt": "2026-10-26T13:09:15.344Z",
-  "count": 155,
+  "updatedAt": "2026-10-26T16:13:07.374Z",
+  "count": 156,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

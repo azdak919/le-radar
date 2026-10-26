@@ -1,12 +1,12 @@
 {
-  "updated": "2026-10-26T13:06:47.677Z",
+  "updated": "2026-10-26T16:12:33.054Z",
   "total": 175,
   "pool": 58,
-  "incomplete": 13,
+  "incomplete": 10,
   "withLeadExcerpt": 118,
-  "candidates": 13,
-  "enriched": 5,
-  "failed": 3,
+  "candidates": 10,
+  "enriched": 4,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -19,40 +19,13 @@
       "changed": false
     },
     {
-      "title": "“This Was Missing In Montreal”",
-      "link": "https://www.mcgilldaily.com/2026/10/this-was-missing-in-montreal/",
-      "ok": true,
-      "score": 100,
-      "chars": 396,
-      "sample": "Genre and tone must also be considered. “I like dramas and intense stuff,” he says, but admits that ",
-      "changed": true
-    },
-    {
-      "title": "Celebrating CAEO Québec’s 50th Anniversary",
-      "link": "https://www.mcgilldaily.com/2026/10/celebrating-caeo-quebecs-50th-anniversary/",
-      "ok": true,
-      "score": 100,
-      "chars": 382,
-      "sample": "The Daily spoke with Kimberly Wong, current director general of SILK, and Gregg Blachford, former pr",
-      "changed": true
-    },
-    {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
-      "ok": true,
-      "score": 100,
-      "chars": 345,
-      "sample": "In late 2025, Quebec banned the use of gender-inclusive language in all government communications wr",
-      "changed": true
-    },
-    {
       "title": "The Price of Staying Home",
       "link": "https://www.mcgilldaily.com/2026/10/the-price-of-staying-home/",
       "ok": true,
       "score": 70,
       "chars": 400,
       "sample": "When thinking about the “McGill Experience,” a plethora of feelings and images spring into mind: see",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Say “Coffee” Again! I Dare You.",
@@ -80,6 +53,33 @@
       "chars": 400,
       "sample": "C’est jour de référendum en Alberta. Même si, pour certains l’indépendance semble hors d’atteinte, l",
       "changed": false
+    },
+    {
+      "title": "Fin de la saison de chasse à l’orignal 2026 au Saguenay-Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/10/19/fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean",
+      "ok": true,
+      "score": 100,
+      "chars": 313,
+      "sample": "Les dix zones d’exploitation contrôlées (ZEC) au Saguenay accueillent chaque année plusieurs chasseu",
+      "changed": true
+    },
+    {
+      "title": "Grabuge au Minotaure avec Have No Heroes et Fair Do’S",
+      "link": "https://journallagriffe.ca/2026/10/grabuge-au-minotaure-avec-have-no-heroes-et-fair-dos/",
+      "ok": true,
+      "score": 82,
+      "chars": 400,
+      "sample": "Le 2 septembre dernier, au bar le Minotaure de Gatineau, s’est déroulé le fulgurant premier concert ",
+      "changed": false
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-13/",
+      "ok": true,
+      "score": 84,
+      "chars": 130,
+      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
+      "changed": true
     }
   ]
 }
