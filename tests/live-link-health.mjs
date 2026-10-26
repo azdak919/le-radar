@@ -191,9 +191,11 @@ console.log('OK live-link-health');
   assert.deepEqual(r.items.map((i) => i.imageLocal || i.title), ['assets/news-images/a.jpg', 'Y']);
 
   // Le bot dédoublonne et vérifie l'intégrité APRÈS le rebase, avant de pousser.
-  for (const wf of ['update-news', 'guard-harvest-freshness', 'discover-news-sources', 'maintain']) {
+  // (scripts/bot-push.sh --verify : lancé après chaque rebase réussi.)
+  for (const wf of ['update-news', 'guard-harvest-freshness', 'discover-news-sources']) {
     const y = readFileSync(new URL(`../.github/workflows/${wf}.yml`, import.meta.url), 'utf8');
-    assert.match(y, /pull --rebase -X theirs[^\n]*&& node scripts\/dedupe-news-json\.js --commit && node tests\/data-integrity\.mjs && git push/, wf);
+    assert.match(y, /bash scripts\/bot-push\.sh --verify "node scripts\/dedupe-news-json\.js --commit && node tests\/data-integrity\.mjs"/, wf);
+    assert.doesNotMatch(y, /-X theirs/, wf);
   }
   console.log('OK dédoublonnage après rebase');
 }

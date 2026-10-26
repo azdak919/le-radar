@@ -24,8 +24,10 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: update-sports-${{ github.ref }}
-  cancel-in-progress: true
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
+  cancel-in-progress: false
+  queue: max
 
 jobs:
   aggregate:
@@ -84,13 +86,4 @@ jobs:
             exit 0
           fi
           git commit -m "chore(sports): refresh RSEQ results"
-          # Fichiers générés : en cas de conflit avec un commit concurrent,
-          # -X theirs garde la version fraîchement produite par ce bot.
-          for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
-            git rebase --abort 2>/dev/null || true
-            echo "push attempt $i failed, retrying…"
-            sleep $((i * 3))
-          done
-          echo "::error::could not push sports update after retries"
-          exit 1
+          bash scripts/bot-push.sh --regen "node scripts/generate-seo.js --update --sports-only" --redo "node scripts/fetch-sports.js --update && node scripts/generate-seo.js --update --sports-only && git add sports.json sports-masthead.json sports-live-window.json sports/index.html en/sports/index.html && { git diff --staged --quiet || git commit -qm 'chore(sports): refresh RSEQ results'; }"

@@ -8,8 +8,10 @@ on:
 
 # Never run two stream-update jobs against the same ref at once.
 concurrency:
-  group: update-streams-${{ github.ref }}
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
   cancel-in-progress: false
+  queue: max
 
 jobs:
   discover:
@@ -73,17 +75,6 @@ jobs:
           git commit -m "bot: update discovered streams (auto)"
           # Rebase onto any work pushed since checkout so the bot never
           # clobbers manual commits and never fails on a fast-forward race.
-          # Fichiers générés : en cas de conflit avec un commit concurrent,
-          # -X theirs garde la version fraîchement produite par ce bot, et un
-          # rebase interrompu est abandonné avant la tentative suivante —
-          # sinon les retries échouent tous sur « unmerged files ».
-          for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
-            git rebase --abort 2>/dev/null || true
-            echo "push attempt $i failed, retrying…"
-            sleep $((i * 3))
-          done
-          echo "::error::could not push bot update after retries"
-          exit 1
+          bash scripts/bot-push.sh --regen "node scripts/generate-seo.js --update"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

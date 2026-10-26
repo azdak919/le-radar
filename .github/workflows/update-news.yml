@@ -27,8 +27,10 @@ on:
 # radio/sports ne doit pas tuer un fetch déjà parti. Manuel = groupe à part
 # pour ne jamais attendre derrière le cron.
 concurrency:
-  group: update-news-${{ github.event_name == 'workflow_dispatch' && 'manual' || github.ref }}
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
   cancel-in-progress: false
+  queue: max
 
 jobs:
   aggregate:
@@ -286,14 +288,7 @@ jobs:
             MSG='bot: update student news feed (auto; HTML gate deferred)'
           fi
           git commit -m "$MSG" || exit 0
-          for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs && git push && exit 0
-            git rebase --abort 2>/dev/null || true
-            echo "push attempt $i failed, retrying…"
-            sleep $((i * 3))
-          done
-          echo "::error::could not push bot update after retries"
-          exit 1
+          bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

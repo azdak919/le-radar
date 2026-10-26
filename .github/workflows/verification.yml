@@ -43,6 +43,10 @@ concurrency:
 
 jobs:
   test:
+    # Les commits des bots (« LE-RADAR … Bot », github-actions[bot]) sont déjà
+    # contrôlés par le bot gate (scripts/bot-prepush-check.sh) avant le push :
+    # on ne relance pas toute la suite Playwright à chaque battement de données.
+    if: ${{ github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]')) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:

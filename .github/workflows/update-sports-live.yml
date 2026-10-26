@@ -79,14 +79,7 @@ jobs:
               return 0
             fi
             git commit -m "chore(sports): refresh live RSEQ scores"
-            for i in 1 2 3; do
-              git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && return 0
-              git rebase --abort 2>/dev/null || true
-              echo "push attempt $i failed, retrying…"
-              sleep $((i * 3))
-            done
-            echo "::error::could not push live sports update after retries"
-            return 1
+            bash scripts/bot-push.sh --redo "node scripts/fetch-sports.js --update --live && git add sports.json sports-masthead.json sports-live-window.json && { git diff --staged --quiet || git commit -qm 'chore(sports): refresh live RSEQ scores'; }"
           }
           pass=1
           fails=0
@@ -108,7 +101,7 @@ jobs:
             fi
             pass=$((pass + 1))
             sleep "$LIVE_SLEEP_SECONDS"
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || git rebase --abort 2>/dev/null || true
+            git pull -q --rebase origin "${GITHUB_REF_NAME}" || git rebase --abort 2>/dev/null || true
           done
           echo "LIVE_PASSES_RUN=$pass" >> "$GITHUB_ENV"
           echo "LIVE_SOURCE_FAILS=$fails" >> "$GITHUB_ENV"

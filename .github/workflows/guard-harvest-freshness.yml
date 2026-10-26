@@ -9,8 +9,10 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: guard-harvest-${{ github.ref }}
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
   cancel-in-progress: false
+  queue: max
 
 jobs:
   guard:
@@ -122,11 +124,4 @@ jobs:
             exit 0
           fi
           git commit -m "chore(ops): harvest freshness catch-up"
-          for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs && git push && exit 0
-            git rebase --abort 2>/dev/null || true
-            echo "push attempt $i failed, retrying…"
-            sleep $((i * 3))
-          done
-          echo "::error::could not push harvest catch-up after retries"
-          exit 1
+          bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"

@@ -8,8 +8,10 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: retro-crawl-historical-${{ github.ref }}
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
   cancel-in-progress: false
+  queue: max
 
 jobs:
   crawl:
@@ -60,8 +62,6 @@ jobs:
           git add news-archive.json historical-crawl-state.json sitemap-archives.xml llms.txt
           git add -A archives journaux en
           git commit -m "bot: retro-crawl historical metadata (auto)" || exit 0
-          # Un push concurrencé par le bot d’actualités sera repris à la passe
-          # suivante; ne pas transformer cet aléa en notification d’échec.
-          git push || echo "Push deferred: next scheduled pass will retry."
+          bash scripts/bot-push.sh --regen "node scripts/generate-seo.js --update"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

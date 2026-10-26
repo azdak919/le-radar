@@ -22,8 +22,10 @@ on:
         default: '20'
 
 concurrency:
-  group: archive-articles
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
   cancel-in-progress: false
+  queue: max
 
 jobs:
   archive:
@@ -68,13 +70,6 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add archive-status.json
           git commit -m "bot: archive student articles in the Wayback Machine (auto)" || exit 0
-          for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
-            git rebase --abort 2>/dev/null || true
-            echo "push attempt $i failed, retrying…"
-            sleep $((i * 3))
-          done
-          echo "::error::could not push archive update after retries"
-          exit 1
+          bash scripts/bot-push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

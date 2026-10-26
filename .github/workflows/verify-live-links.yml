@@ -8,8 +8,10 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: verify-live-links-${{ github.ref }}
+  # Un seul écrivain de données à la fois sur main (file d'attente FIFO).
+  group: data-writers
   cancel-in-progress: false
+  queue: max
 
 jobs:
   verify:
@@ -48,7 +50,6 @@ jobs:
           git add index.html sitemap.xml sitemap-archives.xml llms.txt
           git add -A radios journaux etablissements medias horaires en archives
           git commit -m "bot: drop articles whose source page is gone (auto)" || exit 0
-          git pull --rebase --autostash origin main
-          git push
+          bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
