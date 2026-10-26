@@ -1,17 +1,38 @@
 {
-  "updated": "2026-10-26T10:12:49.209Z",
+  "updated": "2026-10-26T13:12:03.618Z",
   "total": 175,
-  "withImage": 156,
-  "withCredit": 156,
-  "cited": 102,
+  "withImage": 155,
+  "withCredit": 155,
+  "cited": 101,
   "pending": 39,
   "missingHero": 0,
   "ok": false,
-  "checked": 44,
-  "updatedCount": 5,
-  "citedNew": 4,
+  "checked": 46,
+  "updatedCount": 8,
+  "citedNew": 6,
   "fallbackNew": 40,
   "samples": [
+    {
+      "title": "“This Was Missing In Montreal”",
+      "source": "The McGill Daily",
+      "credit": "Photo : Niccolò Fioriti",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Trans Law Collective Dismantles Legal Barriers for Montreal’s Queer Community",
+      "source": "The McGill Daily",
+      "credit": "Photo : Finn Jacobsen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "The Price of Staying Home",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
       "source": "La Griffe",
