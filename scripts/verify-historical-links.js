@@ -11,6 +11,7 @@ const https = require('https');
 const path = require('path');
 const { isAllowedFetchUrl } = require('./url-security-lib');
 
+const { withPendingInboxes, queueArchiveChanges } = require('./archive-inbox-lib');
 const ARCHIVE = path.join(__dirname, '..', 'news-archive.json');
 const update = process.argv.includes('--update');
 const limitArg = process.argv.find((arg) => arg.startsWith('--limit='));
@@ -55,7 +56,9 @@ function due(record) {
 }
 
 async function main() {
-  const catalog = JSON.parse(fs.readFileSync(ARCHIVE, 'utf8'));
+  // Lecture seule : news-archive.json appartient à Update Student News.
+  const catalog = withPendingInboxes(JSON.parse(fs.readFileSync(ARCHIVE, 'utf8')));
+  const before = JSON.parse(JSON.stringify(catalog));
   const dueRecords = (catalog.records || []).filter((record) => {
     if (!record?.originalUrl || !due(record)) return false;
     return !sourceFilter || String(record.source || '').toLocaleLowerCase('fr-CA') === sourceFilter;
@@ -91,7 +94,10 @@ async function main() {
   }
   catalog.updated = new Date().toISOString();
   console.log(`Liens historiques${sourceFilter ? ` (${sourceFilter})` : ''} : ${candidates.length} contrôlé(s); ${available} accessibles, ${missing} disparus, ${unreachable} injoignables.`);
-  if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(catalog) + '\n');
+  if (update) {
+    const queued = queueArchiveChanges('verify-historical-links', before, catalog);
+    console.log(`Boîte d'envoi : ${queued} fiche(s) pour Update Student News.`);
+  }
   else console.log('Dry-run — utilisez --update pour enregistrer les statuts.');
 }
 

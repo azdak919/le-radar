@@ -34,15 +34,11 @@ jobs:
         # cette garde évite qu’un incident inattendu ne génère un courriel de
         # Vérification pour un chantier expérimental.
         continue-on-error: true
-      - name: Regenerate the public sample
-        if: steps.links.outcome == 'success'
-        run: node scripts/generate-seo.js --update
-        continue-on-error: true
       - name: Pre-push integrity (bot gate)
         if: steps.links.outcome == 'success'
         timeout-minutes: 8
         run: |
-          if git diff --quiet; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No diff — skip prepush."
             exit 0
           fi
@@ -50,15 +46,16 @@ jobs:
       - name: Commit verified metadata when changed
         if: steps.links.outcome == 'success'
         run: |
-          if git diff --quiet; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No historical catalogue change."
             exit 0
           fi
           git config user.name "LE-RADAR History Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news-archive.json sitemap-archives.xml llms.txt
-          git add -A archives journaux en
+          # news-archive.json appartient à Update Student News (lot D) : on ne
+          # publie que notre boîte d'envoi, qu'il fusionne au passage suivant.
+          git add data/archive-inbox/verify-historical-links.json
           git commit -m "bot: verify historical article links (auto)" || exit 0
-          bash scripts/bot-push.sh --regen "node scripts/generate-seo.js --update"
+          bash scripts/bot-push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

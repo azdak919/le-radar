@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      actions: write
       issues: write
 
     steps:
@@ -49,36 +50,14 @@ jobs:
         env:
           CI: true
 
-      - name: Rebuild news feed (reflect any promotions / dead feeds)
-        run: node scripts/fetch-news.js --update
-        env:
-          CI: true
-          FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
-
-      # fetch-news réécrit news.json sans toucher feed.xml. Le gate compare
-      # les 10 premières manchettes : sans cette étape le lundi échoue et
-      # rien n'est publié.
-      - name: Rebuild RSS from news.json
-        run: node scripts/generate-feed.js --update
-
       - name: Check for changes
         id: check
         run: |
-          if git diff --quiet news-sources.json news.json news-archive.json feed.xml brand-colors.json radios-candidates.json; then
+          if git diff --quiet news-sources.json historical-catalog.config.json brand-colors.json radios-candidates.json data/news-discovery.md; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
-
-      # Référencement : les pages d'entités, le sitemap et llms.txt dérivent
-      # de ce registre. Sans cette étape, une nouvelle entrée n'aurait sa page
-      # qu'à la passe hebdomadaire de maintain.yml.
-      # continue-on-error : un échec du référencement ne doit jamais bloquer
-      # la publication des données.
-      - name: Regenerate SEO artefacts
-        if: steps.check.outputs.changed == 'true'
-        run: node scripts/generate-seo.js --update
-        continue-on-error: true
 
       - name: Pre-push integrity (bot gate)
         if: steps.check.outputs.changed == 'true'
@@ -90,12 +69,17 @@ jobs:
         run: |
           git config user.name "LE-RADAR News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news-sources.json news.json news-archive.json historical-catalog.config.json feed.xml index.html sitemap.xml sitemap-archives.xml llms.txt brand-colors.json radios-candidates.json data/news-discovery.md
-          git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
-          git commit -m "bot: maintain news sources + refresh feed (auto) — ajouts : ${{ steps.discover.outputs.added || 0 }}"
-          bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
+          for f in news-sources.json historical-catalog.config.json brand-colors.json radios-candidates.json data/news-discovery.md; do
+            [ -e "$f" ] && git add "$f"
+          done
+          git commit -m "bot: maintain news sources (auto) — ajouts : ${{ steps.discover.outputs.added || 0 }}"
+          bash scripts/bot-push.sh
+          # Seul Update Student News écrit news.json, l'archive, feed.xml et le
+          # SEO (lot D) : on le relance au lieu de récolter ici.
+          gh workflow run update-news.yml --ref main -R "$GITHUB_REPOSITORY"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
 
       # UNE seule issue permanente : journal de la découverte (ajouts
       # automatiques + candidats écartés et pourquoi). Mise à jour à chaque

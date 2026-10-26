@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
+const { withPendingInboxes, queueArchiveChanges } = require('./archive-inbox-lib');
 const {
   wordpressApiBase,
   wordpressComApiBase,
@@ -206,7 +207,9 @@ async function main() {
   options.afterIso = new Date(Date.now() - retentionYears * 365.25 * 86400000).toISOString();
   const sourceFile = readJson(SOURCES_PATH, { active: [] });
   const sources = Array.isArray(sourceFile.active) ? sourceFile.active : [];
-  const originalCatalog = readJson(ARCHIVE_PATH, { schemaVersion: 1, records: [] });
+  // Lecture seule : news-archive.json appartient à Update Student News. On part
+  // du catalogue tel qu'il sera après fusion de nos lots encore en attente.
+  const originalCatalog = withPendingInboxes(readJson(ARCHIVE_PATH, { schemaVersion: 1, records: [] }));
   const state = readJson(STATE_PATH, { schemaVersion: 1, updated: null, sources: {} });
   state.sources = state.sources || {};
   if (restart) resetStateFor(state, requestedSource);
@@ -258,7 +261,8 @@ async function main() {
     console.log(`Simulation : ${added} ajout(s), ${updated} mise(s) à jour; aucun fichier écrit. Ajoutez --update pour conserver l’avancement.`);
     return;
   }
-  fs.writeFileSync(ARCHIVE_PATH, serializeHistoricalCatalog(catalog, config).text, 'utf8');
+  const queued = queueArchiveChanges('retro-crawl', originalCatalog, serializeHistoricalCatalog(catalog, config).catalog);
+  console.log(`Boîte d'envoi : ${queued} fiche(s) pour Update Student News (data/archive-inbox/retro-crawl.json).`);
   fs.writeFileSync(STATE_PATH, `${JSON.stringify(state, null, 2)}\n`, 'utf8');
   console.log(`Terminé : ${added} ajout(s), ${updated} mise(s) à jour. Le fil vivant n’a pas été modifié.`);
 }

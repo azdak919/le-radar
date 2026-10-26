@@ -264,6 +264,7 @@ jobs:
             author-qc.json lead-excerpt-qc.json social-feed.json
             lead-image-qc.json photo-credit-qc.json feed.xml
             news-sources.json data/byline-ledger.json data/image-mirror-stats.json
+            data/archive-inbox-applied.json
             assets/news-images assets/stock-images stock-images-map.js data/image-health.json
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)

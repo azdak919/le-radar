@@ -192,7 +192,8 @@ console.log('OK live-link-health');
 
   // Le bot dédoublonne et vérifie l'intégrité APRÈS le rebase, avant de pousser.
   // (scripts/bot-push.sh --verify : lancé après chaque rebase réussi.)
-  for (const wf of ['update-news', 'guard-harvest-freshness', 'discover-news-sources']) {
+  // Lot D : Update Student News est le seul à publier news.json.
+  for (const wf of ['update-news']) {
     const y = readFileSync(new URL(`../.github/workflows/${wf}.yml`, import.meta.url), 'utf8');
     assert.match(y, /bash scripts\/bot-push\.sh --verify "node scripts\/dedupe-news-json\.js --commit && node tests\/data-integrity\.mjs"/, wf);
     assert.doesNotMatch(y, /-X theirs/, wf);

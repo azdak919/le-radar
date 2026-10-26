@@ -41,15 +41,11 @@ jobs:
         id: links
         run: node scripts/verify-historical-links.js --update --limit=12
         continue-on-error: true
-      - name: Regenerate archives after a successful pass
-        if: steps.crawl.outcome == 'success' && steps.links.outcome == 'success'
-        run: node scripts/generate-seo.js --update
-        continue-on-error: true
       - name: Pre-push integrity (bot gate)
         if: steps.crawl.outcome == 'success'
         timeout-minutes: 8
         run: |
-          if git diff --quiet; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No diff — skip prepush."
             exit 0
           fi
@@ -57,15 +53,19 @@ jobs:
       - name: Commit only the historical artefacts
         if: steps.crawl.outcome == 'success'
         run: |
-          if git diff --quiet; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No historical catalogue change."
             exit 0
           fi
           git config user.name "LE-RADAR History Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news-archive.json historical-crawl-state.json sitemap-archives.xml llms.txt
-          git add -A archives journaux en
+          # news-archive.json appartient à Update Student News (lot D) : on ne
+          # publie que nos boîtes d'envoi, qu'il fusionne au passage suivant.
+          git add historical-crawl-state.json
+          for f in data/archive-inbox/retro-crawl.json data/archive-inbox/verify-historical-links.json; do
+            [ -e "$f" ] && git add "$f"
+          done
           git commit -m "bot: retro-crawl historical metadata (auto)" || exit 0
-          bash scripts/bot-push.sh --regen "node scripts/generate-seo.js --update"
+          bash scripts/bot-push.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

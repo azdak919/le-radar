@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: write
+      actions: write
     steps:
       # Partir du main ACTUEL : en file data-writers, le sha de l'événement
       # peut dater de plusieurs passes (rebase de données impossible ensuite).
@@ -50,10 +51,12 @@ jobs:
           fi
           git config user.name "LE-RADAR Link Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/live-link-health.json news.json feed.xml
-          git add index.html sitemap.xml sitemap-archives.xml llms.txt
-          git add -A radios journaux etablissements medias horaires en archives
-          git commit -m "bot: drop articles whose source page is gone (auto)" || exit 0
-          bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
+          git add data/live-link-health.json
+          git commit -m "bot: record articles whose source page is gone (auto)" || exit 0
+          bash scripts/bot-push.sh
+          # Seul Update Student News écrit news.json, feed.xml et le SEO (lot D) :
+          # il applique ce registre ; on le relance pour retirer vite l'article.
+          gh workflow run update-news.yml --ref main -R "$GITHUB_REPOSITORY"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}

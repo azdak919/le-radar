@@ -88,7 +88,9 @@ assert.match(yml, /fetch-sports\.js --update/);
 assert.match(yml, /generate-seo\.js --update --sports-only/);
 assert.match(yml, /discover-sports\.js --update/);
 assert.match(yml, /fetch-radio-nowplaying\.js --update/);
-assert.match(yml, /fetch-news\.js --update/);
+// Lot D : le guard relance Update Student News au lieu de récolter lui-même.
+assert.match(yml, /gh workflow run update-news\.yml/);
+assert.match(yml, /actions: write/);
 
 const refreshStep = yml.match(
   /- name: Refresh \/sports\/ HTML from sports\.json[\s\S]*?(?=\n      - name:)/,
@@ -142,13 +144,9 @@ for (const list of maintainYml.matchAll(/for f in ([^;]+); do/g)) {
 assert.equal(bankCommitLists, 2, 'hebdo : détecteur de changement et git add listent le verrou');
 
 const discoverYml = readFileSync(join(ROOT, '.github/workflows/discover-news-sources.yml'), 'utf8');
-const discoverFeedAt = discoverYml.indexOf('node scripts/generate-feed.js --update');
-const discoverPrepush = discoverYml.indexOf('bash scripts/bot-prepush-check.sh');
-assert.ok(
-  discoverFeedAt >= 0 && discoverFeedAt < discoverPrepush,
-  'discovery : feed.xml régénéré avant le gate (news.json seul fait diverger les manchettes)',
-);
-assert.match(discoverYml, /git add news-sources\.json news\.json news-archive\.json historical-catalog\.config\.json feed\.xml /);
+// Lot D : la découverte ne publie que le registre, puis relance Update Student News.
+assert.match(discoverYml, /gh workflow run update-news\.yml/);
+assert.doesNotMatch(discoverYml, /git add[^\n]*news\.json/);
 
 const windowSrc = readFileSync(join(ROOT, 'scripts/maintenance-window.mjs'), 'utf8');
 assert.match(windowSrc, /guard-harvest-freshness\.yml/);

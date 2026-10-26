@@ -254,17 +254,9 @@ async function main() {
     console.log('Dry-run — utilisez --update pour enregistrer.');
     return;
   }
-  if (removed.length) {
-    const nextNews = {
-      ...news,
-      count: (news.items || []).length - removed.length,
-      items: (news.items || []).filter((item) => !removed.includes(item)),
-    };
-    fs.writeFileSync(NEWS_PATH, `${JSON.stringify(nextNews, null, 2)}\n`);
-    runGenerator('generate-feed.js');
-    runGenerator('generate-seo.js');
-    console.log(`Fil réécrit sans ${removed.length} article(s) disparu(s).`);
-  }
+  // Depuis le lot D (26 oct. 2026), seul Update Student News écrit news.json,
+  // feed.xml et le SEO. Il applique ce registre (omitMissingItems) ; le
+  // workflow le relance dès que le registre change.
   if (applied.changed) {
     writeLedger(applied.ledger);
     console.log(`Registre écrit : ${LEDGER_COUNT(applied.ledger)} disparition(s) en cours.`);

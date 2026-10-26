@@ -21,6 +21,7 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: write
+      actions: write
 
     steps:
       # Partir du main ACTUEL : en file data-writers, le sha de l'événement
@@ -68,46 +69,19 @@ jobs:
         if: steps.eval.outputs.radio == 'true'
         run: node scripts/fetch-radio-nowplaying.js --update
 
-      - name: Catch-up news feeds
+      - name: Catch-up news feeds (relance Update Student News)
         if: steps.eval.outputs.news == 'true'
-        timeout-minutes: 10
         run: |
-          node scripts/fetch-news.js --update
-          # RSS doit suivre news.json (tests/news-representations.mjs).
-          node scripts/generate-feed.js --update
+          # Seul Update Student News écrit news.json, l'archive, feed.xml et le
+          # SEO (lot D) : on le relance au lieu de récolter ici.
+          gh workflow run update-news.yml --ref main -R "$GITHUB_REPOSITORY"
         env:
-          CI: true
-          FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
-
-      # Filet : (1) après un catch-up news, toujours régénérer le prérendu /
-      # JSON-LD ; (2) sinon, si Update Student News a publié news.json sans
-      # index.html (« HTML gate deferred »), guérir avant bot-prepush.
-      # Les manchettes JSON-LD doivent rester des titres complets (pas un
-      # slice 110 car.) — voir generate-seo.js + tests/news-representations.mjs.
-      - name: Sync news SEO artefacts
-        id: news_seo
-        run: |
-          FORCE="${{ steps.eval.outputs.news }}"
-          if [ "$FORCE" != "true" ] && node tests/news-representations.mjs; then
-            echo "needed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "Syncing news SEO artefacts (force=$FORCE)"
-          node scripts/generate-feed.js --update
-          node scripts/generate-seo.js --update
-          # Re-vérifie le fil seul ; le reste de la gate suit.
-          node tests/news-representations.mjs
-          echo "needed=true" >> "$GITHUB_OUTPUT"
-        env:
-          CI: true
+          GH_TOKEN: ${{ github.token }}
 
       - name: Validate generated HTML
         run: |
-          git add sports/index.html en/sports/index.html \
-            index.html sitemap.xml sitemap-archives.xml llms.txt \
-            2>/dev/null || true
-          git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
-          if ! git diff --staged --quiet -- '*.html' 'sitemap*.xml' 'llms.txt'; then
+          git add sports/index.html en/sports/index.html 2>/dev/null || true
+          if ! git diff --staged --quiet -- '*.html'; then
             bash scripts/bot-prepush-check.sh
           fi
 
@@ -119,13 +93,10 @@ jobs:
             sports.json sports-masthead.json sports-leagues.json sports-teams.json sports-sailing.json \
             sports/index.html en/sports/index.html \
             radio-nowplaying.json \
-            news.json news-archive.json news-sources.json feed.xml \
-            index.html sitemap.xml sitemap-archives.xml llms.txt \
             2>/dev/null || true
-          git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Harvest already within SLA (or catch-up produced an identical payload)."
             exit 0
           fi
           git commit -m "chore(ops): harvest freshness catch-up"
-          bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
+          bash scripts/bot-push.sh --regen "node scripts/generate-seo.js --update --sports-only"

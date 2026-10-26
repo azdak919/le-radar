@@ -71,6 +71,7 @@ const {
   isFetchableNewsSource,
 } = require('./source-retention-lib');
 const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
+const { pendingBatches, applyBatches, writeApplied } = require('./archive-inbox-lib');
 const { scheduledSlotFor } = require('./news-schedule-lib');
 const {
   articleLinkKey,
@@ -939,6 +940,13 @@ async function main() {
     priorBySource = new Map();
   }
   try { priorArchive = JSON.parse(fs.readFileSync(ARCHIVE_PATH, 'utf8')); } catch { /* première collecte */ }
+  // Seul écrivain de news-archive.json : on fusionne d'abord les boîtes
+  // d'envoi des autres bots (data/archive-inbox/*.json).
+  const inbox = applyBatches(priorArchive, pendingBatches());
+  priorArchive = inbox.catalog;
+  if (inbox.upserts || inbox.removals) {
+    console.log(`Boîtes d'envoi du catalogue : ${inbox.upserts} fiche(s), ${inbox.removals} retrait(s) fusionnés.`);
+  }
 
   const registry = readRegistry();
   const sourceByName = new Map(SOURCES.map((s) => [s.name, s]));
@@ -1241,6 +1249,7 @@ async function main() {
     applyLeadImagePins(news.items || []);
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
     fs.writeFileSync(ARCHIVE_PATH, serializeHistoricalCatalog(archiveResult.catalog, histConfig).text);
+    writeApplied(inbox.applied);
     registry._lastFetchRun = news.updated;
     writeRegistry(registry);
     console.log(`✅ Wrote ${NEWS_PATH}`);
