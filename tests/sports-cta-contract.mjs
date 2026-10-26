@@ -201,3 +201,21 @@ assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
   assert.match(sportsSrc, /return \[SPORTS_OPEN_LIVE, SPORTS_OPEN_TODAY_RESULT, SPORTS_OPEN_TODAY_NEXT\]/,
     'une carte direct peut céder la place à un résultat du jour');
 }
+
+// Événement sur plusieurs jours (régate 24-25 oct.) : jamais « Aujourd’hui » le lundi.
+{
+  const ctx = { String, Number };
+  vm.runInNewContext(
+    `${sourceBetween('function sportsMultiDayPhase', '/** Kicker : En direct')}
+     this.api = { sportsMultiDayPhase, sportsDayRangeShort };`,
+    ctx,
+  );
+  const g = { date: '2026-10-24', eventStart: '2026-10-24', eventEnd: '2026-10-25' };
+  assert.equal(ctx.api.sportsMultiDayPhase(g, '2026-10-23'), 'before');
+  assert.equal(ctx.api.sportsMultiDayPhase(g, '2026-10-24'), 'during');
+  assert.equal(ctx.api.sportsMultiDayPhase(g, '2026-10-25'), 'during');
+  assert.equal(ctx.api.sportsMultiDayPhase(g, '2026-10-26'), 'after');
+  assert.equal(ctx.api.sportsMultiDayPhase({ date: '2026-10-24' }, '2026-10-26'), '');
+  assert.equal(ctx.api.sportsDayRangeShort('2026-10-24', '2026-10-25'), '24-25 oct.');
+  assert.equal(ctx.api.sportsDayRangeShort('2026-10-31', '2026-11-01'), '31 oct.-1 nov.');
+}

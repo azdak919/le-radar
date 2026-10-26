@@ -64,3 +64,20 @@ test('sports-freshness : payload sports.json prune sans casser', () => {
   const n = Object.keys(pruned.teams).length;
   assert.ok(n > 100);
 });
+
+// Régate 24-25 oct. : gardée le dimanche (en cours) et le lundi (résultats à venir).
+{
+  const { createRequire } = await import('node:module');
+  const req = createRequire(import.meta.url);
+  const SpF = req('../scripts/sports-freshness-lib.js');
+  const regatta = { date: '2026-10-24', eventStart: '2026-10-24', eventEnd: '2026-10-25' };
+  const sun = new Date('2026-10-25T16:00:00Z');
+  const mon = new Date('2026-10-26T13:00:00Z');
+  if (SpF.pruneNextGames([regatta], sun).length !== 1) throw new Error('régate en cours retirée');
+  if (SpF.pruneNextGames([regatta], mon).length !== 0) throw new Error('régate finie sans awaitingResults gardée');
+  if (SpF.pruneNextGames([{ ...regatta, awaitingResults: true }], mon)[0]?.date !== '2026-10-24') {
+    throw new Error('régate finie : vraie date de début attendue');
+  }
+  if (SpF.pruneNextGames([{ date: '2026-10-24' }], mon).length !== 0) throw new Error('match passé gardé');
+  console.log('OK régate plusieurs jours');
+}

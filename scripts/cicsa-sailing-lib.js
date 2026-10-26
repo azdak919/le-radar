@@ -39,7 +39,7 @@ const EVENT_FR = [
   [/quebec regional/, 'Championnat régional du Québec'],
   [/women/, 'Régate féminine'],
   [/keelboat/, 'Championnat canadien en quillard'],
-  [/team race/, 'Championnat canadien de course par équipes'],
+  [/team race/, 'Championnat canadien par équipes'],
   [/match race/, 'Championnat canadien de match-racing'],
   [/fleet race/, 'Championnat canadien de course en flotte'],
   [/single ?hand/, 'Championnat en solitaire'],
@@ -465,8 +465,11 @@ function nextEntry(event, club, urls) {
     home: null,
     sport: 'sailing',
     scoreKind: 'place',
-    competition: `CICSA · ${fr}${boatLabel}`,
+    competition: 'Voile universitaire · CICSA',
     url: urls.schedule,
+    // Régate sur plusieurs jours : vraie plage (jamais la date de collecte).
+    eventStart: event.start,
+    eventEnd: event.end,
     gameId: `cicsa-next:${event.start}:${fold(event.name).replace(/\s+/g, '-')}:${club.registryId}:${boat || '1'}`,
   };
 }
@@ -564,18 +567,15 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
       ));
       if (already) continue;
       ensure(boat.registryId);
-      const date = event.start >= today ? event.start : today;
+      // Date = début réel de la régate. Avant, une régate commencée prenait
+      // la date de collecte (« Aujourd’hui » un lundi après la fin de semaine).
       const next = nextEntry(
-        { ...event, date, boat: '' },
+        { ...event, date: event.start, boat: '' },
         clubs[boat.registryId] || boat,
         urls,
       );
       if (awaiting) {
         next.awaitingResults = true;
-        next.eventEnd = event.end;
-        next.opponent += ' · résultats à venir';
-        next.opponentEn += ' · results pending';
-        next.competition += ' · résultats à venir';
         next.url = urls.results;
       }
       upcoming[boat.registryId].push(next);

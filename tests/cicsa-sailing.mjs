@@ -84,19 +84,20 @@ test('clubs QC : places, classement, pas de hors-province', () => {
   assert.ok(places.some((line) => line.includes('équipage 2')), 'le deuxième équipage reste un résultat');
   assert.equal(mcgill.results.some((game) => /no show/i.test(JSON.stringify(game))), false);
   assert.equal(mcgill.nextGame.opponent, 'Championnat régional du Québec');
-  assert.equal(mcgill.nextGame.date, '2026-10-11');
+  assert.equal(mcgill.nextGame.date, '2026-10-10');
+  assert.equal(mcgill.nextGame.eventEnd, '2026-10-11');
   assert.equal(mcgill.nextGame.url, 'https://cicsailing.ca/season-schedule');
   assert.match(mcgill.results[0].url, /cicsailing\.ca\/season-results/);
 
   const poly = teams['sailing:universitaire:polytechnique'];
   assert.equal(poly.results.length, 0);
   assert.equal(poly.cicsaSeason.rank, 14);
-  assert.equal(poly.nextGame.opponent, 'Championnat canadien de course par équipes');
+  assert.equal(poly.nextGame.opponent, 'Championnat canadien par équipes');
   assert.equal(poly.nextGame.date, '2026-10-24');
 
   const laval = teams['sailing:universitaire:ulaval'];
   assert.ok(laval.results.some((game) => game.scoreFor === 9));
-  assert.equal(laval.nextGame.date, '2026-10-11');
+  assert.equal(laval.nextGame.date, '2026-10-10');
 
   const con = teams['sailing:universitaire:concordia'];
   assert.ok(con.results.some((game) => game.opponent.includes('CAN/AMs') && game.scoreFor === 6));
@@ -112,6 +113,21 @@ test('régate terminée sans scores publiés : reste visible « résultats à ve
   assert.ok(laval.nextGame, 'Laval garde une entrée');
   assert.equal(laval.nextGame.awaitingResults, true);
   assert.match(laval.nextGame.opponentEn, /Quebec Regionals/);
+  // Plage réelle conservée : jamais la date de collecte (bogue « Aujourd’hui » un lundi).
+  assert.equal(laval.nextGame.date, '2026-10-10');
+  assert.equal(laval.nextGame.eventStart, '2026-10-10');
+  assert.equal(laval.nextGame.eventEnd, '2026-10-11');
+  assert.doesNotMatch(laval.nextGame.opponent, /résultats à venir/);
+});
+
+test('régate de deux jours en cours : date = début, fin conservée', () => {
+  const { teams } = buildCicsaQcTeams(SCORES.replace(/,Quebec Regionals \(October 10-11\),/, ',,').replace(/,,,,1,9\.23,|,,,,2,8\.46,|,,,,3,7\.69,/g, ''), SCHEDULE, {
+    seasonStartYear: 2026, seasonLabel: '2026-2027', clubs: CLUBS, today: '2026-10-11',
+  });
+  const laval = teams['sailing:universitaire:ulaval'];
+  assert.equal(laval.nextGame.date, '2026-10-10');
+  assert.equal(laval.nextGame.eventEnd, '2026-10-11');
+  assert.notEqual(laval.nextGame.awaitingResults, true);
 });
 
 test('absence confirmée par rapport de régate : pas de résultat', () => {
@@ -126,7 +142,7 @@ test('absence confirmée par rapport de régate : pas de résultat', () => {
 {
   const { sailingNameFr } = require('../scripts/cicsa-sailing-lib.js');
   const cases = {
-    'Team Race Nationals': 'Championnat canadien de course par équipes',
+    'Team Race Nationals': 'Championnat canadien par équipes',
     'Match Race Nationals': 'Championnat canadien de match-racing',
     "The George Warren Smith '22 Trophy 2026": "Trophée George Warren Smith '22",
     'Charles Invite': 'Régate sur invitation Charles',

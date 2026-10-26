@@ -612,6 +612,9 @@ function sportsUrgency(mode, game, now = Date.now()) {
   if (!Number.isFinite(t)) return { tier: 5, sortMs: Number.POSITIVE_INFINITY };
 
   if (mode === 'next') {
+    if (game?.eventEnd && sportsMultiDayPhase(game, torontoDayKey(now)) === 'during') {
+      return { tier: 1, sortMs: t };
+    }
     // Proxy « en direct » : fenêtre autour du coup d’envoi (tant que l’API
     // S1 n’expose pas un statut live fiable).
     if (t <= now + SPORTS_LIVE_AFTER_MS && t >= now - SPORTS_LIVE_BEFORE_MS) {
@@ -2152,6 +2155,36 @@ function sportsCompetitionLabel(slide) {
  * Mot de temps des puces (même vocabulaire que la CTA) :
  * Aujourd’hui / Demain / hier. Vide → date courte.
  */
+/**
+ * Événement sur plusieurs jours (régate) : phase selon la vraie plage
+ * eventStart → eventEnd (jours civils Toronto). Jamais la date de collecte.
+ * @returns {'before'|'during'|'after'|''}
+ */
+function sportsMultiDayPhase(game, todayKey) {
+  const start = String(game?.eventStart || game?.date || '').slice(0, 10);
+  const end = String(game?.eventEnd || '').slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(start) || !/^\d{4}-\d{2}-\d{2}$/.test(end)) return '';
+  if (end <= start && !game?.awaitingResults) return '';
+  if (todayKey < start) return 'before';
+  if (todayKey <= end) return 'during';
+  return 'after';
+}
+
+/** Plage courte : « 24-25 oct. » / « 31 oct.-1 nov. ». */
+function sportsDayRangeShort(startIso, endIso) {
+  const MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+  const parse = (iso) => {
+    const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return m ? { month: Number(m[2]), day: Number(m[3]) } : null;
+  };
+  const a = parse(startIso);
+  const b = parse(endIso);
+  if (!a) return '';
+  if (!b || (a.month === b.month && a.day === b.day)) return `${a.day} ${MONTHS[a.month - 1]}`;
+  if (a.month === b.month) return `${a.day}-${b.day} ${MONTHS[a.month - 1]}`;
+  return `${a.day} ${MONTHS[a.month - 1]}-${b.day} ${MONTHS[b.month - 1]}`;
+}
+
 /** Kicker : En direct / Aujourd’hui / Demain / Prochain+date / Hier / date. */
 function sportsMatchWhenTag(slide) {
   const g = slide?.game || {};
@@ -2161,6 +2194,11 @@ function sportsMatchWhenTag(slide) {
   const day = sportsSlideDayKey(slide);
   const today = torontoDayKey();
   if (slide?.mode === 'next') {
+    const phase = sportsMultiDayPhase(g, today);
+    if (phase === 'during') return { word: SPORTS_CTA_TAG_LIVE, lamp: 'live' };
+    if (phase === 'after') {
+      return { word: sportsDayRangeShort(g.eventStart || g.date, g.eventEnd), lamp: 'past' };
+    }
     if (sportsGameAwaitingScore(g)) {
       return { word: SPORTS_CTA_TAG_PENDING, lamp: 'past' };
     }
@@ -2192,6 +2230,7 @@ function sportsWhenWord(slide) {
   const day = sportsSlideDayKey(slide);
   if (!day) return '';
   const today = torontoDayKey();
+  if (slide?.mode === 'next' && sportsMultiDayPhase(g, today)) return '';
   if (day === today) {
     if (slide.mode === 'next') return SPORTS_MATCH_TAG_TODAY;
     if (slide.mode === 'result') return 'aujourd’hui';
@@ -2224,7 +2263,10 @@ function sportsMatchSubLine(slide) {
   const meta = placeKind
     ? (sportsPlaceEventShort(g) || sportsCompetitionLabel(slide))
     : sportsCompetitionLabel(slide);
-  return [when, meta, prior ? 'Saison précédente' : ''].filter(Boolean).join(' · ');
+  const pending = slide?.mode === 'next'
+    && sportsMultiDayPhase(g, torontoDayKey()) === 'after'
+    ? 'Résultats à venir' : '';
+  return [pending, when, meta, prior ? 'Saison précédente' : ''].filter(Boolean).join(' · ');
 }
 
 /**

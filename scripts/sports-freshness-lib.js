@@ -142,7 +142,12 @@
     if (!d) return false;
     const todayKey = torontoDayKey(referenceDate);
     const gameKey = String(game?.date || '').slice(0, 10) || dayKey(d);
-    if (gameKey < todayKey) return false;
+    // Régate sur plusieurs jours : en cours jusqu’à eventEnd ; terminée sans
+    // scores publiés (awaitingResults, borné à 14 j par le collecteur) reste
+    // visible avec sa vraie plage de dates.
+    const lastKey = String(game?.eventEnd || '').slice(0, 10);
+    const multiDayAlive = !!lastKey && (lastKey >= todayKey || game?.awaitingResults === true);
+    if (gameKey < todayKey && !multiDayAlive) return false;
     const end = nextGameHorizonEnd(referenceDate);
     return d.getTime() <= end.getTime();
   }
