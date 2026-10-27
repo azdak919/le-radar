@@ -81,6 +81,15 @@ jobs:
             sed -i -E "s/versionCode [0-9]+/versionCode $((code+1))/; s/versionName \"[0-9.]+\"/versionName \"$next\"/" android/app/build.gradle
             node -e "const fs=require('fs');for(const f of ['package.json','package-lock.json']){const p=JSON.parse(fs.readFileSync(f,'utf8'));p.version='$next';if(p.packages&&p.packages[''])p.packages[''].version='$next';fs.writeFileSync(f,JSON.stringify(p,null,2)+'\n')}"
             sed -i -E "s/const APP_VERSION = '[0-9.]+'/const APP_VERSION = '$next'/" mobile/app/js/core.js
+            # Notes de version F-Droid/Play (fastlane) pour le nouveau versionCode.
+            last=$(git tag --list 'android-v*' --sort=-creatordate | head -1)
+            nc=$((code+1)); FL=fastlane/metadata/android
+            git log --no-merges --format='%s' "$last"..HEAD -- android mobile article capacitor.config.json \
+              | grep -viE '^(bot|chore|ci|test)' | sed -E 's/^[a-z]+(\([^)]*\))?: //' | head -5 | cut -c1-90 > "$FL/fr-CA/changelogs/$nc.txt" || true
+            [ -s "$FL/fr-CA/changelogs/$nc.txt" ] || echo "Corrections et améliorations." > "$FL/fr-CA/changelogs/$nc.txt"
+            echo "Bug fixes and improvements." > "$FL/en-US/changelogs/$nc.txt"
+            git add "$FL/fr-CA/changelogs/$nc.txt"
+            git add "$FL/en-US/changelogs/$nc.txt"
             git add android/app/build.gradle
             git add package.json
             git add package-lock.json
