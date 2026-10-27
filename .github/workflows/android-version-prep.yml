@@ -1,73 +1,169 @@
 name: Android version prep
-# Prépare la prochaine version Android SANS taguer ni publier :
-# s'il y a des changements app depuis le dernier tag android-v*, pousse la
-# branche release/android-<version> (versionName +0.0.1, versionCode +1) et met à
-# jour une issue unique avec le lien « créer la PR ». Le tag reste humain.
+# Publication Android automatique AVEC garde-fous (scripts/android-release-gate-lib.js).
+# Le 1er du mois : s'il y a de vrais changements app depuis le dernier tag
+# android-v*, ouvre la PR de version (correctif +0.0.1, versionCode +1), lance
+# Vérification et Mobile (tests Android, builds fdroid + full, APK fdroid sans
+# com.google.android.gms) sur la branche, puis — seulement si TOUT passe et
+# qu'aucune version n'a été publiée ce mois-ci — fusionne la PR et pousse le tag
+# android-vX.Y.Z (F-Droid suit : UpdateCheckMode « Tags ^android-v »).
+# Sinon : aucun tag, et l'issue unique « Version Android à valider (bot) » est mise à jour.
+# Lancement manuel : dry_run=true par défaut (jamais de fusion ni de tag).
 on:
   schedule:
     - cron: '0 8 1 * *'   # le 1er du mois, ~4 h Toronto
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Simulation : PR + contrôles, sans fusion ni tag'
+        type: boolean
+        default: true
+      test_pr:
+        description: 'Test : ouvrir la PR même sans changement app (force dry_run)'
+        type: boolean
+        default: false
+      kind:
+        description: 'patch ou minor (jamais major)'
+        type: choice
+        options: [patch, minor]
+        default: patch
 permissions:
   contents: write
+  pull-requests: write
   issues: write
+  actions: write
 concurrency:
   group: android-version-prep
   cancel-in-progress: false
 jobs:
-  prep:
+  release:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run || inputs.test_pr) }}
+      TEST_PR: ${{ github.event_name == 'workflow_dispatch' && inputs.test_pr }}
+      GATE_KIND: ${{ inputs.kind || 'patch' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - name: Préparer la branche
-        id: prep
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Plan
+        id: plan
         run: |
           set -euo pipefail
-          last=$(git tag --list 'android-v*' --sort=-creatordate | head -1)
-          [ -n "$last" ] || { echo "Aucun tag android-v*"; exit 0; }
-          changes=$(git log --format='- %s (%h)' "$last"..HEAD -- mobile android capacitor.config.json article | grep -v '^- bot' | head -40 || true)
-          if [ -z "$changes" ]; then echo "pending=0" >> "$GITHUB_OUTPUT"; exit 0; fi
-          cur=$(sed -nE 's/.*versionName "([0-9.]+)".*/\1/p' android/app/build.gradle)
-          code=$(sed -nE 's/.*versionCode ([0-9]+).*/\1/p' android/app/build.gradle)
-          next=$(echo "$cur" | awk -F. '{printf "%d.%d.%d", $1, $2, $3+1}')
+          P=$(node scripts/android-release-gate.js plan); echo "$P"
+          echo "json=$P" >> "$GITHUB_OUTPUT"
+          n=$(echo "$P" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).changes.length))')
+          next=$(echo "$P" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).next))')
+          echo "next=$next" >> "$GITHUB_OUTPUT"
+          if [ "$n" = "0" ] && [ "$TEST_PR" != "true" ]; then echo "go=0" >> "$GITHUB_OUTPUT"; else echo "go=1" >> "$GITHUB_OUTPUT"; fi
+      - name: Branche et PR de version
+        id: pr
+        if: steps.plan.outputs.go == '1'
+        run: |
+          set -euo pipefail
+          next='${{ steps.plan.outputs.next }}'
+          BR="release/android-$next"; [ "$TEST_PR" = "true" ] && BR="release/android-$next-test-$(date -u +%Y%m%d%H%M)"
+          echo "branch=$BR" >> "$GITHUB_OUTPUT"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -q -B "release/android-next-local"
-          sed -i -E "s/versionCode [0-9]+/versionCode $((code+1))/; s/versionName \"[0-9.]+\"/versionName \"$next\"/" android/app/build.gradle
-          node -e "const f='package.json',p=require('./'+f);p.version='$next';require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
-          git add android/app/build.gradle
-          git add package.json
-          git commit -qm "chore(android): prépare $next (versionCode $((code+1))) — à valider, aucun tag"
-          # Une branche par version (jamais de force-push) : si elle existe déjà, on la garde.
-          BR="release/android-$next"
-          if git ls-remote --exit-code --heads origin "$BR" >/dev/null; then echo "$BR existe déjà."
-          else git push -q origin "HEAD:refs/heads/$BR"; fi
-          {
-            echo "Mis à jour automatiquement par android-version-prep.yml — $(date -u +%FT%TZ)."
-            echo
-            echo "Une version **$next** est prête (dernier tag : \`$last\`). Rien n'est tagué ni publié."
-            echo
-            echo "1. Ouvrir la PR : https://github.com/${GITHUB_REPOSITORY}/compare/main...release/android-$next?expand=1"
-            echo "2. Si les tests sont verts et que la version convient : fusionner, puis taguer \`android-v$next\`."
-            echo
-            echo "## Changements app depuis $last"
-            echo "$changes"
-          } > "$RUNNER_TEMP/body.md"
-          echo "pending=1" >> "$GITHUB_OUTPUT"
-      - name: Issue unique
+          if git ls-remote --exit-code --heads origin "$BR" >/dev/null; then
+            echo "$BR existe déjà (jamais de force-push)."; git fetch -q origin "$BR"; git checkout -q "origin/$BR"
+          else
+            git checkout -q -b "$BR"
+            code=$(sed -nE 's/.*versionCode ([0-9]+).*/\1/p' android/app/build.gradle)
+            sed -i -E "s/versionCode [0-9]+/versionCode $((code+1))/; s/versionName \"[0-9.]+\"/versionName \"$next\"/" android/app/build.gradle
+            node -e "const f='package.json',p=require('./'+f);p.version='$next';require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
+            git add android/app/build.gradle
+            git add package.json
+            git commit -qm "chore(android): version $next (versionCode $((code+1)))"
+            git push -q origin "HEAD:refs/heads/$BR"
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "code=$(sed -nE 's/.*versionCode ([0-9]+).*/\1/p' android/app/build.gradle)" >> "$GITHUB_OUTPUT"
+          url=$(gh pr list -R "$REPO" --head "$BR" --state open --json url --jq '.[0].url // empty')
+          if [ -z "$url" ]; then
+            T="Android $next"; [ "$TEST_PR" = "true" ] && T="[test] Android $next — ne pas fusionner"
+            url=$(gh pr create -R "$REPO" --base main --head "$BR" --title "$T" --body "PR de version ouverte par android-version-prep.yml. Fusion et tag automatiques seulement si tous les garde-fous passent.")
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Vérification et Mobile sur la branche
+        id: ci
+        if: steps.plan.outputs.go == '1'
+        run: |
+          set -uo pipefail
+          BR='${{ steps.pr.outputs.branch }}'
+          since=$(date -u +%FT%TZ)
+          for wf in verification.yml mobile.yml; do gh workflow run "$wf" -R "$REPO" --ref "$BR"; done
+          wait_run() {
+            local wf=$1 id=""
+            for i in $(seq 1 40); do
+              id=$(gh run list -R "$REPO" --workflow "$wf" --branch "$BR" --event workflow_dispatch --json databaseId,createdAt --jq "[.[] | select(.createdAt >= \"$since\")][0].databaseId // empty")
+              [ -n "$id" ] && break; sleep 15
+            done
+            [ -n "$id" ] || { echo "absent"; return; }
+            gh run watch "$id" -R "$REPO" --interval 30 >/dev/null 2>&1 || true
+            echo "$(gh run view "$id" -R "$REPO" --json conclusion --jq .conclusion) $id"
+          }
+          read v vid < <(wait_run verification.yml); read m mid < <(wait_run mobile.yml)
+          echo "verification=$v" >> "$GITHUB_OUTPUT"; echo "mobile=$m" >> "$GITHUB_OUTPUT"
+          gms=""
+          if [ "$m" = "success" ]; then
+            gh run download "$mid" -R "$REPO" -n android-outputs -D "$RUNNER_TEMP/out" && gms=$(cat "$RUNNER_TEMP"/out/gms-classes-fdroid.txt 2>/dev/null || true)
+          fi
+          echo "gms=$gms" >> "$GITHUB_OUTPUT"
+          echo "Vérification=$v ($vid) Mobile=$m ($mid) gms=$gms"
+      - name: Décision
+        id: decide
+        if: steps.plan.outputs.go == '1'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PENDING: ${{ steps.prep.outputs.pending }}
+          GATE_PLAN: ${{ steps.plan.outputs.json }}
+          GATE_VERIFICATION: ${{ steps.ci.outputs.verification }}
+          GATE_MOBILE: ${{ steps.ci.outputs.mobile }}
+          GATE_GMS: ${{ steps.ci.outputs.gms }}
+          GATE_NEXTCODE_ON_BRANCH: ${{ steps.pr.outputs.code }}
+        run: |
+          D=$(node scripts/android-release-gate.js decide); echo "$D"
+          echo "json=$D" >> "$GITHUB_OUTPUT"
+          echo "release=$(echo "$D" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).release))')" >> "$GITHUB_OUTPUT"
+      - name: Fusion et tag (seulement si tout passe, hors simulation)
+        id: tag
+        if: steps.decide.outputs.release == 'true' && env.DRY != 'true'
+        run: |
+          set -euo pipefail
+          next='${{ steps.plan.outputs.next }}'
+          gh pr merge '${{ steps.pr.outputs.url }}' -R "$REPO" --merge --match-head-commit '${{ steps.pr.outputs.sha }}'
+          sleep 5
+          msha=$(gh pr view '${{ steps.pr.outputs.url }}' -R "$REPO" --json mergeCommit --jq .mergeCommit.oid)
+          git fetch -q origin main
+          git tag -a "android-v$next" "$msha" -m "Android $next (publication automatique, garde-fous verts)"
+          git push -q origin "refs/tags/android-v$next"
+          echo "tagged=android-v$next" >> "$GITHUB_OUTPUT"
+      - name: Issue unique
+        if: always()
         run: |
           TITLE="Version Android à valider (bot)"
-          NUM=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
-          if [ "${PENDING:-0}" = "1" ]; then
-            if [ -n "$NUM" ]; then gh issue edit "$NUM" --repo "${{ github.repository }}" --body-file "$RUNNER_TEMP/body.md"
-            else gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"; fi
-          elif [ -n "$NUM" ]; then
-            gh issue close "$NUM" --repo "${{ github.repository }}" --comment "Plus de changement app en attente."
+          NUM=$(gh issue list -R "$REPO" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
+          if [ '${{ steps.plan.outputs.go }}' != '1' ]; then
+            [ -n "$NUM" ] && gh issue close "$NUM" -R "$REPO" --comment "Aucun changement app depuis le dernier tag."
+            exit 0
           fi
+          if [ -n '${{ steps.tag.outputs.tagged }}' ]; then
+            [ -n "$NUM" ] && gh issue close "$NUM" -R "$REPO" --comment "Publié : ${{ steps.tag.outputs.tagged }} (${{ steps.pr.outputs.url }})."
+            exit 0
+          fi
+          {
+            echo "Mis à jour par android-version-prep.yml — $(date -u +%FT%TZ) — simulation : $DRY."
+            echo
+            echo "Version **${{ steps.plan.outputs.next }}** : ${{ steps.pr.outputs.url }}"
+            echo
+            echo "Décision des garde-fous : \`${{ steps.decide.outputs.json }}\`"
+            echo
+            echo "Aucun tag n'a été poussé."
+          } > "$RUNNER_TEMP/body.md"
+          if [ -n "$NUM" ]; then gh issue edit "$NUM" -R "$REPO" --body-file "$RUNNER_TEMP/body.md"
+          else gh issue create -R "$REPO" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"; fi

@@ -49,6 +49,19 @@ jobs:
       - name: Debug APK
         run: npm run android:debug
 
+      - name: Tests unitaires Android (fdroid + full)
+        run: cd android && ./gradlew testFdroidDebugUnitTest testFullDebugUnitTest
+
+      - name: APK fdroid sans Google Play Services
+        run: |
+          set -euo pipefail
+          apk=$(ls android/app/build/outputs/apk/fdroid/debug/*.apk | head -1)
+          d=$(mktemp -d); unzip -q -o "$apk" 'classes*.dex' -d "$d"
+          n=$(cat "$d"/classes*.dex | grep -a -o 'Lcom/google/android/gms/[A-Za-z0-9_/$]*;' | sort -u | wc -l)
+          echo "classes com.google.android.gms dans l'APK fdroid : $n"
+          echo "$n" > android/app/build/outputs/gms-classes-fdroid.txt
+          test "$n" -eq 0
+
       - name: Release AAB with a throwaway upload key
         run: |
           keytool -genkeypair \
@@ -70,6 +83,7 @@ jobs:
           path: |
             android/app/build/outputs/apk/**/debug/*.apk
             android/app/build/outputs/bundle/**/*.aab
+            android/app/build/outputs/gms-classes-fdroid.txt
           if-no-files-found: error
 
   ios:
