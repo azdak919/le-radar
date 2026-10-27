@@ -39,7 +39,7 @@ assert.notEqual(
 assert.ok(imageUrlKey(u1).includes('foo'), 'imageUrlKey extrait le basename');
 
 const mirrorJs = readFileSync(path.join(root, 'scripts/mirror-news-images.js'), 'utf8');
-assert.match(mirrorJs, /1_200_000/, 'miroir : plafond 1,2 Mo (PNG éditorial ~760 ko)');
+assert.match(mirrorJs, /350_000/, 'miroir : plafond 350 ko, au-delà version réduite (croissance du dépôt)');
 assert.match(mirrorJs, /photonUrl/, 'miroir : Photon si l’origine est trop lourde / down');
 assert.match(mirrorJs, /via: 'photon'/, 'miroir : via photon');
 

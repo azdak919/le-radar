@@ -20,7 +20,7 @@
  *
  * Env :
  *   CI=true                 → moins de logs verbeux
- *   MIRROR_MAX_BYTES        → plafond par fichier (défaut 1200000)
+ *   MIRROR_MAX_BYTES        → plafond par fichier (défaut 350000)
  *   MIRROR_DIR_BUDGET_BYTES → plafond dossier miroir (défaut 48 MiB)
  *   MIRROR_CONCURRENCY      → téléchargements parallèles (défaut 4)
  */
@@ -39,7 +39,7 @@ const doUpdate = process.argv.includes('--update');
 const forceAll = process.argv.includes('--force');
 /* 1,2 Mo : une illustration PNG 16:9 (~760 ko, ex. Sans fin(s) / L’Exemplaire)
  * passait juste au-dessus de 750 ko et n’était jamais mirroirée. */
-const MAX_BYTES = Number(process.env.MIRROR_MAX_BYTES) || 1_200_000;
+const MAX_BYTES = Number(process.env.MIRROR_MAX_BYTES) || 350_000; // au-delà : version réduite 1200 px (croissance du dépôt)
 /* tests/artifact-budget.mjs plafonne le dossier suivi à 50 Mo — viser 48 Mo
  * pour laisser de la marge aux prochains miroirs avant la prochaine purge. */
 const DIR_BUDGET_BYTES = Number(process.env.MIRROR_DIR_BUDGET_BYTES) || 48 * 1024 * 1024;
