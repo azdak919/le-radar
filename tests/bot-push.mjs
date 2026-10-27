@@ -49,7 +49,9 @@ try {
     // Un `git add a b c || true` saute en entier si un chemin manque (news.json perdu, f680ad880).
     assert.doesNotMatch(y, /git add[^\n]*(?:\\\n[^\n]*)*\|\| true/, `${f} : git add masqué par || true`);
     assert.doesNotMatch(y, /\n\s*git push\s*(\n|\|\|)/, `${f} : push direct sans bot-push.sh`);
-    if (f !== 'update-sports-live.yml') assert.match(y, /group: data-writers-[a-z-]+\n\s*cancel-in-progress: false\n\s*queue: max/, f);
+    // android-version-prep.yml ne pousse qu'une branche release/android-* (jamais main ni les données) : pas de verrou data-writers.
+    const releaseBranchOnly = /BR="release\/android-/.test(y) && /git push[^\n]*refs\/heads\/\$BR/.test(y) && !/bot-push\.sh/.test(y);
+    if (f !== 'update-sports-live.yml' && !releaseBranchOnly) assert.match(y, /group: data-writers-[a-z-]+\n\s*cancel-in-progress: false\n\s*queue: max/, f);
   }
   console.log('OK bot-push');
 } finally {
