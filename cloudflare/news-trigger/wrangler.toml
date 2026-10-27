@@ -1,0 +1,20 @@
+# Déclencheur fiable de la collecte news (GitHub saute des crons fréquents).
+# Aucune route ni domaine public : Cron Triggers seulement.
+# Secret requis (jamais dans le dépôt) : GH_TOKEN = jeton GitHub à droits
+# minimaux (Actions: write sur azdak919/le-radar seulement), posé avec
+#   npx wrangler secret put GH_TOKEN
+name = "le-radar-news-trigger"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+preview_urls = false
+
+[triggers]
+# UTC. Pointe ~7 h–23 h HAE (11–03 UTC) : aux 30 min ; sinon aux heures.
+crons = ["5,35 0-3,11-23 * * *", "5 4-10 * * *"]
+
+[vars]
+REPO = "azdak919/le-radar"
+WORKFLOW = "update-news.yml"
+SITE = "https://le-radar.ca"
+MAX_AGE_MIN = "60"
