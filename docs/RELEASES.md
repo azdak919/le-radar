@@ -3,32 +3,35 @@
 Ce fichier suit l'état des trois canaux de diffusion du Radar. À mettre à jour à chaque
 déploiement notable, changement de cache du service worker ou étiquette Android.
 
-_Dernière mise à jour : 26 octobre 2026._
+_Dernière mise à jour : 27 octobre 2026._
 
 ## 1. Web (GitHub Pages, le-radar.ca)
 
 | Élément | Valeur |
 |---|---|
-| Dernier commit `main` déployé | `33ff6e5ea` — bot : métadonnées historiques (auto), 26 oct. 2026, 9 h 34 (HAE) |
-| Dernier changement de code déployé | `16b517d38` — fix(pomo) : carte citation compacte sur téléphone, rien sous le pied de page (26 oct., 8 h 59 HAE) |
-| Déploiement GitHub Pages | ✅ réussi (`pages-build-deployment`, run 40331826633) |
-| Date du déploiement | 26 octobre 2026, 9 h 36 (HAE) |
-| le-radar.ca | ✅ HTTP 200 (vérifié le 26 oct. 2026, 9 h 45 HAE) |
+| Dernier commit `main` déployé | `2a2f3238a` — bot : fil des nouvelles, extraits, images, RSS (auto), 27 oct. 2026, 9 h 13 (HAE) |
+| Dernier changement de code déployé | `495d9e93f` — images miroir publiées dans la Release `mirror-images`, recopiées au déploiement (26 oct., 22 h 43 HAE) |
+| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, run 40511526695) |
+| Date du déploiement | 27 octobre 2026, 9 h 22 (HAE) |
+| le-radar.ca | ✅ HTTP 200 (vérifié le 27 oct. 2026, 9 h 40 HAE) |
 
-Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier avec
-`gh run list -w pages-build-deployment -L 1`.
+Le site se déploie automatiquement à chaque poussée sur `main`, par artefact depuis le 26 oct.
+(21 h 43 HAE, `41dc6e9bf`; retour arrière : `build_type=legacy`). Vérifier avec
+`gh run list -w pages-deploy.yml -L 1`.
 
 ## 2. PWA (service workers)
 
 | Service worker | Cache actuel en ligne |
 |---|---|
-| `sw.js` (site) | `radar-shell-v973` (+ `radar-offline-v22`) — introduit par `16b517d38` |
-| `sports/sw.js` (Sports) | `sports-shell-v333` — introduit par `16b517d38` |
+| `sw.js` (site) | `radar-shell-v976` (+ `radar-offline-v22`) — introduit par `6ce6d91a0` |
+| `sports/sw.js` (Sports) | `sports-shell-v335` — introduit par `6ce6d91a0` |
 
 Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmée).
 
 ### Historique récent des correctifs PWA
 
+- 2026-10-26 — `daf1b3834`, `6ce6d91a0` : un poste qui joue n'affiche plus « Hors ligne »
+  (CHOQ), ni dans la barre ni dans la liste (v976 / v335).
 - 2026-10-26 — `16b517d38` : carte citation du Pomo compacte sur téléphone (v973 / v333).
 - 2026-10-26 — `c69af7581` : barre radio du Pomo et du Solitaire identique au Radar.
 - 2026-10-26 — `3dacbb807` : fin de période du Pomo fiable en arrière-plan (notification).
@@ -58,7 +61,7 @@ Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmé
 | `android-v1.2.3` | 2026-10-23 | ⏳ recette mise à jour le 2026-10-24 (`fa454f12`, versionCode 8), pas encore publiée |
 | `android-v1.2.4` | 2026-10-25 | ⏳ recette mise à jour le 2026-10-26 (MR 54228 fusionnée, `4ee66bdb`, saveur `fdroid`) ; CurrentVersion 1.2.4 / 9 ; pas encore publiée |
 
-Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-26) :
+Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-27) :
 **1.1.1 (versionCode 4)** (suggérée ; 1.1.0 / 3 encore listée). Recette fdroiddata : CurrentVersion **1.2.4 (9)**. `main` est à **1.2.4 (versionCode 9)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
@@ -70,6 +73,7 @@ le-radar.ca en direct.
 Aucun changement dans `mobile/` ni `android/` depuis l'étiquette : les changements suivants
 touchent le site seulement (Pomo, Solitaire, page Sports, radios du site).
 
+- `daf1b3834`, `6ce6d91a0` — un poste qui joue n'affiche plus « Hors ligne » (CHOQ).
 - `16b517d38` — carte citation du Pomo compacte sur téléphone.
 - `c69af7581` — barre radio du Pomo et du Solitaire identique au Radar.
 - `3dacbb807` — fin de période du Pomo fiable en arrière-plan.
