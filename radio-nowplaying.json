@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T06:15:49.204Z",
+  "updatedAt": "2026-10-27T09:34:44.539Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T06:14:49.968Z"
+      "checkedAt": "2026-10-27T09:34:04.802Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
-        "title": "À l'horizon",
+        "title": "Raconte ton quartier",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/a-lhorizon"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T06:14:51.980Z"
+      "checkedAt": "2026-10-27T09:34:06.580Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Pirate et Libres",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Attik / Show For Children",
+        "title": "Tuesday Morning After Pt1",
         "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Pirate et Libres",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T06:14:54.273Z"
+      "checkedAt": "2026-10-27T09:34:08.717Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Hip's Time to Wake Hop",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T06:15:29.012Z"
+      "checkedAt": "2026-10-27T09:34:22.570Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T06:15:29.968Z"
+      "checkedAt": "2026-10-27T09:34:23.612Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
+      "next": {
+        "title": "Le Monde Dans Mes Oreilles",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "slug": "le-monde-dans-mes-oreilles"
+      },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "",
+      "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T06:15:48.854Z"
+      "checkedAt": "2026-10-27T09:34:44.188Z"
     }
   }
 }
