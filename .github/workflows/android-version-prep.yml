@@ -1,0 +1,73 @@
+name: Android version prep
+# Prépare la prochaine version Android SANS taguer ni publier :
+# s'il y a des changements app depuis le dernier tag android-v*, pousse la
+# branche release/android-<version> (versionName +0.0.1, versionCode +1) et met à
+# jour une issue unique avec le lien « créer la PR ». Le tag reste humain.
+on:
+  schedule:
+    - cron: '0 8 1 * *'   # le 1er du mois, ~4 h Toronto
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: android-version-prep
+  cancel-in-progress: false
+jobs:
+  prep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Préparer la branche
+        id: prep
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          last=$(git tag --list 'android-v*' --sort=-creatordate | head -1)
+          [ -n "$last" ] || { echo "Aucun tag android-v*"; exit 0; }
+          changes=$(git log --format='- %s (%h)' "$last"..HEAD -- mobile android capacitor.config.json article | grep -v '^- bot' | head -40 || true)
+          if [ -z "$changes" ]; then echo "pending=0" >> "$GITHUB_OUTPUT"; exit 0; fi
+          cur=$(sed -nE 's/.*versionName "([0-9.]+)".*/\1/p' android/app/build.gradle)
+          code=$(sed -nE 's/.*versionCode ([0-9]+).*/\1/p' android/app/build.gradle)
+          next=$(echo "$cur" | awk -F. '{printf "%d.%d.%d", $1, $2, $3+1}')
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -q -B "release/android-next-local"
+          sed -i -E "s/versionCode [0-9]+/versionCode $((code+1))/; s/versionName \"[0-9.]+\"/versionName \"$next\"/" android/app/build.gradle
+          node -e "const f='package.json',p=require('./'+f);p.version='$next';require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
+          git add android/app/build.gradle
+          git add package.json
+          git commit -qm "chore(android): prépare $next (versionCode $((code+1))) — à valider, aucun tag"
+          # Une branche par version (jamais de force-push) : si elle existe déjà, on la garde.
+          BR="release/android-$next"
+          if git ls-remote --exit-code --heads origin "$BR" >/dev/null; then echo "$BR existe déjà."
+          else git push -q origin "HEAD:refs/heads/$BR"; fi
+          {
+            echo "Mis à jour automatiquement par android-version-prep.yml — $(date -u +%FT%TZ)."
+            echo
+            echo "Une version **$next** est prête (dernier tag : \`$last\`). Rien n'est tagué ni publié."
+            echo
+            echo "1. Ouvrir la PR : https://github.com/${GITHUB_REPOSITORY}/compare/main...release/android-$next?expand=1"
+            echo "2. Si les tests sont verts et que la version convient : fusionner, puis taguer \`android-v$next\`."
+            echo
+            echo "## Changements app depuis $last"
+            echo "$changes"
+          } > "$RUNNER_TEMP/body.md"
+          echo "pending=1" >> "$GITHUB_OUTPUT"
+      - name: Issue unique
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PENDING: ${{ steps.prep.outputs.pending }}
+        run: |
+          TITLE="Version Android à valider (bot)"
+          NUM=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
+          if [ "${PENDING:-0}" = "1" ]; then
+            if [ -n "$NUM" ]; then gh issue edit "$NUM" --repo "${{ github.repository }}" --body-file "$RUNNER_TEMP/body.md"
+            else gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"; fi
+          elif [ -n "$NUM" ]; then
+            gh issue close "$NUM" --repo "${{ github.repository }}" --comment "Plus de changement app en attente."
+          fi
