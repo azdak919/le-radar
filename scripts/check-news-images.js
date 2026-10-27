@@ -116,6 +116,7 @@ async function main() {
   urls.forEach((u, k) => cache.set(u, results[k]));
 
   const broken = [];
+  const deadUrls = [];
   let repaired = 0;
   for (const { item, checks } of plan) {
     for (const c of checks) {
@@ -124,6 +125,8 @@ async function main() {
       const row = { source: item.source, title: item.title, link: item.link, field: c.field, variant: c.variant || '', url: c.url, status: r.status, type: r.type, transient: !!r.transient };
       broken.push(row);
       if (!args.has('--update') || r.transient) continue;
+      if (/^(404|410)$/.test(String(r.status)) && /^(stockImage|image)$/.test(c.field)) deadUrls.push(c.url);
+      row.repaired = true;
       // Image locale absente : le client retombe sur l'origine.
       if (c.field === 'imageLocal') { delete item.imageLocal; delete item.imageLocalVia; repaired += 1; }
       // Origine morte sans miroir : vider, le repli normal prend le relais.
@@ -135,6 +138,7 @@ async function main() {
       }
     }
   }
+  if (deadUrls.length) require('./dead-images-lib').remember(deadUrls);
   const report = { at: new Date().toISOString(), cards: items.length, urls: urls.length, broken: broken.length, repaired, items: broken };
   fs.mkdirSync(path.dirname(REPORT_PATH), { recursive: true });
   fs.writeFileSync(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);

@@ -57,6 +57,8 @@ const { imageHostIsFragile, sourceNeedsCampusBackup } = require('./campus-fallba
 
 
 const ROOT = path.join(__dirname, '..');
+const deadImages = require('./dead-images-lib');
+const DEAD_IMAGES = deadImages.load();
 const NEWS_PATH = path.join(ROOT, 'news.json');
 const QC_PATH = path.join(ROOT, 'lead-image-qc.json');
 const HERO_MIN_POOL = 4;
@@ -312,6 +314,8 @@ async function tryUpgradeExistingImage(item, sourceMap = new Map()) {
 }
 
 function applyPhotoFields(item, stock) {
+  // Photo de repli connue morte (404) : on n'y revient pas ; le client prend une photo du campus.
+  if (deadImages.isDead(stock && stock.stockImage, DEAD_IMAGES)) return false;
   item.stockImage = stock.stockImage;
   item.imageTitle = stock.imageTitle || '';
   item.imageCredit = stock.imageCredit;

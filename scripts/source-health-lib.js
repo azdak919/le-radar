@@ -110,7 +110,7 @@ function evaluateHealth({ registry, datesBySource = {}, imageStats = null, image
   // Balayage des images des cartes (check-news-images.js) : toute image
   // encore cassée après réparation automatique (hors 429/5xx passagers).
   if (imageHealth && Array.isArray(imageHealth.items)) {
-    const persistent = imageHealth.items.filter((i) => !i.transient && i.field !== 'stockImage-mirror');
+    const persistent = imageHealth.items.filter((i) => !i.transient && !i.repaired && i.field !== 'stockImage-mirror');
     if (persistent.length) {
       problems.push({
         kind: 'images-cartes',
