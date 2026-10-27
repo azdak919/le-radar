@@ -47,7 +47,7 @@ jobs:
     outputs:
       publish: ${{ steps.bundle.outputs.publish }}
     permissions:
-      contents: read
+      contents: write   # fichiers de la Release mirror-images seulement ; le push reste au job publish
       issues: write
 
     steps:
@@ -162,6 +162,16 @@ jobs:
       # Miroir local des photos source (GitHub Pages) — si un journal tombe
       # (ex. L’Exemplaire), le fil garde les images déjà cachées. Hôtes fragiles
       # : repli Wayback au téléchargement.
+      # Images miroir hors historique git : on récupère d'abord celles de la
+      # Release mirror-images (le miroir voit ainsi tout le dossier).
+      - name: Restore mirror images (Release)
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && vars.MIRROR_STORE != 'git'
+        timeout-minutes: 4
+        run: node scripts/mirror-release.js restore
+        env:
+          GH_TOKEN: ${{ github.token }}
+        continue-on-error: true
+
       - name: Mirror source images
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         timeout-minutes: 8
@@ -184,6 +194,18 @@ jobs:
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         timeout-minutes: 5
         run: node scripts/check-news-images.js --update
+        continue-on-error: true
+
+      # Publie les nouvelles images dans la Release (pas dans git) et retire
+      # celles que le miroir a purgées (délai de grâce 2 j). En cas d'échec, le
+      # commit retombe sur l'ancien mode (git add -f) : aucune image perdue.
+      - name: Publish mirror images (Release)
+        id: mirror_release
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && vars.MIRROR_STORE != 'git'
+        timeout-minutes: 6
+        run: node scripts/mirror-release.js sync
+        env:
+          GH_TOKEN: ${{ github.token }}
         continue-on-error: true
 
       # Surveillance : flux en échec, sources muettes hors congés, taux
@@ -285,6 +307,10 @@ jobs:
           done
           # Lot E : catalogue mensuel data/archives/ ; -A publie aussi un mois retiré
           # et la suppression de l'ancien news-archive.json monolithique.
+          if [ "${{ vars.MIRROR_STORE }}" = "git" ] || [ "${{ steps.mirror_release.outcome }}" = "failure" ]; then
+            echo "::warning::images miroir commitées dans git (MIRROR_STORE=git ou Release indisponible)"
+            git add -f -- assets/news-images
+          fi
           if [ -d data/archives ]; then git add -A -- data/archives; fi
           git rm -q --cached --ignore-unmatch news-archive.json
           # Toujours publier le prérendu / JSON-LD quand generate-seo a réussi.

@@ -80,3 +80,10 @@ playwright-report/
 data/stock-search-cache.json
 data/source-health.md
 data/platform-health.md
+
+# Images miroir : nouvelles images publiées comme fichiers de la Release
+# `mirror-images` (scripts/mirror-release.js), recopiées dans le site par
+# pages-deploy.yml. Les images déjà suivies restent dans git. Retour arrière :
+# variable de dépôt MIRROR_STORE=git (update-news fait alors `git add -f`).
+assets/news-images/*
+!assets/news-images/manifest.json

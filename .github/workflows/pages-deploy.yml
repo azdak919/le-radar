@@ -59,6 +59,14 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      # Images miroir publiées hors git (Release mirror-images) : mêmes URL
+      # /assets/news-images/<hash>.<ext>, même domaine, même cache PWA.
+      - name: Images miroir (Release)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" _site
+          node scripts/mirror-release.js restore _site/assets/news-images
       - name: Contrôle du site assemblé
         run: |
           set -e
