@@ -1,6 +1,6 @@
 name: Dependabot auto-merge
-# Fusionne les PR Dependabot mineures/correctives une fois Vérification verte
-# ET tous les autres contrôles (Mobile inclus) verts sur la PR. Les majeures restent ouvertes (issue d'alerte unique).
+# Fusionne les PR Dependabot (mineures et majeures) une fois Vérification verte
+# ET tous les autres contrôles (Mobile inclus) verts, smoke test Playwright compris. Sinon la PR reste ouverte (alerte platform-health après 30 j).
 on:
   workflow_run:
     workflows: ["Vérification", "Mobile"]
@@ -33,12 +33,10 @@ jobs:
           if echo "$states" | grep -Eqv '^(SUCCESS|SKIPPED|NEUTRAL)(,(SUCCESS|SKIPPED|NEUTRAL))*$'; then
             echo "Pas encore tout vert : on attend le prochain workflow_run."; exit 0
           fi
-          title=$(gh pr view "$pr" -R "$REPO" --json title --jq .title)
-          # Majeure = premier chiffre change (« from 6.x to 7.x »).
-          if echo "$title" | grep -Eq 'from v?([0-9]+)\.[^ ]* to v?\1\.'; then
-            gh pr merge "$pr" -R "$REPO" --squash --delete-branch
-          elif echo "$title" | grep -Eqi '^.*bump the .* group'; then
-            gh pr merge "$pr" -R "$REPO" --squash --delete-branch
-          else
-            echo "PR #$pr : mise à jour majeure, laissée à la revue."
-          fi
+          # Vérification (job « test ») doit avoir tourné et réussi : elle inclut
+          # le smoke test Playwright du site construit (test:browser:ci).
+          tested=$(gh pr view "$pr" -R "$REPO" --json statusCheckRollup --jq '[.statusCheckRollup[] | select(.name=="test" and .conclusion=="SUCCESS")] | length')
+          [ "${tested:-0}" -ge 1 ] || { echo "Vérification pas encore verte : on attend."; exit 0; }
+          # Mineures ET majeures : tous les contrôles + smoke test verts = fusion.
+          # Sinon la PR reste ouverte et la veille plateforme ouvre l'alerte après 30 j.
+          gh pr merge "$pr" -R "$REPO" --squash --delete-branch
