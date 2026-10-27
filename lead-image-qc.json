@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-27T15:39:09.819Z",
-  "total": 177,
-  "withPhoto": 153,
-  "withStock": 44,
-  "withCampusBank": 35,
-  "fullyCovered": 177,
-  "leadReadyPhotos": 129,
-  "pageScraped": 24,
-  "photosRecovered": 24,
-  "imagesCleared": 17,
-  "stockSearches": 48,
-  "stockFound": 42,
-  "campusBankFound": 29,
+  "updated": "2026-10-27T16:08:37.180Z",
+  "total": 178,
+  "withPhoto": 155,
+  "withStock": 43,
+  "withCampusBank": 33,
+  "fullyCovered": 178,
+  "leadReadyPhotos": 134,
+  "pageScraped": 28,
+  "photosRecovered": 28,
+  "imagesCleared": 22,
+  "stockSearches": 49,
+  "stockFound": 44,
+  "campusBankFound": 30,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -30,13 +30,7 @@
       "title": "Queer Concordia considers lawsuit against CSU",
       "link": "https://thelinknewspaper.ca/article/16519",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
-    },
-    {
-      "title": "Decline in Canadian acceptance of gender diversity",
-      "link": "https://thelinknewspaper.ca/article/16520",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Bulletin La Pige radio 26 octobre",
@@ -45,34 +39,40 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
-      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
-      "link": "https://theplantnews.com/2026/10/25/mens-clothing-ill-wear-on-gender-roles-and-expression-in-the-british-ballad/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/10/simon-ballad-article-1.jpeg"
-    },
-    {
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
       "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     },
     {
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "link": "https://thelinknewspaper.ca/article/16520",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+    },
+    {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
       "title": "Editorial: Lowering immigration, but at what cost?",
       "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",

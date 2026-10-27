@@ -1,23 +1,65 @@
 {
-  "updated": "2026-10-27T15:40:04.614Z",
-  "total": 177,
-  "withImage": 152,
-  "withCredit": 152,
-  "cited": 95,
+  "updated": "2026-10-27T16:09:29.917Z",
+  "total": 178,
+  "withImage": 155,
+  "withCredit": 155,
+  "cited": 98,
   "pending": 39,
   "missingHero": 0,
   "ok": false,
-  "checked": 45,
-  "updatedCount": 6,
-  "citedNew": 6,
-  "fallbackNew": 39,
+  "checked": 53,
+  "updatedCount": 14,
+  "citedNew": 12,
+  "fallbackNew": 41,
   "samples": [
     {
-      "title": "Concordia lose to Ottawa in Division One Classic",
+      "title": "Protest ends with four arrests after new reports of Montreal police misconduct",
       "source": "The Concordian",
-      "credit": "Photo : Eric Klempan",
+      "credit": "Photo: Aidan Raynor",
       "cited": true,
-      "method": "wp-caption"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Canada and Europe set to further alliance in Montreal on Oct. 29–30",
+      "source": "The Concordian",
+      "credit": "Photo: Max Paster",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Carney fast-tracks new pipeline as climate change worsens",
+      "source": "The Concordian",
+      "credit": "Illustration: Georgios Pantazopoulos",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Parti Québécois cabinet shrinks from previous government",
+      "source": "The Concordian",
+      "credit": "Photo: Aidan Raynor",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Wondering why your e Concordia online classes were temporarily inaccessible?",
+      "source": "The Concordian",
+      "credit": "Photo: Catherine Reynolds",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "CSU council kills Reuse Program’s and Homeroom’s fee levy applications",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "« Ceci est un programme de tous âges » : La discrimination",
+      "source": "La Griffe",
+      "credit": "Photo : La Griffe",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Une récolte record de bleuets sauvages dans la région",
@@ -34,25 +76,25 @@
       "method": "figcaption-bare"
     },
     {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
       "source": "The Plant",
       "credit": "Image via Pinterest",
       "cited": true,
       "method": "via-attribution"
-    },
-    {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
     }
   ]
 }
