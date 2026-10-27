@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-27T13:39:50.517Z",
+  "updated": "2026-10-27T15:10:04.430Z",
   "total": 177,
   "withImage": 152,
   "withCredit": 152,
@@ -7,11 +7,18 @@
   "pending": 39,
   "missingHero": 0,
   "ok": false,
-  "checked": 56,
-  "updatedCount": 17,
-  "citedNew": 17,
+  "checked": 45,
+  "updatedCount": 6,
+  "citedNew": 6,
   "fallbackNew": 39,
   "samples": [
+    {
+      "title": "QUICKSPIN: Dopamine Chamber — Fontaines D.C.",
+      "source": "The Concordian",
+      "credit": "Photo : Dopamine Chamber Album Cover",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
     {
       "title": "Une récolte record de bleuets sauvages dans la région",
       "source": "La Pige",
@@ -27,74 +34,25 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Pregnant, not sidelined",
-      "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "via-attribution"
     },
     {
-      "title": "Gone too soon for Concordia flag football",
-      "source": "The Link",
-      "credit": "Photo: Samuel Kayll",
+      "title": "Festivals au Québec : la fête à quel prix ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Strength, perseverance and resilience in a women’s cycling world",
-      "source": "The Link",
-      "credit": "Photo: Jade-S. Vachon-Côté",
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Concordia Health Services partners with ACCM to bring HIV tests to pop-up clinic",
-      "source": "The Link",
-      "credit": "Illustration: Helena Reyes Teruel",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Concordia’s new training on digital sexual abuse",
-      "source": "The Link",
-      "credit": "Photo: Pema Tournadre",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Transgender people need protection and allyship, now more than ever",
-      "source": "The Link",
-      "credit": "Photo : Photo Andraé Lerone Lewis",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Candy wrapper",
-      "source": "The Link",
-      "credit": "Illustration: Gabriel Brothers",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Drag is more than a show",
-      "source": "The Link",
-      "credit": "Photo: Asmaa Stora",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "The Soul Trembles in Montreal",
-      "source": "The Link",
-      "credit": "Photo: Samantha Rainone",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Concordia’s department of biology earns Hollywood credit",
-      "source": "The Link",
-      "credit": "Photo: Aïda M. Lopes",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "method": "media-credit-featured"
     }
   ]
 }
