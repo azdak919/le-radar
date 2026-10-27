@@ -1501,15 +1501,6 @@
       "via": "resize-proxy",
       "nameKey": "psppfirstannoucement-00000006.jpg"
     },
-    "4cf5b3fd566f4030": {
-      "local": "assets/news-images/4cf5b3fd566f4030.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/New-romance.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 152382,
-      "updatedAt": "2026-10-27T16:08:40.763Z",
-      "via": "disk",
-      "nameKey": "new-romance.png"
-    },
     "97b4d830d80fb0f5": {
       "local": "assets/news-images/97b4d830d80fb0f5.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/galerie-carte-rappel-1-scaled.jpg",
@@ -1548,9 +1539,18 @@
       "updatedAt": "2026-10-27T16:08:41.124Z",
       "via": "resize-proxy",
       "nameKey": "csu-online.png"
+    },
+    "bdd0e5197dcedb22": {
+      "local": "assets/news-images/bdd0e5197dcedb22.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/self-care.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 142269,
+      "updatedAt": "2026-10-27T17:38:50.668Z",
+      "via": "disk",
+      "nameKey": "self-care.png"
     }
   },
-  "updatedAt": "2026-10-27T17:09:15.909Z",
+  "updatedAt": "2026-10-27T17:38:50.673Z",
   "count": 155,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
