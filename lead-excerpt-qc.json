@@ -1,12 +1,12 @@
 {
-  "updated": "2026-10-27T03:07:13.862Z",
+  "updated": "2026-10-27T03:36:55.196Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 10,
-  "withLeadExcerpt": 119,
-  "candidates": 10,
-  "enriched": 1,
-  "failed": 1,
+  "incomplete": 11,
+  "withLeadExcerpt": 118,
+  "candidates": 11,
+  "enriched": 3,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -19,12 +19,21 @@
       "changed": false
     },
     {
-      "title": "Cancer du sein : la sensibilisation au-delà d’octobre rose",
-      "link": "https://lapige.atmjonquiere.com/2026/10/26/cancer-du-sein-la-sensibilisation-au-dela-doctobre-rose/?utm_source=rss&utm_medium=rss&utm_campaign=cancer-du-sein-la-sensibilisation-au-dela-doctobre-rose",
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "ok": true,
+      "score": 96,
+      "chars": 377,
+      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
+      "changed": true
+    },
+    {
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
       "ok": true,
       "score": 100,
-      "chars": 241,
-      "sample": "Bien qu’Octobre Rose touche bientôt à sa fin, la lutte contre le cancer du sein n’est pas terminée p",
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
       "changed": true
     },
     {
@@ -55,30 +64,21 @@
       "changed": false
     },
     {
+      "title": "Looking back at my journey walking El Camino de Santiago",
+      "link": "https://theconcordian.com/2026/10/el-camino-de-santiago-personal-essay/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "The light shone in my eyes as I looked up at Santiago de Compostela’s cathedral on May 13, 2026. I h",
+      "changed": true
+    },
+    {
       "title": "Bulletin La Pige radio 26 octobre",
       "link": "https://lapige.atmjonquiere.com/2026/10/26/bulletin-la-pige-radio-26-octobre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-26-octobre",
       "ok": true,
       "score": 68,
       "chars": 171,
       "sample": "Plusieurs cas de facultés affaiblies à Saguenay cette fin de semaine, c’est jour d’élection dans plu",
-      "changed": false
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-13/",
-      "ok": true,
-      "score": 84,
-      "chars": 130,
-      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": false
-    },
-    {
-      "title": "QUICKSPIN: Remi Wolf — Mud",
-      "link": "https://theconcordian.com/2026/10/remi-wolf-mud-quickspin-album-review/",
-      "ok": true,
-      "score": 100,
-      "chars": 158,
-      "sample": "The cover of Remi Wolf ’s third album features the singer covered in mud. The true mud, however, is ",
       "changed": false
     }
   ]
