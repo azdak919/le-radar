@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-27T09:08:43.698Z",
+  "updated": "2026-10-27T11:07:15.142Z",
   "total": 178,
   "withPhoto": 160,
   "withStock": 38,
   "withCampusBank": 29,
   "fullyCovered": 178,
-  "leadReadyPhotos": 135,
+  "leadReadyPhotos": 137,
   "pageScraped": 33,
   "photosRecovered": 33,
   "imagesCleared": 14,
-  "stockSearches": 43,
-  "stockFound": 35,
-  "campusBankFound": 23,
+  "stockSearches": 46,
+  "stockFound": 36,
+  "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -39,16 +39,28 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image.jpeg"
     },
     {
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "link": "https://theplantnews.com/2026/10/25/mens-clothing-ill-wear-on-gender-roles-and-expression-in-the-british-ballad/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/10/simon-ballad-article-1.jpeg"
+    },
+    {
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
       "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     },
     {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "title": "The Honey Bank: CSU’s sustainability initiatives",
+      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Creative Writing September 2026",
+      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
       "title": "CSU fails to reach quorum at special council meeting",
@@ -57,10 +69,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "The Honey Bank: CSU’s sustainability initiatives",
-      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -73,18 +85,6 @@
       "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "A Tradition on the Edge: The Future of Homecoming",
-      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
-    },
-    {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
     }
   ]
 }
