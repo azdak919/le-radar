@@ -76,7 +76,7 @@ test.describe('application mobile', () => {
   test('barre radio persistante entre les onglets @ci-critical', async ({ page }) => {
     // Pas de vrai flux en CI : tout média reçoit 30 s de silence WAV.
     const rate = 8000;
-    const samples = rate * 30;
+    const samples = rate * 120; // 2 min : le silence ne finit jamais avant le test (runner lent)
     const wav = Buffer.alloc(44 + samples, 0x80);
     wav.write('RIFF', 0); wav.writeUInt32LE(36 + samples, 4); wav.write('WAVE', 8);
     wav.write('fmt ', 12); wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22);
@@ -114,20 +114,20 @@ test.describe('application mobile', () => {
       await expect(bar).toBeVisible();
       await expect(bar).toHaveAttribute('data-state', 'playing');
       await expect(page.locator('#tuner')).toBeHidden();
-      const audio = await page.evaluate(() => {
+      // Poll : sous runner chargé, l'audio peut reprendre quelques ms après le changement d'onglet.
+      await expect.poll(() => page.evaluate(() => {
         const node = document.getElementById('player-audio');
         return { marker: node.dataset.marker, paused: node.paused, src: Boolean(node.getAttribute('src')) };
-      });
-      expect(audio).toEqual({ marker: 'same', paused: false, src: true });
+      })).toEqual({ marker: 'same', paused: false, src: true });
     }
 
     // Au chargement : sous le mât (à la place du syntoniseur du site).
     await page.locator('#tabs').getByRole('link', { name: 'Accueil' }).click();
     await page.evaluate(() => window.scrollTo(0, 0));
-    const mastBottom = await page.evaluate(() => Math.round(document.querySelector('.masthead').getBoundingClientRect().bottom));
-    expect(mastBottom).toBeGreaterThan(40); // mât compact ; sans data/ en CI il est plus bas
-    // Carte verre flottante : 8 px sous le mât.
-    expect(Math.abs(await barTop() - mastBottom - 8)).toBeLessThanOrEqual(2);
+    const mastBottomNow = () => page.evaluate(() => Math.round(document.querySelector('.masthead').getBoundingClientRect().bottom));
+    await expect.poll(mastBottomNow).toBeGreaterThan(40); // mât compact ; sans data/ en CI il est plus bas
+    // Carte verre flottante : 8 px sous le mât (poll : polices/images peuvent encore décaler la mise en page).
+    await expect.poll(async () => Math.abs(await barTop() - await mastBottomNow() - 8)).toBeLessThanOrEqual(2);
     // Après défilement : collée en haut de l'écran (sticky), sans débordement.
     await page.evaluate(() => window.scrollTo(0, 4000));
     await expect.poll(barTop).toBeLessThan(10);
