@@ -57,7 +57,7 @@ jobs:
           set -euo pipefail
           apk=$(ls android/app/build/outputs/apk/fdroid/debug/*.apk | head -1)
           d=$(mktemp -d); unzip -q -o "$apk" 'classes*.dex' -d "$d"
-          n=$(cat "$d"/classes*.dex | grep -a -o 'Lcom/google/android/gms/[A-Za-z0-9_/$]*;' | sort -u | wc -l)
+          n=$( { cat "$d"/classes*.dex | grep -a -o 'Lcom/google/android/gms/[A-Za-z0-9_/$]*;' || true; } | sort -u | wc -l)
           echo "classes com.google.android.gms dans l'APK fdroid : $n"
           echo "$n" > android/app/build/outputs/gms-classes-fdroid.txt
           test "$n" -eq 0

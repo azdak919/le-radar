@@ -77,9 +77,12 @@ jobs:
             git checkout -q -b "$BR"
             code=$(sed -nE 's/.*versionCode ([0-9]+).*/\1/p' android/app/build.gradle)
             sed -i -E "s/versionCode [0-9]+/versionCode $((code+1))/; s/versionName \"[0-9.]+\"/versionName \"$next\"/" android/app/build.gradle
-            node -e "const f='package.json',p=require('./'+f);p.version='$next';require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
+            node -e "const fs=require('fs');for(const f of ['package.json','package-lock.json']){const p=JSON.parse(fs.readFileSync(f,'utf8'));p.version='$next';if(p.packages&&p.packages[''])p.packages[''].version='$next';fs.writeFileSync(f,JSON.stringify(p,null,2)+'\n')}"
+            sed -i -E "s/const APP_VERSION = '[0-9.]+'/const APP_VERSION = '$next'/" mobile/app/js/core.js
             git add android/app/build.gradle
             git add package.json
+            git add package-lock.json
+            git add mobile/app/js/core.js
             git commit -qm "chore(android): version $next (versionCode $((code+1)))"
             git push -q origin "HEAD:refs/heads/$BR"
           fi
@@ -145,23 +148,29 @@ jobs:
           echo "tagged=android-v$next" >> "$GITHUB_OUTPUT"
       - name: Issue unique
         if: always()
+        env:
+          DECISION: ${{ steps.decide.outputs.json }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+          TAGGED: ${{ steps.tag.outputs.tagged }}
+          NEXT: ${{ steps.plan.outputs.next }}
+          GO: ${{ steps.plan.outputs.go }}
         run: |
           TITLE="Version Android à valider (bot)"
           NUM=$(gh issue list -R "$REPO" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
-          if [ '${{ steps.plan.outputs.go }}' != '1' ]; then
+          if [ "$GO" != "1" ]; then
             [ -n "$NUM" ] && gh issue close "$NUM" -R "$REPO" --comment "Aucun changement app depuis le dernier tag."
             exit 0
           fi
-          if [ -n '${{ steps.tag.outputs.tagged }}' ]; then
-            [ -n "$NUM" ] && gh issue close "$NUM" -R "$REPO" --comment "Publié : ${{ steps.tag.outputs.tagged }} (${{ steps.pr.outputs.url }})."
+          if [ -n "$TAGGED" ]; then
+            [ -n "$NUM" ] && gh issue close "$NUM" -R "$REPO" --comment "Publié : $TAGGED ($PR_URL)."
             exit 0
           fi
           {
             echo "Mis à jour par android-version-prep.yml — $(date -u +%FT%TZ) — simulation : $DRY."
             echo
-            echo "Version **${{ steps.plan.outputs.next }}** : ${{ steps.pr.outputs.url }}"
+            echo "Version **$NEXT** : $PR_URL"
             echo
-            echo "Décision des garde-fous : \`${{ steps.decide.outputs.json }}\`"
+            echo "Décision des garde-fous : \`$DECISION\`"
             echo
             echo "Aucun tag n'a été poussé."
           } > "$RUNNER_TEMP/body.md"
