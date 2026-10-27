@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-27T02:45:32.388Z",
+  "updated": "2026-10-27T02:56:15.605Z",
   "total": 178,
   "withPhoto": 160,
   "withStock": 38,
   "withCampusBank": 28,
   "fullyCovered": 178,
   "leadReadyPhotos": 136,
-  "pageScraped": 32,
-  "photosRecovered": 32,
+  "pageScraped": 33,
+  "photosRecovered": 33,
   "imagesCleared": 14,
   "stockSearches": 43,
-  "stockFound": 34,
-  "campusBankFound": 23,
+  "stockFound": 33,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,6 +33,12 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image.jpeg"
     },
     {
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "link": "https://theplantnews.com/2026/10/25/mens-clothing-ill-wear-on-gender-roles-and-expression-in-the-british-ballad/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/10/simon-ballad-article-1.jpeg"
+    },
+    {
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
       "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
@@ -45,10 +51,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Festivals au Québec : la fête à quel prix ?",
+      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
+      "reason": "stock-too-small",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
     },
     {
       "title": "CSU fails to reach quorum at special council meeting",
@@ -75,16 +81,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
     }
   ]
 }
