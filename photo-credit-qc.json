@@ -1,23 +1,30 @@
 {
-  "updated": "2026-10-27T20:54:53.804Z",
+  "updated": "2026-10-27T22:10:09.924Z",
   "total": 180,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 100,
-  "pending": 39,
+  "cited": 99,
+  "pending": 40,
   "missingHero": 0,
   "ok": false,
-  "checked": 47,
-  "updatedCount": 8,
+  "checked": 48,
+  "updatedCount": 9,
   "citedNew": 8,
-  "fallbackNew": 39,
+  "fallbackNew": 40,
   "samples": [
     {
       "title": "Sex workers deserve protection",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Une récolte record de bleuets sauvages dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Facebook – Bleuets Savard",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "body-line"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -27,23 +34,23 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "title": "Faire compter sa voix",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
+      "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
