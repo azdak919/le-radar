@@ -1,0 +1,88 @@
+name: Pages deploy (artifact)
+
+# Publication GitHub Pages par artefact (source « GitHub Actions »).
+# Même build Jekyll que l'ancien mode « deploy from branch » (_config.yml,
+# CNAME, .well-known). Les bots poussent avec GITHUB_TOKEN, ce qui ne
+# déclenche pas `push` : on redéploie donc aussi à la fin de chaque workflow
+# qui écrit sur main (workflow_run), plus un filet aux 30 min.
+# Retour arrière : gh api -X PUT repos/azdak919/le-radar/pages \
+#   -f build_type=legacy -f 'source[branch]=main' -f 'source[path]=/'
+
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows:
+      - Update Student News
+      - Update Student Sports (RSEQ)
+      - Update Student Sports (live)
+      - Update Radio Now Playing
+      - Update Radio Schedules
+      - Update Radio Streams
+      - Update Institutions Catalogue
+      - Archive Student Journalism
+      - Discover & Maintain News Sources
+      - Weekly Maintenance (full pipeline)
+      - Retro-crawl Historical Metadata
+      - Verify Historical Article Links
+      - Verify Live Article Links
+      - Detect Radio Schedule Drift
+      - Probe Indigenous MT engines
+    types: [completed]
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Publier (false = build de validation seulement)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+        if: vars.PAGES_ARTIFACT == '1'
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Contrôle du site assemblé
+        run: |
+          set -e
+          for f in CNAME index.html news.json sports.json manifest.json offline.html .well-known/assetlinks.json; do
+            test -s "_site/$f" || { echo "::error::manquant : $f"; exit 1; }
+          done
+          ls _site/*sw*.js >/dev/null
+          test "$(cat _site/CNAME)" = "le-radar.ca"
+          du -sh _site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    # Garde de bascule : tant que la variable PAGES_ARTIFACT != '1', build seul.
+    if: vars.PAGES_ARTIFACT == '1' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.d.outputs.page_url }}
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4
