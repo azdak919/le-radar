@@ -28,6 +28,9 @@ for (const r of runs.filter((x) => !/^pages build/i.test(x.name))) {
     }
   }
 }
+let sailingAlert = '';
+try { sailingAlert = (JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'sports-sailing.json'), 'utf8')).cicsa || {}).sheetAlert || ''; } catch { /* absent */ }
+if (sailingAlert) deprecations.add(`Voile CICSA : ${sailingAlert}`);
 const problems = lib.evaluate({ repoSizeMb: (info.size || 0) / 1024, pages, dependabotPrs: prs, workflows, deprecations: [...deprecations] });
 const body = lib.renderBody(problems);
 const out = path.join(__dirname, '..', 'data', 'platform-health.md');

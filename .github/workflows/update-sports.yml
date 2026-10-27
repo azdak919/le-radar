@@ -58,7 +58,9 @@ jobs:
         continue-on-error: true
 
       - name: Fetch RSEQ sports (tous sports, sans exception)
-        run: node scripts/fetch-sports.js --update
+        run: |
+          node scripts/cicsa-sheet-watch.js --update
+          node scripts/fetch-sports.js --update
         env:
           HOCKEY_CACHE_URL: https://le-radar-hockey.azdak.workers.dev
 
@@ -82,7 +84,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sports.json sports-masthead.json sports-live-window.json sports/index.html en/sports/index.html
+          git add sports.json sports-masthead.json sports-live-window.json sports-sailing.json sports/index.html en/sports/index.html
           # Pages SEO rafraîchies par bot-prepush-check (bascule de semaine).
           for p in radios en/radios; do if [ -e "$p" ]; then git add -- "$p"; fi; done
           if git diff --staged --quiet; then
