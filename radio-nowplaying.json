@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T15:43:39.722Z",
+  "updatedAt": "2026-10-27T19:27:03.673Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Émission (presque) sérieuse",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://chyz.ca/emission/emission-presque-serieuse/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T15:42:52.175Z"
+      "checkedAt": "2026-10-27T19:26:26.106Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Lentement mais sûrement",
+        "title": "À la bonne heure",
         "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/lentement-mais-surement"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
       "next": {
-        "title": "Les sentinelles de l'art",
+        "title": "London café",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
       },
       "track": "",
-      "showTitle": "Lentement mais sûrement",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T15:43:01.804Z"
+      "checkedAt": "2026-10-27T19:26:28.026Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ecolibrium/Environment in Canada",
+        "title": "Montreal Sessions",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Universal Break",
+        "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Ecolibrium/Environment in Canada",
+      "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,86 +74,86 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T15:43:04.804Z"
+      "checkedAt": "2026-10-27T19:26:30.291Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mirror Journal",
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "next": {
-        "title": "World Beat News",
+        "title": "Bikini Brrroadcast",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
       "track": "",
-      "showTitle": "Mirror Journal",
+      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T15:43:19.980Z"
+      "checkedAt": "2026-10-27T19:26:44.585Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Le DOUZE",
         "source": "schedule-live",
         "start": "12:00",
         "end": "18:30"
       },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le DOUZE",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T15:43:20.956Z"
+      "checkedAt": "2026-10-27T19:26:46.020Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Le Monde Dans Mes Oreilles",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "le-monde-dans-mes-oreilles"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
       "next": {
-        "title": "L'UQAM en info",
+        "title": "Le Studio",
         "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
       },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "Le Monde Dans Mes Oreilles",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T15:43:39.371Z"
+      "checkedAt": "2026-10-27T19:27:03.322Z"
     }
   }
 }
