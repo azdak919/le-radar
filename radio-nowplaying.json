@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-10-27T19:27:03.673Z",
+  "updatedAt": "2026-10-27T20:25:07.193Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T19:26:26.106Z"
+      "checkedAt": "2026-10-27T20:24:27.900Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À la bonne heure",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
-      },
-      "next": {
         "title": "London café",
         "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://cism893.ca/emissions/london-cafe"
       },
+      "next": {
+        "title": "les pénibles",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-penibles"
+      },
       "track": "",
-      "showTitle": "À la bonne heure",
+      "showTitle": "London café",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T19:26:28.026Z"
+      "checkedAt": "2026-10-27T20:24:29.895Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T19:26:30.291Z"
+      "checkedAt": "2026-10-27T20:24:32.707Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
-      },
-      "next": {
         "title": "Bikini Brrroadcast",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
+      "showTitle": "Bikini Brrroadcast",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T19:26:44.585Z"
+      "checkedAt": "2026-10-27T20:24:47.386Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T19:26:46.020Z"
+      "checkedAt": "2026-10-27T20:24:48.749Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Le Studio",
         "source": "api-live",
@@ -146,14 +147,14 @@
         "slug": "live"
       },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "Palmarès CHOQ.ca",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T19:27:03.322Z"
+      "checkedAt": "2026-10-27T20:25:06.842Z"
     }
   }
 }
