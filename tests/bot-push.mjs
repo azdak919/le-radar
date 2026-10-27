@@ -45,6 +45,8 @@ try {
   for (const f of readdirSync('.github/workflows')) {
     const y = readFileSync(join('.github/workflows', f), 'utf8');
     if (!/git push|bot-push\.sh/.test(y)) continue;
+    // Pousse seulement une branche release/android-<version> (jamais main).
+    if (f === 'android-version-prep.yml') { assert.doesNotMatch(y, /HEAD:(refs\/heads\/)?main/, f); continue; }
     assert.doesNotMatch(y, /-X theirs/, f);
     // Un `git add a b c || true` saute en entier si un chemin manque (news.json perdu, f680ad880).
     assert.doesNotMatch(y, /git add[^\n]*(?:\\\n[^\n]*)*\|\| true/, `${f} : git add masqué par || true`);
