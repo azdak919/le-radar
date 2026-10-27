@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-27T00:49:35.371Z",
+  "updated": "2026-10-27T09:24:37.654Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4570,14 +4570,31 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20261027004832/https://lapige.atmjonquiere.com/2026/10/26/bulletin-la-pige-radio-26-octobre/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/26/je-peux-decouvrir-des-talents-la-convention-djam-fait-briller-les-danseurs-du-saguenay/": {
+      "at": "2026-10-27T09:19:35.548Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261027091920/https://lapige.atmjonquiere.com/2026/10/26/je-peux-decouvrir-des-talents-la-convention-djam-fait-briller-les-danseurs-du-saguenay/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/26/une-recolte-record-de-bleuets-sauvages-dans-la-region/": {
+      "at": "2026-10-27T09:19:58.207Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261027091943/https://lapige.atmjonquiere.com/2026/10/26/une-recolte-record-de-bleuets-sauvages-dans-la-region/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/26/matrec-investit-15-millions-de-dollars-pour-un-site-denfouissement/": {
+      "at": "2026-10-27T00:48:08.000Z",
+      "via": "existant",
+      "source": "La Pige"
     }
   },
   "stats": {
-    "total": 796,
+    "total": 799,
     "lastRun": {
-      "saved": 1,
-      "skipped": 0,
-      "failed": 5,
+      "saved": 2,
+      "skipped": 1,
+      "failed": 11,
       "stoppedEarly": true
     }
   },
@@ -4585,7 +4602,7 @@
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 27,
-      "checkedAt": "2026-10-20T08:51:31.749Z"
+      "checkedAt": "2026-10-27T09:19:04.593Z"
     },
     "The Tribune": {
       "host": "www.thetribune.ca",
@@ -4595,7 +4612,7 @@
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 138,
-      "checkedAt": "2026-10-20T08:51:40.061Z"
+      "checkedAt": "2026-10-27T09:19:10.258Z"
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
@@ -4610,7 +4627,7 @@
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
       "pages": 9,
-      "checkedAt": "2026-10-20T08:51:45.725Z"
+      "checkedAt": "2026-10-27T09:19:16.407Z"
     },
     "Quartier Libre": {
       "host": "quartierlibre.ca",
