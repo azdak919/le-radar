@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T15:32:58.722Z",
+  "updatedAt": "2026-10-27T15:03:16.178Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-10-26T15:32:58.722Z",
+      "checkedAt": "2026-10-27T15:03:16.178Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -320,7 +320,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-10-26T15:32:58.722Z",
+      "checkedAt": "2026-10-27T15:03:16.178Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -1101,7 +1101,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-10-26T15:32:58.722Z",
+      "checkedAt": "2026-10-27T15:03:16.178Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -1529,6 +1529,12 @@
           "start": "15:00",
           "end": "17:00",
           "title": "Positive Vibes"
+        },
+        {
+          "day": 4,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "Thursday OTH"
         },
         {
           "day": 4,
@@ -4377,7 +4383,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-10-26T15:32:58.722Z",
+      "checkedAt": "2026-10-27T15:03:16.178Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -4604,7 +4610,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-10-26T15:32:58.722Z",
+      "checkedAt": "2026-10-27T15:03:16.178Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -4687,9 +4693,9 @@
         {
           "day": 3,
           "start": "13:00",
-          "end": "14:00",
-          "title": "Échos du monde",
-          "url": "https://www.choq.ca/emissions/echos-du-monde"
+          "end": "13:45",
+          "title": "Onde de CHOQ",
+          "url": "https://www.choq.ca/emissions/onde-de-choq"
         },
         {
           "day": 3,
