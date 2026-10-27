@@ -249,8 +249,9 @@ assert.match(appJs, /RadioPlayback/);
 assert.match(appJs, /useNativeRadio/);
 // F-Droid : signature optionnelle. Sans keystore.properties, assembleRelease sort un APK non signé.
 const appGradle = read('android/app/build.gradle');
-assert.match(appGradle, /versionCode 9/);
-assert.match(appGradle, /versionName "1\.2\.4"/);
+// Version : cohérente entre build.gradle, package.json et APP_VERSION (bumpée par android-version-prep.yml).
+assert.ok(Number((/versionCode (\d+)/.exec(appGradle) || [])[1]) >= 9, 'versionCode ≥ 9');
+assert.equal((/versionName "([0-9.]+)"/.exec(appGradle) || [])[1], pkg.version);
 // Radio native : notification, écran verrouillé, Bluetooth et Android Auto.
 {
   const svc = read('android/app/src/main/java/ca/leradar/app/radio/RadioPlaybackService.java');

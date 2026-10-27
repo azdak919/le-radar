@@ -7,7 +7,8 @@ name: Android version prep
 # qu'aucune version n'a été publiée ce mois-ci — fusionne la PR et pousse le tag
 # android-vX.Y.Z (F-Droid suit : UpdateCheckMode « Tags ^android-v »).
 # Sinon : aucun tag, et l'issue unique « Version Android à valider (bot) » est mise à jour.
-# Lancement manuel : dry_run=true par défaut (jamais de fusion ni de tag).
+# Lancement manuel : dry_run=true par défaut — branche dry-run/* temporaire + CI,
+# sans PR, sans issue, sans fusion ni tag (branche supprimée à la fin).
 on:
   schedule:
     - cron: '0 8 1 * *'   # le 1er du mois, ~4 h Toronto
@@ -17,8 +18,8 @@ on:
         description: 'Simulation : PR + contrôles, sans fusion ni tag'
         type: boolean
         default: true
-      test_pr:
-        description: 'Test : ouvrir la PR même sans changement app (force dry_run)'
+      force:
+        description: 'Test : exécuter les contrôles même sans changement app (simulation seulement)'
         type: boolean
         default: false
       kind:
@@ -41,8 +42,9 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO: ${{ github.repository }}
-      DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run || inputs.test_pr) }}
-      TEST_PR: ${{ github.event_name == 'workflow_dispatch' && inputs.test_pr }}
+      # Simulation : branche temporaire + CI, mais ni PR, ni issue, ni fusion, ni tag.
+      DRY: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run || inputs.force) }}
+      FORCE: ${{ github.event_name == 'workflow_dispatch' && inputs.force }}
       GATE_KIND: ${{ inputs.kind || 'patch' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -60,14 +62,14 @@ jobs:
           n=$(echo "$P" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).changes.length))')
           next=$(echo "$P" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).next))')
           echo "next=$next" >> "$GITHUB_OUTPUT"
-          if [ "$n" = "0" ] && [ "$TEST_PR" != "true" ]; then echo "go=0" >> "$GITHUB_OUTPUT"; else echo "go=1" >> "$GITHUB_OUTPUT"; fi
+          if [ "$n" = "0" ] && [ "$FORCE" != "true" ]; then echo "go=0" >> "$GITHUB_OUTPUT"; else echo "go=1" >> "$GITHUB_OUTPUT"; fi
       - name: Branche et PR de version
         id: pr
         if: steps.plan.outputs.go == '1'
         run: |
           set -euo pipefail
           next='${{ steps.plan.outputs.next }}'
-          BR="release/android-$next"; [ "$TEST_PR" = "true" ] && BR="release/android-$next-test-$(date -u +%Y%m%d%H%M)"
+          BR="release/android-$next"; [ "$DRY" = "true" ] && BR="dry-run/android-$next-$(date -u +%Y%m%d%H%M)"
           echo "branch=$BR" >> "$GITHUB_OUTPUT"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -88,10 +90,11 @@ jobs:
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "code=$(sed -nE 's/.*versionCode ([0-9]+).*/\1/p' android/app/build.gradle)" >> "$GITHUB_OUTPUT"
-          url=$(gh pr list -R "$REPO" --head "$BR" --state open --json url --jq '.[0].url // empty')
-          if [ -z "$url" ]; then
-            T="Android $next"; [ "$TEST_PR" = "true" ] && T="[test] Android $next — ne pas fusionner"
-            url=$(gh pr create -R "$REPO" --base main --head "$BR" --title "$T" --body "PR de version ouverte par android-version-prep.yml. Fusion et tag automatiques seulement si tous les garde-fous passent.")
+          if [ "$DRY" = "true" ]; then
+            url="(simulation : PR « Android $next » non ouverte — https://github.com/$REPO/compare/main...$BR)"
+          else
+            url=$(gh pr list -R "$REPO" --head "$BR" --state open --json url --jq '.[0].url // empty')
+            [ -n "$url" ] || url=$(gh pr create -R "$REPO" --base main --head "$BR" --title "Android $next" --body "PR de version ouverte par android-version-prep.yml. Fusion et tag automatiques seulement si tous les garde-fous passent.")
           fi
           echo "url=$url" >> "$GITHUB_OUTPUT"
       - name: Vérification et Mobile sur la branche
@@ -146,8 +149,15 @@ jobs:
           git tag -a "android-v$next" "$msha" -m "Android $next (publication automatique, garde-fous verts)"
           git push -q origin "refs/tags/android-v$next"
           echo "tagged=android-v$next" >> "$GITHUB_OUTPUT"
+      - name: Nettoyage de la simulation
+        if: always() && env.DRY == 'true' && startsWith(steps.pr.outputs.branch, 'dry-run/')
+        run: |
+          echo "Résultat simulé : $DECISION"
+          git push -q origin --delete "${{ steps.pr.outputs.branch }}" || true
+        env:
+          DECISION: ${{ steps.decide.outputs.json }}
       - name: Issue unique
-        if: always()
+        if: always() && env.DRY != 'true'
         env:
           DECISION: ${{ steps.decide.outputs.json }}
           PR_URL: ${{ steps.pr.outputs.url }}
