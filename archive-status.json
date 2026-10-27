@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-27T09:24:37.654Z",
+  "updated": "2026-10-27T15:42:24.468Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4587,15 +4587,69 @@
       "at": "2026-10-27T00:48:08.000Z",
       "via": "existant",
       "source": "La Pige"
+    },
+    "https://journallagriffe.ca/2026/10/the-unraveled-tour-une-tournee-mondiale-exceptionnelle-dolivia-rodrigo/": {
+      "at": "2026-10-27T15:32:00.433Z",
+      "via": "save-page-now",
+      "source": "La Griffe",
+      "snapshot": "https://web.archive.org/web/20261027153146/https://journallagriffe.ca/2026/10/the-unraveled-tour-une-tournee-mondiale-exceptionnelle-dolivia-rodrigo/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/26/anik-salas-presente-les-champions-mondiaux-de-legalite-des-genres-la-methode-scandinave/": {
+      "at": "2026-10-27T15:32:29.850Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261027153211/https://lapige.atmjonquiere.com/2026/10/26/anik-salas-presente-les-champions-mondiaux-de-legalite-des-genres-la-methode-scandinave/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/26/cancer-du-sein-la-sensibilisation-au-dela-doctobre-rose/": {
+      "at": "2026-10-27T15:32:58.604Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261027153237/https://lapige.atmjonquiere.com/2026/10/26/cancer-du-sein-la-sensibilisation-au-dela-doctobre-rose/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/26/halloween-une-fete-seulement-pour-les-petits/": {
+      "at": "2026-10-27T15:33:21.255Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261027153307/https://lapige.atmjonquiere.com/2026/10/26/halloween-une-fete-seulement-pour-les-petits/"
+    },
+    "https://montrealcampus.ca/2026/10/26/exo-en-compression-etudiantes-sous-pression/": {
+      "at": "2026-10-27T15:38:37.825Z",
+      "via": "save-page-now",
+      "source": "Montréal Campus",
+      "snapshot": "https://web.archive.org/web/20261027153824/https://montrealcampus.ca/2026/10/26/exo-en-compression-etudiantes-sous-pression/"
+    },
+    "https://theconcordian.com/2026/10/mamma-mia-the-musical-in-montreal/": {
+      "at": "2026-10-27T15:39:49.665Z",
+      "via": "save-page-now",
+      "source": "The Concordian",
+      "snapshot": "https://web.archive.org/web/20261027153931/https://theconcordian.com/2026/10/mamma-mia-the-musical-in-montreal/"
+    },
+    "https://theconcordian.com/2026/10/quickspins-dopamine-chamber-fontaines-dc/": {
+      "at": "2026-10-27T15:40:12.322Z",
+      "via": "save-page-now",
+      "source": "The Concordian",
+      "snapshot": "https://web.archive.org/web/20261027153956/https://theconcordian.com/2026/10/quickspins-dopamine-chamber-fontaines-dc/"
+    },
+    "https://thelinknewspaper.ca/article/16528": {
+      "at": "2026-10-27T15:40:49.057Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261027154026/https://thelinknewspaper.ca/article/16528"
+    },
+    "https://thelinknewspaper.ca/article/16527": {
+      "at": "2026-10-27T15:41:59.754Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261027154138/https://thelinknewspaper.ca/article/16527"
     }
   },
   "stats": {
-    "total": 799,
+    "total": 808,
     "lastRun": {
-      "saved": 2,
-      "skipped": 1,
+      "saved": 9,
+      "skipped": 0,
       "failed": 11,
-      "stoppedEarly": true
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -4622,7 +4676,8 @@
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 9,
-      "checkedAt": "2026-10-20T14:28:07.901Z"
+      "checkedAt": "2026-10-20T14:28:07.901Z",
+      "stale": true
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
@@ -4632,7 +4687,7 @@
     "Quartier Libre": {
       "host": "quartierlibre.ca",
       "pages": 40,
-      "checkedAt": "2026-10-20T14:28:13.580Z"
+      "checkedAt": "2026-10-27T15:31:39.551Z"
     },
     "The Plant": {
       "host": "theplantnews.com",
