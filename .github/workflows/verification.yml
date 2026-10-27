@@ -3,6 +3,11 @@ name: Vérification
 on:
   pull_request:
   workflow_dispatch:
+    inputs:
+      full:
+        description: 'Suite navigateur complète (false = sentinelles comme une PR)'
+        type: boolean
+        default: true
   push:
     branches: [main]
     # Snapshots / données bot purs : pas de Chromium ni mail QG à chaque heartbeat.
@@ -87,12 +92,12 @@ jobs:
       # Les specs exhaustives tournent dans la suite complète, manuelle : ne
       # pas payer 111 tests séquentiels pour chaque push.
       - name: Browser checks (critical)
-        if: github.event_name != 'workflow_dispatch'
+        if: github.event_name != 'workflow_dispatch' || !inputs.full
         timeout-minutes: 10
         run: npm run test:browser:ci
 
       - name: Browser checks (full suite)
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && inputs.full
         run: npm run test:browser
 
       - name: Upload browser traces on failure

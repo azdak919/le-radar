@@ -113,7 +113,8 @@ jobs:
           set -uo pipefail
           BR='${{ steps.pr.outputs.branch }}'
           since=$(date -u +%FT%TZ)
-          for wf in verification.yml mobile.yml; do gh workflow run "$wf" -R "$REPO" --ref "$BR"; done
+          gh workflow run verification.yml -R "$REPO" --ref "$BR" -f full=false   # même contrôle qu'une PR
+          gh workflow run mobile.yml -R "$REPO" --ref "$BR"
           wait_run() {
             local wf=$1 id=""
             for i in $(seq 1 40); do
