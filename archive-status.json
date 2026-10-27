@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-27T15:42:24.468Z",
+  "updated": "2026-10-27T20:15:38.541Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4641,15 +4641,21 @@
       "via": "save-page-now",
       "source": "The Link",
       "snapshot": "https://web.archive.org/web/20261027154138/https://thelinknewspaper.ca/article/16527"
+    },
+    "https://journallagriffe.ca/2026/10/ceci-est-un-programme-de-tous-ages-la-discrimination/": {
+      "at": "2026-10-27T20:13:38.186Z",
+      "via": "save-page-now",
+      "source": "La Griffe",
+      "snapshot": "https://web.archive.org/web/20261027201323/https://journallagriffe.ca/2026/10/ceci-est-un-programme-de-tous-ages-la-discrimination/"
     }
   },
   "stats": {
-    "total": 808,
+    "total": 809,
     "lastRun": {
-      "saved": 9,
+      "saved": 1,
       "skipped": 0,
-      "failed": 11,
-      "stoppedEarly": false
+      "failed": 6,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -4676,8 +4682,7 @@
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 9,
-      "checkedAt": "2026-10-20T14:28:07.901Z",
-      "stale": true
+      "checkedAt": "2026-10-27T20:13:13.793Z"
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
