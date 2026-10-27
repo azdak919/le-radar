@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-27T22:09:02.760Z",
+  "updated": "2026-10-27T22:37:58.676Z",
   "total": 180,
   "withPhoto": 157,
   "withStock": 43,
   "withCampusBank": 33,
   "fullyCovered": 180,
-  "leadReadyPhotos": 135,
+  "leadReadyPhotos": 132,
   "pageScraped": 28,
   "photosRecovered": 28,
-  "imagesCleared": 22,
-  "stockSearches": 48,
-  "stockFound": 44,
-  "campusBankFound": 30,
+  "imagesCleared": 21,
+  "stockSearches": 47,
+  "stockFound": 43,
+  "campusBankFound": 29,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,10 +33,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
-      "title": "Concordia University introduces new campus safety texting service",
-      "link": "https://thelinknewspaper.ca/article/16528",
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     },
     {
       "title": "Queer Concordia considers lawsuit against CSU",
@@ -49,12 +49,6 @@
       "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
-    },
-    {
-      "title": "La femme parfaite est un objet",
-      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "“Decolonization”",
@@ -85,6 +79,12 @@
       "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
+      "title": "Searching For a Third Space",
+      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
     }
   ]
 }
