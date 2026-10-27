@@ -1,12 +1,13 @@
 {
-  "checkedAt": "2026-10-26T01:06:32.286Z",
+  "checkedAt": "2026-10-27T02:00:47.817Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
-      "cism"
+      "ckut",
+      "choq"
     ],
     "overhaul": [],
     "unreachable": []
@@ -14,8 +15,8 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 45,
-      "fresh": 45,
+      "published": 43,
+      "fresh": 43,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -26,53 +27,23 @@
       "id": "cism",
       "published": 110,
       "fresh": 110,
-      "added": [
-        "dim 01:00–06:00 Mix franco",
-        "dim 06:00–07:00 Genre de bleu",
-        "dim 07:00–08:00 Par mots et par vaux",
-        "dim 08:00–09:00 Le 120e parallèle",
-        "dim 09:00–10:00 Ya Raï",
-        "dim 10:00–11:00 Effets sonores",
-        "dim 11:00–13:00 Les sirènes",
-        "dim 13:00–15:00 Le char de marge",
-        "dim 15:00–16:00 La Grapevine",
-        "dim 16:00–17:00 Le grand repos",
-        "dim 17:00–19:00 Symbiose",
-        "dim 19:00–20:30 London café (reprise)",
-        "dim 20:30–23:00 Mix Anglo",
-        "dim 23:00–01:00 Basses fréquences (reprise)",
-        "sam 00:00–01:00 Rythmologie (reprise)"
-      ],
-      "removed": [
-        "dim 00:00–02:00 Basses fréquences (reprise)",
-        "dim 02:00–07:00 Mix franco",
-        "dim 07:00–08:00 Genre de bleu",
-        "dim 08:00–09:00 Par mots et par vaux",
-        "dim 09:00–10:00 Le 120e parallèle",
-        "dim 10:00–11:00 Ya Raï",
-        "dim 11:00–12:00 Effets sonores",
-        "dim 12:00–14:00 Les sirènes",
-        "dim 14:00–16:00 Le char de marge",
-        "dim 16:00–17:00 La Grapevine",
-        "dim 17:00–18:00 Le grand repos",
-        "dim 18:00–20:00 Symbiose",
-        "dim 20:00–21:30 London café (reprise)",
-        "dim 21:30–00:00 Mix Anglo",
-        "sam 00:00–02:00 Rythmologie (reprise)"
-      ],
-      "changed": 30,
-      "ratio": 0.273,
-      "status": "drift"
-    },
-    {
-      "id": "ckut",
-      "published": 100,
-      "fresh": 100,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
       "status": "stable"
+    },
+    {
+      "id": "ckut",
+      "published": 100,
+      "fresh": 101,
+      "added": [
+        "jeu 17:00–18:00 Thursday OTH"
+      ],
+      "removed": [],
+      "changed": 1,
+      "ratio": 0.01,
+      "status": "drift"
     },
     {
       "id": "cjlo",
@@ -96,13 +67,17 @@
     },
     {
       "id": "choq",
-      "published": 26,
-      "fresh": 26,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "published": 24,
+      "fresh": 24,
+      "added": [
+        "mer 13:00–13:45 Onde de CHOQ"
+      ],
+      "removed": [
+        "mer 13:00–14:00 Échos du monde"
+      ],
+      "changed": 2,
+      "ratio": 0.083,
+      "status": "drift"
     }
   ]
 }
