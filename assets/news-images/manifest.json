@@ -1501,16 +1501,6 @@
       "via": "resize-proxy",
       "nameKey": "eat-the-rich.png"
     },
-    "5acdf60917a942b3": {
-      "local": "assets/news-images/5acdf60917a942b3.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/10/insurance-1.png",
-      "host": "theconcordian.com",
-      "bytes": 32154,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-27T15:29:49.050Z",
-      "via": "resize-proxy",
-      "nameKey": "insurance-1.png"
-    },
     "d525fc5455bd9d60": {
       "local": "assets/news-images/d525fc5455bd9d60.webp",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/18-19_PHOTO-DE-PRESSE-Lydia-Kepinski-Credit-Charlie-Poirier-Bouthillette.jpg",
@@ -1520,9 +1510,19 @@
       "updatedAt": "2026-10-27T15:29:52.495Z",
       "via": "photon-resize",
       "nameKey": "18-19_photo-de-presse-lydia-kepinski-credit-charlie-poirier-bouthillette.jpg"
+    },
+    "a0324760ffeacc0f": {
+      "local": "assets/news-images/a0324760ffeacc0f.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/10/HannahNobile_111026_HockeyvsMcGill_Vol44-7.jpg",
+      "host": "theconcordian.com",
+      "bytes": 180956,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-27T15:39:15.100Z",
+      "via": "resize-proxy",
+      "nameKey": "hannahnobile_111026_hockeyvsmcgill_vol44-7.jpg"
     }
   },
-  "updatedAt": "2026-10-27T15:29:52.497Z",
+  "updatedAt": "2026-10-27T15:39:15.102Z",
   "count": 152,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
