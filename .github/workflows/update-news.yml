@@ -13,6 +13,8 @@ on:
     # a plus de 75 min (compense un créneau sauté ou un gate qui a échoué).
     - cron: '25 0,9,10,12,14,15,16,18,20,22 * * *'
     - cron: '20 * * * *'
+    # Cadence 30 min en pointe / 60 min sinon : Worker Cloudflare
+    # le-radar-news-trigger (cloudflare/news-trigger) → workflow_dispatch.
   workflow_dispatch:   # Allow manual trigger
   # GitHub lâche les crons fréquents de ce dépôt (observé 2026-08-28 : 7 h
   # sans aucune passe news alors que sports RSEQ et la radio partaient encore).
@@ -26,11 +28,14 @@ on:
 # Un seul job bot à la fois (file d'attente, pas d'annulation) : un filet
 # radio/sports ne doit pas tuer un fetch déjà parti. Manuel = groupe à part
 # pour ne jamais attendre derrière le cron.
+# Collecte SANS verrou de données : une seule collecte à la fois, et les
+# déclenchements en double se fondent (GitHub ne garde qu'UNE collecte en
+# attente). On n'annule pas une collecte en cours : elle publierait dans
+# quelques minutes, la tuer perdrait le travail. Seul le job « publish »
+# (court) tient data-writers-site.
 concurrency:
-  # Un seul écrivain à la fois par famille de fichiers (file FIFO) ; carte dans scripts/data-writer-groups.json.
-  group: data-writers-site
+  group: news-collect
   cancel-in-progress: false
-  queue: max
 
 jobs:
   aggregate:
@@ -39,8 +44,10 @@ jobs:
     # 25 min suffit avec plafonds par source ; 45 min laissait un hang McGill
     # Daily bloquer toute l'après-midi.
     timeout-minutes: 25
+    outputs:
+      publish: ${{ steps.bundle.outputs.publish }}
     permissions:
-      contents: write
+      contents: read
       issues: write
 
     steps:
@@ -254,7 +261,8 @@ jobs:
         continue-on-error: true
         run: bash scripts/bot-prepush-check.sh
 
-      - name: Commit and push updates
+      - name: Commit updates (publication déléguée au job publish)
+        id: bundle
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
         run: |
           git config user.name "LE-RADAR News Bot"
@@ -302,10 +310,33 @@ jobs:
             echo "::warning::integrity + SEO failed — publishing news data only so the live feed still updates"
             MSG='bot: update student news feed (auto; HTML gate deferred)'
           fi
-          git commit -m "$MSG" || exit 0
-          bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Garde « rien à faire » : aucun article ajouté/modifié/retiré ET
+          # dernière publication < 60 min → pas de commit (moins de commits,
+          # verrou jamais pris). Sinon on publie (battement horaire du tampon,
+          # SLA guard-harvest-freshness = 75 min).
+          NOOP=$(node -e "
+            const { execSync } = require('child_process');
+            const strip = (n) => JSON.stringify((n.items || []).map(({ fetchedAt, checkedAt, ...rest }) => rest));
+            let prev = {}; try { prev = JSON.parse(execSync('git show HEAD:news.json', { encoding: 'utf8', maxBuffer: 1 << 28 })); } catch {}
+            const cur = JSON.parse(require('fs').readFileSync('news.json', 'utf8'));
+            const age = (Date.now() - (Date.parse(prev.updated || 0) || 0)) / 60000;
+            console.log(strip(prev) === strip(cur) && age < 60 ? 'true' : 'false');
+          ")
+          if [ "$NOOP" = "true" ]; then
+            echo "Rien de neuf et dernière publication < 60 min : pas de publication."
+            echo "publish=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          git commit -m "$MSG" || { echo "publish=false" >> "$GITHUB_OUTPUT"; exit 0; }
+          git bundle create news.bundle "HEAD^..HEAD"
+          echo "publish=true" >> "$GITHUB_OUTPUT"
+
+      - name: Hand commit to publish job
+        if: steps.bundle.outputs.publish == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: news-commit
+          path: news.bundle
+          retention-days: 1
 
       # UNE seule issue permanente : créée / mise à jour s'il y a un problème,
       # fermée automatiquement quand tout est réglé.
@@ -327,3 +358,37 @@ jobs:
           elif [ -n "$NUM" ]; then
             gh issue close "$NUM" --repo "${{ github.repository }}" --comment "Réglé automatiquement : plus aucun problème détecté."
           fi
+
+  publish:
+    needs: aggregate
+    if: needs.aggregate.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      # Seul moment où l'on tient le verrou de la famille « site » : le push.
+      group: data-writers-site
+      cancel-in-progress: false
+      queue: max
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: news-commit
+      - name: Push news commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "LE-RADAR News Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch -q news.bundle HEAD:refs/news
+          rm -f news.bundle
+          git checkout -q refs/news
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
