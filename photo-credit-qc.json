@@ -1,17 +1,31 @@
 {
-  "updated": "2026-10-27T17:39:31.247Z",
-  "total": 178,
-  "withImage": 155,
-  "withCredit": 155,
+  "updated": "2026-10-27T18:10:24.750Z",
+  "total": 180,
+  "withImage": 156,
+  "withCredit": 156,
   "cited": 98,
-  "pending": 39,
+  "pending": 40,
   "missingHero": 0,
   "ok": false,
-  "checked": 45,
-  "updatedCount": 6,
+  "checked": 46,
+  "updatedCount": 7,
   "citedNew": 6,
-  "fallbackNew": 39,
+  "fallbackNew": 40,
   "samples": [
+    {
+      "title": "La « vie de rêve » de directeur artistique de l’Opéra de Montréal",
+      "source": "Montréal Campus",
+      "credit": "Photo : Gracieuseté de Brent Calis",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Sex workers deserve protection",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Une récolte record de bleuets sauvages dans la région",
       "source": "La Pige",
@@ -25,13 +39,6 @@
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
-    },
-    {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
