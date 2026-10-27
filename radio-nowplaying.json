@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T00:26:34.493Z",
+  "updatedAt": "2026-10-27T03:36:56.468Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T00:25:47.735Z"
+      "checkedAt": "2026-10-27T03:36:02.614Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mono Fred (en stéréo)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Les sentinelles de l'art (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "Mono Fred (en stéréo)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T00:25:49.725Z"
+      "checkedAt": "2026-10-27T03:36:04.415Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Underground Sounds",
+        "title": "27th Hr.",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Drastic Plastic",
+        "title": "Harmony Express",
         "source": "api-live",
-        "start": "22:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "track": "",
-      "showTitle": "Underground Sounds",
+      "showTitle": "27th Hr.",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T00:25:52.572Z"
+      "checkedAt": "2026-10-27T03:36:13.291Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "In The Garage",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/in-the-garage"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "LEKTOR DECODER",
+        "title": "CJLO Late Night",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/lektor-decoder"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "In The Garage",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T00:26:15.116Z"
+      "checkedAt": "2026-10-27T03:36:35.862Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T00:26:16.246Z"
+      "checkedAt": "2026-10-27T03:36:37.267Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-27T00:26:34.142Z"
+      "checkedAt": "2026-10-27T03:36:56.117Z"
     }
   }
 }
