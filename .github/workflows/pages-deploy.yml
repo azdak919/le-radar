@@ -76,7 +76,7 @@ jobs:
           ls _site/*sw*.js >/dev/null
           test "$(cat _site/CNAME)" = "le-radar.ca"
           du -sh _site
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
 
