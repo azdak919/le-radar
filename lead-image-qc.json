@@ -1,15 +1,15 @@
 {
-  "updated": "2026-10-28T00:39:01.720Z",
-  "total": 180,
-  "withPhoto": 157,
+  "updated": "2026-10-28T01:08:02.955Z",
+  "total": 181,
+  "withPhoto": 158,
   "withStock": 43,
   "withCampusBank": 33,
-  "fullyCovered": 180,
+  "fullyCovered": 181,
   "leadReadyPhotos": 137,
-  "pageScraped": 24,
-  "photosRecovered": 24,
-  "imagesCleared": 17,
-  "stockSearches": 49,
+  "pageScraped": 28,
+  "photosRecovered": 28,
+  "imagesCleared": 21,
+  "stockSearches": 50,
   "stockFound": 44,
   "campusBankFound": 30,
   "mainPageLeadReady": true,
@@ -27,8 +27,14 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
-      "title": "Queer Concordia considers lawsuit against CSU",
-      "link": "https://thelinknewspaper.ca/article/16519",
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
@@ -39,40 +45,34 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
       "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
       "link": "https://thelinknewspaper.ca/article/16521",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
-      "title": "Concordia University introduces new campus safety texting service",
-      "link": "https://thelinknewspaper.ca/article/16528",
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
+    },
+    {
+      "title": "Queer Concordia considers lawsuit against CSU",
+      "link": "https://thelinknewspaper.ca/article/16519",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
       "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
-    },
-    {
-      "title": "La femme parfaite est un objet",
-      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
