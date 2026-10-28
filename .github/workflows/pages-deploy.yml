@@ -93,4 +93,4 @@ jobs:
       url: ${{ steps.d.outputs.page_url }}
     steps:
       - id: d
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
