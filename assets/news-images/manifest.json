@@ -1261,16 +1261,6 @@
       "via": "resize-proxy",
       "nameKey": "web-library-computers-catherine-reynolds.jpg"
     },
-    "189dfe71e74b1d9f": {
-      "local": "assets/news-images/189dfe71e74b1d9f.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/10/IMG_0170.png",
-      "host": "theconcordian.com",
-      "bytes": 122839,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-27T16:08:40.665Z",
-      "via": "resize-proxy",
-      "nameKey": "img_0170.png"
-    },
     "ad203c75deb14a2d": {
       "local": "assets/news-images/ad203c75deb14a2d.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/10/PSPPFirstannoucement-00000006.jpg",
@@ -1420,24 +1410,6 @@
       "via": "origin",
       "nameKey": "capture-decran-le-2026-10-27-a-22.12.22.png"
     },
-    "548c24ab5d205e58": {
-      "local": "assets/news-images/548c24ab5d205e58.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/question-de-natalite-2.0.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 152843,
-      "updatedAt": "2026-10-28T02:38:23.050Z",
-      "via": "disk",
-      "nameKey": "question-de-natalite-2.0.jpg"
-    },
-    "bdd0e5197dcedb22": {
-      "local": "assets/news-images/bdd0e5197dcedb22.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/self-care.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 142269,
-      "updatedAt": "2026-10-28T02:38:23.051Z",
-      "via": "disk",
-      "nameKey": "self-care.png"
-    },
     "1139464b07bd2eb7": {
       "local": "assets/news-images/1139464b07bd2eb7.jpg",
       "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-22.30.26.png",
@@ -1488,16 +1460,6 @@
       "via": "resize-proxy",
       "nameKey": "news-2-claire-mccallum.jpg"
     },
-    "f79b6de61ef0e591": {
-      "local": "assets/news-images/f79b6de61ef0e591.png",
-      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/Scitech-3-Zoe-Lee--1000x600.png",
-      "host": "www.thetribune.ca",
-      "bytes": 48544,
-      "contentType": "image/png",
-      "updatedAt": "2026-10-28T08:50:45.730Z",
-      "via": "origin",
-      "nameKey": "scitech-3-zoe-lee-.png"
-    },
     "b7ed3da55872c4a3": {
       "local": "assets/news-images/b7ed3da55872c4a3.jpg",
       "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/SL-1-EMIKO-KAMIYA.jpg",
@@ -1507,10 +1469,66 @@
       "updatedAt": "2026-10-28T08:50:55.455Z",
       "via": "resize-proxy",
       "nameKey": "sl-1-emiko-kamiya.jpg"
+    },
+    "f385e82529ef6099": {
+      "local": "assets/news-images/f385e82529ef6099.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Arrestations-Turquie.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 258756,
+      "updatedAt": "2026-10-28T10:08:14.859Z",
+      "via": "disk",
+      "nameKey": "arrestations-turquie.png"
+    },
+    "272f4fed0d635b4f": {
+      "local": "assets/news-images/272f4fed0d635b4f.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/IA-pocalypse-930x620.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 84015,
+      "updatedAt": "2026-10-28T10:08:14.860Z",
+      "via": "disk",
+      "nameKey": "ia-pocalypse.png"
+    },
+    "4cf5b3fd566f4030": {
+      "local": "assets/news-images/4cf5b3fd566f4030.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/New-romance.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 152382,
+      "updatedAt": "2026-10-28T10:08:14.860Z",
+      "via": "disk",
+      "nameKey": "new-romance.png"
+    },
+    "bcc87593956ecfa5": {
+      "local": "assets/news-images/bcc87593956ecfa5.jpg",
+      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/AE-1-Julie-Raout-1000x600.jpg",
+      "host": "www.thetribune.ca",
+      "bytes": 40387,
+      "updatedAt": "2026-10-28T10:08:14.863Z",
+      "via": "disk",
+      "nameKey": "ae-1-julie-raout.jpg"
+    },
+    "15a38d14ac5021c7": {
+      "local": "assets/news-images/15a38d14ac5021c7.jpg",
+      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/Scitech-3-Zoe-Lee-.png",
+      "host": "www.thetribune.ca",
+      "bytes": 62271,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-28T10:08:15.813Z",
+      "via": "resize-proxy",
+      "nameKey": "scitech-3-zoe-lee-.png"
+    },
+    "30d31f2a5d2d4bb6": {
+      "local": "assets/news-images/30d31f2a5d2d4bb6.jpg",
+      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/news3.png",
+      "host": "www.thetribune.ca",
+      "bytes": 102588,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-28T10:08:17.757Z",
+      "via": "resize-proxy",
+      "nameKey": "news3.png"
     }
   },
-  "updatedAt": "2026-10-28T08:51:01.315Z",
-  "count": 151,
+  "updatedAt": "2026-10-28T10:08:26.016Z",
+  "count": 153,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
