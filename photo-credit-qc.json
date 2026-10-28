@@ -1,19 +1,33 @@
 {
-  "updated": "2026-10-28T13:40:05.410Z",
+  "updated": "2026-10-28T14:08:53.970Z",
   "total": 182,
   "withImage": 153,
   "withCredit": 153,
-  "cited": 98,
-  "pending": 38,
+  "cited": 99,
+  "pending": 37,
   "missingHero": 0,
   "ok": false,
-  "checked": 45,
-  "updatedCount": 10,
-  "citedNew": 7,
-  "fallbackNew": 38,
+  "checked": 46,
+  "updatedCount": 12,
+  "citedNew": 9,
+  "fallbackNew": 37,
   "samples": [
     {
-      "title": "Dimprov: An Ode To Costume Design, Community, and The Candace Warner",
+      "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
+      "source": "La Pige",
+      "credit": "Photo : Diffusion Saguenay",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Where We Belong, We Give Back: BUCS’s Social Impact Portfolio",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Biz Tec 2026 Connects Bishop’s Students with Employers",
       "source": "The Campus",
       "credit": "Photo: The Campus",
       "cited": false,
@@ -41,13 +55,6 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Pregnant, not sidelined",
-      "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
       "credit": "Photo : Tan YiYang",
@@ -55,11 +62,18 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Pregnant, not sidelined",
+      "source": "The Link",
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
