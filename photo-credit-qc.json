@@ -1,44 +1,23 @@
 {
-  "updated": "2026-10-28T21:09:13.035Z",
+  "updated": "2026-10-28T21:17:57.302Z",
   "total": 183,
-  "withImage": 155,
-  "withCredit": 155,
+  "withImage": 156,
+  "withCredit": 156,
   "cited": 98,
-  "pending": 40,
+  "pending": 41,
   "missingHero": 0,
   "ok": false,
-  "checked": 49,
-  "updatedCount": 13,
-  "citedNew": 9,
-  "fallbackNew": 40,
+  "checked": 48,
+  "updatedCount": 9,
+  "citedNew": 7,
+  "fallbackNew": 41,
   "samples": [
     {
-      "title": "L’aveuglement du cynisme chic",
+      "title": "Un mouvement qui doit se faire tout petit",
       "source": "Le Délit",
-      "credit": "Photo : Jiayuan Cao",
+      "credit": "Photo : Félix Fournier l Le Délit",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "C’était ça ou mourir tire à sa fin",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Le retour du Rocky Horror Picture Show",
-      "source": "Le Délit",
-      "credit": "Photo : Le Délit",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le 17 octobre – édition québécoise",
-      "source": "Le Délit",
-      "credit": "Photo : Sixtine Nicolaÿ l Le Délit",
-      "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
       "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
@@ -69,14 +48,7 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Decline in Canadian acceptance of gender diversity",
-      "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Queer Concordia considers lawsuit against CSU",
+      "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
       "source": "The Link",
       "credit": "Photo: The Link",
       "cited": false,
@@ -95,6 +67,13 @@
       "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }

@@ -1,23 +1,14 @@
 {
-  "updated": "2026-10-28T21:07:02.857Z",
+  "updated": "2026-10-28T21:13:35.063Z",
   "total": 183,
-  "pool": 53,
-  "incomplete": 8,
+  "pool": 52,
+  "incomplete": 5,
   "withLeadExcerpt": 124,
-  "candidates": 8,
-  "enriched": 6,
+  "candidates": 5,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
-      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
-      "ok": true,
-      "score": 100,
-      "chars": 259,
-      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
-      "changed": true
-    },
     {
       "title": "Jésus et autres mots-clics",
       "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
@@ -34,33 +25,24 @@
       "score": 66,
       "chars": 400,
       "sample": "À huit ans, dans les dessins animés, je préférais aimer le méchant plutôt que le héros. À 13 ans, je",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "C’était ça ou mourir tire à sa fin",
-      "link": "https://www.delitfrancais.com/2026/10/28/cetait-ca-ou-mourir-tire-a-sa-fin/",
+      "title": "Le 17 octobre – édition québécoise",
+      "link": "https://www.delitfrancais.com/2026/10/28/le-17-octobre-edition-quebecoise/",
       "ok": true,
       "score": 96,
-      "chars": 229,
-      "sample": "L’éditeur précise qu’il n’y aura aucune réimpression de C’était ça ou mourir de sa part et qu’il ne ",
-      "changed": true
+      "chars": 400,
+      "sample": "Debout au milieu du square, on peine à s’entendre parler au-dessus des slogans scandés par la foule ",
+      "changed": false
     },
     {
-      "title": "Le retour du Rocky Horror Picture Show",
-      "link": "https://www.delitfrancais.com/2026/10/28/le-retour-du-rocky-horror-picture-show/",
+      "title": "Un mouvement qui doit se faire tout petit",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-mouvement-qui-doit-se-faire-tout-petit/",
       "ok": true,
       "score": 100,
-      "chars": 344,
-      "sample": "Octobre 2025 marquait le cinquantième anniversaire de la célèbre comédie musicale The Rocky Horror P",
-      "changed": true
-    },
-    {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
-      "ok": true,
-      "score": 100,
-      "chars": 399,
-      "sample": "La demande mondiale de sable, qui a triplé entre 2000 et 2020, alimente un trafic illégal. Au Maroc,",
+      "chars": 364,
+      "sample": "Le 17 octobre, entre 550 000 et 800 000 manifestant·e·s se sont mobilisé·e·s dans toute la France co",
       "changed": true
     },
     {
@@ -71,15 +53,6 @@
       "chars": 400,
       "sample": "After a championship-winning season in 2024- 2025, the Gaiters faced a transitional year with a new ",
       "changed": false
-    },
-    {
-      "title": "Le 17 octobre – édition québécoise",
-      "link": "https://www.delitfrancais.com/2026/10/28/le-17-octobre-edition-quebecoise/",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "Debout au milieu du square, on peine à s’entendre parler au-dessus des slogans scandés par la foule ",
-      "changed": true
     }
   ]
 }
