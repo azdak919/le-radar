@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-28T21:30:57.164Z",
+  "updatedAt": "2026-10-28T23:13:28.449Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "3600 secondes d'histoire",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "18:30",
         "end": "19:30",
         "url": "https://chyz.ca/emission/3600-secondes-dhistoire/"
       },
+      "next": {
+        "title": "Funk Connection",
+        "source": "schedule-live",
+        "start": "19:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/funk-connection/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "3600 secondes d'histoire",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T21:30:25.609Z"
+      "checkedAt": "2026-10-28T23:12:41.022Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Feu | Metal | Chaos",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/feu-metal-chaos"
-      },
-      "next": {
         "title": "Effets sonores (reprise)",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/effets-sonores"
       },
+      "next": {
+        "title": "Jeunesse cosmique",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
+      },
       "track": "",
-      "showTitle": "Feu | Metal | Chaos",
+      "showTitle": "Effets sonores (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T21:30:27.882Z"
+      "checkedAt": "2026-10-28T23:12:43.447Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off the Hour/Sounds of Resistance",
+        "title": "Harbinger Showcase",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
+        "title": "Jazz Euphorium",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "track": "",
-      "showTitle": "Off the Hour/Sounds of Resistance",
+      "showTitle": "Harbinger Showcase",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T21:30:30.766Z"
+      "checkedAt": "2026-10-28T23:12:46.624Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Advice By The Fireplace",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+        "title": "BVST",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/bvst"
       },
       "next": {
-        "title": "The New Consonance",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-new-consonance"
+        "title": "There's a Synth in the House",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
       "track": "",
-      "showTitle": "Advice By The Fireplace",
+      "showTitle": "BVST",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T21:30:32.819Z"
+      "checkedAt": "2026-10-28T23:13:08.921Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T21:30:34.115Z"
+      "checkedAt": "2026-10-28T23:13:10.248Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T21:30:56.813Z"
+      "checkedAt": "2026-10-28T23:13:28.099Z"
     }
   }
 }
