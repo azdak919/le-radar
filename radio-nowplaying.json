@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-28T18:52:02.305Z",
+  "updatedAt": "2026-10-28T21:30:57.164Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "3600 secondes d'histoire",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/3600-secondes-dhistoire/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T18:51:14.896Z"
+      "checkedAt": "2026-10-28T21:30:25.609Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "next": {
-        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "title": "Effets sonores (reprise)",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/vibrance"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T18:51:17.019Z"
+      "checkedAt": "2026-10-28T21:30:27.882Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radyo Kapwa",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "All Da Way Live",
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "Radyo Kapwa",
+      "showTitle": "Off the Hour/Sounds of Resistance",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T18:51:19.680Z"
+      "checkedAt": "2026-10-28T21:30:30.766Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "title": "Advice By The Fireplace",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
       "next": {
-        "title": "Patch Notes",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
+        "title": "The New Consonance",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
       },
       "track": "",
-      "showTitle": "Cherry Vamp and the Sonic Coffin",
+      "showTitle": "Advice By The Fireplace",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T18:51:42.227Z"
+      "checkedAt": "2026-10-28T21:30:32.819Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,18 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T18:51:43.254Z"
+      "checkedAt": "2026-10-28T21:30:34.115Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T18:52:01.954Z"
+      "checkedAt": "2026-10-28T21:30:56.813Z"
     }
   }
 }
