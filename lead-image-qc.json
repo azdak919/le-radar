@@ -1,42 +1,36 @@
 {
-  "updated": "2026-10-28T11:07:49.811Z",
+  "updated": "2026-10-28T11:38:27.810Z",
   "total": 182,
-  "withPhoto": 154,
-  "withStock": 46,
-  "withCampusBank": 35,
+  "withPhoto": 153,
+  "withStock": 47,
+  "withCampusBank": 36,
   "fullyCovered": 182,
-  "leadReadyPhotos": 140,
-  "pageScraped": 30,
-  "photosRecovered": 30,
+  "leadReadyPhotos": 139,
+  "pageScraped": 31,
+  "photosRecovered": 31,
   "imagesCleared": 23,
-  "stockSearches": 50,
-  "stockFound": 49,
-  "campusBankFound": 32,
+  "stockSearches": 51,
+  "stockFound": 50,
+  "campusBankFound": 33,
   "mainPageLeadReady": true,
   "gaps": [
     {
       "title": "If You Ever Get the Chance, Take that Language Class",
       "link": "https://thebucampus.ca/2026/10/27/if-you-ever-get-the-chance-take-that-language-class/",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
       "title": "BU Football: So You’re Telling Me There’s a Chance",
       "link": "https://thebucampus.ca/2026/10/27/bu-football-so-youre-telling-me-theres-a-chance/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+      "image": null
     },
     {
       "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
       "link": "https://thelinknewspaper.ca/article/16521",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
-    },
-    {
-      "title": "Decline in Canadian acceptance of gender diversity",
-      "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
     },
     {
       "title": "Olivia Rodrigo au Centre Bell",
@@ -48,7 +42,7 @@
       "title": "Queer Concordia considers lawsuit against CSU",
       "link": "https://thelinknewspaper.ca/article/16519",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
@@ -63,16 +57,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
-      "title": "Unwanted attention beyond the scoreboard",
-      "link": "https://thelinknewspaper.ca/article/16522",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+      "title": "Bishop’s Hosts Provincial Election Debate",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-hosts-provincial-election-debate/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/5604/30751203172_5861be988f_b.jpg"
     },
     {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "title": "Men’s Club Hockey Perfect Start to the Season",
+      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/2725/4398099308_e6132364e1_b.jpg"
+    },
+    {
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Horoscope September 2026",
