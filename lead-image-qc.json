@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-28T20:08:05.585Z",
+  "updated": "2026-10-28T21:08:11.854Z",
   "total": 183,
-  "withPhoto": 154,
-  "withStock": 51,
-  "withCampusBank": 36,
+  "withPhoto": 155,
+  "withStock": 50,
+  "withCampusBank": 35,
   "fullyCovered": 183,
-  "leadReadyPhotos": 124,
-  "pageScraped": 30,
-  "photosRecovered": 30,
-  "imagesCleared": 25,
-  "stockSearches": 67,
-  "stockFound": 53,
-  "campusBankFound": 33,
+  "leadReadyPhotos": 123,
+  "pageScraped": 29,
+  "photosRecovered": 29,
+  "imagesCleared": 22,
+  "stockSearches": 68,
+  "stockFound": 52,
+  "campusBankFound": 32,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -51,40 +51,40 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Concordia University introduces new campus safety texting service",
       "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Unwanted attention beyond the scoreboard",
       "link": "https://thelinknewspaper.ca/article/16522",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
     },
     {
       "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
       "link": "https://thelinknewspaper.ca/article/16521",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Queer Concordia considers lawsuit against CSU",
-      "link": "https://thelinknewspaper.ca/article/16519",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
-    },
-    {
-      "title": "Editorial: Lowering immigration, but at what cost?",
-      "link": "https://thelinknewspaper.ca/article/16517",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Editorial: Lowering immigration, but at what cost?",
+      "link": "https://thelinknewspaper.ca/article/16517",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }

@@ -1,23 +1,44 @@
 {
-  "updated": "2026-10-28T20:10:02.095Z",
+  "updated": "2026-10-28T21:09:13.035Z",
   "total": 183,
-  "withImage": 154,
-  "withCredit": 154,
-  "cited": 100,
-  "pending": 37,
+  "withImage": 155,
+  "withCredit": 155,
+  "cited": 98,
+  "pending": 40,
   "missingHero": 0,
   "ok": false,
-  "checked": 45,
-  "updatedCount": 9,
-  "citedNew": 8,
-  "fallbackNew": 37,
+  "checked": 49,
+  "updatedCount": 13,
+  "citedNew": 9,
+  "fallbackNew": 40,
   "samples": [
     {
-      "title": "Étudier en histoire, mais travailler dans un autre domaine ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Benoît Rochon, Wikimedia Commons",
+      "title": "L’aveuglement du cynisme chic",
+      "source": "Le Délit",
+      "credit": "Photo : Jiayuan Cao",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "C’était ça ou mourir tire à sa fin",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Le retour du Rocky Horror Picture Show",
+      "source": "Le Délit",
+      "credit": "Photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le 17 octobre – édition québécoise",
+      "source": "Le Délit",
+      "credit": "Photo : Sixtine Nicolaÿ l Le Délit",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
@@ -41,18 +62,25 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Rouge d’une part, blanche de l’autre",
-      "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
       "credit": "Illustration: Annabelle Olumese",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Queer Concordia considers lawsuit against CSU",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
@@ -67,13 +95,6 @@
       "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
       "cited": true,
       "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
     }
   ]
 }
