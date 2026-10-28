@@ -21,16 +21,6 @@
       "via": "origin",
       "nameKey": "motivation_absence.png"
     },
-    "2bff00e5d8019e27": {
-      "local": "assets/news-images/2bff00e5d8019e27.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/09/elections-wikimedia.jpg",
-      "host": "thebucampus.ca",
-      "bytes": 99035,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-09-15T18:32:10.284Z",
-      "via": "origin",
-      "nameKey": "elections-wikimedia.jpg"
-    },
     "5fa57c2fce5bd593": {
       "local": "assets/news-images/5fa57c2fce5bd593.png",
       "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/Lilly-Guilbeault-Scitech-1-.png",
@@ -841,16 +831,6 @@
       "via": "resize-proxy",
       "nameKey": "capture-decran-le-2026-09-30-a-13.22.47.png"
     },
-    "352f832abdaae77d": {
-      "local": "assets/news-images/352f832abdaae77d.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/09/capture-decran-le-2026-09-30-a-13.05.54.png",
-      "host": "thebucampus.ca",
-      "bytes": 160356,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-25T17:19:18.380Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-09-30-a-13.05.54.png"
-    },
     "9696bf5cb1e5aac6": {
       "local": "assets/news-images/9696bf5cb1e5aac6.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/redwhiterose2.jpg",
@@ -1391,16 +1371,6 @@
       "via": "resize-proxy",
       "nameKey": "04_sports_maternity_leave_annabelle_olumese_900_450.png"
     },
-    "267a939518c77e9d": {
-      "local": "assets/news-images/267a939518c77e9d.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/SSA26_l_amour_6926_900_638_90.jpg",
-      "host": "thelinknewspaper.ca",
-      "bytes": 228149,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-27T13:09:42.859Z",
-      "via": "origin",
-      "nameKey": "ssa26_l_amour_6926.jpg"
-    },
     "53c8cc2f9227fad1": {
       "local": "assets/news-images/53c8cc2f9227fad1.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/SamR26_The_soul_trembles_DSC6153-2_900_600_90.jpg",
@@ -1567,10 +1537,29 @@
       "updatedAt": "2026-10-28T01:08:06.474Z",
       "via": "resize-proxy",
       "nameKey": "capture-decran-le-2026-10-27-a-21.03.26.png"
+    },
+    "97b4d830d80fb0f5": {
+      "local": "assets/news-images/97b4d830d80fb0f5.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/galerie-carte-rappel-1-scaled.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 68001,
+      "updatedAt": "2026-10-28T01:30:57.343Z",
+      "via": "disk",
+      "nameKey": "galerie-carte-rappel-1.jpg"
+    },
+    "7e2f8d4ab49fc5c8": {
+      "local": "assets/news-images/7e2f8d4ab49fc5c8.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/SSA26_l_amour_6926_690_489_90.jpg",
+      "host": "thelinknewspaper.ca",
+      "bytes": 148938,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-28T01:30:58.766Z",
+      "via": "origin",
+      "nameKey": "ssa26_l_amour_6926.jpg"
     }
   },
-  "updatedAt": "2026-10-28T01:08:06.477Z",
-  "count": 157,
+  "updatedAt": "2026-10-28T01:30:58.768Z",
+  "count": 156,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
