@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-28T18:06:34.001Z",
+  "updated": "2026-10-28T19:37:02.619Z",
   "total": 183,
   "pool": 58,
-  "incomplete": 4,
+  "incomplete": 6,
   "withLeadExcerpt": 123,
-  "candidates": 4,
-  "enriched": 1,
+  "candidates": 6,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -19,12 +19,30 @@
       "changed": false
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
-      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
       "ok": true,
       "score": 96,
-      "chars": 377,
-      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
+      "chars": 289,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
+      "changed": true
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
+      "ok": true,
+      "score": 96,
+      "chars": 347,
+      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
+      "changed": true
+    },
+    {
+      "title": "S​.​O​.​S. Huîtres menacées",
+      "link": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
+      "ok": true,
+      "score": 100,
+      "chars": 321,
+      "sample": "Cependant, depuis 2024, les récoltes d’huîtres de l’Île​-du​-Prince​-Édouard ont chuté subitement. E",
       "changed": true
     },
     {

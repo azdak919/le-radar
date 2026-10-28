@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-28T18:07:32.006Z",
+  "updated": "2026-10-28T19:38:20.349Z",
   "total": 183,
   "withPhoto": 154,
   "withStock": 51,
   "withCampusBank": 36,
   "fullyCovered": 183,
-  "leadReadyPhotos": 128,
-  "pageScraped": 31,
-  "photosRecovered": 31,
+  "leadReadyPhotos": 121,
+  "pageScraped": 30,
+  "photosRecovered": 30,
   "imagesCleared": 25,
-  "stockSearches": 65,
-  "stockFound": 52,
-  "campusBankFound": 32,
+  "stockSearches": 68,
+  "stockFound": 54,
+  "campusBankFound": 33,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,6 +33,12 @@
       "image": null
     },
     {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+    },
+    {
       "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
       "link": "https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre/?utm_source=rss&utm_medium=rss&utm_campaign=en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre",
       "reason": "no-stock-match",
@@ -45,16 +51,22 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
+      "title": "Unwanted attention beyond the scoreboard",
+      "link": "https://thelinknewspaper.ca/article/16522",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Men’s Club Hockey Perfect Start to the Season",
+      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/2725/4398099308_e6132364e1_b.jpg"
+    },
+    {
       "title": "Decline in Canadian acceptance of gender diversity",
       "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
-    },
-    {
-      "title": "Queer Concordia considers lawsuit against CSU",
-      "link": "https://thelinknewspaper.ca/article/16519",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
@@ -63,28 +75,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
     },
     {
+      "title": "Queer Concordia considers lawsuit against CSU",
+      "link": "https://thelinknewspaper.ca/article/16519",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
+    {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Unwanted attention beyond the scoreboard",
-      "link": "https://thelinknewspaper.ca/article/16522",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
-    },
-    {
-      "title": "Concordia University introduces new campus safety texting service",
-      "link": "https://thelinknewspaper.ca/article/16528",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
-    },
-    {
-      "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
-      "link": "https://thelinknewspaper.ca/article/16521",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
