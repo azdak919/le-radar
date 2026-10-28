@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: main
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
         if: vars.PAGES_ARTIFACT == '1'
       - uses: actions/jekyll-build-pages@v1
         with:
