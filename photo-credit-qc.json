@@ -1,23 +1,37 @@
 {
-  "updated": "2026-10-28T12:57:42.990Z",
+  "updated": "2026-10-28T13:40:05.410Z",
   "total": 182,
   "withImage": 153,
   "withCredit": 153,
-  "cited": 99,
-  "pending": 37,
+  "cited": 98,
+  "pending": 38,
   "missingHero": 0,
   "ok": false,
-  "checked": 44,
-  "updatedCount": 7,
+  "checked": 45,
+  "updatedCount": 10,
   "citedNew": 7,
-  "fallbackNew": 37,
+  "fallbackNew": 38,
   "samples": [
+    {
+      "title": "Dimprov: An Ode To Costume Design, Community, and The Candace Warner",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
       "source": "Le Délit",
       "credit": "Photo : DENIS FARLEY",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Carney fast-tracks new pipeline as climate change worsens",
@@ -29,9 +43,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -39,6 +53,13 @@
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
