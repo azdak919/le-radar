@@ -1,12 +1,11 @@
 {
-  "checkedAt": "2026-10-27T02:00:47.817Z",
+  "checkedAt": "2026-10-28T02:09:05.272Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 5,
     "drift": [
-      "ckut",
       "choq"
     ],
     "overhaul": [],
@@ -35,15 +34,13 @@
     },
     {
       "id": "ckut",
-      "published": 100,
+      "published": 101,
       "fresh": 101,
-      "added": [
-        "jeu 17:00–18:00 Thursday OTH"
-      ],
+      "added": [],
       "removed": [],
-      "changed": 1,
-      "ratio": 0.01,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cjlo",
@@ -68,15 +65,13 @@
     {
       "id": "choq",
       "published": 24,
-      "fresh": 24,
+      "fresh": 25,
       "added": [
-        "mer 13:00–13:45 Onde de CHOQ"
+        "sam 10:00–11:00 Podcast Nomade: L'art de se rencontrer"
       ],
-      "removed": [
-        "mer 13:00–14:00 Échos du monde"
-      ],
-      "changed": 2,
-      "ratio": 0.083,
+      "removed": [],
+      "changed": 1,
+      "ratio": 0.042,
       "status": "drift"
     }
   ]
