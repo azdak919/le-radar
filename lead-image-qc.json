@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-28T14:08:00.704Z",
+  "updated": "2026-10-28T15:38:07.482Z",
   "total": 182,
-  "withPhoto": 153,
-  "withStock": 46,
-  "withCampusBank": 36,
+  "withPhoto": 154,
+  "withStock": 45,
+  "withCampusBank": 35,
   "fullyCovered": 182,
-  "leadReadyPhotos": 138,
-  "pageScraped": 32,
-  "photosRecovered": 32,
-  "imagesCleared": 25,
-  "stockSearches": 51,
-  "stockFound": 48,
-  "campusBankFound": 32,
+  "leadReadyPhotos": 136,
+  "pageScraped": 27,
+  "photosRecovered": 27,
+  "imagesCleared": 19,
+  "stockSearches": 52,
+  "stockFound": 49,
+  "campusBankFound": 33,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -27,16 +27,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
-      "link": "https://thebucampus.ca/2026/10/28/bechard-hudon-brings-unseen-ecosystems-to-light-with-monologue-de-la-foret/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
-    },
-    {
       "title": "BU Football: So You’re Telling Me There’s a Chance",
       "link": "https://thebucampus.ca/2026/10/27/bu-football-so-youre-telling-me-theres-a-chance/",
       "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
     },
     {
       "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
@@ -51,16 +51,22 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "Decline in Canadian acceptance of gender diversity",
-      "link": "https://thelinknewspaper.ca/article/16520",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Unwanted attention beyond the scoreboard",
+      "link": "https://thelinknewspaper.ca/article/16522",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Queer Concordia considers lawsuit against CSU",
-      "link": "https://thelinknewspaper.ca/article/16519",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+      "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
+      "link": "https://thelinknewspaper.ca/article/16521",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "link": "https://thelinknewspaper.ca/article/16520",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
@@ -75,16 +81,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Concordia University introduces new campus safety texting service",
-      "link": "https://thelinknewspaper.ca/article/16528",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Unwanted attention beyond the scoreboard",
-      "link": "https://thelinknewspaper.ca/article/16522",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "title": "Men’s Club Hockey Perfect Start to the Season",
+      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/2725/4398099308_e6132364e1_b.jpg"
     }
   ]
 }
