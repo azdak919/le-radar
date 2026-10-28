@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-28T16:22:13.844Z",
-  "total": 182,
-  "withPhoto": 153,
+  "updated": "2026-10-28T18:07:32.006Z",
+  "total": 183,
+  "withPhoto": 154,
   "withStock": 51,
   "withCampusBank": 36,
-  "fullyCovered": 182,
-  "leadReadyPhotos": 125,
-  "pageScraped": 30,
-  "photosRecovered": 30,
-  "imagesCleared": 24,
-  "stockSearches": 68,
-  "stockFound": 54,
-  "campusBankFound": 33,
+  "fullyCovered": 183,
+  "leadReadyPhotos": 128,
+  "pageScraped": 31,
+  "photosRecovered": 31,
+  "imagesCleared": 25,
+  "stockSearches": 65,
+  "stockFound": 52,
+  "campusBankFound": 32,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,12 +25,6 @@
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Chickens Are Fine: An Open Mic Night with Wit and Whimsy",
-      "link": "https://thebucampus.ca/2026/10/28/the-chickens-are-fine-an-open-mic-night-with-wit-and-whimsy/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "BU Football: So You’re Telling Me There’s a Chance",
@@ -54,13 +48,13 @@
       "title": "Decline in Canadian acceptance of gender diversity",
       "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
     },
     {
       "title": "Queer Concordia considers lawsuit against CSU",
       "link": "https://thelinknewspaper.ca/article/16519",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
@@ -75,16 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Concordia University introduces new campus safety texting service",
-      "link": "https://thelinknewspaper.ca/article/16528",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
-    },
-    {
       "title": "Unwanted attention beyond the scoreboard",
       "link": "https://thelinknewspaper.ca/article/16522",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
+    },
+    {
+      "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
+      "link": "https://thelinknewspaper.ca/article/16521",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }

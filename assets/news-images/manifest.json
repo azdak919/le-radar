@@ -611,16 +611,6 @@
       "via": "resize-proxy",
       "nameKey": "redwhiterose2.jpg"
     },
-    "c532711ea93262f0": {
-      "local": "assets/news-images/c532711ea93262f0.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Huitres.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 227726,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-25T17:19:19.020Z",
-      "via": "resize-proxy",
-      "nameKey": "huitres.png"
-    },
     "c6ecf846f4ddf380": {
       "local": "assets/news-images/c6ecf846f4ddf380.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/ThelysonOrelienAI.png",
@@ -1526,10 +1516,29 @@
       "updatedAt": "2026-10-28T16:22:16.792Z",
       "via": "disk",
       "nameKey": "ia-pocalypse.png"
+    },
+    "4cf5b3fd566f4030": {
+      "local": "assets/news-images/4cf5b3fd566f4030.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/New-romance.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 152382,
+      "updatedAt": "2026-10-28T18:07:37.225Z",
+      "via": "disk",
+      "nameKey": "new-romance.png"
+    },
+    "cdaa958721d9ad90": {
+      "local": "assets/news-images/cdaa958721d9ad90.jpg",
+      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/Cafeteria_Gabrielle.jpg",
+      "host": "montrealcampus.ca",
+      "bytes": 125294,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-28T18:07:39.128Z",
+      "via": "resize-proxy",
+      "nameKey": "cafeteria_gabrielle.jpg"
     }
   },
-  "updatedAt": "2026-10-28T16:22:16.796Z",
-  "count": 153,
+  "updatedAt": "2026-10-28T18:07:39.132Z",
+  "count": 154,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
