@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-28T12:47:48.052Z",
+  "updatedAt": "2026-10-28T16:46:06.432Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mercredi Bonbon",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
-      },
+      "current": null,
       "next": {
-        "title": "Conduite Antisportive",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
+        "title": "Radio-Ciné",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "14:30",
+        "url": "https://chyz.ca/emission/radio-cine/"
       },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-28T12:47:15.027Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Club classique",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T12:47:16.885Z"
+      "checkedAt": "2026-10-28T16:45:37.359Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La carte cadeau",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "track": "",
+      "showTitle": "La carte cadeau",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-28T16:45:39.774Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "The Sleepy King/Terminal 5",
+        "title": "Radyo Kapwa",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T12:47:26.357Z"
+      "checkedAt": "2026-10-28T16:45:42.577Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "North-South Hockey",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "next": {
-        "title": "Are We There Yet?",
+        "title": "The Fluid Mosaic",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "North-South Hockey",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T12:47:28.840Z"
+      "checkedAt": "2026-10-28T16:45:45.938Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
+        "title": "Le DOUZE",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "12:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Le NEUF",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "12:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le DOUZE",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T12:47:29.956Z"
+      "checkedAt": "2026-10-28T16:45:47.278Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-28T12:47:47.701Z"
+      "checkedAt": "2026-10-28T16:46:06.082Z"
     }
   }
 }
