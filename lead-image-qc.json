@@ -1,30 +1,36 @@
 {
-  "updated": "2026-10-28T01:39:45.752Z",
+  "updated": "2026-10-28T02:08:49.123Z",
   "total": 182,
-  "withPhoto": 156,
-  "withStock": 45,
-  "withCampusBank": 34,
+  "withPhoto": 154,
+  "withStock": 47,
+  "withCampusBank": 35,
   "fullyCovered": 182,
-  "leadReadyPhotos": 138,
-  "pageScraped": 27,
-  "photosRecovered": 27,
-  "imagesCleared": 22,
-  "stockSearches": 51,
-  "stockFound": 46,
-  "campusBankFound": 31,
+  "leadReadyPhotos": 135,
+  "pageScraped": 28,
+  "photosRecovered": 28,
+  "imagesCleared": 24,
+  "stockSearches": 50,
+  "stockFound": 48,
+  "campusBankFound": 32,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "I Love Friendsgiving",
+      "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "BU Football: So You’re Telling Me There’s a Chance",
+      "link": "https://thebucampus.ca/2026/10/27/bu-football-so-youre-telling-me-theres-a-chance/",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Unwanted attention beyond the scoreboard",
       "link": "https://thelinknewspaper.ca/article/16522",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
-    },
-    {
-      "title": "Decline in Canadian acceptance of gender diversity",
-      "link": "https://thelinknewspaper.ca/article/16520",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
     },
     {
       "title": "Cancer du sein : la sensibilisation au-delà d’Octobre rose",
@@ -33,16 +39,10 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/AdobeStock_1580462282.jpeg"
     },
     {
-      "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
-      "link": "https://thelinknewspaper.ca/article/16521",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
-    },
-    {
-      "title": "Bulletin La Pige radio 26 octobre",
-      "link": "https://lapige.atmjonquiere.com/2026/10/26/bulletin-la-pige-radio-26-octobre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-26-octobre",
+      "title": "Queer Concordia considers lawsuit against CSU",
+      "link": "https://thelinknewspaper.ca/article/16519",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Queer Language is Queer Resistance",
@@ -51,28 +51,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
-      "title": "Editorial: Lowering immigration, but at what cost?",
-      "link": "https://thelinknewspaper.ca/article/16517",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+      "title": "Une récolte record de bleuets sauvages dans la région",
+      "link": "https://lapige.atmjonquiere.com/2026/10/26/une-recolte-record-de-bleuets-sauvages-dans-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=une-recolte-record-de-bleuets-sauvages-dans-la-region",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Bleuets-Savard.jpg"
     },
     {
-      "title": "Queer Concordia considers lawsuit against CSU",
-      "link": "https://thelinknewspaper.ca/article/16519",
+      "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
+      "link": "https://thelinknewspaper.ca/article/16521",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Creative Writing September 2026",
@@ -81,10 +75,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
-      "title": "La femme parfaite est un objet",
-      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
+      "title": "Editorial: Lowering immigration, but at what cost?",
+      "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+    },
+    {
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     }
   ]
 }
