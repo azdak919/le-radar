@@ -1,19 +1,25 @@
 {
-  "updated": "2026-10-28T11:38:27.810Z",
+  "updated": "2026-10-28T12:56:41.612Z",
   "total": 182,
   "withPhoto": 153,
   "withStock": 47,
   "withCampusBank": 36,
   "fullyCovered": 182,
-  "leadReadyPhotos": 139,
-  "pageScraped": 31,
-  "photosRecovered": 31,
+  "leadReadyPhotos": 132,
+  "pageScraped": 30,
+  "photosRecovered": 30,
   "imagesCleared": 23,
-  "stockSearches": 51,
-  "stockFound": 50,
-  "campusBankFound": 33,
+  "stockSearches": 52,
+  "stockFound": 49,
+  "campusBankFound": 32,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "I Love Friendsgiving",
+      "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
     {
       "title": "If You Ever Get the Chance, Take that Language Class",
       "link": "https://thebucampus.ca/2026/10/27/if-you-ever-get-the-chance-take-that-language-class/",
@@ -29,8 +35,14 @@
     {
       "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
       "link": "https://thelinknewspaper.ca/article/16521",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+    },
+    {
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Olivia Rodrigo au Centre Bell",
@@ -42,7 +54,7 @@
       "title": "Queer Concordia considers lawsuit against CSU",
       "link": "https://thelinknewspaper.ca/article/16519",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
@@ -54,37 +66,25 @@
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Bishop’s Hosts Provincial Election Debate",
-      "link": "https://thebucampus.ca/2026/10/27/bishops-hosts-provincial-election-debate/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/5604/30751203172_5861be988f_b.jpg"
-    },
-    {
-      "title": "Men’s Club Hockey Perfect Start to the Season",
-      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/2725/4398099308_e6132364e1_b.jpg"
-    },
-    {
-      "title": "Decline in Canadian acceptance of gender diversity",
-      "link": "https://thelinknewspaper.ca/article/16520",
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+    },
+    {
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     },
     {
       "title": "Horoscope September 2026",
       "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
-      "title": "Creative Writing September 2026",
-      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     }
   ]
 }
