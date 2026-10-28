@@ -3,17 +3,17 @@
 Ce fichier suit l'état des trois canaux de diffusion du Radar. À mettre à jour à chaque
 déploiement notable, changement de cache du service worker ou étiquette Android.
 
-_Dernière mise à jour : 27 octobre 2026._
+_Dernière mise à jour : 28 octobre 2026._
 
 ## 1. Web (GitHub Pages, le-radar.ca)
 
 | Élément | Valeur |
 |---|---|
-| Dernier commit `main` déployé | `2a2f3238a` — bot : fil des nouvelles, extraits, images, RSS (auto), 27 oct. 2026, 9 h 13 (HAE) |
-| Dernier changement de code déployé | `495d9e93f` — images miroir publiées dans la Release `mirror-images`, recopiées au déploiement (26 oct., 22 h 43 HAE) |
-| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, run 40511526695) |
-| Date du déploiement | 27 octobre 2026, 9 h 22 (HAE) |
-| le-radar.ca | ✅ HTTP 200 (vérifié le 27 oct. 2026, 9 h 40 HAE) |
+| Dernier commit `main` déployé | `ccce99a8f` — bot : retro-crawl historical metadata (auto), 28 oct. 2026, 9 h 32 (HAE) |
+| Dernier changement de code déployé | `aa88c84e6` — Dependabot : `actions/configure-pages` 5 → 6 (#236), après `63292254a` `actions/checkout` 4 → 7 (#237) (28 oct., 8 h 27 HAE) ; dernier changement du site : `495d9e93f` (26 oct.) |
+| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, sur `ccce99a8f`) |
+| Date du déploiement | 28 octobre 2026, 9 h 34 (HAE) |
+| le-radar.ca | ✅ HTTP 200 (vérifié le 28 oct. 2026, 9 h 37 HAE) |
 
 Le site se déploie automatiquement à chaque poussée sur `main`, par artefact depuis le 26 oct.
 (21 h 43 HAE, `41dc6e9bf`; retour arrière : `build_type=legacy`). Vérifier avec
@@ -58,11 +58,11 @@ Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmé
 | `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
-| `android-v1.2.3` | 2026-10-23 | ⏳ recette mise à jour le 2026-10-24 (`fa454f12`, versionCode 8), pas encore publiée |
+| `android-v1.2.3` | 2026-10-23 | ✅ publiée (recette `fa454f12` du 2026-10-24 ; vue sur f-droid.org le 2026-10-28, entre le 27 oct. 9 h 40 et le 28 oct. 9 h 37 HAE) |
 | `android-v1.2.4` | 2026-10-25 | ⏳ recette mise à jour le 2026-10-26 (MR 54228 fusionnée, `4ee66bdb`, saveur `fdroid`) ; CurrentVersion 1.2.4 / 9 ; pas encore publiée |
 
-Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-27) :
-**1.1.1 (versionCode 4)** (suggérée ; 1.1.0 / 3 encore listée). Recette fdroiddata : CurrentVersion **1.2.4 (9)**. `main` est à **1.2.4 (versionCode 9)**.
+Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-28) :
+**1.2.3 (versionCode 8)** (suggérée ; 1.1.1 / 4 et 1.1.0 / 3 encore listées). Recette fdroiddata : CurrentVersion **1.2.4 (9)**. `main` est à **1.2.4 (versionCode 9)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
