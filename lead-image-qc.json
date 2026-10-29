@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-29T20:37:43.105Z",
+  "updated": "2026-10-29T21:15:43.973Z",
   "total": 183,
   "withPhoto": 157,
   "withStock": 43,
   "withCampusBank": 32,
   "fullyCovered": 183,
-  "leadReadyPhotos": 133,
+  "leadReadyPhotos": 140,
   "pageScraped": 31,
   "photosRecovered": 31,
   "imagesCleared": 19,
-  "stockSearches": 54,
+  "stockSearches": 52,
   "stockFound": 44,
-  "campusBankFound": 28,
+  "campusBankFound": 29,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,18 +25,6 @@
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Chickens Are Fine: An Open Mic Night with Wit and Whimsy",
-      "link": "https://thebucampus.ca/2026/10/28/the-chickens-are-fine-an-open-mic-night-with-wit-and-whimsy/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
-      "link": "https://thebucampus.ca/2026/10/28/bechard-hudon-brings-unseen-ecosystems-to-light-with-monologue-de-la-foret/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
@@ -57,34 +45,46 @@
       "image": null
     },
     {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "Men’s Club Hockey Perfect Start to the Season",
-      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/2725/4398099308_e6132364e1_b.jpg"
-    },
-    {
-      "title": "BU Snow Prepares for Another Winter at Bishop’s",
-      "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7120/7088555075_e4eb72404a_b.jpg"
-    },
-    {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Strong Start to the Season for the Gaiters",
-      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "Crossword: Paranormal Activity",
+      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+    },
+    {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
+    },
+    {
+      "title": "Creative Writing September 2026",
+      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
+    },
+    {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/McGill_University_downtown_campus_16.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
