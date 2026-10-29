@@ -1405,3 +1405,33 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 .tuner .tuner-cast-pop {
   border-color: rgba(255, 255, 255, 0.28) !important;
 }
+
+/* Barre allégée (oct. 2026) : plus de boîte autour de la barre ni de
+   sous-encadrés. Pleine largeur, une seule fine ligne en bas. Les contrôles
+   gardent un contour léger (≥ 3:1) et l’anneau de focus clavier. */
+.tuner {
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.tuner .tuner-now {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.tuner .tuner-dial:hover .tuner-now { background: rgba(255, 255, 255, 0.06) !important; }
+.tuner .tuner-step,
+.tuner .tuner-play { box-shadow: none !important; }
+.tuner .tuner-step,
+.tuner .tuner-vol-btn { background: transparent !important; }
+.tuner :focus-visible,
+.tuner .tuner-dial:focus-within .tuner-now {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+@media (max-width: 719.98px) {
+  .tuner .tuner-step,
+  .tuner .tuner-prev,
+  .tuner .tuner-next { border-color: transparent !important; }
+}
