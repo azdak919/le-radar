@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-29T03:07:56.267Z",
+  "updated": "2026-10-29T03:37:55.095Z",
   "total": 183,
-  "withPhoto": 153,
-  "withStock": 47,
-  "withCampusBank": 37,
+  "withPhoto": 155,
+  "withStock": 45,
+  "withCampusBank": 35,
   "fullyCovered": 183,
-  "leadReadyPhotos": 138,
-  "pageScraped": 29,
-  "photosRecovered": 29,
-  "imagesCleared": 21,
-  "stockSearches": 53,
-  "stockFound": 45,
+  "leadReadyPhotos": 133,
+  "pageScraped": 30,
+  "photosRecovered": 30,
+  "imagesCleared": 20,
+  "stockSearches": 54,
+  "stockFound": 46,
   "campusBankFound": 30,
   "mainPageLeadReady": true,
   "gaps": [
@@ -25,6 +25,12 @@
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Crossword: Paranormal Activity",
+      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
     },
     {
       "title": "BU Football: So You’re Telling Me There’s a Chance",
@@ -54,25 +60,7 @@
       "title": "Concordia University introduces new campus safety texting service",
       "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
-    },
-    {
-      "title": "Decline in Canadian acceptance of gender diversity",
-      "link": "https://thelinknewspaper.ca/article/16520",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Queer Concordia considers lawsuit against CSU",
-      "link": "https://thelinknewspaper.ca/article/16519",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
-    },
-    {
-      "title": "Editorial: Lowering immigration, but at what cost?",
-      "link": "https://thelinknewspaper.ca/article/16517",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Queer Language is Queer Resistance",
@@ -84,7 +72,19 @@
       "title": "Unwanted attention beyond the scoreboard",
       "link": "https://thelinknewspaper.ca/article/16522",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+    },
+    {
+      "title": "Editorial: Lowering immigration, but at what cost?",
+      "link": "https://thelinknewspaper.ca/article/16517",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
+    },
+    {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     }
   ]
 }
