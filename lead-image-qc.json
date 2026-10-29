@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-29T19:39:47.697Z",
+  "updated": "2026-10-29T20:07:46.476Z",
   "total": 183,
   "withPhoto": 157,
   "withStock": 43,
   "withCampusBank": 32,
   "fullyCovered": 183,
-  "leadReadyPhotos": 139,
-  "pageScraped": 26,
-  "photosRecovered": 26,
-  "imagesCleared": 14,
+  "leadReadyPhotos": 137,
+  "pageScraped": 31,
+  "photosRecovered": 31,
+  "imagesCleared": 19,
   "stockSearches": 53,
-  "stockFound": 45,
+  "stockFound": 44,
   "campusBankFound": 29,
   "mainPageLeadReady": true,
   "gaps": [
@@ -25,6 +25,18 @@
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
+      "link": "https://thebucampus.ca/2026/10/28/bechard-hudon-brings-unseen-ecosystems-to-light-with-monologue-de-la-foret/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
@@ -45,22 +57,10 @@
       "image": null
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Crossword: Paranormal Activity",
       "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
-    },
-    {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "Concordia University introduces new campus safety texting service",
@@ -69,16 +69,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "title": "Queer Language is Queer Resistance",
+      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "La femme parfaite est un objet",
-      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Plus de 130 jours de manifestation en Albanie",
+      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/65535/48774243902_25f3d81518_b.jpg"
     },
     {
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
