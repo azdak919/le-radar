@@ -1,79 +1,80 @@
 {
-  "updatedAt": "2026-10-29T12:56:31.848Z",
+  "updatedAt": "2026-10-29T14:35:05.935Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Jeudi Révolte",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
-      },
-      "next": {
         "title": "Sons de Cloches",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/sons-de-cloches/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "Jeudi Révolte",
+      "showTitle": "Sons de Cloches",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T12:56:05.176Z"
+      "checkedAt": "2026-10-29T14:34:39.513Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jimmy et Neutron",
+        "title": "Une fenêtre sur le monde",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
       },
       "next": {
-        "title": "La collation",
+        "title": "Présentement à l'écoute",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
       },
       "track": "",
-      "showTitle": "Jimmy et Neutron",
+      "showTitle": "Une fenêtre sur le monde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T12:56:06.928Z"
+      "checkedAt": "2026-10-29T14:34:41.567Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "OFC Podcast Radio",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Folk Directions",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Under The Olive Tree",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "OFC Podcast Radio",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +82,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T12:56:10.611Z"
+      "checkedAt": "2026-10-29T14:34:44.457Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Free City Radio",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/free-city-radio"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "Everything Everywhere",
+        "title": "Chi and Ri",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/chi-and-ri"
       },
       "track": "",
-      "showTitle": "Free City Radio",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T12:56:12.821Z"
+      "checkedAt": "2026-10-29T14:34:46.663Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Le NEUF",
         "source": "schedule-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le NEUF",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T12:56:13.794Z"
+      "checkedAt": "2026-10-29T14:34:47.918Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +155,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T12:56:31.497Z"
+      "checkedAt": "2026-10-29T14:35:05.585Z"
     }
   }
 }
