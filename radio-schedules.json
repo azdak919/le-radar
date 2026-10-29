@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T15:33:54.020Z",
+  "updatedAt": "2026-10-29T15:41:46.577Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-10-28T15:33:54.020Z",
+      "checkedAt": "2026-10-29T15:41:46.577Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -38,6 +38,13 @@
           "end": "21:00",
           "title": "Le Monde d'Erik Arsenault - 10 ans",
           "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
+        },
+        {
+          "day": 0,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Kurdistan, Ici et là-bas",
+          "url": "https://chyz.ca/emission/kurdistan-ici-et-la-bas/"
         },
         {
           "day": 1,
@@ -217,7 +224,7 @@
         {
           "day": 4,
           "start": "16:00",
-          "end": "17:30",
+          "end": "17:00",
           "title": "Chéri.e, j’arrive!",
           "url": "https://chyz.ca/emission/cheri-e-jarrive/"
         },
@@ -313,7 +320,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-10-28T15:33:54.020Z",
+      "checkedAt": "2026-10-29T15:41:46.577Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -1094,7 +1101,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-10-28T15:33:54.020Z",
+      "checkedAt": "2026-10-29T15:41:46.577Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -1712,7 +1719,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-10-28T15:33:54.020Z",
+      "checkedAt": "2026-10-29T15:41:46.577Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -4376,7 +4383,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-10-28T15:33:54.020Z",
+      "checkedAt": "2026-10-29T15:41:46.577Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -4603,7 +4610,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-10-28T15:33:54.020Z",
+      "checkedAt": "2026-10-29T15:41:46.577Z",
       "verifiedWeekOf": "2026-10-26",
       "grid": [
         {
@@ -4686,9 +4693,9 @@
         {
           "day": 3,
           "start": "13:00",
-          "end": "14:00",
-          "title": "Échos du monde",
-          "url": "https://www.choq.ca/emissions/echos-du-monde"
+          "end": "13:45",
+          "title": "Onde de CHOQ",
+          "url": "https://www.choq.ca/emissions/onde-de-choq"
         },
         {
           "day": 3,
