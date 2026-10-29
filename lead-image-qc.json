@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-29T12:37:38.847Z",
+  "updated": "2026-10-29T13:37:34.228Z",
   "total": 182,
-  "withPhoto": 155,
-  "withStock": 44,
-  "withCampusBank": 33,
+  "withPhoto": 156,
+  "withStock": 43,
+  "withCampusBank": 32,
   "fullyCovered": 182,
-  "leadReadyPhotos": 138,
+  "leadReadyPhotos": 137,
   "pageScraped": 30,
   "photosRecovered": 30,
-  "imagesCleared": 20,
+  "imagesCleared": 19,
   "stockSearches": 53,
-  "stockFound": 47,
-  "campusBankFound": 31,
+  "stockFound": 45,
+  "campusBankFound": 29,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -45,26 +45,32 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "Crossword: Paranormal Activity",
-      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Unwanted attention beyond the scoreboard",
-      "link": "https://thelinknewspaper.ca/article/16522",
+      "title": "Crossword: Paranormal Activity",
+      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
+    },
+    {
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "Plus de 130 jours de manifestation en Albanie",
+      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/65535/48774243902_25f3d81518_b.jpg"
+    },
+    {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
@@ -72,19 +78,13 @@
       "title": "Editorial: Lowering immigration, but at what cost?",
       "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
-    },
-    {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/McGill_University_downtown_campus_16.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Concordia University introduces new campus safety texting service",
-      "link": "https://thelinknewspaper.ca/article/16528",
-      "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     }
   ]
 }

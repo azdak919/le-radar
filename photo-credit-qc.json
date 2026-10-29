@@ -1,17 +1,24 @@
 {
-  "updated": "2026-10-29T12:38:33.969Z",
+  "updated": "2026-10-29T13:38:39.926Z",
   "total": 182,
-  "withImage": 155,
-  "withCredit": 155,
+  "withImage": 156,
+  "withCredit": 156,
   "cited": 96,
-  "pending": 41,
+  "pending": 42,
   "missingHero": 0,
   "ok": false,
-  "checked": 46,
-  "updatedCount": 6,
-  "citedNew": 5,
-  "fallbackNew": 41,
+  "checked": 48,
+  "updatedCount": 8,
+  "citedNew": 6,
+  "fallbackNew": 42,
   "samples": [
+    {
+      "title": "Guillaume Lavoie : un geste de cœur pour sa région",
+      "source": "La Pige",
+      "credit": "Photo : André Deschênes",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
       "source": "Le Délit",
@@ -32,6 +39,13 @@
       "credit": "Illustration: Annabelle Olumese",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Unwanted attention beyond the scoreboard",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
