@@ -1,11 +1,12 @@
 {
-  "checkedAt": "2026-10-28T02:09:05.272Z",
+  "checkedAt": "2026-10-29T02:22:10.785Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
+      "chyz",
       "choq"
     ],
     "overhaul": [],
@@ -14,13 +15,15 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 43,
+      "published": 42,
       "fresh": 43,
-      "added": [],
+      "added": [
+        "dim 21:00–22:00 Kurdistan, Ici et là-bas"
+      ],
       "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "changed": 1,
+      "ratio": 0.024,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -64,14 +67,16 @@
     },
     {
       "id": "choq",
-      "published": 24,
+      "published": 25,
       "fresh": 25,
       "added": [
-        "sam 10:00–11:00 Podcast Nomade: L'art de se rencontrer"
+        "mer 13:00–13:45 Onde de CHOQ"
       ],
-      "removed": [],
-      "changed": 1,
-      "ratio": 0.042,
+      "removed": [
+        "mer 13:00–14:00 Échos du monde"
+      ],
+      "changed": 2,
+      "ratio": 0.08,
       "status": "drift"
     }
   ]
