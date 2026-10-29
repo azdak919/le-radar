@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-29T09:59:58.481Z",
+  "updated": "2026-10-29T11:07:48.870Z",
   "total": 182,
   "withPhoto": 155,
   "withStock": 44,
-  "withCampusBank": 34,
+  "withCampusBank": 33,
   "fullyCovered": 182,
-  "leadReadyPhotos": 137,
+  "leadReadyPhotos": 130,
   "pageScraped": 30,
   "photosRecovered": 30,
   "imagesCleared": 20,
   "stockSearches": 53,
   "stockFound": 45,
-  "campusBankFound": 30,
+  "campusBankFound": 29,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,6 +25,12 @@
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
+      "link": "https://thebucampus.ca/2026/10/28/bechard-hudon-brings-unseen-ecosystems-to-light-with-monologue-de-la-foret/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "BU Football: So You’re Telling Me There’s a Chance",
@@ -45,34 +51,28 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "Crossword: Paranormal Activity",
-      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
-    },
-    {
       "title": "Un monde bâti sur du sable",
       "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Concordia University introduces new campus safety texting service",
       "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Unwanted attention beyond the scoreboard",
       "link": "https://thelinknewspaper.ca/article/16522",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+    },
+    {
+      "title": "Queer Language is Queer Resistance",
+      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
