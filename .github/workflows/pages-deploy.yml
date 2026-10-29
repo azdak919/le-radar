@@ -76,9 +76,11 @@ jobs:
           ls _site/*sw*.js >/dev/null
           test "$(cat _site/CNAME)" = "le-radar.ca"
           du -sh _site
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
+          # v4+ exclut les fichiers cachés : garder .well-known/assetlinks.json (Android).
+          include-hidden-files: true
 
   deploy:
     needs: build
@@ -93,4 +95,4 @@ jobs:
       url: ${{ steps.d.outputs.page_url }}
     steps:
       - id: d
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
