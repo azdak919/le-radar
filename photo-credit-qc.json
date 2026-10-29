@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-29T14:09:03.202Z",
+  "updated": "2026-10-29T14:39:21.902Z",
   "total": 182,
   "withImage": 156,
   "withCredit": 156,
-  "cited": 95,
-  "pending": 43,
+  "cited": 96,
+  "pending": 42,
   "missingHero": 0,
   "ok": false,
   "checked": 47,
   "updatedCount": 6,
-  "citedNew": 4,
-  "fallbackNew": 43,
+  "citedNew": 5,
+  "fallbackNew": 42,
   "samples": [
     {
       "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
@@ -29,9 +29,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
