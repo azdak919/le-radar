@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-29T06:07:47.368Z",
-  "total": 183,
+  "updated": "2026-10-29T06:30:27.261Z",
+  "total": 182,
   "withPhoto": 155,
-  "withStock": 45,
-  "withCampusBank": 35,
-  "fullyCovered": 183,
+  "withStock": 44,
+  "withCampusBank": 34,
+  "fullyCovered": 182,
   "leadReadyPhotos": 135,
   "pageScraped": 30,
   "photosRecovered": 30,
   "imagesCleared": 20,
-  "stockSearches": 55,
-  "stockFound": 46,
-  "campusBankFound": 30,
+  "stockSearches": 53,
+  "stockFound": 44,
+  "campusBankFound": 29,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,12 +25,6 @@
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Chickens Are Fine: An Open Mic Night with Wit and Whimsy",
-      "link": "https://thebucampus.ca/2026/10/28/the-chickens-are-fine-an-open-mic-night-with-wit-and-whimsy/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
@@ -57,26 +51,14 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "Crossword: Paranormal Activity",
-      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Un monde bâti sur du sable",
       "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Concordia University introduces new campus safety texting service",
       "link": "https://thelinknewspaper.ca/article/16528",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Unwanted attention beyond the scoreboard",
-      "link": "https://thelinknewspaper.ca/article/16522",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
@@ -85,6 +67,24 @@
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Unwanted attention beyond the scoreboard",
+      "link": "https://thelinknewspaper.ca/article/16522",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+    },
+    {
+      "title": "Bishop’s Hosts Provincial Election Debate",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-hosts-provincial-election-debate/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/5604/30751203172_5861be988f_b.jpg"
+    },
+    {
+      "title": "Editorial: Lowering immigration, but at what cost?",
+      "link": "https://thelinknewspaper.ca/article/16517",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     }
   ]
 }
