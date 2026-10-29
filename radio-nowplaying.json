@@ -1,80 +1,72 @@
 {
-  "updatedAt": "2026-10-29T14:35:05.935Z",
+  "updatedAt": "2026-10-29T18:57:26.256Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Sons de Cloches",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/sons-de-cloches/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
-        "end": "17:30",
+        "end": "17:00",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Sons de Cloches",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-29T14:34:39.513Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Une fenêtre sur le monde",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
-      },
-      "next": {
-        "title": "Présentement à l'écoute",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
-      },
-      "track": "",
-      "showTitle": "Une fenêtre sur le monde",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T14:34:41.567Z"
+      "checkedAt": "2026-10-29T18:56:46.790Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "next": {
+        "title": "La session live",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
+      },
+      "track": "",
+      "showTitle": "Le palmarès",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-29T18:56:48.844Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Folk Directions",
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Under The Olive Tree",
+        "title": "Positive Vibes",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "track": "",
-      "showTitle": "Folk Directions",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,70 +74,70 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T14:34:44.457Z"
+      "checkedAt": "2026-10-29T18:56:51.665Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "Secondhand Sounds",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "next": {
-        "title": "Chi and Ri",
+        "title": "Weirdo Rippers",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/chi-and-ri"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Secondhand Sounds",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T14:34:46.663Z"
+      "checkedAt": "2026-10-29T18:57:05.952Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le NEUF",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "À nous le futur",
         "source": "schedule-live",
         "start": "11:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Le NEUF",
+      "showTitle": "À nous le futur",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T14:34:47.918Z"
+      "checkedAt": "2026-10-29T18:57:07.654Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "15:30",
+        "end": "16:30",
+        "slug": "palmareschoq"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
@@ -155,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T14:35:05.585Z"
+      "checkedAt": "2026-10-29T18:57:25.905Z"
     }
   }
 }
