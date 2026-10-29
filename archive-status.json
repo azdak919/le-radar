@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28T20:37:39.528Z",
+  "updated": "2026-10-29T01:22:49.490Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4743,15 +4743,68 @@
       "via": "save-page-now",
       "source": "The Campus",
       "snapshot": "https://web.archive.org/web/20261028203541/https://thebucampus.ca/2026/10/27/bu-football-so-youre-telling-me-theres-a-chance/"
+    },
+    "https://thebucampus.ca/2026/10/27/gaiters-rugby-wraps-up-season-with-hard-fought-home-finales/": {
+      "at": "2026-10-29T01:13:48.139Z",
+      "via": "save-page-now",
+      "source": "The Campus",
+      "snapshot": "https://web.archive.org/web/20261029011333/https://thebucampus.ca/2026/10/27/gaiters-rugby-wraps-up-season-with-hard-fought-home-finales/"
+    },
+    "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/": {
+      "at": "2026-10-29T01:14:10.828Z",
+      "via": "save-page-now",
+      "source": "The Campus",
+      "snapshot": "https://web.archive.org/web/20261029011355/https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/"
+    },
+    "https://www.polyscope.qc.ca/blog/post/e5DbrhKIs00PKfJEq3lg": {
+      "at": "2026-10-29T01:19:40.810Z",
+      "via": "save-page-now",
+      "source": "Le Polyscope",
+      "snapshot": "https://web.archive.org/web/20261029011922/https://www.polyscope.qc.ca/blog/post/e5DbrhKIs00PKfJEq3lg"
+    },
+    "https://thetribune.ca/features/blackface-at-mcgill/": {
+      "at": "2026-09-15T23:26:54.000Z",
+      "via": "existant",
+      "source": "The Tribune"
+    },
+    "https://quartierlibre.ca/etudier-en-histoire-travailler-ailleurs/": {
+      "at": "2026-10-29T01:20:03.653Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20261029011948/https://quartierlibre.ca/etudier-en-histoire-travailler-ailleurs/"
+    },
+    "https://montrealcampus.ca/2026/10/28/difficile-de-manger-a-luqam-sans-se-ruiner/": {
+      "at": "2026-10-29T01:20:44.675Z",
+      "via": "save-page-now",
+      "source": "Montréal Campus",
+      "snapshot": "https://web.archive.org/web/20261029012026/https://montrealcampus.ca/2026/10/28/difficile-de-manger-a-luqam-sans-se-ruiner/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre/": {
+      "at": "2026-10-29T01:21:25.866Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261029012111/https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre/"
+    },
+    "https://thebucampus.ca/2026/10/28/where-we-belong-we-give-back-bucss-social-impact-portfolio/": {
+      "at": "2026-10-29T01:21:58.582Z",
+      "via": "save-page-now",
+      "source": "The Campus",
+      "snapshot": "https://web.archive.org/web/20261029012139/https://thebucampus.ca/2026/10/28/where-we-belong-we-give-back-bucss-social-impact-portfolio/"
+    },
+    "https://thebucampus.ca/2026/10/28/biztec-2026-connects-bishops-students-with-employers/": {
+      "at": "2026-10-29T01:22:49.490Z",
+      "via": "save-page-now",
+      "source": "The Campus",
+      "snapshot": "https://web.archive.org/web/20261029012234/https://thebucampus.ca/2026/10/28/biztec-2026-connects-bishops-students-with-employers/"
     }
   },
   "stats": {
-    "total": 825,
+    "total": 834,
     "lastRun": {
-      "saved": 6,
-      "skipped": 0,
-      "failed": 8,
-      "stoppedEarly": true
+      "saved": 8,
+      "skipped": 1,
+      "failed": 11,
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -4818,12 +4871,13 @@
     "Le Délit": {
       "host": "www.delitfrancais.com",
       "pages": 136,
-      "checkedAt": "2026-10-22T00:10:32.259Z"
+      "checkedAt": "2026-10-22T00:10:32.259Z",
+      "stale": true
     },
     "Le Polyscope": {
       "host": "www.polyscope.qc.ca",
       "pages": 36,
-      "checkedAt": "2026-10-22T00:10:38.794Z"
+      "checkedAt": "2026-10-29T01:12:34.789Z"
     },
     "Impact Campus": {
       "host": "impactcampus.ca",
