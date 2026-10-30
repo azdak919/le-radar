@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-29T23:16:53.822Z",
+  "updatedAt": "2026-10-30T00:04:53.721Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T23:16:15.255Z"
+      "checkedAt": "2026-10-30T00:04:13.169Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La rumba latina",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/la-rumba"
-      },
-      "next": {
         "title": "La courbe 2.0",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/la-courbe-2-0"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "La rumba latina",
+      "showTitle": "La courbe 2.0",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T23:16:16.979Z"
+      "checkedAt": "2026-10-30T00:04:15.359Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Grey Matters",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Other Worlds on Earth/Dromostexte",
         "source": "api-live",
         "start": "20:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Chaud Pour/Francis",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Grey Matters",
+      "showTitle": "Other Worlds on Earth/Dromostexte",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T23:16:19.616Z"
+      "checkedAt": "2026-10-30T00:04:18.791Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Electric Messiah",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
-      },
-      "next": {
         "title": "Maiden Voyage",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/maiden-voyage"
       },
+      "next": {
+        "title": "The 514",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-514"
+      },
       "track": "",
-      "showTitle": "Electric Messiah",
+      "showTitle": "Maiden Voyage",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T23:16:34.212Z"
+      "checkedAt": "2026-10-30T00:04:33.203Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,34 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T23:16:35.333Z"
+      "checkedAt": "2026-10-30T00:04:34.589Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Les Apatrides Anonymes",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "19:45",
-        "slug": "apatrides-anonymes"
-      },
-      "next": {
         "title": "La nouvelle école des surdoués",
         "source": "api-live",
         "start": "20:00",
         "end": "21:00",
         "slug": "la-nouvelle-ecole-des-surdoues"
       },
+      "next": {
+        "title": "Le grand maître des jeux",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "22:30",
+        "slug": "le-maitre-des-jeux"
+      },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "Les Apatrides Anonymes",
+      "showTitle": "La nouvelle école des surdoués",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-29T23:16:53.471Z"
+      "checkedAt": "2026-10-30T00:04:53.370Z"
     }
   }
 }
