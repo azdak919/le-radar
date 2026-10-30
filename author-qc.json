@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-30T00:06:17.116Z",
+  "updated": "2026-10-30T01:37:08.738Z",
   "total": 183,
   "withAuthor": 183,
-  "mismatches": 15,
+  "mismatches": 21,
   "ok": true,
   "samples": [
     {
@@ -124,7 +124,47 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "MUNACA’s Campaign Exposes the McGill Administration’s Greed",
+      "link": "https://www.mcgilldaily.com/2026/10/munacas-campaign-exposes-the-mcgill-administrations-greed/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Searching For a Third Space",
+      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
+      "link": "https://thetribune.ca/sports/after-mcgill-athletics-cuts-teams-navigate-a-new-future-under-ssmu-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "Ivanna Zhang et Zain Ahmed",
+      "canonicalAuthor": "Ivanna Zhang and Zain Ahmed",
+      "reason": "page-byline-overrides-rss"
     }
   ],
-  "fixed": 15
+  "fixed": 21
 }
