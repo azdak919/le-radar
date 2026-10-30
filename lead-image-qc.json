@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-29T22:37:40.273Z",
+  "updated": "2026-10-30T00:07:38.604Z",
   "total": 183,
   "withPhoto": 157,
   "withStock": 43,
   "withCampusBank": 32,
   "fullyCovered": 183,
-  "leadReadyPhotos": 130,
+  "leadReadyPhotos": 139,
   "pageScraped": 30,
   "photosRecovered": 30,
-  "imagesCleared": 20,
-  "stockSearches": 54,
-  "stockFound": 45,
-  "campusBankFound": 29,
+  "imagesCleared": 19,
+  "stockSearches": 52,
+  "stockFound": 44,
+  "campusBankFound": 28,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,12 +25,6 @@
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
-      "link": "https://thebucampus.ca/2026/10/28/bechard-hudon-brings-unseen-ecosystems-to-light-with-monologue-de-la-foret/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "Crossword: Paranormal Activity",
@@ -69,16 +63,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "Queer Language is Queer Resistance",
+      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Editorial: Lowering immigration, but at what cost?",
       "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Plus de 130 jours de manifestation en Albanie",
+      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/65535/48774243902_25f3d81518_b.jpg"
     },
     {
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
