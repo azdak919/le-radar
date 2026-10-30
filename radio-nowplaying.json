@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T05:43:07.464Z",
+  "updatedAt": "2026-10-30T06:11:29.308Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T05:42:27.001Z"
+      "checkedAt": "2026-10-30T06:10:51.394Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "02:00",
         "end": "03:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T05:42:29.299Z"
+      "checkedAt": "2026-10-30T06:10:53.301Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T05:42:31.997Z"
+      "checkedAt": "2026-10-30T06:10:56.035Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Finally Midnight",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/finally-midnight"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "02:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Wake up Folks!",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/wake-up-folks"
+      },
       "track": "",
-      "showTitle": "Finally Midnight",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T05:42:47.698Z"
+      "checkedAt": "2026-10-30T06:11:10.453Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T05:42:48.619Z"
+      "checkedAt": "2026-10-30T06:11:11.369Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T05:43:07.113Z"
+      "checkedAt": "2026-10-30T06:11:28.957Z"
     }
   }
 }
