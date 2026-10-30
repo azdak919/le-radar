@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-30T13:18:26.124Z",
+  "updatedAt": "2026-10-30T18:36:14.859Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Vendredi Nostalgie",
+        "title": "Conduite Antisportive",
         "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+        "start": "13:30",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
       "next": {
-        "title": "Palmarès CHYZ",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Vendredi Nostalgie",
+      "showTitle": "Conduite Antisportive",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T13:17:46.398Z"
+      "checkedAt": "2026-10-30T18:35:37.580Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "next": {
-        "title": "En-quêtes artistiques",
+        "title": "Salsa et Bembê",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/en-quetes-artistiques"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T13:17:48.586Z"
+      "checkedAt": "2026-10-30T18:35:39.406Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Amuck",
+        "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+        "title": "New Shit",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "track": "",
-      "showTitle": "Jazz Amuck",
+      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,70 +81,70 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T13:17:51.470Z"
+      "checkedAt": "2026-10-30T18:35:41.701Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO News Hour",
+        "title": "Spiral Bound",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
       },
       "next": {
-        "title": "Democracy Now",
+        "title": "Dead Beats",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
       },
       "track": "",
-      "showTitle": "CJLO News Hour",
+      "showTitle": "Spiral Bound",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T13:18:06.651Z"
+      "checkedAt": "2026-10-30T18:35:55.569Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
+        "title": "Ciné-Histoire",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "16:30"
       },
       "next": {
-        "title": "Le Ré-Show : Deuxième service",
+        "title": "Remix ta console",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "16:30",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T13:18:07.578Z"
+      "checkedAt": "2026-10-30T18:35:56.674Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Histoire de passer le temps",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T13:18:25.773Z"
+      "checkedAt": "2026-10-30T18:36:14.509Z"
     }
   }
 }
