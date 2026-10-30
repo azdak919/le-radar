@@ -1278,16 +1278,6 @@
       "via": "resize-proxy",
       "nameKey": "51c5ff87-9a82-4201-a529-40144575ef8a.jpg"
     },
-    "1081e97359be3f07": {
-      "local": "assets/news-images/1081e97359be3f07.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/violence-2.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 93517,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-28T21:16:07.244Z",
-      "via": "resize-proxy",
-      "nameKey": "violence-2.png"
-    },
     "34ecd821609b6280": {
       "local": "assets/news-images/34ecd821609b6280.png",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/09/SPORTS-1-Gwen-Heffernan-1000x600.png",
@@ -1545,26 +1535,36 @@
       "via": "resize-proxy",
       "nameKey": "psppfirstannoucement-00000006.jpg"
     },
-    "b2b58eee19c55729": {
-      "local": "assets/news-images/b2b58eee19c55729.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/HV26_0930_SHIFT_event_DSC8348_690_388_90.jpg",
+    "8a9c168712edaa07": {
+      "local": "assets/news-images/8a9c168712edaa07.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/HV26_0930_SHIFT_event_DSC8348_900_506_90.jpg",
       "host": "thelinknewspaper.ca",
-      "bytes": 82578,
-      "updatedAt": "2026-10-30T14:38:30.824Z",
+      "bytes": 125094,
+      "updatedAt": "2026-10-30T15:37:41.787Z",
       "via": "disk",
       "nameKey": "hv26_0930_shift_event_dsc8348.jpg"
     },
-    "78903cb565b17597": {
-      "local": "assets/news-images/78903cb565b17597.png",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Maternity_leave_Annabelle_Olumese_690_345.png",
+    "5743d8be72ba01da": {
+      "local": "assets/news-images/5743d8be72ba01da.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Maternity_leave_Annabelle_Olumese_900_450.png",
       "host": "thelinknewspaper.ca",
-      "bytes": 320499,
-      "updatedAt": "2026-10-30T14:38:30.824Z",
+      "bytes": 61834,
+      "updatedAt": "2026-10-30T15:37:41.787Z",
       "via": "disk",
-      "nameKey": "04_sports_maternity_leave_annabelle_olumese_690_345.png"
+      "nameKey": "04_sports_maternity_leave_annabelle_olumese_900_450.png"
+    },
+    "c6ecf846f4ddf380": {
+      "local": "assets/news-images/c6ecf846f4ddf380.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/ThelysonOrelienAI.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 153843,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-30T15:37:46.145Z",
+      "via": "resize-proxy",
+      "nameKey": "thelysonorelienai.png"
     }
   },
-  "updatedAt": "2026-10-30T14:38:30.828Z",
+  "updatedAt": "2026-10-30T15:37:46.146Z",
   "count": 157,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",

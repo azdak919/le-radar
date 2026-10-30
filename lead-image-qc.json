@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-30T14:38:25.063Z",
+  "updated": "2026-10-30T15:37:36.732Z",
   "total": 183,
   "withPhoto": 157,
   "withStock": 43,
   "withCampusBank": 32,
   "fullyCovered": 183,
-  "leadReadyPhotos": 129,
-  "pageScraped": 31,
-  "photosRecovered": 31,
+  "leadReadyPhotos": 137,
+  "pageScraped": 30,
+  "photosRecovered": 30,
   "imagesCleared": 19,
-  "stockSearches": 55,
-  "stockFound": 45,
-  "campusBankFound": 29,
+  "stockSearches": 53,
+  "stockFound": 44,
+  "campusBankFound": 28,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -27,10 +27,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
+      "link": "https://thebucampus.ca/2026/10/28/bechard-hudon-brings-unseen-ecosystems-to-light-with-monologue-de-la-foret/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
       "title": "Bishop’s Culture is Community",
       "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "BU Football: So You’re Telling Me There’s a Chance",
+      "link": "https://thebucampus.ca/2026/10/27/bu-football-so-youre-telling-me-theres-a-chance/",
+      "reason": "no-stock-match",
+      "image": null
     },
     {
       "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
@@ -45,28 +57,16 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "BU Football: So You’re Telling Me There’s a Chance",
-      "link": "https://thebucampus.ca/2026/10/27/bu-football-so-youre-telling-me-theres-a-chance/",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
       "title": "Un monde bâti sur du sable",
       "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Crossword: Paranormal Activity",
-      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
-    },
-    {
       "title": "Concordia University introduces new campus safety texting service",
       "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Queer Language is Queer Resistance",
@@ -75,16 +75,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "Editorial: Lowering immigration, but at what cost?",
+      "link": "https://thelinknewspaper.ca/article/16517",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
+    },
+    {
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
       "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
-    },
-    {
-      "title": "Editorial: Lowering immigration, but at what cost?",
-      "link": "https://thelinknewspaper.ca/article/16517",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
