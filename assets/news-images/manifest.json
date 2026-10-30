@@ -441,16 +441,6 @@
       "via": "origin",
       "nameKey": "5infos_ql-e1769792962990.png"
     },
-    "71e1ca02eb9d08be": {
-      "local": "assets/news-images/71e1ca02eb9d08be.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/10-11_Illu-place-ecologie-.jpg",
-      "host": "quartierlibre.ca",
-      "bytes": 298814,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-25T17:19:13.396Z",
-      "via": "resize-proxy",
-      "nameKey": "10-11_illu-place-ecologie-.jpg"
-    },
     "f353a627fd33eafb": {
       "local": "assets/news-images/f353a627fd33eafb.jpg",
       "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/ContratAmazon_Fanny.png",
@@ -1561,10 +1551,29 @@
       "updatedAt": "2026-10-30T18:38:06.583Z",
       "via": "disk",
       "nameKey": "lonely.jpeg"
+    },
+    "8b31c1bb2ae24d42": {
+      "local": "assets/news-images/8b31c1bb2ae24d42.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose.jpg",
+      "host": "thetribune.ca",
+      "bytes": 225282,
+      "updatedAt": "2026-10-30T20:08:19.302Z",
+      "via": "disk",
+      "nameKey": "news-5-eliot-loose.jpg"
+    },
+    "064dba47b70cb096": {
+      "local": "assets/news-images/064dba47b70cb096.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/22_jeux-videos.jpeg",
+      "host": "quartierlibre.ca",
+      "bytes": 275035,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-30T20:08:19.592Z",
+      "via": "origin",
+      "nameKey": "22_jeux-videos.jpeg"
     }
   },
-  "updatedAt": "2026-10-30T18:38:17.096Z",
-  "count": 157,
+  "updatedAt": "2026-10-30T20:08:19.594Z",
+  "count": 158,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
