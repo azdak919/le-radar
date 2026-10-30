@@ -1,21 +1,35 @@
 {
-  "updated": "2026-10-30T17:38:38.947Z",
-  "total": 183,
-  "withImage": 157,
-  "withCredit": 157,
+  "updated": "2026-10-30T18:08:50.066Z",
+  "total": 184,
+  "withImage": 158,
+  "withCredit": 158,
   "cited": 97,
   "pending": 42,
   "missingHero": 0,
   "ok": false,
-  "checked": 48,
-  "updatedCount": 7,
-  "citedNew": 6,
-  "fallbackNew": 42,
+  "checked": 50,
+  "updatedCount": 9,
+  "citedNew": 7,
+  "fallbackNew": 43,
   "samples": [
+    {
+      "title": "Quand la neurodiversité s’épanouit au travail",
+      "source": "Montréal Campus",
+      "credit": "Photo : Montréal Campus",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
       "source": "Le Délit",
       "credit": "Photo : DENIS FARLEY",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -27,11 +41,11 @@
       "method": null
     },
     {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
       "title": "Pregnant, not sidelined",
