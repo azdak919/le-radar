@@ -2015,3 +2015,18 @@ html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) .tuner-now::after {
 html[data-embed="tuner"]:not([data-surface="kiosque-v1"]) .tuner-now {
   padding-right: 11px;
 }
+
+/* Barre allégée (oct. 2026) : aucune boîte arrondie ni bordure autour de la
+   barre embarquée ; en kiosque-v1, fond transparent pour que l’hôte peigne
+   la couleur de son thème. */
+html[data-embed="tuner"] .tuner {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner,
+html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tuner {
+  background: transparent !important;
+  border: 0 !important;
+}
+html[data-embed="tuner"] .tuner .tuner-step,
+html[data-embed="tuner"] .tuner .tuner-vol-btn { background: transparent !important; }
