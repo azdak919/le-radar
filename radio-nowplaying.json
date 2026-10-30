@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-30T06:11:29.308Z",
+  "updatedAt": "2026-10-30T12:49:49.156Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Vendredi Nostalgie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T06:10:51.394Z"
+      "checkedAt": "2026-10-30T12:49:08.252Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
+        "title": "Quartier libre",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/quartier-libre"
       },
       "next": {
-        "title": "Club classique (reprise)",
+        "title": "La collation",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Quartier libre",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T06:10:53.301Z"
+      "checkedAt": "2026-10-30T12:49:10.498Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
+        "title": "Morning Detour",
         "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "G-Flex Survivor's Corner",
+        "title": "Jazz Amuck",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "showTitle": "Morning Detour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T06:10:56.035Z"
+      "checkedAt": "2026-10-30T12:49:13.834Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Wake up Folks!",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
+      "next": {
+        "title": "CJLO News Hour",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Wake up Folks!",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T06:11:10.453Z"
+      "checkedAt": "2026-10-30T12:49:28.955Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Le Ré-Show : Deuxième service",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T06:11:11.369Z"
+      "checkedAt": "2026-10-30T12:49:30.243Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T06:11:28.957Z"
+      "checkedAt": "2026-10-30T12:49:48.806Z"
     }
   }
 }
