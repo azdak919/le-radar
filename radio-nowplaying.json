@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T22:46:58.923Z",
+  "updatedAt": "2026-10-31T01:59:43.287Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,111 +21,111 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T22:46:20.807Z"
+      "checkedAt": "2026-10-31T01:59:03.516Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "OK Doomer",
+        "title": "Le 120e parallèle (reprise)",
         "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/ok-doomer"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
       "next": {
-        "title": "Mix électro",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/mix-electro"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "OK Doomer",
+      "showTitle": "Le 120e parallèle (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T22:46:22.677Z"
+      "checkedAt": "2026-10-31T01:59:05.529Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
+        "title": "Macondo",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Listening to Latin America: Blanca-Victoria",
+        "title": "Weekend Groove",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "Macondo",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T22:46:25.053Z"
+      "checkedAt": "2026-10-31T01:59:08.261Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Go-Go Radio Magic Show",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "El Encuentro Latino",
+        "title": "The Come Up",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/the-come-up"
       },
       "track": "",
-      "showTitle": "The Go-Go Radio Magic Show",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T22:46:39.264Z"
+      "checkedAt": "2026-10-31T01:59:23.158Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La Récréation",
+        "title": "Mangue, Goyave et Reggae",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "21:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Enfin vendredi",
+        "title": "Entre ciel et terre",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "21:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "La Récréation",
+      "showTitle": "Mangue, Goyave et Reggae",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T22:46:40.393Z"
+      "checkedAt": "2026-10-31T01:59:24.649Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-30T22:46:58.572Z"
+      "checkedAt": "2026-10-31T01:59:42.937Z"
     }
   }
 }
