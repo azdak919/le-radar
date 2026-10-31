@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T20:00:17.327Z",
+  "updatedAt": "2026-10-31T21:06:49.319Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T19:59:40.208Z"
+      "checkedAt": "2026-10-31T21:06:04.482Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
+        "title": "Le radar",
         "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
+        "start": "17:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/le-radar-2"
       },
       "next": {
-        "title": "Contenu explicite",
+        "title": "Disconomique",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
       },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Le radar",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T19:59:41.962Z"
+      "checkedAt": "2026-10-31T21:06:06.746Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Funky Revolutions",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "West Indian Rhythms",
         "source": "api-live",
         "start": "16:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Masters At Work",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Funky Revolutions",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T19:59:44.102Z"
+      "checkedAt": "2026-10-31T21:06:09.491Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Caribbean Callaloo",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Mi Dun Talk",
+        "title": "The Limelight",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
       },
       "track": "",
-      "showTitle": "Caribbean Callaloo",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T19:59:58.213Z"
+      "checkedAt": "2026-10-31T21:06:23.977Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T19:59:59.129Z"
+      "checkedAt": "2026-10-31T21:06:25.095Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T20:00:16.976Z"
+      "checkedAt": "2026-10-31T21:06:48.969Z"
     }
   }
 }
