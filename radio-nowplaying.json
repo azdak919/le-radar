@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T09:06:40.692Z",
+  "updatedAt": "2026-10-31T11:06:46.030Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T09:06:02.559Z"
+      "checkedAt": "2026-10-31T11:06:07.121Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T09:06:04.544Z"
+      "checkedAt": "2026-10-31T11:06:08.836Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Mash Time Show",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Quebec Acadie",
         "source": "api-live",
         "start": "06:00",
         "end": "10:00"
       },
+      "next": {
+        "title": "Making Contact/Anything Goes",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "10:30"
+      },
       "track": "",
-      "showTitle": "The Mash Time Show",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,54 +74,54 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T09:06:06.999Z"
+      "checkedAt": "2026-10-31T11:06:12.746Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T09:06:21.033Z"
+      "checkedAt": "2026-10-31T11:06:27.087Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "07:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T09:06:22.682Z"
+      "checkedAt": "2026-10-31T11:06:28.118Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T09:06:40.341Z"
+      "checkedAt": "2026-10-31T11:06:45.679Z"
     }
   }
 }
