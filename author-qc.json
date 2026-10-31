@@ -1,10 +1,26 @@
 {
-  "updated": "2026-10-31T21:53:19.258Z",
+  "updated": "2026-10-31T22:06:34.397Z",
   "total": 184,
   "withAuthor": 184,
-  "mismatches": 19,
+  "mismatches": 21,
   "ok": true,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Samuel Girard",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Guerre en Palestine : trois ans plus tard, Montréal manifeste encore",
+      "link": "https://quartierlibre.ca/guerre-en-palestine-montreal-manifeste/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Elise Miara",
+      "reason": "page-byline"
+    },
     {
       "title": "BU Snow Prepares for Another Winter at Bishop’s",
       "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops/",
@@ -148,15 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Searching For a Third Space",
-      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 19
+  "fixed": 21
 }

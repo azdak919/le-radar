@@ -1,17 +1,31 @@
 {
-  "updated": "2026-10-31T21:55:27.759Z",
+  "updated": "2026-10-31T22:08:53.067Z",
   "total": 184,
-  "withImage": 160,
-  "withCredit": 160,
-  "cited": 97,
-  "pending": 43,
+  "withImage": 159,
+  "withCredit": 159,
+  "cited": 95,
+  "pending": 44,
   "missingHero": 0,
   "ok": false,
-  "checked": 48,
-  "updatedCount": 7,
-  "citedNew": 5,
-  "fallbackNew": 43,
+  "checked": 50,
+  "updatedCount": 8,
+  "citedNew": 6,
+  "fallbackNew": 44,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Guerre en Palestine : trois ans plus tard, Montréal manifeste encore",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Jésus et autres mots-clics",
       "source": "Le Délit",
@@ -20,16 +34,16 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
       "source": "The Campus",
       "credit": "Photo: The Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Hockey is becoming too American",
-      "source": "The Link",
-      "credit": "Photo: The Link",
       "cited": false,
       "method": null
     },
@@ -46,13 +60,6 @@
       "credit": "Image via Pinterest",
       "cited": true,
       "method": "via-attribution"
-    },
-    {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
     },
     {
       "title": "Tex Crick: Indie Through and Through",
