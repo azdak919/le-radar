@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-31T07:06:46.535Z",
+  "updated": "2026-10-31T08:37:36.483Z",
   "total": 184,
   "pool": 53,
-  "incomplete": 5,
+  "incomplete": 6,
   "withLeadExcerpt": 126,
-  "candidates": 5,
-  "enriched": 0,
+  "candidates": 6,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
+    },
+    {
+      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
+      "ok": true,
+      "score": 100,
+      "chars": 333,
+      "sample": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouve",
+      "changed": true
     },
     {
       "title": "L’aveuglement du cynisme chic",
