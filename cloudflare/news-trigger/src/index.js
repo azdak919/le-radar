@@ -48,6 +48,26 @@ export async function run(env, now = Date.now()) {
   return d;
 }
 
+// Filet sports + radio : GitHub saute aussi le cron horaire de
+// guard-harvest-freshness.yml (observé : 1 passe sur 4 à 6 h). On le relance
+// ici si sa dernière passe date de plus de GUARD_MAX_AGE_MIN et qu'aucune
+// n'est en cours. Le garde décide lui-même s'il y a du rattrapage à faire.
+export async function runGuard(env, now = Date.now()) {
+  const wf = env.GUARD_WORKFLOW;
+  if (!wf) return { guard: 'off' };
+  const r = await gh(env, `/actions/workflows/${wf}/runs?per_page=1`);
+  if (!r.ok) return { guard: 'api', status: r.status };
+  const last = (await r.json()).workflow_runs?.[0];
+  if (last && last.status !== 'completed') return { guard: 'busy' };
+  const age = last ? (now - Date.parse(last.created_at)) / 60000 : Infinity;
+  if (age < (Number(env.GUARD_MAX_AGE_MIN) || 55)) return { guard: 'fresh', age: Math.round(age) };
+  const d = await gh(env, `/actions/workflows/${wf}/dispatches`, { method: 'POST', body: JSON.stringify({ ref: 'main' }) });
+  return { guard: 'dispatch', age: Math.round(age), status: d.status };
+}
+
 export default {
-  async scheduled(_event, env, ctx) { ctx.waitUntil(run(env)); },
+  async scheduled(_event, env, ctx) {
+    ctx.waitUntil(run(env).catch((e) => console.log('news', String(e))));
+    ctx.waitUntil(runGuard(env).then((g) => console.log(JSON.stringify(g)), (e) => console.log('guard', String(e))));
+  },
 };
