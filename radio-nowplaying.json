@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-10-31T13:06:48.691Z",
+  "updatedAt": "2026-10-31T14:06:48.173Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHYZ",
-        "source": "schedule",
+        "source": "api-live",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T13:06:07.406Z"
+      "checkedAt": "2026-10-31T14:06:11.561Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T13:06:09.535Z"
+      "checkedAt": "2026-10-31T14:06:13.214Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
-      },
-      "next": {
         "title": "Making Contact/Anything Goes",
         "source": "api-live",
         "start": "10:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "Samedi Midi",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Making Contact/Anything Goes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T13:06:12.333Z"
+      "checkedAt": "2026-10-31T14:06:15.349Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
-      },
-      "next": {
         "title": "Gospel Unlimited",
         "source": "schedule-live",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
+      "next": {
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+      },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Gospel Unlimited",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T13:06:28.016Z"
+      "checkedAt": "2026-10-31T14:06:29.274Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T13:06:28.955Z"
+      "checkedAt": "2026-10-31T14:06:30.309Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T13:06:48.341Z"
+      "checkedAt": "2026-10-31T14:06:47.823Z"
     }
   }
 }
