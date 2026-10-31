@@ -1496,16 +1496,6 @@
       "via": "origin",
       "nameKey": "escape2_fanny.jpg"
     },
-    "ad203c75deb14a2d": {
-      "local": "assets/news-images/ad203c75deb14a2d.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/10/PSPPFirstannoucement-00000006.jpg",
-      "host": "theconcordian.com",
-      "bytes": 139951,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-29T20:07:51.425Z",
-      "via": "resize-proxy",
-      "nameKey": "psppfirstannoucement-00000006.jpg"
-    },
     "8a9c168712edaa07": {
       "local": "assets/news-images/8a9c168712edaa07.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/HV26_0930_SHIFT_event_DSC8348_900_506_90.jpg",
@@ -1571,10 +1561,30 @@
       "updatedAt": "2026-10-31T19:25:02.990Z",
       "via": "disk",
       "nameKey": "thelysonorelienai.png"
+    },
+    "e80f580a5098f024": {
+      "local": "assets/news-images/e80f580a5098f024.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/10/PSPPFirstannoucement-00000018.jpg",
+      "host": "theconcordian.com",
+      "bytes": 118884,
+      "contentType": "image/webp",
+      "updatedAt": "2026-10-31T21:39:20.191Z",
+      "via": "photon-resize",
+      "nameKey": "psppfirstannoucement-00000018.jpg"
+    },
+    "96bfbb9152155b1c": {
+      "local": "assets/news-images/96bfbb9152155b1c.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_NEWS_New_texting_service_Helena_Reyes_Teruel_690_863.png",
+      "host": "thelinknewspaper.ca",
+      "bytes": 62634,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-31T21:39:21.638Z",
+      "via": "resize-proxy",
+      "nameKey": "04_news_new_texting_service_helena_reyes_teruel_690_863.png"
     }
   },
-  "updatedAt": "2026-10-31T20:37:53.926Z",
-  "count": 158,
+  "updatedAt": "2026-10-31T21:39:21.639Z",
+  "count": 159,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
