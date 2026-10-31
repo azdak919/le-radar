@@ -921,15 +921,6 @@
       "via": "resize-proxy",
       "nameKey": "p1,s3,ss2,d4,p02 3ieme avenue val d'or,entre 6e et 7e rue.jpg"
     },
-    "f7c548c7fa330ac4": {
-      "local": "assets/news-images/f7c548c7fa330ac4.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_OPS_NEW_sex_work_Halle_Keays_690_518.png",
-      "host": "thelinknewspaper.ca",
-      "bytes": 44160,
-      "updatedAt": "2026-10-27T22:09:17.509Z",
-      "via": "disk",
-      "nameKey": "04_ops_new_sex_work_halle_keays_690_518.png"
-    },
     "7e2f8d4ab49fc5c8": {
       "local": "assets/news-images/7e2f8d4ab49fc5c8.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/SSA26_l_amour_6926_690_489_90.jpg",
@@ -1570,9 +1561,19 @@
       "updatedAt": "2026-10-31T01:40:52.528Z",
       "via": "disk",
       "nameKey": "lonely.jpeg"
+    },
+    "e0e3c9e4644e958d": {
+      "local": "assets/news-images/e0e3c9e4644e958d.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Yann_Rfd-4_900_600_90.jpg",
+      "host": "thelinknewspaper.ca",
+      "bytes": 112932,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-10-31T02:08:04.644Z",
+      "via": "origin",
+      "nameKey": "yann_rfd-4.jpg"
     }
   },
-  "updatedAt": "2026-10-31T01:40:52.531Z",
+  "updatedAt": "2026-10-31T02:08:04.647Z",
   "count": 158,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",

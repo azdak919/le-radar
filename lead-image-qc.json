@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-31T01:40:48.349Z",
+  "updated": "2026-10-31T02:07:58.563Z",
   "total": 184,
   "withPhoto": 158,
-  "withStock": 50,
+  "withStock": 43,
   "withCampusBank": 32,
   "fullyCovered": 184,
-  "leadReadyPhotos": 104,
-  "pageScraped": 22,
-  "photosRecovered": 22,
-  "imagesCleared": 19,
-  "stockSearches": 90,
-  "stockFound": 50,
+  "leadReadyPhotos": 132,
+  "pageScraped": 31,
+  "photosRecovered": 31,
+  "imagesCleared": 20,
+  "stockSearches": 53,
+  "stockFound": 44,
   "campusBankFound": 28,
   "mainPageLeadReady": true,
   "gaps": [
@@ -33,34 +33,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
-      "title": "Bishop’s Culture is Community",
-      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "Travailler dans le jeu vidéo : un rêve difficile à atteindre pour les étudiant·e·s",
-      "link": "https://quartierlibre.ca/travailler-jeu-video-difficile-etudiants/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/22_jeux-videos.jpeg"
-    },
-    {
-      "title": "Guillaume Lavoie : un geste de cœur pour sa région",
-      "link": "https://lapige.atmjonquiere.com/2026/10/29/guillaume-lavoie-un-geste-de-coeur-pour-sa-region/?utm_source=rss&utm_medium=rss&utm_campaign=guillaume-lavoie-un-geste-de-coeur-pour-sa-region",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Photo-Guillaume-Lavoie.png"
-    },
-    {
-      "title": "Étudier en histoire, mais travailler dans un autre domaine ?",
-      "link": "https://quartierlibre.ca/etudier-en-histoire-travailler-ailleurs/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/4EC8E60C-77CB-482F-B4C1-BE72FD6EDD2C.jpeg"
-    },
-    {
       "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
       "link": "https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre/?utm_source=rss&utm_medium=rss&utm_campaign=en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/en-direct-de-lunivers.avif"
+    },
+    {
+      "title": "Bishop’s Culture is Community",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
       "title": "Olivia Rodrigo au Centre Bell",
@@ -75,16 +57,34 @@
       "image": null
     },
     {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Queer Language is Queer Resistance",
+      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Un monde bâti sur du sable",
       "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Concordia University introduces new campus safety texting service",
-      "link": "https://thelinknewspaper.ca/article/16528",
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
+    },
+    {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     }
   ]
 }
