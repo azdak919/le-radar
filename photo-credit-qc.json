@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-31T07:02:20.739Z",
+  "updated": "2026-10-31T07:08:17.223Z",
   "total": 184,
   "withImage": 158,
   "withCredit": 158,
-  "cited": 98,
-  "pending": 41,
+  "cited": 97,
+  "pending": 42,
   "missingHero": 0,
   "ok": false,
-  "checked": 47,
-  "updatedCount": 7,
-  "citedNew": 6,
-  "fallbackNew": 41,
+  "checked": 46,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 42,
   "samples": [
     {
       "title": "Jésus et autres mots-clics",
@@ -27,18 +27,11 @@
       "method": null
     },
     {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
