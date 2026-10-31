@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-31T01:07:44.494Z",
+  "updated": "2026-10-31T01:40:48.349Z",
   "total": 184,
   "withPhoto": 158,
-  "withStock": 43,
+  "withStock": 50,
   "withCampusBank": 32,
   "fullyCovered": 184,
-  "leadReadyPhotos": 141,
-  "pageScraped": 31,
-  "photosRecovered": 31,
-  "imagesCleared": 20,
-  "stockSearches": 52,
-  "stockFound": 43,
+  "leadReadyPhotos": 104,
+  "pageScraped": 22,
+  "photosRecovered": 22,
+  "imagesCleared": 19,
+  "stockSearches": 90,
+  "stockFound": 50,
   "campusBankFound": 28,
   "mainPageLeadReady": true,
   "gaps": [
@@ -27,16 +27,34 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "The Chickens Are Fine: An Open Mic Night with Wit and Whimsy",
-      "link": "https://thebucampus.ca/2026/10/28/the-chickens-are-fine-an-open-mic-night-with-wit-and-whimsy/",
+      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
+      "link": "https://thebucampus.ca/2026/10/28/bechard-hudon-brings-unseen-ecosystems-to-light-with-monologue-de-la-foret/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "Bishop’s Culture is Community",
       "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Travailler dans le jeu vidéo : un rêve difficile à atteindre pour les étudiant·e·s",
+      "link": "https://quartierlibre.ca/travailler-jeu-video-difficile-etudiants/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/22_jeux-videos.jpeg"
+    },
+    {
+      "title": "Guillaume Lavoie : un geste de cœur pour sa région",
+      "link": "https://lapige.atmjonquiere.com/2026/10/29/guillaume-lavoie-un-geste-de-coeur-pour-sa-region/?utm_source=rss&utm_medium=rss&utm_campaign=guillaume-lavoie-un-geste-de-coeur-pour-sa-region",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Photo-Guillaume-Lavoie.png"
+    },
+    {
+      "title": "Étudier en histoire, mais travailler dans un autre domaine ?",
+      "link": "https://quartierlibre.ca/etudier-en-histoire-travailler-ailleurs/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/4EC8E60C-77CB-482F-B4C1-BE72FD6EDD2C.jpeg"
     },
     {
       "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
@@ -67,24 +85,6 @@
       "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Editorial: Lowering immigration, but at what cost?",
-      "link": "https://thelinknewspaper.ca/article/16517",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
-    },
-    {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
     }
   ]
 }
