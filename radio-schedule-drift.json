@@ -1,29 +1,29 @@
 {
-  "checkedAt": "2026-10-30T02:33:26.092Z",
+  "checkedAt": "2026-10-31T02:16:58.841Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
       "chyz"
     ],
     "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
       "id": "chyz",
       "published": 43,
-      "fresh": 43,
-      "added": [
-        "ven 13:30–15:00 Conduite Antisportive"
-      ],
+      "fresh": 42,
+      "added": [],
       "removed": [
-        "ven 14:30–16:00 Conduite Antisportive"
+        "ven 13:00–14:00 Le Détour"
       ],
-      "changed": 2,
-      "ratio": 0.047,
+      "changed": 1,
+      "ratio": 0.023,
       "status": "drift"
     },
     {
@@ -49,12 +49,12 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 379,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -68,8 +68,8 @@
     },
     {
       "id": "choq",
-      "published": 25,
-      "fresh": 25,
+      "published": 24,
+      "fresh": 24,
       "added": [],
       "removed": [],
       "changed": 0,
