@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-31T21:39:13.093Z",
+  "updated": "2026-10-31T21:54:26.279Z",
   "total": 184,
-  "withPhoto": 159,
+  "withPhoto": 160,
   "withStock": 42,
   "withCampusBank": 31,
   "fullyCovered": 184,
-  "leadReadyPhotos": 127,
-  "pageScraped": 24,
-  "photosRecovered": 24,
-  "imagesCleared": 16,
-  "stockSearches": 58,
+  "leadReadyPhotos": 136,
+  "pageScraped": 27,
+  "photosRecovered": 27,
+  "imagesCleared": 14,
+  "stockSearches": 54,
   "stockFound": 41,
-  "campusBankFound": 26,
+  "campusBankFound": 27,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -37,12 +37,6 @@
       "link": "https://thebucampus.ca/2026/10/27/bishops-hosts-provincial-election-debate/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Students_voting_in_Fall_Elections%2C_University_of_Texas_at_Arlington_%2810005980%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Guillaume Lavoie : un geste de cœur pour sa région",
-      "link": "https://lapige.atmjonquiere.com/2026/10/29/guillaume-lavoie-un-geste-de-coeur-pour-sa-region/?utm_source=rss&utm_medium=rss&utm_campaign=guillaume-lavoie-un-geste-de-coeur-pour-sa-region",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Photo-Guillaume-Lavoie.png"
     },
     {
       "title": "Bishop’s Culture is Community",
@@ -75,16 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
       "title": "Editorial: Lowering immigration, but at what cost?",
       "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
+    },
+    {
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     }
   ]
 }
