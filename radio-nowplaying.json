@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T07:06:55.198Z",
+  "updatedAt": "2026-10-31T08:06:56.043Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T07:05:57.752Z"
+      "checkedAt": "2026-10-31T08:05:58.144Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T07:05:59.473Z"
+      "checkedAt": "2026-10-31T08:05:59.942Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soca Sessions",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "The Mash Time Show",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
+      "next": {
+        "title": "Quebec Acadie",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "10:00"
+      },
       "track": "",
-      "showTitle": "Soca Sessions",
+      "showTitle": "The Mash Time Show",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T07:06:01.894Z"
+      "checkedAt": "2026-10-31T08:06:02.205Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T07:06:35.985Z"
+      "checkedAt": "2026-10-31T08:06:16.022Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T07:06:37.101Z"
+      "checkedAt": "2026-10-31T08:06:17.179Z"
     },
     "choq": {
       "id": "choq",
@@ -129,20 +129,20 @@
       "current": null,
       "next": {
         "title": "D'amour et de sexe",
-        "source": "api-live",
+        "source": "schedule",
         "start": "22:00",
         "end": "00:00",
-        "slug": "damour-et-de-sexe"
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T07:06:54.847Z"
+      "checkedAt": "2026-10-31T08:06:55.693Z"
     }
   }
 }
