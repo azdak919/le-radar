@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T08:06:56.043Z",
+  "updatedAt": "2026-10-31T08:16:29.686Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T08:05:58.144Z"
+      "checkedAt": "2026-10-31T08:15:49.476Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T08:05:59.942Z"
+      "checkedAt": "2026-10-31T08:15:51.476Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T08:06:02.205Z"
+      "checkedAt": "2026-10-31T08:15:54.137Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T08:06:16.022Z"
+      "checkedAt": "2026-10-31T08:16:09.213Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T08:06:17.179Z"
+      "checkedAt": "2026-10-31T08:16:10.090Z"
     },
     "choq": {
       "id": "choq",
@@ -129,20 +129,20 @@
       "current": null,
       "next": {
         "title": "D'amour et de sexe",
-        "source": "schedule",
+        "source": "api-live",
         "start": "22:00",
         "end": "00:00",
-        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+        "slug": "damour-et-de-sexe"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-31T08:06:55.693Z"
+      "checkedAt": "2026-10-31T08:16:29.335Z"
     }
   }
 }
