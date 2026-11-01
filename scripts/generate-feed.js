@@ -252,13 +252,40 @@ function photoCreditLine(item = {}) {
   return item.lang === 'en' ? `Photo: ${credit.replace(/^Photo\s*:?\s*/i, '')}` : credit;
 }
 
+// Logo / visuel par défaut d'une source : jamais en image d'article.
+const FEED_LOGO_IMAGE_RE = /(?:logo|site-?icon|favicon|cropped-|placeholder|(?:^|[\/_-])default[._-]|\/banner\.png)/i;
+
+function isLogoImageUrl(url = '') {
+  return FEED_LOGO_IMAGE_RE.test(String(url).split('?')[0]);
+}
+
 function itemImageUrl(item = {}) {
+  if (item._feedNoImage) return '';
+  if (isLogoImageUrl(item.image) && !item.stockImage) return '';
   // Préférer le miroir GitHub Pages si présent (résilience multi-sources).
   const local = String(item.imageLocal || '').trim();
   if (/^assets\/news-images\//i.test(local)) {
     return `https://le-radar.ca/${local.replace(/^\//, '')}`;
   }
-  return String(item.image || item.stockImage || '').trim();
+  const url = String(item.image || item.stockImage || '').trim();
+  return isLogoImageUrl(url) ? '' : url;
+}
+
+/**
+ * Une même image sur plusieurs articles d'une source = visuel générique
+ * (logo, bannière, repli répété) : on la garde sur le plus récent seulement ;
+ * les autres sortent sans image plutôt qu'avec un doublon.
+ */
+function dedupeFeedImages(items = []) {
+  const seen = new Set();
+  return items.map((item) => {
+    const url = itemImageUrl(item);
+    if (!url) return item;
+    const key = `${item.source}|${url}`;
+    if (seen.has(key)) return { ...item, _feedNoImage: true };
+    seen.add(key);
+    return item;
+  });
 }
 
 function imageMimeType(url = '') {
@@ -405,7 +432,10 @@ function buildItemXml(item = {}, sourceSites = {}) {
     pubDate ? `      <pubDate>${escapeXml(pubDate)}</pubDate>` : '',
     creatorXml,
     sourceXml,
-    `      <description>${cdata(description)}</description>`,
+    // Image aussi en tête de <description> : sans image dans la description,
+    // certains lecteurs vont chercher l'og:image de la page source — souvent
+    // le logo du journal (Le Délit : logo_c.jpg, Le Polyscope : banner.png).
+    `      <description>${cdata(imageUrl ? `<img src="${escapeXml(imageUrl)}" alt="" />\n\n${description}` : description)}</description>`,
     `      <content:encoded>${cdata(bodyHtml)}</content:encoded>`,
     categoryXml,
     mediaXml,
@@ -419,7 +449,7 @@ function buildFeedXml(items = [], config = {}, sourceSites = {}) {
     ? formatRfc822(items[0].date)
     : formatRfc822(new Date());
 
-  const itemXml = items.map((item) => buildItemXml(item, sourceSites)).filter(Boolean).join('\n');
+  const itemXml = dedupeFeedImages(items).map((item) => buildItemXml(item, sourceSites)).filter(Boolean).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
@@ -509,5 +539,5 @@ if (require.main === module) main();
 module.exports = {
   photoCreditLine,
   isRealPhotoCredit,
-  stripInvalidXml, fixPunctuation, itemDisplayTitle, trimToSentence, cleanBrief, dedupeSentences, buildFeedXml, buildItemXml,
+  stripInvalidXml, fixPunctuation, itemDisplayTitle, trimToSentence, cleanBrief, dedupeSentences, buildFeedXml, buildItemXml, isLogoImageUrl, dedupeFeedImages,
 };

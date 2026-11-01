@@ -29,7 +29,7 @@ for (const it of items) {
   }
   assert.match(pick(it, 'pubDate'), /^[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} \+0000$/);
   assert.ok(!/&amp;(amp|lt|gt|quot|#\d+);/.test(it), `entité doublée : ${title}`);
-  const body = pick(it, 'description').split('\n\n').slice(1).join(' ').trim();
+  const body = pick(it, 'description').replace(/^<img [^>]*\/>\n\n/, '').split('\n\n').slice(1).join(' ').trim();
   if (body) {
     assert.match(body, /[.!?…»"”)]$/u, `brève tronquée : ${title} → ${body.slice(-30)}`);
     assert.ok(!/\s[.,](?!\d)/.test(body), `espace avant ponctuation : ${title}`);
@@ -39,6 +39,32 @@ for (const it of items) {
   for (const u of it.matchAll(/(?:src|url|href)="([^"]+)"/g)) assert.match(u[1], /^https?:\/\//, `URL relative : ${u[1]}`);
 }
 console.log(`rss-feed-quality: ${items.length} items OK`);
+
+assert.ok(g.isLogoImageUrl('https://www.delitfrancais.com/wp-content/uploads/2020/09/logo_c.jpg'));
+assert.ok(g.isLogoImageUrl('https://polyscope.qc.ca/banner.png'));
+assert.ok(!g.isLogoImageUrl('https://live.staticflickr.com/65535/48774243902_25f3d81518_b.jpg'));
+{
+  const d = g.dedupeFeedImages([{ source: 'A', image: 'https://x/a.jpg' }, { source: 'A', image: 'https://x/a.jpg' }, { source: 'B', image: 'https://x/a.jpg' }]);
+  assert.deepEqual(d.map((i) => Boolean(i._feedNoImage)), [false, true, false]);
+}
+// Images : jamais un logo / visuel par défaut, jamais la même image sur
+// plusieurs articles d'une même source, et la même image dans description,
+// content:encoded et media:thumbnail (les lecteurs ne doivent pas aller
+// chercher l'og:image de la page, souvent le logo du journal).
+{
+  const LOGO_RE = /(?:logo|site-?icon|favicon|cropped-|placeholder|(?:^|[\/_-])default[._-]|\/banner\.png)/i;
+  const perSource = new Map();
+  for (const it of items) {
+    const thumb = (it.match(/<media:thumbnail url="([^"]+)"/) || [])[1];
+    const src = pick(it, 'source');
+    if (!thumb) continue;
+    assert.ok(!LOGO_RE.test(thumb), `image logo/défaut : ${pick(it, 'title')} → ${thumb}`);
+    assert.ok(pick(it, 'description').startsWith(`<img src="${thumb}"`), `image absente de la description : ${pick(it, 'title')}`);
+    const k = `${src}|${thumb}`;
+    assert.ok(!perSource.has(k), `même image sur deux articles de ${src} : ${thumb}`);
+    perSource.set(k, true);
+  }
+}
 
 // Format des titres : « Média – Auteur : Titre »
 assert.equal(g.itemDisplayTitle({ source: 'Le Délit', author: 'Héloïse Durning', title: 'Le 17 octobre' }), 'Le Délit – Héloïse Durning\u00A0: Le 17 octobre');
@@ -57,7 +83,7 @@ for (const it of items) {
 // Le lecteur affiche déjà date, média et auteur : la description est la brève seule,
 // sans ligne de date, et l'image n'est pas exposée en pièce jointe (media:content).
 for (const it of items) {
-  const desc = pick(it, 'description');
+  const desc = pick(it, 'description').replace(/^<img [^>]*\/>\n\n/, '');
   assert.ok(!/^\s*(\d{1,2} \S+\.?|[A-Z][a-z]{2} \d{1,2}) · /.test(desc), `ligne de date dans la description : ${desc.slice(0, 60)}`);
   assert.ok(!it.includes('<media:content'), 'media:content présent (affiché en pièce jointe)');
 }
