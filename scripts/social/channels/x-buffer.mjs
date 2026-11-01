@@ -58,9 +58,9 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
       if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
       return r.post;
     },
-    async add({ text, image, dueAt }) {
+    async add({ text, image, dueAt, now = false }) {
       const { channelId } = await context();
-      const input = { text, channelId, schedulingType: 'automatic', mode: dueAt ? 'customScheduled' : 'addToQueue' };
+      const input = { text, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
       if (dueAt) input.dueAt = dueAt;
       if (image) input.assets = [{ image: { url: image } }];
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {

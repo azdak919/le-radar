@@ -34,6 +34,10 @@ on:
         description: 'Remettre la file au format « Média • Auteur • Titre : extrait » (editPost, même id/heure) au lieu de remplir'
         type: boolean
         default: false
+      share_now:
+        description: 'Publier tout de suite UN article au hasard (hors file et hors état)'
+        type: boolean
+        default: false
       report:
         description: 'Générer aussi le rapport des comptes X'
         type: boolean
@@ -90,6 +94,7 @@ jobs:
           MAX_NEW: ${{ inputs.max_new }}
           MAX_AGE_H: ${{ inputs.max_age_h }}
           SLOT_TIMES: ${{ inputs.slot_times }}
+          SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           DAILY: ${{ (github.event_name == 'schedule' || inputs.daily) && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-post.mjs

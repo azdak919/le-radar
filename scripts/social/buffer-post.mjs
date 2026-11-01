@@ -48,7 +48,15 @@ const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x =
 const dues = times ? freeSlots(slotsToday(times), queued.map(p => p.dueAt)) : null;
 const want = dues ? Math.min(slots, dues.length) : slots;
 const sentIds = new Set(Object.keys(state.sent));
-const sel = daily ? selectDaily(items, { sentIds, queuedSources, slots: want, accounts: ACCOUNTS, maxAgeH })
+// SHARE_NOW=true : UN article au hasard (récent, ni envoyé ni en file, photo réelle et source hors file si possible), publié tout de suite.
+const shareNow = process.env.SHARE_NOW === 'true';
+const sel = shareNow ? (() => {
+  const qs = new Set(queuedSources), qt = queued.map(p => p.text || '');
+  const pool = items.filter(i => !sentIds.has(i.id) && Date.now() - i.date <= maxAgeH * 3600e3 && !qt.some(t => t.includes(i.link)));
+  const best = [p => p.img && !p.imgDropped && !qs.has(p.source), p => !qs.has(p.source), p => p.img && !p.imgDropped, () => true]
+    .map(f => pool.filter(f)).find(l => l.length) || [];
+  return best.length ? [best[Math.floor(Math.random() * best.length)]] : [];
+})() : daily ? selectDaily(items, { sentIds, queuedSources, slots: want, accounts: ACCOUNTS, maxAgeH })
   : selectItems(items, { sentIds, queuedSources, slots: want, maxAgeH });
 if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${daily ? 'nocturne (veille)' : 'manuel'}`);
 
@@ -56,14 +64,14 @@ const used = new Map(); let n = 0;
 for (const it of sel) {
   const im = await resolveImage(it, { used, repeated });
   const text = buildText(it, ACCOUNTS, undefined, { credit: im?.credit, photo: !!im });
-  const dueAt = dues ? dues[n] : undefined;
+  const dueAt = dues && !shareNow ? dues[n] : undefined;
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
   if (dry) continue;
   try {
-    const post = await channel.add({ text, image: im?.url, dueAt });
-    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, credit: im ? (im.credit || it.source) : null };
+    const post = await channel.add({ text, image: im?.url, dueAt, now: shareNow });
+    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, credit: im ? (im.credit || it.source) : null, ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
-    console.log(`→ en file Buffer : ${post.id} (${post.dueAt || 'heure auto'})`);
+    console.log(`→ Buffer : ${post.id} (${shareNow ? 'publication immédiate ' + (post.status || '') + ' ' + (post.externalLink || '') : post.dueAt || 'heure auto'})`);
   } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }
 }
 // Purge de l'état > 30 jours (le flux ne garde que 50 items).
