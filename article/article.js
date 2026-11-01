@@ -39,7 +39,7 @@
         ? `<img class="card-photo" src="${esc(article.image)}" alt="${esc(article.source ? `Illustration publiée par ${article.source}` : 'Illustration')}" width="640" height="427">`
         : '';
       document.title = `${article.title} — fiche LE-RADAR`;
-      show(`<article class="fiche">
+      show(`<article class="fiche" data-print-url="${esc(action.url)}">
         <p class="card-source"><span>${esc(article.source)}</span></p>
         <h1>${esc(article.title)}</h1>
         ${when}
