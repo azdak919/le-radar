@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-26T13:34:19.617Z",
+  "updated": "2026-11-01T13:47:18.061Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -132,18 +132,18 @@
     },
     "the-campus": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-10-01T13:54:03.863Z",
+      "lastAttemptAt": "2026-11-01T13:47:16.419Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-10-31T13:54:03.863Z",
-      "windowStart": "2023-10-01T19:54:03.790Z",
+      "retryAt": "2026-12-01T13:47:16.419Z",
+      "windowStart": "2023-11-01T19:47:16.342Z",
       "windowYears": 3
     },
     "the-link": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-10-01T13:54:04.192Z",
+      "lastAttemptAt": "2026-11-01T13:47:16.683Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-10-31T13:54:04.192Z",
-      "windowStart": "2023-10-01T19:54:03.790Z",
+      "retryAt": "2026-12-01T13:47:16.683Z",
+      "windowStart": "2023-11-01T19:47:16.342Z",
       "windowYears": 3
     },
     "the-mcgill-daily": {
@@ -160,10 +160,10 @@
     },
     "the-plant": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-10-01T13:54:05.104Z",
+      "lastAttemptAt": "2026-11-01T13:47:17.777Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-10-31T13:54:05.104Z",
-      "windowStart": "2023-10-01T19:54:03.790Z",
+      "retryAt": "2026-12-01T13:47:17.777Z",
+      "windowStart": "2023-11-01T19:47:16.342Z",
       "windowYears": 3
     },
     "the-tribune": {
