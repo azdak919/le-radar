@@ -57,7 +57,10 @@ export function markImages(items) {
   return repeated;
 }
 
-export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].length;
+// X : lien = 23, emoji (≥ U+1F000) = 2
+export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].reduce((n, c) => n + (c.codePointAt(0) >= 0x1F000 ? 2 : 1), 0);
+/** « 📸 Auteur » : auteur·e connu·e de la photo, sinon le nom du média (jamais inventé). */
+export const photoLine = (credit, source) => (credit || source) ? `📸 ${(credit || source).trim()}` : '';
 
 export function excerpt(it) {
   let d = it.desc; if (!d) return '';
@@ -94,8 +97,9 @@ export function joinHead(head, ex, en = isEnglish(head)) {
   return `${head.trim()}${en ? ':' : ' :'} ${ex}`;
 }
 
-export function buildText(it, accounts = [], limit = X_LIMIT) {
-  const head = mentionHead(it, accounts), tail = `\n${it.link}`, en = isEnglish(it.title);
+export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true } = {}) {
+  const pl = photo ? photoLine(credit, it.source) : '';
+  const head = mentionHead(it, accounts), tail = `\n${it.link}${pl ? '\n' + pl : ''}`, en = isEnglish(it.title);
   const mk = e => `${joinHead(head, e, en)}${tail}`;
   let ex = excerpt(it);
   if (ex && xlen(mk(ex)) > limit) {

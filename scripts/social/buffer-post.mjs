@@ -54,14 +54,14 @@ if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${d
 
 const used = new Map(); let n = 0;
 for (const it of sel) {
-  const text = buildText(it, ACCOUNTS);
   const im = await resolveImage(it, { used, repeated });
+  const text = buildText(it, ACCOUNTS, undefined, { credit: im?.credit, photo: !!im });
   const dueAt = dues ? dues[n] : undefined;
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
   if (dry) continue;
   try {
     const post = await channel.add({ text, image: im?.url, dueAt });
-    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null };
+    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, credit: im ? (im.credit || it.source) : null };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
     console.log(`→ en file Buffer : ${post.id} (${post.dueAt || 'heure auto'})`);
   } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }

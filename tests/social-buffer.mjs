@@ -27,19 +27,22 @@ assert(items.every(i => !/utm_/.test(i.link)));
 
 // format + longueur + phrases parasites
 for (const it of items) {
-  const t = buildText(it, accounts);
+  const t = buildText(it, accounts, undefined, { credit: it.source === 'The Link' ? 'Wladyslaw' : '' });
+  const pl = t.split('\n').at(-1);
+  assert.equal(pl, it.source === 'The Link' ? '📸 Wladyslaw' : `📸 ${it.source}`, 'crédit photo sinon média');
   assert(xlen(t) <= 280, `trop long : ${xlen(t)}`);
   assert(xlen(t) >= 270, `trop court : ${xlen(t)}`);
   const ex = t.split('\n')[0]; const last = ex.split(' ').at(-1);
-  assert(ex.endsWith('…') && /^\p{L}+…$/u.test(last) && it.desc.includes(last.slice(0, -1) + ' '), `coupe à un mot entier : ${last}`);
+  assert(ex.endsWith('…') && /^[\p{L}’']+…$/u.test(last) && it.desc.includes(last.slice(0, -1) + ' '), `coupe à un mot entier : ${last}`);
   if (['The Link', "L'Exemplaire", 'Le Polyscope'].includes(it.source)) assert(/^@\w+ • /.test(t), '@ du média sur X');
-  assert(t.endsWith('\n' + it.link), 'lien en fin');
+  assert(t.includes('\n' + it.link + '\n📸 '), 'lien puis crédit');
   assert(!/cliquer ici|lire la suite/i.test(t), 'phrase parasite retirée');
   assert(/…\n/.test(t), 'extrait coupé avec …');
-  assert.equal(t.split('\n').length, 2, 'titre : extrait, puis lien');
+  assert.equal(t.split('\n').length, 3, 'titre : extrait / lien / 📸');
   assert(/^\S.* • Auteur \d • Titre \d de .+ : Un long/.test(t), '« Média • Auteur • Titre : extrait »');
 }
 assert.equal(xlen('a https://x.org/' + 'z'.repeat(200)), 2 + 23);
+assert.equal(xlen('📸 A'), 4, 'emoji = 2');
 
 // mentions exactes seulement
 const link0 = items.find(i => i.source === 'The Link');

@@ -47,7 +47,7 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
     async queued() {
       const { organizationId, channelId } = await context();
       const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {
-        posts(first: 50, input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) { edges { node { id text dueAt } } } }`, { o: organizationId, c: [channelId] });
+        posts(first: 50, input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) { edges { node { id text dueAt assets { source } } } } }`, { o: organizationId, c: [channelId] });
       return (d?.posts?.edges || []).map(e => e.node);
     },
     // Texte seulement : id, image et heure programmée conservés (mode/dueAt omis).
