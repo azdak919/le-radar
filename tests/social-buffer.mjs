@@ -43,6 +43,8 @@ for (const it of items) {
 }
 assert.equal(xlen('a https://x.org/' + 'z'.repeat(200)), 2 + 23);
 assert.equal(xlen('📸 A'), 4, 'emoji = 2');
+assert.equal(xlen('a • b…'), 8, '• et … comptent 2 sur X');
+assert.equal(xlen('’–é'), 3);
 
 // mentions exactes seulement
 const link0 = items.find(i => i.source === 'The Link');
