@@ -1,8 +1,8 @@
-name: Social — Buffer (X @LeRadar_ca)
+name: Social — Buffer (X @LeRadar_ca, Pages Facebook et LinkedIn)
 
 # Feed.xml → file Buffer (forfait gratuit, 10 posts) → X. Coût : 0 $.
-# Canaux : x (Buffer) actif. Bluesky / Mastodon : adaptateurs prévus dans
-# scripts/social/channels/, pas encore activés.
+# Canaux : X, Page Facebook et page LinkedIn « LE-RADAR.ca » (scripts/social/buffer-pages-post.mjs :
+# places libres seulement, heures de pointe de data/social/posting-windows.json, rodage, aucun @).
 on:
   schedule:
     # Une passe par nuit ≈ 3 h Toronto (3 h 07 HNE, 4 h 07 HAE) : articles de la veille, 10 max.
@@ -42,6 +42,11 @@ on:
         description: 'Générer aussi le rapport des comptes X'
         type: boolean
         default: false
+      only:
+        description: 'Réseaux de ce passage'
+        type: choice
+        options: [all, x, pages]
+        default: all
 
 env:
   # Date d'expiration de la clé Buffer « le-radar-github » (pas un secret).
@@ -87,7 +92,7 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/reformat-queue.mjs
       - name: Remplir la file Buffer
-        if: ${{ !inputs.reformat }}
+        if: ${{ !inputs.reformat && inputs.only != 'pages' }}
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
@@ -98,15 +103,38 @@ jobs:
           DAILY: ${{ (github.event_name == 'schedule' || inputs.daily) && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-post.mjs
-      - name: Commit de l'état (data/buffer-sent.json seulement)
+      - name: Pages Facebook et LinkedIn (places libres, heures de pointe)
+        id: pages
+        if: ${{ !inputs.reformat && !inputs.share_now && inputs.only != 'x' }}
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
+          BUFFER_LINKEDIN_CHANNEL_ID: ${{ vars.BUFFER_LINKEDIN_CHANNEL_ID }}
+          PAGES_ISSUE_FILE: /tmp/pages-issue.md
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: node scripts/social/buffer-pages-post.mjs
+      # UNE seule issue (créée ou mise à jour) si Buffer ou le réseau refuse un post ; jamais de doublon.
+      - name: Issue unique si refus Facebook / LinkedIn
+        if: always() && steps.pages.outcome != 'skipped'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -s /tmp/pages-issue.md ] || exit 0
+          [ "${{ inputs.dry_run }}" = "true" ] && { cat /tmp/pages-issue.md; exit 0; }
+          TITLE="Social : publication Facebook / LinkedIn refusée"
+          NUM=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
+          if [ -n "$NUM" ]; then gh issue edit "$NUM" --repo "${{ github.repository }}" --body-file /tmp/pages-issue.md
+          else gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file /tmp/pages-issue.md; fi
+      - name: Commit de l'état (data/buffer-sent.json, data/buffer-pages-sent.json)
         if: always()
         run: |
-          git diff --quiet -- data/buffer-sent.json && { echo "État inchangé."; exit 0; }
+          git diff --quiet -- data/buffer-sent.json data/buffer-pages-sent.json && { echo "État inchangé."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
           git add data/buffer-sent.json
+          git add data/buffer-pages-sent.json
           git commit -s -m "bot(social): état des publications Buffer"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/buffer-sent.json\"))'"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of [\"data/buffer-sent.json\",\"data/buffer-pages-sent.json\"]) JSON.parse(require(\"fs\").readFileSync(f))'"
 
   accounts-report:
     if: github.event.schedule == '41 13 * * 1' || inputs.report
