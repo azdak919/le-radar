@@ -2,7 +2,7 @@
 // Bot social (Buffer/X) : format, longueur, variété, mentions, dédoublonnage, image, auth.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { parseFeed, markImages, buildText, selectItems, xlen, mentionHead, unknownAccounts, stripUtm } from '../scripts/social/lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, xlen, mentionHead, unknownAccounts, stripUtm, slotsToday } from '../scripts/social/lib.mjs';
 import { isAuthFailure } from '../scripts/social/channels/x-buffer.mjs';
 import { BAD } from '../scripts/social/image-resolve.mjs';
 
@@ -71,6 +71,7 @@ assert(BAD.test('https://x.org/wp-content/uploads/logo.png') && !BAD.test('https
 assert(isAuthFailure(401, null));
 assert(isAuthFailure(200, { errors: [{ message: 'Unauthorized', extensions: { code: 'UNAUTHENTICATED' } }] }));
 assert(!isAuthFailure(200, { data: {} }));
+assert(!isAuthFailure(200, { errors: [{ message: 'no', extensions: { code: 'FORBIDDEN' } }] }), 'FORBIDDEN ≠ clé invalide');
 
 // rapport comptes
 const u = unknownAccounts(items, accounts);
@@ -78,4 +79,7 @@ assert(u.sources.includes('Vieux') && !u.sources.includes('The Link'));
 
 // état versionné valide
 assert.equal(typeof JSON.parse(fs.readFileSync(new URL('../data/buffer-sent.json', import.meta.url))).sent, 'object');
+// créneaux du jour (1er nov. 2026 : fin de l'heure avancée à 2 h)
+const dz = slotsToday(['00:30', '07:30', '21:30'], { now: Date.parse('2026-11-01T05:23:00Z') });
+assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
 console.log('social-buffer: ok');

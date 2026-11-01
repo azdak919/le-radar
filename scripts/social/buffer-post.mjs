@@ -3,7 +3,7 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, selectItems, xlen, QUEUE_MAX } from './lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, xlen, slotsToday, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
@@ -30,24 +30,30 @@ try {
   if (channel) {
     const c = await channel.context();
     console.log(`Canal X : ${c.channelId} (${c.discovered ? 'découvert via channels' : 'id de repli'})`);
+    console.log('Horaire du canal :', JSON.stringify(await channel.schedule()));
     queued = await channel.queued();
   }
 } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }
 
 const byPost = new Map(Object.values(state.sent).filter(s => s.postId).map(s => [s.postId, s.source]));
 const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => p.text?.includes(i.link))?.source).filter(Boolean);
-const slots = Math.max(0, QUEUE_MAX - queued.length);
+const maxNew = parseInt(process.env.MAX_NEW || '', 10);
+const slots = Math.min(Math.max(0, QUEUE_MAX - queued.length), maxNew > 0 ? maxNew : QUEUE_MAX);
 console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} · places : ${slots}`);
-const sel = selectItems(items, { sentIds: new Set(Object.keys(state.sent)), queuedSources, slots });
+const maxAgeH = parseInt(process.env.MAX_AGE_H || '', 10) || MAX_AGE_H;
+// SLOT_TIMES="07:30,09:00,…" : programme aujourd'hui à ces heures (America/Toronto) au lieu de l'horaire Buffer.
+const dues = process.env.SLOT_TIMES ? slotsToday(process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean)) : null;
+const sel = selectItems(items, { sentIds: new Set(Object.keys(state.sent)), queuedSources, slots: dues ? Math.min(slots, dues.length) : slots, maxAgeH });
 
 const used = new Map(); let n = 0;
 for (const it of sel) {
   const text = buildText(it, ACCOUNTS);
   const im = await resolveImage(it, { used, repeated });
-  console.log(`\n--- ${++n}. [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
+  const dueAt = dues ? dues[n] : undefined;
+  console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
   if (dry) continue;
   try {
-    const post = await channel.add({ text, image: im?.url });
+    const post = await channel.add({ text, image: im?.url, dueAt });
     state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
     console.log(`→ en file Buffer : ${post.id} (${post.dueAt || 'heure auto'})`);
