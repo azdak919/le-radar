@@ -2549,6 +2549,7 @@ html.has-tuner-safe-cap .tuner {
   .feeds-panel li, .feeds-panel__title { break-inside: avoid; }
   .seo-headline__more, .seo-cta { display: none !important; }
   body * { hyphens: manual !important; -webkit-hyphens: manual !important; }
+  p, li, dd, dt, td, th, h1, h2, h3, h4, a, span, strong, em, time, figcaption { overflow-wrap: anywhere; word-break: normal; }
 
   /* Liens d'articles : URL imprimée après le texte (pas pour la navigation) */
   a.article[href^="http"]::after, .seo-section a[href^="http"]:not(.media-channels__item)::after, main p a[href^="http"]::after {
