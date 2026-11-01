@@ -291,3 +291,17 @@ export function freeSlots(dues, takenIso = []) {
   const taken = takenIso.filter(Boolean).map(Date.parse);
   return dues.filter(d => !taken.some(t => Math.abs(t - Date.parse(d)) < 5 * 60e3));
 }
+
+// Un post publié est-il déjà au format actuel ? Lien vers la fiche le-radar.ca (pas le lien source),
+// pas d'ancien séparateur « • » ni de @ en tête, et dernière ligne = « 📸 crédit » si crédit,
+// sinon le lien de la fiche (aucune ligne 📸).
+export function formatOk(text, it, credit = '') {
+  const lines = String(text || '').split('\n').map(l => l.trim()).filter(Boolean);
+  if (!lines.length) return false;
+  const site = siteLink(it);
+  if (!lines.includes(site)) return false;
+  if (it?.link && it.link !== site && lines.includes(it.link)) return false;
+  if (lines[0].startsWith('@') || lines.some(l => l.includes(' • '))) return false;
+  const pl = photoLine(credit), last = lines[lines.length - 1];
+  return pl ? last === pl : last === site && !lines.some(l => l.startsWith('📸'));
+}

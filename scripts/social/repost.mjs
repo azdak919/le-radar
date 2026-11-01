@@ -8,9 +8,10 @@
 // le bot ne le republiera jamais une 3e fois. Env : URLS, X_DUE (ISO, même ordre), DRY_RUN, BSKY=true|false.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, stripUtm, refreshPhotoLine, photoLine } from './lib.mjs';
+import { parseFeed, markImages, buildText, stripUtm, formatOk, siteLink } from './lib.mjs';
 import { createRequire } from 'node:module';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
+import { buildPageText } from './buffer-pages.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildBskyText, detectLang, postRecord } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -32,8 +33,8 @@ const targets = urls.map(u => items.find(i => i.link === stripUtm(u) || i.id ===
 targets.forEach((t, i) => { if (!t) throw new Error(`absent du flux : ${urls[i]}`); });
 const used = new Map(), imgs = new Map();
 for (const it of targets) imgs.set(it.id, await resolveImage(it, { used, repeated }));
-const photoLineFor = it => { const im = imgs.get(it.id); return im ? photoLine(im.credit, it.source) : ''; };
-const has = (text, it) => (text || '').includes(it.link) || (text || '').includes(articleId(it.link));
+const okFor = (text, it) => formatOk(text, it, imgs.get(it.id)?.credit || '');
+const has = (text, it) => (text || '').includes(it.link) || (text || '').includes(siteLink(it)) || (text || '').includes(articleId(it.link));
 console.log(`Mode ${dry ? 'ESSAI' : 'RÉEL'} · ${targets.length} article(s)`);
 for (const it of targets) console.log(`- ${it.link} · crédit actuel : ${imgs.get(it.id)?.credit || '(aucun → nom du média)'}`);
 
@@ -49,14 +50,13 @@ if (process.env.BSKY !== 'false' && process.env.BLUESKY_APP_PASSWORD) {
   for (const it of targets) {
     const old = posts.filter(p => p.link === it.link || has(p.text, it));
     if (!old.length) { console.log(`Bluesky : aucune publication pour ${it.link}`); continue; }
-    const want = photoLineFor(it);
-    if (old.every(p => p.text.split('\n').pop() === want)) { console.log(`Bluesky : déjà correct (${want}) ${old.map(p => p.url).join(' ')}`); continue; }
+    if (old.every(p => okFor(p.text, it))) { console.log(`Bluesky : déjà correct ${old.map(p => p.url).join(' ')}`); continue; }
     for (const p of old) { console.log(`Bluesky : suppression ${p.url}\n  ancien : ${p.text.split('\n').pop()}`); if (!dry) await bs.deletePost(p.uri); }
     const im = imgs.get(it.id), text = buildBskyText(it, ACC, { credit: im?.credit, photo: !!im });
     console.log(`Bluesky : republication\n${text}`);
     if (dry) continue;
     let thumb = null; if (im) { try { thumb = await bs.uploadImage(im.url); } catch (e) { console.log(`::warning::image : ${e.message}`); } }
-    const r = await bs.post(postRecord({ text, lang: detectLang(it), dids, card: { uri: it.link, title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } }));
+    const r = await bs.post(postRecord({ text, lang: detectLang(it), dids, card: { uri: siteLink(it), title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } }));
     st.sent[it.id] = { ...(st.sent[it.id] || {}), at: new Date().toISOString(), source: it.source, k: titleKey(it), uri: r.uri, url: r.url, repost: { deleted: old.map(p => p.url), credit: im?.credit || null } };
     wr('data/bluesky-sent.json', st);
     console.log(`→ Bluesky : ${r.url}`);
@@ -91,12 +91,12 @@ if (key) {
   for (const [n, it] of targets.entries()) {
     for (const p of all.filter(p => has(p.text, it))) {
       const line = `Buffer ${p.channelService} ${p.status} ${p.id} · ${tz(p.sentAt || p.dueAt)} · ${p.externalLink || ''}\n  ancien : ${p.text.split('\n').pop()}`;
-      if (p.text.split('\n').pop() === photoLineFor(it)) { console.log(`Déjà correct : ${line}`); if (p.channelService === 'twitter' && /sent|sending|scheduled/.test(p.status)) queuedOk.add(it.id); continue; }
+      if (okFor(p.text, it)) { console.log(`Déjà correct : ${line}`); if (p.channelService === 'twitter' && /sent|sending|scheduled/.test(p.status)) queuedOk.add(it.id); continue; }
       if (/sent|sending/.test(p.status)) { console.log(`À SUPPRIMER À LA MAIN (API : publié non supprimable) : ${line}`); continue; }
       // En file : crédit corrigé sur place (même id, image, heure) ; supprimé seulement si non corrigeable.
-      const fixed = refreshPhotoLine(p.text, it, '', p.channelService === 'twitter' ? 280 : 5000);
+      const im0 = imgs.get(it.id), fixed = p.channelService === 'twitter' ? buildText(it, ACC, undefined, { credit: im0?.credit, photo: !!im0 }) : buildPageText(it, { link: 'le-radar' }, { credit: im0?.credit, photo: !!im0 });
       if (fixed && fixed !== p.text && Date.parse(p.dueAt) - Date.now() > 10 * 60e3) {
-        console.log(`Crédit corrigé en file : ${line}\n  nouveau : ${fixed.split('\n').pop()}`);
+        console.log(`Format/crédit corrigé en file : ${line}\n  nouveau : ${fixed.split('\n').pop()}`);
         if (!dry) { await x.editText(p.id, fixed); const s = st.sent[it.id]; if (s) { s.credit = it.credit || it.source; wr('data/buffer-sent.json', st); } }
         if (p.channelService === 'twitter') queuedOk.add(it.id); continue;
       }
