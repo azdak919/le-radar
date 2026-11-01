@@ -102,7 +102,16 @@ export function namedHead(line, accounts = [], source = '') {
 }
 
 /** « Titre : extrait » (fr), « Title: excerpt » (en), simple espace après ? ! … */
-export const isEnglish = title => /[^\s]: /.test(title || '') && !/\s: /.test(title || '');
+const colonEn = t => /[^\s]: /.test(t || '') && !/\s: /.test(t || '');
+/** Langue par mots-outils fr/en (titre + extrait) ; égalité → règle du deux-points (« Title: » = en). */
+export function detectLang(it) {
+  const w = ` ${((it.title || '') + ' ' + (it.desc || '')).toLowerCase().replace(/[^a-zà-ÿœ’']+/g, ' ')} `;
+  const n = list => list.reduce((k, x) => k + (w.split(` ${x} `).length - 1), 0);
+  const fr = n(['le', 'la', 'les', 'des', 'du', 'de', 'et', 'est', 'une', 'un', 'dans', 'pour', 'que', 'qui', 'au', 'aux', 'sur', 'pas', 'avec', 'en']);
+  const en = n(['the', 'and', 'of', 'to', 'is', 'in', 'for', 'that', 'with', 'on', 'are', 'was', 'this', 'from', 'at', 'it', 'their', 'a']);
+  return en > fr ? 'en' : fr > en ? 'fr' : colonEn(it.title) ? 'en' : 'fr';
+}
+export const isEnglish = title => detectLang({ title }) === 'en';
 export function joinHead(head, ex, en = isEnglish(head)) {
   if (!ex) return head;
   if (/[?!…]$/.test(head.trim())) return `${head.trim()} ${ex}`;
@@ -111,7 +120,7 @@ export function joinHead(head, ex, en = isEnglish(head)) {
 
 export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true } = {}) {
   const pl = photo ? photoLine(credit, it.source) : '';
-  const head = mentionHead(it, accounts), tail = `${link ? '\n' + it.link : ''}${pl ? '\n' + pl : ''}`, en = isEnglish(it.title);
+  const head = mentionHead(it, accounts), tail = `${link ? '\n' + it.link : ''}${pl ? '\n' + pl : ''}`, en = detectLang(it) === 'en';
   const mk = e => `${joinHead(head, e, en)}${tail}`;
   let ex = excerpt(it);
   if (ex && len(mk(ex)) > limit) {

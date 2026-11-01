@@ -1,4 +1,40 @@
 {
- "_doc": "Comptes Bluesky vérifiés à la main (même règle que x-accounts.json : cle_flux = nom EXACT dans feed.xml ; handle complet, ex. @journal.bsky.social). Ne jamais copier un @ X ici sans preuve sur Bluesky.",
- "accounts": []
+ "_doc": "Comptes Bluesky vérifiés (bio officielle ou domaine officiel). cle_flux = nom EXACT de la source dans feed.xml. Jamais de @ X recopié sans preuve Bluesky.",
+ "accounts": [
+  {
+   "handle": "@quartierlibre.bsky.social",
+   "nom": "Quartier Libre",
+   "type": "source",
+   "cle_flux": "Quartier Libre",
+   "preuve": "bio : magazine indépendant des étudiant·e·s de l'Université de Montréal"
+  },
+  {
+   "handle": "@pupitre-zc.bsky.social",
+   "nom": "Zone Campus",
+   "type": "source",
+   "cle_flux": "Zone Campus",
+   "preuve": "bio : journal étudiant indépendant de l'UQTR"
+  },
+  {
+   "handle": "@jlecollectif.bsky.social",
+   "nom": "Le Collectif",
+   "type": "source",
+   "cle_flux": "Le Collectif",
+   "preuve": "bio : journal étudiant de l'Université de Sherbrooke"
+  },
+  {
+   "handle": "@theconcordian.bsky.social",
+   "nom": "The Concordian",
+   "type": "source",
+   "cle_flux": "The Concordian",
+   "preuve": "bio : Concordia University's student newspaper since 1983"
+  },
+  {
+   "handle": "@impactcampus.bsky.social",
+   "nom": "Impact Campus",
+   "type": "source",
+   "cle_flux": "Impact Campus",
+   "preuve": "bio : le média des étudiant.es de l'Université Laval"
+  }
+ ]
 }
