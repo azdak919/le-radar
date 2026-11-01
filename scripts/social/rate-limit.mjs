@@ -6,7 +6,12 @@ import { quality, PER_SOURCE_MAX } from './lib.mjs';
 // mastodon : règles de piaille.fr (robots de liens de presse : 5/h, 50/jour).
 // bluesky : plafond anti-pourriel interne, très en deçà de l'API (5 000 points/h, 35 000/jour,
 // une création = 3 points) — voir docs.bsky.app/docs/advanced-guides/rate-limits.
+// tumblr : API officielle = 250 publications/jour/utilisateur, 1 000 appels/h et 5 000/jour par
+// clé (tumblr.com/docs/en/api/v2#rate-limits). Plafond interne 10/h, 150/24 h (≤ 60 % du quota
+// quotidien, ≤ 4 appels par publication) ; les règles (tumblr.com/policy/en/community) proscrivent
+// le pourriel et les étiquettes trompeuses.
 export const NETWORKS = {
+  tumblr: { perHour: 10, perDay: 150, perRun: 3, gapSec: 90 },
   mastodon: { perHour: 5, perDay: 50, perRun: 1, gapSec: 0 },
   bluesky: { perHour: 10, perDay: 150, perRun: 3, gapSec: 90 },
 };
