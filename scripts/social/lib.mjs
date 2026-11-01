@@ -109,22 +109,22 @@ export function joinHead(head, ex, en = isEnglish(head)) {
   return `${head.trim()}${en ? ':' : ' :'} ${ex}`;
 }
 
-export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true } = {}) {
+export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true } = {}) {
   const pl = photo ? photoLine(credit, it.source) : '';
-  const head = mentionHead(it, accounts), tail = `\n${it.link}${pl ? '\n' + pl : ''}`, en = isEnglish(it.title);
+  const head = mentionHead(it, accounts), tail = `${link ? '\n' + it.link : ''}${pl ? '\n' + pl : ''}`, en = isEnglish(it.title);
   const mk = e => `${joinHead(head, e, en)}${tail}`;
   let ex = excerpt(it);
-  if (ex && xlen(mk(ex)) > limit) {
+  if (ex && len(mk(ex)) > limit) {
     // coupe au dernier mot entier qui tient avec « … » (jamais au milieu d'un mot)
     const words = ex.split(' '); let best = '';
     for (let k = 1; k <= words.length; k++) {
       const c = words.slice(0, k).join(' ').replace(/[\s,;:.–-]+$/, '') + '…';
-      if (xlen(mk(c)) <= limit) best = c; else break;
+      if (len(mk(c)) <= limit) best = c; else break;
     }
     ex = best.length >= 21 ? best : '';
   }
   let text = mk(ex), t = head.replace(/^@+/, '');
-  while (xlen(text) > limit) { t = t.slice(0, -2).trimEnd() + '…'; text = `${t}${tail}`; }
+  while (len(text) > limit) { t = t.slice(0, -2).trimEnd() + '…'; text = `${t}${tail}`; }
   return text;
 }
 
