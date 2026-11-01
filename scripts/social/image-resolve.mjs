@@ -5,6 +5,13 @@ const bank = require('../campus-photo-bank.js');
 const UA = {'user-agent':'Mozilla/5.0 (compatible; LeRadarBot/1.0; +https://le-radar.ca)'};
 export const BAD = /logo|default|placeholder|favicon|avatar|icon|sprite|banner|header|cropped-|gravatar|blank|spacer|5-?infos|cinq-?infos|cinq-nouvelles|nouvelles-de-la-semaine|share-image|og-default|site-image/i;
 const MINW = 600;
+/** Auteur·e connu·e d'une photo de la banque du Radar (Wikimedia, etc.), sinon ''. */
+let _credits=null;
+export function bankCredit(url){
+  if(!_credits){ _credits=new Map(); const add=e=>{ if(e?.url&&e.creator&&!/inconnu/i.test(e.creator)) _credits.set(key(e.url),e.creator.trim()); };
+    for(const l of Object.values(bank.BANK||{})) for(const e of l) add(e);
+    try{ for(const l of bank.loadWallpaperCampusExtras().values()) for(const e of l) add(e); }catch{} }
+  return _credits.get(key(url))||''; }
 export function dims(b){ // JPEG/PNG/GIF/WebP
   if(b[0]===0x89&&b[1]===0x50) return {w:b.readUInt32BE(16),h:b.readUInt32BE(20)};
   if(b[0]===0x47&&b[1]===0x49) return {w:b.readUInt16LE(6),h:b.readUInt16LE(8)};
@@ -43,7 +50,7 @@ export async function resolveImage(it,{used,repeated}){
   const u=used.get(it.source)||new Set(); used.set(it.source,u); const rep=repeated.get(it.source)||new Set();
   const ok=async(url)=>{ if(!url||!/^https?:/.test(url)||BAD.test(url)||u.has(key(url))||rep.has(key(url))) return null;
     const p=await probe(url); if(!p||!p.w||p.w<MINW||BAD.test(p.finalUrl)) return null; return p; };
-  const take=(url,p,origin,note)=>{u.add(key(url));const f=new URL(p.finalUrl);[...f.searchParams.keys()].filter(k=>/^utm_/.test(k)).forEach(k=>f.searchParams.delete(k));return {url:f.toString().replace(/\?$/,''),origin,width:p.w,height:p.h,note};};
+  const take=(url,p,origin,note)=>{u.add(key(url));const credit=origin==='banque'?bankCredit(url):'';const f=new URL(p.finalUrl);[...f.searchParams.keys()].filter(k=>/^utm_/.test(k)).forEach(k=>f.searchParams.delete(k));return {url:f.toString().replace(/\?$/,''),origin,width:p.w,height:p.h,note,credit};};
   // 1. image du flux (non écartée)
   if(it.img && !it.imgDropped){ const p=await ok(it.img); if(p) return take(it.img,p,'flux'); }
   // 1b. Flickr écarté : gardé seulement si présent dans la page de l'article

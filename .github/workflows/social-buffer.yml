@@ -5,7 +5,8 @@ name: Social — Buffer (X @LeRadar_ca)
 # scripts/social/channels/, pas encore activés.
 on:
   schedule:
-    - cron: '17 */2 * * *'
+    # Une passe par nuit ≈ 3 h Toronto (3 h 07 HNE, 4 h 07 HAE) : articles de la veille, 10 max.
+    - cron: '7 8 * * *'
     - cron: '41 13 * * 1'   # rapport hebdo des comptes (lundi)
   workflow_dispatch:
     inputs:
@@ -25,6 +26,18 @@ on:
         description: 'Programmer AUJOURD HUI à ces heures America/Toronto, ex. 07:30,09:00 (vide = file Buffer)'
         type: string
         default: ''
+      daily:
+        description: 'Mode nocturne : articles de la veille, créneaux fixes du jour'
+        type: boolean
+        default: false
+      reformat:
+        description: 'Remettre la file au format « Média • Auteur • Titre : extrait » (editPost, même id/heure) au lieu de remplir'
+        type: boolean
+        default: false
+      share_now:
+        description: 'Publier tout de suite UN article au hasard (hors file et hors état)'
+        type: boolean
+        default: false
       report:
         description: 'Générer aussi le rapport des comptes X'
         type: boolean
@@ -66,13 +79,23 @@ jobs:
           NUM=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
           [ -n "$NUM" ] && exit 0
           gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body "La clé d'API Buffer « le-radar-github » expire le ${BUFFER_KEY_EXPIRES} (dans ${LEFT} jours). Régénérer la clé dans Buffer › Settings › API, remplacer le secret BUFFER_API_KEY, puis mettre à jour BUFFER_KEY_EXPIRES dans .github/workflows/social-buffer.yml."
+      - name: Reformater la file Buffer (sans ligne vide)
+        if: inputs.reformat
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: node scripts/social/reformat-queue.mjs
       - name: Remplir la file Buffer
+        if: ${{ !inputs.reformat }}
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
           MAX_NEW: ${{ inputs.max_new }}
           MAX_AGE_H: ${{ inputs.max_age_h }}
           SLOT_TIMES: ${{ inputs.slot_times }}
+          SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
+          DAILY: ${{ (github.event_name == 'schedule' || inputs.daily) && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-post.mjs
       - name: Commit de l'état (data/buffer-sent.json seulement)

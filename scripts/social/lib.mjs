@@ -1,5 +1,8 @@
 // Logique pure des publications sociales du Radar (testée dans tests/social-buffer.mjs).
-export const X_LIMIT = 275;      // marge sous 280
+// Limite par réseau (comptage de la plateforme ; liens X = 23). Les @ viennent d'une liste
+// PAR réseau (data/social/x-accounts.json pour X) : ne jamais réutiliser les @ X ailleurs.
+export const LIMITS = { x: 280, bluesky: 300, mastodon: 500 };
+export const X_LIMIT = LIMITS.x;
 export const URL_LEN = 23;       // X compte tout lien comme 23 caractères
 export const QUEUE_MAX = 10;     // forfait gratuit Buffer : 10 posts planifiés par canal
 export const PER_SOURCE_MAX = 2;
@@ -54,7 +57,10 @@ export function markImages(items) {
   return repeated;
 }
 
-export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].length;
+// X : lien = 23, emoji (≥ U+1F000) = 2
+export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].reduce((n, c) => n + (c.codePointAt(0) >= 0x1F000 ? 2 : 1), 0);
+/** « 📸 Auteur » : auteur·e connu·e de la photo, sinon le nom du média (jamais inventé). */
+export const photoLine = (credit, source) => (credit || source) ? `📸 ${(credit || source).trim()}` : '';
 
 export function excerpt(it) {
   let d = it.desc; if (!d) return '';
@@ -67,24 +73,43 @@ export function excerpt(it) {
   return d;
 }
 
-/** accounts: [{handle,type,cle_flux}] — mention seulement si cle_flux === nom exact. */
+/** Réseaux sociaux seulement : « Média • Auteur • Titre » ; @ seulement si cle_flux === nom exact. */
 export function mentionHead(it, accounts = []) {
-  let head = it.title;
   const src = accounts.find(a => a.type === 'source' && a.cle_flux && a.cle_flux === it.source);
-  if (src && head.startsWith(it.source + ' ')) head = src.handle + head.slice(it.source.length);
   const au = it.author && accounts.find(a => a.type === 'auteur' && a.cle_flux && a.cle_flux === it.author);
-  if (au) head = head.replace(new RegExp('([–-]\\s)' + esc(it.author) + '(\\s?:)'), `$1${au.handle}$2`);
-  return head;
+  const media = src ? src.handle : it.source;
+  const author = it.author && it.author !== it.source ? (au ? au.handle : it.author) : '';
+  const title = it.bare || it.title;
+  return [media, author, title].filter(Boolean).filter((x, i, a) => a.indexOf(x) === i).join(' • ');
 }
 
-export function buildText(it, accounts = [], limit = X_LIMIT) {
-  const head = mentionHead(it, accounts), tail = `\n${it.link}`;
-  const mk = e => e ? `${head}\n\n${e}${tail}` : `${head}${tail}`;
+/** Ancien en-tête « Média – Auteur : Titre » → « Média • Auteur • Titre ». */
+export function bulletHead(line) {
+  const m = line.match(/^(.*?)\s[–-]\s(.*?)\s?:\s(.+)$/);
+  return m ? [m[1], m[2], m[3]].filter((x, i, a) => x && a.indexOf(x) === i).join(' • ') : line;
+}
+
+/** « Titre : extrait » (fr), « Title: excerpt » (en), simple espace après ? ! … */
+export const isEnglish = title => /[^\s]: /.test(title || '') && !/\s: /.test(title || '');
+export function joinHead(head, ex, en = isEnglish(head)) {
+  if (!ex) return head;
+  if (/[?!…]$/.test(head.trim())) return `${head.trim()} ${ex}`;
+  return `${head.trim()}${en ? ':' : ' :'} ${ex}`;
+}
+
+export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true } = {}) {
+  const pl = photo ? photoLine(credit, it.source) : '';
+  const head = mentionHead(it, accounts), tail = `\n${it.link}${pl ? '\n' + pl : ''}`, en = isEnglish(it.title);
+  const mk = e => `${joinHead(head, e, en)}${tail}`;
   let ex = excerpt(it);
   if (ex && xlen(mk(ex)) > limit) {
-    const budget = limit - xlen(mk('')) - 3;
-    let cut = [...ex].slice(0, Math.max(0, budget)).join(''); const sp = cut.lastIndexOf(' ');
-    cut = (sp > 0 ? cut.slice(0, sp) : '').replace(/[\s,;:.–-]+$/, ''); ex = cut.length >= 20 ? cut + '…' : '';
+    // coupe au dernier mot entier qui tient avec « … » (jamais au milieu d'un mot)
+    const words = ex.split(' '); let best = '';
+    for (let k = 1; k <= words.length; k++) {
+      const c = words.slice(0, k).join(' ').replace(/[\s,;:.–-]+$/, '') + '…';
+      if (xlen(mk(c)) <= limit) best = c; else break;
+    }
+    ex = best.length >= 21 ? best : '';
   }
   let text = mk(ex), t = head;
   while (xlen(text) > limit) { t = t.slice(0, -2).trimEnd() + '…'; text = `${t}${tail}`; }
@@ -133,4 +158,52 @@ export function slotsToday(times, { tz = 'America/Toronto', now = Date.now() } =
     const m = p.match(/([+-])(\d\d):?(\d\d)?/); return m ? (m[1] === '-' ? -1 : 1) * (+m[2] * 60 + +(m[3] || 0)) : 0; };
   return times.map(hm => { let t = Date.parse(`${day}T${hm}:00Z`); t -= off(t) * 60e3; t = Date.parse(`${day}T${hm}:00Z`) - off(t) * 60e3; return t; })
     .filter(t => t > now + 10 * 60e3).sort((a, b) => a - b).map(t => new Date(t).toISOString());
+}
+
+// ── Sélection nocturne (≈ 3 h, America/Toronto) ──────────────────────────────
+export const DAILY_SLOTS = ['07:30', '09:00', '10:30', '12:00', '13:00', '15:00', '17:00', '18:30', '20:00', '21:30'];
+export const MIN_EXCERPT = 80;
+const dayOf = (t, tz = 'America/Toronto') => new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(t);
+
+/** Note de qualité : vraie photo du flux > extrait substantiel > @ confirmé. */
+export function quality(it, accounts = []) {
+  const photo = it.img && !it.imgDropped ? 4 : 0;
+  const ex = excerpt(it).length >= MIN_EXCERPT ? 2 : 0;
+  const at = /(^|\s)@\w/.test(mentionHead(it, accounts)) ? 1 : 0;
+  return photo + ex + at;
+}
+
+/**
+ * Choix nocturne : articles NON envoyés de la veille (jour civil Toronto) ; s'il y a moins
+ * de `slots` candidats, élargit à 72 h. Variété d'abord (≤ perSource par source, file comprise,
+ * round-robin), puis qualité (photo réelle, extrait, @ confirmé), puis récence.
+ */
+export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H } = {}) {
+  // veille = jour civil précédent (midi UTC du jour − 24 h : robuste au changement d'heure)
+  const prev = dayOf(Date.parse(dayOf(now, tz) + 'T12:00:00Z') - 864e5, 'UTC');
+  const fresh = items.filter(it => !sentIds.has(it.id) && now - it.date <= maxAgeH * 3600e3 && it.date <= now);
+  let pool = fresh.filter(it => dayOf(it.date, tz) === prev);
+  if (pool.length < slots) pool = fresh;
+  const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
+  const by = new Map();
+  for (const it of pool) { it._q = quality(it, accounts); if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it); }
+  const cmp = (a, b) => b._q - a._q || b.date - a.date;
+  const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmp) }))
+    .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmp(a.q[0], b.q[0]));
+  const sel = [];
+  for (let r = 0; sel.length < slots && r < perSource; r++) {
+    const round = queues.filter(({ s, q }) => q.length && (count.get(s) || 0) < perSource).map(x => x.q[0]).sort(cmp);
+    for (const it of round) {
+      if (sel.length >= slots) break;
+      const qq = by.get(it.source); qq.shift();
+      sel.push(it); count.set(it.source, (count.get(it.source) || 0) + 1);
+    }
+  }
+  return sel;
+}
+
+/** Retire les créneaux déjà pris (dueAt en file, à ±5 min). */
+export function freeSlots(dues, takenIso = []) {
+  const taken = takenIso.filter(Boolean).map(Date.parse);
+  return dues.filter(d => !taken.some(t => Math.abs(t - Date.parse(d)) < 5 * 60e3));
 }

@@ -3,7 +3,7 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, selectItems, xlen, slotsToday, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
@@ -42,21 +42,36 @@ const slots = Math.min(Math.max(0, QUEUE_MAX - queued.length), maxNew > 0 ? maxN
 console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} · places : ${slots}`);
 const maxAgeH = parseInt(process.env.MAX_AGE_H || '', 10) || MAX_AGE_H;
 // SLOT_TIMES="07:30,09:00,…" : programme aujourd'hui à ces heures (America/Toronto) au lieu de l'horaire Buffer.
-const dues = process.env.SLOT_TIMES ? slotsToday(process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean)) : null;
-const sel = selectItems(items, { sentIds: new Set(Object.keys(state.sent)), queuedSources, slots: dues ? Math.min(slots, dues.length) : slots, maxAgeH });
+// DAILY=true (cron nocturne) : veille + classement, créneaux fixes du jour (jamais l'horaire Buffer).
+const daily = process.env.DAILY === 'true';
+const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : daily ? DAILY_SLOTS : null;
+const dues = times ? freeSlots(slotsToday(times), queued.map(p => p.dueAt)) : null;
+const want = dues ? Math.min(slots, dues.length) : slots;
+const sentIds = new Set(Object.keys(state.sent));
+// SHARE_NOW=true : UN article au hasard (récent, ni envoyé ni en file, photo réelle et source hors file si possible), publié tout de suite.
+const shareNow = process.env.SHARE_NOW === 'true';
+const sel = shareNow ? (() => {
+  const qs = new Set(queuedSources), qt = queued.map(p => p.text || '');
+  const pool = items.filter(i => !sentIds.has(i.id) && Date.now() - i.date <= maxAgeH * 3600e3 && !qt.some(t => t.includes(i.link)));
+  const best = [p => p.img && !p.imgDropped && !qs.has(p.source), p => !qs.has(p.source), p => p.img && !p.imgDropped, () => true]
+    .map(f => pool.filter(f)).find(l => l.length) || [];
+  return best.length ? [best[Math.floor(Math.random() * best.length)]] : [];
+})() : daily ? selectDaily(items, { sentIds, queuedSources, slots: want, accounts: ACCOUNTS, maxAgeH })
+  : selectItems(items, { sentIds, queuedSources, slots: want, maxAgeH });
+if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${daily ? 'nocturne (veille)' : 'manuel'}`);
 
 const used = new Map(); let n = 0;
 for (const it of sel) {
-  const text = buildText(it, ACCOUNTS);
   const im = await resolveImage(it, { used, repeated });
-  const dueAt = dues ? dues[n] : undefined;
+  const text = buildText(it, ACCOUNTS, undefined, { credit: im?.credit, photo: !!im });
+  const dueAt = dues && !shareNow ? dues[n] : undefined;
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
   if (dry) continue;
   try {
-    const post = await channel.add({ text, image: im?.url, dueAt });
-    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null };
+    const post = await channel.add({ text, image: im?.url, dueAt, now: shareNow });
+    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, credit: im ? (im.credit || it.source) : null, ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
-    console.log(`→ en file Buffer : ${post.id} (${post.dueAt || 'heure auto'})`);
+    console.log(`→ Buffer : ${post.id} (${shareNow ? 'publication immédiate ' + (post.status || '') + ' ' + (post.externalLink || '') : post.dueAt || 'heure auto'})`);
   } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }
 }
 // Purge de l'état > 30 jours (le flux ne garde que 50 items).
