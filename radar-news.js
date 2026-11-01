@@ -3110,7 +3110,7 @@ function createArticle(item, role = 'standard') {
   // « Par »/« By » se traduit (UI) ; le nom d’auteur reste en original (notranslate).
   // Espace garanti en CSS (.article-author) : la trad du libellé mange l’espace final.
   const bylineHtml = `<p class="article-byline"><span class="article-byline__label">${escapeHtml(byLabel)}</span><strong class="article-author notranslate" translate="no">${escapeHtml(displayAuthor)}</strong></p>`;
-  const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title).replace(/[ \u00a0\u202f]+([?!;»])/g, '\u202f$1').replace(/[ \u00a0\u202f]+:/g, '\u00a0:').replace(/«[ \u00a0\u202f]+/g, '«\u202f'))}</h3>`;
+  const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title)).replace(/[ \u00a0\u202f]+([?!;»])/g, '\u202f$1').replace(/[ \u00a0\u202f]+:/g, '\u00a0:').replace(/«[ \u00a0\u202f]+/g, '«\u202f')}</h3>`;
   const mediaHtml = hasImageCandidate ? '<figure class="article-media"></figure>' : '';
   // Ordre des blocs : scripts/article-card-lib.js (cardSlots), partagé avec l’app.
   //  lead : bandeau, méta, titre, byline, photo, chapô ;
