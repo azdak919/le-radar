@@ -34,7 +34,8 @@ for (const it of items) {
   assert(xlen(t) >= 270, `trop court : ${xlen(t)}`);
   const ex = t.split('\n')[0]; const last = ex.split(' ').at(-1);
   assert(ex.endsWith('…') && /^[\p{L}’']+…$/u.test(last) && it.desc.includes(last.slice(0, -1) + ' '), `coupe à un mot entier : ${last}`);
-  if (['The Link', "L'Exemplaire", 'Le Polyscope'].includes(it.source)) assert(/^@\w+ • /.test(t), '@ du média sur X');
+  if (['The Link', "L'Exemplaire", 'Le Polyscope'].includes(it.source)) assert(/^[^@\s][^\n]* \(@\w+\) • /.test(t), 'nom du média puis (@) sur X');
+  assert(!t.startsWith('@'), 'jamais de @ en tête');
   assert(t.includes('\n' + it.link + '\n📸 '), 'lien puis crédit');
   assert(!/cliquer ici|lire la suite/i.test(t), 'phrase parasite retirée');
   assert(/…\n/.test(t), 'extrait coupé avec …');
@@ -48,13 +49,13 @@ assert.equal(xlen('’–é'), 3);
 
 // mentions exactes seulement
 const link0 = items.find(i => i.source === 'The Link');
-assert(mentionHead(link0, accounts).startsWith('@Linknewspaper • Auteur '));
-assert(mentionHead(items.find(i => i.source === "L'Exemplaire"), accounts).startsWith('@lexemplaire • '));
-assert(mentionHead(items.find(i => i.source === 'Le Polyscope'), accounts).startsWith('@Polyscope • '));
+assert(mentionHead(link0, accounts).startsWith('The Link (@Linknewspaper) • Auteur '));
+assert(mentionHead(items.find(i => i.source === "L'Exemplaire"), accounts).startsWith("L'Exemplaire (@lexemplaire) • "));
+assert(mentionHead(items.find(i => i.source === 'Le Polyscope'), accounts).startsWith('Le Polyscope (@Polyscope) • '));
 assert.equal(mentionHead({ ...link0, source: 'The Link Bis', author: 'A', bare: 'T' }, accounts), 'The Link Bis • A • T');
-assert.equal(mentionHead({ ...link0, author: '', bare: 'T' }, accounts), '@Linknewspaper • T', 'sans auteur');
-assert.equal(mentionHead({ ...link0, author: 'The Link', bare: 'T' }, accounts), '@Linknewspaper • T', 'auteur = média');
-assert(mentionHead({ ...link0, author: 'Jo Doe', bare: 'T' }, [...accounts, { handle: '@jodoe', type: 'auteur', cle_flux: 'Jo Doe' }]) === '@Linknewspaper • @jodoe • T');
+assert.equal(mentionHead({ ...link0, author: '', bare: 'T' }, accounts), 'The Link (@Linknewspaper) • T', 'sans auteur');
+assert.equal(mentionHead({ ...link0, author: 'The Link', bare: 'T' }, accounts), 'The Link (@Linknewspaper) • T', 'auteur = média');
+assert(mentionHead({ ...link0, author: 'Jo Doe', bare: 'T' }, [...accounts, { handle: '@jodoe', type: 'auteur', cle_flux: 'Jo Doe' }]) === 'The Link (@Linknewspaper) • Jo Doe (@jodoe) • T');
 for (const a of accounts) assert(/^@\w{1,15}$/.test(a.handle), `handle invalide ${a.handle}`);
 
 // variété : ≤ 2 par source, 10 max, ≤ 72 h, file existante comptée
@@ -153,5 +154,22 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   assert.deepEqual(LIMITS, { x: 280, bluesky: 300, mastodon: 500 });
   const t5 = buildText(items[0], [], LIMITS.mastodon);
   assert(xlen(t5) <= 500 && xlen(t5) > 400 && !t5.startsWith('@'), 'Mastodon : plus long, aucun @ X');
+}
+// nom + (@), sans @, limite
+{
+  const { namedHead, LIMITS } = await import('../scripts/social/lib.mjs');
+  const acc = [{ handle: '@montrealcampus', type: 'source', cle_flux: 'Montréal Campus' }];
+  const base = { source: 'Montréal Campus', author: 'Emmanuelle Hodoul', bare: 'Titre', title: 'Titre', link: 'https://e.x/a', desc: 'mot '.repeat(200) };
+  const w = buildText(base, acc);
+  assert(w.startsWith('Montréal Campus (@montrealcampus) • Emmanuelle Hodoul • Titre : mot'), w);
+  const wo = buildText({ ...base, source: 'Autre Média' }, acc);
+  assert(wo.startsWith('Autre Média • Emmanuelle Hodoul • Titre : mot') && !wo.includes('(@'), wo);
+  for (const t of [w, wo]) { assert(xlen(t) <= LIMITS.x && !t.startsWith('@')); assert(/mot…\n/.test(t), 'extrait raccourci au mot'); }
+  assert(xlen(buildText(base, acc, LIMITS.bluesky)) <= 300 && xlen(buildText(base, acc, LIMITS.mastodon)) <= 500);
+  const longT = buildText({ ...base, bare: 'Long '.repeat(80).trim(), desc: '' }, acc);
+  assert(xlen(longT) <= 280 && !longT.startsWith('@'), 'titre trop long tronqué');
+  assert.equal(namedHead('@montrealcampus • A • T', acc), 'Montréal Campus (@montrealcampus) • A • T');
+  assert.equal(namedHead('@inconnu • T', acc, 'Source X'), 'Source X (@inconnu) • T');
+  assert.equal(namedHead('Montréal Campus (@montrealcampus) • T', acc), 'Montréal Campus (@montrealcampus) • T');
 }
 console.log('social-buffer: ok');
