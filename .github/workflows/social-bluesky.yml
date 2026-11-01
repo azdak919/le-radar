@@ -1,6 +1,7 @@
 name: Social — Bluesky (@le-radar.bsky.social)
 
-# Mêmes choix nocturnes que X (data/buffer-sent.json), publiés à leur créneau. Coût : 0 $.
+# Articles frais du flux (≤ 24 h, après la mise en service), plafond 10/h et 150/24 h
+# (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
 # Déclencheur principal : Worker le-radar-news-trigger (≤ 5 min après chaque créneau).
 # Cron de secours ci-dessous (GitHub en saute souvent). Idempotent : data/bluesky-sent.json.
 on:
@@ -14,6 +15,10 @@ on:
         default: false
       share_now:
         description: 'Publier tout de suite UN article récent au hasard (hors choix X)'
+        type: boolean
+        default: false
+      bot_label:
+        description: 'Ajouter l’étiquette « bot » au profil (autres champs conservés) — avec dry_run : essai'
         type: boolean
         default: false
 
@@ -36,7 +41,15 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
-      - name: Publier les créneaux dus
+      - name: Étiquette « bot » du profil
+        if: inputs.bot_label
+        env:
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: node scripts/social/bluesky-label.mjs
+      - name: Publier les articles frais
+        if: ${{ !inputs.bot_label }}
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
