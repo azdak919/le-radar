@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-01T02:07:21.314Z",
+  "updated": "2026-11-01T03:37:41.126Z",
   "total": 184,
   "pool": 53,
   "incomplete": 6,
   "withLeadExcerpt": 126,
   "candidates": 6,
-  "enriched": 0,
-  "failed": 1,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -19,13 +19,13 @@
       "changed": false
     },
     {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
+      "title": "Cinema Politica screens Edward Said documentary",
+      "link": "https://thelinknewspaper.ca/article/16532",
       "ok": true,
-      "score": 84,
-      "chars": 400,
-      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": false
+      "score": 96,
+      "chars": 290,
+      "sample": "Cinema Politica held a screening of the documentary Edward Said: Between Worlds at the Sir George Wi",
+      "changed": true
     },
     {
       "title": "L’aveuglement du cynisme chic",
@@ -43,15 +43,6 @@
       "score": 96,
       "chars": 400,
       "sample": "Debout au milieu du square, on peine à s’entendre parler au-dessus des slogans scandés par la foule ",
-      "changed": false
-    },
-    {
-      "title": "Strong Start to the Season for the Gaiters",
-      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
-      "ok": true,
-      "score": 77,
-      "chars": 400,
-      "sample": "After a championship-winning season in 2024- 2025, the Gaiters faced a transitional year with a new ",
       "changed": false
     }
   ]

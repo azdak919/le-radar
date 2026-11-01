@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-01T02:07:04.559Z",
+  "updated": "2026-11-01T03:37:12.130Z",
   "total": 184,
   "withAuthor": 184,
-  "mismatches": 15,
+  "mismatches": 20,
   "ok": true,
   "samples": [
+    {
+      "title": "Cinema Politica screens Edward Said documentary",
+      "link": "https://thelinknewspaper.ca/article/16532",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Sana Paracha",
+      "reason": "page-byline"
+    },
     {
       "title": "BU Snow Prepares for Another Winter at Bishop’s",
       "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops/",
@@ -124,7 +132,39 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "MUNACA’s Campaign Exposes the McGill Administration’s Greed",
+      "link": "https://www.mcgilldaily.com/2026/10/munacas-campaign-exposes-the-mcgill-administrations-greed/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Searching For a Third Space",
+      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 15
+  "fixed": 20
 }
