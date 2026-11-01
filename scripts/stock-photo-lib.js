@@ -1371,6 +1371,39 @@ function namesOtherCampus(item = {}, meta = {}) {
   return !needles.some((w) => photo.includes(w));
 }
 
+/*
+ * Équipe sportive d'une AUTRE école (1er nov. 2026) : « Nipissing Lakers
+ * women's ice hockey » sur un article des Gaiters (The Campus, Bishop's).
+ * Nom d'équipe → mot-clé de l'établissement (comparé à item.institution).
+ */
+const CAMPUS_TEAMS = [
+  ['lakers', 'nipissing'], ['gee gees', 'ottawa'], ['ravens', 'carleton'], ['mustangs', 'western'],
+  ['gryphons', 'guelph'], ['stingers', 'concordia'], ['redbirds', 'mcgill'], ['martlets', 'mcgill'],
+  ['carabins', 'montreal'], ['rouge et or', 'laval'], ['vert et or', 'sherbrooke'], ['vert or', 'sherbrooke'],
+  ['patriotes', 'trois rivieres'], ['citadins', 'uqam'], ['gaiters', 'bishop'], ['gaels', 'queen'],
+  ['varsity blues', 'toronto'], ['marauders', 'mcmaster'], ['golden hawks', 'laurier'], ['warriors', 'waterloo'],
+  ['lancers', 'windsor'], ['badgers', 'brock'], ['ridgebacks', 'ontario tech'], ['thunderwolves', 'lakehead'],
+  ['voyageurs', 'laurentian'], ['paladins', 'royal military'], ['lions', 'york'], ['bold', 'toronto metropolitan'],
+  ['mounties', 'mount allison'], ['x men', 'st francis xavier'], ['x women', 'st francis xavier'], ['tigers', 'dalhousie'],
+  ['huskies', 'saint mary'], ['varsity reds', 'new brunswick'], ['aigles bleus', 'moncton'], ['panthers', 'prince edward'],
+  ['sea hawks', 'memorial'], ['capers', 'cape breton'], ['axemen', 'acadia'], ['axewomen', 'acadia'],
+  ['bisons', 'manitoba'], ['wesmen', 'winnipeg'], ['cougars', 'regina'], ['dinos', 'calgary'],
+  ['golden bears', 'alberta'], ['pandas', 'alberta'], ['pronghorns', 'lethbridge'], ['thunderbirds', 'british columbia'],
+  ['vikes', 'victoria'], ['clan', 'simon fraser'], ['spartans', 'trinity western'], ['wolfpack', 'thompson rivers'],
+  ['heat', 'fraser valley'], ['griffons', 'outaouais'], ['nordiques', 'lionel groulx'], ['titans', 'limoilou'],
+  ['elans', 'garneau'], ['dynamiques', 'sainte foy'], ['cheetahs', 'vanier'], ['blues', 'dawson'],
+  ['islanders', 'john abbott'], ['phenix', 'andre laurendeau'], ['volontaires', 'sherbrooke cegep'],
+];
+function namesOtherSchoolTeam(item = {}, meta = {}) {
+  const photo = ` ${normalizeText(photoTitleOf(item, meta)).replace(/[&-]/g, ' ').replace(/\s+/g, ' ')} `;
+  const inst = normalizeText(`${item.institution || ''} ${item.source || ''}`).replace(/-/g, ' ');
+  for (const [team, school] of CAMPUS_TEAMS) {
+    if (!photo.includes(` ${team} `)) continue;
+    if (!inst.includes(school.split(' ')[0])) return true;
+  }
+  return false;
+}
+
 function stockStillFits(item, meta = {}) {
   if (!item?.stockImage) return true;
 
@@ -1390,6 +1423,7 @@ function stockStillFits(item, meta = {}) {
   }
 
   if (namesOtherCampus(item, meta)) return false;
+  if (namesOtherSchoolTeam(item, meta)) return false;
   if (placeTopicConcordance(item, meta)) return true;
 
   // Mêmes garde-fous qu'à la recherche : sujet visuel nommé, puis photo qui
@@ -1880,6 +1914,8 @@ module.exports = {
   stockStillFits,
   placeTopicConcordance,
   namesOtherCampus,
+  namesOtherSchoolTeam,
+  CAMPUS_TEAMS,
   scoreCandidate,
   STOCK_MIN_RETAIN_SCORE,
   searchOpenverse,
