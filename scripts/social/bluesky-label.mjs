@@ -33,7 +33,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.log(`Bio (${n} graphèmes) et nom affiché « ${name} » à appliquer.`);
   }
   if (process.env.SET_IMAGES === 'true') {
-    // Images HD approuvées : data/social/bluesky-avatar.png (2048²) et bluesky-banner.jpg (1500×500), < 1 Mo chacune.
+    // Images HD approuvées : data/social/bluesky-avatar.png (2048²) et bluesky-banner.jpg (3000×1000), < 1 Mo chacune.
     const { readFileSync } = await import('node:fs');
     const imgs = { avatar: ['bluesky-avatar.png', 'image/png'], banner: ['bluesky-banner.jpg', 'image/jpeg'] };
     next = { ...(next || { ...value, $type: 'app.bsky.actor.profile' }) };
