@@ -1,5 +1,8 @@
 // Logique pure des publications sociales du Radar (testée dans tests/social-buffer.mjs).
-export const X_LIMIT = 275;      // marge sous 280
+// Limite par réseau (comptage de la plateforme ; liens X = 23). Les @ viennent d'une liste
+// PAR réseau (data/social/x-accounts.json pour X) : ne jamais réutiliser les @ X ailleurs.
+export const LIMITS = { x: 280, bluesky: 300, mastodon: 500 };
+export const X_LIMIT = LIMITS.x;
 export const URL_LEN = 23;       // X compte tout lien comme 23 caractères
 export const QUEUE_MAX = 10;     // forfait gratuit Buffer : 10 posts planifiés par canal
 export const PER_SOURCE_MAX = 2;
@@ -96,9 +99,13 @@ export function buildText(it, accounts = [], limit = X_LIMIT) {
   const mk = e => `${joinHead(head, e, en)}${tail}`;
   let ex = excerpt(it);
   if (ex && xlen(mk(ex)) > limit) {
-    const budget = limit - xlen(mk('')) - 3;
-    let cut = [...ex].slice(0, Math.max(0, budget)).join(''); const sp = cut.lastIndexOf(' ');
-    cut = (sp > 0 ? cut.slice(0, sp) : '').replace(/[\s,;:.–-]+$/, ''); ex = cut.length >= 20 ? cut + '…' : '';
+    // coupe au dernier mot entier qui tient avec « … » (jamais au milieu d'un mot)
+    const words = ex.split(' '); let best = '';
+    for (let k = 1; k <= words.length; k++) {
+      const c = words.slice(0, k).join(' ').replace(/[\s,;:.–-]+$/, '') + '…';
+      if (xlen(mk(c)) <= limit) best = c; else break;
+    }
+    ex = best.length >= 21 ? best : '';
   }
   let text = mk(ex), t = head;
   while (xlen(text) > limit) { t = t.slice(0, -2).trimEnd() + '…'; text = `${t}${tail}`; }

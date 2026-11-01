@@ -28,7 +28,11 @@ assert(items.every(i => !/utm_/.test(i.link)));
 // format + longueur + phrases parasites
 for (const it of items) {
   const t = buildText(it, accounts);
-  assert(xlen(t) <= 275, `trop long : ${xlen(t)}`);
+  assert(xlen(t) <= 280, `trop long : ${xlen(t)}`);
+  assert(xlen(t) >= 270, `trop court : ${xlen(t)}`);
+  const ex = t.split('\n')[0]; const last = ex.split(' ').at(-1);
+  assert(ex.endsWith('…') && /^\p{L}+…$/u.test(last) && it.desc.includes(last.slice(0, -1) + ' '), `coupe à un mot entier : ${last}`);
+  if (['The Link', "L'Exemplaire", 'Le Polyscope'].includes(it.source)) assert(/^@\w+ • /.test(t), '@ du média sur X');
   assert(t.endsWith('\n' + it.link), 'lien en fin');
   assert(!/cliquer ici|lire la suite/i.test(t), 'phrase parasite retirée');
   assert(/…\n/.test(t), 'extrait coupé avec …');
@@ -137,5 +141,12 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   assert.equal(bulletHead('@Linknewspaper – Sana Paracha: Cinema Politica'), '@Linknewspaper • Sana Paracha • Cinema Politica');
   assert.equal(bulletHead('@quartierlibre – S G : Jeu : un rêve'), '@quartierlibre • S G • Jeu : un rêve');
   assert.equal(joinHead('@Linknewspaper • Sana Paracha • Cinema Politica', 'Ex', true), '@Linknewspaper • Sana Paracha • Cinema Politica: Ex');
+}
+// limites par réseau
+{
+  const { LIMITS } = await import('../scripts/social/lib.mjs');
+  assert.deepEqual(LIMITS, { x: 280, bluesky: 300, mastodon: 500 });
+  const t5 = buildText(items[0], [], LIMITS.mastodon);
+  assert(xlen(t5) <= 500 && xlen(t5) > 400 && !t5.startsWith('@'), 'Mastodon : plus long, aucun @ X');
 }
 console.log('social-buffer: ok');
