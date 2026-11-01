@@ -10,7 +10,8 @@ import { parseFeed, markImages } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildTumblrText, npfBody, detectLang, BLOG } from './tumblr.mjs';
 import { createTumblr } from './channels/tumblr.mjs';
-import { plan, freshCandidates } from './rate-limit.mjs';
+import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
+import { jitterMs } from './schedule.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/tumblr-sent.json');
@@ -38,20 +39,20 @@ const items = parseFeed(xml); if (!items.length) throw new Error('feed.xml vide'
 const repeated = markImages(items);
 const pl = plan(items, state.sent, { network: 'tumblr', liveSince: state.liveSince, accounts: ACCOUNTS });
 const { limits, status } = pl;
-console.log(`Tumblr ${blog} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s).`);
+console.log(`Tumblr ${blog} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h (poids horaire ${limits.weight}, rodage ×${limits.ramp}) · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s).`);
 for (const it of pl.skip) { console.log(`Sauté (plafond ou variété, jamais rattrapé) : [${it.source}] ${it.id}`); if (!dry) state.sent[it.id] = { at: new Date().toISOString(), skipped: 'cap', source: it.source }; }
 let todo = pl.now.map(it => ({ id: it.id }));
 if (shareNow) {
   const pool = freshCandidates(items, state.sent, { liveSince: state.liveSince });
   const best = [pool.filter(p => p.img && !p.imgDropped), pool].find(l => l.length) || [];
-  todo = status.left && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
+  todo = status.dayLeft && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
 }
 if (!todo.length) { save(); console.log('Rien de frais à publier.'); process.exit(0); }
 
 const posted = dry ? new Set() : await tb.recentLinks();
 const used = new Map(); let n = 0;
 for (const t of todo) {
-  if (n && !dry) await new Promise(r => setTimeout(r, limits.gapSec * 1000));
+  if (n && !dry) await new Promise(r => setTimeout(r, jitterMs(limits.gapSec)));
   const it = items.find(i => i.id === t.id);
   const im = await resolveImage(it, { used, repeated });
   const text = buildTumblrText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
@@ -60,7 +61,7 @@ for (const t of todo) {
   if (dry) continue;
   if (posted.has(it.link)) { console.log('Déjà sur Tumblr (vérifié dans le blogue) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
   const p = await tb.post(body);
-  state.sent[it.id] = { at: new Date().toISOString(), source: it.source, id: p.id, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
+  state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), id: p.id, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
   save();
   console.log(`→ Tumblr : ${p.url}`);
 }

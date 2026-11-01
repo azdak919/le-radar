@@ -12,7 +12,8 @@ import { parseFeed, markImages } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildBskyText, graphemes, detectLang, postRecord, facets, BSKY_LIMIT } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
-import { plan, freshCandidates } from './rate-limit.mjs';
+import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
+import { jitterMs } from './schedule.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/bluesky-sent.json');
@@ -31,13 +32,13 @@ const items = parseFeed(xml); if (!items.length) throw new Error('feed.xml vide'
 const repeated = markImages(items);
 const pl = plan(items, state.sent, { network: 'bluesky', liveSince: state.liveSince, accounts: ACCOUNTS });
 const { limits, status } = pl;
-console.log(`Bluesky ${handle} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s) (plafond/variété).`);
+console.log(`Bluesky ${handle} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h (poids horaire ${limits.weight}, rodage ×${limits.ramp}) · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s) (plafond/variété).`);
 for (const it of pl.skip) { console.log(`Sauté (plafond ou variété, jamais rattrapé) : [${it.source}] ${it.id}`); if (!dry) state.sent[it.id] = { at: new Date().toISOString(), skipped: 'cap', source: it.source }; }
 let todo = pl.now.map(it => ({ id: it.id }));
 if (shareNow) {
   const pool = freshCandidates(items, state.sent, { liveSince: new Date(0).toISOString() });
   const best = [pool.filter(p => p.img && !p.imgDropped), pool].find(l => l.length) || [];
-  todo = status.left && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
+  todo = status.dayLeft && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
 }
 if (!todo.length) { save(); process.exit(0); }
 
@@ -49,7 +50,7 @@ if (!dry) {
 }
 const used = new Map(); let n = 0;
 for (const t of todo) {
-  if (n && !dry) await new Promise(r => setTimeout(r, limits.gapSec * 1000)); // espacement, pas de rafale
+  if (n && !dry) await new Promise(r => setTimeout(r, jitterMs(limits.gapSec))); // espacement, pas de rafale
   const it = items.find(i => i.id === t.id);
   if (!it) { console.log(`::warning::${t.id} absent du flux, non publié.`); if (!dry) state.sent[t.id] = { at: new Date().toISOString(), skipped: 'absent du flux' }; continue; }
   const im = await resolveImage(it, { used, repeated });
@@ -60,7 +61,7 @@ for (const t of todo) {
   let thumb = null; if (im) { try { thumb = await bs.uploadImage(im.url); } catch (e) { console.log(`::warning::image non téléversée : ${e.message}`); } }
   const rec = postRecord({ text, lang, dids, card: { uri: it.link, title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } });
   const p = await bs.post(rec);
-  state.sent[it.id] = { at: new Date().toISOString(), source: it.source, uri: p.uri, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
+  state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), uri: p.uri, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
   save();
   console.log(`→ Bluesky : ${p.url}`);
 }

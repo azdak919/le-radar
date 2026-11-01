@@ -43,10 +43,10 @@ assert.deepEqual(r.due.map(x => x.id), ['d', 'a']); assert.deepEqual(r.late.map(
 r = dueItems(xs, { a: {}, d: {} }, { now });
 assert.deepEqual(r.due, [], 'jamais deux fois');
 
-// Worker : déclenche seulement dans les 35 min suivant un créneau (heure de Toronto, HNE/HAE)
-assert.equal(slotsDue(Date.parse('2026-11-01T17:05:00Z')), true);   // 12 h 05 HNE
-assert.equal(slotsDue(Date.parse('2026-11-01T16:35:00Z')), false);  // 11 h 35 HNE
-assert.equal(slotsDue(Date.parse('2026-07-01T11:35:00Z')), true);   // 7 h 35 HAE
+// Créneaux X : seulement dans les 35 min suivant un créneau (heure de Toronto, HNE/HAE)
+assert.equal(slotsDue(Date.parse('2026-11-01T17:35:00Z')), true);   // 12 h 35 HNE
+assert.equal(slotsDue(Date.parse('2026-11-01T15:35:00Z')), false);  // 10 h 35 HNE
+assert.equal(slotsDue(Date.parse('2026-07-01T12:35:00Z')), true);   // 8 h 35 HAE
 console.log('social-bluesky : OK');
 
 // Bogue « Québec: » : titre français avec deux-points collé → reste français (espace avant « : »)

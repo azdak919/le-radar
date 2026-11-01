@@ -124,13 +124,13 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   const few = parseFeed('<rss>' + mk('S1', 0, '2026-10-31T15:00:00Z') + mk('Avant', 0, '2026-10-30T15:00:00Z') + mk('Vieux', 0, '2026-10-27T15:00:00Z') + '</rss>');
   const d3 = selectDaily(few, { now: run });
   assert.deepEqual(d3.map(i => i.source).sort(), ['Avant', 'S1']);
-  // créneaux : 10 fixes en HNE le 1er nov., 07:30 HNE = 12:30Z ; pris → retirés
+  // créneaux : 10 fixes en HNE le 1er nov., 08:30 HNE = 13:30Z ; pris → retirés
   const z = slotsToday(DAILY_SLOTS, { now: run });
-  assert.equal(z.length, 10); assert.equal(z[0], '2026-11-01T12:30:00.000Z'); assert.equal(z[9], '2026-11-02T02:30:00.000Z');
-  assert.deepEqual(freeSlots(z, ['2026-11-01T12:30:00.000Z', '2026-11-01T14:00:00Z']).length, 8);
+  assert.equal(z.length, 10); assert.equal(z[0], '2026-11-01T13:30:00.000Z'); assert.equal(z[9], '2026-11-02T02:00:00.000Z');
+  assert.deepEqual(freeSlots(z, ['2026-11-01T13:30:00.000Z', '2026-11-01T17:30:00Z']).length, 8);
   // été (HAE) : 07:30 = 11:30Z ; créneaux passés ignorés
   assert.equal(slotsToday(['07:30'], { now: Date.parse('2026-07-01T08:07:00Z') })[0], '2026-07-01T11:30:00.000Z');
-  assert.equal(slotsToday(DAILY_SLOTS, { now: Date.parse('2026-11-01T18:00:00Z') }).length, 5);
+  assert.equal(slotsToday(DAILY_SLOTS, { now: Date.parse('2026-11-01T18:00:00Z') }).length, 7);
   // veille correcte au passage à l'heure avancée (8 mars 2026)
   const sp = parseFeed('<rss>' + mk('P', 0, '2026-03-07T20:00:00Z') + mk('Q', 0, '2026-03-08T20:00:00Z') + '</rss>');
   assert.deepEqual(selectDaily(sp, { now: Date.parse('2026-03-09T08:07:00Z'), slots: 1 }).map(i => i.source), ['Q']);
