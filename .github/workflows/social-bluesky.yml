@@ -21,6 +21,10 @@ on:
         description: 'Ajouter l’étiquette « bot » au profil (autres champs conservés) — avec dry_run : essai'
         type: boolean
         default: false
+      set_bio:
+        description: 'Appliquer la bio de data/social/bluesky-bio.txt (autres champs conservés) — avec dry_run : essai'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -42,14 +46,15 @@ jobs:
         with:
           node-version: '24'
       - name: Étiquette « bot » du profil
-        if: inputs.bot_label
+        if: inputs.bot_label || inputs.set_bio
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          SET_BIO: ${{ inputs.set_bio && 'true' || 'false' }}
         run: node scripts/social/bluesky-label.mjs
       - name: Publier les articles frais
-        if: ${{ !inputs.bot_label }}
+        if: ${{ !inputs.bot_label && !inputs.set_bio }}
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
