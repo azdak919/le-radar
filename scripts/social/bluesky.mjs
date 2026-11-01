@@ -1,7 +1,8 @@
 // Logique pure Bluesky (testée dans tests/social-bluesky.mjs) : longueur en graphèmes,
 // facettes (octets UTF-8), langue, articles dus. Les @ viennent de data/social/bluesky-accounts.json
 // (jamais de la liste X).
-import { buildText, LIMITS } from './lib.mjs';
+import { buildText, LIMITS, detectLang } from './lib.mjs';
+export { detectLang };
 
 const seg = new Intl.Segmenter('fr', { granularity: 'grapheme' });
 export const graphemes = s => [...seg.segment(s || '')].length;
@@ -9,15 +10,6 @@ export const BSKY_LIMIT = LIMITS.bluesky;
 export const GRACE_H = 2;
 const enc = new TextEncoder();
 const bytes = s => enc.encode(s).length;
-
-/** Langue de l'article : mots-outils fr vs en (titre + extrait). */
-export function detectLang(it) {
-  const w = ` ${(it.title + ' ' + (it.desc || '')).toLowerCase().replace(/[^a-zà-ÿ’']+/g, ' ')} `;
-  const n = list => list.reduce((k, x) => k + (w.split(` ${x} `).length - 1), 0);
-  const fr = n(['le', 'la', 'les', 'des', 'du', 'et', 'est', 'une', 'dans', 'pour', 'que', 'qui', 'au', 'sur', 'pas', 'avec']);
-  const en = n(['the', 'and', 'of', 'to', 'is', 'in', 'for', 'that', 'with', 'on', 'are', 'was', 'this', 'from', 'at', 'it']);
-  return en > fr ? 'en' : 'fr';
-}
 
 /** Texte Bluesky : même format que X ; lien gardé dans le texte seulement s'il laisse ≥ 100 car. d'extrait. */
 export function buildBskyText(it, accounts = [], { credit = '', photo = true } = {}) {

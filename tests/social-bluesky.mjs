@@ -48,3 +48,19 @@ assert.equal(slotsDue(Date.parse('2026-11-01T17:05:00Z')), true);   // 12 h 05 H
 assert.equal(slotsDue(Date.parse('2026-11-01T16:35:00Z')), false);  // 11 h 35 HNE
 assert.equal(slotsDue(Date.parse('2026-07-01T11:35:00Z')), true);   // 7 h 35 HAE
 console.log('social-bluesky : OK');
+
+// Bogue « Québec: » : titre français avec deux-points collé → reste français (espace avant « : »)
+import { buildText, isEnglish } from '../scripts/social/lib.mjs';
+const qc = { id: 'q', source: 'The Concordian', author: 'Ilario', title: 'Le plan chaleur 2026 de Montréal, une mesure « pansement » face à la montée de l’itinérance au Québec: Paul St-Pierre Plamondon', bare: 'Le plan chaleur 2026 de Montréal, une mesure « pansement » face à la montée de l’itinérance au Québec', link: 'https://ex.org/a', desc: 'Paul St-Pierre Plamondon en a fait sa priorité dans les régions du Québec et la ville est sous pression depuis des mois.' };
+assert.equal(detectLang(qc), 'fr'); assert.equal(isEnglish(qc.title), false);
+assert(buildText(qc, []).includes('au Québec : Paul'), 'espace avant « : » en français');
+assert.equal(isEnglish('Carabins 4, Stingers 0: Stingers lose in their home opener'), true);
+console.log('social-bluesky (langue) : OK');
+
+// Listes Bluesky : handles uniques, did présents, sources = cle_flux
+import fs2 from 'node:fs';
+const fl = JSON.parse(fs2.readFileSync(new URL('../data/social/bluesky-follows.json', import.meta.url))).follows;
+assert(fl.every(x => /^did:plc:/.test(x.did) && !x.handle.startsWith('@')) && new Set(fl.map(x => x.did)).size === fl.length, 'follows valides');
+const ba = JSON.parse(fs2.readFileSync(new URL('../data/social/bluesky-accounts.json', import.meta.url))).accounts;
+assert(ba.every(a => a.handle.startsWith('@') && a.type === 'source' && a.cle_flux), 'comptes valides');
+console.log('social-bluesky (listes) : OK');
