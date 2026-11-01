@@ -365,8 +365,10 @@ function buildItemXml(item = {}, sourceSites = {}) {
   const description = buildDescriptionText(item);
   const imageUrl = itemImageUrl(item);
   const credit = photoCreditLine(item);
-  const author = itemAuthor(item);
   const sourceName = String(item.source || '').trim();
+  // Signature générique (« The editorial team ») : le média est l’auteur.
+  const rawAuthor = itemAuthor(item);
+  const author = rawAuthor && isMastheadName(rawAuthor, sourceName) ? sourceName : rawAuthor;
   const sourceUrl = sourceHomeUrl(item, sourceSites);
 
   const categories = [
