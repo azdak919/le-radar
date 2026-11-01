@@ -2,7 +2,7 @@
 // Pages Facebook / LinkedIn via Buffer : fenêtres, rodage, places libres, écart, format sans @, lien.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { planDues, dayCap, buildPageText, pageLink, selectForPage, isRejection } from '../scripts/social/buffer-pages.mjs';
+import { planDues, dayCap, buildPageText, pageLink, selectForPage, isRejection, postMetadata } from '../scripts/social/buffer-pages.mjs';
 import { weightAt, localParts } from '../scripts/social/schedule.mjs';
 import { matchChannel } from '../scripts/social/channels/x-buffer.mjs';
 const CFG = JSON.parse(fs.readFileSync(new URL('../data/social/buffer-pages.json', import.meta.url)));
@@ -68,4 +68,6 @@ assert(!matchChannel({ service: 'linkedin', name: 'Charles' }, 'linkedin', 'LE-R
 assert(matchChannel({ service: 'twitter', name: '@LeRadar_ca' }, 'x', 'LeRadar_ca'));
 assert(isRejection('People in Canada can’t see news content') && isRejection('Link blocked by Facebook') && !isRejection('timeout'));
 assert.equal(localParts(T('2026-11-01T17:00:00Z')).weekend, true);
+assert.deepEqual(postMetadata('facebook'), { facebook: { type: 'post' } }, 'Facebook : type post exigé par Buffer');
+assert.equal(postMetadata('linkedin'), undefined);
 console.log('social-buffer-pages : OK');

@@ -9,7 +9,7 @@ import path from 'node:path';
 import { parseFeed, markImages, QUEUE_MAX } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
-import { planDues, selectForPage, buildPageText, isRejection } from './buffer-pages.mjs';
+import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -69,7 +69,7 @@ for (const net of networks) {
     console.log(`\n--- ${net} ${i + 1}. ${new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })} (HNE) [${it.source}] · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
     if (dry) continue;
     try {
-      const post = await ch.add({ text, image: im?.url, dueAt });
+      const post = await ch.add({ text, image: im?.url, dueAt, metadata: postMetadata(cfg.service) });
       sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt };
       save();
       console.log(`→ Buffer ${net} : ${post.id} (${post.dueAt || dueAt})`);
