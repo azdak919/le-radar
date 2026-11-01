@@ -1,26 +1,26 @@
 {
   "version": 1,
-  "updated": "2026-10-01T19:18:48.560Z",
-  "probedAt": "2026-10-01T19:18:48.560Z",
+  "updated": "2026-11-01T18:46:50.281Z",
+  "probedAt": "2026-11-01T18:46:50.281Z",
   "note": "Catalogue des langues autochtones du Québec pour LE-RADAR.ca (Premiers Peuples + Inuit). Le bot scripts/probe-indigenous-mt.js (cron mensuel) sonde les moteurs publics et active une langue dès qu'un code gtx/libretranslate répond de façon fiable. Labels = endonymes ; nameFr = nom en français (UI).",
   "engines": {
     "gtx": {
       "name": "Google Translate (gtx, sans clé)",
       "probeUrl": "https://translate.googleapis.com/translate_a/single",
-      "lastCheck": "2026-10-01T19:18:48.560Z",
+      "lastCheck": "2026-11-01T18:46:50.281Z",
       "ok": true
     },
     "microsoft_list": {
       "name": "Microsoft Translator — liste des langues",
       "probeUrl": "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0",
-      "lastCheck": "2026-10-01T19:18:48.560Z",
+      "lastCheck": "2026-11-01T18:46:50.281Z",
       "ok": true,
       "count": 138
     },
     "libretranslate": {
       "name": "LibreTranslate public",
       "probeUrl": "https://libretranslate.com/languages",
-      "lastCheck": "2026-10-01T19:18:48.560Z",
+      "lastCheck": "2026-11-01T18:46:50.281Z",
       "ok": true,
       "count": 51
     }
@@ -55,12 +55,11 @@
       "engine": "gtx",
       "goog": "iu",
       "lastProbe": {
-        "at": "2026-10-01T19:18:39.946Z",
-        "gtx": true,
-        "gtxCode": "iu",
+        "at": "2026-11-01T18:46:36.831Z",
+        "gtx": false,
+        "gtxCode": null,
         "microsoft": true,
-        "libretranslate": false,
-        "sample": "ᕼᐊᓘ ᐃᓕᓐᓂᐊᖅᑏᑦ. ᑐᙵᓱᒋᑦ ᐃᓕᓐᓂᐊᖅᑏᑦ ᑐᓴᒐᒃᓴᖁᑎᖏᓐᓄᑦ ᑯᐸᐃᒃ ᓯᓚᑦᑐᖅᓴᕐᕕᒡᔪᐊᖏᓐᓂᑦ ᐊᒻᒪ ᓯᓚᑦᑐᖅᓴᕐᕕᖕᓂᑦ."
+        "libretranslate": false
       }
     },
     {
@@ -92,12 +91,11 @@
       "engine": "gtx",
       "goog": "iu-Latn",
       "lastProbe": {
-        "at": "2026-10-01T19:18:41.598Z",
-        "gtx": true,
-        "gtxCode": "iu-Latn",
+        "at": "2026-11-01T18:46:38.422Z",
+        "gtx": false,
+        "gtxCode": null,
         "microsoft": true,
-        "libretranslate": false,
-        "sample": "Haluu ilinniaqtiit. Tunngasugit ilinniaqtinut tusagaksanut kupaik silattuqsarvigjuanginnit amma silattuqsarvigjuanginnit"
+        "libretranslate": false
       }
     },
     {
@@ -129,7 +127,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-10-01T19:18:43.167Z",
+        "at": "2026-11-01T18:46:39.913Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -160,7 +158,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-10-01T19:18:45.093Z",
+        "at": "2026-11-01T18:46:43.544Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -190,7 +188,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-10-01T19:18:45.857Z",
+        "at": "2026-11-01T18:46:45.133Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -223,7 +221,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-10-01T19:18:46.273Z",
+        "at": "2026-11-01T18:46:45.864Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -253,7 +251,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-10-01T19:18:47.799Z",
+        "at": "2026-11-01T18:46:48.719Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -283,7 +281,7 @@
       "engine": null,
       "goog": null,
       "lastProbe": {
-        "at": "2026-10-01T19:18:48.181Z",
+        "at": "2026-11-01T18:46:49.468Z",
         "gtx": false,
         "gtxCode": null,
         "microsoft": false,
@@ -292,6 +290,20 @@
     }
   ],
   "history": [
+    {
+      "at": "2026-11-01T18:46:50.281Z",
+      "newlyEnabled": [],
+      "stillWaiting": [
+        "cr",
+        "moe",
+        "atj",
+        "alq",
+        "moh",
+        "mic"
+      ],
+      "microsoftOk": true,
+      "libreOk": true
+    },
     {
       "at": "2026-10-01T19:18:48.560Z",
       "newlyEnabled": [],
