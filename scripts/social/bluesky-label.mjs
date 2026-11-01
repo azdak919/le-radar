@@ -25,15 +25,20 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const bio = readFileSync(new URL('../../data/social/bluesky-bio.txt', import.meta.url), 'utf8').replace(/\n+$/, '');
     const n = [...new Intl.Segmenter('fr', { granularity: 'grapheme' }).segment(bio)].length;
     if (n > 256) throw new Error(`bio trop longue : ${n} graphèmes`);
-    keys.splice(keys.indexOf('description'), 1);
-    if (value.description === bio && !next) { console.log('Bio déjà à jour : inchangé.'); process.exit(0); }
-    next = { ...(next || { ...value, $type: 'app.bsky.actor.profile' }), description: bio };
-    console.log(`Bio (${n} graphèmes) à appliquer.`);
+    const name = readFileSync(new URL('../../data/social/bluesky-display-name.txt', import.meta.url), 'utf8').trim();
+    if ([...name].length > 64) throw new Error('nom affiché trop long');
+    for (const k of ['description', 'displayName']) if (keys.includes(k)) keys.splice(keys.indexOf(k), 1);
+    if (value.description === bio && value.displayName === name && !next) { console.log('Bio et nom déjà à jour : inchangé.'); process.exit(0); }
+    next = { ...(next || { ...value, $type: 'app.bsky.actor.profile' }), description: bio, displayName: name };
+    console.log(`Bio (${n} graphèmes) et nom affiché « ${name} » à appliquer.`);
   }
   console.log(`Profil ${handle} : champs présents ${keys.join(', ')} ; étiquettes ${JSON.stringify((value.labels?.values || []).map(v => v.val))}`);
   if (!next) { console.log('Étiquette « bot » déjà présente : inchangé.'); process.exit(0); }
   for (const k of keys) if (JSON.stringify(next[k]) !== JSON.stringify(value[k])) throw new Error(`champ ${k} modifié`);
   if (dry) { console.log('ESSAI : écrirait le profil (bio/étiquette), autres champs conservés.'); process.exit(0); }
+  // Relecture juste avant l'écriture : une bannière/avatar téléversé entre-temps n'est pas écrasé.
+  const fresh = await bs.getProfile();
+  if (fresh.cid !== cid) { console.log('Profil modifié entre-temps : relancer.'); process.exit(1); }
   await bs.putProfile(next, cid);
   const after = (await bs.getProfile()).value;
   for (const k of keys) if (JSON.stringify(after[k]) !== JSON.stringify(value[k])) throw new Error(`champ ${k} perdu après écriture`);

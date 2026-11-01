@@ -22,7 +22,7 @@ on:
         type: boolean
         default: false
       set_bio:
-        description: 'Appliquer la bio de data/social/bluesky-bio.txt (autres champs conservés) — avec dry_run : essai'
+        description: 'Appliquer la bio et le nom affiché (data/social/bluesky-bio.txt, bluesky-display-name.txt) (autres champs conservés) — avec dry_run : essai'
         type: boolean
         default: false
 
