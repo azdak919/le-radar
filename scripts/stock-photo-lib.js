@@ -182,6 +182,9 @@ const FOREIGN_LOCATION_MARKERS = [
   'africa', 'brazil', 'mexico city', 'buenos aires', 'moscow', 'istanbul',
   'nigeria', 'lagos', 'ghana', 'kenya', 'nairobi', 'delhi', 'mumbai', 'pakistan',
   'philippines', 'korea', 'vietnam', 'indonesia',
+  // États-Unis : « Students voting… University of Texas at Arlington » pour
+  // un débat à Bishop's (The Campus, oct. 2026).
+  'texas', 'arlington', 'california', 'florida', 'ohio', 'michigan', 'united states', 'washington dc',
 ];
 
 /* Graphiques, cartes, logos : pas des photos (« 2025 Canadian Election -
@@ -1789,7 +1792,7 @@ async function findStockPhoto(item) {
     // Les dimensions réelles peuvent différer de celles annoncées : re-scorer.
     if (scoreCandidate(valid, matchTokens, context) < STOCK_MIN_RETAIN_SCORE) continue;
     const creator = cleanCreatorName(valid.creator || valid.artist || '');
-    return {
+    const result = {
       stockImage: valid.url,
       imageTitle: valid.title || '',
       imageCredit: formatAttribution(valid),
@@ -1798,6 +1801,13 @@ async function findStockPhoto(item) {
       imageProvider: valid.provider,
       imageSourceUrl: valid.foreignLandingUrl || valid.url,
     };
+    // Même règle à l'entrée qu'à la rétention : les tags Openverse (très
+    // larges) faisaient passer « marche pour le climat, Paris » pour un
+    // article sur l'Albanie, retiré à la passe suivante puis repris — boucle
+    // qui laissait une photo hors sujet en ligne (Le Délit, 28 oct. 2026 ;
+    // « Elk in Grand Canyon » pour BU Snow, The Campus).
+    if (!stockStillFits({ ...item, ...result })) continue;
+    return result;
   }
 
   return null;
