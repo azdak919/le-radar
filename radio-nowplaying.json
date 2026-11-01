@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-01T16:36:54.539Z",
+  "updatedAt": "2026-11-01T17:36:47.477Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Remparts de Québec",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:45",
         "end": "16:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T16:36:05.596Z"
+      "checkedAt": "2026-11-01T17:36:06.955Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T16:36:07.993Z"
+      "checkedAt": "2026-11-01T17:36:09.194Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T16:36:19.911Z"
+      "checkedAt": "2026-11-01T17:36:12.353Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
-      },
-      "next": {
         "title": "Brave Little Emo Girl",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
+      "next": {
+        "title": "Northern Stagelights",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T16:36:35.124Z"
+      "checkedAt": "2026-11-01T17:36:27.585Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,28 +121,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T16:36:36.168Z"
+      "checkedAt": "2026-11-01T17:36:28.768Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "OPUS",
         "source": "api-live",
         "start": "12:00",
         "end": "13:00",
         "slug": "opus"
       },
+      "next": {
+        "title": "Pôle hip-hop",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00",
+        "slug": "pole-hip-hop"
+      },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "",
+      "showTitle": "OPUS",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T16:36:54.188Z"
+      "checkedAt": "2026-11-01T17:36:47.127Z"
     }
   }
 }
