@@ -1,42 +1,45 @@
 #!/usr/bin/env node
-// Bot Bluesky du Radar : publie les MÊMES choix nocturnes que X (data/buffer-sent.json) quand
-// leur créneau est passé (≤ 2 h, sinon sauté). Déclenché par le Worker le-radar-news-trigger
-// (aux :05/:35) + cron GitHub de secours. Idempotent : data/bluesky-sent.json + vérification
-// des derniers posts du compte. Sans BLUESKY_APP_PASSWORD : essai.
-// SHARE_NOW=true : UN article récent au hasard, hors choix X, publié tout de suite.
+// Bot Bluesky du Radar : publie les articles FRAIS du flux à mesure qu'ils sont moissonnés
+// (≤ 24 h, jamais avant la mise en service = state.liveSince : aucun rattrapage), une seule fois,
+// espacés (≤ perRun par passage, gapSec entre deux). Plafond bluesky de rate-limit.mjs (10/h,
+// 150/24 h glissantes) ; au-delà, sélection comme X (variété ≤ 2/source, photo, extrait, @),
+// le surplus est SAUTÉ (jamais remis en file). Idempotent : data/bluesky-sent.json + derniers
+// posts du compte. Déclenché par le Worker le-radar-news-trigger (:05/:35) + cron de secours.
+// Sans BLUESKY_APP_PASSWORD : essai. SHARE_NOW=true : un article frais au hasard, tout de suite.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, MAX_AGE_H } from './lib.mjs';
+import { parseFeed, markImages } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
-import { buildBskyText, graphemes, detectLang, dueItems, postRecord, facets, BSKY_LIMIT } from './bluesky.mjs';
+import { buildBskyText, graphemes, detectLang, postRecord, facets, BSKY_LIMIT } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
+import { plan, freshCandidates } from './rate-limit.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
-const XSTATE = path.join(ROOT, 'data/buffer-sent.json'), STATE = path.join(ROOT, 'data/bluesky-sent.json');
+const STATE = path.join(ROOT, 'data/bluesky-sent.json');
 const ACCOUNTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/bluesky-accounts.json'), 'utf8')).accounts;
 const handle = process.env.BLUESKY_HANDLE || 'le-radar.bsky.social', password = process.env.BLUESKY_APP_PASSWORD || '';
 let dry = process.env.DRY_RUN === 'true' || process.argv.includes('--dry-run');
 if (!password) { console.log('BLUESKY_APP_PASSWORD absent : mode essai.'); dry = true; }
 const shareNow = process.env.SHARE_NOW === 'true';
+const save = () => { if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); };
 
-const xSent = JSON.parse(fs.readFileSync(XSTATE, 'utf8')).sent || {};
 const state = JSON.parse(fs.readFileSync(STATE, 'utf8')); state.sent ||= {};
-const { due, late } = dueItems(xSent, state.sent);
-for (const l of late) { console.log(`Sauté (créneau ${l.dueAt} dépassé de > 2 h) : ${l.id}`); if (!dry) state.sent[l.id] = { at: new Date().toISOString(), skipped: 'late', dueAt: l.dueAt }; }
-// En essai : montre aussi les créneaux à venir aujourd'hui.
-const upcoming = dry ? Object.entries(xSent).filter(([id, s]) => s.dueAt && !s.shareNow && !state.sent[id] && Date.parse(s.dueAt) > Date.now() && Date.parse(s.dueAt) - Date.now() < 24 * 3600e3).map(([id, s]) => ({ id, dueAt: s.dueAt, upcoming: true })) : [];
-let todo = shareNow ? [] : [...due, ...upcoming];
-console.log(`Bluesky ${handle} : ${due.length} dû(s), ${late.length} sauté(s), ${upcoming.length} à venir (essai).`);
-if (!todo.length && !shareNow) { if (!dry && late.length) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); process.exit(0); }
+if (!state.liveSince) { state.liveSince = new Date().toISOString(); console.log(`Mise en service : ${state.liveSince} (rien d'antérieur ne sera publié).`); }
 
 const xml = await (await fetch(process.env.FEED_URL || 'https://le-radar.ca/feed.xml', { signal: AbortSignal.timeout(30000) })).text();
 const items = parseFeed(xml); if (!items.length) throw new Error('feed.xml vide');
 const repeated = markImages(items);
+const pl = plan(items, state.sent, { network: 'bluesky', liveSince: state.liveSince, accounts: ACCOUNTS });
+const { limits, status } = pl;
+console.log(`Bluesky ${handle} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s) (plafond/variété).`);
+for (const it of pl.skip) { console.log(`Sauté (plafond ou variété, jamais rattrapé) : [${it.source}] ${it.id}`); if (!dry) state.sent[it.id] = { at: new Date().toISOString(), skipped: 'cap', source: it.source }; }
+let todo = pl.now.map(it => ({ id: it.id }));
 if (shareNow) {
-  const pool = items.filter(i => !xSent[i.id] && !state.sent[i.id] && Date.now() - i.date <= MAX_AGE_H * 3600e3);
+  const pool = freshCandidates(items, state.sent, { liveSince: new Date(0).toISOString() });
   const best = [pool.filter(p => p.img && !p.imgDropped), pool].find(l => l.length) || [];
-  todo = best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
+  todo = status.left && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
 }
+if (!todo.length) { save(); process.exit(0); }
 
 const bs = createBluesky({ handle, password });
 let posted = new Set(); const dids = new Map();
@@ -46,20 +49,21 @@ if (!dry) {
 }
 const used = new Map(); let n = 0;
 for (const t of todo) {
+  if (n && !dry) await new Promise(r => setTimeout(r, limits.gapSec * 1000)); // espacement, pas de rafale
   const it = items.find(i => i.id === t.id);
-  if (!it) { console.log(`::warning::${t.id} absent du flux, non publié.`); if (!dry && !t.upcoming) state.sent[t.id] = { at: new Date().toISOString(), skipped: 'absent du flux', dueAt: t.dueAt }; continue; }
+  if (!it) { console.log(`::warning::${t.id} absent du flux, non publié.`); if (!dry) state.sent[t.id] = { at: new Date().toISOString(), skipped: 'absent du flux' }; continue; }
   const im = await resolveImage(it, { used, repeated });
   const text = buildBskyText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
-  console.log(`\n--- ${++n}.${t.dueAt ? ' ' + new Date(t.dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''}${t.upcoming ? ' (à venir)' : ''} [${it.source}] ${graphemes(text)}/${BSKY_LIMIT} graphèmes · ${lang} · image ${im ? im.url : 'AUCUNE'} · facettes ${facets(text).length}\n${text}`);
-  if (dry || t.upcoming) continue;
-  if (posted.has(it.link)) { console.log('Déjà sur Bluesky (vérifié dans le compte) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dueAt: t.dueAt || null, dedup: true }; fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); continue; }
+  console.log(`\n--- ${++n}. [${it.source}] ${graphemes(text)}/${BSKY_LIMIT} graphèmes · ${lang} · image ${im ? im.url : 'AUCUNE'} · facettes ${facets(text).length}\n${text}`);
+  if (dry) continue;
+  if (posted.has(it.link)) { console.log('Déjà sur Bluesky (vérifié dans le compte) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
   let thumb = null; if (im) { try { thumb = await bs.uploadImage(im.url); } catch (e) { console.log(`::warning::image non téléversée : ${e.message}`); } }
   const rec = postRecord({ text, lang, dids, card: { uri: it.link, title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } });
   const p = await bs.post(rec);
-  state.sent[it.id] = { at: new Date().toISOString(), source: it.source, dueAt: t.dueAt || null, uri: p.uri, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
-  fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
+  state.sent[it.id] = { at: new Date().toISOString(), source: it.source, uri: p.uri, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
+  save();
   console.log(`→ Bluesky : ${p.url}`);
 }
 for (const [id, s] of Object.entries(state.sent)) if (Date.now() - new Date(s.at) > 30 * 864e5) delete state.sent[id];
-if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
+save();
 console.log(`\n${dry ? 'ESSAI' : 'RÉEL'} terminé.`);

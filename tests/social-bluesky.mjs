@@ -64,3 +64,11 @@ assert(fl.every(x => /^did:plc:/.test(x.did) && !x.handle.startsWith('@')) && ne
 const ba = JSON.parse(fs2.readFileSync(new URL('../data/social/bluesky-accounts.json', import.meta.url))).accounts;
 assert(ba.every(a => a.handle.startsWith('@') && a.type === 'source' && a.cle_flux), 'comptes valides');
 console.log('social-bluesky (listes) : OK');
+// auto-étiquette « bot » : conserve tous les champs et les autres étiquettes, idempotente
+const { withBotLabel } = await import('../scripts/social/bluesky-label.mjs');
+const prof = { $type: 'app.bsky.actor.profile', displayName: 'Le Radar', description: 'bio', avatar: { ref: 'a' }, banner: { ref: 'b' }, labels: { $type: 'com.atproto.label.defs#selfLabels', values: [{ val: '!no-unauthenticated' }] } };
+const lab = withBotLabel(prof);
+assert.deepEqual([lab.displayName, lab.description, lab.avatar, lab.banner], [prof.displayName, prof.description, prof.avatar, prof.banner]);
+assert.deepEqual(lab.labels.values.map(v => v.val), ['!no-unauthenticated', 'bot']);
+assert.equal(withBotLabel(lab), null); assert.deepEqual(withBotLabel({}).labels.values, [{ val: 'bot' }]);
+console.log('social-bluesky (étiquette bot) : OK');

@@ -40,6 +40,13 @@ export function createBluesky({ handle, password, fetchImpl = fetch, pds = PDS }
       }
       return (await x('POST', 'com.atproto.repo.uploadBlob', { raw: buf, type })).blob;
     },
+    async getProfile() {
+      const j = await x('GET', 'com.atproto.repo.getRecord', { query: { repo: s.did, collection: 'app.bsky.actor.profile', rkey: 'self' } });
+      return { value: j.value, cid: j.cid };
+    },
+    async putProfile(record, swapRecord) {
+      return x('POST', 'com.atproto.repo.putRecord', { body: { repo: s.did, collection: 'app.bsky.actor.profile', rkey: 'self', record, ...(swapRecord ? { swapRecord } : {}) } });
+    },
     async post(record) {
       const j = await x('POST', 'com.atproto.repo.createRecord', { body: { repo: s.did, collection: 'app.bsky.feed.post', record } });
       return { uri: j.uri, url: `https://bsky.app/profile/${handle}/post/${j.uri.split('/').pop()}` };
