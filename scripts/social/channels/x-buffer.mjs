@@ -1,7 +1,7 @@
 // Canal X (@LeRadar_ca) via l'API GraphQL gratuite de Buffer.
 export const API = 'https://api.buffer.com';
 export const FALLBACK_CHANNEL_ID = '6ae6c47be29c69a171203706';
-export const AUTH_MSG = 'BUFFER_API_KEY expirée ou invalide (elle expire le 1er déc. 2026) : régénérer la clé dans Buffer › Settings › API et mettre à jour le secret du dépôt.';
+export const AUTH_MSG = 'BUFFER_API_KEY expirée ou invalide (voir BUFFER_KEY_EXPIRES dans .github/workflows/social-buffer.yml) : régénérer la clé dans Buffer › Settings › API et mettre à jour le secret du dépôt.';
 
 export class AuthError extends Error {}
 
