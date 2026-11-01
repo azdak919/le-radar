@@ -35,7 +35,7 @@ on:
         type: boolean
         default: false
       reformat:
-        description: 'Remettre la file au format « Média • Auteur • Titre : extrait » (editPost, même id/heure) au lieu de remplir'
+        description: 'Remettre la file au format actuel (formateur partagé, crédits revérifiés ; editPost, même id/heure) au lieu de remplir — canaux selon only'
         type: boolean
         default: false
       share_now:
@@ -92,9 +92,10 @@ jobs:
           NUM=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
           [ -n "$NUM" ] && exit 0
           gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body "La clé d'API Buffer « le-radar-github » expire le ${BUFFER_KEY_EXPIRES} (dans ${LEFT} jours). Régénérer la clé dans Buffer › Settings › API, remplacer le secret BUFFER_API_KEY, puis mettre à jour BUFFER_KEY_EXPIRES dans .github/workflows/social-buffer.yml."
-      - name: Reformater la file Buffer (sans ligne vide)
+      - name: Reformater la file Buffer (format actuel, crédits revérifiés)
         if: inputs.reformat
         env:
+          CHANNELS: ${{ inputs.only == 'x' && 'x' || inputs.only == 'pages' && 'facebook,linkedin' || 'x,facebook,linkedin' }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}

@@ -29,3 +29,10 @@ assert.equal(r, withCredit);
 assert.ok(r.includes(' · ') && r.includes('(@Linknewspaper)') && !r.includes(' • '));
 assert.equal(reformatText(it, acc, { credit: '', img: '' }), noCredit);
 console.log('social-format-align : OK');
+// Crédit à jour pour la file : banque (attribution complète) > flux > état (sauf nom du média).
+import { currentCredit } from '../scripts/social/reformat-queue.mjs';
+const bankImg = 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Universit%C3%A9_Montr%C3%A9al_Roger-Gaudry.jpg';
+assert.equal(currentCredit({ source: 'Quartier Libre' }, { credit: 'abdallahh' }, bankImg), 'abdallahh (Wikimedia Commons, CC BY 2.0)');
+assert.equal(currentCredit({ source: 'The Link', credit: 'Yann Rifflard' }, { credit: 'The Link' }, 'https://le-radar.ca/a.jpg'), 'Yann Rifflard');
+assert.equal(currentCredit({ source: 'The Link' }, { credit: 'The Link' }, 'https://le-radar.ca/a.jpg'), '');
+console.log('social-format-align (crédits) : OK');
