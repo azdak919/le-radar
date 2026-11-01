@@ -58,9 +58,11 @@ const rssTitles = [...rss.matchAll(/<item>[\s\S]*?<title>([\s\S]*?)<\/title>[\s\
 for (const [name, titles] of [
   ['index.html JSON-LD', jsonLdTitles],
   ['index.html prérendu', htmlTitles],
-  ['feed.xml', rssTitles],
 ]) {
   assert.deepEqual(titles, canonical, `${name} : les ${TOP_ITEMS} premières manchettes divergent de news.json`);
 }
+
+// feed.xml : titres préfixés « Média – Auteur : Titre » ; le titre canonique doit terminer l'entrée.
+rssTitles.forEach((t, i) => assert.ok(t.endsWith(canonical[i]), `feed.xml : « ${t} » ne se termine pas par « ${canonical[i]} »`));
 
 console.log(`✓ Les ${TOP_ITEMS} premières manchettes concordent (JSON, RSS, HTML, JSON-LD).`);
