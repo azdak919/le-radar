@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-01T15:39:28.938Z",
+  "updated": "2026-11-01T15:45:21.469Z",
   "total": 184,
   "withImage": 159,
   "withCredit": 159,
-  "cited": 94,
-  "pending": 45,
+  "cited": 95,
+  "pending": 44,
   "missingHero": 0,
   "ok": false,
   "checked": 48,
   "updatedCount": 5,
-  "citedNew": 3,
-  "fallbackNew": 45,
+  "citedNew": 4,
+  "fallbackNew": 44,
   "samples": [
     {
       "title": "Jésus et autres mots-clics",
@@ -29,9 +29,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
