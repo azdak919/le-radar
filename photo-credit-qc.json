@@ -1,28 +1,21 @@
 {
-  "updated": "2026-11-01T14:08:47.735Z",
+  "updated": "2026-11-01T15:39:28.938Z",
   "total": 184,
   "withImage": 159,
   "withCredit": 159,
-  "cited": 95,
-  "pending": 44,
+  "cited": 94,
+  "pending": 45,
   "missingHero": 0,
   "ok": false,
-  "checked": 49,
-  "updatedCount": 6,
-  "citedNew": 5,
-  "fallbackNew": 44,
+  "checked": 48,
+  "updatedCount": 5,
+  "citedNew": 3,
+  "fallbackNew": 45,
   "samples": [
     {
       "title": "Jésus et autres mots-clics",
       "source": "Le Délit",
       "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -36,9 +29,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
