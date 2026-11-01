@@ -234,46 +234,88 @@
   color: var(--accent);
 }
 }
+/* Galerie d’affiches : cartes de même gabarit, aperçu 11 × 17 entier, boutons en pied de carte. */
+.kit-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+.kit-filter[hidden] { display: none; }
+.kit-filter button {
+  font: 600 13px/1.2 var(--sans);
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 7px 12px;
+  min-height: 36px;
+  cursor: pointer;
+}
+.kit-filter button[aria-pressed="true"] {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.kit-filter button:focus-visible,
+.kit-card--poster a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.kit-filter__count {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
 .kit-grid--poster {
   max-width: none;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  align-items: stretch;
 }
-.kit-card__link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+@media (min-width: 1100px) {
+  .kit-grid--poster { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 }
-@media (hover: hover) and (pointer: fine) {
-.kit-card__link:hover .kit-card__label {
-  color: var(--accent);
+.kit-card--poster {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
-}
-
-.kit-card__preview--photo {
+.kit-card--poster[hidden] { display: none; }
+.kit-card--poster .kit-card__preview--photo {
   padding: 0;
   min-height: 0;
   display: block;
-  background: #0e0f12;
-}
-
-.kit-card__preview--photo img {
-  width: 100%;
-  height: auto;
   aspect-ratio: 11 / 17;
-  object-fit: cover;
+  background: #0e0f12;
+  overflow: hidden;
+}
+.kit-card--poster .kit-card__preview--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
 }
-
-@media (min-width: 700px) {
-  .kit-grid--poster > .kit-card--feature {
-    grid-column: span 2;
-  }
+.kit-card--poster .kit-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 4px;
 }
-
-@media (min-width: 1100px) {
-  .kit-card__preview--poster {
-    min-height: 200px;
-  }
+.kit-card--poster .kit-card__label {
+  margin: 0;
+  font-size: 1rem;
+}
+.kit-card--poster .kit-dl {
+  margin-top: auto;
+  padding-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.kit-card--poster .kit-dl a {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Identité visuelle */

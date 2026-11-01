@@ -1,74 +1,85 @@
-/* Galerie d’exemples : campus + sa photo, tirage aléatoire pour remplir la rangée. */
+/* Galerie d’affiches : toutes les affiches d’exemple (examples.json), filtrables par établissement.
+ * Chaque carte a un aperçu entier (11 × 17, sans rognage) et trois formats PDF.
+ * Les PDF des exemples sont composés à 600 dpi par le studio (/affiches/), préréglé par l’URL. */
 (function () {
   const grid = document.getElementById('kit-poster-grid');
   if (!grid) return;
   const base = grid.getAttribute('data-asset-base') || './';
   const lang = (document.documentElement.lang || 'fr').startsWith('en') ? 'en' : 'fr';
   const compose = grid.getAttribute('data-compose') || '../affiches/';
-  let pool = [];
-  let lastSlots = -1;
-  let shown = [];
+  const filterBox = document.getElementById('kit-poster-filter');
+  const countEl = document.getElementById('kit-poster-count');
+  const FORMATS = [
+    ['tabloid', '11 × 17'],
+    ['letter', lang === 'en' ? 'Letter' : 'Lettre'],
+    ['legal', lang === 'en' ? 'Legal' : 'Légal'],
+  ];
+  const esc = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 
   function isAppleTouch() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent)
       || (navigator.platform === 'MacIntel' && Number(navigator.maxTouchPoints) > 1);
   }
 
-  function cols() {
-    const gap = 16;
-    const min = 280;
-    const w = grid.clientWidth || grid.parentElement?.clientWidth || 800;
-    return Math.max(1, Math.floor((w + gap) / (min + gap)));
-  }
-
-  function featureSpan() {
-    return window.innerWidth >= 700 ? 2 : 1;
-  }
-
-  function shuffle(list) {
-    const a = list.slice();
-    for (let i = a.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
+  function composeUrl(ex, format) {
+    const q = new URLSearchParams({ campus: ex.campus });
+    if (ex.photo) q.set('photo', ex.photo);
+    if (ex.greeting && ex.greeting !== 'none') q.set('greeting', ex.greeting);
+    if (ex.lang) q.set('lang', ex.lang);
+    q.set('langs', ex.langs ? 'oui' : 'non');
+    q.set('qr', ex.qr ? 'oui' : 'non');
+    if (format) q.set('format', format);
+    return `${compose}?${q.toString()}`;
   }
 
   function card(ex) {
     const art = document.createElement('article');
-    art.className = 'kit-card kit-card--example';
+    art.className = 'kit-card kit-card--poster kit-card--example';
+    art.dataset.campus = ex.campus;
     const label = lang === 'en' ? ex.labelEn : ex.labelFr;
     const meta = lang === 'en' ? ex.metaEn : ex.metaFr;
-    const esc = (value) => String(value ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-    const href = `${compose}?campus=${encodeURIComponent(ex.campus)}`;
-    const src = `${base}affiche-ex-${esc(ex.id)}-preview.jpg`;
-    art.innerHTML = `<a class="kit-card__link" href="${href}">
-      <div class="kit-card__preview kit-card__preview--photo">
-        <img src="${src}" width="330" height="510" alt="${esc(label)}">
-      </div>
+    const src = `${base}affiche-ex-${encodeURIComponent(ex.id)}-preview.jpg`;
+    const pdfWord = lang === 'en' ? 'Make the PDF' : 'Composer le PDF';
+    const links = FORMATS.map(([id, txt]) => `<a href="${esc(composeUrl(ex, id))}" aria-label="${esc(`${pdfWord} ${txt} — ${label}, ${meta}`)}">${esc(txt)}</a>`).join('');
+    art.innerHTML = `<a class="kit-card__preview kit-card__preview--photo" href="${esc(composeUrl(ex))}" aria-label="${esc(`${lang === 'en' ? 'Customize' : 'Personnaliser'} : ${label}, ${meta}`)}">
+        <img src="${src}" width="660" height="1020" alt="${esc(`${label} — ${meta}`)}" loading="lazy" decoding="async">
+      </a>
       <div class="kit-card__body">
-        <p class="kit-card__label">${esc(label)}</p>
+        <h3 class="kit-card__label">${esc(label)}</h3>
         <p class="kit-card__meta">${esc(meta)}</p>
-      </div>
-    </a>`;
+        <p class="kit-dl" aria-label="${esc(pdfWord)}">${links}</p>
+      </div>`;
     return art;
   }
 
-  function render() {
-    const c = cols();
-    const feat = featureSpan();
-    const restOfRow = Math.max(0, c - feat);
-    const extraRow = feat > 1 ? c : 0;
-    const n = restOfRow + extraRow;
-    if (n === lastSlots && shown.length) return;
-    lastSlots = n;
-    grid.querySelectorAll('.kit-card--example').forEach((el) => el.remove());
-    shown = shuffle(pool).slice(0, n);
-    shown.forEach((ex) => grid.appendChild(card(ex)));
+  function applyFilter(campus) {
+    let n = 0;
+    grid.querySelectorAll('.kit-card--poster').forEach((el) => {
+      const show = campus === 'all' || el.dataset.campus === campus || el.dataset.campus === 'generique';
+      el.hidden = !show;
+      if (show) n += 1;
+    });
+    filterBox?.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.campus === campus)));
+    if (countEl) countEl.textContent = lang === 'en' ? `${n} posters` : `${n} affiches`;
+  }
+
+  function buildFilter(examples) {
+    if (!filterBox) return;
+    const seen = new Map();
+    examples.forEach((ex) => {
+      if (!seen.has(ex.campus)) seen.set(ex.campus, lang === 'en' ? ex.labelEn : ex.labelFr);
+    });
+    const entries = [['all', lang === 'en' ? 'All' : 'Toutes'], ...seen.entries()];
+    filterBox.innerHTML = entries.map(([slug, label]) => `<button type="button" data-campus="${esc(slug)}" aria-pressed="false">${esc(label)}</button>`).join('');
+    filterBox.hidden = seen.size < 2;
+    filterBox.addEventListener('click', (ev) => {
+      const b = ev.target.closest('button[data-campus]');
+      if (b) applyFilter(b.dataset.campus);
+    });
   }
 
   async function saveKitFile(a) {
@@ -95,7 +106,7 @@
   }
 
   document.addEventListener('click', (ev) => {
-    const a = ev.target.closest?.('.kit-dl a[href]');
+    const a = ev.target.closest?.('.kit-dl a[download]');
     if (!a || !isAppleTouch()) return;
     ev.preventDefault();
     ev.stopPropagation();
@@ -107,13 +118,10 @@
   fetch(`${base}examples.json`, { cache: 'no-cache' })
     .then((r) => r.json())
     .then((data) => {
-      pool = (data.examples || []).filter((ex) => ex.id && ex.campus && ex.campus !== 'generique');
-      render();
-      let t = 0;
-      window.addEventListener('resize', () => {
-        clearTimeout(t);
-        t = setTimeout(render, 120);
-      });
+      const examples = (data.examples || []).filter((ex) => ex.id && ex.campus && ex.campus !== 'generique');
+      examples.forEach((ex) => grid.appendChild(card(ex)));
+      buildFilter(examples);
+      applyFilter('all');
     })
     .catch(() => {});
 })();
