@@ -8,7 +8,7 @@
 // le bot ne le republiera jamais une 3e fois. Env : URLS, X_DUE (ISO, même ordre), DRY_RUN, BSKY=true|false.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, stripUtm, refreshPhotoLine } from './lib.mjs';
+import { parseFeed, markImages, buildText, stripUtm, refreshPhotoLine, photoLine } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildBskyText, detectLang, postRecord } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -30,6 +30,7 @@ const targets = urls.map(u => items.find(i => i.link === stripUtm(u) || i.id ===
 targets.forEach((t, i) => { if (!t) throw new Error(`absent du flux : ${urls[i]}`); });
 const used = new Map(), imgs = new Map();
 for (const it of targets) imgs.set(it.id, await resolveImage(it, { used, repeated }));
+const photoLineFor = it => { const im = imgs.get(it.id); return im ? photoLine(im.credit, it.source) : ''; };
 const has = (text, it) => (text || '').includes(it.link);
 console.log(`Mode ${dry ? 'ESSAI' : 'RÉEL'} · ${targets.length} article(s)`);
 for (const it of targets) console.log(`- ${it.link} · crédit actuel : ${imgs.get(it.id)?.credit || '(aucun → nom du média)'}`);
@@ -46,6 +47,8 @@ if (process.env.BSKY !== 'false' && process.env.BLUESKY_APP_PASSWORD) {
   for (const it of targets) {
     const old = posts.filter(p => p.link === it.link || has(p.text, it));
     if (!old.length) { console.log(`Bluesky : aucune publication pour ${it.link}`); continue; }
+    const want = photoLineFor(it);
+    if (old.every(p => p.text.split('\n').pop() === want)) { console.log(`Bluesky : déjà correct (${want}) ${old.map(p => p.url).join(' ')}`); continue; }
     for (const p of old) { console.log(`Bluesky : suppression ${p.url}\n  ancien : ${p.text.split('\n').pop()}`); if (!dry) await bs.deletePost(p.uri); }
     const im = imgs.get(it.id), text = buildBskyText(it, ACC, { credit: im?.credit, photo: !!im });
     console.log(`Bluesky : republication\n${text}`);
@@ -70,15 +73,23 @@ if (key) {
   };
   const x = createXBuffer({ key, fallbackId: process.env.BUFFER_CHANNEL_ID || undefined });
   const { organizationId, channelId } = await x.context();
-  const d = await gql(`query($o: OrganizationId!) { posts(first: 100, input: { organizationId: $o, filter: { status: [scheduled, sent, sending, error, draft], startDate: "${new Date(Date.now() - 10 * 864e5).toISOString()}" } }) { edges { node { id status channelId channelService text dueAt sentAt externalLink } } } }`, { o: organizationId });
+  const chs = (await gql('query($o: OrganizationId!) { channels(input: { organizationId: $o }) { id service name } }', { o: organizationId }))?.channels || [];
+  console.log(`Canaux Buffer : ${chs.map(c => c.service + ' ' + c.name).join(', ')}`);
+  const edges = [];
+  for (const status of ['scheduled', 'sent', 'error']) {
+    const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!], $s: [PostStatus!]) { posts(first: 100, input: { organizationId: $o, filter: { channelIds: $c, status: $s } }) { edges { node { id status channelId channelService text dueAt sentAt externalLink } } } }`, { o: organizationId, c: chs.map(c => c.id), s: [status] });
+    edges.push(...(d?.posts?.edges || []));
+  }
+  const d = { posts: { edges } };
   const all = (d?.posts?.edges || []).map(e => e.node);
-  console.log(`Buffer : ${all.length} post(s) lus (10 derniers jours, tous canaux).`);
+  console.log(`Buffer : ${all.length} post(s) lus (tous canaux).`);
   const st = rd('data/buffer-sent.json'); st.sent ||= {};
   const ACC = rd('data/social/x-accounts.json').accounts;
   const queuedOk = new Set();
   for (const [n, it] of targets.entries()) {
     for (const p of all.filter(p => has(p.text, it))) {
       const line = `Buffer ${p.channelService} ${p.status} ${p.id} · ${tz(p.sentAt || p.dueAt)} · ${p.externalLink || ''}\n  ancien : ${p.text.split('\n').pop()}`;
+      if (p.text.split('\n').pop() === photoLineFor(it)) { console.log(`Déjà correct : ${line}`); if (/sent|sending|scheduled/.test(p.status)) queuedOk.add(it.id); continue; }
       if (/sent|sending/.test(p.status)) { console.log(`À SUPPRIMER À LA MAIN (API : publié non supprimable) : ${line}`); continue; }
       // En file : crédit corrigé sur place (même id, image, heure) ; supprimé seulement si non corrigeable.
       const fixed = refreshPhotoLine(p.text, it, '');
