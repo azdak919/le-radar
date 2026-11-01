@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-01T04:46:50.698Z",
+  "updated": "2026-11-01T05:09:42.147Z",
   "total": 184,
   "pool": 53,
   "incomplete": 5,
   "withLeadExcerpt": 126,
   "candidates": 5,
-  "enriched": 1,
+  "enriched": 0,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -16,6 +16,15 @@
       "score": 76,
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
+      "changed": false
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
+      "ok": true,
+      "score": 84,
+      "chars": 400,
+      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
       "changed": false
     },
     {
@@ -35,15 +44,6 @@
       "chars": 400,
       "sample": "Debout au milieu du square, on peine à s’entendre parler au-dessus des slogans scandés par la foule ",
       "changed": false
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
-      "ok": true,
-      "score": 84,
-      "chars": 400,
-      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": true
     }
   ]
 }
