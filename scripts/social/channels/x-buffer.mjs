@@ -11,7 +11,13 @@ export function isAuthFailure(status, body) {
   return errs.some(e => /^(UNAUTHORIZED|UNAUTHENTICATED)$/i.test(e?.extensions?.code || ''));
 }
 
-export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_ca', fallbackId = FALLBACK_CHANNEL_ID }) {
+/** Canal Buffer d'un service (x, facebook, linkedin…) nommé `channelName` (sans @, insensible à la casse). */
+export const matchChannel = (x, service, channelName) => {
+  const re = service === 'x' ? /twitter|^x$/i : new RegExp(`^${service}`, 'i');
+  return re.test(x?.service || '') && (x.name || '').replace(/^@/, '').trim().toLowerCase() === channelName.toLowerCase();
+};
+
+export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x' }) {
   async function gql(query, variables = {}) {
     const res = await fetchImpl(API, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(30000) });
     let body = null; try { body = await res.json(); } catch {}
@@ -27,14 +33,15 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
     const orgs = d?.account?.organizations || [];
     for (const o of orgs) {
       const c = await gql('query($o: OrganizationId!) { channels(input: { organizationId: $o }) { id name service } }', { o: o.id });
-      const ch = (c?.channels || []).find(x => /twitter|^x$/i.test(x.service) && x.name?.replace(/^@/, '').toLowerCase() === channelName.toLowerCase());
-      if (ch) return (ctx = { organizationId: o.id, channelId: ch.id, discovered: true });
+      const ch = (c?.channels || []).find(x => matchChannel(x, service, channelName));
+      if (ch) return (ctx = { organizationId: o.id, channelId: ch.id, service: ch.service, discovered: true });
     }
     if (!orgs.length) throw new Error('Buffer : aucune organisation sur ce compte');
+    if (!fallbackId) throw new Error(`Buffer : canal ${service} « ${channelName} » introuvable`);
     return (ctx = { organizationId: orgs[0].id, channelId: fallbackId, discovered: false });
   }
   return {
-    name: 'x',
+    name: service,
     context,
     // Lecture seule : l'API publique n'a pas de mutation pour l'horaire (réglé dans l'interface Buffer).
     async schedule() {
@@ -49,6 +56,20 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
       const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {
         posts(first: 50, input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) { edges { node { id text dueAt assets { source } } } } }`, { o: organizationId, c: [channelId] });
       return (d?.posts?.edges || []).map(e => e.node);
+    },
+    /** Publications refusées par le réseau (statut « error ») : id, texte, raison. */
+    async errored() {
+      const { organizationId, channelId } = await context();
+      try {
+        const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {
+          posts(first: 20, input: { organizationId: $o, filter: { channelIds: $c, status: [error] } }) { edges { node { id text dueAt error { message } } } } }`, { o: organizationId, c: [channelId] });
+        return (d?.posts?.edges || []).map(e => e.node);
+      } catch (e) {
+        if (e instanceof AuthError) throw e;
+        const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {
+          posts(first: 20, input: { organizationId: $o, filter: { channelIds: $c, status: [error] } }) { edges { node { id text dueAt } } } }`, { o: organizationId, c: [channelId] });
+        return (d?.posts?.edges || []).map(e => e.node);
+      }
     },
     // Texte seulement : id, image et heure programmée conservés (mode/dueAt omis).
     async editText(id, text) {
