@@ -74,9 +74,11 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
       }
     },
     // Texte seulement : id, image et heure programmée conservés (mode/dueAt omis).
-    async editText(id, text) {
+    // metadata : requis par Buffer pour Facebook ({ facebook: { type: 'post' } }), comme à l'ajout.
+    async editText(id, text, metadata) {
+      const i = { id, text }; if (metadata) i.metadata = metadata;
       const d = await gql(`mutation($i: EditPostInput!) { editPost(input: $i) {
-        ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }`, { i: { id, text } });
+        ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }`, { i });
       const r = d?.editPost;
       if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
       return r.post;

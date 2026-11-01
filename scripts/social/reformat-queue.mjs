@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import { buildText, formatOk, parseFeed, stripUtm, xlen, LIMITS } from './lib.mjs';
 import { bankCredit } from './image-resolve.mjs';
-import { buildPageText } from './buffer-pages.mjs';
+import { buildPageText, postMetadata } from './buffer-pages.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
 /** Texte attendu pour un post en file (pur, testable). */
@@ -35,11 +35,11 @@ async function main() {
     const ch = isX ? createXBuffer({ key, fallbackId: process.env.BUFFER_CHANNEL_ID || undefined })
       : createXBuffer({ key, service: CFG[net].service, channelName: CFG[net].name, fallbackId: null });
     const build = (it, credit, img) => isX ? reformatText(it, ACCOUNTS, { credit, img }) : buildPageText(it, CFG[net], { credit, photo: !!img });
-    await runChannel({ ch, state, build, dry, isX });
+    await runChannel({ ch, state, build, dry, isX, metadata: isX ? undefined : postMetadata(CFG[net].service) });
   }
 }
 
-async function runChannel({ ch, state, build, dry, isX }) {
+async function runChannel({ ch, state, build, dry, isX, metadata }) {
   const byPost = new Map(Object.entries(state).filter(([, s]) => s.postId).map(([k, s]) => [s.postId, { ...s, key: k }]));
   const items = parseFeed(await (await fetch(process.env.FEED_URL || 'https://le-radar.ca/feed.xml', { signal: AbortSignal.timeout(30000) })).text());
   const find = s => s && items.find(i => i.link === stripUtm(s.key) || i.id === s.key || i.link === s.link);
@@ -59,7 +59,7 @@ async function runChannel({ ch, state, build, dry, isX }) {
       if (text === p.text) { console.log(`= ${p.id} ${fmt(p.dueAt)} déjà au bon format`); continue; }
       if (Date.parse(p.dueAt) - Date.now() < 10 * 60e3) { console.log(`! ${p.id} ${fmt(p.dueAt)} trop proche, intact`); continue; }
       if (dry) { console.log(`~ ${p.id} ${fmt(p.dueAt)} serait corrigé :\n${text}`); continue; }
-      const r = await ch.editText(p.id, text); n++;
+      const r = await ch.editText(p.id, text, metadata); n++;
       console.log(`✓ ${r.id} ${fmt(r.dueAt)} corrigé`);
     }
     const after = await ch.queued();
