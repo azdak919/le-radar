@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v982",
+    "cache": "radar-shell-v983",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -15,7 +15,7 @@
       "feeds-campuses-lib.js": "29f6bbe850529567",
       "feeds-page.js": "cae8c6369d6adc07",
       "mobile-playback.js": "955026530d5993b0",
-      "nav-shell.js": "08126a03961125dd",
+      "nav-shell.js": "1cfe4c673cb24e70",
       "photo-bank-data.js": "cec11cc3810004b4",
       "player-sync.js": "36e84f1afaff7fcb",
       "quebec-backgrounds-data.js": "1eb19907aa978bd2",
@@ -40,7 +40,7 @@
       "scripts/session-freshness-lib.js": "4aadd97e95256dfb",
       "scripts/sports-freshness-lib.js": "470ae1a54cb15523",
       "seo-page-theme.js": "8d32dcb10d24af89",
-      "style-chrome.css": "05b45da4732e962c",
+      "style-chrome.css": "f0f25e1c7c278537",
       "style-feed.css": "1209e7332679564f",
       "style-masthead-chrome.css": "4c1088406c55cb38",
       "style-masthead.css": "88bce9788c070034",
@@ -102,7 +102,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v343",
+    "cache": "sports-shell-v344",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -114,7 +114,7 @@
       "engage-prompt.js": "2996b51d1b94f5a4",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
       "mobile-playback.js": "955026530d5993b0",
-      "nav-shell.js": "08126a03961125dd",
+      "nav-shell.js": "1cfe4c673cb24e70",
       "player-sync.js": "36e84f1afaff7fcb",
       "radar-lifecycle.js": "1cc9f4f561e65174",
       "radar-news.js": "c1e86080e749909c",
@@ -130,7 +130,7 @@
       "seo-page-theme.js": "8d32dcb10d24af89",
       "seo-pages.css": "63188eb551ec9ac6",
       "sports-board.js": "9e8743aa681ab5ac",
-      "style-chrome.css": "05b45da4732e962c",
+      "style-chrome.css": "f0f25e1c7c278537",
       "style-feed.css": "1209e7332679564f",
       "style-masthead-chrome.css": "4c1088406c55cb38",
       "style-masthead.css": "88bce9788c070034",
