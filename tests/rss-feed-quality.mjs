@@ -61,3 +61,18 @@ for (const it of items) {
   assert.ok(!/^\s*(\d{1,2} \S+\.?|[A-Z][a-z]{2} \d{1,2}) · /.test(desc), `ligne de date dans la description : ${desc.slice(0, 60)}`);
   assert.ok(!it.includes('<media:content'), 'media:content présent (affiché en pièce jointe)');
 }
+
+// Crédits photo : jamais une signature générique ni le nom du média.
+{
+  const { photoCreditLine } = require('../scripts/generate-feed.js');
+  assert.equal(photoCreditLine({ lang: 'en', source: 'The Concordian', sourceImageCredit: 'Photo: The editorial team' }), '');
+  assert.equal(photoCreditLine({ lang: 'fr', source: 'Quartier Libre', imageCredit: 'Photo : La rédaction' }), '');
+  assert.equal(photoCreditLine({ lang: 'fr', source: 'Quartier Libre', imageCredit: 'Photo : Quartier Libre' }), '');
+  assert.equal(photoCreditLine({ lang: 'en', source: 'X', sourceImageCredit: 'Photo: Staff', imageCredit: 'Photo: Jason Paris / CC BY 2.0' }), 'Photo: Jason Paris / CC BY 2.0');
+  for (const it of items) {
+    for (const m of it.matchAll(/<figcaption[^>]*>([^<]*)<\/figcaption>|(Photo\s*:\s*[^<&]*)/g)) {
+      const cap = (m[1] || m[2] || '').replace(/^(photo|crédit|credit)s?\s*:?\s*/i, '').trim().toLowerCase();
+      assert.ok(!/^(la rédaction|l'équipe|the editorial (team|board|staff)|staff|editors?|newsroom)$/.test(cap), `crédit photo générique : ${cap}`);
+    }
+  }
+}

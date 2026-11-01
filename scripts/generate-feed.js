@@ -226,10 +226,28 @@ function attributionLine(item = {}) {
   return parts.join(' — ');
 }
 
+const normName = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+const MASTHEAD_RE = /^(la |l )?(redaction|equipe( editoriale)?)$|^(the )?(editorial (team|board|staff)|staff|editors?|newsroom)$/;
+
+// Signature générique (« La rédaction », « The editorial team ») ou nom du média lui-même.
+function isMastheadName(name = '', source = '') {
+  const n = normName(name);
+  if (!n) return true;
+  return MASTHEAD_RE.test(n) || (source && n === normName(source));
+}
+
+// Crédit photo réel seulement : une signature générique n'est pas un crédit.
+function isRealPhotoCredit(credit = '', item = {}) {
+  const bare = String(credit).replace(/^(photo|photograph|crédit|credit)s?\s*:?\s*/i, '').trim();
+  return !isMastheadName(bare, item.source);
+}
+
 function photoCreditLine(item = {}) {
-  const credit = item.sourceImageCredit
-    ? displayPhotoCredit(String(item.sourceImageCredit).trim(), item)
-    : String(item.imageCredit || '').trim();
+  const candidates = [
+    item.sourceImageCredit ? displayPhotoCredit(String(item.sourceImageCredit).trim(), item) : '',
+    String(item.imageCredit || '').trim(),
+  ];
+  const credit = candidates.find((c) => c && isRealPhotoCredit(c, item)) || '';
   if (!credit) return '';
   return item.lang === 'en' ? `Photo: ${credit.replace(/^Photo\s*:?\s*/i, '')}` : credit;
 }
@@ -323,7 +341,7 @@ function buildItemBodyHtml(item = {}, sourceSites = {}) {
 
 /** Titre d'item : « Média – Auteur : Titre » (auteur omis s'il manque ou s'il est le média). */
 function itemDisplayTitle(item = {}) {
-  const norm = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const norm = normName;
   const source = stripInvalidXml(item.source || '').replace(/\s+/g, ' ').trim();
   let title = stripInvalidXml(item.title || 'Article').replace(/\s+/g, ' ').trim();
   if (source) {
@@ -331,7 +349,7 @@ function itemDisplayTitle(item = {}) {
     title = title.replace(re, '').trim() || title;
   }
   const author = itemAuthor(item);
-  const isMasthead = /^(la |l )?(redaction|equipe( editoriale)?)$|^(the )?(editorial (team|board|staff)|staff|editors?|newsroom)$/.test(norm(author));
+  const isMasthead = MASTHEAD_RE.test(norm(author));
   const showAuthor = author && !isMasthead && norm(author) !== norm(source) && !norm(source).includes(norm(author));
   const colon = item.lang === 'en' ? ': ' : '\u00A0: ';
   const head = [source, showAuthor ? author : ''].filter(Boolean).join(' – ');
@@ -487,5 +505,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
+  photoCreditLine,
+  isRealPhotoCredit,
   stripInvalidXml, fixPunctuation, itemDisplayTitle, trimToSentence, cleanBrief, dedupeSentences, buildFeedXml, buildItemXml,
 };
