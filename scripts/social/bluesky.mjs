@@ -1,0 +1,64 @@
+// Logique pure Bluesky (testée dans tests/social-bluesky.mjs) : longueur en graphèmes,
+// facettes (octets UTF-8), langue, articles dus. Les @ viennent de data/social/bluesky-accounts.json
+// (jamais de la liste X).
+import { buildText, LIMITS } from './lib.mjs';
+
+const seg = new Intl.Segmenter('fr', { granularity: 'grapheme' });
+export const graphemes = s => [...seg.segment(s || '')].length;
+export const BSKY_LIMIT = LIMITS.bluesky;
+export const GRACE_H = 2;
+const enc = new TextEncoder();
+const bytes = s => enc.encode(s).length;
+
+/** Langue de l'article : mots-outils fr vs en (titre + extrait). */
+export function detectLang(it) {
+  const w = ` ${(it.title + ' ' + (it.desc || '')).toLowerCase().replace(/[^a-zà-ÿ’']+/g, ' ')} `;
+  const n = list => list.reduce((k, x) => k + (w.split(` ${x} `).length - 1), 0);
+  const fr = n(['le', 'la', 'les', 'des', 'du', 'et', 'est', 'une', 'dans', 'pour', 'que', 'qui', 'au', 'sur', 'pas', 'avec']);
+  const en = n(['the', 'and', 'of', 'to', 'is', 'in', 'for', 'that', 'with', 'on', 'are', 'was', 'this', 'from', 'at', 'it']);
+  return en > fr ? 'en' : 'fr';
+}
+
+/** Texte Bluesky : même format que X ; lien gardé dans le texte seulement s'il laisse ≥ 100 car. d'extrait. */
+export function buildBskyText(it, accounts = [], { credit = '', photo = true } = {}) {
+  const opt = { credit, photo, len: graphemes };
+  const withLink = buildText(it, accounts, BSKY_LIMIT, { ...opt, link: true });
+  const without = buildText(it, accounts, BSKY_LIMIT, { ...opt, link: false });
+  const body = t => t.split('\n')[0];
+  return body(without).length - body(withLink).length > 100 ? without : withLink;
+}
+
+/** Facettes : liens (http…) et @ confirmés Bluesky (dids : Map handle→did). Offsets en octets UTF-8. */
+export function facets(text, dids = new Map()) {
+  const out = [];
+  for (const m of text.matchAll(/https?:\/\/[^\s]+/g)) {
+    const s = bytes(text.slice(0, m.index));
+    out.push({ index: { byteStart: s, byteEnd: s + bytes(m[0]) }, features: [{ $type: 'app.bsky.richtext.facet#link', uri: m[0] }] });
+  }
+  for (const m of text.matchAll(/(^|[\s(])@([a-z0-9][a-z0-9.-]*\.[a-z]{2,})/gi)) {
+    const did = dids.get(m[2].toLowerCase()); if (!did) continue;
+    const i = m.index + m[1].length, s = bytes(text.slice(0, i));
+    out.push({ index: { byteStart: s, byteEnd: s + bytes('@' + m[2]) }, features: [{ $type: 'app.bsky.richtext.facet#mention', did }] });
+  }
+  return out.sort((a, b) => a.index.byteStart - b.index.byteStart);
+}
+
+/** Choix X (data/buffer-sent.json) dont le créneau est passé depuis ≤ graceH, pas encore sur Bluesky. */
+export function dueItems(xSent = {}, bskySent = {}, { now = Date.now(), graceH = GRACE_H } = {}) {
+  const due = [], late = [];
+  for (const [id, s] of Object.entries(xSent)) {
+    if (!s?.dueAt || s.shareNow || bskySent[id]) continue;
+    const t = Date.parse(s.dueAt); if (!(t <= now)) continue;
+    (now - t <= graceH * 3600e3 ? due : late).push({ id, dueAt: s.dueAt, source: s.source });
+  }
+  const by = (a, b) => Date.parse(a.dueAt) - Date.parse(b.dueAt);
+  return { due: due.sort(by), late: late.sort(by) };
+}
+
+/** Enregistrement app.bsky.feed.post. */
+export function postRecord({ text, lang, dids, card, now = new Date() }) {
+  const rec = { $type: 'app.bsky.feed.post', text, createdAt: now.toISOString(), langs: [lang] };
+  const f = facets(text, dids); if (f.length) rec.facets = f;
+  if (card) rec.embed = { $type: 'app.bsky.embed.external', external: { uri: card.uri, title: card.title.slice(0, 300), description: (card.description || '').slice(0, 1000), ...(card.thumb ? { thumb: card.thumb } : {}) } };
+  return rec;
+}

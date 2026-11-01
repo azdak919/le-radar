@@ -17,3 +17,12 @@ export function decide({ now, newsUpdated, active, feedDates = [], maxAgeMin = 6
   if (ageMin >= maxAgeMin) return { dispatch: true, reason: `dernière collecte il y a ${ageMin} min`, ageMin };
   return { dispatch: false, reason: 'rien de neuf', ageMin };
 }
+
+// Créneaux sociaux (America/Toronto) = DAILY_SLOTS de scripts/social/lib.mjs.
+export const SOCIAL_SLOTS = ['07:30', '09:00', '10:30', '12:00', '13:00', '15:00', '17:00', '18:30', '20:00', '21:30'];
+/** Vrai si un créneau est passé depuis 0 à windowMin minutes (heure de Toronto). */
+export function slotsDue(now, { windowMin = 35, tz = 'America/Toronto', slots = SOCIAL_SLOTS } = {}) {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(x => [x.type, x.value]));
+  const m = +p.hour * 60 + +p.minute;
+  return slots.some(s => { const [h, mm] = s.split(':').map(Number); const d = m - (h * 60 + mm); return d >= 0 && d < windowMin; });
+}
