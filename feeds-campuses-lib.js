@@ -93,5 +93,28 @@
     };
   }
 
-  return { institutionAcronym, groupSources, buildCampusModel };
+  // Horaire réel (mesuré oct. 2026) : ~25 mises à jour par jour, environ
+  // toutes les heures, jour et nuit (crons + filet horaire + Worker).
+  // On annonce donc la prochaine « vers » l'heure pleine qui suit dernière + 1 h.
+  function torontoClock(date) {
+    return new Intl.DateTimeFormat('fr-CA', {
+      timeZone: 'America/Toronto', hour: 'numeric', minute: '2-digit',
+    }).format(date).replace(/\s/g, ' ');
+  }
+  function nextUpdateEstimate(updated) {
+    const t = new Date(updated);
+    if (Number.isNaN(t.getTime())) return null;
+    const next = new Date(t.getTime() + 60 * 60 * 1000);
+    next.setUTCMinutes(0, 0, 0);
+    if (next - t < 45 * 60 * 1000) next.setTime(next.getTime() + 60 * 60 * 1000);
+    return next;
+  }
+  function updateStatus(updated, now = new Date()) {
+    const next = nextUpdateEstimate(updated);
+    if (!next) return '';
+    if (next < new Date(now)) return 'Prochaine mise à jour imminente.';
+    return `Prochaine mise à jour prévue vers ${torontoClock(next)} (heure du Québec).`;
+  }
+
+  return { institutionAcronym, groupSources, buildCampusModel, torontoClock, nextUpdateEstimate, updateStatus };
 }));

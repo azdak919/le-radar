@@ -217,17 +217,15 @@ async function renderFeedsUpdated() {
     const data = await res.json();
     if (!data.updated) return;
     const actual = new Date(data.updated);
-    const slot = data.updatedSlot ? new Date(data.updatedSlot) : null;
-    const slotOk = slot
-      && !Number.isNaN(slot.getTime())
-      && actual - slot >= 0
-      && actual - slot <= 45 * 60 * 1000;
-    const d = slotOk ? slot : actual;
-    const stamp = d.toLocaleString('fr-CA', {
+    // Heure réelle de la récolte (pas le créneau théorique), en heure de Toronto.
+    const stamp = actual.toLocaleString('fr-CA', {
+      timeZone: 'America/Toronto',
       day: 'numeric', month: 'long', year: 'numeric',
       hour: 'numeric', minute: '2-digit',
     });
-    FEEDS_UPDATED.textContent = `Dernière mise à jour du fil : ${stamp}`;
+    const lib = window.RadarFeedsCampuses;
+    const next = lib && lib.updateStatus ? ` ${lib.updateStatus(actual)}` : '';
+    FEEDS_UPDATED.textContent = `Dernière mise à jour du fil : ${stamp}.${next}`;
     FEEDS_UPDATED.hidden = false;
   } catch {
     /* optional */
