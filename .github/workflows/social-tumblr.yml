@@ -18,6 +18,10 @@ on:
         description: 'Publier tout de suite UN article frais (après la mise en service)'
         type: boolean
         default: false
+      share_url:
+        description: 'Avec share_now : URL de l’article précis à publier (même article sur tous les réseaux)'
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -47,6 +51,7 @@ jobs:
           TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
           DRY_RUN: ${{ (inputs.dry_run || vars.TUMBLR_LIVE != 'true') && 'true' || 'false' }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
+          SHARE_URL: ${{ inputs.share_url }}
         run: node scripts/social/tumblr-post.mjs
       - name: Commit de l'état (data/tumblr-sent.json seulement)
         if: always()

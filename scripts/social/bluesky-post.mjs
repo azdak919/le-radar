@@ -8,7 +8,7 @@
 // Sans BLUESKY_APP_PASSWORD : essai. SHARE_NOW=true : un article frais au hasard, tout de suite.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages } from './lib.mjs';
+import { parseFeed, markImages, stripUtm } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildBskyText, graphemes, detectLang, postRecord, facets, BSKY_LIMIT } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -40,6 +40,9 @@ if (shareNow) {
   const best = [pool.filter(p => p.img && !p.imgDropped), pool].find(l => l.length) || [];
   todo = status.dayLeft && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
 }
+const shareUrl = (process.env.SHARE_URL || '').trim();
+const pickUrl = () => { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
+if (shareNow && shareUrl) todo = [{ id: pickUrl().id, shareNow: true }]; // article imposé : un seul post, hors plafond
 if (!todo.length) { save(); process.exit(0); }
 
 const bs = createBluesky({ handle, password });
