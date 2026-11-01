@@ -76,3 +76,9 @@ for (const it of items) {
     }
   }
 }
+
+// dc:creator : jamais une signature générique (le média la remplace).
+for (const it of items) {
+  const c = (it.match(/<dc:creator>([^<]*)<\/dc:creator>/) || [])[1] || '';
+  assert.ok(!/^(la rédaction|l'équipe|the editorial (team|board|staff)|staff|editors?|newsroom)$/i.test(c.trim()), `dc:creator générique : ${c}`);
+}
