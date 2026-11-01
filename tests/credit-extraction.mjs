@@ -133,3 +133,16 @@ console.log('credit-extraction la-rédaction OK');
   }
   console.log('credit-extraction photo-de FR OK');
 }
+
+// Montréal Campus : « Mention illustration : Maud Amoretti » → Illustration : Maud Amoretti (pas « Photo : Montréal Campus »).
+{
+  const pad = '<html><body>' + 'x'.repeat(300);
+  const img = 'https://montrealcampus.ca/wp-content/uploads/2026/10/neurodiversite-au-travail-Maud-Amoretti.jpg';
+  const h = `${pad}<figure><img src="${img}"><figcaption>Fanny Groleau travaille chez Zera Café depuis plus d&rsquo;un an. Mention illustration : Maud Amoretti</figcaption></figure></body></html>`;
+  const r = PC.resolveSourcePhotoCredit({ source: 'Montréal Campus', lang: 'fr', image: img }, h);
+  assert.equal(r.creator, 'Maud Amoretti');
+  assert.equal(r.creditLine, 'Illustration : Maud Amoretti');
+  const h2 = h.replace('Mention illustration', 'Mention photo');
+  assert.equal(PC.resolveSourcePhotoCredit({ source: 'Montréal Campus', lang: 'fr', image: img }, h2).creditLine, 'Photo : Maud Amoretti');
+  console.log('credit-extraction mention FR OK');
+}

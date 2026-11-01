@@ -447,6 +447,8 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
   // FR : « … Photo d’Aidan Raynor // The Concordian » / « Photo de Marie Tremblay »
   // / « Illustration par X » → même forme que « Photo by X » (The Concordian FR).
   t = String(t || '')
+    // Montréal Campus : « Mention illustration : Maud Amoretti » / « Mention photo : X »
+    .replace(/\bMention\s+(?=(?:photos?|illustrations?|dessins?|cr[ée]dits?(?:\s+photo)?)\s*:)/giu, '')
     .replace(/&#8217;|&#x2019;|&rsquo;/gi, '’').replace(/&#039;|&#39;|&apos;/gi, "'")
     .replace(/\b(Photos?|Illustrations?|Graphiques?|Dessins?)\s+(?:de\s+|par\s+|d['’]\s*)(?=\p{Lu})/gu,
       (m, k) => (/^photo/i.test(k) ? `${k} by ` : 'Graphic by '));
