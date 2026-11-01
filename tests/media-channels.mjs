@@ -141,3 +141,16 @@ assert.deepEqual(
 );
 
 console.log('✓ canaux de distribution : RSS, Google Actualités, récolte sociale filtrée, stats.');
+
+// editText transmet metadata (Facebook exige un type à l'édition comme à l'ajout).
+{
+  const { createXBuffer: mk } = await import('../scripts/social/channels/x-buffer.mjs');
+  let sent = null;
+  const fetchImpl = async (_u, o) => { sent = JSON.parse(o.body).variables; return { ok: true, status: 200, json: async () => ({ data: { editPost: { post: { id: 'p1', text: 't', dueAt: null } } } }) }; };
+  const c = mk({ key: 'k', fetchImpl, fallbackId: 'c' });
+  await c.editText('p1', 't', { facebook: { type: 'post' } });
+  if (JSON.stringify(sent.i) !== JSON.stringify({ id: 'p1', text: 't', metadata: { facebook: { type: 'post' } } })) throw new Error('metadata absente de editPost');
+  await c.editText('p1', 't');
+  if ('metadata' in sent.i) throw new Error('metadata inattendue');
+  console.log('editText metadata : OK');
+}
