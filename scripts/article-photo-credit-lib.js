@@ -19,7 +19,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 16;
+const CREDIT_EXTRACTOR_REV = 17; // rev 17 : « Photo de / d’X » (FR, The Concordian)
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -444,6 +444,14 @@ function parseFigcaptionAttribution(text = '', lang = 'fr') {
  * / « … Courtesy Naya Hachwa » / « … Photo Marisa Filice » (photo essay : auteur = photographe).
  */
 function parseTrailingCaptionCredit(t = '', lang = 'fr') {
+  // FR : « … Photo d’Aidan Raynor // The Concordian » / « Photo de Marie Tremblay »
+  // / « Illustration par X » → même forme que « Photo by X » (The Concordian FR).
+  t = String(t || '')
+    // Montréal Campus : « Mention illustration : Maud Amoretti » / « Mention photo : X »
+    .replace(/\bMention\s+(?=(?:photos?|illustrations?|dessins?|cr[ée]dits?(?:\s+photo)?)\s*:)/giu, '')
+    .replace(/&#8217;|&#x2019;|&rsquo;/gi, '’').replace(/&#039;|&#39;|&apos;/gi, "'")
+    .replace(/\b(Photos?|Illustrations?|Graphiques?|Dessins?)\s+(?:de\s+|par\s+|d['’]\s*)(?=\p{Lu})/gu,
+      (m, k) => (/^photo/i.test(k) ? `${k} by ` : 'Graphic by '));
   // Zone Campus / FR : « … Beach Party. Crédit : Journaliste » / « Crédits : Pinterest. »
   const frTrail = t.match(TRAILING_FR_CREDIT_RE)
     || t.match(/^(Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Photo)\s*:\s*(.+?)\s*\.?$/iu);

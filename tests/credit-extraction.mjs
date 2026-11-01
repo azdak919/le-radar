@@ -117,3 +117,32 @@ assert.equal(PC.creditFromIptc('IMG_2034', 'fr'), null);
 assert.equal(C.displayAuthorName('Ellen Lurie and Managing Editor', en), 'Ellen Lurie');
 assert.equal(C.displayAuthorName('Ingara Maidou and Eva Marriott-Fabre', en), 'Ingara Maidou and Eva Marriott-Fabre');
 console.log('credit-extraction la-rédaction OK');
+
+// The Concordian (article FR) : « Photo d’Aidan Raynor // The Concordian » → Aidan Raynor, pas « The Concordian ».
+{
+  const pad = '<html><body>' + 'x'.repeat(300);
+  const img = 'https://theconcordian.com/wp-content/uploads/2026/10/PSPPFirstannoucement-00000018-1024x683.jpg';
+  const html = `${pad}<figure class="cs-entry__post-media"><img src="data:image/png;base64,A" data-pk-src="${img}"></figure>
+<figcaption class="cs-entry__caption-text wp-caption-text">La mairesse à l&#8217;accueil Bonneau le 23 octobre. Photo d&#8217;Aidan Raynor // The Concordian</figcaption></body></html>`;
+  const r = PC.resolveSourcePhotoCredit({ source: 'The Concordian', lang: 'en', image: img }, html);
+  assert.equal(r.creator, 'Aidan Raynor');
+  assert.equal(r.creditLine, 'Photo: Aidan Raynor');
+  for (const [cap, who] of [['Vue du parc. Photo de Marie Tremblay', 'Marie Tremblay'], ['Une affiche. Illustration par Léa Roy // Le Délit', 'Léa Roy']]) {
+    const h = `${pad}<figure><img src="${img}"><figcaption>${cap}</figcaption></figure></body></html>`;
+    assert.equal(PC.extractPhotoCreditFromHtml(h, img, 'fr')?.creator, who, cap);
+  }
+  console.log('credit-extraction photo-de FR OK');
+}
+
+// Montréal Campus : « Mention illustration : Maud Amoretti » → Illustration : Maud Amoretti (pas « Photo : Montréal Campus »).
+{
+  const pad = '<html><body>' + 'x'.repeat(300);
+  const img = 'https://montrealcampus.ca/wp-content/uploads/2026/10/neurodiversite-au-travail-Maud-Amoretti.jpg';
+  const h = `${pad}<figure><img src="${img}"><figcaption>Fanny Groleau travaille chez Zera Café depuis plus d&rsquo;un an. Mention illustration : Maud Amoretti</figcaption></figure></body></html>`;
+  const r = PC.resolveSourcePhotoCredit({ source: 'Montréal Campus', lang: 'fr', image: img }, h);
+  assert.equal(r.creator, 'Maud Amoretti');
+  assert.equal(r.creditLine, 'Illustration : Maud Amoretti');
+  const h2 = h.replace('Mention illustration', 'Mention photo');
+  assert.equal(PC.resolveSourcePhotoCredit({ source: 'Montréal Campus', lang: 'fr', image: img }, h2).creditLine, 'Photo : Maud Amoretti');
+  console.log('credit-extraction mention FR OK');
+}
