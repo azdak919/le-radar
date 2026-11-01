@@ -26,3 +26,6 @@ export function slotsDue(now, { windowMin = 35, tz = 'America/Toronto', slots = 
   const m = +p.hour * 60 + +p.minute;
   return slots.some(s => { const [h, mm] = s.split(':').map(Number); const d = m - (h * 60 + mm); return d >= 0 && d < windowMin; });
 }
+
+/** SOCIAL_WORKFLOW : un ou plusieurs workflows séparés par des virgules (ex. Bluesky, Tumblr). */
+export const socialWorkflows = v => [...new Set(String(v || '').split(',').map(s => s.trim()).filter(Boolean))];

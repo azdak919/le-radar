@@ -1,7 +1,7 @@
 // le-radar-news-trigger : lance update-news.yml (workflow_dispatch) seulement
 // s'il y a du nouveau dans les flux, ou si la dernière collecte publiée date
 // de plus de MAX_AGE_MIN. Jamais si une collecte est déjà en cours ou en file.
-import { decide, newestFeedDate, slotsDue } from './lib.js';
+import { decide, newestFeedDate, slotsDue, socialWorkflows } from './lib.js';
 
 const UA = 'LE-RADAR-NewsTrigger/1.0 (+https://le-radar.ca/)';
 
@@ -65,16 +65,20 @@ export async function runGuard(env, now = Date.now()) {
   return { guard: 'dispatch', age: Math.round(age), status: d.status };
 }
 
-// Bluesky n'a pas de planificateur : après chaque créneau social, lance social-bluesky.yml
+// Bluesky et Tumblr n'ont pas de planificateur : après chaque créneau social, lance chaque workflow de SOCIAL_WORKFLOW
 // (le workflow publie les choix dus, idempotent). Aucune relance si une passe est en cours.
 export async function runSocial(env, now = Date.now()) {
-  const wf = env.SOCIAL_WORKFLOW;
-  if (!wf || !slotsDue(now)) return { social: 'idle' };
-  const r = await gh(env, `/actions/workflows/${wf}/runs?per_page=1`);
-  const last = r.ok ? (await r.json()).workflow_runs?.[0] : null;
-  if (last && last.status !== 'completed') return { social: 'busy' };
-  const d = await gh(env, `/actions/workflows/${wf}/dispatches`, { method: 'POST', body: JSON.stringify({ ref: 'main' }) });
-  return { social: 'dispatch', status: d.status };
+  const wfs = socialWorkflows(env.SOCIAL_WORKFLOW);
+  if (!wfs.length || !slotsDue(now)) return { social: 'idle' };
+  const out = {};
+  for (const wf of wfs) {
+    const r = await gh(env, `/actions/workflows/${wf}/runs?per_page=1`);
+    const last = r.ok ? (await r.json()).workflow_runs?.[0] : null;
+    if (last && last.status !== 'completed') { out[wf] = 'busy'; continue; }
+    const d = await gh(env, `/actions/workflows/${wf}/dispatches`, { method: 'POST', body: JSON.stringify({ ref: 'main' }) });
+    out[wf] = d.status;
+  }
+  return { social: 'dispatch', ...out };
 }
 
 export default {
