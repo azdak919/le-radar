@@ -3,7 +3,7 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, selectItems, xlen, slotsToday, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
@@ -42,8 +42,15 @@ const slots = Math.min(Math.max(0, QUEUE_MAX - queued.length), maxNew > 0 ? maxN
 console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} · places : ${slots}`);
 const maxAgeH = parseInt(process.env.MAX_AGE_H || '', 10) || MAX_AGE_H;
 // SLOT_TIMES="07:30,09:00,…" : programme aujourd'hui à ces heures (America/Toronto) au lieu de l'horaire Buffer.
-const dues = process.env.SLOT_TIMES ? slotsToday(process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean)) : null;
-const sel = selectItems(items, { sentIds: new Set(Object.keys(state.sent)), queuedSources, slots: dues ? Math.min(slots, dues.length) : slots, maxAgeH });
+// DAILY=true (cron nocturne) : veille + classement, créneaux fixes du jour (jamais l'horaire Buffer).
+const daily = process.env.DAILY === 'true';
+const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : daily ? DAILY_SLOTS : null;
+const dues = times ? freeSlots(slotsToday(times), queued.map(p => p.dueAt)) : null;
+const want = dues ? Math.min(slots, dues.length) : slots;
+const sentIds = new Set(Object.keys(state.sent));
+const sel = daily ? selectDaily(items, { sentIds, queuedSources, slots: want, accounts: ACCOUNTS, maxAgeH })
+  : selectItems(items, { sentIds, queuedSources, slots: want, maxAgeH });
+if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${daily ? 'nocturne (veille)' : 'manuel'}`);
 
 const used = new Map(); let n = 0;
 for (const it of sel) {

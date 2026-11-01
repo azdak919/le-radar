@@ -134,3 +134,51 @@ export function slotsToday(times, { tz = 'America/Toronto', now = Date.now() } =
   return times.map(hm => { let t = Date.parse(`${day}T${hm}:00Z`); t -= off(t) * 60e3; t = Date.parse(`${day}T${hm}:00Z`) - off(t) * 60e3; return t; })
     .filter(t => t > now + 10 * 60e3).sort((a, b) => a - b).map(t => new Date(t).toISOString());
 }
+
+// ── Sélection nocturne (≈ 3 h, America/Toronto) ──────────────────────────────
+export const DAILY_SLOTS = ['07:30', '09:00', '10:30', '12:00', '13:00', '15:00', '17:00', '18:30', '20:00', '21:30'];
+export const MIN_EXCERPT = 80;
+const dayOf = (t, tz = 'America/Toronto') => new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(t);
+
+/** Note de qualité : vraie photo du flux > extrait substantiel > @ confirmé. */
+export function quality(it, accounts = []) {
+  const photo = it.img && !it.imgDropped ? 4 : 0;
+  const ex = excerpt(it).length >= MIN_EXCERPT ? 2 : 0;
+  const at = /(^|\s)@\w/.test(mentionHead(it, accounts)) ? 1 : 0;
+  return photo + ex + at;
+}
+
+/**
+ * Choix nocturne : articles NON envoyés de la veille (jour civil Toronto) ; s'il y a moins
+ * de `slots` candidats, élargit à 72 h. Variété d'abord (≤ perSource par source, file comprise,
+ * round-robin), puis qualité (photo réelle, extrait, @ confirmé), puis récence.
+ */
+export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H } = {}) {
+  // veille = jour civil précédent (midi UTC du jour − 24 h : robuste au changement d'heure)
+  const prev = dayOf(Date.parse(dayOf(now, tz) + 'T12:00:00Z') - 864e5, 'UTC');
+  const fresh = items.filter(it => !sentIds.has(it.id) && now - it.date <= maxAgeH * 3600e3 && it.date <= now);
+  let pool = fresh.filter(it => dayOf(it.date, tz) === prev);
+  if (pool.length < slots) pool = fresh;
+  const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
+  const by = new Map();
+  for (const it of pool) { it._q = quality(it, accounts); if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it); }
+  const cmp = (a, b) => b._q - a._q || b.date - a.date;
+  const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmp) }))
+    .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmp(a.q[0], b.q[0]));
+  const sel = [];
+  for (let r = 0; sel.length < slots && r < perSource; r++) {
+    const round = queues.filter(({ s, q }) => q.length && (count.get(s) || 0) < perSource).map(x => x.q[0]).sort(cmp);
+    for (const it of round) {
+      if (sel.length >= slots) break;
+      const qq = by.get(it.source); qq.shift();
+      sel.push(it); count.set(it.source, (count.get(it.source) || 0) + 1);
+    }
+  }
+  return sel;
+}
+
+/** Retire les créneaux déjà pris (dueAt en file, à ±5 min). */
+export function freeSlots(dues, takenIso = []) {
+  const taken = takenIso.filter(Boolean).map(Date.parse);
+  return dues.filter(d => !taken.some(t => Math.abs(t - Date.parse(d)) < 5 * 60e3));
+}

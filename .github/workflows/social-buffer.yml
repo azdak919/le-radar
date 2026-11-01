@@ -5,7 +5,8 @@ name: Social — Buffer (X @LeRadar_ca)
 # scripts/social/channels/, pas encore activés.
 on:
   schedule:
-    - cron: '17 */2 * * *'
+    # Une passe par nuit ≈ 3 h Toronto (3 h 07 HNE, 4 h 07 HAE) : articles de la veille, 10 max.
+    - cron: '7 8 * * *'
     - cron: '41 13 * * 1'   # rapport hebdo des comptes (lundi)
   workflow_dispatch:
     inputs:
@@ -25,6 +26,10 @@ on:
         description: 'Programmer AUJOURD HUI à ces heures America/Toronto, ex. 07:30,09:00 (vide = file Buffer)'
         type: string
         default: ''
+      daily:
+        description: 'Mode nocturne : articles de la veille, créneaux fixes du jour'
+        type: boolean
+        default: false
       report:
         description: 'Générer aussi le rapport des comptes X'
         type: boolean
@@ -73,6 +78,7 @@ jobs:
           MAX_NEW: ${{ inputs.max_new }}
           MAX_AGE_H: ${{ inputs.max_age_h }}
           SLOT_TIMES: ${{ inputs.slot_times }}
+          DAILY: ${{ (github.event_name == 'schedule' || inputs.daily) && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-post.mjs
       - name: Commit de l'état (data/buffer-sent.json seulement)
