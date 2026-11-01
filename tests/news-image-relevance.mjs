@@ -80,3 +80,19 @@ const avoidAll = bank.bankEntriesFor("Bishop's University").map((e) => `${e.url}
 assert.equal(bank.pickCampusPhoto(debate, { avoidUrls: avoidAll }), null);
 
 console.log('news-image-relevance (lieu, répétition) OK');
+
+// Équipe d'une autre école : « Nipissing Lakers » ≠ Gaiters de Bishop's.
+const gaiters = { source: 'The Campus', institution: "Bishop's University", lang: 'en',
+  title: 'Strong Start to the Season for the Gaiters', excerpt: 'The Gaiters women’s hockey team opened with two wins.',
+  stockImage: "https://upload.wikimedia.org/wikipedia/commons/x/Nipissing_Lakers_women%27s_ice_hockey_%282026%29.jpg",
+  imageTitle: "File:Nipissing Lakers women's ice hockey (2026).jpg", imageProvider: 'wikimedia', imageLicense: 'CC BY-SA 4.0' };
+assert.equal(L.namesOtherSchoolTeam(gaiters), true);
+assert.equal(L.stockStillFits(gaiters), false, 'Nipissing Lakers ≠ Gaiters');
+assert.match(bank.pickCampusPhoto(gaiters, { avoidUrls: [] }).imageTitle, /Bishop/);
+// Sa propre équipe reste acceptée par cette règle ; Rouge et Or ≠ Carabins.
+assert.equal(L.namesOtherSchoolTeam({ ...gaiters, imageTitle: "Bishop's Gaiters football 2019", stockImage: '' }), false);
+assert.equal(L.namesOtherSchoolTeam({ source: 'Quartier Libre', institution: 'Université de Montréal',
+  imageTitle: 'Rouge et Or football Laval', stockImage: '' }), true);
+assert.equal(L.namesOtherSchoolTeam({ source: 'Quartier Libre', institution: 'Université de Montréal',
+  imageTitle: 'Carabins de Montréal', stockImage: '' }), false);
+console.log('news-image-relevance (équipes) OK');
