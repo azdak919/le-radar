@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-01T03:37:12.130Z",
+  "updated": "2026-11-01T04:46:36.843Z",
   "total": 184,
   "withAuthor": 184,
-  "mismatches": 20,
+  "mismatches": 21,
   "ok": true,
   "samples": [
-    {
-      "title": "Cinema Politica screens Edward Said documentary",
-      "link": "https://thelinknewspaper.ca/article/16532",
-      "source": "The Link",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Sana Paracha",
-      "reason": "page-byline"
-    },
     {
       "title": "BU Snow Prepares for Another Winter at Bishop’s",
       "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
+      "link": "https://thetribune.ca/sports/after-mcgill-athletics-cuts-teams-navigate-a-new-future-under-ssmu-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "Ivanna Zhang et Zain Ahmed",
+      "canonicalAuthor": "Ivanna Zhang and Zain Ahmed",
+      "reason": "page-byline-overrides-rss"
     }
   ],
-  "fixed": 20
+  "fixed": 21
 }
