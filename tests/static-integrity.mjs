@@ -577,7 +577,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   );
   assert(kit.includes('Pour les babillards'), 'kit-media : phrase affiches claire');
   assert(kit.includes('id="kit-poster-grid"'), 'kit-media : grille d’exemples d’affiches');
-  assert(kit.includes('kit-poster-examples.js'), 'kit-media : tirage aléatoire d’exemples');
+  assert(kit.includes('kit-poster-examples.js'), 'kit-media : galerie d’exemples');
   assert(kit.includes('kit-card--feature'), 'kit-media : affiche générique en carte vedette');
   assert(kit.includes('download="le-radar-affiche-11x17.pdf"'), 'kit-media : nom de fichier PDF 11 × 17');
   assert(kit.includes('type="application/pdf"'), 'kit-media : type PDF explicite pour iOS');
@@ -585,8 +585,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
     const examplesJs = readFileSync(join(root, 'kit-media/kit-poster-examples.js'), 'utf8');
     assert(examplesJs.includes('function isAppleTouch'), 'kit-media : détection iPad/iOS');
     assert(examplesJs.includes('function saveKitFile'), 'kit-media : enregistrement iOS (partage / nouvel onglet)');
-    assert(examplesJs.includes('featureSpan'), 'kit-media : la vedette compte pour deux colonnes');
-    assert(examplesJs.includes('minmax(280px') || examplesJs.includes('const min = 280'), 'kit-media : cartes plus larges sur tablette');
+    // La vedette sur deux colonnes étirait toute sa rangée (cartes vides) : même gabarit pour toutes.
+    assert(!examplesJs.includes('featureSpan'), 'kit-media : plus de vedette sur deux colonnes');
+    assert(examplesJs.includes('function buildFilter'), 'kit-media : filtre par établissement');
   }
   assert(existsSync(join(root, 'assets/kit/affiches/examples.json')), 'kit-media : catalogue d’exemples');
   {

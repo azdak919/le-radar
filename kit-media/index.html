@@ -96,9 +96,12 @@
       <section class="kit-section" id="affiches">
         <h2>Affiches</h2>
         <p>Pour les babillards de campus. Composez la vôtre, ou téléchargez le modèle générique.</p>
+        <div class="kit-block" role="group" aria-labelledby="kit-compose-title">
+        <h3 class="kit-block__title" id="kit-compose-title">Créer la vôtre</h3>
+        <p class="kit-block__lead">Le studio compose une affiche à votre campus, avec sa photo, en PDF 600 dpi.</p>
         <p class="kit-cta"><a class="kit-cta__btn" href="../affiches/">Composer une affiche</a></p>
-        <p class="kit-campus-lead">Choisir un campus :</p>
-        <nav class="kit-campus" aria-label="Campus">
+        <p class="kit-campus-lead" id="kit-campus-lead">Ou ouvrir le studio pour un campus :</p>
+        <nav class="kit-campus" aria-labelledby="kit-campus-lead">
           <a href="../affiches/?campus=laval">Université Laval</a>
           <a href="../affiches/?campus=mcgill">Université McGill</a>
           <a href="../affiches/?campus=udem">Université de Montréal</a>
@@ -118,21 +121,28 @@
           <a href="../affiches/?campus=poly">Polytechnique</a>
           <a href="../affiches/?campus=hec">HEC Montréal</a>
         </nav>
+        </div>
+        <div class="kit-block" role="group" aria-labelledby="kit-models-title">
+        <h3 class="kit-block__title" id="kit-models-title">Modèles prêts à imprimer</h3>
+        <p class="kit-campus-lead" id="kit-filter-lead">Filtrer les modèles par établissement :</p>
+        <div class="kit-filter" id="kit-poster-filter" role="group" aria-labelledby="kit-filter-lead" hidden></div>
+        <p class="kit-filter__count" id="kit-poster-count" aria-live="polite"></p>
         <div class="kit-grid kit-grid--poster" id="kit-poster-grid" data-asset-base="../assets/kit/affiches/" data-compose="../affiches/">
-          <article class="kit-card kit-card--feature">
-            <div class="kit-card__preview kit-card__preview--photo">
-              <img src="../assets/kit/affiches/affiche-generique-preview.jpg" width="330" height="510" alt="Affiche générique LE-RADAR.ca">
-            </div>
+          <article class="kit-card kit-card--poster kit-card--feature" data-campus="generique">
+            <a class="kit-card__preview kit-card__preview--photo" href="../assets/kit/affiches/affiche-generique-11x17-600dpi.pdf" aria-label="Ouvrir le PDF 11 × 17 de l’affiche générique">
+              <img src="../assets/kit/affiches/affiche-generique-preview.jpg" width="660" height="1020" alt="Affiche générique LE-RADAR.ca" decoding="async">
+            </a>
             <div class="kit-card__body">
-              <p class="kit-card__label">Affiche générique</p>
-              <p class="kit-card__meta">Langues · 600 dpi · PDF</p>
-              <p class="kit-dl">
+              <h3 class="kit-card__label">Affiche générique</h3>
+              <p class="kit-card__meta">Tous les campus · langues · 600 dpi</p>
+              <p class="kit-dl" aria-label="Télécharger le PDF">
                 <a href="../assets/kit/affiches/affiche-generique-11x17-600dpi.pdf" download="le-radar-affiche-11x17.pdf" type="application/pdf">11 × 17</a>
                 <a href="../assets/kit/affiches/affiche-generique-lettre-600dpi.pdf" download="le-radar-affiche-lettre.pdf" type="application/pdf">Lettre</a>
                 <a href="../assets/kit/affiches/affiche-generique-legal-600dpi.pdf" download="le-radar-affiche-legal.pdf" type="application/pdf">Légal</a>
               </p>
             </div>
           </article>
+        </div>
         </div>
       </section>
 
@@ -310,6 +320,6 @@
     <script src="../nav-shell.js" defer></script>
     <script src="../native-tuner.js" defer></script>
     <script src="../engage-prompt.js" defer></script>
-    <script src="./kit-poster-examples.js?v=ipad-dl" defer></script>
+    <script src="./kit-poster-examples.js?v=galerie-2" defer></script>
   </body>
 </html>

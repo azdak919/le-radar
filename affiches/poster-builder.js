@@ -1303,6 +1303,23 @@ function applyQuery() {
     if (sel) sel.value = greeting;
   }
   syncGenericLangs();
+  // Préréglages venus de la galerie du kit (format, langue, QR, langues).
+  const presets = {
+    format: Object.keys(FORMATS),
+    lang: ['standard', 'bilingue', 'minimal'],
+    qr: ['oui', 'non'],
+    langs: ['oui', 'non'],
+  };
+  Object.entries(presets).forEach(([name, allowed]) => {
+    const value = q.get(name);
+    if (!value || !allowed.includes(value)) return;
+    const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
+    if (input) input.checked = true;
+    if (name === 'format') state.format = value;
+    if (name === 'lang') state.lang = value;
+    if (name === 'qr') state.qr = value === 'oui';
+    if (name === 'langs') state.langs = value === 'oui';
+  });
 }
 
 function applyPhotoHint() {

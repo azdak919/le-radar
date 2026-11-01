@@ -8,6 +8,7 @@ import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
+import { writeStamp } from './kit-poster-stamp.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = join(root, 'assets/kit/affiches');
@@ -65,7 +66,7 @@ async function main() {
       });
       if (fmt.value === 'tabloid') {
         const preview = join(outDir, 'affiche-generique-preview.jpg');
-        const thumb = spawn('magick', [dest, '-resize', '330x510', preview], { stdio: 'inherit' });
+        const thumb = spawn('magick', [dest, '-resize', '660x1020', '-quality', '84', preview], { stdio: 'inherit' });
         await new Promise((resolve, reject) => {
           thumb.on('exit', (code) => (code === 0 ? resolve() : reject(new Error('preview'))));
         });
@@ -78,7 +79,7 @@ async function main() {
   }
 }
 
-main().catch((err) => {
+main().then(() => writeStamp(root)).catch((err) => {
   console.error(err);
   process.exit(1);
 });

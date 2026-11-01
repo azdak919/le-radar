@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
+import { writeStamp } from './kit-poster-stamp.mjs';
 
 const require = createRequire(import.meta.url);
 const { cacheId, cacheDir, findCached } = require('./photo-lab-cache');
@@ -88,7 +89,9 @@ async function attachLocalPhotos(page) {
     }
     const file = cachedPath(route.request().url(), map);
     if (!file) {
-      await route.abort();
+      // Pas en cache : on va chercher la photo publique (sinon l’aperçu sortait sans photo).
+      console.warn('  photo hors cache, téléchargée :', route.request().url().slice(0, 100));
+      await route.continue();
       return;
     }
     await route.fulfill({
@@ -135,8 +138,19 @@ async function pickPhoto(page, hint) {
 }
 
 async function capture(page, dest) {
+  // Attendre la photo : sinon l’aperçu sort sans fond (course observée sur Laval).
+  await page.waitForLoadState('networkidle').catch(() => {});
   await page.waitForTimeout(800);
-  const data = await page.locator('#preview canvas').evaluate((c) => c.toDataURL('image/jpeg', 0.88));
+  const data = await page.locator('#preview canvas').evaluate((c) => {
+    // Aperçu net (2×) pour la galerie du kit : 660 × 1020 px.
+    const o = document.createElement('canvas');
+    o.width = 660;
+    o.height = 1020;
+    const g = o.getContext('2d');
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(c, 0, 0, o.width, o.height);
+    return o.toDataURL('image/jpeg', 0.84);
+  });
   const buf = Buffer.from(data.split(',')[1], 'base64');
   writeFileSync(dest, buf);
 }
@@ -145,7 +159,7 @@ async function main() {
   const server = await startServer();
   const browser = await chromium.launch();
   try {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
     await attachLocalPhotos(page);
     for (const ex of catalog.examples) {
       const dest = join(outDir, `affiche-ex-${ex.id}-preview.jpg`);
@@ -175,7 +189,7 @@ async function main() {
   }
 }
 
-main().catch((err) => {
+main().then(() => writeStamp(root)).catch((err) => {
   console.error(err);
   process.exit(1);
 });
