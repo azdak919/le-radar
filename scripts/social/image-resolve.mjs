@@ -2,13 +2,22 @@
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const bank = require('../campus-photo-bank.js');
+import { personCredit } from './lib.mjs';
 const UA = {'user-agent':'Mozilla/5.0 (compatible; LeRadarBot/1.0; +https://le-radar.ca)'};
 export const BAD = /logo|default|placeholder|favicon|avatar|icon|sprite|banner|header|cropped-|gravatar|blank|spacer|5-?infos|cinq-?infos|cinq-nouvelles|nouvelles-de-la-semaine|share-image|og-default|site-image/i;
 const MINW = 600;
+/** Attribution d'une photo de banque : nom de personne tel quel ; pseudo (ex. « abdallahh », seul nom publié
+ * par l'auteur·e sur Flickr/Commons) complété par la source et la licence, comme l'exige CC BY. */
+export function bankAttribution(e){
+  const c=String(e?.creator||'').trim(); if(!c) return '';
+  if(personCredit(c)) return c;
+  const src=/wiki/i.test(`${e.url||''} ${e.sourceUrl||''}`)?'Wikimedia Commons':/flickr/i.test(`${e.url||''} ${e.sourceUrl||''}`)?'Flickr':'';
+  const extra=[src,String(e.license||'').trim()].filter(Boolean).join(', ');
+  return extra?`${c} (${extra})`:c; }
 /** Auteur·e connu·e d'une photo de la banque du Radar (Wikimedia, etc.), sinon ''. */
 let _credits=null;
 export function bankCredit(url){
-  if(!_credits){ _credits=new Map(); const add=e=>{ if(e?.url&&e.creator&&!/inconnu/i.test(e.creator)) _credits.set(key(e.url),e.creator.trim()); };
+  if(!_credits){ _credits=new Map(); const add=e=>{ if(e?.url&&e.creator&&!/inconnu/i.test(e.creator)) _credits.set(key(e.url),bankAttribution(e)); };
     for(const l of Object.values(bank.BANK||{})) for(const e of l) add(e);
     try{ for(const l of bank.loadWallpaperCampusExtras().values()) for(const e of l) add(e); }catch{} }
   return _credits.get(key(url))||''; }

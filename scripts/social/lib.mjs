@@ -210,8 +210,11 @@ export function selectItems(items, { sentIds = new Set(), queuedSources = [], sl
     if (sentIds.has(it.id) || !(now - it.date <= maxAgeH * 3600e3)) continue;
     if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it);
   }
-  const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort((a, b) => b.date - a.date) }))
-    .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || b.q[0].date - a.q[0].date);
+  // variété d'abord, puis récence (jour civil), et à jour égal la vraie photo créditée à une personne.
+  // Les articles sans photo propre (repli banque campus) restent publiés, simplement après à égalité.
+  const cmpP = (a, b) => (dayOf(a.date) !== dayOf(b.date) ? b.date - a.date : photoRank(b) - photoRank(a) || b.date - a.date);
+  const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmpP) }))
+    .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmpP(a.q[0], b.q[0]));
   const sel = [];
   for (let r = 0; sel.length < slots && r < perSource; r++)
     for (const { s, q } of queues) {
@@ -249,9 +252,18 @@ export const DAILY_SLOTS = ['08:30', '11:30', '12:30', '13:30', '14:30', '15:30'
 export const MIN_EXCERPT = 80;
 const dayOf = (t, tz = 'America/Toronto') => new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(t);
 
-/** Note de qualité : vraie photo du flux > extrait substantiel > @ confirmé. */
+/** Crédit photo nommant une personne (« Prénom Nom »), pas un pseudo, une banque ni une mention générique. */
+export function personCredit(c) {
+  const t = String(c || '').replace(/^(photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').trim();
+  if (!t || /wiki|commons|unsplash|pexels|pixabay|shutterstock|getty|istock|courtoisie|courtesy|archives?|stock|@|https?:|\d/i.test(t)) return false;
+  return /^\p{Lu}[\p{L}'’.-]+(?:\s+(?:(?:de|du|des|da|di|van|von|den|der|la|le|el|al|bin)\s+)*\p{Lu}[\p{L}'’.-]+)+$/u.test(t);
+}
+/** Rang photo : 2 = vraie photo du flux créditée à une personne, 1 = photo du flux, 0 = aucune (banque/repli). */
+export const photoRank = it => (it.img && !it.imgDropped ? (personCredit(it.credit) && norm(it.credit) !== norm(it.source) ? 2 : 1) : 0);
+
+/** Note de qualité : vraie photo du flux créditée à une personne > photo du flux > extrait substantiel > @ confirmé. */
 export function quality(it, accounts = []) {
-  const photo = it.img && !it.imgDropped ? 4 : 0;
+  const photo = [0, 4, 6][photoRank(it)];
   const ex = excerpt(it).length >= MIN_EXCERPT ? 2 : 0;
   const at = /(^|\s)@\w/.test(mentionHead(it, accounts)) ? 1 : 0;
   return photo + ex + at;
