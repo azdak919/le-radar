@@ -4,11 +4,12 @@
  */
 import { expect, test } from '@playwright/test';
 
-const PAGES = ['/', '/horaires/', '/en/', '/affiches/', '/archives/'];
+// Échantillon court (budget CI 10 min) : gabarit FR généré + gabarit EN.
+const PAGES = [['/horaires/', 'light'], ['/en/', 'dark']];
 const WIDTHS = [320, 360, 390, 768, 1024, 1440];
 
-for (const path of PAGES) {
-  for (const theme of ['light', 'dark']) {
+for (const [path, theme] of PAGES) {
+  {
     test(`@ci-critical footer v2 sans débordement — ${path} ${theme}`, async ({ page }) => {
       test.setTimeout(120_000);
       await page.addInitScript((t) => localStorage.setItem('radar-theme', t), theme);

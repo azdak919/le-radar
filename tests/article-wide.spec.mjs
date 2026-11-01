@@ -18,12 +18,13 @@ test.beforeAll(() => {
   html = fs.readFileSync(path.join(dir, 'article', id, 'index.html'), 'utf8');
 });
 
-for (const width of [390, 768, 1024, 1440, 1920, 2560]) {
-  test(`@ci-critical fiche d'article lisible — ${width}px`, async ({ page }) => {
-    test.skip(!html, 'aucune fiche rendue');
-    await page.route(`**/article/${id}/`, (r) => r.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: html }));
+test(`@ci-critical fiche d'article lisible de 390 à 2560 px`, async ({ page }) => {
+  test.skip(!html, 'aucune fiche rendue');
+  test.setTimeout(90_000);
+  await page.route(`**/article/${id}/`, (r) => r.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: html }));
+  await page.goto(`/article/${id}/`, { waitUntil: 'load' });
+  for (const width of [390, 768, 1024, 1440, 1920, 2560]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto(`/article/${id}/`, { waitUntil: 'load' });
     const m = await page.evaluate(() => {
       const q = (s) => document.querySelector(s)?.getBoundingClientRect();
       const fs = parseFloat(getComputedStyle(document.querySelector('.seo-article__excerpt') || document.body).fontSize);
@@ -33,5 +34,5 @@ for (const width of [390, 768, 1024, 1440, 1920, 2560]) {
     if (m.lead) expect(m.lead.width / m.fs).toBeLessThanOrEqual(80 * 0.6 + 40); // ≈ 75ch max
     if (m.fig) expect(m.fig.height).toBeLessThanOrEqual(Math.min(m.vh * 0.75, 800));
     if (width >= 1024 && m.fig) expect(m.title.left).toBeGreaterThan(m.fig.right);
-  });
-}
+  }
+});
