@@ -33,17 +33,19 @@ for (const it of items) {
   assert(!/cliquer ici|lire la suite/i.test(t), 'phrase parasite retirée');
   assert(/…\n/.test(t), 'extrait coupé avec …');
   assert.equal(t.split('\n').length, 2, 'titre : extrait, puis lien');
-  assert(/ : Titre \d de .+ : Un long/.test(t), 'deux-points français après le titre');
+  assert(/^\S.* • Auteur \d • Titre \d de .+ : Un long/.test(t), '« Média • Auteur • Titre : extrait »');
 }
 assert.equal(xlen('a https://x.org/' + 'z'.repeat(200)), 2 + 23);
 
 // mentions exactes seulement
 const link0 = items.find(i => i.source === 'The Link');
-assert(mentionHead(link0, accounts).startsWith('@Linknewspaper – '));
-assert(mentionHead(items.find(i => i.source === "L'Exemplaire"), accounts).startsWith('@lexemplaire – '));
-assert(mentionHead(items.find(i => i.source === 'Le Polyscope'), accounts).startsWith('@Polyscope – '));
-assert.equal(mentionHead({ ...link0, source: 'The Link Bis', title: 'The Link Bis – A : T' }, accounts), 'The Link Bis – A : T');
-assert(mentionHead({ ...link0, author: 'Jo Doe', title: 'The Link – Jo Doe: T' }, [...accounts, { handle: '@jodoe', type: 'auteur', cle_flux: 'Jo Doe' }]).includes('– @jodoe:'));
+assert(mentionHead(link0, accounts).startsWith('@Linknewspaper • Auteur '));
+assert(mentionHead(items.find(i => i.source === "L'Exemplaire"), accounts).startsWith('@lexemplaire • '));
+assert(mentionHead(items.find(i => i.source === 'Le Polyscope'), accounts).startsWith('@Polyscope • '));
+assert.equal(mentionHead({ ...link0, source: 'The Link Bis', author: 'A', bare: 'T' }, accounts), 'The Link Bis • A • T');
+assert.equal(mentionHead({ ...link0, author: '', bare: 'T' }, accounts), '@Linknewspaper • T', 'sans auteur');
+assert.equal(mentionHead({ ...link0, author: 'The Link', bare: 'T' }, accounts), '@Linknewspaper • T', 'auteur = média');
+assert(mentionHead({ ...link0, author: 'Jo Doe', bare: 'T' }, [...accounts, { handle: '@jodoe', type: 'auteur', cle_flux: 'Jo Doe' }]) === '@Linknewspaper • @jodoe • T');
 for (const a of accounts) assert(/^@\w{1,15}$/.test(a.handle), `handle invalide ${a.handle}`);
 
 // variété : ≤ 2 par source, 10 max, ≤ 72 h, file existante comptée
@@ -125,12 +127,15 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
 }
 // format titre/extrait
 {
-  const { joinHead, isEnglish } = await import('../scripts/social/lib.mjs');
+  const { joinHead, isEnglish, bulletHead } = await import('../scripts/social/lib.mjs');
   assert.equal(joinHead('Le Délit – A : Titre', 'Extrait'), 'Le Délit – A : Titre : Extrait');
   assert.equal(joinHead('The Link – A: Title', 'Excerpt'), 'The Link – A: Title: Excerpt');
   assert.equal(joinHead('X – A : Vraiment ?', 'Ex'), 'X – A : Vraiment ? Ex');
   assert.equal(joinHead('X – A: Wow!', 'Ex'), 'X – A: Wow! Ex');
   assert.equal(joinHead('X – A : Suite…', 'Ex'), 'X – A : Suite… Ex');
   assert(isEnglish('The Link – A: T') && !isEnglish('Le Délit – A : T'));
+  assert.equal(bulletHead('@Linknewspaper – Sana Paracha: Cinema Politica'), '@Linknewspaper • Sana Paracha • Cinema Politica');
+  assert.equal(bulletHead('@quartierlibre – S G : Jeu : un rêve'), '@quartierlibre • S G • Jeu : un rêve');
+  assert.equal(joinHead('@Linknewspaper • Sana Paracha • Cinema Politica', 'Ex', true), '@Linknewspaper • Sana Paracha • Cinema Politica: Ex');
 }
 console.log('social-buffer: ok');

@@ -67,14 +67,20 @@ export function excerpt(it) {
   return d;
 }
 
-/** accounts: [{handle,type,cle_flux}] — mention seulement si cle_flux === nom exact. */
+/** Réseaux sociaux seulement : « Média • Auteur • Titre » ; @ seulement si cle_flux === nom exact. */
 export function mentionHead(it, accounts = []) {
-  let head = it.title;
   const src = accounts.find(a => a.type === 'source' && a.cle_flux && a.cle_flux === it.source);
-  if (src && head.startsWith(it.source + ' ')) head = src.handle + head.slice(it.source.length);
   const au = it.author && accounts.find(a => a.type === 'auteur' && a.cle_flux && a.cle_flux === it.author);
-  if (au) head = head.replace(new RegExp('([–-]\\s)' + esc(it.author) + '(\\s?:)'), `$1${au.handle}$2`);
-  return head;
+  const media = src ? src.handle : it.source;
+  const author = it.author && it.author !== it.source ? (au ? au.handle : it.author) : '';
+  const title = it.bare || it.title;
+  return [media, author, title].filter(Boolean).filter((x, i, a) => a.indexOf(x) === i).join(' • ');
+}
+
+/** Ancien en-tête « Média – Auteur : Titre » → « Média • Auteur • Titre ». */
+export function bulletHead(line) {
+  const m = line.match(/^(.*?)\s[–-]\s(.*?)\s?:\s(.+)$/);
+  return m ? [m[1], m[2], m[3]].filter((x, i, a) => x && a.indexOf(x) === i).join(' • ') : line;
 }
 
 /** « Titre : extrait » (fr), « Title: excerpt » (en), simple espace après ? ! … */
