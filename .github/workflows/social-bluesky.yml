@@ -25,6 +25,10 @@ on:
         description: 'Appliquer la bio et le nom affiché (data/social/bluesky-bio.txt, bluesky-display-name.txt) (autres champs conservés) — avec dry_run : essai'
         type: boolean
         default: false
+      set_images:
+        description: 'Appliquer l’avatar et la bannière HD (data/social/bluesky-avatar.png, bluesky-banner.jpg) (autres champs conservés) — avec dry_run : essai'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -46,15 +50,16 @@ jobs:
         with:
           node-version: '24'
       - name: Étiquette « bot » du profil
-        if: inputs.bot_label || inputs.set_bio
+        if: inputs.bot_label || inputs.set_bio || inputs.set_images
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           SET_BIO: ${{ inputs.set_bio && 'true' || 'false' }}
+          SET_IMAGES: ${{ inputs.set_images && 'true' || 'false' }}
         run: node scripts/social/bluesky-label.mjs
       - name: Publier les articles frais
-        if: ${{ !inputs.bot_label && !inputs.set_bio }}
+        if: ${{ !inputs.bot_label && !inputs.set_bio && !inputs.set_images }}
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}

@@ -32,6 +32,21 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     next = { ...(next || { ...value, $type: 'app.bsky.actor.profile' }), description: bio, displayName: name };
     console.log(`Bio (${n} graphèmes) et nom affiché « ${name} » à appliquer.`);
   }
+  if (process.env.SET_IMAGES === 'true') {
+    // Images HD approuvées : data/social/bluesky-avatar.png (2048²) et bluesky-banner.jpg (1500×500), < 1 Mo chacune.
+    const { readFileSync } = await import('node:fs');
+    const imgs = { avatar: ['bluesky-avatar.png', 'image/png'], banner: ['bluesky-banner.jpg', 'image/jpeg'] };
+    next = { ...(next || { ...value, $type: 'app.bsky.actor.profile' }) };
+    for (const [k, [f, type]] of Object.entries(imgs)) {
+      const buf = readFileSync(new URL(`../../data/social/${f}`, import.meta.url));
+      if (buf.length > 1_000_000) throw new Error(`${f} dépasse 1 Mo`);
+      if (keys.includes(k)) keys.splice(keys.indexOf(k), 1);
+      if (dry) { console.log(`ESSAI : ${k} ← ${f} (${buf.length} octets)`); continue; }
+      const blob = await bs.uploadImage(`data:${type};base64,${buf.toString('base64')}`);
+      if (!blob) throw new Error(`téléversement ${f} échoué`);
+      next[k] = blob; console.log(`${k} ← ${f} (${buf.length} octets)`);
+    }
+  }
   console.log(`Profil ${handle} : champs présents ${keys.join(', ')} ; étiquettes ${JSON.stringify((value.labels?.values || []).map(v => v.val))}`);
   if (!next) { console.log('Étiquette « bot » déjà présente : inchangé.'); process.exit(0); }
   for (const k of keys) if (JSON.stringify(next[k]) !== JSON.stringify(value[k])) throw new Error(`champ ${k} modifié`);
