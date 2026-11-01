@@ -1778,3 +1778,35 @@
 .sports-result--next,
 .sports-result--W,
 .sports-result--L { border-left-width: 1px; }
+
+/* ── Fiche d'article /article/<id>/ (scripts/article-pages.js) ──────────── */
+.seo-article .seo-title { margin-bottom: 10px; }
+.seo-article__meta {
+  margin: 0 0 18px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--muted);
+}
+.seo-article__sep { opacity: 0.6; }
+.seo-article__figure { margin: 0 0 20px; padding: 0; }
+.seo-article__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 72vh;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--line, rgba(127, 127, 127, 0.15));
+}
+.seo-wire .seo-article__credit {
+  margin: 8px 0 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.seo-article__excerpt { max-width: 68ch; }
+.seo-wire .seo-article__back { margin: 0; font-family: var(--sans); font-size: 14.5px; }
+.seo-article__back a { color: var(--accent); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .seo-article__back a:hover { text-decoration: underline; } }

@@ -1,0 +1,57 @@
+name: Social — purge complète (toutes les publications)
+
+# Manuel seulement. Supprime toutes les publications du Radar sur Bluesky et Tumblr, vide les
+# files Buffer (X, Facebook, LinkedIn) et remet les états à zéro. Les posts déjà publiés via
+# Buffer sont listés dans le bilan (l'API ne les retire pas du réseau). Coût : 0 $.
+on:
+  workflow_dispatch:
+    inputs:
+      networks:
+        description: 'Réseaux (bluesky,tumblr,buffer)'
+        default: 'bluesky,tumblr,buffer'
+      dry_run:
+        description: 'Essai seulement (rien n’est supprimé)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Purger
+        env:
+          NETWORKS: ${{ inputs.networks }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
+          TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}
+          TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
+        run: node scripts/social/purge.mjs
+      - name: Commit des états
+        if: ${{ !inputs.dry_run }}
+        run: |
+          F="data/buffer-sent.json data/bluesky-sent.json data/tumblr-sent.json data/buffer-pages-sent.json"
+          git diff --quiet -- $F && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          for f in $F; do git add -- "$f"; done
+          git commit -s -m "bot(social): états remis à zéro après la purge"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of process.argv.slice(1)) JSON.parse(require(\"fs\").readFileSync(f))' $F"

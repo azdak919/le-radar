@@ -18,6 +18,13 @@
 
   const id = new URLSearchParams(location.search).get('id') || '';
 
+  // Fiche statique /article/<id>/ (habillage complet, carte de lien) : redirection si elle existe.
+  if (/^[0-9a-f]{16}$/i.test(id)) {
+    fetch(`./${id.toLowerCase()}/`, { method: 'HEAD', cache: 'no-cache' })
+      .then((r) => { if (r.ok) location.replace(`./${id.toLowerCase()}/`); })
+      .catch(() => {});
+  }
+
   fetch('../news.json', { cache: 'no-cache' })
     .then((response) => {
       if (!response.ok) throw new Error('fil');

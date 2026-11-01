@@ -6,7 +6,7 @@
 // DRY_RUN=true : vérifie l'authentification (/v2/user/info) sans publier.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, stripUtm } from './lib.mjs';
+import { parseFeed, markImages, stripUtm, siteLink } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildTumblrText, npfBody, detectLang, BLOG } from './tumblr.mjs';
 import { createTumblr } from './channels/tumblr.mjs';
@@ -59,10 +59,11 @@ for (const t of todo) {
   const it = items.find(i => i.id === t.id);
   const im = await resolveImage(it, { used, repeated });
   const text = buildTumblrText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
+  if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   const body = npfBody(it, text, { image: im, lang });
   console.log(`\n--- ${++n}. [${it.source}] ${lang} · image ${im ? im.url : 'AUCUNE'} · étiquettes ${body.tags}\n${text}`);
   if (dry) continue;
-  if (posted.has(it.link)) { console.log('Déjà sur Tumblr (vérifié dans le blogue) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
+  if (posted.has(it.link) || posted.has(siteLink(it))) { console.log('Déjà sur Tumblr (vérifié dans le blogue) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
   const p = await tb.post(body);
   state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), id: p.id, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
   save();

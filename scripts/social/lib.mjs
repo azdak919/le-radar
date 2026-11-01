@@ -14,6 +14,9 @@ const dec = s => ent((s || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')).tri
 const tag = (b, t) => { const m = b.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`)); return m ? dec(m[1]) : ''; };
 const plain = h => ent(ent((h || '').replace(/<[^>]*>/g, ' '))).replace(/\s+/g, ' ').trim();
 export const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+import { createRequire } from 'node:module';
+const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
+export { articleId };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 export function stripUtm(u) {
@@ -36,13 +39,16 @@ export function feedCredit(html = '') {
  * est celle du flux (sinon : banque ou page article, crédit propre à cette image). null = rien à faire. */
 export function refreshPhotoLine(text, it, assetUrl = '', limit = X_LIMIT) {
   const lines = String(text || '').split('\n'), i = lines.findIndex(l => l.startsWith('📸'));
-  if (i < 0 || !it?.img) return null;
+  if (!it?.img) return null;
   const k = u => String(u || '').replace(/^https?:\/\//, '').replace(/[?#].*$/, '');
   if (assetUrl && k(assetUrl) !== k(it.img)) return null;
-  lines[i] = photoLine(it.credit, it.source);
-  // Plafond X : raccourcit l'extrait au mot entier (« … »), jamais le lien ni le crédit.
-  while (xlen(lines.join('\n')) > limit && / \S+…?$/.test(lines[0])) lines[0] = lines[0].replace(/[\s,;:.–-]*\s\S+…?$/, '…');
-  return xlen(lines.join('\n')) > limit ? null : lines.join('\n');
+  const want = photoLine(it.credit);
+  if (i >= 0) { if (want) lines[i] = want; else lines.splice(i, 1); } else if (want) lines.push(want); else return null;
+  // Plafond : raccourcit l'extrait (paragraphe entre deux lignes vides) au mot entier, jamais le lien ni le crédit.
+  const e = lines[1] === '' && lines[3] === '' ? 2 : -1;
+  while (e > 0 && xlen(lines.join('\n')) > limit && / \S+…?$/.test(lines[e])) lines[e] = lines[e].replace(/[\s,;:.–—-]*\s\S+…?$/, '…');
+  const out = lines.join('\n');
+  return xlen(out) > limit ? null : out;
 }
 
 export function parseFeed(xml) {
@@ -88,7 +94,7 @@ export function markImages(items) {
 const W1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
 export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].reduce((n, c) => { const k = c.codePointAt(0); return n + (W1.some(([a, b]) => k >= a && k <= b) ? 1 : 2); }, 0);
 /** « 📸 Auteur » : auteur·e connu·e de la photo, sinon le nom du média (jamais inventé). */
-export const photoLine = (credit, source) => (credit || source) ? `📸 ${(credit || source).trim()}` : '';
+export const photoLine = credit => String(credit || '').trim() ? `📸 ${String(credit).trim()}` : '';
 
 export function excerpt(it) {
   let d = it.desc; if (!d) return '';
@@ -144,23 +150,53 @@ export function joinHead(head, ex, en = isEnglish(head)) {
   return `${head.trim()}${en ? ':' : ' :'} ${ex}`;
 }
 
-export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true } = {}) {
-  const pl = photo ? photoLine(credit, it.source) : '';
-  const head = mentionHead(it, accounts), tail = `${link ? '\n' + it.link : ''}${pl ? '\n' + pl : ''}`, en = detectLang(it) === 'en';
-  const mk = e => `${joinHead(head, e, en)}${tail}`;
-  let ex = excerpt(it);
-  if (ex && len(mk(ex)) > limit) {
-    // coupe au dernier mot entier qui tient avec « … » (jamais au milieu d'un mot)
-    const words = ex.split(' '); let best = '';
-    for (let k = 1; k <= words.length; k++) {
-      const c = words.slice(0, k).join(' ').replace(/[\s,;:.–-]+$/, '') + '…';
-      if (len(mk(c)) <= limit) best = c; else break;
-    }
-    ex = best.length >= 21 ? best : '';
-  }
-  let text = mk(ex), t = head.replace(/^@+/, '');
-  while (len(text) > limit) { t = t.slice(0, -2).trimEnd() + '…'; text = `${t}${tail}`; }
-  return text;
+export const SITE = 'https://le-radar.ca';
+/** Lien partagé partout : fiche statique le-radar.ca/article/<id>/ (même identifiant que l'appli). */
+export const siteLink = it => { const id = articleId(it?.link || ''); return id ? `${SITE}/article/${id}/` : (it?.link || ''); };
+export const SEP = ' · '; // U+00B7, espacé : séparateur unique du format
+
+/** « Média (@média) · Auteur (@auteur) » ; @ seulement si cle_flux === nom exact (liste PAR réseau). */
+export function mediaLine(it, accounts = []) {
+  const src = accounts.find(a => a.type === 'source' && a.cle_flux && a.cle_flux === it.source);
+  const au = it.author && accounts.find(a => a.type === 'auteur' && a.cle_flux && a.cle_flux === it.author);
+  const media = (it.source || '').trim() ? (src ? `${it.source.trim()} (${src.handle})` : it.source.trim()) : '';
+  const name = (it.author || '').trim();
+  const author = name && norm(name) !== norm(it.source) ? (au ? `${name} (${au.handle})` : name) : '';
+  return [media, author].filter(Boolean).join(SEP);
+}
+
+/** Phrases (fin . ! ? … suivie d'une majuscule, d'un chiffre ou d'un guillemet). */
+export const sentences = t => String(t || '').replace(/\s+/g, ' ').trim().split(/(?<=[.!?…»"”])\s+(?=[«"“A-ZÀ-ÝŒ0-9])/).filter(Boolean);
+
+/** Extrait coupé en fin de phrase : au plus `max` phrases qui tiennent ; sinon 1re phrase coupée au mot (« … », ≥ 40 car.). */
+export function cutExcerpt(ex, fits, max = 2) {
+  const ss = sentences(ex); let best = '';
+  for (let k = 1; k <= Math.min(max, ss.length); k++) { const c = ss.slice(0, k).join(' '); if (fits(c)) best = c; else break; }
+  if (best || !ss.length) return best;
+  const words = ss[0].split(' ');
+  for (let k = words.length - 1; k > 0; k--) { const c = words.slice(0, k).join(' ').replace(/[\s,;:.–—-]+$/, '') + '…'; if (fits(c)) return c.length >= 40 ? c : ''; }
+  return '';
+}
+
+/**
+ * Format unique des 5 réseaux (lignes, pas de puces) :
+ *   Titre
+ *   (ligne vide) Extrait, 1-2 phrases entières
+ *   (ligne vide) Média (@média) · Auteur
+ *   https://le-radar.ca/article/<id>/
+ *   📸 Crédit            (seulement si un crédit réel est connu : jamais de doublon du média)
+ * Jamais de séparateur vide ni de doublon. Texte contenant « tison » : '' (refusé).
+ */
+export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it) } = {}) {
+  const pl = photo ? photoLine(credit) : '';
+  let title = String(it.bare || it.title || '').replace(/\s+/g, ' ').trim();
+  const ml = mediaLine(it, accounts);
+  const tail = [ml, link ? url : '', pl].filter(Boolean).join('\n');
+  const mk = (t, e) => [t, e, tail].filter(Boolean).join('\n\n');
+  const ex = cutExcerpt(excerpt(it), e => len(mk(title, e)) <= limit);
+  let text = mk(title, ex);
+  while (len(text) > limit && title.length > 10) { title = title.slice(0, -2).trimEnd().replace(/[\s,;:.–—-]+$/, '') + '…'; text = mk(title, ''); }
+  return /tison/i.test(text) ? '' : text;
 }
 
 /**

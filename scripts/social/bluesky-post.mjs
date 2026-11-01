@@ -8,7 +8,7 @@
 // Sans BLUESKY_APP_PASSWORD : essai. SHARE_NOW=true : un article frais au hasard, tout de suite.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, stripUtm } from './lib.mjs';
+import { parseFeed, markImages, stripUtm, siteLink } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildBskyText, graphemes, detectLang, postRecord, facets, BSKY_LIMIT } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -58,11 +58,12 @@ for (const t of todo) {
   if (!it) { console.log(`::warning::${t.id} absent du flux, non publié.`); if (!dry) state.sent[t.id] = { at: new Date().toISOString(), skipped: 'absent du flux' }; continue; }
   const im = await resolveImage(it, { used, repeated });
   const text = buildBskyText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
+  if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   console.log(`\n--- ${++n}. [${it.source}] ${graphemes(text)}/${BSKY_LIMIT} graphèmes · ${lang} · image ${im ? im.url : 'AUCUNE'} · facettes ${facets(text).length}\n${text}`);
   if (dry) continue;
-  if (posted.has(it.link)) { console.log('Déjà sur Bluesky (vérifié dans le compte) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
+  if (posted.has(it.link) || posted.has(siteLink(it))) { console.log('Déjà sur Bluesky (vérifié dans le compte) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
   let thumb = null; if (im) { try { thumb = await bs.uploadImage(im.url); } catch (e) { console.log(`::warning::image non téléversée : ${e.message}`); } }
-  const rec = postRecord({ text, lang, dids, card: { uri: it.link, title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } });
+  const rec = postRecord({ text, lang, dids, card: { uri: siteLink(it), title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } });
   const p = await bs.post(rec);
   state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), uri: p.uri, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
   save();
