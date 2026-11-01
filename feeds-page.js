@@ -181,11 +181,13 @@ function renderFeedsGridRow(group, brandColors) {
 async function renderFeedsCampuses() {
   if (!FEEDS_GRID_UNI) return;
   try {
-    const [registry, brandColors] = await Promise.all([
+    const [registry, brandColors, news] = await Promise.all([
       fetch('./news-sources.json', { cache: 'no-cache' }).then((r) => r.json()),
       fetch('./brand-colors.json', { cache: 'no-cache' }).then((r) => r.json()),
+      fetch('./news.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null),
     ]);
-    const model = CAMPUSES.buildCampusModel(registry || {}, ACRONYM_TABLE);
+    // Seuls les journaux qui ont des articles dans le fil publié sont affichés.
+    const model = CAMPUSES.buildCampusModel(registry || {}, ACRONYM_TABLE, news);
 
     FEEDS_GRID_UNI.replaceChildren(...model.universities.map((g) => renderFeedsGridRow(g, brandColors)));
     FEEDS_GRID_UNI.removeAttribute('aria-busy');
