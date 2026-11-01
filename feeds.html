@@ -109,31 +109,32 @@
 
     <main class="wire feeds-wire">
       <header class="feeds-head">
-        <p class="feeds-eyebrow">Abonnement RSS</p>
+        <p class="feeds-eyebrow">Flux RSS</p>
         <h1 class="feeds-title">Le fil étudiant</h1>
-        <p class="feeds-lead">Toute l'actualité des journaux étudiants du Québec, dans un seul flux. Chaque entrée renvoie vers l'article original.</p>
+        <p class="feeds-lead">Toutes les nouvelles des journaux étudiants du Québec, dans un seul flux RSS. Chaque article renvoie vers le texte original.</p>
         <p id="feeds-updated" class="feeds-updated" hidden></p>
       </header>
 
       <article class="feeds-card" data-feed="feed.xml" aria-label="Abonnement au fil étudiant">
         <div class="feeds-subscribe">
           <div class="feeds-subscribe__copy">
-            <p class="feeds-subscribe__label">URL du flux</p>
+            <p class="feeds-subscribe__label" id="feeds-url-label">Adresse du flux</p>
             <div class="feeds-subscribe__url">
               <svg class="feeds-subscribe__rss" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg>
-              <code class="feeds-subscribe__code" data-feed-url></code>
+              <code class="feeds-subscribe__code" data-feed-url aria-labelledby="feeds-url-label">https://le-radar.ca/feed.xml</code>
             </div>
           </div>
           <div class="feeds-subscribe__actions">
             <button type="button" class="feed-btn feed-btn--primary" data-subscribe>S'abonner</button>
-            <button type="button" class="feed-btn" data-copy>Copier l'URL</button>
-            <a class="feed-btn feed-btn--quiet" data-open target="_blank" rel="noopener">Voir le flux</a>
+            <button type="button" class="feed-btn" data-copy>Copier l’adresse</button>
+            <a class="feed-btn feed-btn--quiet" data-open href="feed.xml" target="_blank" rel="noopener">Voir le flux<span class="visually-hidden"> (nouvel onglet)</span></a>
           </div>
         </div>
 
         <div class="feeds-card__body">
           <section class="feeds-panel feeds-panel--sources" aria-labelledby="feeds-sources-title">
             <h2 id="feeds-sources-title" class="feeds-panel__title">Campus couverts</h2>
+            <h3 class="feeds-panel__subtitle">Universités</h3>
             <ul id="feeds-grid-uni" class="feeds-grid" aria-busy="true"></ul>
             <div id="feeds-cegep-wrap" class="feeds-cegep-wrap" hidden>
               <h3 class="feeds-panel__subtitle">Cégeps</h3>
@@ -145,12 +146,13 @@
           <section class="feeds-panel feeds-panel--info" aria-labelledby="feeds-info-title">
             <h2 id="feeds-info-title" class="feeds-panel__title">En bref</h2>
             <ul class="feeds-points">
-              <li class="feeds-points__item">« S'abonner » ouvre le menu de partage (mobile) ou votre lecteur RSS (Firefox), sinon copie l'URL.</li>
-              <li class="feeds-points__item">Titre, brève, photo et lien vers la publication étudiante source.</li>
-              <li class="feeds-points__item">Rafraîchi automatiquement tout au long de la journée.</li>
+              <li class="feeds-points__item">Pour vous abonner, collez l’adresse du flux dans votre lecteur RSS (Feedly, Inoreader, NetNewsWire, Flash Info…). Le bouton « S’abonner » le fait pour vous quand c’est possible ; sinon, il copie l’adresse.</li>
+              <li class="feeds-points__item">Chaque article a son titre sous la forme « Média – Auteur : Titre », un court résumé, une photo et un lien vers le journal étudiant qui l’a publié.</li>
+              <li class="feeds-points__item">Le fil se met à jour tout seul, 10 fois par jour aux heures ci-dessous.</li>
+              <li class="feeds-points__item">La liste des campus ci-contre est tirée directement des sources du fil : elle change dès qu’un journal est ajouté.</li>
             </ul>
             <div class="feeds-schedule">
-              <p class="feeds-schedule__label">10 passages · heure de Québec</p>
+              <p class="feeds-schedule__label">Mises à jour prévues · heure du Québec</p>
               <ul class="feeds-schedule__times" aria-label="Horaires de mise à jour">
                 <li>6:00</li><li>7:00</li><li>9:00</li><li>11:00</li><li>12:00</li>
                 <li>13:00</li><li>15:00</li><li>17:00</li><li>19:00</li><li>21:00</li>
@@ -211,6 +213,7 @@
     <script src="quebec-nations-backgrounds-data.js" defer></script>
     <script src="quebec-backgrounds.js" defer></script>
     <script src="institution-acronyms-data.js" defer></script>
+    <script src="feeds-campuses-lib.js" defer></script>
     <script src="feeds-page.js" defer></script>
     <script src="nav-shell.js" defer></script>
     <script src="native-tuner.js" defer></script>
