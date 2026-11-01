@@ -31,13 +31,15 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
     if (ctx) return ctx;
     const d = await gql('query { account { organizations { id name } } }');
     const orgs = d?.account?.organizations || [];
+    const seen = [];
     for (const o of orgs) {
       const c = await gql('query($o: OrganizationId!) { channels(input: { organizationId: $o }) { id name service } }', { o: o.id });
+      for (const x of c?.channels || []) seen.push(`${x.service}:${x.name}`);
       const ch = (c?.channels || []).find(x => matchChannel(x, service, channelName));
       if (ch) return (ctx = { organizationId: o.id, channelId: ch.id, service: ch.service, discovered: true });
     }
     if (!orgs.length) throw new Error('Buffer : aucune organisation sur ce compte');
-    if (!fallbackId) throw new Error(`Buffer : canal ${service} « ${channelName} » introuvable`);
+    if (!fallbackId) throw new Error(`Buffer : canal ${service} « ${channelName} » introuvable (canaux : ${seen.join(', ') || 'aucun'})`);
     return (ctx = { organizationId: orgs[0].id, channelId: fallbackId, discovered: false });
   }
   return {
