@@ -53,8 +53,40 @@ function loadSourceSites() {
   );
 }
 
+/** Caractères interdits en XML 1.0 (ex. \x02 = césure InDesign) → retirés. */
+const XML_INVALID = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF\u00AD]/g;
+
+function stripInvalidXml(text = '') {
+  return String(text).replace(XML_INVALID, '');
+}
+
+/** Ponctuation : pas d'espace avant . , ; espaces fines avant ; ! ? et : en français. */
+function fixPunctuation(text = '', lang = 'fr') {
+  let s = String(text)
+    .replace(/[ \t]+([.,])(?!\d)/g, '$1')
+    .replace(/([.,!?;:])\1+(?!\.)/g, '$1')
+    .replace(/\(\s+/g, '(')
+    .replace(/\s+\)/g, ')')
+    .replace(/ {2,}/g, ' ');
+  if (lang !== 'en') s = s.replace(/(\S)[ \u00A0]?([;!?])(?=\s|$)/gu, '$1\u202F$2');
+  return s;
+}
+
+/** Coupe proprement : jamais au milieu d'un mot ni d'une phrase si possible. */
+function trimToSentence(s = '', max = 520) {
+  let out = String(s).trim();
+  const ends = /[.!?…»"”)]$/u;
+  if (out.length <= max && ends.test(out)) return out;
+  const cut = out.slice(0, max);
+  const m = [...cut.matchAll(/[.!?…](?:[»"”)])?(?=\s|$)/gu)].pop();
+  if (m && m.index + m[0].length > cut.length * 0.4) return cut.slice(0, m.index + m[0].length).trim();
+  const last = cut.lastIndexOf(' ');
+  const base = (out.length > max ? (last > max * 0.6 ? cut.slice(0, last) : cut) : cut.slice(0, Math.max(last, 0)) || cut);
+  return base.replace(/[\s,;:–—-]+$/u, '').trim() + '…';
+}
+
 function escapeXml(text = '') {
-  return String(text)
+  return stripInvalidXml(text)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -63,7 +95,7 @@ function escapeXml(text = '') {
 }
 
 function cdata(text = '') {
-  return `<![CDATA[${String(text).replace(/]]>/g, ']]]]><![CDATA[>')}]]>`;
+  return `<![CDATA[${stripInvalidXml(text).replace(/]]>/g, ']]]]><![CDATA[>')}]]>`;
 }
 
 function formatRfc822(date) {
@@ -90,20 +122,35 @@ function institutionLabel(item = {}) {
 }
 
 function cleanBrief(text = '', max = 520) {
-  let s = String(text)
+  const s = stripInvalidXml(text)
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
-  if (s.length > max) {
-    const cut = s.slice(0, max);
-    const last = cut.lastIndexOf(' ');
-    s = (last > max * 0.6 ? cut.slice(0, last) : cut).trim() + '…';
-  }
-  return s;
+  if (!s) return '';
+  return trimToSentence(s, max);
+}
+
+/** Retire les phrases répétées et le titre recopié en tête de brève. */
+function dedupeSentences(text = '', title = '') {
+  const seen = new Set();
+  const norm = (x) => x.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  const t = norm(title);
+  return String(text)
+    .split(/(?<=[.!?…])\s+/u)
+    .filter((sent) => {
+      const k = norm(sent);
+      if (!k) return false;
+      if (t && k === t) return false;
+      if (k.length > 20 && seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .join(' ');
 }
 
 function itemBrief(item = {}) {
-  return cleanBrief(item.leadExcerpt || item.excerpt || '', BRIEF_MAX);
+  const raw = dedupeSentences(stripInvalidXml(item.leadExcerpt || item.excerpt || '').replace(/\s+/g, ' '), item.title);
+  return fixPunctuation(cleanBrief(raw, BRIEF_MAX), item.lang);
 }
 
 function itemDateline(item = {}) {
@@ -141,7 +188,9 @@ function itemCompactMeta(item = {}) {
   const author = itemAuthor(item);
   const source = String(item.source || '').trim();
   const date = itemSimpleDate(item);
-  return [source, author, date].filter(Boolean).join(' · ');
+  // Média et auteur sont déjà dans le <title> (« Média – Auteur : Titre ») : pas de répétition ici.
+  void author; void source;
+  return date;
 }
 
 function sourceHomeUrl(item = {}, sourceSites = {}) {
@@ -221,7 +270,7 @@ function buildDescriptionText(item = {}) {
 function buildItemBodyHtml(item = {}, sourceSites = {}) {
   const parts = [];
   const imageUrl = itemImageUrl(item);
-  const title = String(item.title || 'Article').trim();
+  const title = stripInvalidXml(item.title || 'Article').replace(/\s+/g, ' ').trim();
   const credit = photoCreditLine(item);
   const meta = itemCompactMeta(item);
   const en = item.lang === 'en';
@@ -281,11 +330,28 @@ function buildItemBodyHtml(item = {}, sourceSites = {}) {
   return parts.join('\n');
 }
 
+/** Titre d'item : « Média – Auteur : Titre » (auteur omis s'il manque ou s'il est le média). */
+function itemDisplayTitle(item = {}) {
+  const norm = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const source = stripInvalidXml(item.source || '').replace(/\s+/g, ' ').trim();
+  let title = stripInvalidXml(item.title || 'Article').replace(/\s+/g, ' ').trim();
+  if (source) {
+    const re = new RegExp(`^${source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*[-–—:|·]\\s*`, 'i');
+    title = title.replace(re, '').trim() || title;
+  }
+  const author = itemAuthor(item);
+  const isMasthead = /^(la |l )?(redaction|equipe( editoriale)?)$|^(the )?(editorial (team|board|staff)|staff|editors?|newsroom)$/.test(norm(author));
+  const showAuthor = author && !isMasthead && norm(author) !== norm(source) && !norm(source).includes(norm(author));
+  const colon = item.lang === 'en' ? ': ' : '\u00A0: ';
+  const head = [source, showAuthor ? author : ''].filter(Boolean).join(' – ');
+  return head ? `${head}${colon}${title}` : title;
+}
+
 function buildItemXml(item = {}, sourceSites = {}) {
   const link = String(item.link || '').trim();
   if (!link) return '';
 
-  const title = String(item.title || 'Article').trim();
+  const title = stripInvalidXml(item.title || 'Article').replace(/\s+/g, ' ').trim();
   const pubDate = formatRfc822(item.date);
   const description = buildDescriptionText(item);
   const imageUrl = itemImageUrl(item);
@@ -326,7 +392,7 @@ function buildItemXml(item = {}, sourceSites = {}) {
 
   return [
     '    <item>',
-    `      <title>${escapeXml(title)}</title>`,
+    `      <title>${escapeXml(itemDisplayTitle(item))}</title>`,
     `      <link>${escapeXml(link)}</link>`,
     `      <guid isPermaLink="true">${escapeXml(link)}</guid>`,
     pubDate ? `      <pubDate>${escapeXml(pubDate)}</pubDate>` : '',
@@ -391,6 +457,18 @@ function main() {
     process.exit(1);
   }
 
+  // Doublons : même lien ou même titre normalisé (reprises multi-sources).
+  const seenKeys = new Set();
+  const unique = items.filter((it) => {
+    const keys = [String(it.link).trim().replace(/[?#].*$/, '').replace(/\/$/, ''),
+      `${String(it.source || '')}|${String(it.title).toLowerCase().replace(/\s+/g, ' ').trim()}`];
+    if (keys.some((k) => seenKeys.has(k))) return false;
+    keys.forEach((k) => seenKeys.add(k));
+    return true;
+  });
+  items.length = 0;
+  items.push(...unique);
+
   console.log(`${BRAND} RSS Generator`);
   console.log('=======================\n');
   console.log(`Site     : ${SITE_BASE}`);
@@ -419,4 +497,8 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = {
+  stripInvalidXml, fixPunctuation, itemDisplayTitle, trimToSentence, cleanBrief, dedupeSentences, buildFeedXml, buildItemXml,
+};
