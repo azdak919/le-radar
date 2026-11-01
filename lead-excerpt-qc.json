@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-01T22:27:50.931Z",
+  "updated": "2026-11-01T23:37:05.260Z",
   "total": 184,
   "pool": 53,
-  "incomplete": 5,
+  "incomplete": 6,
   "withLeadExcerpt": 126,
-  "candidates": 5,
-  "enriched": 0,
+  "candidates": 6,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "link": "https://www.delitfrancais.com/2026/09/30/rouge-dune-part-blanche-de-lautre/",
+      "ok": true,
+      "score": 82,
+      "chars": 400,
+      "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
+      "changed": true
     },
     {
       "title": "Cinq nouvelles de la semaine",
