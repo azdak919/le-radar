@@ -8,14 +8,15 @@ export class AuthError extends Error {}
 export function isAuthFailure(status, body) {
   if (status === 401 || status === 403) return true;
   const errs = body?.errors || [];
-  return errs.some(e => /UNAUTH|FORBIDDEN/i.test(e?.extensions?.code || '') || /unauthori[sz]ed|unauthenticated|invalid (api )?(key|token)|expired/i.test(e?.message || ''));
+  return errs.some(e => /^(UNAUTHORIZED|UNAUTHENTICATED)$/i.test(e?.extensions?.code || ''));
 }
 
 export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_ca', fallbackId = FALLBACK_CHANNEL_ID }) {
   async function gql(query, variables = {}) {
     const res = await fetchImpl(API, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(30000) });
     let body = null; try { body = await res.json(); } catch {}
-    if (isAuthFailure(res.status, body)) throw new AuthError(AUTH_MSG);
+    const why = (body?.errors || []).map(e => `${e?.extensions?.code || '?'}: ${e?.message || ''}`).join(' | ').slice(0, 400);
+    if (isAuthFailure(res.status, body)) throw new AuthError(`${AUTH_MSG} [HTTP ${res.status} ${why}]`);
     if (!res.ok || body?.errors?.length) throw new Error(`Buffer API ${res.status}: ${JSON.stringify(body?.errors || body).slice(0, 500)}`);
     return body.data;
   }
@@ -38,13 +39,13 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
     async queued() {
       const { organizationId, channelId } = await context();
       const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {
-        posts(input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) { edges { node { id text dueAt } } } }`, { o: organizationId, c: [channelId] });
+        posts(first: 50, input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) { edges { node { id text dueAt } } } }`, { o: organizationId, c: [channelId] });
       return (d?.posts?.edges || []).map(e => e.node);
     },
     async add({ text, image }) {
       const { channelId } = await context();
       const input = { text, channelId, schedulingType: 'automatic', mode: 'addToQueue' };
-      if (image) input.assets = { images: [{ url: image }] };
+      if (image) input.assets = [{ image: { url: image } }];
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
         ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`, { i: input });
       const r = d?.createPost;

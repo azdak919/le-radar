@@ -71,6 +71,7 @@ assert(BAD.test('https://x.org/wp-content/uploads/logo.png') && !BAD.test('https
 assert(isAuthFailure(401, null));
 assert(isAuthFailure(200, { errors: [{ message: 'Unauthorized', extensions: { code: 'UNAUTHENTICATED' } }] }));
 assert(!isAuthFailure(200, { data: {} }));
+assert(!isAuthFailure(200, { errors: [{ message: 'no', extensions: { code: 'FORBIDDEN' } }] }), 'FORBIDDEN ≠ clé invalide');
 
 // rapport comptes
 const u = unknownAccounts(items, accounts);
