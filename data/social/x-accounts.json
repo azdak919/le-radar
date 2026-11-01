@@ -1,0 +1,179 @@
+{
+ "_doc": "Comptes X vérifiés à la main. cle_flux = nom EXACT de la source (ou de l auteur) dans feed.xml ; mention seulement si égalité stricte. Les radios et ligues ne sont pas des sources d articles du flux : pas de mention automatique. Ne jamais ajouter de compte non vérifié.",
+ "accounts": [
+  {
+   "handle": "@Linknewspaper",
+   "nom": "The Link",
+   "type": "source",
+   "cle_flux": "The Link",
+   "preuve": "bio: Concordia University's independent publication since 1980"
+  },
+  {
+   "handle": "@mcgilldaily",
+   "nom": "The McGill Daily",
+   "type": "source",
+   "cle_flux": "The McGill Daily",
+   "preuve": "lien sur mcgilldaily.com + bio"
+  },
+  {
+   "handle": "@DelitFrancais",
+   "nom": "Le Délit",
+   "type": "source",
+   "cle_flux": "Le Délit",
+   "preuve": "bio: seul journal francophone de McGill"
+  },
+  {
+   "handle": "@theconcordian",
+   "nom": "The Concordian",
+   "type": "source",
+   "cle_flux": "The Concordian",
+   "preuve": "lien sur theconcordian.com + bio"
+  },
+  {
+   "handle": "@thebucampus",
+   "nom": "The Campus Newspaper",
+   "type": "source",
+   "cle_flux": "The Campus",
+   "preuve": "bio: student newspaper at Bishop's University"
+  },
+  {
+   "handle": "@quartierlibre",
+   "nom": "Quartier Libre",
+   "type": "source",
+   "cle_flux": "Quartier Libre",
+   "preuve": "lien sur quartierlibre.ca + bio"
+  },
+  {
+   "handle": "@montrealcampus",
+   "nom": "Montréal Campus",
+   "type": "source",
+   "cle_flux": "Montréal Campus",
+   "preuve": "lien sur montrealcampus.ca + bio UQAM"
+  },
+  {
+   "handle": "@ImpactCampus",
+   "nom": "Impact Campus",
+   "type": "source",
+   "cle_flux": "Impact Campus",
+   "preuve": "bio: mag étudiant de l'Université Laval"
+  },
+  {
+   "handle": "@lexemplaire",
+   "nom": "L'Exemplaire",
+   "type": "source",
+   "cle_flux": "L'Exemplaire",
+   "preuve": "lien sur exemplaire.com.ulaval.ca + bio"
+  },
+  {
+   "handle": "@Polyscope",
+   "nom": "Le Polyscope",
+   "type": "source",
+   "cle_flux": "Le Polyscope",
+   "preuve": "lien social-feed.json + bio Polytechnique"
+  },
+  {
+   "handle": "@ckut",
+   "nom": "CKUT",
+   "type": "source",
+   "cle_flux": "CKUT 90,3",
+   "preuve": "lien sur ckut.ca",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@CJLO1690AM",
+   "nom": "CJLO 1690AM",
+   "type": "source",
+   "cle_flux": "CJLO 1690AM",
+   "preuve": "lien sur cjlo.com + bio",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@CHYZ943",
+   "nom": "CHYZ 94,3",
+   "type": "source",
+   "cle_flux": "CHYZ 94,3",
+   "preuve": "bio: CHYZ 94.3 à Québec",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@CHOQ_ca",
+   "nom": "CHOQ.ca",
+   "type": "source",
+   "cle_flux": "CHOQ.ca",
+   "preuve": "lien sur choq.ca",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@CFAK883",
+   "nom": "CFAK 88.3",
+   "type": "source",
+   "cle_flux": "CFAK 88,3",
+   "preuve": "bio: radio officielle de l'UdeS",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@RSEQ1",
+   "nom": "RSEQ",
+   "type": "ligue",
+   "cle_flux": "RSEQ",
+   "preuve": "bio: réseau du sport étudiant du Québec",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@USPORTSca",
+   "nom": "U SPORTS",
+   "type": "ligue",
+   "cle_flux": null,
+   "preuve": "bio officielle U SPORTS",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@Carabins",
+   "nom": "Carabins",
+   "type": "ligue",
+   "cle_flux": null,
+   "preuve": "bio: équipes sportives de l'UdeM",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@rougeetor",
+   "nom": "Rouge et Or",
+   "type": "ligue",
+   "cle_flux": null,
+   "preuve": "bio: compte officiel des 17 équipes de l'U Laval",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@McGillAthletics",
+   "nom": "McGill Athletics",
+   "type": "ligue",
+   "cle_flux": null,
+   "preuve": "bio officielle",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@VertetOr",
+   "nom": "Vert & Or",
+   "type": "ligue",
+   "cle_flux": null,
+   "preuve": "bio officielle",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@PatriotesUQTR",
+   "nom": "Patriotes UQTR",
+   "type": "ligue",
+   "cle_flux": null,
+   "preuve": "bio officielle",
+   "hors_flux_articles": true
+  },
+  {
+   "handle": "@BishopsGaiters",
+   "nom": "#GaiterNation",
+   "type": "ligue",
+   "cle_flux": null,
+   "preuve": "bio: Bishop's University Athletics",
+   "hors_flux_articles": true
+  }
+ ]
+}
