@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T13:06:41.524Z",
+  "updatedAt": "2026-11-01T14:36:46.483Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T13:06:03.546Z"
+      "checkedAt": "2026-11-01T14:36:07.126Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le 120e parallèle",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
-      },
-      "next": {
         "title": "Ya Raï",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "https://cism893.ca/emissions/ya-rai"
       },
+      "next": {
+        "title": "Effets sonores",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
+      },
       "track": "",
-      "showTitle": "Le 120e parallèle",
+      "showTitle": "Ya Raï",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T13:06:05.373Z"
+      "checkedAt": "2026-11-01T14:36:09.285Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Mind, Soul, & Spirit",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Latin Time",
         "source": "api-live",
         "start": "09:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "International Radio Report",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Mind, Soul, & Spirit",
+      "showTitle": "Latin Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T13:06:07.538Z"
+      "checkedAt": "2026-11-01T14:36:12.170Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Gigi Brown Experience",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
-      },
-      "next": {
         "title": "REVC",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/revc"
       },
+      "next": {
+        "title": "Rigged Sessions",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/rigged-sessions"
+      },
       "track": "",
-      "showTitle": "The Gigi Brown Experience",
+      "showTitle": "REVC",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T13:06:21.646Z"
+      "checkedAt": "2026-11-01T14:36:27.213Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T13:06:22.934Z"
+      "checkedAt": "2026-11-01T14:36:27.995Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T13:06:41.174Z"
+      "checkedAt": "2026-11-01T14:36:46.134Z"
     }
   }
 }
