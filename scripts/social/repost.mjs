@@ -8,7 +8,7 @@
 // le bot ne le republiera jamais une 3e fois. Env : URLS, X_DUE (ISO, même ordre), DRY_RUN, BSKY=true|false.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, stripUtm } from './lib.mjs';
+import { parseFeed, markImages, buildText, stripUtm, refreshPhotoLine } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { buildBskyText, detectLang, postRecord } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -75,13 +75,23 @@ if (key) {
   console.log(`Buffer : ${all.length} post(s) lus (10 derniers jours, tous canaux).`);
   const st = rd('data/buffer-sent.json'); st.sent ||= {};
   const ACC = rd('data/social/x-accounts.json').accounts;
+  const queuedOk = new Set();
   for (const [n, it] of targets.entries()) {
     for (const p of all.filter(p => has(p.text, it))) {
       const line = `Buffer ${p.channelService} ${p.status} ${p.id} · ${tz(p.sentAt || p.dueAt)} · ${p.externalLink || ''}\n  ancien : ${p.text.split('\n').pop()}`;
       if (/sent|sending/.test(p.status)) { console.log(`À SUPPRIMER À LA MAIN (API : publié non supprimable) : ${line}`); continue; }
+      // En file : crédit corrigé sur place (même id, image, heure) ; supprimé seulement si non corrigeable.
+      const fixed = refreshPhotoLine(p.text, it, '');
+      if (fixed && fixed !== p.text && Date.parse(p.dueAt) - Date.now() > 10 * 60e3) {
+        console.log(`Crédit corrigé en file : ${line}\n  nouveau : ${fixed.split('\n').pop()}`);
+        if (!dry) { await x.editText(p.id, fixed); const s = st.sent[it.id]; if (s) { s.credit = it.credit || it.source; wr('data/buffer-sent.json', st); } }
+        queuedOk.add(it.id); continue;
+      }
+      if (fixed === p.text) { console.log(`Déjà correct en file : ${line}`); queuedOk.add(it.id); continue; }
       console.log(`Suppression : ${line}`);
       if (!dry) { const r = await gql('mutation($i: DeletePostInput!) { deletePost(input: $i) { ... on DeletePostSuccess { id } ... on VoidMutationError { message } } }', { i: { id: p.id } }); if (!r?.deletePost?.id) throw new Error(`deletePost refusé : ${JSON.stringify(r)}`); }
     }
+    if (queuedOk.has(it.id)) continue;
     const due = dues[n];
     if (!due) { console.log(`X : pas de X_DUE pour ${it.link}, pas de republication.`); continue; }
     if (!(Date.parse(due) > Date.now() + 10 * 60e3)) throw new Error(`X_DUE passé ou trop proche : ${due}`);
