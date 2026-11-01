@@ -50,9 +50,10 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
         posts(first: 50, input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) { edges { node { id text dueAt } } } }`, { o: organizationId, c: [channelId] });
       return (d?.posts?.edges || []).map(e => e.node);
     },
-    async add({ text, image }) {
+    async add({ text, image, dueAt }) {
       const { channelId } = await context();
-      const input = { text, channelId, schedulingType: 'automatic', mode: 'addToQueue' };
+      const input = { text, channelId, schedulingType: 'automatic', mode: dueAt ? 'customScheduled' : 'addToQueue' };
+      if (dueAt) input.dueAt = dueAt;
       if (image) input.assets = [{ image: { url: image } }];
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
         ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`, { i: input });

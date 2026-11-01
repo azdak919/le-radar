@@ -124,3 +124,13 @@ export function unknownAccounts(items, accounts) {
   }
   return { sources: [...src.keys()].sort(), authors: [...aut.entries()].sort().map(([a, s]) => ({ author: a, source: s })) };
 }
+
+/** Créneaux "HH:MM" d'aujourd'hui (fuseau tz) encore à venir → ISO UTC. Gère le changement d'heure. */
+export function slotsToday(times, { tz = 'America/Toronto', now = Date.now() } = {}) {
+  const f = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' });
+  const day = f.format(now);
+  const off = t => { const p = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'longOffset' }).formatToParts(t).find(x => x.type === 'timeZoneName').value;
+    const m = p.match(/([+-])(\d\d):?(\d\d)?/); return m ? (m[1] === '-' ? -1 : 1) * (+m[2] * 60 + +(m[3] || 0)) : 0; };
+  return times.map(hm => { let t = Date.parse(`${day}T${hm}:00Z`); t -= off(t) * 60e3; t = Date.parse(`${day}T${hm}:00Z`) - off(t) * 60e3; return t; })
+    .filter(t => t > now + 10 * 60e3).sort((a, b) => a - b).map(t => new Date(t).toISOString());
+}
