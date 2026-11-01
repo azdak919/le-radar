@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
 // et le thème sombre s'imprime sur fond blanc.
 // Largeur utile d'une page Letter avec les marges @page (13 mm de chaque côté).
 const PRINT_WIDTH = 718;
-const pages = ['/', '/feeds.html', '/sports/', '/radios/choq/', '/journaux/le-delit/'];
+const pages = ['/', '/feeds.html', '/sports/', '/radios/choq/', '/journaux/le-delit/', '/article/'];
 
 for (const url of pages) {
   for (const theme of ['light', 'dark']) {
@@ -15,6 +15,17 @@ for (const url of pages) {
       await page.emulateMedia({ media: 'print', colorScheme: theme });
       await page.setViewportSize({ width: PRINT_WIDTH, height: 1000 });
       await page.goto(url, { waitUntil: 'domcontentloaded' });
+      if (url === '/article/') {
+        // Fiche du premier article publié : même identifiant que l'app.
+        const id = await page.evaluate(async () => {
+          const d = await (await fetch('../news.json')).json();
+          return window.RadarMobile.articleId(d.items[0].link);
+        });
+        await page.goto(`${url}?id=${id}`, { waitUntil: 'domcontentloaded' });
+        await expect(page.locator('article.fiche h1')).toBeVisible();
+        const printUrl = await page.locator('article.fiche').getAttribute('data-print-url');
+        expect(printUrl, 'URL de l’article imprimée').toMatch(/^https?:\/\//);
+      }
       await page.waitForTimeout(1500);
 
       const report = await page.evaluate((maxW) => {
@@ -38,7 +49,7 @@ for (const url of pages) {
           if ((cs.overflowX === 'hidden' || cs.overflowX === 'clip' || cs.overflowY === 'hidden' || cs.overflowY === 'clip')
               && el.scrollHeight > el.clientHeight + 2 && el.textContent.trim()) clipped.push(label(el));
         }
-        const interactive = [...document.querySelectorAll('#tuner, #radar-player, .masthead-actions, button, select, input, textarea, .sports-page-tools, #page-tools')]
+        const interactive = [...document.querySelectorAll('#tuner, #radar-player, .masthead-actions, button, select, input, textarea, .sports-page-tools, #page-tools, a.wide.primary')]
           .filter(visible).map(label);
         const bg = getComputedStyle(document.body).backgroundColor;
         const ink = getComputedStyle(document.body).color;

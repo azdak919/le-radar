@@ -2551,6 +2551,29 @@ html.has-tuner-safe-cap .tuner {
   body * { hyphens: manual !important; -webkit-hyphens: manual !important; }
   p, li, dd, dt, td, th, h1, h2, h3, h4, a, span, strong, em, time, figcaption { overflow-wrap: anywhere; word-break: normal; }
 
+  /* Sports résumés : fiches compactes sur trois colonnes */
+  .sports-board, .sports-board.is-masonry { columns: 3 !important; column-gap: 8pt !important; }
+  .sports-panel { padding: 3pt 4pt !important; margin: 0 0 5pt !important; }
+  .sports-panel__school, .sports-panel__meta, .sports-panel__glyph, .sports-result__opp-full, .sports-panel__program .sports-panel__code { display: none !important; }
+  .sports-panel__name { font-size: 9pt !important; margin: 0 !important; }
+  .sports-panel__program { font-size: 8pt !important; margin: 0 !important; }
+  .sports-panel__head { display: block !important; margin: 0 0 2pt !important; padding: 0 !important; }
+  .sports-result { grid-template-columns: 5.4em 2.4em minmax(0, 1fr) auto !important; font-size: 7.5pt !important; padding: 2pt 0 !important; line-height: 1.25 !important; }
+  /* — Impressions résumées (accueil et sports) — */
+  .news-list .article { display: flow-root !important; }
+  .news-list .article > :not(.article-media) { width: auto !important; max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; grid-column: auto !important; float: none !important; }
+  .news-list .article:not(.article--lead) .article-media { width: 26% !important; max-width: 1.25in !important; }
+  .news-tail { display: none !important; }
+  .news-list::after, .sports-board-root::after {
+    content: "Suite sur le-radar.ca"; display: block; column-span: all;
+    margin-top: 10pt; padding-top: 4pt; border-top: 1pt solid #000;
+    font: 700 9pt "Inter", system-ui, sans-serif; text-align: center; letter-spacing: .04em;
+  }
+  .sports-board-root::after { content: "Résultats et matchs de la semaine en cours seulement — suite sur le-radar.ca/sports"; }
+  .sports-board-root:has(.sports-panel[data-print-week]) .sports-panel:not([data-print-week]),
+  .sports-board-root:has(.sports-panel[data-print-week]) .sports-sport-block:not([data-print-week]),
+  .sports-result[data-print-off-week] { display: none !important; }
+
   /* Liens d'articles : URL imprimée après le texte (pas pour la navigation) */
   a.article[href^="http"]::after, .seo-section a[href^="http"]:not(.media-channels__item)::after, main p a[href^="http"]::after {
     content: " ‹" attr(href) "›";

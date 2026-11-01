@@ -292,6 +292,25 @@
     return false;
   }
 
+  /**
+   * Impression résumée : seules les équipes qui jouent cette semaine
+   * (lundi–dimanche, heure du Québec) et leurs matchs de la semaine.
+   * Attributs lus par le bloc @media print de style-chrome.css.
+   */
+  function markPrintWeek() {
+    const range = periodRange('week');
+    root.querySelectorAll('.sports-panel').forEach((panel) => {
+      panel.toggleAttribute('data-print-week', panelMatchesPeriod(panel, 'week'));
+      panel.querySelectorAll('.sports-result').forEach((row) => {
+        const ymd = (row.querySelector('time[datetime]')?.getAttribute('datetime') || '').slice(0, 10);
+        row.toggleAttribute('data-print-off-week', Boolean(range && /^\d{4}-\d{2}-\d{2}$/.test(ymd) && !ymdInRange(ymd, range)));
+      });
+    });
+    root.querySelectorAll('.sports-sport-block').forEach((block) => {
+      block.toggleAttribute('data-print-week', Boolean(block.querySelector('.sports-panel[data-print-week]')));
+    });
+  }
+
   let searchOpen = false;
   let searchQuery = '';
   let searchTimer = 0;
@@ -907,12 +926,14 @@
 
   apply(sport, sector, sex, period, team, initial.q || '', initial.game || '');
   relabelCivilDays();
+  markPrintWeek();
   layoutMasonry();
   if (initial.q) setSearchOpen(true);
   if (!team && !initial.q) openHashSport();
   window.addEventListener('hashchange', openHashSport);
   window.setInterval(() => {
     relabelCivilDays();
+    markPrintWeek();
     syncLivePresentation();
     const cur = currentFilters();
     if (cur.period === 'live') {
