@@ -57,8 +57,10 @@ export function markImages(items) {
   return repeated;
 }
 
-// X : lien = 23, emoji (≥ U+1F000) = 2
-export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].reduce((n, c) => n + (c.codePointAt(0) >= 0x1F000 ? 2 : 1), 0);
+// Comptage pondéré de X (twitter-text v3) : lien = 23 ; poids 1 pour U+0000–10FF, 2000–200D,
+// 2010–201F, 2032–2037 ; tout le reste (•, …, emoji, etc.) = 2.
+const W1 = [[0, 4351], [8192, 8205], [8208, 8223], [8242, 8247]];
+export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].reduce((n, c) => { const k = c.codePointAt(0); return n + (W1.some(([a, b]) => k >= a && k <= b) ? 1 : 2); }, 0);
 /** « 📸 Auteur » : auteur·e connu·e de la photo, sinon le nom du média (jamais inventé). */
 export const photoLine = (credit, source) => (credit || source) ? `📸 ${(credit || source).trim()}` : '';
 
