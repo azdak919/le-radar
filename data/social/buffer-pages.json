@@ -1,5 +1,5 @@
 {
  "_doc": "Pages Facebook et LinkedIn « LE-RADAR.ca » publiées via Buffer (forfait gratuit : 10 publications en file par canal). link = le-radar (fiche https://le-radar.ca/article/?id=…, recommandé sur Facebook à cause du blocage des nouvelles de Meta au Canada) ou source (article du média). perDay = plafond à pleine vitesse ; minGapMin = écart minimal entre deux publications ; rodage ×0,4 (j 0-2), ×0,7 (j 3-6) depuis liveSince. Aucun @ sur ces réseaux.",
  "facebook": { "service": "facebook", "name": "LE-RADAR.ca", "link": "le-radar", "liveSince": "2026-11-01T04:00:00Z", "perDay": 6, "minGapMin": 100, "limit": 1500 },
- "linkedin": { "service": "linkedin", "name": "LE-RADAR.ca", "link": "source", "liveSince": "2026-11-01T04:00:00Z", "perDay": 3, "minGapMin": 150, "limit": 2000 }
+ "linkedin": { "service": "linkedin", "name": "le-radar-ca", "link": "source", "liveSince": "2026-11-01T04:00:00Z", "perDay": 3, "minGapMin": 150, "limit": 2000 }
 }
