@@ -3,7 +3,8 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H, stripUtm } from './lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
+const inText = (t, i) => !!t && (t.includes(i.link) || t.includes(siteLink(i)));
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
@@ -39,7 +40,7 @@ try {
 // ACTUEL du site (figcaption du flux, même fonction que les autres bots) ; editPost si différent.
 if (channel && process.env.REFRESH_CREDITS !== 'false') {
   for (const p of queued) {
-    const it = items.find(i => p.text?.includes(i.link)); if (!it) continue;
+    const it = items.find(i => inText(p.text, i)); if (!it) continue;
     const r = refreshPhotoLine(p.text, it, p.assets?.[0]?.source || '');
     if (!r || r === p.text) continue;
     if (Date.parse(p.dueAt) - Date.now() < 10 * 60e3) { console.log(`Crédit : ${p.id} trop proche, intact`); continue; }
@@ -48,7 +49,7 @@ if (channel && process.env.REFRESH_CREDITS !== 'false') {
   }
 }
 const byPost = new Map(Object.values(state.sent).filter(s => s.postId).map(s => [s.postId, s.source]));
-const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => p.text?.includes(i.link))?.source).filter(Boolean);
+const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => inText(p.text, i))?.source).filter(Boolean);
 const maxNew = parseInt(process.env.MAX_NEW || '', 10);
 const slots = Math.min(Math.max(0, QUEUE_MAX - queued.length), maxNew > 0 ? maxNew : QUEUE_MAX);
 console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} · places : ${slots}`);
@@ -67,7 +68,7 @@ const shareUrl = (process.env.SHARE_URL || '').trim();
 const pickUrl = () => { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
   const qs = new Set(queuedSources), qt = queued.map(p => p.text || '');
-  const pool = items.filter(i => !sentIds.has(i.id) && Date.now() - i.date <= maxAgeH * 3600e3 && !qt.some(t => t.includes(i.link)));
+  const pool = items.filter(i => !sentIds.has(i.id) && Date.now() - i.date <= maxAgeH * 3600e3 && !qt.some(t => inText(t, i)));
   const best = [p => p.img && !p.imgDropped && !qs.has(p.source), p => !qs.has(p.source), p => p.img && !p.imgDropped, () => true]
     .map(f => pool.filter(f)).find(l => l.length) || [];
   return best.length ? [best[Math.floor(Math.random() * best.length)]] : [];
@@ -79,6 +80,7 @@ const used = new Map(); let n = 0;
 for (const it of sel) {
   const im = await resolveImage(it, { used, repeated });
   const text = buildText(it, ACCOUNTS, undefined, { credit: im?.credit, photo: !!im });
+  if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   const dueAt = dues && !shareNow ? dues[n] : undefined;
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
   if (dry) continue;

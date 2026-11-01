@@ -67,6 +67,10 @@ jobs:
         run: |
           sudo chown -R "$(id -u):$(id -g)" _site
           node scripts/mirror-release.js restore _site/assets/news-images
+      # Fiches /article/<id>/ statiques (carte de lien des réseaux sociaux) : registre
+      # data/article-pages.json + news.json, gabarit horaires/index.html.
+      - name: Fiches d'article statiques
+        run: node scripts/article-pages.js --render _site
       - name: Contrôle du site assemblé
         run: |
           set -e

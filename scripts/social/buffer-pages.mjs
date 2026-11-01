@@ -3,7 +3,7 @@
 // fenêtres de pointe du réseau (data/social/posting-windows.json), jamais en rafale, sans dépasser
 // les places libres (10 par canal, forfait gratuit) ni le plafond quotidien (rodage compris).
 import { createRequire } from 'node:module';
-import { buildText, selectItems } from './lib.mjs';
+import { buildText, selectItems, siteLink } from './lib.mjs';
 import { weightAt, rampAt, TZ } from './schedule.mjs';
 import { titleKey } from './rate-limit.mjs';
 const require = createRequire(import.meta.url);
@@ -15,12 +15,12 @@ const dayKey = t => new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'nume
 
 /** Lien du post : fiche le-radar.ca (même identifiant que l'application) ou article du média. */
 export function pageLink(it, mode = 'le-radar') {
-  return mode === 'source' ? it.link : `${ORIGIN}/article/?id=${articleId(it.link)}`;
+  return mode === 'source' ? it.link : siteLink(it);
 }
 
 /** « Média • Auteur • Titre : extrait », lien, « 📸 crédit ». Jamais de @ (noms en clair). */
 export function buildPageText(it, cfg = {}, { credit = '', photo = true } = {}) {
-  const text = buildText({ ...it, link: pageLink(it, cfg.link) }, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true });
+  const text = buildText(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link) });
   return text.replace(/(^|[\s(])@(?=\w)/g, '$1');
 }
 

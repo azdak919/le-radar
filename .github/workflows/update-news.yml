@@ -232,6 +232,7 @@ jobs:
         run: |
           node scripts/fetch-social.js --update
           node scripts/generate-feed.js --update
+          node scripts/article-pages.js --update
         env:
           CI: true
         continue-on-error: true
@@ -295,6 +296,7 @@ jobs:
             lead-image-qc.json photo-credit-qc.json feed.xml
             news-sources.json data/byline-ledger.json data/image-mirror-stats.json
             data/archive-inbox-applied.json
+            data/article-pages.json
             assets/news-images assets/stock-images stock-images-map.js data/image-health.json data/dead-images.json
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)

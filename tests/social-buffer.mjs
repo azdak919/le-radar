@@ -25,23 +25,27 @@ const accounts = JSON.parse(fs.readFileSync(new URL('../data/social/x-accounts.j
 assert.equal(stripUtm('https://a.b/c?utm_source=x&id=3'), 'https://a.b/c?id=3');
 assert(items.every(i => !/utm_/.test(i.link)));
 
-// format + longueur + phrases parasites
+// format : Titre / extrait (≤ 2 phrases entières) / Média (@) · Auteur / lien fiche le-radar.ca / 📸 crédit
+const { siteLink, sentences, cutExcerpt, mediaLine } = await import('../scripts/social/lib.mjs');
 for (const it of items) {
   const t = buildText(it, accounts, undefined, { credit: it.source === 'The Link' ? 'Wladyslaw' : '' });
-  const pl = t.split('\n').at(-1);
-  assert.equal(pl, it.source === 'The Link' ? '📸 Wladyslaw' : `📸 ${it.source}`, 'crédit photo sinon média');
+  const p = t.split('\n\n');
   assert(xlen(t) <= 280, `trop long : ${xlen(t)}`);
-  assert(xlen(t) >= 270, `trop court : ${xlen(t)}`);
-  const ex = t.split('\n')[0]; const last = ex.split(' ').at(-1);
-  assert(ex.endsWith('…') && /^[\p{L}’']+…$/u.test(last) && it.desc.includes(last.slice(0, -1) + ' '), `coupe à un mot entier : ${last}`);
-  if (['The Link', "L'Exemplaire", 'Le Polyscope'].includes(it.source)) assert(/^[^@\s][^\n]* \(@\w+\) • /.test(t), 'nom du média puis (@) sur X');
-  assert(!t.startsWith('@'), 'jamais de @ en tête');
-  assert(t.includes('\n' + it.link + '\n📸 '), 'lien puis crédit');
-  assert(!/cliquer ici|lire la suite/i.test(t), 'phrase parasite retirée');
-  assert(/…\n/.test(t), 'extrait coupé avec …');
-  assert.equal(t.split('\n').length, 3, 'titre : extrait / lien / 📸');
-  assert(/^\S.* • Auteur \d • Titre \d de .+ : Un long/.test(t), '« Média • Auteur • Titre : extrait »');
+  assert.equal(p.length, 3, 'titre / extrait / pied');
+  assert(/^Titre \d de /.test(p[0]), 'titre en premier');
+  assert(/^Un long extrait/.test(p[1]) && /\.$/.test(p[1]) && sentences(p[1]).length <= 2, `extrait en fin de phrase : ${p[1]}`);
+  const foot = p[2].split('\n');
+  assert(/^https:\/\/le-radar\.ca\/article\/[0-9a-f]{16}\/$/.test(foot[1]) && foot[1] === siteLink(it), 'lien = fiche le-radar.ca');
+  assert(!t.includes(it.link), 'jamais le lien du média');
+  if (it.source === 'The Link') assert.equal(foot[2], '📸 Wladyslaw'); else assert.equal(foot.length, 2, 'sans crédit : aucune ligne 📸 (pas de doublon du média)');
+  if (['The Link', "L'Exemplaire", 'Le Polyscope'].includes(it.source)) assert(/^[^@\s][^\n]* \(@\w+\) · Auteur \d$/.test(foot[0]), 'Média (@) · Auteur');
+  assert(!/cliquer ici|lire la suite|•/i.test(t), 'ni phrase parasite ni puce');
 }
+assert.equal(mediaLine({ source: 'Le Délit', author: 'Le Délit' }), 'Le Délit', 'auteur = média : pas de doublon');
+assert.equal(mediaLine({ source: 'Le Délit', author: '' }), 'Le Délit', 'sans auteur : pas de séparateur vide');
+assert.deepEqual(sentences('Un. Deux ? Trois! quatre'), ['Un.', 'Deux ?', 'Trois! quatre']);
+assert.equal(cutExcerpt('Une phrase. Deux phrases. Trois.', () => true), 'Une phrase. Deux phrases.');
+assert.equal(buildText({ source: 'X', title: 'Charles Tison parle', link: 'https://e.x/1' }), '', 'garde « tison »');
 assert.equal(xlen('a https://x.org/' + 'z'.repeat(200)), 2 + 23);
 assert.equal(xlen('📸 A'), 4, 'emoji = 2');
 assert.equal(xlen('a • b…'), 8, '• et … comptent 2 sur X');
@@ -153,7 +157,7 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   const { LIMITS } = await import('../scripts/social/lib.mjs');
   assert.deepEqual(LIMITS, { x: 280, bluesky: 300, mastodon: 500 });
   const t5 = buildText(items[0], [], LIMITS.mastodon);
-  assert(xlen(t5) <= 500 && xlen(t5) > 400 && !t5.startsWith('@'), 'Mastodon : plus long, aucun @ X');
+  assert(xlen(t5) <= 500 && !t5.includes('(@'), 'Mastodon : aucun @ X');
 }
 // nom + (@), sans @, limite
 {
@@ -161,16 +165,14 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   const acc = [{ handle: '@montrealcampus', type: 'source', cle_flux: 'Montréal Campus' }];
   const base = { source: 'Montréal Campus', author: 'Emmanuelle Hodoul', bare: 'Titre', title: 'Titre', link: 'https://e.x/a', desc: 'mot '.repeat(200) };
   const w = buildText(base, acc);
-  assert(w.startsWith('Montréal Campus (@montrealcampus) • Emmanuelle Hodoul • Titre : mot'), w);
+  assert(w.startsWith('Titre\n\nmot') && w.includes('\n\nMontréal Campus (@montrealcampus) · Emmanuelle Hodoul\n'), w);
   const wo = buildText({ ...base, source: 'Autre Média' }, acc);
-  assert(wo.startsWith('Autre Média • Emmanuelle Hodoul • Titre : mot') && !wo.includes('(@'), wo);
+  assert(wo.includes('\nAutre Média · Emmanuelle Hodoul\n') && !wo.includes('(@'), wo);
   for (const t of [w, wo]) { assert(xlen(t) <= LIMITS.x && !t.startsWith('@')); assert(/mot…\n/.test(t), 'extrait raccourci au mot'); }
   assert(xlen(buildText(base, acc, LIMITS.bluesky)) <= 300 && xlen(buildText(base, acc, LIMITS.mastodon)) <= 500);
   const longT = buildText({ ...base, bare: 'Long '.repeat(80).trim(), desc: '' }, acc);
   assert(xlen(longT) <= 280 && !longT.startsWith('@'), 'titre trop long tronqué');
   assert.equal(namedHead('@montrealcampus • A • T', acc), 'Montréal Campus (@montrealcampus) • A • T');
-  assert.equal(namedHead('@inconnu • T', acc, 'Source X'), 'Source X (@inconnu) • T');
-  assert.equal(namedHead('Montréal Campus (@montrealcampus) • T', acc), 'Montréal Campus (@montrealcampus) • T');
 }
 console.log('social-buffer: ok');
 
@@ -188,16 +190,16 @@ console.log('social-buffer: ok');
   const { feedCredit, refreshPhotoLine } = await import('../scripts/social/lib.mjs');
   assert.equal(feedCredit('<figcaption>Photo: Features</figcaption>'), '', 'rubrique rejetée');
   const it = { img: 'https://le-radar.ca/assets/news-images/a.jpg', credit: 'André Deschênes', source: 'La Pige' };
-  const t = 'La Pige • É. B. • Titre : extrait\nhttps://x/y\n📸 La Pige';
-  assert.equal(refreshPhotoLine(t, it, 'https://le-radar.ca/assets/news-images/a.jpg'), 'La Pige • É. B. • Titre : extrait\nhttps://x/y\n📸 André Deschênes');
+  const t = 'Titre\n\nextrait\n\nLa Pige · É. B.\nhttps://x/y\n📸 La Pige';
+  assert.equal(refreshPhotoLine(t, it, 'https://le-radar.ca/assets/news-images/a.jpg'), 'Titre\n\nextrait\n\nLa Pige · É. B.\nhttps://x/y\n📸 André Deschênes');
   assert.equal(refreshPhotoLine(t, it, 'https://upload.wikimedia.org/b.jpg'), null, 'image banque : crédit propre gardé');
-  assert.equal(refreshPhotoLine(t, { ...it, credit: '' }, it.img), t, 'sans crédit : média');
+  assert.equal(refreshPhotoLine(t, { ...it, credit: '' }, it.img), 'Titre\n\nextrait\n\nLa Pige · É. B.\nhttps://x/y', 'sans crédit : ligne retirée');
 }
 
 {
   const { refreshPhotoLine, xlen } = await import('../scripts/social/lib.mjs');
   const it = { img: 'https://a/b.jpg', credit: 'Un crédit photo nettement plus long que le nom', source: 'The Link' };
-  const t = 'The Link • A • ' + 'mot '.repeat(60).trim() + '…\nhttps://thelinknewspaper.ca/article/16530\n📸 The Link';
+  const t = 'Titre\n\n' + 'mot '.repeat(60).trim() + '…\n\nThe Link · A\nhttps://thelinknewspaper.ca/article/16530\n📸 The Link';
   const r = refreshPhotoLine(t, it, '');
   assert.ok(r && xlen(r) <= 280 && r.endsWith('📸 ' + it.credit) && r.includes('\nhttps://thelinknewspaper.ca/article/16530\n'), 'raccourci sous 280');
 }
