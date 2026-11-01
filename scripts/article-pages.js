@@ -25,6 +25,13 @@ const STORE = path.join(ROOT, 'data/article-pages.json');
 const SITE = 'https://le-radar.ca';
 
 const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+/** Espaces insécables typographiques (fr) : jamais « ? » ou « : » seul en début de ligne. */
+function frenchNbsp(s = '') {
+  return String(s)
+    .replace(/[ \u00a0\u202f]+([?!;»])/g, '\u202f$1')
+    .replace(/[ \u00a0\u202f]+:/g, '\u00a0:')
+    .replace(/«[ \u00a0\u202f]+/g, '«\u202f');
+}
 const clean = (s = '') => String(s).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 /** « Photo: X » → « X » ; « Illustration : X » gardé. Même règle que feedCredit (lib sociale). */
@@ -122,7 +129,7 @@ function articleMain(a) {
   return `<main class="wire seo-wire seo-article" data-article-id="${esc(a.id)}">
       <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">${esc(a.source || 'Article')}</span></nav>
       <p class="seo-eyebrow">${esc([a.source, a.institution].filter(Boolean).join(' · '))}</p>
-      <h1 class="seo-title" lang="${a.lang === 'en' ? 'en-CA' : 'fr-CA'}">${esc(a.title)}</h1>
+      <h1 class="seo-title" lang="${a.lang === 'en' ? 'en-CA' : 'fr-CA'}">${esc(frenchNbsp(a.title))}</h1>
       ${meta ? `<p class="seo-article__meta">${meta}</p>` : ''}${fig}
       ${a.excerpt ? `<p class="seo-lead seo-article__excerpt" lang="${a.lang === 'en' ? 'en-CA' : 'fr-CA'}">${esc(a.excerpt)}</p>` : ''}
       <div class="seo-source-actions">
@@ -210,4 +217,5 @@ if (require.main === module) {
   if (!args.includes('--update') && i < 0) { console.error('Usage : node scripts/article-pages.js --update | --render <dir>'); process.exit(2); }
 }
 
-module.exports = { recordOf, merge, renderPage, loadTemplate, creditOf, shortExcerpt, frDate, render };
+module.exports = {
+  frenchNbsp, recordOf, merge, renderPage, loadTemplate, creditOf, shortExcerpt, frDate, render };

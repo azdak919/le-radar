@@ -34,5 +34,6 @@ test(`@ci-critical fiche d'article lisible de 390 à 2560 px`, async ({ page }) 
     if (m.lead) expect(m.lead.width / m.fs).toBeLessThanOrEqual(80 * 0.6 + 40); // ≈ 75ch max
     if (m.fig) expect(m.fig.height).toBeLessThanOrEqual(Math.min(m.vh * 0.75, 800));
     if (width >= 1024 && m.fig) expect(m.title.left).toBeGreaterThan(m.fig.right);
+    if (width >= 1920) { const w = await page.evaluate(() => document.querySelector('.seo-article').getBoundingClientRect().width); expect(w).toBeLessThanOrEqual(1361); }
   }
 });

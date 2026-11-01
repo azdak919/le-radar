@@ -1732,3 +1732,12 @@ html[data-wide-preview="e"] .news-hero-spacer {
   align-items: center;
   gap: 5px;
 }
+
+/* Fiche d'article : bornée à ~1360 px et centrée sur très grands écrans. */
+@media (min-width: 1400px) {
+  html[data-wide-preview="e"] .seo-wire.seo-article {
+    max-width: min(var(--maxw), 1360px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
