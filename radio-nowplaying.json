@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T17:36:47.477Z",
+  "updatedAt": "2026-11-01T18:36:48.149Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T17:36:06.955Z"
+      "checkedAt": "2026-11-01T18:36:07.935Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sirènes",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/les-sirenes"
-      },
-      "next": {
         "title": "Le char de marge",
         "source": "schedule",
         "start": "13:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
+      "next": {
+        "title": "La Grapevine",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/la-grapevine"
+      },
       "track": "",
-      "showTitle": "Les sirènes",
+      "showTitle": "Le char de marge",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T17:36:09.194Z"
+      "checkedAt": "2026-11-01T18:36:10.203Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free Kick",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "13:00"
-      },
-      "next": {
         "title": "Modular Systems/Future Classics",
         "source": "api-live",
         "start": "13:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "The Magic Roundabout",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Free Kick",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T17:36:12.353Z"
+      "checkedAt": "2026-11-01T18:36:13.089Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Brave Little Emo Girl",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
-      },
-      "next": {
         "title": "Northern Stagelights",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
+      "next": {
+        "title": "Methods and Madness",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/methods-and-madness"
+      },
       "track": "",
-      "showTitle": "Brave Little Emo Girl",
+      "showTitle": "Northern Stagelights",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T17:36:27.585Z"
+      "checkedAt": "2026-11-01T18:36:28.373Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,18 +121,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T17:36:28.768Z"
+      "checkedAt": "2026-11-01T18:36:29.300Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "OPUS",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "opus"
-      },
+      "current": null,
       "next": {
         "title": "Pôle hip-hop",
         "source": "api-live",
@@ -141,14 +135,14 @@
         "slug": "pole-hip-hop"
       },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "OPUS",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T17:36:47.127Z"
+      "checkedAt": "2026-11-01T18:36:47.798Z"
     }
   }
 }
