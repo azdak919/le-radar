@@ -193,3 +193,11 @@ console.log('social-buffer: ok');
   assert.equal(refreshPhotoLine(t, it, 'https://upload.wikimedia.org/b.jpg'), null, 'image banque : crédit propre gardé');
   assert.equal(refreshPhotoLine(t, { ...it, credit: '' }, it.img), t, 'sans crédit : média');
 }
+
+{
+  const { refreshPhotoLine, xlen } = await import('../scripts/social/lib.mjs');
+  const it = { img: 'https://a/b.jpg', credit: 'Un crédit photo nettement plus long que le nom', source: 'The Link' };
+  const t = 'The Link • A • ' + 'mot '.repeat(60).trim() + '…\nhttps://thelinknewspaper.ca/article/16530\n📸 The Link';
+  const r = refreshPhotoLine(t, it, '');
+  assert.ok(r && xlen(r) <= 280 && r.endsWith('📸 ' + it.credit) && r.includes('\nhttps://thelinknewspaper.ca/article/16530\n'), 'raccourci sous 280');
+}
