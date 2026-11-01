@@ -1810,3 +1810,32 @@
 .seo-wire .seo-article__back { margin: 0; font-family: var(--sans); font-size: 14.5px; }
 .seo-article__back a { color: var(--accent); text-decoration: none; }
 @media (hover: hover) and (pointer: fine) { .seo-article__back a:hover { text-decoration: underline; } }
+
+/* Fiche d'article — grands écrans : colonne de lecture centrée (tablette) puis
+   photo + texte en deux colonnes (≥ 1024 px). Lignes ~65–70ch, photo bornée. */
+@media (min-width: 700px) and (max-width: 1023.98px) {
+  .seo-article { max-width: 760px; margin-left: auto; margin-right: auto; }
+  .seo-article__figure img { aspect-ratio: 16 / 10; max-height: 60vh; }
+}
+@media (min-width: 1024px) {
+  .seo-wire.seo-article {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: clamp(32px, 4vw, 64px);
+    align-content: start;
+    max-width: 1360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .seo-article > * { grid-column: 2; min-width: 0; max-width: 70ch; }
+  .seo-article > .seo-crumbs { grid-column: 1 / -1; max-width: none; }
+  .seo-article > .seo-article__figure {
+    grid-column: 1;
+    grid-row: 2 / span 7;
+    align-self: start;
+    position: sticky;
+    top: 96px;
+    max-width: none;
+  }
+  .seo-article__figure img { aspect-ratio: 4 / 3; max-height: min(72vh, 760px); }
+}
