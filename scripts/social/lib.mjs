@@ -20,6 +20,16 @@ export function stripUtm(u) {
   try { const x = new URL(u); for (const k of [...x.searchParams.keys()]) if (/^utm_/i.test(k)) x.searchParams.delete(k); return x.toString().replace(/\?$/, ''); } catch { return u; }
 }
 
+/** Crédit de la photo du flux (figcaption de content:encoded) : « Photo: Aidan Raynor » → « Aidan Raynor »,
+ * « Illustration : Maud Amoretti » gardé tel quel. Vide si absent. */
+export function feedCredit(html = '') {
+  const m = String(html).match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i); if (!m) return '';
+  let c = dec(m[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+  while (/^photo\s*:\s*/i.test(c)) c = c.replace(/^photo\s*:\s*/i, '');
+  c = c.replace(/^illustration\s*:\s*/i, 'Illustration : ');
+  return c.length >= 2 && c.length <= 120 ? c : '';
+}
+
 export function parseFeed(xml) {
   return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(m => {
     const b = m[1]; const desc = tag(b, 'description');
@@ -32,6 +42,7 @@ export function parseFeed(xml) {
       id: tag(b, 'guid') || link, title, bare: m2 ? m2[1].trim() : title, link, author, source, img,
       date: new Date(tag(b, 'pubDate')), desc: plain(desc),
       categories: [...b.matchAll(/<category>([\s\S]*?)<\/category>/g)].map(x => dec(x[1])),
+      credit: feedCredit(tag(b, 'content:encoded')),
     };
   }).sort((a, b) => b.date - a.date);
 }

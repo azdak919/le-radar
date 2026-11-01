@@ -1,0 +1,62 @@
+name: Social — correction de crédit (supprimer et republier)
+
+# Manuel seulement. Supprime les publications des articles listés (Bluesky, files Buffer) et les
+# republie au format normal avec le crédit actuel du flux. Posts X déjà envoyés : listés dans le
+# journal (l'API Buffer ne supprime pas un post publié). Coût : 0 $.
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: 'URL(s) des articles, séparées par des virgules'
+        required: true
+      x_due:
+        description: 'Heure(s) ISO de republication X, même ordre (vide = pas de republication X)'
+        default: ''
+      bluesky:
+        description: 'Traiter Bluesky (supprimer + republier tout de suite)'
+        type: boolean
+        default: true
+      dry_run:
+        description: 'Essai seulement'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+
+jobs:
+  repost:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Supprimer et republier
+        env:
+          URLS: ${{ inputs.urls }}
+          X_DUE: ${{ inputs.x_due }}
+          BSKY: ${{ inputs.bluesky && 'true' || 'false' }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+        run: node scripts/social/repost.mjs
+      - name: Commit des états
+        if: always()
+        run: |
+          git diff --quiet -- data/buffer-sent.json data/bluesky-sent.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/buffer-sent.json
+          git add data/bluesky-sent.json
+          git commit -s -m "bot(social): états après correction de crédit"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of [\"data/buffer-sent.json\",\"data/bluesky-sent.json\"]) JSON.parse(require(\"fs\").readFileSync(f))'"

@@ -173,3 +173,13 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   assert.equal(namedHead('Montréal Campus (@montrealcampus) • T', acc), 'Montréal Campus (@montrealcampus) • T');
 }
 console.log('social-buffer: ok');
+
+// Crédit photo du flux (figcaption) — PR #277 : The Concordian / Montréal Campus.
+{
+  const { feedCredit } = await import('../scripts/social/lib.mjs');
+  const fc = t => feedCredit(`<figure><img src="x"><figcaption style="a">${t}</figcaption></figure>`);
+  assert.equal(fc('Photo: Aidan Raynor'), 'Aidan Raynor', 'feedCredit Photo:');
+  assert.equal(fc('Illustration : Maud Amoretti'), 'Illustration : Maud Amoretti', 'feedCredit Illustration');
+  assert.equal(fc('Photo: Illustration: Keven Vaillancourt'), 'Illustration : Keven Vaillancourt', 'feedCredit Photo: Illustration:');
+  assert.equal(feedCredit('<p>sans légende</p>'), '', 'feedCredit absent');
+}
