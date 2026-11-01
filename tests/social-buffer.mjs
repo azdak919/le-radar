@@ -32,8 +32,8 @@ for (const it of items) {
   assert(t.endsWith('\n' + it.link), 'lien en fin');
   assert(!/cliquer ici|lire la suite/i.test(t), 'phrase parasite retirée');
   assert(/…\n/.test(t), 'extrait coupé avec …');
-  assert(!/\n\n/.test(t), 'aucune ligne vide');
-  assert.equal(t.split('\n').length, 3, 'titre / extrait / lien');
+  assert.equal(t.split('\n').length, 2, 'titre : extrait, puis lien');
+  assert(/ : Titre \d de .+ : Un long/.test(t), 'deux-points français après le titre');
 }
 assert.equal(xlen('a https://x.org/' + 'z'.repeat(200)), 2 + 23);
 
@@ -122,5 +122,15 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   // veille correcte au passage à l'heure avancée (8 mars 2026)
   const sp = parseFeed('<rss>' + mk('P', 0, '2026-03-07T20:00:00Z') + mk('Q', 0, '2026-03-08T20:00:00Z') + '</rss>');
   assert.deepEqual(selectDaily(sp, { now: Date.parse('2026-03-09T08:07:00Z'), slots: 1 }).map(i => i.source), ['Q']);
+}
+// format titre/extrait
+{
+  const { joinHead, isEnglish } = await import('../scripts/social/lib.mjs');
+  assert.equal(joinHead('Le Délit – A : Titre', 'Extrait'), 'Le Délit – A : Titre : Extrait');
+  assert.equal(joinHead('The Link – A: Title', 'Excerpt'), 'The Link – A: Title: Excerpt');
+  assert.equal(joinHead('X – A : Vraiment ?', 'Ex'), 'X – A : Vraiment ? Ex');
+  assert.equal(joinHead('X – A: Wow!', 'Ex'), 'X – A: Wow! Ex');
+  assert.equal(joinHead('X – A : Suite…', 'Ex'), 'X – A : Suite… Ex');
+  assert(isEnglish('The Link – A: T') && !isEnglish('Le Délit – A : T'));
 }
 console.log('social-buffer: ok');

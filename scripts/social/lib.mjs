@@ -77,9 +77,17 @@ export function mentionHead(it, accounts = []) {
   return head;
 }
 
+/** « Titre : extrait » (fr), « Title: excerpt » (en), simple espace après ? ! … */
+export const isEnglish = title => /[^\s]: /.test(title || '') && !/\s: /.test(title || '');
+export function joinHead(head, ex, en = isEnglish(head)) {
+  if (!ex) return head;
+  if (/[?!…]$/.test(head.trim())) return `${head.trim()} ${ex}`;
+  return `${head.trim()}${en ? ':' : ' :'} ${ex}`;
+}
+
 export function buildText(it, accounts = [], limit = X_LIMIT) {
-  const head = mentionHead(it, accounts), tail = `\n${it.link}`;
-  const mk = e => e ? `${head}\n${e}${tail}` : `${head}${tail}`;
+  const head = mentionHead(it, accounts), tail = `\n${it.link}`, en = isEnglish(it.title);
+  const mk = e => `${joinHead(head, e, en)}${tail}`;
   let ex = excerpt(it);
   if (ex && xlen(mk(ex)) > limit) {
     const budget = limit - xlen(mk('')) - 3;
