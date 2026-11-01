@@ -3,7 +3,7 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
@@ -35,6 +35,18 @@ try {
   }
 } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }
 
+// Crédit à jour à la publication : chaque post en file dont l'article est au flux reprend le crédit
+// ACTUEL du site (figcaption du flux, même fonction que les autres bots) ; editPost si différent.
+if (channel && process.env.REFRESH_CREDITS !== 'false') {
+  for (const p of queued) {
+    const it = items.find(i => p.text?.includes(i.link)); if (!it) continue;
+    const r = refreshPhotoLine(p.text, it, p.assets?.[0]?.source || '');
+    if (!r || r === p.text) continue;
+    if (Date.parse(p.dueAt) - Date.now() < 10 * 60e3) { console.log(`Crédit : ${p.id} trop proche, intact`); continue; }
+    console.log(`Crédit rafraîchi ${p.id} : ${p.text.split('\n').pop()} → ${r.split('\n').pop()}`);
+    if (!dry) { await channel.editText(p.id, r); p.text = r; const s = Object.values(state.sent).find(v => v.postId === p.id); if (s) s.credit = it.credit; }
+  }
+}
 const byPost = new Map(Object.values(state.sent).filter(s => s.postId).map(s => [s.postId, s.source]));
 const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => p.text?.includes(i.link))?.source).filter(Boolean);
 const maxNew = parseInt(process.env.MAX_NEW || '', 10);

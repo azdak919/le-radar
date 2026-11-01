@@ -27,7 +27,20 @@ export function feedCredit(html = '') {
   let c = dec(m[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
   while (/^photo\s*:\s*/i.test(c)) c = c.replace(/^photo\s*:\s*/i, '');
   c = c.replace(/^illustration\s*:\s*/i, 'Illustration : ');
+  // Libellé de rubrique pris pour un crédit (« Photo: Features ») : inutilisable.
+  if (/^(features?|news|opinions?|sports?|culture|photos?|illustrations?|crédits?|credits?)$/i.test(c)) return '';
   return c.length >= 2 && c.length <= 120 ? c : '';
+}
+
+/** Remplace la ligne 📸 d'un post en file par le crédit actuel du flux, seulement si l'image du post
+ * est celle du flux (sinon : banque ou page article, crédit propre à cette image). null = rien à faire. */
+export function refreshPhotoLine(text, it, assetUrl = '') {
+  const lines = String(text || '').split('\n'), i = lines.findIndex(l => l.startsWith('📸'));
+  if (i < 0 || !it?.img) return null;
+  const k = u => String(u || '').replace(/^https?:\/\//, '').replace(/[?#].*$/, '');
+  if (assetUrl && k(assetUrl) !== k(it.img)) return null;
+  lines[i] = photoLine(it.credit, it.source);
+  return lines.join('\n');
 }
 
 export function parseFeed(xml) {

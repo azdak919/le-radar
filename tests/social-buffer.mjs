@@ -183,3 +183,13 @@ console.log('social-buffer: ok');
   assert.equal(fc('Photo: Illustration: Keven Vaillancourt'), 'Illustration : Keven Vaillancourt', 'feedCredit Photo: Illustration:');
   assert.equal(feedCredit('<p>sans légende</p>'), '', 'feedCredit absent');
 }
+
+{
+  const { feedCredit, refreshPhotoLine } = await import('../scripts/social/lib.mjs');
+  assert.equal(feedCredit('<figcaption>Photo: Features</figcaption>'), '', 'rubrique rejetée');
+  const it = { img: 'https://le-radar.ca/assets/news-images/a.jpg', credit: 'André Deschênes', source: 'La Pige' };
+  const t = 'La Pige • É. B. • Titre : extrait\nhttps://x/y\n📸 La Pige';
+  assert.equal(refreshPhotoLine(t, it, 'https://le-radar.ca/assets/news-images/a.jpg'), 'La Pige • É. B. • Titre : extrait\nhttps://x/y\n📸 André Deschênes');
+  assert.equal(refreshPhotoLine(t, it, 'https://upload.wikimedia.org/b.jpg'), null, 'image banque : crédit propre gardé');
+  assert.equal(refreshPhotoLine(t, { ...it, credit: '' }, it.img), t, 'sans crédit : média');
+}
