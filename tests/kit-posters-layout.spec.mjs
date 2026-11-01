@@ -35,6 +35,14 @@ for (const width of widths) {
         };
       });
       expect(info.overflow, 'débordement horizontal').toBeLessThanOrEqual(0);
+      // Marge gauche : le contenu ne colle jamais au bord de l’écran.
+      const minLeft = width < 600 ? 12 : 24;
+      for (const sel of ['.kit-cta__btn', '#kit-compose-title', '#kit-filter-lead', '#kit-poster-filter button', '#kit-poster-grid .kit-card--poster']) {
+        const left = await page.locator(sel).first().evaluate((el) => el.getBoundingClientRect().left);
+        expect(left, `marge gauche de ${sel}`).toBeGreaterThanOrEqual(minLeft);
+        const right = await page.locator(sel).first().evaluate((el) => window.innerWidth - el.getBoundingClientRect().right);
+        expect(right, `pas de débordement à droite : ${sel}`).toBeGreaterThanOrEqual(0);
+      }
       expect(info.cards.length).toBeGreaterThan(1);
       const rows = new Map();
       for (const c of info.cards) {

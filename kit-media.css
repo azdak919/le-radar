@@ -234,6 +234,22 @@
   color: var(--accent);
 }
 }
+.kit-block {
+  margin: 0 0 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+.kit-block__title {
+  margin: 0 0 6px;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+}
+.kit-block__lead {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 /* Galerie d’affiches : cartes de même gabarit, aperçu 11 × 17 entier, boutons en pied de carte. */
 .kit-filter {
   display: flex;

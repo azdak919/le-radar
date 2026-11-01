@@ -96,9 +96,12 @@
       <section class="kit-section" id="affiches">
         <h2>Affiches</h2>
         <p>Pour les babillards de campus. Composez la vôtre, ou téléchargez le modèle générique.</p>
+        <div class="kit-block" role="group" aria-labelledby="kit-compose-title">
+        <h3 class="kit-block__title" id="kit-compose-title">Créer la vôtre</h3>
+        <p class="kit-block__lead">Le studio compose une affiche à votre campus, avec sa photo, en PDF 600 dpi.</p>
         <p class="kit-cta"><a class="kit-cta__btn" href="../affiches/">Composer une affiche</a></p>
-        <p class="kit-campus-lead">Choisir un campus :</p>
-        <nav class="kit-campus" aria-label="Campus">
+        <p class="kit-campus-lead" id="kit-campus-lead">Ou ouvrir le studio pour un campus :</p>
+        <nav class="kit-campus" aria-labelledby="kit-campus-lead">
           <a href="../affiches/?campus=laval">Université Laval</a>
           <a href="../affiches/?campus=mcgill">Université McGill</a>
           <a href="../affiches/?campus=udem">Université de Montréal</a>
@@ -118,7 +121,11 @@
           <a href="../affiches/?campus=poly">Polytechnique</a>
           <a href="../affiches/?campus=hec">HEC Montréal</a>
         </nav>
-        <div class="kit-filter" id="kit-poster-filter" role="group" aria-label="Filtrer les affiches par établissement" hidden></div>
+        </div>
+        <div class="kit-block" role="group" aria-labelledby="kit-models-title">
+        <h3 class="kit-block__title" id="kit-models-title">Modèles prêts à imprimer</h3>
+        <p class="kit-campus-lead" id="kit-filter-lead">Filtrer les modèles par établissement :</p>
+        <div class="kit-filter" id="kit-poster-filter" role="group" aria-labelledby="kit-filter-lead" hidden></div>
         <p class="kit-filter__count" id="kit-poster-count" aria-live="polite"></p>
         <div class="kit-grid kit-grid--poster" id="kit-poster-grid" data-asset-base="../assets/kit/affiches/" data-compose="../affiches/">
           <article class="kit-card kit-card--poster kit-card--feature" data-campus="generique">
@@ -135,6 +142,7 @@
               </p>
             </div>
           </article>
+        </div>
         </div>
       </section>
 

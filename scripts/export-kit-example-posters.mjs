@@ -89,7 +89,9 @@ async function attachLocalPhotos(page) {
     }
     const file = cachedPath(route.request().url(), map);
     if (!file) {
-      await route.abort();
+      // Pas en cache : on va chercher la photo publique (sinon l’aperçu sortait sans photo).
+      console.warn('  photo hors cache, téléchargée :', route.request().url().slice(0, 100));
+      await route.continue();
       return;
     }
     await route.fulfill({
