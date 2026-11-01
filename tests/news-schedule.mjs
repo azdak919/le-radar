@@ -143,10 +143,7 @@ assert.deepEqual(
 );
 
 const feeds = readFileSync(new URL('../feeds.html', import.meta.url), 'utf8');
-assert.match(
-  feeds,
-  /<li>6:00<\/li><li>7:00<\/li><li>9:00<\/li><li>11:00<\/li><li>12:00<\/li>\s*<li>13:00<\/li><li>15:00<\/li><li>17:00<\/li><li>19:00<\/li><li>21:00<\/li>/,
-  'feeds.html : 6 h, midi, et toutes les 2 h de 7 h à 21 h',
-);
+assert.match(feeds, /environ toutes les heures/, 'feeds.html : fréquence réelle (≈ horaire), pas 10 créneaux fixes');
+assert.doesNotMatch(feeds, /10 fois par jour/, 'promesse de 10 passes fausse : mesuré ≈ 25/jour');
 
 console.log('OK news-schedule');

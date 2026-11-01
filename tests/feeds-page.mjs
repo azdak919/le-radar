@@ -53,3 +53,14 @@ for (const m of html.matchAll(/(?:href|data-feed)="([^"#:]+\.(?:xml|json))"/g)) 
 assert.ok(/<link rel="alternate" type="application\/rss\+xml"[^>]+href="feed\.xml"/.test(html));
 assert.ok(!/tison/i.test(html + page), 'nom réel dans la page');
 console.log(`feeds-page: ${groups.length} établissements, ${shown.length} journaux, ${n} en intégration OK`);
+
+// Prochaine mise à jour : heure de Toronto, change d'heure inclus (HAE → HNE le 1er nov. 2026).
+assert.equal(lib.updateStatus('2026-10-31T13:12:00Z', '2026-10-31T13:20:00Z'), 'Prochaine mise à jour prévue vers 10 h 00 (heure du Québec).'.replace('10 h 00', lib.torontoClock(new Date('2026-10-31T14:00:00Z'))));
+assert.equal(lib.nextUpdateEstimate('2026-10-31T13:12:00Z').toISOString(), '2026-10-31T14:00:00.000Z');
+assert.equal(lib.nextUpdateEstimate('2026-10-31T13:50:00Z').toISOString(), '2026-10-31T15:00:00.000Z');
+assert.match(lib.torontoClock(new Date('2026-10-31T14:00:00Z')), /^10/, 'HAE : 14 h UTC = 10 h');
+assert.match(lib.torontoClock(new Date('2026-11-02T14:00:00Z')), /^9/, 'HNE : 14 h UTC = 9 h');
+assert.equal(lib.nextUpdateEstimate('pas une date'), null);
+assert.match(page, /timeZone: 'America\/Toronto'/, 'date de mise à jour en heure de Toronto');
+assert.doesNotMatch(page, /updatedSlot/, 'afficher l’heure réelle, pas le créneau théorique');
+assert.equal(lib.updateStatus('2026-10-31T10:00:00Z', '2026-10-31T13:00:00Z'), 'Prochaine mise à jour imminente.');
