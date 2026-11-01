@@ -257,9 +257,8 @@ function imageMimeType(url = '') {
  * Méta + brève, sans HTML — lisible sous le titre.
  */
 function buildDescriptionText(item = {}) {
-  const meta = itemCompactMeta(item);
-  const brief = itemBrief(item);
-  return [meta, brief].filter(Boolean).join('\n\n');
+  // Les lecteurs affichent déjà la date, le média et l'auteur : la brève seule évite les doublons.
+  return itemBrief(item);
 }
 
 /**
@@ -272,20 +271,12 @@ function buildItemBodyHtml(item = {}, sourceSites = {}) {
   const imageUrl = itemImageUrl(item);
   const title = stripInvalidXml(item.title || 'Article').replace(/\s+/g, ' ').trim();
   const credit = photoCreditLine(item);
-  const meta = itemCompactMeta(item);
   const en = item.lang === 'en';
   const link = String(item.link || '').trim();
   const sourceName = String(item.source || '').trim();
   const inst = institutionLabel(item);
 
-  if (meta) {
-    parts.push(
-      `<p style="margin:0 0 0.85em;font-size:0.9em;line-height:1.4;color:#666">`
-      + `<strong style="color:#444">${escapeXml(meta)}</strong>`
-      + `</p>`,
-    );
-  }
-
+  // Pas de ligne de date dans le corps : le lecteur l'affiche déjà dans l'en-tête.
   if (imageUrl) {
     parts.push(
       '<figure style="margin:0 0 1em;padding:0">',
@@ -375,13 +366,9 @@ function buildItemXml(item = {}, sourceSites = {}) {
   // Image via Media RSS seulement (pas d'<enclosure>) :
   // les enclosures apparaissent comme « Attachments » dans Discord / certains
   // lecteurs, en double de l'image déjà dans content:encoded.
-  const mime = imageUrl ? imageMimeType(imageUrl) : '';
+  // media:content s'affiche aussi en « pièce jointe » dans Flash Info : vignette seule.
   const mediaXml = imageUrl
-    ? `      <media:content url="${escapeXml(imageUrl)}" medium="image" type="${escapeXml(mime)}" isDefault="true">\n`
-      + (credit ? `        <media:credit role="photographer">${escapeXml(credit)}</media:credit>\n` : '')
-      + (title ? `        <media:title>${escapeXml(title)}</media:title>\n` : '')
-      + '      </media:content>\n'
-      + `      <media:thumbnail url="${escapeXml(imageUrl)}" />`
+    ? `      <media:thumbnail url="${escapeXml(imageUrl)}" />`
     : '';
 
   const bodyHtml = buildItemBodyHtml(item, sourceSites);
