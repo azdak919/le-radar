@@ -79,7 +79,7 @@ export function mentionHead(it, accounts = []) {
 
 export function buildText(it, accounts = [], limit = X_LIMIT) {
   const head = mentionHead(it, accounts), tail = `\n${it.link}`;
-  const mk = e => e ? `${head}\n\n${e}${tail}` : `${head}${tail}`;
+  const mk = e => e ? `${head}\n${e}${tail}` : `${head}${tail}`;
   let ex = excerpt(it);
   if (ex && xlen(mk(ex)) > limit) {
     const budget = limit - xlen(mk('')) - 3;

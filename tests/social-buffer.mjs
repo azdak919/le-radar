@@ -32,6 +32,8 @@ for (const it of items) {
   assert(t.endsWith('\n' + it.link), 'lien en fin');
   assert(!/cliquer ici|lire la suite/i.test(t), 'phrase parasite retirée');
   assert(/…\n/.test(t), 'extrait coupé avec …');
+  assert(!/\n\n/.test(t), 'aucune ligne vide');
+  assert.equal(t.split('\n').length, 3, 'titre / extrait / lien');
 }
 assert.equal(xlen('a https://x.org/' + 'z'.repeat(200)), 2 + 23);
 

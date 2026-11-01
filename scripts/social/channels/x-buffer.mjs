@@ -50,6 +50,14 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
         posts(first: 50, input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) { edges { node { id text dueAt } } } }`, { o: organizationId, c: [channelId] });
       return (d?.posts?.edges || []).map(e => e.node);
     },
+    // Texte seulement : id, image et heure programmée conservés (mode/dueAt omis).
+    async editText(id, text) {
+      const d = await gql(`mutation($i: EditPostInput!) { editPost(input: $i) {
+        ... on PostActionSuccess { post { id text dueAt } } ... on MutationError { message } } }`, { i: { id, text } });
+      const r = d?.editPost;
+      if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
+      return r.post;
+    },
     async add({ text, image, dueAt }) {
       const { channelId } = await context();
       const input = { text, channelId, schedulingType: 'automatic', mode: dueAt ? 'customScheduled' : 'addToQueue' };
