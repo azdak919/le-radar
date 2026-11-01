@@ -43,3 +43,40 @@ assert.ok((block.match(/url:/g) || []).length >= 6, 'banque Bishop’s ≥ 6 pho
 if (entries) assert.ok(entries.length >= 6);
 
 console.log('news-image-relevance OK');
+
+// 1er nov. 2026 — lieu + sujet concordants : pas un faux positif.
+const festival = {
+  source: 'Impact Campus', institution: 'Université Laval', lang: 'fr',
+  title: 'Retour sur le festival d’arts littéraires Québec en toutes lettres',
+  excerpt: 'Le festival d’arts littéraires Québec en toutes lettres est de retour pour sa 17e édition.',
+  stockImage: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Qu%C3%A9bec_-_Maison_de_la_litt%C3%A9rature_20241031.jpg',
+  imageTitle: 'Maison de la littérature, Québec',
+  imageProvider: 'wikimedia', imageLicense: 'CC BY-SA 4.0',
+};
+assert.equal(L.stockStillFits(festival), true, 'Maison de la littérature, Québec = festival littéraire à Québec');
+// Le lieu seul ne suffit pas : Québec sans mot de sujet commun.
+assert.equal(L.stockStillFits({ ...festival, imageTitle: 'Château Frontenac, Québec',
+  stockImage: 'https://upload.wikimedia.org/wikipedia/commons/x/Chateau_Frontenac.jpg' }), false);
+
+// Autre campus nommé (University Park, Penn State) ≠ débat à Bishop's.
+const parkDebate = { ...debate,
+  stockImage: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/University_Park_MMB_%C2%ABP4_Students%27_Union_Elections_2013.jpg?utm_source=commons.wikimedia.org',
+  imageTitle: "File:University Park MMB «P4 Students' Union Elections 2013.jpg" };
+assert.equal(L.stockStillFits(parkDebate), false, 'University Park ≠ Bishop’s');
+// … et le remplacement vient de la banque du campus de la source.
+const repl = bank.pickCampusPhoto(debate, { avoidUrls: [] });
+assert.match(repl.imageTitle, /Bishop/);
+
+// Anti-répétition par source, URL avec ou sans ?utm_ : une seule occurrence.
+const u = 'https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg';
+const camp = (title, date, url) => ({ source: 'The Campus', institution: "Bishop's University", title, date,
+  link: `https://x/${title}`, stockImage: url, imageProvider: 'campus-bank', imageTitle: "Bishop's University campus 2011 04" });
+const lot = [camp('Hockey', '2026-10-30', `${u}?utm_source=commons.wikimedia.org`), camp('Football', '2026-10-29', u)];
+assert.equal(bank.dedupeStockBySource(lot), 1);
+assert.notEqual(bank.stockKey(lot[0].stockImage), bank.stockKey(lot[1].stockImage || ''));
+assert.equal(bank.stockKey(`${u}?utm_x=1`), bank.stockKey(u.replace('%27', "'")));
+// pickCampusPhoto respecte l'avoid même quand la forme de l'URL diffère.
+const avoidAll = bank.bankEntriesFor("Bishop's University").map((e) => `${e.url}?utm_source=x`);
+assert.equal(bank.pickCampusPhoto(debate, { avoidUrls: avoidAll }), null);
+
+console.log('news-image-relevance (lieu, répétition) OK');

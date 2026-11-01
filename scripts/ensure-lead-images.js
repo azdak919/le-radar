@@ -51,7 +51,7 @@ const {
   setStockDeadline,
   stockNetworkStats,
 } = require('./stock-photo-lib');
-const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems } = require('./campus-photo-bank');
+const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems, dedupeStockBySource } = require('./campus-photo-bank');
 const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 const { imageHostIsFragile, sourceNeedsCampusBackup } = require('./campus-fallback-lib');
 
@@ -861,8 +861,13 @@ async function main() {
       // d'établissement épuisée (Bishop's, 14 vues déjà placées) laissait
       // l'article sans aucun visuel. Une photo de campus répétée vaut mieux
       // qu'un trou dans la une — c'est le dernier filet.
+      // Banque épuisée globalement : on relâche l'unicité entre médias,
+      // jamais au sein d'une même source (règle anti-répétition).
+      const sameSource = items
+        .filter((o) => o !== item && o.source === item.source && o.stockImage)
+        .map((o) => o.stockImage);
       const campus = pickCampusPhoto(item, { avoidUrls: usedCampusUrls })
-        || pickCampusPhoto(item, { avoidUrls: [] });
+        || pickCampusPhoto(item, { avoidUrls: sameSource });
       if (!campus?.stockImage) continue;
       applyPhotoFields(item, campus);
       item.leadImageReady = false;
@@ -872,6 +877,9 @@ async function main() {
       campusFinal += 1;
     }
     if (campusFinal) console.log(`↻ ${campusFinal} photo(s) campus (filet final)`);
+
+    const dedupedBySource = dedupeStockBySource(items);
+    if (dedupedBySource) console.log(`↻ ${dedupedBySource} photo(s) répétée(s) dans une même source remplacée(s)`);
   }
 
   const withPhoto = items.filter((i) => i.image && isCandidateImageUrl(i.image)).length;

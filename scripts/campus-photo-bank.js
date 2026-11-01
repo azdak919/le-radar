@@ -346,6 +346,22 @@ const BANK = {
       sourceUrl: "https://commons.wikimedia.org/wiki/File:Observatoire_de_l%60universit%C3%A9_Bishop_-_panoramio.jpg",
       tags: "exterior campus lennoxville observatory",
     },
+    {
+      url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Bishop%27s_University%2C_McGreer_Hall%2C_2600%2C_rue_Coll%C3%A8ge%2C_Sherbrooke_une_partie_des_b%C3%A2timents_avec_la_fa%C3%A7ade_de_la_chapelle_11-d.na.civile-78-3599.jpg",
+      title: "Bishop's University, McGreer Hall et façade de la chapelle",
+      creator: "Groupe de recherche en art du Québec",
+      license: "CC BY-SA 4.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Bishop%27s_University,_McGreer_Hall,_2600,_rue_Coll%C3%A8ge,_Sherbrooke_une_partie_des_b%C3%A2timents_avec_la_fa%C3%A7ade_de_la_chapelle_11-d.na.civile-78-3599.jpg",
+      tags: "exterior campus lennoxville chapel",
+    },
+    {
+      url: "https://upload.wikimedia.org/wikipedia/commons/6/65/Bishop%27s_University%2C_McGreer_Hall%2C_2600%2C_rue_Coll%C3%A8ge%2C_Sherbrooke_une_partie_des_b%C3%A2timents_avec_le_chevet_de_la_chapelle_11-d.na.civile-78-3500.jpg",
+      title: "Bishop's University, McGreer Hall et chevet de la chapelle",
+      creator: "Groupe de recherche en art du Québec",
+      license: "CC BY-SA 4.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Bishop%27s_University,_McGreer_Hall,_2600,_rue_Coll%C3%A8ge,_Sherbrooke_une_partie_des_b%C3%A2timents_avec_le_chevet_de_la_chapelle_11-d.na.civile-78-3500.jpg",
+      tags: "exterior campus lennoxville chapel",
+    },
   ],
   'polytechnique montreal': [],
   'universite du quebec a chicoutimi': [
@@ -873,14 +889,14 @@ function pickCampusPhoto(item = {}, opts = {}) {
 
   const avoid = new Set(
     [...(opts.avoidUrls || [])]
-      .map((u) => String(u || '').trim())
+      .map((u) => stockKey(u))
       .filter(Boolean),
   );
   // Unicité stricte : jamais une URL déjà prise (même si le pool saisonnier
   // est vide — on retombe sur le pool complet, puis on filtre avoid).
-  let candidates = pool.filter((e) => !avoid.has(e.url));
+  let candidates = pool.filter((e) => !avoid.has(stockKey(e.url)));
   if (!candidates.length) {
-    candidates = entries.filter((e) => !avoid.has(e.url));
+    candidates = entries.filter((e) => !avoid.has(stockKey(e.url)));
   }
   if (!candidates.length) return null;
 
@@ -970,6 +986,50 @@ function diversifyCampusBankItems(items = []) {
   return changed;
 }
 
+/** Clé d'image stable : sans query (?utm_…), décodée (%27 ↔ '), minuscules. */
+function stockKey(url = '') {
+  let u = String(url || '').trim().replace(/^https?:\/\//i, '').replace(/[?#].*$/, '');
+  try { u = decodeURIComponent(u); } catch { /* garde brut */ }
+  return u.replace(/ /g, '_').toLowerCase();
+}
+
+/**
+ * Règle anti-répétition par source, pour TOUTES les photos de repli (banque
+ * campus, mât, recherche Wikimedia par lieu) : une même image ne revient pas
+ * sur deux articles d'une même source. Le plus récent la garde ; les autres
+ * reçoivent une autre vue de la banque du campus de la source, sinon rien.
+ * Cas réel (1er nov. 2026) : « Bishop's University campus 2011 04 » sur deux
+ * articles de The Campus (une URL avec ?utm_…, l'autre sans).
+ */
+function dedupeStockBySource(items = []) {
+  let changed = 0;
+  const bySource = new Map();
+  for (const it of items) {
+    if (!it || !it.stockImage || (it.image && String(it.image).trim())) continue;
+    const src = String(it.source || it.institution || '');
+    if (!bySource.has(src)) bySource.set(src, []);
+    bySource.get(src).push(it);
+  }
+  for (const group of bySource.values()) {
+    group.sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0));
+    const used = new Set();
+    for (const it of group) {
+      const k = stockKey(it.stockImage);
+      if (!used.has(k)) { used.add(k); continue; }
+      const pick = pickCampusPhoto(it, { avoidUrls: used });
+      if (pick?.stockImage) {
+        Object.assign(it, pick);
+        it.leadImageReady = false;
+        used.add(stockKey(pick.stockImage));
+      } else {
+        clearCampusBankFields(it);
+      }
+      changed += 1;
+    }
+  }
+  return changed;
+}
+
 function hasCampusBank(institution = '') {
   return bankEntriesFor(institution).length > 0;
 }
@@ -984,6 +1044,8 @@ module.exports = {
   diversifyCampusBankItems,
   clearCampusBankFields,
   hasCampusBank,
+  dedupeStockBySource,
+  stockKey,
   entryToStockFields,
   loadWallpaperCampusExtras,
   mapWallpaperToBankKey,

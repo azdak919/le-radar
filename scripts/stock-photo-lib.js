@@ -1326,6 +1326,51 @@ function scoreStockFit(item, stockUrl = '', meta = {}) {
   return scoreCandidate(hit, matchTokens, context);
 }
 
+/*
+ * Lieu + sujet concordants (Impact Campus, 1er nov. 2026) : « Maison de la
+ * littérature, Québec » pour le festival d'arts littéraires Québec en toutes
+ * lettres. Aucune branche thématique ne nomme la scène, mais la photo nomme
+ * un lieu québécois cité par l'article ET partage un mot de sujet
+ * (littérature/littéraire). Les lieux étrangers (Paris, Texas) ne comptent pas.
+ */
+const QC_PLACE_WORDS = ['quebec', 'montreal', 'sherbrooke', 'lennoxville', 'gatineau', 'outaouais',
+  'saguenay', 'chicoutimi', 'jonquiere', 'rimouski', 'trois rivieres', 'levis', 'longueuil', 'laval'];
+const GENERIC_STEMS = new Set(['univer', 'etudia', 'studen', 'campus', 'colleg', 'cegeps', 'quebec',
+  'montre', 'sherbr', 'photog', 'commons', 'wikime', 'edition', 'retour', 'nouvel']);
+function stemsOf(text) {
+  return new Set(normalizeText(text).split(/[\s-]+/).filter((w) => w.length >= 6)
+    .map((w) => w.slice(0, 6)).filter((st) => !GENERIC_STEMS.has(st)));
+}
+function photoTitleOf(item = {}, meta = {}) {
+  return [meta.title || '', item.imageTitle || '',
+    decodeURIComponent(String(item.stockImage || '').split('?')[0].split('/').pop() || '').replace(/[_]+/g, ' ')]
+    .join(' ');
+}
+function placeTopicConcordance(item = {}, meta = {}) {
+  const photo = normalizeText(photoTitleOf(item, meta));
+  const article = normalizeText(`${item.title || ''} ${item.excerpt || ''} ${item.leadExcerpt || ''}`);
+  const hasWord = (hay, w) => new RegExp(`(?:^|\\s)${w}(?:\\s|$)`).test(hay);
+  if (!QC_PLACE_WORDS.some((w) => hasWord(photo, w) && hasWord(article, w))) return false;
+  const a = stemsOf(article);
+  for (const st of stemsOf(photoTitleOf(item, meta))) if (a.has(st)) return true;
+  return false;
+}
+/*
+ * Un autre campus nommé (« University Park … Students' Union Elections »,
+ * « University of Texas ») n'illustre pas un article de Bishop's : la banque
+ * du campus de la source passe avant.
+ */
+const INSTITUTION_GENERIC = new Set(['university', 'universite', 'college', 'cegep', 'campus', 'of', 'de',
+  'du', 'des', 'la', 'le', 'the', 'and', 'et', 'en', 's']);
+function namesOtherCampus(item = {}, meta = {}) {
+  const photo = normalizeText(photoTitleOf(item, meta));
+  if (!/\b(?:university|universite|college|cegep)\b/.test(photo)) return false;
+  const needles = normalizeText(item.institution || '').split(/\s+/)
+    .filter((w) => w.length >= 4 && !INSTITUTION_GENERIC.has(w));
+  if (!needles.length) return false;
+  return !needles.some((w) => photo.includes(w));
+}
+
 function stockStillFits(item, meta = {}) {
   if (!item?.stockImage) return true;
 
@@ -1343,6 +1388,9 @@ function stockStillFits(item, meta = {}) {
     if (context.winterTopic && SUMMER_PHOTO_RE.test(hay) && !WINTER_PHOTO_RE.test(hay)) return false;
     return true;
   }
+
+  if (namesOtherCampus(item, meta)) return false;
+  if (placeTopicConcordance(item, meta)) return true;
 
   // Mêmes garde-fous qu'à la recherche : sujet visuel nommé, puis photo qui
   // répond bien à la scène demandée (et pas seulement à l'écho du titre).
@@ -1830,6 +1878,8 @@ module.exports = {
   findStockPhoto,
   scoreStockFit,
   stockStillFits,
+  placeTopicConcordance,
+  namesOtherCampus,
   scoreCandidate,
   STOCK_MIN_RETAIN_SCORE,
   searchOpenverse,
