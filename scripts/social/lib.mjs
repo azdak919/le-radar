@@ -34,13 +34,15 @@ export function feedCredit(html = '') {
 
 /** Remplace la ligne 📸 d'un post en file par le crédit actuel du flux, seulement si l'image du post
  * est celle du flux (sinon : banque ou page article, crédit propre à cette image). null = rien à faire. */
-export function refreshPhotoLine(text, it, assetUrl = '') {
+export function refreshPhotoLine(text, it, assetUrl = '', limit = X_LIMIT) {
   const lines = String(text || '').split('\n'), i = lines.findIndex(l => l.startsWith('📸'));
   if (i < 0 || !it?.img) return null;
   const k = u => String(u || '').replace(/^https?:\/\//, '').replace(/[?#].*$/, '');
   if (assetUrl && k(assetUrl) !== k(it.img)) return null;
   lines[i] = photoLine(it.credit, it.source);
-  return lines.join('\n');
+  // Plafond X : raccourcit l'extrait au mot entier (« … »), jamais le lien ni le crédit.
+  while (xlen(lines.join('\n')) > limit && / \S+…?$/.test(lines[0])) lines[0] = lines[0].replace(/[\s,;:.–-]*\s\S+…?$/, '…');
+  return xlen(lines.join('\n')) > limit ? null : lines.join('\n');
 }
 
 export function parseFeed(xml) {
