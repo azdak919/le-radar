@@ -1,5 +1,5 @@
 {
- "_doc": "Fenêtres de publication par réseau, heure America/Toronto. weight 0 = heures calmes (rien ne part, les articles frais attendent le matin s'ils ont encore < 24 h). Poids relatifs appliqués au plafond horaire. Sources : X = Sprout Social 2026 (sproutsocial.com/insights/best-times-to-post-on-social-media) ; Bluesky = Buffer 2026, 3 M de posts (buffer.com/resources/best-time-to-post-on-bluesky) ; Tumblr = Union Metrics / Bitly via synthèses 2026 (soirées 19-22 h, dimanche) ; Mastodon = fil chronologique, moyenne Sprout 11-18 h.",
+ "_doc": "Fenêtres de publication par réseau, heure America/Toronto. weight 0 = heures calmes (rien ne part, les articles frais attendent le matin s'ils ont encore < 24 h). Poids relatifs appliqués au plafond horaire. Sources : X = Sprout Social 2026 (sproutsocial.com/insights/best-times-to-post-on-social-media) ; Bluesky = Buffer 2026, 3 M de posts (buffer.com/resources/best-time-to-post-on-bluesky) ; Tumblr = Union Metrics / Bitly via synthèses 2026 (soirées 19-22 h, dimanche) ; Mastodon = fil chronologique, moyenne Sprout 11-18 h. ; Facebook (Pages, public québécois) = Sprout Social / Hootsuite 2026 : 9-13 h et 18-21 h en semaine, fin de semaine plus calme ; LinkedIn (Pages) = Sprout Social 2026 : mar.-jeu. 8-10 h et 12-14 h, presque rien la fin de semaine (ici : 9-11 h seulement).",
  "x": {
   "weekday": [[0, 7, 0], [7, 11, 0.5], [11, 18, 1], [18, 22, 0.6], [22, 24, 0.3]],
   "weekend": [[0, 8, 0], [8, 9, 0.3], [9, 21, 0.5], [21, 24, 0.3]]
@@ -15,5 +15,13 @@
  "mastodon": {
   "weekday": [[0, 7, 0], [7, 11, 0.6], [11, 18, 1], [18, 22, 0.6], [22, 24, 0.3]],
   "weekend": [[0, 8, 0], [8, 21, 0.6], [21, 24, 0.3]]
+ },
+ "facebook": {
+  "weekday": [[0, 7, 0], [7, 9, 0.3], [9, 13, 1], [13, 18, 0.4], [18, 21, 0.9], [21, 23, 0.2], [23, 24, 0]],
+  "weekend": [[0, 8, 0], [8, 9, 0.2], [9, 13, 0.8], [13, 18, 0.4], [18, 21, 0.7], [21, 24, 0]]
+ },
+ "linkedin": {
+  "weekday": [[0, 7, 0], [7, 8, 0.3], [8, 10, 1], [10, 12, 0.4], [12, 14, 0.9], [14, 17, 0.3], [17, 24, 0]],
+  "weekend": [[0, 8, 0], [8, 9, 0], [9, 11, 0.34], [11, 24, 0]]
  }
 }
