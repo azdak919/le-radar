@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T00:36:47.412Z",
+  "updatedAt": "2026-11-01T01:36:43.543Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T00:36:06.143Z"
+      "checkedAt": "2026-11-01T01:36:04.082Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "InfiniBIT!",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/infinibit"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "21:30",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "InfiniBIT!",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T00:36:08.351Z"
+      "checkedAt": "2026-11-01T01:36:06.005Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Masters At Work",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Howls From Hell/Too Loud For The Crowd",
         "source": "api-live",
         "start": "21:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "SKEwInGTheWaBeS$$",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Masters At Work",
+      "showTitle": "Howls From Hell/Too Loud For The Crowd",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T00:36:11.075Z"
+      "checkedAt": "2026-11-01T01:36:09.511Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "The Go Go Radio Magic Show",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "21:30",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
       "next": {
-        "title": "The Spacious Astrology Playlist",
+        "title": "Brave New Jams",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/brave-new-jams"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "The Go Go Radio Magic Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T00:36:26.693Z"
+      "checkedAt": "2026-11-01T01:36:24.153Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T00:36:28.015Z"
+      "checkedAt": "2026-11-01T01:36:25.294Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T00:36:47.062Z"
+      "checkedAt": "2026-11-01T01:36:43.192Z"
     }
   }
 }
