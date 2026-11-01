@@ -75,12 +75,13 @@ export function excerpt(it) {
   return d;
 }
 
-/** Réseaux sociaux seulement : « Média • Auteur • Titre » ; @ seulement si cle_flux === nom exact. */
+/** Réseaux sociaux seulement : « Média (@média) • Auteur (@auteur) • Titre » ; @ seulement si cle_flux === nom exact.
+ *  Jamais de @ en tête (X le traiterait comme une réponse) : toujours le nom, puis le @ entre parenthèses. */
 export function mentionHead(it, accounts = []) {
   const src = accounts.find(a => a.type === 'source' && a.cle_flux && a.cle_flux === it.source);
   const au = it.author && accounts.find(a => a.type === 'auteur' && a.cle_flux && a.cle_flux === it.author);
-  const media = src ? src.handle : it.source;
-  const author = it.author && it.author !== it.source ? (au ? au.handle : it.author) : '';
+  const media = src ? `${it.source} (${src.handle})` : it.source;
+  const author = it.author && it.author !== it.source ? (au ? `${it.author} (${au.handle})` : it.author) : '';
   const title = it.bare || it.title;
   return [media, author, title].filter(Boolean).filter((x, i, a) => a.indexOf(x) === i).join(' • ');
 }
@@ -89,6 +90,15 @@ export function mentionHead(it, accounts = []) {
 export function bulletHead(line) {
   const m = line.match(/^(.*?)\s[–-]\s(.*?)\s?:\s(.+)$/);
   return m ? [m[1], m[2], m[3]].filter((x, i, a) => x && a.indexOf(x) === i).join(' • ') : line;
+}
+
+/** En-tête déjà en file commençant par « @handle • » → « Nom (@handle) • » (nom via la liste, sinon source). */
+export function namedHead(line, accounts = [], source = '') {
+  const m = line.match(/^(@\w+)(\s.*|$)/);
+  if (!m) return line;
+  const a = accounts.find(x => x.type === 'source' && x.cle_flux && x.handle.toLowerCase() === m[1].toLowerCase());
+  const name = a ? a.cle_flux : source;
+  return name ? `${name} (${m[1]})${m[2]}` : line.replace(/^@/, '');
 }
 
 /** « Titre : extrait » (fr), « Title: excerpt » (en), simple espace après ? ! … */
@@ -113,7 +123,7 @@ export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', pho
     }
     ex = best.length >= 21 ? best : '';
   }
-  let text = mk(ex), t = head;
+  let text = mk(ex), t = head.replace(/^@+/, '');
   while (xlen(text) > limit) { t = t.slice(0, -2).trimEnd() + '…'; text = `${t}${tail}`; }
   return text;
 }
