@@ -50,7 +50,7 @@ export async function resolveImage(it,{used,repeated}){
   const u=used.get(it.source)||new Set(); used.set(it.source,u); const rep=repeated.get(it.source)||new Set();
   const ok=async(url)=>{ if(!url||!/^https?:/.test(url)||BAD.test(url)||u.has(key(url))||rep.has(key(url))) return null;
     const p=await probe(url); if(!p||!p.w||p.w<MINW||BAD.test(p.finalUrl)) return null; return p; };
-  const take=(url,p,origin,note)=>{u.add(key(url));const credit=origin==='banque'?bankCredit(url):'';const f=new URL(p.finalUrl);[...f.searchParams.keys()].filter(k=>/^utm_/.test(k)).forEach(k=>f.searchParams.delete(k));return {url:f.toString().replace(/\?$/,''),origin,width:p.w,height:p.h,note,credit};};
+  const take=(url,p,origin,note)=>{u.add(key(url));const credit=origin==='banque'?bankCredit(url):origin==='flux'?(it.credit||''):'';const f=new URL(p.finalUrl);[...f.searchParams.keys()].filter(k=>/^utm_/.test(k)).forEach(k=>f.searchParams.delete(k));return {url:f.toString().replace(/\?$/,''),origin,width:p.w,height:p.h,note,credit};};
   // 1. image du flux (non écartée)
   if(it.img && !it.imgDropped){ const p=await ok(it.img); if(p) return take(it.img,p,'flux'); }
   // 1b. Flickr écarté : gardé seulement si présent dans la page de l'article
