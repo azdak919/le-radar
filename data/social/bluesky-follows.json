@@ -1,411 +1,614 @@
 {
- "_doc": "Abonnements de @le-radar.bsky.social : comptes vérifiés seulement (suivis par scripts/social/bluesky-follow.mjs).",
- "follows": [
-  {
-   "handle": "quartierlibre.bsky.social",
-   "nom": "Quartier Libre",
-   "categorie": "source",
-   "preuve": "bio : magazine indépendant des étudiant·e·s de l'Université de Montréal",
-   "did": "did:plc:7k3lohqik2febxmeu5sazh6b"
-  },
-  {
-   "handle": "pupitre-zc.bsky.social",
-   "nom": "Zone Campus",
-   "categorie": "source",
-   "preuve": "bio : journal étudiant indépendant de l'UQTR",
-   "did": "did:plc:h3jgsd33k6h5whze5jxokjig"
-  },
-  {
-   "handle": "jlecollectif.bsky.social",
-   "nom": "Le Collectif",
-   "categorie": "source",
-   "preuve": "bio : journal étudiant de l'Université de Sherbrooke",
-   "did": "did:plc:ubhpqmfwc5nls6bxs3wtbxy2"
-  },
-  {
-   "handle": "theconcordian.bsky.social",
-   "nom": "The Concordian",
-   "categorie": "source",
-   "preuve": "bio : Concordia University's student newspaper since 1983",
-   "did": "did:plc:drhcapw4xezl3mepaetjkp5z"
-  },
-  {
-   "handle": "impactcampus.bsky.social",
-   "nom": "Impact Campus",
-   "categorie": "source",
-   "preuve": "bio : le média des étudiant.es de l'Université Laval",
-   "did": "did:plc:ldrjos5dq5vr75weciedej5l"
-  },
-  {
-   "handle": "justinvaillancourt.bsky.social",
-   "nom": "Justin Vaillancourt",
-   "categorie": "journaliste-source",
-   "preuve": "bio : directeur de l'information, Montréal Campus",
-   "did": "did:plc:of7yqlykplmg7iouxbcvts3u"
-  },
-  {
-   "handle": "alicefournier.bsky.social",
-   "nom": "Alice Fournier",
-   "categorie": "journaliste-source",
-   "preuve": "bio : rédactrice en chef, Montréal Campus",
-   "did": "did:plc:i6kyricqfqu3q3btstcxiwh5"
-  },
-  {
-   "handle": "aidanjraynor.bsky.social",
-   "nom": "Aidan Raynor",
-   "categorie": "journaliste-source",
-   "preuve": "bio : rédacteur en chef, The Concordian",
-   "did": "did:plc:afy5wiokrkmwhbyp3uplgmlh"
-  },
-  {
-   "handle": "angebabineau.bsky.social",
-   "nom": "Angélique Babineau",
-   "categorie": "journaliste-source",
-   "preuve": "bio : The Concordian",
-   "did": "did:plc:mtw4523stb2qmisb7vlzgx6z"
-  },
-  {
-   "handle": "ulaval.ca",
-   "nom": "Université Laval",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:sczjlx25oqxtaykdxpsnlndx"
-  },
-  {
-   "handle": "uqam.ca",
-   "nom": "UQAM",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:gq2lmyrjpohfaszfiompsd5j"
-  },
-  {
-   "handle": "uqo.ca",
-   "nom": "UQO",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:qv6zorav3mpm7uvg4qa4jj7z"
-  },
-  {
-   "handle": "concordia.ca",
-   "nom": "Université Concordia",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:rip4vxzx6fyfy6asavfaiwfz"
-  },
-  {
-   "handle": "umontreal.ca",
-   "nom": "Université de Montréal",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:sj5ghy7bsqxhrdvfiefykchb"
-  },
-  {
-   "handle": "hec.ca",
-   "nom": "HEC Montréal",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:ipo5mtmtkygxpay5e42wiyne"
-  },
-  {
-   "handle": "vaniercollege.qc.ca",
-   "nom": "Cégep Vanier",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:w6pvu6zvtpsyxnftwu7kfgav"
-  },
-  {
-   "handle": "usherbrooke.bsky.social",
-   "nom": "Université de Sherbrooke",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:ptvc7yzupw4t6sjt52zvaquv"
-  },
-  {
-   "handle": "etsmtl.bsky.social",
-   "nom": "ÉTS",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:773noj5rcemmj4nyd3zg5y4m"
-  },
-  {
-   "handle": "universiteteluq.bsky.social",
-   "nom": "Université TÉLUQ",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:shdv3wj2lb3hkii2netykonc"
-  },
-  {
-   "handle": "uqtr.bsky.social",
-   "nom": "UQTR",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:6nlbgiuc4ok5hketa3ra4efn"
-  },
-  {
-   "handle": "uqar.bsky.social",
-   "nom": "UQAR",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:b4pqr6s2n3bigin2cvpjaqc5"
-  },
-  {
-   "handle": "ubishops.bsky.social",
-   "nom": "Bishop's University",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:rugsbuyfcmp52ftddmrtblnq"
-  },
-  {
-   "handle": "polymtl.bsky.social",
-   "nom": "Polytechnique Montréal",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:rbt2cebxbajh2vkrrc3abxub"
-  },
-  {
-   "handle": "inrsciences.bsky.social",
-   "nom": "INRS",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:vgfhhn7gzaqj4xbeizpw7r6b"
-  },
-  {
-   "handle": "cegepduvieuxmtl.bsky.social",
-   "nom": "Cégep du Vieux Montréal",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:4cg54yzglvzt6gk2tgfczfhw"
-  },
-  {
-   "handle": "assnatqc.bsky.social",
-   "nom": "Assemblée nationale du Québec",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:a33cesxlojzlll2jc2uzmx2p"
-  },
-  {
-   "handle": "conseildepresse.bsky.social",
-   "nom": "Conseil de presse du Québec",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:kdwftjuxgh22cpx4dnfqxckl"
-  },
-  {
-   "handle": "fpjq.bsky.social",
-   "nom": "FPJQ",
-   "categorie": "institution",
-   "preuve": "bio officielle",
-   "did": "did:plc:enjphow3aantystjywrsxvn6"
-  },
-  {
-   "handle": "ecoleensemble.com",
-   "nom": "École ensemble",
-   "categorie": "institution",
-   "preuve": "domaine officiel",
-   "did": "did:plc:pggienaiyr3khifho4zua53g"
-  },
-  {
-   "handle": "ledevoir.com",
-   "nom": "Le Devoir",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:buri5e2ky6wzn5cvor7owkzh"
-  },
-  {
-   "handle": "lapresse.ca",
-   "nom": "La Presse",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:scwrdl3lzhvpfnju2lcleqv7"
-  },
-  {
-   "handle": "info.radio-canada.ca",
-   "nom": "Radio-Canada Info",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:jteddxcy2pan3t4bo5tthutn"
-  },
-  {
-   "handle": "journaldemontreal.com",
-   "nom": "Le Journal de Montréal",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:fqtlx4aba5mnf2mk3nqs5ne5"
-  },
-  {
-   "handle": "journaldequebec.com",
-   "nom": "Le Journal de Québec",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:rvmgl3w26vymioigti6vc5te"
-  },
-  {
-   "handle": "tvanouvelles.ca",
-   "nom": "TVA Nouvelles",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:phfxliqhafv7fprwzaru3exo"
-  },
-  {
-   "handle": "lactualite.com",
-   "nom": "L'actualité",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:6nowvrvegqzncq4azfehvsx3"
-  },
-  {
-   "handle": "noovo.info",
-   "nom": "Noovo Info",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:qxv7ymkiroyaanunxvky2z7f"
-  },
-  {
-   "handle": "985fm.ca",
-   "nom": "98,5 FM",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:45tfelc3s6sgs3jgyrr4x46c"
-  },
-  {
-   "handle": "ledroit.com",
-   "nom": "Le Droit",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:7f5ppet5lohuo3usnqewf3a5"
-  },
-  {
-   "handle": "lesoleil.com",
-   "nom": "Le Soleil",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:2jjqzndycaea3sfr5pvjyqbj"
-  },
-  {
-   "handle": "lenouvelliste.ca",
-   "nom": "Le Nouvelliste",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:ylsjq7z37xmy2mr3k3gycjqf"
-  },
-  {
-   "handle": "tvasports.ca",
-   "nom": "TVA Sports",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:547rcqmqws4bnzkzsctap6oy"
-  },
-  {
-   "handle": "rds.ca",
-   "nom": "RDS",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:7a47nphhiy37rrori2vrrvo5"
-  },
-  {
-   "handle": "cjlo.com",
-   "nom": "CJLO 1690AM",
-   "categorie": "media-qc",
-   "preuve": "domaine officiel",
-   "did": "did:plc:knzonsazsdiahavlarsj54fp"
-  },
-  {
-   "handle": "iciradiocanada.bsky.social",
-   "nom": "Radio-Canada",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:ugwjov6ytdkem4meyhl75p6f"
-  },
-  {
-   "handle": "mtlgazette.bsky.social",
-   "nom": "Montreal Gazette",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:c2pqqu7yi4nuxghkqw3baozz"
-  },
-  {
-   "handle": "ctvnewsmontreal.bsky.social",
-   "nom": "CTV News Montreal",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:jc3uvsfby2oxtcqomg4k2m5b"
-  },
-  {
-   "handle": "cjad800.bsky.social",
-   "nom": "CJAD 800",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:b52zb3trc5yxvuc4f4w4nadt"
-  },
-  {
-   "handle": "qubradio.bsky.social",
-   "nom": "QUB radio",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:ml7ydmrwqzhiokdq5a2i6c5a"
-  },
-  {
-   "handle": "choqca.bsky.social",
-   "nom": "CHOQ Info",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:qex22pxqkzc62uurdwzz264r"
-  },
-  {
-   "handle": "cfak883.bsky.social",
-   "nom": "CFAK 88,3",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:vw5cq6bf4vod3jnyym5tkbon"
-  },
-  {
-   "handle": "tlmep.bsky.social",
-   "nom": "Tout le monde en parle",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:qupmckjppges3ypctmkg4rqn"
-  },
-  {
-   "handle": "infomantv.bsky.social",
-   "nom": "Infoman",
-   "categorie": "media-qc",
-   "preuve": "bio officielle",
-   "did": "did:plc:tcdxwbtxpquwvkph3olozgl5"
-  },
-  {
-   "handle": "patriceroy.bsky.social",
-   "nom": "Patrice Roy",
-   "categorie": "journaliste",
-   "preuve": "bio",
-   "did": "did:plc:c6kr33z7d7izwvubn565tzd5"
-  },
-  {
-   "handle": "geraldfillion.bsky.social",
-   "nom": "Gérald Fillion",
-   "categorie": "journaliste",
-   "preuve": "bio",
-   "did": "did:plc:ykxt3oljqh2vmsrzsht4nwlz"
-  },
-  {
-   "handle": "thomasgerbet.bsky.social",
-   "nom": "Thomas Gerbet",
-   "categorie": "journaliste",
-   "preuve": "bio",
-   "did": "did:plc:64girefktzr3op7lwv4boetu"
-  },
-  {
-   "handle": "mmsioui.bsky.social",
-   "nom": "Marie-Michèle Sioui",
-   "categorie": "journaliste",
-   "preuve": "bio",
-   "did": "did:plc:z3jtjuq2kkxh6yqvasoobic7"
-  },
-  {
-   "handle": "daphneedv.bsky.social",
-   "nom": "Daphnée Dion-Viens",
-   "categorie": "journaliste",
-   "preuve": "bio",
-   "did": "did:plc:i7vg5zsjwqez3gtql2yrlclh"
-  }
- ]
+  "_doc": "Abonnements de @le-radar.bsky.social : comptes vérifiés seulement (suivis par scripts/social/bluesky-follow.mjs).",
+  "follows": [
+    {
+      "handle": "quartierlibre.bsky.social",
+      "nom": "Quartier Libre",
+      "categorie": "source",
+      "preuve": "bio : magazine indépendant des étudiant·e·s de l'Université de Montréal",
+      "did": "did:plc:7k3lohqik2febxmeu5sazh6b"
+    },
+    {
+      "handle": "pupitre-zc.bsky.social",
+      "nom": "Zone Campus",
+      "categorie": "source",
+      "preuve": "bio : journal étudiant indépendant de l'UQTR",
+      "did": "did:plc:h3jgsd33k6h5whze5jxokjig"
+    },
+    {
+      "handle": "jlecollectif.bsky.social",
+      "nom": "Le Collectif",
+      "categorie": "source",
+      "preuve": "bio : journal étudiant de l'Université de Sherbrooke",
+      "did": "did:plc:ubhpqmfwc5nls6bxs3wtbxy2"
+    },
+    {
+      "handle": "theconcordian.bsky.social",
+      "nom": "The Concordian",
+      "categorie": "source",
+      "preuve": "bio : Concordia University's student newspaper since 1983",
+      "did": "did:plc:drhcapw4xezl3mepaetjkp5z"
+    },
+    {
+      "handle": "impactcampus.bsky.social",
+      "nom": "Impact Campus",
+      "categorie": "source",
+      "preuve": "bio : le média des étudiant.es de l'Université Laval",
+      "did": "did:plc:ldrjos5dq5vr75weciedej5l"
+    },
+    {
+      "handle": "justinvaillancourt.bsky.social",
+      "nom": "Justin Vaillancourt",
+      "categorie": "journaliste-source",
+      "preuve": "bio : directeur de l'information, Montréal Campus",
+      "did": "did:plc:of7yqlykplmg7iouxbcvts3u"
+    },
+    {
+      "handle": "alicefournier.bsky.social",
+      "nom": "Alice Fournier",
+      "categorie": "journaliste-source",
+      "preuve": "bio : rédactrice en chef, Montréal Campus",
+      "did": "did:plc:i6kyricqfqu3q3btstcxiwh5"
+    },
+    {
+      "handle": "aidanjraynor.bsky.social",
+      "nom": "Aidan Raynor",
+      "categorie": "journaliste-source",
+      "preuve": "bio : rédacteur en chef, The Concordian",
+      "did": "did:plc:afy5wiokrkmwhbyp3uplgmlh"
+    },
+    {
+      "handle": "angebabineau.bsky.social",
+      "nom": "Angélique Babineau",
+      "categorie": "journaliste-source",
+      "preuve": "bio : The Concordian",
+      "did": "did:plc:mtw4523stb2qmisb7vlzgx6z"
+    },
+    {
+      "handle": "ulaval.ca",
+      "nom": "Université Laval",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:sczjlx25oqxtaykdxpsnlndx"
+    },
+    {
+      "handle": "uqam.ca",
+      "nom": "UQAM",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:gq2lmyrjpohfaszfiompsd5j"
+    },
+    {
+      "handle": "uqo.ca",
+      "nom": "UQO",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:qv6zorav3mpm7uvg4qa4jj7z"
+    },
+    {
+      "handle": "concordia.ca",
+      "nom": "Université Concordia",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:rip4vxzx6fyfy6asavfaiwfz"
+    },
+    {
+      "handle": "umontreal.ca",
+      "nom": "Université de Montréal",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:sj5ghy7bsqxhrdvfiefykchb"
+    },
+    {
+      "handle": "hec.ca",
+      "nom": "HEC Montréal",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:ipo5mtmtkygxpay5e42wiyne"
+    },
+    {
+      "handle": "vaniercollege.qc.ca",
+      "nom": "Cégep Vanier",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:w6pvu6zvtpsyxnftwu7kfgav"
+    },
+    {
+      "handle": "usherbrooke.bsky.social",
+      "nom": "Université de Sherbrooke",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:ptvc7yzupw4t6sjt52zvaquv"
+    },
+    {
+      "handle": "etsmtl.bsky.social",
+      "nom": "ÉTS",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:773noj5rcemmj4nyd3zg5y4m"
+    },
+    {
+      "handle": "universiteteluq.bsky.social",
+      "nom": "Université TÉLUQ",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:shdv3wj2lb3hkii2netykonc"
+    },
+    {
+      "handle": "uqtr.bsky.social",
+      "nom": "UQTR",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:6nlbgiuc4ok5hketa3ra4efn"
+    },
+    {
+      "handle": "uqar.bsky.social",
+      "nom": "UQAR",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:b4pqr6s2n3bigin2cvpjaqc5"
+    },
+    {
+      "handle": "ubishops.bsky.social",
+      "nom": "Bishop's University",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:rugsbuyfcmp52ftddmrtblnq"
+    },
+    {
+      "handle": "polymtl.bsky.social",
+      "nom": "Polytechnique Montréal",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:rbt2cebxbajh2vkrrc3abxub"
+    },
+    {
+      "handle": "inrsciences.bsky.social",
+      "nom": "INRS",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:vgfhhn7gzaqj4xbeizpw7r6b"
+    },
+    {
+      "handle": "cegepduvieuxmtl.bsky.social",
+      "nom": "Cégep du Vieux Montréal",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:4cg54yzglvzt6gk2tgfczfhw"
+    },
+    {
+      "handle": "assnatqc.bsky.social",
+      "nom": "Assemblée nationale du Québec",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:a33cesxlojzlll2jc2uzmx2p"
+    },
+    {
+      "handle": "conseildepresse.bsky.social",
+      "nom": "Conseil de presse du Québec",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:kdwftjuxgh22cpx4dnfqxckl"
+    },
+    {
+      "handle": "fpjq.bsky.social",
+      "nom": "FPJQ",
+      "categorie": "institution",
+      "preuve": "bio officielle",
+      "did": "did:plc:enjphow3aantystjywrsxvn6"
+    },
+    {
+      "handle": "ecoleensemble.com",
+      "nom": "École ensemble",
+      "categorie": "institution",
+      "preuve": "domaine officiel",
+      "did": "did:plc:pggienaiyr3khifho4zua53g"
+    },
+    {
+      "handle": "ledevoir.com",
+      "nom": "Le Devoir",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:buri5e2ky6wzn5cvor7owkzh"
+    },
+    {
+      "handle": "lapresse.ca",
+      "nom": "La Presse",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:scwrdl3lzhvpfnju2lcleqv7"
+    },
+    {
+      "handle": "info.radio-canada.ca",
+      "nom": "Radio-Canada Info",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:jteddxcy2pan3t4bo5tthutn"
+    },
+    {
+      "handle": "journaldemontreal.com",
+      "nom": "Le Journal de Montréal",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:fqtlx4aba5mnf2mk3nqs5ne5"
+    },
+    {
+      "handle": "journaldequebec.com",
+      "nom": "Le Journal de Québec",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:rvmgl3w26vymioigti6vc5te"
+    },
+    {
+      "handle": "tvanouvelles.ca",
+      "nom": "TVA Nouvelles",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:phfxliqhafv7fprwzaru3exo"
+    },
+    {
+      "handle": "lactualite.com",
+      "nom": "L'actualité",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:6nowvrvegqzncq4azfehvsx3"
+    },
+    {
+      "handle": "noovo.info",
+      "nom": "Noovo Info",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:qxv7ymkiroyaanunxvky2z7f"
+    },
+    {
+      "handle": "985fm.ca",
+      "nom": "98,5 FM",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:45tfelc3s6sgs3jgyrr4x46c"
+    },
+    {
+      "handle": "ledroit.com",
+      "nom": "Le Droit",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:7f5ppet5lohuo3usnqewf3a5"
+    },
+    {
+      "handle": "lesoleil.com",
+      "nom": "Le Soleil",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:2jjqzndycaea3sfr5pvjyqbj"
+    },
+    {
+      "handle": "lenouvelliste.ca",
+      "nom": "Le Nouvelliste",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:ylsjq7z37xmy2mr3k3gycjqf"
+    },
+    {
+      "handle": "tvasports.ca",
+      "nom": "TVA Sports",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:547rcqmqws4bnzkzsctap6oy"
+    },
+    {
+      "handle": "rds.ca",
+      "nom": "RDS",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:7a47nphhiy37rrori2vrrvo5"
+    },
+    {
+      "handle": "cjlo.com",
+      "nom": "CJLO 1690AM",
+      "categorie": "media-qc",
+      "preuve": "domaine officiel",
+      "did": "did:plc:knzonsazsdiahavlarsj54fp"
+    },
+    {
+      "handle": "iciradiocanada.bsky.social",
+      "nom": "Radio-Canada",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:ugwjov6ytdkem4meyhl75p6f"
+    },
+    {
+      "handle": "mtlgazette.bsky.social",
+      "nom": "Montreal Gazette",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:c2pqqu7yi4nuxghkqw3baozz"
+    },
+    {
+      "handle": "ctvnewsmontreal.bsky.social",
+      "nom": "CTV News Montreal",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:jc3uvsfby2oxtcqomg4k2m5b"
+    },
+    {
+      "handle": "cjad800.bsky.social",
+      "nom": "CJAD 800",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:b52zb3trc5yxvuc4f4w4nadt"
+    },
+    {
+      "handle": "qubradio.bsky.social",
+      "nom": "QUB radio",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:ml7ydmrwqzhiokdq5a2i6c5a"
+    },
+    {
+      "handle": "choqca.bsky.social",
+      "nom": "CHOQ Info",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:qex22pxqkzc62uurdwzz264r"
+    },
+    {
+      "handle": "cfak883.bsky.social",
+      "nom": "CFAK 88,3",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:vw5cq6bf4vod3jnyym5tkbon"
+    },
+    {
+      "handle": "tlmep.bsky.social",
+      "nom": "Tout le monde en parle",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:qupmckjppges3ypctmkg4rqn"
+    },
+    {
+      "handle": "infomantv.bsky.social",
+      "nom": "Infoman",
+      "categorie": "media-qc",
+      "preuve": "bio officielle",
+      "did": "did:plc:tcdxwbtxpquwvkph3olozgl5"
+    },
+    {
+      "handle": "patriceroy.bsky.social",
+      "nom": "Patrice Roy",
+      "categorie": "journaliste",
+      "preuve": "bio",
+      "did": "did:plc:c6kr33z7d7izwvubn565tzd5"
+    },
+    {
+      "handle": "geraldfillion.bsky.social",
+      "nom": "Gérald Fillion",
+      "categorie": "journaliste",
+      "preuve": "bio",
+      "did": "did:plc:ykxt3oljqh2vmsrzsht4nwlz"
+    },
+    {
+      "handle": "thomasgerbet.bsky.social",
+      "nom": "Thomas Gerbet",
+      "categorie": "journaliste",
+      "preuve": "bio",
+      "did": "did:plc:64girefktzr3op7lwv4boetu"
+    },
+    {
+      "handle": "mmsioui.bsky.social",
+      "nom": "Marie-Michèle Sioui",
+      "categorie": "journaliste",
+      "preuve": "bio",
+      "did": "did:plc:z3jtjuq2kkxh6yqvasoobic7"
+    },
+    {
+      "handle": "daphneedv.bsky.social",
+      "nom": "Daphnée Dion-Viens",
+      "categorie": "journaliste",
+      "preuve": "bio",
+      "did": "did:plc:i7vg5zsjwqez3gtql2yrlclh"
+    },
+    {
+      "handle": "cegepstjean-inter.bsky.social",
+      "nom": "Cégep Saint-Jean-sur-Richelieu International",
+      "categorie": "institution",
+      "preuve": "bio : ",
+      "did": "did:plc:xpdzhim7f3qkehvylnirdspy"
+    },
+    {
+      "handle": "assofxg.bsky.social",
+      "nom": "Association étudiante du Cégep Garneau",
+      "categorie": "institution",
+      "preuve": "bio : Suis les activités de l’association étudiante!  Nous sommes là pour défendre tes droits et tes intér",
+      "did": "did:plc:olj2mlgpk2u43iu76nxnxhtl"
+    },
+    {
+      "handle": "alec-castonguay.bsky.social",
+      "nom": "Alec Castonguay",
+      "categorie": "journaliste",
+      "preuve": "bio : Papa et conjoint heureux. Journaliste et animateur, Radio-Canada. Ex-L’actualité, Ex-Le Devoir. Aute",
+      "did": "did:plc:6hbk3rbyffzumk6draym7rc2"
+    },
+    {
+      "handle": "cbcradiocanada.bsky.social",
+      "nom": "CBC/Radio-Canada",
+      "categorie": "media",
+      "preuve": "bio : Public broadcaster | Diffuseur public 🇨🇦 ― Inform, enlighten and entertain. Renseigner, éclairer et ",
+      "did": "did:plc:bzkufnlx6daymo6nxy4ekcmr"
+    },
+    {
+      "handle": "encoremieuxpm.bsky.social",
+      "nom": "C'est encore mieux l'après-midi (Radio-Canada)",
+      "categorie": "emission",
+      "preuve": "bio : Compte officiel de l'émission du retour à la maison de Radio-Canada, à Québec. Animée par Guillaume ",
+      "did": "did:plc:xztsvrmmlvd2jzj2zfv7tgam"
+    },
+    {
+      "handle": "loulousrc.bsky.social",
+      "nom": "Louise Boisvert Radio-Canada",
+      "categorie": "journaliste",
+      "preuve": "bio : Journaliste à Radio-Canada depuis 2007. Reporter spécialisée aux affaires municipales Ville de Québe",
+      "did": "did:plc:wss5n3phdlfxo2bdnc6dcqw7"
+    },
+    {
+      "handle": "blaisjf.bsky.social",
+      "nom": "Jean-François Blais",
+      "categorie": "journaliste",
+      "preuve": "bio : Journaliste à la recherche à ICI Première (Radio-Canada). @rc_penelope",
+      "did": "did:plc:oyaipolnwlxb43rcsqpwhpyx"
+    },
+    {
+      "handle": "telequebec.bsky.social",
+      "nom": "Télé-Québec",
+      "categorie": "emission",
+      "preuve": "bio : Vivez une expérience hors du commun grâce à Télé-Québec 💙📺",
+      "did": "did:plc:rvdg7fsl4hturkbweg7vv3bt"
+    },
+    {
+      "handle": "danslesmedias.bsky.social",
+      "nom": "Dans les médias",
+      "categorie": "emission",
+      "preuve": "bio : L'émission qui décrypte l'actualité médiatique #danslesmédias. 📺  Mercredi 21h à Télé-Québec",
+      "did": "did:plc:nqf7rnifxpcfokr23arhw436"
+    },
+    {
+      "handle": "evebeaudin.bsky.social",
+      "nom": "",
+      "categorie": "journaliste",
+      "preuve": "bio : Journaliste et animatrice 📺🎧 Conso, science, santé, environnement  @Science-Presse, ICI Première, Té",
+      "did": "did:plc:lbqw3p7d2plt7e4slxmhn6cw"
+    },
+    {
+      "handle": "jsbui.bsky.social",
+      "nom": "Jean-Simon Bui",
+      "categorie": "journaliste",
+      "preuve": "bio : Fier papa 👦🏻👶🏼 Chef d’antenne à Noovo Info 12 et Québec  Coureur 🏃  Expert en rien, curieux de tout ",
+      "did": "did:plc:vqoiduzuggi4rqw2uttuksiz"
+    },
+    {
+      "handle": "vgaudreau.bsky.social",
+      "nom": "Valérie Gaudreau",
+      "categorie": "journaliste",
+      "preuve": "bio : Chroniqueuse politique au Soleil. Collaboratrice Radio-Canada + Noovo Info + CKIA Politique / journa",
+      "did": "did:plc:nh5vldp52so4hewu67gjrojs"
+    },
+    {
+      "handle": "etiennefg.bsky.social",
+      "nom": "Étienne Fortin-Gauthier",
+      "categorie": "journaliste",
+      "preuve": "bio : Journaliste à Montréal Passionné de francophonie TV + web Noovo info",
+      "did": "did:plc:fk662zlsrqy2rlpoj7ol2bsx"
+    },
+    {
+      "handle": "stephgiroux.bsky.social",
+      "nom": "Stephane Giroux",
+      "categorie": "journaliste",
+      "preuve": "bio : Journaliste CTV Montréal, grand voyageur et amateur de rock qui se joue très très fort. \\m/",
+      "did": "did:plc:jujmgrqramfrviqtyt5rc5f4"
+    },
+    {
+      "handle": "jacobserebrin.bsky.social",
+      "nom": "Jacob Serebrin",
+      "categorie": "journaliste",
+      "preuve": "bio : Reporter at The Gazette in Montreal Journaliste à Montréal pour The Gazette ",
+      "did": "did:plc:zqkfgwfgqwfvp3q5xujxfghk"
+    },
+    {
+      "handle": "cism893.bsky.social",
+      "nom": "CISM 89,3 FM",
+      "categorie": "radio",
+      "preuve": "bio : LA référence en musique et en culture alternative et émergente au Québec.  Sur le FM 89,3 ou en lign",
+      "did": "did:plc:aexzzg7owo62awokqbe3iwyr"
+    },
+    {
+      "handle": "dollarama-diaspora.bsky.social",
+      "nom": "alexis",
+      "categorie": "journaliste",
+      "preuve": "bio : montreal-based journalist. ex-McGill Daily, bylines @lataco.bsky.social, CBC, etc. re: us/qc/can/mx/",
+      "did": "did:plc:h7as47ozyqq2ecqbquzh73uw"
+    },
+    {
+      "handle": "bibliouqam.bsky.social",
+      "nom": "Bibliothèques UQAM",
+      "categorie": "institution",
+      "preuve": "bio : Compte officiel des Bibliothèques de l’UQAM 📖🔎 Soutien à la recherche #bibliouqam  Instagram: @bibli",
+      "did": "did:plc:nv45h3d4ygz635rmlh3i2vvy"
+    },
+    {
+      "handle": "droit-ulaval.bsky.social",
+      "nom": "Faculté de droit - Université Laval",
+      "categorie": "institution",
+      "preuve": "bio : ⚖️ S’engager et innover pour une société plus juste et inclusive. 📍 Université Laval, Québec 🔗 https",
+      "did": "did:plc:gmjxtr6v7pvwl3iltia26xuz"
+    },
+    {
+      "handle": "banq-officiel.bsky.social",
+      "nom": "BAnQ ",
+      "categorie": "institution",
+      "preuve": "bio : Bibliothèque et Archives nationales du Québec La culture accessible à tous et à toutes, gratuitement",
+      "did": "did:plc:aj3stbngxzys35hggitozskz"
+    },
+    {
+      "handle": "fecq-officiel.bsky.social",
+      "nom": "Fédération étudiante collégiale du Québec (FECQ)",
+      "categorie": "institution",
+      "preuve": "bio : La FECQ, c’est une fédération qui défend les intérêts de la population étudiante collégiale à traver",
+      "did": "did:plc:q7gxlcaj6b73x5w33fr2wc6k"
+    },
+    {
+      "handle": "lequotidien.com",
+      "nom": "Le Quotidien",
+      "categorie": "media",
+      "preuve": "bio : Le média coopératif du Saguenay-Lac-Saint-Jean.",
+      "did": "did:plc:go3t5us6voc3wqacppbnhxe2"
+    },
+    {
+      "handle": "steverukavina.bsky.social",
+      "nom": "Steve Rukavina",
+      "categorie": "journaliste",
+      "preuve": "bio : CBC journalist Montreal",
+      "did": "did:plc:nptcwjsk7vreg6upx65dybcb"
+    },
+    {
+      "handle": "dgelevan.bsky.social",
+      "nom": "Douglas Gelevan",
+      "categorie": "journaliste",
+      "preuve": "bio : Journalist. Weekend Anchor CBC Montreal. Oui, je parle français. Friends call me Doug",
+      "did": "did:plc:k5li5zrhcli7wdkzrenrzg6s"
+    },
+    {
+      "handle": "aaronderfel.bsky.social",
+      "nom": "Aaron Derfel",
+      "categorie": "journaliste",
+      "preuve": "bio : I'm an investigative journalist at the Montreal Gazette. You can also find me on Mastodon at mas.to/",
+      "did": "did:plc:mdyjqkd7zj3ueayap24tkxz5"
+    },
+    {
+      "handle": "fagstein.bsky.social",
+      "nom": "Steve Faguy",
+      "categorie": "journaliste",
+      "preuve": "bio : Blogger, media analyst, copy editor at the Montreal Gazette. https://blog.fagstein.com",
+      "did": "did:plc:x5uvkfpa6qjii2six6ymnybs"
+    },
+    {
+      "handle": "stucowangazette.bsky.social",
+      "nom": "Stu Cowan",
+      "categorie": "journaliste",
+      "preuve": "bio : Sports columnist for Montreal Gazette and host of weekly Hockey Inside/Out Show on Gazette website a",
+      "did": "did:plc:plbxp42m4e2zi4m6l47uevdy"
+    },
+    {
+      "handle": "andyriga.bsky.social",
+      "nom": "Andy Riga",
+      "categorie": "journaliste",
+      "preuve": "bio : Montrealer. Journaliste à la Gazette. Reporter covering Quebec news and issues for the Montreal Gaze",
+      "did": "did:plc:4vzdzpj3thitn3lvsfiidgwl"
+    },
+    {
+      "handle": "cultmtl.com",
+      "nom": "Cult MTL",
+      "categorie": "media",
+      "preuve": "bio : Love for Montreal culture. https://linkin.bio/cultmtl/",
+      "did": "did:plc:6hnkpvshsxjgot5figjyardd"
+    }
+  ]
 }

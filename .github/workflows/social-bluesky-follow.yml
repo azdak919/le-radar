@@ -1,7 +1,10 @@
 name: Social — Bluesky abonnements
 
-# Suit data/social/bluesky-follows.json (idempotent, ≤ 30 par passe, espacés). Coût : 0 $.
+# Suit data/social/bluesky-follows.json : idempotent (déjà suivis sautés), ≤ 5 par passe, ≤ 25 / 24 h,
+# délais aléatoires 20–60 s, départ décalé, arrêt à la première erreur. Coût : 0 $.
 on:
+  schedule:
+    - cron: '23 14,18,22 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -11,7 +14,7 @@ on:
       max_follows:
         description: 'Max par passe'
         type: string
-        default: '30'
+        default: '5'
 
 permissions:
   contents: read
@@ -23,7 +26,7 @@ concurrency:
 jobs:
   follow:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -33,5 +36,5 @@ jobs:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
-          MAX_FOLLOWS: ${{ inputs.max_follows }}
+          MAX_FOLLOWS: ${{ inputs.max_follows || '5' }}
         run: node scripts/social/bluesky-follow.mjs
