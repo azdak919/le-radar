@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T11:06:45.688Z",
+  "updatedAt": "2026-11-01T12:06:40.000Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T11:06:06.982Z"
+      "checkedAt": "2026-11-01T12:06:02.547Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
-      },
-      "next": {
         "title": "Par mots et par vaux",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
+      "next": {
+        "title": "Le 120e parallèle",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
+      },
       "track": "",
-      "showTitle": "Genre de bleu",
+      "showTitle": "Par mots et par vaux",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T11:06:08.906Z"
+      "checkedAt": "2026-11-01T12:06:04.326Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T11:06:11.303Z"
+      "checkedAt": "2026-11-01T12:06:06.805Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,27 +101,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T11:06:25.856Z"
+      "checkedAt": "2026-11-01T12:06:20.999Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
+        "source": "schedule",
+        "start": "00:01",
         "end": "07:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T11:06:27.383Z"
+      "checkedAt": "2026-11-01T12:06:22.125Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T11:06:45.337Z"
+      "checkedAt": "2026-11-01T12:06:39.649Z"
     }
   }
 }
