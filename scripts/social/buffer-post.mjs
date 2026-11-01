@@ -30,6 +30,7 @@ try {
   if (channel) {
     const c = await channel.context();
     console.log(`Canal X : ${c.channelId} (${c.discovered ? 'découvert via channels' : 'id de repli'})`);
+    console.log('Horaire du canal :', JSON.stringify(await channel.schedule()));
     queued = await channel.queued();
   }
 } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }

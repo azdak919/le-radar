@@ -36,6 +36,14 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_c
   return {
     name: 'x',
     context,
+    // Lecture seule : l'API publique n'a pas de mutation pour l'horaire (réglé dans l'interface Buffer).
+    async schedule() {
+      const { channelId } = await context();
+      try {
+        const d = await gql('query($i: ChannelId!) { channel(input: { id: $i }) { timezone postingSchedule { day paused times } } }', { i: channelId });
+        return d?.channel || null;
+      } catch (e) { if (e instanceof AuthError) throw e; return { error: e.message }; }
+    },
     async queued() {
       const { organizationId, channelId } = await context();
       const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {
