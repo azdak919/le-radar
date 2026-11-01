@@ -6,7 +6,9 @@
 // Usage : node scripts/social/buffer-pages-post.mjs [--dry-run] [--feed fichier.xml]   (PAGES=facebook,linkedin)
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, QUEUE_MAX } from './lib.mjs';
+import { parseFeed, markImages, QUEUE_MAX, refreshPhotoLine } from './lib.mjs';
+import { createRequire } from 'node:module';
+const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
@@ -52,6 +54,14 @@ for (const net of networks) {
   } catch (e) {
     if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); }
     console.log(`::warning::${net} : canal indisponible (${e.message.slice(0, 200)}) — réseau sauté.`); problems.push(`- **${net}** : canal indisponible — ${e.message.slice(0, 300)}`); continue;
+  }
+  // Crédit actuel du site (même source que X/Bluesky/Tumblr) réappliqué aux posts en file avant publication.
+  if (ch && process.env.REFRESH_CREDITS !== 'false') for (const p of queued) {
+    const it = items.find(i => p.text?.includes(i.link) || p.text?.includes(articleId(i.link))); if (!it) continue;
+    const r = refreshPhotoLine(p.text, it, p.assets?.[0]?.source || '', 5000);
+    if (!r || r === p.text || Date.parse(p.dueAt) - Date.now() < 10 * 60e3) continue;
+    console.log(`Crédit rafraîchi ${net} ${p.id} : ${p.text.split('\n').pop()} → ${r.split('\n').pop()}`);
+    if (!dry) { await ch.editText(p.id, r); p.text = r; }
   }
   const now = Date.now();
   const taken = [...queued.map(p => p.dueAt), ...Object.values(sent).map(s => s.dueAt || s.at)].filter(Boolean);

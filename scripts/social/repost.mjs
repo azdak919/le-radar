@@ -9,6 +9,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, buildText, stripUtm, refreshPhotoLine, photoLine } from './lib.mjs';
+import { createRequire } from 'node:module';
+const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage } from './image-resolve.mjs';
 import { buildBskyText, detectLang, postRecord } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -31,7 +33,7 @@ targets.forEach((t, i) => { if (!t) throw new Error(`absent du flux : ${urls[i]}
 const used = new Map(), imgs = new Map();
 for (const it of targets) imgs.set(it.id, await resolveImage(it, { used, repeated }));
 const photoLineFor = it => { const im = imgs.get(it.id); return im ? photoLine(im.credit, it.source) : ''; };
-const has = (text, it) => (text || '').includes(it.link);
+const has = (text, it) => (text || '').includes(it.link) || (text || '').includes(articleId(it.link));
 console.log(`Mode ${dry ? 'ESSAI' : 'RÉEL'} · ${targets.length} article(s)`);
 for (const it of targets) console.log(`- ${it.link} · crédit actuel : ${imgs.get(it.id)?.credit || '(aucun → nom du média)'}`);
 
@@ -92,7 +94,7 @@ if (key) {
       if (p.text.split('\n').pop() === photoLineFor(it)) { console.log(`Déjà correct : ${line}`); if (/sent|sending|scheduled/.test(p.status)) queuedOk.add(it.id); continue; }
       if (/sent|sending/.test(p.status)) { console.log(`À SUPPRIMER À LA MAIN (API : publié non supprimable) : ${line}`); continue; }
       // En file : crédit corrigé sur place (même id, image, heure) ; supprimé seulement si non corrigeable.
-      const fixed = refreshPhotoLine(p.text, it, '');
+      const fixed = refreshPhotoLine(p.text, it, '', p.channelService === 'twitter' ? 280 : 5000);
       if (fixed && fixed !== p.text && Date.parse(p.dueAt) - Date.now() > 10 * 60e3) {
         console.log(`Crédit corrigé en file : ${line}\n  nouveau : ${fixed.split('\n').pop()}`);
         if (!dry) { await x.editText(p.id, fixed); const s = st.sent[it.id]; if (s) { s.credit = it.credit || it.source; wr('data/buffer-sent.json', st); } }
