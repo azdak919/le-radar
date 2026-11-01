@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-11-01T21:06:53.502Z",
+  "updatedAt": "2026-11-01T22:06:46.141Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Remparts de Québec",
-        "source": "api-live",
-        "start": "13:45",
-        "end": "16:30",
-        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
       "track": "",
-      "showTitle": "Remparts de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-01T21:06:07.816Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Le grand repos",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/le-grand-repos"
-      },
-      "next": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "track": "",
-      "showTitle": "Le grand repos",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T21:06:09.993Z"
+      "checkedAt": "2026-11-01T22:06:05.660Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
+      "next": {
+        "title": "London café (reprise)",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
+      "track": "",
+      "showTitle": "Symbiose",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-01T22:06:07.703Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T21:06:13.142Z"
+      "checkedAt": "2026-11-01T22:06:12.268Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T21:06:27.618Z"
+      "checkedAt": "2026-11-01T22:06:26.581Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,28 +121,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T21:06:28.652Z"
+      "checkedAt": "2026-11-01T22:06:27.936Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "mutations"
       },
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
+      },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "",
+      "showTitle": "Mutations",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T21:06:53.152Z"
+      "checkedAt": "2026-11-01T22:06:45.791Z"
     }
   }
 }
