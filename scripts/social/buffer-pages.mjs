@@ -72,3 +72,6 @@ export function selectForPage(items, { sent = {}, queuedSources = [], queuedText
 
 /** Erreur Buffer/réseau qui signale un refus du lien ou du post (blocage des nouvelles de Meta, etc.). */
 export const isRejection = msg => /news|blocked|block|restrict|not allowed|policy|reject|refus|spam|invalid (link|url)|unavailable in your country|canada/i.test(msg || '');
+
+/** Métadonnées Buffer par réseau (Facebook exige un type : post, story ou reel). */
+export const postMetadata = service => service === 'facebook' ? { facebook: { type: 'post' } } : undefined;
