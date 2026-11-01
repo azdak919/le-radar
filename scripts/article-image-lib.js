@@ -324,6 +324,23 @@ function stripBoilerplateRegions(html = '') {
     .replace(/<footer[\s\S]*?<\/footer>/gi, '');
 }
 
+/** Vrai si `excerpt` est le texte d'un lien vers une AUTRE page que `selfUrl` (titre d'une carte voisine). */
+function excerptLinksElsewhere(excerpt = '', html = '', selfUrl = '') {
+  const norm = (t) => String(t || '').replace(/<[^>]+>/g, ' ')
+    .replace(/&#8217;|&rsquo;|’/g, "'").replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/\s+/g, ' ').trim().toLowerCase();
+  const want = norm(excerpt).replace(/…$/, '');
+  if (want.length < 20) return false;
+  const key = (u) => String(u || '').replace(/[?#].*$/, '').replace(/\/+$/, '').replace(/^https?:\/\/(www\.)?/i, '').toLowerCase();
+  const self = key(selfUrl);
+  for (const m of String(html).matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    if (key(m[1]) === self) continue;
+    const text = norm(m[2]);
+    if (text.length >= 20 && (text === want || (want.length >= 60 && text.startsWith(want)))) return true;
+  }
+  return false;
+}
+
 function articleBodyHtml(html = '') {
   const patterns = [
     /itemprop=["']articleBody["'][^>]*>([\s\S]*?)(?=<div[^>]*class=["'][^"']*s-post-nav|<aside|<footer)/i,
@@ -1285,6 +1302,7 @@ function sleep(ms) {
 }
 
 module.exports = {
+  excerptLinksElsewhere,
   GLOBAL_IMAGE_REJECT_RE,
   unwrapCdnImageUrl,
   upgradeCmsImageUrl,

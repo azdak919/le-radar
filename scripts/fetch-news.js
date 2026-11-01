@@ -40,6 +40,7 @@ const {
 } = require('./article-photo-credit-lib');
 const {
   articleBodyHtml,
+  excerptLinksElsewhere,
   imageFromArticleHtml,
   dropSharedSourceImages,
   keepNewestSharedImage,
@@ -367,7 +368,7 @@ function isThinExcerpt(text = '') {
   return normalizeExcerptText(text).length < 120;
 }
 
-function firstParagraphFromHtml(html = '') {
+function firstParagraphFromHtml(html = '', { fallback = true } = {}) {
   const decoded = decodeEntities(html);
   const paragraphs = decoded.match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
   for (const p of paragraphs) {
@@ -377,8 +378,9 @@ function firstParagraphFromHtml(html = '') {
     if (/^(?:Photo|Crédit|Credit)\s*:/i.test(text)) continue;
     return text;
   }
-  const fallback = normalizeExcerptText(decoded);
-  return fallback.length >= 40 ? fallback : '';
+  if (!fallback) return '';
+  const whole = normalizeExcerptText(decoded);
+  return whole.length >= 40 ? whole : '';
 }
 
 function pickExcerpt(block) {
@@ -774,9 +776,13 @@ async function enrichItem(item, sourceByName = new Map()) {
   }
 
   // Teaser RSS trop court (Le Délit, etc.) : recharger un vrai paragraphe.
+  // Extrait = titre d'un AUTRE article lié dans la page (carte « Recent posts » prise pour le corps,
+  // ex. mot croisé de The Concordian sans <p>) : on l'efface pour le remplacer par les métas.
+  if (next.excerpt && excerptLinksElsewhere(next.excerpt, slim, item.link)) next.excerpt = '';
   if (!next.excerpt || isJunkExcerpt(next.excerpt) || isThinExcerpt(next.excerpt)) {
     const candidates = [
-      firstParagraphFromHtml(body),
+      // Sans repli « tout le texte » : un corps sans <p> n'est souvent qu'une carte vers un autre article.
+      firstParagraphFromHtml(body, { fallback: false }),
       metaContent(slim, 'og:description'),
       metaContent(slim, 'description'),
       metaContent(slim, 'twitter:description'),
