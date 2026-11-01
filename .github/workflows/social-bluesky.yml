@@ -17,6 +17,10 @@ on:
         description: 'Publier tout de suite UN article récent au hasard (hors choix X)'
         type: boolean
         default: false
+      share_url:
+        description: 'Avec share_now : URL de l’article précis à publier (même article sur tous les réseaux)'
+        type: string
+        default: ''
       bot_label:
         description: 'Ajouter l’étiquette « bot » au profil (autres champs conservés) — avec dry_run : essai'
         type: boolean
@@ -65,6 +69,7 @@ jobs:
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
+          SHARE_URL: ${{ inputs.share_url }}
         run: node scripts/social/bluesky-post.mjs
       - name: Commit de l'état (data/bluesky-sent.json seulement)
         if: always()

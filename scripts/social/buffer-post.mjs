@@ -3,7 +3,7 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H } from './lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H, stripUtm } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
@@ -61,8 +61,11 @@ const dues = times ? freeSlots(slotsToday(times), queued.map(p => p.dueAt)) : nu
 const want = dues ? Math.min(slots, dues.length) : slots;
 const sentIds = new Set(Object.keys(state.sent));
 // SHARE_NOW=true : UN article au hasard (récent, ni envoyé ni en file, photo réelle et source hors file si possible), publié tout de suite.
+// SHARE_URL : cet article précis (même article sur tous les réseaux), avec SHARE_NOW.
 const shareNow = process.env.SHARE_NOW === 'true';
-const sel = shareNow ? (() => {
+const shareUrl = (process.env.SHARE_URL || '').trim();
+const pickUrl = () => { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
+const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
   const qs = new Set(queuedSources), qt = queued.map(p => p.text || '');
   const pool = items.filter(i => !sentIds.has(i.id) && Date.now() - i.date <= maxAgeH * 3600e3 && !qt.some(t => t.includes(i.link)));
   const best = [p => p.img && !p.imgDropped && !qs.has(p.source), p => !qs.has(p.source), p => p.img && !p.imgDropped, () => true]

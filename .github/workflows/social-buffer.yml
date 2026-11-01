@@ -38,6 +38,10 @@ on:
         description: 'Publier tout de suite UN article au hasard (hors file et hors état)'
         type: boolean
         default: false
+      share_url:
+        description: 'Avec share_now : URL de l’article précis à publier (même article sur tous les réseaux)'
+        type: string
+        default: ''
       report:
         description: 'Générer aussi le rapport des comptes X'
         type: boolean
@@ -100,17 +104,20 @@ jobs:
           MAX_AGE_H: ${{ inputs.max_age_h }}
           SLOT_TIMES: ${{ inputs.slot_times }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
+          SHARE_URL: ${{ inputs.share_url }}
           DAILY: ${{ (github.event_name == 'schedule' || inputs.daily) && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-post.mjs
       - name: Pages Facebook et LinkedIn (places libres, heures de pointe)
         id: pages
-        if: ${{ !inputs.reformat && !inputs.share_now && inputs.only != 'x' }}
+        if: ${{ !inputs.reformat && (!inputs.share_now || inputs.share_url != '') && inputs.only != 'x' }}
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
           BUFFER_LINKEDIN_CHANNEL_ID: ${{ vars.BUFFER_LINKEDIN_CHANNEL_ID }}
           PAGES_ISSUE_FILE: /tmp/pages-issue.md
+          SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
+          SHARE_URL: ${{ inputs.share_url }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-pages-post.mjs
       # UNE seule issue (créée ou mise à jour) si Buffer ou le réseau refuse un post ; jamais de doublon.

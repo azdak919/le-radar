@@ -6,7 +6,7 @@
 // Usage : node scripts/social/buffer-pages-post.mjs [--dry-run] [--feed fichier.xml]   (PAGES=facebook,linkedin)
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, QUEUE_MAX } from './lib.mjs';
+import { parseFeed, markImages, QUEUE_MAX, stripUtm } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
@@ -32,6 +32,9 @@ const repeated = markImages(items);
 const state = JSON.parse(fs.readFileSync(STATE, 'utf8'));
 const save = () => { if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); };
 const problems = [];
+// SHARE_NOW=true + SHARE_URL : cet article précis, publié tout de suite sur chaque Page (hors file).
+const shareUrl = (process.env.SHARE_NOW === 'true' && process.env.SHARE_URL || '').trim();
+const pickUrl = () => { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 
 for (const net of networks) {
   const cfg = CFG[net]; const sent = (state[net] ||= {});
@@ -56,9 +59,9 @@ for (const net of networks) {
   const now = Date.now();
   const taken = [...queued.map(p => p.dueAt), ...Object.values(sent).map(s => s.dueAt || s.at)].filter(Boolean);
   const free = Math.max(0, QUEUE_MAX - queued.length);
-  const dues = planDues({ network: net, cfg, now, taken, free });
+  const dues = shareUrl ? [undefined] : planDues({ network: net, cfg, now, taken, free });
   const bySource = new Map(Object.values(sent).filter(s => s.postId).map(s => [s.postId, s.source]));
-  const sel = selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now });
+  const sel = shareUrl ? [pickUrl()] : selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now });
   console.log(`File : ${queued.length}/${QUEUE_MAX} · places libres : ${free} · créneaux de pointe retenus : ${dues.length} · articles : ${sel.length}`);
   const used = new Map();
   for (let i = 0; i < sel.length; i++) {
@@ -66,11 +69,11 @@ for (const net of networks) {
     const im = await resolveImage(it, { used, repeated });
     const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
     if (/tison/i.test(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
-    console.log(`\n--- ${net} ${i + 1}. ${new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })} (HNE) [${it.source}] · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
+    console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
     if (dry) continue;
     try {
-      const post = await ch.add({ text, image: im?.url, dueAt, metadata: postMetadata(cfg.service) });
-      sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt };
+      const post = await ch.add({ text, image: im?.url, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service) });
+      sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt, ...(shareUrl ? { shareNow: true, link: post.externalLink || null } : {}) };
       save();
       console.log(`→ Buffer ${net} : ${post.id} (${post.dueAt || dueAt})`);
     } catch (e) {
