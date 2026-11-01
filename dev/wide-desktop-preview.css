@@ -1236,7 +1236,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
  * Les liens restent en ligne avec des · — pas une pile centrée.
  */
 @media (min-width: 1440px) {
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) {
     display: grid;
     grid-template-columns: minmax(22rem, 1.45fr) minmax(16rem, 0.85fr);
     grid-template-areas:
@@ -1250,21 +1250,21 @@ html[data-wide-preview="e"] .news-hero-spacer {
     align-items: start;
     padding-bottom: max(56px, env(safe-area-inset-bottom, 0px));
   }
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__brand {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) .site-foot__brand {
     grid-area: brand;
     margin-bottom: 0;
   }
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) > p:nth-of-type(1) {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) > p:nth-of-type(1) {
     grid-area: note;
     margin-bottom: 0;
     max-width: 46em;
   }
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) > p:nth-of-type(2) {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) > p:nth-of-type(2) {
     grid-area: lic;
     margin-bottom: 0;
     max-width: 46em;
   }
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__links {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) .site-foot__links {
     grid-area: links;
     flex-direction: row;
     flex-wrap: wrap;
@@ -1274,16 +1274,16 @@ html[data-wide-preview="e"] .news-hero-spacer {
     margin-bottom: 0;
     max-width: 46em;
   }
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__sep {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) .site-foot__sep {
     display: inline;
   }
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .site-foot__credit {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) .site-foot__credit {
     grid-area: credit;
     margin-top: 0;
     padding-top: 0;
     border-top: none;
   }
-  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance) .seo-foot-meta {
+  html[data-wide-preview="e"] .site-foot:not(.site-foot--maintenance):not(.site-foot--v2) .seo-foot-meta {
     grid-area: meta;
     margin-top: 10px;
   }

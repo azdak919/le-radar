@@ -44,12 +44,82 @@
     }
     return nav;
   }
+  const COL_LABELS = {
+    fr: { explore: 'Explorer', project: 'Le projet', install: 'Installer', nav: 'Pied de page' },
+    en: { explore: 'Explore', project: 'The project', install: 'Install', nav: 'Footer' },
+  };
+  function col(key, labels) {
+    const div = document.createElement('div');
+    div.className = 'site-foot__col site-foot__col--' + key;
+    const h = document.createElement('p');
+    h.className = 'site-foot__col-title';
+    h.textContent = labels[key];
+    const list = document.createElement('div');
+    list.className = 'site-foot__col-list';
+    div.append(h, list);
+    return { div, list };
+  }
+  /**
+   * Pied de page v2 : marque + réseaux, colonnes (Explorer / Le projet / Installer),
+   * puis mentions en bas. Tous les gabarits (.site-foot) passent par ici ; le contenu
+   * existant est déplacé, jamais supprimé.
+   */
+  function restructure(foot) {
+    if (foot.classList.contains('site-foot--v2') || foot.classList.contains('site-foot--maintenance')) return;
+    const links = foot.querySelector(':scope > .site-foot__links');
+    if (!links) return;
+    const lang = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr';
+    const labels = COL_LABELS[lang];
+    const brand = foot.querySelector(':scope > .site-foot__brand');
+    const social = foot.querySelector(':scope > .site-foot__social');
+    const about = [...foot.querySelectorAll(':scope > p')].find((p) => !p.className && !p.querySelector('a[rel~="license"]'));
+    const licence = [...foot.querySelectorAll(':scope > p')].find((p) => p.querySelector('a[rel~="license"]'));
+    const kao = foot.querySelector(':scope > .site-foot__kao');
+    const credit = foot.querySelector(':scope > .site-foot__credit');
+    const contact = credit && credit.querySelector('.site-foot__contact');
+
+    const top = document.createElement('div');
+    top.className = 'site-foot__top';
+    const brandCol = document.createElement('div');
+    brandCol.className = 'site-foot__brandcol';
+    if (brand) brandCol.append(brand);
+    if (social) brandCol.append(social);
+    if (about) { about.classList.add('site-foot__about'); brandCol.append(about); }
+
+    const explore = col('explore', labels);
+    const project = col('project', labels);
+    const install = col('install', labels);
+    [...links.children].forEach((el) => {
+      if (el.classList.contains('site-foot__sep')) { el.remove(); return; }
+      const href = el.getAttribute('href') || '';
+      if (el.hasAttribute('data-install-app') || el.hasAttribute('data-foot-fdroid')) install.list.append(el);
+      else if (el.hasAttribute('hreflang') || /kit-media|media-kit/.test(href)) project.list.append(el);
+      else explore.list.append(el);
+    });
+    if (contact) project.list.append(contact);
+    if (kao) project.list.append(kao);
+    links.classList.add('site-foot__cols');
+    links.setAttribute('aria-label', labels.nav);
+    links.append(explore.div, project.div);
+    if (install.list.children.length) links.append(install.div);
+    top.append(brandCol, links);
+
+    const bottom = document.createElement('div');
+    bottom.className = 'site-foot__bottom';
+    if (credit) bottom.append(credit);
+    if (licence) { licence.classList.add('site-foot__licence'); credit ? credit.insertBefore(licence, credit.querySelector('.site-foot__legal')) : bottom.append(licence); }
+    foot.prepend(top);
+    top.after(bottom);
+    foot.classList.add('site-foot--v2');
+  }
   function mount() {
     document.querySelectorAll('footer.site-foot').forEach((foot) => {
-      if (foot.querySelector('.site-foot__social')) return;
-      const brand = foot.querySelector('.site-foot__brand');
-      const nav = build();
-      if (brand) brand.after(nav); else foot.prepend(nav);
+      if (!foot.querySelector('.site-foot__social')) {
+        const brand = foot.querySelector('.site-foot__brand');
+        const nav = build();
+        if (brand) brand.after(nav); else foot.prepend(nav);
+      }
+      restructure(foot);
     });
   }
   window.RadarSocialLinks = SOCIAL_LINKS;

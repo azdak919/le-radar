@@ -65,7 +65,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 0 0 14px -10px;
+  margin: 0 0 14px;
 }
 .site-foot .site-foot__social a {
   display: inline-flex;
@@ -83,6 +83,68 @@
 }
 .site-foot .site-foot__social a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; color: var(--accent); }
 @media print { .site-foot__social { display: none !important; } }
+
+/* ─────────────── FOOTER v2 (structuré par nav-shell.js) ───────────────
+   Marque + réseaux + présentation | colonnes Explorer / Le projet / Installer,
+   puis mentions. Une seule grille pour tous les gabarits et tailles. */
+.site-foot--v2 { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+.site-foot--v2 .site-foot__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 2fr);
+  gap: 24px 48px;
+  align-items: start;
+}
+.site-foot--v2 .site-foot__about { max-width: 46ch; margin: 0; }
+.site-foot--v2 .site-foot__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px 24px;
+  margin: 0;
+  align-items: start;
+}
+.site-foot__col { min-width: 0; }
+.site-foot__col-title {
+  margin: 0 0 8px !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.site-foot__col-list { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+.site-foot__col-list .site-foot__sep { display: none; }
+.site-foot__col-list > a,
+.site-foot__col-list > .site-foot__link-btn,
+.site-foot__col-list > p > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  overflow-wrap: anywhere;
+}
+.site-foot__col-list > p { margin: 0 !important; }
+.site-foot--v2 .site-foot__contact a { color: var(--accent); }
+.site-foot--v2 .site-foot__kao-hint { display: block; font-size: 12px; line-height: 1.4; }
+.site-foot--v2 .site-foot__bottom {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+.site-foot--v2 .site-foot__credit { margin: 0; padding: 0; border: 0; }
+.site-foot--v2 .site-foot__licence { font-size: 12px; }
+@media (max-width: 900px) {
+  .site-foot--v2 .site-foot__top { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .site-foot--v2 .site-foot__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-foot--v2 .site-foot__col--project { grid-row: span 2; }
+  .site-foot__col-list > a,
+  .site-foot__col-list > .site-foot__link-btn,
+  .site-foot__col-list > p > a { min-height: 44px; }
+}
+@media (max-width: 340px) {
+  .site-foot--v2 .site-foot__cols { grid-template-columns: minmax(0, 1fr); }
+  .site-foot--v2 .site-foot__col--project { grid-row: auto; }
+}
 
 .site-foot__sep {
   color: var(--rule);
