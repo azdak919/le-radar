@@ -63,7 +63,7 @@ assert.deepEqual(selectForPage([it, other], { slots: 5, now, queuedTexts: ['… 
 assert.equal(selectForPage([it, other], { slots: 1, now }).length, 1);
 // canaux Buffer et refus
 assert(matchChannel({ service: 'facebook', name: 'LE-RADAR.ca' }, 'facebook', 'LE-RADAR.ca'));
-assert(matchChannel({ service: 'linkedin', name: 'le-radar.ca' }, 'linkedin', 'LE-RADAR.ca'));
+assert(matchChannel({ service: 'linkedin', name: 'le-radar-ca' }, 'linkedin', CFG.linkedin.name), 'nom Buffer de la page LinkedIn');
 assert(!matchChannel({ service: 'linkedin', name: 'Charles' }, 'linkedin', 'LE-RADAR.ca'));
 assert(matchChannel({ service: 'twitter', name: '@LeRadar_ca' }, 'x', 'LeRadar_ca'));
 assert(isRejection('People in Canada can’t see news content') && isRejection('Link blocked by Facebook') && !isRejection('timeout'));
