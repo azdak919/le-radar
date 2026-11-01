@@ -1,0 +1,79 @@
+name: Social — Buffer (X @LeRadar_ca)
+
+# Feed.xml → file Buffer (forfait gratuit, 10 posts) → X. Coût : 0 $.
+# Canaux : x (Buffer) actif. Bluesky / Mastodon : adaptateurs prévus dans
+# scripts/social/channels/, pas encore activés.
+on:
+  schedule:
+    - cron: '17 */2 * * *'
+    - cron: '41 13 * * 1'   # rapport hebdo des comptes (lundi)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Essai seulement (aucun envoi à Buffer)'
+        type: boolean
+        default: false
+      report:
+        description: 'Générer aussi le rapport des comptes X'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  queue:
+    if: github.event.schedule != '41 13 * * 1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Remplir la file Buffer
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: node scripts/social/buffer-post.mjs
+      - name: Commit de l'état (data/buffer-sent.json seulement)
+        if: always()
+        run: |
+          git diff --quiet -- data/buffer-sent.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/buffer-sent.json
+          git commit -s -m "bot(social): état des publications Buffer"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/buffer-sent.json\"))'"
+
+  accounts-report:
+    if: github.event.schedule == '41 13 * * 1' || inputs.report
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - run: node scripts/social/accounts-report.mjs /tmp/report.md
+      # UNE seule issue permanente, mise à jour (jamais de doublon).
+      - name: Sync issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Social : comptes X à vérifier"
+          NUM=$(gh issue list --repo "${{ github.repository }}" --state all --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
+          if [ -n "$NUM" ]; then
+            gh issue edit "$NUM" --repo "${{ github.repository }}" --body-file /tmp/report.md
+          else
+            gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file /tmp/report.md
+          fi
