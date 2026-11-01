@@ -27,6 +27,7 @@ permissions:
 concurrency:
   group: data-writers-social
   cancel-in-progress: false
+  queue: max
 
 jobs:
   repost:
