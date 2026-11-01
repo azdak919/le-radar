@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T05:58:22.800Z",
+  "updatedAt": "2026-11-01T07:06:42.402Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T05:57:42.861Z"
+      "checkedAt": "2026-11-01T07:06:00.005Z"
     },
     "cism": {
       "id": "cism",
@@ -48,29 +48,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T05:57:44.996Z"
+      "checkedAt": "2026-11-01T07:06:02.135Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "DEAD AIR BACKUP (REPLACE ME)",
+        "title": "Utopia's Paradise",
         "source": "api-live",
-        "start": "01:00",
-        "end": "01:00"
+        "start": "02:00",
+        "end": "06:00"
       },
-      "next": null,
-      "track": "",
-      "showTitle": "DEAD AIR BACKUP (REPLACE ME)",
+      "next": {
+        "title": "Mind, Soul, & Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T05:57:47.950Z"
+      "checkedAt": "2026-11-01T07:06:05.017Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -97,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T05:58:03.528Z"
+      "checkedAt": "2026-11-01T07:06:20.962Z"
     },
     "cfak": {
       "id": "cfak",
@@ -117,7 +120,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T05:58:04.437Z"
+      "checkedAt": "2026-11-01T07:06:22.404Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +141,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T05:58:22.450Z"
+      "checkedAt": "2026-11-01T07:06:42.051Z"
     }
   }
 }
