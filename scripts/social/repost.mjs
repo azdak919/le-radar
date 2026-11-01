@@ -91,16 +91,16 @@ if (key) {
   for (const [n, it] of targets.entries()) {
     for (const p of all.filter(p => has(p.text, it))) {
       const line = `Buffer ${p.channelService} ${p.status} ${p.id} · ${tz(p.sentAt || p.dueAt)} · ${p.externalLink || ''}\n  ancien : ${p.text.split('\n').pop()}`;
-      if (p.text.split('\n').pop() === photoLineFor(it)) { console.log(`Déjà correct : ${line}`); if (/sent|sending|scheduled/.test(p.status)) queuedOk.add(it.id); continue; }
+      if (p.text.split('\n').pop() === photoLineFor(it)) { console.log(`Déjà correct : ${line}`); if (p.channelService === 'twitter' && /sent|sending|scheduled/.test(p.status)) queuedOk.add(it.id); continue; }
       if (/sent|sending/.test(p.status)) { console.log(`À SUPPRIMER À LA MAIN (API : publié non supprimable) : ${line}`); continue; }
       // En file : crédit corrigé sur place (même id, image, heure) ; supprimé seulement si non corrigeable.
       const fixed = refreshPhotoLine(p.text, it, '', p.channelService === 'twitter' ? 280 : 5000);
       if (fixed && fixed !== p.text && Date.parse(p.dueAt) - Date.now() > 10 * 60e3) {
         console.log(`Crédit corrigé en file : ${line}\n  nouveau : ${fixed.split('\n').pop()}`);
         if (!dry) { await x.editText(p.id, fixed); const s = st.sent[it.id]; if (s) { s.credit = it.credit || it.source; wr('data/buffer-sent.json', st); } }
-        queuedOk.add(it.id); continue;
+        if (p.channelService === 'twitter') queuedOk.add(it.id); continue;
       }
-      if (fixed === p.text) { console.log(`Déjà correct en file : ${line}`); queuedOk.add(it.id); continue; }
+      if (fixed === p.text) { console.log(`Déjà correct en file : ${line}`); if (p.channelService === 'twitter') queuedOk.add(it.id); continue; }
       console.log(`Suppression : ${line}`);
       if (!dry) { const r = await gql('mutation($i: DeletePostInput!) { deletePost(input: $i) { ... on DeletePostSuccess { id } ... on VoidMutationError { message } } }', { i: { id: p.id } }); if (!r?.deletePost?.id) throw new Error(`deletePost refusé : ${JSON.stringify(r)}`); }
     }
