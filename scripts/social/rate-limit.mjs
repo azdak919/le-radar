@@ -1,18 +1,20 @@
 // Module commun aux bots sociaux du Radar : plafonds par réseau (fenêtres glissantes),
 // espacement, fraîcheur (jamais de rattrapage) et sélection « comme X » quand le réseau limite.
 // Réutilisé par Bluesky, puis Mastodon.
-import { quality, PER_SOURCE_MAX } from './lib.mjs';
+import { quality, PER_SOURCE_MAX, norm } from './lib.mjs';
+import { effectiveLimits } from './schedule.mjs';
 
 // mastodon : règles de piaille.fr (robots de liens de presse : 5/h, 50/jour).
 // bluesky : plafond anti-pourriel interne, très en deçà de l'API (5 000 points/h, 35 000/jour,
 // une création = 3 points) — voir docs.bsky.app/docs/advanced-guides/rate-limits.
 // tumblr : API officielle = 250 publications/jour/utilisateur, 1 000 appels/h et 5 000/jour par
-// clé (tumblr.com/docs/en/api/v2#rate-limits). Plafond interne 10/h, 150/24 h (≤ 60 % du quota
-// quotidien, ≤ 4 appels par publication) ; les règles (tumblr.com/policy/en/community) proscrivent
-// le pourriel et les étiquettes trompeuses.
+// clé (tumblr.com/docs/en/api/v2#rate-limits) ; la file native de Tumblr plafonne à 50/jour
+// (help.tumblr.com/knowledge-base/queued-posts). Plafond interne 5/h, 50/24 h, comme une file
+// humaine ; les règles (tumblr.com/policy/en/community) proscrivent le pourriel et l'automatisation.
+// Plafonds de base : l'ordonnanceur (schedule.mjs) les module par heure et pendant le rodage.
 export const NETWORKS = {
-  tumblr: { perHour: 10, perDay: 150, perRun: 3, gapSec: 90 },
-  mastodon: { perHour: 5, perDay: 50, perRun: 1, gapSec: 0 },
+  tumblr: { perHour: 5, perDay: 50, perRun: 2, gapSec: 120 },
+  mastodon: { perHour: 5, perDay: 50, perRun: 1, gapSec: 60 },
   bluesky: { perHour: 10, perDay: 150, perRun: 3, gapSec: 90 },
 };
 export const MAX_FRESH_H = 24; // jamais d'article plus vieux que 24 h
@@ -51,17 +53,27 @@ export function rankLikeX(pool, { recentSources = [], perSource = PER_SOURCE_MAX
   return out; // les articles hors classement (source déjà à 2) sont exclus
 }
 
+/** Clé de quasi-doublon : titre normalisé (même article repris par deux sources = un seul post). */
+export const titleKey = it => norm(it.bare || it.title || '').slice(0, 80);
+
 /**
- * Plan d'un passage : `now` = publiés maintenant (≤ perRun, ≤ restant), `hold` = gardés pour le
- * passage suivant dans la même heure (frais, pas du rattrapage), `skip` = surplus sauté définitivement.
+ * Plan d'un passage. `now` = publiés maintenant (≤ perRun effectif, ≤ restant de l'heure pondérée),
+ * `hold` = frais gardés pour un passage suivant (heures calmes ou plafond horaire : ils partent plus tard
+ * s'ils ont encore < 24 h, sinon ils expirent sans rattrapage), `skip` = sauté définitivement
+ * (variété ≤ 2/source, quasi-doublon, ou au-delà de la capacité restante sur 24 h).
  */
-export function plan(items, sent, { network, liveSince, accounts = [], now = Date.now() } = {}) {
-  const limits = NETWORKS[network]; if (!limits) throw new Error(`réseau inconnu : ${network}`);
+export function plan(items, sent, { network, liveSince, accounts = [], now = Date.now(), schedule = true } = {}) {
+  const base = NETWORKS[network]; if (!base) throw new Error(`réseau inconnu : ${network}`);
+  const limits = schedule ? effectiveLimits(base, { network, liveSince, now }) : base;
   const r = remaining(sent, limits, { now });
-  const pool = freshCandidates(items, sent, { liveSince, now });
-  const recentSources = Object.values(sent).filter(s => s?.source && !s.skipped && now - Date.parse(s.at) < 864e5).map(s => s.source);
+  const recent = Object.values(sent).filter(s => now - Date.parse(s?.at) < 864e5);
+  const seenKeys = new Set(recent.map(s => s.k).filter(Boolean)), poolKeys = new Set();
+  const all = freshCandidates(items, sent, { liveSince, now });
+  const dup = [], pool = [];
+  for (const it of all) { const k = titleKey(it); if (k && (seenKeys.has(k) || poolKeys.has(k))) dup.push(it); else { poolKeys.add(k); pool.push(it); } }
+  const recentSources = recent.filter(s => s?.source && !s.skipped && !s.dedup).map(s => s.source);
   const ranked = rankLikeX(pool, { recentSources, accounts });
-  const keep = ranked.slice(0, r.left), go = keep.slice(0, limits.perRun);
+  const keep = ranked.slice(0, r.dayLeft), go = keep.slice(0, Math.min(limits.perRun, r.hourLeft));
   const keepIds = new Set(keep.map(i => i.id));
-  return { limits, status: r, now: go, hold: keep.slice(go.length), skip: pool.filter(i => !keepIds.has(i.id)) };
+  return { limits, status: r, now: go, hold: keep.slice(go.length), skip: [...pool.filter(i => !keepIds.has(i.id)), ...dup] };
 }

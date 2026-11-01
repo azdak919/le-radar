@@ -182,7 +182,8 @@ export function slotsToday(times, { tz = 'America/Toronto', now = Date.now() } =
 }
 
 // ── Sélection nocturne (≈ 3 h, America/Toronto) ──────────────────────────────
-export const DAILY_SLOTS = ['07:30', '09:00', '10:30', '12:00', '13:00', '15:00', '17:00', '18:30', '20:00', '21:30'];
+// Créneaux X alignés sur les pointes Sprout Social 2026 (mar.-jeu. 12-18 h, heure locale) : 1 le matin, 7 de 11 h 30 à 17 h 30, 2 en soirée.
+export const DAILY_SLOTS = ['08:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:30', '17:30', '19:00', '21:00'];
 export const MIN_EXCERPT = 80;
 const dayOf = (t, tz = 'America/Toronto') => new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(t);
 

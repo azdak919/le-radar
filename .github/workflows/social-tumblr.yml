@@ -1,6 +1,6 @@
 name: Social — Tumblr (leradar-ca.tumblr.com)
 
-# Articles frais du flux (≤ 24 h, après la mise en service), plafond 10/h et 150/24 h
+# Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
 # Publication réelle seulement si la variable de dépôt TUMBLR_LIVE vaut « true »
 # (les règles de Tumblr encadrent la publication automatisée : activation sur accord).

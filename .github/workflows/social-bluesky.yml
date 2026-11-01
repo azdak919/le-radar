@@ -1,6 +1,6 @@
 name: Social — Bluesky (@le-radar.bsky.social)
 
-# Articles frais du flux (≤ 24 h, après la mise en service), plafond 10/h et 150/24 h
+# Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 10/h et 150/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
 # Déclencheur principal : Worker le-radar-news-trigger (≤ 5 min après chaque créneau).
 # Cron de secours ci-dessous (GitHub en saute souvent). Idempotent : data/bluesky-sent.json.

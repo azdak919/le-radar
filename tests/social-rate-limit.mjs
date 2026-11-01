@@ -25,8 +25,12 @@ assert(['a3', 'b1'].includes(r[0]), 'photo réelle d’abord');
 assert.equal(rankLikeX(pool, { recentSources: ['A', 'A'] }).filter(i => i.source === 'A').length, 0, '2 déjà publiés sur 24 h');
 // plan : surplus sauté, jamais gardé au-delà de la fenêtre
 const many = Array.from({ length: 9 }, (_, i) => it('m' + i, 'S' + i, 5 + i));
-const p = plan(many, mk([1, 2, 3]), { network: 'mastodon', liveSince: ago(600).toISOString(), now });
-assert.equal(p.now.length, 1); assert.equal(p.hold.length, 1); assert.equal(p.skip.length, 7);
-const pb = plan(many, {}, { network: 'bluesky', liveSince: ago(600).toISOString(), now });
+const p = plan(many, mk([1, 2, 3]), { network: 'mastodon', liveSince: ago(600).toISOString(), now, schedule: false });
+assert.equal(p.now.length, 1); assert.equal(p.hold.length, 8, 'plafond horaire : gardés (frais)'); assert.equal(p.skip.length, 0);
+const full = plan(many, mk(Array.from({ length: 48 }, (_, i) => 70 + i * 25)), { network: 'mastodon', liveSince: ago(600).toISOString(), now, schedule: false });
+assert.equal(full.now.length + full.hold.length, 2); assert.equal(full.skip.length, 7, 'au-delà de 24 h de capacité : sautés');
+const twin = [it('t1', 'A', 5), { ...it('t2', 'B', 6), title: 't1' }];
+assert.equal(plan(twin, {}, { network: 'mastodon', liveSince: ago(600).toISOString(), now, schedule: false }).skip.length, 1, 'quasi-doublon');
+const pb = plan(many, {}, { network: 'bluesky', liveSince: ago(600).toISOString(), now, schedule: false });
 assert.equal(pb.now.length, 3); assert.equal(pb.hold.length, 6); assert.equal(pb.skip.length, 0);
 console.log('social-rate-limit : OK');

@@ -13,7 +13,7 @@ export function buildTumblrText(it, accounts = [], { credit = '', photo = true }
 const tag = s => (s || '').replace(/[#,]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
 /** Étiquettes : média, presse étudiante, Québec (+ student press si anglais). Jamais d'étiquette trompeuse. */
 export function tagsFor(it, lang = detectLang(it)) {
-  return [...new Set([tag(it.source), 'presse étudiante', 'Québec', ...(lang === 'en' ? ['student press'] : [])].filter(Boolean))];
+  return [...new Set([tag(it.source), ...(it.categories || []).slice(0, 1).map(tag), 'presse étudiante', 'Québec', ...(lang === 'en' ? ['student press'] : [])].filter(Boolean))].slice(0, 5);
 }
 
 /** Corps NPF : texte (lien cliquable via formatting), image réelle (si présente), bloc lien. */

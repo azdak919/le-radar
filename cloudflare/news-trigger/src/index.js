@@ -1,7 +1,7 @@
 // le-radar-news-trigger : lance update-news.yml (workflow_dispatch) seulement
 // s'il y a du nouveau dans les flux, ou si la dernière collecte publiée date
 // de plus de MAX_AGE_MIN. Jamais si une collecte est déjà en cours ou en file.
-import { decide, newestFeedDate, slotsDue, socialWorkflows } from './lib.js';
+import { decide, newestFeedDate, socialHours, socialWorkflows } from './lib.js';
 
 const UA = 'LE-RADAR-NewsTrigger/1.0 (+https://le-radar.ca/)';
 
@@ -65,11 +65,11 @@ export async function runGuard(env, now = Date.now()) {
   return { guard: 'dispatch', age: Math.round(age), status: d.status };
 }
 
-// Bluesky et Tumblr n'ont pas de planificateur : après chaque créneau social, lance chaque workflow de SOCIAL_WORKFLOW
+// Bluesky et Tumblr n'ont pas de planificateur : à chaque passage de 7 h à minuit, lance chaque workflow de SOCIAL_WORKFLOW (chacun applique ses fenêtres horaires)
 // (le workflow publie les choix dus, idempotent). Aucune relance si une passe est en cours.
 export async function runSocial(env, now = Date.now()) {
   const wfs = socialWorkflows(env.SOCIAL_WORKFLOW);
-  if (!wfs.length || !slotsDue(now)) return { social: 'idle' };
+  if (!wfs.length || !socialHours(now)) return { social: 'idle' };
   const out = {};
   for (const wf of wfs) {
     const r = await gh(env, `/actions/workflows/${wf}/runs?per_page=1`);

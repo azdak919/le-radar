@@ -22,6 +22,6 @@ const slot = Date.parse('2026-11-01T17:05:00Z'); // 12:05 Toronto
 const rs = await runSocial({ REPO: 'o/r', GH_TOKEN: 'x', SOCIAL_WORKFLOW: 'social-bluesky.yml,social-tumblr.yml' }, slot);
 assert.deepEqual(rs, { social: 'dispatch', 'social-bluesky.yml': 204, 'social-tumblr.yml': 'busy' });
 assert.equal(calls.filter(c => c[0] === 'POST').length, 1);
-assert.deepEqual(await runSocial({ SOCIAL_WORKFLOW: 'a.yml' }, Date.parse('2026-11-01T17:50:00Z')), { social: 'idle' });
+assert.deepEqual(await runSocial({ SOCIAL_WORKFLOW: 'a.yml' }, Date.parse('2026-11-02T08:05:00Z')), { social: 'idle' }, '3 h à Toronto : calme');
 globalThis.fetch = realFetch;
 console.log('news-trigger ok');
