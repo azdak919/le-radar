@@ -36,7 +36,8 @@ try {
 
 const byPost = new Map(Object.values(state.sent).filter(s => s.postId).map(s => [s.postId, s.source]));
 const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => p.text?.includes(i.link))?.source).filter(Boolean);
-const slots = Math.max(0, QUEUE_MAX - queued.length);
+const maxNew = parseInt(process.env.MAX_NEW || '', 10);
+const slots = Math.min(Math.max(0, QUEUE_MAX - queued.length), maxNew > 0 ? maxNew : QUEUE_MAX);
 console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} · places : ${slots}`);
 const sel = selectItems(items, { sentIds: new Set(Object.keys(state.sent)), queuedSources, slots });
 

@@ -13,6 +13,10 @@ on:
         description: 'Essai seulement (aucun envoi à Buffer)'
         type: boolean
         default: false
+      max_new:
+        description: 'Nombre max de nouvelles publications pour ce passage (vide = remplir jusqu à 10)'
+        type: string
+        default: ''
       report:
         description: 'Générer aussi le rapport des comptes X'
         type: boolean
@@ -58,6 +62,7 @@ jobs:
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          MAX_NEW: ${{ inputs.max_new }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-post.mjs
       - name: Commit de l'état (data/buffer-sent.json seulement)
