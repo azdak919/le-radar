@@ -130,6 +130,10 @@ const EXTERNAL_LINK_ATTRS = ' target="_blank" rel="noopener noreferrer"';
 
 function escapeHtml(text = '') {
   return String(text)
+    // Caractères de contrôle (ex. U+0002 laissé par une césure copiée) :
+    // invisibles à l'écran, ils s'impriment en carrés vides.
+    // eslint-disable-next-line no-control-regex
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
