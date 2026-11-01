@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T03:36:41.628Z",
+  "updatedAt": "2026-11-01T05:06:45.114Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,135 +21,124 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T03:36:03.323Z"
+      "checkedAt": "2026-11-01T05:05:59.651Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Genre de bleu",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T03:36:05.251Z"
+      "checkedAt": "2026-11-01T05:06:01.759Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "SKEwInGTheWaBeS$$",
+        "title": "DEAD AIR BACKUP (REPLACE ME)",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "next": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
+        "start": "01:00",
         "end": "01:00"
       },
+      "next": null,
       "track": "",
-      "showTitle": "SKEwInGTheWaBeS$$",
+      "showTitle": "DEAD AIR BACKUP (REPLACE ME)",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T03:36:07.912Z"
+      "checkedAt": "2026-11-01T05:06:04.775Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Brave New Jams",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/brave-new-jams"
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Floydian Slip",
+        "title": "Sun Ra, Sun Rise",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
       "track": "",
-      "showTitle": "Brave New Jams",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T03:36:22.277Z"
+      "checkedAt": "2026-11-01T05:06:20.211Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": null,
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T03:36:23.338Z"
+      "checkedAt": "2026-11-01T05:06:21.172Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "D'amour et de sexe",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00",
-        "slug": "damour-et-de-sexe"
-      },
+      "current": null,
       "next": {
         "title": "OPUS",
-        "source": "schedule",
+        "source": "api-live",
         "start": "12:00",
         "end": "13:00",
-        "url": "https://www.choq.ca/emissions/opus"
+        "slug": "opus"
       },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "D'amour et de sexe",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-01T03:36:41.278Z"
+      "checkedAt": "2026-11-01T05:06:44.763Z"
     }
   }
 }
