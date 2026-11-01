@@ -54,9 +54,10 @@ for (const it of items) {
   assert.match(title, /^[^:]+?( – [^:]+)?(\u00A0: |: )\S/u, `format : ${title}`);
 }
 
-// Pas de répétition média/auteur entre le titre et la ligne de méta de la description.
+// Le lecteur affiche déjà date, média et auteur : la description est la brève seule,
+// sans ligne de date, et l'image n'est pas exposée en pièce jointe (media:content).
 for (const it of items) {
-  const src = pick(it, 'source').replace(/&amp;/g, '&');
-  const meta = pick(it, 'description').split('\n\n')[0];
-  if (src) assert.ok(!meta.includes(src), `média répété dans la description : ${meta}`);
+  const desc = pick(it, 'description');
+  assert.ok(!/^\s*(\d{1,2} \S+\.?|[A-Z][a-z]{2} \d{1,2}) · /.test(desc), `ligne de date dans la description : ${desc.slice(0, 60)}`);
+  assert.ok(!it.includes('<media:content'), 'media:content présent (affiché en pièce jointe)');
 }
