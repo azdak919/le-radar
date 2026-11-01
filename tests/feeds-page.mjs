@@ -11,21 +11,28 @@ const registry = JSON.parse(readFileSync(new URL('../news-sources.json', import.
 const html = readFileSync(new URL('../feeds.html', import.meta.url), 'utf8');
 const page = readFileSync(new URL('../feeds-page.js', import.meta.url), 'utf8');
 
-const model = lib.buildCampusModel(registry, table);
+const news = JSON.parse(readFileSync(new URL('../news.json', import.meta.url)));
+const model = lib.buildCampusModel(registry, table, news);
+const published = new Set(news.items.map((a) => a.source));
 const groups = [...model.universities, ...model.cegeps];
 
 // Chaque source active apparaît une fois, et seulement elles.
 const shown = groups.flatMap((g) => g.papers).sort();
-const active = [...new Set(registry.active.filter((s) => s.name && s.institution).map((s) => s.name))].sort();
-assert.deepEqual(shown, active, 'campus affichés ≠ sources actives');
+const active = [...new Set(registry.active.filter((s) => s.name && s.institution && published.has(s.name)).map((s) => s.name))].sort();
+assert.deepEqual(shown, active, 'campus affichés ≠ sources publiées');
+// Chaque journal affiché a au moins un article dans le fil publié.
+for (const name of shown) assert.ok(published.has(name), `affiché sans article publié : ${name}`);
+// Une source sans article ne s'affiche pas (cas synthétique).
+const fake = lib.buildCampusModel({ active: [{ name: 'A', institution: 'Université X' }, { name: 'B', institution: 'Collège Y', type: 'cegep' }], candidates: [] }, {}, { items: [{ source: 'A' }] });
+assert.deepEqual(fake.cegeps, []); assert.equal(fake.pending, 1); assert.deepEqual(fake.waiting, ['B']);
 
 // Les cégeps sont dans la section Cégeps.
-for (const s of registry.active.filter((x) => x.type === 'cegep')) {
+for (const s of registry.active.filter((x) => x.type === 'cegep' && published.has(x.name))) {
   assert.ok(model.cegeps.some((g) => g.papers.includes(s.name)), `cégep mal classé : ${s.name}`);
 }
 
 // Compteur « en cours d’intégration » = candidats réels.
-const n = (registry.candidates || []).length;
+const n = (registry.candidates || []).length + model.waiting.length;
 if (n) assert.ok(model.note.startsWith(`+ ${n} publication`), model.note);
 else assert.equal(model.note, '');
 

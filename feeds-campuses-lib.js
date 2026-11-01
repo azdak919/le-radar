@@ -64,15 +64,29 @@
     });
   }
 
+  // Sources réellement publiées : au moins un article dans news.json (fil de la
+  // dernière récolte). Sans news.json, on écarte au moins les sources « stale ».
+  function publishedNames(news) {
+    const items = Array.isArray(news?.items) ? news.items : null;
+    if (!items) return null;
+    return new Set(items.map((a) => a && a.source).filter(Boolean));
+  }
+
   // Modèle complet de la section : universités, cégeps et note « en cours d’intégration ».
-  function buildCampusModel(registry = {}, table = {}) {
-    const active = (registry.active || []).filter((s) => s && s.name && s.institution);
+  // Une source configurée sans article publié passe dans le compteur.
+  function buildCampusModel(registry = {}, table = {}, news = null) {
+    const configured = (registry.active || []).filter((s) => s && s.name && s.institution);
+    const published = publishedNames(news);
+    const isLive = (s) => (published ? published.has(s.name) : s._status !== 'stale');
+    const active = configured.filter(isLive);
+    const waiting = configured.filter((s) => !isLive(s));
     const groups = groupSources(active, table);
-    const pending = (registry.candidates || []).length;
+    const pending = (registry.candidates || []).length + waiting.length;
     return {
       universities: groups.filter((g) => g.type !== 'cegep'),
       cegeps: groups.filter((g) => g.type === 'cegep'),
       pending,
+      waiting: waiting.map((s) => s.name),
       note: pending > 0
         ? `+ ${pending} publication${pending > 1 ? 's' : ''} en cours d’intégration au fil.`
         : '',
