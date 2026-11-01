@@ -7,6 +7,10 @@ on:
   schedule:
     # Une passe par nuit ≈ 3 h Toronto (3 h 07 HNE, 4 h 07 HAE) : articles de la veille, 10 max.
     - cron: '7 8 * * *'
+    # Passes de secours (idempotentes : créneaux déjà pris et articles déjà envoyés ignorés).
+    # GitHub retarde parfois le cron nocturne de plusieurs heures (1er nov. 2026 : 3 h 07 → 10 h 00 HNE).
+    - cron: '23 10 * * *'   # ≈ 5 h 23 HNE
+    - cron: '47 11 * * *'   # ≈ 6 h 47 HNE, avant le 1er créneau (8 h 30)
     - cron: '41 13 * * 1'   # rapport hebdo des comptes (lundi)
   workflow_dispatch:
     inputs:
