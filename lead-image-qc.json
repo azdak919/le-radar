@@ -1,25 +1,19 @@
 {
-  "updated": "2026-11-02T12:29:33.334Z",
+  "updated": "2026-11-02T13:07:35.068Z",
   "total": 184,
-  "withPhoto": 164,
-  "withStock": 34,
-  "withCampusBank": 32,
+  "withPhoto": 166,
+  "withStock": 32,
+  "withCampusBank": 30,
   "fullyCovered": 184,
-  "leadReadyPhotos": 135,
-  "pageScraped": 29,
-  "photosRecovered": 29,
+  "leadReadyPhotos": 138,
+  "pageScraped": 28,
+  "photosRecovered": 28,
   "imagesCleared": 10,
-  "stockSearches": 48,
+  "stockSearches": 45,
   "stockFound": 32,
   "campusBankFound": 29,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Olivia Rodrigo au Centre Bell",
-      "link": "https://www.delitfrancais.com/2026/10/28/olivia-rodrigo-au-centre-bell/",
-      "reason": "no-stock-match",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
-    },
     {
       "title": "Virage conservateur en Colombie-Britannique",
       "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
@@ -39,10 +33,28 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/en-direct-de-lunivers.avif"
     },
     {
+      "title": "Olivia Rodrigo au Centre Bell",
+      "link": "https://www.delitfrancais.com/2026/10/28/olivia-rodrigo-au-centre-bell/",
+      "reason": "no-stock-match",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
+    },
+    {
       "title": "L’état des routes du Québec à l’aube de l’hiver",
       "link": "https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8f/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Princeton Professor Beth Lew-Williams Wins 2026 Cundill History Prize",
+      "link": "https://www.mcgilldaily.com/2026/11/princeton-professor-beth-lew-williams-wins-2026-cundill-history-prize/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "NAZA: When the Perpetrators Tell the Story",
+      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
       "title": "Crossword: Paranormal Activity",
@@ -57,34 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
+      "title": "Men’s Club Hockey Perfect Start to the Season",
+      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/65/Bishop%27s_University%2C_McGreer_Hall%2C_2600%2C_rue_Coll%C3%A8ge%2C_Sherbrooke_une_partie_des_b%C3%A2timents_avec_le_chevet_de_la_chapelle_11-d.na.civile-78-3500.jpg"
     },
     {
-      "title": "Plus de 130 jours de manifestation en Albanie",
-      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
+      "title": "Strong Start to the Season for the Gaiters",
+      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Observatoire_de_l%60universit%C3%A9_Bishop_-_panoramio.jpg"
     },
     {
       "title": "Editorial: Lowering immigration, but at what cost?",
       "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
-    },
-    {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg"
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     }
   ]
 }

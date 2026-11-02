@@ -1,30 +1,58 @@
 {
-  "updated": "2026-11-02T12:30:28.656Z",
+  "updated": "2026-11-02T13:08:45.296Z",
   "total": 184,
-  "withImage": 163,
-  "withCredit": 163,
+  "withImage": 165,
+  "withCredit": 165,
   "cited": 96,
-  "pending": 49,
+  "pending": 51,
   "missingHero": 0,
   "ok": false,
-  "checked": 54,
-  "updatedCount": 6,
-  "citedNew": 5,
-  "fallbackNew": 49,
+  "checked": 57,
+  "updatedCount": 9,
+  "citedNew": 6,
+  "fallbackNew": 51,
   "samples": [
     {
-      "title": "Jésus et autres mots-clics",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
+      "title": "Keeping our unhoused community warm this winter",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The Sexual Politics of the Trade War",
+      "source": "The McGill Daily",
+      "credit": "Photo : Kara Fan",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
+      "title": "When “Boys Will Be Boys” Means Boys Killing Girls",
+      "source": "The McGill Daily",
+      "credit": "Photo : Eva Marriott-Fabre",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Bio-Weapons: Cregger Plays A Game",
+      "source": "The McGill Daily",
+      "credit": "Photo : Jane Goodman",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "For The Love of The Game: The Story of Seat Alert",
+      "source": "The McGill Daily",
+      "credit": "Photo : Ethan McAuliffe",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Is Montreal Ready for Slave Play?",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
@@ -46,13 +74,6 @@
       "credit": "Image via Pinterest",
       "cited": true,
       "method": "via-attribution"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
     }
   ]
 }
