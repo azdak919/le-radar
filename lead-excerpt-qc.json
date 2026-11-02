@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-02T14:37:07.149Z",
+  "updated": "2026-11-02T15:07:02.918Z",
   "total": 184,
   "pool": 58,
-  "incomplete": 8,
-  "withLeadExcerpt": 123,
-  "candidates": 8,
-  "enriched": 0,
+  "incomplete": 10,
+  "withLeadExcerpt": 124,
+  "candidates": 10,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
+    },
+    {
+      "title": "Au tour de Jonquière d’être conquise par « La meilleure façon, c’est par accident »",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/au-tour-de-jonquiere-detre-conquise-par-la-meilleure-facon-cest-par-accident/?utm_source=rss&utm_medium=rss&utm_campaign=au-tour-de-jonquiere-detre-conquise-par-la-meilleure-facon-cest-par-accident",
+      "ok": true,
+      "score": 100,
+      "chars": 349,
+      "sample": "Le Ciné-Club de Jonquière a attiré la deuxième plus grosse foule de son histoire lundi soir, alors q",
+      "changed": true
     },
     {
       "title": "Keeping our unhoused community warm this winter",
