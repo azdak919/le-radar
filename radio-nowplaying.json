@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-11-02T22:07:48.047Z",
+  "updatedAt": "2026-11-02T23:07:34.540Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Femmes de l'ombre",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/femmes-de-lombre/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T22:07:18.338Z"
+      "checkedAt": "2026-11-02T23:06:53.500Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T22:07:20.230Z"
+      "checkedAt": "2026-11-02T23:06:55.812Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "En Profondeur",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Queercorps",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Lesbo-sons",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "En Profondeur",
+      "showTitle": "Queercorps",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T22:07:23.002Z"
+      "checkedAt": "2026-11-02T23:06:58.868Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Pressure Drop",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
-      },
-      "next": {
         "title": "Voice of the Voiceless",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
+      "next": {
+        "title": "Monday Mass with Father Kate",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
+      },
       "track": "",
-      "showTitle": "The Pressure Drop",
+      "showTitle": "Voice of the Voiceless",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T22:07:37.244Z"
+      "checkedAt": "2026-11-02T23:07:13.936Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Ma radio Académia",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:01"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Ma radio Académia",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T22:07:41.061Z"
+      "checkedAt": "2026-11-02T23:07:15.191Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T22:07:47.696Z"
+      "checkedAt": "2026-11-02T23:07:34.189Z"
     }
   }
 }
