@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T09:07:03.426Z",
+  "updatedAt": "2026-11-02T10:06:43.816Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T09:06:02.284Z"
+      "checkedAt": "2026-11-02T10:06:03.418Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "06:30",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+      },
       "track": "",
-      "showTitle": "Le char de marge (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T09:06:04.542Z"
+      "checkedAt": "2026-11-02T10:06:05.955Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T09:06:07.354Z"
+      "checkedAt": "2026-11-02T10:06:08.555Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T09:06:22.292Z"
+      "checkedAt": "2026-11-02T10:06:22.995Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T09:06:23.558Z"
+      "checkedAt": "2026-11-02T10:06:24.359Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +134,20 @@
       "current": null,
       "next": {
         "title": "Onde de CHOQ",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:00",
         "end": "13:45",
-        "url": "https://www.choq.ca/emissions/onde-de-choq"
+        "slug": "onde-de-choq"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T09:07:03.076Z"
+      "checkedAt": "2026-11-02T10:06:43.465Z"
     }
   }
 }
