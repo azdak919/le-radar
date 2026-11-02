@@ -54,7 +54,7 @@ jobs:
     # on ne relance pas toute la suite Playwright à chaque battement de données.
     if: ${{ github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]')) }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: read
 
@@ -93,7 +93,9 @@ jobs:
       # pas payer 111 tests séquentiels pour chaque push.
       - name: Browser checks (critical)
         if: github.event_name != 'workflow_dispatch' || !inputs.full
-        timeout-minutes: 10
+        # 94 sentinelles prennent maintenant 7 à 10 min : marge pour éviter
+        # un échec par simple dépassement alors que tous les tests passent.
+        timeout-minutes: 14
         run: npm run test:browser:ci
 
       - name: Browser checks (full suite)
