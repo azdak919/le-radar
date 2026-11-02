@@ -593,7 +593,7 @@ function compose(opts) {
   }
 
   const credit = photo && opts.credit
-    ? `Photo : ${opts.credit}${opts.license ? ` · ${opts.license}` : ''}`
+    ? posterCredit(opts.credit, opts.license, opts.photoUrl || '')
     : '';
   const fit = Math.min(w / refW, h / refH);
   const measure = (text, size) => {
@@ -877,6 +877,7 @@ function paintPreview(img, photo) {
     photoImg: img || null,
     credit: photo?.credit,
     license: photo?.license,
+    photoUrl: photo?.url,
     focalX: state.focalX,
     focalY: state.focalY,
     cropScale: state.zoom,
@@ -1081,6 +1082,8 @@ async function downloadPrint(kind = 'pdf') {
       photoImg: img,
       credit: photo?.credit,
       license: photo?.license,
+    photoUrl: photo?.url,
+      photoUrl: photo?.url,
       focalX: state.focalX,
       focalY: state.focalY,
       cropScale: state.zoom,
@@ -1454,6 +1457,24 @@ function bind() {
     window.addEventListener('resize', refit);
   }
 }
+
+/* posterCredit:start — même règle que bankAttribution (scripts/social/image-resolve.mjs, feedCredit) :
+ * une personne « Prénom Nom » → « Photo : Nom · licence » ; un pseudo → « pseudo (Wikimedia Commons, licence) ». */
+function posterPersonCredit(c) {
+  const t = String(c || '').replace(/^(photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').trim();
+  if (!t || /wiki|commons|unsplash|pexels|pixabay|shutterstock|getty|istock|courtoisie|courtesy|archives?|stock|@|https?:|\d/i.test(t)) return false;
+  return /^\p{Lu}[\p{L}'’.-]+(?:\s+(?:(?:de|du|des|da|di|van|von|den|der|la|le|el|al|bin)\s+)*\p{Lu}[\p{L}'’.-]+)+$/u.test(t);
+}
+function posterCredit(credit, license, url) {
+  const c = String(credit || '').trim();
+  if (!c) return '';
+  const lic = String(license || '').trim();
+  if (posterPersonCredit(c)) return `Photo : ${c}${lic ? ` · ${lic}` : ''}`;
+  const src = /wiki/i.test(String(url || '')) ? 'Wikimedia Commons' : /flickr/i.test(String(url || '')) ? 'Flickr' : '';
+  const extra = [src, lic].filter(Boolean).join(', ');
+  return extra ? `${c} (${extra})` : c;
+}
+/* posterCredit:end */
 
 async function main() {
   bind();
