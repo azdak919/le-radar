@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-02T08:07:03.033Z",
+  "updated": "2026-11-02T09:45:12.649Z",
   "total": 184,
   "pool": 53,
-  "incomplete": 11,
+  "incomplete": 5,
   "withLeadExcerpt": 122,
-  "candidates": 11,
-  "enriched": 6,
+  "candidates": 5,
+  "enriched": 0,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -19,66 +19,30 @@
       "changed": false
     },
     {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
-      "ok": true,
-      "score": 100,
-      "chars": 333,
-      "sample": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouve",
-      "changed": true
-    },
-    {
-      "title": "Toujours pas de football éliminatoire à Sherbrooke cette année",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/toujours-pas-de-football-eliminatoire-a-sherbrooke-cette-annee/",
-      "ok": true,
-      "score": 100,
-      "chars": 319,
-      "sample": "Pour une 3 e saison consécutive, les joueurs du Vert & Or agiront à titre de spectateurs à l’occasio",
-      "changed": true
-    },
-    {
-      "title": "Rosalie Tremblay sans complexe devant le défi qui l’attend au Danemark",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/rosalie-tremblay-sans-complexe-devant-le-defi-qui-lattend-au-danemark/",
-      "ok": true,
-      "score": 96,
-      "chars": 250,
-      "sample": "On entend souvent le mot « maturité » revenir dans les conversations comme enjeu principal chez plus",
-      "changed": true
-    },
-    {
-      "title": "Pete Fry élu maire de Vancouver",
-      "link": "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/",
-      "ok": true,
-      "score": 96,
-      "chars": 343,
-      "sample": "Ken Sim, maire sortant, a été défait par Pete Fry lors des élections de la course à la mairie de la ",
-      "changed": true
-    },
-    {
-      "title": "Virage conservateur en Colombie-Britannique",
-      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
-      "ok": true,
-      "score": 100,
-      "chars": 293,
-      "sample": "Les personnes britanno-colombiennes étaient invitées aux urnes le 24 octobre dernier. Après neuf ann",
-      "changed": true
-    },
-    {
-      "title": "L’état des routes du Québec à l’aube de l’hiver",
-      "link": "https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/",
-      "ok": true,
-      "score": 100,
-      "chars": 296,
-      "sample": "Plus que quelques semaines avant que l’hiver se pointe le bout du nez. Les mitaines, tuques et mante",
-      "changed": true
-    },
-    {
       "title": "Cinq nouvelles de la semaine",
       "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
       "ok": true,
       "score": 84,
       "chars": 400,
       "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
+      "changed": false
+    },
+    {
+      "title": "L’aveuglement du cynisme chic",
+      "link": "https://www.delitfrancais.com/2026/10/28/laveuglement-du-cynisme-chic/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "À huit ans, dans les dessins animés, je préférais aimer le méchant plutôt que le héros. À 13 ans, je",
+      "changed": false
+    },
+    {
+      "title": "Le 17 octobre – édition québécoise",
+      "link": "https://www.delitfrancais.com/2026/10/28/le-17-octobre-edition-quebecoise/",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Debout au milieu du square, on peine à s’entendre parler au-dessus des slogans scandés par la foule ",
       "changed": false
     }
   ]
