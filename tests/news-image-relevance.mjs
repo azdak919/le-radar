@@ -96,3 +96,28 @@ assert.equal(L.namesOtherSchoolTeam({ source: 'Quartier Libre', institution: 'Un
 assert.equal(L.namesOtherSchoolTeam({ source: 'Quartier Libre', institution: 'Université de Montréal',
   imageTitle: 'Carabins de Montréal', stockImage: '' }), false);
 console.log('news-image-relevance (équipes) OK');
+
+// Débat à Bishop's : la vraie photo de l'article (« Capture d’écran, le … », 856×1080)
+// passe avant la banque campus quand la source exporte ses photos ainsi (The Campus).
+const A = require('../scripts/article-image-lib.js');
+const shot = 'https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-22.35.07.png';
+assert.equal(A.isCropSafePortrait(856, 1080, { url: shot }), false, 'sans indice de source : refus prudent');
+assert.equal(A.isCropSafePortrait(856, 1080, { url: shot, screenshotPhotos: true }), true, 'The Campus : vraie photo');
+assert.equal(A.isCropSafePortrait(856, 1080, { url: shot.replace('capture-decran', 'affiche-capture-decran'), screenshotPhotos: true }), false, 'affiche : refus');
+assert.equal(A.isCropSafePortrait(600, 1080, { url: shot, screenshotPhotos: true }), false, 'trop en hauteur : refus');
+assert.equal(A.imageOptionsFromHints({ screenshotPhotos: true }).screenshotPhotos, true);
+const sources = JSON.parse(readFileSync(new URL('../news-sources.json', import.meta.url), 'utf8'));
+const campusSrc = (sources.sources || Object.values(sources).flat()).find((s) => s && s.name === 'The Campus');
+assert.equal(campusSrc?.botHints?.images?.screenshotPhotos, true, 'indice screenshotPhotos sur The Campus');
+
+// Doublon Wikimedia par lieu : une même photo avec ou sans ?utm_ n'entre qu'une fois dans la banque.
+const merged = bank.mergeCampusEntries([{ url: u }], [{ url: `${u}?utm_source=commons.wikimedia.org` }, { url: u.replace('%27', "'") }]);
+assert.equal(merged.length, 1, 'banque fusionnée sans doublon d’URL');
+const keys = bank.bankEntriesFor("Bishop's University").map((e) => bank.stockKey(e.url));
+assert.equal(new Set(keys).size, keys.length, 'banque Bishop’s : aucune photo deux fois');
+// Réattribution : deux cartes ne reçoivent jamais la même photo sous deux formes d'URL.
+const many = bank.bankEntriesFor("Bishop's University").map((e, i) => camp(`c${i}`, `2026-10-${10 + i}`, e.url));
+bank.diversifyCampusBankItems(many);
+const got = many.filter((it) => it.stockImage).map((it) => bank.stockKey(it.stockImage));
+assert.equal(new Set(got).size, got.length, 'diversify : photos uniques par clé');
+console.log('news-image-relevance (débat, doublons) OK');
