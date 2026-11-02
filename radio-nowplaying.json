@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T08:06:52.497Z",
+  "updatedAt": "2026-11-02T09:07:03.426Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T08:06:14.474Z"
+      "checkedAt": "2026-11-02T09:06:02.284Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T08:06:16.251Z"
+      "checkedAt": "2026-11-02T09:06:04.542Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Adventures In Music",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Unmuted with Svetlana and Miss Trish",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T08:06:18.991Z"
+      "checkedAt": "2026-11-02T09:06:07.354Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T08:06:32.981Z"
+      "checkedAt": "2026-11-02T09:06:22.292Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T08:06:33.924Z"
+      "checkedAt": "2026-11-02T09:06:23.558Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +134,20 @@
       "current": null,
       "next": {
         "title": "Onde de CHOQ",
-        "source": "api-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "13:45",
-        "slug": "onde-de-choq"
+        "url": "https://www.choq.ca/emissions/onde-de-choq"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T08:06:52.147Z"
+      "checkedAt": "2026-11-02T09:07:03.076Z"
     }
   }
 }
