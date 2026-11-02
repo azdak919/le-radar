@@ -741,16 +741,6 @@
       "via": "resize-proxy",
       "nameKey": "dsc03591.jpg"
     },
-    "9233c6cfb7e0f95b": {
-      "local": "assets/news-images/9233c6cfb7e0f95b.webp",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 683222,
-      "contentType": "image/webp",
-      "updatedAt": "2026-10-26T19:15:58.951Z",
-      "via": "photon-resize",
-      "nameKey": "dsc0108.jpg"
-    },
     "52b3b173fc6c8e5b": {
       "local": "assets/news-images/52b3b173fc6c8e5b.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image-maison-1-scaled.jpg",
@@ -1573,17 +1563,27 @@
       "via": "origin",
       "nameKey": "04.fringe.between_worlds.sana_paracha.online_1000094039-2.jpg"
     },
-    "2ab4782df799135a": {
-      "local": "assets/news-images/2ab4782df799135a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Lonely.jpeg",
+    "c6ecf846f4ddf380": {
+      "local": "assets/news-images/c6ecf846f4ddf380.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/ThelysonOrelienAI.png",
       "host": "www.delitfrancais.com",
-      "bytes": 185165,
-      "updatedAt": "2026-11-02T01:13:05.610Z",
+      "bytes": 153843,
+      "updatedAt": "2026-11-02T02:07:40.389Z",
       "via": "disk",
-      "nameKey": "lonely.jpeg"
+      "nameKey": "thelysonorelienai.png"
+    },
+    "b6eaca974ceb6e4d": {
+      "local": "assets/news-images/b6eaca974ceb6e4d.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Soupe-Populaire.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 130626,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-02T02:07:42.334Z",
+      "via": "resize-proxy",
+      "nameKey": "soupe-populaire.jpg"
     }
   },
-  "updatedAt": "2026-11-02T01:35:49.577Z",
+  "updatedAt": "2026-11-02T02:07:42.336Z",
   "count": 159,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
