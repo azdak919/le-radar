@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-02T14:06:42.202Z",
+  "updatedAt": "2026-11-02T15:06:48.785Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Lundi Indie",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
-      },
-      "next": {
         "title": "K-C'EST ÇA ?",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "11:00",
         "url": "https://chyz.ca/emission/k-cest-ca/"
       },
+      "next": {
+        "title": "APRIORI",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/apriori/"
+      },
       "track": "",
-      "showTitle": "Lundi Indie",
+      "showTitle": "K-C'EST ÇA ?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T14:06:04.195Z"
+      "checkedAt": "2026-11-02T15:06:08.344Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Faits de société!",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/faits-de-societe"
       },
+      "next": {
+        "title": "o'keb",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/okeb"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Faits de société!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T14:06:06.038Z"
+      "checkedAt": "2026-11-02T15:06:10.608Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T14:06:08.503Z"
+      "checkedAt": "2026-11-02T15:06:13.413Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Death of the Midrange",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "I Think You Might Like This",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+      },
       "track": "",
-      "showTitle": "Death of the Midrange",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T14:06:22.783Z"
+      "checkedAt": "2026-11-02T15:06:28.655Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T14:06:24.080Z"
+      "checkedAt": "2026-11-02T15:06:30.069Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T14:06:41.851Z"
+      "checkedAt": "2026-11-02T15:06:48.434Z"
     }
   }
 }
