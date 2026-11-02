@@ -1,31 +1,17 @@
 {
-  "updated": "2026-11-02T22:09:37.487Z",
+  "updated": "2026-11-02T22:40:37.009Z",
   "total": 185,
   "withImage": 167,
   "withCredit": 167,
-  "cited": 94,
-  "pending": 55,
+  "cited": 95,
+  "pending": 54,
   "missingHero": 0,
   "ok": false,
-  "checked": 57,
-  "updatedCount": 5,
+  "checked": 56,
+  "updatedCount": 3,
   "citedNew": 2,
-  "fallbackNew": 55,
+  "fallbackNew": 54,
   "samples": [
-    {
-      "title": "Quand notre quotidien change de couleur",
-      "source": "La Pige",
-      "credit": "Photo : Diego Pinto de Queiros",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
       "source": "The Campus",
@@ -36,9 +22,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",

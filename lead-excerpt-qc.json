@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-02T22:07:05.555Z",
+  "updated": "2026-11-02T22:36:56.013Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 11,
+  "incomplete": 10,
   "withLeadExcerpt": 126,
-  "candidates": 11,
-  "enriched": 2,
+  "candidates": 10,
+  "enriched": 0,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -19,22 +19,13 @@
       "changed": false
     },
     {
-      "title": "Quand notre quotidien change de couleur",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/quand-notre-quotidien-change-de-couleur/?utm_source=rss&utm_medium=rss&utm_campaign=quand-notre-quotidien-change-de-couleur",
-      "ok": true,
-      "score": 96,
-      "chars": 221,
-      "sample": "Où sont passés le bleu, le vert, le rouge et le jaune ? En quelques décennies, la couleur s’est fait",
-      "changed": true
-    },
-    {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
       "link": "https://lapige.atmjonquiere.com/2026/11/02/luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant/?utm_source=rss&utm_medium=rss&utm_campaign=luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant",
       "ok": true,
       "score": 100,
       "chars": 400,
       "sample": "Bien qu’il soit à la tête du conseil de ville depuis un an, Luc Boivin a remporté les élections de j",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Tout ce qui me rappelle pourquoi je déteste le beige et pourquoi je ne pourrai jamais m’affilier à cette couleur",
@@ -79,6 +70,15 @@
       "score": 72,
       "chars": 399,
       "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
+      "changed": false
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
+      "ok": true,
+      "score": 84,
+      "chars": 400,
+      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
       "changed": false
     }
   ]
