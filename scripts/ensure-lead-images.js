@@ -58,6 +58,7 @@ const { imageHostIsFragile, sourceNeedsCampusBackup } = require('./campus-fallba
 
 const ROOT = path.join(__dirname, '..');
 const deadImages = require('./dead-images-lib');
+const rubricBanners = require('./rubric-banner-lib');
 const DEAD_IMAGES = deadImages.load();
 const NEWS_PATH = path.join(ROOT, 'news.json');
 const QC_PATH = path.join(ROOT, 'lead-image-qc.json');
@@ -516,6 +517,27 @@ async function main() {
     imagesCleared += 1;
   });
   logPhase('validation sur page');
+
+  // Bannières de rubrique (« EDITORIAL » du McGill Daily réexporté en
+  // « Screenshot-… ») : même visuel, nom de fichier neuf. On compare l'image
+  // (empreinte dHash) aux bannières connues et entre billets d'une source ;
+  // repli ensuite par la file habituelle (banque pertinente, puis campus).
+  {
+    const store = rubricBanners.loadStore();
+    const hits = await rubricBanners.findRubricBanners(items.filter((i) => i.image), { store });
+    for (const item of hits) {
+      console.log(`  ✂ bannière de rubrique ${item.source} : ${item.image}`);
+      if (doUpdate) {
+        item.image = '';
+        item.leadImageReady = false;
+        clearMirroredLead(item);
+        clearSourceImageCredit(item);
+      }
+      imagesCleared += 1;
+    }
+    if (doUpdate) rubricBanners.saveStore(store);
+  }
+  logPhase('bannières de rubrique');
 
   // Avant la file « sans photo » (jusqu’à 40 scrapes, timeout CI 6 min) :
   // les unes du fil dont l’image est un bandeau campagne (Fondation UdeS
