@@ -860,6 +860,36 @@ function clearCampusBankFields(item) {
   item.leadImageReady = false;
 }
 
+
+// === Saison des photos de repli (data/campus-photo-seasons.json, tag-campus-seasons.js) ===
+// Jamais de photo enneigée hors de l'hiver réel (15 nov. → 31 mars) ; saison
+// inconnue : évitée s'il reste une photo sans neige connue.
+let _seasonCache = null;
+function photoSeasons() {
+  if (_seasonCache) return _seasonCache;
+  try { _seasonCache = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'campus-photo-seasons.json'), 'utf8')).photos || {}; } catch { _seasonCache = {}; }
+  return _seasonCache;
+}
+/** true = neige / hiver, false = sans neige, null = inconnu. */
+function photoHasSnow(e = {}) {
+  if (WINTER_RE.test(`${e.title || ''} ${e.tags || ''} ${e.url || ''}`.replace(/_/g, ' '))) return true;
+  const t = photoSeasons()[stockKey(e.url)];
+  return t && typeof t.snow === 'boolean' ? t.snow : null;
+}
+/** Hiver réel au Québec : du 15 novembre au 31 mars. */
+function isSnowSeason(when = new Date()) {
+  const d = when instanceof Date ? when : new Date(when);
+  if (isNaN(d)) return false;
+  const m = d.getUTCMonth() + 1;
+  return m === 12 || m <= 3 || (m === 11 && d.getUTCDate() >= 15);
+}
+function seasonFilter(pool = [], when = new Date()) {
+  if (isSnowSeason(when)) return pool;
+  const noSnow = pool.filter((e) => photoHasSnow(e) === false);
+  if (noSnow.length) return noSnow;
+  return pool.filter((e) => photoHasSnow(e) === null);
+}
+
 /**
  * Choisit une photo campus pour l'article.
  * Ne réutilise **jamais** une URL déjà dans avoidUrls : si la banque est
@@ -869,7 +899,7 @@ function clearCampusBankFields(item) {
  * @param {{ preferSeason?: 'summer'|'winter'|'any', avoidUrls?: string[]|Set<string> }} [opts]
  */
 function pickCampusPhoto(item = {}, opts = {}) {
-  const entries = bankEntriesFor(item.institution || '');
+  const entries = seasonFilter(bankEntriesFor(item.institution || ''), opts.now || new Date());
   if (!entries.length) return null;
 
   const hayArticle = `${item.title || ''} ${item.excerpt || ''} ${item.leadExcerpt || ''}`;
@@ -932,7 +962,7 @@ function diversifyCampusBankItems(items = []) {
 
   for (const [, group] of byInst) {
     if (!group.length) continue;
-    const entries = bankEntriesFor(group[0].institution || '');
+    const entries = seasonFilter(bankEntriesFor(group[0].institution || ''), new Date());
     if (!entries.length) {
       for (const item of group) {
         clearCampusBankFields(item);
@@ -971,9 +1001,11 @@ function diversifyCampusBankItems(items = []) {
         continue;
       }
 
+      // Photo actuelle encore valable (saison, unicité) : on la garde (pas de valse, épingles respectées).
+      const current = candidates.find((e) => stockKey(e.url) === stockKey(item.stockImage));
       const seed = String(item.link || item.title || i);
       const hash = crypto.createHash('sha1').update(`${seed}|${i}`).digest();
-      const pick = candidates[hash[0] % candidates.length];
+      const pick = current || candidates[hash[0] % candidates.length];
       used.add(stockKey(pick.url));
 
       if (item.stockImage !== pick.url) {
@@ -1048,6 +1080,9 @@ module.exports = {
   dedupeStockBySource,
   stockKey,
   entryToStockFields,
+  photoHasSnow,
+  isSnowSeason,
+  seasonFilter,
   loadWallpaperCampusExtras,
   mapWallpaperToBankKey,
   mergeCampusEntries,

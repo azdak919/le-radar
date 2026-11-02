@@ -19,7 +19,7 @@
  */
 
 const fs = require('fs');
-const { applyLeadImagePins } = require('./lead-image-pins-lib');
+const { applyLeadImagePins, loadPins, normUrl } = require('./lead-image-pins-lib');
 const path = require('path');
 const { hasUsableImage } = require('./lead-fallback-lib');
 const {
@@ -58,6 +58,7 @@ const { imageHostIsFragile, sourceNeedsCampusBackup } = require('./campus-fallba
 
 const ROOT = path.join(__dirname, '..');
 const deadImages = require('./dead-images-lib');
+const rubricBanners = require('./rubric-banner-lib');
 const DEAD_IMAGES = deadImages.load();
 const NEWS_PATH = path.join(ROOT, 'news.json');
 const QC_PATH = path.join(ROOT, 'lead-image-qc.json');
@@ -441,9 +442,18 @@ async function dedupeCardImages(items = []) {
   const keyOf = (u) => String(u || '').replace(/^https?:\/\//, '').replace(/[?#].*$/, '')
     .replace(/-\d+x\d+(?=\.[a-z]+$)/i, '').toLowerCase();
   const groups = new Map();
+  // Photo imposée (data/lead-image-pins.json) : réservée à son billet. On
+  // regroupe aussi par stockImage, sinon la banque pouvait redonner la même
+  // photo à un autre billet (McGill_University_Montréal, 2 nov. 2026).
+  const pins = loadPins();
+  const isPinned = (it) => {
+    const pin = pins.pins.get(normUrl(it.link));
+    return !!(pin && pin.stockImage && pin.stockImage === it.stockImage);
+  };
   for (const it of items) {
-    if (!it || !it.image) continue;
-    const k = keyOf(it.image);
+    const src = it && (it.image || it.stockImage);
+    if (!src) continue;
+    const k = keyOf(src);
     if (!groups.has(k)) groups.set(k, []);
     groups.get(k).push(it);
   }
@@ -451,11 +461,17 @@ async function dedupeCardImages(items = []) {
   let fixed = 0;
   for (const group of groups.values()) {
     if (group.length < 2) continue;
-    group.sort((a, b) => (Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0));
+    group.sort((a, b) => (isPinned(b) - isPinned(a))
+      || ((Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0)));
     for (const it of group.slice(1)) {
+      const dupStock = !it.image && it.stockImage;
       it.image = '';
       it.leadImageReady = false;
       clearMirroredLead(it);
+      if (dupStock) {
+        // Sans autre photo de saison : image par défaut (champs vides).
+        for (const f of ['stockImage', 'imageCredit', 'imageCreator', 'imageSourceUrl', 'imageLicense']) delete it[f];
+      }
       let stock = null;
       try { stock = await findStockPhoto(it); } catch { stock = null; }
       if (!stock?.stockImage || usedStock.has(stock.stockImage)) {
@@ -475,6 +491,22 @@ function backfillImageCreator(item) {
   if (item.imageCreator || !item.imageCredit) return;
   const m = String(item.imageCredit).match(/^Photo\s*:\s*(.+?)\s*\/\s*/i);
   if (m) item.imageCreator = cleanCreatorName(m[1].trim());
+}
+
+async function purgeRubricBanners(items, { refill = null } = {}) {
+  const store = rubricBanners.loadStore();
+  const hits = await rubricBanners.findRubricBanners(items.filter((i) => i.image), { store });
+  for (const item of hits) {
+    console.log(`  ✂ bannière de rubrique ${item.source} : ${item.image}`);
+    if (!doUpdate) continue;
+    item.image = '';
+    item.leadImageReady = false;
+    clearMirroredLead(item);
+    clearSourceImageCredit(item);
+    if (refill) await refill(item);
+  }
+  if (doUpdate) rubricBanners.saveStore(store);
+  return hits.size;
 }
 
 async function main() {
@@ -516,6 +548,13 @@ async function main() {
     imagesCleared += 1;
   });
   logPhase('validation sur page');
+
+  // Bannières de rubrique (« EDITORIAL » du McGill Daily réexporté en
+  // « Screenshot-… ») : même visuel, nom de fichier neuf. On compare l'image
+  // (empreinte dHash) aux bannières connues et entre billets d'une source ;
+  // repli ensuite par la file habituelle (banque pertinente, puis campus).
+  imagesCleared += await purgeRubricBanners(items);
+  logPhase('bannières de rubrique');
 
   // Avant la file « sans photo » (jusqu’à 40 scrapes, timeout CI 6 min) :
   // les unes du fil dont l’image est un bandeau campagne (Fondation UdeS
@@ -933,6 +972,9 @@ async function main() {
 
   if (doUpdate) {
     applyLeadImagePins(allItems);
+    // Second passage : l'image a pu être remise (ou passée en pleine résolution) après le premier.
+    const lateBanners = await purgeRubricBanners(items, { refill: (it) => fillClearedLead(it, sourceMap, { avoidCampusUrls: usedCampusUrls }).catch(() => 'none') });
+    if (lateBanners) console.log(`✂ ${lateBanners} bannière(s) de rubrique retirée(s) en fin de passage`);
     const dedup = await dedupeCardImages(allItems);
     if (dedup) console.log(`↻ ${dedup} photo(s) déjà sur une autre carte → banque libre / campus`);
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');

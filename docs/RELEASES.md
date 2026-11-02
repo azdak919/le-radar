@@ -3,17 +3,17 @@
 Ce fichier suit l'état des trois canaux de diffusion du Radar. À mettre à jour à chaque
 déploiement notable, changement de cache du service worker ou étiquette Android.
 
-_Dernière mise à jour : 29 octobre 2026._
+_Dernière mise à jour : 2 novembre 2026._
 
 ## 1. Web (GitHub Pages, le-radar.ca)
 
 | Élément | Valeur |
 |---|---|
-| Dernier commit `main` déployé | `bf8c91de9` — fusion de #240 (actions Pages v5), 29 oct. 2026, 9 h 05 (HAE) |
-| Dernier changement de code déployé | `98dd0b8fb` — actions GitHub Pages passées en v5 en gardant `.well-known/` (`include-hidden-files: true`, #240, 29 oct.) ; `assetlinks.json` toujours en HTTP 200 ; dernier changement du site : `495d9e93f` (26 oct.) |
-| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, sur `bf8c91de9`) |
-| Date du déploiement | 29 octobre 2026, 9 h 07 (HAE) |
-| le-radar.ca | ✅ HTTP 200 (vérifié le 29 oct. 2026, 9 h 37 HAE) |
+| Dernier commit `main` déployé | `30ee3823a` — mise à jour automatique du fil, 2 nov. 2026, 9 h 41 (HNE) |
+| Dernier changement de code déployé | `870470192` — bannières de rubrique écartées par empreinte d'image (EDITORIAL du McGill Daily), #311, 2 nov. |
+| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, sur `30ee3823a`) |
+| Date du déploiement | 2 novembre 2026, 9 h 43 (HNE) |
+| le-radar.ca | ✅ HTTP 200 (vérifié le 2 nov. 2026, 9 h 48 HNE) |
 
 Le site se déploie automatiquement à chaque poussée sur `main`, par artefact depuis le 26 oct.
 (21 h 43 HAE, `41dc6e9bf`; retour arrière : `build_type=legacy`). Vérifier avec
@@ -23,29 +23,31 @@ Le site se déploie automatiquement à chaque poussée sur `main`, par artefact 
 
 | Service worker | Cache actuel en ligne |
 |---|---|
-| `sw.js` (site) | `radar-shell-v976` (+ `radar-offline-v22`) — introduit par `6ce6d91a0` |
-| `sports/sw.js` (Sports) | `sports-shell-v335` — introduit par `6ce6d91a0` |
+| `sw.js` (site) | `radar-shell-v986` (+ `radar-offline-v22`) — introduit par `67ca60b02` (1er nov., 17 h 22 HNE) |
+| `sports/sw.js` (Sports) | `sports-shell-v347` — introduit par `67ca60b02` |
 
-Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmée).
+Le `sw.js` et le `sports/sw.js` servis en ligne correspondent à ceux de `main` (pas de version périmée).
 
 ### Historique récent des correctifs PWA
 
+- 2026-11-01 — `67ca60b02`, `b0b161ffc` : espaces insécables dans les titres (après
+  l'échappement), fiche article bornée à 1360 px (v986 / v347).
+- 2026-11-01 — `50620a653`, `300ee47e0` : pied de page v2 unifié avec icônes des réseaux,
+  fiches d'article grands écrans.
+- 2026-11-01 — `94e27f3ef`, `40c96e03c` : fiches article statiques `/article/`, impression soignée.
+- 2026-10-31 — `ae9f19a9c`, `decbaf856` : impression (page de journal figée, mots longs coupés).
+- 2026-10-31 — `984052214`, `5499b97dd` : page des flux (campus réels, seulement les journaux actifs).
+- 2026-10-30 — `24f4a0d8f` : barre radio, contours autour de chaque bouton.
+- 2026-10-29 — `6cf44caba` : bump du shell pour la barre allégée.
 - 2026-10-26 — `daf1b3834`, `6ce6d91a0` : un poste qui joue n'affiche plus « Hors ligne »
   (CHOQ), ni dans la barre ni dans la liste (v976 / v335).
-- 2026-10-26 — `16b517d38` : carte citation du Pomo compacte sur téléphone (v973 / v333).
-- 2026-10-26 — `c69af7581` : barre radio du Pomo et du Solitaire identique au Radar.
-- 2026-10-26 — `3dacbb807` : fin de période du Pomo fiable en arrière-plan (notification).
-- 2026-10-26 — `b301e5265`, `ec64eaf4d` : régates sur plusieurs jours (vraie plage de dates),
-  voile compacte dans le bandeau.
-- 2026-10-25 — `7ad018a8d`, `f530b23d8` : contours radio, Pomo/Solitaire retouchés.
-- 2026-10-23 — `0e56639e4` : fraîcheur des nouvelles (session en cours ou ≤ 45 jours);
-  `news.json` élagué, caches montés à v924 / v291.
+- 2026-10-26 — `16b517d38`, `c69af7581`, `3dacbb807` : Pomo (citation compacte, barre radio,
+  fin de période en arrière-plan).
+- 2026-10-23 — `0e56639e4` : fraîcheur des nouvelles (session en cours ou ≤ 45 jours).
 - **2026-10-23 — `5fce3112c`** : retrait du rechargement automatique sur `controllerchange`.
   L'app se rechargeait seule après chaque nouvelle version (et au retour après plus d'une
   heure), ce qui obligeait à rafraîchir une à trois fois avant d'être utilisable.
 - 2026-10-21 — `94ab25143` : cartes article comme le site + fond « verre » du mât.
-- 2026-10-18 — `e6b1f2fd6` : mât Sports compacté (payload 15 % → 7 %).
-- 2026-10-17 — `bb36ab5e2` : pointages RSEQ en direct dans le navigateur.
 
 ## 3. Android (Capacitor, F-Droid)
 
@@ -54,31 +56,37 @@ Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmé
 | `android-v1.0.0` | 2026-09-21 | — (antérieure à F-Droid) |
 | `android-v1.0.1` | 2026-10-05 | — (antérieure à F-Droid) |
 | `android-v1.1.0` | 2026-10-07 | ✅ publiée (MR fdroiddata 49671 fusionnée le 2026-10-15) |
-| `android-v1.1.1` | 2026-10-21 | ✅ publiée (recette `bba9c08a` du 2026-10-22 ; APK sur f-droid.org le 2026-10-25, 9 h 08 HAE) |
-| `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
-| `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
-| `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
-| `android-v1.2.3` | 2026-10-23 | ✅ publiée (recette `fa454f12` du 2026-10-24 ; vue sur f-droid.org le 2026-10-28, entre le 27 oct. 9 h 40 et le 28 oct. 9 h 37 HAE) |
-| `android-v1.2.4` | 2026-10-25 | ⏳ recette mise à jour le 2026-10-26 (MR 54228 fusionnée, `4ee66bdb`, saveur `fdroid`) ; CurrentVersion 1.2.4 / 9 ; pas encore publiée |
+| `android-v1.1.1` | 2026-10-21 | ✅ publiée (recette `bba9c08a` du 2026-10-22 ; APK sur f-droid.org le 2026-10-25) |
+| `android-v1.2.0` | 2026-10-23 | ⏭️ jamais construite par F-Droid (dépassée par 1.2.3) |
+| `android-v1.2.1` | 2026-10-23 | ⏭️ jamais construite par F-Droid (dépassée par 1.2.3) |
+| `android-v1.2.2` | 2026-10-23 | ⏭️ jamais construite par F-Droid (dépassée par 1.2.3) |
+| `android-v1.2.3` | 2026-10-23 | ✅ publiée (recette `fa454f12` du 2026-10-24 ; vue sur f-droid.org le 2026-10-28) |
+| `android-v1.2.4` | 2026-10-25 | ✅ publiée (recette MR 54228 du 2026-10-26, saveur `fdroid` ; vue sur f-droid.org le 2026-11-02, après le 29 oct.) |
+| `android-v1.2.5` | 2026-11-01 (9 h 54 HNE, `82c39961e`) | ⏳ recette mise à jour le 2026-11-02, 1 h 33 HNE (« bot: Update LE-RADAR to 10 ») ; CurrentVersion 1.2.5 / 10 ; pas encore publiée |
 
-Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-29) :
-**1.2.3 (versionCode 8)** (suggérée ; 1.1.1 / 4 et 1.1.0 / 3 encore listées). Recette fdroiddata : CurrentVersion **1.2.4 (9)**. `main` est à **1.2.4 (versionCode 9)**.
+Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-11-02) :
+**1.2.4 (versionCode 9)** (suggérée ; 1.2.3 / 8 et 1.1.1 / 4 encore listées). Recette fdroiddata : CurrentVersion **1.2.5 (10)**. `main` est à **1.2.5 (versionCode 10)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
 
-### Changements web pas encore dans l'APK (après `android-v1.2.4`)
+### Changements web pas encore dans l'APK (après `android-v1.2.5`)
 
-Aucun changement dans `mobile/` ni `android/` depuis l'étiquette : les changements suivants
-touchent le site seulement (Pomo, Solitaire, page Sports, radios du site).
+Aucun changement dans `mobile/` ni `android/` depuis l'étiquette. Côté site seulement :
 
-- `daf1b3834`, `6ce6d91a0` — un poste qui joue n'affiche plus « Hors ligne » (CHOQ).
-- `16b517d38` — carte citation du Pomo compacte sur téléphone.
-- `c69af7581` — barre radio du Pomo et du Solitaire identique au Radar.
-- `3dacbb807` — fin de période du Pomo fiable en arrière-plan.
-- `ec64eaf4d`, `b301e5265` — régates de voile : plages de dates, bandeau compact, résultats 24 h.
-- `7ad018a8d` — contours radio plus visibles, minuterie Pomo agrandie sur téléphone.
+- `870470192` — bannières de rubrique écartées des images d'article (#311).
+- `67ca60b02`, `b0b161ffc` — espaces insécables dans les titres, fiche bornée à 1360 px.
+- `50620a653`, `300ee47e0` — pied de page v2 et icônes des réseaux.
+- `94e27f3ef` — fiches article statiques `/article/`.
+- `ba6dd537d` — l'extrait ne reprend plus le titre d'une carte voisine (#279).
+- Kit média, affiches et publications sociales (Bluesky, Tumblr, Buffer) : hors application.
+
+### Contenu de `android-v1.2.5` (versionCode 10)
+
+Reprend les changements du site faits depuis 1.2.4 jusqu'à `82c39961e` : poste qui joue sans
+« Hors ligne » (CHOQ), barre radio et Pomo retouchés, régates de voile, impression
+(`40c96e03c`).
 
 ### Contenu de `android-v1.2.4` (versionCode 9)
 
