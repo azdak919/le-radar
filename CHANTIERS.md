@@ -27,3 +27,6 @@ Fichier de passation entre IA (Claude Code, Codex, Cursor, OpenCode…). Détail
 
 ## Tenir à jour
 Quand un chantier avance ou se termine : cocher la liste de l'issue, fermer l'issue, et mettre à jour cet index dans le même PR.
+
+## Photo imposée en double (2 nov. 2026) — corrigé
+- `dedupeCardImages` regroupe aussi par `stockImage` ; le billet épinglé garde la photo imposée, l'autre prend une autre photo (ou l'image par défaut). Test : tests/pinned-photo-dedupe.mjs. news.json corrigé (Tribune « gutted motion »).
