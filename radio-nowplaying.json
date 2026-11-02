@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T05:06:36.910Z",
+  "updatedAt": "2026-11-02T06:06:40.120Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T05:05:58.223Z"
+      "checkedAt": "2026-11-02T06:06:00.800Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T05:06:00.034Z"
+      "checkedAt": "2026-11-02T06:06:02.949Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Sound Of Soul",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Roots, Rock, Reggae",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Adventures In Music",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Sound Of Soul",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,17 +74,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T05:06:03.031Z"
+      "checkedAt": "2026-11-02T06:06:05.530Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cinema Smackdown",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "00:30",
-        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Experiments",
@@ -94,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "Cinema Smackdown",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T05:06:16.889Z"
+      "checkedAt": "2026-11-02T06:06:20.029Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T05:06:17.922Z"
+      "checkedAt": "2026-11-02T06:06:21.183Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T05:06:36.559Z"
+      "checkedAt": "2026-11-02T06:06:39.770Z"
     }
   }
 }
