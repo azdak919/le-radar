@@ -385,8 +385,16 @@ assert.equal(chyzOverlap?.title, 'Spécial', 'le créneau CHYZ commencé le plus
   const todayDow = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[wd];
   const weekStart = addDays(today, todayDow === 0 ? -6 : 1 - todayDow);
   const nextMonday = addDays(weekStart, 7);
-  const utc17 = (ymd) => `${ymd}T21:00:00+00:00`;
-  const utc18 = (ymd) => `${ymd}T22:00:00+00:00`;
+  // Décalage réel de Toronto ce jour-là (HAE -04:00 ou HNE -05:00), pour que
+  // « 17 h » reste 17 h heure locale des deux côtés du changement d'heure.
+  const tzOffset = (ymd) => {
+    const name = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Toronto', timeZoneName: 'longOffset' })
+      .formatToParts(new Date(`${ymd}T17:00:00Z`))
+      .find((p) => p.type === 'timeZoneName').value;
+    return name.replace('GMT', '') || '+00:00';
+  };
+  const utc17 = (ymd) => `${ymd}T17:00:00${tzOffset(ymd)}`;
+  const utc18 = (ymd) => `${ymd}T18:00:00${tzOffset(ymd)}`;
   const episodes = {
     [weekStart]: [{
       title: 'ep',
