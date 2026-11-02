@@ -1,72 +1,37 @@
 {
-  "updated": "2026-11-02T16:11:06.504Z",
+  "updated": "2026-11-02T17:10:06.327Z",
   "total": 185,
   "withImage": 167,
   "withCredit": 167,
-  "cited": 98,
-  "pending": 51,
+  "cited": 99,
+  "pending": 50,
   "missingHero": 0,
   "ok": false,
-  "checked": 58,
-  "updatedCount": 11,
-  "citedNew": 7,
-  "fallbackNew": 51,
+  "checked": 55,
+  "updatedCount": 6,
+  "citedNew": 5,
+  "fallbackNew": 50,
   "samples": [
     {
-      "title": "Des vignes hybrides pour résister au froid",
+      "title": "Prendre une photo, est-ce vraiment se souvenir ?",
       "source": "La Pige",
-      "credit": "Photo : Gabriel Barrette",
+      "credit": "Photo : Anaëlle Chevert",
       "cited": true,
       "method": "body-line"
     },
     {
-      "title": "La Fondation du Domaine-du-Roy célèbre 40 ans d’impact sur les soins de santé de proximité",
+      "title": "Pénurie d’arbitres : le football durement touché au Saguenay–Lac-Saint-Jean",
       "source": "La Pige",
-      "credit": "Photo : Fondation du Domaine-du-Roy",
+      "credit": "Photo : Arthur Bakhache",
       "cited": true,
       "method": "body-line"
     },
     {
-      "title": "De Sydenham à Albani : ce que racontent les rues du Saguenay",
+      "title": "L’IA, nouvelle arme des fraudeurs en cryptomonnaies",
       "source": "La Pige",
-      "credit": "Photo : Émile Beauséjour",
+      "credit": "Photo : Alexis Auclair",
       "cited": true,
       "method": "body-line"
-    },
-    {
-      "title": "Quand la fièvre des cartes de hockey s’invite au comptoir",
-      "source": "La Pige",
-      "credit": "Photo : Mathieu Bisson",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Youth and Climate Activism",
-      "source": "The McGill Daily",
-      "credit": "Photo : Lëa-Kim Châteauneuf / Wikimedia Commons / CC BY-SA 4.0",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Princeton Professor Beth Lew-Williams Wins 2026 Cundill History Prize",
-      "source": "The McGill Daily",
-      "credit": "Photo : Cundill History Prize logo, https",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "NAZA: When the Perpetrators Tell the Story",
-      "source": "The McGill Daily",
-      "credit": "Photo: The McGill Daily",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Guerre en Palestine : trois ans plus tard, Montréal manifeste encore",
-      "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
@@ -78,9 +43,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",

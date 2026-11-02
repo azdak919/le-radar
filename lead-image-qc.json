@@ -1,25 +1,19 @@
 {
-  "updated": "2026-11-02T16:09:21.779Z",
+  "updated": "2026-11-02T17:08:50.885Z",
   "total": 185,
   "withPhoto": 169,
   "withStock": 30,
   "withCampusBank": 28,
   "fullyCovered": 185,
   "leadReadyPhotos": 146,
-  "pageScraped": 27,
-  "photosRecovered": 27,
+  "pageScraped": 26,
+  "photosRecovered": 26,
   "imagesCleared": 10,
-  "stockSearches": 40,
-  "stockFound": 24,
-  "campusBankFound": 21,
+  "stockSearches": 39,
+  "stockFound": 23,
+  "campusBankFound": 20,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Virage conservateur en Colombie-Britannique",
-      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
-    },
     {
       "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
       "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
@@ -27,10 +21,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
     },
     {
-      "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
-      "link": "https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre/?utm_source=rss&utm_medium=rss&utm_campaign=en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre",
+      "title": "Virage conservateur en Colombie-Britannique",
+      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/en-direct-de-lunivers.avif"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
+    },
+    {
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -39,10 +39,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "Men’s Club Hockey Perfect Start to the Season",
-      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
+      "title": "Bishop’s Culture is Community",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "Strong Start to the Season for the Gaiters",
@@ -55,12 +55,6 @@
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "I Love Friendsgiving",
-      "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
     },
     {
       "title": "La femme parfaite est un objet",
@@ -81,10 +75,16 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "Ottawa monument dedicated to LGBT Purge survivors now open",
-      "link": "https://thelinknewspaper.ca/article/16521",
+      "title": "Decline in Canadian acceptance of gender diversity",
+      "link": "https://thelinknewspaper.ca/article/16520",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_NEWS_Monument_celebrates_queer_Canadians_Annabelle_Olumese_690_863.png"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_NEWS_Canadians_becoming_less_accepting_Mira_De_Koven_690_914.png"
+    },
+    {
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_NEWS_New_texting_service_Helena_Reyes_Teruel_690_863.png"
     }
   ]
 }
