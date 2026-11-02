@@ -19,7 +19,7 @@
  */
 
 const fs = require('fs');
-const { applyLeadImagePins } = require('./lead-image-pins-lib');
+const { applyLeadImagePins, loadPins, normUrl } = require('./lead-image-pins-lib');
 const path = require('path');
 const { hasUsableImage } = require('./lead-fallback-lib');
 const {
@@ -442,9 +442,18 @@ async function dedupeCardImages(items = []) {
   const keyOf = (u) => String(u || '').replace(/^https?:\/\//, '').replace(/[?#].*$/, '')
     .replace(/-\d+x\d+(?=\.[a-z]+$)/i, '').toLowerCase();
   const groups = new Map();
+  // Photo imposée (data/lead-image-pins.json) : réservée à son billet. On
+  // regroupe aussi par stockImage, sinon la banque pouvait redonner la même
+  // photo à un autre billet (McGill_University_Montréal, 2 nov. 2026).
+  const pins = loadPins();
+  const isPinned = (it) => {
+    const pin = pins.pins.get(normUrl(it.link));
+    return !!(pin && pin.stockImage && pin.stockImage === it.stockImage);
+  };
   for (const it of items) {
-    if (!it || !it.image) continue;
-    const k = keyOf(it.image);
+    const src = it && (it.image || it.stockImage);
+    if (!src) continue;
+    const k = keyOf(src);
     if (!groups.has(k)) groups.set(k, []);
     groups.get(k).push(it);
   }
@@ -452,11 +461,17 @@ async function dedupeCardImages(items = []) {
   let fixed = 0;
   for (const group of groups.values()) {
     if (group.length < 2) continue;
-    group.sort((a, b) => (Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0));
+    group.sort((a, b) => (isPinned(b) - isPinned(a))
+      || ((Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0)));
     for (const it of group.slice(1)) {
+      const dupStock = !it.image && it.stockImage;
       it.image = '';
       it.leadImageReady = false;
       clearMirroredLead(it);
+      if (dupStock) {
+        // Sans autre photo de saison : image par défaut (champs vides).
+        for (const f of ['stockImage', 'imageCredit', 'imageCreator', 'imageSourceUrl', 'imageLicense']) delete it[f];
+      }
       let stock = null;
       try { stock = await findStockPhoto(it); } catch { stock = null; }
       if (!stock?.stockImage || usedStock.has(stock.stockImage)) {
