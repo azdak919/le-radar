@@ -97,3 +97,25 @@ test('zone sûre : une fois épinglée, la barre reste sous la zone d’état', 
   expect(pinned.cap.top).toBeCloseTo(0, 0);
   expect(pinned.cap.bottom).toBeGreaterThanOrEqual(pinned.tuner.top - 0.5);
 });
+
+test.describe('iPad paysage (app installée)', () => {
+  test.use({ viewport: { width: 1024, height: 768 } });
+  test('zone sûre : la coiffe a la même teinte que le synthé', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.tuner-safe-cap', { state: 'attached' });
+    const r = await page.evaluate(() => {
+      const s = document.createElement('style');
+      s.textContent = ':root { --safe-top: 24px; }';
+      document.head.appendChild(s);
+      const cap = document.querySelector('.tuner-safe-cap');
+      const tuner = document.querySelector('#tuner');
+      return {
+        h: cap.getBoundingClientRect().height,
+        cap: getComputedStyle(cap).backgroundColor,
+        tuner: getComputedStyle(tuner).backgroundColor,
+      };
+    });
+    expect(r.h).toBeCloseTo(24, 0);
+    expect(r.cap).toBe(r.tuner);
+  });
+});

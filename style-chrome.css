@@ -2222,6 +2222,13 @@ html.has-tuner-safe-cap .tuner {
   background: var(--tuner-bg);
   pointer-events: none;
 }
+/* iPad / tablette en app installée (≥720px) : l'inset haut n'y vaut PAS 0
+   (~24 px, barre d'état iPadOS). Le synthé y prend la teinte de session :
+   la coiffe doit la suivre, sinon une bande grise distincte reste sous
+   l'heure et la batterie au-dessus de la barre radio (bug iPad, 2026-11-02). */
+@media (min-width: 720px) {
+  .tuner-safe-cap { background: #101816; }
+}
 .masthead-inner,
 .tuner-inner,
 .wire {
