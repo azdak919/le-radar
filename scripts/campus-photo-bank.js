@@ -110,7 +110,8 @@ function mergeCampusEntries(curated = [], extras = []) {
   const seen = new Set();
   const out = [];
   for (const e of [...curated, ...extras]) {
-    const u = String(e?.url || '').trim();
+    // Clé normalisée : la même photo avec ou sans ?utm_… ne compte qu’une fois.
+    const u = stockKey(e?.url || '');
     if (!u || seen.has(u)) continue;
     seen.add(u);
     out.push(e);
@@ -956,9 +957,9 @@ function diversifyCampusBankItems(items = []) {
         if (winterish.length) pool = winterish;
       }
 
-      let candidates = pool.filter((e) => !used.has(e.url));
+      let candidates = pool.filter((e) => !used.has(stockKey(e.url)));
       if (!candidates.length) {
-        candidates = entries.filter((e) => !used.has(e.url));
+        candidates = entries.filter((e) => !used.has(stockKey(e.url)));
       }
 
       // Banque épuisée : retirer le doublon plutôt que réafficher la même image.
@@ -973,7 +974,7 @@ function diversifyCampusBankItems(items = []) {
       const seed = String(item.link || item.title || i);
       const hash = crypto.createHash('sha1').update(`${seed}|${i}`).digest();
       const pick = candidates[hash[0] % candidates.length];
-      used.add(pick.url);
+      used.add(stockKey(pick.url));
 
       if (item.stockImage !== pick.url) {
         Object.assign(item, entryToStockFields(pick));

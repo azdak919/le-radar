@@ -907,6 +907,9 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   const file = path.split('/').pop().replace(/[_+.-]+/g, ' ');
   if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) return false;
   if (captionLooksLikeCampaignGraphic(text)) return false;
+  // Source qui exporte ses vraies photos en « Capture d’écran, le … » (The Campus,
+  // Bishop’s : photo du débat électoral 856×1080) : indice de source explicite.
+  if (ctx.screenshotPhotos && SCREENSHOT_FILE_RE.test(file)) return true;
   // Nom de fichier d'appareil photo (IMG_0067, DSC_1234, _U2A7376) : une vraie
   // photo, même sans alt (The Link, 900×1200) — pas une affiche montée.
   if (looksLikeCameraFile(file)) return true;
@@ -1135,6 +1138,7 @@ function imageOptionsFromHints(hints = {}) {
   return {
     preferSizeFull: !!hints.preferSizeFull,
     preferFirstContentImage: !!hints.preferFirstContentImage,
+    screenshotPhotos: !!hints.screenshotPhotos,
     demotePathPatterns: imageDemotePatternsFromHints(hints),
   };
 }
@@ -1180,7 +1184,7 @@ function leadImageUrlCandidates(raw = '') {
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
   /** Portrait recadrable (crédit Photo/Dessin, pas une affiche) : une 3:2 centrée. */
   const portraitHit = (url, width, height, ctx, source) => (
-    isCropSafePortrait(width, height, { ...ctx, url })
+    isCropSafePortrait(width, height, { ...ctx, url, screenshotPhotos: !!options.screenshotPhotos })
       ? { url, width, height, source, leadReady: true, cropSafe: true }
       : null
   );
