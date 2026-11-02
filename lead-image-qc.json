@@ -1,30 +1,30 @@
 {
-  "updated": "2026-11-02T20:08:29.441Z",
+  "updated": "2026-11-02T21:09:38.205Z",
   "total": 185,
   "withPhoto": 169,
   "withStock": 31,
   "withCampusBank": 28,
   "fullyCovered": 185,
   "leadReadyPhotos": 145,
-  "pageScraped": 26,
-  "photosRecovered": 26,
-  "imagesCleared": 10,
+  "pageScraped": 25,
+  "photosRecovered": 25,
+  "imagesCleared": 9,
   "stockSearches": 40,
-  "stockFound": 24,
-  "campusBankFound": 21,
+  "stockFound": 25,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
-      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
-    },
     {
       "title": "Virage conservateur en Colombie-Britannique",
       "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
+    },
+    {
+      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
+      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
     },
     {
       "title": "Un monde bâti sur du sable",
@@ -60,7 +60,7 @@
       "title": "I Love Friendsgiving",
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "La femme parfaite est un objet",
@@ -72,7 +72,7 @@
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
+      "image": null
     },
     {
       "title": "Olivia Rodrigo au Centre Bell",
@@ -81,10 +81,10 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "Unwanted attention beyond the scoreboard",
-      "link": "https://thelinknewspaper.ca/article/16522",
+      "title": "Hockey is becoming too American",
+      "link": "https://thelinknewspaper.ca/article/16529",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Sexualization_of_female_athletes_Sehra_Maloney_690_863.PNG"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Americanization_of_the_NHL_Isobel_Budding_690_893.png"
     }
   ]
 }
