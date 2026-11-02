@@ -1,132 +1,139 @@
 {
-  "updatedAt": "2026-11-02T12:45:43.629Z",
+  "updatedAt": "2026-11-02T14:06:42.202Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Lundi Indie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
+      "next": {
+        "title": "K-C'EST ÇA ?",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://chyz.ca/emission/k-cest-ca/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Lundi Indie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:44:22.524Z"
+      "checkedAt": "2026-11-02T14:06:04.195Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le terrain sportif",
+        "title": "La collation",
         "source": "schedule",
-        "start": "06:30",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "Yallah! Lâcher prise avec Rhabibiii",
+        "title": "Faits de société!",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/faits-de-societe"
       },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:44:24.402Z"
+      "checkedAt": "2026-11-02T14:06:06.038Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Unmuted with Svetlana and Miss Trish",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00"
+        "title": "Latin Music Mondays",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Le Lendemain de la veille",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00"
+        "title": "All Things Campus",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Unmuted with Svetlana and Miss Trish",
+      "showTitle": "Latin Music Mondays",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "stream",
-        "schedule"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:44:50.559Z"
+      "checkedAt": "2026-11-02T14:06:08.503Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Experiments",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "title": "Death of the Midrange",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
       },
       "next": {
-        "title": "Trawling the Megahertz",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "Experiments",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-02T12:45:24.758Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Death of the Midrange",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:45:25.799Z"
+      "checkedAt": "2026-11-02T14:06:22.783Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Le NEUF",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "13:00"
+      },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "18:00"
+      },
+      "track": "",
+      "showTitle": "Le NEUF",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-02T14:06:24.080Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:45:43.279Z"
+      "checkedAt": "2026-11-02T14:06:41.851Z"
     }
   }
 }
