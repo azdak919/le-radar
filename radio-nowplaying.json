@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-02T15:06:48.785Z",
+  "updatedAt": "2026-11-02T16:06:55.507Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "K-C'EST ÇA ?",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://chyz.ca/emission/k-cest-ca/"
-      },
-      "next": {
         "title": "APRIORI",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/apriori/"
       },
+      "next": {
+        "title": "Spillthepsy",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/spillthepsy/"
+      },
       "track": "",
-      "showTitle": "K-C'EST ÇA ?",
+      "showTitle": "APRIORI",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T15:06:08.344Z"
+      "checkedAt": "2026-11-02T16:06:08.014Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Faits de société!",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/faits-de-societe"
-      },
-      "next": {
         "title": "o'keb",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/okeb"
       },
+      "next": {
+        "title": "L'alter ego",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
+      },
       "track": "",
-      "showTitle": "Faits de société!",
+      "showTitle": "o'keb",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T15:06:10.608Z"
+      "checkedAt": "2026-11-02T16:06:09.992Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Music Mondays",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "All Things Campus",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "World Skip The Beat",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Latin Music Mondays",
+      "showTitle": "All Things Campus",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T15:06:13.413Z"
+      "checkedAt": "2026-11-02T16:06:12.628Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "I Think You Might Like This",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
+      "next": {
+        "title": "Twang City",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "I Think You Might Like This",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T15:06:28.655Z"
+      "checkedAt": "2026-11-02T16:06:47.171Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T15:06:30.069Z"
+      "checkedAt": "2026-11-02T16:06:48.519Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Cadence Weapon — Line Dry",
+      "track": "Élégie — Demain minuit",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T15:06:48.434Z"
+      "checkedAt": "2026-11-02T16:06:55.156Z"
     }
   }
 }
