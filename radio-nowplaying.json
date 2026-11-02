@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T12:06:48.053Z",
+  "updatedAt": "2026-11-02T12:45:43.629Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:06:06.979Z"
+      "checkedAt": "2026-11-02T12:44:22.524Z"
     },
     "cism": {
       "id": "cism",
@@ -48,47 +48,47 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:06:09.296Z"
+      "checkedAt": "2026-11-02T12:44:24.402Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
         "title": "Unmuted with Svetlana and Miss Trish",
-        "source": "api-live",
+        "source": "schedule",
         "start": "07:00",
         "end": "08:00"
       },
       "next": {
         "title": "Le Lendemain de la veille",
-        "source": "api-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "09:00"
       },
       "track": "",
       "showTitle": "Unmuted with Svetlana and Miss Trish",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:06:12.401Z"
+      "checkedAt": "2026-11-02T12:44:50.559Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Experiments",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
       "next": {
         "title": "Trawling the Megahertz",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Experiments",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:06:27.395Z"
+      "checkedAt": "2026-11-02T12:45:24.758Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:06:28.490Z"
+      "checkedAt": "2026-11-02T12:45:25.799Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T12:06:47.702Z"
+      "checkedAt": "2026-11-02T12:45:43.279Z"
     }
   }
 }
