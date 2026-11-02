@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-02T21:41:53.924Z",
-  "count": 21,
+  "updated": "2026-11-02T22:10:54.827Z",
+  "count": 23,
   "items": [
     {
       "name": "Quartier Libre",
@@ -163,6 +163,28 @@
       ]
     },
     {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "Exil",
       "institution": "Cégep du Vieux Montréal",
       "type": "cegep",
@@ -179,7 +201,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/WordPresscom",
           "handle": "WordPresscom",
-          "stats": "WordPress.com. 747,455 followers · 322 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
+          "stats": "",
           "label": "Facebook"
         }
       ]
@@ -276,6 +298,42 @@
           "handle": "@theplantdawson",
           "stats": "",
           "label": "TikTok"
+        }
+      ]
+    },
+    {
+      "name": "L'Oisif",
+      "institution": "Cégep de Chicoutimi",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/cegepchicoutimi/",
+          "handle": "@cegepchicoutimi",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/CegepChicoutimi",
+          "handle": "CegepChicoutimi",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://www.twitter.com/CegepChicoutimi",
+          "handle": "@CegepChicoutimi",
+          "stats": "",
+          "label": "X"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/channel/UCK61mhwLjnBG2QgN5vex2bw",
+          "handle": "@UCK61mhwLjnBG2QgN5vex2bw",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },

@@ -1,37 +1,30 @@
 {
-  "updated": "2026-11-02T21:40:34.502Z",
+  "updated": "2026-11-02T22:09:37.487Z",
   "total": 185,
   "withImage": 167,
   "withCredit": 167,
-  "cited": 96,
-  "pending": 53,
+  "cited": 94,
+  "pending": 55,
   "missingHero": 0,
   "ok": false,
-  "checked": 58,
-  "updatedCount": 6,
-  "citedNew": 5,
-  "fallbackNew": 53,
+  "checked": 57,
+  "updatedCount": 5,
+  "citedNew": 2,
+  "fallbackNew": 55,
   "samples": [
     {
-      "title": "Les journalistes, ennemis des pays totalitaires",
-      "source": "La Pige",
-      "credit": "Photo : Istock",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Pour Halloween, ce sont les pesticides qui font peur",
+      "title": "Quand notre quotidien change de couleur",
       "source": "La Pige",
       "credit": "Photo : Diego Pinto de Queiros",
       "cited": true,
       "method": "body-line"
     },
     {
-      "title": "Fermeture du Berlioz : une dernière soirée haute en émotions",
+      "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
       "source": "La Pige",
-      "credit": "Photo : Mathieu Bisson",
-      "cited": true,
-      "method": "body-line"
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
@@ -43,9 +36,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
