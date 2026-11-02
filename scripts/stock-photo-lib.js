@@ -1144,6 +1144,8 @@ function scoreCandidate(hit, matchTokens, context = null) {
   // Article qui mentionne été ET hiver (ex. prévisions El Niño) : ne pas
   // forcer un conflit saisonnier — le sujet n'est pas « un été » ou « un hiver ».
   const mixedSeasonTopic = !!(context?.summerTopic && context?.winterTopic);
+  // Jamais de photo enneigée hors de l'hiver réel (15 nov. → 31 mars), même pour un sujet d'hiver.
+  if (photoWinter && !require('./campus-photo-bank').isSnowSeason(context?.now || new Date())) return -1;
   if (!mixedSeasonTopic) {
     if (context?.summerTopic && photoWinter) return -1;
     if (context?.winterTopic && photoSummer && !photoWinter) return -1;
