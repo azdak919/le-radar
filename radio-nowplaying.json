@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-02T02:06:41.241Z",
+  "updatedAt": "2026-11-02T03:37:11.161Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Kurdistan, Ici et là-bas",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/kurdistan-ici-et-la-bas/"
-      },
+      "current": null,
       "next": {
         "title": "Lundi Indie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Kurdistan, Ici et là-bas",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T02:06:03.354Z"
+      "checkedAt": "2026-11-02T03:36:34.283Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T02:06:04.918Z"
+      "checkedAt": "2026-11-02T03:36:36.099Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T02:06:07.451Z"
+      "checkedAt": "2026-11-02T03:36:38.165Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Afro Archives",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/afro-archives"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Cinema Smackdown",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "00:30",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+      },
       "track": "",
-      "showTitle": "Afro Archives",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T02:06:21.973Z"
+      "checkedAt": "2026-11-02T03:36:52.502Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T02:06:22.802Z"
+      "checkedAt": "2026-11-02T03:36:53.559Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T02:06:40.890Z"
+      "checkedAt": "2026-11-02T03:37:10.811Z"
     }
   }
 }
