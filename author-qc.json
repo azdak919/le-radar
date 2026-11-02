@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-02T15:36:45.393Z",
-  "total": 184,
-  "withAuthor": 184,
-  "mismatches": 14,
+  "updated": "2026-11-02T16:07:25.080Z",
+  "total": 185,
+  "withAuthor": 185,
+  "mismatches": 15,
   "ok": true,
   "samples": [
+    {
+      "title": "Youth and Climate Activism",
+      "link": "https://www.mcgilldaily.com/2026/11/youth-and-climate-activism/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Léah Tattersall",
+      "reason": "page-byline"
+    },
     {
       "title": "Keeping our unhoused community warm this winter",
       "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
@@ -86,12 +94,12 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
+      "title": "Celebrating CAEO Québec’s 50th Anniversary",
+      "link": "https://www.mcgilldaily.com/2026/10/celebrating-caeo-quebecs-50th-anniversary/",
       "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
+      "fieldAuthor": "Mara Gibea et Justin Friedberg",
+      "canonicalAuthor": "Mara Gibea and Justin Friedberg",
+      "reason": "page-byline-overrides-rss"
     },
     {
       "title": "Letters from the Editors October 2026",
@@ -118,5 +126,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 14
+  "fixed": 15
 }

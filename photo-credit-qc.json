@@ -1,23 +1,72 @@
 {
-  "updated": "2026-11-02T15:39:46.891Z",
-  "total": 184,
-  "withImage": 164,
-  "withCredit": 164,
-  "cited": 96,
-  "pending": 50,
+  "updated": "2026-11-02T16:11:06.504Z",
+  "total": 185,
+  "withImage": 167,
+  "withCredit": 167,
+  "cited": 98,
+  "pending": 51,
   "missingHero": 0,
   "ok": false,
-  "checked": 53,
-  "updatedCount": 4,
-  "citedNew": 3,
-  "fallbackNew": 50,
+  "checked": 58,
+  "updatedCount": 11,
+  "citedNew": 7,
+  "fallbackNew": 51,
   "samples": [
     {
-      "title": "Pénurie de médecins persistante au Saguenay-Lac-Saint-Jean",
+      "title": "Des vignes hybrides pour résister au froid",
       "source": "La Pige",
-      "credit": "Photo : Dominic Delude",
+      "credit": "Photo : Gabriel Barrette",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "La Fondation du Domaine-du-Roy célèbre 40 ans d’impact sur les soins de santé de proximité",
+      "source": "La Pige",
+      "credit": "Photo : Fondation du Domaine-du-Roy",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "De Sydenham à Albani : ce que racontent les rues du Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Émile Beauséjour",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Quand la fièvre des cartes de hockey s’invite au comptoir",
+      "source": "La Pige",
+      "credit": "Photo : Mathieu Bisson",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Youth and Climate Activism",
+      "source": "The McGill Daily",
+      "credit": "Photo : Lëa-Kim Châteauneuf / Wikimedia Commons / CC BY-SA 4.0",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Princeton Professor Beth Lew-Williams Wins 2026 Cundill History Prize",
+      "source": "The McGill Daily",
+      "credit": "Photo : Cundill History Prize logo, https",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "NAZA: When the Perpetrators Tell the Story",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Guerre en Palestine : trois ans plus tard, Montréal manifeste encore",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
@@ -29,9 +78,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
