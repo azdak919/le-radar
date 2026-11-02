@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T03:37:11.161Z",
+  "updatedAt": "2026-11-02T04:16:25.347Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T03:36:34.283Z"
+      "checkedAt": "2026-11-02T04:15:46.811Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "20:30",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Basses fréquences (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/basses-frequences"
       },
+      "next": {
+        "title": "L'alter ego (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Basses fréquences (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T03:36:36.099Z"
+      "checkedAt": "2026-11-02T04:15:48.762Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Cha Cha In Blue",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "Ill Groove Garden",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
-      "track": "",
-      "showTitle": "Cha Cha In Blue",
+      "next": {
+        "title": "Sound Of Soul",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "01:00"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "Ill Groove Garden",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T03:36:38.165Z"
+      "checkedAt": "2026-11-02T04:15:51.270Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T03:36:52.502Z"
+      "checkedAt": "2026-11-02T04:16:06.052Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T03:36:53.559Z"
+      "checkedAt": "2026-11-02T04:16:07.256Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T03:37:10.811Z"
+      "checkedAt": "2026-11-02T04:16:24.997Z"
     }
   }
 }
