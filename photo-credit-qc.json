@@ -1,23 +1,37 @@
 {
-  "updated": "2026-11-02T02:08:44.420Z",
+  "updated": "2026-11-02T03:09:21.367Z",
   "total": 184,
-  "withImage": 159,
-  "withCredit": 159,
+  "withImage": 165,
+  "withCredit": 165,
   "cited": 98,
-  "pending": 43,
+  "pending": 49,
   "missingHero": 0,
   "ok": false,
-  "checked": 49,
-  "updatedCount": 7,
+  "checked": 55,
+  "updatedCount": 13,
   "citedNew": 6,
-  "fallbackNew": 43,
+  "fallbackNew": 49,
   "samples": [
     {
-      "title": "Le recours à l’aide alimentaire atteint un niveau record au Québec",
+      "title": "« Une augmentation des tarifs de 3% » : la STS dévoile ses orientations pour 2027",
       "source": "La Pige",
-      "credit": "Photo : Rosalie Lepage",
+      "credit": "Photo : Kevin Duquette-Goulet",
       "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "body-line"
+    },
+    {
+      "title": "The Chickens Are Fine: An Open Mic Night with Wit and Whimsy",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Jésus et autres mots-clics",
@@ -27,14 +41,42 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
+      "title": "Bishop’s Hosts Provincial Election Debate",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "If You Ever Get the Chance, Take that Language Class",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Une épidémie de solitude masculine, vraiment ?",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Félix Fournier l Le Délit",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "BU Snow Prepares for Another Winter at Bishop’s",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "BU Football: So You’re Telling Me There’s a Chance",
       "source": "The Campus",
       "credit": "Photo: The Campus",
       "cited": false,
@@ -53,13 +95,6 @@
       "credit": "Image via Pinterest",
       "cited": true,
       "method": "via-attribution"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
     }
   ]
 }
