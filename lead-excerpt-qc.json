@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-02T17:07:12.756Z",
+  "updated": "2026-11-02T18:23:35.239Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 7,
   "withLeadExcerpt": 126,
-  "candidates": 10,
-  "enriched": 3,
+  "candidates": 7,
+  "enriched": 0,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,33 +17,6 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
-    },
-    {
-      "title": "Prendre une photo, est-ce vraiment se souvenir ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/prendre-une-photo-est-ce-vraiment-se-souvenir/?utm_source=rss&utm_medium=rss&utm_campaign=prendre-une-photo-est-ce-vraiment-se-souvenir",
-      "ok": true,
-      "score": 96,
-      "chars": 385,
-      "sample": "Elles sont dans nos téléphones, nos albums et nos réseaux sociaux. Les photographies occupent une pl",
-      "changed": true
-    },
-    {
-      "title": "Pénurie d’arbitres : le football durement touché au Saguenay–Lac-Saint-Jean",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/penurie-darbitres-le-football-durement-touche-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=penurie-darbitres-le-football-durement-touche-au-saguenay-lac-saint-jean",
-      "ok": true,
-      "score": 100,
-      "chars": 247,
-      "sample": "Le football est le sport le plus touché par la pénurie d’arbitres au Saguenay–Lac-Saint-Jean alors q",
-      "changed": true
-    },
-    {
-      "title": "L’IA, nouvelle arme des fraudeurs en cryptomonnaies",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/lia-nouvelle-arme-des-fraudeurs-en-cryptomonnaies/?utm_source=rss&utm_medium=rss&utm_campaign=lia-nouvelle-arme-des-fraudeurs-en-cryptomonnaies",
-      "ok": true,
-      "score": 96,
-      "chars": 225,
-      "sample": "Des internautes ont été victimes d’arnaques à la cryptomonnaie par des personnages surréalistes comm",
-      "changed": true
     },
     {
       "title": "Youth and Climate Activism",
@@ -79,6 +52,15 @@
       "score": 72,
       "chars": 399,
       "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
+      "changed": false
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
+      "ok": true,
+      "score": 84,
+      "chars": 400,
+      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
       "changed": false
     }
   ]
