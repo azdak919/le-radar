@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-02T21:11:07.717Z",
+  "updated": "2026-11-02T21:40:34.502Z",
   "total": 185,
   "withImage": 167,
   "withCredit": 167,
@@ -7,15 +7,29 @@
   "pending": 53,
   "missingHero": 0,
   "ok": false,
-  "checked": 56,
-  "updatedCount": 4,
-  "citedNew": 3,
+  "checked": 58,
+  "updatedCount": 6,
+  "citedNew": 5,
   "fallbackNew": 53,
   "samples": [
     {
-      "title": "Le tourisme régional accueille le changement comme une opportunité.",
+      "title": "Les journalistes, ennemis des pays totalitaires",
       "source": "La Pige",
-      "credit": "Photo : Émile Beauséjour",
+      "credit": "Photo : Istock",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Pour Halloween, ce sont les pesticides qui font peur",
+      "source": "La Pige",
+      "credit": "Photo : Diego Pinto de Queiros",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Fermeture du Berlioz : une dernière soirée haute en émotions",
+      "source": "La Pige",
+      "credit": "Photo : Mathieu Bisson",
       "cited": true,
       "method": "body-line"
     },
