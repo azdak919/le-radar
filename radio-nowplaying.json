@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T20:46:08.072Z",
+  "updatedAt": "2026-11-02T22:06:36.546Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Chéri.e, Jme Mobilise!",
+        "title": "Les Arshitechs du Son",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T20:45:36.758Z"
+      "checkedAt": "2026-11-02T22:06:08.471Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Les criquets crinqués",
         "source": "schedule",
         "start": "17:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
+      "next": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T20:45:39.236Z"
+      "checkedAt": "2026-11-02T22:06:10.462Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T20:45:41.995Z"
+      "checkedAt": "2026-11-02T22:06:13.458Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whip Appeal",
+        "title": "The Pressure Drop",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
       "next": {
-        "title": "Dreamscapes",
+        "title": "Voice of the Voiceless",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
       "track": "",
-      "showTitle": "Whip Appeal",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T20:45:59.731Z"
+      "checkedAt": "2026-11-02T22:06:27.599Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T20:46:00.742Z"
+      "checkedAt": "2026-11-02T22:06:29.174Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Bitume",
         "source": "api-live",
@@ -146,14 +140,14 @@
         "slug": "bitume"
       },
       "track": "Élégie — Demain minuit",
-      "showTitle": "Palmarès CHOQ.ca",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T20:46:07.721Z"
+      "checkedAt": "2026-11-02T22:06:36.195Z"
     }
   }
 }
