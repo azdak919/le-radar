@@ -34,3 +34,6 @@ Quand un chantier avance ou se termine : cocher la liste de l'issue, fermer l'is
 - Correctif : teinte de la coiffe alignée à ≥720px (style-chrome.css), test iPad 1024×768 dans tests/tuner-safe-area.spec.mjs, shell radar v987 / sports v348.
 ## Photo imposée en double (2 nov. 2026) — corrigé
 - `dedupeCardImages` regroupe aussi par `stockImage` ; le billet épinglé garde la photo imposée, l'autre prend une autre photo (ou l'image par défaut). Test : tests/pinned-photo-dedupe.mjs. news.json corrigé (Tribune « gutted motion »).
+
+## Buffer X : passe du soir (2 nov. 2026) — fait
+- Cron `7 2 * * *` (≈ 21 h 07 HNE, 22 h 07 HAE) avec EVENING=true : remplit dès la veille les 10 créneaux du lendemain (8 h 30 → 21 h), pool = articles du jour. Mêmes règles (≤ 2 par source, sans doublon, photos d'article, 📸, format). Passes de nuit en secours (freeSlots : aucun doublon). Test : tests/social-buffer.mjs.

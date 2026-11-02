@@ -237,9 +237,10 @@ export function unknownAccounts(items, accounts) {
 }
 
 /** Créneaux "HH:MM" d'aujourd'hui (fuseau tz) encore à venir → ISO UTC. Gère le changement d'heure. */
-export function slotsToday(times, { tz = 'America/Toronto', now = Date.now() } = {}) {
+export function slotsToday(times, { tz = 'America/Toronto', now = Date.now(), dayOffset = 0 } = {}) {
   const f = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' });
-  const day = f.format(now);
+  // dayOffset = 1 : créneaux du lendemain (passe du soir, ≈ 21 h Toronto).
+  const day = dayOffset ? new Date(Date.parse(f.format(now) + 'T12:00:00Z') + dayOffset * 864e5).toISOString().slice(0, 10) : f.format(now);
   const off = t => { const p = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'longOffset' }).formatToParts(t).find(x => x.type === 'timeZoneName').value;
     const m = p.match(/([+-])(\d\d):?(\d\d)?/); return m ? (m[1] === '-' ? -1 : 1) * (+m[2] * 60 + +(m[3] || 0)) : 0; };
   return times.map(hm => { let t = Date.parse(`${day}T${hm}:00Z`); t -= off(t) * 60e3; t = Date.parse(`${day}T${hm}:00Z`) - off(t) * 60e3; return t; })
@@ -274,9 +275,10 @@ export function quality(it, accounts = []) {
  * de `slots` candidats, élargit à 72 h. Variété d'abord (≤ perSource par source, file comprise,
  * round-robin), puis qualité (photo réelle, extrait, @ confirmé), puis récence.
  */
-export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H } = {}) {
-  // veille = jour civil précédent (midi UTC du jour − 24 h : robuste au changement d'heure)
-  const prev = dayOf(Date.parse(dayOf(now, tz) + 'T12:00:00Z') - 864e5, 'UTC');
+export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H, evening = false } = {}) {
+  // veille = jour civil précédent (midi UTC du jour − 24 h : robuste au changement d'heure).
+  // Passe du soir : les créneaux sont ceux de demain, la « veille » est donc aujourd'hui.
+  const prev = evening ? dayOf(now, tz) : dayOf(Date.parse(dayOf(now, tz) + 'T12:00:00Z') - 864e5, 'UTC');
   const fresh = items.filter(it => !sentIds.has(it.id) && now - it.date <= maxAgeH * 3600e3 && it.date <= now);
   let pool = fresh.filter(it => dayOf(it.date, tz) === prev);
   if (pool.length < slots) pool = fresh;

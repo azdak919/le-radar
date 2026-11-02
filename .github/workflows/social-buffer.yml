@@ -6,6 +6,7 @@ name: Social — Buffer (X @LeRadar_ca, Pages Facebook et LinkedIn)
 on:
   schedule:
     # Une passe par nuit ≈ 3 h Toronto (3 h 07 HNE, 4 h 07 HAE) : articles de la veille, 10 max.
+    - cron: '7 2 * * *'     # ≈ 21 h 07 HNE (22 h 07 HAE) : passe du soir, créneaux du lendemain
     - cron: '7 8 * * *'
     # Passes de secours (idempotentes : créneaux déjà pris et articles déjà envoyés ignorés).
     # GitHub retarde parfois le cron nocturne de plusieurs heures (1er nov. 2026 : 3 h 07 → 10 h 00 HNE).
@@ -111,6 +112,7 @@ jobs:
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}
           DAILY: ${{ (github.event_name == 'schedule' || inputs.daily) && 'true' || 'false' }}
+          EVENING: ${{ github.event.schedule == '7 2 * * *' && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: node scripts/social/buffer-post.mjs
       - name: Pages Facebook et LinkedIn (places libres, heures de pointe)

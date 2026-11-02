@@ -57,8 +57,11 @@ const maxAgeH = parseInt(process.env.MAX_AGE_H || '', 10) || MAX_AGE_H;
 // SLOT_TIMES="07:30,09:00,…" : programme aujourd'hui à ces heures (America/Toronto) au lieu de l'horaire Buffer.
 // DAILY=true (cron nocturne) : veille + classement, créneaux fixes du jour (jamais l'horaire Buffer).
 const daily = process.env.DAILY === 'true';
+// EVENING=true (cron ≈ 21 h Toronto) : remplit dès la veille les créneaux du lendemain (8 h 30 → 21 h).
+// Les passes de nuit restent en secours : freeSlots écarte les créneaux déjà pris, aucun doublon.
+const evening = daily && process.env.EVENING === 'true';
 const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : daily ? DAILY_SLOTS : null;
-const dues = times ? freeSlots(slotsToday(times), queued.map(p => p.dueAt)) : null;
+const dues = times ? freeSlots(slotsToday(times, { dayOffset: evening ? 1 : 0 }), queued.map(p => p.dueAt)) : null;
 const want = dues ? Math.min(slots, dues.length) : slots;
 const sentIds = new Set(Object.keys(state.sent));
 // SHARE_NOW=true : UN article au hasard (récent, ni envoyé ni en file, photo réelle et source hors file si possible), publié tout de suite.
@@ -72,7 +75,7 @@ const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
   const best = [p => p.img && !p.imgDropped && !qs.has(p.source), p => !qs.has(p.source), p => p.img && !p.imgDropped, () => true]
     .map(f => pool.filter(f)).find(l => l.length) || [];
   return best.length ? [best[Math.floor(Math.random() * best.length)]] : [];
-})() : daily ? selectDaily(items, { sentIds, queuedSources, slots: want, accounts: ACCOUNTS, maxAgeH })
+})() : daily ? selectDaily(items, { sentIds, queuedSources, slots: want, accounts: ACCOUNTS, maxAgeH, evening })
   : selectItems(items, { sentIds, queuedSources, slots: want, maxAgeH });
 if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${daily ? 'nocturne (veille)' : 'manuel'}`);
 

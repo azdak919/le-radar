@@ -203,3 +203,19 @@ console.log('social-buffer: ok');
   const r = refreshPhotoLine(t, it, '');
   assert.ok(r && xlen(r) <= 280 && r.endsWith('📸 ' + it.credit) && r.includes('\nhttps://thelinknewspaper.ca/article/16530\n'), 'raccourci sous 280');
 }
+
+// Passe du soir (≈ 21 h 07 HNE, 02:07Z) : créneaux du LENDEMAIN, 8 h 30 compris ; pool = articles du jour même.
+{
+  const now = Date.parse('2026-11-03T02:07:00Z'); // lundi 2 nov., 21 h 07 HNE
+  const dz = slotsToday(DAILY_SLOTS, { now, dayOffset: 1 });
+  assert.equal(dz.length, DAILY_SLOTS.length, 'tous les créneaux de demain');
+  assert.equal(dz[0], '2026-11-03T13:30:00.000Z', '8 h 30 HNE le 3 nov.');
+  assert.ok(dz.includes('2026-11-03T17:30:00.000Z'), '12 h 30 HNE');
+  // Secours de nuit : créneaux déjà pris par la passe du soir → aucun doublon.
+  assert.equal(freeSlots(slotsToday(DAILY_SLOTS, { now: Date.parse('2026-11-03T08:07:00Z') }), dz).length, 0, 'nuit : rien à refaire');
+  const mk = (src, iso) => `<item><title>${src} titre</title><link>https://ex.org/${src}</link><guid>${src}</guid><pubDate>${new Date(iso).toUTCString()}</pubDate><source url="https://ex.org">${src}</source><description><![CDATA[x]]></description></item>`;
+  const its = parseFeed(`<rss><channel>${mk('Jour', '2026-11-02T15:00:00Z')}${mk('Veille', '2026-11-01T15:00:00Z')}</channel></rss>`); markImages(its);
+  const d = selectDaily(its, { now, slots: 1, evening: true });
+  assert.deepEqual(d.map(i => i.source), ['Jour'], 'soir : articles du jour');
+  console.log('social-buffer (passe du soir): OK');
+}
