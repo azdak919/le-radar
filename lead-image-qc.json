@@ -1,30 +1,30 @@
 {
-  "updated": "2026-11-02T18:39:50.551Z",
+  "updated": "2026-11-02T19:08:49.065Z",
   "total": 185,
   "withPhoto": 169,
   "withStock": 31,
   "withCampusBank": 28,
   "fullyCovered": 185,
   "leadReadyPhotos": 145,
-  "pageScraped": 29,
-  "photosRecovered": 29,
-  "imagesCleared": 12,
+  "pageScraped": 26,
+  "photosRecovered": 26,
+  "imagesCleared": 10,
   "stockSearches": 40,
   "stockFound": 24,
-  "campusBankFound": 20,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Virage conservateur en Colombie-Britannique",
-      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
-    },
     {
       "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
       "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
+    },
+    {
+      "title": "Virage conservateur en Colombie-Britannique",
+      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
     },
     {
       "title": "Un monde bâti sur du sable",
@@ -57,10 +57,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Crossword: Paranormal Activity",
-      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
+      "title": "Editorial: Lowering immigration, but at what cost?",
+      "link": "https://thelinknewspaper.ca/article/16517",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
     },
     {
       "title": "La femme parfaite est un objet",
@@ -81,10 +81,10 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg"
     },
     {
-      "title": "Unwanted attention beyond the scoreboard",
-      "link": "https://thelinknewspaper.ca/article/16522",
+      "title": "Concordia University introduces new campus safety texting service",
+      "link": "https://thelinknewspaper.ca/article/16528",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Sexualization_of_female_athletes_Sehra_Maloney_690_863.PNG"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_NEWS_New_texting_service_Helena_Reyes_Teruel_690_863.png"
     }
   ]
 }
