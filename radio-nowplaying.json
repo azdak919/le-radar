@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T04:16:25.347Z",
+  "updatedAt": "2026-11-02T05:06:36.910Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T04:15:46.811Z"
+      "checkedAt": "2026-11-02T05:05:58.223Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "L'alter ego (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Basses fréquences (reprise)",
+      "showTitle": "L'alter ego (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T04:15:48.762Z"
+      "checkedAt": "2026-11-02T05:06:00.034Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ill Groove Garden",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Sound Of Soul",
         "source": "api-live",
         "start": "00:00",
         "end": "01:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Ill Groove Garden",
+      "next": {
+        "title": "Roots, Rock, Reggae",
+        "source": "api-live",
+        "start": "01:00",
+        "end": "04:00"
+      },
+      "track": "",
+      "showTitle": "Sound Of Soul",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,65 +74,70 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T04:15:51.270Z"
+      "checkedAt": "2026-11-02T05:06:03.031Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Cinema Smackdown",
         "source": "schedule-live",
         "start": "00:00",
         "end": "00:30",
         "url": "http://www.cjlo.com/shows/cinema-smackdown"
       },
+      "next": {
+        "title": "Experiments",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/experiments"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Cinema Smackdown",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T04:16:06.052Z"
+      "checkedAt": "2026-11-02T05:06:16.889Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:01",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T04:16:07.256Z"
+      "checkedAt": "2026-11-02T05:06:17.922Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
@@ -142,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T04:16:24.997Z"
+      "checkedAt": "2026-11-02T05:06:36.559Z"
     }
   }
 }
