@@ -32,3 +32,5 @@ Quand un chantier avance ou se termine : cocher la liste de l'issue, fermer l'is
 - Symptôme : app installée sur iPad, une bande grise sous la barre d'état iPadOS au-dessus de la barre radio épinglée.
 - Cause : `.tuner-safe-cap` gardait `--tuner-bg` alors qu'à ≥720px le synthé prend `#101816` ; l'inset haut n'est pas nul sur iPad.
 - Correctif : teinte de la coiffe alignée à ≥720px (style-chrome.css), test iPad 1024×768 dans tests/tuner-safe-area.spec.mjs, shell radar v987 / sports v348.
+## Photo imposée en double (2 nov. 2026) — corrigé
+- `dedupeCardImages` regroupe aussi par `stockImage` ; le billet épinglé garde la photo imposée, l'autre prend une autre photo (ou l'image par défaut). Test : tests/pinned-photo-dedupe.mjs. news.json corrigé (Tribune « gutted motion »).
