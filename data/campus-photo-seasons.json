@@ -1,0 +1,761 @@
+{
+ "_note": "Saison des photos de repli campus (scripts/tag-campus-seasons.js) — snow true/false/null.",
+ "photos": {
+  "upload.wikimedia.org/wikipedia/commons/e/e8/roddick_gates_(mcgill_university)_2005-09-02.jpg": {
+   "snow": false,
+   "why": "banque du mât : ete"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/2d/mcgill_university_montréal.jpeg": {
+   "snow": false,
+   "why": "catégorie October 2002"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/62/roddick_gates_closed,_mcgill_university,_july_17,_2024.jpg": {
+   "snow": false,
+   "why": "catégorie July 2024"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c0/mcgill_university_downtown_campus_31.jpg": {
+   "snow": true,
+   "why": "prise 2013-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/18/wilson_hall,_mcgill_university.jpg": {
+   "snow": false,
+   "why": "prise 2013-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/1d/4_mcgill_university,_montreal,quebec_2009.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a2/arts_building,_mcgill_university.jpg": {
+   "snow": null,
+   "why": "prise 2012-11 (novembre : incertain)"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/8b/mcgill_university,_winter.jpg": {
+   "snow": true,
+   "why": "texte : Winter"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/ab/université_de_montréal,_pavillon_roger-gaudry.jpg": {
+   "snow": false,
+   "why": "prise 2015-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/2f/uqam-judith-jasmin.jpg": {
+   "snow": false,
+   "why": "prise 2016-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/16/cj_building,_loyola_campus,_communication_studies,_concordia_university.jpg": {
+   "snow": true,
+   "why": "prise 2019-01"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/d1/henry_f._hall_building_07.jpg": {
+   "snow": false,
+   "why": "prise 2014-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/99/henry_f._hall_building_01.jpg": {
+   "snow": false,
+   "why": "prise 2013-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/83/henry_f._hall_building_10.jpg": {
+   "snow": false,
+   "why": "prise 2020-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/fc/loyola_college_building_15.jpg": {
+   "snow": false,
+   "why": "prise 2012-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_mackay_street,_montreal.jpg": {
+   "snow": false,
+   "why": "prise 2012-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/de/pavillon_louis-jacques-casault_3.jpg": {
+   "snow": false,
+   "why": "prise 2018-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a9/wooded_lawn_on_the_universite_laval_campus_at_dusk.jpg": {
+   "snow": false,
+   "why": "prise 2018-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/b/b6/pavillon_ferdinand-vandry_06.jpg": {
+   "snow": false,
+   "why": "prise 2019-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/af/campus_de_longueuil_-_universite_de_sherbrooke_09.jpg": {
+   "snow": false,
+   "why": "prise 2014-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/b/b3/bishop's_university_campus_2011.jpg": {
+   "snow": false,
+   "why": "prise 2011-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ea/bishop's_university_mcgreer_hall.jpg": {
+   "snow": false,
+   "why": "prise 2011-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/14/bandeen_hall.jpg": {
+   "snow": false,
+   "why": "prise 2023-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/46/bishopsu_lac1.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/6a/john_bassett_memorial_library.jpg": {
+   "snow": false,
+   "why": "prise 2023-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/9c/observatoire_de_l`université_bishop_-_panoramio.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/0e/bishop's_university,_mcgreer_hall,_2600,_rue_collège,_sherbrooke_une_partie_des_bâtiments_avec_la_façade_de_la_chapelle_11-d.na.civile-78-3599.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/65/bishop's_university,_mcgreer_hall,_2600,_rue_collège,_sherbrooke_une_partie_des_bâtiments_avec_le_chevet_de_la_chapelle_11-d.na.civile-78-3500.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/thumb/7/74/2016-10_université_du_québec_à_chicoutimi_01.jpg/1920px-2016-10_université_du_québec_à_chicoutimi_01.jpg": {
+   "snow": false,
+   "why": "prise 2016-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/thumb/e/ea/2016-10_université_du_québec_à_chicoutimi_02.jpg/1920px-2016-10_université_du_québec_à_chicoutimi_02.jpg": {
+   "snow": false,
+   "why": "prise 2016-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/9c/facade_uqar.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/thumb/8/81/université_du_québec_à_rimouski_-_entrée_principale.jpg/1920px-université_du_québec_à_rimouski_-_entrée_principale.jpg": {
+   "snow": false,
+   "why": "prise 2005-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/90/uqtr_-_pavillon_michel_sarrazin_01.jpg": {
+   "snow": false,
+   "why": "prise 2009-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/57/uqtr_-_pavillon_michel_sarrazin_03.jpg": {
+   "snow": false,
+   "why": "prise 2009-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/3/34/uqtr_-_pavillon_albert_tessier_et_léon_provancher.jpg": {
+   "snow": false,
+   "why": "prise 2009-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/47/pavillon_pierre-boucher_uqtr.jpg": {
+   "snow": true,
+   "why": "prise 2015-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/94/cégep_du_vieux_montréal01.jpg": {
+   "snow": false,
+   "why": "prise 2009-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/6c/cégep_du_vieux_montréal,_nov_03_2022.jpg": {
+   "snow": false,
+   "why": "texte : autumn"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/f4/pavillon_principal_du_cégep_de_jonquière.jpg": {
+   "snow": false,
+   "why": "prise 2017-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/01/bâtiment_du_cégep_de_jonquière.jpg": {
+   "snow": false,
+   "why": "prise 2010-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a5/pavillon_joseph_angers_du_cégep_de_jonquière.jpg": {
+   "snow": false,
+   "why": "prise 2010-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/4b/entrée_du_pavillon_gérard-arguin_du_cégep_de_jonquière02.jpg": {
+   "snow": false,
+   "why": "prise 2010-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/97/cegep_outaouais.jpg": {
+   "snow": false,
+   "why": "prise 2023-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/2a/campus_félix-leclerc_2024-08-22_01.jpg": {
+   "snow": false,
+   "why": "prise 2024-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ed/campus_félix-leclerc_2024-08-22_02.jpg": {
+   "snow": false,
+   "why": "prise 2024-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/cf/john_abbott_college_007.jpg": {
+   "snow": false,
+   "why": "prise 2012-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/03/john_abbott_college_015.jpg": {
+   "snow": false,
+   "why": "prise 2012-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/3/39/pavillon_principal,_cégep_john-abbott,_21111,_rue_lakeshore_(sainte-anne-de-bellevue)_(8531417191).jpg": {
+   "snow": null,
+   "why": "prise 2010-11 (novembre : incertain)"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ee/dawson_college_1.jpg": {
+   "snow": false,
+   "why": "prise 2025-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/d5/dawson_college_6.jpg": {
+   "snow": false,
+   "why": "prise 2025-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/7/71/dawson_college_05.jpg": {
+   "snow": false,
+   "why": "prise 2011-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/f3/dawson_college_06.jpg": {
+   "snow": false,
+   "why": "prise 2011-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/3/3b/dawson_college_04.jpg": {
+   "snow": false,
+   "why": "prise 2011-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/96/dawson_college_11.jpg": {
+   "snow": true,
+   "why": "prise 2014-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/0e/dawson_college_10.jpg": {
+   "snow": true,
+   "why": "prise 2014-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c2/dawson_college_09.jpg": {
+   "snow": true,
+   "why": "prise 2014-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c8/collège_dawson.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/88/collège_dawson,_façade_sur_sherbrooke_o,_montréal_2005-11-10.jpg": {
+   "snow": false,
+   "why": "texte : autumn"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/16/metro-level_entrance,_dawson_college,_apr_06_2022.jpg": {
+   "snow": false,
+   "why": "prise 2022-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/e9/collège_lionel-groulx_(entrée_du_vieux_séminaire).jpg": {
+   "snow": true,
+   "why": "prise 2006-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/ac/collège_lionel-groulx_1.jpg": {
+   "snow": true,
+   "why": "prise 2006-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/98/collège_lionel-groulx.jpg": {
+   "snow": true,
+   "why": "prise 2014-02"
+  },
+  "upload.wikimedia.org/wikipedia/commons/7/70/cégep_de_chicoutimi_(vue_gauche_ancien_séminaire).jpg": {
+   "snow": false,
+   "why": "prise 2008-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/82/entrée_de_l'ancien_séminaire_de_chicoutimi.jpg": {
+   "snow": false,
+   "why": "prise 2009-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/cf/cégep_chicoutimi_aile_h.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/99/montréal,_cégep,_maisonneuve_02.jpg": {
+   "snow": true,
+   "why": "prise 2024-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/88/montréal,_cégep,_maisonneuve_01.jpg": {
+   "snow": true,
+   "why": "prise 2024-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/41/entrance_of_college_de_maisonneuve.jpg": {
+   "snow": false,
+   "why": "prise 2026-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a7/cégep_de_rimouski.jpg": {
+   "snow": false,
+   "why": "prise 2012-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/84/rimouski-cegep.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/7/71/cegeprimouski2.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/b/b0/bishop's_university_campus_2011_03.jpg": {
+   "snow": false,
+   "why": "prise 2011-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/82/bishop's_university_campus_2011_04.jpg": {
+   "snow": false,
+   "why": "prise 2011-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/df/arts_building,_mcgill_university,_aug_31_2022.jpg": {
+   "snow": false,
+   "why": "prise 2022-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/8b/université_de_sherbrooke_-_centre_multifonctionnel.jpg": {
+   "snow": true,
+   "why": "prise 2011-12"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c8/pavillon_roger-gaudry_ii.jpg": {
+   "snow": false,
+   "why": "prise 2017-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/21/université_de_montréal_(_école_polytechnique_de_montréal_et_pavillon_roger-gaudry).jpg": {
+   "snow": false,
+   "why": "prise 2015-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/91/université_de_montréal_(roger-gaudry).jpg": {
+   "snow": false,
+   "why": "prise 2008-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/69/université_de_montréal,_pavillon_principal,_rentrée_01.jpg": {
+   "snow": false,
+   "why": "prise 2014-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/66/pavillon_adrien-pouliot_01.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/e5/pavillon_adrien-pouliot_02.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/96/pavillon_adrien-pouliot_03.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a0/pavillon_dkn,_université_laval_03.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/16/pavillon_dkn,_université_laval_04.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/8a/pavillon_dkn,_université_laval_05.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a7/pavillon_dkn,_université_laval_06.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/62/pavillon_dkn,_université_laval_11.jpg": {
+   "snow": false,
+   "why": "prise 2020-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/f5/pavillon_judith-jasmin_uqam_15.jpg": {
+   "snow": false,
+   "why": "prise 2015-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/05/pavillon_judith-jasmin_uqam_17.jpg": {
+   "snow": false,
+   "why": "prise 2016-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/3/39/pavillon_judith-jasmin_uqam_18.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/24/pavillon_judith-jasmin_uqam_2.jpg": {
+   "snow": false,
+   "why": "prise 2019-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/cf/pavillon_judith-jasmin_uqam_23.jpg": {
+   "snow": false,
+   "why": "prise 2017-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/80/pavillon_judith-jasmin_uqam_24.jpg": {
+   "snow": false,
+   "why": "prise 2017-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ee/uqam_pavillon_des_sciences_de_la_gestion_07.jpg": {
+   "snow": false,
+   "why": "prise 2015-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ec/henry_f._hall_building_04.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/7/77/henry_f._hall_building_05.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/6b/henry_f._hall_building_06.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/53/université_de_sherbrooke_-_résidences_g11_à_g13_(panorama).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/81/université_de_sherbrooke_-_pavillon_georges-cabana_(panorama).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/12/université_de_sherbrooke_-_faculté_des_sciences_(panorama).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/6b/université_de_sherbrooke_-_résidences_g8_à_g15_(panorama).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/2c/université_de_sherbrooke_-_centrale_d'énergie.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/eb/université_de_sherbrooke_-_faculté_d'éducation.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/95/université_de_sherbrooke_-_pavillon_univestrie.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/89/pavillon_univestrie_udes_-_panoramio.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a4/pavillon_alphonse-marie-parent_05.jpg": {
+   "snow": false,
+   "why": "prise 2019-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/46/pavillon_h.-biermans-l.-moraud_01.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c8/pavillon_ernest-lemieux_06.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ea/pavillons_principal_et_des_humanités_de_l'uqac.jpg": {
+   "snow": false,
+   "why": "prise 2009-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/12/pavillon_du_cural_sur_le_campus_de_l'uqac.jpg": {
+   "snow": false,
+   "why": "prise 2009-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/81/université_du_québec_à_rimouski_-_entrée_principale.jpg": {
+   "snow": false,
+   "why": "prise 2005-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/1a/ursulines_université_du_québec,_300,_allée_des_ursulines,_rimouski_façade_11-d.na.civile-80-3436.jpg": {
+   "snow": false,
+   "why": "banque du mât : automne"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/e5/ursulines_université_du_québec,_300,_allée_des_ursulines,_rimouski_façade,_partie_centrale_et_aile_gauche_11-d.na.civile-80-3437.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/06/uqo_-_université_du_québec_en_outaouais.jpg": {
+   "snow": false,
+   "why": "prise 2009-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/af/uqat_campusrouyn-noranada.jpg": {
+   "snow": false,
+   "why": "prise 2009-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/cb/pavillon_des_premiers_peuples.jpg": {
+   "snow": false,
+   "why": "prise 2020-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/59/ecole_de_technologie_superieure_05.jpg": {
+   "snow": false,
+   "why": "prise 2011-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/6b/école_de_technologie_supérieure_-_montreal,_canada_-_dsc07688.jpg": {
+   "snow": false,
+   "why": "prise 2016-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/f6/ecole_de_technologie_superieure_01.jpg": {
+   "snow": false,
+   "why": "prise 2011-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/29/téluq_panorama.jpg": {
+   "snow": false,
+   "why": "prise 2012-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a9/teluq_headquarters_in_quebec_city.jpg": {
+   "snow": false,
+   "why": "prise 2014-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/15/enap_teluq_udq.jpg": {
+   "snow": false,
+   "why": "prise 2014-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/45/enap_headquarters_in_quebec_city.jpg": {
+   "snow": false,
+   "why": "prise 2014-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c2/enap.jpg": {
+   "snow": false,
+   "why": "prise 2012-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/b/b6/inrs-building.jpg": {
+   "snow": true,
+   "why": "prise 2026-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/b/b0/edifice_quebec_inrs.jpg": {
+   "snow": false,
+   "why": "prise 2005-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/56/hec_montreal_csc_side.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/fc/decelles_hec.jpg": {
+   "snow": false,
+   "why": "prise 2013-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a7/hec_montréal-decelles_2.jpg": {
+   "snow": false,
+   "why": "prise 2026-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/15/enap_teluq_uq.jpg": {
+   "snow": true,
+   "why": "prise 2008-12"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a0/grand_axe_ulaval.jpg": {
+   "snow": false,
+   "why": "prise 2019-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/60/pavillon_palasis-prince_10.jpg": {
+   "snow": false,
+   "why": "prise 2019-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/df/pavillon_jean-charles-bonenfant_02.jpg": {
+   "snow": false,
+   "why": "prise 2019-08"
+  },
+  "upload.wikimedia.org/wikipedia/commons/3/3d/pavillon_abitibi-price_02.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/68/pavillon_agathe-lacerte_03.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/7/70/pavillon_alexandre-vachon_01.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/08/charles-eugène-marchand_05.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/7/79/pavillon_d'optique_photonique_laser_02.jpg": {
+   "snow": false,
+   "why": "prise 2019-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/ac/pavillon_de_l'est_01.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ec/peps_université_laval.jpg": {
+   "snow": false,
+   "why": "prise 2018-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/9d/pavillon_de_médecine_dentaire_01.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/93/pavillon_des_services_ul_03.jpg": {
+   "snow": false,
+   "why": "prise 2019-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/2c/pavillon_envirotron_ul_01.jpg": {
+   "snow": false,
+   "why": "prise 2019-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a4/pavillon_félix-antoine-savard_02.jpg": {
+   "snow": false,
+   "why": "prise 2019-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c6/pavillon_gene-h.-kruger_02.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/d9/pavillon_j.-a.-de_sève_02.jpg": {
+   "snow": false,
+   "why": "prise 2019-07"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/ed/pavillon_des_sciences_de_l'éducation_ul_01.jpg": {
+   "snow": false,
+   "why": "prise 2019-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/b/ba/pavillon_maurice-pollack.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/10/pavillon_paul-comtois_03.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/4c/pavillon_la_laurentienne_ulaval.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/91/pav_desjardinsul.jpg": {
+   "snow": false,
+   "why": "prise 2012-04"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/52/exterior_of_ecole_polytechnique_de_montreal.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/6/6c/école_polytechnique_de_montréal.jpg": {
+   "snow": false,
+   "why": "prise 2015-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/15/mcgill_university_downtown_campus_14.jpg": {
+   "snow": true,
+   "why": "prise 2013-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/83/mcgill_university_downtown_campus_18.jpg": {
+   "snow": true,
+   "why": "prise 2013-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a3/campus_udem_sous_la_neige,_montréal_02.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/83/campus_de_l'université_de_montréal.jpg": {
+   "snow": false,
+   "why": "prise 2015-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/c6/université_montréal_roger-gaudry.jpg": {
+   "snow": false,
+   "why": "prise 2007-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/54/internal_street_in_the_université_laval,_quebec_canada.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/7/78/university_building_at_universite_laval.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/4b/universite_laval_building_in_snow.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/94/université_de_sherbrooke,_campus_longueuil,_qc_-_panoramio_(1).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/fd/varennes_(québec)-campus_de_l'inrs-2023-09-23.jpg": {
+   "snow": false,
+   "why": "prise 2023-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/e/e6/pavillon_louis-jacques-casault_-_université_-laval_-_quebec_city_-_october_2007.jpg": {
+   "snow": false,
+   "why": "prise 2007-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/b/bc/pavillon_dkn,_université_laval_10.jpg": {
+   "snow": false,
+   "why": "prise 2019-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/57/pavillon_dkn,_université_laval_07.jpg": {
+   "snow": false,
+   "why": "prise 2019-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/82/pavillon_judith-jasmin_uqam_08.jpg": {
+   "snow": false,
+   "why": "prise 2013-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/9/90/pavillon_judith-jasmin_uqam_1.jpg": {
+   "snow": false,
+   "why": "prise 2019-10"
+  },
+  "upload.wikimedia.org/wikipedia/commons/f/ff/université_de_sherbrooke_-_centre_culturel.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/d4/190927-003-uqat.jpg": {
+   "snow": false,
+   "why": "prise 2019-09"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/14/école_polytechnique_de_montréal.jpg": {
+   "snow": null,
+   "why": "inconnu"
+  },
+  "/assets/masthead/polytechnique-nuit-abdallahh.jpg": {
+   "snow": false,
+   "why": "banque du mât : ete"
+  },
+  "/assets/masthead/polytechnique-lassonde-abdallahh.jpg": {
+   "snow": false,
+   "why": "banque du mât : automne"
+  },
+  "/assets/masthead/polytechnique-lassonde-nuit-abdallahh.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/da/mcgill_university_downtown_campus_16.jpg": {
+   "snow": true,
+   "why": "prise 2013-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/3/3d/mcgill_university_downtown_campus_36.jpg": {
+   "snow": true,
+   "why": "prise 2013-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/54/mcgill_university_downtown_campus_37.jpg": {
+   "snow": true,
+   "why": "prise 2013-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/5/59/campus_udem_sous_la_neige,_montréal_01.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/8/8f/université_de_sherbrooke,_campus_longueuil,_qc_-_panoramio.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/4/49/université_de_sherbrooke,_campus_longueuil,_qc_-_panoramio_(2).jpg": {
+   "snow": false,
+   "why": "banque du mât : automne"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a5/université_de_sherbrooke,_campus_longueuil,_qc_-_panoramio_(3).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/1/1e/université_de_sherbrooke,_campus_longueuil,_qc_-_panoramio_(4).jpg": {
+   "snow": false,
+   "why": "banque du mât : automne"
+  },
+  "upload.wikimedia.org/wikipedia/commons/2/2a/université_de_sherbrooke,_campus_longueuil,_qc_-_panoramio_(5).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/0/08/université_de_sherbrooke,_campus_longueuil,_qc_-_panoramio_(6).jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/dc/pavillon_dkn,_université_laval_12.jpg": {
+   "snow": false,
+   "why": "prise 2020-05"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/ce/campus_udem_sous_la_neige,_montréal_03.jpg": {
+   "snow": true,
+   "why": "banque du mât : hiver"
+  },
+  "upload.wikimedia.org/wikipedia/commons/c/cb/uqtr_-_pavillon_ringuet.jpg": {
+   "snow": false,
+   "why": "prise 2009-06"
+  },
+  "upload.wikimedia.org/wikipedia/commons/a/a8/mcgill_university_downtown_campus_13.jpg": {
+   "snow": true,
+   "why": "prise 2013-03"
+  },
+  "upload.wikimedia.org/wikipedia/commons/d/d2/université_du_québec_à_montréal_(uqam)_-_montreal,_canada_-_dsc08309.jpg": {
+   "snow": false,
+   "why": "prise 2016-09"
+  }
+ }
+}

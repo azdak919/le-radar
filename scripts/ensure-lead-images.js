@@ -478,6 +478,22 @@ function backfillImageCreator(item) {
   if (m) item.imageCreator = cleanCreatorName(m[1].trim());
 }
 
+async function purgeRubricBanners(items, { refill = null } = {}) {
+  const store = rubricBanners.loadStore();
+  const hits = await rubricBanners.findRubricBanners(items.filter((i) => i.image), { store });
+  for (const item of hits) {
+    console.log(`  ✂ bannière de rubrique ${item.source} : ${item.image}`);
+    if (!doUpdate) continue;
+    item.image = '';
+    item.leadImageReady = false;
+    clearMirroredLead(item);
+    clearSourceImageCredit(item);
+    if (refill) await refill(item);
+  }
+  if (doUpdate) rubricBanners.saveStore(store);
+  return hits.size;
+}
+
 async function main() {
   // Requêtes banques libres coupées 20 s avant le budget (marge écriture).
   setStockDeadline(startedAt + STEP_BUDGET_MS - 20000);
@@ -522,21 +538,7 @@ async function main() {
   // « Screenshot-… ») : même visuel, nom de fichier neuf. On compare l'image
   // (empreinte dHash) aux bannières connues et entre billets d'une source ;
   // repli ensuite par la file habituelle (banque pertinente, puis campus).
-  {
-    const store = rubricBanners.loadStore();
-    const hits = await rubricBanners.findRubricBanners(items.filter((i) => i.image), { store });
-    for (const item of hits) {
-      console.log(`  ✂ bannière de rubrique ${item.source} : ${item.image}`);
-      if (doUpdate) {
-        item.image = '';
-        item.leadImageReady = false;
-        clearMirroredLead(item);
-        clearSourceImageCredit(item);
-      }
-      imagesCleared += 1;
-    }
-    if (doUpdate) rubricBanners.saveStore(store);
-  }
+  imagesCleared += await purgeRubricBanners(items);
   logPhase('bannières de rubrique');
 
   // Avant la file « sans photo » (jusqu’à 40 scrapes, timeout CI 6 min) :
@@ -955,6 +957,9 @@ async function main() {
 
   if (doUpdate) {
     applyLeadImagePins(allItems);
+    // Second passage : l'image a pu être remise (ou passée en pleine résolution) après le premier.
+    const lateBanners = await purgeRubricBanners(items, { refill: (it) => fillClearedLead(it, sourceMap, { avoidCampusUrls: usedCampusUrls }).catch(() => 'none') });
+    if (lateBanners) console.log(`✂ ${lateBanners} bannière(s) de rubrique retirée(s) en fin de passage`);
     const dedup = await dedupeCardImages(allItems);
     if (dedup) console.log(`↻ ${dedup} photo(s) déjà sur une autre carte → banque libre / campus`);
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
