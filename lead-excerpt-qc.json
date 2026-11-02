@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-02T13:07:08.260Z",
+  "updated": "2026-11-02T14:37:07.149Z",
   "total": 184,
   "pool": 58,
-  "incomplete": 14,
+  "incomplete": 8,
   "withLeadExcerpt": 123,
-  "candidates": 14,
-  "enriched": 9,
+  "candidates": 8,
+  "enriched": 0,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -25,34 +25,16 @@
       "score": 70,
       "chars": 400,
       "sample": "On October 23, Paul St-Pierre Plamondon released plans to fulfill his first campaign promise as Prem",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Princeton Professor Beth Lew-Williams Wins 2026 Cundill History Prize",
-      "link": "https://www.mcgilldaily.com/2026/11/princeton-professor-beth-lew-williams-wins-2026-cundill-history-prize/",
+      "title": "When “Boys Will Be Boys” Means Boys Killing Girls",
+      "link": "https://www.mcgilldaily.com/2026/11/when-boys-will-be-boys-means-boys-killing-girls/",
       "ok": true,
-      "score": 96,
-      "chars": 393,
-      "sample": "During the forum, Lew-Williams explained that John Doe Chinaman began with questions about everyday ",
-      "changed": true
-    },
-    {
-      "title": "For The Love of The Game: The Story of Seat Alert",
-      "link": "https://www.mcgilldaily.com/2026/11/for-the-love-of-the-game-the-story-of-seat-alert/",
-      "ok": true,
-      "score": 96,
-      "chars": 382,
-      "sample": "Despite its growing presence on campus, the history of the website remains obscure; some peers I spo",
-      "changed": true
-    },
-    {
-      "title": "Is Montreal Ready for Slave Play?",
-      "link": "https://www.mcgilldaily.com/2026/11/is-montreal-ready-for-slave-play/",
-      "ok": true,
-      "score": 96,
-      "chars": 397,
-      "sample": "From the dark of the stage, theatre artist esi callender speaks: “ Slave Play is a comedy of sorts. ",
-      "changed": true
+      "score": 72,
+      "chars": 400,
+      "sample": "In 2025, Netflix released psychological crime drama Adolescence , a British TV series that would cha",
+      "changed": false
     },
     {
       "title": "NAZA: When the Perpetrators Tell the Story",
@@ -61,7 +43,7 @@
       "score": 72,
       "chars": 399,
       "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Cinq nouvelles de la semaine",
@@ -79,6 +61,15 @@
       "score": 66,
       "chars": 400,
       "sample": "À huit ans, dans les dessins animés, je préférais aimer le méchant plutôt que le héros. À 13 ans, je",
+      "changed": false
+    },
+    {
+      "title": "Le 17 octobre – édition québécoise",
+      "link": "https://www.delitfrancais.com/2026/10/28/le-17-octobre-edition-quebecoise/",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Debout au milieu du square, on peine à s’entendre parler au-dessus des slogans scandés par la foule ",
       "changed": false
     }
   ]
