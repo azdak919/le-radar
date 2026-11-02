@@ -60,8 +60,20 @@ function decodePng(buf) {
 
 /** dHash 64 bits (hex) depuis une image 9×8 en gris. */
 function dhashFromPng(buf) {
-  const img = decodePng(buf);
-  if (!img || img.w !== 9 || img.h !== 8) return '';
+  let img = null;
+  try { img = decodePng(buf); } catch { img = null; }
+  if (!img || img.w < 9 || img.h < 8) return '';
+  if (img.w !== 9 || img.h !== 8) {
+    const g = new Array(72).fill(0);
+    for (let y = 0; y < 8; y += 1) for (let x = 0; x < 9; x += 1) {
+      const x0 = Math.floor(x * img.w / 9); const x1 = Math.max(x0 + 1, Math.floor((x + 1) * img.w / 9));
+      const y0 = Math.floor(y * img.h / 8); const y1 = Math.max(y0 + 1, Math.floor((y + 1) * img.h / 8));
+      let sum = 0; let n = 0;
+      for (let yy = y0; yy < y1; yy += 1) for (let xx = x0; xx < x1; xx += 1) { sum += img.gray[yy * img.w + xx]; n += 1; }
+      g[y * 9 + x] = sum / n;
+    }
+    img = { w: 9, h: 8, gray: g };
+  }
   let bits = '';
   for (let y = 0; y < 8; y += 1) for (let x = 0; x < 8; x += 1) bits += img.gray[y * 9 + x] > img.gray[y * 9 + x + 1] ? '1' : '0';
   return BigInt('0b' + bits).toString(16).padStart(16, '0');
@@ -102,6 +114,10 @@ function saveStore(store, p = STORE) {
  */
 async function findRubricBanners(items = [], { store = { generic: [], cache: {} }, fingerprint, concurrency = 12, maxNew = 120 } = {}) {
   const fp = fingerprint || (async (u) => dhashFromPng(await fetchBuffer(thumbUrl(u), 6000)));
+  // Même fichier en vignette / pleine résolution (-1024x576, -scaled) : même empreinte.
+  const ck = (u) => String(u).replace(/[?#].*$/, '').replace(/-(?:\d+x\d+|scaled)(?=\.\w+$)/i, '');
+  for (const [u, h] of Object.entries(store.cache)) if (h && store.cache[ck(u)] === undefined) store.cache[ck(u)] = h;
+  for (const it of items) if (it && it.image && store.cache[it.image] === undefined && store.cache[ck(it.image)]) store.cache[it.image] = store.cache[ck(it.image)];
   const hits = new Set(); const hashes = new Map();
   // Empreintes neuves en parallèle, plafonnées par passage (le cache fait le reste).
   const todo = [...new Set(items.filter((it) => it && it.image && !genericFileName(it.image) && store.cache[it.image] === undefined).map((it) => it.image))].slice(0, maxNew);
