@@ -69,3 +69,25 @@ export async function decide(text, opts = {}) {
   if (!ai) return fb ? { like: true, emoji: fb } : null; // IA absente : seulement le clairement positif
   return { like: true, emoji: ai.emoji || fb || '👍' };
 }
+
+// --- J'aime des publications des sources (indépendant de nos articles) ---
+export const MAX_SOURCE_LIKES_PER_DAY = 15;
+const ADS = /(commandit|sponsor|partenariat payé|paid partnership|publicité|#ad\b|#pub\b|promo|rabais|concours|giveaway)/i;
+/** Filtre fixe : pas de partisan, négatif, haineux, pub/commandite, lien de pourriel. */
+export function sourcePreFilter(text) {
+  const t = String(text || '');
+  if (ADS.test(t) || NEG.test(t)) return false;
+  return !/(bit\.ly|t\.me\/|crypto|casino|onlyfans)/i.test(t);
+}
+/** Une source au plus une fois par jour (heure de Toronto). */
+export function sourceDone(state, key, now = new Date()) { return state.srcDay?.[key] === dayKey(now); }
+export function markSource(state, key, now = new Date()) { state.srcDay ||= {}; state.srcDay[key] = dayKey(now); }
+export function sourceBudget(state, net, now = new Date()) { return MAX_SOURCE_LIKES_PER_DAY - (state.daily?.[dayKey(now)]?.['src-' + net] || 0); }
+/** IA : seulement « safe » explicite ; toute erreur → rien. Mastodon : filtre fixe seulement (noAi). */
+export async function decideSourceLike(text, opts = {}) {
+  if (!String(text || '').trim() && !opts.allowEmpty) return false;
+  if (!sourcePreFilter(text)) return false;
+  if (opts.noAi) return true;
+  const ai = await aiClassify(text, opts);
+  return !!(ai && ai.ok);
+}
