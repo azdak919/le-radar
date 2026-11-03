@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03T14:09:21.370Z",
+  "updated": "2026-11-03T14:15:48.903Z",
   "total": 186,
   "withImage": 166,
   "withCredit": 166,
@@ -8,16 +8,23 @@
   "missingHero": 0,
   "ok": false,
   "checked": 57,
-  "updatedCount": 4,
+  "updatedCount": 5,
   "citedNew": 3,
   "fallbackNew": 54,
   "samples": [
     {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
+      "title": "Reportages La Pige radio 2 novembre",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Vote obligatoire, idée réalisable ?",
+      "source": "La Pige",
+      "credit": "Photo : Colin Boucher",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
