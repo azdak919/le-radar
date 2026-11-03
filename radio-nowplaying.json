@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-02T23:07:34.540Z",
+  "updatedAt": "2026-11-03T00:06:33.523Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Femmes de l'ombre",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "18:30",
         "end": "19:30",
         "url": "https://chyz.ca/emission/femmes-de-lombre/"
       },
+      "next": {
+        "title": "Mardi Groovy",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Femmes de l'ombre",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T23:06:53.500Z"
+      "checkedAt": "2026-11-03T00:06:04.690Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les criquets crinqués",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
         "title": "Les vinyles versatiles",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
       },
+      "next": {
+        "title": "Mono Fred (en stéréo)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
+      },
       "track": "",
-      "showTitle": "Les criquets crinqués",
+      "showTitle": "Les vinyles versatiles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T23:06:55.812Z"
+      "checkedAt": "2026-11-03T00:06:06.632Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Queercorps",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Lesbo-sons",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Underground Sounds",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Queercorps",
+      "showTitle": "Lesbo-sons",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T23:06:58.868Z"
+      "checkedAt": "2026-11-03T00:06:09.741Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Voice of the Voiceless",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
-      },
-      "next": {
         "title": "Monday Mass with Father Kate",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
       },
+      "next": {
+        "title": "In The Garage",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
+      },
       "track": "",
-      "showTitle": "Voice of the Voiceless",
+      "showTitle": "Monday Mass with Father Kate",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T23:07:13.936Z"
+      "checkedAt": "2026-11-03T00:06:12.638Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,28 +133,35 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T23:07:15.191Z"
+      "checkedAt": "2026-11-03T00:06:13.746Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Bitume",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00",
         "slug": "bitume"
       },
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+      },
       "track": "Élégie — Demain minuit",
-      "showTitle": "",
+      "showTitle": "Bitume",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-02T23:07:34.189Z"
+      "checkedAt": "2026-11-03T00:06:33.172Z"
     }
   }
 }
