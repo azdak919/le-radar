@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T13:07:24.035Z",
+  "updatedAt": "2026-11-03T14:06:48.712Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,87 +28,87 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T13:06:15.190Z"
+      "checkedAt": "2026-11-03T14:06:10.052Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Lentement mais sûrement",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/lentement-mais-surement"
       },
+      "next": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Lentement mais sûrement",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T13:06:28.922Z"
+      "checkedAt": "2026-11-03T14:06:23.650Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt2",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Basa Basa",
-        "source": "schedule",
+        "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Ecolibrium/Environment in Canada",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt2",
+      "showTitle": "Basa Basa",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "stream",
-        "schedule"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T13:07:12.246Z"
+      "checkedAt": "2026-11-03T14:06:26.419Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "At The Movies",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "At The Movies",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T13:07:15.318Z"
+      "checkedAt": "2026-11-03T14:06:28.687Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T13:07:16.957Z"
+      "checkedAt": "2026-11-03T14:06:30.406Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T13:07:23.684Z"
+      "checkedAt": "2026-11-03T14:06:48.362Z"
     }
   }
 }
