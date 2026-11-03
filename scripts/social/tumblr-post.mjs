@@ -49,7 +49,7 @@ if (shareNow) {
   todo = status.dayLeft && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
 }
 const shareUrl = (process.env.SHARE_URL || '').trim();
-const pickUrl = () => { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
+const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 if (shareNow && shareUrl) todo = [{ id: pickUrl().id, shareNow: true }]; // article imposé : un seul post, hors plafond
 if (!todo.length) { save(); console.log('Rien de frais à publier.'); process.exit(0); }
 

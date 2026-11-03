@@ -37,7 +37,7 @@ const save = () => { if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, nul
 const problems = [];
 // SHARE_NOW=true + SHARE_URL : cet article précis, publié tout de suite sur chaque Page (hors file).
 const shareUrl = (process.env.SHARE_NOW === 'true' && process.env.SHARE_URL || '').trim();
-const pickUrl = () => { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
+const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 
 for (const net of networks) {
   const cfg = CFG[net]; const sent = (state[net] ||= {});

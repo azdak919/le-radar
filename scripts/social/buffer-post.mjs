@@ -69,7 +69,7 @@ const sentIds = new Set(Object.keys(state.sent));
 // SHARE_URL : cet article précis (même article sur tous les réseaux), avec SHARE_NOW.
 const shareNow = process.env.SHARE_NOW === 'true';
 const shareUrl = (process.env.SHARE_URL || '').trim();
-const pickUrl = () => { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
+const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
   const qs = new Set(queuedSources), qt = queued.map(p => p.text || '');
   const pool = items.filter(i => !sentIds.has(i.id) && Date.now() - i.date <= maxAgeH * 3600e3 && !qt.some(t => inText(t, i)));
