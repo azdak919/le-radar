@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-11-03T20:37:44.654Z",
+  "updatedAt": "2026-11-03T21:36:36.974Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T20:37:16.478Z"
+      "checkedAt": "2026-11-03T21:36:07.644Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
-      },
-      "next": {
         "title": "les pénibles",
         "source": "schedule",
         "start": "16:30",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/les-penibles"
       },
+      "next": {
+        "title": "Catharmix",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/catharmix"
+      },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "les pénibles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T20:37:18.701Z"
+      "checkedAt": "2026-11-03T21:36:10.374Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T20:37:22.006Z"
+      "checkedAt": "2026-11-03T21:36:13.259Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
-      },
-      "next": {
         "title": "Bikini Brrroadcast",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
+      "showTitle": "Bikini Brrroadcast",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T20:37:25.115Z"
+      "checkedAt": "2026-11-03T21:36:16.128Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,34 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T20:37:26.329Z"
+      "checkedAt": "2026-11-03T21:36:17.459Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
-      "next": {
         "title": "Passion Psy",
         "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "slug": "passion-psy"
       },
+      "next": {
+        "title": "Le Studio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
+      },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Palmarès CHOQ.ca",
+      "showTitle": "Passion Psy",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T20:37:44.304Z"
+      "checkedAt": "2026-11-03T21:36:36.625Z"
     }
   }
 }
