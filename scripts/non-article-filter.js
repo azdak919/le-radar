@@ -10,6 +10,21 @@ const NON_ARTICLE_PATH = /\/(?:category|categorie|tag|etiquette|author|auteur|pa
 const WP_CHROME = /\b(?:Reblog|Subscribed?|Sign me up|Log in now|Have a WordPress\.com account|Like this:|Share this:|Loading\.\.\.)\b/gi;
 const LOGO_IMAGE = /(?:^|[\/_-])(?:logo|favicon|site-?icon|cropped-[^\/]*icon|apple-touch-icon)[^\/]*$/i;
 
+const { sourceHints, patternList } = require('./source-hints');
+
+/**
+ * Critères propres à la source (news-sources.json → botHints.filter) :
+ *   excludePathPatterns, rejectExcerptPatterns, logoImagePatterns (regex texte).
+ */
+function filterHints(item = {}, opts = {}) {
+  const h = sourceHints(item.source, 'filter', opts);
+  return {
+    paths: patternList(h.excludePathPatterns),
+    excerpts: patternList(h.rejectExcerptPatterns),
+    logos: patternList(h.logoImagePatterns),
+  };
+}
+
 const text = (s = '') => String(s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 function isUrlOnly(s = '') {
@@ -31,17 +46,21 @@ function isNonArticleLink(link = '') {
   try { return NON_ARTICLE_PATH.test(new URL(link).pathname.replace(/\/+$/, '') + '/'); } catch { return false; }
 }
 
-function isLogoImage(url = '', src = {}) {
+function isLogoImage(url = '', item = {}, opts = {}) {
   if (!url) return false;
   const u = String(url).split(/[?#]/)[0];
   if (LOGO_IMAGE.test(u)) return true;
-  const known = [].concat(src.logoImages || []).filter(Boolean);
-  return known.some((k) => u.endsWith(String(k).split(/[?#]/)[0]));
+  return filterHints(item, opts).logos.some((re) => re.test(u));
 }
 
 /** Raison du rejet, ou '' si le billet est un vrai article. */
-function nonArticleReason(item = {}) {
+function nonArticleReason(item = {}, opts = {}) {
   if (isNonArticleLink(item.link)) return 'page non-article';
+  const h = filterHints(item, opts);
+  let p = '';
+  try { p = new URL(item.link).pathname; } catch { p = String(item.link || ''); }
+  if (h.paths.some((re) => re.test(p))) return 'page exclue (critère de la source)';
+  if (h.excerpts.some((re) => re.test(text(item.excerpt)) || re.test(text(item.leadExcerpt)))) return 'extrait rejeté (critère de la source)';
   const ex = item.excerpt || '';
   const lead = item.leadExcerpt || '';
   if (isWpChromeExcerpt(ex) || isWpChromeExcerpt(lead)) {
@@ -55,7 +74,7 @@ function nonArticleReason(item = {}) {
  * Retire les faux articles, enlève les logos utilisés comme image.
  * Une même image sur ≥ 3 billets distincts d'une source = logo du site.
  */
-function filterNonArticles(items = [], { log = () => {} } = {}) {
+function filterNonArticles(items = [], { log = () => {}, ...opts } = {}) {
   const bySrcImg = new Map();
   for (const it of items) {
     if (!it || !it.image) continue;
@@ -65,10 +84,10 @@ function filterNonArticles(items = [], { log = () => {} } = {}) {
   const kept = [];
   for (const it of items) {
     if (!it) continue;
-    const why = nonArticleReason(it);
+    const why = nonArticleReason(it, opts);
     if (why) { log(`✂ faux article (${why}) : ${it.source} — ${it.title}`); continue; }
     const k = `${it.source}\u0000${String(it.image || '').split(/[?#]/)[0]}`;
-    if (it.image && (isLogoImage(it.image) || (bySrcImg.get(k)?.size || 0) >= 3)) {
+    if (it.image && (isLogoImage(it.image, it, opts) || (bySrcImg.get(k)?.size || 0) >= 3)) {
       log(`✂ logo retiré comme image : ${it.source} — ${it.title}`);
       it.image = '';
       it.leadImageReady = false;
