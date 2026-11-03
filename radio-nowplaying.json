@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T02:53:57.327Z",
+  "updatedAt": "2026-11-03T03:34:42.356Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T02:53:43.716Z"
+      "checkedAt": "2026-11-03T03:34:08.297Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mono Fred (en stéréo)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Les sentinelles de l'art (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "Mono Fred (en stéréo)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T02:53:45.195Z"
+      "checkedAt": "2026-11-03T03:34:09.874Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Underground Sounds",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Drastic Plastic",
         "source": "api-live",
         "start": "22:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "27th Hr.",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Underground Sounds",
+      "showTitle": "Drastic Plastic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T02:53:47.384Z"
+      "checkedAt": "2026-11-03T03:34:12.397Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "LEKTOR DECODER",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/lektor-decoder"
-      },
-      "next": {
         "title": "Past Tense",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/past-tense"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "LEKTOR DECODER",
+      "showTitle": "Past Tense",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T02:53:49.682Z"
+      "checkedAt": "2026-11-03T03:34:35.062Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T02:53:50.857Z"
+      "checkedAt": "2026-11-03T03:34:36.199Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T02:53:56.976Z"
+      "checkedAt": "2026-11-03T03:34:42.005Z"
     }
   }
 }
