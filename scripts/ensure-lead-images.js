@@ -977,7 +977,8 @@ async function main() {
     if (lateBanners) console.log(`✂ ${lateBanners} bannière(s) de rubrique retirée(s) en fin de passage`);
     const dedup = await dedupeCardImages(allItems);
     if (dedup) console.log(`↻ ${dedup} photo(s) déjà sur une autre carte → banque libre / campus`);
-    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
+    const kept = require('./non-article-filter').filterNonArticles(allItems, { log: console.log });
+    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: kept, count: kept.length }, null, 2) + '\n');
     fs.writeFileSync(QC_PATH, JSON.stringify(qc, null, 2) + '\n');
     saveStockSearchCache();
     console.log(`\n✅ ${NEWS_PATH}`);

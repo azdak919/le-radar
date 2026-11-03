@@ -15,6 +15,7 @@
 
 const fs = require('fs');
 const { applyLeadImagePins } = require('./lead-image-pins-lib');
+const { filterNonArticles, nonArticleReason } = require('./non-article-filter');
 const path = require('path');
 const https = require('https');
 const { fork } = require('child_process');
@@ -621,7 +622,7 @@ function shouldDropFeedItem(item = {}, src = {}) {
 }
 
 function filterFeedItems(items = [], src = {}) {
-  return items.filter((it) => !shouldDropFeedItem(it, src));
+  return items.filter((it) => !shouldDropFeedItem(it, src) && !nonArticleReason(it));
 }
 
 /** RSS principal, ou fusion de plusieurs flux (ex. catégories WordPress disjointes). */
@@ -1252,6 +1253,8 @@ async function main() {
   );
 
   if (doUpdate) {
+    news.items = filterNonArticles(news.items || [], { log: console.log });
+    news.count = news.items.length;
     applyLeadImagePins(news.items || []);
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
     const archiveWrite = writeArchive(serializeHistoricalCatalog(archiveResult.catalog, histConfig).catalog);
