@@ -20,6 +20,13 @@ const realPlant = { source: 'The Plant', title: 'Real', link: 'https://theplantn
 const out = filterNonArticles([plant, realPlant]);
 assert.equal(out.length, 1);
 assert.equal(out[0].image, '', 'logo pplant retiré comme image');
+// Vrai texte dans le flux + menu WordPress en leadExcerpt : gardé, menu effacé.
+const horo = { source: 'The Plant', title: 'Horoscope September 2026', link: 'https://theplantnews.com/2026/09/01/horoscope/',
+  excerpt: 'Aries (Mar. 20 – Apr.18): For a short period of time, your least wise friends will give you the most sage advice.',
+  leadExcerpt: 'Comment Reblog Subscribe Subscribed The Plant Sign me up Have a WordPress.com account? Log in now.' };
+const kept = filterNonArticles([horo]);
+assert.equal(kept.length, 1, 'Horoscope gardé');
+assert.equal(kept[0].leadExcerpt, undefined, 'menu WordPress effacé');
 // Le critère de The Plant ne touche pas une autre source.
 const other = { ...realPlant, source: 'Le Délit', link: 'https://www.delitfrancais.com/x/' };
 assert.equal(filterNonArticles([other])[0].image, realPlant.image);

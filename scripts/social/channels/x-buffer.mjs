@@ -1,4 +1,4 @@
-// Canal X (@LeRadar_ca) via l'API GraphQL gratuite de Buffer.
+// Canal X (@le_radar_ca) via l'API GraphQL gratuite de Buffer.
 export const API = 'https://api.buffer.com';
 export const FALLBACK_CHANNEL_ID = '6ae6c47be29c69a171203706';
 export const AUTH_MSG = 'BUFFER_API_KEY expirée ou invalide (voir BUFFER_KEY_EXPIRES dans .github/workflows/social-buffer.yml) : régénérer la clé dans Buffer › Settings › API et mettre à jour le secret du dépôt.';
@@ -17,7 +17,7 @@ export const matchChannel = (x, service, channelName) => {
   return re.test(x?.service || '') && (x.name || '').replace(/^@/, '').trim().toLowerCase() === channelName.toLowerCase();
 };
 
-export function createXBuffer({ key, fetchImpl = fetch, channelName = 'LeRadar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x' }) {
+export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x' }) {
   async function gql(query, variables = {}) {
     const res = await fetchImpl(API, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(30000) });
     let body = null; try { body = await res.json(); } catch {}

@@ -42,7 +42,7 @@ if (nets.has('mastodon')) {
 if (nets.has('bluesky')) {
   if (!process.env.BLUESKY_APP_PASSWORD) summary.push('Bluesky : mot de passe d’application absent, sauté.');
   else {
-    const handle = process.env.BLUESKY_HANDLE || 'le-radar.bsky.social';
+    const handle = process.env.BLUESKY_HANDLE || 'le-radar.ca';
     const bs = createBluesky({ handle, password: process.env.BLUESKY_APP_PASSWORD });
     await bs.login();
     let n = 0, guard = 0; const seen = new Set();

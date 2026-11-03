@@ -22,7 +22,8 @@ export function rampAt(liveSince, now = Date.now()) {
 }
 /** Plafonds effectifs de l'instant : jamais au-dessus des plafonds de base ; 0 en heures calmes. */
 export function effectiveLimits(limits, { network, liveSince, now = Date.now(), windows = WIN } = {}) {
-  const w = weightAt(network, now, windows), r = rampAt(liveSince, now);
+  // `ramp: false` (rate-limit.mjs) : pas de rodage — tout frais publié sous 24 h (Tumblr, 3 nov. 2026).
+  const w = weightAt(network, now, windows), r = limits.ramp === false ? 1 : rampAt(liveSince, now);
   const perHour = w > 0 ? Math.max(1, Math.round(limits.perHour * w * r)) : 0;
   const perDay = Math.max(1, Math.round(limits.perDay * r));
   const perRun = Math.min(limits.perRun, Math.max(perHour ? 1 : 0, Math.ceil(perHour / 2))); // pas de rafale

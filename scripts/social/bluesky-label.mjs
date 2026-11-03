@@ -12,7 +12,7 @@ export function withBotLabel(profile = {}) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const handle = process.env.BLUESKY_HANDLE || 'le-radar.bsky.social', password = process.env.BLUESKY_APP_PASSWORD || '';
+  const handle = process.env.BLUESKY_HANDLE || 'le-radar.ca', password = process.env.BLUESKY_APP_PASSWORD || '';
   if (!password) { console.log('BLUESKY_APP_PASSWORD absent : rien à faire.'); process.exit(0); }
   const dry = process.env.DRY_RUN === 'true';
   const bs = createBluesky({ handle, password }); await bs.login();

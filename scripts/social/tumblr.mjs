@@ -4,7 +4,7 @@
 import { buildText, detectLang, siteLink } from './lib.mjs';
 export { detectLang };
 export const TUMBLR_LIMIT = 1000; // texte court et lisible (NPF n'impose pas de limite stricte)
-export const BLOG = 'leradar-ca.tumblr.com';
+export const BLOG = 'le-radar-ca.tumblr.com';
 
 export function buildTumblrText(it, accounts = [], { credit = '', photo = true } = {}) {
   return buildText(it, accounts, TUMBLR_LIMIT, { credit, photo, len: s => [...s].length, link: true });

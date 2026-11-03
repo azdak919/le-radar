@@ -170,7 +170,7 @@ function renderPage(tpl, a) {
     a.date ? `<meta property="article:published_time" content="${esc(a.date)}" />` : '',
     a.author ? `<meta property="article:author" content="${esc(a.author)}" />` : '',
     `<meta name="twitter:card" content="summary_large_image" />`,
-    `<meta name="twitter:site" content="@LeRadar_ca" />`,
+    `<meta name="twitter:site" content="@le_radar_ca" />`,
     `<meta name="twitter:title" content="${esc(a.title)}" />`,
     `<meta name="twitter:description" content="${esc(desc)}" />`,
     `<meta name="twitter:image" content="${esc(img)}" />`,
