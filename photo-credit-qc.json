@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03T20:40:00.922Z",
+  "updated": "2026-11-03T22:10:04.524Z",
   "total": 182,
   "withImage": 163,
   "withCredit": 163,
@@ -7,46 +7,11 @@
   "pending": 53,
   "missingHero": 0,
   "ok": false,
-  "checked": 67,
-  "updatedCount": 13,
-  "citedNew": 8,
+  "checked": 65,
+  "updatedCount": 3,
+  "citedNew": 6,
   "fallbackNew": 59,
   "samples": [
-    {
-      "title": "Le Parti conservateur fait augmenter le taux de participation aux élections provinciales de 2026",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Victor Marchand / L'Exemplaire",
-      "cited": true,
-      "method": "json-ld"
-    },
-    {
-      "title": "Entretien avec le rappeur et historien Webster",
-      "source": "Quartier Libre",
-      "credit": "Photo : Geneviève Robitaille",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le réseau à Vélo en roue libre auprès de la population",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
       "source": "The Campus",
@@ -62,39 +27,11 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Québec roule pour de saines habitudes de vie",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Benjamin Lessard / L’Exemplaire",
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
       "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "La bière locale cherche sa place dans un marché saturé",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Les étudiants autochtones se sentent-ils bien représentés sur le campus ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Pourquoi « brosser » au tailgate du Rouge et Or ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Raphaël Bédard / L’Exemplaire",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Marcher pour mieux vieillir",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
+      "method": "via-attribution"
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-03T20:37:33.485Z",
+  "updated": "2026-11-03T22:07:57.210Z",
   "total": 182,
   "pool": 58,
-  "incomplete": 16,
-  "withLeadExcerpt": 122,
-  "candidates": 16,
-  "enriched": 5,
+  "incomplete": 11,
+  "withLeadExcerpt": 125,
+  "candidates": 11,
+  "enriched": 3,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,51 +17,6 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
-    },
-    {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
-      "ok": true,
-      "score": 96,
-      "chars": 233,
-      "sample": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En",
-      "changed": true
-    },
-    {
-      "title": "Le Parti conservateur fait augmenter le taux de participation aux élections provinciales de 2026",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-parti-conservateur-fait-augmenter-le-taux-de-participation-aux-elections-provinciales-de-2026/",
-      "ok": true,
-      "score": 100,
-      "chars": 327,
-      "sample": "Les Québécois ont voté à 66,9 % lors de la dernière élection. Ce n’est cependant pas dans toutes les",
-      "changed": true
-    },
-    {
-      "title": "Entretien avec le rappeur et historien Webster",
-      "link": "https://quartierlibre.ca/entretien-avec-le-rappeur-et-historien-webster/",
-      "ok": true,
-      "score": 100,
-      "chars": 371,
-      "sample": "L’exposition Fugitifs ! et le recueil qui en découle s’inspirent de petites annonces de fuites publi",
-      "changed": true
-    },
-    {
-      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/cancer-du-sein-les-milieux-professionnels-a-risque-sous-la-loupe/",
-      "ok": true,
-      "score": 100,
-      "chars": 247,
-      "sample": "Les projections du taux d’incidence par province de 2026 proviennent de l’ Appendice 2 de la Project",
-      "changed": true
-    },
-    {
-      "title": "Le réseau à Vélo en roue libre auprès de la population",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-reseau-avelo-en-roue-libre-aupres-de-la-population/",
-      "ok": true,
-      "score": 96,
-      "chars": 316,
-      "sample": "Initialement, le projet pilote àVélo comptait dix stations et cent vélos. Cinq ans plus tard, le pro",
-      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -80,6 +35,51 @@
       "chars": 400,
       "sample": "Les pâtes alimentaires sans assaisonnement, la nourriture en morceaux au fond de l’évier, les petits",
       "changed": false
+    },
+    {
+      "title": "Youth and Climate Activism",
+      "link": "https://www.mcgilldaily.com/2026/11/youth-and-climate-activism/",
+      "ok": true,
+      "score": 72,
+      "chars": 400,
+      "sample": "Albert Lalonde, co- spokesperson for the 2019 student movement Pour le Future de Montreal (PLF) sinc",
+      "changed": false
+    },
+    {
+      "title": "Keeping our unhoused community warm this winter",
+      "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
+      "ok": true,
+      "score": 96,
+      "chars": 395,
+      "sample": "Investing in warming shelters is not enough, as shelters and homes are not synonymous. This distinct",
+      "changed": true
+    },
+    {
+      "title": "When “Boys Will Be Boys” Means Boys Killing Girls",
+      "link": "https://www.mcgilldaily.com/2026/11/when-boys-will-be-boys-means-boys-killing-girls/",
+      "ok": true,
+      "score": 72,
+      "chars": 399,
+      "sample": "In 2025, Netflix released psychological crime drama Adolescence, a British TV series that would chan",
+      "changed": true
+    },
+    {
+      "title": "NAZA: When the Perpetrators Tell the Story",
+      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
+      "ok": true,
+      "score": 72,
+      "chars": 399,
+      "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
+      "changed": false
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
+      "ok": true,
+      "score": 84,
+      "chars": 400,
+      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
+      "changed": true
     }
   ]
 }
