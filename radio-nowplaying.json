@@ -1,80 +1,87 @@
 {
-  "updatedAt": "2026-11-03T11:35:58.979Z",
+  "updatedAt": "2026-11-03T13:07:24.035Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Groovy",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "L'art des Histoires",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:30",
+        "url": "https://chyz.ca/emission/lart-des-histoires/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Groovy",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T11:35:32.963Z"
+      "checkedAt": "2026-11-03T13:06:15.190Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Raconte ton quartier",
+        "title": "La collation",
         "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "450DB",
+        "title": "Lentement mais sûrement",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/450db"
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/lentement-mais-surement"
       },
       "track": "",
-      "showTitle": "Raconte ton quartier",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T11:35:46.382Z"
+      "checkedAt": "2026-11-03T13:06:28.922Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Beat Power Hour",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00"
+        "title": "Tuesday Morning After Pt2",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Tuesday Morning After Pt1",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "title": "Basa Basa",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "The Beat Power Hour",
+      "showTitle": "Tuesday Morning After Pt2",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T11:35:49.150Z"
+      "checkedAt": "2026-11-03T13:07:12.246Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,43 +108,37 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T11:35:51.241Z"
+      "checkedAt": "2026-11-03T13:07:15.318Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "12:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Le DOUZE",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "12:00",
+        "end": "18:30"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T11:35:52.526Z"
+      "checkedAt": "2026-11-03T13:07:16.957Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
-      },
+      "current": null,
       "next": {
         "title": "L'UQAM en info",
         "source": "api-live",
@@ -146,14 +147,14 @@
         "slug": "uqam-en-info"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Les rois de l'arène",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T11:35:58.629Z"
+      "checkedAt": "2026-11-03T13:07:23.684Z"
     }
   }
 }
