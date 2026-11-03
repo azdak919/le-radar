@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-03T16:06:50.843Z",
+  "updatedAt": "2026-11-03T17:08:22.160Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "L'art des Histoires",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:30",
-        "url": "https://chyz.ca/emission/lart-des-histoires/"
-      },
+      "current": null,
       "next": {
         "title": "Émission (presque) sérieuse",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/emission-presque-serieuse/"
       },
       "track": "",
-      "showTitle": "L'art des Histoires",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T16:06:12.573Z"
+      "checkedAt": "2026-11-03T17:07:43.569Z"
     },
     "cism": {
       "id": "cism",
@@ -55,85 +48,84 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T16:06:26.303Z"
+      "checkedAt": "2026-11-03T17:07:57.234Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ecolibrium/Environment in Canada",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Universal Break",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "",
-      "showTitle": "Ecolibrium/Environment in Canada",
+      "next": {
+        "title": "Voice of Korea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "You",
+      "showTitle": "Universal Break",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T16:06:29.611Z"
+      "checkedAt": "2026-11-03T17:08:00.555Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mirror Journal",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
-      },
-      "next": {
         "title": "World Beat News",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/world-beat-news"
       },
+      "next": {
+        "title": "Shaking the Habitual",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+      },
       "track": "",
-      "showTitle": "Mirror Journal",
+      "showTitle": "World Beat News",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T16:06:31.844Z"
+      "checkedAt": "2026-11-03T17:08:02.379Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Le DOUZE",
         "source": "schedule-live",
         "start": "12:00",
         "end": "18:30"
       },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le DOUZE",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T16:06:32.896Z"
+      "checkedAt": "2026-11-03T17:08:03.448Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +146,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T16:06:50.492Z"
+      "checkedAt": "2026-11-03T17:08:21.810Z"
     }
   }
 }
