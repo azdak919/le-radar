@@ -60,7 +60,10 @@ function nonArticleReason(item = {}, opts = {}) {
   let p = '';
   try { p = new URL(item.link).pathname; } catch { p = String(item.link || ''); }
   if (h.paths.some((re) => re.test(p))) return 'page exclue (critère de la source)';
-  if (h.excerpts.some((re) => re.test(text(item.excerpt)) || re.test(text(item.leadExcerpt)))) return 'extrait rejeté (critère de la source)';
+  // Critère de la source : sur l'extrait du flux seulement. Le menu WordPress
+  // collé en leadExcerpt est effacé (filterNonArticles), jamais un motif de rejet
+  // quand le flux a du vrai texte (Horoscope de The Plant, 3 nov. 2026).
+  if (h.excerpts.some((re) => re.test(text(item.excerpt)))) return 'extrait rejeté (critère de la source)';
   const ex = item.excerpt || '';
   const lead = item.leadExcerpt || '';
   if (isWpChromeExcerpt(ex) || isWpChromeExcerpt(lead)) {
@@ -93,6 +96,7 @@ function filterNonArticles(items = [], { log = () => {}, ...opts } = {}) {
       it.leadImageReady = false;
       for (const f of ['imageLocal', 'imageLocalKey', 'imageLocalVia', 'sourceImageCredit']) delete it[f];
     }
+    if (it.leadExcerpt && isWpChromeExcerpt(it.leadExcerpt)) delete it.leadExcerpt;
     kept.push(it);
   }
   return kept;
