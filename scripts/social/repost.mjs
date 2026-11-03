@@ -5,7 +5,7 @@
 // Buffer (tous canaux) : posts programmés/en erreur supprimés ; posts déjà envoyés NON supprimables
 // par l'API → listés (externalLink) pour suppression manuelle. X : nouveau post programmé à X_DUE.
 // États mis à jour (data/bluesky-sent.json, data/buffer-sent.json) : l'article reste « envoyé »,
-// le bot ne le republiera jamais une 3e fois. Env : URLS, X_DUE (ISO, même ordre), DRY_RUN, BSKY=true|false.
+// le bot ne le republiera jamais une 3e fois. FORCE=true : remplace même si le texte est correct (ex. mauvaise image). Env : URLS, X_DUE (ISO, même ordre), DRY_RUN, BSKY=true|false.
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, buildText, stripUtm, formatOk, siteLink } from './lib.mjs';
@@ -50,12 +50,12 @@ if (process.env.BSKY !== 'false' && process.env.BLUESKY_APP_PASSWORD) {
   for (const it of targets) {
     const old = posts.filter(p => p.link === it.link || has(p.text, it));
     if (!old.length) { console.log(`Bluesky : aucune publication pour ${it.link}`); continue; }
-    if (old.every(p => okFor(p.text, it))) { console.log(`Bluesky : déjà correct ${old.map(p => p.url).join(' ')}`); continue; }
+    if (process.env.FORCE !== 'true' && old.every(p => okFor(p.text, it))) { console.log(`Bluesky : déjà correct ${old.map(p => p.url).join(' ')}`); continue; }
     for (const p of old) { console.log(`Bluesky : suppression ${p.url}\n  ancien : ${p.text.split('\n').pop()}`); if (!dry) await bs.deletePost(p.uri); }
     const im = imgs.get(it.id), text = buildBskyText(it, ACC, { credit: im?.credit, photo: !!im });
     console.log(`Bluesky : republication\n${text}`);
     if (dry) continue;
-    let thumb = null; if (im) { try { thumb = await bs.uploadImage(im.url); } catch (e) { console.log(`::warning::image : ${e.message}`); } }
+    const thumb = await bs.uploadImage(im.url); // échec = erreur
     const r = await bs.post(postRecord({ text, lang: detectLang(it), dids, card: { uri: siteLink(it), title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } }));
     st.sent[it.id] = { ...(st.sent[it.id] || {}), at: new Date().toISOString(), source: it.source, k: titleKey(it), uri: r.uri, url: r.url, repost: { deleted: old.map(p => p.url), credit: im?.credit || null } };
     wr('data/bluesky-sent.json', st);

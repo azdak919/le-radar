@@ -16,6 +16,10 @@ on:
         description: 'Traiter Bluesky (supprimer + republier tout de suite)'
         type: boolean
         default: true
+      force:
+        description: 'Remplacer même si le texte est correct (ex. mauvaise image de carte)'
+        type: boolean
+        default: false
       dry_run:
         description: 'Essai seulement'
         type: boolean
@@ -46,6 +50,7 @@ jobs:
           X_DUE: ${{ inputs.x_due }}
           BSKY: ${{ inputs.bluesky && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          FORCE: ${{ inputs.force && 'true' || 'false' }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
