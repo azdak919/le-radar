@@ -1,0 +1,59 @@
+name: Social — Interactions (Bluesky, Tumblr, Mastodon)
+
+# Toutes les 2 h de 8 h à 20 h (heure de Toronto, HNE ; décalé d'1 h en HAE), jamais la nuit. Coût : 0 $.
+# Bluesky : j'aime + un émoji (liste blanche) ; Tumblr : j'aime des reblogs commentés ; Mastodon : favoris seulement, sans IA.
+# Au plus 3 réponses par publication de < 48 h, 20 actions/jour/réseau. État : data/engage-state.json.
+# Réel seulement si la variable ENGAGE_LIVE vaut « true » ou en lancement manuel avec dry_run décoché.
+on:
+  schedule:
+    - cron: '20 13,15,17,19,21,23 * * *'
+    - cron: '20 1 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Essai : aucune interaction réelle'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  engage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Interactions
+        env:
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
+          TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}
+          TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) || (github.event_name == 'schedule' && vars.ENGAGE_LIVE != 'true') && 'true' || 'false' }}
+        run: node scripts/social/engage.mjs
+      - name: Commit de l'état (data/engage-state.json seulement)
+        if: always()
+        run: |
+          git diff --quiet -- data/engage-state.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/engage-state.json
+          git commit -s -m "bot(social): état des interactions"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/engage-state.json\"))'"
