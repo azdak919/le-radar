@@ -1581,15 +1581,6 @@
       "via": "disk",
       "nameKey": "montage_1920x1080_v6.png"
     },
-    "2ab4782df799135a": {
-      "local": "assets/news-images/2ab4782df799135a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Lonely.jpeg",
-      "host": "www.delitfrancais.com",
-      "bytes": 185165,
-      "updatedAt": "2026-11-03T17:25:04.177Z",
-      "via": "disk",
-      "nameKey": "lonely.jpeg"
-    },
     "7a15d9019b06c31f": {
       "local": "assets/news-images/7a15d9019b06c31f.jpg",
       "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/WhatsApp-Image-2026-10-19-at-12.28.24-e1792471067108.jpeg",
@@ -1599,10 +1590,29 @@
       "updatedAt": "2026-11-03T17:38:50.793Z",
       "via": "origin",
       "nameKey": "whatsapp-image-2026-10-19-at-12.28.24-e1792471067108.jpeg"
+    },
+    "c6ecf846f4ddf380": {
+      "local": "assets/news-images/c6ecf846f4ddf380.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/ThelysonOrelienAI.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 153843,
+      "updatedAt": "2026-11-03T19:38:42.498Z",
+      "via": "disk",
+      "nameKey": "thelysonorelienai.png"
+    },
+    "c09c3e7a87e87172": {
+      "local": "assets/news-images/c09c3e7a87e87172.jpg",
+      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FIMG_2252.jpeg?alt=media&token=2040dd1d-16e0-4b0f-83eb-698437eceb28",
+      "host": "firebasestorage.googleapis.com",
+      "bytes": 300057,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-03T19:38:44.783Z",
+      "via": "resize-proxy",
+      "nameKey": "img_2252.jpeg"
     }
   },
-  "updatedAt": "2026-11-03T19:09:09.165Z",
-  "count": 161,
+  "updatedAt": "2026-11-03T19:38:44.785Z",
+  "count": 162,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

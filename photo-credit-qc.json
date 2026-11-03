@@ -1,23 +1,30 @@
 {
-  "updated": "2026-11-03T19:10:47.009Z",
-  "total": 182,
-  "withImage": 162,
-  "withCredit": 162,
+  "updated": "2026-11-03T19:40:21.498Z",
+  "total": 183,
+  "withImage": 163,
+  "withCredit": 163,
   "cited": 89,
   "pending": 53,
   "missingHero": 0,
   "ok": false,
-  "checked": 66,
-  "updatedCount": 4,
+  "checked": 67,
+  "updatedCount": 5,
   "citedNew": 7,
-  "fallbackNew": 59,
+  "fallbackNew": 60,
   "samples": [
     {
-      "title": "Vote obligatoire, idée réalisable ?",
-      "source": "La Pige",
-      "credit": "Photo : Colin Boucher",
+      "title": "Je déteste novembre",
+      "source": "Le Polyscope",
+      "credit": "Photo : Le Polyscope",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "body-line"
+      "method": "media-credit-near"
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
