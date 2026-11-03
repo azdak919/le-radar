@@ -1,31 +1,17 @@
 {
-  "updated": "2026-11-03T17:39:59.849Z",
-  "total": 186,
-  "withImage": 164,
-  "withCredit": 164,
-  "cited": 90,
-  "pending": 54,
+  "updated": "2026-11-03T18:26:35.240Z",
+  "total": 182,
+  "withImage": 161,
+  "withCredit": 161,
+  "cited": 88,
+  "pending": 53,
   "missingHero": 0,
   "ok": false,
-  "checked": 57,
-  "updatedCount": 5,
-  "citedNew": 2,
-  "fallbackNew": 55,
+  "checked": 65,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 59,
   "samples": [
-    {
-      "title": "STM Anniversary",
-      "source": "The Plant",
-      "credit": "Photo: The Plant",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le virus du Nil occidental se propage à cause des changements climatiques",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
       "source": "The Campus",
@@ -41,11 +27,39 @@
       "method": "figcaption-trailing"
     },
     {
+      "title": "Québec : la percée conservatrice, l’échec péquiste",
+      "source": "L'Exemplaire",
+      "credit": "Montage : Benjamin Lessard / L’Exemplaire",
+      "cited": true,
+      "method": "montage"
+    },
+    {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
       "source": "The Plant",
       "credit": "Image via Pinterest",
       "cited": true,
       "method": "via-attribution"
+    },
+    {
+      "title": "Québec roule pour de saines habitudes de vie",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Benjamin Lessard / L’Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Pourquoi « brosser » au tailgate du Rouge et Or ?",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Raphaël Bédard / L’Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Les chroniqueurs polémistes : un mal nécessaire ?",
+      "source": "L'Exemplaire",
+      "credit": "Photo : alexas fotos • utilisation gratuite autorisée via Pixabay",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
