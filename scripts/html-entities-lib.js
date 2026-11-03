@@ -10,6 +10,8 @@ const NAMED_HTML_ENTITIES = {
   quot: '"',
   apos: "'",
   nbsp: '\u00A0',
+  shy: '\u00AD',
+  zwsp: '\u200B',
   hellip: '…',
   mdash: '—',
   ndash: '–',
@@ -121,9 +123,16 @@ function decodeEntities(str = '') {
   return decodeHtmlEntities(str);
 }
 
+const INLINE_TAG_RE = /<\/?(?:span|a|em|strong|b|i|u|s|sup|sub|small|mark|abbr|font|code|q|cite|time|wbr)\b[^>]*>/gi;
+const INVISIBLE_CHARS_RE = /[\u00AD\u200B-\u200D\u2060\uFEFF]/g;
+
 function stripHtml(html = '') {
   return decodeHtmlEntities(html)
+    // Balises en ligne (span, a, em…) : aucune espace, sinon « p</span><span>ermet » devient « p ermet ».
+    .replace(INLINE_TAG_RE, '')
     .replace(/<[^>]+>/g, ' ')
+    // Trait d'union conditionnel, espaces sans chasse, joiners, BOM.
+    .replace(INVISIBLE_CHARS_RE, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
