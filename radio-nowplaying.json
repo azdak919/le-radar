@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T10:06:30.547Z",
+  "updatedAt": "2026-11-03T11:35:58.979Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,7 +7,7 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Mardi Champ Gauche",
+        "title": "Mardi Groovy",
         "source": "schedule",
         "start": "08:00",
         "end": "10:00",
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T10:06:00.606Z"
+      "checkedAt": "2026-11-03T11:35:32.963Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Raconte ton quartier",
         "source": "schedule",
-        "start": "05:00",
+        "start": "06:00",
         "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
       },
       "next": {
-        "title": "Raconte ton quartier",
+        "title": "450DB",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+        "url": "https://cism893.ca/emissions/450db"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Raconte ton quartier",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T10:06:14.172Z"
+      "checkedAt": "2026-11-03T11:35:46.382Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T10:06:20.163Z"
+      "checkedAt": "2026-11-03T11:35:49.150Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T10:06:22.333Z"
+      "checkedAt": "2026-11-03T11:35:51.241Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T10:06:23.471Z"
+      "checkedAt": "2026-11-03T11:35:52.526Z"
     },
     "choq": {
       "id": "choq",
@@ -139,22 +139,21 @@
         "slug": "les-rois-de-larene"
       },
       "next": {
-        "title": "Le Monde Dans Mes Oreilles",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://www.choq.ca/emissions/le-monde-dans-mes-oreilles"
+        "title": "L'UQAM en info",
+        "source": "api-live",
+        "start": "12:45",
+        "end": "13:30",
+        "slug": "uqam-en-info"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T10:06:30.196Z"
+      "checkedAt": "2026-11-03T11:35:58.629Z"
     }
   }
 }
