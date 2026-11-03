@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-03T03:36:53.418Z",
+  "updated": "2026-11-03T05:07:12.114Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 11,
+  "incomplete": 10,
   "withLeadExcerpt": 126,
-  "candidates": 11,
-  "enriched": 1,
-  "failed": 5,
+  "candidates": 10,
+  "enriched": 4,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -19,12 +19,30 @@
       "changed": false
     },
     {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
+      "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant/?utm_source=rss&utm_medium=rss&utm_campaign=luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant",
       "ok": true,
       "score": 100,
-      "chars": 333,
-      "sample": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouve",
+      "chars": 400,
+      "sample": "Bien qu’il soit à la tête du conseil de ville depuis un an, Luc Boivin a remporté les élections de j",
+      "changed": true
+    },
+    {
+      "title": "Tout ce qui me rappelle pourquoi je déteste le beige et pourquoi je ne pourrai jamais m’affilier à cette couleur",
+      "link": "https://quartierlibre.ca/pourquoi-je-deteste-le-beige/",
+      "ok": true,
+      "score": 80,
+      "chars": 400,
+      "sample": "Les pâtes alimentaires sans assaisonnement, la nourriture en morceaux au fond de l’évier, les petits",
+      "changed": true
+    },
+    {
+      "title": "Bulletins La Pige radio 2 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-2-novembre",
+      "ok": true,
+      "score": 68,
+      "chars": 167,
+      "sample": "Opération policière en cours à Chicoutimi, l’insécurité alimentaire en hausse chez les jeunes et la ",
       "changed": true
     },
     {
