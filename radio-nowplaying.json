@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-03T14:06:48.712Z",
+  "updatedAt": "2026-11-03T15:06:48.952Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Mardi Groovy",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
-      },
-      "next": {
         "title": "L'art des Histoires",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "11:30",
         "url": "https://chyz.ca/emission/lart-des-histoires/"
       },
+      "next": {
+        "title": "Émission (presque) sérieuse",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/emission-presque-serieuse/"
+      },
       "track": "",
-      "showTitle": "Mardi Groovy",
+      "showTitle": "L'art des Histoires",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T14:06:10.052Z"
+      "checkedAt": "2026-11-03T15:06:08.523Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T14:06:23.650Z"
+      "checkedAt": "2026-11-03T15:06:22.738Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T14:06:26.419Z"
+      "checkedAt": "2026-11-03T15:06:25.457Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "At The Movies",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "Mirror Journal",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/mirror-journal"
+      },
       "track": "",
-      "showTitle": "At The Movies",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T14:06:28.687Z"
+      "checkedAt": "2026-11-03T15:06:28.779Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T14:06:30.406Z"
+      "checkedAt": "2026-11-03T15:06:29.864Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T14:06:48.362Z"
+      "checkedAt": "2026-11-03T15:06:48.602Z"
     }
   }
 }
