@@ -65,7 +65,7 @@ export async function runGuard(env, now = Date.now()) {
   return { guard: 'dispatch', age: Math.round(age), status: d.status };
 }
 
-// Bluesky et Tumblr n'ont pas de planificateur : à chaque passage de 7 h à minuit, lance chaque workflow de SOCIAL_WORKFLOW (chacun applique ses fenêtres horaires)
+// Bluesky, Tumblr et Mastodon n'ont pas de planificateur : à chaque passage de 7 h à minuit, lance chaque workflow de SOCIAL_WORKFLOW (chacun applique ses fenêtres horaires)
 // (le workflow publie les choix dus, idempotent). Aucune relance si une passe est en cours.
 export async function runSocial(env, now = Date.now()) {
   const wfs = socialWorkflows(env.SOCIAL_WORKFLOW);
@@ -75,7 +75,9 @@ export async function runSocial(env, now = Date.now()) {
     const r = await gh(env, `/actions/workflows/${wf}/runs?per_page=1`);
     const last = r.ok ? (await r.json()).workflow_runs?.[0] : null;
     if (last && last.status !== 'completed') { out[wf] = 'busy'; continue; }
-    const d = await gh(env, `/actions/workflows/${wf}/dispatches`, { method: 'POST', body: JSON.stringify({ ref: 'main' }) });
+    // Mastodon : son workflow_dispatch est en essai par défaut (dry_run: true) → passe réelle explicite.
+    const body = /mastodon/.test(wf) ? { ref: 'main', inputs: { dry_run: 'false' } } : { ref: 'main' };
+    const d = await gh(env, `/actions/workflows/${wf}/dispatches`, { method: 'POST', body: JSON.stringify(body) });
     out[wf] = d.status;
   }
   return { social: 'dispatch', ...out };

@@ -12,16 +12,19 @@ assert.equal(decide({ now, newsUpdated: now - 61 * 60000, active: 0, feedDates: 
 assert.equal(decide({ now, newsUpdated: upd, active: 0, feedDates: [now + 86400000] }).dispatch, false); // date future ignorée
 assert.deepEqual(socialWorkflows('social-bluesky.yml, social-tumblr.yml,'), ['social-bluesky.yml', 'social-tumblr.yml']);
 assert.deepEqual(socialWorkflows('social-bluesky.yml'), ['social-bluesky.yml']);
-assert.match(fs.readFileSync(new URL('../cloudflare/news-trigger/wrangler.toml', import.meta.url), 'utf8'), /SOCIAL_WORKFLOW = "social-bluesky\.yml,social-tumblr\.yml"/);
+assert.match(fs.readFileSync(new URL('../cloudflare/news-trigger/wrangler.toml', import.meta.url), 'utf8'), /SOCIAL_WORKFLOW = "social-bluesky\.yml,social-tumblr\.yml,social-mastodon\.yml"/);
 // runSocial : un dispatch par workflow, « busy » si une passe est en cours
 const calls = []; const realFetch = globalThis.fetch;
-globalThis.fetch = async (u, init = {}) => { calls.push([init.method || 'GET', u]);
+globalThis.fetch = async (u, init = {}) => { calls.push([init.method || 'GET', u, init.body]);
   if (/runs\?/.test(u)) return new Response(JSON.stringify({ workflow_runs: [{ status: /tumblr/.test(u) ? 'in_progress' : 'completed' }] }));
   return new Response(null, { status: 204 }); };
 const slot = Date.parse('2026-11-01T17:05:00Z'); // 12:05 Toronto
 const rs = await runSocial({ REPO: 'o/r', GH_TOKEN: 'x', SOCIAL_WORKFLOW: 'social-bluesky.yml,social-tumblr.yml' }, slot);
 assert.deepEqual(rs, { social: 'dispatch', 'social-bluesky.yml': 204, 'social-tumblr.yml': 'busy' });
 assert.equal(calls.filter(c => c[0] === 'POST').length, 1);
+calls.length = 0;
+assert.deepEqual(await runSocial({ REPO: 'o/r', GH_TOKEN: 'x', SOCIAL_WORKFLOW: 'social-mastodon.yml' }, slot), { social: 'dispatch', 'social-mastodon.yml': 204 });
+assert.deepEqual(JSON.parse(calls.find(c => c[0] === 'POST')[2]), { ref: 'main', inputs: { dry_run: 'false' } }, 'Mastodon : passe réelle, pas l’essai par défaut');
 assert.deepEqual(await runSocial({ SOCIAL_WORKFLOW: 'a.yml' }, Date.parse('2026-11-02T08:05:00Z')), { social: 'idle' }, '3 h à Toronto : calme');
 globalThis.fetch = realFetch;
 console.log('news-trigger ok');

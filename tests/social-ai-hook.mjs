@@ -1,7 +1,7 @@
 // Crochet IA : actif sur X/Pages/Bluesky/Tumblr, JAMAIS sur Mastodon (piaille.fr interdit le texte IA).
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { articleLang, aiHook, withHook, validHook, aiEnabled } from '../scripts/social/ai-hook.mjs';
+import { articleLang, aiHook, aiHookDetail, withHook, validHook, aiEnabled, hookReject, hookLang, parseAi } from '../scripts/social/ai-hook.mjs';
 import { buildText } from '../scripts/social/lib.mjs';
 import { buildBskyText } from '../scripts/social/bluesky.mjs';
 import { buildTumblrText } from '../scripts/social/tumblr.mjs';
@@ -14,8 +14,22 @@ const ok = async () => ({ ok: true, json: async () => ({ result: { response: JSO
 assert.equal(aiEnabled({}), false);
 assert.equal(aiEnabled({ ...env, SOCIAL_AI: 'off' }), false);
 assert.equal(validHook('Le ministre Tremblay annonce 300 millions pour les étudiants', it), false, 'garde-fou chiffre/nom');
-assert.equal(await aiHook(it, { env, fetchImpl: async () => ({ ok: false }) }), null, 'repli sur échec');
-assert.equal(await aiHook(it, { env, fetchImpl: async () => { throw new Error('x'); } }), null);
+assert.equal(await aiHook(it, { env, fetchImpl: async () => ({ ok: false, status: 429 }) }), null, 'repli sur échec');
+assert.match((await aiHookDetail(it, { env, fetchImpl: async () => ({ ok: false, status: 429 }) })).reason, /HTTP 429 \(quota\)/);
+assert.match((await aiHookDetail(it, { env, fetchImpl: async () => { throw new Error('x'); } })).reason, /appel en échec/);
+// Cas trouvé : Workers AI renvoie parfois `response` déjà décodé (objet) ou du JSON entouré de ```json.
+const obj = await aiHook(it, { env, fetchImpl: async () => ({ ok: true, json: async () => ({ result: { response: { hook: HOOK, topic: 'Éducation' } } }) }) });
+assert.equal(obj.hook, HOOK, 'réponse objet acceptée');
+assert.deepEqual(parseAi('```json\n{"hook":"a","topic":"b"}\n```'), { hook: 'a', topic: 'b' });
+assert.equal(parseAi('pas de json'), null);
+// Garde-fou intact : chiffres et noms absents refusés, avec la raison ; décimales et auteurs présents acceptés.
+const pct = { ...it, title: 'La participation atteint 66,9 % chez les jeunes', bare: 'La participation atteint 66,9 % chez les jeunes', desc: 'Selon Élections Québec, la hausse est nette.', author: 'Arianne Dion' };
+assert.equal(hookReject('Les jeunes votent davantage, avec 66,9 % de participation', pct), null);
+assert.match(hookReject('Les jeunes votent davantage, avec 71 % de participation', pct), /chiffre absent \(71\)/);
+assert.equal(hookReject('Selon Élections Québec et Arianne Dion, la hausse est nette', pct), null);
+assert.match(hookReject('Le ministre Tremblay annonce une hausse nette', pct), /nom absent \(Tremblay\)/);
+// Accroche trop courte pour trancher la langue : pas de rejet pour « langue ».
+assert.equal(hookLang('Hausse nette chez les jeunes électeurs'), 'fr'); assert.equal(hookLang('Hausse nette, vote jeune record'), null);
 const a = { ...it }; await withHook(a, { env, fetchImpl: ok });
 assert.equal(a.aiHook, HOOK);
 const bad = { ...it, id: 'x2' }; await withHook(bad, { env, fetchImpl: async () => ({ ok: true, json: async () => ({ result: { response: '{"hook":"Le recteur Dupont promet 42 cours","topic":"Éducation"}' } }) }) });

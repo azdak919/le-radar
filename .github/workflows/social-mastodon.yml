@@ -6,7 +6,8 @@ name: Social — Mastodon (@leradar@piaille.fr)
 # Idempotent : data/mastodon-sent.json + derniers posts du blogue.
 on:
   schedule:
-    - cron: '10,40 * * * *'
+    # Minutes peu chargées (GitHub saute souvent :00/:10/:40) ; filet : Worker le-radar-news-trigger (workflow_dispatch, dry_run: false).
+    - cron: '7,37 * * * *'
   workflow_dispatch:
     inputs:
       dry_run:
