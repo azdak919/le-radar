@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-03T07:17:55.393Z",
+  "updated": "2026-11-03T09:07:25.129Z",
   "total": 186,
   "withPhoto": 169,
   "withStock": 32,
   "withCampusBank": 28,
   "fullyCovered": 186,
-  "leadReadyPhotos": 143,
-  "pageScraped": 29,
-  "photosRecovered": 29,
-  "imagesCleared": 10,
+  "leadReadyPhotos": 144,
+  "pageScraped": 30,
+  "photosRecovered": 30,
+  "imagesCleared": 11,
   "stockSearches": 43,
-  "stockFound": 27,
+  "stockFound": 28,
   "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
@@ -39,12 +39,6 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
     },
     {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
-    },
-    {
       "title": "Plus de 130 jours de manifestation en Albanie",
       "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
       "reason": "no-stock-match",
@@ -55,6 +49,12 @@
       "link": "https://lapige.atmjonquiere.com/2026/11/02/pour-halloween-ce-sont-les-pesticides-qui-font-peur/?utm_source=rss&utm_medium=rss&utm_campaign=pour-halloween-ce-sont-les-pesticides-qui-font-peur",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/16.jpg"
+    },
+    {
+      "title": "L’état des routes du Québec à l’aube de l’hiver",
+      "link": "https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/99/286770161_715d975245_b.jpg"
     },
     {
       "title": "Strong Start to the Season for the Gaiters",
@@ -81,10 +81,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "I Love Friendsgiving",
-      "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
     }
   ]
 }
