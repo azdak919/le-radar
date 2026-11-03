@@ -26,7 +26,7 @@ const len = s => [...String(s).replace(/https?:\/\/\S+/g, 'x'.repeat(23))].lengt
 export const camelTag = s => { const w = String(s || '').replace(/[’'`-]/g, ' ').split(/[^\p{L}\p{N}]+/u).filter(Boolean); return w.length ? '#' + w.map(x => x[0].toUpperCase() + x.slice(1)).join('') : ''; };
 /** 3 ou 4 mots-clics CamelCase : #PresseÉtudiante #Québec #<Média> + sujet (1re catégorie). */
 export const mastoTags = it => [...new Set(['#PresseÉtudiante', '#Québec', camelTag(it.source), camelTag((it.categories || [])[0])].filter(t => t.length > 2))].join(' ');
-export const buildMastoText = (it, { credit = '', photo = true } = {}) => { const tags = mastoTags(it); const t = buildText(it, [], LIMITS.mastodon - len(tags) - 2, { credit, photo, len, link: true }); return t && `${t}\n\n${tags}`; };
+export const buildMastoText = (it, { credit = '', photo = true } = {}) => { const tags = mastoTags(it); const t = buildText(it, [], LIMITS.mastodon - len(tags) - 2, { credit, photo, len, link: true, ai: false /* jamais d'IA : règles de piaille.fr */ }); return t && `${t}\n\n${tags}`; };
 
 const state = JSON.parse(fs.readFileSync(STATE, 'utf8')); state.sent ||= {};
 if (!state.liveSince) { state.liveSince = new Date().toISOString(); console.log(`Mise en service : ${state.liveSince} (rien d'antérieur ne sera publié).`); }

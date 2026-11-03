@@ -7,8 +7,8 @@ export { detectLang };
 export const TUMBLR_LIMIT = 1000; // texte court et lisible (NPF n'impose pas de limite stricte)
 export const BLOG = 'le-radar-ca.tumblr.com';
 
-export function buildTumblrText(it, accounts = [], { credit = '', photo = true } = {}) {
-  return buildText(it, accounts, TUMBLR_LIMIT, { credit, photo, len: s => [...s].length, link: true });
+export function buildTumblrText(it, accounts = [], { credit = '', photo = true, ai = true } = {}) {
+  return buildText(it, accounts, TUMBLR_LIMIT, { credit, photo, len: s => [...s].length, link: true, ai });
 }
 
 const tag = s => (s || '').replace(/[#,]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);

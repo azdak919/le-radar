@@ -31,3 +31,20 @@ export async function aiHook(it, { env = process.env, fetchImpl = fetch, lang = 
     return { hook: validHook(j.hook, it) ? j.hook.trim() : null, topic: TOPICS.includes(j.topic) ? j.topic : null };
   } catch { return null; }
 }
+
+// Budget : ~5 neurones par appel (llama 3.1 8B fp8, ~450 jetons). Plafond par exécution très
+// en deçà des 10 000 neurones/jour gratuits (≈ 100 exécutions × 12 appels × 5 ≈ 6 000).
+export const MAX_CALLS_PER_RUN = Number(process.env.SOCIAL_AI_MAX || 12);
+let calls = 0; const cache = new Map();
+/** Pose it.aiHook (accroche validée) si l'IA répond ; sinon rien (repli déterministe). Jamais Mastodon. */
+export async function withHook(it, opts = {}) {
+  if (!it || !aiEnabled(opts.env)) return it;
+  if (cache.has(it.id)) { const h = cache.get(it.id); if (h) it.aiHook = h; return it; }
+  if (calls >= (opts.max ?? MAX_CALLS_PER_RUN)) return it;
+  calls++;
+  const r = await aiHook(it, opts);
+  cache.set(it.id, r?.hook || null);
+  if (r?.hook) it.aiHook = r.hook;
+  console.log(`IA : ${r?.hook ? 'accroche retenue' : 'repli déterministe'} (${it.id})`);
+  return it;
+}

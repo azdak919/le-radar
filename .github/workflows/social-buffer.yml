@@ -114,6 +114,8 @@ jobs:
           DAILY: ${{ (github.event_name == 'schedule' || inputs.daily) && 'true' || 'false' }}
           EVENING: ${{ github.event.schedule == '7 2 * * *' && 'true' || 'false' }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/social/buffer-post.mjs
       - name: Pages Facebook et LinkedIn (places libres, heures de pointe)
         id: pages
@@ -126,6 +128,8 @@ jobs:
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/social/buffer-pages-post.mjs
       # UNE seule issue (créée ou mise à jour) si Buffer ou le réseau refuse un post ; jamais de doublon.
       - name: Issue unique si refus Facebook / LinkedIn

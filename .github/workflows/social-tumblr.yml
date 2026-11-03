@@ -52,6 +52,8 @@ jobs:
           DRY_RUN: ${{ (inputs.dry_run || vars.TUMBLR_LIVE != 'true') && 'true' || 'false' }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/social/tumblr-post.mjs
       - name: Commit de l'état (data/tumblr-sent.json seulement)
         if: always()

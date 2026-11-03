@@ -96,7 +96,8 @@ export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].
 /** « 📸 Auteur » : auteur·e connu·e de la photo, sinon le nom du média (jamais inventé). */
 export const photoLine = credit => String(credit || '').trim() ? `📸 ${String(credit).trim()}` : '';
 
-export function excerpt(it) {
+export function excerpt(it, { ai = false } = {}) {
+  if (ai && typeof it.aiHook === 'string' && it.aiHook.trim()) return it.aiHook.trim(); // accroche IA validée (ai-hook.mjs)
   let d = it.desc; if (!d) return '';
   for (const p of [it.title, it.bare]) if (p && d.startsWith(p)) d = d.slice(p.length).replace(/^[\s:–-]+/, '');
   if (it.author) d = d.replace(new RegExp('^(par|by)?\\s*' + esc(it.author) + '[\\s,:–-]*', 'i'), '');
@@ -187,13 +188,13 @@ export function cutExcerpt(ex, fits, max = 2) {
  *   📸 Crédit            (seulement si un crédit réel est connu : jamais de doublon du média)
  * Jamais de séparateur vide ni de doublon. Texte contenant « tison » : '' (refusé).
  */
-export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it) } = {}) {
+export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it), ai = false } = {}) {
   const pl = photo ? photoLine(credit) : '';
   let title = String(it.bare || it.title || '').replace(/\s+/g, ' ').trim();
   const ml = mediaLine(it, accounts);
   const tail = [ml, link ? url : '', pl].filter(Boolean).join('\n');
   const mk = (t, e) => [t, e, tail].filter(Boolean).join('\n\n');
-  const ex = cutExcerpt(excerpt(it), e => len(mk(title, e)) <= limit);
+  const ex = cutExcerpt(excerpt(it, { ai }), e => len(mk(title, e)) <= limit);
   let text = mk(title, ex);
   while (len(text) > limit && title.length > 10) { title = title.slice(0, -2).trimEnd().replace(/[\s,;:.–—-]+$/, '') + '…'; text = mk(title, ''); }
   return /tison/i.test(text) ? '' : text;

@@ -21,6 +21,10 @@ on:
         description: 'Avec share_now : URL de l’article précis à publier (même article sur tous les réseaux)'
         type: string
         default: ''
+      ai_test:
+        description: 'Un seul appel de test à Workers AI (jeton jamais affiché), sans publier'
+        type: boolean
+        default: false
       bot_label:
         description: 'Ajouter l’étiquette « bot » au profil (autres champs conservés) — avec dry_run : essai'
         type: boolean
@@ -62,14 +66,22 @@ jobs:
           SET_BIO: ${{ inputs.set_bio && 'true' || 'false' }}
           SET_IMAGES: ${{ inputs.set_images && 'true' || 'false' }}
         run: node scripts/social/bluesky-label.mjs
+      - name: Test du jeton Workers AI (un appel)
+        if: ${{ inputs.ai_test }}
+        env:
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/social/ai-ping.mjs
       - name: Publier les articles frais
-        if: ${{ !inputs.bot_label && !inputs.set_bio && !inputs.set_images }}
+        if: ${{ !inputs.ai_test && !inputs.bot_label && !inputs.set_bio && !inputs.set_images }}
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: node scripts/social/bluesky-post.mjs
       - name: Commit de l'état (data/bluesky-sent.json seulement)
         if: always()
