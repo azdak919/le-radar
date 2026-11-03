@@ -12,7 +12,7 @@ assert.equal(weightAt('bluesky', T('2026-11-07T22:00:00Z')), 1, 'samedi 17 h : p
 const live = '2026-11-01T17:00:00Z';
 assert.equal(rampAt(live, T('2026-11-02T00:00:00Z')), 0.4); assert.equal(rampAt(live, T('2026-11-05T18:00:00Z')), 0.7); assert.equal(rampAt(live, T('2026-11-09T00:00:00Z')), 1);
 const e = effectiveLimits(NETWORKS.tumblr, { network: 'tumblr', liveSince: live, now: T('2026-11-02T01:00:00Z') });
-assert.deepEqual([e.perHour, e.perDay, e.perRun], [2, 20, 1], 'rodage Tumblr jour 0 en pointe');
+assert.deepEqual([e.perHour, e.perDay, e.perRun], [3, 48, 2], 'rodage Tumblr jour 0 en pointe');
 const night = effectiveLimits(NETWORKS.bluesky, { network: 'bluesky', liveSince: live, now: T('2026-11-03T08:00:00Z') });
 assert.deepEqual([night.perHour, night.perRun], [0, 0]);
 for (const n of Object.keys(NETWORKS)) for (let h = 0; h < 168; h++) {

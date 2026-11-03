@@ -40,7 +40,7 @@ const repeated = markImages(items);
 const pl = plan(items, state.sent, { network: 'tumblr', liveSince: state.liveSince, accounts: ACCOUNTS });
 const { limits, status } = pl;
 console.log(`Tumblr ${blog} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h (poids horaire ${limits.weight}, rodage ×${limits.ramp}) · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s).`);
-for (const it of pl.skip) { console.log(`Sauté (plafond ou variété, jamais rattrapé) : [${it.source}] ${it.id}`); if (!dry) state.sent[it.id] = { at: new Date().toISOString(), skipped: 'cap', source: it.source }; }
+for (const it of pl.skip) { console.log(`Sauté (quasi-doublon) : [${it.source}] ${it.id}`); if (!dry) state.sent[it.id] = { at: new Date().toISOString(), skipped: 'dup', source: it.source }; }
 let todo = pl.now.map(it => ({ id: it.id }));
 if (shareNow) {
   const pool = freshCandidates(items, state.sent, { liveSince: state.liveSince });

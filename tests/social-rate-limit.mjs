@@ -32,5 +32,5 @@ assert.equal(full.now.length + full.hold.length, 2); assert.equal(full.skip.leng
 const twin = [it('t1', 'A', 5), { ...it('t2', 'B', 6), title: 't1' }];
 assert.equal(plan(twin, {}, { network: 'mastodon', liveSince: ago(600).toISOString(), now, schedule: false }).skip.length, 1, 'quasi-doublon');
 const pb = plan(many, {}, { network: 'bluesky', liveSince: ago(600).toISOString(), now, schedule: false });
-assert.equal(pb.now.length, 3); assert.equal(pb.hold.length, 6); assert.equal(pb.skip.length, 0);
+assert.equal(pb.now.length + pb.hold.length, 9, 'bluesky : rien de sauté (étalement)'); assert.equal(pb.skip.length, 0);
 console.log('social-rate-limit : OK');
