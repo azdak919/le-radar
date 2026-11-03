@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-03T14:17:08.815Z",
-  "count": 22,
+  "updated": "2026-11-03T14:40:33.011Z",
+  "count": 23,
   "items": [
     {
       "name": "Quartier Libre",
@@ -19,7 +19,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/QuartierLibre.ca",
           "handle": "QuartierLibre.ca",
-          "stats": "Quartier Libre, Montreal. 6,549 followers · 2 talking about this. Magazine indépendant des étudiant(e)s de l'UdeM, émission tous les vendredis à 12 h sur CISM",
+          "stats": "",
           "label": "Facebook"
         },
         {
@@ -371,6 +371,28 @@
           "handle": "@theconcordian",
           "stats": "",
           "label": "X"
+        }
+      ]
+    },
+    {
+      "name": "Impact Campus",
+      "institution": "Université Laval",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/impact_campus_ul/",
+          "handle": "@impact_campus_ul",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://facebook.com/impactcampus",
+          "handle": "impactcampus",
+          "stats": "",
+          "label": "Facebook"
         }
       ]
     },
