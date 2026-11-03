@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-03T05:06:54.471Z",
+  "updated": "2026-11-03T07:07:27.476Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 14,
+  "mismatches": 16,
   "ok": true,
   "samples": [
     {
@@ -116,7 +116,23 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
+      "link": "https://thetribune.ca/sports/after-mcgill-athletics-cuts-teams-navigate-a-new-future-under-ssmu-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "Ivanna Zhang et Zain Ahmed",
+      "canonicalAuthor": "Ivanna Zhang and Zain Ahmed",
+      "reason": "page-byline-overrides-rss"
+    },
+    {
+      "title": "What we liked this summer break",
+      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "Dylan Hing, Lia James et Siena Torres",
+      "canonicalAuthor": "Dylan Hing, Lia James and Siena Torres",
+      "reason": "page-byline-overrides-rss"
     }
   ],
-  "fixed": 14
+  "fixed": 16
 }
