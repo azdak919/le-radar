@@ -2,6 +2,7 @@
 // lien, « 📸 crédit » ; contenu NPF (texte, image réelle, bloc lien), étiquettes pertinentes.
 // Aucun @ : aucun blogue Tumblr de média étudiant confirmé (data/social/tumblr-accounts.json vide).
 import { buildText, detectLang, siteLink } from './lib.mjs';
+import { tumblrTags } from './hashtags.mjs';
 export { detectLang };
 export const TUMBLR_LIMIT = 1000; // texte court et lisible (NPF n'impose pas de limite stricte)
 export const BLOG = 'le-radar-ca.tumblr.com';
@@ -13,7 +14,7 @@ export function buildTumblrText(it, accounts = [], { credit = '', photo = true }
 const tag = s => (s || '').replace(/[#,]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
 /** Étiquettes : média, presse étudiante, Québec (+ student press si anglais). Jamais d'étiquette trompeuse. */
 export function tagsFor(it, lang = detectLang(it)) {
-  return [...new Set([tag(it.source), ...(it.categories || []).slice(0, 1).map(tag), 'presse étudiante', 'Québec', ...(lang === 'en' ? ['student press'] : [])].filter(Boolean))].slice(0, 5);
+  return tumblrTags(it, lang);
 }
 
 /** Corps NPF : texte (lien cliquable via formatting), image réelle (si présente), bloc lien. */
