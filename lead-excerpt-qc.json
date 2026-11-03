@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-03T00:06:54.877Z",
+  "updated": "2026-11-03T00:12:50.007Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 11,
   "withLeadExcerpt": 126,
-  "candidates": 10,
-  "enriched": 0,
+  "candidates": 11,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
+    },
+    {
+      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
+      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
+      "ok": true,
+      "score": 96,
+      "chars": 233,
+      "sample": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En",
+      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -70,15 +79,6 @@
       "score": 72,
       "chars": 399,
       "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
-      "changed": false
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
-      "ok": true,
-      "score": 84,
-      "chars": 400,
-      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
       "changed": false
     }
   ]
