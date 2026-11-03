@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T08:06:28.875Z",
+  "updatedAt": "2026-11-03T09:07:00.563Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T08:06:00.902Z"
+      "checkedAt": "2026-11-03T09:05:58.960Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T08:06:14.625Z"
+      "checkedAt": "2026-11-03T09:06:12.325Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T08:06:17.814Z"
+      "checkedAt": "2026-11-03T09:06:30.831Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T08:06:21.026Z"
+      "checkedAt": "2026-11-03T09:06:33.013Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T08:06:21.951Z"
+      "checkedAt": "2026-11-03T09:06:34.105Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +134,20 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "api-live",
+        "source": "schedule",
         "start": "05:00",
         "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T08:06:28.524Z"
+      "checkedAt": "2026-11-03T09:07:00.213Z"
     }
   }
 }
