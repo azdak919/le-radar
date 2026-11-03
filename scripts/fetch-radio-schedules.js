@@ -92,6 +92,7 @@ async function main() {
     let checkedAt = now;
     let verifiedWeekOf = weekStartIso(now, timezone);
     let carried = false;
+    let unverified = false;
 
     const prevGrid = prev.stations?.[radio.id]?.grid;
     const prevCount = Array.isArray(prevGrid) ? prevGrid.length : 0;
@@ -108,6 +109,8 @@ async function main() {
       verifiedWeekOf = prev.stations[radio.id].verifiedWeekOf
         || weekStartIso(checkedAt, timezone);
       carried = true;
+      // Site officiel injoignable : grille gardée, affichée « non vérifiée ».
+      unverified = true;
     } else if (
       !doForce
       && prevCount >= 10
@@ -151,6 +154,7 @@ async function main() {
       sources: finalSources,
       checkedAt,
       ...(verifiedWeekOf ? { verifiedWeekOf } : {}),
+      ...(unverified ? { unverified: true } : {}),
       // `live` vaut pour la seconde où la page a été lue : publié dans un
       // fichier relu pendant deux semaines, il désignerait une émission finie
       // depuis longtemps comme étant à l'antenne.

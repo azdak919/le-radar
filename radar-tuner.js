@@ -545,6 +545,20 @@ function scheduleTimeToMin(value) {
   return h * 60 + min;
 }
 
+const SCHEDULE_STALE_MS = 7 * 24 * 3600 * 1000;
+/**
+ * « grille non vérifiée » : site officiel injoignable au dernier passage
+ * (`unverified`) ou aucune relecture réussie depuis 7 jours.
+ */
+function scheduleUnverifiedNote(radio, now = Date.now()) {
+  const st = radio?.id ? radioSchedules.stations?.[radio.id] : null;
+  if (!st || !Array.isArray(st.grid) || !st.grid.length) return '';
+  const last = Date.parse(st.verifiedAt || st.checkedAt || '');
+  const stale = Number.isFinite(last) && now - last > SCHEDULE_STALE_MS;
+  if (!st.unverified && !stale) return '';
+  return window.RadarTranslate?.getMode?.() === 'en' ? 'schedule not verified' : 'grille non vérifiée';
+}
+
 /** Plage horaire couvrant l'instant présent (gère les émissions de nuit). */
 function scheduleCurrentSlot(radio) {
   const grid = radio?.id ? radioSchedules.stations?.[radio.id]?.grid : null;
@@ -857,8 +871,11 @@ function airRotationPhases(radio, { withSlogan = false } = {}) {
     const end = cur.end || schedCur?.end || '';
     const timeRange = start && end ? `${start} – ${end}` : (start || '');
     // La piste a sa propre phase : inutile de la répéter en sous-titre.
-    const sub = timeRange
+    const baseSub = timeRange
       || (host && normLoose(host) !== normLoose(cur.title) ? `avec ${host}` : '');
+    // Grille conservée sans relecture de la page officielle : le dire.
+    const note = cur === schedCur ? scheduleUnverifiedNote(radio) : '';
+    const sub = note ? [baseSub, note].filter(Boolean).join(' · ') : baseSub;
     push(cur.title, sub, 'live');
   }
 
