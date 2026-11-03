@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
     inputs:
       networks:
-        description: 'Réseaux (bluesky,tumblr,buffer)'
-        default: 'bluesky,tumblr,buffer'
+        description: 'Réseaux (bluesky,tumblr,mastodon,buffer)'
+        default: 'bluesky,tumblr,mastodon,buffer'
       dry_run:
         description: 'Essai seulement (rien n’est supprimé)'
         type: boolean
@@ -44,11 +44,13 @@ jobs:
           TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
           TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}
           TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE }}
         run: node scripts/social/purge.mjs
       - name: Commit des états
         if: ${{ !inputs.dry_run }}
         run: |
-          F="data/buffer-sent.json data/bluesky-sent.json data/tumblr-sent.json data/buffer-pages-sent.json"
+          F="data/buffer-sent.json data/bluesky-sent.json data/tumblr-sent.json data/mastodon-sent.json data/buffer-pages-sent.json"
           git diff --quiet -- $F && { echo "État inchangé."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"

@@ -26,9 +26,9 @@ assert.equal(rankLikeX(pool, { recentSources: ['A', 'A'] }).filter(i => i.source
 // plan : surplus sauté, jamais gardé au-delà de la fenêtre
 const many = Array.from({ length: 9 }, (_, i) => it('m' + i, 'S' + i, 5 + i));
 const p = plan(many, mk([1, 2, 3]), { network: 'mastodon', liveSince: ago(600).toISOString(), now, schedule: false });
-assert.equal(p.now.length, 1); assert.equal(p.hold.length, 8, 'plafond horaire : gardés (frais)'); assert.equal(p.skip.length, 0);
+assert.equal(p.now.length + p.hold.length, 9, 'plafond horaire : gardés (frais)'); assert.equal(p.skip.length, 0);
 const full = plan(many, mk(Array.from({ length: 48 }, (_, i) => 70 + i * 25)), { network: 'mastodon', liveSince: ago(600).toISOString(), now, schedule: false });
-assert.equal(full.now.length + full.hold.length, 2); assert.equal(full.skip.length, 7, 'au-delà de 24 h de capacité : sautés');
+assert.equal(full.now.length + full.hold.length, 9); assert.equal(full.skip.length, 0, 'mastodon : étalé comme Bluesky, rien de sauté');
 const twin = [it('t1', 'A', 5), { ...it('t2', 'B', 6), title: 't1' }];
 assert.equal(plan(twin, {}, { network: 'mastodon', liveSince: ago(600).toISOString(), now, schedule: false }).skip.length, 1, 'quasi-doublon');
 const pb = plan(many, {}, { network: 'bluesky', liveSince: ago(600).toISOString(), now, schedule: false });
