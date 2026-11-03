@@ -1,26 +1,36 @@
 {
-  "checkedAt": "2026-11-02T02:24:01.335Z",
+  "checkedAt": "2026-11-03T03:55:14.363Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [],
-    "overhaul": [
-      "cism"
+    "stable": 1,
+    "drift": [
+      "chyz",
+      "ckut"
     ],
-    "unreachable": []
+    "overhaul": [
+      "cism",
+      "choq"
+    ],
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
       "id": "chyz",
       "published": 42,
       "fresh": 42,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "added": [
+        "mar 08:00–10:00 Mardi Groovy"
+      ],
+      "removed": [
+        "mar 08:00–10:00 Mardi Champ Gauche"
+      ],
+      "changed": 2,
+      "ratio": 0.048,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -229,22 +239,43 @@
     {
       "id": "ckut",
       "published": 103,
-      "fresh": 103,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 100,
+      "added": [
+        "dim 00:00–02:00 stereOphobic",
+        "lun 07:00–08:00 Unmuted",
+        "lun 19:00–20:00 Lesbo-sons",
+        "mar 18:00–19:00 Prison Radio",
+        "mer 22:00–00:00 Lo Signal _First of the Month",
+        "jeu 17:00–18:00 Off the Hour: Trib Talks",
+        "jeu 23:00–01:00 L'aire du Diable",
+        "ven 19:00–22:00 LLA/Macondo"
+      ],
+      "removed": [
+        "dim 00:00–01:00 stereOphobic",
+        "dim 01:00–01:00 DEAD AIR BACKUP (REPLACE ME)",
+        "dim 01:01–02:00 DEAD AIR BACKUP (REPLACE ME)",
+        "lun 07:00–08:00 Unmuted with Svetlana and Miss Trish",
+        "lun 19:00–20:00 Dykes on Mykes",
+        "mar 18:00–19:00 Rez Rock Radio",
+        "mer 22:00–00:00 Meanwhile",
+        "jeu 17:00–18:00 Thursday OTH",
+        "jeu 23:00–01:00 You Need A Heart To Live 2",
+        "ven 19:00–20:00 Listening to Latin America: Blanca-Victoria",
+        "ven 20:00–22:00 Macondo"
+      ],
+      "changed": 19,
+      "ratio": 0.184,
+      "status": "drift"
     },
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 379,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -259,12 +290,27 @@
     {
       "id": "choq",
       "published": 24,
-      "fresh": 24,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 27,
+      "added": [
+        "lun 19:00–20:00 Bitume",
+        "mar 16:00–17:30 Passion Psy",
+        "mer 11:00–12:00 Miroirs d’Orient",
+        "mer 19:00–20:00 Les Amazones",
+        "jeu 14:00–15:00 Dans les airs",
+        "ven 12:45–12:55 Montréal au courant",
+        "ven 14:00–14:30 Les fleurs du tapis",
+        "sam 10:00–11:00 Podcast Nomade: L'art de se rencontrer"
+      ],
+      "removed": [
+        "dim 14:00–16:00 Pôle hip-hop",
+        "mar 11:00–12:00 Le Monde Dans Mes Oreilles",
+        "jeu 18:30–19:45 Les Apatrides Anonymes",
+        "jeu 20:00–21:00 La nouvelle école des surdoués",
+        "ven 17:00–18:00 La Niche"
+      ],
+      "changed": 13,
+      "ratio": 0.542,
+      "status": "overhaul"
     }
   ]
 }
