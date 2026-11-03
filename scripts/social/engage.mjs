@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createTumblr, oauthHeader, API as TAPI } from './channels/tumblr.mjs';
 import { BLOG } from './tumblr.mjs';
-import { emptyState, budget, spend, seen, mark, okAccount, decide, MAX_PER_POST, MAX_AGE_H } from './engage-lib.mjs';
+import { decideSourceLike, sourceDone, markSource, sourceBudget, emptyState, budget, spend, seen, mark, okAccount, decide, MAX_PER_POST, MAX_AGE_H } from './engage-lib.mjs';
 
 const STATE = 'data/engage-state.json';
 const DRY = process.env.DRY_RUN !== 'false';
@@ -111,10 +111,69 @@ async function mastodon() {
   report.mastodon = { posts, acts };
 }
 
+// --- J'aime des publications des sources : au plus 1 par source par jour, 15/jour/réseau, aucun texte ---
+const SRC = fs.existsSync('data/source-accounts.json') ? JSON.parse(fs.readFileSync('data/source-accounts.json', 'utf8')).sources || [] : [];
+async function likeOne(net, src, account, candidates, act) {
+  const key = `${net}:${account}`;
+  if (sourceDone(state, key, now)) return 0;
+  for (const c of candidates.filter(c => young(c.date)).slice(0, 5)) {
+    const id = `src-${net}:${c.id}`; if (seen(state, id) || c.liked) continue;
+    if (sourceBudget(state, net, now) < 1) return 0;
+    const ok = await decideSourceLike(c.text, { noAi: net === 'mastodon', allowEmpty: net !== 'mastodon' && !!c.hasMedia });
+    log(`Source ${src} (${net}) ${c.url || c.id} → ${ok ? 'j’aime' : 'sauté'}`);
+    if (!ok) continue;
+    if (!DRY) { await act(c); spend(state, 'src-' + net, 1, now); mark(state, id, now); markSource(state, key, now); }
+    return 1;
+  }
+  return 0;
+}
+async function sourcesBluesky() {
+  const { BLUESKY_HANDLE: handle, BLUESKY_APP_PASSWORD: password } = process.env; if (!handle || !password) return;
+  const pds = 'https://bsky.social';
+  const x = async (method, nsid, { query, body, jwt } = {}) => { const r = await fetch(`${pds}/xrpc/${nsid}${query ? '?' + new URLSearchParams(query) : ''}`, { method, headers: { ...(jwt ? { authorization: `Bearer ${jwt}` } : {}), ...(body ? { 'content-type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(30000) }); const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(`Bluesky ${nsid} ${r.status}`); return j; };
+  const s = await x('POST', 'com.atproto.server.createSession', { body: { identifier: handle, password } });
+  let n = 0;
+  for (const src of SRC) for (const acc of src.bluesky || []) {
+    const feed = (await x('GET', 'app.bsky.feed.getAuthorFeed', { query: { actor: acc, limit: '10', filter: 'posts_no_replies' }, jwt: s.accessJwt })).feed || [];
+    const cands = feed.filter(f => !f.reason && f.post.author.handle === acc).map(f => ({ id: f.post.uri, cid: f.post.cid, date: f.post.indexedAt, text: f.post.record?.text || '', hasMedia: !!f.post.embed, liked: !!f.post.viewer?.like }));
+    n += await likeOne('bluesky', src.name, acc, cands, c => x('POST', 'com.atproto.repo.createRecord', { jwt: s.accessJwt, body: { repo: s.did, collection: 'app.bsky.feed.like', record: { $type: 'app.bsky.feed.like', subject: { uri: c.id, cid: c.cid }, createdAt: new Date().toISOString() } } }));
+  }
+  report.sourcesBluesky = n;
+}
+async function sourcesTumblr() {
+  const e = process.env, keys = { ck: e.TUMBLR_CONSUMER_KEY, cs: e.TUMBLR_CONSUMER_SECRET, tk: e.TUMBLR_TOKEN, ts: e.TUMBLR_TOKEN_SECRET }; if (!keys.ck || !keys.tk) return;
+  const call = async (method, path, query, body) => { const url = `${TAPI}${path}${query ? '?' + new URLSearchParams(query) : ''}`; const r = await fetch(url, { method, headers: { authorization: oauthHeader(method, url, keys), ...(body ? { 'content-type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(30000) }); const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(`Tumblr ${path} ${r.status}`); return j.response; };
+  let n = 0;
+  for (const src of SRC) for (const acc of src.tumblr || []) {
+    const posts = (await call('GET', `/blog/${acc}/posts`, { limit: '10', npf: 'true', reblog_info: 'true' }))?.posts || [];
+    const cands = posts.filter(p => !p.trail?.length && !p.reblogged_from_id).map(p => ({ id: p.id_string, key: p.reblog_key, date: p.timestamp * 1000, text: [p.summary, ...(p.content || []).map(c => c.text || '')].join(' '), hasMedia: (p.content || []).some(c => c.type === 'image'), liked: !!p.liked, url: p.post_url }));
+    n += await likeOne('tumblr', src.name, acc, cands, c => call('POST', '/user/like', null, { id: c.id, reblog_key: c.key }));
+  }
+  report.sourcesTumblr = n;
+}
+async function sourcesMastodon() {
+  const base = (process.env.MASTODON_INSTANCE || 'https://piaille.fr').replace(/\/+$/, ''), token = process.env.MASTODON_TOKEN; if (!token) return;
+  let n = 0;
+  for (const src of SRC) for (const url of src.mastodon || []) {
+    // Résolution par l'instance de piaille.fr (recherche publique, sans jeton de lecture).
+    const u = new URL(url), acct = u.pathname.replace(/^\/@/, '') + '@' + u.hostname;
+    const a = await fetch(`${base}/api/v1/accounts/lookup?acct=${encodeURIComponent(acct)}`, { signal: AbortSignal.timeout(30000) }).then(r => r.ok ? r.json() : null);
+    if (!a) continue;
+    const sts = await fetch(`${base}/api/v1/accounts/${a.id}/statuses?limit=10&exclude_replies=true&exclude_reblogs=true`, { signal: AbortSignal.timeout(30000) }).then(r => r.ok ? r.json() : []);
+    const cands = sts.map(st => ({ id: st.uri, local: st.id, date: st.created_at, text: String(st.content || '').replace(/<[^>]+>/g, ' '), url: st.url }));
+    n += await likeOne('mastodon', src.name, acct, cands, async c => { const r = await fetch(`${base}/api/v1/statuses/${c.local}/favourite`, { method: 'POST', headers: { authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(30000) }); if (!r.ok) throw new Error(`Mastodon favourite ${r.status}`); });
+  }
+  report.sourcesMastodon = n;
+}
+
 let failed = 0;
 for (const [n, f] of [['bluesky', bluesky], ['tumblr', tumblr], ['mastodon', mastodon]]) {
   if (!only.includes(n)) continue;
   try { await f(); } catch (err) { failed++; log(`${n} : erreur ${String(err.message).slice(0, 200)}`); report[n] = { error: true }; }
+}
+for (const [n, f] of [['bluesky', sourcesBluesky], ['tumblr', sourcesTumblr], ['mastodon', sourcesMastodon]]) {
+  if (!only.includes(n) || process.env.SOURCE_LIKES === 'off') continue;
+  try { await f(); } catch (err) { log(`sources ${n} : erreur ${String(err.message).slice(0, 200)}`); }
 }
 if (!DRY) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
 log(`Résumé ${DRY ? '(essai)' : ''} : ${JSON.stringify(report)}`);
