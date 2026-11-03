@@ -1,9 +1,14 @@
-// Résolution d’image des publications sociales : flux → (Flickr si dans la page) → page de l’article → banque campus du Radar.
+// Résolution d’image des publications sociales : UNIQUEMENT l’image retenue par le-radar.ca pour l’article
+// (page article / og:image du Radar, data/article-pages.json). Jamais une image tirée du site source :
+// une pub (ex. Prime Video dans le corps d’un article du Collectif) y a déjà été prise pour la photo.
+// Les anciennes étapes (flux → page source → banque) restent dans resolveSourceImage, non utilisées par les envois.
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const bank = require('../campus-photo-bank.js');
-import { personCredit } from './lib.mjs';
+import { personCredit, articleId } from './lib.mjs';
+import { readFileSync } from 'node:fs';
 const UA = {'user-agent':'Mozilla/5.0 (compatible; LeRadarBot/1.0; +https://le-radar.ca)'};
+export const AD = /(?:^|[\/_.\-=?&])(?:ads?|adserver|advert\w*|sponsor\w*|promo\w*|publicite|pub|prime-?video|essayez-?prime|amazon-?prime|doubleclick|googlesyndication|adsystem|taboola|outbrain|criteo|\d{3,4}x(?:90|250|600))(?:[\/_.\-=?&]|$)|amazon-adsystem|doubleclick\.net|googlesyndication|adnxs|primevideo|m\.media-amazon\.com/i;
 export const BAD = /logo|default|placeholder|favicon|avatar|icon|sprite|banner|header|cropped-|gravatar|blank|spacer|5-?infos|cinq-?infos|cinq-nouvelles|nouvelles-de-la-semaine|share-image|og-default|site-image/i;
 const MINW = 600;
 /** Attribution d'une photo de banque : nom de personne tel quel ; pseudo (ex. « abdallahh », seul nom publié
@@ -54,11 +59,23 @@ export function candidates(html,base){ const out=[];
     if(u&&!u.startsWith('data:')) out.push({url:abs(u,base),how:'img article'}); }
   return out; }
 export async function bodyImages(link){ const h=await page(link); return h?candidates(h,link):[]; }
+let _pages=null;
+/** Image que le-radar.ca affiche pour l'article (même valeur que l'og:image de /article/<id>/). */
+export function siteImage(it,{pages}={}){
+  if(!pages){ if(!_pages){ try{ _pages=JSON.parse(readFileSync(new URL('../../data/article-pages.json',import.meta.url),'utf8')); }catch{ _pages={}; } } pages=_pages; }
+  const id=articleId(it?.link||''); const pg=id&&(pages.articles||pages)[id];
+  const url=pg?.image; if(!url||!/^https:\/\//.test(url)||AD.test(url)) return null;
+  return {url,origin:'le-radar.ca',credit:pg.credit||'',note:`og:image de /article/${id}/`}; }
+export async function resolveImage(it,opts={}){ const im=siteImage(it,opts); if(im||opts.pages) return im;
+  // Article pas encore dans le JSON du dépôt : og:image de la page publiée sur le-radar.ca.
+  const id=articleId(it?.link||''); if(!id) return null; const url=`https://le-radar.ca/article/${id}/`;
+  const h=await page(url); const og=h&&candidates(h,url).find(c=>c.how==='og/twitter')?.url;
+  return og&&/^https:\/\/le-radar\.ca\//.test(og)&&!AD.test(og)?{url:og,origin:'le-radar.ca',credit:'',note:`og:image de ${url}`}:null; }
 /** used: Map(source -> Set(keys)) ; repeatedBySource: Map(source->Set(keys) vues dans ≥2 articles) */
-export async function resolveImage(it,{used,repeated}){
+export async function resolveSourceImage(it,{used,repeated}){
   const u=used.get(it.source)||new Set(); used.set(it.source,u); const rep=repeated.get(it.source)||new Set();
-  const ok=async(url)=>{ if(!url||!/^https?:/.test(url)||BAD.test(url)||u.has(key(url))||rep.has(key(url))) return null;
-    const p=await probe(url); if(!p||!p.w||p.w<MINW||BAD.test(p.finalUrl)) return null; return p; };
+  const ok=async(url)=>{ if(!url||!/^https?:/.test(url)||BAD.test(url)||AD.test(url)||u.has(key(url))||rep.has(key(url))) return null;
+    const p=await probe(url); if(!p||!p.w||p.w<MINW||BAD.test(p.finalUrl)||AD.test(p.finalUrl)) return null; return p; };
   const take=(url,p,origin,note)=>{u.add(key(url));const credit=origin==='banque'?bankCredit(url):origin==='flux'?(it.credit||''):'';const f=new URL(p.finalUrl);[...f.searchParams.keys()].filter(k=>/^utm_/.test(k)).forEach(k=>f.searchParams.delete(k));return {url:f.toString().replace(/\?$/,''),origin,width:p.w,height:p.h,note,credit};};
   // 1. image du flux (non écartée)
   if(it.img && !it.imgDropped){ const p=await ok(it.img); if(p) return take(it.img,p,'flux'); }
