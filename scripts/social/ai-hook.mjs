@@ -2,7 +2,7 @@
 // CLOUDFLARE_AI_TOKEN et CLOUDFLARE_ACCOUNT_ID sont absents. Tout échec, quota atteint ou sortie
 // invalide → null : les scripts gardent la version déterministe (titre en tête, hashtags.mjs).
 // Garde-fou : l'accroche ne peut contenir aucun chiffre, guillemet ni nom propre absent du titre/extrait.
-export const MODEL = '@cf/meta/llama-3.1-8b-instruct';
+export const MODEL = '@cf/meta/llama-3.1-8b-instruct-fp8-fast';
 export const aiEnabled = (env = process.env) => !!(env.CLOUDFLARE_AI_TOKEN && env.CLOUDFLARE_ACCOUNT_ID && env.SOCIAL_AI !== 'off');
 const words = s => new Set((String(s || '').normalize('NFC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || []));
 /** Accroche acceptable : 20-140 car., aucun chiffre ni mot capitalisé absent de la source, pas de citation ni hashtag. */
