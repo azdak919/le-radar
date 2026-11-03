@@ -18,7 +18,7 @@ import { jitterMs } from './schedule.mjs';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/bluesky-sent.json');
 const ACCOUNTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/bluesky-accounts.json'), 'utf8')).accounts;
-const handle = process.env.BLUESKY_HANDLE || 'le-radar.bsky.social', password = process.env.BLUESKY_APP_PASSWORD || '';
+const handle = process.env.BLUESKY_HANDLE || 'le-radar.ca', password = process.env.BLUESKY_APP_PASSWORD || '';
 let dry = process.env.DRY_RUN === 'true' || process.argv.includes('--dry-run');
 if (!password) { console.log('BLUESKY_APP_PASSWORD absent : mode essai.'); dry = true; }
 const shareNow = process.env.SHARE_NOW === 'true';

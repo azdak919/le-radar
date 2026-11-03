@@ -1,4 +1,4 @@
-name: Social — Tumblr (leradar-ca.tumblr.com)
+name: Social — Tumblr (le-radar-ca.tumblr.com)
 
 # Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.

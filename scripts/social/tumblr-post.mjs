@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Bot Tumblr du Radar (leradar-ca.tumblr.com) : même règles que Bluesky. Articles FRAIS du flux
+// Bot Tumblr du Radar (le-radar-ca.tumblr.com) : même règles que Bluesky. Articles FRAIS du flux
 // (≤ 24 h, après state.liveSince : aucun rattrapage), une seule fois, ≤ 3 par passage espacés de
 // 90 s. Plafond tumblr de rate-limit.mjs (10/h, 150/24 h) ; au-delà, sélection comme X, surplus
 // SAUTÉ. Idempotent : data/tumblr-sent.json + derniers posts du blogue. Sans clés : essai.

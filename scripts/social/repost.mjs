@@ -40,7 +40,7 @@ for (const it of targets) console.log(`- ${it.link} · crédit actuel : ${imgs.g
 
 // ---- Bluesky
 if (process.env.BSKY !== 'false' && process.env.BLUESKY_APP_PASSWORD) {
-  const handle = process.env.BLUESKY_HANDLE || 'le-radar.bsky.social';
+  const handle = process.env.BLUESKY_HANDLE || 'le-radar.ca';
   const bs = createBluesky({ handle, password: process.env.BLUESKY_APP_PASSWORD });
   await bs.login();
   const ACC = rd('data/social/bluesky-accounts.json').accounts, dids = new Map();

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Abonnements de @le-radar.bsky.social : data/social/bluesky-follows.json, idempotent et lent
+// Abonnements de @le-radar.ca : data/social/bluesky-follows.json, idempotent et lent
 // (MAX_FOLLOWS par passe, DELAY_MS entre chaque, déjà suivis sautés). Sans mot de passe : essai.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,7 +7,7 @@ import { PDS } from './channels/bluesky.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const list = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/bluesky-follows.json'), 'utf8')).follows;
-const handle = process.env.BLUESKY_HANDLE || 'le-radar.bsky.social', password = process.env.BLUESKY_APP_PASSWORD || '';
+const handle = process.env.BLUESKY_HANDLE || 'le-radar.ca', password = process.env.BLUESKY_APP_PASSWORD || '';
 // Anti-pourriel : ≤ 5 par passe, ≤ 25 par 24 h glissantes (relevé des enregistrements de suivi), délais aléatoires.
 const max = Math.min(parseInt(process.env.MAX_FOLLOWS || '5', 10), 5), dayCap = parseInt(process.env.DAY_CAP || '25', 10);
 const delay = () => parseInt(process.env.DELAY_MS || '0', 10) || 20000 + Math.floor(Math.random() * 40000);

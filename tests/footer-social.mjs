@@ -8,11 +8,11 @@ const m = src.match(/const SOCIAL_LINKS = (\[[\s\S]*?\n  \]);/);
 assert.ok(m, 'SOCIAL_LINKS introuvable dans nav-shell.js');
 const links = vm.runInNewContext(m[1]);
 const expected = {
-  x: 'https://x.com/LeRadar_ca',
-  bluesky: 'https://bsky.app/profile/le-radar.bsky.social',
+  x: 'https://x.com/le_radar_ca',
+  bluesky: 'https://bsky.app/profile/le-radar.ca',
   facebook: 'https://www.facebook.com/profile.php?id=61596092762097',
   linkedin: 'https://www.linkedin.com/company/le-radar-ca/',
-  tumblr: 'https://leradar-ca.tumblr.com',
+  tumblr: 'https://le-radar-ca.tumblr.com',
   rss: 'https://le-radar.ca/feed.xml',
 };
 const on = links.filter((l) => l.enabled);
