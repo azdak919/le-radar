@@ -1,0 +1,34 @@
+name: Bluesky — supprimer une publication
+
+# Manuel seulement. Supprime UNE publication du compte Bluesky du Radar (par rkey).
+on:
+  workflow_dispatch:
+    inputs:
+      rkey:
+        description: 'rkey de la publication (fin de l’URL bsky.app/.../post/<rkey>)'
+        required: true
+        type: string
+      dry_run:
+        description: 'Essai seulement'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Supprimer
+        env:
+          RKEY: ${{ inputs.rkey }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+        run: node scripts/social/bluesky-delete.mjs
