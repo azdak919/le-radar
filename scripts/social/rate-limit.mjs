@@ -37,7 +37,7 @@ export function remaining(sent, limits, { now = Date.now() } = {}) {
 
 /** Articles admissibles : jamais publiés/sautés, ≤ 24 h, publiés après la mise en service. */
 export function freshCandidates(items, sent = {}, { liveSince, now = Date.now(), maxH = MAX_FRESH_H } = {}) {
-  const since = Math.max(Date.parse(liveSince) || now, now - maxH * 3600e3);
+  const ls = Date.parse(liveSince), since = Math.max(Number.isFinite(ls) ? ls : now, now - maxH * 3600e3); // époque 0 (share_now) = valide
   return items.filter(it => !sent[it.id] && +it.date >= since && +it.date <= now);
 }
 
