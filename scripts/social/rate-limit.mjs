@@ -16,7 +16,7 @@ export const NETWORKS = {
   // spread : aucune exclusion « variété » ; une même source est étalée (tourniquet), l'excédent attend
   // (hold) au lieu d'être sauté, et le volume suit les poids horaires (pointes) avant l'échéance de 24 h.
   // Volume réel du flux ≈ 40-50/jour.
-  mastodon: { perHour: 5, perDay: 50, perRun: 2, gapSec: 90, spread: true }, // piaille.fr : robots ≤ 5/h, 50/jour ; API 300 req/5 min, 30 médias/30 min
+  mastodon: { perHour: 5, perDay: 50, perRun: 2, gapSec: 90, spread: true, ramp: false }, // piaille.fr : robots ≤ 5/h, 50/jour ; API 300 req/5 min, 30 médias/30 min
   tumblr: { perHour: 8, perDay: 120, perRun: 3, gapSec: 120, spread: true, ramp: false }, // < 250/jour (limite officielle)
   bluesky: { perHour: 12, perDay: 150, perRun: 4, gapSec: 90, spread: true },
 };
