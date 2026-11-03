@@ -13,6 +13,7 @@ import path from 'node:path';
 import { createBluesky } from './channels/bluesky.mjs';
 import { API, isAuthFailure, AUTH_MSG } from './channels/x-buffer.mjs';
 import { BLOG } from './tumblr.mjs';
+import { createMastodon } from './channels/mastodon.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const dry = process.env.DRY_RUN !== 'false';
@@ -21,6 +22,22 @@ const now = new Date().toISOString();
 const wr = (f, o) => { if (!dry) fs.writeFileSync(path.join(ROOT, f), JSON.stringify(o, null, 1) + '\n'); };
 const summary = [];
 console.log(`Purge ${dry ? 'ESSAI (rien n’est supprimé)' : 'RÉELLE'} · ${[...nets].join(', ')}`);
+
+if (nets.has('mastodon')) {
+  if (!process.env.MASTODON_TOKEN) summary.push('Mastodon : jeton absent, sauté.');
+  else {
+    const md = createMastodon({ instance: process.env.MASTODON_INSTANCE || 'https://piaille.fr', token: process.env.MASTODON_TOKEN });
+    let n = 0, guard = 0;
+    for (;;) {
+      const ss = await md.listStatuses(40); if (!ss.length || guard++ > 50) break;
+      for (const p of ss) { console.log(`Mastodon ${dry ? 'à supprimer' : 'supprimé'} : ${p.url}`); if (!dry) { await md.deleteStatus(p.id); await new Promise(r => setTimeout(r, 2000)); } n++; }
+      if (dry) break;
+    }
+    summary.push(`Mastodon : ${n} statut(s) ${dry ? 'à supprimer' : 'supprimé(s)'}.`);
+    const st = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/mastodon-sent.json'), 'utf8'));
+    wr('data/mastodon-sent.json', { ...st, liveSince: now, sent: {}, purgedAt: now });
+  }
+}
 
 if (nets.has('bluesky')) {
   if (!process.env.BLUESKY_APP_PASSWORD) summary.push('Bluesky : mot de passe d’application absent, sauté.');

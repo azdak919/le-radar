@@ -1,0 +1,61 @@
+name: Social — Mastodon (@leradar@piaille.fr)
+
+# Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
+# (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
+# Publication réelle seulement si la variable de dépôt MASTODON_LIVE vaut « true »
+# Idempotent : data/mastodon-sent.json + derniers posts du blogue.
+on:
+  schedule:
+    - cron: '10,40 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Essai : vérifie l’authentification (aucune publication), aucune publication'
+        type: boolean
+        default: true
+      share_now:
+        description: 'Publier tout de suite UN article frais (après la mise en service)'
+        type: boolean
+        default: false
+      share_url:
+        description: 'Avec share_now : URL de l’article précis à publier (même article sur tous les réseaux)'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  post:
+    if: github.event_name == 'workflow_dispatch' || vars.MASTODON_LIVE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Publier les articles frais
+        env:
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          DRY_RUN: ${{ (inputs.dry_run || vars.MASTODON_LIVE != 'true') && 'true' || 'false' }}
+          SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
+          SHARE_URL: ${{ inputs.share_url }}
+        run: node scripts/social/mastodon-post.mjs
+      - name: Commit de l'état (data/mastodon-sent.json seulement)
+        if: always()
+        run: |
+          git diff --quiet -- data/mastodon-sent.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/mastodon-sent.json
+          git commit -s -m "bot(social): état des publications Mastodon"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/mastodon-sent.json\"))'"
