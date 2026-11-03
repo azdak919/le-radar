@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-03T22:07:57.210Z",
+  "updated": "2026-11-03T23:06:53.164Z",
   "total": 182,
   "pool": 58,
-  "incomplete": 11,
-  "withLeadExcerpt": 125,
-  "candidates": 11,
-  "enriched": 3,
+  "incomplete": 10,
+  "withLeadExcerpt": 122,
+  "candidates": 10,
+  "enriched": 0,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -46,22 +46,13 @@
       "changed": false
     },
     {
-      "title": "Keeping our unhoused community warm this winter",
-      "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
-      "ok": true,
-      "score": 96,
-      "chars": 395,
-      "sample": "Investing in warming shelters is not enough, as shelters and homes are not synonymous. This distinct",
-      "changed": true
-    },
-    {
       "title": "When “Boys Will Be Boys” Means Boys Killing Girls",
       "link": "https://www.mcgilldaily.com/2026/11/when-boys-will-be-boys-means-boys-killing-girls/",
       "ok": true,
       "score": 72,
       "chars": 399,
       "sample": "In 2025, Netflix released psychological crime drama Adolescence, a British TV series that would chan",
-      "changed": true
+      "changed": false
     },
     {
       "title": "NAZA: When the Perpetrators Tell the Story",
@@ -79,7 +70,16 @@
       "score": 84,
       "chars": 400,
       "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Bulletins La Pige radio 2 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-2-novembre",
+      "ok": true,
+      "score": 68,
+      "chars": 167,
+      "sample": "Opération policière en cours à Chicoutimi, l’insécurité alimentaire en hausse chez les jeunes et la ",
+      "changed": false
     }
   ]
 }
