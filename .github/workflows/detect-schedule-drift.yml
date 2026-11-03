@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      issues: write
 
     steps:
       # Partir du main ACTUEL : en file data-writers, le sha de l'événement
@@ -35,6 +36,14 @@ jobs:
 
       - name: Compare published grids against live schedule pages
         run: node scripts/detect-schedule-drift.js --update
+
+      # Une issue par station (refonte ou 7 jours sans vérification), mise à
+      # jour plutôt que dupliquée ; n'empêche jamais la publication du rapport.
+      - name: Open or update per-station schedule issues
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/radio-schedule-issues.js --apply
 
       - name: Check for changes
         id: check
