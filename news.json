@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-03T12:36:37.041Z",
+  "updated": "2026-11-03T14:06:31.621Z",
   "updatedSlot": null,
   "count": 186,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-02T19:00:00.000Z",
-      "lastFetchOk": "2026-11-03T12:35:51.567Z"
+      "lastFetchOk": null
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-30T18:00:00.000Z",
-      "lastFetchOk": "2026-11-03T12:35:52.034Z"
+      "lastFetchOk": "2026-11-03T14:05:59.371Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-10-28T11:23:00.000Z",
-      "lastFetchOk": "2026-11-03T12:35:54.065Z"
+      "lastFetchOk": "2026-11-03T14:06:01.720Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-11-02T15:36:04.000Z",
-      "lastFetchOk": "2026-11-03T12:35:54.423Z"
+      "lastFetchOk": "2026-11-03T14:06:02.214Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,97 +42,9 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-01T02:21:00.000Z",
-      "lastFetchOk": "2026-11-03T12:35:55.030Z"
+      "lastFetchOk": "2026-11-03T14:06:03.425Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 10,
-      "freshArticleCount": 0,
-      "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-11-03T12:35:55.794Z"
-    },
-    "L'Exemplaire": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 10,
-      "freshArticleCount": 10,
-      "lastArticle": "2026-10-13T21:23:27.000Z",
-      "lastFetchOk": "2026-11-03T12:35:57.177Z"
-    },
-    "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 10,
-      "freshArticleCount": 10,
-      "lastArticle": "2026-11-02T08:00:00.000Z",
-      "lastFetchOk": "2026-11-03T12:35:58.490Z"
-    },
-    "Exil": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 10,
-      "freshArticleCount": 0,
-      "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-11-03T12:35:58.671Z"
-    },
-    "La Pige": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 10,
-      "freshArticleCount": 10,
-      "lastArticle": "2026-11-02T21:43:06.000Z",
-      "lastFetchOk": "2026-11-03T12:35:59.250Z"
-    },
-    "Le Polyscope": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 20,
-      "freshArticleCount": 7,
-      "lastArticle": "2026-10-11T18:28:17.755Z",
-      "lastFetchOk": "2026-11-03T12:36:01.198Z"
-    },
-    "The Tribune": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 20,
-      "freshArticleCount": 20,
-      "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-11-03T12:36:03.505Z"
-    },
-    "The Campus": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 20,
-      "freshArticleCount": 20,
-      "lastArticle": "2026-10-28T13:44:16.000Z",
-      "lastFetchOk": "2026-11-03T12:36:03.714Z"
-    },
-    "The Plant": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 10,
-      "freshArticleCount": 10,
-      "lastArticle": "2026-10-25T19:23:41.000Z",
-      "lastFetchOk": "2026-11-03T12:36:03.862Z"
-    },
-    "L'Oisif": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 3,
-      "freshArticleCount": 0,
-      "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-11-03T12:36:05.124Z"
-    },
-    "La Gifle": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 10,
-      "freshArticleCount": 0,
-      "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-11-03T12:36:05.266Z"
-    },
-    "Le Trait d'Union": {
       "fetchOk": false,
       "stale": false,
       "articleCount": 0,
@@ -140,13 +52,101 @@
       "lastArticle": null,
       "lastFetchOk": null
     },
-    "The Concordian": {
+    "L'Exemplaire": {
       "fetchOk": true,
       "stale": false,
+      "articleCount": 10,
+      "freshArticleCount": 10,
+      "lastArticle": "2026-10-13T21:23:27.000Z",
+      "lastFetchOk": "2026-11-03T14:06:05.185Z"
+    },
+    "Le Collectif": {
+      "fetchOk": false,
+      "stale": true,
+      "articleCount": 10,
+      "freshArticleCount": 10,
+      "lastArticle": "2026-11-02T08:00:00.000Z",
+      "lastFetchOk": null
+    },
+    "Exil": {
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 10,
+      "freshArticleCount": 0,
+      "lastArticle": "2026-04-18T22:22:07.000Z",
+      "lastFetchOk": "2026-11-03T14:06:05.920Z"
+    },
+    "La Pige": {
+      "fetchOk": false,
+      "stale": true,
+      "articleCount": 10,
+      "freshArticleCount": 10,
+      "lastArticle": "2026-11-02T21:43:06.000Z",
+      "lastFetchOk": null
+    },
+    "Le Polyscope": {
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 20,
+      "freshArticleCount": 7,
+      "lastArticle": "2026-10-11T18:28:17.755Z",
+      "lastFetchOk": "2026-11-03T14:06:09.089Z"
+    },
+    "The Tribune": {
+      "fetchOk": false,
+      "stale": true,
+      "articleCount": 20,
+      "freshArticleCount": 20,
+      "lastArticle": "2026-09-08T15:35:43.000Z",
+      "lastFetchOk": null
+    },
+    "The Campus": {
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 20,
+      "freshArticleCount": 20,
+      "lastArticle": "2026-10-28T13:44:16.000Z",
+      "lastFetchOk": "2026-11-03T14:06:09.881Z"
+    },
+    "The Plant": {
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 10,
+      "freshArticleCount": 10,
+      "lastArticle": "2026-10-25T19:23:41.000Z",
+      "lastFetchOk": "2026-11-03T14:06:10.142Z"
+    },
+    "L'Oisif": {
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 3,
+      "freshArticleCount": 0,
+      "lastArticle": "2019-08-23T18:43:43.000Z",
+      "lastFetchOk": "2026-11-03T14:06:11.513Z"
+    },
+    "La Gifle": {
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 10,
+      "freshArticleCount": 0,
+      "lastArticle": "2018-05-19T20:19:20.000Z",
+      "lastFetchOk": "2026-11-03T14:06:11.823Z"
+    },
+    "Le Trait d'Union": {
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 10,
+      "freshArticleCount": 0,
+      "lastArticle": "2024-11-14T14:41:41.000Z",
+      "lastFetchOk": "2026-11-03T14:06:12.383Z"
+    },
+    "The Concordian": {
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 6,
       "freshArticleCount": 6,
       "lastArticle": "2026-10-31T21:00:40.000Z",
-      "lastFetchOk": "2026-11-03T12:36:17.786Z"
+      "lastFetchOk": null
     },
     "Impact Campus": {
       "fetchOk": true,
@@ -154,7 +154,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-22T20:32:47.000Z",
-      "lastFetchOk": "2026-11-03T12:36:19.042Z"
+      "lastFetchOk": "2026-11-03T14:06:26.169Z"
     },
     "La Griffe": {
       "fetchOk": true,
@@ -162,7 +162,7 @@
       "articleCount": 10,
       "freshArticleCount": 8,
       "lastArticle": "2026-10-27T15:51:37.000Z",
-      "lastFetchOk": "2026-11-03T12:36:19.330Z"
+      "lastFetchOk": "2026-11-03T14:06:26.519Z"
     }
   },
   "items": [
@@ -178,7 +178,6 @@
       "date": "2026-11-02T21:43:06.000Z",
       "excerpt": "Argent, blanc, noir, gris : dans un stationnement, les verts et jaunes pétants sont plus rares d’après Axalta. (Photo : Diego Pinto de Queiros). Où sont passés le bleu, le vert, le rouge et le jaune ? En quelques décennies, la couleur s’est faite discrète dans notre quotidien,",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_2262.jpeg",
-      "_pageAuthor": "Diego A. Pinto De Queiros",
       "sourceImageCredit": "Photo : Diego Pinto de Queiros",
       "sourceImageCreator": "Diego Pinto de Queiros",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/quand-notre-quotidien-change-de-couleur/?utm_source=rss&utm_medium=rss&utm_campaign=quand-notre-quotidien-change-de-couleur",
@@ -186,11 +185,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_2262.jpeg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Où sont passés le bleu, le vert, le rouge et le jaune ? En quelques décennies, la couleur s’est faite discrète dans notre quotidien, au point que ceux qui tiennent encore à en avoir doivent mettre la main au portefeuille.",
       "imageLocal": "assets/news-images/3f679541a343ec01.jpg",
       "imageLocalKey": "3f679541a343ec01",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -204,7 +204,6 @@
       "date": "2026-11-02T21:40:19.000Z",
       "excerpt": "Bien qu’il soit à la tête du conseil de ville depuis un an, Luc Boivin a remporté les élections de justesse. Il avait obtenu 232 voix de plus qu’Andrée Laforest (Photo d’archive : Lyra Larouche). Il y a un an jour pour jour, 44,96 % des Saguenéens ont élu Luc Boivin comme",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-1-750x375-1.jpeg",
-      "_pageAuthor": "Vittoria Caputo",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant/?utm_source=rss&utm_medium=rss&utm_campaign=luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant",
       "sourceImageCreditFrom": "media",
@@ -212,10 +211,10 @@
       "sourceImageCreditImageKey": "image-1-750x375-1.jpeg",
       "sourceImageCreditRev": 17,
       "leadImageReady": false,
-      "leadExcerpt": "Bien qu’il soit à la tête du conseil de ville depuis un an, Luc Boivin a remporté les élections de justesse. Il avait obtenu 232 voix de plus qu’Andrée Laforest (Photo d’archive : Lyra Larouche). Il y a un an jour pour jour, 44,96 % des Saguenéens ont élu Luc Boivin comme nouveau maire de Saguenay. Dès le début de son mandat, l’ancien homme d’affaires et conseiller municipal promettait de travaill",
       "imageLocal": "assets/news-images/cdd4b8072ab2ed3b.jpg",
       "imageLocalKey": "cdd4b8072ab2ed3b",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -229,7 +228,6 @@
       "date": "2026-11-02T21:34:12.000Z",
       "excerpt": "Des zones comme le Moyen-Orient sont considérées dangereuses par Reporters sans Frontières. (Photo: Istock) La Journée internationale de la fin de l’impunité pour les crimes commis contre des journalistes permet de mettre en lumière la situation de la presse autour du globe. Une",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg",
-      "_pageAuthor": "Colin Boucher",
       "sourceImageCredit": "Photo : Istock",
       "sourceImageCreator": "Istock",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/les-journalistes-ennemis-des-pays-totalitaires/?utm_source=rss&utm_medium=rss&utm_campaign=les-journalistes-ennemis-des-pays-totalitaires",
@@ -241,7 +239,8 @@
       "leadExcerpt": "La Journée internationale de la fin de l’impunité pour les crimes commis contre des journalistes p ermet de mettre en lumière la situation de la presse autour du globe. Une occasion de rappeler l’importance du rôle des gardiens de la démocratie.",
       "imageLocal": "assets/news-images/2ead14e8873d5755.jpg",
       "imageLocalKey": "2ead14e8873d5755",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -255,7 +254,6 @@
       "date": "2026-11-02T21:33:01.000Z",
       "excerpt": "Mères au front Saguenay avait déjà tenu une manifestation devant Rio Tinto, puis un autre en 2025 devant le ministère des Forêts. (Photo : Diego Pinto de Queiros) Le samedi 31 octobre 2026, jour de l’Halloween, il n’y avait pas que les vampires, les clowns et les fantômes qui",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/16.jpg",
-      "_pageAuthor": "Diego A. Pinto De Queiros",
       "sourceImageCredit": "Photo : Diego Pinto de Queiros",
       "sourceImageCreator": "Diego Pinto de Queiros",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/pour-halloween-ce-sont-les-pesticides-qui-font-peur/?utm_source=rss&utm_medium=rss&utm_campaign=pour-halloween-ce-sont-les-pesticides-qui-font-peur",
@@ -267,7 +265,8 @@
       "leadExcerpt": "Le samedi 31 octobre 2026, jour de l’Halloween, il n’y avait pas que les vampires, les clowns et les fantômes qui semaient la terreur. D’après Mères au front Saguenay, les pesticides ont aussi de quoi effrayer. Selon l’organisme, ces produits menaceraient autant notre environnement que notre santé.",
       "imageLocal": "assets/news-images/d420e9752985e57c.jpg",
       "imageLocalKey": "d420e9752985e57c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -281,7 +280,6 @@
       "date": "2026-11-02T21:23:23.000Z",
       "excerpt": "En ce 31 octobre, la soirée de fermeture du Berlioz était dédiée à la traditionnelle soirée d’Halloween. (Photo : Mathieu Bisson) L’émotion était au rendez-vous à l’occasion de la soirée de fermeture du Berlioz samedi dernier. Pour l’occasion, quelque 600 personnes ont afflué la",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Photo.jpg",
-      "_pageAuthor": "Mathieu Bisson",
       "sourceImageCredit": "Photo : Mathieu Bisson",
       "sourceImageCreator": "Mathieu Bisson",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/fermeture-du-berlioz-une-derniere-soiree-haute-en-emotions/?utm_source=rss&utm_medium=rss&utm_campaign=fermeture-du-berlioz-une-derniere-soiree-haute-en-emotions",
@@ -289,11 +287,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "photo.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "L’émotion était au rendez-vous à l’occasion de la soirée de fermeture du Berlioz samedi dernier. Pour l’occasion, quelque 600 personnes ont afflué la mythique discothèque de la rue Saint-Dominique. Cependant, après tout près de 35 ans d’existence, la fin des activités de l’institution amène son lot de déception et d’incertitude pour de nombreux employés.",
       "imageLocal": "assets/news-images/50f82f1020330c8b.jpg",
       "imageLocalKey": "50f82f1020330c8b",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -307,7 +306,6 @@
       "date": "2026-11-02T20:47:36.000Z",
       "excerpt": "Julie Dubord, Directrice générale de Tourisme Saguenay-Lac-Saint-Jean. (Photo : Émile Beauséjour) L’industrie touristique du Québec devra composer avec un changement dans la structure gouvernementale, alors que, pour la première fois depuis 1963, il n’y aura pas de ministère",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_1827.jpeg",
-      "_pageAuthor": "Émile Beauséjour",
       "sourceImageCredit": "Photo : Émile Beauséjour",
       "sourceImageCreator": "Émile Beauséjour",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/le-tourisme-regional-accueille-le-changement-comme-une-opportunite/?utm_source=rss&utm_medium=rss&utm_campaign=le-tourisme-regional-accueille-le-changement-comme-une-opportunite",
@@ -315,11 +313,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_1827.jpeg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Pour la directrice générale de Tourisme Saguenay-Lac-Saint-Jean, Julie Dubord, cette nouvelle est accueillie de la bonne manière par les acteurs régionaux. « Chez Tourisme Saguenay-Lac-Saint-Jean, on le voit comme une opportunité. Ça fait longtemps qu’on milite pour faire reconnaître l’apport économique de l’industrie touristique. »",
       "imageLocal": "assets/news-images/f638ea5dfc2e189d.jpg",
       "imageLocalKey": "f638ea5dfc2e189d",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -333,18 +332,18 @@
       "date": "2026-11-02T19:05:12.000Z",
       "excerpt": "La professeure en petite enfance Maria Camila Londono Aristizabal explique qu’il est préférable de prendre une vrai pause, sans écran, pour réellement reposer notre cerveau. (Photo : Emmaëlle Lacave–Jonneaux) À l’heure où les téléphones occupent chaque moment de silence, l’ennui",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Image-10.jpg",
-      "_pageAuthor": "Emmaëlle Lacave-Jonneaux",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/est-ce-encore-possible-de-sennuyer/?utm_source=rss&utm_medium=rss&utm_campaign=est-ce-encore-possible-de-sennuyer",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-10.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Ce sont 69% des jeunes de 15 à 25 ans qui disent culpabiliser de « ne rien faire » selon une étude menée par Jam (une branche de la firme CROP) . Alors que chaque moment vide est rempli par un téléphone, une vidéo ou une activité, nous avons moins d’occasions d’apprivoiser le calme.",
       "imageLocal": "assets/news-images/630c7d68ad99e069.jpg",
       "imageLocalKey": "630c7d68ad99e069",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -359,18 +358,17 @@
       "excerpt": "Les pâtes alimentaires sans assaisonnement, la nourriture en morceaux au fond de l’évier, les petits pains sans croûte qui ont été trop longtemps au soleil et qui commencent à sécher, les édulcorants et les chips réduites en sel. La bave séchée à la commissure des lèvres d’un",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/88270D3E-2B87-40EB-A414-863E9BE35178.jpeg",
       "authorCheckedAt": "2026-11-02T19:06:54.205Z",
-      "_pageAuthor": "Mathilde Jobin",
       "sourceImageCredit": "Photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/pourquoi-je-deteste-le-beige/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "88270d3e-2b87-40eb-a414-863e9be35178.jpeg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
-      "leadExcerpt": "Les pâtes alimentaires sans assaisonnement, la nourriture en morceaux au fond de l’évier, les petits pains sans croûte qui ont été trop longtemps au soleil et qui commencent à sécher, les édulcorants et les chips réduites en sel. La bave séchée à la commissure des lèvres d’un vieil homme qui a peut-être déjà été mon professeur, la peau morte, les ampoules sous les talons, les doigts et les dents t",
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/6dacc4b050f7ad54.jpg",
       "imageLocalKey": "6dacc4b050f7ad54",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -383,8 +381,7 @@
       "author": "Colin Boucher",
       "date": "2026-11-02T18:33:12.000Z",
       "excerpt": "Au Québec, le vote est volontaire depuis la création de la province. (Photo : Colin Boucher) Aux dernières élections provinciales, environ un Québécois sur trois n’a pas exercé son droit de vote. Alors que le vote est obligatoire dans certains pays, ce mode de scrutin est loin",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_3341-1.jpeg",
-      "_pageAuthor": "Colin Boucher",
+      "image": "",
       "sourceImageCredit": "Photo : Colin Boucher",
       "sourceImageCreator": "Colin Boucher",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/vote-obligatoire-idee-realisable/?utm_source=rss&utm_medium=rss&utm_campaign=vote-obligatoire-idee-realisable",
@@ -392,8 +389,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3341-1.jpeg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
-      "leadExcerpt": "Aux dernières élections provinciales, environ un Québécois sur trois n’a pas exercé son droit de vote. Alors que le vote est obligatoire dans certains pays, ce mode de scrutin est loin de faire l’unanimité dans la province."
+      "leadImageReady": false,
+      "leadExcerpt": "Aux dernières élections provinciales, environ un Québécois sur trois n’a pas exercé son droit de vote. Alors que le vote est obligatoire dans certains pays, ce mode de scrutin est loin de faire l’unanimité dans la province.",
+      "_retainedFromCache": true,
+      "imageDead": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_3341-1.jpeg"
     },
     {
       "source": "La Pige",
@@ -407,7 +406,6 @@
       "date": "2026-11-02T18:26:10.000Z",
       "excerpt": "Bulletin 12h Opération policière en cours à Chicoutimi, l’insécurité alimentaire en hausse chez les jeunes et la carte fidélité de Salvatoré est la plus utilisée par les Québécois. Écoutez un résumé de ces nouvelles et bien d’autres avec Charles Pinel en cliquant ici. Bulletin",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg",
-      "_pageAuthor": "juliebergeron",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-2-novembre",
       "sourceImageCreditFrom": "media",
@@ -422,11 +420,11 @@
       "imageLicense": "CC BY 2.0",
       "imageProvider": "wikimedia",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Midnight_Breakfast_2015_(17301521071).jpg",
-      "leadExcerpt": "Opération policière en cours à Chicoutimi, l’insécurité alimentaire en hausse chez les jeunes et la carte fidélité de Salvatoré est la plus utilisée par les Québécois.",
       "imageLocal": "assets/news-images/9233c6cfb7e0f95b.jpg",
       "imageLocalKey": "9233c6cfb7e0f95b",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/6d0a6ca9bebf004f.jpg"
+      "stockImageLocal": "assets/stock-images/6d0a6ca9bebf004f.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -440,7 +438,6 @@
       "date": "2026-11-02T16:46:22.000Z",
       "excerpt": "Les photographies imprimées permettent de conserver une trace tangible des souvenirs. (Photo : Anaëlle Chevert) Elles sont dans nos téléphones, nos albums et nos réseaux sociaux. Les photographies occupent une place importante dans notre quotidien, mais leur rôle ne s’arrête pas",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/20261029_142730791_iOS.jpg",
-      "_pageAuthor": "Anaëlle Chevert",
       "sourceImageCredit": "Photo : Anaëlle Chevert",
       "sourceImageCreator": "Anaëlle Chevert",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/02/prendre-une-photo-est-ce-vraiment-se-souvenir/?utm_source=rss&utm_medium=rss&utm_campaign=prendre-une-photo-est-ce-vraiment-se-souvenir",
@@ -448,11 +445,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "20261029_142730791_ios.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Elles sont dans nos téléphones, nos albums et nos réseaux sociaux. Les photographies occupent une place importante dans notre quotidien, mais leur rôle ne s’arrête pas à conserver des images. Elles peuvent faire ressurgir des émotions, révéler des détails oubliés et nous confronter à une question : à force de vouloir tout immortaliser, profitons-nous encore pleinement de l’instant ?",
       "imageLocal": "assets/news-images/ffa2736db62d84df.jpg",
       "imageLocalKey": "ffa2736db62d84df",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The McGill Daily",
@@ -493,7 +491,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "On October 23, Paul St-Pierre Plamondon released plans to fulfill his first campaign promise as Premier: allocating an additional 28 million dollars to the 48 million provincial budget to operate warming shelters for unhoused people this winter. Around 16 to 18 million dollars",
       "image": "",
-      "authorCheckedAt": "2026-11-02T13:06:47.853Z",
+      "authorCheckedAt": "2026-11-03T14:06:41.055Z",
       "leadExcerpt": "On October 23, Paul St-Pierre Plamondon released plans to fulfill his first campaign promise as Premier: allocating an additional 28 million dollars to the 48 million provincial budget to operate warming shelters for unhoused people this winter. Around 16 to 18 million dollars of this budget will be set aside for Montreal, which, according to The Montreal Gazette , encompasses around 5,000 unhouse",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg",
@@ -517,7 +515,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "The rhetorical parallels in Trump’s description of of Canada and his victims of sexual assault",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/McGill-Daily.jpg",
-      "authorCheckedAt": "2026-11-02T13:06:48.363Z",
+      "authorCheckedAt": "2026-11-03T14:06:41.570Z",
       "_pageAuthor": "Anneke Goodwin",
       "sourceImageCredit": "Photo : Kara Fan",
       "sourceImageCreator": "Kara Fan",
@@ -544,7 +542,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "Administered by McGill University, the Cundill History Prize recognizes historical writing that combines rigorous research, high literary quality, and wide-ranging public appeal. Open to books written in or translated into English, this international competition comes with a",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Cundill-prize.jpg",
-      "authorCheckedAt": "2026-11-02T13:06:48.615Z",
+      "authorCheckedAt": "2026-11-03T14:06:41.841Z",
       "_pageAuthor": "Lorin Kamaci",
       "sourceImageCredit": "Photo : Cundill History Prize logo, https",
       "sourceImageCreator": "Cundill History Prize logo, https",
@@ -571,7 +569,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "A look into cases of incel-related murders and what must be done to end them",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Untitled_Artwork-8.jpeg",
-      "authorCheckedAt": "2026-11-02T13:06:48.854Z",
+      "authorCheckedAt": "2026-11-03T14:06:42.106Z",
       "_pageAuthor": "Stella Phipps",
       "sourceImageCredit": "Photo : Eva Marriott-Fabre",
       "sourceImageCreator": "Eva Marriott-Fabre",
@@ -598,7 +596,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "\"Yeah! Video games!\" - Bryan Hodukavich, Resident Evil (2026)",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/IMG_4100.jpg",
-      "authorCheckedAt": "2026-11-02T13:06:49.101Z",
+      "authorCheckedAt": "2026-11-03T14:06:42.374Z",
       "_pageAuthor": "Elouan Thomas",
       "sourceImageCredit": "Photo : Jane Goodman",
       "sourceImageCreator": "Jane Goodman",
@@ -625,7 +623,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "It doesn’t matter how prepared you are — course selection day is a gong-show. CRNs get mixed up and you end up in a closed section; your bird-to-hard course ratio veers off course as one of your choices, normally the bird, fills up; you’re in the winter section applying for",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/IMG_8428-930x620.jpg",
-      "authorCheckedAt": "2026-11-02T13:06:49.343Z",
+      "authorCheckedAt": "2026-11-03T14:06:42.641Z",
       "_pageAuthor": "Beau Milelli",
       "sourceImageCredit": "Photo : Ethan McAuliffe",
       "sourceImageCreator": "Ethan McAuliffe",
@@ -652,7 +650,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "From the dark of the stage, theatre artist esi callender speaks: “ Slave Play is a comedy of sorts. It should be playedas such. I’m not sure where the music is coming from, but it’s there. You should not work to make the audience comfortable with what they are witnessing at",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/BTW-Slave-Play-_-The-Exchange-Pre-Show-Conversation-Kristen-Young-1.jpg",
-      "authorCheckedAt": "2026-11-02T13:06:49.584Z",
+      "authorCheckedAt": "2026-11-03T14:06:42.907Z",
       "_pageAuthor": "Amihan del Rosario-Tapan",
       "sourceImageCredit": "Photo: The McGill Daily",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/11/is-montreal-ready-for-slave-play/",
@@ -678,7 +676,7 @@
       "date": "2026-11-02T13:00:00.000Z",
       "excerpt": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence. Even more unsettling: learning that this same violence was treated as a routine aspect of military life. Directed by Yuval Abraham and Rachel Szor, NAZA (2026) examines Israel’s",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Rachel_Szor_and_Yuval_Abraham_at_the_83rd_Venice_International_Film_Festival-930x620.jpg",
-      "authorCheckedAt": "2026-11-02T13:06:49.815Z",
+      "authorCheckedAt": "2026-11-03T14:06:43.146Z",
       "_pageAuthor": "Maria Hamdaoui",
       "sourceImageCredit": "Photo: The McGill Daily",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
@@ -704,7 +702,6 @@
       "date": "2026-11-02T08:00:00.000Z",
       "excerpt": "Pour une 3 e saison consécutive, les joueurs du Vert & Or agiront à titre de spectateurs à l’occasion des séries éliminatoires du RSEQ. Sherbrooke est mathématiquement éliminé après cette défaite du 24 octobre dernier face aux Stingers de Concordia, où l’équipe s’est inclinée",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORT-Toujours-pas-de-football-eliminatoire-a-Sherbrooke-cette-annee-Credit-photo-Manuel-Ezeta-Vert-Or.jpg",
-      "_pageAuthor": "Olivier Boivin",
       "sourceImageCredit": "Photo : Manuel Ezeta Vert Or",
       "sourceImageCreator": "Manuel Ezeta Vert Or",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/toujours-pas-de-football-eliminatoire-a-sherbrooke-cette-annee/",
@@ -712,11 +709,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sport-toujours-pas-de-football-eliminatoire-a-sherbrooke-cette-annee-credit-photo-manuel-ezeta-vert-or.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Pour une 3 e saison consécutive, les joueurs du Vert & Or agiront à titre de spectateurs à l’occasion des séries éliminatoires du RSEQ. Sherbrooke est mathématiquement éliminé après cette défaite du 24 octobre dernier face aux Stingers de Concordia, où l’équipe s’est inclinée par la marque de 34-13 devant ses fidèles.",
       "imageLocal": "assets/news-images/34c1eb7418442c13.jpg",
       "imageLocalKey": "34c1eb7418442c13",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -730,7 +728,6 @@
       "date": "2026-11-02T08:00:00.000Z",
       "excerpt": "Les Eagles de Philadelphie ont tout récemment appris que la saison de leur quart-arrière partant, Jalen Hurts, était terminée. Cependant, ce n’est pas la blessure en tant que telle qui cause présentement des maux de tête à la direction, mais bien la gestion de celle-ci.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORTS_JalenHurts_SourceEagles-de-Philadelphie.png",
-      "_pageAuthor": "Olivier Boivin",
       "sourceImageCredit": "Photo : Eagles de philadelphie",
       "sourceImageCreator": "Eagles de philadelphie",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/dossier-jalen-hurts-les-eagles-dans-leau-chaude/",
@@ -738,10 +735,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports_jalenhurts_sourceeagles-de-philadelphie.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/255bf88e227cbb17.png",
       "imageLocalKey": "255bf88e227cbb17",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -755,7 +753,6 @@
       "date": "2026-11-02T08:00:00.000Z",
       "excerpt": "Chaque automne revient cette fameuse tradition des pools sportifs, où amis et familles se réunissent, ou bien se tiraillent, dans le but d’aller chercher les meilleurs joueurs possibles pour leurs équipes fictives.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORTS_PoolsSportifs_SourceGettyImages.png",
-      "_pageAuthor": "Olivier Boivin",
       "sourceImageCredit": "Photo : Getty Images",
       "sourceImageCreator": "Getty Images",
       "sourceImageCreditUrl": "https://lecollectif.ca/edition-papier/a-vos-pools/",
@@ -763,10 +760,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports_poolssportifs_sourcegettyimages.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/346636fcf8ab11cc.jpg",
       "imageLocalKey": "346636fcf8ab11cc",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -781,7 +779,6 @@
       "excerpt": "Pas plus tard qu’en janvier, Rosalie Tremblay prenait part au Championnat mondial féminin des moins de 18 ans en Nouvelle-Écosse, qui s’était soldé par une défaite crève-cœur aux mains des Américaines en grande finale. Quelques mois plus tard, la direction d’Hockey Canada croit",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORT-RosalieTremblay_SourceUniversiteDuWisconsin.png",
       "authorCheckedAt": "2026-11-02T08:06:39.400Z",
-      "_pageAuthor": "Olivier Boivin",
       "sourceImageCredit": "Photo : Université du Wisconsin",
       "sourceImageCreator": "Université du Wisconsin",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/rosalie-tremblay-sans-complexe-devant-le-defi-qui-lattend-au-danemark/",
@@ -789,11 +786,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sport-rosalietremblay_sourceuniversiteduwisconsin.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "On entend souvent le mot « maturité » revenir dans les conversations comme enjeu principal chez plusieurs jeunes joueurs talentueux. Rosalie Tremblay n’a pas à s’inquiéter de cet aspect, elle qui s’attire déjà des éloges dans le milieu professionnel.",
       "imageLocal": "assets/news-images/7ccc51ce546d30e2.jpg",
       "imageLocalKey": "7ccc51ce546d30e2",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -807,7 +805,6 @@
       "date": "2026-11-02T08:00:00.000Z",
       "excerpt": "Luiz Inácio Lula da Silva a remporté un quatrième mandat à la présidence du Brésil avec 51,79 % des votes au second tour du 25 octobre 2026. Pour sa part, le candidat de droite, Flávio Bolsonaro, a obtenu 48,21 %.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg",
-      "_pageAuthor": "Nicolas Hamel",
       "sourceImageCredit": "Photo : LinkedIn de Luiz Inácio Lula da Silva",
       "sourceImageCreator": "LinkedIn de Luiz Inácio Lula da Silva",
       "sourceImageCreditUrl": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
@@ -818,7 +815,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/8c16b479fbb19e57.jpg",
       "imageLocalKey": "8c16b479fbb19e57",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -833,7 +831,6 @@
       "excerpt": "Dernièrement, les violences engendrées par des colons israéliens en Cisjordanie sont en hausse. L’arrivée de la saison des olives joue un grand rôle dans cette recrudescence des attaques contre les personnes palestiniennes sur ce territoire.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/Capture-decran-le-2026-11-01-a-08.38.41-1.png",
       "authorCheckedAt": "2026-11-02T08:06:40.356Z",
-      "_pageAuthor": "Fabrice Lamarre",
       "sourceImageCredit": "Photo : Pixabay",
       "sourceImageCreator": "Pixabay",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/vague-dattaques-de-colons-en-cisjordanie/",
@@ -841,10 +838,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-01-a-08.38.41-1.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/0b5a80625f7d133d.jpg",
       "imageLocalKey": "0b5a80625f7d133d",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -859,7 +857,6 @@
       "excerpt": "Ken Sim, maire sortant, a été défait par Pete Fry lors des élections de la course à la mairie de la ville de Vancouver. Pete Fry devient ainsi le premier maire vert de l’histoire à occuper ce poste. Avec 47,1 % des voix, cette victoire du Parti vert représente sans doute un",
       "image": "",
       "authorCheckedAt": "2026-11-02T08:06:41.202Z",
-      "_pageAuthor": "Fabrice Lamarre",
       "leadExcerpt": "Ken Sim, maire sortant, a été défait par Pete Fry lors des élections de la course à la mairie de la ville de Vancouver. Pete Fry devient ainsi le premier maire vert de l’histoire à occuper ce poste. Avec 47,1 % des voix, cette victoire du Parti vert représente sans doute un changement de direction politique majeur pour la Ville de Vancouver.",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/af/Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg",
@@ -869,7 +866,8 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg",
-      "stockImageLocal": "assets/stock-images/912fa583aa5bad54.jpg"
+      "stockImageLocal": "assets/stock-images/912fa583aa5bad54.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -884,7 +882,6 @@
       "excerpt": "Les personnes britanno-colombiennes étaient invitées aux urnes le 24 octobre dernier. Après neuf années de gouvernement néo-démocrate, les conservateurs imposent un changement de gouvernance. Le résultat de ces élections constitue un changement majeur dans le paysage politique",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg",
       "authorCheckedAt": "2026-11-02T08:06:41.958Z",
-      "_pageAuthor": "Fabrice Lamarre",
       "sourceImageCredit": "Photo : Page FaceBook de Lorne Doerkson",
       "sourceImageCreator": "Page FaceBook de Lorne Doerkson",
       "sourceImageCreditUrl": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
@@ -896,7 +893,8 @@
       "leadExcerpt": "Les personnes britanno-colombiennes étaient invitées aux urnes le 24 octobre dernier. Après neuf années de gouvernement néo-démocrate, les conservateurs imposent un changement de gouvernance. Le résultat de ces élections constitue un changement majeur dans le paysage politique de la province.",
       "imageLocal": "assets/news-images/f68145c2d7ce460e.jpg",
       "imageLocalKey": "f68145c2d7ce460e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -917,10 +915,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_nouveau-conseil-des-ministres-du-pq_source-page-facebook-de-marie-karlynn-laflamme.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/67e62455f17df4d1.jpg",
       "imageLocalKey": "67e62455f17df4d1",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -942,7 +941,8 @@
       "imageCreator": "Zingaro. I am a gipsy too.",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/30208099@N00/286770161"
+      "imageSourceUrl": "https://www.flickr.com/photos/30208099@N00/286770161",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -990,11 +990,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "5infos_ql-e1769792962990.png",
       "sourceImageCreditRev": 16,
-      "leadImageReady": true,
-      "leadExcerpt": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de la semaine passée, cliquer ici . Le premier ministre du Québec, Paul St-Pierre Plamondon, a annoncé mercredi dernier son intention de déposer un projet de loi pour changer l’heure de manière permanente. Il base cette décision sur les études en lien avec les effets du changement d’heure sur la santé e",
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -1018,7 +1018,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/e80f580a5098f024.webp",
       "imageLocalKey": "e80f580a5098f024",
-      "imageLocalVia": "photon-resize"
+      "imageLocalVia": "photon-resize",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1039,11 +1040,12 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "palestine-2.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Au micro, Boutaïna Chafi, l’une des organisatrices du Mouvement de la jeunesse palestinienne à Montréal. Présent dans plusieurs pays arabes et occidentaux, ce collectif transnational rassemble des jeunes Palestinien·ne·s de la diaspora. Sa branche montréalaise organise régulièrement des manifestations au centre-ville.",
       "imageLocal": "assets/news-images/f6b5787a181a16f6.webp",
       "imageLocalKey": "f6b5787a181a16f6",
-      "imageLocalVia": "photon-resize"
+      "imageLocalVia": "photon-resize",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1091,11 +1093,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "22_jeux-videos.jpeg",
       "sourceImageCreditRev": 16,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "L’industrie du jeu vidéo traverse une période difficile depuis quelques années, notamment en raison de pertes d’emploi récurrentes dans les grands studios installés au Québec. Face à l’incertitude qui plane sur le secteur, les étudiant·e·s en jeu vidéo tentent de ne pas se décourager, malgré les nombreuses embûches qui les attendent sur le marché du travail.",
       "imageLocal": "assets/news-images/064dba47b70cb096.jpg",
       "imageLocalKey": "064dba47b70cb096",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1160,14 +1163,15 @@
       "excerpt": "Halloween crossword – Issue 7, Volume 44",
       "image": "",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG",
-      "imageTitle": "Loyola College Building, Concordia University",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG",
+      "imageTitle": "Mackay Street near Concordia University, Montreal",
       "imageCredit": "Photo : Thomas1313 / CC BY-SA 3.0 · Wikimedia Commons",
       "imageCreator": "Thomas1313",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Loyola_College_Building_15.JPG",
-      "stockImageLocal": "assets/stock-images/ca2d98efaaca18bb.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG",
+      "stockImageLocal": "assets/stock-images/63b014a9599e54ad.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1189,11 +1193,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "4ec8e60c-77cb-482f-b4c1-be72fd6edd2c.jpeg",
       "sourceImageCreditRev": 16,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Les étudiant·e·s en histoire souhaitent faire exister des histoires trop peu entendues. Cependant, l’avenir professionnel des diplômé·e·s reste incertain. Entre enjeux liés à la passion et aux réalités structurelles, deux étudiant·e·s à la maîtrise de l’Université de Montréal partagent avec Quartier Libre les raisons qui les motivent à poursuivre leurs études dans le domaine.",
       "imageLocal": "assets/news-images/4c62b76b1492bda6.jpg",
       "imageLocalKey": "4c62b76b1492bda6",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -1913,15 +1918,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-03T07:07:02.136Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg",
-      "imageTitle": "Bishop's University Bandeen Hall",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg",
+      "imageTitle": "Bishop's University John Bassett Memorial Library",
       "imageCredit": "Photo : Tpoirier05 / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Tpoirier05",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bandeen_Hall.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:John_Bassett_Memorial_Library.jpg",
       "leadExcerpt": "Through our shared experiences, starting with challenges during O-Week and continuing through nights at the Gait, cheering at Gaiters games no matter the outcome, wings at the Lion, and the proud singing of our school song at graduation and throughout our time here, there is a common sense of community among BU students.",
-      "stockImageLocal": "assets/stock-images/d75a894c65c0f22f.jpg"
+      "stockImageLocal": "assets/stock-images/e61047bee5a9fe27.jpg"
     },
     {
       "source": "The Campus",
@@ -1937,15 +1942,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-03T07:07:02.345Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Bishop's University campus 2011 04",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Bishop's University campus 2011 03",
       "imageCredit": "Photo : Jason Paris / CC BY 2.0 · Wikimedia Commons",
       "imageCreator": "Jason Paris",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2003.jpg",
       "leadExcerpt": "Thanksgiving is one of the more controversial holidays in North America. It’s true; traditionally, it’s been a celebration built on the foundation of something not worth celebrating. The complicated and devastating nature of colonialism isn’t something that should be celebrated without acknowledging the harm that has been done.",
-      "stockImageLocal": "assets/stock-images/bdaf73b0c9e8717f.jpg"
+      "stockImageLocal": "assets/stock-images/63fe9495a34b6ccf.jpg"
     },
     {
       "source": "The Campus",
@@ -2072,7 +2077,8 @@
       "leadExcerpt": "At the last council meeting on Oct. 21 , a motion to approve six fee-levy referendum questions was presented. Groups whose motions were approved will appear on the election ballot.",
       "imageLocal": "assets/news-images/e79a6a6b8227f7b6.jpg",
       "imageLocalKey": "e79a6a6b8227f7b6",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Campus",
@@ -2247,7 +2253,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/3c11325c9b1ffc4c.jpg",
       "imageLocalKey": "3c11325c9b1ffc4c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -2272,7 +2279,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/9654e4915b25732c.jpg",
       "imageLocalKey": "9654e4915b25732c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -2295,7 +2303,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/c3d677e670a424bb.jpg",
       "imageLocalKey": "c3d677e670a424bb",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "La Griffe",
@@ -2612,15 +2621,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-02T16:07:07.117Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg",
-      "imageTitle": "Henry F. Hall Building 10, Concordia University",
-      "imageCredit": "Photo : Jeangagnon / CC BY-SA 4.0 · Wikimedia Commons",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG",
+      "imageTitle": "Henry F. Hall Building 01, Concordia University",
+      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
       "imageCreator": "Jeangagnon",
-      "imageLicense": "CC BY-SA 4.0",
+      "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_10.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_01.JPG",
       "leadExcerpt": "The program lets immigrants obtain a Quebec selection certificate, which helps them apply for permanent residency. International students and foreign workers must provide proof of French proficiency or show they have worked in certain sectors in the province for at least two years.",
-      "stockImageLocal": "assets/stock-images/4242d9aea59f4d8b.jpg"
+      "stockImageLocal": "assets/stock-images/582ef31c64537478.jpg"
     },
     {
       "source": "The Link",
@@ -2792,11 +2801,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "18-19_photo-de-presse-lydia-kepinski-credit-charlie-poirier-bouthillette.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Depuis sa victoire aux 21 e Francouvertes en 2017 et la parution de son premier album studio, Premier juin , en 2018, beaucoup de choses ont changé dans la vie de l’autrice-compositrice-interprète Lydia Képinski . Entre tournées et festivals d’envergure, elle a réussi à établir sa place parmi les artistes les plus uniques de l’environnement musical québécois. Aujourd’hui, elle est de retour avec u",
       "imageLocal": "assets/news-images/d525fc5455bd9d60.webp",
       "imageLocalKey": "d525fc5455bd9d60",
-      "imageLocalVia": "photon-resize"
+      "imageLocalVia": "photon-resize",
+      "_retainedFromCache": true
     },
     {
       "source": "La Griffe",
@@ -3151,14 +3161,15 @@
       "authorCheckedAt": "2026-11-03T05:06:53.457Z",
       "leadImageReady": false,
       "leadExcerpt": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de la semaine passée, cliquer ici.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/21/Universit%C3%A9_de_Montr%C3%A9al_%28_%C3%89cole_polytechnique_de_Montr%C3%A9al_et_Pavillon_Roger-Gaudry%29.JPG",
-      "imageTitle": "Université de Montréal ( École polytechnique de Montréal et Pavillon Roger-Gaudry)",
-      "imageCredit": "Photo : Laurent Bélanger / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Laurent Bélanger",
-      "imageLicense": "CC BY-SA 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/91/Universit%C3%A9_de_Montr%C3%A9al_%28Roger-Gaudry%29.JPG",
+      "imageTitle": "Université de Montréal (Roger-Gaudry)",
+      "imageCredit": "Photo : Colocho / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Colocho",
+      "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20de%20Montr%C3%A9al%20(%20%C3%89cole%20polytechnique%20de%20Montr%C3%A9al%20et%20Pavillon%20Roger-Gaudry).JPG",
-      "stockImageLocal": "assets/stock-images/d48b2427bef559f5.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20de%20Montr%C3%A9al%20(Roger-Gaudry).JPG",
+      "stockImageLocal": "assets/stock-images/c24a99d444cb2fd2.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -3179,11 +3190,12 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image2.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Pour le président de la FÉCQ, Abdelmajid El-Mouhib, le mouvement français invite surtout à la réflexion les étudiant·e·s du Québec. « Si eux réussissent à se mobiliser en étant tous solidaires, pourquoi est-ce que nous, on n’est pas capables ? » demande-t-il.",
       "imageLocal": "assets/news-images/57214b196a94c179.png",
       "imageLocalKey": "57214b196a94c179",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -3205,10 +3217,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "5_2_denivele.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/1dddaf7c69932cc0.jpg",
       "imageLocalKey": "1dddaf7c69932cc0",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -3230,11 +3243,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "naza_dessin.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Les deux cinéastes ont mis près de trois ans à convaincre 24 membres de l’armée et du renseignement de témoigner, sous couvert d’anonymat (ils apparaissent sous forme de silhouette et leurs voix sont modifiées), par crainte de représailles du gouvernement israélien.",
       "imageLocal": "assets/news-images/099ed0668be37213.png",
       "imageLocalKey": "099ed0668be37213",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Impact Campus",
@@ -3504,15 +3518,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-03T03:36:32.792Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/88/Coll%C3%A8ge_Dawson%2C_fa%C3%A7ade_sur_Sherbrooke_O%2C_Montr%C3%A9al_2005-11-10.JPG",
-      "imageTitle": "Collège Dawson, façade sur Sherbrooke Ouest, Montréal",
-      "imageCredit": "Photo : Gene.arboit / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Gene.arboit",
-      "imageLicense": "CC BY-SA 3.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg",
+      "imageTitle": "Metro-level entrance, Dawson College, Apr 06 2022",
+      "imageCredit": "Photo : D. Benjamin Miller / CC0 · Wikimedia Commons",
+      "imageCreator": "D. Benjamin Miller",
+      "imageLicense": "CC0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Dawson,_fa%C3%A7ade_sur_Sherbrooke_O,_Montr%C3%A9al_2005-11-10.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Metro-level_entrance,_Dawson_College,_Apr_06_2022.jpg",
       "leadExcerpt": "Comment Reblog Subscribe Subscribed The Plant Sign me up Have a WordPress.com account? Log in now.",
-      "stockImageLocal": "assets/stock-images/aefebc34ebb99e5c.jpg"
+      "stockImageLocal": "assets/stock-images/13bbdb6c076a11bc.jpg"
     },
     {
       "source": "The Plant",
@@ -3528,15 +3542,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-03T03:36:33.473Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Dawson_College_6.jpg",
-      "imageTitle": "Dawson College 6, Montréal",
-      "imageCredit": "Photo : Hayden Soloviev / CC BY 4.0 · Wikimedia Commons",
-      "imageCreator": "Hayden Soloviev",
-      "imageLicense": "CC BY 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Dawson_College_05.jpg",
+      "imageTitle": "Dawson College 05",
+      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Jeangagnon",
+      "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_6.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_05.jpg",
       "leadExcerpt": "With the start of the next semester, our very fitting theme for the submissions this issue was renewal. I feel like renewal has a very binary connotation: transitioning from a flawed past to an improved present. However, I feel that it’s much more nuanced than that. Our lives are not memoir, we don’t have one defining incident that separates our life into a distinct before and after. Like a muscle",
-      "stockImageLocal": "assets/stock-images/78f3bcaf5b02baf0.jpg"
+      "stockImageLocal": "assets/stock-images/b6725a5a41507112.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -3559,17 +3573,17 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "L’événement « Ça roule Doc ! » était de retour samedi le 28 septembre dernier pour sa cinquième édition sur le campus de l’Université Laval. Ce sont près de 500 personnes qui se sont rassemblées afin de se balader à vélo ou à pied dans les rues de Québec pour promouvoir les saines habitudes de vie.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Pavillon_Adrien-Pouliot_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon Adrien-Pouliot 02",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon Adrien-Pouliot 01",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Adrien-Pouliot%2002.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Adrien-Pouliot%2001.jpg",
       "imageLocal": "assets/news-images/b3c705d98e3955f0.jpg",
       "imageLocalKey": "b3c705d98e3955f0",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/b5d04c7f47bceb5c.jpg"
+      "stockImageLocal": "assets/stock-images/f0b7ee2de14eab1a.jpg"
     },
     {
       "source": "Montréal Campus",
@@ -3616,17 +3630,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Les microbrasseries québécoises sont de plus en plus nombreuses et la concurrence est vive. Malgré l’intérêt des consommateurs pour ce type de produits, le contexte économique actuel contraint certains brasseurs à redoubler d’effort pour se démarquer. Le marché serait-il en train de saturer ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg",
-      "imageTitle": "Pavillon Jean-Charles-Bonenfant 02",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/60/Pavillon_Palasis-Prince_10.jpg",
+      "imageTitle": "Pavillon Palasis-Prince 10",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Jean-Charles-Bonenfant_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Palasis-Prince_10.jpg",
       "imageLocal": "assets/news-images/ea46ef6162ef9475.jpg",
       "imageLocalKey": "ea46ef6162ef9475",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/aa5df3626551c002.jpg"
+      "stockImageLocal": "assets/stock-images/afa99a753be46bd2.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -3648,17 +3662,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "La représentation des communautés autochtones sur le campus de l’Université Laval ne se limite pas à l’organisation d’évènements comme celui du 30 septembre. Elle doit se traduire aussi par d’autres actions concrètes comme la nouvelle résidence étudiante Yahndawa’ qui vient d’ouvrir ses portes.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg",
-      "imageTitle": "Park in Université Laval",
-      "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Wilfredor",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+      "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
+      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
       "imageLocal": "assets/news-images/294ffdc14f33c43b.jpg",
       "imageLocalKey": "294ffdc14f33c43b",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/b8f07607bcc60c0f.jpg"
+      "stockImageLocal": "assets/stock-images/f1a23eb08d38a755.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -3681,17 +3695,17 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Rassemblement, consommations, hot-dogs et football Voilà des mots souvent associés aux fêtes d'avant-match du Rouge et Or. Quoi dire de l'omniprésence de l'alcool dans ces rendez-vous supposément sportifs ouverts aux étudiants et aux familles ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
-      "imageTitle": "Pavillon Jeanne-Lapointe",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/10/Pavillon_Paul-Comtois_03.jpg",
+      "imageTitle": "Pavillon Paul-Comtois",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Paul-Comtois_03.jpg",
       "imageLocal": "assets/news-images/e4a25ec6e0bc7969.jpg",
       "imageLocalKey": "e4a25ec6e0bc7969",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/1919db41650015a3.jpg"
+      "stockImageLocal": "assets/stock-images/897c6b961cd6c2af.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -3713,17 +3727,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "La marche Agissons ensemble pour le mieux-être des aînés, en l’honneur de la Journée internationale des aînés, s’étend sur trois kilomètres dans le secteur du parc de la Francophonie à Québec. L'occasion pour les personnes âgées de réaffirmer qu'elles ont encore un rôle à jouer dans notre société.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Pavillon_Envirotron_UL_01.jpg",
-      "imageTitle": "Pavillon Envirotron",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
+      "imageTitle": "Pavillon de médecine dentaire",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Envirotron_UL_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
       "imageLocal": "assets/news-images/a677e6cc600c71d7.jpg",
       "imageLocalKey": "a677e6cc600c71d7",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/801a58f945524a6f.jpg"
+      "stockImageLocal": "assets/stock-images/a7235a00dd7907ee.jpg"
     },
     {
       "source": "Le Polyscope",
@@ -3860,31 +3874,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "La femme parfaite est un objet",
-      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
-      "author": "Rose Langlois",
-      "date": "2026-10-07T07:00:00.000Z",
-      "excerpt": "Réflexion sur l’objectification des femmes dans le rap.",
-      "image": "",
-      "featured": true,
-      "authorCheckedAt": "2026-10-07T11:17:47.577Z",
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Arts Building, McGill University, Aug 31 2022",
-      "imageCredit": "Photo : D. Benjamin Miller / CC0 · Wikimedia Commons",
-      "imageCreator": "D. Benjamin Miller",
-      "imageLicense": "CC0",
-      "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Arts%20Building%2C%20McGill%20University%2C%20Aug%2031%202022.jpg",
-      "leadExcerpt": "Dans l’imaginaire du rap, un rappeur qui réussit a de l’argent en quantités ridicules, ce qui lui permet d’acheter montres, voitures, diamants pour les dents : bref, tout le luxe désiré. Toutefois, ce luxe passe par la réussite sexuelle. Un rappeur réussi sera irrésistible pour les femmes, qu’il le soit grâce à sa capacité de leur acheter ce qu’elles veulent ou grâce à ses prouesses sexuelles.",
-      "stockImageLocal": "assets/stock-images/7b8ed6bf1f742c2e.jpg"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Un classique revisité",
       "link": "https://www.delitfrancais.com/2026/10/07/un-classique-revisite/",
       "author": "Rose Langlois",
@@ -3905,6 +3894,31 @@
       "imageLocal": "assets/news-images/37e21b1471eabbad.jpg",
       "imageLocalKey": "37e21b1471eabbad",
       "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
+      "author": "Rose Langlois",
+      "date": "2026-10-07T07:00:00.000Z",
+      "excerpt": "Réflexion sur l’objectification des femmes dans le rap.",
+      "image": "",
+      "featured": true,
+      "authorCheckedAt": "2026-10-07T11:17:47.577Z",
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Arts Building, McGill University, Aug 31 2022",
+      "imageCredit": "Photo : D. Benjamin Miller / CC0 · Wikimedia Commons",
+      "imageCreator": "D. Benjamin Miller",
+      "imageLicense": "CC0",
+      "imageProvider": "campus-bank",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Arts%20Building%2C%20McGill%20University%2C%20Aug%2031%202022.jpg",
+      "leadExcerpt": "Dans l’imaginaire du rap, un rappeur qui réussit a de l’argent en quantités ridicules, ce qui lui permet d’acheter montres, voitures, diamants pour les dents : bref, tout le luxe désiré. Toutefois, ce luxe passe par la réussite sexuelle. Un rappeur réussi sera irrésistible pour les femmes, qu’il le soit grâce à sa capacité de leur acheter ce qu’elles veulent ou grâce à ses prouesses sexuelles.",
+      "stockImageLocal": "assets/stock-images/7b8ed6bf1f742c2e.jpg"
     },
     {
       "source": "The Plant",
@@ -4028,17 +4042,17 @@
       "sourceImageCreditImageKey": "alexas_fotos-journalist-985073-scaled-e1791153792413.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Pavillon_Gene-H.-Kruger_02.jpg",
-      "imageTitle": "Pavillon Gene-H.-Kruger",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_F%C3%A9lix-Antoine-Savard_02.jpg",
+      "imageTitle": "Pavillon Félix-Antoine-Savard",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Gene-H.-Kruger_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_F%C3%A9lix-Antoine-Savard_02.jpg",
       "imageLocal": "assets/news-images/41ee39a656453c37.jpg",
       "imageLocalKey": "41ee39a656453c37",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/04f676d202beae5a.jpg"
+      "stockImageLocal": "assets/stock-images/b967cbb339969cfd.jpg"
     },
     {
       "source": "Impact Campus",
@@ -4093,23 +4107,23 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
-      "author": "Rose Langlois",
+      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
+      "author": "Dalia Djazouli",
       "date": "2026-09-30T07:00:00.000Z",
-      "excerpt": "Réflexion sur la dénonciation de l’IA dans le milieu littéraire.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/ThelysonOrelienAI.png",
+      "excerpt": "La manosphère, vecteur de radicalisation.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Lonely.jpeg",
       "featured": true,
-      "leadExcerpt": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En quelques instants, la carrière prometteuse de cet auteur québécois a basculé pour le reléguer au rang de paria du milieu littéraire.",
+      "leadExcerpt": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouvernement américain alertant sur un recul généralisé des liens sociaux. Justifiée par des données sélectionnées de manière tendancieuse, la « Male Loneliness Epidemic » s’apparente davantage à une panique morale qu’une réalité sociale.",
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/c6ecf846f4ddf380.jpg",
-      "imageLocalKey": "c6ecf846f4ddf380",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
+      "imageLocal": "assets/news-images/2ab4782df799135a.jpg",
+      "imageLocalKey": "2ab4782df799135a",
+      "sourceImageCredit": "Photo : Félix Fournier l Le Délit",
+      "sourceImageCreator": "Félix Fournier l Le Délit",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "thelysonorelienai.png",
+      "sourceImageCreditImageKey": "lonely.jpeg",
       "sourceImageCreditRev": 17
     },
     {
@@ -4155,17 +4169,17 @@
       "sourceImageCreditImageKey": "2222-scaled-e1790714177232.jpeg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg",
-      "imageTitle": "Pavillon Charles-Eugène-Marchand",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/68/Pavillon_Agathe-Lacerte_03.jpg",
+      "imageTitle": "Pavillon Agathe-Lacerte",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Agathe-Lacerte_03.jpg",
       "imageLocal": "assets/news-images/1d3f9ced47b22b4c.jpg",
       "imageLocalKey": "1d3f9ced47b22b4c",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/9312d68b533a55b8.jpg"
+      "stockImageLocal": "assets/stock-images/85b4eff16b7ff90a.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -4187,17 +4201,17 @@
       "sourceImageCreditImageKey": "img_0051_oui.jpeg",
       "sourceImageCreditRev": 16,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg",
-      "imageTitle": "Pavillon d’optique-photonique",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/70/Pavillon_Alexandre-Vachon_01.jpg",
+      "imageTitle": "Pavillon Alexandre-Vachon",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_d%27optique_photonique_laser_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Alexandre-Vachon_01.jpg",
       "imageLocal": "assets/news-images/154c6fcbb151eb6d.jpg",
       "imageLocalKey": "154c6fcbb151eb6d",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/539b5adacc45f50d.jpg"
+      "stockImageLocal": "assets/stock-images/12253475a05cb15e.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -4219,17 +4233,17 @@
       "sourceImageCreditImageKey": "img_0732-3-e1790710346154.jpeg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/93/Pavillon_des_Services_UL_03.jpg",
-      "imageTitle": "Pavillon des Services",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Peps_Universit%C3%A9_Laval.jpg",
+      "imageTitle": "PEPS",
+      "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Wilfredor",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_des_Services_UL_03.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Peps_Universit%C3%A9_Laval.jpg",
       "imageLocal": "assets/news-images/b334f7cd3ffc3ba9.jpg",
       "imageLocalKey": "b334f7cd3ffc3ba9",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/ce75b7ccff99b3a6.jpg"
+      "stockImageLocal": "assets/stock-images/e058b3e1e6284d55.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -4251,17 +4265,17 @@
       "sourceImageCreditImageKey": "825256892_2256056895249410_3022686307242620777_n1.jpg",
       "sourceImageCreditRev": 16,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
-      "imageTitle": "Pavillon J.-A.-DeSève",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Pavillon_Maurice-Pollack.jpg",
+      "imageTitle": "Pavillon Maurice-Pollack",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Maurice-Pollack.jpg",
       "imageLocal": "assets/news-images/60fcb408c3a18888.jpg",
       "imageLocalKey": "60fcb408c3a18888",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/fb0d3ac3bc0ca610.jpg"
+      "stockImageLocal": "assets/stock-images/66b237d2dd7516ea.jpg"
     },
     {
       "source": "Montréal Campus",
@@ -4397,7 +4411,8 @@
       "image": "",
       "leadImageReady": false,
       "imageTitle": "McGill University, Montréal",
-      "imageProvider": "campus-bank"
+      "imageProvider": "campus-bank",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4418,10 +4433,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "news-5-eliot-loose.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/8b31c1bb2ae24d42.jpg",
       "imageLocalKey": "8b31c1bb2ae24d42",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4438,7 +4454,8 @@
       "authorCheckedAt": "2026-11-03T07:07:18.547Z",
       "leadImageReady": false,
       "imageTitle": "Roddick Gates, McGill University",
-      "imageProvider": "campus-bank"
+      "imageProvider": "campus-bank",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4459,10 +4476,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "lilly-guilbeault-scitech-1-.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/c59f0f121c007a38.jpg",
       "imageLocalKey": "c59f0f121c007a38",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4483,10 +4501,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sl2-emiko-kamiya.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/15504a096ec4570e.jpg",
       "imageLocalKey": "15504a096ec4570e",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4507,10 +4526,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sports-1-gwen-heffernan.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/34ecd821609b6280.png",
       "imageLocalKey": "34ecd821609b6280",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4531,10 +4551,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "news-2-claire-mccallum.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/f4c76630a1cac1b6.jpg",
       "imageLocalKey": "f4c76630a1cac1b6",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4555,10 +4576,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "zoe-lee-news-1.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/edb7700e4ff4fb1c.jpg",
       "imageLocalKey": "edb7700e4ff4fb1c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4579,10 +4601,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ae-2-stina-baudin.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/2430478fcc1fdf75.jpg",
       "imageLocalKey": "2430478fcc1fdf75",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4603,10 +4626,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "scitech-3-zoe-lee-.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/75bc16a385dfdedb.jpg",
       "imageLocalKey": "75bc16a385dfdedb",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4627,10 +4651,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "op-2-holden-callif.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/627163318f54f63c.jpg",
       "imageLocalKey": "627163318f54f63c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4651,10 +4676,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "op-1-gwen-heffernan-e1788833430898.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/581ab3d9884a6f7c.jpg",
       "imageLocalKey": "581ab3d9884a6f7c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4675,10 +4701,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "scitech-3-gwen-heffernan.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/4dc6140767c1ee5c.png",
       "imageLocalKey": "4dc6140767c1ee5c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4699,10 +4726,18 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sports-2-eliot-loose.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/ccd99384ee9d1b1f.jpg",
       "imageLocalKey": "ccd99384ee9d1b1f",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/8306/7992985419_1f432e2553_b.jpg",
+      "imageTitle": "Woman Cyclist Gives Thumbs Up",
+      "imageCredit": "Photo : Chris Hunkeler / CC BY-SA · Openverse",
+      "imageCreator": "Chris Hunkeler",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/14913305@N00/7992985419"
     },
     {
       "source": "The Tribune",
@@ -4726,7 +4761,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/33bf5add2c4a544b.jpg",
       "imageLocalKey": "33bf5add2c4a544b",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4750,7 +4786,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/601742353e505754.jpg",
       "imageLocalKey": "601742353e505754",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4771,10 +4808,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ae-3-eliot-loose-e1788834029314.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/235709de0c0b9900.jpg",
       "imageLocalKey": "235709de0c0b9900",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4795,10 +4833,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sl-1-emiko-kamiya.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/b57f213694c29d33.jpg",
       "imageLocalKey": "b57f213694c29d33",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4819,10 +4858,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "news3.png",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/a80f5d612c8133a8.jpg",
       "imageLocalKey": "a80f5d612c8133a8",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4843,10 +4883,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ae-1-julie-raout.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/d03ec924bb4426bb.jpg",
       "imageLocalKey": "d03ec924bb4426bb",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Polyscope",
