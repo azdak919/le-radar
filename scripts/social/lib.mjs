@@ -311,6 +311,7 @@ export function freeSlots(dues, takenIso = []) {
 // sinon le lien de la fiche (aucune ligne 📸).
 export function formatOk(text, it, credit = '') {
   const lines = String(text || '').split('\n').map(l => l.trim()).filter(Boolean);
+  if (lines.length > 1 && /^(#[\p{L}\p{N}_]+\s*)+$/u.test(lines[lines.length - 1])) lines.pop(); // ligne de hashtags Bluesky
   if (!lines.length) return false;
   const site = siteLink(it);
   if (!lines.includes(site)) return false;

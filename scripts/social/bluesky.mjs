@@ -2,6 +2,7 @@
 // facettes (octets UTF-8), langue, articles dus. Les @ viennent de data/social/bluesky-accounts.json
 // (jamais de la liste X).
 import { buildText, LIMITS, detectLang, siteLink } from './lib.mjs';
+import { bskyTags } from './hashtags.mjs';
 export { siteLink };
 export { detectLang };
 
@@ -13,8 +14,10 @@ const enc = new TextEncoder();
 const bytes = s => enc.encode(s).length;
 
 /** Texte Bluesky : format commun (lib.mjs), 300 graphèmes, lien vers la fiche le-radar.ca. */
-export function buildBskyText(it, accounts = [], { credit = '', photo = true } = {}) {
-  return buildText(it, accounts, BSKY_LIMIT, { credit, photo, len: graphemes, link: true });
+export function buildBskyText(it, accounts = [], { credit = '', photo = true, tags = true } = {}) {
+  const line = tags ? bskyTags(it).join(' ') : '';
+  const text = buildText(it, accounts, BSKY_LIMIT - (line ? graphemes(line) + 1 : 0), { credit, photo, len: graphemes, link: true });
+  return text && line ? `${text}\n${line}` : text;
 }
 
 /** Facettes : liens (http…) et @ confirmés Bluesky (dids : Map handle→did). Offsets en octets UTF-8. */
@@ -28,6 +31,11 @@ export function facets(text, dids = new Map()) {
     const did = dids.get(m[2].toLowerCase()); if (!did) continue;
     const i = m.index + m[1].length, s = bytes(text.slice(0, i));
     out.push({ index: { byteStart: s, byteEnd: s + bytes('@' + m[2]) }, features: [{ $type: 'app.bsky.richtext.facet#mention', did }] });
+  }
+  for (const m of text.matchAll(/(^|\s)#([\p{L}\p{N}_]{1,64})/gu)) {
+    if (/^\d+$/.test(m[2])) continue;
+    const s = bytes(text.slice(0, m.index + m[1].length));
+    out.push({ index: { byteStart: s, byteEnd: s + bytes('#' + m[2]) }, features: [{ $type: 'app.bsky.richtext.facet#tag', tag: m[2] }] });
   }
   return out.sort((a, b) => a.index.byteStart - b.index.byteStart);
 }
