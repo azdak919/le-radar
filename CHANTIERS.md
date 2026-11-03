@@ -37,3 +37,9 @@ Quand un chantier avance ou se termine : cocher la liste de l'issue, fermer l'is
 
 ## Buffer X : passe du soir (2 nov. 2026) — fait
 - Cron `7 2 * * *` (≈ 21 h 07 HNE, 22 h 07 HAE) avec EVENING=true : remplit dès la veille les 10 créneaux du lendemain (8 h 30 → 21 h), pool = articles du jour. Mêmes règles (≤ 2 par source, sans doublon, photos d'article, 📸, format). Passes de nuit en secours (freeSlots : aucun doublon). Test : tests/social-buffer.mjs.
+
+## Bluesky et Tumblr : tout publier, étalé (2 nov. 2026) — fait
+- `NETWORKS.*.spread` : plus d'exclusion « ≤ 2/source » ; tourniquet entre sources, excédent en attente (hold), seul le quasi-doublon (titleKey) est sauté.
+- Cadence `paceSpread` : part w(maintenant)/Σw(passages avant échéance) par article → volume aux pointes (posting-windows.json), rien aux heures calmes ; article qui expirerait avant le prochain passage non calme = en tête.
+- Plafonds : Bluesky 12/h, 150/j, 4/passage ; Tumblr 8/h, 120/j, 3/passage (< 250/j officiel).
+- Entrées `skipped: cap` fraîches retirées (Bluesky 33, Tumblr 23). Test : tests/social-bluesky-spread.mjs.
