@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T09:07:00.563Z",
+  "updatedAt": "2026-11-03T10:06:30.547Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T09:05:58.960Z"
+      "checkedAt": "2026-11-03T10:06:00.606Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À l'horizon",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/a-lhorizon"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Raconte ton quartier",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+      },
       "track": "",
-      "showTitle": "À l'horizon",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T09:06:12.325Z"
+      "checkedAt": "2026-11-03T10:06:14.172Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Attik / Show For Children",
-        "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
-      },
-      "next": {
         "title": "The Beat Power Hour",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt1",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T09:06:30.831Z"
+      "checkedAt": "2026-11-03T10:06:20.163Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T09:06:33.013Z"
+      "checkedAt": "2026-11-03T10:06:22.333Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,35 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T09:06:34.105Z"
+      "checkedAt": "2026-11-03T10:06:23.471Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
+      },
+      "next": {
+        "title": "Le Monde Dans Mes Oreilles",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://www.choq.ca/emissions/le-monde-dans-mes-oreilles"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "",
+      "showTitle": "Les rois de l'arène",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
+        "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T09:07:00.213Z"
+      "checkedAt": "2026-11-03T10:06:30.196Z"
     }
   }
 }
