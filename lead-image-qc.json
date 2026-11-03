@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-03T14:38:27.973Z",
+  "updated": "2026-11-03T15:09:43.077Z",
   "total": 186,
   "withPhoto": 169,
   "withStock": 32,
   "withCampusBank": 28,
   "fullyCovered": 186,
-  "leadReadyPhotos": 142,
-  "pageScraped": 32,
-  "photosRecovered": 32,
-  "imagesCleared": 10,
+  "leadReadyPhotos": 143,
+  "pageScraped": 34,
+  "photosRecovered": 34,
+  "imagesCleared": 12,
   "stockSearches": 44,
   "stockFound": 28,
-  "campusBankFound": 21,
+  "campusBankFound": 20,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -27,16 +27,16 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg"
     },
     {
-      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
-      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
-    },
-    {
       "title": "Virage conservateur en Colombie-Britannique",
       "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
+    },
+    {
+      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
+      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
     },
     {
       "title": "Pour Halloween, ce sont les pesticides qui font peur",
@@ -49,6 +49,12 @@
       "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+    },
+    {
+      "title": "L’état des routes du Québec à l’aube de l’hiver",
+      "link": "https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/99/286770161_715d975245_b.jpg"
     },
     {
       "title": "Bishop’s Culture is Community",
@@ -69,16 +75,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Men’s Club Hockey Perfect Start to the Season",
-      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
-    },
-    {
       "title": "I Love Friendsgiving",
       "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "La femme parfaite est un objet",
