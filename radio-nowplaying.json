@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T01:07:05.642Z",
+  "updatedAt": "2026-11-03T02:06:19.581Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T01:06:39.832Z"
+      "checkedAt": "2026-11-03T02:06:04.501Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T01:06:41.375Z"
+      "checkedAt": "2026-11-03T02:06:06.157Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T01:06:43.844Z"
+      "checkedAt": "2026-11-03T02:06:08.729Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "In The Garage",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/in-the-garage"
-      },
-      "next": {
         "title": "LEKTOR DECODER",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/lektor-decoder"
       },
+      "next": {
+        "title": "Past Tense",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/past-tense"
+      },
       "track": "",
-      "showTitle": "In The Garage",
+      "showTitle": "LEKTOR DECODER",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T01:06:46.381Z"
+      "checkedAt": "2026-11-03T02:06:11.279Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T01:06:47.505Z"
+      "checkedAt": "2026-11-03T02:06:12.331Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Élégie — Demain minuit",
+      "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -149,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-03T01:07:05.291Z"
+      "checkedAt": "2026-11-03T02:06:19.230Z"
     }
   }
 }
