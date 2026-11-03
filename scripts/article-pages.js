@@ -218,4 +218,4 @@ if (require.main === module) {
 }
 
 module.exports = {
-  frenchNbsp, recordOf, merge, renderPage, loadTemplate, creditOf, shortExcerpt, frDate, render };
+  frenchNbsp, imageOf, recordOf, merge, renderPage, loadTemplate, creditOf, shortExcerpt, frDate, render };

@@ -62,7 +62,7 @@ for (const t of todo) {
   console.log(`\n--- ${++n}. [${it.source}] ${graphemes(text)}/${BSKY_LIMIT} graphèmes · ${lang} · image ${im ? im.url : 'AUCUNE'} · facettes ${facets(text).length}\n${text}`);
   if (dry) continue;
   if (posted.has(it.link) || posted.has(siteLink(it))) { console.log('Déjà sur Bluesky (vérifié dans le compte) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
-  let thumb = null; if (im) { try { thumb = await bs.uploadImage(im.url); } catch (e) { console.log(`::warning::image non téléversée : ${e.message}`); } }
+  const thumb = await bs.uploadImage(im.url); // échec = erreur : jamais de carte sans l'image du Radar
   const rec = postRecord({ text, lang, dids, card: { uri: siteLink(it), title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } });
   const p = await bs.post(rec);
   state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), uri: p.uri, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };

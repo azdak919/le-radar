@@ -66,11 +66,20 @@ export function siteImage(it,{pages}={}){
   const id=articleId(it?.link||''); const pg=id&&(pages.articles||pages)[id];
   const url=pg?.image; if(!url||!/^https:\/\//.test(url)||AD.test(url)) return null;
   return {url,origin:'le-radar.ca',credit:pg.credit||'',note:`og:image de /article/${id}/`}; }
-export async function resolveImage(it,opts={}){ const im=siteImage(it,opts); if(im||opts.pages) return im;
-  // Article pas encore dans le JSON du dépôt : og:image de la page publiée sur le-radar.ca.
-  const id=articleId(it?.link||''); if(!id) return null; const url=`https://le-radar.ca/article/${id}/`;
-  const h=await page(url); const og=h&&candidates(h,url).find(c=>c.how==='og/twitter')?.url;
-  return og&&/^https:\/\/le-radar\.ca\//.test(og)&&!AD.test(og)?{url:og,origin:'le-radar.ca',credit:'',note:`og:image de ${url}`}:null; }
+const sitePages=require('../article-pages.js');
+let _news=null;
+const newsItems=()=>{ if(!_news){ try{ const d=JSON.parse(readFileSync(new URL('../../news.json',import.meta.url),'utf8')); _news=Array.isArray(d)?d:(d.articles||d.items||[]); }catch{ _news=[]; } } return _news; };
+/** Image choisie par le-radar.ca : article-pages.json → même sélection que le site (imageOf sur news.json,
+ * repli compris) → og:image publiée de /article/<id>/. Jamais le site source. Introuvable = erreur. */
+export async function resolveImage(it,opts={}){ const im=siteImage(it,opts); if(im) return im;
+  const id=articleId(it?.link||'');
+  const n=(opts.news||newsItems()).find(x=>x.link===it?.link||(id&&articleId(x.link||'')===id));
+  const viaSite=n&&sitePages.imageOf(n);
+  if(viaSite&&!AD.test(viaSite)) return {url:viaSite,origin:'le-radar.ca',credit:sitePages.creditOf?.(n)||'',note:'imageOf (sélection du site)'};
+  if(id&&!opts.offline){ const url=`https://le-radar.ca/article/${id}/`; const h=await page(url);
+    const og=h&&candidates(h,url).find(c=>c.how==='og/twitter')?.url;
+    if(og&&/^https:\/\//.test(og)&&!/og-cover\.png/.test(og)&&!AD.test(og)) return {url:og,origin:'le-radar.ca',credit:'',note:`og:image de ${url}`}; }
+  throw new Error(`Image du Radar introuvable pour ${it?.link||'(sans lien)'} : publication refusée (jamais sans image).`); }
 /** used: Map(source -> Set(keys)) ; repeatedBySource: Map(source->Set(keys) vues dans ≥2 articles) */
 export async function resolveSourceImage(it,{used,repeated}){
   const u=used.get(it.source)||new Set(); used.set(it.source,u); const rep=repeated.get(it.source)||new Set();
