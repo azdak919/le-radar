@@ -45,7 +45,7 @@ if (shareNow) {
   todo = status.dayLeft && best.length ? [{ id: best[Math.floor(Math.random() * best.length)].id, shareNow: true }] : [];
 }
 const shareUrl = (process.env.SHARE_URL || '').trim();
-if (shareNow && shareUrl) { const it = items.find(i => i.link === stripUtm(shareUrl) || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); todo = [{ id: it.id, shareNow: true }]; }
+if (shareNow && shareUrl) { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); todo = [{ id: it.id, shareNow: true }]; }
 if (!todo.length) { save(); console.log('Rien de frais à publier.'); process.exit(0); }
 
 const md = createMastodon({ instance, token, acct });
