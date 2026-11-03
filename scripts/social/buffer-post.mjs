@@ -7,6 +7,7 @@ import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, 
 const inText = (t, i) => !!t && (t.includes(i.link) || t.includes(siteLink(i)));
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
+import { withHook } from './ai-hook.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-sent.json');
@@ -82,7 +83,9 @@ if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${d
 const used = new Map(); let n = 0;
 for (const it of sel) {
   const im = await resolveImage(it, { used, repeated });
-  const text = buildText(it, ACCOUNTS, undefined, { credit: im?.credit, photo: !!im });
+  if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+  await withHook(it);
+  const text = buildText(it, ACCOUNTS, undefined, { credit: im?.credit, photo: !!im, ai: true });
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   const dueAt = dues && !shareNow ? dues[n] : undefined;
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);

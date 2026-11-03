@@ -14,9 +14,9 @@ const enc = new TextEncoder();
 const bytes = s => enc.encode(s).length;
 
 /** Texte Bluesky : format commun (lib.mjs), 300 graphèmes, lien vers la fiche le-radar.ca. */
-export function buildBskyText(it, accounts = [], { credit = '', photo = true, tags = true } = {}) {
+export function buildBskyText(it, accounts = [], { credit = '', photo = true, tags = true, ai = true } = {}) {
   const line = tags ? bskyTags(it).join(' ') : '';
-  const text = buildText(it, accounts, BSKY_LIMIT - (line ? graphemes(line) + 1 : 0), { credit, photo, len: graphemes, link: true });
+  const text = buildText(it, accounts, BSKY_LIMIT - (line ? graphemes(line) + 1 : 0), { credit, photo, len: graphemes, link: true, ai });
   return text && line ? `${text}\n${line}` : text;
 }
 

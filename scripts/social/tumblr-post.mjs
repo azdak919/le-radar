@@ -12,6 +12,7 @@ import { buildTumblrText, npfBody, detectLang, BLOG } from './tumblr.mjs';
 import { createTumblr } from './channels/tumblr.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
+import { withHook } from './ai-hook.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/tumblr-sent.json');
@@ -58,6 +59,8 @@ for (const t of todo) {
   if (n && !dry) await new Promise(r => setTimeout(r, jitterMs(limits.gapSec)));
   const it = items.find(i => i.id === t.id);
   const im = await resolveImage(it, { used, repeated });
+  if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+  await withHook(it);
   const text = buildTumblrText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   const body = npfBody(it, text, { image: im, lang });

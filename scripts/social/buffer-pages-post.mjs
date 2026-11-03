@@ -13,6 +13,7 @@ import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
+import { withHook } from './ai-hook.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-pages-sent.json');
@@ -77,6 +78,8 @@ for (const net of networks) {
   for (let i = 0; i < sel.length; i++) {
     const it = sel[i], dueAt = dues[i];
     const im = await resolveImage(it, { used, repeated });
+    if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+    await withHook(it);
     const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
     if (/tison/i.test(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
     console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);

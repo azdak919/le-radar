@@ -14,6 +14,7 @@ import { buildBskyText, graphemes, detectLang, postRecord, facets, BSKY_LIMIT } 
 import { createBluesky } from './channels/bluesky.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
+import { withHook } from './ai-hook.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/bluesky-sent.json');
@@ -57,6 +58,8 @@ for (const t of todo) {
   const it = items.find(i => i.id === t.id);
   if (!it) { console.log(`::warning::${t.id} absent du flux, non publié.`); if (!dry) state.sent[t.id] = { at: new Date().toISOString(), skipped: 'absent du flux' }; continue; }
   const im = await resolveImage(it, { used, repeated });
+  if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+  await withHook(it);
   const text = buildBskyText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   console.log(`\n--- ${++n}. [${it.source}] ${graphemes(text)}/${BSKY_LIMIT} graphèmes · ${lang} · image ${im ? im.url : 'AUCUNE'} · facettes ${facets(text).length}\n${text}`);

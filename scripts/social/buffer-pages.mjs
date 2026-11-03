@@ -19,8 +19,8 @@ export function pageLink(it, mode = 'le-radar') {
 }
 
 /** « Média • Auteur • Titre : extrait », lien, « 📸 crédit ». Jamais de @ (noms en clair). */
-export function buildPageText(it, cfg = {}, { credit = '', photo = true } = {}) {
-  const text = buildText(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link) });
+export function buildPageText(it, cfg = {}, { credit = '', photo = true, ai = true } = {}) {
+  const text = buildText(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link), ai });
   return text.replace(/(^|[\s(])@(?=\w)/g, '$1');
 }
 
