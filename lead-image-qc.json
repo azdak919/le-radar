@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-03T00:14:10.588Z",
+  "updated": "2026-11-03T01:37:03.002Z",
   "total": 185,
   "withPhoto": 169,
   "withStock": 31,
-  "withCampusBank": 28,
+  "withCampusBank": 27,
   "fullyCovered": 185,
   "leadReadyPhotos": 142,
-  "pageScraped": 30,
-  "photosRecovered": 30,
+  "pageScraped": 29,
+  "photosRecovered": 29,
   "imagesCleared": 10,
   "stockSearches": 43,
   "stockFound": 25,
-  "campusBankFound": 21,
+  "campusBankFound": 20,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -27,16 +27,16 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg"
     },
     {
-      "title": "Virage conservateur en Colombie-Britannique",
-      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
-    },
-    {
       "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
       "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
+    },
+    {
+      "title": "Virage conservateur en Colombie-Britannique",
+      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -57,6 +57,12 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
+      "title": "L’état des routes du Québec à l’aube de l’hiver",
+      "link": "https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/99/286770161_715d975245_b.jpg"
+    },
+    {
       "title": "Bishop’s Culture is Community",
       "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
       "reason": "no-stock-match",
@@ -73,12 +79,6 @@
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "Crossword: Paranormal Activity",
-      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
     },
     {
       "title": "La femme parfaite est un objet",
