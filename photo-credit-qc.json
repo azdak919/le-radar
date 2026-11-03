@@ -1,30 +1,44 @@
 {
-  "updated": "2026-11-03T16:40:36.724Z",
+  "updated": "2026-11-03T17:26:16.345Z",
   "total": 186,
-  "withImage": 166,
-  "withCredit": 166,
-  "cited": 92,
-  "pending": 55,
+  "withImage": 165,
+  "withCredit": 165,
+  "cited": 91,
+  "pending": 54,
   "missingHero": 0,
   "ok": false,
-  "checked": 58,
-  "updatedCount": 5,
-  "citedNew": 2,
-  "fallbackNew": 56,
+  "checked": 59,
+  "updatedCount": 7,
+  "citedNew": 4,
+  "fallbackNew": 55,
   "samples": [
     {
-      "title": "Le réseau à Vélo en roue libre auprès de la population",
+      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
       "source": "L'Exemplaire",
       "credit": "Photo : L'Exemplaire",
       "cited": false,
       "method": null
     },
     {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "AI Content",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Québec : la percée conservatrice, l’échec péquiste",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Marie-Josée Hélie / Facebook",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "json-ld"
+    },
+    {
+      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
@@ -36,9 +50,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",

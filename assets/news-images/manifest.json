@@ -71,16 +71,6 @@
       "via": "origin",
       "nameKey": "lara-september-issue-picture-1.jpg"
     },
-    "e1d9e134b7e2920e": {
-      "local": "assets/news-images/e1d9e134b7e2920e.jpg",
-      "remote": "https://theplantnews.com/wp-content/uploads/2026/10/leo_cafealphabet-1.jpg",
-      "host": "theplantnews.com",
-      "bytes": 300065,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-06T05:40:24.240Z",
-      "via": "origin",
-      "nameKey": "leo_cafealphabet-1.jpg"
-    },
     "9fbb4d19167ec958": {
       "local": "assets/news-images/9fbb4d19167ec958.png",
       "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76",
@@ -150,26 +140,6 @@
       "updatedAt": "2026-10-17T17:00:58.492Z",
       "via": "origin",
       "nameKey": "trv_2627_cyrano_1078-c-danny-taillon.jpg"
-    },
-    "b334f7cd3ffc3ba9": {
-      "local": "assets/news-images/b334f7cd3ffc3ba9.jpg",
-      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/09/IMG_0732-3-e1790710346154.jpeg",
-      "host": "www.exemplaire.com.ulaval.ca",
-      "bytes": 106903,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-17T17:01:01.233Z",
-      "via": "origin",
-      "nameKey": "img_0732-3-e1790710346154.jpeg"
-    },
-    "154c6fcbb151eb6d": {
-      "local": "assets/news-images/154c6fcbb151eb6d.jpg",
-      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/09/IMG_0051_OUI-scaled.jpeg",
-      "host": "www.exemplaire.com.ulaval.ca",
-      "bytes": 552715,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-17T17:01:01.248Z",
-      "via": "origin",
-      "nameKey": "img_0051_oui.jpeg"
     },
     "7669952e03d9ed65": {
       "local": "assets/news-images/7669952e03d9ed65.png",
@@ -1623,15 +1593,6 @@
       "via": "resize-proxy",
       "nameKey": "img_2262.jpeg"
     },
-    "c6ecf846f4ddf380": {
-      "local": "assets/news-images/c6ecf846f4ddf380.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/ThelysonOrelienAI.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 153843,
-      "updatedAt": "2026-11-03T16:39:28.902Z",
-      "via": "disk",
-      "nameKey": "thelysonorelienai.png"
-    },
     "1e1c34fb613861aa": {
       "local": "assets/news-images/1e1c34fb613861aa.jpg",
       "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/IMG_1693.jpeg",
@@ -1641,10 +1602,37 @@
       "updatedAt": "2026-11-03T16:39:30.557Z",
       "via": "resize-proxy",
       "nameKey": "img_1693.jpeg"
+    },
+    "157e1b0794b4afbb": {
+      "local": "assets/news-images/157e1b0794b4afbb.jpg",
+      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/Ruban-rose-metiers-et-risques-professionnels.png",
+      "host": "www.exemplaire.com.ulaval.ca",
+      "bytes": 90331,
+      "updatedAt": "2026-11-03T17:25:04.152Z",
+      "via": "disk",
+      "nameKey": "ruban-rose-metiers-et-risques-professionnels.png"
+    },
+    "af3f79ee87a691ca": {
+      "local": "assets/news-images/af3f79ee87a691ca.jpg",
+      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/montage_1920x1080_v6.png",
+      "host": "www.exemplaire.com.ulaval.ca",
+      "bytes": 112893,
+      "updatedAt": "2026-11-03T17:25:04.152Z",
+      "via": "disk",
+      "nameKey": "montage_1920x1080_v6.png"
+    },
+    "2ab4782df799135a": {
+      "local": "assets/news-images/2ab4782df799135a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Lonely.jpeg",
+      "host": "www.delitfrancais.com",
+      "bytes": 185165,
+      "updatedAt": "2026-11-03T17:25:04.177Z",
+      "via": "disk",
+      "nameKey": "lonely.jpeg"
     }
   },
-  "updatedAt": "2026-11-03T16:39:30.560Z",
-  "count": 165,
+  "updatedAt": "2026-11-03T17:25:04.968Z",
+  "count": 164,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
