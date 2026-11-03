@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-03T19:51:53.617Z",
+  "updated": "2026-11-03T20:37:05.399Z",
   "total": 182,
   "withAuthor": 182,
-  "mismatches": 13,
+  "mismatches": 14,
   "ok": true,
   "samples": [
+    {
+      "title": "Entretien avec le rappeur et historien Webster",
+      "link": "https://quartierlibre.ca/entretien-avec-le-rappeur-et-historien-webster/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Geneviève Robitaille",
+      "reason": "page-byline"
+    },
     {
       "title": "Keeping our unhoused community warm this winter",
       "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
@@ -110,5 +118,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 13
+  "fixed": 14
 }

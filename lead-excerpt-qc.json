@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-03T19:51:59.426Z",
+  "updated": "2026-11-03T20:37:33.485Z",
   "total": 182,
   "pool": 58,
-  "incomplete": 13,
-  "withLeadExcerpt": 126,
-  "candidates": 13,
-  "enriched": 2,
+  "incomplete": 16,
+  "withLeadExcerpt": 122,
+  "candidates": 16,
+  "enriched": 5,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -19,12 +19,48 @@
       "changed": false
     },
     {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
+      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
+      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
+      "ok": true,
+      "score": 96,
+      "chars": 233,
+      "sample": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En",
+      "changed": true
+    },
+    {
+      "title": "Le Parti conservateur fait augmenter le taux de participation aux élections provinciales de 2026",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-parti-conservateur-fait-augmenter-le-taux-de-participation-aux-elections-provinciales-de-2026/",
       "ok": true,
       "score": 100,
-      "chars": 333,
-      "sample": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouve",
+      "chars": 327,
+      "sample": "Les Québécois ont voté à 66,9 % lors de la dernière élection. Ce n’est cependant pas dans toutes les",
+      "changed": true
+    },
+    {
+      "title": "Entretien avec le rappeur et historien Webster",
+      "link": "https://quartierlibre.ca/entretien-avec-le-rappeur-et-historien-webster/",
+      "ok": true,
+      "score": 100,
+      "chars": 371,
+      "sample": "L’exposition Fugitifs ! et le recueil qui en découle s’inspirent de petites annonces de fuites publi",
+      "changed": true
+    },
+    {
+      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/cancer-du-sein-les-milieux-professionnels-a-risque-sous-la-loupe/",
+      "ok": true,
+      "score": 100,
+      "chars": 247,
+      "sample": "Les projections du taux d’incidence par province de 2026 proviennent de l’ Appendice 2 de la Project",
+      "changed": true
+    },
+    {
+      "title": "Le réseau à Vélo en roue libre auprès de la population",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-reseau-avelo-en-roue-libre-aupres-de-la-population/",
+      "ok": true,
+      "score": 96,
+      "chars": 316,
+      "sample": "Initialement, le projet pilote àVélo comptait dix stations et cent vélos. Cinq ans plus tard, le pro",
       "changed": true
     },
     {
@@ -43,42 +79,6 @@
       "score": 80,
       "chars": 400,
       "sample": "Les pâtes alimentaires sans assaisonnement, la nourriture en morceaux au fond de l’évier, les petits",
-      "changed": false
-    },
-    {
-      "title": "Youth and Climate Activism",
-      "link": "https://www.mcgilldaily.com/2026/11/youth-and-climate-activism/",
-      "ok": true,
-      "score": 72,
-      "chars": 400,
-      "sample": "Albert Lalonde, co- spokesperson for the 2019 student movement Pour le Future de Montreal (PLF) sinc",
-      "changed": false
-    },
-    {
-      "title": "Keeping our unhoused community warm this winter",
-      "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
-      "ok": true,
-      "score": 70,
-      "chars": 400,
-      "sample": "On October 23, Paul St-Pierre Plamondon released plans to fulfill his first campaign promise as Prem",
-      "changed": false
-    },
-    {
-      "title": "When “Boys Will Be Boys” Means Boys Killing Girls",
-      "link": "https://www.mcgilldaily.com/2026/11/when-boys-will-be-boys-means-boys-killing-girls/",
-      "ok": true,
-      "score": 72,
-      "chars": 400,
-      "sample": "In 2025, Netflix released psychological crime drama Adolescence , a British TV series that would cha",
-      "changed": false
-    },
-    {
-      "title": "NAZA: When the Perpetrators Tell the Story",
-      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
-      "ok": true,
-      "score": 72,
-      "chars": 399,
-      "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
       "changed": false
     }
   ]
