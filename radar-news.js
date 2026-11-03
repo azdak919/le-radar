@@ -4354,7 +4354,9 @@ function isJunkAuthorName(name = '') {
   if (/https?:\/\//i.test(a) || /\.(?:php|js|css)\b/i.test(a)) return true;
   if (/\b(?:wp-content|wp-admin|wp-block|prefetch|selector_matches|splide)\b/i.test(a)) return true;
   if (/\b(?:Recent Posts|Skip to content|Written by|Read more|Lire la suite)\b/i.test(a)) return true;
-  if (a.split(/\s+/).length > 6) return true;
+  // Plusieurs signataires (« A B, C D et E F ») : la limite vaut par nom.
+  const names = a.split(/\s*,\s*|\s+(?:et|and|&)\s+/).filter(Boolean);
+  if (names.length > 8 || names.some((n) => n.split(/\s+/).length > 6)) return true;
   return false;
 }
 
