@@ -16,7 +16,7 @@ export const NETWORKS = {
   // spread : aucune exclusion « variété » ; une même source est étalée (tourniquet), l'excédent attend
   // (hold) au lieu d'être sauté, et le volume suit les poids horaires (pointes) avant l'échéance de 24 h.
   // Volume réel du flux ≈ 40-50/jour.
-  tumblr: { perHour: 8, perDay: 120, perRun: 3, gapSec: 120, spread: true }, // < 250/jour (limite officielle)
+  tumblr: { perHour: 8, perDay: 120, perRun: 3, gapSec: 120, spread: true, ramp: false }, // < 250/jour (limite officielle)
   mastodon: { perHour: 5, perDay: 50, perRun: 1, gapSec: 60 },
   bluesky: { perHour: 12, perDay: 150, perRun: 4, gapSec: 90, spread: true },
 };

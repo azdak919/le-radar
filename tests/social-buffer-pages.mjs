@@ -66,7 +66,7 @@ assert.equal(selectForPage([it, other], { slots: 1, now }).length, 1);
 assert(matchChannel({ service: 'facebook', name: 'LE-RADAR.ca' }, 'facebook', 'LE-RADAR.ca'));
 assert(matchChannel({ service: 'linkedin', name: 'le-radar-ca' }, 'linkedin', CFG.linkedin.name), 'nom Buffer de la page LinkedIn');
 assert(!matchChannel({ service: 'linkedin', name: 'Charles' }, 'linkedin', 'LE-RADAR.ca'));
-assert(matchChannel({ service: 'twitter', name: '@LeRadar_ca' }, 'x', 'LeRadar_ca'));
+assert(matchChannel({ service: 'twitter', name: '@le_radar_ca' }, 'x', 'le_radar_ca'));
 assert(isRejection('People in Canada can’t see news content') && isRejection('Link blocked by Facebook') && !isRejection('timeout'));
 assert.equal(localParts(T('2026-11-01T17:00:00Z')).weekend, true);
 assert.deepEqual(postMetadata('facebook'), { facebook: { type: 'post' } }, 'Facebook : type post exigé par Buffer');

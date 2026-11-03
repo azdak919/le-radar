@@ -34,3 +34,12 @@ for (const network of ['bluesky', 'tumblr']) {
   assert.equal(pu.now[0]?.id, 'old', `${network} : article sur le point d'expirer en tête`);
 }
 console.log('social-bluesky-spread: OK');
+
+// Tumblr sans rodage : 5 publiés en 24 h au lieu de tout le frais (3 nov. 2026).
+{
+  const { effectiveLimits } = await import('../scripts/social/schedule.mjs');
+  const { NETWORKS: LIMITS } = await import('../scripts/social/rate-limit.mjs');
+  const t = Date.parse('2026-11-03T18:30:00Z');
+  const lim = effectiveLimits(LIMITS.tumblr, { network: 'tumblr', liveSince: '2026-11-03T00:00:00Z', now: t });
+  if (lim.ramp !== 1) throw new Error('Tumblr : pas de rodage');
+}
