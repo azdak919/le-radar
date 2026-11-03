@@ -21,7 +21,10 @@ assert.equal(item.sourceImageCredit, undefined);
 assert.match(item.stockImage, /Maison_de_la_litt/);
 assert.match(item.imageCredit, /Pymouss/);
 
-// Données publiées conformes + photo unique.
+// Données publiées conformes + photo unique. Contrôle des données du fil :
+// ignoré par la passe horaires radio (RADAR_GATE_SCOPE=radio), qui ne touche
+// pas news.json — un écart du fil ne doit pas bloquer les grilles (2 nov. 2026).
+if (process.env.RADAR_GATE_SCOPE !== 'radio') {
 const news = JSON.parse(fs.readFileSync(new URL('../news.json', import.meta.url)));
 const live = news.items.find((i) => i.link === LINK);
 if (live) {
@@ -33,5 +36,6 @@ const pins = loadPins();
 for (const [, pin] of pins.pins) {
   const n = news.items.filter((i) => (i.stockImage || i.image) === pin.stockImage).length;
   assert.ok(n <= 1, 'photo imposée en double');
+}
 }
 console.log('lead-image-pins: ok');

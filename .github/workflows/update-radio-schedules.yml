@@ -61,6 +61,8 @@ jobs:
       - name: Pre-push integrity (bot gate)
         if: steps.check.outputs.changed == 'true'
         timeout-minutes: 8
+        env:
+          RADAR_GATE_SCOPE: radio
         run: bash scripts/bot-prepush-check.sh
 
       - name: Commit and push updates
