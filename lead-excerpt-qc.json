@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-03T16:07:19.317Z",
+  "updated": "2026-11-03T16:37:51.182Z",
   "total": 186,
   "pool": 58,
-  "incomplete": 10,
-  "withLeadExcerpt": 126,
-  "candidates": 10,
-  "enriched": 0,
+  "incomplete": 12,
+  "withLeadExcerpt": 127,
+  "candidates": 12,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,6 +17,24 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
+    },
+    {
+      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
+      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
+      "ok": true,
+      "score": 96,
+      "chars": 233,
+      "sample": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En",
+      "changed": true
+    },
+    {
+      "title": "Le réseau à Vélo en roue libre auprès de la population",
+      "link": "https://www.exemplaire.com.ulaval.ca/actualites/le-reseau-avelo-en-roue-libre-aupres-de-la-population/",
+      "ok": true,
+      "score": 96,
+      "chars": 316,
+      "sample": "Initialement, le projet pilote àVélo comptait dix stations et cent vélos. Cinq ans plus tard, le pro",
+      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -61,24 +79,6 @@
       "score": 72,
       "chars": 400,
       "sample": "In 2025, Netflix released psychological crime drama Adolescence , a British TV series that would cha",
-      "changed": false
-    },
-    {
-      "title": "NAZA: When the Perpetrators Tell the Story",
-      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
-      "ok": true,
-      "score": 72,
-      "chars": 399,
-      "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
-      "changed": false
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
-      "ok": true,
-      "score": 84,
-      "chars": 400,
-      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
       "changed": false
     }
   ]
