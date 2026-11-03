@@ -6,6 +6,7 @@
 const { fetchText, articleBodyHtml, decodeEntities } = require('./article-image-lib');
 const { normalizeArticleUrl, GENERIC_AUTHORS } = require('./author-lib');
 const { looksLikePersonName } = require('./article-card-lib');
+const { sourceHints } = require('./source-hints');
 
 const PHOTO_CREDIT_FIELDS = [
   'sourceImageCredit',
@@ -972,9 +973,36 @@ function formatAuthorPhotographerCredit(item = {}) {
   };
 }
 
+/** « … Montage : Benjamin Lessard / L’Exemplaire. » dans une légende (JSON-LD, figcaption). */
+function extractMontageCredit(html = '') {
+  const texts = [];
+  for (const node of flattenJsonLd(parseJsonLdBlocks(html))) if (node && node.caption) texts.push(String(node.caption));
+  for (const m of String(html).matchAll(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/gi)) texts.push(stripHtml(m[1]));
+  for (const t of texts) {
+    const m = decodeEntities(t).match(/(?:^|[.;)]\s*)(?:photo)?montage\s*:\s*([^.;()]{3,90}?)\s*\.?\s*$/i);
+    if (m) return m[1].replace(/\s+/g, ' ').trim();
+  }
+  return '';
+}
+
 function resolveSourcePhotoCredit(item = {}, html = '') {
   const imageUrl = String(item.image || '').trim();
   if (!imageUrl) return null;
+
+  // Critère de la source (botHints.photoCredits.preferMontageCredit) : une
+  // image composée crédite son montage, pas la première photo de la légende.
+  const montage = sourceHints(item.source, 'photoCredits').preferMontageCredit
+    ? extractMontageCredit(html) : '';
+  if (montage) {
+    return {
+      cited: true,
+      creditLine: `Montage : ${montage}`,
+      creator: montage.split(/\s*\/\s*/)[0],
+      creditUrl: String(item.link || '').trim(),
+      from: 'article',
+      method: 'montage',
+    };
+  }
 
   const cited = extractPhotoCreditFromHtml(html, imageUrl, item.lang === 'en' ? 'en' : 'fr');
 
@@ -1070,6 +1098,10 @@ async function fetchSourcePhotoCredit(item) {
 }
 
 function applySourcePhotoCredit(item, resolved, { doUpdate = false } = {}) {
+  if (doUpdate && item) {
+    const hintRev = Number(sourceHints(item.source, 'photoCredits').rev) || 0;
+    if (hintRev) item.sourceImageCreditHintRev = hintRev;
+  }
   if (!resolved) return { changed: false };
   const prev = {
     line: item.sourceImageCredit || '',
@@ -1133,6 +1165,9 @@ function needsSourceCreditCheck(item) {
   const key = imageUrlKey(item.image);
   if (!key) return false;
   const rev = item.sourceImageCreditRev || 0;
+  // Critère de la source modifié (botHints.photoCredits.rev) : revérifier.
+  const hintRev = Number(sourceHints(item.source, 'photoCredits').rev) || 0;
+  if (hintRev && (item.sourceImageCreditHintRev || 0) < hintRev) return true;
   // Placeholders (« Journaliste », « Staff »…) → re-résoudre (auteur ou média).
   if (isPlaceholderPhotoCredit(item.sourceImageCreator)
     || isPlaceholderPhotoCredit(item.sourceImageCredit)
@@ -1243,6 +1278,7 @@ function auditPhotoCredits(items = []) {
 }
 
 module.exports = {
+  extractMontageCredit,
   stripCreditHandles,
   figureImageUrls,
   CREDIT_EXTRACTOR_REV,

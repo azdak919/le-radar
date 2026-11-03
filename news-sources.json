@@ -164,11 +164,17 @@
             "post-author",
             "td-post-author-name",
             "schema.org/Person"
-          ]
+          ],
+          "_note": "Signature « Par A, B et C » (en-tête td-post-author-name, plusieurs auteurs)."
         },
         "images": {
           "preferSizeFull": true,
           "fragileHost": true
+        },
+        "photoCredits": {
+          "_note": "3 nov. 2026 : image vedette = montage ; créditer « Montage : … » de la légende, pas la première photo citée.",
+          "preferMontageCredit": true,
+          "rev": 1
         }
       },
       "_lastChecked": "2026-11-03T17:36:05.756Z",
@@ -384,7 +390,19 @@
           "rejectPathPatterns": [
             "theplant-logo",
             "plantgif",
-            "different-indoor-plants"
+            "different-indoor-plants",
+            "pplant"
+          ]
+        },
+        "filter": {
+          "_note": "3 nov. 2026 : billet vidéo « AI Content » (extrait = menu WordPress, image = logo pplant).",
+          "rejectExcerptPatterns": [
+            "^https?://videopress\\.com/\\S+$",
+            "Have a WordPress\\.com account"
+          ],
+          "logoImagePatterns": [
+            "/pplant\\.(?:jpe?g|png)$",
+            "theplant-logo"
           ]
         }
       },

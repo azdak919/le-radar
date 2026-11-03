@@ -112,7 +112,8 @@ async function main() {
   };
 
   if (doUpdate && enriched > 0) {
-    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
+    const kept = require('./non-article-filter').filterNonArticles(allItems, { log: console.log });
+    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: kept, count: kept.length }, null, 2) + '\n');
     console.log(`\n✅ ${enriched} leadExcerpt écrit(s) dans news.json`);
   } else if (doUpdate) {
     console.log('\nRien à écrire.');

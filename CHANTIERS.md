@@ -43,3 +43,10 @@ Quand un chantier avance ou se termine : cocher la liste de l'issue, fermer l'is
 - Cadence `paceSpread` : part w(maintenant)/Σw(passages avant échéance) par article → volume aux pointes (posting-windows.json), rien aux heures calmes ; article qui expirerait avant le prochain passage non calme = en tête.
 - Plafonds : Bluesky 12/h, 150/j, 4/passage ; Tumblr 8/h, 120/j, 3/passage (< 250/j officiel).
 - Entrées `skipped: cap` fraîches retirées (Bluesky 33, Tumblr 23). Test : tests/social-bluesky-spread.mjs.
+
+## Critères par source (3 nov. 2026)
+- Ajuster une source : `news-sources.json` → son entrée → `botHints` (édition à la main, regex en texte).
+  - `filter` : `excludePathPatterns`, `rejectExcerptPatterns`, `logoImagePatterns` (faux articles, logo comme image).
+  - `authors`, `images` (`rejectPathPatterns`…), `photoCredits` (`preferMontageCredit`, `rev` : l'augmenter force la revérification des crédits de cette source).
+- Sans entrée : comportement général (`scripts/non-article-filter.js`). Un motif invalide est ignoré pour cette source seulement (`scripts/source-hints.js`).
+- Migrées : The Plant (billet vidéo « AI Content », logo pplant), L'Exemplaire (plusieurs auteurs, crédit du montage). Test : tests/source-hints-plant-exemplaire.mjs.
