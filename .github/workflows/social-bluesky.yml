@@ -71,7 +71,14 @@ jobs:
         env:
           CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: node scripts/social/ai-ping.mjs
+        # Autonome (le checkout est sur main) : modèle identique à scripts/social/ai-hook.mjs.
+        run: |
+          node --input-type=module -e "
+          const m='@cf/meta/llama-3.1-8b-instruct-fp8-fast';
+          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/'+process.env.CLOUDFLARE_ACCOUNT_ID+'/ai/run/'+m,{method:'POST',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_AI_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:'Réponds seulement : OK'}],max_tokens:5})});
+          const j=await r.json().catch(()=>({}));
+          console.log('HTTP '+r.status+' success='+j.success+' réponse='+String(j.result?.response||'').slice(0,20)+' erreurs='+JSON.stringify((j.errors||[]).map(e=>e.code)));
+          if(!r.ok||!j.success)process.exit(1);"
       - name: Publier les articles frais
         if: ${{ !inputs.ai_test && !inputs.bot_label && !inputs.set_bio && !inputs.set_images }}
         env:
