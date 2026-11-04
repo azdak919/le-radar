@@ -92,8 +92,9 @@ test('clubs QC : places, classement, pas de hors-province', () => {
   const poly = teams['sailing:universitaire:polytechnique'];
   assert.equal(poly.results.length, 0);
   assert.equal(poly.cicsaSeason.rank, 14);
-  assert.equal(poly.nextGame.opponent, 'Championnat canadien par équipes');
-  assert.equal(poly.nextGame.date, '2026-10-24');
+  // Poly est dans la cellule liste d'attente (Notes) : jamais inscrite.
+  assert.ok(!poly.nextGame);
+  assert.ok(!JSON.stringify(poly).includes('cicsa-next'));
 
   const laval = teams['sailing:universitaire:ulaval'];
   assert.ok(laval.results.some((game) => game.scoreFor === 9));
