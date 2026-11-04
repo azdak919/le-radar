@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T03:06:33.070Z",
+  "updatedAt": "2026-11-04T04:06:33.330Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T03:06:05.856Z"
+      "checkedAt": "2026-11-04T04:06:07.836Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Les sentinelles de l'art (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Les sentinelles de l'art (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T03:06:07.895Z"
+      "checkedAt": "2026-11-04T04:06:09.760Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sound Ark",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
-      "track": "",
-      "showTitle": "Montreal Sound Ark",
+      "next": {
+        "title": "Space Plane",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
+      "track": "Easy Sonic Living/Zoe",
+      "showTitle": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T03:06:10.818Z"
+      "checkedAt": "2026-11-04T04:06:12.086Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Turn Off The Lights",
         "source": "schedule-live",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/turn-off-the-lights"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Turn Off The Lights",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T03:06:12.884Z"
+      "checkedAt": "2026-11-04T04:06:13.620Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T03:06:14.004Z"
+      "checkedAt": "2026-11-04T04:06:14.620Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +148,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T03:06:32.719Z"
+      "checkedAt": "2026-11-04T04:06:32.980Z"
     }
   }
 }
