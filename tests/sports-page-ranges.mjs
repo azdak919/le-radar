@@ -39,7 +39,7 @@ assert.match(readFileSync(join(ROOT, 'sports-board.js'), 'utf8'), /data-event-st
 const season = { cicsaSeason: { season: '2026-2027', rank: 11, field: 16, score: 7.5 } };
 assert.equal(S.sportsCicsaSeasonMeta(season, 'fr'), 'Classement saison CICSA 2026-2027\u00a0: 11e/16 · 7,5 pts');
 assert.equal(S.sportsCicsaSeasonMeta(season, 'en'), 'CICSA 2026-2027 season standing: 11th/16 · 7.5 pts');
-// Ordre chronologique : plus ancienne en haut, à venir à la fin.
+// Ordre : à venir d’abord, puis résultats du plus récent au plus ancien.
 {
   const team = { sport: 'sailing', results: [
     { date: '2026-10-25', opponent: 'B', scoreFor: 7, scoreAgainst: 11, scoreKind: 'place', sport: 'sailing' },
@@ -47,7 +47,6 @@ assert.equal(S.sportsCicsaSeasonMeta(season, 'en'), 'CICSA 2026-2027 season stan
   ], nextGame: { date: '2026-11-14', opponent: 'C', sport: 'sailing' } };
   const out = S.sportsResultRows(team, {}, 'fr');
   const dates = [...out.matchAll(/datetime="([^"]+)"/g)].map((m) => m[1]);
-  assert.deepEqual(dates.slice(0, 2), ['2026-10-11', '2026-10-25']);
-  assert.ok(out.indexOf('2026-11-14') > out.indexOf('2026-10-25'), 'à venir à la fin');
+  assert.deepEqual(dates, ['2026-11-14', '2026-10-25', '2026-10-11'], 'à venir en haut, puis passés récents → anciens');
 }
 console.log('OK sports-page-ranges');

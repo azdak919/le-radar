@@ -1361,7 +1361,7 @@ function sportsResultRows(team, t, lang) {
     ? team.results.slice().sort((a, b) => (
       String(b.date || '').localeCompare(String(a.date || ''))
       || (Number(a.scoreFor) || 99) - (Number(b.scoreFor) || 99)
-    )).slice(0, 16).reverse() // 16 plus récentes, affichées en ordre chronologique (à venir à la fin)
+    )).slice(0, 16)
     : (team.lastGame ? [team.lastGame] : []);
   for (const last of pastGames) {
     const opp = formatOpp(last);
@@ -1398,6 +1398,7 @@ function sportsResultRows(team, t, lang) {
   <span class="${badgeClass}" title="${escapeHtml(label)}">${badge}</span>${priorMeta}
 </li>`);
   }
+  const pastCount = rows.length;
   const next = team.nextGame
     ? { ...team.nextGame, opponent: String(team.nextGame.opponent || '').replace(/\s*·\s*résultats à venir\s*$/i, '') }
     : null;
@@ -1454,7 +1455,9 @@ function sportsResultRows(team, t, lang) {
     }
     return `<p class="sports-panel__empty">${escapeHtml(t.sportsEmpty)}</p>`;
   }
-  return `<ul class="sports-panel__list">${rows.join('\n')}</ul>`;
+  // À venir / en cours d’abord (le plus proche en haut), puis passés du plus récent au plus ancien.
+  const ordered = [...rows.slice(pastCount), ...rows.slice(0, pastCount)];
+  return `<ul class="sports-panel__list">${ordered.join('\n')}</ul>`;
 }
 
 /**
