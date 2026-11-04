@@ -1398,6 +1398,7 @@ function sportsResultRows(team, t, lang) {
   <span class="${badgeClass}" title="${escapeHtml(label)}">${badge}</span>${priorMeta}
 </li>`);
   }
+  const pastCount = rows.length;
   const next = team.nextGame
     ? { ...team.nextGame, opponent: String(team.nextGame.opponent || '').replace(/\s*·\s*résultats à venir\s*$/i, '') }
     : null;
@@ -1454,7 +1455,9 @@ function sportsResultRows(team, t, lang) {
     }
     return `<p class="sports-panel__empty">${escapeHtml(t.sportsEmpty)}</p>`;
   }
-  return `<ul class="sports-panel__list">${rows.join('\n')}</ul>`;
+  // À venir / en cours d’abord (le plus proche en haut), puis passés du plus récent au plus ancien.
+  const ordered = [...rows.slice(pastCount), ...rows.slice(0, pastCount)];
+  return `<ul class="sports-panel__list">${ordered.join('\n')}</ul>`;
 }
 
 /**
@@ -1544,10 +1547,11 @@ function sportsCicsaSeasonMeta(team, lang) {
   const pts = points
     ? (lang === 'en' ? `${points} pts` : `${points.replace('.', ',')} pts`)
     : '';
+  // Libellé explicite : ne pas confondre avec la place à une régate (« 7e/11 »).
   const label = lang === 'en'
-    ? `CICSA season ${season.season || ''}`.trim()
-    : `Saison CICSA ${season.season || ''}`.trim();
-  return [label, `${ord}/${field}`, pts].filter(Boolean).join(' · ');
+    ? `CICSA ${season.season || ''} season standing:`.replace(/\s+/g, ' ')
+    : `Classement saison CICSA ${season.season || ''}`.trim() + '\u00a0:';
+  return [`${label} ${ord}/${field}`, pts].filter(Boolean).join(' · ');
 }
 
 function sportsPanelHtml(team, t, lang) {
@@ -2015,4 +2019,4 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, spor
   return { pages, model };
 }
 
-module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase };
+module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta, sportsResultRows };
