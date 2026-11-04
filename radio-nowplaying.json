@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T09:06:47.269Z",
+  "updatedAt": "2026-11-04T10:06:31.449Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T09:06:01.406Z"
+      "checkedAt": "2026-11-04T10:06:02.930Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T09:06:03.825Z"
+      "checkedAt": "2026-11-04T10:06:05.304Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T09:06:07.076Z"
+      "checkedAt": "2026-11-04T10:06:08.491Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T09:06:09.712Z"
+      "checkedAt": "2026-11-04T10:06:10.831Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T09:06:10.989Z"
+      "checkedAt": "2026-11-04T10:06:12.422Z"
     },
     "choq": {
       "id": "choq",
@@ -134,21 +134,20 @@
       "current": null,
       "next": {
         "title": "Miroirs d’Orient",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
-        "url": "https://www.choq.ca/emissions/miroirs-dorient"
+        "slug": "miroirs-dorient"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T09:06:46.918Z"
+      "checkedAt": "2026-11-04T10:06:31.098Z"
     }
   }
 }
