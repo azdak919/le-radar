@@ -10,7 +10,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
-const { buildCicsaQcTeams, qcBoat } = require(join(dirname(fileURLToPath(import.meta.url)), '..', 'scripts/cicsa-sailing-lib.js'));
+const { buildCicsaQcTeams, qcBoat, icsaRowFields } = require(join(dirname(fileURLToPath(import.meta.url)), '..', 'scripts/cicsa-sailing-lib.js'));
 
 const CLUBS = [
   { registryId: 'mcgill', clubName: 'McGill Sailing', name: 'Université McGill', code: 'MCG', rseqTeamId: 'mcgill' },
@@ -179,4 +179,14 @@ test('saison voile : bascule automatique en août', () => {
   const cfg = { seasonStartYear: 2026, seasonLabel: '2026-2027' };
   assert.deepEqual(resolveSeason(cfg, new Date('2026-10-26T12:00:00Z')), { seasonStartYear: 2026, seasonLabel: '2026-2027', stale: false });
   assert.deepEqual(resolveSeason(cfg, new Date('2027-09-01T12:00:00Z')), { seasonStartYear: 2027, seasonLabel: '2027-2028', stale: true });
+});
+
+test('ICSA « Sailing now » : régate Final = résultat officiel ; en cours ignorée', () => {
+  const fin = icsaRowFields(['NEISA Fall Tournament', 'Bentley', 'Conference Championship', 'Combined', 'Final', '2/8']);
+  assert.equal(fin.status, 'Official');
+  assert.equal(fin.placeRaw, '2/8');
+  assert.equal(fin.dateLabel, '');
+  assert.equal(icsaRowFields(['X', 'Y', 'Fundamental', 'Combined', '3A', '4/9']), null);
+  const row = icsaRowFields(["Reece's Cup", 'New Hampshire', 'Fundamental', '2 Divisions', 'Oct 18', 'Official', '7/15']);
+  assert.deepEqual([row.dateLabel, row.status, row.placeRaw], ['Oct 18', 'Official', '7/15']);
 });
