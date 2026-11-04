@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-04T17:40:19.173Z",
+  "updated": "2026-11-04T18:07:55.495Z",
   "total": 183,
   "pool": 53,
-  "incomplete": 10,
+  "incomplete": 8,
   "withLeadExcerpt": 121,
-  "candidates": 10,
-  "enriched": 2,
+  "candidates": 8,
+  "enriched": 0,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -26,24 +26,6 @@
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
-    },
-    {
-      "title": "Affaire Ewert : qui savait quoi ?",
-      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
-      "ok": true,
-      "score": 90,
-      "chars": 390,
-      "sample": "Sa réponse ne précise donc pas quels services connaissaient la situation d’Ewert avant son arrivée, ",
-      "changed": true
-    },
-    {
-      "title": "Fin de la TVQ sur les produits de seconde main, une bonne idée qui ne fait pas l’unanimité",
-      "link": "https://lapige.atmjonquiere.com/2026/11/04/fin-de-la-tvq-sur-les-produits-de-seconde-main-une-bonne-idee-qui-ne-fait-pas-lunanimite/?utm_source=rss&utm_medium=rss&utm_campaign=fin-de-la-tvq-sur-les-produits-de-seconde-main-une-bonne-idee-qui-ne-fait-pas-lunanimite",
-      "ok": true,
-      "score": 100,
-      "chars": 347,
-      "sample": "Élu le 5 octobre à la tête d’un gouvernement minoritaire, Paul St-Pierre Plamondon s’est engagé à ab",
-      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -79,6 +61,15 @@
       "score": 72,
       "chars": 399,
       "sample": "In 2025, Netflix released psychological crime drama Adolescence, a British TV series that would chan",
+      "changed": false
+    },
+    {
+      "title": "NAZA: When the Perpetrators Tell the Story",
+      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
+      "ok": true,
+      "score": 72,
+      "chars": 399,
+      "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
       "changed": false
     }
   ]
