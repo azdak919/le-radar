@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-04T07:01:46.365Z",
+  "updated": "2026-11-04T08:08:02.003Z",
   "total": 183,
   "withPhoto": 166,
   "withStock": 33,
   "withCampusBank": 28,
   "fullyCovered": 183,
-  "leadReadyPhotos": 138,
-  "pageScraped": 37,
-  "photosRecovered": 37,
-  "imagesCleared": 12,
-  "stockSearches": 47,
-  "stockFound": 30,
+  "leadReadyPhotos": 141,
+  "pageScraped": 35,
+  "photosRecovered": 35,
+  "imagesCleared": 11,
+  "stockSearches": 42,
+  "stockFound": 29,
   "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
@@ -33,6 +33,12 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
     },
     {
+      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
+      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
+    },
+    {
       "title": "Reportages La Pige radio 2 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/03/reportages-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-la-pige-radio-2-novembre",
       "reason": "no-stock-match",
@@ -45,22 +51,16 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/16.jpg"
     },
     {
-      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
-      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
       "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
       "title": "Men’s Club Hockey Perfect Start to the Season",
@@ -84,7 +84,7 @@
       "title": "Crossword: Paranormal Activity",
       "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
     }
   ]
 }
