@@ -1,10 +1,26 @@
 {
-  "updated": "2026-11-04T18:07:38.184Z",
-  "total": 183,
-  "withAuthor": 183,
-  "mismatches": 14,
+  "updated": "2026-11-04T19:07:02.798Z",
+  "total": 184,
+  "withAuthor": 184,
+  "mismatches": 16,
   "ok": true,
   "samples": [
+    {
+      "title": "On avance quand même",
+      "link": "https://quartierlibre.ca/on-avance-quand-meme-la-peur/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "La rédaction",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "AI Content",
+      "link": "https://theplantnews.com/2026/11/03/3782/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "Keeping our unhoused community warm this winter",
       "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
@@ -118,5 +134,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 14
+  "fixed": 16
 }

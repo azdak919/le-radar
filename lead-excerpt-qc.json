@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-04T18:07:55.495Z",
-  "total": 183,
+  "updated": "2026-11-04T19:07:24.786Z",
+  "total": 184,
   "pool": 53,
-  "incomplete": 8,
-  "withLeadExcerpt": 121,
-  "candidates": 8,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 13,
+  "withLeadExcerpt": 124,
+  "candidates": 13,
+  "enriched": 5,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -28,6 +28,42 @@
       "changed": false
     },
     {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
+      "ok": true,
+      "score": 100,
+      "chars": 258,
+      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "changed": true
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
+      "changed": true
+    },
+    {
+      "title": "On avance quand même",
+      "link": "https://quartierlibre.ca/on-avance-quand-meme-la-peur/",
+      "ok": true,
+      "score": 100,
+      "chars": 286,
+      "sample": "La peur nous accompagne partout. Et parce que nous sommes de drôles de créatures, nous la recherchon",
+      "changed": true
+    },
+    {
+      "title": "Un nouveau souffle pour l’église de Saint-Félix-d’Otis",
+      "link": "https://lapige.atmjonquiere.com/2026/11/04/un-nouveau-souffle-pour-leglise-de-saint-felix-dotis/?utm_source=rss&utm_medium=rss&utm_campaign=un-nouveau-souffle-pour-leglise-de-saint-felix-dotis",
+      "ok": true,
+      "score": 100,
+      "chars": 227,
+      "sample": "L’église de Saint-Félix-d’Otis changera de vocation prochainement, en raison de la fréquentation de ",
+      "changed": true
+    },
+    {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
       "link": "https://lapige.atmjonquiere.com/2026/11/02/luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant/?utm_source=rss&utm_medium=rss&utm_campaign=luc-boivin-fait-lunanimite-chez-les-organismes-pour-linstant",
       "ok": true,
@@ -37,39 +73,12 @@
       "changed": false
     },
     {
-      "title": "Tout ce qui me rappelle pourquoi je déteste le beige et pourquoi je ne pourrai jamais m’affilier à cette couleur",
-      "link": "https://quartierlibre.ca/pourquoi-je-deteste-le-beige/",
-      "ok": true,
-      "score": 80,
-      "chars": 400,
-      "sample": "Les pâtes alimentaires sans assaisonnement, la nourriture en morceaux au fond de l’évier, les petits",
-      "changed": false
-    },
-    {
       "title": "Youth and Climate Activism",
       "link": "https://www.mcgilldaily.com/2026/11/youth-and-climate-activism/",
       "ok": true,
       "score": 72,
       "chars": 400,
       "sample": "Albert Lalonde, co- spokesperson for the 2019 student movement Pour le Future de Montreal (PLF) sinc",
-      "changed": false
-    },
-    {
-      "title": "When “Boys Will Be Boys” Means Boys Killing Girls",
-      "link": "https://www.mcgilldaily.com/2026/11/when-boys-will-be-boys-means-boys-killing-girls/",
-      "ok": true,
-      "score": 72,
-      "chars": 399,
-      "sample": "In 2025, Netflix released psychological crime drama Adolescence, a British TV series that would chan",
-      "changed": false
-    },
-    {
-      "title": "NAZA: When the Perpetrators Tell the Story",
-      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
-      "ok": true,
-      "score": 72,
-      "chars": 399,
-      "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
       "changed": false
     }
   ]

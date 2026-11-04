@@ -1,28 +1,42 @@
 {
-  "updated": "2026-11-04T18:10:40.045Z",
+  "updated": "2026-11-04T19:10:48.850Z",
   "total": 183,
-  "withImage": 165,
-  "withCredit": 165,
-  "cited": 89,
-  "pending": 54,
+  "withImage": 164,
+  "withCredit": 164,
+  "cited": 90,
+  "pending": 52,
   "missingHero": 0,
   "ok": false,
-  "checked": 67,
-  "updatedCount": 5,
-  "citedNew": 6,
-  "fallbackNew": 61,
+  "checked": 68,
+  "updatedCount": 7,
+  "citedNew": 10,
+  "fallbackNew": 58,
   "samples": [
     {
-      "title": "Stingers clinch final playoff spot despite ongoing coaching search",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
+      "title": "Un nouveau souffle pour l’église de Saint-Félix-d’Otis",
+      "source": "La Pige",
+      "credit": "Photo : Colin Perron",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
       "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "source": "Le Délit",
+      "credit": "Photo : DENIS FARLEY",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -36,9 +50,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
