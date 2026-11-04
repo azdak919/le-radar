@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-04T01:06:55.333Z",
+  "updated": "2026-11-04T02:36:56.452Z",
   "total": 182,
   "pool": 58,
-  "incomplete": 10,
-  "withLeadExcerpt": 122,
-  "candidates": 10,
-  "enriched": 0,
+  "incomplete": 12,
+  "withLeadExcerpt": 123,
+  "candidates": 12,
+  "enriched": 2,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,6 +17,24 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "link": "https://www.delitfrancais.com/2026/09/30/rouge-dune-part-blanche-de-lautre/",
+      "ok": true,
+      "score": 82,
+      "chars": 400,
+      "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
+      "changed": true
+    },
+    {
+      "title": "Les distances — La complexité des relations dispersées",
+      "link": "https://impactcampus.ca/arts-et-culture/les-distances-la-complexite-des-relations-dispersees/",
+      "ok": true,
+      "score": 100,
+      "chars": 392,
+      "sample": "Les complexités de l’immigration sont au cœur de cette pièce. Les personnages incarnent tous une fac",
+      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -61,24 +79,6 @@
       "score": 72,
       "chars": 399,
       "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
-      "changed": false
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
-      "ok": true,
-      "score": 84,
-      "chars": 400,
-      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": false
-    },
-    {
-      "title": "Bulletins La Pige radio 2 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-2-novembre",
-      "ok": true,
-      "score": 68,
-      "chars": 167,
-      "sample": "Opération policière en cours à Chicoutimi, l’insécurité alimentaire en hausse chez les jeunes et la ",
       "changed": false
     }
   ]

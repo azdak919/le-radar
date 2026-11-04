@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04T01:09:57.500Z",
+  "updated": "2026-11-04T02:39:09.634Z",
   "total": 182,
   "withImage": 163,
   "withCredit": 163,
@@ -7,11 +7,25 @@
   "pending": 53,
   "missingHero": 0,
   "ok": false,
-  "checked": 65,
-  "updatedCount": 3,
-  "citedNew": 6,
+  "checked": 67,
+  "updatedCount": 5,
+  "citedNew": 8,
   "fallbackNew": 59,
   "samples": [
+    {
+      "title": "Les distances — La complexité des relations dispersées",
+      "source": "Impact Campus",
+      "credit": "Photo : Nicola-Frank Vachon",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
       "source": "The Campus",
