@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-04T16:08:10.363Z",
+  "updated": "2026-11-04T17:41:40.903Z",
   "total": 183,
   "withPhoto": 167,
-  "withStock": 32,
+  "withStock": 31,
   "withCampusBank": 28,
   "fullyCovered": 183,
-  "leadReadyPhotos": 147,
-  "pageScraped": 34,
-  "photosRecovered": 34,
+  "leadReadyPhotos": 142,
+  "pageScraped": 31,
+  "photosRecovered": 31,
   "imagesCleared": 11,
-  "stockSearches": 39,
+  "stockSearches": 41,
   "stockFound": 28,
-  "campusBankFound": 21,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,6 +25,12 @@
       "link": "https://lapige.atmjonquiere.com/2026/11/02/les-journalistes-ennemis-des-pays-totalitaires/?utm_source=rss&utm_medium=rss&utm_campaign=les-journalistes-ennemis-des-pays-totalitaires",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg"
+    },
+    {
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -63,12 +69,6 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Pete Fry élu maire de Vancouver",
-      "link": "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/49/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
@@ -81,10 +81,10 @@
       "image": null
     },
     {
-      "title": "Virage conservateur en Colombie-Britannique",
-      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
+      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
+      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
     }
   ]
 }
