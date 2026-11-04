@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T08:06:28.648Z",
+  "updatedAt": "2026-11-04T09:06:47.269Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T08:06:00.544Z"
+      "checkedAt": "2026-11-04T09:06:01.406Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ailleurs: escales en musique",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Club classique",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "Ailleurs: escales en musique",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T08:06:03.103Z"
+      "checkedAt": "2026-11-04T09:06:03.825Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WarpCor / Out of the Void",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Full Circle",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "The Wednesday Morning After",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "WarpCor / Out of the Void",
+      "showTitle": "Full Circle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T08:06:05.889Z"
+      "checkedAt": "2026-11-04T09:06:07.076Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T08:06:08.711Z"
+      "checkedAt": "2026-11-04T09:06:09.712Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T08:06:09.664Z"
+      "checkedAt": "2026-11-04T09:06:10.989Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +134,21 @@
       "current": null,
       "next": {
         "title": "Miroirs d’Orient",
-        "source": "api-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "12:00",
-        "slug": "miroirs-dorient"
+        "url": "https://www.choq.ca/emissions/miroirs-dorient"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T08:06:28.298Z"
+      "checkedAt": "2026-11-04T09:06:46.918Z"
     }
   }
 }
