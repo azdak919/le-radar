@@ -406,9 +406,9 @@ function parseSchedule(rows, seasonStartYear) {
     const tokens = [];
     if (hostCol >= 0) tokens.push(cell(row, hostCol));
     for (const c of teamCols) tokens.push(cell(row, c));
-    if (notesCol >= 0) {
-      for (const part of cell(row, notesCol).split(/[,;/]+/)) tokens.push(part);
-    }
+    // La cellule « Notes » qui suit le trou après les inscriptions liste les
+    // équipes « No Entry Slot/Waitlist » (légende de la feuille officielle) :
+    // elles ne sont PAS inscrites et ne doivent créer aucune participation.
     const qc = [];
     const seen = new Set();
     for (const token of tokens) {
