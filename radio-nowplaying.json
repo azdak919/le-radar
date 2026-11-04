@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T02:06:36.127Z",
+  "updatedAt": "2026-11-04T03:06:33.070Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T02:06:07.483Z"
+      "checkedAt": "2026-11-04T03:06:05.856Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T02:06:09.325Z"
+      "checkedAt": "2026-11-04T03:06:07.895Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,60 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T02:06:13.817Z"
+      "checkedAt": "2026-11-04T03:06:10.818Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "NSIDE!",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/nside"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
-      "track": "",
-      "showTitle": "NSIDE!",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-04T02:06:16.378Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Dichotomie 88.3",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
       "next": {
-        "title": "Mix Franco",
+        "title": "Turn Off The Lights",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
       },
       "track": "",
-      "showTitle": "Dichotomie 88.3",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T02:06:17.803Z"
+      "checkedAt": "2026-11-04T03:06:12.884Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Mix Franco",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "track": "",
+      "showTitle": "Mix Franco",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-04T03:06:14.004Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +148,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T02:06:35.777Z"
+      "checkedAt": "2026-11-04T03:06:32.719Z"
     }
   }
 }
