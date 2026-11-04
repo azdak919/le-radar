@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-04T13:37:31.125Z",
+  "updated": "2026-11-04T14:07:28.325Z",
   "total": 183,
   "withPhoto": 166,
   "withStock": 32,
   "withCampusBank": 28,
   "fullyCovered": 183,
-  "leadReadyPhotos": 147,
+  "leadReadyPhotos": 144,
   "pageScraped": 35,
   "photosRecovered": 35,
-  "imagesCleared": 13,
-  "stockSearches": 39,
-  "stockFound": 29,
-  "campusBankFound": 22,
+  "imagesCleared": 14,
+  "stockSearches": 40,
+  "stockFound": 31,
+  "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -27,12 +27,6 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg"
     },
     {
-      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
-      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
-    },
-    {
       "title": "Reportages La Pige radio 2 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/03/reportages-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-la-pige-radio-2-novembre",
       "reason": "no-stock-match",
@@ -43,6 +37,12 @@
       "link": "https://lapige.atmjonquiere.com/2026/11/02/pour-halloween-ce-sont-les-pesticides-qui-font-peur/?utm_source=rss&utm_medium=rss&utm_campaign=pour-halloween-ce-sont-les-pesticides-qui-font-peur",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/16.jpg"
+    },
+    {
+      "title": "L’état des routes du Québec à l’aube de l’hiver",
+      "link": "https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/99/286770161_715d975245_b.jpg"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -69,10 +69,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Crossword: Paranormal Activity",
-      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
+      "title": "The VAV Gallery is coming alive",
+      "link": "https://theconcordian.com/2026/11/the-vav-gallery-is-coming-alive/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
     },
     {
       "title": "Pete Fry élu maire de Vancouver",
