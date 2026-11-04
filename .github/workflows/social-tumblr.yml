@@ -13,7 +13,7 @@ on:
       dry_run:
         description: 'Essai : vérifie l’authentification (/v2/user/info), aucune publication'
         type: boolean
-        default: true
+        default: false
       share_now:
         description: 'Publier tout de suite UN article frais (après la mise en service)'
         type: boolean
