@@ -92,9 +92,9 @@ test('clubs QC : places, classement, pas de hors-province', () => {
   const poly = teams['sailing:universitaire:polytechnique'];
   assert.equal(poly.results.length, 0);
   assert.equal(poly.cicsaSeason.rank, 14);
-  // Poly est dans la cellule liste d'attente (Notes) : jamais inscrite.
-  assert.ok(!poly.nextGame);
-  assert.ok(!JSON.stringify(poly).includes('cicsa-next'));
+  // Poly est dans la cellule liste d'attente (Notes) : « Liste d'attente », pas inscrite.
+  assert.equal(poly.nextGame.waitlist, true);
+  assert.equal(poly.nextGame.date, '2026-10-24');
 
   const laval = teams['sailing:universitaire:ulaval'];
   assert.ok(laval.results.some((game) => game.scoreFor === 9));
@@ -190,4 +190,36 @@ test('ICSA « Sailing now » : régate Final = résultat officiel ; en cours ign
   assert.equal(icsaRowFields(['X', 'Y', 'Fundamental', 'Combined', '3A', '4/9']), null);
   const row = icsaRowFields(["Reece's Cup", 'New Hampshire', 'Fundamental', '2 Divisions', 'Oct 18', 'Official', '7/15']);
   assert.deepEqual([row.dateLabel, row.status, row.placeRaw], ['Oct 18', 'Official', '7/15']);
+});
+
+const WL_SCHEDULE = `
+Weekend,Date,Region,2026-27 Events,Host,Venue,Tier,Spots,Points
+,,,,,,,,,Host (1),2,3,4,Notes,Teams,Entries
+9,Nov 14-15,Ontario,Fleet Race Nationals,CICSA,RCYC,NAT,12,12,QU,WLU,UofT,CON,"LVL, Poly, McG 2"
+`;
+const wl = (sched, today) => buildCicsaQcTeams(SCORES, sched, { seasonStartYear: 2026, clubs: CLUBS, today }).teams;
+
+test('liste d\'attente : statut waitlist pour plusieurs clubs QC', () => {
+  const t = wl(WL_SCHEDULE, '2026-11-04');
+  for (const id of ['ulaval', 'polytechnique']) {
+    const g = t[`sailing:universitaire:${id}`].nextGame;
+    assert.equal(g.waitlist, true, id);
+    assert.equal(g.eventStart, '2026-11-14');
+    assert.ok(!g.awaitingResults);
+  }
+  assert.ok(!t['sailing:universitaire:concordia'].nextGame.waitlist);
+});
+
+test('liste d\'attente : promotion automatique quand inscrite', () => {
+  const t = wl(WL_SCHEDULE.replace('UofT,CON,"LVL, Poly', 'LVL,CON,"Poly'), '2026-11-04');
+  assert.ok(!t['sailing:universitaire:ulaval'].nextGame.waitlist);
+  assert.equal(t['sailing:universitaire:polytechnique'].nextGame.waitlist, true);
+});
+
+test('liste d\'attente : régate passée sans résultat → disparaît', () => {
+  const t = wl(WL_SCHEDULE, '2026-11-17');
+  for (const id of ['ulaval', 'polytechnique']) {
+    const team = t[`sailing:universitaire:${id}`];
+    assert.ok(!team || !JSON.stringify(team).includes('Fleet Race Nationals'), id);
+  }
 });

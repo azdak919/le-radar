@@ -2294,7 +2294,8 @@ function sportsMatchSubLine(slide) {
     if (slide?.mode === 'result') {
       return [sportsPlaceScoreText(g), org].filter(Boolean).join(' · ');
     }
-    const pending = sportsMultiDayPhase(g, torontoDayKey()) === 'after' ? 'Résultats à venir' : '';
+    const pending = g.waitlist ? 'Liste d’attente'
+      : sportsMultiDayPhase(g, torontoDayKey()) === 'after' ? 'Résultats à venir' : '';
     return [org, pending || sportsKickoffClock(g)].filter(Boolean).join(' · ');
   }
   const tag = sportsMatchWhenTag(slide);

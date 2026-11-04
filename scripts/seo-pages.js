@@ -1435,10 +1435,12 @@ function sportsResultRows(team, t, lang) {
 </li>`);
     } else {
       // Régate terminée sans résultats / en cours : jamais « À venir ».
-      const state = phase === 'after' || next.awaitingResults
+      const state = next.waitlist ? (t.sportsWaitlist || 'Liste d’attente')
+        : phase === 'after' || next.awaitingResults
         ? (t.sportsAwaitingResults || 'Résultats à venir')
         : phase === 'during' ? (t.sportsInProgress || 'En cours') : t.sportsUpcoming;
-      const stateKey = phase === 'after' || next.awaitingResults ? ' data-event-state="awaiting"'
+      const stateKey = next.waitlist ? ' data-event-state="waitlist"'
+        : phase === 'after' || next.awaitingResults ? ' data-event-state="awaiting"'
         : phase === 'during' ? ' data-event-state="during"' : '';
       rows.push(`<li class="sports-result sports-result--next"${nextGid}${stateKey}>
   <time class="sports-result__time" datetime="${escapeHtml(next.eventStart || next.date || '')}">${timeHtml}</time>

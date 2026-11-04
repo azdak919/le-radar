@@ -419,8 +419,21 @@ function parseSchedule(rows, seasonStartYear) {
       seen.add(key);
       qc.push(boat);
     }
-    if (!qc.length) continue;
+    // Liste d'attente : toutes les équipes QC (1re ou 2e équipe) de la cellule Notes.
+    const waitlist = [];
+    if (notesCol >= 0) {
+      for (const token of cell(row, notesCol).match(/[A-Za-z]+(?:\s*\d+)?/g) || []) {
+        const boat = qcBoat(token);
+        if (!boat) continue;
+        const key = `${boat.registryId}:${boat.boat}`;
+        if (seen.has(key)) continue; // déjà inscrite (promotion) : prime
+        seen.add(key);
+        waitlist.push(boat);
+      }
+    }
+    if (!qc.length && !waitlist.length) continue;
     events.push({
+      waitlist,
       name,
       start: when.start,
       end: when.end,
@@ -615,6 +628,22 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
         next.url = urls.results;
       }
       upcoming[boat.registryId].push(next);
+    }
+    // Liste d'attente : visible seulement avant la fin ; promotion automatique
+    // dès que l'équipe passe dans les colonnes d'inscription ou a un résultat.
+    if (!awaiting) {
+      for (const boat of event.waitlist || []) {
+        if (event.qc.some((b) => b.registryId === boat.registryId && b.boat === boat.boat)) continue;
+        const scoredW = scored && scored.boats.some((row) => (
+          row.boat && row.boat.registryId === boat.registryId && !row.noShow
+        ));
+        if (scoredW) continue;
+        ensure(boat.registryId);
+        const next = nextEntry({ ...event, date: event.start, boat: boat.boat || '' },
+          clubs[boat.registryId] || boat, urls);
+        next.waitlist = true;
+        upcoming[boat.registryId].push(next);
+      }
     }
   }
 
