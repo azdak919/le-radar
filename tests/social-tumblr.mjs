@@ -20,8 +20,8 @@ assert.equal(b.content[1].media[0].url, 'https://ex.org/p.jpg');
 assert.equal(b.content[5].text, '📸 Éloïse');
 assert.equal(b.content[6].url, url); assert.equal(b.source_url, url);
 assert.equal(npfBody(it, t).content.filter(c => c.type === 'image').length, 0, 'sans photo : pas de bloc image');
-assert.deepEqual(tagsFor(it), ['Montréal Campus', 'UQAM', 'Montréal', 'presse étudiante', 'journalisme étudiant', 'Québec', 'actualités']);
-assert.deepEqual(tagsFor({ source: 'The Link' }, 'en'), ['The Link', 'Concordia', 'Montréal', 'presse étudiante', 'journalisme étudiant', 'Québec', 'actualités', 'student press']);
+assert.deepEqual(tagsFor(it), ['québec', 'quebec', 'actualités', 'presse étudiante', 'montréal', 'montreal', 'journalisme étudiant', 'uqam', 'montréal campus', 'actualites', 'université']);
+assert.deepEqual(tagsFor({ source: 'The Link' }, 'en'), ['student journalism', 'student newspaper', 'news', 'montréal', 'montreal', 'canada', 'quebec', 'concordia', 'the link', 'student press', 'university']);
 assert(linksInPosts([{ content: [{ type: 'link', url: it.link }] }]).has(it.link));
 // OAuth 1.0a : vecteur connu (RFC 5849 §1.2, requête GET photos)
 const h = oauthHeader('GET', 'http://photos.example.net/photos?file=vacation.jpg&size=original', { ck: 'dpf43f3p2l4k3l03', cs: 'kd94hf93k423kf44', tk: 'nnch734d00sl2jdk', ts: 'pfkkdhi9sl3r4s00' }, { nonce: 'kllo9940pd9333jh', time: 1191242096 });
