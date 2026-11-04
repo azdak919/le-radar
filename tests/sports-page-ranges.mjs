@@ -35,4 +35,8 @@ for (const m of html.matchAll(/<li class="sports-result[^"]*"[^>]*data-game-id="
   assert.doesNotMatch(m[1], /sports-result__opp">[^<]*· résultats à venir/i, 'suffixe retiré du titre');
 }
 assert.match(readFileSync(join(ROOT, 'sports-board.js'), 'utf8'), /data-event-state'\) === 'awaiting'/);
+// Rang de saison CICSA libellé : distinct d’une place à une régate.
+const season = { cicsaSeason: { season: '2026-2027', rank: 11, field: 16, score: 7.5 } };
+assert.equal(S.sportsCicsaSeasonMeta(season, 'fr'), 'Classement saison CICSA 2026-2027\u00a0: 11e/16 · 7,5 pts');
+assert.equal(S.sportsCicsaSeasonMeta(season, 'en'), 'CICSA 2026-2027 season standing: 11th/16 · 7.5 pts');
 console.log('OK sports-page-ranges');

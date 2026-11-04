@@ -1544,10 +1544,11 @@ function sportsCicsaSeasonMeta(team, lang) {
   const pts = points
     ? (lang === 'en' ? `${points} pts` : `${points.replace('.', ',')} pts`)
     : '';
+  // Libellé explicite : ne pas confondre avec la place à une régate (« 7e/11 »).
   const label = lang === 'en'
-    ? `CICSA season ${season.season || ''}`.trim()
-    : `Saison CICSA ${season.season || ''}`.trim();
-  return [label, `${ord}/${field}`, pts].filter(Boolean).join(' · ');
+    ? `CICSA ${season.season || ''} season standing:`.replace(/\s+/g, ' ')
+    : `Classement saison CICSA ${season.season || ''}`.trim() + '\u00a0:';
+  return [`${label} ${ord}/${field}`, pts].filter(Boolean).join(' · ');
 }
 
 function sportsPanelHtml(team, t, lang) {
@@ -2015,4 +2016,4 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, spor
   return { pages, model };
 }
 
-module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase };
+module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta };
