@@ -1,6 +1,6 @@
 // Hashtags et étiquettes déterministes (testés dans tests/social-hashtags.mjs).
 // Sujet et lieu déduits UNIQUEMENT du titre, de l'extrait, des catégories et de la source : jamais inventés.
-// X, Facebook, LinkedIn : aucun hashtag. Bluesky : #Québec #PresseÉtudiante + 1 sujet. Tumblr : ≈ 8 étiquettes natives.
+// X, Facebook, LinkedIn : aucun hashtag. Bluesky : #Québec #PresseÉtudiante + 1 sujet. Tumblr : 10 à 15 étiquettes en minuscules.
 const TOPICS = [
   ['Politique', 'politique', /\b(élection|électoral|vote|gouvernement|ministre|député|caq|legault|parti|politi|election|government|minister)/i],
   ['Sport', 'sport', /\b(hockey|football|soccer|basket|volley|rugby|match|saison|sport|carabins|stingers|rouge et or|gaiters|redbirds|martlets|game|season)/i],
@@ -26,13 +26,31 @@ export function topicOf(it) { const b = blob(it); const t = TOPICS.find(([, , re
 export const placeOf = it => PLACES[(it.source || '').trim()] || [];
 /** Hashtags Bluesky (cliquables par facettes) : toujours #Québec #PresseÉtudiante, + sujet si détecté. */
 export function bskyTags(it) { const t = topicOf(it); return ['Québec', 'PresseÉtudiante', ...(t ? [t.tag] : [])].map(x => '#' + x); }
-/** Étiquettes Tumblr natives (≤ 8, sans # ni virgule). */
+// Tumblr : tout en minuscules, étiquettes les plus suivies d'abord (les 5 premières comptent en recherche),
+// forme sans accent ajoutée là où on la cherche, langue de l'article, 10 à 15 étiquettes dédupliquées.
+const TOPIC_TAGS = {
+  'Politique': ['politique', 'politics'], 'Sport': ['sport', 'sports'], 'Culture': ['culture', 'culture'],
+  'Environnement': ['environnement', 'environment'], 'Santé': ['santé', 'health'], 'Éducation': ['éducation', 'education'],
+  'Société': ['société', 'society'], 'International': ['international', 'world news'], 'Science': ['science', 'science'],
+  'Économie': ['économie', 'economy'],
+};
+const GENERIC = /^(à la une|a la une|une|news|nouvelles|actualités?|actualites?|uncategori[sz]ed|non classé|non classe|general|général|générale|featured|home|accueil|blog|articles?|top stories|latest|misc|divers|autres?|other)$/i;
+const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '').normalize('NFC');
 export function tumblrTags(it, lang = 'fr') {
-  const clean = s => String(s || '').replace(/[#,]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
-  const t = topicOf(it), [city, uni] = placeOf(it);
-  const out = [it.source, uni, city, t?.label, ...(it.categories || []).slice(0, 1), 'presse étudiante', 'journalisme étudiant', 'Québec', 'actualités', ...(lang === 'en' ? ['student press'] : [])];
+  const low = s => String(s || '').normalize('NFC').toLowerCase().replace(/[#,;:!?"“”«»()\[\]{}|/\\]/g, ' ').replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim();
+  const en = lang === 'en';
+  const [city, uni] = placeOf(it).map(low);
+  const ai = it.aiTopic && TOPIC_TAGS[it.aiTopic] ? it.aiTopic : null;
+  const rx = topicOf(it)?.tag;
+  const topic = TOPIC_TAGS[ai || rx]?.[en ? 1 : 0];
+  const cat = low((it.categories || [])[0]);
+  const catOk = cat && cat.length <= 30 && cat.split(' ').length <= 3 && !GENERIC.test(cat) && !/^\d+$/.test(cat);
+  const withPlain = s => s ? [s, strip(s)] : [];
+  const out = en
+    ? ['student journalism', 'student newspaper', 'news', ...withPlain(city), 'canada', topic, 'quebec', uni && strip(uni), low(it.source), catOk && cat, 'student press', 'university']
+    : ['québec', 'quebec', 'actualités', 'presse étudiante', ...withPlain(city), topic, 'journalisme étudiant', uni, low(it.source), catOk && cat, 'actualites', 'université'];
   const seen = new Set(), res = [];
-  for (const x of out.map(clean).filter(Boolean)) { const k = x.toLowerCase(); if (!seen.has(k)) { seen.add(k); res.push(x); } }
-  return res.slice(0, 8);
+  for (const x of out) { const v = low(x).slice(0, 60); if (v && !seen.has(v)) { seen.add(v); res.push(v); } }
+  return res.slice(0, 15);
 }
 export { camel };

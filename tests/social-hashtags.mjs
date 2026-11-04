@@ -22,7 +22,22 @@ const long = { ...it, title: 'x'.repeat(400), bare: 'y '.repeat(200) };
 assert.ok(graphemes(buildBskyText(long)) <= BSKY_LIMIT);
 assert.equal(topicOf({ title: 'Carabins 4, Stingers 0' }).tag, 'Sport');
 // Tumblr : ≤ 8 étiquettes, lieu et sujet, sans # ni virgule
-const tt = tumblrTags(it); assert.ok(tt.length <= 8 && tt.includes('Saguenay') && tt.includes('Cégep de Jonquière') && tt.includes('politique'));
+const tt = tumblrTags(it); assert.ok(tt.length >= 10 && tt.length <= 15 && tt.includes('saguenay') && tt.includes('cégep de jonquière') && tt.includes('politique'), tt.join('|'));
+assert.ok(tt.every(x => x === x.toLowerCase()) && new Set(tt).size === tt.length);
+{ // FR : larges + lieu d'abord, source après, forme sans accent, catégorie générique écartée, sujet IA prioritaire
+  const fr = tumblrTags({ source: "L'Exemplaire", title: 'Le cancer au travail', desc: 'Des étudiants témoignent', categories: ['À la une'], aiTopic: 'Santé' }, 'fr');
+  assert.deepEqual(fr.slice(0, 4), ['québec', 'quebec', 'actualités', 'presse étudiante']);
+  assert.ok(fr.indexOf('santé') > -1 && !fr.includes('éducation') && !fr.includes('à la une'), fr.join('|'));
+  assert.ok(fr.indexOf("l'exemplaire") > fr.indexOf('québec') && fr.includes('université laval') && fr.length >= 10 && fr.length <= 15);
+  const m = tumblrTags({ source: 'Le Délit', title: 'x', categories: ['Uncategorized'] }, 'fr'); assert.ok(m.includes('montréal') && m.includes('montreal') && !m.includes('uncategorized'));
+  assert.ok(!tumblrTags({ source: 'Le Délit', title: 'x', aiTopic: 'Inventé' }, 'fr').some(t => t === 'inventé'));
+}
+{ // EN : étiquettes anglaises, student press présent, aucune étiquette française générique
+  const e = tumblrTags({ source: 'The McGill Daily', title: 'Tuition hike protest', categories: ['Campus Life'] }, 'en');
+  assert.deepEqual(e.slice(0, 3), ['student journalism', 'student newspaper', 'news']);
+  assert.ok(e.includes('montreal') && e.includes('canada') && e.includes('student press') && e.includes('education') && e.includes('campus life'), e.join('|'));
+  assert.ok(!e.includes('actualités') && !e.includes('presse étudiante') && e.length >= 10 && e.length <= 15);
+}
 assert.ok(tt.every(x => !/[#,]/.test(x)));
 // X et pages : média à la fin, lien à la fin, aucun hashtag
 const x = buildText(it, [], 280, { credit: '' }); assert.ok(!/#\p{L}/u.test(x) && x.trim().endsWith('le-radar.ca/' + x.trim().split('le-radar.ca/')[1]));

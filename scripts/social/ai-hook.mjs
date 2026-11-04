@@ -65,12 +65,13 @@ let calls = 0; const cache = new Map();
 /** Pose it.aiHook (accroche validée) si l'IA répond ; sinon rien (repli déterministe). Jamais Mastodon. */
 export async function withHook(it, opts = {}) {
   if (!it || !aiEnabled(opts.env)) return it;
-  if (cache.has(it.id)) { const h = cache.get(it.id); if (h) it.aiHook = h; return it; }
+  if (cache.has(it.id)) { const c = cache.get(it.id); if (c?.hook) it.aiHook = c.hook; if (c?.topic) it.aiTopic = c.topic; return it; }
   if (calls >= (opts.max ?? MAX_CALLS_PER_RUN)) return it;
   calls++;
   const r = await aiHookDetail(it, opts);
-  cache.set(it.id, r?.hook || null);
+  cache.set(it.id, { hook: r?.hook || null, topic: r?.topic || null });
   if (r?.hook) it.aiHook = r.hook;
+  if (r?.topic) it.aiTopic = r.topic; // sujet IA (liste fermée TOPICS) : sert aux étiquettes Tumblr
   console.log(`IA : ${r?.hook ? 'accroche retenue' : `repli déterministe — ${r?.reason || 'aucune réponse'}`} (${it.id})`);
   return it;
 }
