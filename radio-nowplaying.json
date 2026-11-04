@@ -1,35 +1,27 @@
 {
-  "updatedAt": "2026-11-04T16:36:46.353Z",
+  "updatedAt": "2026-11-04T17:37:44.163Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "On en Parle",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/on-en-parle/",
-        "special": true
-      },
+      "current": null,
       "next": {
         "title": "Radio-Ciné",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "14:30",
         "url": "https://chyz.ca/emission/radio-cine/"
       },
       "track": "",
-      "showTitle": "On en Parle",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T16:36:05.638Z"
+      "checkedAt": "2026-11-04T17:37:02.754Z"
     },
     "cism": {
       "id": "cism",
@@ -56,19 +48,98 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T16:36:07.971Z"
+      "checkedAt": "2026-11-04T17:37:05.135Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "If You Got Ears",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "ffiles",
+      "next": {
+        "title": "Radyo Kapwa",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "",
+      "showTitle": "If You Got Ears",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-04T17:37:09.369Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "North-South Hockey",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
+      },
+      "next": {
+        "title": "The Fluid Mosaic",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+      },
+      "track": "",
+      "showTitle": "North-South Hockey",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-04T17:37:24.809Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Le DOUZE",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "00:00"
+      },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "track": "",
+      "showTitle": "Le DOUZE",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-04T17:37:25.851Z"
+    },
+    "choq": {
+      "id": "choq",
+      "name": "CHOQ.ca",
+      "current": null,
+      "next": {
+        "title": "Échos du monde",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00",
+        "slug": "echos-du-monde"
+      },
+      "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -76,86 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T16:36:10.860Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "Code Switch",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
-      },
-      "next": {
-        "title": "North-South Hockey",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
-      },
-      "track": "",
-      "showTitle": "Code Switch",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-04T16:36:27.159Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Le NEUF",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "12:00"
-      },
-      "next": {
-        "title": "Le DOUZE",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "00:00"
-      },
-      "track": "",
-      "showTitle": "Le NEUF",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-04T16:36:28.414Z"
-    },
-    "choq": {
-      "id": "choq",
-      "name": "CHOQ.ca",
-      "current": {
-        "title": "Miroirs d’Orient",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "miroirs-dorient"
-      },
-      "next": {
-        "title": "Onde de CHOQ",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
-      },
-      "track": "Harmony Tividad — Anything",
-      "showTitle": "Miroirs d’Orient",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-04T16:36:46.003Z"
+      "checkedAt": "2026-11-04T17:37:43.813Z"
     }
   }
 }
