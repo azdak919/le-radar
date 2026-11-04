@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-03T23:30:26.777Z",
+  "updated": "2026-11-04T00:37:13.852Z",
   "total": 182,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 11,
   "withLeadExcerpt": 122,
-  "candidates": 10,
-  "enriched": 0,
+  "candidates": 11,
+  "enriched": 1,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
       "changed": false
+    },
+    {
+      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
+      "ok": true,
+      "score": 100,
+      "chars": 333,
+      "sample": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouve",
+      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -70,15 +79,6 @@
       "score": 84,
       "chars": 400,
       "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
-      "changed": false
-    },
-    {
-      "title": "Bulletins La Pige radio 2 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-2-novembre",
-      "ok": true,
-      "score": 68,
-      "chars": 167,
-      "sample": "Opération policière en cours à Chicoutimi, l’insécurité alimentaire en hausse chez les jeunes et la ",
       "changed": false
     }
   ]
