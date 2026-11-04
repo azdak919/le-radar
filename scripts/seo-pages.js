@@ -1361,7 +1361,7 @@ function sportsResultRows(team, t, lang) {
     ? team.results.slice().sort((a, b) => (
       String(b.date || '').localeCompare(String(a.date || ''))
       || (Number(a.scoreFor) || 99) - (Number(b.scoreFor) || 99)
-    )).slice(0, 16)
+    )).slice(0, 16).reverse() // 16 plus récentes, affichées en ordre chronologique (à venir à la fin)
     : (team.lastGame ? [team.lastGame] : []);
   for (const last of pastGames) {
     const opp = formatOpp(last);
@@ -2016,4 +2016,4 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, spor
   return { pages, model };
 }
 
-module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta };
+module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta, sportsResultRows };
