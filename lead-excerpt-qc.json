@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-04T14:37:05.294Z",
+  "updated": "2026-11-04T16:07:34.533Z",
   "total": 183,
   "pool": 53,
-  "incomplete": 9,
-  "withLeadExcerpt": 121,
-  "candidates": 9,
-  "enriched": 0,
+  "incomplete": 11,
+  "withLeadExcerpt": 122,
+  "candidates": 11,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -26,6 +26,24 @@
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
+    },
+    {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
+      "ok": true,
+      "score": 100,
+      "chars": 258,
+      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "changed": true
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
+      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -61,24 +79,6 @@
       "score": 72,
       "chars": 399,
       "sample": "In 2025, Netflix released psychological crime drama Adolescence, a British TV series that would chan",
-      "changed": false
-    },
-    {
-      "title": "NAZA: When the Perpetrators Tell the Story",
-      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
-      "ok": true,
-      "score": 72,
-      "chars": 399,
-      "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
-      "changed": false
-    },
-    {
-      "title": "Bulletins La Pige radio 2 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-2-novembre",
-      "ok": true,
-      "score": 68,
-      "chars": 167,
-      "sample": "Opération policière en cours à Chicoutimi, l’insécurité alimentaire en hausse chez les jeunes et la ",
       "changed": false
     }
   ]

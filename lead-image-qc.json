@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-04T14:37:33.892Z",
+  "updated": "2026-11-04T16:08:10.363Z",
   "total": 183,
-  "withPhoto": 166,
+  "withPhoto": 167,
   "withStock": 32,
   "withCampusBank": 28,
   "fullyCovered": 183,
-  "leadReadyPhotos": 146,
+  "leadReadyPhotos": 147,
   "pageScraped": 34,
   "photosRecovered": 34,
-  "imagesCleared": 14,
+  "imagesCleared": 11,
   "stockSearches": 39,
-  "stockFound": 30,
-  "campusBankFound": 23,
+  "stockFound": 28,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -63,16 +63,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "The VAV Gallery is coming alive",
-      "link": "https://theconcordian.com/2026/11/the-vav-gallery-is-coming-alive/",
+      "title": "Pete Fry élu maire de Vancouver",
+      "link": "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
-    },
-    {
-      "title": "I Love Friendsgiving",
-      "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/49/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Blackface at McGill",
@@ -85,6 +79,12 @@
       "link": "https://thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Virage conservateur en Colombie-Britannique",
+      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
     }
   ]
 }
