@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T12:06:29.651Z",
+  "updatedAt": "2026-11-04T12:53:00.513Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T12:06:03.860Z"
+      "checkedAt": "2026-11-04T12:52:35.093Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T12:06:05.843Z"
+      "checkedAt": "2026-11-04T12:52:37.076Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,17 +74,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T12:06:08.363Z"
+      "checkedAt": "2026-11-04T12:52:39.394Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
+        "title": "Words and Culture",
         "source": "schedule-live",
-        "start": "06:00",
+        "start": "07:30",
         "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        "url": "http://www.cjlo.com/shows/words-and-culture"
       },
       "next": {
         "title": "CJLO's Alternative Mega Mix",
@@ -94,15 +94,14 @@
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Morning Electro-shock",
+      "showTitle": "Words and Culture",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T12:06:10.644Z"
+      "checkedAt": "2026-11-04T12:52:41.601Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T12:06:11.433Z"
+      "checkedAt": "2026-11-04T12:52:42.602Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T12:06:29.301Z"
+      "checkedAt": "2026-11-04T12:53:00.162Z"
     }
   }
 }
