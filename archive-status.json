@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03T21:25:12.112Z",
+  "updated": "2026-11-04T01:38:36.024Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5126,10 +5126,10 @@
   "stats": {
     "total": 892,
     "lastRun": {
-      "saved": 9,
+      "saved": 0,
       "skipped": 0,
-      "failed": 11,
-      "stoppedEarly": false
+      "failed": 3,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -5146,18 +5146,18 @@
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 138,
-      "checkedAt": "2026-10-27T09:19:10.258Z",
-      "stale": true
+      "checkedAt": "2026-11-04T01:37:51.714Z"
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
       "pages": 235,
-      "checkedAt": "2026-10-28T00:42:39.991Z"
+      "checkedAt": "2026-11-04T01:38:02.517Z"
     },
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 9,
-      "checkedAt": "2026-10-27T20:13:13.793Z"
+      "checkedAt": "2026-10-27T20:13:13.793Z",
+      "stale": true
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
