@@ -572,6 +572,13 @@ async function enrichIcsaRegattaDates(team, cache) {
     if (!dates) continue;
     g.eventStart = dates.start;
     g.eventEnd = dates.end;
+    // Régate « Sailing now » terminée : date absente du tableau école.
+    if (!g.date) g.date = dates.end;
+  }
+  if (Array.isArray(team.results)) {
+    team.results = team.results.filter((g) => g.date);
+    team.results.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    team.lastGame = team.results[0] || null;
   }
 }
 
@@ -599,9 +606,9 @@ function parseSailingSchoolPage(html, school) {
     const event = cells[0].text;
     const host = cells[1].text;
     const type = cells[2].text;
-    const dateLabel = cells[4].text;
-    const status = cells[5].text;
-    const placeRaw = cells[6] ? cells[6].text : '';
+    const fields = Cicsa.icsaRowFields(cells.map((c) => c.text));
+    if (!fields) continue;
+    const { dateLabel, status, placeRaw } = fields;
     const placeM = placeRaw.match(/(\d+)\s*\/\s*(\d+)/);
     let date = parseSailingDate(dateLabel, seasonHint);
     if (date && year) date = `${year}-${date.slice(5)}`;

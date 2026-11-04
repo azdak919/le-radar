@@ -720,6 +720,21 @@ function parseIcsaRegattaDates(html) {
 }
 
 /**
+ * Ligne d’une page école ICSA. Tableau saison : Name|Host|Type|Scoring|Date|Status|Place(s).
+ * Tableau « Sailing now » : Name|Host|Type|Scoring|Last race|Place(s) — une régate
+ * dont la dernière course est « Final » est un résultat officiel, sans date (la date
+ * vient ensuite de la page de la régate). En cours (pas Final) → ignorée.
+ */
+function icsaRowFields(cellTexts) {
+  const c = cellTexts || [];
+  if (c.length === 6) {
+    if (!/^final$/i.test(String(c[4] || '').trim())) return null;
+    return { dateLabel: '', status: 'Official', placeRaw: c[5] || '', live: true };
+  }
+  return { dateLabel: c[4] || '', status: c[5] || '', placeRaw: c[6] || '', live: false };
+}
+
+/**
  * Saison courante (août → juillet) : évite qu'une année codée en dur
  * dans sports-sailing.json fige les dates après le changement de saison.
  */
@@ -740,6 +755,7 @@ module.exports = {
   currentSeasonStartYear,
   resolveSeason,
   parseIcsaRegattaDates,
+  icsaRowFields,
   sailingNameFr,
   sailingNameShort,
   collectResultsSeen,
