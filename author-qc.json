@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-04T06:40:48.075Z",
-  "total": 182,
-  "withAuthor": 182,
-  "mismatches": 13,
+  "updated": "2026-11-04T07:00:49.779Z",
+  "total": 183,
+  "withAuthor": 183,
+  "mismatches": 14,
   "ok": true,
   "samples": [
     {
@@ -108,7 +108,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "source": "The Tribune",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 13
+  "fixed": 14
 }
