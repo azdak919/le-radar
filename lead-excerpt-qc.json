@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-04T02:36:56.452Z",
+  "updated": "2026-11-04T03:37:06.491Z",
   "total": 182,
   "pool": 58,
-  "incomplete": 12,
+  "incomplete": 11,
   "withLeadExcerpt": 123,
-  "candidates": 12,
-  "enriched": 2,
+  "candidates": 11,
+  "enriched": 0,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -25,16 +25,7 @@
       "score": 82,
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
-      "changed": true
-    },
-    {
-      "title": "Les distances — La complexité des relations dispersées",
-      "link": "https://impactcampus.ca/arts-et-culture/les-distances-la-complexite-des-relations-dispersees/",
-      "ok": true,
-      "score": 100,
-      "chars": 392,
-      "sample": "Les complexités de l’immigration sont au cœur de cette pièce. Les personnages incarnent tous une fac",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -79,6 +70,15 @@
       "score": 72,
       "chars": 399,
       "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
+      "changed": false
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14/",
+      "ok": true,
+      "score": 84,
+      "chars": 400,
+      "sample": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de l",
       "changed": false
     }
   ]
