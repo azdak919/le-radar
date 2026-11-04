@@ -1,27 +1,27 @@
 {
-  "updated": "2026-10-26T20:53:59.592Z",
+  "updated": "2026-11-04T20:10:21.343Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 130579
+      "ms": 277804
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 42720
+      "ms": 58319
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 86302
+      "ms": 354046
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 81834
+      "ms": 102885
     }
   ],
   "summary": {
@@ -31,32 +31,32 @@
       "dead": 0,
       "stale": 5,
       "candidates": 5,
-      "articles": 178,
-      "withAuthor": 178,
-      "withExcerpt": 178,
+      "articles": 183,
+      "withAuthor": 183,
+      "withExcerpt": 183,
       "authorQc": {
         "ok": true,
-        "mismatches": 18
+        "mismatches": 16
       },
       "leadImageQc": {
-        "fullyCovered": 178,
-        "withPhoto": 160,
-        "withStock": 39,
-        "leadReadyPhotos": 137,
-        "pageScraped": 33,
+        "fullyCovered": 183,
+        "withPhoto": 165,
+        "withStock": 33,
+        "leadReadyPhotos": 143,
+        "pageScraped": 32,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": false,
-        "withCredit": 159,
-        "cited": 106,
-        "pending": 37,
+        "withCredit": 164,
+        "cited": 90,
+        "pending": 52,
         "missingHero": 0
       }
     },
     "backgrounds": {
       "masthead": {
-        "count": 113,
+        "count": 117,
         "maxBank": 200,
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
@@ -79,7 +79,7 @@
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
       },
-      "count": 113,
+      "count": 117,
       "maxBank": 200,
       "lastSessionCleanup": "2026-09-01",
       "lastSessionId": "automne"
@@ -149,7 +149,7 @@
     {
       "level": "info",
       "code": "schedule_drift",
-      "message": "Hors programmation : cism (+15 −15)"
+      "message": "Hors programmation : chyz (+3 −0)"
     }
   ]
 }
