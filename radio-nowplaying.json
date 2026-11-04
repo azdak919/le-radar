@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T19:36:48.440Z",
+  "updatedAt": "2026-11-04T20:15:45.649Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T19:36:10.648Z"
+      "checkedAt": "2026-11-04T20:15:07.048Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/vibrance"
-      },
-      "next": {
         "title": "Le cours de math",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
+      "next": {
+        "title": "Feu | Metal | Chaos",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
+      },
       "track": "",
-      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T19:36:12.583Z"
+      "checkedAt": "2026-11-04T20:15:09.543Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radyo Kapwa",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "All Da Way Live",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off the Hour/Sounds of Resistance",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Radyo Kapwa",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T19:36:14.996Z"
+      "checkedAt": "2026-11-04T20:15:12.064Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
-      },
-      "next": {
         "title": "Patch Notes",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/patch-notes"
       },
+      "next": {
+        "title": "Borderline",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
+      },
       "track": "",
-      "showTitle": "Cherry Vamp and the Sonic Coffin",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T19:36:29.177Z"
+      "checkedAt": "2026-11-04T20:15:26.506Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T19:36:30.407Z"
+      "checkedAt": "2026-11-04T20:15:27.936Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
+      "next": {
+        "title": "Les Amazones",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00",
+        "slug": "les-amazones"
+      },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T19:36:48.089Z"
+      "checkedAt": "2026-11-04T20:15:45.298Z"
     }
   }
 }
