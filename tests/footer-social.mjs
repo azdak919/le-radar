@@ -13,6 +13,7 @@ const expected = {
   facebook: 'https://www.facebook.com/profile.php?id=61596092762097',
   linkedin: 'https://www.linkedin.com/company/le-radar-ca/',
   tumblr: 'https://le-radar-ca.tumblr.com',
+  mastodon: 'https://piaille.fr/@leradar',
   rss: 'https://le-radar.ca/feed.xml',
 };
 const on = links.filter((l) => l.enabled);
@@ -22,8 +23,6 @@ for (const l of on) {
   assert.match(l.label, /LE-RADAR\.ca/, `aria-label ${l.id}`);
   assert.ok(l.path.length > 20 && /^0 0 \d+ \d+$/.test(l.viewBox), `icône ${l.id}`);
 }
-const masto = links.find((l) => l.id === 'mastodon');
-assert.ok(masto && masto.enabled === false, 'Mastodon prêt mais désactivé');
 assert.match(src, /a\.rel = 'me noopener'/);
 assert.doesNotMatch(src, /tison/i);
 assert.ok(fs.existsSync(new URL('../assets/social-icons/LICENSE.md', import.meta.url)));
