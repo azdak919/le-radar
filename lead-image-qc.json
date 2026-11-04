@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-04T12:08:12.049Z",
+  "updated": "2026-11-04T13:37:31.125Z",
   "total": 183,
   "withPhoto": 166,
   "withStock": 32,
   "withCampusBank": 28,
   "fullyCovered": 183,
-  "leadReadyPhotos": 142,
-  "pageScraped": 34,
-  "photosRecovered": 34,
+  "leadReadyPhotos": 147,
+  "pageScraped": 35,
+  "photosRecovered": 35,
   "imagesCleared": 13,
-  "stockSearches": 41,
-  "stockFound": 31,
-  "campusBankFound": 24,
+  "stockSearches": 39,
+  "stockFound": 29,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -63,28 +63,28 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
-      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
-      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "title": "Crossword: Paranormal Activity",
+      "link": "https://theconcordian.com/2026/10/crossword-paranormal-activity/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
     },
     {
-      "title": "Letters from the Editors October 2026",
-      "link": "https://theplantnews.com/2026/10/25/letters-from-the-editors-october-2026/",
+      "title": "Pete Fry élu maire de Vancouver",
+      "link": "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Dawson_College_6.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/49/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
     }
   ]
 }
