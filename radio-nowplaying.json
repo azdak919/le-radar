@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T18:36:43.578Z",
+  "updatedAt": "2026-11-04T19:36:48.440Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Radio-Ciné",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "14:00",
-        "end": "14:30",
-        "url": "https://chyz.ca/emission/radio-cine/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T18:36:06.105Z"
+      "checkedAt": "2026-11-04T19:36:10.648Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "Vibrance: voyage dance vers Montréal et ailleurs",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/vibrance"
       },
+      "next": {
+        "title": "Le cours de math",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T18:36:08.060Z"
+      "checkedAt": "2026-11-04T19:36:12.583Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Radyo Kapwa",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "All Da Way Live",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "Radyo Kapwa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T18:36:10.256Z"
+      "checkedAt": "2026-11-04T19:36:14.996Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
-      },
-      "next": {
         "title": "Cherry Vamp and the Sonic Coffin",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
+      "next": {
+        "title": "Patch Notes",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
+      },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Cherry Vamp and the Sonic Coffin",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T18:36:24.461Z"
+      "checkedAt": "2026-11-04T19:36:29.177Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T18:36:25.626Z"
+      "checkedAt": "2026-11-04T19:36:30.407Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Échos du monde",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00",
-        "slug": "echos-du-monde"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -146,14 +140,14 @@
         "slug": "palmareschoq"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Échos du monde",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-04T18:36:43.227Z"
+      "checkedAt": "2026-11-04T19:36:48.089Z"
     }
   }
 }
