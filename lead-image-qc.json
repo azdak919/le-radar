@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-05T15:07:21.994Z",
+  "updated": "2026-11-05T15:39:48.119Z",
   "total": 183,
-  "withPhoto": 166,
-  "withStock": 32,
-  "withCampusBank": 29,
+  "withPhoto": 167,
+  "withStock": 31,
+  "withCampusBank": 28,
   "fullyCovered": 183,
-  "leadReadyPhotos": 143,
-  "pageScraped": 31,
-  "photosRecovered": 31,
-  "imagesCleared": 14,
-  "stockSearches": 40,
-  "stockFound": 28,
-  "campusBankFound": 23,
+  "leadReadyPhotos": 144,
+  "pageScraped": 32,
+  "photosRecovered": 32,
+  "imagesCleared": 13,
+  "stockSearches": 39,
+  "stockFound": 26,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,16 +33,16 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg"
     },
     {
+      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
+      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Laisser couler l’eau",
       "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
-    },
-    {
-      "title": "Plus de 130 jours de manifestation en Albanie",
-      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
       "title": "Reportages La Pige radio 2 novembre",
@@ -57,16 +57,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
+      "title": "Plus de 130 jours de manifestation en Albanie",
+      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
+    },
+    {
       "title": "Bishop’s Culture is Community",
       "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
-    },
-    {
-      "title": "Editorial: Lowering immigration, but at what cost?",
-      "link": "https://thelinknewspaper.ca/article/16517",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
     },
     {
       "title": "Queer Language is Queer Resistance",
@@ -77,7 +77,7 @@
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
+      "reason": "campus-bank",
       "image": null
     },
     {

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T15:06:27.088Z",
+  "updated": "2026-11-05T15:37:42.938Z",
   "updatedSlot": null,
   "count": 183,
   "freshnessSessions": 3,
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-04T19:00:00.000Z",
-      "lastFetchOk": "2026-11-05T15:05:53.517Z"
+      "lastFetchOk": "2026-11-05T15:35:59.001Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-05T02:30:44.000Z",
-      "lastFetchOk": "2026-11-05T15:05:53.938Z"
+      "lastFetchOk": "2026-11-05T15:35:59.485Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-04T12:00:00.000Z",
-      "lastFetchOk": "2026-11-05T15:05:55.773Z"
+      "lastFetchOk": "2026-11-05T15:36:01.587Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-11-02T15:36:04.000Z",
-      "lastFetchOk": "2026-11-05T15:05:56.170Z"
+      "lastFetchOk": "2026-11-05T15:36:02.126Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-04T23:25:00.000Z",
-      "lastFetchOk": "2026-11-05T15:05:57.248Z"
+      "lastFetchOk": "2026-11-05T15:36:03.250Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-11-05T15:05:58.058Z"
+      "lastFetchOk": "2026-11-05T15:36:04.129Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-03T20:33:01.000Z",
-      "lastFetchOk": "2026-11-05T15:05:59.071Z"
+      "lastFetchOk": "2026-11-05T15:36:05.223Z"
     },
     "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-02T08:00:00.000Z",
-      "lastFetchOk": "2026-11-05T15:06:00.370Z"
+      "lastFetchOk": null
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-11-05T15:06:00.556Z"
+      "lastFetchOk": "2026-11-05T15:36:17.568Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-05T14:10:39.000Z",
-      "lastFetchOk": "2026-11-05T15:06:01.231Z"
+      "lastFetchOk": "2026-11-05T15:36:18.264Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,15 +90,15 @@
       "articleCount": 20,
       "freshArticleCount": 8,
       "lastArticle": "2026-11-03T18:56:04.245Z",
-      "lastFetchOk": "2026-11-05T15:06:02.666Z"
+      "lastFetchOk": "2026-11-05T15:36:19.529Z"
     },
     "The Tribune": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-11-05T15:06:04.385Z"
+      "lastFetchOk": null
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,15 +106,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-10-28T13:44:16.000Z",
-      "lastFetchOk": "2026-11-05T15:06:04.610Z"
+      "lastFetchOk": "2026-11-05T15:36:31.881Z"
     },
     "The Plant": {
       "fetchOk": true,
       "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
-      "lastArticle": "2026-11-03T18:39:32.000Z",
-      "lastFetchOk": "2026-11-05T15:06:04.763Z"
+      "lastArticle": "2026-11-05T15:34:18.000Z",
+      "lastFetchOk": "2026-11-05T15:36:32.314Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-11-05T15:06:06.120Z"
+      "lastFetchOk": "2026-11-05T15:36:33.590Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-11-05T15:06:06.263Z"
+      "lastFetchOk": "2026-11-05T15:36:33.761Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-11-05T15:06:06.846Z"
+      "lastFetchOk": "2026-11-05T15:36:34.545Z"
     },
     "The Concordian": {
       "fetchOk": true,
@@ -146,7 +146,7 @@
       "articleCount": 6,
       "freshArticleCount": 6,
       "lastArticle": "2026-11-05T14:35:40.000Z",
-      "lastFetchOk": "2026-11-05T15:06:07.205Z"
+      "lastFetchOk": "2026-11-05T15:36:41.719Z"
     },
     "Impact Campus": {
       "fetchOk": true,
@@ -154,7 +154,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-04T02:16:00.000Z",
-      "lastFetchOk": "2026-11-05T15:06:08.590Z"
+      "lastFetchOk": "2026-11-05T15:36:42.854Z"
     },
     "La Griffe": {
       "fetchOk": true,
@@ -162,10 +162,88 @@
       "articleCount": 10,
       "freshArticleCount": 8,
       "lastArticle": "2026-10-27T15:51:37.000Z",
-      "lastFetchOk": "2026-11-05T15:06:08.842Z"
+      "lastFetchOk": "2026-11-05T15:36:43.117Z"
     }
   },
   "items": [
+    {
+      "source": "The Plant",
+      "institution": "Dawson College",
+      "region": "Montréal",
+      "type": "cegep",
+      "lang": "en",
+      "title": "Lights, Camera, Seltzer ! : POP Montreal 2026",
+      "link": "https://theplantnews.com/2026/11/05/lights-camera-seltzer-pop-montreal-2026/",
+      "author": "Samantha Levine",
+      "date": "2026-11-05T15:34:18.000Z",
+      "excerpt": "Hanako at the Rialto Theatre, via Samantha Levine Samantha Levine Arts and Culture Correspondent On Thursday, September 23rd, we entered the Rialto Theatre, silver hoops twinkling with anticipation. Ciders were poured, theatre lights dimmed. A murmur passed through the crowd,",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/11/samantha-pop-mtl-img_3805.jpeg",
+      "_pageAuthor": "Samantha Levine",
+      "authorCheckedAt": "2026-11-05T15:37:52.381Z",
+      "leadExcerpt": "On Thursday, September 23rd, we entered the Rialto Theatre, silver hoops twinkling with anticipation. Ciders were poured, theatre lights dimmed. A murmur passed through the crowd, followed by the hush of a collective held breath: Pop Montreal 2026 had begun.",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/f2dba12e65e50967.jpg",
+      "imageLocalKey": "f2dba12e65e50967",
+      "sourceImageCredit": "Photo: The Plant",
+      "sourceImageCreator": "",
+      "sourceImageCreditUrl": "https://theplantnews.com/2026/11/05/lights-camera-seltzer-pop-montreal-2026/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "samantha-pop-mtl-img_3805.jpeg",
+      "sourceImageCreditRev": 17
+    },
+    {
+      "source": "The Plant",
+      "institution": "Dawson College",
+      "region": "Montréal",
+      "type": "cegep",
+      "lang": "en",
+      "title": "Come for the Borsch. Stay for the Culture.",
+      "link": "https://theplantnews.com/2026/11/05/come-for-the-borsch-stay-for-the-culture/",
+      "author": "Karina Awad-Battista",
+      "date": "2026-11-05T15:26:01.000Z",
+      "excerpt": "The Korinnia Dance Troupe marching in Square Viger, via Karina Awad-Battista Karina Awad-Battista Staff Writer It is a sunny October afternoon, and I am sitting in Square Viger eating a bowl of warm borsch. This is what was advertised as the point of the whole event. On their",
+      "image": "",
+      "_pageAuthor": "Karina Awad-Battista",
+      "authorCheckedAt": "2026-11-05T15:37:52.603Z",
+      "leadExcerpt": "For those of you who are unaware, borsch is a traditional soup dish originating from Ukraine. There are infinite variations, but the most well-known is made with beets and garnished with sour cream, served with some bread rolls on the side. Today, borsch is a staple in many Eastern European households and is seen as an integral part of Ukrainian culture.",
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg",
+      "imageTitle": "Dawson College 06",
+      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Jeangagnon",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageProvider": "campus-bank",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_06.jpg",
+      "stockImageLocal": "assets/stock-images/bb8d1727e78fd5e3.jpg"
+    },
+    {
+      "source": "The Plant",
+      "institution": "Dawson College",
+      "region": "Montréal",
+      "type": "cegep",
+      "lang": "en",
+      "title": "The Iceberg of Safdie’s Stairs",
+      "link": "https://theplantnews.com/2026/11/05/the-iceberg-of-safdies-stairs/",
+      "author": "Leo Baron",
+      "date": "2026-11-05T15:22:22.000Z",
+      "excerpt": "Here’s the tip of the iceberg. If you have ever been to the Montreal Museum of Fine Arts on Sherbrooke Street, you will have noticed that the flight of stairs to the right of the lobby, designed by the giant of architecture Moshe Safdie, are unusually treacherous. The steps are",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/10/image28.png",
+      "_pageAuthor": "Leo Baron",
+      "sourceImageCredit": "Image via Cult MTL",
+      "sourceImageCreator": "Cult MTL",
+      "sourceImageCreditUrl": "https://theplantnews.com/2026/11/05/the-iceberg-of-safdies-stairs/",
+      "sourceImageCreditFrom": "rss-content",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "image28.png",
+      "sourceImageCreditRev": 17,
+      "authorCheckedAt": "2026-11-05T15:37:52.819Z",
+      "leadExcerpt": "It’s a funny thing. Online, the Safdie stairs have been seriously condemned for their hazardous nature. This is true. The stairs have the potential to make an inattentive person fall. Does a piece of art need to ask for the user’s consent beforehand? According to the Régie du batiment du Quebec (RBQ), implemented a decade after the stairs’ installment, by law, Safdie’s creation shouldn’t exist.",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/f3fe5ad0c2947746.jpg",
+      "imageLocalKey": "f3fe5ad0c2947746",
+      "imageLocalVia": "resize-proxy"
+    },
     {
       "source": "The Concordian",
       "institution": "Concordia University",
@@ -178,17 +256,18 @@
       "date": "2026-11-05T14:35:40.000Z",
       "excerpt": "Au Tigré, les combats ont repris en septembre, entraînant des tensions entre l’Éthiopie et l’Érythrée. Un jeu d’alliance se met en place et la menace d’un conflit régional inquiète.",
       "image": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0169.jpg",
-      "leadExcerpt": "Le 23 septembre 2026, près de quatre ans après la signature des accords garantissant une paix fragile, les combats ont repris dans la région du Tigré, en Éthiopie, entre le gouvernement d’Addis-Abeba et le Front de libération du peuple du Tigré (TPLF). L’armée éthiopienne avait annoncé avoir pris le contrôle des principales villes de la région.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/5290d639c37348b7.jpg",
-      "imageLocalKey": "5290d639c37348b7",
       "sourceImageCredit": "Photo : Carte de Zelda Dover",
       "sourceImageCreator": "Carte de Zelda Dover",
       "sourceImageCreditUrl": "https://theconcordian.com/2026/11/combats-tigre-ethiopie-erythree/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_0169.jpg",
-      "sourceImageCreditRev": 17
+      "sourceImageCreditRev": 17,
+      "leadImageReady": true,
+      "leadExcerpt": "Le 23 septembre 2026, près de quatre ans après la signature des accords garantissant une paix fragile, les combats ont repris dans la région du Tigré, en Éthiopie, entre le gouvernement d’Addis-Abeba et le Front de libération du peuple du Tigré (TPLF). L’armée éthiopienne avait annoncé avoir pris le contrôle des principales villes de la région.",
+      "imageLocal": "assets/news-images/5290d639c37348b7.jpg",
+      "imageLocalKey": "5290d639c37348b7",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -529,16 +608,16 @@
       "date": "2026-11-04T14:00:00.000Z",
       "excerpt": "The bold, colourful artworks of Congregation hung on the VAV Gallery’s walls in a duo show featuring the works of two Concordia students, Loup Gauvin-Dufresne and Rowan Draper. Between paintings, Gauvin-Dufresne and Draper sprinkled in tiny surprises that encouraged visitors to",
       "image": "",
-      "leadExcerpt": "The bold, colourful artworks of Congregation hung on the VAV Gallery’s walls in a duo show featuring the works of two Concordia students, Loup Gauvin-Dufresne and Rowan Draper. Between paintings, Gauvin-Dufresne and Draper sprinkled in tiny surprises that encouraged visitors to interact more with the space.",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG",
-      "imageTitle": "Henry F. Hall Building 01, Concordia University",
-      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jeangagnon",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG",
+      "imageTitle": "Loyola College Building, Concordia University",
+      "imageCredit": "Photo : Thomas1313 / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Thomas1313",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_01.JPG",
-      "stockImageLocal": "assets/stock-images/582ef31c64537478.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Loyola_College_Building_15.JPG",
+      "leadExcerpt": "The bold, colourful artworks of Congregation hung on the VAV Gallery’s walls in a duo show featuring the works of two Concordia students, Loup Gauvin-Dufresne and Rowan Draper. Between paintings, Gauvin-Dufresne and Draper sprinkled in tiny surprises that encouraged visitors to interact more with the space.",
+      "stockImageLocal": "assets/stock-images/ca2d98efaaca18bb.jpg"
     },
     {
       "source": "Le Délit",
@@ -818,7 +897,6 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
       "featured": true,
       "authorCheckedAt": "2026-11-04T12:07:09.892Z",
-      "_pageAuthor": "Rose Langlois",
       "sourceImageCredit": "Photo : Ana Camila Torchia",
       "sourceImageCreator": "Ana Camila Torchia",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
@@ -844,7 +922,6 @@
       "date": "2026-11-04T02:16:00.000Z",
       "excerpt": "Du 20 octobre au 7 novembre, la pièce de théâtre Les Distances est présentée au Théâtre Périscope, une création issue de la collaboration entre les productions du Théâtre Sortie de Secours (Québec) et de Sala Beckett (Barcelone). Tendre comédie de quotidiens morcelés par les",
       "image": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/03211119/Capture-decran-le-2026-11-03-a-21.09.23-1.png",
-      "_pageAuthor": "Léann Laquerre et Archives Impact Campus",
       "sourceImageCredit": "Photo : Nicola-Frank Vachon",
       "sourceImageCreator": "Nicola-Frank Vachon",
       "sourceImageCreditUrl": "https://impactcampus.ca/arts-et-culture/les-distances-la-complexite-des-relations-dispersees/",
@@ -870,7 +947,6 @@
       "date": "2026-11-03T20:33:01.000Z",
       "excerpt": "Premier constat : depuis 2014, certaines circonscriptions affichent de hauts taux de participation. C’est le cas de Louis-Hébert, dans la région de Québec, qui est la circonscription championne de la province à ce niveau depuis 12 ans. Lors des quatre dernières élections,",
       "image": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/IMG_4023-scaled.jpg",
-      "_pageAuthor": "Arianne Dion et Victor Marchand",
       "sourceImageCredit": "Photo : Victor Marchand / L'Exemplaire",
       "sourceImageCreator": "Victor Marchand / L'Exemplaire",
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-parti-conservateur-fait-augmenter-le-taux-de-participation-aux-elections-provinciales-de-2026/",
@@ -880,17 +956,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Les Québécois ont voté à 66,9 % lors de la dernière élection. Ce n’est cependant pas dans toutes les circonscriptions de la province où le taux de vote a été aussi haut. Certaines circonscriptions ont vu des baisses et d’autres des hausses marquées dans la participation de leurs citoyens. Que s'est-il passé plus précisément ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/70/Pavillon_Alexandre-Vachon_01.jpg",
-      "imageTitle": "Pavillon Alexandre-Vachon",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg",
+      "imageTitle": "Pavillon d’optique-photonique",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Alexandre-Vachon_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_d%27optique_photonique_laser_02.jpg",
       "imageLocal": "assets/news-images/356092f6aaafb8d8.jpg",
       "imageLocalKey": "356092f6aaafb8d8",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/12253475a05cb15e.jpg",
+      "stockImageLocal": "assets/stock-images/539b5adacc45f50d.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -962,17 +1038,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Le virus du Nil occidental dit VNO est transmis à l’homme par le moustique, lui-même infecté par les oiseaux. L’homme est un « hôte terminal » dans cette transmission, c’est-à-dire qu’il ne peut pas transmettre le virus.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Pavillon_Maurice-Pollack.jpg",
-      "imageTitle": "Pavillon Maurice-Pollack",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
+      "imageTitle": "Pavillon Jeanne-Lapointe",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Maurice-Pollack.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
       "imageLocal": "assets/news-images/7a15d9019b06c31f.jpg",
       "imageLocalKey": "7a15d9019b06c31f",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/66b237d2dd7516ea.jpg",
+      "stockImageLocal": "assets/stock-images/1919db41650015a3.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -995,17 +1071,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Les projections du taux d’incidence par province de 2026 proviennent de l’ Appendice 2 de la Projection du fardeau du cancer au Canada en 2026 . Cette projection n’incluait pas de données pour le Nunavut, les Territoires du Nord-Ouest ou le Yukon.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 10",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
-      "imageLicense": "CC BY-SA 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pavillon_Louis-Jacques-Casault_-_Universit%C3%A9_-Laval_-_Quebec_City_-_October_2007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon Louis-Jacques-Casault - Université -Laval - Quebec City - October 2007",
+      "imageCredit": "Photo : Colin Rose / CC BY-SA 2.0 · Wikimedia Commons",
+      "imageCreator": "Colin Rose",
+      "imageLicense": "CC BY-SA 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2010.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Louis-Jacques-Casault%20-%20Universit%C3%A9%20-Laval%20-%20Quebec%20City%20-%20October%202007.jpg",
       "imageLocal": "assets/news-images/157e1b0794b4afbb.jpg",
       "imageLocalKey": "157e1b0794b4afbb",
       "imageLocalVia": "disk",
-      "stockImageLocal": "assets/stock-images/61ad1fc61b4f15f1.jpg",
+      "stockImageLocal": "assets/stock-images/723254b9789ea506.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -1029,17 +1105,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Pendant la campagne électorale, Éric Duhaime a concentré ses efforts dans la région de Québec, où il estimait avoir de meilleures chances de remporter des sièges . Ancien animateur de Radio X et du FM 93, le chef conservateur était déjà une figure connue du paysage médiatique de la Capitale-Nationale.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Pavillon_DKN%2C_Universit%C3%A9_Laval_05.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 05",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Pavillon_DKN%2C_Universit%C3%A9_Laval_06.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 06",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2005.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2006.jpg",
       "imageLocal": "assets/news-images/af3f79ee87a691ca.jpg",
       "imageLocalKey": "af3f79ee87a691ca",
       "imageLocalVia": "disk",
-      "stockImageLocal": "assets/stock-images/b5ddec82ff714881.jpg",
+      "stockImageLocal": "assets/stock-images/394d452d38b98964.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -1062,17 +1138,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Initialement, le projet pilote àVélo comptait dix stations et cent vélos. Cinq ans plus tard, le projet est toujours en expansion et compte désormais 225 stations et 2300 vélos. Cette augmentation peut notamment s’expliquer par l’accessibilité de ce moyen de transport ainsi que par sa popularité auprès des usagers.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg",
-      "imageTitle": "Pavillon Alphonse-Marie-Parent 05",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg",
+      "imageTitle": "Pavillon Ernest-Lemieux 06",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Alphonse-Marie-Parent_05.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ernest-Lemieux_06.jpg",
       "imageLocal": "assets/news-images/1e1c34fb613861aa.jpg",
       "imageLocalKey": "1e1c34fb613861aa",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/0cd4a52262537f4a.jpg",
+      "stockImageLocal": "assets/stock-images/0c9e04d1a3c8a7bd.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -1451,7 +1527,8 @@
       "leadExcerpt": "Pour une 3 e saison consécutive, les joueurs du Vert & Or agiront à titre de spectateurs à l’occasion des séries éliminatoires du RSEQ. Sherbrooke est mathématiquement éliminé après cette défaite du 24 octobre dernier face aux Stingers de Concordia, où l’équipe s’est inclinée par la marque de 34-13 devant ses fidèles.",
       "imageLocal": "assets/news-images/34c1eb7418442c13.jpg",
       "imageLocalKey": "34c1eb7418442c13",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1475,7 +1552,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/255bf88e227cbb17.png",
       "imageLocalKey": "255bf88e227cbb17",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1499,7 +1577,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/346636fcf8ab11cc.jpg",
       "imageLocalKey": "346636fcf8ab11cc",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1525,7 +1604,8 @@
       "leadExcerpt": "On entend souvent le mot « maturité » revenir dans les conversations comme enjeu principal chez plusieurs jeunes joueurs talentueux. Rosalie Tremblay n’a pas à s’inquiéter de cet aspect, elle qui s’attire déjà des éloges dans le milieu professionnel.",
       "imageLocal": "assets/news-images/7ccc51ce546d30e2.jpg",
       "imageLocalKey": "7ccc51ce546d30e2",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1549,7 +1629,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/8c16b479fbb19e57.jpg",
       "imageLocalKey": "8c16b479fbb19e57",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1574,7 +1655,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/0b5a80625f7d133d.jpg",
       "imageLocalKey": "0b5a80625f7d133d",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1600,7 +1682,8 @@
       "leadExcerpt": "Ken Sim, maire sortant, a été défait par Pete Fry lors des élections de la course à la mairie de la ville de Vancouver. Pete Fry devient ainsi le premier maire vert de l’histoire à occuper ce poste. Avec 47,1 % des voix, cette victoire du Parti vert représente sans doute un changement de direction politique majeur pour la Ville de Vancouver.",
       "imageLocal": "assets/news-images/e6a1e4b56e14688d.jpg",
       "imageLocalKey": "e6a1e4b56e14688d",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1626,7 +1709,8 @@
       "leadExcerpt": "Les personnes britanno-colombiennes étaient invitées aux urnes le 24 octobre dernier. Après neuf années de gouvernement néo-démocrate, les conservateurs imposent un changement de gouvernance. Le résultat de ces élections constitue un changement majeur dans le paysage politique de la province.",
       "imageLocal": "assets/news-images/f68145c2d7ce460e.jpg",
       "imageLocalKey": "f68145c2d7ce460e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1650,7 +1734,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/67e62455f17df4d1.jpg",
       "imageLocalKey": "67e62455f17df4d1",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1682,7 +1767,8 @@
       "leadExcerpt": "Plus que quelques semaines avant que l’hiver se pointe le bout du nez. Les mitaines, tuques et manteaux seront de mise, tout comme les pneus d’hiver et les balais à neige. Cependant, l’état des routes du Québec semble toujours tirer de la patte en hiver. Un expert du milieu s’exprime à ce sujet.",
       "imageLocal": "assets/news-images/cc0e1337f791bded.jpg",
       "imageLocalKey": "cc0e1337f791bded",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -2430,15 +2516,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-05T09:06:39.921Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Bishop's University campus 2011 03",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Bishop's University campus 2011 04",
       "imageCredit": "Photo : Jason Paris / CC BY 2.0 · Wikimedia Commons",
       "imageCreator": "Jason Paris",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2003.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg",
       "leadExcerpt": "Thanksgiving is one of the more controversial holidays in North America. It’s true; traditionally, it’s been a celebration built on the foundation of something not worth celebrating. The complicated and devastating nature of colonialism isn’t something that should be celebrated without acknowledging the harm that has been done.",
-      "stockImageLocal": "assets/stock-images/63fe9495a34b6ccf.jpg"
+      "stockImageLocal": "assets/stock-images/bdaf73b0c9e8717f.jpg"
     },
     {
       "source": "The Campus",
@@ -2607,15 +2693,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-05T04:07:08.529Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg",
-      "imageTitle": "Bishop's University John Bassett Memorial Library",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg",
+      "imageTitle": "Bishop's University Bandeen Hall",
       "imageCredit": "Photo : Tpoirier05 / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Tpoirier05",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:John_Bassett_Memorial_Library.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bandeen_Hall.jpg",
       "leadExcerpt": "The crowd roared with joy as the team jumped into the glass celebrating in front of them. Momentum carried for the team as barely two minutes later rookie defenseman Anthony Ménard sprung Senior forward and assistant captain Cody Morton on a breakaway.",
-      "stockImageLocal": "assets/stock-images/e61047bee5a9fe27.jpg"
+      "stockImageLocal": "assets/stock-images/d75a894c65c0f22f.jpg"
     },
     {
       "source": "The Campus",
@@ -3007,15 +3093,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-04T17:39:41.550Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg",
-      "imageTitle": "Henry F. Hall Building 10, Concordia University",
-      "imageCredit": "Photo : Jeangagnon / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Jeangagnon",
-      "imageLicense": "CC BY-SA 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG",
+      "imageTitle": "Mackay Street near Concordia University, Montreal",
+      "imageCredit": "Photo : Thomas1313 / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Thomas1313",
+      "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Henry_F._Hall_Building_10.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG",
       "leadExcerpt": "The program lets immigrants obtain a Quebec selection certificate, which helps them apply for permanent residency. International students and foreign workers must provide proof of French proficiency or show they have worked in certain sectors in the province for at least two years.",
-      "stockImageLocal": "assets/stock-images/4242d9aea59f4d8b.jpg"
+      "stockImageLocal": "assets/stock-images/63b014a9599e54ad.jpg"
     },
     {
       "source": "The Link",
@@ -3481,30 +3567,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "The Plant",
-      "institution": "Dawson College",
-      "region": "Montréal",
-      "type": "cegep",
-      "lang": "en",
-      "title": "Letters from the Editors October 2026",
-      "link": "https://theplantnews.com/2026/10/25/letters-from-the-editors-october-2026/",
-      "author": "The editorial team",
-      "date": "2026-10-25T18:48:05.000Z",
-      "excerpt": "Dear reader, It’s funny to think that, already, we are halfway through our semester together! I have made it a mission of mine to enjoy the month more; all it has to offer. The trees that arched overhead in September are now golden. I think there is a particular kind of beauty",
-      "image": "",
-      "authorCheckedAt": "2026-11-05T04:07:11.749Z",
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Dawson_College_05.jpg",
-      "imageTitle": "Dawson College 05",
-      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jeangagnon",
-      "imageLicense": "CC BY-SA 3.0",
-      "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_05.jpg",
-      "leadExcerpt": "I have made it a mission of mine to enjoy the month more; all it has to offer. The trees that arched overhead in September are now golden. I think there is a particular kind of beauty in this brief, cosy interval, before the trees are bare and the cold settles in for good.",
-      "stockImageLocal": "assets/stock-images/b6725a5a41507112.jpg"
-    },
-    {
       "source": "Quartier Libre",
       "institution": "Université de Montréal",
       "region": "Montréal",
@@ -3733,32 +3795,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "The Plant",
-      "institution": "Dawson College",
-      "region": "Montréal",
-      "type": "cegep",
-      "lang": "en",
-      "title": "Math, now, … Thinking Outside the Box",
-      "link": "https://theplantnews.com/2026/10/19/math-now-thinking-outside-the-box/",
-      "author": "Charlie Reuter",
-      "date": "2026-10-19T15:51:48.000Z",
-      "excerpt": "Via Charlie Reuter By Charlie Reuter Science & Environment Editor Allow me to show you a problem. It’s not a hard one; you know all the math required since Secondary III. Solving the math is not the point, though. What makes it my favourite problem is the fun one has trying to",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/10/thinking_outside_the_box_fig_1.png",
-      "authorCheckedAt": "2026-11-05T04:07:13.769Z",
-      "sourceImageCredit": "Image via Charlie Reuter",
-      "sourceImageCreator": "Charlie Reuter",
-      "sourceImageCreditUrl": "https://theplantnews.com/2026/10/19/math-now-thinking-outside-the-box/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "thinking_outside_the_box_fig_1.png",
-      "sourceImageCreditRev": 16,
-      "leadImageReady": true,
-      "leadExcerpt": "Allow me to show you a problem. It’s not a hard one; you know all the math required since Secondary III. Solving the math is not the point, though. What makes it my favourite problem is the fun one has trying to visualize the completely counterintuitive solution. Are you ready? Let’s go.",
-      "imageLocal": "assets/news-images/05d6f3318224f888.png",
-      "imageLocalKey": "05d6f3318224f888",
-      "imageLocalVia": "origin"
-    },
-    {
       "source": "Impact Campus",
       "institution": "Université Laval",
       "region": "Capitale-Nationale",
@@ -3808,29 +3844,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "The Plant",
-      "institution": "Dawson College",
-      "region": "Montréal",
-      "type": "cegep",
-      "lang": "en",
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "author": "The editorial team",
-      "date": "2026-10-13T22:28:02.000Z",
-      "excerpt": "Aries (Mar. 20 – Apr.18): For a short period of time, your least wise friends will give you the most sage advice. Keep your eyes and ears open around them. Taurus (Apr.19 – May 20): Use your brain less and your heart more. Not just in love but in your day-to-day life. You’ll",
-      "image": "",
-      "authorCheckedAt": "2026-11-04T20:13:06.737Z",
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/88/Coll%C3%A8ge_Dawson%2C_fa%C3%A7ade_sur_Sherbrooke_O%2C_Montr%C3%A9al_2005-11-10.JPG",
-      "imageTitle": "Collège Dawson, façade sur Sherbrooke Ouest, Montréal",
-      "imageCredit": "Photo : Gene.arboit / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Gene.arboit",
-      "imageLicense": "CC BY-SA 3.0",
-      "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Dawson,_fa%C3%A7ade_sur_Sherbrooke_O,_Montr%C3%A9al_2005-11-10.JPG",
-      "stockImageLocal": "assets/stock-images/aefebc34ebb99e5c.jpg"
-    },
-    {
       "source": "L'Exemplaire",
       "institution": "Université Laval",
       "region": "Capitale-Nationale",
@@ -3850,17 +3863,17 @@
       "sourceImageCreditImageKey": "c1cd7a14-e81e-4399-a55f-d0f111666dac-e1790799322671.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
-      "imageTitle": "Pavillon de médecine dentaire",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/93/Pavillon_des_Services_UL_03.jpg",
+      "imageTitle": "Pavillon des Services",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_des_Services_UL_03.jpg",
       "imageLocal": "assets/news-images/b3c705d98e3955f0.jpg",
       "imageLocalKey": "b3c705d98e3955f0",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/a7235a00dd7907ee.jpg",
+      "stockImageLocal": "assets/stock-images/ce75b7ccff99b3a6.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3907,17 +3920,17 @@
       "sourceImageCreditImageKey": "dsc_2009-2.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg",
-      "imageTitle": "Pavillon Charles-Eugène-Marchand",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Pavillon_de_l%27Est_01.jpg",
+      "imageTitle": "Pavillon de l’Est",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_de_l%27Est_01.jpg",
       "imageLocal": "assets/news-images/ea46ef6162ef9475.jpg",
       "imageLocalKey": "ea46ef6162ef9475",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/9312d68b533a55b8.jpg",
+      "stockImageLocal": "assets/stock-images/2c14dc92c5b3ab5b.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3939,17 +3952,17 @@
       "sourceImageCreditImageKey": "20260930_130623-2.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
-      "imageTitle": "Pavillon J.-A.-DeSève",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Pavillon_Gene-H.-Kruger_02.jpg",
+      "imageTitle": "Pavillon Gene-H.-Kruger",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Gene-H.-Kruger_02.jpg",
       "imageLocal": "assets/news-images/294ffdc14f33c43b.jpg",
       "imageLocalKey": "294ffdc14f33c43b",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/fb0d3ac3bc0ca610.jpg",
+      "stockImageLocal": "assets/stock-images/04f676d202beae5a.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3972,17 +3985,17 @@
       "sourceImageCreditImageKey": "tro_stade-telus-ul.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon Adrien-Pouliot 01",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+      "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Adrien-Pouliot%2001.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
       "imageLocal": "assets/news-images/e4a25ec6e0bc7969.jpg",
       "imageLocalKey": "e4a25ec6e0bc7969",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/f0b7ee2de14eab1a.jpg",
+      "stockImageLocal": "assets/stock-images/f1a23eb08d38a755.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4004,17 +4017,17 @@
       "sourceImageCreditImageKey": "img_2001-scaled-e1791856442129.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/46/Pavillon_H.-Biermans-L.-Moraud_01.jpg",
-      "imageTitle": "Pavillon H.-Biermans-L.-Moraud 01",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Grand_Axe_ULaval.jpg",
+      "imageTitle": "Grand Axe ULaval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_H.-Biermans-L.-Moraud_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Grand_Axe_ULaval.jpg",
       "imageLocal": "assets/news-images/a677e6cc600c71d7.jpg",
       "imageLocalKey": "a677e6cc600c71d7",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/edb0c03bd4709c8a.jpg",
+      "stockImageLocal": "assets/stock-images/638f8d74ce92f23a.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4327,7 +4340,8 @@
       "authorCheckedAt": "2026-11-05T07:25:59.732Z",
       "leadImageReady": false,
       "imageTitle": "McGill University, Montréal",
-      "imageProvider": "campus-bank"
+      "imageProvider": "campus-bank",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4340,7 +4354,7 @@
       "author": "Mairin Burke",
       "date": "2026-09-08T10:05:00.000Z",
       "excerpt": "The Montreal Trans Patient Union (TPU)—a collective advocating for healthcare for trans and nonbinary people—announced on July 12 that McGill’s Student Wellness Hub will once again provide gender-affirming care (GAC) services to trans American students under the age of 19. This",
-      "image": "https://thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose.jpg",
+      "image": "https://thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose-1000x600.jpg",
       "authorCheckedAt": "2026-11-05T09:06:43.045Z",
       "sourceImageCredit": "Photo: The Tribune",
       "sourceImageCreditUrl": "https://thetribune.ca/news/mcgill-wellness-hub-reinstates-gac-for-trans-american-students-under-the-age-of-19-08092026/",
@@ -4349,9 +4363,7 @@
       "sourceImageCreditImageKey": "news-5-eliot-loose.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/8b31c1bb2ae24d42.jpg",
-      "imageLocalKey": "8b31c1bb2ae24d42",
-      "imageLocalVia": "disk"
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4368,7 +4380,8 @@
       "authorCheckedAt": "2026-11-05T09:06:43.490Z",
       "leadImageReady": false,
       "imageTitle": "Roddick Gates, McGill University",
-      "imageProvider": "campus-bank"
+      "imageProvider": "campus-bank",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4392,7 +4405,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/c59f0f121c007a38.jpg",
       "imageLocalKey": "c59f0f121c007a38",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4416,7 +4430,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/15504a096ec4570e.jpg",
       "imageLocalKey": "15504a096ec4570e",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4440,7 +4455,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/34ecd821609b6280.png",
       "imageLocalKey": "34ecd821609b6280",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4464,7 +4480,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/f4c76630a1cac1b6.jpg",
       "imageLocalKey": "f4c76630a1cac1b6",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4488,7 +4505,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/edb7700e4ff4fb1c.jpg",
       "imageLocalKey": "edb7700e4ff4fb1c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4512,7 +4530,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2430478fcc1fdf75.jpg",
       "imageLocalKey": "2430478fcc1fdf75",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4536,7 +4555,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/75bc16a385dfdedb.jpg",
       "imageLocalKey": "75bc16a385dfdedb",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4560,7 +4580,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/627163318f54f63c.jpg",
       "imageLocalKey": "627163318f54f63c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4584,7 +4605,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/581ab3d9884a6f7c.jpg",
       "imageLocalKey": "581ab3d9884a6f7c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4608,7 +4630,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/4dc6140767c1ee5c.png",
       "imageLocalKey": "4dc6140767c1ee5c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4632,7 +4655,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/ccd99384ee9d1b1f.jpg",
       "imageLocalKey": "ccd99384ee9d1b1f",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4656,7 +4680,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/33bf5add2c4a544b.jpg",
       "imageLocalKey": "33bf5add2c4a544b",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4680,7 +4705,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/601742353e505754.jpg",
       "imageLocalKey": "601742353e505754",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4704,7 +4730,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/235709de0c0b9900.jpg",
       "imageLocalKey": "235709de0c0b9900",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4728,7 +4755,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/b57f213694c29d33.jpg",
       "imageLocalKey": "b57f213694c29d33",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4752,7 +4780,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/a80f5d612c8133a8.jpg",
       "imageLocalKey": "a80f5d612c8133a8",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4776,7 +4805,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/d03ec924bb4426bb.jpg",
       "imageLocalKey": "d03ec924bb4426bb",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Polyscope",
