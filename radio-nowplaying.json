@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T00:59:10.442Z",
+  "updatedAt": "2026-11-05T02:06:46.067Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T00:58:30.365Z"
+      "checkedAt": "2026-11-05T02:06:07.094Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "21:00",
         "end": "23:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "La carte cadeau (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
       "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T00:58:32.692Z"
+      "checkedAt": "2026-11-05T02:06:08.963Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Lo Signal _First of the Month",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,35 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T00:58:35.481Z"
+      "checkedAt": "2026-11-05T02:06:11.398Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
-      },
-      "next": {
         "title": "There's a Synth in the House",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
+      "next": {
+        "title": "Sippin' On Sound",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/sippin-on-sound"
+      },
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "There's a Synth in the House",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T00:58:50.561Z"
+      "checkedAt": "2026-11-05T02:06:25.740Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T00:58:52.172Z"
+      "checkedAt": "2026-11-05T02:06:26.768Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les Amazones",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00",
-        "slug": "les-amazones"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
@@ -154,14 +147,14 @@
         "slug": "box-sophisme"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Les Amazones",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T00:59:10.092Z"
+      "checkedAt": "2026-11-05T02:06:45.716Z"
     }
   }
 }
