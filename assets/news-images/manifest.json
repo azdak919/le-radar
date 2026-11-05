@@ -1118,16 +1118,6 @@
       "via": "origin",
       "nameKey": "88270d3e-2b87-40eb-a414-863e9be35178.jpeg"
     },
-    "3f679541a343ec01": {
-      "local": "assets/news-images/3f679541a343ec01.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_2262.jpeg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 116440,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-02T22:08:45.686Z",
-      "via": "resize-proxy",
-      "nameKey": "img_2262.jpeg"
-    },
     "1e1c34fb613861aa": {
       "local": "assets/news-images/1e1c34fb613861aa.jpg",
       "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/IMG_1693.jpeg",
@@ -1631,15 +1621,6 @@
       "via": "disk",
       "nameKey": "rocky.jpeg"
     },
-    "cdf081914623d574": {
-      "local": "assets/news-images/cdf081914623d574.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/article-de-juliette-c.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 223663,
-      "updatedAt": "2026-11-05T19:09:24.967Z",
-      "via": "disk",
-      "nameKey": "article-de-juliette-c.jpg"
-    },
     "49f21c1877846634": {
       "local": "assets/news-images/49f21c1877846634.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/klein_bottle_rectangles_diagram-1-edited-1.png",
@@ -1669,9 +1650,28 @@
       "updatedAt": "2026-11-05T19:38:31.146Z",
       "via": "origin",
       "nameKey": "rsi_envrionnement_usine.jpg"
+    },
+    "77c707c2771abe3a": {
+      "local": "assets/news-images/77c707c2771abe3a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 64590,
+      "updatedAt": "2026-11-05T20:08:38.215Z",
+      "via": "disk",
+      "nameKey": "jesus.jpg"
+    },
+    "06e34368f82c7274": {
+      "local": "assets/news-images/06e34368f82c7274.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Richardson-Zephir.jpeg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 171726,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-05T20:08:38.627Z",
+      "via": "origin",
+      "nameKey": "richardson-zephir.jpeg"
     }
   },
-  "updatedAt": "2026-11-05T19:38:31.148Z",
+  "updatedAt": "2026-11-05T20:08:38.630Z",
   "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
