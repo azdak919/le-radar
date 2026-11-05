@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-04T23:46:44.483Z",
+  "updated": "2026-11-05T00:06:55.109Z",
   "total": 183,
   "withAuthor": 183,
-  "mismatches": 15,
+  "mismatches": 16,
   "ok": true,
   "samples": [
+    {
+      "title": "Seven Montreal police officers fired due to alleged racist and discriminatory acts",
+      "link": "https://thelinknewspaper.ca/article/16533",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Nicolas Tremblay",
+      "reason": "page-byline"
+    },
     {
       "title": "On avance quand même",
       "link": "https://quartierlibre.ca/on-avance-quand-meme-la-peur/",
@@ -126,5 +134,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 15
+  "fixed": 16
 }
