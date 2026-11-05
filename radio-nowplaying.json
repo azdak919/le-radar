@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-11-05T20:06:53.826Z",
+  "updatedAt": "2026-11-05T21:07:24.004Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:00",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T20:06:07.172Z"
+      "checkedAt": "2026-11-05T21:06:52.178Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T20:06:09.092Z"
+      "checkedAt": "2026-11-05T21:06:53.818Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T20:06:11.891Z"
+      "checkedAt": "2026-11-05T21:06:56.556Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Weirdo Rippers",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/weirdo-rippers"
-      },
-      "next": {
         "title": "Hooked On Sonics",
         "source": "schedule-live",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
+      "next": {
+        "title": "Unheard Of",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
+      },
       "track": "",
-      "showTitle": "Weirdo Rippers",
+      "showTitle": "Hooked On Sonics",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T20:06:32.858Z"
+      "checkedAt": "2026-11-05T21:06:59.250Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T20:06:33.817Z"
+      "checkedAt": "2026-11-05T21:07:00.402Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:30",
         "end": "16:30",
         "slug": "palmareschoq"
       },
+      "next": {
+        "title": "La 3ème demie",
+        "source": "api-live",
+        "start": "17:15",
+        "end": "18:00",
+        "slug": "le-12-mtlsup"
+      },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T20:06:53.475Z"
+      "checkedAt": "2026-11-05T21:07:23.654Z"
     }
   }
 }
