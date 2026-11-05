@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-05T16:05:40.444Z",
+  "updatedAt": "2026-11-05T17:07:04.353Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Sons de Cloches",
+        "title": "Conduite Antisportive",
         "source": "api-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/sons-de-cloches/"
+        "start": "11:30",
+        "end": "12:30",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
       "next": {
         "title": "Chéri.e, j’arrive!",
@@ -20,16 +20,15 @@
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Sons de Cloches",
+      "showTitle": "Conduite Antisportive",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T16:04:58.687Z"
+      "checkedAt": "2026-11-05T17:06:05.738Z"
     },
     "cism": {
       "id": "cism",
@@ -56,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T16:05:00.505Z"
+      "checkedAt": "2026-11-05T17:06:08.130Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Under The Olive Tree",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Venus Radio",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Under The Olive Tree",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T16:05:04.857Z"
+      "checkedAt": "2026-11-05T17:06:10.454Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Chi and Ri",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/chi-and-ri"
-      },
-      "next": {
         "title": "The Power Hour",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/the-power-hour"
       },
+      "next": {
+        "title": "What's Happening in NDG",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+      },
       "track": "",
-      "showTitle": "Chi and Ri",
+      "showTitle": "The Power Hour",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T16:05:20.171Z"
+      "checkedAt": "2026-11-05T17:06:45.291Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T16:05:21.048Z"
+      "checkedAt": "2026-11-05T17:06:46.244Z"
     },
     "choq": {
       "id": "choq",
@@ -155,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T16:05:40.093Z"
+      "checkedAt": "2026-11-05T17:07:04.003Z"
     }
   }
 }
