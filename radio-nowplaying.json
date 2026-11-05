@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T18:06:31.857Z",
+  "updatedAt": "2026-11-05T20:06:53.826Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T18:06:04.623Z"
+      "checkedAt": "2026-11-05T20:06:07.172Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Rythmologie",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "15:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
       },
       "next": {
-        "title": "La session live",
+        "title": "Entropie",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/entropie"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T18:06:06.440Z"
+      "checkedAt": "2026-11-05T20:06:09.092Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
+        "title": "Positive Vibes",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "title": "Off the Hour: Trib Talks",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,35 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T18:06:09.204Z"
+      "checkedAt": "2026-11-05T20:06:11.891Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "What's Happening in NDG",
+        "title": "Weirdo Rippers",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "next": {
-        "title": "Secondhand Sounds",
+        "title": "Hooked On Sonics",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "track": "",
-      "showTitle": "What's Happening in NDG",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T18:06:11.576Z"
+      "checkedAt": "2026-11-05T20:06:32.858Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,34 +126,28 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T18:06:12.830Z"
+      "checkedAt": "2026-11-05T20:06:33.817Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Onde de CHOQ",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
-      },
+      "current": null,
       "next": {
-        "title": "Dans les airs",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00",
-        "slug": "dans-les-airs"
+        "start": "15:30",
+        "end": "16:30",
+        "slug": "palmareschoq"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Onde de CHOQ",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T18:06:31.506Z"
+      "checkedAt": "2026-11-05T20:06:53.475Z"
     }
   }
 }
