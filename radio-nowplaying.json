@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-11-05T21:07:24.004Z",
+  "updatedAt": "2026-11-05T22:06:52.250Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
+      "current": null,
       "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-05T21:06:52.178Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Rythmologie",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
-        "title": "Entropie",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/entropie"
-      },
-      "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T21:06:53.818Z"
+      "checkedAt": "2026-11-05T22:06:04.761Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Entropie",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/entropie"
+      },
+      "next": {
+        "title": "La rumba latina",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
+      },
+      "track": "",
+      "showTitle": "Entropie",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-05T22:06:06.384Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off the Hour: Trib Talks",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Off the Hour: Trib Talks",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T21:06:56.556Z"
+      "checkedAt": "2026-11-05T22:06:10.156Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Hooked On Sonics",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "next": {
         "title": "Unheard Of",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/unheard-of"
@@ -103,12 +96,12 @@
       "track": "",
       "showTitle": "Hooked On Sonics",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T21:06:59.250Z"
+      "checkedAt": "2026-11-05T22:06:32.506Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T21:07:00.402Z"
+      "checkedAt": "2026-11-05T22:06:33.635Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:30",
-        "end": "16:30",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "La 3ème demie",
         "source": "api-live",
@@ -153,14 +140,14 @@
         "slug": "le-12-mtlsup"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Palmarès CHOQ.ca",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T21:07:23.654Z"
+      "checkedAt": "2026-11-05T22:06:51.899Z"
     }
   }
 }
