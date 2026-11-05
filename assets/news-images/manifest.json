@@ -261,16 +261,6 @@
       "via": "origin",
       "nameKey": "image1.png"
     },
-    "a72f307aa3fd358a": {
-      "local": "assets/news-images/a72f307aa3fd358a.jpg",
-      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/Edito2.jpg",
-      "host": "montrealcampus.ca",
-      "bytes": 354575,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-25T22:35:06.621Z",
-      "via": "origin",
-      "nameKey": "edito2.jpg"
-    },
     "d4b9c9430cfd97fc": {
       "local": "assets/news-images/d4b9c9430cfd97fc.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/1000059287-e1793018860601.jpg",
@@ -1661,17 +1651,27 @@
       "via": "disk",
       "nameKey": "article-de-juliette-c.jpg"
     },
-    "d0d4eef2f356a4c4": {
-      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
+    "0d84d91b0191efcf": {
+      "local": "assets/news-images/0d84d91b0191efcf.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
       "host": "www.delitfrancais.com",
-      "bytes": 286051,
-      "updatedAt": "2026-11-05T21:37:53.757Z",
+      "bytes": 83501,
+      "updatedAt": "2026-11-05T22:07:43.985Z",
       "via": "disk",
-      "nameKey": "ak-mbam.jpg"
+      "nameKey": "blanchissement.png"
+    },
+    "b5e0ae5ceaa51323": {
+      "local": "assets/news-images/b5e0ae5ceaa51323.jpg",
+      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/97a15dafa9922b8717c1d3162c3013c6.jpg",
+      "host": "montrealcampus.ca",
+      "bytes": 14361,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-05T22:07:44.538Z",
+      "via": "origin",
+      "nameKey": "97a15dafa9922b8717c1d3162c3013c6.jpg"
     }
   },
-  "updatedAt": "2026-11-05T21:37:53.764Z",
+  "updatedAt": "2026-11-05T22:07:44.540Z",
   "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
