@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T10:06:39.973Z",
+  "updatedAt": "2026-11-05T12:06:46.682Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T10:05:59.401Z"
+      "checkedAt": "2026-11-05T12:06:05.997Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Jimmy et Neutron",
         "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
       },
       "next": {
-        "title": "La lecture pis toi",
+        "title": "La collation",
         "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Jimmy et Neutron",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T10:06:01.639Z"
+      "checkedAt": "2026-11-05T12:06:08.565Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
+        "title": "OFC Podcast Radio",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Total €clipse of The ☾harts",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "track": "",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T10:06:04.726Z"
+      "checkedAt": "2026-11-05T12:06:11.550Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Everything Everywhere",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T10:06:19.553Z"
+      "checkedAt": "2026-11-05T12:06:26.438Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T10:06:20.419Z"
+      "checkedAt": "2026-11-05T12:06:27.472Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +148,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T10:06:39.623Z"
+      "checkedAt": "2026-11-05T12:06:46.331Z"
     }
   }
 }
