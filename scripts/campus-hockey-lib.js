@@ -255,6 +255,9 @@ function teamsFromGames(games, { now = Date.now(), reg = null } = {}) {
     team.results.sort((a, b) => String(b.date).localeCompare(String(a.date)));
     team.nextGame = team.nextGames[0] || null;
     if (!team.lastGame && team.results[0]) team.lastGame = team.results[0];
+    // Les matchs sont posés après le premier apply : surnom + adversaire
+    // (Martlets, Carabins) doivent suivre le calendrier complet.
+    if (reg) applyRegistryToTeam(team, reg);
   }
   return teams;
 }

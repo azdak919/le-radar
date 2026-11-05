@@ -80,6 +80,24 @@ test('sports-teams.json registre des formations', () => {
   const len = resolveSportsTeam(loaded, { name: 'Ch.-Lennoxville', code: 'LEN' });
   assert.equal(len.matched, true);
   assert.match(len.fullName || '', /Lennoxville|Champlain/i);
+  const mcgillF = resolveSportsTeam(loaded, {
+    name: 'McGill', code: 'MCG', sector: 'universitaire', sex: 'F',
+  });
+  const mcgillM = resolveSportsTeam(loaded, {
+    name: 'McGill', code: 'MCG', sector: 'universitaire', sex: 'M',
+  });
+  assert.equal(mcgillF.nickname, 'Martlets');
+  assert.equal(mcgillM.nickname, 'Redbirds');
+  const udem = resolveSportsTeam(loaded, {
+    name: 'Montréal', code: 'MTL', sector: 'universitaire', sex: 'F',
+  });
+  assert.equal(udem.registryId, 'udem');
+  assert.equal(udem.nickname, 'Carabins');
+  const cta = readFileSync(join(ROOT, 'radar-sports-cta.js'), 'utf8');
+  assert.match(cta, /mcgill:\s*\{\s*F:\s*'Martlets',\s*M:\s*'Redbirds'\s*\}/);
+  const mcgillEntry = reg.teams.find((t) => t.id === 'mcgill');
+  assert.equal(mcgillEntry.nicknameBySex.F, 'Martlets');
+  assert.equal(mcgillEntry.nicknameBySex.M, 'Redbirds');
 });
 
 test('fetch-sports.js est du JS Node valide', () => {

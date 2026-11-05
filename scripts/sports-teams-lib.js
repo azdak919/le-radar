@@ -156,6 +156,22 @@ function resolveSportsTeam(reg, query = {}) {
   return emptyResolved(query);
 }
 
+function normSex(sex) {
+  const s = String(sex || '').trim().toUpperCase();
+  if (s === 'F' || s === 'W') return 'F';
+  if (s === 'M' || s === 'H') return 'M';
+  return '';
+}
+
+/** Surnom selon le sexe quand le registre en a deux (Martlets / Redbirds). */
+function nicknameForEntry(entry, sex) {
+  if (!entry) return null;
+  const key = normSex(sex);
+  const by = entry.nicknameBySex;
+  if (by && key && by[key]) return String(by[key]);
+  return entry.nickname || null;
+}
+
 function emptyResolved(query) {
   const name = String(query.name || '').trim() || 'Équipe';
   const code = String(query.code || '').toUpperCase().slice(0, 4) || codeFromName(name);
@@ -176,7 +192,7 @@ function toResolved(entry, query) {
     registryId: entry.id,
     shortName: entry.shortName || query.name || entry.fullName,
     fullName: entry.fullName || null,
-    nickname: entry.nickname || null,
+    nickname: nicknameForEntry(entry, query.sex),
     code: String(entry.code || query.code || '').toUpperCase().slice(0, 4),
     sector: entry.sector || query.sector || null,
     priority: Number.isFinite(entry.priority) ? entry.priority : 99,
@@ -218,6 +234,7 @@ function applyRegistryToTeam(team, reg) {
     code: team.code,
     sector: team.sector,
     rseqTeamId: team.rseqTeamId,
+    sex: team.sex,
   });
   if (sailingClub) {
     // Établissement hôte + code depuis le registre ; garder le nom de club.
@@ -236,13 +253,27 @@ function applyRegistryToTeam(team, reg) {
     team.registryId = resolved.registryId || undefined;
     team.priority = resolved.priority;
   }
-  if (team.lastGame) applyRegistryToGameSide(team.lastGame, reg, team.sector);
-  if (team.nextGame) applyRegistryToGameSide(team.nextGame, reg, team.sector);
+  applyRegistryToListedGames(team, reg);
   return team;
 }
 
-function applyRegistryToGameSide(game, reg, sector) {
-  if (!game) return;
+function applyRegistryToListedGames(team, reg) {
+  if (!team || !reg) return;
+  const list = [];
+  if (team.lastGame) list.push(team.lastGame);
+  if (team.nextGame) list.push(team.nextGame);
+  if (Array.isArray(team.results)) list.push(...team.results);
+  if (Array.isArray(team.nextGames)) list.push(...team.nextGames);
+  const seen = new Set();
+  for (const game of list) {
+    if (!game || seen.has(game)) continue;
+    seen.add(game);
+    applyRegistryToGameSide(game, reg, team.sector, team.sex);
+  }
+}
+
+function applyRegistryToGameSide(game, reg, sector, sex) {
+  if (!game || !reg) return;
   // Régate : le nom d’épreuve n’est pas une école. Ne pas réécrire
   // « Régionale Québec » en sigle UCON / LAV / MCG.
   if (game.scoreKind === 'place' || game.sport === 'sailing' || game.opponentCode === 'CICS') return;
@@ -256,12 +287,21 @@ function applyRegistryToGameSide(game, reg, sector) {
   } else if (/universit[eé]|university/i.test(hint)) {
     oppSector = 'universitaire';
   }
-  const opp = resolveSportsTeam(reg, {
-    name: game.opponent,
-    fullName: game.opponentFullName,
-    code: game.opponentCode,
-    sector: oppSector,
-  });
+  const sideSex = game.sex || sex;
+  const regId = String(game.opponentRegistryId || '');
+  let opp = null;
+  if (regId && reg.byId && reg.byId.has(regId)) {
+    opp = toResolved(reg.byId.get(regId), { sex: sideSex, name: game.opponent });
+  }
+  if (!opp) {
+    opp = resolveSportsTeam(reg, {
+      name: game.opponent,
+      fullName: game.opponentFullName,
+      code: game.opponentCode,
+      sector: oppSector,
+      sex: sideSex,
+    });
+  }
   game.opponent = opp.shortName;
   game.opponentCode = opp.code;
   if (opp.fullName) game.opponentFullName = opp.fullName;
@@ -275,6 +315,7 @@ module.exports = {
   resolveSportsTeam,
   applyRegistryToTeam,
   applyRegistryToGameSide,
+  nicknameForEntry,
   codeFromName,
   normKey,
   DEFAULT_PATH,

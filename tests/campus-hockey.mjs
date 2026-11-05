@@ -115,6 +115,32 @@ assert.equal(sideGames.length, 1);
 assert.equal(sideGames[0].homeRegistryId, 'mcgill', 'At X → X is home');
 assert.equal(sideGames[0].awayRegistryId, 'bishops');
 
+const { loadSportsTeamsRegistry } = require(join(ROOT, 'scripts/sports-teams-lib.js'));
+const reg = loadSportsTeamsRegistry();
+const women = lib.teamsFromGames([{
+  date: '2026-11-05',
+  time: '19:00',
+  homeRegistryId: 'mcgill',
+  homeName: 'McGill',
+  awayRegistryId: 'udem',
+  awayName: 'Montréal',
+  competition: 'Hockey universitaire féminin D1',
+  url: 'https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27',
+  scoreHome: null,
+  scoreAway: null,
+  sex: 'F',
+  division: 'D1',
+}], { now: Date.parse('2026-11-05T12:00:00-05:00'), reg });
+const martlets = Object.values(women).find((t) => t.registryId === 'mcgill' && t.sex === 'F');
+assert.equal(martlets.nickname, 'Martlets');
+assert.equal(martlets.nextGame.opponent, 'Montréal');
+assert.equal(martlets.nextGame.opponentNickname, 'Carabins');
+assert.equal(martlets.nextGame.opponentCode, 'MTL');
+assert.equal(martlets.nextGame.opponentRegistryId, 'udem');
+const carabins = Object.values(women).find((t) => t.registryId === 'udem' && t.sex === 'F');
+assert.equal(carabins.nickname, 'Carabins');
+assert.equal(carabins.nextGame.opponentNickname, 'Martlets');
+
 const src = readFileSync(join(ROOT, 'scripts/fetch-sports.js'), 'utf8');
 assert.match(src, /campus-hockey-lib/);
 assert.match(src, /calendriers campus/);
