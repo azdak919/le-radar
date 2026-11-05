@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-05T07:26:00.148Z",
+  "updated": "2026-11-05T09:06:51.101Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 17,
+  "mismatches": 18,
   "ok": true,
   "samples": [
     {
@@ -134,13 +134,21 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
+      "link": "https://thetribune.ca/sports/after-mcgill-athletics-cuts-teams-navigate-a-new-future-under-ssmu-08092026/",
       "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Ellen Lurie and Managing Editor",
-      "reason": "page-byline"
+      "fieldAuthor": "Ivanna Zhang et Zain Ahmed",
+      "canonicalAuthor": "Ivanna Zhang and Zain Ahmed",
+      "reason": "page-byline-overrides-rss"
+    },
+    {
+      "title": "What we liked this summer break",
+      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "Dylan Hing, Lia James et Siena Torres",
+      "canonicalAuthor": "Dylan Hing, Lia James and Siena Torres",
+      "reason": "page-byline-overrides-rss"
     }
   ],
-  "fixed": 17
+  "fixed": 18
 }
