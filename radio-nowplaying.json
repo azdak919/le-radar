@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T07:49:23.284Z",
+  "updatedAt": "2026-11-05T09:07:02.352Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T07:48:43.077Z"
+      "checkedAt": "2026-11-05T09:05:59.011Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Charlottes",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/les-charlottes"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "La lecture pis toi",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+      },
       "track": "",
-      "showTitle": "Les Charlottes",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T07:48:45.384Z"
+      "checkedAt": "2026-11-05T09:06:00.931Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "Freeform Air",
+      "next": {
+        "title": "Total €clipse of The ☾harts",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "07:00"
+      },
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T07:48:48.294Z"
+      "checkedAt": "2026-11-05T09:06:03.940Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T07:49:03.206Z"
+      "checkedAt": "2026-11-05T09:06:22.219Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T07:49:04.726Z"
+      "checkedAt": "2026-11-05T09:06:23.326Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +134,20 @@
       "current": null,
       "next": {
         "title": "Onde de CHOQ",
-        "source": "api-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "13:45",
-        "slug": "onde-de-choq"
+        "url": "https://www.choq.ca/emissions/onde-de-choq"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T07:49:22.933Z"
+      "checkedAt": "2026-11-05T09:07:02.002Z"
     }
   }
 }
