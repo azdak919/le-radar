@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T15:07:04.743Z",
+  "updatedAt": "2026-11-05T16:05:40.444Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,52 +29,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T15:06:05.885Z"
+      "checkedAt": "2026-11-05T16:04:58.687Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Présentement à l'écoute",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
-      },
-      "next": {
         "title": "La grande ludothèque",
         "source": "schedule",
         "start": "11:00",
         "end": "13:00",
         "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Présentement à l'écoute",
+      "showTitle": "La grande ludothèque",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T15:06:08.202Z"
+      "checkedAt": "2026-11-05T16:05:00.505Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Folk Directions",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Under The Olive Tree",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Venus Radio",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Folk Directions",
+      "showTitle": "Under The Olive Tree",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,59 +82,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T15:06:10.918Z"
+      "checkedAt": "2026-11-05T16:05:04.857Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Chi and Ri",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/chi-and-ri"
       },
-      "track": "",
-      "showTitle": "Democracy Now",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-05T15:06:45.672Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Le NEUF",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
       "next": {
-        "title": "À nous le futur",
+        "title": "The Power Hour",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "00:00"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/the-power-hour"
       },
       "track": "",
-      "showTitle": "Le NEUF",
+      "showTitle": "Chi and Ri",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T15:06:46.948Z"
+      "checkedAt": "2026-11-05T16:05:20.171Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "00:00"
+      },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "track": "",
+      "showTitle": "À nous le futur",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-05T16:05:21.048Z"
     },
     "choq": {
       "id": "choq",
@@ -155,7 +155,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T15:07:04.393Z"
+      "checkedAt": "2026-11-05T16:05:40.093Z"
     }
   }
 }
