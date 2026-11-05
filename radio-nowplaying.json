@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-05T02:06:46.067Z",
+  "updatedAt": "2026-11-05T03:36:43.704Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Funk Connection",
-        "source": "api-live",
-        "start": "19:30",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/funk-connection/"
-      },
+      "current": null,
       "next": {
-        "title": "Blasphème",
-        "source": "schedule-live",
-        "start": "21:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/blaspheme/"
+        "title": "Jeudi Révolte",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Funk Connection",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T02:06:07.094Z"
+      "checkedAt": "2026-11-05T03:36:04.478Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T02:06:08.963Z"
+      "checkedAt": "2026-11-05T03:36:06.608Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Lo Signal _First of the Month",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Off The Hook",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Lo Signal _First of the Month",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T02:06:11.398Z"
+      "checkedAt": "2026-11-05T03:36:09.143Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "There's a Synth in the House",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
-      },
-      "next": {
         "title": "Sippin' On Sound",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/sippin-on-sound"
       },
+      "next": {
+        "title": "The Night Watch",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
+      },
       "track": "",
-      "showTitle": "There's a Synth in the House",
+      "showTitle": "Sippin' On Sound",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T02:06:25.740Z"
+      "checkedAt": "2026-11-05T03:36:23.841Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T02:06:26.768Z"
+      "checkedAt": "2026-11-05T03:36:25.063Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T02:06:45.716Z"
+      "checkedAt": "2026-11-05T03:36:43.353Z"
     }
   }
 }
