@@ -1792,6 +1792,59 @@ function sportsChipWithInstitution(label, paren) {
 }
 
 /**
+ * Surnoms qui changent selon le sexe. Miroir de `nicknameBySex` dans
+ * sports-teams.json — le payload déjà publié dit encore « Redbirds » pour
+ * les équipes féminines de McGill.
+ */
+const SPORTS_NICK_BY_SEX = {
+  mcgill: { F: 'Martlets', M: 'Redbirds' },
+};
+
+function sportsNormSex(raw) {
+  const s = String(raw || '').trim();
+  if (/^(f|w)$/i.test(s)) return 'F';
+  if (/^(m|h)$/i.test(s)) return 'M';
+  if (/f[eé]minin|\bwomen\b/i.test(s)) return 'F';
+  if (/\bmasculin\b|\bmen\b/i.test(s)) return 'M';
+  return '';
+}
+
+function sportsLoadedTeamList() {
+  const teams = sportsData && sportsData.teams;
+  if (!teams) return [];
+  return Array.isArray(teams) ? teams : Object.values(teams);
+}
+
+function sportsNicknameFromLoadedTeams({ registryId, shortName, sector } = {}) {
+  const list = sportsLoadedTeamList();
+  const id = String(registryId || '');
+  if (id) {
+    const hit = list.find((t) => t && t.registryId === id && t.nickname && t.sport !== 'sailing');
+    if (hit) return String(hit.nickname).trim();
+  }
+  const fold = sportsFoldKey(shortName);
+  if (!fold) return '';
+  const hits = list.filter((t) => t && t.nickname && t.sport !== 'sailing'
+    && sportsFoldKey(t.name || t.shortName) === fold
+    && (!sector || !t.sector || t.sector === sector));
+  const hit = hits.find((t) => !sector || t.sector === sector) || hits[0];
+  return hit ? String(hit.nickname).trim() : '';
+}
+
+/** Surnom d’une face : table par sexe, puis champ, puis une autre formation du payload. */
+function sportsFacingNickname({
+  nick = '', registryId = '', sex = '', shortName = '', sector = '',
+} = {}) {
+  const id = String(registryId || '');
+  const sk = sportsNormSex(sex);
+  const table = SPORTS_NICK_BY_SEX[id];
+  if (table && sk && table[sk]) return table[sk];
+  const given = String(nick || '').trim();
+  if (given) return given;
+  return sportsNicknameFromLoadedTeams({ registryId: id, shortName, sector });
+}
+
+/**
  * Nom d’équipe pour **puce** : surnom + (sigle) (Vert & Or (UdeS)).
  * Sans surnom : acronyme univ. ou nom officiel cégep. Voile = club.
  */
@@ -1810,7 +1863,14 @@ function sportsChipTeamShort(team) {
     sector: team?.sector,
   };
   const nick = sailing ? '' : String(team?.nickname || '').trim();
-  if (nick) return sportsChipWithInstitution(nick, sportsInstitutionParen(args));
+  const faced = sailing ? '' : sportsFacingNickname({
+    nick,
+    registryId: team?.registryId,
+    sex: team?.sex || team?.leagueLabel,
+    shortName: team?.name || team?.shortName,
+    sector: team?.sector,
+  });
+  if (faced) return sportsChipWithInstitution(faced, sportsInstitutionParen(args));
   let name = sportsDisplaySideName({
     ...args,
     nickname: '',
@@ -1824,7 +1884,7 @@ function sportsChipTeamShort(team) {
 }
 
 /** Adversaire sur puce — surnom + (sigle), comme l’équipe à domicile. */
-function sportsChipOpponentLabel(game) {
+function sportsChipOpponentLabel(game, team) {
   if (sportsIsSailingGame(null, game)) {
     return sportsSailEventShort(game) || 'Régate';
   }
@@ -1832,11 +1892,16 @@ function sportsChipOpponentLabel(game) {
   const code = String(game?.opponentCode || '').toUpperCase();
   const sport = String(game?.sport || '').toLowerCase();
   const sailing = sport === 'sailing' || sport === 'voile';
-  let sector = '';
-  if (sportsLooksCollegial({ fullName: full, shortName: game?.opponent, code })) {
-    sector = 'collegial';
-  } else if (sportsLooksUniversity({ fullName: full, shortName: game?.opponent, code })) {
-    sector = 'universitaire';
+  let sector = String(game?.opponentSector || '').toLowerCase();
+  if (sector !== 'collegial' && sector !== 'universitaire') {
+    if (sportsLooksCollegial({ fullName: full, shortName: game?.opponent, code })) {
+      sector = 'collegial';
+    } else if (sportsLooksUniversity({ fullName: full, shortName: game?.opponent, code })) {
+      sector = 'universitaire';
+    } else {
+      const teamSector = String(team?.sector || '').toLowerCase();
+      if (teamSector === 'collegial' || teamSector === 'universitaire') sector = teamSector;
+    }
   }
   const args = {
     shortName: game?.opponent,
@@ -1845,7 +1910,14 @@ function sportsChipOpponentLabel(game) {
     sector,
   };
   const nick = sailing ? '' : String(game?.opponentNickname || '').trim();
-  if (nick) return sportsChipWithInstitution(nick, sportsInstitutionParen(args));
+  const faced = sailing ? '' : sportsFacingNickname({
+    nick,
+    registryId: game?.opponentRegistryId,
+    sex: game?.sex || team?.sex || game?.competition || team?.leagueLabel,
+    shortName: game?.opponent,
+    sector,
+  });
+  if (faced) return sportsChipWithInstitution(faced, sportsInstitutionParen(args));
   return sportsDisplaySideName({
     ...args,
     nickname: '',
@@ -1952,7 +2024,7 @@ function sportsLiveScoreText(game) {
 
 function sportsLiveTeamsScoreHtml(team, game) {
   const home = sportsChipTeamShort(team);
-  const opp = sportsChipOpponentLabel(game);
+  const opp = sportsChipOpponentLabel(game, team);
   const scoreTxt = sportsLiveScoreText(game);
   return `<span class="sports-chip__name">${escapeHtml(home)}</span> `
     + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
@@ -1966,7 +2038,7 @@ function sportsLiveTeamsScoreHtml(team, game) {
  */
 function sportsScorebugSides(team, game) {
   const us = sportsChipTeamShort(team);
-  const them = sportsChipOpponentLabel(game);
+  const them = sportsChipOpponentLabel(game, team);
   const has = sportsGameHasScore(game);
   const usN = has ? String(game.scoreFor) : SPORTS_LIVE_SCORE_PENDING_SIDE;
   const themN = has ? String(game.scoreAgainst) : SPORTS_LIVE_SCORE_PENDING_SIDE;
@@ -2335,7 +2407,7 @@ function sportsCtaLabelFromSlide(slide) {
   const g = slide.game;
   const glyph = sportsGlyph(slide.team.sport || g.sport);
   const home = sportsChipTeamShort(slide.team);
-  const opp = sportsChipOpponentLabel(g);
+  const opp = sportsChipOpponentLabel(g, slide.team);
 
   if (sportsGameIsLive(g)) {
     return `${glyph} ${home} ${sportsLiveScoreText(g)} ${opp}`;
@@ -3500,7 +3572,7 @@ function fillSportsCtaLayer(layer, slide) {
   } else if (src?.mode === 'next' && src.team && src.game) {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
-    const opp = sportsChipOpponentLabel(g);
+    const opp = sportsChipOpponentLabel(g, src.team);
     text.innerHTML = sportsIsSailingGame(src.team, g)
       ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__vs">·</span> `
@@ -3511,7 +3583,7 @@ function fillSportsCtaLayer(layer, slide) {
   } else if (src?.team && src.game && src.mode === 'result') {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
-    const opp = sportsChipOpponentLabel(g);
+    const opp = sportsChipOpponentLabel(g, src.team);
     const placeKind = sportsIsPlaceResult(g, src.team.sport);
     if (placeKind) {
       const placeTxt = sportsPlaceScoreText(g);
@@ -3881,7 +3953,7 @@ function sportsChipTitle(slide) {
   const sport = sportsSportLabelFr(g.sport || team.sport);
   // Mêmes libellés que les puces (Bleu/Jaune, fullName si mono-token).
   const home = sportsChipTeamShort(team);
-  const opp = sportsPlainOpponentName(g);
+  const opp = sportsChipOpponentLabel(g, team);
   const when = formatSportsWhen(g.date, g.time);
   const host = String(team.fullName || '').trim();
 
@@ -4038,7 +4110,7 @@ function paintSportsChip(slide, animate = false) {
 
   const home = sportsChipTeamShort(team);
   // Puce étroite : acronymes univ. (ULaval, UdeM…) — CTA garde les formes longues.
-  const opp = sportsChipOpponentLabel(g);
+  const opp = sportsChipOpponentLabel(g, slide.team);
   const subLine = sportsMatchSubLine(slide);
   const whenInfo = sportsMatchWhenTag(slide);
   const whenTag = whenInfo ? (() => {
