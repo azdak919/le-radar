@@ -1511,15 +1511,6 @@
       "via": "disk",
       "nameKey": "blanchissement.png"
     },
-    "81eba94ebcb817b3": {
-      "local": "assets/news-images/81eba94ebcb817b3.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/RebeccaChan_OliviaRodrigo_Vol44-1.jpg",
-      "host": "theconcordian.com",
-      "bytes": 123154,
-      "updatedAt": "2026-11-04T23:37:56.453Z",
-      "via": "disk",
-      "nameKey": "rebeccachan_oliviarodrigo_vol44-1.jpg"
-    },
     "a2b29577a851f9b4": {
       "local": "assets/news-images/a2b29577a851f9b4.webp",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0217.png",
@@ -1629,9 +1620,19 @@
       "updatedAt": "2026-11-05T14:39:02.195Z",
       "via": "resize-proxy",
       "nameKey": "capture-decran-le-2026-11-03-a-18.13.47.png"
+    },
+    "5290d639c37348b7": {
+      "local": "assets/news-images/5290d639c37348b7.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0169.jpg",
+      "host": "theconcordian.com",
+      "bytes": 142433,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-05T15:07:41.288Z",
+      "via": "origin",
+      "nameKey": "img_0169.jpg"
     }
   },
-  "updatedAt": "2026-11-05T14:39:02.198Z",
+  "updatedAt": "2026-11-05T15:07:41.291Z",
   "count": 164,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
