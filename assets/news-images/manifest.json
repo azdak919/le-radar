@@ -1495,16 +1495,6 @@
       "via": "resize-proxy",
       "nameKey": "juliette-c.png"
     },
-    "038198215f0ad9f6": {
-      "local": "assets/news-images/038198215f0ad9f6.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/SamanthaWoo_1026_DJworkshop_VOL44-14.jpg",
-      "host": "theconcordian.com",
-      "bytes": 96328,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-04T14:07:47.941Z",
-      "via": "photon-resize",
-      "nameKey": "samanthawoo_1026_djworkshop_vol44-14.jpg"
-    },
     "cc0e1337f791bded": {
       "local": "assets/news-images/cc0e1337f791bded.jpg",
       "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_EtatDesRoutesAuQuebec_SourcePexels-817x1024.jpg",
@@ -1629,9 +1619,19 @@
       "updatedAt": "2026-11-05T00:08:00.950Z",
       "via": "origin",
       "nameKey": "nst26_1102_spvm_4031.jpg"
+    },
+    "74a99795e0a8bace": {
+      "local": "assets/news-images/74a99795e0a8bace.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/PSPPFirstannoucement-00000002.jpg",
+      "host": "theconcordian.com",
+      "bytes": 163512,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-05T01:37:55.571Z",
+      "via": "resize-proxy",
+      "nameKey": "psppfirstannoucement-00000002.jpg"
     }
   },
-  "updatedAt": "2026-11-05T01:07:58.811Z",
+  "updatedAt": "2026-11-05T01:37:55.574Z",
   "count": 164,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
