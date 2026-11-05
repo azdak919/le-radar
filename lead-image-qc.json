@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-05T23:37:30.931Z",
+  "updated": "2026-11-05T23:43:23.068Z",
   "total": 187,
   "withPhoto": 170,
   "withStock": 31,
   "withCampusBank": 28,
   "fullyCovered": 187,
-  "leadReadyPhotos": 150,
-  "pageScraped": 35,
-  "photosRecovered": 35,
+  "leadReadyPhotos": 149,
+  "pageScraped": 34,
+  "photosRecovered": 34,
   "imagesCleared": 18,
-  "stockSearches": 37,
+  "stockSearches": 38,
   "stockFound": 27,
   "campusBankFound": 22,
   "mainPageLeadReady": true,
@@ -51,6 +51,12 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
     },
     {
+      "title": "Bishop’s Culture is Community",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg"
+    },
+    {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
@@ -75,16 +81,10 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
-      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
-      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
+      "title": "Pete Fry élu maire de Vancouver",
+      "link": "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
-    },
-    {
-      "title": "Virage conservateur en Colombie-Britannique",
-      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Pete-Fry-elu-maire-de-Vancouver_Page-FB-Pete-Fry-for-Vancouver-682x1024.jpg"
     }
   ]
 }
