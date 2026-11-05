@@ -1,16 +1,40 @@
 {
-  "updated": "2026-11-05T17:31:09.670Z",
+  "updated": "2026-11-05T18:07:24.206Z",
   "total": 187,
   "withAuthor": 187,
-  "mismatches": 17,
+  "mismatches": 22,
   "ok": true,
   "samples": [
     {
-      "title": "On Resonance",
-      "link": "https://theplantnews.com/2026/11/05/on-resonance/",
+      "title": "Creative Writing October 2026",
+      "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
       "source": "The Plant",
       "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Martin Kaloshi",
+      "canonicalAuthor": "Frances Juntilla",
+      "reason": "page-byline"
+    },
+    {
+      "title": "La peur : un plaisir paradoxal",
+      "link": "https://quartierlibre.ca/frisson-le-plaisir-paradoxal-de-la-peur/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Julie Bertille",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Femme, et c’est tout",
+      "link": "https://theplantnews.com/2026/11/05/femme-et-cest-tout/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Alaa Ettaouth",
+      "reason": "page-byline"
+    },
+    {
+      "title": "How Generation Z is Quietly Leading a Revolution",
+      "link": "https://theplantnews.com/2026/11/05/how-generation-z-is-quietly-leading-a-revolution/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Alexander Lopez Ricaurte",
       "reason": "page-byline"
     },
     {
@@ -27,30 +51,6 @@
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Why is it important to vote?",
-      "link": "https://theplantnews.com/2026/11/03/quebec-2026-election-guide/",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Streaming service Fatigue & the Resurrection of Physical Media",
-      "link": "https://theplantnews.com/2026/11/03/the-resurrection-of-physical-media/",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "STM Turns 60: How’s the Service Treating You?",
-      "link": "https://theplantnews.com/2026/11/03/stm-anniversary/",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
     },
     {
@@ -134,13 +134,37 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
+      "title": "Celebrating CAEO Québec’s 50th Anniversary",
+      "link": "https://www.mcgilldaily.com/2026/10/celebrating-caeo-quebecs-50th-anniversary/",
       "source": "The McGill Daily",
+      "fieldAuthor": "Mara Gibea et Justin Friedberg",
+      "canonicalAuthor": "Mara Gibea and Justin Friedberg",
+      "reason": "page-byline-overrides-rss"
+    },
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Know Your Artist: Stina Baudin",
+      "link": "https://thetribune.ca/a-e/art/know-your-artist-stina-baudin-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
+      "link": "https://thetribune.ca/opinion/commentary/clear-bags-a-simple-remedy-for-montreals-lacklustre-composting-habits-08092026/",
+      "source": "The Tribune",
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
     }
   ],
-  "fixed": 17
+  "fixed": 22
 }
