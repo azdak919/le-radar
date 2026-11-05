@@ -1395,15 +1395,6 @@
       "via": "disk",
       "nameKey": "unnamed.jpg"
     },
-    "cdf081914623d574": {
-      "local": "assets/news-images/cdf081914623d574.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/article-de-juliette-c.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 223663,
-      "updatedAt": "2026-11-04T17:41:53.096Z",
-      "via": "disk",
-      "nameKey": "article-de-juliette-c.jpg"
-    },
     "8a9c168712edaa07": {
       "local": "assets/news-images/8a9c168712edaa07.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/HV26_0930_SHIFT_event_DSC8348_900_506_90.jpg",
@@ -1641,9 +1632,18 @@
       "updatedAt": "2026-11-05T16:39:01.278Z",
       "via": "resize-proxy",
       "nameKey": "news-5-eliot-loose.jpg"
+    },
+    "77c707c2771abe3a": {
+      "local": "assets/news-images/77c707c2771abe3a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 64590,
+      "updatedAt": "2026-11-05T17:08:11.393Z",
+      "via": "disk",
+      "nameKey": "jesus.jpg"
     }
   },
-  "updatedAt": "2026-11-05T16:39:01.281Z",
+  "updatedAt": "2026-11-05T17:08:11.398Z",
   "count": 165,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",

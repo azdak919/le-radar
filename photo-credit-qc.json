@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T16:40:37.326Z",
+  "updated": "2026-11-05T17:09:33.882Z",
   "total": 183,
   "withImage": 165,
   "withCredit": 165,
@@ -7,36 +7,22 @@
   "pending": 53,
   "missingHero": 0,
   "ok": false,
-  "checked": 69,
-  "updatedCount": 7,
+  "checked": 67,
+  "updatedCount": 5,
   "citedNew": 8,
-  "fallbackNew": 61,
+  "fallbackNew": 59,
   "samples": [
-    {
-      "title": "Affaires et procès : un lien permanent dans le sport moderne?",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Empathie, l’oeuvre qui a démystifié la santé mentale",
-      "source": "Montréal Campus",
-      "credit": "Illustration : Maud Amoretti",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "source": "Montréal Campus",
-      "credit": "Photo : Montréal Campus",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
       "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
