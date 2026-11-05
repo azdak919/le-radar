@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-05T01:36:49.189Z",
-  "total": 183,
-  "withAuthor": 183,
-  "mismatches": 15,
+  "updated": "2026-11-05T02:36:49.468Z",
+  "total": 184,
+  "withAuthor": 184,
+  "mismatches": 16,
   "ok": true,
   "samples": [
     {
@@ -11,6 +11,14 @@
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "STM Anniversary",
+      "link": "https://theplantnews.com/2026/11/03/stm-anniversary/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
     },
     {
@@ -126,5 +134,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 15
+  "fixed": 16
 }
