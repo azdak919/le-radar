@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-05T12:07:06.584Z",
-  "total": 185,
+  "updated": "2026-11-05T13:06:56.102Z",
+  "total": 186,
   "pool": 53,
-  "incomplete": 10,
-  "withLeadExcerpt": 125,
-  "candidates": 10,
-  "enriched": 2,
+  "incomplete": 11,
+  "withLeadExcerpt": 126,
+  "candidates": 11,
+  "enriched": 4,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -26,6 +26,15 @@
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
+    },
+    {
+      "title": "L’école à la maison, un frein à l’intégration sociale?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/05/lecole-a-la-maison-un-frein-a-lintegration-sociale/?utm_source=rss&utm_medium=rss&utm_campaign=lecole-a-la-maison-un-frein-a-lintegration-sociale",
+      "ok": true,
+      "score": 94,
+      "chars": 253,
+      "sample": "Un enfant qui a fait l’école à la maison risque d’avoir un choc culturel et d’être confronté à des é",
+      "changed": true
     },
     {
       "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
@@ -64,17 +73,8 @@
       "changed": false
     },
     {
-      "title": "NAZA: When the Perpetrators Tell the Story",
-      "link": "https://www.mcgilldaily.com/2026/11/naza-when-the-perpetrators-tell-the-story/",
-      "ok": true,
-      "score": 72,
-      "chars": 399,
-      "sample": "There is something particularly disturbing in hearing someone admit to celebrating acts of violence.",
-      "changed": false
-    },
-    {
-      "title": "STM Turns 60: How’s the Service Treating You?",
-      "link": "https://theplantnews.com/2026/11/03/stm-anniversary/",
+      "title": "Streaming service Fatigue & the Resurrection of Physical Media",
+      "link": "https://theplantnews.com/2026/11/03/the-resurrection-of-physical-media/",
       "ok": true,
       "score": 60,
       "chars": 98,
