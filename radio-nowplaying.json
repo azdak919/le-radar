@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T22:06:52.250Z",
+  "updatedAt": "2026-11-05T22:10:45.297Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T22:06:04.761Z"
+      "checkedAt": "2026-11-05T22:10:08.057Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T22:06:06.384Z"
+      "checkedAt": "2026-11-05T22:10:09.914Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T22:06:10.156Z"
+      "checkedAt": "2026-11-05T22:10:23.217Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Hooked On Sonics",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "next": {
         "title": "Unheard Of",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/unheard-of"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Hooked On Sonics",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T22:06:32.506Z"
+      "checkedAt": "2026-11-05T22:10:26.263Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T22:06:33.635Z"
+      "checkedAt": "2026-11-05T22:10:27.083Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T22:06:51.899Z"
+      "checkedAt": "2026-11-05T22:10:44.947Z"
     }
   }
 }
