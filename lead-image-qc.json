@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-05T15:39:48.119Z",
+  "updated": "2026-11-05T16:38:26.540Z",
   "total": 183,
   "withPhoto": 167,
   "withStock": 31,
   "withCampusBank": 28,
   "fullyCovered": 183,
   "leadReadyPhotos": 144,
-  "pageScraped": 32,
-  "photosRecovered": 32,
-  "imagesCleared": 13,
-  "stockSearches": 39,
+  "pageScraped": 29,
+  "photosRecovered": 29,
+  "imagesCleared": 11,
+  "stockSearches": 40,
   "stockFound": 26,
-  "campusBankFound": 22,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,16 +21,16 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-1-750x375-1.jpeg"
     },
     {
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
+      "reason": "no-stock-match",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
+    },
+    {
       "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
       "link": "https://lapige.atmjonquiere.com/2026/11/05/bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png"
-    },
-    {
-      "title": "Les journalistes, ennemis des pays totalitaires",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/les-journalistes-ennemis-des-pays-totalitaires/?utm_source=rss&utm_medium=rss&utm_campaign=les-journalistes-ennemis-des-pays-totalitaires",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg"
     },
     {
       "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
@@ -51,10 +51,10 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
-      "title": "Strong Start to the Season for the Gaiters",
-      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
+      "title": "Les journalistes, ennemis des pays totalitaires",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/les-journalistes-ennemis-des-pays-totalitaires/?utm_source=rss&utm_medium=rss&utm_campaign=les-journalistes-ennemis-des-pays-totalitaires",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -69,6 +69,12 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
+      "title": "Strong Start to the Season for the Gaiters",
+      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
@@ -77,13 +83,7 @@
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "campus-bank",
-      "image": null
-    },
-    {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
-      "reason": "no-stock-match",
+      "reason": "stock-too-small",
       "image": null
     }
   ]

@@ -1,21 +1,35 @@
 {
-  "updated": "2026-11-05T15:41:37.708Z",
+  "updated": "2026-11-05T16:40:37.326Z",
   "total": 183,
   "withImage": 165,
   "withCredit": 165,
-  "cited": 91,
+  "cited": 89,
   "pending": 53,
   "missingHero": 0,
   "ok": false,
-  "checked": 66,
-  "updatedCount": 5,
-  "citedNew": 7,
-  "fallbackNew": 59,
+  "checked": 69,
+  "updatedCount": 7,
+  "citedNew": 8,
+  "fallbackNew": 61,
   "samples": [
     {
-      "title": "Lights, Camera, Seltzer ! : POP Montreal 2026",
-      "source": "The Plant",
-      "credit": "Photo: The Plant",
+      "title": "Affaires et procès : un lien permanent dans le sport moderne?",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Empathie, l’oeuvre qui a démystifié la santé mentale",
+      "source": "Montréal Campus",
+      "credit": "Illustration : Maud Amoretti",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "source": "Montréal Campus",
+      "credit": "Photo : Montréal Campus",
       "cited": false,
       "method": null
     },
