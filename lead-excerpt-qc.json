@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-05T18:07:43.580Z",
+  "updated": "2026-11-05T18:38:14.151Z",
   "total": 187,
   "pool": 53,
-  "incomplete": 12,
-  "withLeadExcerpt": 128,
-  "candidates": 12,
-  "enriched": 6,
+  "incomplete": 11,
+  "withLeadExcerpt": 129,
+  "candidates": 11,
+  "enriched": 4,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,12 +28,39 @@
       "changed": false
     },
     {
-      "title": "Affaire Ewert : qui savait quoi ?",
-      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
+      "title": "Jésus et autres mots-clics",
+      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
       "ok": true,
-      "score": 90,
-      "chars": 390,
-      "sample": "Sa réponse ne précise donc pas quels services connaissaient la situation d’Ewert avant son arrivée, ",
+      "score": 76,
+      "chars": 400,
+      "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
+      "changed": true
+    },
+    {
+      "title": "Quand la mode va trop loin",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
+      "ok": true,
+      "score": 100,
+      "chars": 317,
+      "sample": "En 2017, la demande de blanchiment anal aurait explosé de 23 % dans la clinique médicale londonienne",
+      "changed": true
+    },
+    {
+      "title": "Portes ouvertes à la Ferme CPR Grenon",
+      "link": "https://lapige.atmjonquiere.com/2026/11/05/portes-ouvertes-a-la-ferme-cpr-grenon/?utm_source=rss&utm_medium=rss&utm_campaign=portes-ouvertes-a-la-ferme-cpr-grenon",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Aujourd’hui a lieu l’activité portes ouvertes de la Ferme CPR Grenon Inc. L’objectif est de montrer ",
+      "changed": true
+    },
+    {
+      "title": "Beyond the Body: The Sexualization of Women in Sports",
+      "link": "https://theplantnews.com/2026/11/05/beyond-the-body-the-sexualization-of-women-in-sports/",
+      "ok": true,
+      "score": 96,
+      "chars": 395,
+      "sample": "Sydney Sweeney is no stranger to the spotlight. As one of Hollywood’s most recognizable young actres",
       "changed": true
     },
     {
@@ -43,25 +70,7 @@
       "score": 70,
       "chars": 400,
       "sample": "With the start of the next semester, our very fitting theme for the submissions this issue was renew",
-      "changed": true
-    },
-    {
-      "title": "La peur : un plaisir paradoxal",
-      "link": "https://quartierlibre.ca/frisson-le-plaisir-paradoxal-de-la-peur/",
-      "ok": true,
-      "score": 100,
-      "chars": 271,
-      "sample": "« Les contenus d’horreur sont très réalistes, donc ça me fait peur, tout simplement, confie l’étudia",
-      "changed": true
-    },
-    {
-      "title": "Femme, et c’est tout",
-      "link": "https://theplantnews.com/2026/11/05/femme-et-cest-tout/",
-      "ok": true,
-      "score": 100,
-      "chars": 332,
-      "sample": "En septembre 2026, une histoire de viol collectif qui aurait eu lieu sur le campus de l’Université a",
-      "changed": true
+      "changed": false
     },
     {
       "title": "How Generation Z is Quietly Leading a Revolution",
@@ -70,15 +79,6 @@
       "score": 66,
       "chars": 400,
       "sample": "Generation Z is often labelled lazy, spoiled, and constantly complaining about the circumstances of ",
-      "changed": true
-    },
-    {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
-      "ok": true,
-      "score": 80,
-      "chars": 400,
-      "sample": "Depuis 25 ans, le Cinéma Beaubien fait partie du paysage culturel montréalais. Bien plus qu’un endro",
       "changed": false
     }
   ]
