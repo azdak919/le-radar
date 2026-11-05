@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04T21:29:52.628Z",
+  "updated": "2026-11-05T01:47:49.931Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5121,14 +5121,26 @@
       "via": "save-page-now",
       "source": "Le Polyscope",
       "snapshot": "https://web.archive.org/web/20261103212442/https://www.polyscope.qc.ca/blog/post/MfLXishMbOutix14qjpm"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/04/un-nouveau-souffle-pour-leglise-de-saint-felix-dotis/": {
+      "at": "2026-11-05T01:46:58.357Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261105014638/https://lapige.atmjonquiere.com/2026/11/04/un-nouveau-souffle-pour-leglise-de-saint-felix-dotis/"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/04/fin-de-la-tvq-sur-les-produits-de-seconde-main-une-bonne-idee-qui-ne-fait-pas-lunanimite/": {
+      "at": "2026-11-05T01:47:23.560Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261105014708/https://lapige.atmjonquiere.com/2026/11/04/fin-de-la-tvq-sur-les-produits-de-seconde-main-une-bonne-idee-qui-ne-fait-pas-lunanimite/"
     }
   },
   "stats": {
-    "total": 892,
+    "total": 894,
     "lastRun": {
-      "saved": 0,
+      "saved": 2,
       "skipped": 0,
-      "failed": 4,
+      "failed": 2,
       "stoppedEarly": true
     }
   },
@@ -5201,7 +5213,8 @@
     "Le Polyscope": {
       "host": "www.polyscope.qc.ca",
       "pages": 36,
-      "checkedAt": "2026-10-29T01:12:34.789Z"
+      "checkedAt": "2026-10-29T01:12:34.789Z",
+      "stale": true
     },
     "Impact Campus": {
       "host": "impactcampus.ca",
