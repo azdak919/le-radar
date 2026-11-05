@@ -1,10 +1,26 @@
 {
-  "updated": "2026-11-05T17:06:54.741Z",
+  "updated": "2026-11-05T17:31:09.670Z",
   "total": 187,
   "withAuthor": 187,
-  "mismatches": 16,
+  "mismatches": 17,
   "ok": true,
   "samples": [
+    {
+      "title": "On Resonance",
+      "link": "https://theplantnews.com/2026/11/05/on-resonance/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Martin Kaloshi",
+      "reason": "page-byline"
+    },
+    {
+      "title": "The Existential Horror of AI",
+      "link": "https://theplantnews.com/2026/11/05/the-existential-horror-of-ai/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "On avance quand même",
       "link": "https://quartierlibre.ca/on-avance-quand-meme-la-peur/",
@@ -32,14 +48,6 @@
     {
       "title": "STM Turns 60: How’s the Service Treating You?",
       "link": "https://theplantnews.com/2026/11/03/stm-anniversary/",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "The Prevalence of AI Content on Social Media",
-      "link": "https://theplantnews.com/2026/11/03/3782/",
       "source": "The Plant",
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
@@ -134,5 +142,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 16
+  "fixed": 17
 }

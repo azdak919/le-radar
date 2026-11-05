@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-05T17:09:33.882Z",
-  "total": 183,
-  "withImage": 165,
-  "withCredit": 165,
-  "cited": 89,
-  "pending": 53,
+  "updated": "2026-11-05T17:35:20.787Z",
+  "total": 184,
+  "withImage": 166,
+  "withCredit": 166,
+  "cited": 101,
+  "pending": 42,
   "missingHero": 0,
   "ok": false,
-  "checked": 67,
-  "updatedCount": 5,
-  "citedNew": 8,
-  "fallbackNew": 59,
+  "checked": 66,
+  "updatedCount": 16,
+  "citedNew": 18,
+  "fallbackNew": 48,
   "samples": [
+    {
+      "title": "The Existential Horror of AI",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
@@ -20,9 +27,9 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Jésus et autres mots-clics",
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
       "source": "Le Délit",
-      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
+      "credit": "Photo : DENIS FARLEY",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -41,11 +48,53 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
-      "source": "The Plant",
-      "credit": "Image via Pinterest",
+      "title": "Reading the static and exploring long COVID’s impact on the brain’s electrical rhythm",
+      "source": "The Tribune",
+      "credit": "Photo : Lilly Guilbeault",
       "cited": true,
-      "method": "via-attribution"
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
+      "source": "The Tribune",
+      "credit": "Photo : Gwen Heffernan",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Know Your Artist: Stina Baudin",
+      "source": "The Tribune",
+      "credit": "Photo : Stina Baudin",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "McGill science students: You don’t need to know where you’re going yet",
+      "source": "The Tribune",
+      "credit": "Photo : Zoe Lee",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
+      "source": "The Tribune",
+      "credit": "Photo : Holden Callif",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Meta’s $18 billion USD settlement is just loose change",
+      "source": "The Tribune",
+      "credit": "Photo : Gwen Heffernan",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "HIV care informed by social determinants of health",
+      "source": "The Tribune",
+      "credit": "Photo : Gwen Heffernan",
+      "cited": true,
+      "method": "figcaption-attribution"
     }
   ]
 }
