@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-05T07:00:02.678Z",
-  "total": 184,
-  "withAuthor": 184,
-  "mismatches": 16,
+  "updated": "2026-11-05T07:26:00.148Z",
+  "total": 185,
+  "withAuthor": 185,
+  "mismatches": 17,
   "ok": true,
   "samples": [
     {
@@ -132,7 +132,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "source": "The Tribune",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Ellen Lurie and Managing Editor",
+      "reason": "page-byline"
     }
   ],
-  "fixed": 16
+  "fixed": 17
 }
