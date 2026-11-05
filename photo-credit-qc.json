@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T13:09:11.921Z",
+  "updated": "2026-11-05T14:40:27.585Z",
   "total": 183,
   "withImage": 164,
   "withCredit": 164,
@@ -7,15 +7,29 @@
   "pending": 52,
   "missingHero": 0,
   "ok": false,
-  "checked": 66,
-  "updatedCount": 5,
-  "citedNew": 8,
+  "checked": 69,
+  "updatedCount": 8,
+  "citedNew": 11,
   "fallbackNew": 58,
   "samples": [
     {
-      "title": "L’école à la maison, un frein à l’intégration sociale?",
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
       "source": "La Pige",
-      "credit": "Photo : Vittoria Caputo",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Yachts, champagne et abonnés : pourquoi la vie des riches fascine tant",
+      "source": "La Pige",
+      "credit": "Photo : Google",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le fétichisme des pieds, une fascination singulière",
+      "source": "La Pige",
+      "credit": "Photo : Elena Simet",
       "cited": true,
       "method": "body-line"
     },
@@ -25,6 +39,13 @@
       "credit": "Photo : Bastien Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Entretien avec le rappeur et historien Webster",
+      "source": "Quartier Libre",
+      "credit": "Photo : Geneviève Robitaille",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
