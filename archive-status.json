@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T01:47:49.931Z",
+  "updated": "2026-11-05T11:41:52.538Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5133,15 +5133,57 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20261105014708/https://lapige.atmjonquiere.com/2026/11/04/fin-de-la-tvq-sur-les-produits-de-seconde-main-une-bonne-idee-qui-ne-fait-pas-lunanimite/"
+    },
+    "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/": {
+      "at": "2026-11-05T11:35:07.929Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20261105113452/https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/"
+    },
+    "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/": {
+      "at": "2026-11-05T11:36:31.112Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20261105113612/https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/"
+    },
+    "https://lecollectif.ca/societe/nouveau-conseil-des-ministres-du-pq/": {
+      "at": "2026-11-05T11:37:54.332Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20261105113736/https://lecollectif.ca/societe/nouveau-conseil-des-ministres-du-pq/"
+    },
+    "https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/": {
+      "at": "2026-11-05T11:38:16.965Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20261105113801/https://lecollectif.ca/societe/letat-des-routes-du-quebec-a-laube-de-lhiver/"
+    },
+    "https://montrealcampus.ca/2026/10/26/trente-minutes-avec-le-recteur/": {
+      "at": "2026-11-05T11:39:19.650Z",
+      "via": "save-page-now",
+      "source": "Montréal Campus",
+      "snapshot": "https://web.archive.org/web/20261105113858/https://montrealcampus.ca/2026/10/26/trente-minutes-avec-le-recteur/"
+    },
+    "https://montrealcampus.ca/2026/11/04/elections-de-mi-mandat-des-etudiantes-du-vermont-mobilisees/": {
+      "at": "2026-11-05T11:40:04.537Z",
+      "via": "save-page-now",
+      "source": "Montréal Campus",
+      "snapshot": "https://web.archive.org/web/20261105113947/https://montrealcampus.ca/2026/11/04/elections-de-mi-mandat-des-etudiantes-du-vermont-mobilisees/"
+    },
+    "https://theconcordian.com/2026/11/28m-in-emergency-homelessness-funding/": {
+      "at": "2026-11-05T11:40:37.565Z",
+      "via": "save-page-now",
+      "source": "The Concordian",
+      "snapshot": "https://web.archive.org/web/20261105114022/https://theconcordian.com/2026/11/28m-in-emergency-homelessness-funding/"
     }
   },
   "stats": {
-    "total": 894,
+    "total": 901,
     "lastRun": {
-      "saved": 2,
+      "saved": 7,
       "skipped": 0,
-      "failed": 2,
-      "stoppedEarly": true
+      "failed": 13,
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -5203,18 +5245,17 @@
     "The Campus": {
       "host": "thebucampus.ca",
       "pages": 4,
-      "checkedAt": "2026-10-29T10:23:05.455Z"
+      "checkedAt": "2026-11-05T11:28:27.056Z"
     },
     "Le Délit": {
       "host": "www.delitfrancais.com",
       "pages": 136,
-      "checkedAt": "2026-10-29T10:23:01.386Z"
+      "checkedAt": "2026-11-05T11:28:19.804Z"
     },
     "Le Polyscope": {
       "host": "www.polyscope.qc.ca",
       "pages": 36,
-      "checkedAt": "2026-10-29T01:12:34.789Z",
-      "stale": true
+      "checkedAt": "2026-11-05T11:28:15.136Z"
     },
     "Impact Campus": {
       "host": "impactcampus.ca",
