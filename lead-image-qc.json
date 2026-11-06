@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-06T07:00:32.851Z",
+  "updated": "2026-11-06T08:08:09.178Z",
   "total": 187,
   "withPhoto": 170,
   "withStock": 31,
   "withCampusBank": 28,
   "fullyCovered": 187,
-  "leadReadyPhotos": 149,
+  "leadReadyPhotos": 150,
   "pageScraped": 34,
   "photosRecovered": 34,
   "imagesCleared": 18,
-  "stockSearches": 39,
-  "stockFound": 28,
-  "campusBankFound": 23,
+  "stockSearches": 38,
+  "stockFound": 27,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -45,28 +45,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "Bishop’s Culture is Community",
-      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
       "title": "Strong Start to the Season for the Gaiters",
       "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
     },
     {
+      "title": "Bishop’s Culture is Community",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
       "title": "Queer Language is Queer Resistance",
       "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "On Mental Health’s Legalities and Limits: Analysing P-38",
-      "link": "https://theplantnews.com/2026/11/05/on-mental-healths-legalities-and-limits-analysing-p-38/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/88/Coll%C3%A8ge_Dawson%2C_fa%C3%A7ade_sur_Sherbrooke_O%2C_Montr%C3%A9al_2005-11-10.JPG"
     },
     {
       "title": "Blackface at McGill",
@@ -85,6 +79,12 @@
       "link": "https://lapige.atmjonquiere.com/2026/11/03/reportages-la-pige-radio-2-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-la-pige-radio-2-novembre",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+    },
+    {
+      "title": "Virage conservateur en Colombie-Britannique",
+      "link": "https://lecollectif.ca/edition-papier/virage-conservateur-en-colombie-britannique/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Virage-conservateur-en-Colombie-Britannique_Page-FB-de-Lorne-Doerkson.jpg"
     }
   ]
 }
