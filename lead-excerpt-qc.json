@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-06T16:50:54.511Z",
+  "updated": "2026-11-06T18:07:03.739Z",
   "total": 187,
   "pool": 53,
-  "incomplete": 8,
-  "withLeadExcerpt": 129,
-  "candidates": 8,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 9,
+  "withLeadExcerpt": 130,
+  "candidates": 9,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -26,6 +26,15 @@
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
+    },
+    {
+      "title": "Une moustache pour parler de deux cancers masculins",
+      "link": "https://lapige.atmjonquiere.com/2026/11/06/une-moustache-pour-parler-de-deux-cancers-masculins/?utm_source=rss&utm_medium=rss&utm_campaign=une-moustache-pour-parler-de-deux-cancers-masculins",
+      "ok": true,
+      "score": 100,
+      "chars": 394,
+      "sample": "Ces deux cancers touchent la zone du bassin, mais ils ne frappent pas au même âge. Au Québec, 18 hom",
+      "changed": true
     },
     {
       "title": "Portes ouvertes à la Ferme CPR Grenon",
