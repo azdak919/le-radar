@@ -1,23 +1,30 @@
 {
-  "updated": "2026-11-06T21:39:56.112Z",
-  "total": 187,
+  "updated": "2026-11-06T22:09:21.029Z",
+  "total": 188,
   "withImage": 170,
   "withCredit": 170,
-  "cited": 107,
-  "pending": 40,
+  "cited": 106,
+  "pending": 41,
   "missingHero": 0,
   "ok": false,
-  "checked": 54,
-  "updatedCount": 5,
+  "checked": 55,
+  "updatedCount": 6,
   "citedNew": 8,
-  "fallbackNew": 46,
+  "fallbackNew": 47,
   "samples": [
     {
-      "title": "Au-delà de la vitesse: Villeneuve immortalisé",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
+      "title": "Étudiant·e·s en cinéma, entre inquiétudes et ambitions",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "S’éclater sans faire de bruit au silent disco",
+      "source": "Montréal Campus",
+      "credit": "Illustration : Fanny Lécaudé",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-mention"
     },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
@@ -27,9 +34,9 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "title": "Quand la mode va trop loin",
       "source": "Le Délit",
-      "credit": "Photo : DENIS FARLEY",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
