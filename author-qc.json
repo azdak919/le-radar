@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-06T15:36:54.592Z",
+  "updated": "2026-11-06T16:07:21.378Z",
   "total": 187,
   "withAuthor": 187,
-  "mismatches": 17,
+  "mismatches": 18,
   "ok": true,
   "samples": [
     {
@@ -19,6 +19,14 @@
       "source": "Quartier Libre",
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Keeping our unhoused community warm this winter",
+      "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
     },
     {
@@ -142,5 +150,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 17
+  "fixed": 18
 }
