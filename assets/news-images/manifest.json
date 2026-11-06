@@ -1287,16 +1287,6 @@
       "via": "resize-proxy",
       "nameKey": "image.png"
     },
-    "bcb477df109aacf4": {
-      "local": "assets/news-images/bcb477df109aacf4.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/billets_canadiens.png",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 118450,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T14:39:01.853Z",
-      "via": "resize-proxy",
-      "nameKey": "billets_canadiens.png"
-    },
     "2545f71ffd33f31b": {
       "local": "assets/news-images/2545f71ffd33f31b.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/587D85BE-5ABB-4716-8EA0-5EB24A0D87EE_1_201_a.jpeg",
@@ -1326,16 +1316,6 @@
       "updatedAt": "2026-11-05T16:38:45.278Z",
       "via": "origin",
       "nameKey": "uber-one-for-students-rides-web-728x80-ca-fr.jpg"
-    },
-    "52a8bbbb6bd5e8f6": {
-      "local": "assets/news-images/52a8bbbb6bd5e8f6.jpg",
-      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/citr.jpg",
-      "host": "theplantnews.com",
-      "bytes": 293444,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T16:38:45.451Z",
-      "via": "resize-proxy",
-      "nameKey": "citr.jpg"
     },
     "410b23d8098cb18f": {
       "local": "assets/news-images/410b23d8098cb18f.webp",
@@ -1613,16 +1593,6 @@
       "via": "origin",
       "nameKey": "5_fantome_charles-david.jpg"
     },
-    "d0d4eef2f356a4c4": {
-      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 286051,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-06T19:08:10.582Z",
-      "via": "origin",
-      "nameKey": "ak-mbam.jpg"
-    },
     "3225c5fd449e237c": {
       "local": "assets/news-images/3225c5fd449e237c.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/PublicationFacebook_SNPPA2026_1200x630_V1_1.original.jpg",
@@ -1672,10 +1642,50 @@
       "updatedAt": "2026-11-06T20:38:19.387Z",
       "via": "resize-proxy",
       "nameKey": "img_9774.jpg"
+    },
+    "63746a8acb487311": {
+      "local": "assets/news-images/63746a8acb487311.jpg",
+      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/lennon.jpg",
+      "host": "theplantnews.com",
+      "bytes": 47986,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-06T21:07:48.134Z",
+      "via": "origin",
+      "nameKey": "lennon.jpg"
+    },
+    "e8fabd6c27ec8909": {
+      "local": "assets/news-images/e8fabd6c27ec8909.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_3325.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 89228,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-06T21:07:49.418Z",
+      "via": "resize-proxy",
+      "nameKey": "img_3325.jpg"
+    },
+    "140272a87a1faec2": {
+      "local": "assets/news-images/140272a87a1faec2.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 97778,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-06T21:07:49.959Z",
+      "via": "photon-resize",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
+    },
+    "0d84d91b0191efcf": {
+      "local": "assets/news-images/0d84d91b0191efcf.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 83501,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-06T21:07:52.087Z",
+      "via": "resize-proxy",
+      "nameKey": "blanchissement.png"
     }
   },
-  "updatedAt": "2026-11-06T20:38:19.390Z",
-  "count": 168,
+  "updatedAt": "2026-11-06T21:07:52.090Z",
+  "count": 169,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
