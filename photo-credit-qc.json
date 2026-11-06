@@ -1,21 +1,35 @@
 {
-  "updated": "2026-11-06T18:39:40.773Z",
+  "updated": "2026-11-06T19:09:17.655Z",
   "total": 187,
-  "withImage": 168,
-  "withCredit": 168,
-  "cited": 103,
-  "pending": 41,
+  "withImage": 169,
+  "withCredit": 169,
+  "cited": 105,
+  "pending": 40,
   "missingHero": 0,
   "ok": false,
-  "checked": 52,
-  "updatedCount": 3,
-  "citedNew": 5,
-  "fallbackNew": 47,
+  "checked": 54,
+  "updatedCount": 5,
+  "citedNew": 8,
+  "fallbackNew": 46,
   "samples": [
+    {
+      "title": "L’UdeM a-t-elle ses fantômes ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Fonds Ernest Cormier, Centre canadien d’architecture",
+      "cited": true,
+      "method": "figcaption"
+    },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
       "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "source": "Le Délit",
+      "credit": "Photo : DENIS FARLEY",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -29,9 +43,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
