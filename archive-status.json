@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T21:48:05.640Z",
+  "updated": "2026-11-06T11:28:35.794Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5223,15 +5223,43 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20261105214749/https://lapige.atmjonquiere.com/2026/11/05/portes-ouvertes-a-la-ferme-cpr-grenon/"
+    },
+    "https://theplantnews.com/2026/11/05/how-generation-z-is-quietly-leading-a-revolution/": {
+      "at": "2026-11-06T01:47:57.000Z",
+      "via": "existant",
+      "source": "The Plant"
+    },
+    "https://theplantnews.com/2026/11/05/on-resonance/": {
+      "at": "2026-11-06T01:49:28.000Z",
+      "via": "existant",
+      "source": "The Plant"
+    },
+    "https://theplantnews.com/2026/11/05/the-existential-horror-of-ai/": {
+      "at": "2026-11-06T11:27:02.306Z",
+      "via": "save-page-now",
+      "source": "The Plant",
+      "snapshot": "https://web.archive.org/web/20261106015043/https://theplantnews.com/2026/11/05/the-existential-horror-of-ai/"
+    },
+    "https://theplantnews.com/2026/11/05/kill-john-lennon-the-dark-side-of-the-catcher-in-the-rye/": {
+      "at": "2026-11-06T11:27:24.889Z",
+      "via": "save-page-now",
+      "source": "The Plant",
+      "snapshot": "https://web.archive.org/web/20261106112709/https://theplantnews.com/2026/11/05/kill-john-lennon-the-dark-side-of-the-catcher-in-the-rye/"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/05/lecole-a-la-maison-un-frein-a-lintegration-sociale/": {
+      "at": "2026-11-06T11:27:47.458Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261106112732/https://lapige.atmjonquiere.com/2026/11/05/lecole-a-la-maison-un-frein-a-lintegration-sociale/"
     }
   },
   "stats": {
-    "total": 909,
+    "total": 914,
     "lastRun": {
-      "saved": 8,
-      "skipped": 0,
-      "failed": 12,
-      "stoppedEarly": false
+      "saved": 3,
+      "skipped": 2,
+      "failed": 4,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -5308,7 +5336,8 @@
     "Impact Campus": {
       "host": "impactcampus.ca",
       "pages": 42,
-      "checkedAt": "2026-10-30T10:25:59.737Z"
+      "checkedAt": "2026-10-30T10:25:59.737Z",
+      "stale": true
     },
     "The Concordian": {
       "host": "theconcordian.com",
