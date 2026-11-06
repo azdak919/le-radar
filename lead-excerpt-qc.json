@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-06T14:36:40.123Z",
+  "updated": "2026-11-06T15:37:14.483Z",
   "total": 187,
   "pool": 53,
-  "incomplete": 9,
-  "withLeadExcerpt": 128,
-  "candidates": 9,
-  "enriched": 1,
+  "incomplete": 10,
+  "withLeadExcerpt": 129,
+  "candidates": 10,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,12 +28,21 @@
       "changed": false
     },
     {
-      "title": "Affaire Ewert : qui savait quoi ?",
-      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
+      "title": "Découvrir l’héritage militaire de Sherbrooke en mode balado",
+      "link": "https://lecollectif.ca/culture/decouvrir-lheritage-militaire-de-sherbrooke-en-mode-balado/",
       "ok": true,
-      "score": 90,
-      "chars": 390,
-      "sample": "Sa réponse ne précise donc pas quels services connaissaient la situation d’Ewert avant son arrivée, ",
+      "score": 100,
+      "chars": 370,
+      "sample": "Lancé en pleine Campagne nationale du coquelicot, le circuit propose un parcours historique de plus ",
+      "changed": true
+    },
+    {
+      "title": "Lourde défaite pour le Parti républicain",
+      "link": "https://lecollectif.ca/societe/lourde-defaite-pour-le-parti-republicain/",
+      "ok": true,
+      "score": 96,
+      "chars": 343,
+      "sample": "Sans grande surprise, le Parti démocrate s’empare de la Chambre des représentants, et même du Sénat ",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 80,
       "chars": 400,
       "sample": "Depuis 25 ans, le Cinéma Beaubien fait partie du paysage culturel montréalais. Bien plus qu’un endro",
-      "changed": false
-    },
-    {
-      "title": "Yachts, champagne et abonnés : pourquoi la vie des riches fascine tant",
-      "link": "https://lapige.atmjonquiere.com/2026/11/05/yachts-champagne-et-abonnes-pourquoi-la-vie-des-riches-fascine-tant/?utm_source=rss&utm_medium=rss&utm_campaign=yachts-champagne-et-abonnes-pourquoi-la-vie-des-riches-fascine-tant",
-      "ok": true,
-      "score": 100,
-      "chars": 171,
-      "sample": "Une story Instagram. Un yacht, du champagne, un coucher de soleil sur la Méditerranée. On se dit qu’",
       "changed": false
     }
   ]
