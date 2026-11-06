@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-06T15:07:07.676Z",
+  "updatedAt": "2026-11-06T15:54:40.745Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Palmarès CHYZ",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
+      "current": null,
       "next": {
         "title": "Punk-o-rama",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/punk-o-rama/"
       },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T15:06:07.107Z"
+      "checkedAt": "2026-11-06T15:54:03.511Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T15:06:09.030Z"
+      "checkedAt": "2026-11-06T15:54:05.082Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T15:06:12.940Z"
+      "checkedAt": "2026-11-06T15:54:07.550Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Democracy Now",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
         "title": "The Alley",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/the-alley"
@@ -103,12 +96,12 @@
       "track": "",
       "showTitle": "Democracy Now",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T15:06:47.715Z"
+      "checkedAt": "2026-11-06T15:54:22.067Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T15:06:48.846Z"
+      "checkedAt": "2026-11-06T15:54:22.950Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T15:07:07.325Z"
+      "checkedAt": "2026-11-06T15:54:40.394Z"
     }
   }
 }
