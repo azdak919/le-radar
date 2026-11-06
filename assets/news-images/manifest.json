@@ -1486,16 +1486,6 @@
       "via": "resize-proxy",
       "nameKey": "lilly-guilbeault-scitech-1-.png"
     },
-    "f535e2b616bd26d8": {
-      "local": "assets/news-images/f535e2b616bd26d8.jpg",
-      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg",
-      "host": "www.thetribune.ca",
-      "bytes": 146721,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T17:33:11.368Z",
-      "via": "resize-proxy",
-      "nameKey": "ae4-sophie-schuyler.jpg"
-    },
     "568a2cdd96272451": {
       "local": "assets/news-images/568a2cdd96272451.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/alaa-1.jpg",
@@ -1526,16 +1516,6 @@
       "via": "photon-resize",
       "nameKey": "aureliediouf-261026-iadanslajustice-vol-44.jpg"
     },
-    "7bd5c7d9fb820478": {
-      "local": "assets/news-images/7bd5c7d9fb820478.jpg",
-      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/OP-2-Holden-Callif-scaled.jpg",
-      "host": "www.thetribune.ca",
-      "bytes": 164181,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T18:08:43.623Z",
-      "via": "resize-proxy",
-      "nameKey": "op-2-holden-callif.jpg"
-    },
     "30d31f2a5d2d4bb6": {
       "local": "assets/news-images/30d31f2a5d2d4bb6.jpg",
       "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/news3.png",
@@ -1545,16 +1525,6 @@
       "updatedAt": "2026-11-05T18:08:44.424Z",
       "via": "resize-proxy",
       "nameKey": "news3.png"
-    },
-    "2cb897d28b20657a": {
-      "local": "assets/news-images/2cb897d28b20657a.jpg",
-      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/CAMILA_SIERRA_ORDONEZ_2_EK-scaled.jpg",
-      "host": "www.thetribune.ca",
-      "bytes": 163756,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T18:08:49.442Z",
-      "via": "resize-proxy",
-      "nameKey": "camila_sierra_ordonez_2_ek.jpg"
     },
     "8a9c168712edaa07": {
       "local": "assets/news-images/8a9c168712edaa07.jpg",
@@ -1653,26 +1623,56 @@
       "via": "disk",
       "nameKey": "blanchissement.png"
     },
-    "d0d4eef2f356a4c4": {
-      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
+    "0da527b271273a7a": {
+      "local": "assets/news-images/0da527b271273a7a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
       "host": "www.delitfrancais.com",
-      "bytes": 286051,
-      "updatedAt": "2026-11-06T13:07:52.279Z",
+      "bytes": 70585,
+      "updatedAt": "2026-11-06T14:37:24.598Z",
       "via": "disk",
-      "nameKey": "ak-mbam.jpg"
+      "nameKey": "rocky.jpeg"
     },
-    "77c707c2771abe3a": {
-      "local": "assets/news-images/77c707c2771abe3a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+    "cdf081914623d574": {
+      "local": "assets/news-images/cdf081914623d574.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/article-de-juliette-c.jpg",
       "host": "www.delitfrancais.com",
-      "bytes": 64590,
-      "updatedAt": "2026-11-06T13:07:52.280Z",
+      "bytes": 223663,
+      "updatedAt": "2026-11-06T14:37:24.598Z",
       "via": "disk",
-      "nameKey": "jesus.jpg"
+      "nameKey": "article-de-juliette-c.jpg"
+    },
+    "4732fb8c4c53327f": {
+      "local": "assets/news-images/4732fb8c4c53327f.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/CAMILA_SIERRA_ORDONEZ_2_EK-scaled.jpg",
+      "host": "thetribune.ca",
+      "bytes": 163756,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-06T14:37:27.284Z",
+      "via": "resize-proxy",
+      "nameKey": "camila_sierra_ordonez_2_ek.jpg"
+    },
+    "d20e9f77b2f85d5b": {
+      "local": "assets/news-images/d20e9f77b2f85d5b.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/OP-2-Holden-Callif-scaled.jpg",
+      "host": "thetribune.ca",
+      "bytes": 164181,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-06T14:37:27.491Z",
+      "via": "resize-proxy",
+      "nameKey": "op-2-holden-callif.jpg"
+    },
+    "624ad2b7cf167032": {
+      "local": "assets/news-images/624ad2b7cf167032.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg",
+      "host": "thetribune.ca",
+      "bytes": 146721,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-06T14:37:27.734Z",
+      "via": "resize-proxy",
+      "nameKey": "ae4-sophie-schuyler.jpg"
     }
   },
-  "updatedAt": "2026-11-06T13:07:53.849Z",
+  "updatedAt": "2026-11-06T14:37:27.736Z",
   "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
