@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T07:54:40.558Z",
+  "updatedAt": "2026-11-06T09:07:07.568Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T07:54:04.068Z"
+      "checkedAt": "2026-11-06T09:06:00.207Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Toute est dans toute",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+      },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T07:54:05.605Z"
+      "checkedAt": "2026-11-06T09:06:01.680Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "G-Flex Survivor's Corner",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "next": {
+        "title": "Morning Detour",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "G-Flex Survivor",
+      "showTitle": "G-Flex Survivor's Corner",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T07:54:07.671Z"
+      "checkedAt": "2026-11-06T09:06:13.534Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T07:54:21.812Z"
+      "checkedAt": "2026-11-06T09:06:28.033Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T07:54:23.151Z"
+      "checkedAt": "2026-11-06T09:06:28.785Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +134,20 @@
       "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "api-live",
+        "source": "schedule",
         "start": "11:30",
         "end": "12:30",
-        "slug": "box-sophisme"
+        "url": "https://www.choq.ca/emissions/box-sophisme"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T07:54:40.207Z"
+      "checkedAt": "2026-11-06T09:07:07.217Z"
     }
   }
 }
