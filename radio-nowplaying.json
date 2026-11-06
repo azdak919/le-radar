@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-11-06T19:07:08.170Z",
+  "updatedAt": "2026-11-06T20:07:11.698Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Conduite Antisportive",
-        "source": "api-live",
-        "start": "13:30",
-        "end": "15:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Conduite Antisportive",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-06T19:06:07.474Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Salsa et Bembê",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
-      },
-      "next": {
-        "title": "Turbo Tannant",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/turbo-tannant"
-      },
-      "track": "",
-      "showTitle": "Salsa et Bembê",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T19:06:09.419Z"
+      "checkedAt": "2026-11-06T20:06:39.887Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Turbo Tannant",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
+      },
+      "next": {
+        "title": "OK Doomer",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
+      },
+      "track": "",
+      "showTitle": "Turbo Tannant",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-06T20:06:41.391Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "NNB/SQUAT FM/QPIRG/knots",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "New Shit",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
+      "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T19:06:13.227Z"
+      "checkedAt": "2026-11-06T20:06:44.097Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Spiral Bound",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/spiral-bound"
-      },
-      "next": {
         "title": "Dead Beats",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/dead-beats"
       },
+      "next": {
+        "title": "Tapeworms",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/tapeworms"
+      },
       "track": "",
-      "showTitle": "Spiral Bound",
+      "showTitle": "Dead Beats",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T19:06:47.896Z"
+      "checkedAt": "2026-11-06T20:06:51.786Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T19:06:48.980Z"
+      "checkedAt": "2026-11-06T20:06:52.605Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les fleurs du tapis",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "14:30",
-        "slug": "les-fleurs-du-tapis"
-      },
+      "current": null,
       "next": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
@@ -153,14 +140,14 @@
         "slug": "histoire-de-passer-le-temps"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Les fleurs du tapis",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T19:07:07.819Z"
+      "checkedAt": "2026-11-06T20:07:11.347Z"
     }
   }
 }
