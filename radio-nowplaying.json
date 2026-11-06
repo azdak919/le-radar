@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T05:07:00.541Z",
+  "updatedAt": "2026-11-06T06:06:37.046Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,73 +21,74 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T05:06:01.338Z"
+      "checkedAt": "2026-11-06T06:05:59.874Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T05:06:03.301Z"
+      "checkedAt": "2026-11-06T06:06:01.497Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "L'aire du Diable",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor's Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "L'aire du Diable",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T05:06:06.206Z"
+      "checkedAt": "2026-11-06T06:06:03.836Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Finally Midnight",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "02:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
@@ -95,12 +96,12 @@
       "track": "",
       "showTitle": "Finally Midnight",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T05:06:41.017Z"
+      "checkedAt": "2026-11-06T06:06:17.960Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T05:06:42.123Z"
+      "checkedAt": "2026-11-06T06:06:19.041Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T05:07:00.191Z"
+      "checkedAt": "2026-11-06T06:06:36.695Z"
     }
   }
 }
