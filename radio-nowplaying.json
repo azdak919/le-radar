@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-06T17:38:11.772Z",
+  "updatedAt": "2026-11-06T19:07:08.170Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Conduite Antisportive",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:30",
         "end": "15:00",
         "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Conduite Antisportive",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:37:29.783Z"
+      "checkedAt": "2026-11-06T19:06:07.474Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques",
+        "title": "Salsa et Bembê",
         "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Turbo Tannant",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
       },
       "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "Salsa et Bembê",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:37:31.758Z"
+      "checkedAt": "2026-11-06T19:06:09.419Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Butcher T's Noontime Cuts",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
-      "track": "Butcher T",
-      "showTitle": "Butcher T's Noontime Cuts",
+      "next": {
+        "title": "New Shit",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
+      "track": "",
+      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:37:35.648Z"
+      "checkedAt": "2026-11-06T19:06:13.227Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Charts & Crafts",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
+        "title": "Spiral Bound",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
       },
       "next": {
-        "title": "the castle",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-castle"
+        "title": "Dead Beats",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
       },
       "track": "",
-      "showTitle": "Charts & Crafts",
+      "showTitle": "Spiral Bound",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:37:51.188Z"
+      "checkedAt": "2026-11-06T19:06:47.896Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:37:52.426Z"
+      "checkedAt": "2026-11-06T19:06:48.980Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Montréal au courant",
+      "current": {
+        "title": "Les fleurs du tapis",
         "source": "api-live",
-        "start": "12:45",
-        "end": "12:55",
-        "slug": "montreal-au-courant"
+        "start": "14:00",
+        "end": "14:30",
+        "slug": "les-fleurs-du-tapis"
+      },
+      "next": {
+        "title": "Histoire de passer le temps",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "",
+      "showTitle": "Les fleurs du tapis",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:38:11.422Z"
+      "checkedAt": "2026-11-06T19:07:07.819Z"
     }
   }
 }
