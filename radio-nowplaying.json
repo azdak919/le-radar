@@ -1,113 +1,107 @@
 {
-  "updatedAt": "2026-11-05T23:06:55.613Z",
+  "updatedAt": "2026-11-06T00:07:11.532Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Crooch Control",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "21:00",
         "end": "22:00",
         "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-05T23:06:05.751Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La rumba latina",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/la-rumba"
-      },
-      "next": {
-        "title": "La courbe 2.0",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/la-courbe-2-0"
-      },
-      "track": "",
-      "showTitle": "La rumba latina",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T23:06:07.612Z"
+      "checkedAt": "2026-11-06T00:06:07.792Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La courbe 2.0",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/la-courbe-2-0"
+      },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "track": "",
+      "showTitle": "La courbe 2.0",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-06T00:06:09.760Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Upstage",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Grey Matters",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Other Worlds on Earth/Dromostexte",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Upstage",
+      "showTitle": "Grey Matters",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T23:06:10.232Z"
+      "checkedAt": "2026-11-06T00:06:16.850Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Unheard Of",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
-      },
-      "next": {
         "title": "Electric Messiah",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/electric-messiah"
       },
+      "next": {
+        "title": "Maiden Voyage",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/maiden-voyage"
+      },
       "track": "",
-      "showTitle": "Unheard Of",
+      "showTitle": "Electric Messiah",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T23:06:35.813Z"
+      "checkedAt": "2026-11-06T00:06:51.498Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T23:06:36.782Z"
+      "checkedAt": "2026-11-06T00:06:52.625Z"
     },
     "choq": {
       "id": "choq",
@@ -153,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-05T23:06:55.262Z"
+      "checkedAt": "2026-11-06T00:07:11.183Z"
     }
   }
 }
