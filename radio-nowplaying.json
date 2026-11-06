@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T10:22:07.256Z",
+  "updatedAt": "2026-11-06T12:06:46.508Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T10:21:10.124Z"
+      "checkedAt": "2026-11-06T12:06:06.571Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Quartier libre",
         "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/quartier-libre"
       },
       "next": {
-        "title": "Toute est dans toute",
+        "title": "La collation",
         "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Quartier libre",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T10:21:11.587Z"
+      "checkedAt": "2026-11-06T12:06:08.438Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "G-Flex Survivor's Corner",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Morning Detour",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
-      "track": "G-Flex Survivor",
-      "showTitle": "G-Flex Survivor's Corner",
+      "next": {
+        "title": "Jazz Amuck",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
+      "track": "",
+      "showTitle": "Morning Detour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T10:21:13.798Z"
+      "checkedAt": "2026-11-06T12:06:11.541Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Wake up Folks!",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
-      "track": "",
-      "showTitle": "CJLO Late Night",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-06T10:21:48.000Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
       "next": {
-        "title": "Folkswagen",
+        "title": "CJLO News Hour",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Wake up Folks!",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T10:21:48.871Z"
+      "checkedAt": "2026-11-06T12:06:26.407Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
+      "track": "",
+      "showTitle": "Folkswagen",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-06T12:06:27.282Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T10:22:06.906Z"
+      "checkedAt": "2026-11-06T12:06:46.158Z"
     }
   }
 }
