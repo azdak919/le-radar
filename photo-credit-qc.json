@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-06T18:09:18.842Z",
+  "updated": "2026-11-06T18:39:40.773Z",
   "total": 187,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 104,
-  "pending": 40,
+  "cited": 103,
+  "pending": 41,
   "missingHero": 0,
   "ok": false,
   "checked": 52,
-  "updatedCount": 4,
-  "citedNew": 6,
-  "fallbackNew": 46,
+  "updatedCount": 3,
+  "citedNew": 5,
+  "fallbackNew": 47,
   "samples": [
-    {
-      "title": "Une moustache pour parler de deux cancers masculins",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
@@ -36,9 +29,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
