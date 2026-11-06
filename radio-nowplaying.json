@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-06T14:07:00.386Z",
+  "updatedAt": "2026-11-06T15:07:07.676Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Vendredi Nostalgie",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
-      },
-      "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Punk-o-rama",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/punk-o-rama/"
+      },
       "track": "",
-      "showTitle": "Vendredi Nostalgie",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T14:06:03.367Z"
+      "checkedAt": "2026-11-06T15:06:07.107Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "En-quêtes artistiques",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/en-quetes-artistiques"
-      },
-      "next": {
         "title": "Accents ouverts",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/accents-ouverts"
       },
+      "next": {
+        "title": "Rebelles soniques",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
+      },
       "track": "",
-      "showTitle": "En-quêtes artistiques",
+      "showTitle": "Accents ouverts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T14:06:04.931Z"
+      "checkedAt": "2026-11-06T15:06:09.030Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T14:06:07.328Z"
+      "checkedAt": "2026-11-06T15:06:12.940Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO News Hour",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "The Alley",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/the-alley"
+      },
       "track": "",
-      "showTitle": "CJLO News Hour",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T14:06:41.565Z"
+      "checkedAt": "2026-11-06T15:06:47.715Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T14:06:42.521Z"
+      "checkedAt": "2026-11-06T15:06:48.846Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T14:07:00.036Z"
+      "checkedAt": "2026-11-06T15:07:07.325Z"
     }
   }
 }
