@@ -1277,16 +1277,6 @@
       "via": "resize-proxy",
       "nameKey": "image.jpeg"
     },
-    "467697863f7bc97d": {
-      "local": "assets/news-images/467697863f7bc97d.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 47525,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T14:39:01.724Z",
-      "via": "resize-proxy",
-      "nameKey": "image.png"
-    },
     "2545f71ffd33f31b": {
       "local": "assets/news-images/2545f71ffd33f31b.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/587D85BE-5ABB-4716-8EA0-5EB24A0D87EE_1_201_a.jpeg",
@@ -1673,18 +1663,27 @@
       "via": "photon-resize",
       "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
     },
-    "0d84d91b0191efcf": {
-      "local": "assets/news-images/0d84d91b0191efcf.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
+    "d0d4eef2f356a4c4": {
+      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
       "host": "www.delitfrancais.com",
-      "bytes": 83501,
+      "bytes": 286051,
+      "updatedAt": "2026-11-06T21:38:28.869Z",
+      "via": "disk",
+      "nameKey": "ak-mbam.jpg"
+    },
+    "2bf3bfaf723c2921": {
+      "local": "assets/news-images/2bf3bfaf723c2921.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-1-1.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 123598,
       "contentType": "image/jpeg",
-      "updatedAt": "2026-11-06T21:07:52.087Z",
+      "updatedAt": "2026-11-06T21:38:31.011Z",
       "via": "resize-proxy",
-      "nameKey": "blanchissement.png"
+      "nameKey": "image-1-1.jpg"
     }
   },
-  "updatedAt": "2026-11-06T21:07:52.090Z",
+  "updatedAt": "2026-11-06T21:38:31.014Z",
   "count": 169,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
