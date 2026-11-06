@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T17:07:27.021Z",
+  "updatedAt": "2026-11-06T17:38:11.772Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:06:48.651Z"
+      "checkedAt": "2026-11-06T17:37:29.783Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:06:50.260Z"
+      "checkedAt": "2026-11-06T17:37:31.758Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:06:52.995Z"
+      "checkedAt": "2026-11-06T17:37:35.648Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:07:07.360Z"
+      "checkedAt": "2026-11-06T17:37:51.188Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:07:08.705Z"
+      "checkedAt": "2026-11-06T17:37:52.426Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Opération beurre de cinoche",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
-      },
+      "current": null,
       "next": {
         "title": "Montréal au courant",
         "source": "api-live",
@@ -146,14 +140,14 @@
         "slug": "montreal-au-courant"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Opération beurre de cinoche",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T17:07:26.671Z"
+      "checkedAt": "2026-11-06T17:38:11.422Z"
     }
   }
 }
