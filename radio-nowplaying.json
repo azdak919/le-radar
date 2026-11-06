@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T22:36:46.314Z",
+  "updatedAt": "2026-11-06T22:42:13.521Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T22:36:07.109Z"
+      "checkedAt": "2026-11-06T22:41:13.959Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T22:36:08.750Z"
+      "checkedAt": "2026-11-06T22:41:15.565Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T22:36:10.952Z"
+      "checkedAt": "2026-11-06T22:41:17.939Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "The Groove Master's Hour",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
       "next": {
         "title": "The Go-Go Radio Magic Show",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "The Groove Master's Hour",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T22:36:25.056Z"
+      "checkedAt": "2026-11-06T22:41:52.277Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T22:36:26.167Z"
+      "checkedAt": "2026-11-06T22:41:53.405Z"
     },
     "choq": {
       "id": "choq",
@@ -155,7 +155,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T22:36:45.964Z"
+      "checkedAt": "2026-11-06T22:42:13.171Z"
     }
   }
 }
