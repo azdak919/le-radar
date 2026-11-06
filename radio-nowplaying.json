@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-06T02:43:04.313Z",
+  "updatedAt": "2026-11-06T03:36:38.531Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Crooch Control",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/crooch-control/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Crooch Control",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T02:42:26.577Z"
+      "checkedAt": "2026-11-06T03:36:10.779Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T02:42:28.228Z"
+      "checkedAt": "2026-11-06T03:36:12.632Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,34 +73,34 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T02:42:30.865Z"
+      "checkedAt": "2026-11-06T03:36:15.663Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The 514",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-514"
-      },
-      "next": {
         "title": "How Did We Get Here?",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/how-did-we-get-here"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "The 514",
+      "showTitle": "How Did We Get Here?",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T02:42:45.156Z"
+      "checkedAt": "2026-11-06T03:36:18.901Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,18 +125,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T02:42:46.198Z"
+      "checkedAt": "2026-11-06T03:36:19.998Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le grand maître des jeux",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
-      },
+      "current": null,
       "next": {
         "title": "Podcast Nomade: L'art de se rencontrer",
         "source": "api-live",
@@ -152,14 +139,14 @@
         "slug": "podcast-nomade-lart-de-se-rencontrer"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Le grand maître des jeux",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T02:43:03.962Z"
+      "checkedAt": "2026-11-06T03:36:38.181Z"
     }
   }
 }
