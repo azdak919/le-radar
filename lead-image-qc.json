@@ -1,30 +1,30 @@
 {
-  "updated": "2026-11-06T19:07:48.443Z",
+  "updated": "2026-11-06T20:38:01.243Z",
   "total": 187,
   "withPhoto": 170,
-  "withStock": 30,
+  "withStock": 31,
   "withCampusBank": 28,
   "fullyCovered": 187,
-  "leadReadyPhotos": 152,
-  "pageScraped": 31,
-  "photosRecovered": 31,
-  "imagesCleared": 17,
-  "stockSearches": 35,
-  "stockFound": 25,
-  "campusBankFound": 20,
+  "leadReadyPhotos": 149,
+  "pageScraped": 34,
+  "photosRecovered": 34,
+  "imagesCleared": 18,
+  "stockSearches": 38,
+  "stockFound": 27,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Vendredi fou ou achat local : où va l’argent des consommateurs ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/06/vendredi-fou-ou-achat-local-ou-va-largent-des-consommateurs/?utm_source=rss&utm_medium=rss&utm_campaign=vendredi-fou-ou-achat-local-ou-va-largent-des-consommateurs",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2023/11/salonmetierdart.jpg"
+    },
     {
       "title": "25 ans de cinéma… et de souvenirs!",
       "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
       "reason": "no-stock-match",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
-    },
-    {
-      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
-      "link": "https://lapige.atmjonquiere.com/2026/11/05/bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png"
     },
     {
       "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
@@ -37,6 +37,12 @@
       "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+    },
+    {
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
+      "link": "https://lapige.atmjonquiere.com/2026/11/05/bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -63,6 +69,12 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
+      "title": "Creative Writing October 2026",
+      "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Dawson_College_04.jpg"
+    },
+    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
@@ -73,18 +85,6 @@
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
-    },
-    {
-      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
-      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
-    },
-    {
-      "title": "Pete Fry élu maire de Vancouver",
-      "link": "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Pete-Fry-elu-maire-de-Vancouver_Page-FB-Pete-Fry-for-Vancouver-682x1024.jpg"
     }
   ]
 }
