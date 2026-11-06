@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T03:36:38.531Z",
+  "updatedAt": "2026-11-06T05:07:00.541Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,122 +21,122 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T03:36:10.779Z"
+      "checkedAt": "2026-11-06T05:06:01.338Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "La grande ludothèque (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "La grande ludothèque (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T03:36:12.632Z"
+      "checkedAt": "2026-11-06T05:06:03.301Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Chaud Pour/Francis",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "L'aire du Diable",
         "source": "api-live",
         "start": "23:00",
         "end": "01:00"
       },
-      "track": "You",
-      "showTitle": "Chaud Pour/Francis",
+      "next": {
+        "title": "Listen! You Smell Something?",
+        "source": "api-live",
+        "start": "01:00",
+        "end": "04:00"
+      },
+      "track": "",
+      "showTitle": "L'aire du Diable",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T03:36:15.663Z"
+      "checkedAt": "2026-11-06T05:06:06.206Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "How Did We Get Here?",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/how-did-we-get-here"
+        "title": "Finally Midnight",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "How Did We Get Here?",
+      "showTitle": "Finally Midnight",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T03:36:18.901Z"
+      "checkedAt": "2026-11-06T05:06:41.017Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "À nous le futur",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T03:36:19.998Z"
+      "checkedAt": "2026-11-06T05:06:42.123Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Podcast Nomade: L'art de se rencontrer",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "slug": "podcast-nomade-lart-de-se-rencontrer"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
@@ -146,7 +146,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T03:36:38.181Z"
+      "checkedAt": "2026-11-06T05:07:00.191Z"
     }
   }
 }
