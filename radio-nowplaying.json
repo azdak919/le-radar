@@ -1,107 +1,113 @@
 {
-  "updatedAt": "2026-11-06T01:36:44.283Z",
+  "updatedAt": "2026-11-06T02:36:33.286Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Crooch Control",
-        "source": "schedule",
+        "source": "api-live",
         "start": "21:00",
         "end": "22:00",
         "url": "https://chyz.ca/emission/crooch-control/"
       },
+      "next": {
+        "title": "Vendredi Nostalgie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Crooch Control",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T01:36:04.548Z"
+      "checkedAt": "2026-11-06T02:36:06.859Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La courbe 2.0",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/la-courbe-2-0"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "21:00",
         "end": "23:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "La grande ludothèque (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
       "track": "",
-      "showTitle": "La courbe 2.0",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T01:36:06.146Z"
+      "checkedAt": "2026-11-06T02:36:08.342Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Other Worlds on Earth/Dromostexte",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Chaud Pour/Francis",
         "source": "api-live",
         "start": "21:00",
         "end": "23:00"
       },
-      "track": "",
-      "showTitle": "Other Worlds on Earth/Dromostexte",
+      "next": {
+        "title": "L'aire du Diable",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "01:00"
+      },
+      "track": "You",
+      "showTitle": "Chaud Pour/Francis",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T01:36:08.639Z"
+      "checkedAt": "2026-11-06T02:36:10.470Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Maiden Voyage",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/maiden-voyage"
-      },
-      "next": {
         "title": "The 514",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/the-514"
       },
+      "next": {
+        "title": "How Did We Get Here?",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/how-did-we-get-here"
+      },
       "track": "",
-      "showTitle": "Maiden Voyage",
+      "showTitle": "The 514",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T01:36:25.433Z"
+      "checkedAt": "2026-11-06T02:36:12.937Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +132,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T01:36:26.355Z"
+      "checkedAt": "2026-11-06T02:36:14.125Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le grand maître des jeux",
         "source": "api-live",
         "start": "21:00",
         "end": "22:30",
         "slug": "le-maitre-des-jeux"
       },
+      "next": {
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "11:00",
+        "slug": "podcast-nomade-lart-de-se-rencontrer"
+      },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "",
+      "showTitle": "Le grand maître des jeux",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T01:36:43.932Z"
+      "checkedAt": "2026-11-06T02:36:32.936Z"
     }
   }
 }
