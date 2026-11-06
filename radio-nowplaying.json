@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T13:06:50.428Z",
+  "updatedAt": "2026-11-06T14:07:00.386Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T13:06:06.460Z"
+      "checkedAt": "2026-11-06T14:06:03.367Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "En-quêtes artistiques",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "https://cism893.ca/emissions/en-quetes-artistiques"
       },
+      "next": {
+        "title": "Accents ouverts",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/accents-ouverts"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "En-quêtes artistiques",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T13:06:08.267Z"
+      "checkedAt": "2026-11-06T14:06:04.931Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Morning Detour",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Jazz Amuck",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Morning Detour",
+      "showTitle": "Jazz Amuck",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T13:06:11.289Z"
+      "checkedAt": "2026-11-06T14:06:07.328Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Wake up Folks!",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/wake-up-folks"
-      },
-      "next": {
         "title": "CJLO News Hour",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/cjlo-news-hour"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Wake up Folks!",
+      "showTitle": "CJLO News Hour",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T13:06:30.746Z"
+      "checkedAt": "2026-11-06T14:06:41.565Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T13:06:31.658Z"
+      "checkedAt": "2026-11-06T14:06:42.521Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T13:06:50.077Z"
+      "checkedAt": "2026-11-06T14:07:00.036Z"
     }
   }
 }
