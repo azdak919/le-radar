@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-06T09:36:13.525Z",
+  "updated": "2026-11-06T11:06:45.744Z",
   "total": 187,
   "withAuthor": 187,
-  "mismatches": 19,
+  "mismatches": 18,
   "ok": true,
   "samples": [
     {
@@ -142,14 +142,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "What we liked this summer break",
-      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
-      "source": "The Tribune",
-      "fieldAuthor": "Dylan Hing, Lia James et Siena Torres",
-      "canonicalAuthor": "Dylan Hing, Lia James and Siena Torres",
-      "reason": "page-byline-overrides-rss"
-    },
-    {
       "title": "‘The Tribune’ Explains: How to vote in Quebec’s 2026 general election",
       "link": "https://thetribune.ca/news/the-tribune-explains/the-tribune-explains-how-to-vote-in-quebecs-2026-general-election-08092026/",
       "source": "The Tribune",
@@ -158,5 +150,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 19
+  "fixed": 18
 }

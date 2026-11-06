@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-06T09:36:32.216Z",
+  "updated": "2026-11-06T11:06:51.538Z",
   "total": 187,
   "pool": 53,
-  "incomplete": 9,
-  "withLeadExcerpt": 128,
-  "candidates": 9,
-  "enriched": 1,
+  "incomplete": 10,
+  "withLeadExcerpt": 129,
+  "candidates": 10,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,12 +28,21 @@
       "changed": false
     },
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
-      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
+      "title": "Jésus et autres mots-clics",
+      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
+      "changed": true
+    },
+    {
+      "title": "Quand la mode va trop loin",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
       "ok": true,
       "score": 100,
-      "chars": 258,
-      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "chars": 317,
+      "sample": "En 2017, la demande de blanchiment anal aurait explosé de 23 % dans la clinique médicale londonienne",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 80,
       "chars": 400,
       "sample": "Depuis 25 ans, le Cinéma Beaubien fait partie du paysage culturel montréalais. Bien plus qu’un endro",
-      "changed": false
-    },
-    {
-      "title": "Yachts, champagne et abonnés : pourquoi la vie des riches fascine tant",
-      "link": "https://lapige.atmjonquiere.com/2026/11/05/yachts-champagne-et-abonnes-pourquoi-la-vie-des-riches-fascine-tant/?utm_source=rss&utm_medium=rss&utm_campaign=yachts-champagne-et-abonnes-pourquoi-la-vie-des-riches-fascine-tant",
-      "ok": true,
-      "score": 100,
-      "chars": 171,
-      "sample": "Une story Instagram. Un yacht, du champagne, un coucher de soleil sur la Méditerranée. On se dit qu’",
       "changed": false
     }
   ]
