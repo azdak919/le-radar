@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T09:07:07.568Z",
+  "updatedAt": "2026-11-06T10:06:49.366Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T09:06:00.207Z"
+      "checkedAt": "2026-11-06T10:06:09.330Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T09:06:01.680Z"
+      "checkedAt": "2026-11-06T10:06:11.121Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T09:06:13.534Z"
+      "checkedAt": "2026-11-06T10:06:14.460Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T09:06:28.033Z"
+      "checkedAt": "2026-11-06T10:06:29.133Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T09:06:28.785Z"
+      "checkedAt": "2026-11-06T10:06:30.100Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +134,20 @@
       "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:30",
         "end": "12:30",
-        "url": "https://www.choq.ca/emissions/box-sophisme"
+        "slug": "box-sophisme"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-06T09:07:07.217Z"
+      "checkedAt": "2026-11-06T10:06:49.015Z"
     }
   }
 }
