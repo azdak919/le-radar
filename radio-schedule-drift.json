@@ -1,28 +1,31 @@
 {
-  "checkedAt": "2026-11-06T03:22:59.998Z",
+  "checkedAt": "2026-11-07T02:44:20.072Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 5,
     "drift": [
-      "choq"
+      "chyz"
     ],
     "overhaul": [],
-    "unreachable": [
-      "cjlo"
-    ]
+    "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
       "published": 45,
-      "fresh": 45,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 46,
+      "added": [
+        "ven 18:45–21:30 Remparts de Québec",
+        "sam 14:30–18:30 Football du Rouge et Or"
+      ],
+      "removed": [
+        "sam 13:30–17:30 Football du Rouge et Or"
+      ],
+      "changed": 3,
+      "ratio": 0.067,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -47,12 +50,12 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 0,
+      "fresh": 379,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "unreachable"
+      "status": "stable"
     },
     {
       "id": "cfak",
@@ -68,15 +71,11 @@
       "id": "choq",
       "published": 27,
       "fresh": 27,
-      "added": [
-        "mer 13:00–14:00 Échos du monde"
-      ],
-      "removed": [
-        "mer 13:00–13:45 Onde de CHOQ"
-      ],
-      "changed": 2,
-      "ratio": 0.074,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
