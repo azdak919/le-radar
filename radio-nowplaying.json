@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-11-07T22:36:50.595Z",
+  "updatedAt": "2026-11-07T23:36:43.095Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Football du Rouge et Or",
-        "source": "api-live",
-        "start": "14:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Football du Rouge et Or",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-07T22:36:04.455Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Disconomique",
-        "source": "schedule",
-        "start": "16:30",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/disconomique"
-      },
-      "next": {
-        "title": "Solénoïde",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/solenoide"
-      },
-      "track": "",
-      "showTitle": "Disconomique",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T22:36:06.100Z"
+      "checkedAt": "2026-11-07T23:36:06.160Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
+      "next": {
+        "title": "InfiniBIT!",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:30",
+        "url": "https://cism893.ca/emissions/infinibit"
+      },
+      "track": "",
+      "showTitle": "Solénoïde",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-07T23:36:07.702Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,34 +73,34 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T22:36:08.436Z"
+      "checkedAt": "2026-11-07T23:36:09.933Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "The Limelight",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/the-limelight"
       },
+      "next": {
+        "title": "Screamers",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T22:36:22.343Z"
+      "checkedAt": "2026-11-07T23:36:24.083Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T22:36:23.902Z"
+      "checkedAt": "2026-11-07T23:36:25.168Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T22:36:50.244Z"
+      "checkedAt": "2026-11-07T23:36:42.745Z"
     }
   }
 }
