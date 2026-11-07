@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-07T04:07:07.209Z",
+  "updated": "2026-11-07T05:06:40.046Z",
   "total": 188,
   "pool": 54,
-  "incomplete": 12,
+  "incomplete": 11,
   "withLeadExcerpt": 129,
-  "candidates": 12,
-  "enriched": 2,
+  "candidates": 11,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,21 +28,12 @@
       "changed": false
     },
     {
-      "title": "Quand la mode va trop loin",
-      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
+      "title": "What the Cornell case taught me",
+      "link": "https://theconcordian.com/2026/11/what-the-cornell-case-taught-me/",
       "ok": true,
       "score": 100,
-      "chars": 317,
-      "sample": "En 2017, la demande de blanchiment anal aurait explosé de 23 % dans la clinique médicale londonienne",
-      "changed": true
-    },
-    {
-      "title": "Revue de concert : Aya Nakamura",
-      "link": "https://theconcordian.com/2026/11/revue-concert-aya-nakamura-montreal/",
-      "ok": true,
-      "score": 100,
-      "chars": 286,
-      "sample": "La fin de semaine dernière, celle qu’on surnomme « la reine de France », Aya Nakamura, a fait sa pre",
+      "chars": 245,
+      "sample": "I think we have all come across the Cornell case by now. The Cornell sexual assault case involves a ",
       "changed": true
     },
     {
@@ -79,6 +70,15 @@
       "score": 80,
       "chars": 400,
       "sample": "La sortie de la série Empathie l’an dernier a généré un engouement majeur. La création de Florence L",
+      "changed": false
+    },
+    {
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
+      "ok": true,
+      "score": 80,
+      "chars": 400,
+      "sample": "Depuis 25 ans, le Cinéma Beaubien fait partie du paysage culturel montréalais. Bien plus qu’un endro",
       "changed": false
     }
   ]
