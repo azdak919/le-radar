@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T00:36:45.743Z",
+  "updatedAt": "2026-11-07T01:36:43.376Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,34 +29,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T00:36:04.606Z"
+      "checkedAt": "2026-11-07T01:36:06.355Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rave de nuit",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/rave-de-nuit"
-      },
-      "next": {
         "title": "Le 120e parallèle (reprise)",
         "source": "schedule",
         "start": "20:00",
         "end": "21:00",
         "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Rave de nuit",
+      "showTitle": "Le 120e parallèle (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T00:36:06.247Z"
+      "checkedAt": "2026-11-07T01:36:07.883Z"
     },
     "ckut": {
       "id": "ckut",
@@ -82,34 +82,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T00:36:11.421Z"
+      "checkedAt": "2026-11-07T01:36:10.426Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Go-Go Radio Magic Show",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
-      },
-      "next": {
         "title": "El Encuentro Latino",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/el-encuentro-latino"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "The Go-Go Radio Magic Show",
+      "showTitle": "El Encuentro Latino",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T00:36:26.207Z"
+      "checkedAt": "2026-11-07T01:36:24.952Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,7 +134,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T00:36:27.301Z"
+      "checkedAt": "2026-11-07T01:36:25.837Z"
     },
     "choq": {
       "id": "choq",
@@ -156,7 +156,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T00:36:45.392Z"
+      "checkedAt": "2026-11-07T01:36:43.026Z"
     }
   }
 }
