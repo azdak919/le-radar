@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-07T21:06:45.954Z",
+  "updated": "2026-11-07T23:41:21.119Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 22,
+  "mismatches": 17,
   "ok": true,
   "samples": [
-    {
-      "title": "Karmina, des vampires québécois !",
-      "link": "https://quartierlibre.ca/karmina-vampires-quebecois/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Mathilde Jobin",
-      "reason": "page-byline"
-    },
     {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy/",
@@ -36,30 +28,6 @@
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Galaxy evolution: The expansion of our universe",
-      "link": "https://thetribune.ca/sci-tech/galaxy-evolution-the-expansion-of-our-universe/",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Clara Smyrski",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Off-road engineering",
-      "link": "https://thetribune.ca/sci-tech/off-road-engineering/",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Clara Smyrski",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Lessons from a singing mouse",
-      "link": "https://thetribune.ca/sci-tech/lessons-from-a-singing-mouse/",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Clara Smyrski",
-      "reason": "page-byline"
     },
     {
       "title": "Keeping our unhoused community warm this winter",
@@ -164,7 +132,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
+      "link": "https://thetribune.ca/opinion/commentary/clear-bags-a-simple-remedy-for-montreals-lacklustre-composting-habits-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 22
+  "fixed": 17
 }
