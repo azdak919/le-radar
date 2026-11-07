@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T21:36:49.122Z",
+  "updatedAt": "2026-11-07T22:36:50.595Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T21:36:07.987Z"
+      "checkedAt": "2026-11-07T22:36:04.455Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T21:36:09.825Z"
+      "checkedAt": "2026-11-07T22:36:06.100Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,34 +80,34 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T21:36:12.660Z"
+      "checkedAt": "2026-11-07T22:36:08.436Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mi Dun Talk",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "The Limelight",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
+      },
       "track": "",
-      "showTitle": "Mi Dun Talk",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T21:36:27.642Z"
+      "checkedAt": "2026-11-07T22:36:22.343Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T21:36:29.192Z"
+      "checkedAt": "2026-11-07T22:36:23.902Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T21:36:48.772Z"
+      "checkedAt": "2026-11-07T22:36:50.244Z"
     }
   }
 }
