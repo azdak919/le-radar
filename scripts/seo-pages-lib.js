@@ -1374,6 +1374,27 @@ function quebecWeekStartDate(now = new Date()) {
   return local;
 }
 
+/** Coverage measures published time, never audio availability or accuracy. */
+function scheduleQualityText(station, t, now = Date.now()) {
+  const en = t.lang.startsWith('en');
+  const notes = [];
+  const last = Date.parse(station?.checkedAt || '');
+  if (station?.unverified || !Number.isFinite(last) || now - last > 7 * 86400000) {
+    notes.push(en ? 'Schedule not verified; last known data.' : 'Grille non vérifiée ; dernières données connues.');
+  }
+  const coverage = require('./radio-schedule-lib').gridCoverage(station?.grid).weekPercent;
+  if (coverage < 100) notes.push(en
+    ? `Partial schedule (${coverage}% of the week published). Missing slots do not mean the station is offline.`
+    : `Grille partielle (${coverage} % de la semaine publiée). Les plages absentes ne signifient pas que la radio est hors ligne.`);
+  if (station?.grid?.some((slot) => slot.endUnknown)) notes.push(en
+    ? 'Some end times are not published; these shows are not labelled on air.'
+    : 'Certaines fins ne sont pas publiées ; ces émissions ne sont pas indiquées à l’antenne.');
+  if (station?.grid?.some((slot) => slot.endInferred)) notes.push(en
+    ? 'End times are estimated from the next start; the source does not publish them.'
+    : 'Fins estimées à partir des débuts suivants ; la source ne les publie pas.');
+  return notes.join(' ');
+}
+
 function scheduleContext(checkedAt, _verifiedWeekOf, t) {
   const checked = checkedAt ? new Date(checkedAt) : null;
   // Semaine courante à Québec, pas la semaine du tampon. La date MAJ dit
@@ -1435,7 +1456,7 @@ function scheduleSlotStates(grid) {
   const active = slots.filter((slot) => {
     const start = slotMinutes(slot.start);
     const end = slotMinutes(slot.end);
-    if (end == null) return slot.day === nowDay && nowMinute >= start;
+    if (end == null) return false; // published start alone is not an on-air interval
     if (end > start) return slot.day === nowDay && nowMinute >= start && nowMinute < end;
     // 23:00–00:00 et les émissions qui franchissent minuit.
     return (slot.day === nowDay && nowMinute >= start)
@@ -1444,7 +1465,8 @@ function scheduleSlotStates(grid) {
   if (active.length) {
     // En cas de chevauchement éditorial, privilégier le créneau commencé le
     // plus récemment : c'est généralement la mise à jour la plus précise.
-    active.sort((a, b) => (slotMinutes(b.start) ?? 0) - (slotMinutes(a.start) ?? 0));
+    active.sort((a, b) => ((b.day === nowDay ? 0 : -1440) + slotMinutes(b.start))
+      - ((a.day === nowDay ? 0 : -1440) + slotMinutes(a.start)));
     state.set(active[0], 'live');
     return state;
   }
@@ -1464,7 +1486,7 @@ function scheduleSlotStates(grid) {
   return state;
 }
 
-function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stationId = '' } = {}) {
+function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stationId = '', unverified = false } = {}) {
   if (!grid || !grid.length) return '';
   const byDay = new Map();
   for (const slot of grid) {
@@ -1514,6 +1536,7 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
         return `            <li${classes ? ` class="${classes}"` : ''} data-schedule-start="${escapeHtml(s.start)}" data-schedule-end="${escapeHtml(s.end || '')}"${stateLabel ? ` aria-label="${escapeHtml(stateLabel)} : ${title}"` : ''}>`
           + `<time class="seo-slot__time">${range}</time>`
           + `<span class="seo-slot__title">${label}</span>`
+          + (s.endUnknown ? `<span class="seo-slot__note">${t.lang.startsWith('en') ? 'End not published' : 'Fin non publiée'}</span>` : '')
           + (overnight ? `<span class="seo-slot__note">${escapeHtml(t.overnight)}</span>` : '')
           + '</li>';
       })
@@ -1523,6 +1546,7 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
 
   return `      <section class="seo-section" id="horaire"${stationId ? ` data-schedule-station="${escapeHtml(stationId)}"` : ''}>\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
     + scheduleContext(checkedAt, verifiedWeekOf, t)
+    + `      <p class="seo-note" data-schedule-quality>${escapeHtml(scheduleQualityText({ grid, checkedAt, unverified }, t))}</p>\n`
     + `      <div class="seo-schedule-scroll">\n      <div class="seo-schedule">\n${blocks.join('\n')}\n      </div>\n      </div>\n`
     + `      <p class="seo-note">${escapeHtml(t.scheduleNote)}</p>\n      </section>\n`;
 }
@@ -1560,6 +1584,7 @@ module.exports = {
   slotMinutes,
   scheduleTable,
   scheduleContext,
+  scheduleQualityText,
   quebecWeekStartDate,
   scheduleTodayDay,
   scheduleCurrentMinute,

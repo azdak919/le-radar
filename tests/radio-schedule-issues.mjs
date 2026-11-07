@@ -23,9 +23,12 @@ assert.equal(new Set(plan.map((p) => p.title)).size, plan.length, 'un titre uniq
 assert.equal(titleFor('chyz'), 'Radio : grille à vérifier — CHYZ');
 
 // Collecteur : site injoignable → grille gardée et marquée unverified.
-const src = fs.readFileSync(new URL('../scripts/fetch-radio-schedules.js', import.meta.url), 'utf8');
-assert.match(src, /unverified = true;/);
-assert.match(src, /unverified \? \{ unverified: true \}/);
+const { selectScheduleGrid } = require('../scripts/radio-schedule-lib.js');
+const previous = { grid: [{ day: 1, start: '09:00', end: '10:00', title: 'Real show' }], checkedAt: '2026-11-02T11:00:00Z' };
+const retained = selectScheduleGrid({ grid: [], previous, now: new Date(now).toISOString() });
+assert.equal(retained.unverified, true);
+assert.equal(retained.checkedAt, previous.checkedAt);
+assert.deepEqual(retained.grid, previous.grid);
 // Radar : la mention s'affiche.
 const tuner = fs.readFileSync(new URL('../radar-tuner.js', import.meta.url), 'utf8');
 assert.match(tuner, /grille non vérifiée/);

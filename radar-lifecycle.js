@@ -829,11 +829,12 @@ function syncSeoScheduleNow() {
     }
   }
   const active = slots.filter((slot) => {
-    if (slot.end == null) return slot.day === now.day && now.minute >= slot.start;
+    if (slot.end == null) return false; // unknown duration is not proof of being on air
     if (slot.end > slot.start) return slot.day === now.day && now.minute >= slot.start && now.minute < slot.end;
     return (slot.day === now.day && now.minute >= slot.start)
       || (slot.day === (now.day + 6) % 7 && now.minute < slot.end);
-  }).sort((a, b) => b.start - a.start)[0];
+  }).sort((a, b) => ((b.day === now.day ? 0 : -1440) + b.start)
+    - ((a.day === now.day ? 0 : -1440) + a.start))[0];
 
   let upcoming = null;
   let distance = Infinity;
@@ -911,11 +912,12 @@ function pickHubAirFromGrid(grid, now) {
     });
   }
   const active = slots.filter((slot) => {
-    if (slot.end == null) return slot.day === now.day && now.minute >= slot.start;
+    if (slot.end == null) return false; // unknown duration is not proof of being on air
     if (slot.end > slot.start) return slot.day === now.day && now.minute >= slot.start && now.minute < slot.end;
     return (slot.day === now.day && now.minute >= slot.start)
       || (slot.day === (now.day + 6) % 7 && now.minute < slot.end);
-  }).sort((a, b) => b.start - a.start)[0];
+  }).sort((a, b) => ((b.day === now.day ? 0 : -1440) + b.start)
+    - ((a.day === now.day ? 0 : -1440) + a.start))[0];
   if (active) return { live: true, slot: active };
   let upcoming = null;
   let distance = Infinity;

@@ -132,7 +132,7 @@ function normalizeSlot(slot) {
 
   const start = timeToMinutes(slot.start);
   const end = timeToMinutes(slot.end);
-  if (start == null || end == null) return null;
+  if (start == null || (end == null && !slot.endUnknown)) return null;
 
   const url = String(slot.url || '').trim();
   let title = stripProductionNote(
@@ -143,7 +143,7 @@ function normalizeSlot(slot) {
   if (url) title = expandTruncatedTitle(title, url);
   if (!title || isJunkShowTitle(title)) return null;
 
-  const out = { day, start: minutesToTime(start), end: minutesToTime(end), title };
+  const out = { day, start: minutesToTime(start), ...(end == null ? { endUnknown: true } : { end: minutesToTime(end) }), title };
   const host = decodeHtmlEntities(String(slot.host || '')).replace(/\s+/g, ' ').trim();
   if (host) out.host = host;
   if (url) out.url = url;
@@ -152,6 +152,7 @@ function normalizeSlot(slot) {
   // collecte pour le now-playing, mais `stripTransientFlags` l'ôte avant
   // publication dans radio-schedules.json.
   if (slot.live) out.live = true;
+  if (slot.endInferred) out.endInferred = true;
   return out;
 }
 
@@ -223,6 +224,7 @@ function resolveCurrentSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
     if (!slot) continue;
     const start = timeToMinutes(slot.start);
     const end = timeToMinutes(slot.end);
+    if (end == null) continue; // no published duration: never claim this show is on air
     const startAbs = slot.day * 1440 + start;
     const endAbs = slot.day * 1440 + (end <= start ? end + 1440 : end);
     const isLive = (nowAbs >= startAbs && nowAbs < endAbs)
@@ -283,7 +285,9 @@ function resolveNextSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
  */
 /** Planchers de couverture hebdo — partagés bot + data-integrity. Ne pas baisser sans diagnostic. */
 const COVERAGE_FLOOR = {
-  cism: 95, cjlo: 95, ckut: 95, cfak: 80, chyz: 20,
+  cism: 95, cjlo: 95, ckut: 95, cfak: 70, chyz: 20,
+  // CFAK 2026-11-07: 5 weekdays (~71%). Weekend only lists a start;
+  // the former 80% included two invented 00:00–07:00 durations.
   // CHOQ = épisodes datés, pas une grille type. Une semaine de rentrée à ~9 %
   // est réelle (GraphQL a répondu) ; le plancher 10 % gardait une semaine
   // d’avant et masquait Pôle hip-hop le dimanche. 5 % = parseur quasi vide.
@@ -294,23 +298,25 @@ function gridCoverage(grid) {
   const perDay = [0, 0, 0, 0, 0, 0, 0];
   const gaps = [];
   const byDay = new Map();
+  const addInterval = (day, start, end) => {
+    if (!byDay.has(day)) byDay.set(day, []);
+    byDay.get(day).push({ start, end });
+  };
 
   for (const raw of Array.isArray(grid) ? grid : []) {
     const slot = normalizeSlot(raw);
     if (!slot) continue;
-    if (!byDay.has(slot.day)) byDay.set(slot.day, []);
-    byDay.get(slot.day).push(slot);
+    const start = timeToMinutes(slot.start);
+    const end = timeToMinutes(slot.end);
+    if (end == null) continue; // a start alone does not establish any covered time
+    if (end <= start) {
+      addInterval(slot.day, start, 1440);
+      addInterval((slot.day + 1) % 7, 0, end);
+    } else addInterval(slot.day, start, end);
   }
 
   for (let day = 0; day < 7; day += 1) {
-    const slots = (byDay.get(day) || [])
-      .map((s) => {
-        const start = timeToMinutes(s.start);
-        const end = timeToMinutes(s.end);
-        return { start, end: end <= start ? end + 1440 : end, title: s.title };
-      })
-      .filter((s) => s.start != null && Number.isFinite(s.end))
-      .sort((a, b) => a.start - b.start);
+    const slots = (byDay.get(day) || []).sort((a, b) => a.start - b.start);
 
     // Fusion des intervalles → temps réellement couvert, sans double compte.
     let covered = 0;
@@ -333,6 +339,36 @@ function gridCoverage(grid) {
     slots: Array.isArray(grid) ? grid.length : 0,
     gaps: gaps.filter((g) => g.end - g.start >= 30),
   };
+}
+
+/** Reject impossible piles, not ordinary fortnightly alternances. */
+function gridPlausibilityIssues(grid) {
+  const intervals = new Map();
+  for (const slot of mergeGrids(grid)) {
+    const key = `${slot.day}|${slot.start}|${slot.end}`;
+    if (!intervals.has(key)) intervals.set(key, new Set());
+    intervals.get(key).add(slot.title.toLowerCase());
+  }
+  return [...intervals].filter(([, titles]) => titles.size > 8)
+    .map(([key, titles]) => `${titles.size} distinct shows at ${key}`);
+}
+
+/** Choose safe data without refreshing the timestamp of a retained grid. */
+function selectScheduleGrid({ grid, sources, previous, now, weekOf, floor, force = false }) {
+  const previousGrid = previous?.grid || [];
+  const previousSafe = previousGrid.length && mergeGrids(previousGrid).length === previousGrid.length
+    && !gridPlausibilityIssues(previousGrid).length;
+  const issues = gridPlausibilityIssues(grid);
+  const coverageDrop = floor && gridCoverage(grid).weekPercent < floor
+    && gridCoverage(previousGrid).weekPercent >= floor;
+  const collapsed = previousSafe && previousGrid.length >= 10 && grid.length < previousGrid.length * 0.6;
+  const retain = !grid.length || issues.length || (!force && (collapsed || coverageDrop));
+  if (retain && !previousSafe) throw new Error(`No trustworthy schedule: ${issues.join('; ') || 'empty/collapsed source and invalid previous grid'}`);
+  if (retain) return {
+    ...previous, grid: previousGrid, unverified: true, attemptedAt: now,
+    retainedReason: issues.join('; ') || (!grid.length ? 'source-unavailable' : 'source-collapsed'),
+  };
+  return { grid, sources, checkedAt: now, verifiedWeekOf: weekOf, attemptedAt: now };
 }
 
 // ─── Adaptateurs de sources ─────────────────────────────────────────────────────
@@ -594,12 +630,13 @@ function parseCfakGrid(htmlText) {
     cards.sort((a, b) => a.start.localeCompare(b.start));
     for (let j = 0; j < cards.length; j += 1) {
       let end = j + 1 < cards.length ? cards[j + 1].start : cards[0].start;
-      // Un seul créneau à minuit (ex. samedi « Les nuits CFAK ») : éviter 00:00→00:00
-      // qui couvrirait toute la journée ; la nuit CFAK se termine vers 07:00 comme les autres jours.
-      if (end === cards[j].start && /^00:0[01]$/.test(cards[j].start)) {
-        end = '07:00';
+      if (cards.length === 1) {
+        // A single start says nothing about its end. In particular, do not
+        // invent 07:00 on the weekend or interpret equal bounds as 24 hours.
+        grid.push({ day: heads[i].day, start: cards[j].start, endUnknown: true, title: cards[j].title });
+      } else {
+        grid.push({ day: heads[i].day, start: cards[j].start, end, title: cards[j].title, endInferred: true });
       }
-      grid.push({ day: heads[i].day, start: cards[j].start, end, title: cards[j].title });
     }
   }
   return grid;
@@ -846,6 +883,9 @@ function parseCjloClockToken(token = '') {
   const m = /^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/i.exec(raw);
   if (!m) return null;
   let hour = parseInt(m[1], 10);
+  // Drupal emits unscheduled shows as Monday ‘Midnight - 0:30 AM’.
+  // 0 is not a 12-hour clock hour. Keep genuine 12:30 AM and alternances.
+  if (hour < 1 || hour > 12) return null;
   const minute = m[2] ? parseInt(m[2], 10) : 0;
   const ap = m[3].toLowerCase();
   if (ap === 'pm' && hour !== 12) hour += 12;
@@ -1074,12 +1114,12 @@ async function fetchChoqGrid(src = {}, deps = {}) {
           variables: { date: ['and', `>= ${day}`, `< ${next}`] },
         }),
       });
-      if (res.ok) {
-        const json = await res.json();
-        entries = Array.isArray(json?.data?.entries) ? json.data.entries : [];
+      if (!res.ok) throw new Error(`CHOQ ${day}: HTTP ${res.status}`);
+      const json = await res.json();
+      if (json.errors?.length || !Array.isArray(json?.data?.entries)) {
+        throw new Error(`CHOQ ${day}: invalid GraphQL schedule response`);
       }
-    } catch {
-      entries = [];
+      entries = json.data.entries;
     } finally {
       clearTimeout(timer);
     }
@@ -1179,6 +1219,8 @@ module.exports = {
   expandTruncatedTitle,
   COVERAGE_FLOOR,
   gridCoverage,
+  gridPlausibilityIssues,
+  selectScheduleGrid,
   normalizeSlot,
   stripTransientFlags,
   mergeGrids,
