@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { resolveCurrentSlot, gridCoverage, fetchChoqGrid, COVERAGE_FLOOR } = require('../scripts/radio-schedule-lib.js');
+const { resolveCurrentSlot, gridCoverage, fetchChoqGrid, COVERAGE_FLOOR, gridPlausibilityIssues } = require('../scripts/radio-schedule-lib.js');
 const { isGoogleNewsPublicationUrl } = require('../scripts/media-channels-lib.js');
 
 const root = new URL('../', import.meta.url);
@@ -307,6 +307,7 @@ assert(
 for (const [id, floor] of Object.entries(COVERAGE_FLOOR)) {
   const station = schedules[id];
   if (!station) continue;
+  assert.deepEqual(gridPlausibilityIssues(station.grid), [], `${id}: grille invraisemblable`);
   const cov = gridCoverage(station.grid);
   assert(
     cov.weekPercent >= floor,

@@ -17,7 +17,7 @@ const {
   T, escapeHtml, slugify, normKey, canonicalInstitution, localizedInstitutionName, isoDay,
   sportsUpdatedStamp,
   fill, frOf, frAt, plural, renderPage, factsList, headlineList, cardGrid, scheduleTable,
-  scheduleContext, scheduleTodayDay, EXTERNAL_LINK_ATTRS,
+  scheduleContext, scheduleQualityText, scheduleTodayDay, EXTERNAL_LINK_ATTRS,
 } = require('./seo-pages-lib');
 const { pruneSportsTeam } = require('./sports-freshness-lib');
 const { resolveCurrentSlot, resolveNextSlot } = require('./radio-schedule-lib');
@@ -456,6 +456,7 @@ function radioPage(radio, lang, ctx) {
     checkedAt: ctx.schedules?.[radio.id]?.checkedAt,
     verifiedWeekOf: ctx.schedules?.[radio.id]?.verifiedWeekOf,
     stationId: radio.id,
+    unverified: ctx.schedules?.[radio.id]?.unverified,
   });
 
   const jsonLd = JSON.stringify({
@@ -907,6 +908,7 @@ function scheduleHubCards(entries, t, lang, up) {
       + `<span class="seo-radio-card__name">${escapeHtml(name)}</span>`
       + (place ? `<span class="seo-radio-card__place">${escapeHtml(place)}</span>` : '')
       + airHtml
+      + `<span class="seo-radio-card__place" data-schedule-quality>${escapeHtml(scheduleQualityText(station, t))}</span>`
       + '</a>\n        </li>';
   });
   return `      <ul class="seo-radio-cards">\n${items.join('\n')}\n      </ul>\n`;

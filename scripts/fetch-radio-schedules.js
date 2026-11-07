@@ -18,6 +18,7 @@ const {
   gridCoverage,
   COVERAGE_FLOOR,
   stripTransientFlags,
+  selectScheduleGrid,
   DEFAULT_TZ,
 } = require('./radio-schedule-lib');
 
@@ -37,7 +38,7 @@ const doForce = process.argv.includes('--force');
  * on écraserait alors 102 créneaux justes par 3. Une vraie refonte de grille
  * (rentrée) se passe avec `--force`.
  */
-const COLLAPSE_RATIO = 0.6;
+// Le seuil 0.6 est appliqué par selectScheduleGrid, sauf ancienne grille invraisemblable.
 
 function belowCoverageFloor(id, nextGrid, prevGrid) {
   const floor = COVERAGE_FLOOR[id];
@@ -87,77 +88,28 @@ async function main() {
         console.warn(`  ! ${radio.id} source ${src.type}: ${err.message}`),
     });
 
-    let finalGrid = grid;
-    let finalSources = sources;
-    let checkedAt = now;
-    let verifiedWeekOf = weekStartIso(now, timezone);
-    let carried = false;
-    let unverified = false;
-
-    const prevGrid = prev.stations?.[radio.id]?.grid;
-    const prevCount = Array.isArray(prevGrid) ? prevGrid.length : 0;
-
-    // Résilience : si toutes les sources sont injoignables ce cycle mais qu'on
-    // avait déjà une grille, on conserve la dernière connue.
-    if (!finalGrid.length && prevCount) {
-      finalGrid = prevGrid;
-      finalSources = prev.stations[radio.id].sources || [];
-      checkedAt = prev.stations[radio.id].checkedAt || now;
-      // Migration sûre des grilles antérieures : `checkedAt` désigne déjà la
-      // dernière collecte réussie. Sa semaine Québec est donc traçable, même
-      // si l'ancien fichier ne portait pas encore `verifiedWeekOf`.
-      verifiedWeekOf = prev.stations[radio.id].verifiedWeekOf
-        || weekStartIso(checkedAt, timezone);
-      carried = true;
-      // Site officiel injoignable : grille gardée, affichée « non vérifiée ».
-      unverified = true;
-    } else if (
-      !doForce
-      && prevCount >= 10
-      && finalGrid.length
-      && (
-        finalGrid.length < prevCount * COLLAPSE_RATIO
-        || belowCoverageFloor(radio.id, finalGrid, prevGrid)
-      )
-    ) {
-      // Effondrement : la source répond, mais le parseur n'en tire presque
-      // plus rien — typiquement une refonte du site — ou la semaine est trop
-      // mince pour passer data-integrity (CHOQ hors session). Garder l'ancienne
-      // grille plutôt que de faire échouer tout le bot.
-      const why = belowCoverageFloor(radio.id, finalGrid, prevGrid)
-        ? `${gridCoverage(finalGrid).weekPercent} % < plancher ${COVERAGE_FLOOR[radio.id]} %`
-        : `${finalGrid.length} plages contre ${prevCount} précédemment (< ${Math.round(COLLAPSE_RATIO * 100)} %)`;
-      console.warn(
-        `  ⚠ ${radio.id}: ${why} — grille conservée. `
-        + 'Vérifier la source, puis relancer avec --force si le changement est réel.',
-      );
-      finalGrid = prevGrid;
-      finalSources = prev.stations[radio.id].sources || [];
-      // On a bien sondé ce cycle : tamponner checkedAt. La semaine de la
-      // grille conservée (verifiedWeekOf) ne bouge pas.
-      checkedAt = now;
-      verifiedWeekOf = prev.stations[radio.id].verifiedWeekOf
-        || weekStartIso(prev.stations[radio.id].checkedAt || now, timezone);
-      carried = true;
-    }
-
-    if (!finalGrid.length) {
-      if (!cfg._nowPlayingOnly) {
-        console.log(`  · ${radio.id}: aucune plage (sources vides)`);
-      }
+    const previous = prev.stations?.[radio.id];
+    if (!grid.length && !previous?.grid?.length) {
+      if (!cfg._nowPlayingOnly) console.warn(`  ! ${radio.id}: aucune grille vérifiable`);
       continue;
     }
-
+    if (belowCoverageFloor(radio.id, grid, previous?.grid)) {
+      console.warn(`  ⚠ ${radio.id}: couverture sous le plancher connu`);
+    }
+    const selected = selectScheduleGrid({
+      grid, sources, previous, now, weekOf: weekStartIso(now, timezone),
+      floor: COVERAGE_FLOOR[radio.id], force: doForce,
+    });
+    const finalGrid = selected.grid;
+    const finalSources = selected.sources || [];
+    const carried = Boolean(selected.unverified);
+    if (carried) console.warn(`  ⚠ ${radio.id}: ${selected.retainedReason} — grille non vérifiée conservée`);
     stations[radio.id] = {
+      ...selected,
       id: radio.id,
       name: radio.name,
-      sources: finalSources,
-      checkedAt,
-      ...(verifiedWeekOf ? { verifiedWeekOf } : {}),
-      ...(unverified ? { unverified: true } : {}),
-      // `live` vaut pour la seconde où la page a été lue : publié dans un
-      // fichier relu pendant deux semaines, il désignerait une émission finie
-      // depuis longtemps comme étant à l'antenne.
+      verifiedWeekOf: selected.verifiedWeekOf || weekStartIso(selected.checkedAt, timezone),
+      coveragePercent: gridCoverage(finalGrid).weekPercent,
       grid: stripTransientFlags(finalGrid),
     };
     totalSlots += finalGrid.length;
