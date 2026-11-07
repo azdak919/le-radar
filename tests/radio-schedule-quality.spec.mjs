@@ -41,11 +41,11 @@ test('midnight overlap priority agrees between client hub and grid @ci-critical'
     ];
     const picked = pickHubAirFromGrid(grid, { day: 0, minute: 90 });
     const container = document.createElement('section');
-    container.innerHTML = grid.map((slot) => `<div class="seo-day" data-schedule-day="${slot.day}"><li data-schedule-start="${slot.start}" data-schedule-end="${slot.end}">${slot.title}</li></div>`).join('');
+    container.innerHTML = grid.map((slot) => `<div class="seo-day" data-schedule-day="${slot.day}"><li data-schedule-start="${slot.start}" data-schedule-end="${slot.end}"><span class="seo-slot__title">${slot.title}</span></li></div>`).join('');
     document.querySelectorAll('.seo-day').forEach((el) => el.remove());
     document.body.append(container);
     syncSeoScheduleNow();
-    return { hub: picked.slot.title, grid: container.querySelector('.seo-slot--live')?.textContent };
+    return { hub: picked.slot.title, grid: container.querySelector('.seo-slot--live .seo-slot__title')?.textContent };
   });
   expect(title).toEqual({ hub: 'New current', grid: 'New current' });
 });

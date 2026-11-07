@@ -13,6 +13,7 @@
  * et docs/referencement.md pour le pourquoi.
  */
 
+const { radioPalette, radioPaletteAttrs } = require('./radio-palette-lib');
 const {
   T, escapeHtml, slugify, normKey, canonicalInstitution, localizedInstitutionName, isoDay,
   sportsUpdatedStamp,
@@ -486,6 +487,7 @@ function radioPage(radio, lang, ctx) {
         { label: name },
       ],
       bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated: radioUpdated(radio, ctx),
+      extraStyles: ['radio-institution-colors.css'],
     }),
     changefreq: 'weekly',
     priority: '0.8',
@@ -903,7 +905,7 @@ function scheduleHubCards(entries, t, lang, up) {
         + `<span class="seo-radio-card__when">${formatHubWhen(air, todayDay, t)}</span>`
         + '</span>';
     }
-    return `        <li class="seo-radio-card"${radio.id ? ` data-schedule-station="${escapeHtml(radio.id)}"` : ''}${liveState ? ` data-air-state="${liveState}"` : ''}>\n`
+    return `        <li class="seo-radio-card"${radioPaletteAttrs(radio.id)}${radio.id ? ` data-schedule-station="${escapeHtml(radio.id)}"` : ''}${liveState ? ` data-air-state="${liveState}"` : ''}>\n`
       + `          <a href="${escapeHtml(href)}">`
       + `<span class="seo-radio-card__name">${escapeHtml(name)}</span>`
       + (place ? `<span class="seo-radio-card__place">${escapeHtml(place)}</span>` : '')
@@ -929,7 +931,7 @@ function scheduleHubCards(entries, t, lang, up) {
 function scheduleDayView(model, lang, up) {
   const en = lang === 'en';
   const stations = model.radioEntries.slice().sort((a, b) => (a.fullName || a.name).localeCompare(b.fullName || b.name, 'fr')).map(radio => ({
-    id: radio.id, name: radio.fullName || radio.name,
+    id: radio.id, name: radio.fullName || radio.name, palette: radioPalette(radio.id),
     place: [radio.group?.short || localizedInstitutionName(radio.institution, lang), radio.city].filter(Boolean).join(' · '),
     href: `${up}${ROUTES.radio[lang](radio.slug)}#horaire`,
   }));
@@ -972,7 +974,9 @@ function schedulesHubPage(model, lang, ctx) {
     }, null);
     body += scheduleContext(latestChecked, null, t);
     body += `<p class="seo-note"><a href="#journee">${lang === 'en' ? 'Compare the six stations hour by hour ↓' : 'Comparer les six radios heure par heure ↓'}</a></p>\n`;
+    body += `<section class="seo-radio-now" aria-labelledby="radio-now-title"><h2 id="radio-now-title">${lang === 'en' ? 'On the radio right now' : 'En ce moment à la radio'}</h2><p class="seo-radio-now__hint">${lang === 'en' ? 'On air and next programmes, in Québec time.' : 'À l’antenne et prochaines émissions, à l’heure du Québec.'}</p>\n`;
     body += scheduleHubCards(withGrid, t, lang, up);
+    body += '</section>\n';
     body += scheduleDayView(model, lang, up);
   }
 
@@ -1007,7 +1011,7 @@ function schedulesHubPage(model, lang, ctx) {
       crumbs: [{ label: t.home, href: up }, { label: t.schedules }],
       bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated: null,
       extraScripts: ['scripts/radio-day-lib.js', 'radio-day-view.js'],
-      extraStyles: ['radio-day-view.css'],
+      extraStyles: ['radio-day-view.css', 'radio-institution-colors.css'],
     }),
     changefreq: 'weekly',
     priority: '0.7',
