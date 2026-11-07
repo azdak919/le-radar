@@ -729,16 +729,6 @@
       "via": "resize-proxy",
       "nameKey": "neurodiversite-au-travail-maud-amoretti.jpg"
     },
-    "064dba47b70cb096": {
-      "local": "assets/news-images/064dba47b70cb096.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/22_jeux-videos.jpeg",
-      "host": "quartierlibre.ca",
-      "bytes": 275035,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-30T20:08:19.592Z",
-      "via": "origin",
-      "nameKey": "22_jeux-videos.jpeg"
-    },
     "e0e3c9e4644e958d": {
       "local": "assets/news-images/e0e3c9e4644e958d.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Yann_Rfd-4_900_600_90.jpg",
@@ -1614,15 +1604,6 @@
       "via": "resize-proxy",
       "nameKey": "scitech-2-_manon-keller-_-the-tribune_.jpeg"
     },
-    "6652aa068d12dd9c": {
-      "local": "assets/news-images/6652aa068d12dd9c.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
-      "host": "theconcordian.com",
-      "bytes": 127956,
-      "updatedAt": "2026-11-07T21:38:22.416Z",
-      "via": "disk",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
-    },
     "13e2e174944f4387": {
       "local": "assets/news-images/13e2e174944f4387.png",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/11/sports-2-zoe-lee-1-1000x600.png",
@@ -1672,10 +1653,19 @@
       "updatedAt": "2026-11-07T21:38:26.164Z",
       "via": "resize-proxy",
       "nameKey": "sports1-eliot-loose.png"
+    },
+    "140272a87a1faec2": {
+      "local": "assets/news-images/140272a87a1faec2.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 97778,
+      "updatedAt": "2026-11-07T23:07:51.660Z",
+      "via": "disk",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
     }
   },
-  "updatedAt": "2026-11-07T21:38:26.168Z",
-  "count": 168,
+  "updatedAt": "2026-11-07T23:07:52.352Z",
+  "count": 167,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
