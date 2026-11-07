@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-07T14:36:47.313Z",
+  "updated": "2026-11-07T15:06:44.532Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 19,
+  "mismatches": 20,
   "ok": true,
   "samples": [
+    {
+      "title": "70 years of ‘Giovanni’s Room’",
+      "link": "https://thetribune.ca/a-e/70-years-of-giovannis-room-03112026/",
+      "source": "The Tribune",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Ellen Lurie",
+      "reason": "page-byline"
+    },
     {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy/",
@@ -158,5 +166,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 19
+  "fixed": 20
 }
