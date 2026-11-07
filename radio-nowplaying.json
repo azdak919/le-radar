@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T19:36:48.318Z",
+  "updatedAt": "2026-11-07T20:24:33.121Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T19:36:05.184Z"
+      "checkedAt": "2026-11-07T20:23:53.810Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Contenu explicite",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/contenu-explicite"
       },
+      "next": {
+        "title": "Le radar",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "16:30",
+        "url": "https://cism893.ca/emissions/le-radar-2"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Contenu explicite",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T19:36:07.066Z"
+      "checkedAt": "2026-11-07T20:23:55.638Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T19:36:10.334Z"
+      "checkedAt": "2026-11-07T20:23:58.611Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T19:36:25.135Z"
+      "checkedAt": "2026-11-07T20:24:12.930Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T19:36:26.360Z"
+      "checkedAt": "2026-11-07T20:24:14.300Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T19:36:47.967Z"
+      "checkedAt": "2026-11-07T20:24:32.770Z"
     }
   }
 }
