@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T06:06:56.020Z",
+  "updatedAt": "2026-11-07T07:06:37.839Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T06:05:57.767Z"
+      "checkedAt": "2026-11-07T07:05:58.851Z"
     },
     "cism": {
       "id": "cism",
@@ -48,59 +48,60 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T06:05:59.272Z"
+      "checkedAt": "2026-11-07T07:06:00.348Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Soca Sessions",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "The Mash Time Show",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "WEFUNK",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T06:06:02.362Z"
+      "checkedAt": "2026-11-07T07:06:03.029Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
-        "source": "schedule",
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T06:06:36.662Z"
+      "checkedAt": "2026-11-07T07:06:17.312Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T06:06:37.815Z"
+      "checkedAt": "2026-11-07T07:06:18.301Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T06:06:55.669Z"
+      "checkedAt": "2026-11-07T07:06:37.488Z"
     }
   }
 }
