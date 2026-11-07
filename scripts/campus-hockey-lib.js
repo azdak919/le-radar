@@ -234,6 +234,7 @@ function teamsFromGames(games, { now = Date.now(), reg = null } = {}) {
         opponentRegistryId: oppId,
         opponentSector: 'universitaire',
         sex: g.sex || 'M',
+        ...(g.decision ? { decision: g.decision } : {}),
       };
       if (scored) {
         entry.scoreFor = myScore;
@@ -336,6 +337,7 @@ function parseStingersResultsHtml(html) {
       scoreAway: awayGame ? ours : theirs,
       url: STINGERS_W_URL,
       source: 'campus-stingers-w',
+      ...(score && /\bSO\b|shootout|tirs de barrage/i.test(result) ? { decision: 'SO' } : {}),
     }));
   }
   return games;
@@ -464,6 +466,27 @@ function overlayCampusHockey(existingTeams, campusTeams) {
       continue;
     }
     for (const team of targets) {
+      // Keep central IDs/links; only reconcile an explicit shootout winner against
+      // its tied central score. Never guess that arbitrary disagreement is regulation.
+      const results = Array.isArray(team.results) ? team.results : [];
+      for (const official of camp.results || []) {
+        const matches = results.filter(g => g.date === official.date
+          && g.opponentRegistryId === official.opponentRegistryId && g.home === official.home);
+        if (matches.length !== 1 || official.decision !== 'SO') continue;
+        const previous = matches[0];
+        if (previous.scoreFor !== previous.scoreAgainst || previous.scoreFor == null) continue;
+        const tied = Number(previous.scoreFor);
+        if (Math.min(official.scoreFor, official.scoreAgainst) !== tied
+          || Math.max(official.scoreFor, official.scoreAgainst) !== tied + 1) continue;
+        const reconciled = { ...previous, scoreFor: official.scoreFor, scoreAgainst: official.scoreAgainst,
+          result: official.result, decision: 'SO', url: official.url,
+          scoreSourceUrl: official.url,
+          previousReportedScore: { scoreFor: previous.scoreFor, scoreAgainst: previous.scoreAgainst, url: previous.url || null } };
+        results[results.indexOf(previous)] = reconciled;
+        if (team.lastGame && team.lastGame.date === previous.date
+          && team.lastGame.opponentRegistryId === previous.opponentRegistryId
+          && team.lastGame.home === previous.home) team.lastGame = reconciled;
+      }
       const empty = !(team.nextGames && team.nextGames.length) && !team.nextGame;
       if (empty && camp.nextGames && camp.nextGames.length) {
         team.nextGames = camp.nextGames;
@@ -553,15 +576,20 @@ async function fetchCampusHockey({ reg = null, now = Date.now() } = {}) {
   if (uqac.body) {
     try { uqacJson = JSON.parse(uqac.body); } catch { /* ignore */ }
   }
-  const games = mergeGames([
-    uqo.body ? parseUqoScheduleHtml(uqo.body) : [],
-    uqacJson ? parseUqacEventsJson(uqacJson) : [],
-    stingers.body ? parseStingersResultsHtml(stingers.body) : [],
-    gaiters.body ? parseSidearmJsonLd(gaiters.body, GAITERS_W_URL, 'campus-gaiters-w') : [],
-    mcgill.body ? parseSidearmJsonLd(mcgill.body, MCGILL_W_URL, 'campus-mcgill-w') : [],
-    carabins.body ? parseCarabinsTable(carabins.body) : [],
-    laval.body ? parseLavalCalendarHtml(laval.body) : [],
-  ]);
+  const parsed = [
+    ['campus-uqo', uqo, uqo.body ? parseUqoScheduleHtml(uqo.body) : []],
+    ['campus-uqac', uqac, uqacJson ? parseUqacEventsJson(uqacJson) : []],
+    ['campus-stingers-w', stingers, stingers.body ? parseStingersResultsHtml(stingers.body) : []],
+    ['campus-gaiters-w', gaiters, gaiters.body ? parseSidearmJsonLd(gaiters.body, GAITERS_W_URL, 'campus-gaiters-w') : []],
+    ['campus-mcgill-w', mcgill, mcgill.body ? parseSidearmJsonLd(mcgill.body, MCGILL_W_URL, 'campus-mcgill-w') : []],
+    ['campus-carabins-w', carabins, carabins.body ? parseCarabinsTable(carabins.body) : []],
+    ['campus-laval-w', laval, laval.body ? parseLavalCalendarHtml(laval.body) : []],
+  ];
+  for (const [leagueId, part, list] of parsed) {
+    if (part.body && !list.length) errors.push({ leagueId, label: leagueId,
+      error: 'empty_schedule: HTTP 200 but no recognized encounter; coverage not confirmed' });
+  }
+  const games = mergeGames(parsed.map(([, , list]) => list));
   const teams = teamsFromGames(games, { now, reg });
   return { teams, games, errors };
 }

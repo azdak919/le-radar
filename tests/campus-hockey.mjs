@@ -161,3 +161,24 @@ assert.deepEqual([concordiaFr[2].time,concordiaFr[2].scoreHome,concordiaFr[2].sc
 assert.equal(concordiaFr[3].date,'2027-01-07');
 assert.equal(concordiaFr[0].url,'https://www.concordia.ca/fr/stingers/hockey_f/resultats.html');
 assert.deepEqual(lib.parseStingersResultsHtml('<ul><li>13 nov.</li><li>19 h</li><li>@ Laval</li></ul>'),[]);
+
+assert.equal(concordiaFr[1].decision, 'SO');
+const shootoutCamp = lib.teamsFromGames([concordiaFr[1]], { now: Date.parse('2026-11-07T12:00:00-05:00') });
+const draw = { date: '2026-11-01', time: '14:00', opponentRegistryId: 'mcgill', home: true, scoreFor: 1, scoreAgainst: 1, result: 'D', gameId: 123, url: 'https://example.test/central' };
+const central = { c: { id: 'c', registryId: 'concordia', sport: 'hockey', sex: 'F', sector: 'universitaire', results: [draw], lastGame: draw } };
+lib.overlayCampusHockey(central, shootoutCamp);
+assert.deepEqual([central.c.lastGame.scoreFor, central.c.lastGame.scoreAgainst, central.c.lastGame.decision], [1, 2, 'SO']);
+assert.equal(central.c.lastGame.gameId, 123);
+assert.equal(central.c.lastGame.previousReportedScore.scoreFor, 1);
+assert.equal(central.c.lastGame.url, concordiaFr[1].url);
+const once = JSON.stringify(central);
+lib.overlayCampusHockey(central, shootoutCamp);
+assert.equal(JSON.stringify(central), once, 'shootout reconciliation is idempotent');
+const contradictory = { c: { id:'c', registryId:'concordia', sport:'hockey', sex:'F', sector:'universitaire', results:[{...draw, scoreFor: 4, scoreAgainst: 4}] } };
+lib.overlayCampusHockey(contradictory, shootoutCamp);
+assert.equal(contradictory.c.results[0].scoreFor, 4, 'unexplained disagreement never overwritten');
+
+const mcDraw = { ...draw, opponentRegistryId: 'concordia', home: false };
+const mcCentral = { m: { id:'m', registryId:'mcgill', sport:'hockey', sex:'F', sector:'universitaire', results:[mcDraw], lastGame:mcDraw } };
+lib.overlayCampusHockey(mcCentral, shootoutCamp);
+assert.deepEqual([mcCentral.m.lastGame.scoreFor, mcCentral.m.lastGame.scoreAgainst], [2,1], 'opposing face has same shootout outcome');

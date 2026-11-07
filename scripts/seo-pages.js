@@ -1414,10 +1414,10 @@ function sportsResultRows(team, t, lang) {
       : (last.result === 'W' ? t.sportsWin : last.result === 'L' ? t.sportsLoss : t.sportsDraw);
     const score = placeKind
       ? (sportsPlaceScoreText(last, lang) || `${last.scoreFor}–${last.scoreAgainst}`)
-      : `${last.scoreFor}–${last.scoreAgainst}`;
+      : `${last.scoreFor}–${last.scoreAgainst}${last.decision === 'SO' ? (lang === 'en' ? ' (SO)' : ' (TB)') : ''}`;
     const scoreAria = placeKind
       ? `${t.sportsPlace} ${sportsPlaceScoreText(last, lang) || `${last.scoreFor} / ${last.scoreAgainst}`}`
-      : label;
+      : `${label}${last.decision === 'SO' ? (lang === 'en' ? ', after shootout' : ', après tirs de barrage') : ''}`;
     const when = sportsEventRangeLabel(last, lang)
       || sportsDayWord(last.date, t) || formatSportsDate(last.date, lang);
     const prior = !!(last.priorSeason || (!isSailing && team.lastGamePriorSeason));

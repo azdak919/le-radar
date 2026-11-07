@@ -387,9 +387,9 @@
         const score = row.querySelector('.sports-result__score');
         const hasScore = [game.scoreFor, game.scoreAgainst].every(n => n != null && String(n).trim() !== '' && Number.isFinite(Number(n)) && Number(n) >= 0);
         const waiting = Number.isFinite(kickoff) && kickoff < Date.now() - LIVE_TAIL_MS;
-        const state = final ? (lang === 'en' ? 'Final' : 'Terminé') : waiting ? (lang === 'en' ? 'Awaiting results' : 'Résultats à venir') : (lang === 'en' ? 'Upcoming' : 'À venir');
+        const state = final ? (game.decision === 'SO' ? (lang === 'en' ? 'Final after shootout' : 'Terminé après tirs de barrage') : (lang === 'en' ? 'Final' : 'Terminé')) : waiting ? (lang === 'en' ? 'Awaiting results' : 'Résultats à venir') : (lang === 'en' ? 'Upcoming' : 'À venir');
         score.className = 'sports-result__score' + (!hasScore ? ' sports-result__score--next' : '');
-        score.textContent = hasScore ? `${game.scoreFor}–${game.scoreAgainst}` : state;
+        score.textContent = hasScore ? `${game.scoreFor}–${game.scoreAgainst}${game.decision === 'SO' ? (lang === 'en' ? ' (SO)' : ' (TB)') : ''}` : state;
         score.setAttribute('aria-label', hasScore && !final ? (lang === 'en' ? 'Last reported score' : 'Dernier pointage connu') : state);
         for (const attr of ['data-idle-html', 'data-idle-class']) score.removeAttribute(attr);
         const badge = row.querySelector('.sports-result__badge');
