@@ -823,6 +823,7 @@ function syncSeoScheduleNow() {
     for (const el of dayEl.querySelectorAll('li[data-schedule-start]')) {
       el.classList.remove('seo-slot--live', 'seo-slot--upcoming', 'seo-slot--playing', 'seo-slot--pulse');
       el.removeAttribute('aria-label');
+      el.querySelector('.seo-slot__badge')?.remove();
       const start = seoScheduleMinute(el.dataset.scheduleStart);
       const end = seoScheduleMinute(el.dataset.scheduleEnd);
       if (start != null) slots.push({ el, day, start, end });
@@ -846,13 +847,19 @@ function syncSeoScheduleNow() {
   }
 
   const en = document.documentElement.lang.startsWith('en');
+  const mark = (slot, label, symbol) => {
+    const title = slot.el.querySelector('.seo-slot__title')?.textContent.trim() || slot.el.textContent.trim();
+    slot.el.setAttribute('aria-label', `${label}: ${title}`);
+    const badge = document.createElement('span'); badge.className = 'seo-slot__badge';
+    badge.setAttribute('aria-hidden', 'true'); badge.textContent = `${symbol} ${label}`; slot.el.append(badge);
+  };
   if (active) {
     active.el.classList.add('seo-slot--live');
-    active.el.setAttribute('aria-label', `${en ? 'On air' : 'À l’antenne'}: ${active.el.textContent.trim()}`);
+    mark(active, en ? 'On air' : 'À l’antenne', '●');
   }
   if (upcoming) {
     upcoming.el.classList.add('seo-slot--upcoming');
-    upcoming.el.setAttribute('aria-label', `${en ? 'Up next' : 'À venir'}: ${upcoming.el.textContent.trim()}`);
+    mark(upcoming, en ? 'Next programme' : 'Prochaine émission', '→');
   }
   const pulse = pickSeoSchedulePulse(active, upcoming, seoSchedulePulsePref());
   pulse?.el.classList.add('seo-slot--pulse');
@@ -962,7 +969,7 @@ function syncSeoScheduleHub() {
     const when = air.querySelector('.seo-radio-card__when');
     if (kicker) kicker.textContent = picked.live
       ? (en ? 'On air' : 'À l’antenne')
-      : (en ? 'Up next' : 'À venir');
+      : (en ? 'Next programme' : 'Prochaine émission');
     if (show) show.textContent = picked.slot.title;
     if (when) when.textContent = formatHubAirWhen(picked.slot, now.day, en);
   }

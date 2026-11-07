@@ -17,6 +17,7 @@
  *    redirection automatique** (les règles de translate.js gardent la main).
  */
 
+const { radioPaletteAttrs } = require('./radio-palette-lib');
 const SITE_NAME = 'LE-RADAR.ca';
 const TAGLINE_FR = 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
 const TAGLINE_EN = 'Québec student newspapers, campus radio and sports, all in one place';
@@ -308,7 +309,7 @@ const T = {
     noHeadlines: 'Aucun article récent au moment de la dernière mise à jour.',
     schedule: 'À l’antenne cette semaine',
     scheduleLive: 'À l’antenne',
-    scheduleUpcoming: 'À venir',
+    scheduleUpcoming: 'Prochaine émission',
     scheduleNote: 'Grille colligée automatiquement à partir du site de la station ; elle peut varier.',
     schedulesNote: 'Les grilles viennent des sites des stations ; elles peuvent changer.',
     scheduleWeek: 'Semaine du',
@@ -489,7 +490,7 @@ const T = {
     noHeadlines: 'No recent articles as of the last update.',
     schedule: 'On air this week',
     scheduleLive: 'On air',
-    scheduleUpcoming: 'Up next',
+    scheduleUpcoming: 'Next programme',
     scheduleNote: 'Schedule collected automatically from the station’s website; it may change.',
     schedulesNote: 'Grids come from each station’s website; they may change.',
     scheduleWeek: 'Week of',
@@ -1537,6 +1538,7 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
         return `            <li${classes ? ` class="${classes}"` : ''} data-schedule-start="${escapeHtml(s.start)}" data-schedule-end="${escapeHtml(s.end || '')}"${stateLabel ? ` aria-label="${escapeHtml(stateLabel)} : ${title}"` : ''}>`
           + `<time class="seo-slot__time">${range}</time>`
           + `<span class="seo-slot__title">${label}</span>`
+          + (stateLabel ? `<span class="seo-slot__badge" aria-hidden="true">${state === 'live' ? '●' : '→'} ${escapeHtml(stateLabel)}</span>` : '')
           + (s.endUnknown ? `<span class="seo-slot__note">${t.lang.startsWith('en') ? 'End not published' : 'Fin non publiée'}</span>` : '')
           + (overnight ? `<span class="seo-slot__note">${escapeHtml(t.overnight)}</span>` : '')
           + '</li>';
@@ -1545,7 +1547,7 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
     return `        <div class="seo-day${todayClass}" data-schedule-day="${day}"${day === todayDay ? ' data-current-day="true"' : ''}>\n          <h3>${escapeHtml(t.days[day] || '')}</h3>\n          <ul>\n${slots}\n          </ul>\n        </div>`;
   });
 
-  return `      <section class="seo-section" id="horaire"${stationId ? ` data-schedule-station="${escapeHtml(stationId)}"` : ''}>\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
+  return `      <section class="seo-section" id="horaire"${radioPaletteAttrs(stationId)}${stationId ? ` data-schedule-station="${escapeHtml(stationId)}"` : ''}>\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
     + scheduleContext(checkedAt, verifiedWeekOf, t)
     + `      <details class="seo-note" data-schedule-details><summary>${t.lang.startsWith('en') ? 'Sources and updates' : 'Sources et mises à jour'}</summary><p data-schedule-quality>${escapeHtml(scheduleQualityText({ grid, checkedAt, unverified }, t))}</p></details>\n`
     + `      <div class="seo-schedule-scroll">\n      <div class="seo-schedule">\n${blocks.join('\n')}\n      </div>\n      </div>\n`

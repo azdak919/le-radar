@@ -29,7 +29,13 @@
   };
   const stations = JSON.parse(root.querySelector('[data-day-stations]').textContent);
   const px = 1.6; // One civil-clock hour = 96 px, including the two DST transition days.
-  const palette = ['#876227', '#17656c', '#815278', '#385f91', '#994d3b', '#496f3a'];
+  const applyPalette = (node, station) => {
+    const p = station.palette; if (!p) return;
+    node.dataset.radioInstitution = p.institution;
+    for (const [name, value] of [['brand', p.primary], ['variant', p.variant], ['companion', p.companion]]) {
+      if (/^#[0-9a-f]{6}$/i.test(value)) node.style.setProperty('--station-' + name, value);
+    }
+  };
   const base = new URL('.', document.currentScript.src);
   let payload, dates, selected = L.moment().day, followToday = true, lastToday = L.moment().iso;
   let scroll, board, axis, models, opener;
@@ -68,7 +74,7 @@
   dialog.addEventListener('close', () => { if (opener?.isConnected) opener.focus({ preventScroll: true }); });
   document.body.append(dialog);
   function showDetail(station, b, trigger) {
-    opener = trigger; dialog.replaceChildren();
+    opener = trigger; dialog.replaceChildren(); applyPalette(dialog, station);
     const close = button(text.close, 'radio-day-close'); close.autofocus = true;
     close.addEventListener('click', () => dialog.close());
     const h = el('h2', '', b.slot.title); h.id = 'radio-day-detail-title';
@@ -112,7 +118,12 @@
       line.hidden = !isToday; line.style.top = `${now.minute * px}px`;
       if (line.dataset.dayNow === 'label') line.textContent = L.time(now.minute);
     }
-    board.querySelectorAll('.radio-day-block').forEach(b => b.classList.toggle('is-current-time', isToday && b.closest('.radio-day-track').dataset.verified === 'true' && Number(b.dataset.start) <= now.minute && now.minute < Number(b.dataset.end)));
+    board.querySelectorAll('.radio-day-block').forEach(b => {
+      const active = isToday && b.closest('.radio-day-track').dataset.verified === 'true' && Number(b.dataset.start) <= now.minute && now.minute < Number(b.dataset.end);
+      b.classList.toggle('is-current-time', active);
+      b.querySelector('.radio-day-block__state').hidden = !active;
+      if (active) b.setAttribute('aria-current', 'time'); else b.removeAttribute('aria-current');
+    });
   }
   function scrollToNow() {
     if (scroll && !jump.disabled) scroll.scrollTop = Math.max(0, (L.moment().minute - 60) * px);
@@ -137,12 +148,12 @@
       const sourceStation = payload.stations?.[station.id] || {};
       const ownWeek = sourceStation.verifiedWeekOf || dates[0].iso;
       const older = ownWeek !== dates[0].iso;
-      const head = el('div', 'radio-day-heading'); head.style.gridColumn = String(i + 2); head.style.setProperty('--station-color', palette[i % palette.length]);
+      const head = el('div', 'radio-day-heading'); head.style.gridColumn = String(i + 2); applyPalette(head, station);
       const week = el('a', '', station.name); week.href = station.href; week.title = `${text.week} · ${station.name}`;
       head.append(week, el('span', '', station.place));
       if (older) head.append(el('span', '', `${text.retained} ${new Intl.DateTimeFormat(locale, { timeZone: 'America/Toronto', day: 'numeric', month: 'short' }).format(new Date(`${ownWeek}T12:00:00Z`))}`));
       board.append(head);
-      const track = el('div', 'radio-day-track'); track.style.gridColumn = String(i + 2); track.style.setProperty('--station-color', palette[i % palette.length]); track.dataset.station = station.id; track.dataset.verified = String(!older && !sourceStation.unverified);
+      const track = el('div', 'radio-day-track'); track.style.gridColumn = String(i + 2); applyPalette(track, station); track.dataset.station = station.id; track.dataset.verified = String(!older && !sourceStation.unverified);
       for (const b of blocks) {
         const slot = makeSlotButton(station, b, 'radio-day-block');
         slot.dataset.start = b.start; slot.dataset.end = b.end; slot.dataset.sourceIndex = b.index; slot.dataset.lane = b.lane; slot.dataset.lanes = b.laneCount;
@@ -150,7 +161,8 @@
         slot.style.left = `calc(${b.lane * 100 / b.laneCount}% + 2px)`; slot.style.width = `calc(${100 / b.laneCount}% - 4px)`;
         const content = el('span', 'radio-day-block__content');
         const when = el('span', 'radio-day-block__time', `${b.fromPrevious ? '↳ ' : ''}${L.time(b.start)}–${L.time(b.end)}`);
-        content.append(when, el('span', 'radio-day-block__title', b.slot.title));
+        const state = el('span', 'radio-day-block__state', en ? '● On air' : '● À l’antenne'); state.hidden = true; state.setAttribute('aria-hidden', 'true');
+        content.append(state, when, el('span', 'radio-day-block__title', b.slot.title));
         slot.append(content, el('span', 'radio-day-block__more', '↗')); track.append(slot);
       }
       const line = el('div', 'radio-day-now'); line.dataset.dayNow = 'line'; line.setAttribute('aria-hidden', 'true'); track.append(line); board.append(track);
