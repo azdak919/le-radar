@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T13:06:48.483Z",
+  "updatedAt": "2026-11-07T14:06:44.866Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T13:06:03.485Z"
+      "checkedAt": "2026-11-07T14:06:05.496Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T13:06:05.106Z"
+      "checkedAt": "2026-11-07T14:06:07.145Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T13:06:14.603Z"
+      "checkedAt": "2026-11-07T14:06:09.918Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World-Up'",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
-      },
-      "next": {
         "title": "The Live Wire Show",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/the-live-wire-show"
       },
+      "next": {
+        "title": "Gospel Unlimited",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/gospel-unlimited"
+      },
       "track": "",
-      "showTitle": "World-Up'",
+      "showTitle": "The Live Wire Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T13:06:28.567Z"
+      "checkedAt": "2026-11-07T14:06:24.814Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T13:06:29.708Z"
+      "checkedAt": "2026-11-07T14:06:26.078Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T13:06:48.132Z"
+      "checkedAt": "2026-11-07T14:06:44.516Z"
     }
   }
 }
