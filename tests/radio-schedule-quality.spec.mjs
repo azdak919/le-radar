@@ -55,10 +55,10 @@ test('CFAK weekend uses the exact published end, including the exclusive boundar
   await page.goto('/radios/cfak/', { waitUntil: 'domcontentloaded' });
   const weekend = page.locator('.seo-day[data-schedule-day="6"] li');
   await expect(weekend).toHaveCount(1);
-  await expect(weekend).toHaveAttribute('data-schedule-end', '05:00');
+  await expect(weekend).toHaveAttribute('data-schedule-end', '04:59');
   await expect(weekend).not.toContainText('Fin non publiée');
   await expect(page.locator('.seo-slot--live .seo-slot__title')).toHaveText('Les nuits CFAK');
-  await page.clock.setFixedTime(new Date('2026-11-07T10:00:00Z'));
+  await page.clock.setFixedTime(new Date('2026-11-07T09:59:00Z'));
   await page.evaluate(() => syncSeoScheduleNow());
   await expect(page.locator('.seo-slot--live')).toHaveCount(0);
 });

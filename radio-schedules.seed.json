@@ -55,7 +55,7 @@
       "grid": []
     },
     "cfak": {
-      "_note": "La page publique lie un payload Nuxt statique : horaires hdeb/hfin et titres balados. hfin désigne la dernière minute incluse (04:59 → borne exclusive 05:00). Extraire le build depuis la page, ne jamais deviner les fins à partir du début suivant. Repli HTML débuts seuls ; conserver la dernière grille aux fins publiées si cette source devient indisponible.",
+      "_note": "La page publique lie un payload Nuxt statique : horaires hdeb/hfin et titres balados. Le lecteur public compare strictement maintenant < hfin : 459 est donc la borne exclusive 04:59, sans ajout de minute. Extraire le build depuis la page, ne jamais deviner les fins à partir du début suivant. Repli HTML débuts seuls ; conserver la dernière grille aux fins publiées si cette source devient indisponible.",
       "sources": [
         {
           "type": "cfak",

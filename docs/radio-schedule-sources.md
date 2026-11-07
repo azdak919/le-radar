@@ -1,6 +1,7 @@
 # Horaires radio : sources vérifiables et mise à jour
 
-Audit du 7 novembre 2026, collecte à 02 h 57 HNE (America/Toronto).
+Audit du 7 novembre 2026 (America/Toronto). La date de chaque collecte effective
+est enregistrée dans radio-schedules.json.
 Les pourcentages mesurent uniquement les minutes munies de bornes publiées,
 pas la disponibilité audio ni une garantie d’exactitude.
 
@@ -18,22 +19,31 @@ pas la disponibilité audio ni une garantie d’exactitude.
 La page publie un lien `/_nuxt/static/<build>/programmation/payload.js`.
 Le build est extrait de la page à chaque passe, jamais codé en dur. L’actif
 observé est https://www.cfak.ca/_nuxt/static/1793725584/programmation/payload.js.
+Les pages HTTPS courantes avec et sans `www` ont été relues : même build du
+3 novembre 2026 à 12 h 06 HNE et mêmes 36 débuts/titres. Les 36 cartes visibles
+correspondent toutes au payload; aucun autre balado historique n’est ajouté.
 Son objet `horaires` donne les sept jours (lundi d’abord), `emission`, `hdeb`
 et `hfin`; `balados` fournit les titres et liens. Le décodeur lit exclusivement
 des littéraux/références liées : aucun JavaScript distant n’est exécuté.
 
 Les **36 fins sont maintenant sourcées**, contre 34 estimées et deux inconnues
-avant cette correction. **13 bornes de fin changent**. Exemples :
+avant cette correction. Les 36 fins reprennent maintenant les bornes exactes
+publiées, dont 13 corrections de durée significatives (11 plages étirées vers
+la suivante et les deux fins de week-end auparavant inconnues). Exemples :
 
-- samedi/dimanche Les nuits CFAK : `hdeb: 0`, `hfin: 459`, soit 00:00–05:00;
-- lundi Solénoïde : `1300`–`1359`, soit 13:00–14:00, pas jusqu’à 18:00;
-- mardi Mix Franco : `2200`–`2359`, soit 22:00–00:00.
+- samedi/dimanche Les nuits CFAK : `hdeb: 0`, `hfin: 459`, soit 00:00–04:59;
+- lundi Solénoïde : `1300`–`1359`, soit 13:00–13:59, pas jusqu’à 18:00;
+- mardi Mix Franco : `2200`–`2359`, soit 22:00–23:59.
 
-`hfin` est la dernière minute incluse, normalisée en borne exclusive à la minute
-suivante; sa valeur originale reste dans `sourceEnd`. Le lundi commence à 00:01
-selon la source, ce n’est pas complété arbitrairement à 00:00. Les 50 % réels
-remplacent les anciens 71/80 % gonflés par les fins inférées. Le plancher 45 %
-est recalibré sur ces bornes publiées, pas sur une disparition d’émissions.
+Le client public de la station (https://www.cfak.ca/_nuxt/1683c69.js, lu lors
+de l’audit) utilise exactement `n.hdeb <= r && n.hfin > r`. `hfin` est donc
+conservé comme **borne exclusive sans ajout de minute**, y compris 04:59 et
+23:59. La valeur publiée reste aussi dans `sourceEnd`. Une première hypothèse
+« dernière minute incluse » a été invalidée par cette vérification avant fusion.
+Le lundi commence à 00:01 selon la source, ce n’est pas complété arbitrairement
+à 00:00. Les 50 % réels remplacent les anciens 71/80 % gonflés par les fins
+inférées. Le plancher 45 % est recalibré sur ces bornes publiées, pas sur une
+disparition d’émissions.
 Le repli HTML ne fournit que les débuts; il ne peut remplacer une grille dont
 les fins publiées ont déjà été obtenues. Une panne conserve cette grille et
 sa vraie date de lecture, avec une tentative distincte.

@@ -641,7 +641,7 @@ function parseCfakGrid(htmlText) {
   return grid;
 }
 
-/** CFAK publishes HHmm integer boundaries (hfin is the last included minute). */
+/** CFAK publishes HHmm boundaries; its public player uses hdeb <= now < hfin. */
 function cfakPageDataToGrid(payload) {
   const data = payload?.data?.find((entry) => Array.isArray(entry.horaires));
   if (!data || data.horaires.length !== 7 || !Array.isArray(data.balados)) return [];
@@ -656,11 +656,11 @@ function cfakPageDataToGrid(payload) {
     for (const item of slots) {
       const show = shows.get(item.emission);
       const start = clock(item.hdeb);
-      const lastMinute = clock(item.hfin);
-      if (!show?.title || start == null || lastMinute == null) throw new Error('Invalid CFAK published schedule entry');
+      const endMinute = clock(item.hfin);
+      if (!show?.title || start == null || endMinute == null) throw new Error('Invalid CFAK published schedule entry');
       grid.push({
         day: (index + 1) % 7, start: minutesToTime(start),
-        end: minutesToTime(lastMinute + 1), sourceEnd: minutesToTime(lastMinute),
+        end: minutesToTime(endMinute), sourceEnd: minutesToTime(endMinute),
         title: show.title, url: `https://www.cfak.ca/balados/${encodeURIComponent(show.urlslug || show.slug)}`,
       });
     }

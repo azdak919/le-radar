@@ -95,12 +95,12 @@ const exactCfak = lib.mergeGrids(lib.cfakPageDataToGrid(decoded));
 assert.equal(exactCfak.length, 36);
 assert.equal(exactCfak.filter((s) => s.sourceEnd).length, 36);
 assert.equal(lib.gridCoverage(exactCfak).weekPercent, 50, 'real scheduled duration, not stretched-to-next-start coverage');
-assert.equal(exactCfak.find((s) => s.day === 6).end, '05:00');
+assert.equal(exactCfak.find((s) => s.day === 6).end, '04:59');
 assert.equal(exactCfak.find((s) => s.day === 6).sourceEnd, '04:59');
-assert.equal(exactCfak.find((s) => s.day === 1 && s.start === '13:00').end, '14:00');
-assert.equal(exactCfak.find((s) => s.day === 2 && s.start === '22:00').end, '00:00');
-assert.equal(lib.resolveCurrentSlot(exactCfak, new Date('2026-11-07T09:59:00Z')).title, 'Les nuits CFAK');
-assert.equal(lib.resolveCurrentSlot(exactCfak, new Date('2026-11-07T10:00:00Z')), null);
+assert.equal(exactCfak.find((s) => s.day === 1 && s.start === '13:00').end, '13:59');
+assert.equal(exactCfak.find((s) => s.day === 2 && s.start === '22:00').end, '23:59');
+assert.equal(lib.resolveCurrentSlot(exactCfak, new Date('2026-11-07T09:58:00Z')).title, 'Les nuits CFAK');
+assert.equal(lib.resolveCurrentSlot(exactCfak, new Date('2026-11-07T09:59:00Z')), null);
 assert.equal(lib.resolveCurrentSlot(exactCfak, new Date('2026-11-09T04:59:00Z')), null, 'no invented Sunday evening filler');
 for (const build of ['1793725584', 'next-build-123']) {
   const calls = [];
