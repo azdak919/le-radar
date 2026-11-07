@@ -1445,15 +1445,6 @@
       "via": "origin",
       "nameKey": "97a15dafa9922b8717c1d3162c3013c6.jpg"
     },
-    "cdf081914623d574": {
-      "local": "assets/news-images/cdf081914623d574.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/article-de-juliette-c.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 223663,
-      "updatedAt": "2026-11-06T14:37:24.598Z",
-      "via": "disk",
-      "nameKey": "article-de-juliette-c.jpg"
-    },
     "4732fb8c4c53327f": {
       "local": "assets/news-images/4732fb8c4c53327f.jpg",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/09/CAMILA_SIERRA_ORDONEZ_2_EK-scaled.jpg",
@@ -1633,16 +1624,6 @@
       "via": "disk",
       "nameKey": "blanchissement.png"
     },
-    "0da527b271273a7a": {
-      "local": "assets/news-images/0da527b271273a7a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
-      "host": "www.delitfrancais.com",
-      "bytes": 70585,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-07T04:08:06.830Z",
-      "via": "origin",
-      "nameKey": "rocky.jpeg"
-    },
     "69a04023345230f5": {
       "local": "assets/news-images/69a04023345230f5.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_8852-877x1024.jpg",
@@ -1673,18 +1654,35 @@
       "via": "photon-resize",
       "nameKey": "img_0208.jpg"
     },
-    "6652aa068d12dd9c": {
-      "local": "assets/news-images/6652aa068d12dd9c.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
+    "140272a87a1faec2": {
+      "local": "assets/news-images/140272a87a1faec2.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
       "host": "theconcordian.com",
-      "bytes": 127956,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-07T13:17:29.499Z",
-      "via": "photon-resize",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
+      "bytes": 97778,
+      "updatedAt": "2026-11-07T14:37:41.309Z",
+      "via": "disk",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
+    },
+    "d0d4eef2f356a4c4": {
+      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 286051,
+      "updatedAt": "2026-11-07T14:37:41.349Z",
+      "via": "disk",
+      "nameKey": "ak-mbam.jpg"
+    },
+    "77c707c2771abe3a": {
+      "local": "assets/news-images/77c707c2771abe3a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 64590,
+      "updatedAt": "2026-11-07T14:37:41.349Z",
+      "via": "disk",
+      "nameKey": "jesus.jpg"
     }
   },
-  "updatedAt": "2026-11-07T13:17:33.684Z",
+  "updatedAt": "2026-11-07T14:37:41.695Z",
   "count": 169,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
