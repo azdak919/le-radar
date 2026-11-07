@@ -1552,15 +1552,16 @@ assert(
 );
 {
   const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
+  const programmeTitle = (wideCss.match(/#tuner-nowair-wide \.tuner-wide-slot__title\s*\{([^}]+)\}/) || [])[1] || '';
   assert(
     appJs.includes('function liveCopyFromPhases')
       && appJs.includes('function composedAirPhases')
-      && /tuner-wide-slot__title[\s\S]*?white-space:\s*nowrap/.test(wideCss)
-      && /tuner-wide-slot__title[\s\S]*?text-overflow:\s*clip/.test(wideCss)
-      && /hideLive:\s*!hasLive/.test(appJs)
-      && /min-width:\s*8rem/.test(wideCss)
-      && !/tuner-wide-slot--next[\s\S]{0,80}max-width:\s*20rem/.test(wideCss),
-    'antenne : 2 lignes, titre entier en wide (pas d’ellipse, pas de wrap)',
+      && /white-space:\s*normal/.test(programmeTitle)
+      && /overflow-wrap:\s*anywhere/.test(programmeTitle)
+      && !/max-height|text-overflow:\s*ellipsis/.test(programmeTitle)
+      && /grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/.test(wideCss)
+      && /hideLive:\s*!hasLive/.test(appJs),
+    'antenne : deux colonnes bornées, titres complets pouvant revenir à la ligne sans clamp ni ellipse',
   );
   const expandedStack = (wideCss.match(
     /\.wide-rail-stack:has\(\.filters-panel\.is-expanded\)\s*\{[^}]+\}/,

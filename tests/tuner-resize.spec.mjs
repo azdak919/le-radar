@@ -82,7 +82,7 @@ test('1920 → 1279 → 390 → 1920 : la barre radio reste entière', async ({ 
   expect(back.name.length, 'retour 1920 : carré vide').toBeGreaterThan(0);
 });
 
-test('390 / 430 : pas de skip gauche, suivant collé au cadran', async ({ page }) => {
+test('390 / 430 : deux skips visibles et collés au cadran', async ({ page }) => {
   for (const width of [390, 430]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -96,9 +96,14 @@ test('390 / 430 : pas de skip gauche, suivant collé au cadran', async ({ page }
       const ns = getComputedStyle(next);
       const n = now.getBoundingClientRect();
       const x = next.getBoundingClientRect();
+      const p = prev.getBoundingClientRect();
       return {
         ok: true,
-        prevHidden: ps.display === 'none',
+        prevShown: ps.display !== 'none' && p.width > 8,
+        prevLeft: p.left,
+        prevFused: Math.abs(n.left - p.right) <= 4,
+        prevW: Math.round(p.width),
+        viewport: innerWidth,
         nextShown: ns.display !== 'none' && x.width > 8,
         nextW: Math.round(x.width),
         fused: Math.abs(x.left - n.right) <= 4,
@@ -107,7 +112,12 @@ test('390 / 430 : pas de skip gauche, suivant collé au cadran', async ({ page }
       };
     });
     expect(geo.ok, `${width}: boutons présents`).toBe(true);
-    expect(geo.prevHidden, `${width}: skip gauche masqué`).toBe(true);
+    // Production deliberately restored Previous beside the dial; retain both
+    // controls instead of reviving the obsolete hide-Previous contract.
+    expect(geo.prevShown, `${width}: skip gauche accessible`).toBe(true);
+    expect(geo.prevLeft, `${width}: précédent non rogné`).toBeGreaterThanOrEqual(0);
+    expect(geo.prevFused, `${width}: précédent collé au cadran`).toBe(true);
+    expect(geo.prevW, `${width}: précédent compact`).toBeLessThanOrEqual(40);
     expect(geo.nextShown, `${width}: skip droit visible`).toBe(true);
     expect(geo.nextW, `${width}: skip droit compact`).toBeLessThanOrEqual(40);
     expect(geo.fused, `${width}: skip collé au cadran`).toBe(true);

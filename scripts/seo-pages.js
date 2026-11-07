@@ -908,10 +908,21 @@ function scheduleHubCards(entries, t, lang, up) {
       + `<span class="seo-radio-card__name">${escapeHtml(name)}</span>`
       + (place ? `<span class="seo-radio-card__place">${escapeHtml(place)}</span>` : '')
       + airHtml
-      + `<span class="seo-radio-card__place" data-schedule-quality>${escapeHtml(scheduleQualityText(station, t))}</span>`
       + '</a>\n        </li>';
   });
-  return `      <ul class="seo-radio-cards">\n${items.join('\n')}\n      </ul>\n`;
+  const details = entries.map(({ radio, station }) => {
+    const used = String(station.sources?.[0] || '').replace(/^[^:]+:(?=https?:\/\/)/, '');
+    const source = /^https?:\/\//.test(used) ? used : (radio.website || '');
+    const checked = station.checkedAt ? new Intl.DateTimeFormat(t.lang, {
+      timeZone: 'America/Toronto', dateStyle: 'medium', timeStyle: 'short',
+    }).format(new Date(station.checkedAt)) : (lang === 'en' ? 'unknown' : 'inconnue');
+    return `<li><strong>${escapeHtml(radio.name)}</strong> — ${escapeHtml(checked)} (Toronto). `
+      + `<span data-schedule-quality>${escapeHtml(scheduleQualityText(station, t))}</span>`
+      + (source ? ` <a href="${escapeHtml(source)}"${EXTERNAL_LINK_ATTRS}>${lang === 'en' ? 'Station source' : 'Source de la station'}</a>` : '')
+      + '</li>';
+  }).join('');
+  return `      <ul class="seo-radio-cards">\n${items.join('\n')}\n      </ul>\n`
+    + `      <details class="seo-note" data-schedule-details><summary>${lang === 'en' ? 'Sources and updates' : 'Sources et mises à jour'}</summary><ul>${details}</ul></details>\n`;
 }
 
 function schedulesHubPage(model, lang, ctx) {

@@ -36,6 +36,7 @@ const ROOT = path.join(__dirname, '..');
 const RADIOS_PATH = path.join(ROOT, 'radios.json');
 const SEED_PATH = path.join(ROOT, 'radio-schedules.seed.json');
 const doUpdate = process.argv.includes('--update');
+const discoverAll = process.argv.includes('--discover-all');
 
 // Chemins fréquents d'une page d'horaire à sonder en JSON-LD / adaptateur dédié.
 const SCHEDULE_PATHS = [
@@ -106,6 +107,12 @@ function candidatesFor(radio, seedCfg) {
   return dedupeSources(out);
 }
 
+/** Revalidate known sources first; broad discovery is useful on failure, not
+ * repeated on every healthy refresh. --discover-all remains a manual audit. */
+function shouldProbeSource(src, knownLabels, workingCount, all = false) {
+  return all || !knownLabels.size || !workingCount || knownLabels.has(labelOf(src));
+}
+
 /** Détecte une plateforme Spinitron référencée sur le site (jeton requis). */
 async function detectSpinitron(radio, deps) {
   const base = normBase(radio.website);
@@ -137,6 +144,7 @@ async function main() {
     const working = [];
 
     for (const src of candidates) {
+      if (!shouldProbeSource(src, prevLabels, working.length, discoverAll)) continue;
       try {
         const grid = await runAdapter(src, deps);
         if (grid && grid.length >= MIN_SLOTS) {
@@ -215,7 +223,9 @@ async function main() {
   }
 }
 
-main().catch((e) => {
+if (require.main === module) main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
+
+module.exports = { candidatesFor, shouldProbeSource };

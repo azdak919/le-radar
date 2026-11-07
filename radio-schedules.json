@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T07:21:19.518Z",
+  "updatedAt": "2026-11-07T08:10:34.420Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -330,9 +330,9 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-07T07:21:19.518Z",
+      "checkedAt": "2026-11-07T08:10:34.420Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T07:21:19.518Z",
+      "attemptedAt": "2026-11-07T08:10:34.420Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
       "coveragePercent": 36
@@ -1113,9 +1113,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-07T07:21:19.518Z",
+      "checkedAt": "2026-11-07T08:10:34.420Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T07:21:19.518Z",
+      "attemptedAt": "2026-11-07T08:10:34.420Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1726,9 +1726,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-07T07:21:19.518Z",
+      "checkedAt": "2026-11-07T08:10:34.420Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T07:21:19.518Z",
+      "attemptedAt": "2026-11-07T08:10:34.420Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2600,9 +2600,9 @@
       "sources": [
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-11-07T07:21:19.518Z",
+      "checkedAt": "2026-11-07T08:10:34.420Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T07:21:19.518Z",
+      "attemptedAt": "2026-11-07T08:10:34.420Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "coveragePercent": 100
@@ -2612,263 +2612,302 @@
         {
           "day": 0,
           "start": "00:00",
-          "endUnknown": true,
-          "title": "Les nuits CFAK"
+          "end": "04:59",
+          "title": "Les nuits CFAK",
+          "url": "https://www.cfak.ca/balados/les-nuits-cfak",
+          "sourceEnd": "04:59"
         },
         {
           "day": 1,
           "start": "00:01",
-          "end": "07:00",
+          "end": "06:59",
           "title": "Les nuits CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/les-nuits-cfak",
+          "sourceEnd": "06:59"
         },
         {
           "day": 1,
           "start": "07:00",
-          "end": "08:00",
+          "end": "07:59",
           "title": "Folkswagen",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/Folkswagen",
+          "sourceEnd": "07:59"
         },
         {
           "day": 1,
           "start": "08:00",
-          "end": "09:00",
+          "end": "08:59",
           "title": "Palmarès CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/palmares-cfak",
+          "sourceEnd": "08:59"
         },
         {
           "day": 1,
           "start": "09:00",
-          "end": "13:00",
+          "end": "10:59",
           "title": "Le NEUF",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/le-neuf",
+          "sourceEnd": "10:59"
         },
         {
           "day": 1,
           "start": "13:00",
-          "end": "18:00",
+          "end": "13:59",
           "title": "Solénoïde",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/solenoide",
+          "sourceEnd": "13:59"
         },
         {
           "day": 1,
           "start": "18:00",
-          "end": "20:00",
+          "end": "18:59",
           "title": "Ma radio Académia",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/ma-radio-academia",
+          "sourceEnd": "18:59"
         },
         {
           "day": 1,
           "start": "20:00",
-          "end": "00:01",
+          "end": "21:59",
           "title": "Le terrain sportif",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/soccersports",
+          "sourceEnd": "21:59"
         },
         {
           "day": 2,
           "start": "00:00",
-          "end": "07:00",
+          "end": "06:59",
           "title": "Les nuits CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/les-nuits-cfak",
+          "sourceEnd": "06:59"
         },
         {
           "day": 2,
           "start": "07:00",
-          "end": "08:00",
+          "end": "07:59",
           "title": "Folkswagen",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/Folkswagen",
+          "sourceEnd": "07:59"
         },
         {
           "day": 2,
           "start": "08:00",
-          "end": "12:00",
+          "end": "08:59",
           "title": "Palmarès CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/palmares-cfak",
+          "sourceEnd": "08:59"
         },
         {
           "day": 2,
           "start": "12:00",
-          "end": "18:30",
+          "end": "12:59",
           "title": "Le DOUZE",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/le-douze",
+          "sourceEnd": "12:59"
         },
         {
           "day": 2,
           "start": "18:30",
-          "end": "20:00",
+          "end": "19:59",
           "title": "L'Aut'Rock",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/lautrock",
+          "sourceEnd": "19:59"
         },
         {
           "day": 2,
           "start": "20:00",
-          "end": "22:00",
+          "end": "21:59",
           "title": "Dichotomie 88.3",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/dichotomie-883",
+          "sourceEnd": "21:59"
         },
         {
           "day": 2,
           "start": "22:00",
-          "end": "00:00",
+          "end": "23:59",
           "title": "Mix Franco",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/Mix-Franco",
+          "sourceEnd": "23:59"
         },
         {
           "day": 3,
           "start": "00:00",
-          "end": "07:00",
+          "end": "06:59",
           "title": "Les nuits CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/les-nuits-cfak",
+          "sourceEnd": "06:59"
         },
         {
           "day": 3,
           "start": "07:00",
-          "end": "08:00",
+          "end": "07:59",
           "title": "Folkswagen",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/Folkswagen",
+          "sourceEnd": "07:59"
         },
         {
           "day": 3,
           "start": "08:00",
-          "end": "09:00",
+          "end": "08:59",
           "title": "Palmarès CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/palmares-cfak",
+          "sourceEnd": "08:59"
         },
         {
           "day": 3,
           "start": "09:00",
-          "end": "12:00",
+          "end": "10:59",
           "title": "Le NEUF",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/le-neuf",
+          "sourceEnd": "10:59"
         },
         {
           "day": 3,
           "start": "12:00",
-          "end": "00:00",
+          "end": "12:59",
           "title": "Le DOUZE",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/le-douze",
+          "sourceEnd": "12:59"
         },
         {
           "day": 4,
           "start": "00:00",
-          "end": "07:00",
+          "end": "06:59",
           "title": "Les nuits CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/les-nuits-cfak",
+          "sourceEnd": "06:59"
         },
         {
           "day": 4,
           "start": "07:00",
-          "end": "08:00",
+          "end": "07:59",
           "title": "Folkswagen",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/Folkswagen",
+          "sourceEnd": "07:59"
         },
         {
           "day": 4,
           "start": "08:00",
-          "end": "09:00",
+          "end": "08:59",
           "title": "Palmarès CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/palmares-cfak",
+          "sourceEnd": "08:59"
         },
         {
           "day": 4,
           "start": "09:00",
-          "end": "11:00",
+          "end": "10:59",
           "title": "Le NEUF",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/le-neuf",
+          "sourceEnd": "10:59"
         },
         {
           "day": 4,
           "start": "11:00",
-          "end": "00:00",
+          "end": "11:59",
           "title": "À nous le futur",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/a-nous-le-futur",
+          "sourceEnd": "11:59"
         },
         {
           "day": 5,
           "start": "00:00",
-          "end": "07:00",
+          "end": "06:59",
           "title": "Les nuits CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/les-nuits-cfak",
+          "sourceEnd": "06:59"
         },
         {
           "day": 5,
           "start": "07:00",
-          "end": "08:00",
+          "end": "07:59",
           "title": "Folkswagen",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/Folkswagen",
+          "sourceEnd": "07:59"
         },
         {
           "day": 5,
           "start": "08:00",
-          "end": "11:00",
+          "end": "08:59",
           "title": "Palmarès CFAK",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/palmares-cfak",
+          "sourceEnd": "08:59"
         },
         {
           "day": 5,
           "start": "11:00",
-          "end": "12:00",
+          "end": "11:59",
           "title": "Le Ré-Show : Deuxième service",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/le-re-show-deuxieme-service",
+          "sourceEnd": "11:59"
         },
         {
           "day": 5,
           "start": "12:00",
-          "end": "16:30",
+          "end": "13:59",
           "title": "Ciné-Histoire",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/cine-histoire",
+          "sourceEnd": "13:59"
         },
         {
           "day": 5,
           "start": "16:30",
-          "end": "18:00",
+          "end": "17:59",
           "title": "Remix ta console",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/remix-ta-console",
+          "sourceEnd": "17:59"
         },
         {
           "day": 5,
           "start": "18:00",
-          "end": "19:00",
+          "end": "18:59",
           "title": "La Récréation",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/la-recreation",
+          "sourceEnd": "18:59"
         },
         {
           "day": 5,
           "start": "19:00",
-          "end": "21:00",
+          "end": "20:59",
           "title": "Enfin vendredi",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/enfin-vendredi",
+          "sourceEnd": "20:59"
         },
         {
           "day": 5,
           "start": "21:00",
-          "end": "22:00",
+          "end": "21:59",
           "title": "Mangue, Goyave et Reggae",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/mangue-goyave-et-reggae",
+          "sourceEnd": "21:59"
         },
         {
           "day": 5,
           "start": "22:00",
-          "end": "00:00",
+          "end": "23:59",
           "title": "Entre ciel et terre",
-          "endInferred": true
+          "url": "https://www.cfak.ca/balados/entre-ciel-et-terre",
+          "sourceEnd": "23:59"
         },
         {
           "day": 6,
           "start": "00:00",
-          "endUnknown": true,
-          "title": "Les nuits CFAK"
+          "end": "04:59",
+          "title": "Les nuits CFAK",
+          "url": "https://www.cfak.ca/balados/les-nuits-cfak",
+          "sourceEnd": "04:59"
         }
       ],
       "sources": [
-        "cfak:https://www.cfak.ca/programmation/"
+        "cfak:https://www.cfak.ca/programmation/",
+        "published-page-data:https://www.cfak.ca/_nuxt/static/1793725584/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-07T07:21:19.518Z",
+      "checkedAt": "2026-11-07T08:10:34.420Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T07:21:19.518Z",
+      "attemptedAt": "2026-11-07T08:10:34.420Z",
       "id": "cfak",
       "name": "CFAK 88,3",
-      "coveragePercent": 71
+      "coveragePercent": 50
     },
     "choq": {
       "grid": [
@@ -2877,197 +2916,197 @@
           "start": "12:00",
           "end": "13:00",
           "title": "OPUS",
-          "url": "https://www.choq.ca/emissions/opus"
+          "url": "https://www.choq.ca/balados/opus"
         },
         {
           "day": 0,
           "start": "17:00",
           "end": "18:00",
           "title": "Mutations",
-          "url": "https://www.choq.ca/emissions/mutations"
+          "url": "https://www.choq.ca/balados/mutations"
         },
         {
           "day": 1,
           "start": "13:00",
           "end": "13:45",
           "title": "Onde de CHOQ",
-          "url": "https://www.choq.ca/emissions/onde-de-choq"
+          "url": "https://www.choq.ca/balados/onde-de-choq"
         },
         {
           "day": 1,
           "start": "15:00",
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
-          "url": "https://www.choq.ca/emissions/palmareschoq"
+          "url": "https://www.choq.ca/balados/palmareschoq"
         },
         {
           "day": 1,
           "start": "19:00",
           "end": "20:00",
           "title": "Bitume",
-          "url": "https://www.choq.ca/emissions/bitume"
+          "url": "https://www.choq.ca/balados/bitume"
         },
         {
           "day": 2,
           "start": "05:00",
           "end": "07:00",
           "title": "Les rois de l'arène",
-          "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+          "url": "https://www.choq.ca/balados/les-rois-de-larene"
         },
         {
           "day": 2,
           "start": "12:45",
           "end": "13:30",
           "title": "L'UQAM en info",
-          "url": "https://www.choq.ca/emissions/uqam-en-info"
+          "url": "https://www.choq.ca/balados/uqam-en-info"
         },
         {
           "day": 2,
           "start": "14:00",
           "end": "14:45",
           "title": "Onde de CHOQ",
-          "url": "https://www.choq.ca/emissions/onde-de-choq"
+          "url": "https://www.choq.ca/balados/onde-de-choq"
         },
         {
           "day": 2,
           "start": "15:00",
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
-          "url": "https://www.choq.ca/emissions/palmareschoq"
+          "url": "https://www.choq.ca/balados/palmareschoq"
         },
         {
           "day": 2,
           "start": "16:00",
           "end": "17:30",
           "title": "Passion Psy",
-          "url": "https://www.choq.ca/emissions/passion-psy"
+          "url": "https://www.choq.ca/balados/passion-psy"
         },
         {
           "day": 2,
           "start": "18:00",
           "end": "19:00",
           "title": "Le Studio",
-          "url": "https://www.choq.ca/emissions/live"
+          "url": "https://www.choq.ca/balados/live"
         },
         {
           "day": 3,
           "start": "11:00",
           "end": "12:00",
           "title": "Miroirs d’Orient",
-          "url": "https://www.choq.ca/emissions/miroirs-dorient"
+          "url": "https://www.choq.ca/balados/miroirs-dorient"
         },
         {
           "day": 3,
           "start": "13:00",
           "end": "13:45",
           "title": "Onde de CHOQ",
-          "url": "https://www.choq.ca/emissions/onde-de-choq"
+          "url": "https://www.choq.ca/balados/onde-de-choq"
         },
         {
           "day": 3,
           "start": "15:00",
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
-          "url": "https://www.choq.ca/emissions/palmareschoq"
+          "url": "https://www.choq.ca/balados/palmareschoq"
         },
         {
           "day": 3,
           "start": "19:00",
           "end": "20:00",
           "title": "Les Amazones",
-          "url": "https://www.choq.ca/emissions/les-amazones"
+          "url": "https://www.choq.ca/balados/les-amazones"
         },
         {
           "day": 4,
           "start": "13:00",
           "end": "13:45",
           "title": "Onde de CHOQ",
-          "url": "https://www.choq.ca/emissions/onde-de-choq"
+          "url": "https://www.choq.ca/balados/onde-de-choq"
         },
         {
           "day": 4,
           "start": "14:00",
           "end": "15:00",
           "title": "Dans les airs",
-          "url": "https://www.choq.ca/emissions/dans-les-airs"
+          "url": "https://www.choq.ca/balados/dans-les-airs"
         },
         {
           "day": 4,
           "start": "15:30",
           "end": "16:30",
           "title": "Palmarès CHOQ.ca",
-          "url": "https://www.choq.ca/emissions/palmareschoq"
+          "url": "https://www.choq.ca/balados/palmareschoq"
         },
         {
           "day": 4,
           "start": "17:15",
           "end": "18:00",
           "title": "La 3ème demie",
-          "url": "https://www.choq.ca/emissions/le-12-mtlsup"
+          "url": "https://www.choq.ca/balados/le-12-mtlsup"
         },
         {
           "day": 4,
           "start": "21:00",
           "end": "22:30",
           "title": "Le grand maître des jeux",
-          "url": "https://www.choq.ca/emissions/le-maitre-des-jeux"
+          "url": "https://www.choq.ca/balados/le-maitre-des-jeux"
         },
         {
           "day": 5,
           "start": "11:30",
           "end": "12:30",
           "title": "Opération beurre de cinoche",
-          "url": "https://www.choq.ca/emissions/box-sophisme"
+          "url": "https://www.choq.ca/balados/box-sophisme"
         },
         {
           "day": 5,
           "start": "12:45",
           "end": "12:55",
           "title": "Montréal au courant",
-          "url": "https://www.choq.ca/emissions/montreal-au-courant"
+          "url": "https://www.choq.ca/balados/montreal-au-courant"
         },
         {
           "day": 5,
           "start": "13:00",
           "end": "13:45",
           "title": "Onde de CHOQ",
-          "url": "https://www.choq.ca/emissions/onde-de-choq"
+          "url": "https://www.choq.ca/balados/onde-de-choq"
         },
         {
           "day": 5,
           "start": "14:00",
           "end": "14:30",
           "title": "Les fleurs du tapis",
-          "url": "https://www.choq.ca/emissions/les-fleurs-du-tapis"
+          "url": "https://www.choq.ca/balados/les-fleurs-du-tapis"
         },
         {
           "day": 5,
           "start": "16:00",
           "end": "17:00",
           "title": "Histoire de passer le temps",
-          "url": "https://www.choq.ca/emissions/histoire-de-passer-le-temps"
+          "url": "https://www.choq.ca/balados/histoire-de-passer-le-temps"
         },
         {
           "day": 6,
           "start": "10:00",
           "end": "11:00",
           "title": "Podcast Nomade: L'art de se rencontrer",
-          "url": "https://www.choq.ca/emissions/podcast-nomade-lart-de-se-rencontrer"
+          "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
         },
         {
           "day": 6,
           "start": "22:00",
           "end": "00:00",
           "title": "D'amour et de sexe",
-          "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+          "url": "https://www.choq.ca/balados/damour-et-de-sexe"
         }
       ],
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-07T07:21:19.518Z",
+      "checkedAt": "2026-11-07T08:10:34.420Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T07:21:19.518Z",
+      "attemptedAt": "2026-11-07T08:10:34.420Z",
       "id": "choq",
       "name": "CHOQ.ca",
       "coveragePercent": 16

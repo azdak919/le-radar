@@ -660,7 +660,7 @@ test('wide CHOQ : la piste scindée ne déborde pas sur À venir', async ({ page
   expect(geo.title).toBe('Earth Mother Fucker / Pound Land');
   expect(geo.sub).toBe('Earth Mother Fucker - Happy Shopper');
   expect(geo.titleHasEm, 'plus de cadratin dans le titre').toBe(false);
-  expect(geo.titleH, 'titre = 1 ligne').toBeLessThan(22);
+  expect(geo.titleH, 'titre lisible, retour à la ligne permis').toBeGreaterThan(12);
   expect(geo.subH, 'sous-ligne = 1 ligne').toBeGreaterThan(8);
   expect(geo.liveRight, 'le titre live ne recouvre pas À venir').toBeLessThan(geo.nextLeft - 4);
 });
@@ -698,11 +698,11 @@ test('wide : sans émission, masquer À l’antenne (pas « Rien à l’antenne 
   expect(report.display, 'le slot live doit disparaître').toBe('none');
   expect(report.nextTitle).toBe("Rien de programmé pour aujourd'hui");
   expect(report.noRadioNext, 'sans poste : tiret, pas le creux du jour').toBe('—');
-  expect(report.nextWrap).toBe('nowrap');
-  expect(report.nextH, 'creux du jour = 1 ligne').toBeLessThan(22);
+  expect(report.nextWrap).toBe('normal');
+  expect(report.nextH, 'message lisible sans rognage').toBeGreaterThan(12);
 });
 
-test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }) => {
+test('wide : deux slots bornés, titres complets sans écrasement', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => window.RadarAir?._pure && document.getElementById('tuner-nowair-wide'));
@@ -742,10 +742,10 @@ test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }
   });
 
   expect(geo.liveHidden, 'slot live forcé visible pour la géométrie').toBe(false);
-  expect(geo.liveWrap).toBe('nowrap');
-  expect(geo.nextWrap).toBe('nowrap');
-  expect(geo.liveH, 'titre live = 1 ligne').toBeLessThan(22);
-  expect(geo.nextH, 'titre à venir = 1 ligne').toBeLessThan(22);
+  expect(geo.liveWrap).toBe('normal');
+  expect(geo.nextWrap).toBe('normal');
+  expect(geo.liveH, 'titre live complet').toBeGreaterThan(12);
+  expect(geo.nextH, 'titre à venir complet').toBeGreaterThan(12);
   expect(geo.liveW, 'slot live pas écrasé').toBeGreaterThan(120);
   expect(geo.nextW, 'slot à venir pas écrasé').toBeGreaterThan(120);
   expect(geo.empty.hideLive, 'sans émission : masquer À l’antenne').toBe(true);

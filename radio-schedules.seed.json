@@ -1,5 +1,5 @@
 {
-  "_comment": "Source ÉDITABLE des horaires radio. CI aux 2 semaines : discover-schedule-sources.js --update puis fetch-radio-schedules.js --update (workflow update-radio-schedules.yml). Adaptateurs grille : chyz, cism, cjlo, cfak, airtime (CKUT), choq (GraphQL). En cours + à venir : fetch-radio-nowplaying.js (aux 30 min) lit cette grille + les APIs (_nowPlayingSources : cism-v1, choq-episodes, craft-live, triton-np, airtime-live, icy).",
+  "_comment": "Source ÉDITABLE des horaires radio. CI deux fois par jour : discover-schedule-sources.js --update puis fetch-radio-schedules.js --update (workflow update-radio-schedules.yml). Adaptateurs grille : chyz, cism, cjlo, cfak, airtime (CKUT), choq (GraphQL). En cours + à venir : fetch-radio-nowplaying.js (aux 30 min) lit cette grille + les APIs (_nowPlayingSources : cism-v1, choq-episodes, craft-live, triton-np, airtime-live, icy).",
   "_format": {
     "day": "0 = dimanche, 1 = lundi, 2 = mardi, 3 = mercredi, 4 = jeudi, 5 = vendredi, 6 = samedi",
     "start_end": "Heures locales 24 h America/Toronto, format \"HH:MM\". Une plage dont la fin est <= au début traverse minuit (ex. 23:00 → 01:00).",
@@ -45,12 +45,8 @@
       "grid": []
     },
     "cjlo": {
-      "_note": "Grille Drupal 7 sur http://www.cjlo.com/schedule (Daytime + Late Night, colonnes Sun–Sat). HTTP seulement : le port 443 ne répond pas, garder l'URL en http://. Le site rend par intermittence une page d'erreur Drupal « 500 Service unavailable » sur toutes les URL, y compris l'accueil, quel que soit l'agent (vérifié 2026-07-26) : c'est une panne de leur côté, pas un blocage d'IP — inutile de router via le worker Cloudflare, il recevrait le même 500. Le bot conserve alors la dernière grille connue.",
+      "_note": "Grille publique Drupal 7, Daytime + Late Night, colonnes Sun–Sat. HTTPS vérifié fonctionnel le 7 novembre 2026 ; les anciennes observations HTTP seulement ne sont plus valides. Conserver la dernière grille fiable et sa vraie date si la source échoue. Les placeholders 0:30 AM ne sont pas des heures valides.",
       "sources": [
-        {
-          "type": "cjlo",
-          "url": "http://www.cjlo.com/schedule"
-        },
         {
           "type": "cjlo",
           "url": "https://www.cjlo.com/schedule/"
@@ -59,7 +55,7 @@
       "grid": []
     },
     "cfak": {
-      "_note": "Grille publiée sur cfak.ca/programmation (site Nuxt, cartes par jour).",
+      "_note": "La page publique lie un payload Nuxt statique : horaires hdeb/hfin et titres balados. Le lecteur public compare strictement maintenant < hfin : 459 est donc la borne exclusive 04:59, sans ajout de minute. Extraire le build depuis la page, ne jamais deviner les fins à partir du début suivant. Repli HTML débuts seuls ; conserver la dernière grille aux fins publiées si cette source devient indisponible.",
       "sources": [
         {
           "type": "cfak",

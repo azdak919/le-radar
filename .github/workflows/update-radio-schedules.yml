@@ -2,11 +2,11 @@ name: Update Radio Schedules
 
 on:
   schedule:
-    # Quotidien 09:00 UTC. Les grilles portent des occurrences de la semaine,
+    # Deux fois par jour, 04 h et 13 h HNE (05 h et 14 h HAE). Les grilles portent des occurrences de la semaine,
     # pas un gabarit type : CHOQ publie des épisodes datés en cours de semaine
     # (Pôle hip-hop le dimanche n’existait pas encore à la passe du jeudi).
     # Les autres postes no-op s’il n’y a rien de nouveau (pas de commit).
-    - cron: '0 9 * * *'
+    - cron: '0 9,18 * * *'
   workflow_dispatch:
 
 concurrency:
@@ -33,6 +33,9 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Validate collector regression fixtures
+        run: node tests/radio-schedule-quality.mjs
+
       - name: Discover and revalidate schedule sources
         run: node scripts/discover-schedule-sources.js --update
 
@@ -43,11 +46,8 @@ jobs:
       # Québec courante (seo-pages-lib), pas un champ du JSON. Sans cette
       # passe le lundi, les pages restent à la semaine précédente et
       # static-integrity (via bot-prepush) fait échouer RSEQ / autres bots.
-      # continue-on-error : un échec du référencement ne doit jamais bloquer
-      # la publication des données de grille.
       - name: Regenerate SEO artefacts
         run: node scripts/generate-seo.js --update
-        continue-on-error: true
 
       - name: Check for changes
         id: check
