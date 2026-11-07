@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="../../style-feed.css" />
     <link rel="stylesheet" href="../../style-chrome.css" />
     <link rel="stylesheet" href="../../seo-pages.css" />
+    <link rel="stylesheet" href="../../radio-day-view.css" />
     <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e102" />
     <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
     <script src="../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
@@ -131,6 +132,8 @@
     <script src="../../radar-lifecycle.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
+    <script src="../../scripts/radio-day-lib.js" defer></script>
+    <script src="../../radio-day-view.js" defer></script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Québec campus radio schedules","description":"Weekly schedules for the 6 campus radio stations at Québec CEGEPs and universities, collected automatically and gathered in one place.","inLanguage":"en-CA","about":{"@type":"ItemList","numberOfItems":6,"itemListElement":[{"@type":"ListItem","position":1,"name":"CFAK 88,3 FM","url":"https://le-radar.ca/en/radios/cfak/#horaire"},{"@type":"ListItem","position":2,"name":"CHOQ.ca","url":"https://le-radar.ca/en/radios/choq/#horaire"},{"@type":"ListItem","position":3,"name":"CHYZ 94,3 FM","url":"https://le-radar.ca/en/radios/chyz/#horaire"},{"@type":"ListItem","position":4,"name":"CISM 89,3 FM","url":"https://le-radar.ca/en/radios/cism/#horaire"},{"@type":"ListItem","position":5,"name":"CJLO 1690 AM","url":"https://le-radar.ca/en/radios/cjlo/#horaire"},{"@type":"ListItem","position":6,"name":"CKUT 90,3 FM","url":"https://le-radar.ca/en/radios/ckut/#horaire"}]}}</script>
   </head>
   <body>
@@ -312,15 +315,16 @@
       <h1 class="seo-title">Québec campus radio schedules</h1>
       <p class="seo-lead">What’s on this week at the campus stations, in Québec time.</p>
       <p class="seo-schedule-meta"><span>Week of November 2, 2026</span><span aria-hidden="true">·</span><span>Updated November 7, 2026</span></p>
+<p class="seo-note"><a href="#journee">Compare the six stations hour by hour ↓</a></p>
       <ul class="seo-radio-cards">
         <li class="seo-radio-card" data-schedule-station="cfak" data-air-state="upcoming">
           <a href="../../en/radios/cfak/#horaire"><span class="seo-radio-card__name">CFAK 88,3 FM</span><span class="seo-radio-card__place">UdeS · Sherbrooke</span><span class="seo-radio-card__now" data-schedule-air data-air-state="upcoming"><span class="seo-radio-card__kicker">Up next</span><span class="seo-radio-card__show">Les nuits CFAK</span><span class="seo-radio-card__when">Sunday 00:00<span class="seo-slot__dash" aria-hidden="true">–</span>04:59</span></span></a>
         </li>
-        <li class="seo-radio-card" data-schedule-station="choq" data-air-state="live">
-          <a href="../../en/radios/choq/#horaire"><span class="seo-radio-card__name">CHOQ.ca</span><span class="seo-radio-card__place">Web · UQAM · Montréal</span><span class="seo-radio-card__now" data-schedule-air data-air-state="live"><span class="seo-radio-card__kicker">On air</span><span class="seo-radio-card__show">Podcast Nomade: L'art de se rencontrer</span><span class="seo-radio-card__when">10:00<span class="seo-slot__dash" aria-hidden="true">–</span>11:00</span></span></a>
+        <li class="seo-radio-card" data-schedule-station="choq" data-air-state="upcoming">
+          <a href="../../en/radios/choq/#horaire"><span class="seo-radio-card__name">CHOQ.ca</span><span class="seo-radio-card__place">Web · UQAM · Montréal</span><span class="seo-radio-card__now" data-schedule-air data-air-state="upcoming"><span class="seo-radio-card__kicker">Up next</span><span class="seo-radio-card__show">D'amour et de sexe</span><span class="seo-radio-card__when">22:00<span class="seo-slot__dash" aria-hidden="true">–</span>00:00</span></span></a>
         </li>
-        <li class="seo-radio-card" data-schedule-station="chyz" data-air-state="upcoming">
-          <a href="../../en/radios/chyz/#horaire"><span class="seo-radio-card__name">CHYZ 94,3 FM</span><span class="seo-radio-card__place">ULaval · Québec</span><span class="seo-radio-card__now" data-schedule-air data-air-state="upcoming"><span class="seo-radio-card__kicker">Up next</span><span class="seo-radio-card__show">Le Ré-Show : Deuxième Service</span><span class="seo-radio-card__when">11:00<span class="seo-slot__dash" aria-hidden="true">–</span>12:00</span></span></a>
+        <li class="seo-radio-card" data-schedule-station="chyz" data-air-state="live">
+          <a href="../../en/radios/chyz/#horaire"><span class="seo-radio-card__name">CHYZ 94,3 FM</span><span class="seo-radio-card__place">ULaval · Québec</span><span class="seo-radio-card__now" data-schedule-air data-air-state="live"><span class="seo-radio-card__kicker">On air</span><span class="seo-radio-card__show">Le Ré-Show : Deuxième Service</span><span class="seo-radio-card__when">11:00<span class="seo-slot__dash" aria-hidden="true">–</span>12:00</span></span></a>
         </li>
         <li class="seo-radio-card" data-schedule-station="cism" data-air-state="live">
           <a href="../../en/radios/cism/#horaire"><span class="seo-radio-card__name">CISM 89,3 FM</span><span class="seo-radio-card__place">UdeM · Montréal</span><span class="seo-radio-card__now" data-schedule-air data-air-state="live"><span class="seo-radio-card__kicker">On air</span><span class="seo-radio-card__show">Elkin Polo El Show</span><span class="seo-radio-card__when">08:00<span class="seo-slot__dash" aria-hidden="true">–</span>12:00</span></span></a>
@@ -333,6 +337,14 @@
         </li>
       </ul>
       <details class="seo-note" data-schedule-details><summary>Sources and updates</summary><ul><li><strong>CFAK 88,3</strong> — Nov 7, 2026, 10:19 a.m. (Toronto). <span data-schedule-quality>Partial schedule (50% of the week published). Missing slots do not mean the station is offline.</span> <a href="https://www.cfak.ca/programmation/" target="_blank" rel="noopener noreferrer">Station source</a></li><li><strong>CHOQ.ca</strong> — Nov 7, 2026, 10:19 a.m. (Toronto). <span data-schedule-quality>Partial schedule (16% of the week published). Missing slots do not mean the station is offline.</span> <a href="https://www.choq.ca/api/graphql" target="_blank" rel="noopener noreferrer">Station source</a></li><li><strong>CHYZ 94,3</strong> — Nov 7, 2026, 10:19 a.m. (Toronto). <span data-schedule-quality>Partial schedule (36% of the week published). Missing slots do not mean the station is offline.</span> <a href="https://chyz.ca/horaire/" target="_blank" rel="noopener noreferrer">Station source</a></li><li><strong>CISM 89,3</strong> — Nov 7, 2026, 10:19 a.m. (Toronto). <span data-schedule-quality></span> <a href="https://cism893.ca/grille-horaire/" target="_blank" rel="noopener noreferrer">Station source</a></li><li><strong>CJLO 1690AM</strong> — Nov 7, 2026, 10:19 a.m. (Toronto). <span data-schedule-quality></span> <a href="https://www.cjlo.com/schedule/" target="_blank" rel="noopener noreferrer">Station source</a></li><li><strong>CKUT 90,3</strong> — Nov 7, 2026, 10:19 a.m. (Toronto). <span data-schedule-quality></span> <a href="https://ckut.airtime.pro" target="_blank" rel="noopener noreferrer">Station source</a></li></ul></details>
+      <section class="radio-day-view" id="journee" data-radio-day-view aria-labelledby="radio-day-title">
+        <h2 id="radio-day-title">Compare a day, radio by radio</h2>
+        <p class="radio-day-hint">One shared clock; blocks reflect published durations. Select a block for its full title and details. Empty space means no published slot; overlapping slots stay side by side.</p>
+        <script type="application/json" data-day-stations>[{"id":"cfak","name":"CFAK 88,3 FM","place":"UdeS · Sherbrooke","href":"../../en/radios/cfak/#horaire"},{"id":"choq","name":"CHOQ.ca","place":"UQAM · Montréal","href":"../../en/radios/choq/#horaire"},{"id":"chyz","name":"CHYZ 94,3 FM","place":"ULaval · Québec","href":"../../en/radios/chyz/#horaire"},{"id":"cism","name":"CISM 89,3 FM","place":"UdeM · Montréal","href":"../../en/radios/cism/#horaire"},{"id":"cjlo","name":"CJLO 1690 AM","place":"Concordia · Montréal","href":"../../en/radios/cjlo/#horaire"},{"id":"ckut","name":"CKUT 90,3 FM","place":"McGill · Montréal","href":"../../en/radios/ckut/#horaire"}]</script>
+        <p data-day-status role="status">Loading the shared schedule…</p>
+        <div data-day-ui hidden></div>
+        <noscript><p>JavaScript enables this comparison. The station links above provide their full weekly lists without JavaScript.</p></noscript>
+      </section>
       <p class="seo-note">Grids come from each station’s website; they may change.</p>
 
     </main>
