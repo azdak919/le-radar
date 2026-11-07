@@ -26,4 +26,9 @@ function plan({ local = [], tracked = [], remote = [], now = Date.now(), graceDa
   return { upload, delete: del };
 }
 
-module.exports = { TAG, IMG, plan };
+// Erreurs passagères de l'API GitHub (HTTP 5xx, coupure réseau) : on réessaie ;
+// les autres (404, droits, release absente) remontent tout de suite.
+const TRANSIENT = /HTTP 5\d\d|HTTP 429|timed? ?out|ECONNRESET|ETIMEDOUT|EAI_AGAIN|connection reset|unexpected EOF|stream error/i;
+function isTransient(text) { return TRANSIENT.test(String(text || '')); }
+
+module.exports = { TAG, IMG, plan, isTransient };
