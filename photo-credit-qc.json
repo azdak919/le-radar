@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-07T05:08:44.624Z",
+  "updated": "2026-11-07T06:15:16.221Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
-  "cited": 106,
-  "pending": 41,
+  "cited": 107,
+  "pending": 40,
   "missingHero": 0,
   "ok": false,
-  "checked": 54,
+  "checked": 53,
   "updatedCount": 4,
   "citedNew": 7,
-  "fallbackNew": 47,
+  "fallbackNew": 46,
   "samples": [
-    {
-      "title": "What the Cornell case taught me",
-      "source": "The Concordian",
-      "credit": "Illustration: Manasi Iyampillay",
-      "cited": true,
-      "method": "figcaption-illustration"
-    },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
@@ -37,6 +30,13 @@
       "title": "Pregnant, not sidelined",
       "source": "The Link",
       "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Going all the way with Cinéma L’Amour",
+      "source": "The Link",
+      "credit": "Photo: Santiago Sánchez Arbouin",
       "cited": true,
       "method": "figcaption-trailing"
     }
