@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T05:06:41.570Z",
+  "updatedAt": "2026-11-07T06:06:56.020Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T05:06:00.121Z"
+      "checkedAt": "2026-11-07T06:05:57.767Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T05:06:01.747Z"
+      "checkedAt": "2026-11-07T06:05:59.272Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,21 +73,21 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T05:06:04.392Z"
+      "checkedAt": "2026-11-07T06:06:02.362Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Jazz Boulevard",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "next": {
         "title": "World-Up'",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
@@ -95,12 +95,12 @@
       "track": "",
       "showTitle": "Jazz Boulevard",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T05:06:18.967Z"
+      "checkedAt": "2026-11-07T06:06:36.662Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,7 +120,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T05:06:20.046Z"
+      "checkedAt": "2026-11-07T06:06:37.815Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T05:06:41.219Z"
+      "checkedAt": "2026-11-07T06:06:55.669Z"
     }
   }
 }
