@@ -96,15 +96,24 @@ export const xlen = s => [...s.replace(/https?:\/\/\S+/g, 'x'.repeat(URL_LEN))].
 /** « 📸 Auteur » : auteur·e connu·e de la photo, sinon le nom du média (jamais inventé). */
 export const photoLine = credit => String(credit || '').trim() ? `📸 ${String(credit).trim()}` : '';
 
+const STOP = new Set('le la les un une des de du d l a au aux et ou en dans sur pour par avec son sa ses leur leurs ce cet cette ces qui que est sont the an of to in on for and or with its is are at by from mode'.split(' '));
+const stems = s => norm(s).split(' ').filter(w => w && !STOP.has(w)).map(w => w.slice(0, 5));
+/** Vrai si `text` n'ajoute presque rien au titre (≥ 80 % de ses mots-racines déjà dans le titre) : accroche à omettre. */
+export function redundantWithTitle(text, title) {
+  const t = new Set(stems(title)), h = stems(text);
+  if (!h.length || !t.size) return false;
+  return h.filter(w => t.has(w)).length / h.length >= 0.8;
+}
+
 export function excerpt(it, { ai = false } = {}) {
-  if (ai && typeof it.aiHook === 'string' && it.aiHook.trim()) return it.aiHook.trim(); // accroche IA validée (ai-hook.mjs)
+  if (ai && typeof it.aiHook === 'string' && it.aiHook.trim() && !redundantWithTitle(it.aiHook, it.bare || it.title)) return it.aiHook.trim(); // accroche IA validée (ai-hook.mjs)
   let d = it.desc; if (!d) return '';
   for (const p of [it.title, it.bare]) if (p && d.startsWith(p)) d = d.slice(p.length).replace(/^[\s:–-]+/, '');
   if (it.author) d = d.replace(new RegExp('^(par|by)?\\s*' + esc(it.author) + '[\\s,:–-]*', 'i'), '');
   d = d.replace(/\s*(The post|Cet article|L’article|L'article) .* (appeared first on|est apparu en premier sur) .*$/i, '').replace(/\s*\[(…|\.\.\.)\]\s*$/, '…').trim();
   d = d.replace(/[^.!?…]*\b(cliquer?|cliquez) ici\b[^.!?…]*[.!?…]?/gi, '')
     .replace(/[^.!?…]*\b(click here|lire la suite|read more|continue reading|en savoir plus)\b[^.!?…]*[.!?…]?/gi, '').replace(/\s+/g, ' ').trim();
-  if (!d || norm(d) === norm(it.bare) || norm(it.bare).startsWith(norm(d))) return '';
+  if (!d || norm(d) === norm(it.bare) || norm(it.bare).startsWith(norm(d)) || redundantWithTitle(d, it.bare || it.title)) return ''; // jamais titre + paraphrase vide
   return d;
 }
 

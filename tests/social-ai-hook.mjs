@@ -58,3 +58,16 @@ const f1 = { ...it, id: 'f1' }; await withHook(f1, { env, fetchImpl: cap(HOOK) }
 assert.match(prompt, /en français/); assert.equal(f1.aiHook, HOOK);
 for (const x of [e1, f1]) { const t = buildBskyText(x, [], { photo: true }); assert.ok(t.includes('#Québec') && t.includes('#PresseÉtudiante'), 'hashtags fixes'); }
 console.log('social-ai-hook : OK');
+
+// Régression 6 nov. (Le Collectif, 2590ab97cedc52e7) : accroche IA = titre paraphrasé → rejetée, et omise si déjà en cache.
+{
+  const { excerpt, redundantWithTitle } = await import('../scripts/social/lib.mjs');
+  const sh = { id: 's1', source: 'Le Collectif', title: 'Découvrir l’héritage militaire de Sherbrooke en mode balado', bare: 'Découvrir l’héritage militaire de Sherbrooke en mode balado', desc: 'Lancé en pleine Campagne nationale du coquelicot, le circuit propose un parcours historique de plus de 200 ans.', lang: 'fr', link: 'https://example.org/s', date: Date.now() };
+  const dup = "Découvrez l'héritage militaire de Sherbrooke en mode balado !";
+  assert.equal(redundantWithTitle(dup, sh.title), true);
+  assert.equal(hookReject(dup, sh), 'répète le titre');
+  assert.equal(excerpt({ ...sh, aiHook: dup }, { ai: true }), sh.desc, 'accroche redondante ignorée : extrait réel');
+  assert.equal(excerpt({ ...sh, desc: dup }), '', 'repli redondant omis, rien inventé');
+  assert.equal(redundantWithTitle(sh.desc, sh.title), false, 'extrait utile conservé');
+  assert.equal(hookReject(HOOK, it), null, 'accroche utile toujours acceptée');
+}

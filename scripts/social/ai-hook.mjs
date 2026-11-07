@@ -2,7 +2,7 @@
 // CLOUDFLARE_AI_TOKEN et CLOUDFLARE_ACCOUNT_ID sont absents. Tout échec, quota atteint ou sortie
 // invalide → null : les scripts gardent la version déterministe (titre en tête, hashtags.mjs).
 // Garde-fou : l'accroche ne peut contenir aucun chiffre, guillemet ni nom propre absent du titre/extrait.
-import { detectLang } from './lib.mjs';
+import { detectLang, redundantWithTitle } from './lib.mjs';
 /** Langue de l'article : champ explicite (lang/language) sinon titre + extrait. */
 export const articleLang = it => { const l = String(it?.lang || it?.language || '').toLowerCase().slice(0, 2); return l === 'en' || l === 'fr' ? l : detectLang({ title: it?.bare || it?.title, desc: it?.desc }); };
 export const MODEL = '@cf/meta/llama-3.1-8b-instruct-fp8-fast';
@@ -15,6 +15,7 @@ export function hookReject(hook, it) {
   const h = String(hook || '').replace(/\s+/g, ' ').trim();
   if (h.length < 20 || h.length > 140) return `longueur ${h.length}`;
   if (/[«»"“”#@]|https?:/i.test(h)) return 'guillemet, hashtag ou lien';
+  if (redundantWithTitle(h, it.bare || it.title)) return 'répète le titre';
   const src = words(`${it.bare || it.title} ${it.desc || ''} ${it.author || ''} ${(it.authors || []).join?.(' ') || ''}`);
   for (const n of h.match(/\d+/g) || []) if (!src.has(n)) return `chiffre absent (${n})`;
   for (const w of h.match(/(?<=\s)\p{Lu}[\p{L}'’-]+/gu) || []) if (!src.has(w.toLowerCase().replace(/['’].*$/, '')) && !src.has(w.toLowerCase())) return `nom absent (${w})`;
@@ -72,6 +73,6 @@ export async function withHook(it, opts = {}) {
   cache.set(it.id, { hook: r?.hook || null, topic: r?.topic || null });
   if (r?.hook) it.aiHook = r.hook;
   if (r?.topic) it.aiTopic = r.topic; // sujet IA (liste fermée TOPICS) : sert aux étiquettes Tumblr
-  console.log(`IA : ${r?.hook ? 'accroche retenue' : `repli déterministe — ${r?.reason || 'aucune réponse'}`} (${it.id})`);
+  console.log(`IA : ${r?.hook ? `accroche retenue [source=ia ${MODEL}]` : `repli déterministe — ${r?.reason || 'aucune réponse'}`} (${it.id})`);
   return it;
 }
