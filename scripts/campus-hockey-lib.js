@@ -13,11 +13,12 @@
 'use strict';
 
 const https = require('https');
+const { zonedTimeToMs } = require('./sports-freshness-lib');
 const { applyRegistryToTeam, codeFromName } = require('./sports-teams-lib');
 
 const UQO_SCHEDULE_URL = 'https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission';
 const UQAC_EVENTS_URL = 'https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50';
-const STINGERS_W_URL = 'https://stingers.ca/whockey/results.php';
+const STINGERS_W_URL = 'https://www.concordia.ca/fr/stingers/hockey_f/resultats.html';
 const GAITERS_W_URL = 'https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27';
 const MCGILL_W_URL = 'https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27';
 const CARABINS_W_URL = 'https://carabins.umontreal.ca/hockey-feminin/calendrier/';
@@ -32,9 +33,9 @@ const NICK_TO_REGISTRY = [
   [/torrents|\buqo\b/i, 'uqo', 'UQO'],
   [/inuk|\buqac\b/i, 'uqac', 'UQAC'],
   [/piranhas|\bets\b|\béts\b/i, 'ets', 'ÉTS'],
-  [/vert[\s-]*et[\s-]*or|\buds\b|usherbrooke|\bsherbrooke\b/i, 'usherbrooke', 'Sherbrooke'],
+  [/vert[\s-]*et[\s-]*or|\buds\b|usherbrooke|\bsherbrooke\b/i, 'usherbrooke', 'Université de Sherbrooke'],
   [/\bconcordia\b|\bstingers\b/i, 'concordia', 'Concordia'],
-  [/\bmontr[eé]al\b|\bcarabins\b|\budem\b/i, 'udem', 'Montréal'],
+  [/\bmontr[eé]al\b|\bcarabins\b|\budem\b/i, 'udem', 'Université de Montréal'],
   [/\bbishop|\bgaiters\b/i, 'bishops', "Bishop's"],
   [/\bmcgill\b|\bmartlets\b/i, 'mcgill', 'McGill'],
   [/\blaval\b|\brouge et or\b|\bulaval\b/i, 'ulaval', 'Laval'],
@@ -215,7 +216,7 @@ function teamsFromGames(games, { now = Date.now(), reg = null } = {}) {
         if (reg) applyRegistryToTeam(team, reg);
         teams[key] = team;
       }
-      const startMs = Date.parse(`${g.date}T${g.time || '00:00'}:00-04:00`);
+      const startMs = zonedTimeToMs(g.date, g.time || '00:00');
       const scored = g.scoreHome != null && g.scoreAway != null;
       const myScore = scored ? (side === 'home' ? g.scoreHome : g.scoreAway) : null;
       const oppScore = scored ? (side === 'home' ? g.scoreAway : g.scoreHome) : null;
@@ -293,34 +294,46 @@ function womenGame(partial) {
 }
 
 function parseStingersResultsHtml(html) {
-  const yearM = String(html || '').match(/20(\d{2})\s*[-–]\s*20(\d{2})/);
-  const startY = yearM ? 2000 + Number(yearM[1]) : 2026;
+  const yearM = String(html || '').match(/20(\d{2})\s*[-–]\s*(?:20)?(\d{2})/);
+  if (!yearM) return []; // Never assign an unknown season to the current year.
+  const startY = 2000 + Number(yearM[1]);
+  const frMonths = { janv: 1, fevr: 2, févr: 2, mars: 3, avr: 4, mai: 5, juin: 6, juill: 7, août: 8, aout: 8, sept: 9, oct: 10, nov: 11, déc: 12, dec: 12 };
   const games = [];
-  const blocks = String(html || '').split(/<ul>/i);
+  const blocks = String(html || '').split(/<ul(?:\s[^>]*)?>/i);
   for (const block of blocks) {
-    const lis = [...block.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)].map((x) => stripTags(x[1]));
+    const lis = [...block.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)].map(x => stripTags(x[1]).replace(/&#x27;|&apos;/g, "'"));
     if (lis.length < 3) continue;
-    const dateLi = lis.find((s) => /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i.test(s));
-    const timeLi = lis.find((s) => /\d{1,2}(?::\d{2})?\s*(AM|PM)/i.test(s));
-    const oppLi = lis.find((s) => /^(@|vs\.?)/i.test(s));
+    const dateLi = lis.find(s => /^(?:\d{1,2}\s+[a-zéûô]+|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))/i.test(s));
+    const oppLi = lis.find(s => /^(@|vs\.?|c\.)\s*/i.test(s));
     if (!dateLi || !oppLi) continue;
-    const dm = dateLi.match(/([A-Za-z]+)\.?\s+(\d{1,2})/);
-    if (!dm) continue;
-    const month = EN_MONTHS[dm[1].toLowerCase()];
-    if (!month) continue;
+    const fr = dateLi.match(/^(\d{1,2})\s+([a-zéûô]+)\.?/i);
+    const en = dateLi.match(/^([A-Za-z]+)\.?\s+(\d{1,2})/);
+    const month = fr ? frMonths[fr[2].toLowerCase()] : en ? EN_MONTHS[en[1].toLowerCase()] : null;
+    const day = Number(fr ? fr[1] : en?.[2]);
+    if (!month || !day) continue;
     const year = month >= 9 ? startY : startY + 1;
-    const date = `${year}-${String(month).padStart(2, '0')}-${String(Number(dm[2])).padStart(2, '0')}`;
+    const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const timeLi = lis.find(s => /^(?:\d{1,2}\s*h(?:\s*\d{2})?|\d{1,2}(?::\d{2})?\s*(?:AM|PM))$/i.test(s)) || '';
+    const ft = timeLi.match(/^(\d{1,2})\s*h(?:\s*(\d{2}))?$/i);
+    const time = ft ? `${ft[1].padStart(2, '0')}:${ft[2] || '00'}` : parseEnTime(timeLi);
     const awayGame = /^@/.test(oppLi);
-    const opp = resolveNick(oppLi.replace(/^(@|vs\.?)\s*/i, ''));
+    const opp = resolveNick(oppLi.replace(/^(@|vs\.?|c\.)\s*/i, ''));
     const us = resolveNick('Concordia');
     if (!opp || !us || opp.registryId === us.registryId) continue;
+    const result = lis.find(s => /^(Victoire|Défaite|Win|Loss|W|L)\s+\d/i.test(s)) || '';
+    const score = result.match(/^(Victoire|Défaite|Win|Loss|W|L)\s+(\d+)\s*[-–]\s*(\d+)/i);
+    // The official French page gives winner–loser, with Victoire/Défaite.
+    const lost = score && /^(Défaite|Loss|L)$/i.test(score[1]);
+    const ours = score ? Number(score[lost ? 3 : 2]) : null;
+    const theirs = score ? Number(score[lost ? 2 : 3]) : null;
     games.push(womenGame({
-      date,
-      time: parseEnTime(timeLi || ''),
+      date, time,
       homeRegistryId: awayGame ? opp.registryId : us.registryId,
       homeName: awayGame ? opp.name : us.name,
       awayRegistryId: awayGame ? us.registryId : opp.registryId,
       awayName: awayGame ? us.name : opp.name,
+      scoreHome: awayGame ? theirs : ours,
+      scoreAway: awayGame ? ours : theirs,
       url: STINGERS_W_URL,
       source: 'campus-stingers-w',
     }));

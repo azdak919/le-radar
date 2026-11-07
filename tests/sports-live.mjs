@@ -26,7 +26,7 @@ test('torontoDayKey : 20:01 EDT reste le 23 (pas le 24 UTC)', () => {
 
 test('fenêtre live : 15 min avant et 3 h après', () => {
   const game = { date: '2026-08-23', time: '17:00' };
-  assert.equal(Live.isLiveRaw(game, NOW_BEFORE), true);
+  assert.equal(Live.isLiveRaw(game, NOW_BEFORE), false); // prefetch is not a live status
   assert.equal(Live.isLiveRaw(game, Date.parse('2026-08-23T20:40:00.000Z')), false); // 16:40
   assert.equal(Live.isLiveRaw(game, NOW_LIVE), true);
   assert.equal(Live.isLiveRaw(game, NOW_DONE), false);

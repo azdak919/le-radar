@@ -1314,35 +1314,32 @@ function sportsSexGroupOrder(lead) {
 }
 
 /** Fenêtre visuelle « en cours » — mêmes bornes que app.js (CTA). */
-const SPORTS_LIVE_VISUAL_LEAD_MS = 15 * 60 * 1000;
 const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000;
 
 function sportsNextIsLive(game, now = Date.now()) {
-  if (!game) return false;
-  if (game.live === true) return true;
+  if (!game || game.final === true || game.live === false || game.result) return false;
   const ts = sportsNextGameTs({ nextGame: game });
   if (!Number.isFinite(ts) || ts === Number.POSITIVE_INFINITY) return false;
-  return ts <= now + SPORTS_LIVE_VISUAL_LEAD_MS && ts >= now - SPORTS_LIVE_VISUAL_TAIL_MS;
+  return ts <= now && ts >= now - SPORTS_LIVE_VISUAL_TAIL_MS;
 }
 
 /** Timestamp prochain match (ms) — Infinity si aucun (va en bas). */
 function sportsNextGameTs(team) {
+  const candidates = (team?.nextGames || []).filter(g => !g.final && !g.result).map(g => sportsNextGameTs({ nextGame: g })).filter(Number.isFinite);
+  const active = candidates.filter(ts => ts >= Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS);
+  if (active.length) return Math.min(...active);
   const g = team?.nextGame;
-  if (!g || !g.date) return Number.POSITIVE_INFINITY;
-  const rawTime = String(g.time || '23:59').replace(/\s*h\s*/i, ':').replace(/[^\d:]/g, '');
-  const parts = rawTime.split(':').map((n) => parseInt(n, 10));
-  const hh = Number.isFinite(parts[0]) ? parts[0] : 23;
-  const mm = Number.isFinite(parts[1]) ? parts[1] : 59;
-  const iso = `${g.date}T${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:00`;
-  const ts = Date.parse(iso);
+  if (!g || !g.date || !g.time) return Number.POSITIVE_INFINITY;
+  const ts = require('./sports-freshness-lib').zonedTimeToMs(g.date, g.time);
   return Number.isFinite(ts) ? ts : Number.POSITIVE_INFINITY;
 }
 
 /** Timestamp dernier match (ms) — -Infinity si aucun (après les « à venir »). */
 function sportsLastGameTs(team) {
+  if (team?.results?.length) return Math.max(...team.results.map(g => sportsLastGameTs({ lastGame: g })));
   const g = team?.lastGame;
   if (!g || !g.date) return Number.NEGATIVE_INFINITY;
-  const ts = Date.parse(`${g.date}T12:00:00`);
+  const ts = require('./sports-freshness-lib').zonedTimeToMs(g.date, g.time || '12:00');
   return Number.isFinite(ts) ? ts : Number.NEGATIVE_INFINITY;
 }
 
@@ -1397,12 +1394,14 @@ function sportsResultRows(team, t, lang) {
       ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(tip)}">${inner}</a>`
       : inner;
   };
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(new Date());
+  const todayResults = (team.results || []).filter(g => g.date === today).sort((a, b) => sportsNextGameTs({ nextGame: b }) - sportsNextGameTs({ nextGame: a }));
   const pastGames = (isSailing && Array.isArray(team.results) && team.results.length)
     ? team.results.slice().sort((a, b) => (
       String(b.date || '').localeCompare(String(a.date || ''))
       || (Number(a.scoreFor) || 99) - (Number(b.scoreFor) || 99)
     )).slice(0, 16)
-    : (team.lastGame ? [team.lastGame] : []);
+    : todayResults.length ? todayResults : (team.lastGame ? [team.lastGame] : []);
   for (const last of pastGames) {
     const opp = formatOpp(last);
     const placeKind = sportsIsPlaceResult(last, team.sport);
@@ -1439,9 +1438,14 @@ function sportsResultRows(team, t, lang) {
 </li>`);
   }
   const pastCount = rows.length;
-  const next = team.nextGame
-    ? { ...team.nextGame, opponent: String(team.nextGame.opponent || '').replace(/\s*·\s*résultats à venir\s*$/i, '') }
-    : null;
+  const todayUpcoming = !isSailing && Array.isArray(team.nextGames) ? team.nextGames.filter(g => g.date === today) : [];
+  const upcomingGames = (todayUpcoming.length ? todayUpcoming : (team.nextGame ? [team.nextGame] : [])).slice().sort((a, b) => {
+    const ta = sportsNextGameTs({ nextGame: a }); const tb = sportsNextGameTs({ nextGame: b });
+    const aa = ta >= Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS; const ab = tb >= Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS;
+    return aa !== ab ? (aa ? -1 : 1) : aa ? ta - tb : tb - ta;
+  });
+  for (const originalNext of upcomingGames) {
+  const next = { ...originalNext, opponent: String(originalNext.opponent || '').replace(/\s*·\s*résultats à venir\s*$/i, '') };
   if (next) {
     const live = sportsNextIsLive(next);
     const rangeLabel = sportsEventRangeLabel(next, lang);
@@ -1460,7 +1464,8 @@ function sportsResultRows(team, t, lang) {
       : next.home
         ? `<span class="sports-result__venue">${escapeHtml(t.sportsHome)}</span>`
         : '';
-    const nextGid = next.gameId ? ` data-game-id="${escapeHtml(String(next.gameId))}"` : '';
+    const nextGid = (next.gameId ? ` data-game-id="${escapeHtml(String(next.gameId))}"` : '')
+      + ` data-kickoff-ts="${sportsNextGameTs({ nextGame: next })}" data-live-excluded="${next.live === false || next.final || next.result ? '1' : '0'}"`;
     if (live) {
       const liveLabel = t.sportsLive || 'En cours';
       const hasScore = next.scoreFor != null && next.scoreAgainst != null
@@ -1478,7 +1483,8 @@ function sportsResultRows(team, t, lang) {
       const state = next.waitlist ? (t.sportsWaitlist || 'Liste d’attente')
         : phase === 'after' || next.awaitingResults
         ? (t.sportsAwaitingResults || 'Résultats à venir')
-        : phase === 'during' ? (t.sportsInProgress || 'En cours') : t.sportsUpcoming;
+        : phase === 'during' ? (t.sportsInProgress || 'En cours')
+        : sportsNextGameTs({ nextGame: next }) < Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS ? (t.sportsAwaitingResults || 'Résultats à venir') : t.sportsUpcoming;
       const stateKey = next.waitlist ? ' data-event-state="waitlist"'
         : phase === 'after' || next.awaitingResults ? ' data-event-state="awaiting"'
         : phase === 'during' ? ' data-event-state="during"' : '';
@@ -1490,7 +1496,9 @@ function sportsResultRows(team, t, lang) {
 </li>`);
     }
   }
+  }
   if (!rows.length) {
+    if (team.scheduleUnavailable) return `<p class="sports-panel__empty sports-panel__source-stale">${lang === 'en' ? 'Official schedule/results source temporarily unavailable. No score inferred.' : 'Source officielle des horaires/résultats temporairement inaccessible. Aucun pointage déduit.'}</p>`;
     if (team.clubNote || team.status === 'club' || team.status === 'upcoming') {
       const note = team.clubNote || t.sportsClubPending;
       return `<p class="sports-panel__empty sports-panel__empty--club">${escapeHtml(note)}</p>`;
@@ -1605,9 +1613,13 @@ function sportsPanelHtml(team, t, lang) {
   const sexBadge = sexLabel
     ? ` <span class="sports-panel__sex sports-panel__sex--${sexKey === 'F' ? 'f' : sexKey === 'M' ? 'm' : 'x'}"${sexKey === 'X' ? ' title="Mixte"' : ''}>${escapeHtml(sexLabel)}</span>`
     : '';
-  const liveNow = sportsNextIsLive(team.nextGame);
+  const currentGame = (team.nextGames || []).find(g => sportsNextIsLive(g)) || team.nextGame;
+  const liveNow = sportsNextIsLive(currentGame);
+  const verifiedAt = Date.parse(currentGame?.liveVerifiedAt || '');
+  const sourceConfirmed = Boolean(currentGame?.liveFeed && Number.isFinite(verifiedAt) && Date.now() - verifiedAt >= 0 && Date.now() - verifiedAt < 5 * 60000);
+  const liveStatusLabel = sourceConfirmed ? (t.sportsLive || 'En cours') : lang === 'en' ? 'Scheduled now' : 'En cours · horaire';
   const livePill = team.nextGame
-    ? ` <span class="sports-panel__live"${liveNow ? '' : ' hidden'}>${escapeHtml(t.sportsLive || 'En cours')}</span>`
+    ? ` <span class="sports-panel__live"${liveNow ? '' : ' hidden'}>${escapeHtml(liveStatusLabel)}</span>`
     : '';
   // Associations de voile (ULaVoile, PolyVoile, McGill Sailing) : jamais le surnom varsity.
   const isSailingClub = sport === 'sailing'
@@ -1650,10 +1662,12 @@ function sportsPanelHtml(team, t, lang) {
     sportsCicsaSeasonMeta(team, lang),
     team.record?.label ? `${t.sportsRecord} ${team.record.label}` : '',
   ].filter(Boolean).join(' · ');
+  const institutionAttr = ` data-institution="${escapeHtml(team.institutionId || team.registryId || '')}" data-institution-label="${escapeHtml(team.institutionLabel || team.institutionName || team.fullName || '')}" data-institution-campus="${escapeHtml(team.fullName || '')}"`;
   const regAttr = team.registryId ? ` data-registry="${escapeHtml(team.registryId)}"` : '';
   const effectiveSex = sportsEffectiveSexKey(team) || sexKey;
   const sexAttr = effectiveSex ? ` data-sex="${effectiveSex.toLowerCase()}"` : ' data-sex=""';
   const nextTs = sportsNextGameTs(team);
+  const kickoffAttr = team.nextGame ? ` data-next-date="${escapeHtml(team.nextGame.date || '')}" data-next-time="${escapeHtml(team.nextGame.time || '')}" data-live-confirmed="${sourceConfirmed ? '1' : '0'}" data-live-verified-at="${escapeHtml(currentGame?.liveVerifiedAt || '')}"` : '';
   const nextAttr = Number.isFinite(nextTs) && nextTs < Number.POSITIVE_INFINITY
     ? ` data-next-ts="${nextTs}"`
     : ' data-next-ts=""';
@@ -1664,7 +1678,7 @@ function sportsPanelHtml(team, t, lang) {
   /* Index local pour la loupe (équipe, institution, sport, codes…). */
   const searchHay = [
     team.name, shortName, nick, team.fullName, team.code, team.institution,
-    team.school, team.division, team.sector, sport, sportsSportLabel(team, t, lang),
+    ...(team.identityAliases || []), team.school, team.division, team.sector, sport, sportsSportLabel(team, t, lang),
     sexLabel, team.league, team.conference,
   ].filter(Boolean).join(' ');
   const searchAttr = searchHay
@@ -1672,7 +1686,7 @@ function sportsPanelHtml(team, t, lang) {
     : '';
   const liveClass = liveNow ? ' sports-panel--live' : '';
   const liveAttr = liveNow ? ' data-live="1"' : '';
-  return `<section class="sports-panel${liveClass}" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${lastAttr}${liveAttr}${regAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
+  return `<section class="sports-panel${liveClass}" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${kickoffAttr}${lastAttr}${liveAttr}${regAttr}${institutionAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
   <header class="sports-panel__head">
     <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
     <div class="sports-panel__identity">
@@ -1681,8 +1695,8 @@ function sportsPanelHtml(team, t, lang) {
       <p class="sports-panel__meta">${escapeHtml(meta)}</p>
     </div>
   </header>
-  ${sportsResultRows(team, t, lang)}
-</section>`;
+  ${team.staleSource ? `<p class="sports-panel__source-stale">${lang === 'en' ? 'Source unavailable; last known data retained.' : 'Source indisponible; dernières données connues conservées.'}</p>\n  ` : ''}${sportsResultRows(team, t, lang)}
+</section>`.replace(/[ \t]+$/gm, '');
 }
 
 /** Sous-titre Féminin / Masculin dans une section sport. */
@@ -1769,6 +1783,10 @@ function sportsHubPage(lang, ctx) {
     .filter((team) => team && (team.lastGame || team.nextGame || team.name
       || (Array.isArray(team.results) && team.results.length)
       || team.status === 'club' || team.status === 'upcoming'));
+  for (const team of teamsRaw) {
+    if (team.sport === 'hockey' && !team.lastGame && !team.nextGame && !(team.results || []).length
+      && (sports.errors || []).some(e => e.leagueId === `spordle-${team.sector}`)) team.scheduleUnavailable = true;
+  }
   // Compteurs F/M par sport (pastilles titre) — n’influence plus l’ordre des cartes.
   const sexLeadBySport = {};
   for (const sport of [...new Set(teamsRaw.map((t) => t.sport).filter(Boolean))]) {
@@ -1827,7 +1845,29 @@ function sportsHubPage(lang, ctx) {
     body += `      <p class="seo-empty">${escapeHtml(t.sportsEmpty)}</p>\n`;
   } else {
     body += `      <div class="sports-board-root" data-sports-board>\n`;
+    body += `        <p class="sports-board-status">${lang === 'en' ? '“Scheduled now” is estimated from the start time; only a recent official feed confirms live play. A dash means no reported score, not 0.' : '« En cours · horaire » est une estimation selon le coup d’envoi; seul un suivi officiel récent confirme le direct. Un tiret indique un pointage non reçu, pas 0.'}</p>\n`;
     body += `        <div class="sports-filters" role="group" aria-label="${escapeHtml(t.sports)}">\n`;
+    const institutionOptions = new Map();
+    for (const team of teams) {
+      const id = team.institutionId || team.registryId;
+      const label = team.institutionLabel || team.institutionName || team.fullName;
+      if (id && label) institutionOptions.set(id, label);
+    }
+    body += `          <div class="sports-filters__row sports-filters__institution">
+`;
+    body += `            <label class="sports-filters__label" for="sports-institution">${lang === 'en' ? 'Institution' : 'Établissement'}</label>
+`;
+    body += `            <input id="sports-institution" type="search" list="sports-institutions" autocomplete="off" placeholder="${lang === 'en' ? 'All institutions — search…' : 'Tous les établissements — rechercher…'}" aria-describedby="sports-institution-hint" />
+`;
+    body += `            <datalist id="sports-institutions">${[...institutionOptions].sort((a, b) => a[1].localeCompare(b[1], lang)).map(([id, label]) => `<option value="${escapeHtml(label)}" data-institution-id="${escapeHtml(id)}"></option>`).join('')}</datalist>
+`;
+    body += `            <span class="sr-only" id="sports-institution-hint">${lang === 'en' ? 'Type an institution or campus; combines with all other filters.' : 'Saisir un établissement ou campus; se combine avec tous les autres filtres.'}</span>
+`;
+    body += `            <button type="button" class="sports-filter" data-sports-clear-filters>${lang === 'en' ? 'Reset filters' : 'Réinitialiser les filtres'}</button>
+`;
+    body += `          </div>
+`;
+
     body += `          <div class="sports-filters__row">\n`;
     body += `            <span class="sports-filters__label">${escapeHtml(t.sportsFilterSport)}</span>\n`;
     body += `            <button type="button" class="sports-filter is-active" data-filter-sport="all" aria-pressed="true">${escapeHtml(t.sportsAll)}</button>\n`;
@@ -1867,6 +1907,7 @@ function sportsHubPage(lang, ctx) {
     body += `          <div class="sports-filters__row" data-filter-period-row>\n`;
     body += `            <span class="sports-filters__label">${escapeHtml(t.sportsFilterPeriod)}</span>\n`;
     body += `            <button type="button" class="sports-filter is-active" data-filter-period="all" aria-pressed="true">${escapeHtml(t.sportsPeriodAll || t.sportsAll)}</button>\n`;
+    body += `            <button type="button" class="sports-filter" data-filter-period="today" aria-pressed="false">${lang === 'en' ? 'Today' : 'Aujourd’hui'}</button>\n`;
     body += `            <button type="button" class="sports-filter" data-filter-period="live" aria-pressed="false">${escapeHtml(t.sportsPeriodLive || t.sportsLive)}</button>\n`;
     body += `            <button type="button" class="sports-filter" data-filter-period="week" aria-pressed="false">${escapeHtml(t.sportsPeriodWeek)}</button>\n`;
     body += `            <button type="button" class="sports-filter" data-filter-period="next-week" aria-pressed="false">${escapeHtml(t.sportsPeriodNextWeek)}</button>\n`;
@@ -1874,7 +1915,7 @@ function sportsHubPage(lang, ctx) {
     body += `            <button type="button" class="sports-filter" data-filter-period="session" aria-pressed="false">${escapeHtml(t.sportsPeriodSession)}</button>\n`;
     body += '          </div>\n';
     body += '        </div>\n';
-    body += `        <p class="sports-board-status" data-sports-status>${teams.length} ${teams.length > 1 ? t.sportsTeams : t.sportsTeamOne}</p>\n`;
+    body += `        <p class="sports-board-status" data-sports-status role="status" aria-live="polite" aria-atomic="true">${teams.length} ${teams.length > 1 ? t.sportsTeams : t.sportsTeamOne}</p>\n`;
 
     for (const sport of sportsPresent) {
       const group = teams.filter((team) => team.sport === sport);
@@ -2061,4 +2102,4 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, spor
   return { pages, model };
 }
 
-module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta, sportsResultRows };
+module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta, sportsResultRows, sportsNextGameTs, sportsLastGameTs, sportsNextIsLive };

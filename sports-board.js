@@ -30,9 +30,16 @@
   const searchInput = document.getElementById('sports-search-input');
   const searchClear = document.getElementById('sports-search-clear');
   const searchHint = document.getElementById('sports-search-hint');
+  const institutionInput = document.getElementById('sports-institution');
+  const institutionOptions = Array.from(document.querySelectorAll('#sports-institutions option'));
+  function selectedInstitution() {
+    const raw = String(institutionInput?.value || '').trim();
+    const option = institutionOptions.find(o => o.value === raw || o.getAttribute('data-institution-id') === raw);
+    return { raw, id: option?.getAttribute('data-institution-id') || '', label: option?.value || raw };
+  }
 
   const TZ = 'America/Toronto';
-  const PERIOD_KEYS = new Set(['all', 'live', 'week', 'next-week', 'month', 'session']);
+  const PERIOD_KEYS = new Set(['all', 'today', 'live', 'week', 'next-week', 'month', 'session']);
   /* Même fenêtre que app.js (CTA « En direct ») : 15 min avant → 3 h après. */
   const LIVE_LEAD_MS = 15 * 60 * 1000;
   const LIVE_TAIL_MS = 3 * 3600 * 1000;
@@ -47,6 +54,7 @@
       live: 'En cours',
       emptyPeriod: {
         live: 'Aucun match en cours.',
+        today: 'Aucun match aujourd’hui.',
         week: 'Aucun match cette semaine.',
         'next-week': 'Aucun match la semaine prochaine.',
         month: 'Aucun match ce mois-ci.',
@@ -66,6 +74,7 @@
       live: 'Live',
       emptyPeriod: {
         live: 'No games in progress.',
+        today: 'No games today.',
         week: 'No games this week.',
         'next-week': 'No games next week.',
         month: 'No games this month.',
@@ -123,6 +132,7 @@
   function periodRange(periodKey, ref = new Date()) {
     const today = ymdInToronto(ref);
     if (!periodKey || periodKey === 'all') return null;
+    if (periodKey === 'today') return { start: today, end: today };
     if (periodKey === 'week') {
       const start = startOfWeekMonday(today);
       return { start, end: addDaysYmd(start, 6) };
@@ -176,15 +186,23 @@
   }
 
   function panelKickoffMs(panel) {
-    const ts = parseFloat(panel.getAttribute('data-next-ts') || '');
+    const ymd = panel.getAttribute('data-next-date');
+    const clock = panel.getAttribute('data-next-time');
+    const explicit = ymd && clock && window.RadarSportsFreshness?.zonedTimeToMs?.(ymd, clock, TZ);
+    const ts = explicit || parseFloat(panel.getAttribute('data-next-ts') || '');
     return Number.isFinite(ts) && ts > 0 ? ts : NaN;
   }
 
   function panelIsLiveNow(panel, now = Date.now()) {
     if (panel.classList.contains('sports-panel--external')) return false;
+    const nextRows = Array.from(panel.querySelectorAll('.sports-result[data-kickoff-ts]'));
+    if (nextRows.length) return nextRows.some(row => {
+      const kickoff = Number(row.getAttribute('data-kickoff-ts'));
+      return !row.hasAttribute('data-result') && row.getAttribute('data-live-excluded') !== '1' && Number.isFinite(kickoff) && kickoff <= now && kickoff >= now - LIVE_TAIL_MS;
+    });
     const ts = panelKickoffMs(panel);
     if (Number.isFinite(ts)) {
-      return ts <= now + LIVE_LEAD_MS && ts >= now - LIVE_TAIL_MS;
+      return ts <= now && ts >= now - LIVE_TAIL_MS;
     }
     return panel.getAttribute('data-live') === '1';
   }
@@ -203,6 +221,9 @@
       pill.textContent = t.live;
       name.appendChild(pill);
     }
+    const verifiedAt = Date.parse(panel.getAttribute('data-live-verified-at') || '');
+    const confirmed = panel.getAttribute('data-live-confirmed') === '1' && Date.now() - verifiedAt >= 0 && Date.now() - verifiedAt < 5 * 60000;
+    pill.textContent = confirmed ? t.live : lang === 'en' ? 'Scheduled now' : 'En cours · horaire';
     pill.hidden = false;
     return pill;
   }
@@ -260,6 +281,13 @@
         || 'sports-result__badge sports-result__badge--next';
       badge.setAttribute('title', badge.textContent);
     }
+    const kickoff = Number(row.getAttribute('data-kickoff-ts'));
+    if (Number.isFinite(kickoff) && kickoff < Date.now() - LIVE_TAIL_MS && score) {
+      const waiting = lang === 'en' ? 'Awaiting results' : 'Résultats à venir';
+      score.textContent = waiting; score.setAttribute('aria-label', waiting);
+      row.setAttribute('data-event-state', 'awaiting');
+      if (badge) { badge.textContent = '…'; badge.setAttribute('title', waiting); }
+    }
   }
 
   function syncLivePresentation(now = Date.now()) {
@@ -269,13 +297,116 @@
       if (live) panel.setAttribute('data-live', '1');
       else panel.removeAttribute('data-live');
       ensureLivePill(panel, live);
-      const row = panel.querySelector('.sports-result--next, .sports-result--live');
-      if (live) armLiveRow(row);
-      else if (row && row.getAttribute('data-live-armed') === '1') {
-        disarmLiveRow(row);
-      }
+      panel.querySelectorAll('.sports-result--next, .sports-result--live').forEach(row => {
+        const kickoff = Number(row.getAttribute('data-kickoff-ts') || panelKickoffMs(panel));
+        const rowLive = !row.hasAttribute('data-result') && row.getAttribute('data-live-excluded') !== '1'
+          && Number.isFinite(kickoff) && kickoff <= now && kickoff >= now - LIVE_TAIL_MS;
+        if (rowLive) armLiveRow(row);
+        else if (row.getAttribute('data-live-armed') === '1') disarmLiveRow(row);
+      });
     });
   }
+
+  // The shared masthead owns the batched fetch and live polling. Reuse its data;
+  // no request per formation, no second collector, and no full-page reload.
+  let hydratedPayload = null;
+  let hydratedDay = '';
+  function hydrateSportsBoard(payload) {
+    if (!payload || !payload.teams || typeof payload.teams !== 'object') return;
+    hydratedPayload = payload; hydratedDay = ymdInToronto();
+    const byId = new Map(Object.entries(payload.teams).map(([key, team]) => [team?.id || key, team]));
+    scoredPanels.forEach(panel => {
+      const team = byId.get(panel.getAttribute('data-team'));
+      if (!team || team.sport === 'sailing') return; // multi-day/place renderer remains authoritative
+      const next = team.nextGame || team.nextGames?.[0] || null;
+      const last = team.lastGame || team.results?.[0] || null;
+      const ms = game => game?.date && game?.time
+        ? window.RadarSportsFreshness?.zonedTimeToMs?.(game.date, game.time, TZ) : NaN;
+      panel.setAttribute('data-next-ts', String(ms(next) || ''));
+      panel.setAttribute('data-next-date', next?.date || '');
+      panel.setAttribute('data-next-time', next?.time || '');
+      panel.setAttribute('data-last-ts', String(ms(last) || ''));
+      panel.setAttribute('data-live-confirmed', next?.liveFeed && next?.liveVerifiedAt ? '1' : '0');
+      panel.setAttribute('data-live-verified-at', next?.liveVerifiedAt || '');
+      const today = ymdInToronto();
+      const finals = [...(team.results || []), ...(team.nextGames || []).filter(g => g.final || g.result)];
+      const results = finals.filter(g => g.date === today).sort((a, b) => ms(b) - ms(a));
+      if (!results.length && last) results.push(last);
+      const upcoming = (team.nextGames || []).filter(g => !g.final && !g.result && g.date === today).sort((a, b) => ms(a) - ms(b));
+      if (!upcoming.length && next && !next.final && !next.result) upcoming.push(next);
+      const selected = [...upcoming.map(game => ({ game, final: Boolean(game.final || game.result) })), ...results.map(game => ({ game, final: true }))];
+      const usable = selected.filter(({ game }) => game?.date && (game.gameId || game.url));
+      if (!usable.length) return; // Retain an empty/unavailable notice until a row can replace it.
+      let list = panel.querySelector('.sports-panel__list');
+      if (!list) {
+        list = document.createElement('ul'); list.className = 'sports-panel__list';
+        const empty = panel.querySelector('.sports-panel__empty');
+        if (empty) empty.replaceWith(list); else panel.appendChild(list);
+      }
+      const gameKey = game => game.gameId ? String(game.gameId) : JSON.stringify([
+        game.date, game.time || '', game.opponentRegistryId || game.opponentFullName || game.opponent || '',
+        game.home, game.url,
+      ]);
+      const retained = new Set();
+      for (const { game, final } of usable) {
+        const key = gameKey(game);
+        let row = Array.from(list.querySelectorAll('.sports-result')).find(r => (r.getAttribute('data-hydration-key') || r.getAttribute('data-game-id')) === key);
+        if (!row) {
+          row = document.createElement('li');
+          row.className = 'sports-result';
+          if (game.gameId) row.setAttribute('data-game-id', game.gameId);
+          for (const [tag, cls] of [['time', 'time'], ['span', 'score'], ['span', 'title'], ['span', 'badge']]) {
+            const el = document.createElement(tag); el.className = `sports-result__${cls}`; row.appendChild(el);
+          }
+          const title = row.querySelector('.sports-result__title');
+          const label = [game.opponentNickname, game.opponentFullName || game.opponent || game.opponentCode].filter(Boolean).join(' · ');
+          const href = game.url || `https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=${encodeURIComponent(game.gameId)}`;
+          if (/^https?:\/\//i.test(href)) {
+            const link = document.createElement('a'); link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = label; title.appendChild(link);
+          } else title.textContent = label;
+        }
+        row.setAttribute('data-hydration-key', key);
+        retained.add(key);
+        row.className = 'sports-result' + (final ? ` sports-result--${game.result || 'D'}` : ' sports-result--next');
+        row.toggleAttribute('data-result', final);
+        if (final) row.setAttribute('data-result', game.result || 'D');
+        row.setAttribute('data-kickoff-ts', String(ms(game)));
+        row.setAttribute('data-live-excluded', final || game.final || game.live === false ? '1' : '0');
+        row.removeAttribute('data-live-armed');
+        row.removeAttribute('data-event-state');
+        const time = row.querySelector('time');
+        time.setAttribute('datetime', game.date || '');
+        const kickoff = ms(game);
+        time.textContent = game.date === today ? (lang === 'en' ? 'Today' : 'Aujourd’hui') : game.date || '';
+        if (Number.isFinite(kickoff)) {
+          const clock = document.createElement('span'); clock.className = 'sports-result__clock';
+          clock.textContent = new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }).format(new Date(kickoff));
+          if (game.period && !final) clock.textContent += ` · ${game.period}`;
+          time.appendChild(clock);
+        }
+        const score = row.querySelector('.sports-result__score');
+        const hasScore = [game.scoreFor, game.scoreAgainst].every(n => n != null && String(n).trim() !== '' && Number.isFinite(Number(n)) && Number(n) >= 0);
+        const waiting = Number.isFinite(kickoff) && kickoff < Date.now() - LIVE_TAIL_MS;
+        const state = final ? (lang === 'en' ? 'Final' : 'Terminé') : waiting ? (lang === 'en' ? 'Awaiting results' : 'Résultats à venir') : (lang === 'en' ? 'Upcoming' : 'À venir');
+        score.className = 'sports-result__score' + (!hasScore ? ' sports-result__score--next' : '');
+        score.textContent = hasScore ? `${game.scoreFor}–${game.scoreAgainst}` : state;
+        score.setAttribute('aria-label', hasScore && !final ? (lang === 'en' ? 'Last reported score' : 'Dernier pointage connu') : state);
+        for (const attr of ['data-idle-html', 'data-idle-class']) score.removeAttribute(attr);
+        const badge = row.querySelector('.sports-result__badge');
+        badge.className = 'sports-result__badge' + (final ? '' : ' sports-result__badge--next');
+        badge.textContent = final ? ({ W: lang === 'en' ? 'W' : 'V', L: lang === 'en' ? 'L' : 'D', D: lang === 'en' ? 'T' : 'N' }[game.result] || '') : '→';
+        badge.title = state;
+        for (const attr of ['data-idle-badge', 'data-idle-badge-class']) badge.removeAttribute(attr);
+        list.appendChild(row); // ordered upcoming first, then source results
+      }
+      if (retained.size) list.querySelectorAll('.sports-result').forEach(row => {
+        if (!retained.has(row.getAttribute('data-hydration-key') || row.getAttribute('data-game-id'))) row.remove();
+      });
+    });
+    const cur = currentFilters();
+    apply(cur.sport, cur.sector, cur.sex, cur.period, '', searchQuery);
+  }
+  window.addEventListener('radar:sports-updated', event => hydrateSportsBoard(event.detail));
 
   function panelMatchesPeriod(panel, periodKey) {
     if (!periodKey || periodKey === 'all') return true;
@@ -359,6 +490,7 @@
         team: (q.get('team') || '').trim(),
         game: (q.get('game') || '').trim(),
         q: (q.get('q') || '').trim(),
+        institution: (q.get('institution') || '').trim(),
       };
     } catch {
       return { sport: 'all', sector: 'all', sex: 'all', period: 'all', team: '', game: '', q: '' };
@@ -368,6 +500,9 @@
   function writeQuery(sport, sector, sex, period, team, q, game) {
     try {
       const url = new URL(window.location.href);
+      const school = selectedInstitution();
+      if (school.raw) url.searchParams.set('institution', school.id || school.raw);
+      else url.searchParams.delete('institution');
       if (!sport || sport === 'all') url.searchParams.delete('sport');
       else url.searchParams.set('sport', sport);
       if (!sector || sector === 'all') url.searchParams.delete('sector');
@@ -510,11 +645,9 @@
       if (tSex) effectiveSex = tSex;
     }
 
-    // Recherche texte : élargir sport/sexe (sinon les chips bloquent le scan).
-    if (tokens.length) {
-      effectiveSport = 'all';
-      effectiveSex = 'all';
-    }
+    // Search, school and chips are independent AND filters; never silently reset another choice.
+    const school = selectedInstitution();
+    const schoolTokens = searchTokens(school.raw);
 
     let externalVisible = 0;
     panels.forEach((panel) => {
@@ -529,7 +662,17 @@
       const okSearch = panelMatchesSearch(panel, tokens);
       // Période : matchs (scores ou à venir) dans la fenêtre ; masque les cartes liens.
       const okPeriod = panelMatchesPeriod(panel, periodKey);
-      const show = okSport && okSector && okSex && okSearch && okPeriod;
+      const schoolHay = normalizeSearchText([panel.getAttribute('data-institution-label'), panel.getAttribute('data-institution-campus')].filter(Boolean).join(' '));
+      const okSchool = !school.raw || (!isExternal && (school.id
+        ? panel.getAttribute('data-institution') === school.id
+        : schoolTokens.every(token => schoolHay.includes(token))));
+      panel.querySelectorAll('.sports-result').forEach(row => {
+        const date = (row.querySelector('time[datetime]')?.getAttribute('datetime') || '').slice(0, 10);
+        const range = periodRange(period);
+        row.hidden = period === 'live' ? !row.classList.contains('sports-result--live')
+          : Boolean(range && (!date || !ymdInRange(date, range)));
+      });
+      const show = okSport && okSector && okSex && okSearch && okPeriod && okSchool;
       panel.hidden = !show;
       if (show && !isExternal) visible += 1;
       if (show && isExternal) externalVisible += 1;
@@ -557,13 +700,20 @@
       const kids = Array.from(board.querySelectorAll(':scope > .sports-panel'));
       if (kids.length < 2) return;
       kids.sort((a, b) => {
-        const ta = parseFloat(a.getAttribute('data-next-ts') || '');
-        const tb = parseFloat(b.getAttribute('data-next-ts') || '');
-        const aOk = Number.isFinite(ta);
-        const bOk = Number.isFinite(tb);
+        const shownNext = panel => Math.min(...Array.from(panel.querySelectorAll('.sports-result--next, .sports-result--live'))
+          .filter(row => !row.hidden && row.getAttribute('data-live-excluded') !== '1')
+          .map(row => Number(row.getAttribute('data-kickoff-ts')))
+          .filter(ts => Number.isFinite(ts) && ts >= Date.now() - LIVE_TAIL_MS));
+        const ta = shownNext(a);
+        const tb = shownNext(b);
+        const aOk = Number.isFinite(ta) && ta >= Date.now() - LIVE_TAIL_MS;
+        const bOk = Number.isFinite(tb) && tb >= Date.now() - LIVE_TAIL_MS;
         if (aOk && bOk && ta !== tb) return ta - tb;
         if (aOk && !bOk) return -1;
         if (!aOk && bOk) return 1;
+        const la = parseFloat(a.getAttribute('data-last-ts') || '') || 0;
+        const lb = parseFloat(b.getAttribute('data-last-ts') || '') || 0;
+        if (!aOk && !bOk && la !== lb) return lb - la;
         const na = (a.querySelector('.sports-panel__name-text')?.textContent || '').trim();
         const nb = (b.querySelector('.sports-panel__name-text')?.textContent || '').trim();
         return na.localeCompare(nb, 'fr');
@@ -658,13 +808,20 @@
     const period = btn.hasAttribute('data-filter-period')
       ? btn.getAttribute('data-filter-period')
       : (periodButtons.find((b) => b.getAttribute('aria-pressed') === 'true')?.getAttribute('data-filter-period') || 'all');
-    // Nouveau filtre chips : on efface la requête texte pour éviter le conflit.
-    if (searchInput) searchInput.value = '';
-    searchQuery = '';
-    apply(sport, sector, sex, period, '', '');
+    apply(sport, sector, sex, period, '', searchQuery);
   }
 
   root.addEventListener('click', onFilterClick);
+  institutionInput?.addEventListener('input', () => {
+    const cur = currentFilters();
+    apply(cur.sport, cur.sector, cur.sex, cur.period, '', searchQuery);
+  });
+  root.querySelector('[data-sports-clear-filters]')?.addEventListener('click', () => {
+    if (institutionInput) institutionInput.value = '';
+    if (searchInput) searchInput.value = '';
+    searchQuery = '';
+    apply('all', 'all', 'all', 'all', '', '', '');
+  });
 
   /**
    * Clic « SPORTS Étudiants » (titre, fil d’Ariane, pied) : recharge sans
@@ -823,6 +980,10 @@
   }
 
   const initial = readQuery();
+  if (institutionInput && initial.institution) {
+    const hit = institutionOptions.find(o => o.getAttribute('data-institution-id') === initial.institution);
+    institutionInput.value = hit?.value || initial.institution;
+  }
   const knownSports = new Set([
     ...panels.map((p) => (p.getAttribute('data-sport') || '').toLowerCase()),
     ...blocks.map((b) => (b.getAttribute('data-sport') || '').toLowerCase()),
@@ -927,6 +1088,7 @@
   apply(sport, sector, sex, period, team, initial.q || '', initial.game || '');
   relabelCivilDays();
   markPrintWeek();
+  if (window.RadarSportsBoardSnapshot) hydrateSportsBoard(window.RadarSportsBoardSnapshot);
   layoutMasonry();
   if (initial.q) setSearchOpen(true);
   if (!team && !initial.q) openHashSport();
@@ -934,9 +1096,10 @@
   window.setInterval(() => {
     relabelCivilDays();
     markPrintWeek();
+    if (hydratedPayload && hydratedDay !== ymdInToronto()) hydrateSportsBoard(hydratedPayload);
     syncLivePresentation();
     const cur = currentFilters();
-    if (cur.period === 'live') {
+    if (cur.period !== 'all') {
       apply(cur.sport, cur.sector, cur.sex, cur.period, '', searchQuery);
     }
   }, 30000);

@@ -98,7 +98,8 @@ function isScoreValue(n) {
 function rseqHasScore(game) {
   if (!game) return false;
   if (isScoreValue(game.HomeTeamScore) && isScoreValue(game.VisitingTeamScore)) return true;
-  return isScoreValue(Number(game.scoreFor)) && isScoreValue(Number(game.scoreAgainst));
+  return game.scoreFor != null && game.scoreAgainst != null && String(game.scoreFor).trim() !== '' && String(game.scoreAgainst).trim() !== ''
+    && isScoreValue(Number(game.scoreFor)) && isScoreValue(Number(game.scoreAgainst));
 }
 
 /**
@@ -114,6 +115,7 @@ function rseqIsSubmitted(game) {
 }
 
 function inLiveWindow(game, now = Date.now()) {
+  if (!gameTime(game)) return false; // unknown kickoff is not an invented noon fixture
   const t = gameMs(game);
   if (!Number.isFinite(t)) return false;
   return t <= now + LIVE_LEAD_MS && t >= now - LIVE_TAIL_MS;
@@ -122,6 +124,7 @@ function inLiveWindow(game, now = Date.now()) {
 /** En cours : fenêtre visuelle, pas encore versé aux classements. */
 function isLiveRaw(game, now = Date.now()) {
   if (!game || rseqIsSubmitted(game) || game.live === false) return false;
+  if (gameMs(game) > now) return false; // prefetch window is not live play
   if (game.live === true && inLiveWindow(game, now)) return true;
   return inLiveWindow(game, now) && !rseqIsSubmitted(game);
 }

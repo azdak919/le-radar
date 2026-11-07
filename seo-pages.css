@@ -999,6 +999,7 @@
 }
 .sports-sport-block[hidden],
 .sports-panel[hidden],
+.sports-result[hidden],
 .sports-sex-group[hidden] {
   display: none !important;
 }
@@ -1839,3 +1840,37 @@
   }
   .seo-article__figure img { aspect-ratio: 4 / 3; max-height: min(72vh, 760px); }
 }
+
+/* Sports: one searchable school/campus control, never 93 chips. */
+.sports-filters__institution { align-items: center; }
+#sports-institution {
+  box-sizing: border-box;
+  flex: 1 1 17rem;
+  min-width: 0;
+  max-width: 36rem;
+  min-height: 2.75rem;
+  border: 1px solid currentColor;
+  border-radius: .5rem;
+  padding: .5rem .7rem;
+  background: var(--surface, transparent);
+  color: var(--text, inherit);
+  font: inherit;
+}
+#sports-institution::placeholder { color: inherit; opacity: .8; }
+#sports-institution:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sports-panel__source-stale { font-size: .8rem; border-inline-start: 2px solid currentColor; padding-inline-start: .5rem; }
+@media (max-width: 480px) {
+  .sports-filters__institution { flex-wrap: wrap; }
+  #sports-institution { flex-basis: 100%; max-width: 100%; }
+}
+
+/* Dark sports badges: retain category colors without low-contrast blue/pink ink. */
+[data-theme="dark"] .sports-panel__sex--m,
+[data-theme="dark"] .sports-sex-group__label--m { color: #bddcff; background: #142c49; border-color: #74b4ff; }
+[data-theme="dark"] .sports-panel__sex--f,
+[data-theme="dark"] .sports-sex-group__label--f { color: #ffd0e9; background: #48233c; border-color: #f0a2cf; }
+[data-theme="dark"] .sports-panel__sex--x { color: #ede7ff; background: #35294a; border-color: #c0b0e0; }
+
+/* Small live text needs AA even when the shared bright-red token does not. */
+.sports-panel__live { color: #a10f2b; background: #fae4e8; border-color: #ce6074; }
+.sports-panel__sex--x { color: #514360; background: #eee8f5; }

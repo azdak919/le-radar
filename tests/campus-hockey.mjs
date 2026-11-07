@@ -62,7 +62,7 @@ const uqac = Object.values(teams).find((t) => t.registryId === 'uqac');
 assert.ok(uqac);
 assert.ok(uqac.nextGames.length >= 1, 'UQAC a des à-venir');
 assert.equal(uqac.nextGame.date, '2026-09-19');
-assert.equal(uqac.nextGame.opponent, 'Sherbrooke');
+assert.equal(uqac.nextGame.opponent, 'Université de Sherbrooke');
 
 const s1 = {
   'universitaire:hockey:s1:uqac': {
@@ -133,7 +133,8 @@ const women = lib.teamsFromGames([{
 }], { now: Date.parse('2026-11-05T12:00:00-05:00'), reg });
 const martlets = Object.values(women).find((t) => t.registryId === 'mcgill' && t.sex === 'F');
 assert.equal(martlets.nickname, 'Martlets');
-assert.equal(martlets.nextGame.opponent, 'Montréal');
+assert.equal(martlets.nextGame.opponent, 'UdeM');
+assert.equal(martlets.nextGame.opponentFullName, 'Université de Montréal');
 assert.equal(martlets.nextGame.opponentNickname, 'Carabins');
 assert.equal(martlets.nextGame.opponentCode, 'MTL');
 assert.equal(martlets.nextGame.opponentRegistryId, 'udem');
@@ -146,3 +147,17 @@ assert.match(src, /campus-hockey-lib/);
 assert.match(src, /calendriers campus/);
 
 console.log('OK campus-hockey');
+
+// Official Concordia French schedule: winner–loser score order, no invented 0–0.
+const concordiaFr = lib.parseStingersResultsHtml(`<h1>CALENDRIER 2026-2027</h1>
+<ul><li>29 oct.</li><li>19 h</li><li>@ McGill</li><li>Ligue</li><li>Défaite 4-1</li></ul>
+<ul><li>01 nov.</li><li>14 h</li><li>c. McGill</li><li>Ligue</li><li>Défaite 2-1 SO</li></ul>
+<ul><li>13 nov.</li><li>19 h 30</li><li>@ Laval</li><li>Ligue</li><li> </li></ul>
+<ul><li>07 janv.</li><li>19 h</li><li>c. McGill</li><li>Ligue</li><li> </li></ul>`);
+assert.equal(concordiaFr.length, 4);
+assert.deepEqual([concordiaFr[0].date, concordiaFr[0].time, concordiaFr[0].scoreHome, concordiaFr[0].scoreAway], ['2026-10-29','19:00',4,1]);
+assert.deepEqual([concordiaFr[1].scoreHome,concordiaFr[1].scoreAway],[1,2]);
+assert.deepEqual([concordiaFr[2].time,concordiaFr[2].scoreHome,concordiaFr[2].scoreAway],['19:30',null,null]);
+assert.equal(concordiaFr[3].date,'2027-01-07');
+assert.equal(concordiaFr[0].url,'https://www.concordia.ca/fr/stingers/hockey_f/resultats.html');
+assert.deepEqual(lib.parseStingersResultsHtml('<ul><li>13 nov.</li><li>19 h</li><li>@ Laval</li></ul>'),[]);

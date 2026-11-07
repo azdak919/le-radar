@@ -37,21 +37,21 @@ const teams = Object.values(data.teams || {});
 
 // ── Resolve smoke ─────────────────────────────────────────────────
 const resolveCases = [
-  { q: { name: 'Sherbrooke', sector: 'collegial' }, code: 'SHE', fullRe: /Cégep/i },
-  { q: { name: 'Sherbrooke', sector: 'universitaire' }, code: 'USHE', fullRe: /Université/i },
+  { q: { name: 'Sherbrooke', code: 'SHE', sector: 'collegial' }, code: 'SHE', fullRe: /Cégep/i },
+  { q: { name: 'Sherbrooke', code: 'USHE', sector: 'universitaire' }, code: 'USHE', fullRe: /Université/i },
   { q: { name: 'Sherbrooke', fullName: 'Cégep de Sherbrooke' }, code: 'SHE' },
   { q: { name: 'Sherbrooke', fullName: 'Université de Sherbrooke' }, code: 'USHE' },
   { q: { code: 'SHE', sector: 'collegial' }, code: 'SHE' },
   { q: { code: 'USHE', sector: 'universitaire' }, code: 'USHE' },
-  { q: { name: 'Trois-Rivières', sector: 'collegial' }, code: 'TRV', fullRe: /Cégep/i },
+  { q: { name: 'Trois-Rivières', code: 'TRV', sector: 'collegial' }, code: 'TRV', fullRe: /Cégep/i },
   { q: { name: 'UQTR', sector: 'universitaire' }, code: 'UQTR', fullRe: /Universit|UQTR/i },
-  { q: { name: 'Rimouski', sector: 'collegial' }, code: 'RIM', fullRe: /Cégep/i },
+  { q: { name: 'Rimouski', code: 'RIM', sector: 'collegial' }, code: 'RIM', fullRe: /Cégep/i },
   { q: { name: 'UQAR', sector: 'universitaire' }, code: 'UQAR', fullRe: /Universit|UQAR/i },
-  { q: { name: 'Chicoutimi', sector: 'collegial' }, code: 'CHI', fullRe: /Cégep/i },
+  { q: { name: 'Chicoutimi', code: 'CHI', sector: 'collegial' }, code: 'CHI', fullRe: /Cégep/i },
   { q: { name: 'UQAC', sector: 'universitaire' }, code: 'UQAC' },
-  { q: { name: 'Outaouais', sector: 'collegial' }, code: 'OUT', fullRe: /Cégep/i },
+  { q: { name: 'Outaouais', code: 'OUT', sector: 'collegial' }, code: 'OUT', fullRe: /Cégep/i },
   { q: { name: 'UQO', sector: 'universitaire' }, code: 'UQO' },
-  { q: { name: 'Laval', sector: 'universitaire' }, code: 'LAV' },
+  { q: { name: 'Laval', code: 'LAV', sector: 'universitaire' }, code: 'LAV' },
   { q: { name: 'Laflèche', sector: 'collegial' }, code: 'LAF' },
   { q: { name: 'Notre-Dame Bleu', sector: 'collegial' }, code: 'NDFB' },
 ];
@@ -72,6 +72,11 @@ for (const c of resolveCases) {
   if (c.fullRe && !c.fullRe.test(r.fullName || '')) {
     fail('resolve', `fullName mismatch ${r.fullName}`, { q: c.q });
   }
+}
+
+for (const name of ['Montréal', 'Sherbrooke', 'Trois-Rivières', 'Rimouski', 'Chicoutimi', 'Outaouais', 'Laval']) {
+  const r = resolveSportsTeam(reg, { name });
+  if (r.matched || !/établissement non précisé/.test(r.shortName)) fail('ambiguous-city', `city alone must remain unresolved: ${name}`);
 }
 
 // ── Banque ────────────────────────────────────────────────────────

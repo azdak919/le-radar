@@ -1,0 +1,606 @@
+{
+  "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+  "verifiedOn": "2026-11-07",
+  "matches": [
+    {
+      "GameId": "1d90b8a7-035b-4929-8869-912f2e5e14a0",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "HomeTeamName": "Beauce-Appalaches SG",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "06e25aa1-17a2-4e05-adf0-177258ae5ee6",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "HomeTeamName": "Beauce-Appalaches SM",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "a7a37e67-134d-4384-ba5a-e199c4320e70",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "999f2ba0-e1e4-455a-bbb6-92f5ce2e28aa",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "2a8ea2f4-b83f-4eab-baf0-77164331dbcb",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "VisitingTeamName": "Charlevoix",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "9b14e357-448c-4cb2-b71e-e92713de79ef",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "VisitingTeamName": "Limoilou Noir",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "4649835d-462e-4e8d-ad60-963261a040ee",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "e615c805-4801-42ad-ac27-fa31458819ca",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "c7687d0d-40e1-402e-aea4-2b45d90621c6",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "HomeTeamName": "Beauce-Appalaches SM",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "VisitingTeamName": "Charlevoix",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "22e33f32-f7b6-4674-8a4c-d133a7889764",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "79291dc4-c2c1-449c-8afe-aadfbe22fa77",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "VisitingTeamName": "Limoilou Noir",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "69a891ae-2389-4fdd-a363-d081fc8d8cbc",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": null,
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": null
+    },
+    {
+      "GameId": "651f34c7-571e-4768-8663-bb48ecd97f40",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": "LIM",
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": "NDF"
+    },
+    {
+      "GameId": "7a19a88b-c471-47b2-8e55-351a992701eb",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": "CHX",
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": "GAR"
+    },
+    {
+      "GameId": "9cc5f54f-2e2f-460e-bbeb-e58d0bc232d8",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "HomeTeamName": "Beauce-Appalaches SM",
+      "HomeTeamCode": "BAPSM",
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": "GAR"
+    },
+    {
+      "GameId": "600afc04-990c-4046-9bce-512237ea1757",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "HomeTeamName": "Beauce-Appalaches SG",
+      "HomeTeamCode": "BAPSG",
+      "VisitingTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "VisitingTeamName": "Limoilou Noir",
+      "VisitingTeamCode": "LIM"
+    },
+    {
+      "GameId": "2d33a911-139e-4bb3-acd5-e5f3439b7318",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": "NDF",
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": "BAPSM"
+    },
+    {
+      "GameId": "48fe68e9-c110-4d07-9c04-b94ed9534fd4",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "HomeTeamName": "Beauce-Appalaches SG",
+      "HomeTeamCode": "BAPSG",
+      "VisitingTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "VisitingTeamName": "Charlevoix",
+      "VisitingTeamCode": "CHX"
+    },
+    {
+      "GameId": "f79348bf-9e08-4576-aaa0-6a6e982fcf1d",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": "NDF",
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": "GAR"
+    },
+    {
+      "GameId": "27cb25b9-1bef-43d9-907e-2ad7e684ea36",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": "LIM",
+      "VisitingTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "VisitingTeamName": "Charlevoix",
+      "VisitingTeamCode": "CHX"
+    },
+    {
+      "GameId": "70da2726-84ef-4015-829a-d96a38fa8ad0",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": "LIM",
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": "GAR"
+    },
+    {
+      "GameId": "69fd600f-9544-477a-bcee-c26295cab951",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "HomeTeamName": "Beauce-Appalaches SG",
+      "HomeTeamCode": "BAPSG",
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": "BAPSM"
+    },
+    {
+      "GameId": "81c67bb8-dbdf-4af3-a581-24261d764299",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "HomeTeamName": "Beauce-Appalaches SG",
+      "HomeTeamCode": "BAPSG",
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": "NDF"
+    },
+    {
+      "GameId": "cf63454e-9b30-4862-984e-f3df76ee2e34",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": "CHX",
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": "BAPSM"
+    },
+    {
+      "GameId": "ad8578b8-5925-4992-bec0-eb3cfef90296",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": "GAR",
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": "BAPSG"
+    },
+    {
+      "GameId": "ee02527a-93ee-4ad4-8480-9e4062eb274f",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": "NDF",
+      "VisitingTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "VisitingTeamName": "Limoilou Noir",
+      "VisitingTeamCode": "LIM"
+    },
+    {
+      "GameId": "3e52ab8a-21d1-4195-b01b-30fc85aede73",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "HomeTeamName": "Beauce-Appalaches SM",
+      "HomeTeamCode": "BAPSM",
+      "VisitingTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "VisitingTeamName": "Limoilou Noir",
+      "VisitingTeamCode": "LIM"
+    },
+    {
+      "GameId": "6916b827-ec92-4f3e-a942-b6ae90233874",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": "CHX",
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": "NDF"
+    },
+    {
+      "GameId": "12079039-21e0-45c3-8e68-b118782445b5",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "HomeTeamName": "Beauce-Appalaches SM",
+      "HomeTeamCode": "BAPSM",
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": "BAPSG"
+    },
+    {
+      "GameId": "9ca0f44c-744b-4c15-b256-09347db41b9b",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": "GAR",
+      "VisitingTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "VisitingTeamName": "Charlevoix",
+      "VisitingTeamCode": "CHX"
+    },
+    {
+      "GameId": "0efd6ba9-c553-4c9f-ac10-f857c659f2f1",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": "NDF",
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": "BAPSG"
+    },
+    {
+      "GameId": "f4cf1907-4d35-4e04-a992-99d489ec9622",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": "GAR",
+      "VisitingTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "VisitingTeamName": "Limoilou Noir",
+      "VisitingTeamCode": "LIM"
+    },
+    {
+      "GameId": "b50694cf-958f-4c55-914a-1802bea07334",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "HomeTeamName": "Beauce-Appalaches SM",
+      "HomeTeamCode": "BAPSM",
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": "NDF"
+    },
+    {
+      "GameId": "ab60a8f8-4d8f-4b09-9565-38d5af45ea48",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": "CHX",
+      "VisitingTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "VisitingTeamName": "Limoilou Noir",
+      "VisitingTeamCode": "LIM"
+    },
+    {
+      "GameId": "543952c4-a167-4f01-98fe-3006bc13916b",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": "GAR",
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": "BAPSM"
+    },
+    {
+      "GameId": "03c89225-bc92-47a1-a947-97b94b0a028a",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": "CHX",
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": "BAPSG"
+    },
+    {
+      "GameId": "73cdffa2-8f07-44a1-bf2e-2ac4884a8944",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": "LIM",
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": "BAPSG"
+    },
+    {
+      "GameId": "56ad4a4c-c50c-4531-9edc-af1776405874",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": "NDF",
+      "VisitingTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "VisitingTeamName": "Charlevoix",
+      "VisitingTeamCode": "CHX"
+    },
+    {
+      "GameId": "3c965239-668a-4799-b4ee-d4ef4fa18f5b",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "HomeTeamName": "Beauce-Appalaches SG",
+      "HomeTeamCode": "BAPSG",
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": "GAR"
+    },
+    {
+      "GameId": "0bbb2647-9570-40e4-8b2f-0e30d40dc0be",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": "LIM",
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": "BAPSM"
+    },
+    {
+      "GameId": "508bc469-9dee-4cd1-8ea1-4d48c8d68b99",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "HomeTeamName": "Garneau",
+      "HomeTeamCode": "GAR",
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": "NDF"
+    },
+    {
+      "GameId": "5dd66120-6002-44c5-9079-7f927beb3859",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "HomeTeamName": "Beauce-Appalaches SM",
+      "HomeTeamCode": "BAPSM",
+      "VisitingTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "VisitingTeamName": "Charlevoix",
+      "VisitingTeamCode": "CHX"
+    },
+    {
+      "GameId": "fdac8b65-ef3a-4b1d-922e-19e1ca639207",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": "LIM",
+      "VisitingTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "VisitingTeamName": "Notre-Dame",
+      "VisitingTeamCode": "NDF"
+    },
+    {
+      "GameId": "9dfb974e-743a-47c5-a415-76acadfdb2d1",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": "CHX",
+      "VisitingTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "VisitingTeamName": "Beauce-Appalaches SG",
+      "VisitingTeamCode": "BAPSG"
+    },
+    {
+      "GameId": "270f8d9a-5798-4aab-bde7-dd9f70bae277",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "HomeTeamName": "Beauce-Appalaches SG",
+      "HomeTeamCode": "BAPSG",
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": "BAPSM"
+    },
+    {
+      "GameId": "1051663a-229e-467b-aedb-5f935e26acba",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+      "HomeTeamName": "Limoilou Noir",
+      "HomeTeamCode": "LIM",
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": "GAR"
+    },
+    {
+      "GameId": "1108686f-fcd2-4780-a215-e57669c3791d",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+      "HomeTeamName": "Charlevoix",
+      "HomeTeamCode": "CHX",
+      "VisitingTeamId": "d18db455-1c3b-4fb9-9a8e-c7ef65df490d",
+      "VisitingTeamName": "Garneau",
+      "VisitingTeamCode": "GAR"
+    },
+    {
+      "GameId": "693d5d67-9c0c-48d0-8ee4-f57c11c25649",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "14804db5-24a0-455d-a7d3-15b471884e4f",
+      "HomeTeamName": "Notre-Dame",
+      "HomeTeamCode": "NDF",
+      "VisitingTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "VisitingTeamName": "Beauce-Appalaches SM",
+      "VisitingTeamCode": "BAPSM"
+    },
+    {
+      "GameId": "16edb7e1-394b-4c15-adeb-2a2d752742d2",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Meilleure 1re pos.",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Quatrième 2e pos.",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "2d44b662-7120-49d9-942e-ac4c335e1abc",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Troisième 1re pos.",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Deuxième 2e pos.",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "07518bac-e89d-4932-96c7-6da45934f12a",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Deuxième 1re pos.",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Troisième 2e pos.",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "bfb06b76-9c90-4f14-b0bc-7b32cd2ec0f0",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Quatrième 1re pos.",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Première 2e pos.",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "c42e5afd-c400-4449-bfa7-3d69d7af6ad8",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Perdant SF02",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Perdant SF01",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "f1e254ca-f245-4079-addb-bab3d54c04d2",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Gagnant SF01",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Gagnant SF02",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "144d9f9b-4a10-4ed1-92a3-d174db24bf59",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Perdant SF04",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Perdant SF03",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "735ee1ac-6ecf-483d-b558-7246a1341702",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Gagnant SF03",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Gagnant SF04",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "688f9019-0a10-41ba-8105-91e3744d95e4",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Perdant SF08",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Gagnant SF05",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "f908adc5-e33e-4a9d-abdf-5cde30ae5109",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Perdant SF06",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Gagnant SF07",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "b6a7458e-c9cd-4c87-8662-db6cd45c4332",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Gagnant SF09",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Gagnant SF10",
+      "VisitingTeamCode": ""
+    },
+    {
+      "GameId": "ce40ac01-78e2-4a15-93e0-b72e238612f6",
+      "LeagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "HomeTeamId": "00000000-0000-0000-0000-000000000000",
+      "HomeTeamName": "Gagnant SF06",
+      "HomeTeamCode": "",
+      "VisitingTeamId": "00000000-0000-0000-0000-000000000000",
+      "VisitingTeamName": "Gagnant SF08",
+      "VisitingTeamCode": ""
+    }
+  ]
+}
