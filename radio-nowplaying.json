@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T02:33:11.662Z",
+  "updatedAt": "2026-11-07T04:07:09.338Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T02:31:36.134Z"
+      "checkedAt": "2026-11-07T04:06:02.650Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rebelles soniques (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Rebelles soniques (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T02:31:37.983Z"
+      "checkedAt": "2026-11-07T04:06:04.475Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "LLA/Macondo",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Weekend Groove",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "WEFUNK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "LLA/Macondo",
+      "showTitle": "Weekend Groove",
       "host": "",
       "source": "schedule",
       "sources": [
@@ -74,7 +74,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T02:32:28.499Z"
+      "checkedAt": "2026-11-07T04:06:34.534Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -82,16 +82,16 @@
       "current": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
+        "start": "23:00",
+        "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "The Come Up",
+        "title": "Jazz Boulevard",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "track": "",
       "showTitle": "CJLO's Alternative Mega Mix",
@@ -101,32 +101,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T02:32:44.134Z"
+      "checkedAt": "2026-11-07T04:06:49.546Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mangue, Goyave et Reggae",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Entre ciel et terre",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Mangue, Goyave et Reggae",
+      "showTitle": "Entre ciel et terre",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T02:32:45.388Z"
+      "checkedAt": "2026-11-07T04:06:50.514Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +148,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T02:33:11.312Z"
+      "checkedAt": "2026-11-07T04:07:08.987Z"
     }
   }
 }
