@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-07T18:39:22.328Z",
+  "updated": "2026-11-07T18:45:57.931Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
-  "cited": 107,
-  "pending": 40,
+  "cited": 106,
+  "pending": 41,
   "missingHero": 0,
   "ok": false,
   "checked": 52,
   "updatedCount": 3,
-  "citedNew": 6,
-  "fallbackNew": 46,
+  "citedNew": 5,
+  "fallbackNew": 47,
   "samples": [
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
@@ -29,9 +29,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
