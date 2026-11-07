@@ -1,4 +1,8 @@
 import { expect, test } from '@playwright/test';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const { unpackSportsPayload } = require('../scripts/sports-payload-lib');
+const payload = unpackSportsPayload(require('../sports.json'));
 
 test.describe('Embed sports IAB @ci-critical', () => {
   test('300×250 montre une carte LE-RADAR (match ou marque)', async ({ page }) => {
@@ -55,6 +59,22 @@ test.describe('Embed sports IAB @ci-critical', () => {
     await expect(page.locator('.sports-panel.is-spotlight')).toBeVisible({ timeout: 15_000 });
     if (target.searchParams.get('game')) {
       await expect(page.locator('.sports-result.is-spotlight')).toBeVisible({ timeout: 10_000 });
+    }
+    // Initial navigation may scroll; passive data refreshes must not do so.
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await page.evaluate(() => {
+      window.refreshScrolls = 0;
+      Element.prototype.scrollIntoView = function () { window.refreshScrolls++; };
+    });
+    for (let refresh = 0; refresh < 3; refresh++) {
+      await page.evaluate(data => window.dispatchEvent(new CustomEvent('radar:sports-updated', { detail: data })), payload);
+      await expect(page.locator('.sports-panel.is-spotlight')).toBeVisible();
+      if (target.searchParams.get('game')) await expect(page.locator('.sports-result.is-spotlight')).toBeVisible();
+      const current = new URL(page.url());
+      expect(current.searchParams.get('team')).toBe(target.searchParams.get('team'));
+      expect(current.searchParams.get('game')).toBe(target.searchParams.get('game'));
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      expect(await page.evaluate(() => window.refreshScrolls)).toBe(0);
     }
   });
 

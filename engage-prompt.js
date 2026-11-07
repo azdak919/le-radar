@@ -301,28 +301,17 @@
     const { family, browser } = plat;
 
     if (family === 'ios') {
-      if (browser === 'chrome_ios' || browser === 'firefox' || browser === 'edge' || browser === 'opera') {
-        return en
-          ? [
-            'On iPhone/iPad, install works best from <strong>Safari</strong>.',
-            'Open this page in Safari, then tap <strong>Share</strong> (□↑).',
-            'Choose <strong>Add to Home Screen</strong>, then <strong>Add</strong>.',
-          ]
-          : [
-            'Sur iPhone/iPad, l’installation se fait depuis <strong>Safari</strong>.',
-            'Ouvrez cette page dans Safari, puis touchez <strong>Partager</strong> (□↑).',
-            'Choisissez <strong>Sur l’écran d’accueil</strong>, puis <strong>Ajouter</strong>.',
-          ];
-      }
+      // iPadOS can expose a desktop UA; Brave can look identical to Safari.
+      // Give every iOS browser the same dependable Safari route, not UA guesses.
       return en
         ? [
-          'Tap the <strong>Share</strong> button (square with arrow).',
-          'Scroll and choose <strong>Add to Home Screen</strong>.',
+          'In <strong>Safari</strong> on your iPhone or iPad, open this page.',
+          'Tap <strong>Share</strong> (square with an upward arrow), then <strong>Add to Home Screen</strong>.',
           'Confirm <strong>Add</strong> — LE-RADAR.ca opens like an app.',
         ]
         : [
-          'Touchez le bouton <strong>Partager</strong> (carré avec flèche).',
-          'Faites défiler et choisissez <strong>Sur l’écran d’accueil</strong>.',
+          'Dans <strong>Safari</strong> sur votre iPhone ou iPad, ouvrez cette page.',
+          'Touchez <strong>Partager</strong> (carré avec flèche vers le haut), puis <strong>Sur l’écran d’accueil</strong>.',
           'Validez <strong>Ajouter</strong> — LE-RADAR.ca s’ouvre comme une app.',
         ];
     }

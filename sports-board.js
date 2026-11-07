@@ -404,7 +404,9 @@
       });
     });
     const cur = currentFilters();
-    apply(cur.sport, cur.sector, cur.sex, cur.period, '', searchQuery);
+    // Refresh data without cancelling an embed/deep-link selection.
+    const selected = readQuery();
+    apply(cur.sport, cur.sector, cur.sex, cur.period, selected.team, searchQuery, gameFocus, { scroll: false });
   }
   window.addEventListener('radar:sports-updated', event => hydrateSportsBoard(event.detail));
 
@@ -544,7 +546,7 @@
    * Deep-link ?game=… : la ligne de résultat / prochain cliquée dans l’iframe.
    * data-game-id si présent (pages régénérées) ; sinon href RSEQ GameId=.
    */
-  function focusGame(gameId) {
+  function focusGame(gameId, scroll = true) {
     clearGameSpotlight();
     const id = String(gameId || '').trim();
     if (!id) return null;
@@ -560,7 +562,7 @@
     }
     if (!row) return null;
     row.classList.add('is-spotlight');
-    window.requestAnimationFrame(() => {
+    if (scroll) window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         try {
           row.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -574,7 +576,7 @@
    * Deep-link ?team=… : comme la sélection d’une station — la carte formation
    * cible est visible, ouverte dans sa section, surbrillée et amenée au centre.
    */
-  function focusTeam(teamId) {
+  function focusTeam(teamId, scroll = true) {
     clearTeamSpotlight();
     if (!teamId) return null;
     const panel = panels.find((p) => (p.getAttribute('data-team') || '') === teamId);
@@ -596,7 +598,7 @@
       el = el.previousElementSibling;
     }
     panel.classList.add('is-spotlight');
-    window.requestAnimationFrame(() => {
+    if (scroll) window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         try {
           panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -618,7 +620,7 @@
 
   let gameFocus = '';
 
-  function apply(sport, sector, sex, period, team, query, game) {
+  function apply(sport, sector, sex, period, team, query, game, options = {}) {
     syncLivePresentation();
     const sportKey = sport || 'all';
     const sectorKey = sector || 'all';
@@ -773,12 +775,12 @@
     }
 
     if (teamId && !tokens.length) {
-      focusTeam(teamId);
-      if (gameFocus) focusGame(gameFocus);
+      focusTeam(teamId, options.scroll !== false);
+      if (gameFocus) focusGame(gameFocus, options.scroll !== false);
       else clearGameSpotlight();
     } else if (tokens.length && visible) {
       // Ne pas auto-scroller à chaque frappe — seulement si un seul match.
-      if (visible === 1) focusFirstVisible();
+      if (visible === 1 && options.scroll !== false) focusFirstVisible();
     } else {
       clearTeamSpotlight();
       clearGameSpotlight();
