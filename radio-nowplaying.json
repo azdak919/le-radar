@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T04:07:09.338Z",
+  "updatedAt": "2026-11-07T05:06:41.570Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T04:06:02.650Z"
+      "checkedAt": "2026-11-07T05:06:00.121Z"
     },
     "cism": {
       "id": "cism",
@@ -48,85 +48,79 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T04:06:04.475Z"
+      "checkedAt": "2026-11-07T05:06:01.747Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Weekend Groove",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "WEFUNK",
-        "source": "schedule",
+        "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Soca Sessions",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Weekend Groove",
+      "showTitle": "WEFUNK",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "stream",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T04:06:34.534Z"
+      "checkedAt": "2026-11-07T05:06:04.392Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Jazz Boulevard",
         "source": "schedule-live",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
+      "next": {
+        "title": "World-Up'",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Jazz Boulevard",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T04:06:49.546Z"
+      "checkedAt": "2026-11-07T05:06:18.967Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Entre ciel et terre",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": null,
       "track": "",
-      "showTitle": "Entre ciel et terre",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T04:06:50.514Z"
+      "checkedAt": "2026-11-07T05:06:20.046Z"
     },
     "choq": {
       "id": "choq",
@@ -134,21 +128,20 @@
       "current": null,
       "next": {
         "title": "Podcast Nomade: L'art de se rencontrer",
-        "source": "schedule",
+        "source": "api-live",
         "start": "10:00",
         "end": "11:00",
-        "url": "https://www.choq.ca/emissions/podcast-nomade-lart-de-se-rencontrer"
+        "slug": "podcast-nomade-lart-de-se-rencontrer"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-07T04:07:08.987Z"
+      "checkedAt": "2026-11-07T05:06:41.219Z"
     }
   }
 }
