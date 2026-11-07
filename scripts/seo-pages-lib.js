@@ -1059,6 +1059,7 @@ function renderPage({
   lang, path, altPath, title, description, h1, eyebrow, crumbs = [],
   bodyHtml, jsonLd, siteBase, updated, robots = 'index,follow', alternate = true,
   extraScripts = [],
+  extraStyles = [],
   wireClass = '',
   /** Si défini : le h1 devient un lien (ex. reset filtres « Au tableau »). */
   h1Href = null,
@@ -1147,7 +1148,7 @@ ${appHeadHtml}    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="${up}style-feed.css" />
     <link rel="stylesheet" href="${up}style-chrome.css" />
     <link rel="stylesheet" href="${up}seo-pages.css" />
-${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
+${extraStyles.map((src) => `    <link rel="stylesheet" href="${up}${escapeHtml(src)}" />`).join('\n')}${extraStyles.length ? '\n' : ''}${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}nav-shell.js" defer></script>
     <script src="${up}cast.js" defer></script>
     <script src="${up}mobile-playback.js" defer></script>

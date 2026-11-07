@@ -1,0 +1,12 @@
+[
+  {"day":0,"start":"23:00","end":"02:00","title":"Traversée du dimanche au lundi","url":"https://example.org/show"},
+  {"day":1,"start":"09:00","end":"10:00","title":"Une heure"},
+  {"day":1,"start":"10:00","end":"12:00","title":"Deux heures — émission longue"},
+  {"day":1,"start":"10:30","end":"11:00","title":"Alternance publiée"},
+  {"day":1,"start":"11:00","end":"11:15","title":"Quart d’heure"},
+  {"day":1,"start":"12:00","end":"12:01","title":"Titre très long sans espace SuperLongTitreSansEspacePourVérifierQueLeDétailResteLisibleEtAccessible"},
+  {"day":1,"start":"13:00","end":null,"title":"Début seul"},
+  {"day":1,"start":"14:00","end":"15:00","endInferred":true,"title":"Fin estimée : pas de bloc"},
+  {"day":1,"start":"16:00","end":"16:00","title":"Durée nulle ambiguë : pas de bloc"},
+  {"day":6,"start":"23:30","end":"00:30","title":"Samedi vers dimanche"}
+]

@@ -925,6 +925,25 @@ function scheduleHubCards(entries, t, lang, up) {
     + `      <details class="seo-note" data-schedule-details><summary>${lang === 'en' ? 'Sources and updates' : 'Sources et mises à jour'}</summary><ul>${details}</ul></details>\n`;
 }
 
+/** The daily comparison reuses the same public schedules, never a second collector. */
+function scheduleDayView(model, lang, up) {
+  const en = lang === 'en';
+  const stations = model.radioEntries.slice().sort((a, b) => (a.fullName || a.name).localeCompare(b.fullName || b.name, 'fr')).map(radio => ({
+    id: radio.id, name: radio.fullName || radio.name,
+    place: [radio.group?.short || localizedInstitutionName(radio.institution, lang), radio.city].filter(Boolean).join(' · '),
+    href: `${up}${ROUTES.radio[lang](radio.slug)}#horaire`,
+  }));
+  const config = JSON.stringify(stations).replace(/</g, '\\u003c');
+  return `      <section class="radio-day-view" id="journee" data-radio-day-view aria-labelledby="radio-day-title">
+        <h2 id="radio-day-title">${en ? 'Compare a day, radio by radio' : 'Comparer une journée, radio par radio'}</h2>
+        <p class="radio-day-hint">${en ? 'One shared clock; blocks reflect published durations. Select a block for its full title and details. Empty space means no published slot; overlapping slots stay side by side.' : 'Une même échelle horaire, des blocs proportionnels aux durées publiées. Sélectionnez un bloc pour son titre complet et ses détails. Blanc : aucun créneau publié ; les chevauchements restent côte à côte.'}</p>
+        <script type="application/json" data-day-stations>${config}</script>
+        <p data-day-status role="status">${en ? 'Loading the shared schedule…' : 'Chargement de la grille commune…'}</p>
+        <div data-day-ui hidden></div>
+        <noscript><p>${en ? 'JavaScript enables this comparison. The station links above provide their full weekly lists without JavaScript.' : 'JavaScript permet cette comparaison. Les liens des stations ci-dessus donnent leurs listes hebdomadaires complètes sans JavaScript.'}</p></noscript>
+      </section>\n`;
+}
+
 function schedulesHubPage(model, lang, ctx) {
   const t = T[lang];
   const path = ROUTES.schedules[lang];
@@ -952,7 +971,9 @@ function schedulesHubPage(model, lang, ctx) {
       return !max || stamp > max ? stamp : max;
     }, null);
     body += scheduleContext(latestChecked, null, t);
+    body += `<p class="seo-note"><a href="#journee">${lang === 'en' ? 'Compare the six stations hour by hour ↓' : 'Comparer les six radios heure par heure ↓'}</a></p>\n`;
     body += scheduleHubCards(withGrid, t, lang, up);
+    body += scheduleDayView(model, lang, up);
   }
 
   body += `      <p class="seo-note">${escapeHtml(t.schedulesNote)}</p>\n`;
@@ -985,6 +1006,8 @@ function schedulesHubPage(model, lang, ctx) {
       eyebrow: t.radios,
       crumbs: [{ label: t.home, href: up }, { label: t.schedules }],
       bodyHtml: body, jsonLd, siteBase: ctx.siteBase, updated: null,
+      extraScripts: ['scripts/radio-day-lib.js', 'radio-day-view.js'],
+      extraStyles: ['radio-day-view.css'],
     }),
     changefreq: 'weekly',
     priority: '0.7',

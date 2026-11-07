@@ -1,0 +1,61 @@
+/* The comparison is isolated from the player and the existing station weeks. */
+.radio-day-view { margin-block: 2rem; min-width: 0; max-width: 100%; scroll-margin-top: 6rem; }
+.radio-day-view [hidden] { display: none !important; }
+.radio-day-view h2 { margin-bottom: .45rem; }
+.radio-day-hint { color: var(--muted); font-size: .85rem; line-height: 1.55; }
+.radio-day-toolbar { display: flex; align-items: end; gap: .5rem; flex-wrap: wrap; margin-top: 1rem; }
+.radio-day-label { display: grid; gap: .25rem; font-size: .78rem; font-weight: 600; flex: 1 1 190px; max-width: 360px; min-width: 0; }
+.radio-day-view select, .radio-day-toolbar button, .radio-day-dialog button { font: inherit; color: inherit; background: var(--bg, #fff); border: 1px solid var(--rule, #bbb); border-radius: 5px; min-height: 42px; padding: .5rem .75rem; cursor: pointer; }
+.radio-day-view select { width: 100%; min-width: 0; }
+.radio-day-toolbar button:disabled { opacity: .45; cursor: default; }
+.radio-day-date { font-size: .88rem; font-weight: 600; text-transform: capitalize; margin: .85rem 0 .65rem; }
+.radio-day-scroll { max-height: min(72vh, 780px); min-height: 280px; width: 100%; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--rule, #ccc); border-radius: 7px; scrollbar-color: var(--muted) var(--bg-soft, #eee); }
+.radio-day-board { display: grid; grid-template-columns: 58px repeat(6, minmax(176px, 1fr)); grid-template-rows: 70px 2304px; min-width: 1114px; position: relative; isolation: isolate; }
+.radio-day-corner, .radio-day-heading { grid-row: 1; position: sticky; top: 0; z-index: 6; background: var(--bg, #fff); border-bottom: 1px solid var(--rule, #ccc); box-sizing: border-box; }
+.radio-day-corner { grid-column: 1; left: 0; z-index: 9; padding: 1.5rem .3rem; font-size: .7rem; }
+.radio-day-heading { border-left: 1px solid var(--rule, #ccc); border-top: 3px solid var(--station-color); padding: .45rem .55rem; overflow: auto; font-size: .85rem; }
+.radio-day-heading a { display: block; font-weight: 700; color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.radio-day-heading > span { display: block; font-size: .67rem; color: var(--muted); line-height: 1.4; }
+.radio-day-axis { grid-row: 2; grid-column: 1; position: sticky; left: 0; z-index: 5; background: var(--bg, #fff); }
+.radio-day-tick { position: absolute; left: 4px; right: 4px; font-size: .68rem; color: var(--muted); transform: translateY(-50%); font-variant-numeric: tabular-nums; }
+.radio-day-tick:first-child { transform: none; }
+.radio-day-tick:nth-child(25) { transform: translateY(-100%); }
+.radio-day-track { grid-row: 2; position: relative; border-left: 1px solid var(--rule, #ccc); background: repeating-linear-gradient(to bottom, transparent 0, transparent 95px, var(--rule, #ddd) 95px, var(--rule, #ddd) 96px); }
+.radio-day-view .radio-day-block { position: absolute; box-sizing: border-box; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; min-height: 0; margin: 0; padding: 0; border: 0; overflow: clip; border-radius: 3px; text-align: left; color: inherit; background: var(--bg-soft, #eee); background: color-mix(in srgb, var(--station-color) 11%, var(--bg, #fff)); box-shadow: inset 2px 0 var(--station-color), inset 0 0 0 1px color-mix(in srgb, var(--station-color) 30%, transparent); font: inherit; cursor: pointer; }
+.radio-day-block__content { position: sticky; top: 74px; margin: 3px 6px; display: flex; flex-direction: column; max-height: calc(100% - 6px); overflow: hidden; overflow-wrap: anywhere; }
+.radio-day-block__time { font-size: .64rem; font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.radio-day-block__title { font-size: .77rem; line-height: 1.35; margin-top: .2rem; }
+.radio-day-block__more { position: absolute; right: 2px; bottom: 0; line-height: 1; font-size: .65rem; background: var(--bg, #fff); border-radius: 2px; }
+.radio-day-block.is-current-time { background: color-mix(in srgb, var(--status-live, #c8102e) 13%, var(--bg, #fff)); }
+.radio-day-now { position: absolute; left: 0; right: 0; border-top: 2px solid var(--status-live, #c8102e); z-index: 4; pointer-events: none; }
+.radio-day-current { position: absolute; left: 1px; right: 0; transform: translateY(-50%); font-size: .67rem; line-height: 1.6; text-align: center; color: #fff; background: var(--status-live, #c8102e); border-radius: 3px; font-variant-numeric: tabular-nums; }
+.radio-day-list { margin-top: .9rem; font-size: .85rem; }
+.radio-day-list summary { cursor: pointer; font-weight: 600; }
+.radio-day-list-station { margin-top: 1.2rem; }
+.radio-day-list-station ul { padding-left: 1.1rem; }
+.radio-day-view .radio-day-list-entry { border: 0; padding: .4rem 0; background: transparent; color: inherit; font: inherit; text-align: left; overflow-wrap: anywhere; cursor: pointer; text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 3px; }
+.radio-day-view :focus-visible, .radio-day-dialog :focus-visible { outline: 3px solid var(--accent, #c8102e); outline-offset: 2px; }
+.radio-day-block:focus-visible { z-index: 7; }
+.radio-day-dialog { box-sizing: border-box; border: 1px solid var(--rule, #bbb); border-radius: 8px; padding: 1.2rem; width: min(560px, calc(100vw - 28px)); max-height: calc(100dvh - 32px); overflow: auto; color: var(--ink, #222); background: var(--bg, #fff); overflow-wrap: anywhere; }
+.radio-day-dialog::backdrop { background: #0008; }
+.radio-day-dialog h2 { font: 600 1.45rem/1.3 'Source Serif 4', Georgia, serif; margin-block: .8rem; }
+.radio-day-dialog p { font-size: .9rem; line-height: 1.6; }
+.radio-day-close { display: block; margin-left: auto; }
+.radio-day-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+.radio-day-dialog .radio-day-listen { background: var(--live, #c8102e); border-color: var(--live, #c8102e); color: #fff; }
+@media (max-width: 420px) {
+  .radio-day-label { flex: 1 1 160px; }
+  .radio-day-toolbar { gap: .35rem; }
+  .radio-day-toolbar button { padding: .5rem .6rem; }
+  .radio-day-scroll { max-height: 65vh; }
+}
+@media print {
+  .radio-day-scroll { max-height: none; overflow: visible; }
+  .radio-day-toolbar, .radio-day-dialog { display: none; }
+}
+
+.radio-day-station-picker, .radio-day-swipe { display: none; }
+@media (max-width: 1113px) {
+  .radio-day-station-picker { display: grid; flex: 1 1 100%; max-width: 360px; }
+  .radio-day-swipe { display: block; font-size: .75rem; color: var(--muted); margin: .45rem 0; }
+}
