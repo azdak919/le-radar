@@ -601,16 +601,6 @@
       "via": "resize-proxy",
       "nameKey": "cafeteria_gabrielle.jpg"
     },
-    "4c62b76b1492bda6": {
-      "local": "assets/news-images/4c62b76b1492bda6.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/4EC8E60C-77CB-482F-B4C1-BE72FD6EDD2C.jpeg",
-      "host": "quartierlibre.ca",
-      "bytes": 230929,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-28T20:08:10.473Z",
-      "via": "origin",
-      "nameKey": "4ec8e60c-77cb-482f-b4c1-be72fd6edd2c.jpeg"
-    },
     "34ecd821609b6280": {
       "local": "assets/news-images/34ecd821609b6280.png",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/09/SPORTS-1-Gwen-Heffernan-1000x600.png",
@@ -690,16 +680,6 @@
       "updatedAt": "2026-10-29T00:08:27.121Z",
       "via": "resize-proxy",
       "nameKey": "ae-3-eliot-loose-e1788834029314.png"
-    },
-    "b57f213694c29d33": {
-      "local": "assets/news-images/b57f213694c29d33.jpg",
-      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/SL-1-EMIKO-KAMIYA.jpg",
-      "host": "thetribune.ca",
-      "bytes": 104680,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-10-29T00:08:27.560Z",
-      "via": "resize-proxy",
-      "nameKey": "sl-1-emiko-kamiya.jpg"
     },
     "ccd99384ee9d1b1f": {
       "local": "assets/news-images/ccd99384ee9d1b1f.jpg",
@@ -1337,16 +1317,6 @@
       "via": "photon-resize",
       "nameKey": "aureliediouf-261026-iadanslajustice-vol-44.jpg"
     },
-    "30d31f2a5d2d4bb6": {
-      "local": "assets/news-images/30d31f2a5d2d4bb6.jpg",
-      "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/news3.png",
-      "host": "www.thetribune.ca",
-      "bytes": 102588,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T18:08:44.424Z",
-      "via": "resize-proxy",
-      "nameKey": "news3.png"
-    },
     "8a9c168712edaa07": {
       "local": "assets/news-images/8a9c168712edaa07.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/HV26_0930_SHIFT_event_DSC8348_900_506_90.jpg",
@@ -1654,16 +1624,6 @@
       "via": "disk",
       "nameKey": "blanchissement.png"
     },
-    "4ed1a6fea8f2af28": {
-      "local": "assets/news-images/4ed1a6fea8f2af28.jpg",
-      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/AE-1-Julie-Raout-scaled.jpg",
-      "host": "thetribune.ca",
-      "bytes": 222873,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-07T15:46:58.684Z",
-      "via": "origin",
-      "nameKey": "ae-1-julie-raout.jpg"
-    },
     "5743d8be72ba01da": {
       "local": "assets/news-images/5743d8be72ba01da.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Maternity_leave_Annabelle_Olumese_900_450.png",
@@ -1674,18 +1634,48 @@
       "via": "resize-proxy",
       "nameKey": "04_sports_maternity_leave_annabelle_olumese_900_450.png"
     },
-    "6652aa068d12dd9c": {
-      "local": "assets/news-images/6652aa068d12dd9c.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
+    "140272a87a1faec2": {
+      "local": "assets/news-images/140272a87a1faec2.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
       "host": "theconcordian.com",
-      "bytes": 127956,
-      "updatedAt": "2026-11-07T20:19:50.560Z",
+      "bytes": 97778,
+      "updatedAt": "2026-11-07T21:07:51.909Z",
       "via": "disk",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
+    },
+    "1b096fd682af1769": {
+      "local": "assets/news-images/1b096fd682af1769.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/11/Scitech-3-Rokayah-Bellaoui-scaled.jpg",
+      "host": "thetribune.ca",
+      "bytes": 108039,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-07T21:07:54.169Z",
+      "via": "resize-proxy",
+      "nameKey": "scitech-3-rokayah-bellaoui.jpg"
+    },
+    "79163db289510fb7": {
+      "local": "assets/news-images/79163db289510fb7.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/11/Scitech-1-Gwen-Heffernan-1000x600.png",
+      "host": "thetribune.ca",
+      "bytes": 165734,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-07T21:07:54.300Z",
+      "via": "resize-proxy",
+      "nameKey": "scitech-1-gwen-heffernan.png"
+    },
+    "108ee859316cad14": {
+      "local": "assets/news-images/108ee859316cad14.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/11/SciTech-2-_Manon-Keller-_-The-Tribune_-scaled.jpeg",
+      "host": "thetribune.ca",
+      "bytes": 208040,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-07T21:07:54.623Z",
+      "via": "resize-proxy",
+      "nameKey": "scitech-2-_manon-keller-_-the-tribune_.jpeg"
     }
   },
-  "updatedAt": "2026-11-07T20:19:51.084Z",
-  "count": 169,
+  "updatedAt": "2026-11-07T21:07:54.626Z",
+  "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
