@@ -6,7 +6,7 @@
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { TAG, IMG, plan } = require('./mirror-release-lib');
+const { TAG, IMG, plan, isTransient } = require('./mirror-release-lib');
 
 const ROOT = path.join(__dirname, '..');
 const DIR = path.join(ROOT, 'assets', 'news-images');
@@ -23,10 +23,19 @@ if (mode === 'restore') {
   const dir = path.resolve(rest[0] || DIR);
   fs.mkdirSync(dir, { recursive: true });
   const before = fs.readdirSync(dir).length;
-  try {
-    gh(['release', 'download', TAG, '-R', REPO, '-D', dir, '--skip-existing', '-p', '*'], { stdio: ['ignore', 'pipe', 'pipe'] });
-  } catch (e) {
-    if (!/no assets/i.test(String(e.stderr || e.message))) throw e; // Release vide : rien à restaurer
+  // --skip-existing : une reprise ne retélécharge que ce qui manque encore.
+  const ATTEMPTS = 4;
+  for (let attempt = 1; ; attempt++) {
+    try {
+      gh(['release', 'download', TAG, '-R', REPO, '-D', dir, '--skip-existing', '-p', '*'], { stdio: ['ignore', 'pipe', 'pipe'] });
+      break;
+    } catch (e) {
+      const msg = String(e.stderr || e.message);
+      if (/no assets/i.test(msg)) break; // Release vide : rien à restaurer
+      if (!isTransient(msg) || attempt >= ATTEMPTS) throw e;
+      console.warn(`mirror-release restore : erreur passagère (essai ${attempt}/${ATTEMPTS}) : ${msg.trim()} ; nouvel essai`);
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 10000 * attempt);
+    }
   }
   console.log(`mirror-release restore : ${fs.readdirSync(dir).length - before} fichier(s) ajoutés dans ${path.relative(ROOT, dir) || dir}`);
 } else if (mode === 'sync') {

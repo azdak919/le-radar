@@ -96,7 +96,19 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.d.outputs.page_url }}
+      url: ${{ steps.d.outputs.page_url || steps.d2.outputs.page_url }}
     steps:
+      # Le service Pages reste parfois bloqué en « syncing_files » jusqu'au
+      # délai (10 min) alors qu'un déploiement normal prend 1 à 2 min ; le
+      # déploiement est alors annulé et un second essai passe aussitôt.
+      # Un seul nouvel essai : s'il échoue aussi, le job échoue.
       - id: d
         uses: actions/deploy-pages@v5
+        continue-on-error: true
+        with:
+          timeout: 420000
+      - id: d2
+        if: steps.d.outcome == 'failure'
+        uses: actions/deploy-pages@v5
+        with:
+          timeout: 600000
