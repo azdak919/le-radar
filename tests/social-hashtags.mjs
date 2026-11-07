@@ -52,7 +52,7 @@ assert.ok(!validHook('Selon Legault, le vote obligatoire est réalisable.', it),
 assert.ok(!validHook('« Une idée réalisable », dit le ministre du coin', it), 'citation');
 const env = { CLOUDFLARE_AI_TOKEN: 't', CLOUDFLARE_ACCOUNT_ID: 'acc' };
 const ok = await aiHook(it, { env, fetchImpl: async () => ({ ok: true, json: async () => ({ result: { response: '{"hook":"Le vote obligatoire, une idée réalisable ?","topic":"Politique"}' } }) }) });
-assert.deepEqual(ok, { hook: 'Le vote obligatoire, une idée réalisable ?', topic: 'Politique' });
+assert.deepEqual(ok, { hook: null, topic: 'Politique' }, 'accroche qui paraphrase le titre : omise (6 nov.)');
 assert.equal(await aiHook(it, { env, fetchImpl: async () => ({ ok: false, status: 429 }) }), null, 'quota → repli');
 assert.equal(await aiHook(it, { env, fetchImpl: async () => { throw new Error('net'); } }), null);
 console.log('social-hashtags : OK');
