@@ -1237,16 +1237,6 @@
       "via": "origin",
       "nameKey": "nst26_1102_spvm_4031.jpg"
     },
-    "74a99795e0a8bace": {
-      "local": "assets/news-images/74a99795e0a8bace.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/PSPPFirstannoucement-00000002.jpg",
-      "host": "theconcordian.com",
-      "bytes": 163512,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-05T01:37:55.571Z",
-      "via": "resize-proxy",
-      "nameKey": "psppfirstannoucement-00000002.jpg"
-    },
     "78d1a82da1b40bf9": {
       "local": "assets/news-images/78d1a82da1b40bf9.jpg",
       "remote": "https://montrealcampus.ca/wp-content/uploads/2026/11/image.jpeg",
@@ -1681,9 +1671,19 @@
       "updatedAt": "2026-11-06T22:08:11.034Z",
       "via": "resize-proxy",
       "nameKey": "silent-disco.png"
+    },
+    "4fb1d3eb457b00b6": {
+      "local": "assets/news-images/4fb1d3eb457b00b6.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/combined-image-2.jpg",
+      "host": "theconcordian.com",
+      "bytes": 170136,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-07T03:07:55.965Z",
+      "via": "photon-resize",
+      "nameKey": "combined-image-2.jpg"
     }
   },
-  "updatedAt": "2026-11-07T02:07:57.579Z",
+  "updatedAt": "2026-11-07T03:07:55.967Z",
   "count": 169,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
