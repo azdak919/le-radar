@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-06T21:03:48.758Z",
+  "updated": "2026-11-07T01:17:41.558Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5279,15 +5279,69 @@
       "at": "2026-11-06T02:06:38.000Z",
       "via": "existant",
       "source": "La Pige"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/06/vendredi-fou-ou-achat-local-ou-va-largent-des-consommateurs/": {
+      "at": "2026-11-07T01:10:14.252Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261107010953/https://lapige.atmjonquiere.com/2026/11/06/vendredi-fou-ou-achat-local-ou-va-largent-des-consommateurs/"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/06/proches-aidants-une-semaine-pour-reconnaitre-ceux-quon-ne-voit-pas/": {
+      "at": "2026-11-07T01:11:01.206Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261107011050/https://lapige.atmjonquiere.com/2026/11/06/proches-aidants-une-semaine-pour-reconnaitre-ceux-quon-ne-voit-pas/"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/06/une-20e-saison-positive-pour-le-quai-des-croisieres-de-la-baie/": {
+      "at": "2026-11-07T01:11:23.992Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261107011109/https://lapige.atmjonquiere.com/2026/11/06/une-20e-saison-positive-pour-le-quai-des-croisieres-de-la-baie/"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/06/la-semaine-quebecoise-des-rencontres-interculturelles-bat-son-plein-a-saguenay/": {
+      "at": "2026-11-07T01:11:46.753Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261107011131/https://lapige.atmjonquiere.com/2026/11/06/la-semaine-quebecoise-des-rencontres-interculturelles-bat-son-plein-a-saguenay/"
+    },
+    "https://quartierlibre.ca/etudiantes-en-cinema-inquietudes-ambitions/": {
+      "at": "2026-11-07T01:15:45.725Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20261107011530/https://quartierlibre.ca/etudiantes-en-cinema-inquietudes-ambitions/"
+    },
+    "https://montrealcampus.ca/2026/11/06/seclater-sans-faire-de-bruit-au-silent-disco/": {
+      "at": "2026-11-07T01:16:21.360Z",
+      "via": "save-page-now",
+      "source": "Montréal Campus",
+      "snapshot": "https://web.archive.org/web/20261107011604/https://montrealcampus.ca/2026/11/06/seclater-sans-faire-de-bruit-au-silent-disco/"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/06/au-dela-de-la-vitesse-villeneuve-immortalise/": {
+      "at": "2026-11-07T01:16:43.953Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261107011628/https://lapige.atmjonquiere.com/2026/11/06/au-dela-de-la-vitesse-villeneuve-immortalise/"
+    },
+    "https://www.polyscope.qc.ca/blog/post/H4n2WPpJ3xgzqANSFq4G": {
+      "at": "2026-11-07T01:17:18.967Z",
+      "via": "save-page-now",
+      "source": "Le Polyscope",
+      "snapshot": "https://web.archive.org/web/20261107011659/https://www.polyscope.qc.ca/blog/post/H4n2WPpJ3xgzqANSFq4G"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/06/plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu/": {
+      "at": "2026-11-07T01:17:41.558Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261107011726/https://lapige.atmjonquiere.com/2026/11/06/plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu/"
     }
   },
   "stats": {
-    "total": 919,
+    "total": 928,
     "lastRun": {
-      "saved": 3,
-      "skipped": 2,
-      "failed": 3,
-      "stoppedEarly": true
+      "saved": 9,
+      "skipped": 0,
+      "failed": 11,
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -5369,7 +5423,7 @@
     "The Concordian": {
       "host": "theconcordian.com",
       "pages": 122,
-      "checkedAt": "2026-10-31T01:01:14.470Z"
+      "checkedAt": "2026-11-07T01:09:48.563Z"
     },
     "La Griffe": {
       "host": "journallagriffe.ca",
