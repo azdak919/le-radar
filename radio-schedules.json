@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T15:19:22.185Z",
+  "updatedAt": "2026-11-07T21:20:14.576Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -330,9 +330,9 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-07T15:19:22.185Z",
+      "checkedAt": "2026-11-07T21:20:14.576Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T15:19:22.185Z",
+      "attemptedAt": "2026-11-07T21:20:14.576Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
       "coveragePercent": 36
@@ -1113,9 +1113,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-07T15:19:22.185Z",
+      "checkedAt": "2026-11-07T21:20:14.576Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T15:19:22.185Z",
+      "attemptedAt": "2026-11-07T21:20:14.576Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1726,9 +1726,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-07T15:19:22.185Z",
+      "checkedAt": "2026-11-07T21:20:14.576Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T15:19:22.185Z",
+      "attemptedAt": "2026-11-07T21:20:14.576Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2602,10 +2602,12 @@
       ],
       "checkedAt": "2026-11-07T15:19:22.185Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T15:19:22.185Z",
+      "attemptedAt": "2026-11-07T21:20:14.576Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
-      "coveragePercent": 100
+      "coveragePercent": 100,
+      "unverified": true,
+      "retainedReason": "source-unavailable"
     },
     "cfak": {
       "grid": [
@@ -2902,9 +2904,9 @@
         "cfak:https://www.cfak.ca/programmation/",
         "published-page-data:https://www.cfak.ca/_nuxt/static/1793725584/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-07T15:19:22.185Z",
+      "checkedAt": "2026-11-07T21:20:14.576Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T15:19:22.185Z",
+      "attemptedAt": "2026-11-07T21:20:14.576Z",
       "id": "cfak",
       "name": "CFAK 88,3",
       "coveragePercent": 50
@@ -3104,9 +3106,9 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-07T15:19:22.185Z",
+      "checkedAt": "2026-11-07T21:20:14.576Z",
       "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-07T15:19:22.185Z",
+      "attemptedAt": "2026-11-07T21:20:14.576Z",
       "id": "choq",
       "name": "CHOQ.ca",
       "coveragePercent": 16
