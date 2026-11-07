@@ -1635,24 +1635,6 @@
       "via": "photon-resize",
       "nameKey": "img_0208.jpg"
     },
-    "140272a87a1faec2": {
-      "local": "assets/news-images/140272a87a1faec2.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
-      "host": "theconcordian.com",
-      "bytes": 97778,
-      "updatedAt": "2026-11-07T14:37:41.309Z",
-      "via": "disk",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
-    },
-    "d0d4eef2f356a4c4": {
-      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 286051,
-      "updatedAt": "2026-11-07T14:37:41.349Z",
-      "via": "disk",
-      "nameKey": "ak-mbam.jpg"
-    },
     "0da527b271273a7a": {
       "local": "assets/news-images/0da527b271273a7a.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
@@ -1661,16 +1643,6 @@
       "updatedAt": "2026-11-07T15:07:46.147Z",
       "via": "disk",
       "nameKey": "rocky.jpeg"
-    },
-    "bc6f0f904674d20c": {
-      "local": "assets/news-images/bc6f0f904674d20c.jpg",
-      "remote": "https://thetribune.ca/wp-content/uploads/2026/11/AE2-Evy-Shamber-scaled.jpeg",
-      "host": "thetribune.ca",
-      "bytes": 156526,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-07T15:07:52.129Z",
-      "via": "resize-proxy",
-      "nameKey": "ae2-evy-shamber.jpeg"
     },
     "cdf081914623d574": {
       "local": "assets/news-images/cdf081914623d574.jpg",
@@ -1681,9 +1653,37 @@
       "updatedAt": "2026-11-07T15:07:58.199Z",
       "via": "resize-proxy",
       "nameKey": "article-de-juliette-c.jpg"
+    },
+    "6652aa068d12dd9c": {
+      "local": "assets/news-images/6652aa068d12dd9c.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
+      "host": "theconcordian.com",
+      "bytes": 127956,
+      "updatedAt": "2026-11-07T15:46:58.317Z",
+      "via": "disk",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
+    },
+    "0d84d91b0191efcf": {
+      "local": "assets/news-images/0d84d91b0191efcf.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 83501,
+      "updatedAt": "2026-11-07T15:46:58.385Z",
+      "via": "disk",
+      "nameKey": "blanchissement.png"
+    },
+    "4ed1a6fea8f2af28": {
+      "local": "assets/news-images/4ed1a6fea8f2af28.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/AE-1-Julie-Raout-scaled.jpg",
+      "host": "thetribune.ca",
+      "bytes": 222873,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-07T15:46:58.684Z",
+      "via": "origin",
+      "nameKey": "ae-1-julie-raout.jpg"
     }
   },
-  "updatedAt": "2026-11-07T15:07:58.201Z",
+  "updatedAt": "2026-11-07T15:46:59.015Z",
   "count": 169,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
