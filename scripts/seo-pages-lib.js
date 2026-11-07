@@ -1546,7 +1546,7 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
 
   return `      <section class="seo-section" id="horaire"${stationId ? ` data-schedule-station="${escapeHtml(stationId)}"` : ''}>\n        <h2>${escapeHtml(t.schedule)}</h2>\n`
     + scheduleContext(checkedAt, verifiedWeekOf, t)
-    + `      <p class="seo-note" data-schedule-quality>${escapeHtml(scheduleQualityText({ grid, checkedAt, unverified }, t))}</p>\n`
+    + `      <details class="seo-note" data-schedule-details><summary>${t.lang.startsWith('en') ? 'Sources and updates' : 'Sources et mises à jour'}</summary><p data-schedule-quality>${escapeHtml(scheduleQualityText({ grid, checkedAt, unverified }, t))}</p></details>\n`
     + `      <div class="seo-schedule-scroll">\n      <div class="seo-schedule">\n${blocks.join('\n')}\n      </div>\n      </div>\n`
     + `      <p class="seo-note">${escapeHtml(t.scheduleNote)}</p>\n      </section>\n`;
 }

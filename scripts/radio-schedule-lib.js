@@ -12,6 +12,7 @@
  */
 
 const { decodeHtmlEntities } = require('./html-entities-lib');
+const { parseNuxt2PageData } = require('./public-page-data-lib');
 
 const WEEK_MIN = 7 * 24 * 60;
 const DEFAULT_TZ = 'America/Toronto';
@@ -153,6 +154,7 @@ function normalizeSlot(slot) {
   // publication dans radio-schedules.json.
   if (slot.live) out.live = true;
   if (slot.endInferred) out.endInferred = true;
+  if (slot.sourceEnd && timeToMinutes(slot.sourceEnd) != null) out.sourceEnd = slot.sourceEnd;
   return out;
 }
 
@@ -285,9 +287,9 @@ function resolveNextSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
  */
 /** Planchers de couverture hebdo — partagés bot + data-integrity. Ne pas baisser sans diagnostic. */
 const COVERAGE_FLOOR = {
-  cism: 95, cjlo: 95, ckut: 95, cfak: 70, chyz: 20,
-  // CFAK 2026-11-07: 5 weekdays (~71%). Weekend only lists a start;
-  // the former 80% included two invented 00:00–07:00 durations.
+  cism: 95, cjlo: 95, ckut: 95, cfak: 45, chyz: 20,
+  // CFAK: official published Nuxt page data includes exact hfin boundaries.
+  // ~50% is actually scheduled; the previous 71/80% used fabricated long ends.
   // CHOQ = épisodes datés, pas une grille type. Une semaine de rentrée à ~9 %
   // est réelle (GraphQL a répondu) ; le plancher 10 % gardait une semaine
   // d’avant et masquait Pôle hip-hop le dimanche. 5 % = parseur quasi vide.
@@ -362,11 +364,13 @@ function selectScheduleGrid({ grid, sources, previous, now, weekOf, floor, force
   const coverageDrop = floor && gridCoverage(grid).weekPercent < floor
     && gridCoverage(previousGrid).weekPercent >= floor;
   const collapsed = previousSafe && previousGrid.length >= 10 && grid.length < previousGrid.length * 0.6;
-  const retain = !grid.length || issues.length || (!force && (collapsed || coverageDrop));
+  const lostPublishedEnds = previousGrid.some((slot) => slot.sourceEnd)
+    && !grid.some((slot) => slot.sourceEnd) && grid.some((slot) => slot.endUnknown || slot.endInferred);
+  const retain = !grid.length || issues.length || lostPublishedEnds || (!force && (collapsed || coverageDrop));
   if (retain && !previousSafe) throw new Error(`No trustworthy schedule: ${issues.join('; ') || 'empty/collapsed source and invalid previous grid'}`);
   if (retain) return {
     ...previous, grid: previousGrid, unverified: true, attemptedAt: now,
-    retainedReason: issues.join('; ') || (!grid.length ? 'source-unavailable' : 'source-collapsed'),
+    retainedReason: issues.join('; ') || (!grid.length ? 'source-unavailable' : lostPublishedEnds ? 'source-missing-end-times' : 'source-collapsed'),
   };
   return { grid, sources, checkedAt: now, verifiedWeekOf: weekOf, attemptedAt: now };
 }
@@ -629,17 +633,55 @@ function parseCfakGrid(htmlText) {
     if (!cards.length) continue;
     cards.sort((a, b) => a.start.localeCompare(b.start));
     for (let j = 0; j < cards.length; j += 1) {
-      let end = j + 1 < cards.length ? cards[j + 1].start : cards[0].start;
-      if (cards.length === 1) {
-        // A single start says nothing about its end. In particular, do not
-        // invent 07:00 on the weekend or interpret equal bounds as 24 hours.
-        grid.push({ day: heads[i].day, start: cards[j].start, endUnknown: true, title: cards[j].title });
-      } else {
-        grid.push({ day: heads[i].day, start: cards[j].start, end, title: cards[j].title, endInferred: true });
-      }
+      // HTML prints starts only. Do not stretch a programme to the next
+      // card; the authoritative ends are in the page's linked Nuxt payload.
+      grid.push({ day: heads[i].day, start: cards[j].start, endUnknown: true, title: cards[j].title });
     }
   }
   return grid;
+}
+
+/** CFAK publishes HHmm integer boundaries (hfin is the last included minute). */
+function cfakPageDataToGrid(payload) {
+  const data = payload?.data?.find((entry) => Array.isArray(entry.horaires));
+  if (!data || data.horaires.length !== 7 || !Array.isArray(data.balados)) return [];
+  const shows = new Map(data.balados.map((show) => [show.slug, show]));
+  const clock = (n) => {
+    if (!Number.isInteger(n) || n < 0 || n > 2359 || n % 100 > 59) return null;
+    return Math.floor(n / 100) * 60 + n % 100;
+  };
+  const grid = [];
+  data.horaires.forEach((slots, index) => {
+    if (!Array.isArray(slots)) throw new Error('CFAK day is not a schedule array');
+    for (const item of slots) {
+      const show = shows.get(item.emission);
+      const start = clock(item.hdeb);
+      const lastMinute = clock(item.hfin);
+      if (!show?.title || start == null || lastMinute == null) throw new Error('Invalid CFAK published schedule entry');
+      grid.push({
+        day: (index + 1) % 7, start: minutesToTime(start),
+        end: minutesToTime(lastMinute + 1), sourceEnd: minutesToTime(lastMinute),
+        title: show.title, url: `https://www.cfak.ca/balados/${encodeURIComponent(show.urlslug || show.slug)}`,
+      });
+    }
+  });
+  return grid;
+}
+
+async function fetchCfakGrid(src, deps = {}) {
+  const pageUrl = src.url || 'https://www.cfak.ca/programmation/';
+  const html = await fetchText(pageUrl, deps);
+  // Follow only an asset actually linked in the public page, never guess an API.
+  const asset = /(?:src|href)=["']([^"']*\/_nuxt\/static\/[^"']*\/programmation\/payload\.js)["']/i.exec(html)?.[1];
+  if (asset) {
+    const url = new URL(decodeHtmlEntities(asset), pageUrl);
+    if (url.origin !== new URL(pageUrl).origin) throw new Error('Unexpected CFAK payload origin');
+    const grid = cfakPageDataToGrid(parseNuxt2PageData(await fetchText(url.href, deps)));
+    if (!grid.length) throw new Error('CFAK published page data contained no usable schedule');
+    grid.sourceUrl = url.href;
+    return grid;
+  }
+  return parseCfakGrid(html);
 }
 
 const CISM_DAY_INDEX = {
@@ -835,13 +877,14 @@ async function parseCismGrid(htmlText) {
   return parseCismNuxtPayload(pickLargestJsonScript(htmlText));
 }
 
-/** Préfère /_payload.json (plus stable) puis HTML SSR. */
+/** Accepte le payload Nuxt ou son repli HTML public, puis la page SSR. */
 async function fetchCismGrid(src = {}, deps = {}) {
   const pageUrl = src.url || 'https://cism893.ca/grille-horaire/';
   try {
     const payloadUrl = new URL('_payload.json', pageUrl.endsWith('/') ? pageUrl : `${pageUrl}/`).toString();
     const raw = await fetchText(payloadUrl, deps);
-    const grid = parseCismNuxtPayload(raw);
+    const grid = /^\s*[\[{]/.test(raw) ? parseCismNuxtPayload(raw)
+      : /type=["']application\/json["']/.test(raw) ? await parseCismGrid(raw) : [];
     if (grid.length) return grid;
   } catch (err) {
     if (typeof deps.onError === 'function') deps.onError({ type: 'cism-payload', url: pageUrl }, err);
@@ -1087,8 +1130,9 @@ async function fetchChoqGrid(src = {}, deps = {}) {
     return { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[wd] ?? null;
   };
 
-  const today = ymdInTz(new Date());
-  const todayDow = dayIndexInTz(new Date().toISOString());
+  const instant = new Date(deps.now || Date.now());
+  const today = ymdInTz(instant);
+  const todayDow = dayIndexInTz(instant.toISOString());
   const daysFromMonday = todayDow === 0 ? 6 : Math.max(0, (todayDow ?? 1) - 1);
   const weekStart = addDaysYmd(today, -daysFromMonday);
   const grid = [];
@@ -1140,7 +1184,7 @@ async function fetchChoqGrid(src = {}, deps = {}) {
       if (seen.has(key)) continue;
       seen.add(key);
       const slot = { day: dow, start, end, title };
-      if (parent?.slug) slot.url = `https://www.choq.ca/emissions/${parent.slug}`;
+      if (parent?.slug) slot.url = `https://www.choq.ca/balados/${parent.slug}`;
       grid.push(slot);
     }
   }
@@ -1154,9 +1198,9 @@ const ADAPTERS = {
   spinitron: (src, deps) => fetchSpinitronGrid(src, deps),
   jsonld: async (src, deps) => jsonldToGrid(await fetchText(src.url, deps)),
   chyz: async (src, deps) => parseChyzGrid(await fetchText(src.url, deps)),
-  cfak: async (src, deps) => parseCfakGrid(await fetchText(src.url, deps)),
+  cfak: (src, deps) => fetchCfakGrid(src, deps),
   cism: (src, deps) => fetchCismGrid(src, deps),
-  cjlo: async (src, deps) => parseCjloGrid(await fetchText(src.url || 'http://www.cjlo.com/schedule', deps)),
+  cjlo: async (src, deps) => parseCjloGrid(await fetchText(src.url || 'https://www.cjlo.com/schedule/', deps)),
   choq: (src, deps) => fetchChoqGrid(src, deps),
   'choq-episodes': (src, deps) => fetchChoqGrid(src, deps),
 };
@@ -1190,6 +1234,7 @@ async function collateStationGrid(cfg = {}, deps = {}) {
       if (grid && grid.length) {
         collected.push(grid);
         used.push(sourceLabel(src));
+        if (grid.sourceUrl) used.push(`published-page-data:${grid.sourceUrl}`);
       }
     } catch (err) {
       if (typeof deps.onError === 'function') deps.onError(src, err);
@@ -1237,6 +1282,8 @@ module.exports = {
   fetchSpinitronGrid,
   parseChyzGrid,
   parseCfakGrid,
+  cfakPageDataToGrid,
+  fetchCfakGrid,
   pickLargestJsonScript,
   reviveNuxt,
   unixTsToHHMM,
