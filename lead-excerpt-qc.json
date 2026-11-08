@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-08T05:06:38.414Z",
+  "updated": "2026-11-08T06:18:46.308Z",
   "total": 188,
   "pool": 56,
-  "incomplete": 12,
-  "withLeadExcerpt": 130,
-  "candidates": 12,
-  "enriched": 2,
-  "failed": 3,
+  "incomplete": 11,
+  "withLeadExcerpt": 129,
+  "candidates": 11,
+  "enriched": 3,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -28,21 +28,30 @@
       "changed": false
     },
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
-      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
+      "title": "Affaire Ewert : qui savait quoi ?",
+      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
       "ok": true,
-      "score": 100,
-      "chars": 258,
-      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "score": 90,
+      "chars": 390,
+      "sample": "Sa réponse ne précise donc pas quels services connaissaient la situation d’Ewert avant son arrivée, ",
       "changed": true
     },
     {
-      "title": "Jésus et autres mots-clics",
-      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
+      "title": "Plus rien n’est égal par ailleurs : Un film qui divise, et c’est voulu",
+      "link": "https://lapige.atmjonquiere.com/2026/11/06/plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu/?utm_source=rss&utm_medium=rss&utm_campaign=plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu",
       "ok": true,
-      "score": 76,
+      "score": 96,
+      "chars": 162,
+      "sample": "Présenté jeudi soir au Cégep de Jonquière, le nouveau documentaire de Martin Bureau a suscité autant",
+      "changed": true
+    },
+    {
+      "title": "Portes ouvertes à la Ferme CPR Grenon",
+      "link": "https://lapige.atmjonquiere.com/2026/11/05/portes-ouvertes-a-la-ferme-cpr-grenon/?utm_source=rss&utm_medium=rss&utm_campaign=portes-ouvertes-a-la-ferme-cpr-grenon",
+      "ok": true,
+      "score": 96,
       "chars": 400,
-      "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
+      "sample": "Aujourd’hui a lieu l’activité portes ouvertes de la Ferme CPR Grenon Inc. L’objectif est de montrer ",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 80,
       "chars": 400,
       "sample": "La sortie de la série Empathie l’an dernier a généré un engouement majeur. La création de Florence L",
-      "changed": false
-    },
-    {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
-      "ok": true,
-      "score": 80,
-      "chars": 400,
-      "sample": "Depuis 25 ans, le Cinéma Beaubien fait partie du paysage culturel montréalais. Bien plus qu’un endro",
       "changed": false
     }
   ]
