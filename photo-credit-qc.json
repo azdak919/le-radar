@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-08T10:09:44.630Z",
+  "updated": "2026-11-08T11:30:11.811Z",
   "total": 188,
   "withImage": 169,
   "withCredit": 169,
-  "cited": 110,
-  "pending": 36,
+  "cited": 109,
+  "pending": 37,
   "missingHero": 0,
   "ok": false,
-  "checked": 49,
-  "updatedCount": 4,
+  "checked": 50,
+  "updatedCount": 5,
   "citedNew": 7,
-  "fallbackNew": 42,
+  "fallbackNew": 43,
   "samples": [
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
@@ -20,11 +20,18 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Affaire Ewert : qui savait quoi ?",
+      "title": "Quand la mode va trop loin",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Le retour du Rocky Horror Picture Show",
+      "source": "Le Délit",
+      "credit": "Photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
