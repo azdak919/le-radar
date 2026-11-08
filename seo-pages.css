@@ -1881,3 +1881,15 @@
 /* Small live text needs AA even when the shared bright-red token does not. */
 .sports-panel__live { color: #a10f2b; background: #fae4e8; border-color: #ce6074; }
 .sports-panel__sex--x { color: #514360; background: #eee8f5; }
+
+/* Le repli des prochains matchs est un enrichissement JS ; sans JS, tout reste lisible. */
+.sports-panel__upcoming-toggle {
+  appearance: none; display: block; margin: 10px 0 0; padding: 9px 12px;
+  min-height: 44px; max-width: 100%; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--bg); color: var(--accent);
+  font: 600 13px/1.4 var(--sans); cursor: pointer; text-align: left;
+}
+.sports-panel__upcoming-toggle:hover { background: var(--bg-soft); }
+.sports-panel__upcoming-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.sports-panel__upcoming-toggle[hidden] { display: none; }
+@media print { .sports-panel__upcoming-toggle { display: none; } }

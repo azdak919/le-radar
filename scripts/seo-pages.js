@@ -1729,7 +1729,7 @@ function sportsPanelHtml(team, t, lang) {
     : '';
   const liveClass = liveNow ? ' sports-panel--live' : '';
   const liveAttr = liveNow ? ' data-live="1"' : '';
-  return `<section class="sports-panel${liveClass}" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}" data-results-source-url="${escapeHtml(sportsResultsSourceUrl(team))}"${sexAttr}${nextAttr}${kickoffAttr}${lastAttr}${liveAttr}${regAttr}${institutionAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
+  return `<section class="sports-panel${liveClass}" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}" data-league="${escapeHtml([team.league, team.conference, team.division].filter(Boolean).join(' · '))}" data-results-source-url="${escapeHtml(sportsResultsSourceUrl(team))}"${sexAttr}${nextAttr}${kickoffAttr}${lastAttr}${liveAttr}${regAttr}${institutionAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
   <header class="sports-panel__head">
     <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
     <div class="sports-panel__identity">
