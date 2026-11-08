@@ -1,0 +1,26 @@
+import {test,expect} from '@playwright/test';
+import {readFileSync} from 'node:fs';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),pages=require('../scripts/article-pages.js');
+const news=JSON.parse(readFileSync(new URL('../news.json',import.meta.url),'utf8'));
+const item=news.items.find(it=>it.link.includes('les-distances-la-complexite'));
+const record=pages.recordOf(item);
+for(const width of [1440,390])test(`Impact Campus auteur fil et fiche ${width} @ci-critical`,async({page},info)=>{
+ await page.setViewportSize({width,height:900});
+ await page.route('**/*',route=>{const u=new URL(route.request().url());
+  if(u.pathname==='/news.json')return route.fulfill({json:{...news,items:[item]}});
+  if(u.pathname===`/article/${record.id}/`)return route.fulfill({body:pages.renderPage(pages.loadTemplate(),record),contentType:'text/html'});
+  if(u.pathname==='/'+item.imageLocal)return route.fulfill({body:'<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="tan"/></svg>',contentType:'image/svg+xml'});
+  return u.hostname==='127.0.0.1'?route.continue():route.abort();
+ });
+ await page.goto('/',{waitUntil:'domcontentloaded'});
+ await expect(page.locator('.article-author').first()).toHaveText('Léann Laquerre');
+ await expect(page.getByText('Archives Impact Campus',{exact:false})).toHaveCount(0);
+ await page.screenshot({path:info.outputPath(`feed-${width}.png`),fullPage:true});
+ await page.goto(`/article/${record.id}/`,{waitUntil:'domcontentloaded'});
+ await expect(page.getByText('Léann Laquerre',{exact:true})).toBeVisible();
+ await expect(page.getByText('Nicola-Frank Vachon',{exact:false})).toBeVisible();
+ const ld=await page.locator('script[type="application/ld+json"]').first().textContent();expect(JSON.parse(ld).author.name).toBe('Léann Laquerre');
+ expect(await page.content()).not.toContain('Archives Impact Campus');
+ await page.screenshot({path:info.outputPath(`article-${width}.png`),fullPage:true});
+});
