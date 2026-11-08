@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-08T14:07:35.890Z",
+  "updated": "2026-11-08T14:14:41.119Z",
   "total": 188,
   "withPhoto": 171,
   "withStock": 30,
   "withCampusBank": 28,
   "fullyCovered": 188,
-  "leadReadyPhotos": 156,
-  "pageScraped": 27,
-  "photosRecovered": 27,
+  "leadReadyPhotos": 154,
+  "pageScraped": 28,
+  "photosRecovered": 28,
   "imagesCleared": 18,
   "stockSearches": 35,
   "stockFound": 26,
-  "campusBankFound": 21,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -71,7 +71,7 @@
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
+      "reason": "campus-bank",
       "image": null
     },
     {
@@ -81,10 +81,10 @@
       "image": null
     },
     {
-      "title": "Pete Fry élu maire de Vancouver",
-      "link": "https://lecollectif.ca/edition-papier/pete-fry-elu-maire-de-vancouver/",
+      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
+      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Pete-Fry-elu-maire-de-Vancouver_Page-FB-Pete-Fry-for-Vancouver-682x1024.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
     }
   ]
 }
