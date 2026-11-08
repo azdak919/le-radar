@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T06:06:40.803Z",
+  "updatedAt": "2026-11-08T07:06:39.717Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T06:05:56.208Z"
+      "checkedAt": "2026-11-08T07:06:00.514Z"
     },
     "cism": {
       "id": "cism",
@@ -48,33 +48,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T06:05:58.106Z"
+      "checkedAt": "2026-11-08T07:06:02.540Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Utopia's Paradise",
         "source": "api-live",
         "start": "02:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "stereOphobic",
+      "next": {
+        "title": "Mind, Soul, & Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T06:06:06.171Z"
+      "checkedAt": "2026-11-08T07:06:05.243Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T06:06:20.632Z"
+      "checkedAt": "2026-11-08T07:06:19.417Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T06:06:21.704Z"
+      "checkedAt": "2026-11-08T07:06:20.503Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T06:06:40.452Z"
+      "checkedAt": "2026-11-08T07:06:39.366Z"
     }
   }
 }
