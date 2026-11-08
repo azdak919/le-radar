@@ -1,4 +1,7 @@
 import {test,expect} from '@playwright/test';
+// Full sports history remains in the DOM. Keep action/source traces without
+// repeatedly serializing 100k nodes; mandatory visual captures remain below.
+test.use({trace:{mode:'retain-on-failure',snapshots:false,screenshots:false,sources:true}});
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 const {unpackSportsPayload}=require('../scripts/sports-payload-lib');
