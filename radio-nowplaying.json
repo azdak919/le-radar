@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T11:26:59.429Z",
+  "updatedAt": "2026-11-08T13:07:11.624Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T11:26:00.180Z"
+      "checkedAt": "2026-11-08T13:06:11.130Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu",
+        "title": "Le 120e parallèle",
         "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
       "next": {
-        "title": "Par mots et par vaux",
+        "title": "Ya Raï",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/ya-rai"
       },
       "track": "",
-      "showTitle": "Genre de bleu",
+      "showTitle": "Le 120e parallèle",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T11:26:14.063Z"
+      "checkedAt": "2026-11-08T13:06:25.066Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T11:26:16.569Z"
+      "checkedAt": "2026-11-08T13:06:27.589Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sun Ra, Sun Rise",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
-      },
-      "next": {
         "title": "The Gigi Brown Experience",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
       },
+      "next": {
+        "title": "REVC",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/revc"
+      },
       "track": "",
-      "showTitle": "Sun Ra, Sun Rise",
+      "showTitle": "The Gigi Brown Experience",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T11:26:40.469Z"
+      "checkedAt": "2026-11-08T13:06:51.529Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T11:26:41.460Z"
+      "checkedAt": "2026-11-08T13:06:53.025Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T11:26:59.079Z"
+      "checkedAt": "2026-11-08T13:07:11.274Z"
     }
   }
 }
