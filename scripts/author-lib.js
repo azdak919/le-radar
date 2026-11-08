@@ -126,6 +126,17 @@ function normalizeAuthor(name = '') {
   return a.slice(0, 120);
 }
 
+/** Compte archiviste technique Impact Campus, pas une signature collective.
+ * Filtrer la composante exacte AVANT l'arbitrage, y compris RSS/cache/ledger.
+ * Ne généraliser ni « Archives », ni « Campus », ni aux autres médias. */
+function sourceAuthor(name = '', source = '', lang = 'fr') {
+  const normalized = normalizeAuthor(name);
+  if (normAuthorKey(source) !== normAuthorKey('Impact Campus')) return normalized;
+  const parts = splitMultiAuthorLabel(name);
+  const retained = parts.filter(part => normAuthorKey(part) !== normAuthorKey('Archives Impact Campus'));
+  return retained.length === parts.length ? normalized : joinAuthorNames(retained, lang);
+}
+
 function isEditorialPlaceholder(name = '', lang = 'fr') {
   const a = normalizeAuthor(name);
   return !!canonicalizeEditorialAuthor(a) || a === editorialFallback(lang === 'en' ? 'en' : 'fr');
@@ -882,7 +893,7 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
   const strongRole = authorsFromStrongRoleByline(html);
   if (strongRole.length) {
     const joined = joinAuthorNames(strongRole, l);
-    const early = expandAuthorName(joined, l) || joined;
+    const early = sourceAuthor(expandAuthorName(joined, l) || joined, sourceName, l);
     if (early && !isEditorialPlaceholder(early, l)) {
       if (!sourceKey || normAuthorKey(early) !== sourceKey) {
         return early;
@@ -896,7 +907,7 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
   const elementorAuthors = authorsFromElementorPar(html);
   if (elementorAuthors.length) {
     const joined = joinAuthorNames(elementorAuthors, l);
-    const early = expandAuthorName(joined, l) || joined;
+    const early = sourceAuthor(expandAuthorName(joined, l) || joined, sourceName, l);
     if (early && !isEditorialPlaceholder(early, l)) {
       if (!sourceKey || normAuthorKey(early) !== sourceKey) {
         return early;
@@ -918,7 +929,7 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
   const standaloneBy = authorsFromStandaloneByParagraph(html);
   if (standaloneBy.length) {
     const joined = joinAuthorNames(standaloneBy, l);
-    const early = expandAuthorName(joined, l) || joined;
+    const early = sourceAuthor(expandAuthorName(joined, l) || joined, sourceName, l);
     if (early && !isEditorialPlaceholder(early, l)) {
       if (!sourceKey || normAuthorKey(early) !== sourceKey) {
         return early;
@@ -1056,9 +1067,9 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
 
   for (const { author } of candidates.sort((a, b) => b.trust - a.trust)) {
     const parts = splitMultiAuthorLabel(author);
-    const name = parts.length > 1
+    const name = sourceAuthor(parts.length > 1
       ? joinAuthorNames(parts.map((p) => expandAuthorName(p)).filter(Boolean), l)
-      : expandAuthorName(author, l);
+      : expandAuthorName(author, l), sourceName, l);
     if (!name || isEditorialPlaceholder(name, l)) continue;
     if (sourceKey && normAuthorKey(name) === sourceKey) continue;
     // Compte technique WP = nom du média (ex. « The Campus », « The Concordian »)
@@ -1090,7 +1101,7 @@ function detectFeedDefaultAuthors(items = []) {
       // prolifique (≥50 % des articles d'une petite source) ne doit pas
       // être pris pour un compte technique et remplacé par « La rédaction ».
       if (item.authorCheckedAt) continue;
-      const a = normalizeAuthor(item.author);
+      const a = sourceAuthor(item.author, source, lang);
       if (!a || isEditorialPlaceholder(a, lang)) continue;
       const key = normAuthorKey(a);
       counts.set(key, { name: a, count: (counts.get(key)?.count || 0) + 1 });
@@ -1107,7 +1118,7 @@ function detectFeedDefaultAuthors(items = []) {
 
 function isFeedDefaultAuthor(item, feedDefaults = new Map()) {
   const src = item.source || '';
-  const key = normAuthorKey(normalizeAuthor(item.author));
+  const key = normAuthorKey(sourceAuthor(item.author, src, item.lang));
   if (!key || !feedDefaults.has(src)) return false;
   return feedDefaults.get(src).has(key);
 }
@@ -1123,11 +1134,14 @@ function findSiblingAuthor(item, allItems = []) {
 
   const keys = new Set();
   for (const entry of [item, ...siblings]) {
-    const a = normalizeAuthor(entry.author);
+    const a = sourceAuthor(entry.author, item.source, item.lang);
     if (a) keys.add(normAuthorKey(a));
   }
   if (keys.size !== 1) return '';
-  return normalizeAuthor(item.author) || normalizeAuthor(siblings[0].author) || '';
+  if (normAuthorKey(item.source) === normAuthorKey('Impact Campus')) {
+    return [item, ...siblings].map(entry => sourceAuthor(entry.author, item.source, item.lang)).find(Boolean) || '';
+  }
+  return sourceAuthor(item.author, item.source, item.lang) || sourceAuthor(siblings[0].author, item.source, item.lang) || '';
 }
 
 /** Chroniques à la première personne — seulement si aucune autre source fiable. */
@@ -1177,6 +1191,7 @@ function needsPageAuthorVerification(item, feedDefaults = new Map(), hints = {})
  * le site affiche « La rédaction » jusqu'à la prochaine passe verify-authors.
  */
 function mergePriorAuthor(item = {}, prior = null) {
+  if (normAuthorKey(item.source) === normAuthorKey('Impact Campus')) item.author = sourceAuthor(item.author, item.source, item.lang);
   if (!prior) return item;
   const lang = item.lang === 'en' ? 'en' : 'fr';
   // Timestamp de vérification page : suit l'article d'un run à l'autre.
@@ -1185,7 +1200,7 @@ function mergePriorAuthor(item = {}, prior = null) {
   }
   const current = normalizeAuthor(item.author);
   if (current && !isEditorialPlaceholder(current, lang)) return item;
-  const prev = normalizeAuthor(prior.author);
+  const prev = sourceAuthor(prior.author, item.source, lang);
   if (!prev || isEditorialPlaceholder(prev, lang)) return item;
   if (normAuthorKey(prev) === normAuthorKey(item.source || '')) return item;
   item.author = prev;
@@ -1214,14 +1229,14 @@ function bylineFromLedger(source = '', link = '', ledger = undefined) {
   const bucket = book[source];
   if (!bucket || typeof bucket !== 'object') return '';
   const key = normalizeArticleUrl(link);
-  const name = expandAuthorName(bucket[key] || '');
+  const name = sourceAuthor(expandAuthorName(bucket[key] || ''), source);
   if (!name || isEditorialPlaceholder(name)) return '';
   return name;
 }
 
 /** Mémorise une byline réelle. Un thème qui repasse à « Admin » ne l'efface pas. */
 function rememberResolvedByline(source = '', link = '', author = '') {
-  const name = expandAuthorName(author);
+  const name = sourceAuthor(expandAuthorName(author), source);
   const key = normalizeArticleUrl(link);
   if (!source || !key || !name || isEditorialPlaceholder(name)) return false;
   const ledger = loadBylineLedger();
@@ -1243,13 +1258,13 @@ function resolveAuthorCandidate(item, allItems, feedDefaults, pageAuthor, ledger
   const ex = String(item.excerpt || '').trim();
   const fromExcerpt = extractBylineFromText(ex);
   const excerptAuthor = excerptOpensWithByline(ex) && fromExcerpt.author
-    ? fromExcerpt.author
+    ? sourceAuthor(fromExcerpt.author, item.source, item.lang)
     : '';
   const lang = item.lang === 'en' ? 'en' : 'fr';
-  let page = normalizeAuthor(pageAuthor);
+  let page = sourceAuthor(pageAuthor, item.source, lang);
   // « Auteur » identique au nom du média = compte technique, pas une byline.
   if (page && normAuthorKey(page) === normAuthorKey(item.source || '')) page = '';
-  let rss = normalizeAuthor(trimMangledAuthor(item.author));
+  let rss = sourceAuthor(trimMangledAuthor(item.author), item.source, lang);
   if (isEditorialPlaceholder(rss, lang)) rss = '';
   if (rss && normAuthorKey(rss) === normAuthorKey(item.source || '')) rss = '';
   const rssIsDefault = rss && isFeedDefaultAuthor(item, feedDefaults);
@@ -1312,10 +1327,11 @@ function reconcileAuthor(item, allItems = [], {
   applyFallback = false,
   feedDefaults = null,
   pageAuthor = '',
+  ledger = undefined,
 } = {}) {
   const defaults = feedDefaults || detectFeedDefaultAuthors(allItems);
   const previousAuthor = normalizeAuthor(item.author) || null;
-  const resolved = resolveAuthorCandidate(item, allItems, defaults, pageAuthor);
+  const resolved = resolveAuthorCandidate(item, allItems, defaults, pageAuthor, ledger);
 
   let next = { ...item };
   let changed = false;
@@ -1397,6 +1413,7 @@ module.exports = {
   joinAuthorNames,
   expandAuthorName,
   normalizeAuthor,
+  sourceAuthor,
   trimMangledAuthor,
   extractBylineFromText,
   extractFirstPersonAuthor,
