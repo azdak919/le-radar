@@ -354,6 +354,8 @@
         const key = gameKey(game);
         if (retained.has(key)) continue;
         let row = existingRows.get(key);
+        // A delayed live preview must not turn an already-final result back into an upcoming game.
+        if (row?.hasAttribute('data-result') && !final) continue;
         if (!row) {
           row = document.createElement('li');
           row.className = 'sports-result';

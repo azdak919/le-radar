@@ -152,8 +152,17 @@ test('complete session history survives compact and full updates @ci-critical', 
  await page.locator('#sports-institution').fill('Université Laval');
  await page.locator('[data-filter-period="session"]').click();
  for (const sport of ['football', 'soccer', 'rugby']) {
-  const team = Object.values(source.teams).find(t=>t.registryId==='ulaval' && t.sport===sport && t.results?.length > 1);
+  let team = Object.values(source.teams).find(t=>t.registryId==='ulaval' && t.sport===sport && t.results?.length > 1);
   const card = page.locator(`.sports-panel[data-team="${team.id}"]`);
+  if (sport === 'football') {
+   // Freeze the historical example instead of depending on the next weekly collector.
+   const regular = Array.from({length:8},(_,i)=>({gameId:`history-regular-${i}`,date:`2026-09-${String(i+1).padStart(2,'0')}`,time:'15:00',opponent:'Fixture opponent',result:'W',scoreFor:21,scoreAgainst:7}));
+   const semi = {...regular[0],gameId:'history-semi',date:'2026-11-07',scoreFor:42,scoreAgainst:4};
+   const final = {gameId:'history-final',date:'2026-11-14',time:'13:00',opponent:'Fixture opponent'};
+   team = {...team,results:[semi,...regular],lastGame:semi,nextGame:final,nextGames:[final]};
+   const html = require('../scripts/seo-pages').sportsResultRows(team,{},'fr');
+   await card.evaluate((panel,html)=>{panel.querySelectorAll('.sports-panel__list,.sports-panel__empty,.sports-panel__results-source').forEach(el=>el.remove());panel.insertAdjacentHTML('beforeend',html);},html);
+  }
   const before = await card.locator('.sports-result').count();
   expect(before).toBeGreaterThanOrEqual(team.results.length);
   const resultKeys = await card.locator('[data-result]').evaluateAll(rows => rows.map(row=>row.getAttribute('data-hydration-key')));
@@ -191,7 +200,12 @@ test('official results link remains available with future-only schedule @ci-crit
  await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),{teams:{[team.id]:updated}});
  await expect(link).toBeVisible();
  const final={...game,result:'W',final:true,scoreFor:2,scoreAgainst:1};
- await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),{teams:{[team.id]:{...updated,results:[final],lastGame:final,nextGames:[],nextGame:null}}});
+ await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),{teams:{[team.id]:{...updated,results:[final],lastGame:final,nextGames:[game],nextGame:game}}});
  await expect(link).toBeHidden();
  await expect(card.locator('[data-result]')).toHaveCount(1);
+ // A late compact preview cannot downgrade that final result either.
+ await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),{teams:{[team.id]:updated}});
+ await expect(card.locator('[data-result]')).toHaveCount(1);
+ await expect(card.locator('.sports-result')).toHaveCount(1);
+ await expect(link).toBeHidden();
 });
