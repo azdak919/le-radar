@@ -34,6 +34,14 @@ async function open(page,width,theme,path='/sports/'){
  await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
  await expect(page.locator('#sports-institution')).toBeVisible();
 }
+// Artifact capture has Playwright's separate afterEach/teardown budget;
+// functional assertions and their 30-second deadline stay unchanged.
+test.afterEach(async({page},info)=>{
+ const match=/^sports identities filters and geometry (light|dark) (320|390|1024|1440) /.exec(info.title);
+ if(!match)return;
+ await page.locator('#sports-institution').scrollIntoViewIfNeeded();
+ await page.screenshot({path:info.outputPath(`${publicRun?'public':'fixture'}-sports-${match[1]}-${match[2]}.png`)});
+});
 for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
  test(`sports identities filters and geometry ${theme} ${width} @ci-critical`,async({page},info)=>{
   await open(page,width,theme);
@@ -64,8 +72,6 @@ for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
   await page.locator('[data-filter-sport="football"]').click();await institution.fill('Université Laval');
   await card.scrollIntoViewIfNeeded();
   await card.screenshot({path:info.outputPath(`${publicRun?'public':'fixture'}-card-${theme}-${width}.png`)});
-  await institution.scrollIntoViewIfNeeded();
-  await page.screenshot({path:info.outputPath(`${publicRun?'public':'fixture'}-sports-${theme}-${width}.png`)});
  });
 }
 for(const theme of ['light','dark'])test(`sports dynamic theme change to ${theme} preserves geometry @ci-critical`,async({page})=>{

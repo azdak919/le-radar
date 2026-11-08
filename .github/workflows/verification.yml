@@ -47,65 +47,109 @@ concurrency:
   group: quality-${{ github.ref }}
   cancel-in-progress: true
 
-jobs:
-  test:
-    # Les commits des bots (« LE-RADAR … Bot », github-actions[bot]) sont déjà
-    # contrôlés par le bot gate (scripts/bot-prepush-check.sh) avant le push :
-    # on ne relance pas toute la suite Playwright à chaque battement de données.
-    if: ${{ github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]')) }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 25
-    permissions:
-      contents: read
+# Independent runners prevent browser/HTTP-server contention between projects.
+permissions:
+  contents: read
 
+jobs:
+  static:
+    if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (true) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
           cache: npm
-
       - name: Install test dependencies
         run: npm ci
-
-      # Syntaxe / données / PWA : pas besoin de navigateur. Échoue vite
-      # si le hang est uniquement Playwright/Chromium.
       - name: Static and data checks
         run: npm run check
 
-      # ubuntu-latest a déjà les libs système. `--with-deps` (apt-get)
-      # peut rester bloqué 10+ min ; le binaire Playwright suffit.
+  critical:
+    if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (github.event_name != 'workflow_dispatch' || !inputs.full) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [main, serial-sensitive]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install test dependencies
+        run: npm ci
       - name: Cache Playwright Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
       - name: Install Chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
-
-      # PR / push main : trois sentinelles UI (mât, chrome, smoke).
-      # Les specs exhaustives tournent dans la suite complète, manuelle : ne
-      # pas payer 111 tests séquentiels pour chaque push.
       - name: Browser checks (critical)
-        if: github.event_name != 'workflow_dispatch' || !inputs.full
-        # 162 checks run sequentially; the runner needs more than 14 minutes.
-        # Keep every assertion and retry; allow the complete suite to finish.
-        timeout-minutes: 20
-        run: npm run test:browser:ci
-
-      - name: Browser checks (full suite)
-        if: github.event_name == 'workflow_dispatch' && inputs.full
-        run: npm run test:browser
-
+        timeout-minutes: 30
+        run: npm run test:browser:ci -- --project=${{ matrix.project }} --workers=1
       - name: Upload browser traces on failure
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: playwright-traces
+          name: playwright-traces-${{ matrix.project }}
           path: test-results/
           retention-days: 7
+
+  full:
+    if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (github.event_name == 'workflow_dispatch' && inputs.full) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install test dependencies
+        run: npm ci
+      - name: Cache Playwright Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Browser checks (full suite)
+        timeout-minutes: 50
+        run: npm run test:browser
+      - name: Upload browser traces on failure
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-traces-full
+          path: test-results/
+          retention-days: 7
+
+  # Preserve the required check name; skipped/cancelled required jobs never pass.
+  test:
+    if: ${{ always() && (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) }}
+    needs: [static, critical, full]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Require successful jobs for the selected mode
+        env:
+          FULL: ${{ github.event_name == 'workflow_dispatch' && inputs.full }}
+          STATIC_RESULT: ${{ needs.static.result }}
+          CRITICAL_RESULT: ${{ needs.critical.result }}
+          FULL_RESULT: ${{ needs.full.result }}
+        run: node scripts/verification-gate.mjs
