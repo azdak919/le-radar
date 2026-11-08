@@ -1,0 +1,111 @@
+#!/usr/bin/env node
+'use strict';
+const fs=require('fs');
+const path=require('path');
+const lib=require('./radio-health-lib');
+const silence=require('./stream-silence-lib');
+const ROOT=path.join(__dirname,'..');
+async function publishedAlternatives(radio,{probe=lib.requestSample}={}) {
+  const candidates=[];
+  for(const source of [...new Set([radio.website,radio.listenUrl].filter(lib.safeHttps))].slice(0,2)) {
+    const page=await probe(source,{maxBytes:256*1024});
+    if(!page.ok || !/text\/html|application\/json/i.test(page.mime||''))continue;
+    const text=page.body.toString('utf8');
+    candidates.push(...lib.officialCandidates(text,source));
+    // src relatif explicitement publié dans le lecteur officiel (pas de chemin deviné).
+    for(const match of text.matchAll(/<(?:audio|source)\b[^>]*\bsrc=["']([^"']+)["']/gi)) {
+      try { const url=lib.safeHttps(new URL(match[1],source).href);if(url)candidates.unshift({url,source,kind:'official-player'}); } catch { /* lien invalide */ }
+    }
+  }
+  const unique=[...new Map(candidates.map(c=>[c.url,c])).values()];
+  const expanded=[];
+  for(const candidate of unique.slice(0,4)) {
+    if(/\.(?:m3u8?|pls)(?:\?|$)/i.test(candidate.url)) {
+      const list=await probe(candidate.url,{maxBytes:32768});
+      if(list.ok) for(const url of list.body.toString('utf8').match(/https:\/\/[^\s"'<>]+/g)||[]) {
+        if(lib.safeHttps(url))expanded.push({url,source:candidate.source,playlist:candidate.url,kind:'official-playlist'});
+      }
+    } else expanded.push(candidate);
+  }
+  return [...new Map(expanded.map(c=>[c.url,c])).values()].slice(0,4);
+}
+async function checkRadio(radio,previous={},deps={}) {
+  const now=deps.now??Date.now(),inspect=deps.inspect||lib.inspect;
+  let result=await inspect(radio.stream,previous,{...deps,now});
+  const primary=result;
+  if(result.state!=='working'||result.expiry==='2d') {
+    // L'absence du décodeur est un incident du contrôle, pas une panne de station.
+    if(result.error!=='ffmpeg-missing')for(const candidate of await (deps.alternatives||publishedAlternatives)(radio,deps)) {
+      const sources=new Set([radio.website,radio.listenUrl].map(lib.safeHttps).filter(Boolean));
+      if(candidate.url===radio.stream||!lib.safeHttps(candidate.url)||!sources.has(lib.safeHttps(candidate.source)))continue;
+      const alternative=await inspect(candidate.url,{}, {...deps,now,forceAudio:true});
+      if(alternative.state==='working'&&alternative.audio?.decoded&&alternative.expiry!=='2d') {
+        result={...alternative,provenance:candidate,replacedUrl:radio.stream,primaryError:primary.error||'certificate-soon'};break;
+      }
+    }
+  }
+  if(!result.provenance&&previous.url===result.url&&previous.provenance)result.provenance=previous.provenance;
+  const record=lib.updateRecord(previous,result,now);
+  let entry={...radio,_streamChecked:record.checkedAt,_streamStatus:record.state};
+  if(record.state==='working') {
+    entry.stream=record.url;
+    if(record.provenance)entry._streamProvenance=record.provenance;
+    if(record.audio?.checkedAt!==previous.audio?.checkedAt)entry=silence.applySilenceSample(entry,radio,{meanDb:record.audio.meanDb});
+    else if(radio._streamStatus==='silent')entry._streamStatus='silent';
+  }
+  return {entry,record};
+}
+async function checkAll(radios,previous={},deps={}) {
+  const now=deps.now??Date.now(),report={checkedAt:new Date(now).toISOString(),total:radios.length,stations:{}},updated=[];
+  for(const radio of radios) {
+    try {
+      const result=await checkRadio(radio,previous.stations?.[radio.id]||{}, {...deps,now});
+      updated.push(result.entry);report.stations[radio.id]=result.record;
+    } catch {
+      const record=lib.updateRecord(previous.stations?.[radio.id],{url:radio.stream,state:'unknown',error:'check-exception',checkedAt:report.checkedAt},now);
+      report.stations[radio.id]=record;updated.push({...radio,_streamStatus:'unknown',_streamChecked:report.checkedAt});
+    }
+  }
+  return {radios:updated,report};
+}
+async function checkCandidates(registry, radios, report, deps={}) {
+  const now=deps.now??Date.now(),at=new Date(now).toISOString();
+  const last=Date.parse(registry._lastHealthDiscovery);
+  if(new Date(now).getUTCDay()!==1 || (Number.isFinite(last)&&now-last<6*lib.DAY))return registry;
+  const {promoteCandidate,slugFromCandidate}=require('./discover-streams');
+  const existing=new Set(radios.map(r=>r.id)),retained=[];
+  // Budget explicite : au plus quatre candidatures officielles par semaine.
+  const candidates=[...(registry.candidates||[])].sort((a,b)=>(Date.parse(a._lastChecked)||0)-(Date.parse(b._lastChecked)||0));
+  for(const [i,candidate]of candidates.entries()) {
+    if(i>=4){retained.push(candidate);continue;}
+    const id=slugFromCandidate(candidate);
+    try {
+      const {record}=await checkRadio({id,name:candidate.name,website:candidate.website,stream:null},{},{...deps,now});
+      if(record.state==='working'&&record.provenance&&!existing.has(id)) {
+        radios.push({...promoteCandidate(candidate,{stream:record.url,status:'working',checked:at}),_streamProvenance:record.provenance});
+        report.stations[id]=record;existing.add(id);
+      } else retained.push({...candidate,_lastChecked:at,_failCount:(candidate._failCount||0)+1,_healthError:record.error||'already-listed'});
+    } catch {retained.push({...candidate,_lastChecked:at,_healthError:'check-exception'});}
+  }
+  return {...registry,candidates:retained,_lastHealthDiscovery:at};
+}
+
+async function main() {
+  const args=process.argv.slice(2),radios=JSON.parse(fs.readFileSync(path.join(ROOT,'radios.json'),'utf8'));
+  let previous={};try{previous=JSON.parse(fs.readFileSync(path.join(ROOT,'data/radio-health.json'),'utf8'));}catch{/* premier contrôle */}
+  const result=await checkAll(radios,previous);
+  let registry={candidates:[]};try{registry=JSON.parse(fs.readFileSync(path.join(ROOT,'radios-candidates.json'),'utf8'));}catch{/* aucune candidature */}
+  registry=await checkCandidates(registry,result.radios,result.report);
+  result.report.total=result.radios.length;
+  const problems=lib.healthProblems(result.report);
+  console.log(JSON.stringify(result.report,null,2));
+  if(process.env.GITHUB_STEP_SUMMARY)fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`## Santé des flux radio\n${problems.length?problems.map(p=>`- ${p}`).join('\n'):'- TLS et audio vérifiés ; aucun problème.'}\n`);
+  if(args.includes('--update')) {
+    fs.mkdirSync(path.join(ROOT,'data'),{recursive:true});
+    fs.writeFileSync(path.join(ROOT,'data/radio-health.json'),JSON.stringify(result.report,null,2)+'\n');
+    fs.writeFileSync(path.join(ROOT,'radios.json'),JSON.stringify(result.radios,null,2)+'\n');
+    fs.writeFileSync(path.join(ROOT,'radios-candidates.json'),JSON.stringify(registry,null,2)+'\n');
+  }
+}
+module.exports={publishedAlternatives,checkRadio,checkAll,checkCandidates};
+if(require.main===module)main().catch(e=>{console.error(e.message);process.exitCode=1;});

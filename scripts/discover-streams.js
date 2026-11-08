@@ -589,7 +589,7 @@ function applyStreamToRadio(radio, discovery) {
     return entry;
   }
   entry.stream = stream;
-  entry._streamStatus = stream ? 'working' : 'none';
+  entry._streamStatus = stream ? 'unknown' : 'none';
   entry._streamChecked = discovery.checked;
   return entry;
 }
@@ -730,6 +730,9 @@ async function main() {
 }
 
 module.exports = {
+  promoteCandidate,
+  slugFromCandidate,
+  applyStreamToRadio,
   CHYZ_ONAIR_STREAM,
   CFAK_ONAIR_STREAM,
   CHOQ_ONAIR_STREAM,

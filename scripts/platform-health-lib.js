@@ -1,4 +1,5 @@
 'use strict';
+const { createHash } = require('crypto');
 /**
  * Santé de la plateforme (ce que les bots ne peuvent pas réparer seuls) :
  * taille du dépôt, certificat HTTPS Pages, PR Dependabot bloquées,
@@ -36,7 +37,9 @@ function evaluate(facts, now = Date.now()) {
 }
 
 function renderBody(problems, at = new Date().toISOString()) {
+  const fingerprint=createHash('sha256').update(JSON.stringify([...problems].sort())).digest('hex');
   return [
+    `<!-- radar-health:${fingerprint} -->`,
     `Mis à jour automatiquement par platform-health.yml — ${at}.`,
     'Cette issue se ferme seule quand tout est réglé.',
     '',
