@@ -243,23 +243,30 @@ test('politique civile à minuit, final/update, horaire inconnu jamais live et m
   expect(state.unknown).toBe(false);expect(state.live).toBe(true);expect(state.final).toBe(false);expect(state.done).toEqual(['nov7','nov8']);
 });
 
-test('peinture réelle live-only, moins de cartes et rotation sans retour froid @ci-critical', async({page},info)=>{
-  await page.setViewportSize({width:1440,height:1000});
+test('peinture réelle live 1/2/3/N, resize, statut final et rotation sans froid @ci-critical', async({page},info)=>{
+  await page.setViewportSize({width:1920,height:1000});
   await page.clock.setFixedTime(new Date('2026-11-08T17:00:00-05:00'));
+  await page.route('https://**/*',r=>r.abort());
   await page.goto('/',{waitUntil:'domcontentloaded'});
   await expect(page.locator('#masthead-sports-strip')).toBeVisible();
-  for (const n of [1,3]) {
-    const pool=Array.from({length:n},(_,i)=>slide(`direct-${i}`,'next','2026-11-08','16:30',{live:true,scoreFor:i,scoreAgainst:0})).concat(slide('cold','next','2026-11-08','19:00'));
-    const expected=await page.evaluate(pool=>{
-      sportsSlides=pool;sportsFitCount=null;sportsFitDepth=0;renderSportsStrip();scheduleSportsRotate();
-      return Math.min(sportsBoardCount(),pool.length-1);
-    },pool);
+  for(const n of [1,2,3,7]) {
+    const pool=Array.from({length:n},(_,i)=>slide(`direct-${i}`,'next','2026-11-08','16:30',{live:true,scoreFor:i,scoreAgainst:0,opponent:'X',opponentCode:'X'})).concat(slide('cold','next','2026-11-08','19:00'));
+    pool.forEach(s=>{s.team.code=s.key;s.team.name=s.key;});
+    const expected=await page.evaluate(pool=>{sportsSlides=pool;sportsFitCount=4;sportsFitDepth=0;renderSportsStrip();scheduleSportsRotate();return Math.min(sportsBoardCount(),pool.length-1);},pool);
     const cards=page.locator('#masthead-sports-strip > a');
-    await expect(cards).toHaveCount(expected);
-    await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(expected);
-    await page.evaluate(()=>rotateSportsSlot(0));
-    await expect(page.locator('#masthead-sports-strip > a[data-sports-key="cold"]')).toHaveCount(0);
+    await expect(cards).toHaveCount(expected);await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(expected);
+    await page.evaluate(()=>rotateSportsSlot(0));await expect(page.locator('#masthead-sports-strip > a[data-sports-key="cold"]')).toHaveCount(0);
     if(n===3){await page.addStyleTag({content:'#local-lab-format-bar{display:none!important}'});await page.locator('#masthead-sports-strip').screenshot({path:info.outputPath('sports-live-only.png')});}
+    // Voie de mise à jour réellement utilisée par les sondages de statut.
+    await page.evaluate(()=>{const sig=sportsBoardLiveSig(),keys=sportsVisibleLiveKeys();const s=sportsSlides.find(s=>s.key==='direct-0');s.mode='result';s.game={...s.game,live:false,final:true,result:'W',scoreFor:3,scoreAgainst:1};sportsRerenderAfterLiveChange(sig,keys);});
+    if(n>1){
+      await expect(page.locator('#masthead-sports-strip > a[data-sports-key="direct-0"]')).toHaveCount(0);
+      await page.setViewportSize({width:1024,height:900});
+      await expect.poll(()=>cards.evaluateAll(cards=>cards.length>0&&cards.every(c=>c.dataset.sportsLive==='1')&&new Set(cards.map(c=>c.dataset.sportsKey)).size===cards.length)).toBe(true);
+      expect(await cards.count()).toBeLessThanOrEqual(n-1);
+      await page.setViewportSize({width:1920,height:1000});
+      await expect.poll(()=>cards.evaluateAll(cards=>cards.length>0&&cards.every(c=>c.dataset.sportsLive==='1'))).toBe(true);
+    }else{await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(0);}
   }
 });
 
