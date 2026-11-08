@@ -1281,6 +1281,13 @@
   grid-template-columns: 4.5rem 4.25rem minmax(0, 1fr) 1.25rem;
   column-gap: 8px;
 }
+.sports-panel__results-source {
+  margin: 8px 0 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
 .sports-panel__empty {
   margin: 0;
   font-family: var(--sans);

@@ -88,7 +88,7 @@ test('Laval is live, 19h is not; score/final status hydrate without navigation @
  payload.teams[laval.id].nextGame=null;payload.teams[laval.id].nextGames=[];payload.teams[laval.id].results=[final];payload.teams[laval.id].lastGame=final;
  await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),payload);
  await expect(card).toBeHidden();await page.locator('[data-filter-period="today"]').click();
- await expect(card).toBeVisible();await expect(card.locator('[data-result="W"]')).toBeVisible();
+ await expect(card).toBeVisible();await expect(card.locator('[data-result="W"]:visible')).toBeVisible();
  expect(page.url().split('?')[0]).toBe(url.split('?')[0]);
 });
 
@@ -140,4 +140,58 @@ test('campus match without GameId hydrates with a stable key and retains notice 
  await expect(card.locator('.sports-result')).toHaveCount(1);
  await expect(card.locator('.sports-result__score')).toHaveText('1–2');
  await expect(card.locator('.sports-result__title a')).toHaveAttribute('href',game.url);
+});
+
+
+test('complete session history survives compact and full updates @ci-critical', async ({ page }) => {
+ test.skip(publicRun, 'Controlled update regression; public counts are verified separately.');
+ await page.clock.install({time:new Date('2026-11-07T23:45:00Z')});
+ await page.route('**/sports-masthead.json*', route => route.abort());
+ await page.route('https://s1.rseq.ca/**', route => route.abort());
+ await page.goto('/sports/?labFrame=1', { waitUntil:'domcontentloaded' });
+ await page.locator('#sports-institution').fill('Université Laval');
+ await page.locator('[data-filter-period="session"]').click();
+ for (const sport of ['football', 'soccer', 'rugby']) {
+  const team = Object.values(source.teams).find(t=>t.registryId==='ulaval' && t.sport===sport && t.results?.length > 1);
+  const card = page.locator(`.sports-panel[data-team="${team.id}"]`);
+  const before = await card.locator('.sports-result').count();
+  expect(before).toBeGreaterThanOrEqual(team.results.length);
+  const resultKeys = await card.locator('[data-result]').evaluateAll(rows => rows.map(row=>row.getAttribute('data-hydration-key')));
+  const compact = {teams:{[team.id]:{...team,results:[team.results[0]],lastGame:team.results[0],nextGames:[],nextGame:null}}};
+  for (const payload of [compact, compact, {teams:{[team.id]:team}}]) {
+   await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),payload);
+   await expect(card.locator('.sports-result')).toHaveCount(before);
+   expect(await card.locator('[data-result]').evaluateAll(rows=>rows.map(row=>row.getAttribute('data-hydration-key')).sort())).toEqual([...resultKeys].sort());
+  }
+  if(sport==='football') {
+   await expect(card.locator('[data-result]')).toHaveCount(9);
+   await expect(card.locator('.sports-result--next')).toHaveCount(1);
+   await expect(card.locator('.sports-result--next time')).toHaveAttribute('datetime','2026-11-14');
+   await page.locator('[data-filter-period="today"]').click();
+   await expect(card.locator('.sports-result:visible')).toHaveCount(1);
+   await expect(card.locator('.sports-result:visible time')).toHaveAttribute('datetime','2026-11-07');
+   await page.locator('[data-filter-period="session"]').click();
+   await expect(card.locator('.sports-result:visible')).toHaveCount(10);
+  }
+ }
+});
+
+test('official results link remains available with future-only schedule @ci-critical', async ({page})=>{
+ test.skip(publicRun,'Controlled empty schedule regression.');
+ await page.route('**/sports-masthead.json*',route=>route.abort());
+ await page.goto('/sports/?labFrame=1',{waitUntil:'domcontentloaded'});
+ const team=Object.values(source.teams).find(t=>t.source==='rseq-s1'&&!t.results?.length&&!t.lastGame);
+ const card=page.locator(`.sports-panel[data-team="${team.id}"]`);
+ await page.locator('[data-filter-sport="'+team.sport+'"]').click();
+ const link=card.getByRole('link',{name:'Consulter les résultats sur le site officiel'});
+ await expect(link).toBeVisible();
+ await expect(link).toHaveAttribute('href',`https://diffusion.rseq.ca/?Type=League&LeagueId=${team.leagueId}`);
+ const game={gameId:'fixture-source-future',date:'2026-11-14',time:'13:00',opponent:'Fixture opponent'};
+ const updated={...team,nextGame:game,nextGames:[game]};
+ await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),{teams:{[team.id]:updated}});
+ await expect(link).toBeVisible();
+ const final={...game,result:'W',final:true,scoreFor:2,scoreAgainst:1};
+ await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),{teams:{[team.id]:{...updated,results:[final],lastGame:final,nextGames:[],nextGame:null}}});
+ await expect(link).toBeHidden();
+ await expect(card.locator('[data-result]')).toHaveCount(1);
 });

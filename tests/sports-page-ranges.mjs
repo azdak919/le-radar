@@ -49,4 +49,32 @@ assert.equal(S.sportsCicsaSeasonMeta(season, 'en'), 'CICSA 2026-2027 season stan
   const dates = [...out.matchAll(/datetime="([^"]+)"/g)].map((m) => m[1]);
   assert.deepEqual(dates, ['2026-11-14', '2026-10-25', '2026-10-11'], 'à venir en haut, puis passés récents → anciens');
 }
+// Complete season, not the masthead preview: eight regular results + playoff + final.
+{
+  const results = Array.from({ length: 8 }, (_, i) => ({ gameId: `regular-${i}`, date: `2026-09-${String(i + 1).padStart(2, '0')}`, time: '15:00', opponent: 'Official opponent', scoreFor: 21, scoreAgainst: 7, result: 'W' }));
+  const playoff = { ...results[0], gameId: 'semi', date: '2026-11-07', scoreFor: 42, scoreAgainst: 4 };
+  const final = { gameId: 'final', date: '2026-11-14', time: '13:00', opponent: 'Official opponent' };
+  const team = { sport: 'football', source: 'rseq-s1', leagueId: 'd9538539-2732-439b-8521-02da4f3da6e8', results: [playoff, ...results], lastGame: playoff, nextGame: final, nextGames: [final] };
+  const out = S.sportsResultRows(team, {}, 'fr');
+  assert.equal((out.match(/<li class="sports-result/g) || []).length, 10);
+  assert.equal((out.match(/data-result=/g) || []).length, 9);
+  assert.equal((out.match(/data-game-id="final"/g) || []).length, 1);
+  assert.ok(out.indexOf('data-game-id="final"') < out.indexOf('data-game-id="semi"'));
+  assert.match(out, /sports-panel__results-source" hidden/);
+  for (const sport of ['soccer', 'rugby', 'sailing']) assert.equal((S.sportsResultRows({ ...team, sport }, {}, 'fr').match(/<li class="sports-result/g) || []).length, 10, sport);
+  const empty = { ...team, results: [], lastGame: null, nextGames: [], nextGame: null, scheduleUnavailable: true };
+  const link = 'Consulter les résultats sur le site officiel';
+  for (const variant of [empty, { ...empty, nextGame: final, nextGames: [final] }]) {
+    const html = S.sportsResultRows(variant, {}, 'fr');
+    assert.ok(html.includes(link));
+    assert.doesNotMatch(html, /sports-panel__results-source" hidden/);
+    assert.match(html, /https:\/\/diffusion.rseq.ca\/\?Type=League&amp;LeagueId=/);
+    assert.doesNotMatch(html, /courriel|email|prépar/i);
+  }
+  assert.equal(S.sportsResultsSourceUrl({ source: 'unknown', resultsSourceUrl: 'javascript:alert(1)' }), '');
+  assert.equal(S.sportsResultsSourceUrl({ source: 'unknown' }), '');
+  assert.equal(S.sportsResultsSourceUrl({ sport: 'hockey', sex: 'F', registryId: 'concordia', source: 'campus-hockey', results: [{url:'https://example.invalid/a-single-game'}] }), 'https://www.concordia.ca/fr/stingers/hockey_f/resultats.html');
+  assert.equal(S.sportsResultsSourceUrl({ source: 'spordle-rseqhockey', sector: 'collegial' }), 'https://collegial.rseqhockey.com/fr');
+  assert.equal(S.sportsResultsSourceUrl({ source: 'rseq-s1', leagueId: 'invalid' }), '');
+}
 console.log('OK sports-page-ranges');

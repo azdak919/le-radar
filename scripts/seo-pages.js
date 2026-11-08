@@ -1359,6 +1359,48 @@ function compareSportsTeamsBySchedule(a, b) {
   return String(a.name || '').localeCompare(String(b.name || ''), 'fr');
 }
 
+/** Stable identity shared with the non-destructive live overlay. */
+function sportsPageGameKey(game) {
+  return game.gameId ? String(game.gameId) : JSON.stringify([
+    game.date, game.time || '', game.opponentRegistryId || game.opponentFullName || game.opponent || '',
+    game.home, game.url,
+  ]);
+}
+function sportsPageUniqueGames(games) {
+  const seen = new Set();
+  return games.filter(game => {
+    if (!game || !game.date) return false;
+    const key = sportsPageGameKey(game);
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+}
+function sportsResultsSourceUrl(team) {
+  const explicit = team.resultsSourceUrl || team.scheduleUrl;
+  if (explicit && /^https?:\/\//i.test(explicit)) return explicit;
+  if (team.sport === 'hockey') {
+    const campus = require('./campus-hockey-lib');
+    const schedules = team.sex === 'F' ? {
+      concordia: campus.STINGERS_W_URL, bishops: campus.GAITERS_W_URL,
+      mcgill: campus.MCGILL_W_URL, udem: campus.CARABINS_W_URL, ulaval: campus.LAVAL_W_URL,
+    } : { uqo: campus.UQO_SCHEDULE_URL };
+    if (schedules[team.registryId]) return schedules[team.registryId];
+  }
+  if (String(team.source || '').startsWith('rseq-s1') && /^[a-f0-9-]{36}$/i.test(team.leagueId || '')) {
+    return `https://diffusion.rseq.ca/?Type=League&LeagueId=${encodeURIComponent(team.leagueId)}`;
+  }
+  if (team.source === 'spordle-rseqhockey' && ['collegial', 'universitaire'].includes(team.sector)) {
+    return `https://${team.sector}.rseqhockey.com/fr`;
+  }
+  return '';
+}
+function sportsResultsSourceLink(team, lang, hasResults) {
+  const href = sportsResultsSourceUrl(team);
+  if (!href) return '';
+  const label = lang === 'en' ? 'View results on the official website' : 'Consulter les résultats sur le site officiel';
+  return `<p class="sports-panel__results-source"${hasResults ? ' hidden' : ''}><a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a></p>`;
+}
+
 function sportsResultRows(team, t, lang) {
   const rows = [];
   const isSailing = team.sport === 'sailing';
@@ -1394,14 +1436,12 @@ function sportsResultRows(team, t, lang) {
       ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(tip)}">${inner}</a>`
       : inner;
   };
-  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(new Date());
-  const todayResults = (team.results || []).filter(g => g.date === today).sort((a, b) => sportsNextGameTs({ nextGame: b }) - sportsNextGameTs({ nextGame: a }));
-  const pastGames = (isSailing && Array.isArray(team.results) && team.results.length)
-    ? team.results.slice().sort((a, b) => (
-      String(b.date || '').localeCompare(String(a.date || ''))
-      || (Number(a.scoreFor) || 99) - (Number(b.scoreFor) || 99)
-    )).slice(0, 16)
-    : todayResults.length ? todayResults : (team.lastGame ? [team.lastGame] : []);
+  // The hub renders the complete freshness-pruned bank. Period chips filter rows,
+  // not a last-game preview. No silent result cap (including sailing).
+  const pastGames = sportsPageUniqueGames([
+    ...(team.results || []), ...(team.nextGames || []).filter(g => g.final || g.result), team.lastGame,
+  ]).sort((a, b) => String(b.date).localeCompare(String(a.date))
+    || String(b.time || '').localeCompare(String(a.time || '')));
   for (const last of pastGames) {
     const opp = formatOpp(last);
     const placeKind = sportsIsPlaceResult(last, team.sport);
@@ -1420,7 +1460,7 @@ function sportsResultRows(team, t, lang) {
       : `${label}${last.decision === 'SO' ? (lang === 'en' ? ', after shootout' : ', après tirs de barrage') : ''}`;
     const when = sportsEventRangeLabel(last, lang)
       || sportsDayWord(last.date, t) || formatSportsDate(last.date, lang);
-    const prior = !!(last.priorSeason || (!isSailing && team.lastGamePriorSeason));
+    const prior = !!(last.priorSeason || (!isSailing && team.lastGamePriorSeason && last === team.lastGame));
     const priorClass = prior ? ' sports-result--prior-season' : '';
     const kindClass = placeKind ? 'place' : escapeHtml(last.result || 'D');
     const priorMeta = prior
@@ -1429,7 +1469,8 @@ function sportsResultRows(team, t, lang) {
     const badgeClass = placeKind && placeBadge
       ? 'sports-result__badge sports-result__badge--place'
       : 'sports-result__badge';
-    const lastGid = last.gameId ? ` data-game-id="${escapeHtml(String(last.gameId))}"` : '';
+    const lastGid = (last.gameId ? ` data-game-id="${escapeHtml(String(last.gameId))}"` : '')
+      + ` data-hydration-key="${escapeHtml(sportsPageGameKey(last))}" data-kickoff-ts="${sportsNextGameTs({ nextGame: last })}"`;
     rows.push(`<li class="sports-result sports-result--${kindClass}${priorClass}" data-result="${placeKind ? 'place' : escapeHtml(last.result || 'D')}"${prior ? ' data-prior-season="1"' : ''}${lastGid}>
   <time class="sports-result__time" datetime="${escapeHtml(last.date || '')}">${escapeHtml(when)}</time>
   <span class="sports-result__score" aria-label="${escapeHtml(scoreAria)}">${escapeHtml(score)}</span>
@@ -1438,8 +1479,9 @@ function sportsResultRows(team, t, lang) {
 </li>`);
   }
   const pastCount = rows.length;
-  const todayUpcoming = !isSailing && Array.isArray(team.nextGames) ? team.nextGames.filter(g => g.date === today) : [];
-  const upcomingGames = (todayUpcoming.length ? todayUpcoming : (team.nextGame ? [team.nextGame] : [])).slice().sort((a, b) => {
+  const resultKeys = new Set(pastGames.map(sportsPageGameKey));
+  const upcomingGames = sportsPageUniqueGames([...(team.nextGames || []), team.nextGame])
+    .filter(game => !game.final && !game.result && !resultKeys.has(sportsPageGameKey(game))).slice().sort((a, b) => {
     const ta = sportsNextGameTs({ nextGame: a }); const tb = sportsNextGameTs({ nextGame: b });
     const aa = ta >= Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS; const ab = tb >= Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS;
     return aa !== ab ? (aa ? -1 : 1) : aa ? ta - tb : tb - ta;
@@ -1465,7 +1507,7 @@ function sportsResultRows(team, t, lang) {
         ? `<span class="sports-result__venue">${escapeHtml(t.sportsHome)}</span>`
         : '';
     const nextGid = (next.gameId ? ` data-game-id="${escapeHtml(String(next.gameId))}"` : '')
-      + ` data-kickoff-ts="${sportsNextGameTs({ nextGame: next })}" data-live-excluded="${next.live === false || next.final || next.result ? '1' : '0'}"`;
+      + ` data-hydration-key="${escapeHtml(sportsPageGameKey(next))}" data-kickoff-ts="${sportsNextGameTs({ nextGame: next })}" data-live-excluded="${next.live === false || next.final || next.result ? '1' : '0'}"`;
     if (live) {
       const liveLabel = t.sportsLive || 'En cours';
       const hasScore = next.scoreFor != null && next.scoreAgainst != null
@@ -1497,17 +1539,18 @@ function sportsResultRows(team, t, lang) {
     }
   }
   }
+  const sourceLink = sportsResultsSourceLink(team, lang, pastCount > 0);
   if (!rows.length) {
-    if (team.scheduleUnavailable) return `<p class="sports-panel__empty sports-panel__source-stale">${lang === 'en' ? 'Official schedule/results source temporarily unavailable. No score inferred.' : 'Source officielle des horaires/résultats temporairement inaccessible. Aucun pointage déduit.'}</p>`;
+    if (team.scheduleUnavailable) return `<p class="sports-panel__empty sports-panel__source-stale">${lang === 'en' ? 'Official schedule/results source temporarily unavailable. No score inferred.' : 'Source officielle des horaires/résultats temporairement inaccessible. Aucun pointage déduit.'}</p>${sourceLink}`;
     if (team.clubNote || team.status === 'club' || team.status === 'upcoming') {
       const note = team.clubNote || t.sportsClubPending;
-      return `<p class="sports-panel__empty sports-panel__empty--club">${escapeHtml(note)}</p>`;
+      return `<p class="sports-panel__empty sports-panel__empty--club">${escapeHtml(note)}</p>${sourceLink}`;
     }
-    return `<p class="sports-panel__empty">${escapeHtml(t.sportsEmpty)}</p>`;
+    return `<p class="sports-panel__empty">${escapeHtml(t.sportsEmpty)}</p>${sourceLink}`;
   }
   // À venir / en cours d’abord (le plus proche en haut), puis passés du plus récent au plus ancien.
   const ordered = [...rows.slice(pastCount), ...rows.slice(0, pastCount)];
-  return `<ul class="sports-panel__list">${ordered.join('\n')}</ul>`;
+  return `<ul class="sports-panel__list">${ordered.join('\n')}</ul>${sourceLink}`;
 }
 
 /**
@@ -1686,7 +1729,7 @@ function sportsPanelHtml(team, t, lang) {
     : '';
   const liveClass = liveNow ? ' sports-panel--live' : '';
   const liveAttr = liveNow ? ' data-live="1"' : '';
-  return `<section class="sports-panel${liveClass}" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${kickoffAttr}${lastAttr}${liveAttr}${regAttr}${institutionAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
+  return `<section class="sports-panel${liveClass}" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}" data-results-source-url="${escapeHtml(sportsResultsSourceUrl(team))}"${sexAttr}${nextAttr}${kickoffAttr}${lastAttr}${liveAttr}${regAttr}${institutionAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
   <header class="sports-panel__head">
     <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
     <div class="sports-panel__identity">
@@ -2102,4 +2145,4 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, spor
   return { pages, model };
 }
 
-module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta, sportsResultRows, sportsNextGameTs, sportsLastGameTs, sportsNextIsLive };
+module.exports = { buildEntityPages, ROUTES, sportsEventRangeLabel, sportsEventPhase, sportsCicsaSeasonMeta, sportsResultRows, sportsResultsSourceUrl, sportsNextGameTs, sportsLastGameTs, sportsNextIsLive };
