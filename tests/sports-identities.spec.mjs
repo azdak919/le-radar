@@ -204,10 +204,10 @@ for (const sport of ['football', 'soccer', 'rugby']) test(`complete session hist
   if(sport==='football') {
    await expect(card.locator('[data-result]')).toHaveCount(9);
    await expect(card.locator('.sports-result--next')).toHaveCount(1);
-   await expect(card.locator('.sports-result--next time')).toHaveAttribute('datetime','2026-11-14');
+   await expect(card.locator('.sports-result--next time')).toHaveAttribute('datetime','2026-11-14T13:00');
    await page.locator('[data-filter-period="today"]').click();
    await expect(card.locator('.sports-result:visible')).toHaveCount(1);
-   await expect(card.locator('.sports-result:visible time')).toHaveAttribute('datetime','2026-11-07');
+   await expect(card.locator('.sports-result:visible time')).toHaveAttribute('datetime','2026-11-07T15:00');
    await page.locator('[data-filter-period="session"]').click();
    await expect(card.locator('.sports-result:visible')).toHaveCount(10);
   }

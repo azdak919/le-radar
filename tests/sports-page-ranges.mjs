@@ -92,3 +92,26 @@ console.log('OK sports-page-ranges');
     assert.doesNotMatch(page.html, /class="sports-panel"/);
   }
 }
+
+// Dates civiles SSR/client : aucune heure par défaut, tri numérique stable.
+const Dates=require('../scripts/sports-date-lib');
+const now=Date.parse('2026-11-08T06:00:00Z');
+assert.equal(Dates.format('2026-11-07','14:00','fr',now).day,'Hier');
+assert.equal(Dates.format('2026-11-07','14:00','fr',now).clock,'14h');
+assert.equal(Dates.format('2026-11-07','14:15','fr',now).clock,'14h15');
+assert.equal(Dates.format('2026-11-07','14:15','en',now).clock,'2:15 PM');
+assert.equal(Dates.format('2026-11-07','','fr',now).datetime,'2026-11-07');
+for(const invalid of ['',null,'bad','24:00','9:99'])assert.equal(Dates.format('2026-11-07',invalid,'fr',now).clock,'');
+assert.equal(Dates.format('2026-11-07','9:00','fr',now).datetime,Dates.format('2026-11-07','09:00','fr',now).datetime);
+assert.equal(Dates.format('2027-01-01','9:00','fr',Date.parse('2027-01-01T04:55:00Z')).year,'2027');
+assert.equal(Dates.format('2026-12-31','9:00','fr',Date.parse('2027-01-01T05:05:00Z')).year,'2026');
+assert.equal(Dates.format('2025-11-07','','en',now).year,'2025');
+for(const instant of ['2026-03-08T06:30:00Z','2026-03-08T07:30:00Z'])assert.equal(Dates.format('2026-03-08','1:30','fr',Date.parse(instant)).day,'Aujourd’hui');
+for(const instant of ['2026-11-01T05:30:00Z','2026-11-01T06:30:00Z'])assert.equal(Dates.format('2026-11-01','1:30','fr',Date.parse(instant)).day,'Aujourd’hui');
+assert.equal(Dates.format('2026-11-01','','fr',Date.parse('2026-11-01T03:30:00Z')).day,'Demain');
+const games=['9:00','14:00','09:00',''].map(time=>({date:'2026-11-07',time}));
+assert.deepEqual([...games].sort((a,b)=>Dates.compare(a,b,true)).map(g=>g.time),['14:00','9:00','09:00','']);
+assert.deepEqual([...games].sort((a,b)=>Dates.compare(a,b)).map(g=>g.time),['9:00','09:00','14:00','']);
+const realDates=require('./fixtures/sports-dates-real.json');assert.equal(Object.values(realDates.teams).reduce((n,t)=>n+t.results.length,0),5);
+for(const team of Object.values(realDates.teams)){const html=S.sportsResultRows(team,{},'fr');for(const game of team.results){assert.ok(html.includes(`data-game-id="${game.gameId}"`));assert.ok(html.includes(`datetime="2026-11-07T${Dates.clockValue(game.time).canonical}"`));assert.ok(html.includes(`${game.scoreFor}–${game.scoreAgainst}`));}}
+console.log('sports dates: shared compact FR/EN, numeric clocks, no invented time, years, DST and 5 real games preserved');

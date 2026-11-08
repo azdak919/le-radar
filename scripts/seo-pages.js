@@ -21,6 +21,7 @@ const {
   scheduleContext, scheduleQualityText, scheduleTodayDay, EXTERNAL_LINK_ATTRS,
 } = require('./seo-pages-lib');
 const { pruneSportsTeam } = require('./sports-freshness-lib');
+const SportsDate = require('./sports-date-lib');
 const { resolveCurrentSlot, resolveNextSlot } = require('./radio-schedule-lib');
 const {
   listVisibleChannels,
@@ -1196,13 +1197,16 @@ function formatSportsClock(time, lang) {
 }
 
 /** HTML date (+ heure empilée) pour aligner les colonnes avec les lignes de score. */
-function formatSportsTimeHtml(date, time, lang, dayLabel) {
-  const day = dayLabel || formatSportsDate(date, lang) || date || '';
-  const clock = formatSportsClock(time, lang);
-  if (clock) {
-    return `<span class="sports-result__day">${escapeHtml(day)}</span><span class="sports-result__clock">${escapeHtml(clock)}</span>`;
-  }
-  return escapeHtml(day);
+function formatSportsTimeHtml(date, time, lang, dayLabel, now = Date.now(), period = '') {
+  const f = SportsDate.format(date, time, lang, now);
+  const clock = [f.clock, period].filter(Boolean).join(' · ');
+  return `<span class="sports-result__day${dayLabel ? ' sports-result__day--range' : ''}">${escapeHtml(dayLabel || f.day)}</span>`
+    + (f.year ? `<span class="sports-result__year">${escapeHtml(f.year)}</span>` : '')
+    + (clock ? `<span class="sports-result__clock">${escapeHtml(clock)}</span>` : '');
+}
+function sportsTimeAttrs(date, time, lang, now) {
+  const f = SportsDate.format(date, time, lang, now);
+  return `datetime="${escapeHtml(f.datetime)}" data-game-time="${escapeHtml(f.canonicalTime)}" aria-label="${escapeHtml(f.accessible)}" title="${escapeHtml(f.accessible)}"`;
 }
 
 /** Normalise sex → 'F' | 'M' | 'X' | '' */
@@ -1338,8 +1342,8 @@ function sportsNextGameTs(team) {
 function sportsLastGameTs(team) {
   if (team?.results?.length) return Math.max(...team.results.map(g => sportsLastGameTs({ lastGame: g })));
   const g = team?.lastGame;
-  if (!g || !g.date) return Number.NEGATIVE_INFINITY;
-  const ts = require('./sports-freshness-lib').zonedTimeToMs(g.date, g.time || '12:00');
+  if (!g || !g.date || !g.time) return Number.NEGATIVE_INFINITY;
+  const ts = require('./sports-freshness-lib').zonedTimeToMs(g.date, g.time);
   return Number.isFinite(ts) ? ts : Number.NEGATIVE_INFINITY;
 }
 
@@ -1402,6 +1406,7 @@ function sportsResultsSourceLink(team, lang, hasResults) {
 }
 
 function sportsResultRows(team, t, lang) {
+  const now = Date.now();
   const rows = [];
   const isSailing = team.sport === 'sailing';
   /** Adversaire : surnom en 1ʳᵉ si connu (identité d’équipe), sinon nom court. */
@@ -1440,8 +1445,7 @@ function sportsResultRows(team, t, lang) {
   // not a last-game preview. No silent result cap (including sailing).
   const pastGames = sportsPageUniqueGames([
     ...(team.results || []), ...(team.nextGames || []).filter(g => g.final || g.result), team.lastGame,
-  ]).sort((a, b) => String(b.date).localeCompare(String(a.date))
-    || String(b.time || '').localeCompare(String(a.time || '')));
+  ]).sort((a, b) => SportsDate.compare(a, b, true));
   for (const last of pastGames) {
     const opp = formatOpp(last);
     const placeKind = sportsIsPlaceResult(last, team.sport);
@@ -1458,8 +1462,7 @@ function sportsResultRows(team, t, lang) {
     const scoreAria = placeKind
       ? `${t.sportsPlace} ${sportsPlaceScoreText(last, lang) || `${last.scoreFor} / ${last.scoreAgainst}`}`
       : `${label}${last.decision === 'SO' ? (lang === 'en' ? ', after shootout' : ', après tirs de barrage') : ''}`;
-    const when = sportsEventRangeLabel(last, lang)
-      || sportsDayWord(last.date, t) || formatSportsDate(last.date, lang);
+    const when = formatSportsTimeHtml(last.date, last.time, lang, sportsEventRangeLabel(last, lang), now);
     const prior = !!(last.priorSeason || (!isSailing && team.lastGamePriorSeason && last === team.lastGame));
     const priorClass = prior ? ' sports-result--prior-season' : '';
     const kindClass = placeKind ? 'place' : escapeHtml(last.result || 'D');
@@ -1472,7 +1475,7 @@ function sportsResultRows(team, t, lang) {
     const lastGid = (last.gameId ? ` data-game-id="${escapeHtml(String(last.gameId))}"` : '')
       + ` data-hydration-key="${escapeHtml(sportsPageGameKey(last))}" data-kickoff-ts="${sportsNextGameTs({ nextGame: last })}"`;
     rows.push(`<li class="sports-result sports-result--${kindClass}${priorClass}" data-result="${placeKind ? 'place' : escapeHtml(last.result || 'D')}"${prior ? ' data-prior-season="1"' : ''}${lastGid}>
-  <time class="sports-result__time" datetime="${escapeHtml(last.date || '')}">${escapeHtml(when)}</time>
+  <time class="sports-result__time" ${sportsTimeAttrs(last.date, last.time, lang, now)}>${when}</time>
   <span class="sports-result__score" aria-label="${escapeHtml(scoreAria)}">${escapeHtml(score)}</span>
   <span class="sports-result__title">${formatTitle(last, opp)}</span>
   <span class="${badgeClass}" title="${escapeHtml(label)}">${badge}</span>${priorMeta}
@@ -1481,25 +1484,14 @@ function sportsResultRows(team, t, lang) {
   const pastCount = rows.length;
   const resultKeys = new Set(pastGames.map(sportsPageGameKey));
   const upcomingGames = sportsPageUniqueGames([...(team.nextGames || []), team.nextGame])
-    .filter(game => !game.final && !game.result && !resultKeys.has(sportsPageGameKey(game))).slice().sort((a, b) => {
-    const ta = sportsNextGameTs({ nextGame: a }); const tb = sportsNextGameTs({ nextGame: b });
-    const aa = ta >= Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS; const ab = tb >= Date.now() - SPORTS_LIVE_VISUAL_TAIL_MS;
-    return aa !== ab ? (aa ? -1 : 1) : aa ? ta - tb : tb - ta;
-  });
+    .filter(game => !game.final && !game.result && !resultKeys.has(sportsPageGameKey(game))).slice().sort((a, b) => SportsDate.compare(a, b));
   for (const originalNext of upcomingGames) {
   const next = { ...originalNext, opponent: String(originalNext.opponent || '').replace(/\s*·\s*résultats à venir\s*$/i, '') };
   if (next) {
     const live = sportsNextIsLive(next);
     const rangeLabel = sportsEventRangeLabel(next, lang);
     const phase = sportsEventPhase(next);
-    const dayWord = rangeLabel || (phase ? '' : sportsDayWord(next.date, t));
-    const kickClock = formatSportsClock(next.time, lang);
-    const liveClock = live
-      ? [kickClock, next.period].filter(Boolean).join(' · ')
-      : '';
-    const timeHtml = live && liveClock
-      ? `<span class="sports-result__day">${escapeHtml(dayWord || formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(liveClock)}</span>`
-      : formatSportsTimeHtml(next.date, next.time, lang, dayWord);
+    const timeHtml = formatSportsTimeHtml(next.date, next.time, lang, rangeLabel, now, live ? next.period || '' : '');
     const opp = formatOpp(next);
     const venue = next.home === false
       ? `<span class="sports-result__venue">${escapeHtml(t.sportsAway)}</span>`
@@ -1515,7 +1507,7 @@ function sportsResultRows(team, t, lang) {
         && Number(next.scoreFor) !== -999 && Number(next.scoreAgainst) !== -999;
       const scoreText = hasScore ? `${next.scoreFor}–${next.scoreAgainst}` : '—';
       rows.push(`<li class="sports-result sports-result--live"${nextGid}>
-  <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
+  <time class="sports-result__time" ${sportsTimeAttrs(next.date, next.time, lang, now)} data-game-period="${escapeHtml(live ? next.period || '' : '')}">${timeHtml}</time>
   <span class="sports-result__score" aria-label="${escapeHtml(liveLabel)}">${escapeHtml(scoreText)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
   <span class="sports-result__badge" title="${escapeHtml(liveLabel)}"></span>
@@ -1531,7 +1523,7 @@ function sportsResultRows(team, t, lang) {
         : phase === 'after' || next.awaitingResults ? ' data-event-state="awaiting"'
         : phase === 'during' ? ' data-event-state="during"' : '';
       rows.push(`<li class="sports-result sports-result--next"${nextGid}${stateKey}>
-  <time class="sports-result__time" datetime="${escapeHtml(next.eventStart || next.date || '')}">${timeHtml}</time>
+  <time class="sports-result__time" ${sportsTimeAttrs(next.eventStart || next.date, next.time, lang, now)}>${timeHtml}</time>
   <span class="sports-result__score sports-result__score--next" aria-label="${escapeHtml(state)}">${escapeHtml(state)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
   <span class="sports-result__badge sports-result__badge--next" title="${escapeHtml(state)}">→</span>
@@ -2044,7 +2036,7 @@ function sportsHubPage(lang, ctx) {
       jsonLd,
       siteBase: ctx.siteBase,
       updated,
-      extraScripts: ['sports-board.js'],
+      extraScripts: ['scripts/sports-date-lib.js', 'sports-board.js'],
       wireClass: 'seo-wire--sports',
       chromeCurrent: 'sports',
       // Seul le volet français est une app installable : il porte le

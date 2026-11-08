@@ -87,6 +87,7 @@ const SHARED_ASSETS = [
   '../engage-prompt.js',
   '../app-sw-register.js',
   '../sports-board.js',
+  '../scripts/sports-date-lib.js',
   '../assets/icon.svg',
   '../assets/icon-32.png',
   '../assets/emoji/satellite.png',

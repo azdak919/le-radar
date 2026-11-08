@@ -313,9 +313,22 @@
   // Overlay reported games without deleting SSR history/futures absent from a preview.
   let hydratedPayload = null;
   let hydratedDay = '';
-  let gameClockFormatter;
+  const SportsDate = window.RadarSportsDate;
+  function renderGameTime(el, date, rawTime, period = '') {
+    if (!SportsDate) return;
+    const f = SportsDate.format(date, rawTime, lang, Date.now());
+    el.setAttribute('datetime', f.datetime); el.dataset.gameTime = f.canonicalTime || ''; el.dataset.gamePeriod = period;
+    el.setAttribute('aria-label', f.accessible); el.title = f.accessible;
+    const nodes = [];
+    for (const [key, text] of [['day', f.day], ['year', f.year], ['clock', [f.clock, period].filter(Boolean).join(' · ')]]) {
+      if (!text) continue;
+      const span = document.createElement('span'); span.className = `sports-result__${key}`; span.textContent = text; nodes.push(span);
+    }
+    el.replaceChildren(...nodes);
+  }
+
   function hydrateSportsBoard(payload) {
-    if (!payload || !payload.teams || typeof payload.teams !== 'object') return;
+    if (!SportsDate || !payload || !payload.teams || typeof payload.teams !== 'object') return;
     hydratedPayload = payload; hydratedDay = ymdInToronto();
     const byId = new Map(Object.entries(payload.teams).map(([key, team]) => [team?.id || key, team]));
     // Opposing teams often share the same kickoff; convert each date/time once per payload.
@@ -345,9 +358,9 @@
       ]);
       const today = ymdInToronto();
       const finals = [...(team.results || []), ...(team.nextGames || []).filter(g => g.final || g.result)];
-      const results = [...finals, ...(last ? [last] : [])].sort((a, b) => String(b.date).localeCompare(String(a.date)) || String(b.time || '').localeCompare(String(a.time || '')));
+      const results = [...finals, ...(last ? [last] : [])].sort((a, b) => SportsDate.compare(a, b, true));
       const finalKeys = new Set(results.map(gameKey));
-      const upcoming = [...(team.nextGames || []), ...(next ? [next] : [])].filter(g => !g.final && !g.result && !finalKeys.has(gameKey(g))).sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.time || '').localeCompare(String(b.time || '')));
+      const upcoming = [...(team.nextGames || []), ...(next ? [next] : [])].filter(g => !g.final && !g.result && !finalKeys.has(gameKey(g))).sort((a, b) => SportsDate.compare(a, b));
       const selected = [...upcoming.map(game => ({ game, final: Boolean(game.final || game.result) })), ...results.map(game => ({ game, final: true }))];
       const usable = selected.filter(({ game }) => game?.date && (game.gameId || game.url));
       if (!usable.length) return; // Retain an empty/unavailable notice until a row can replace it.
@@ -389,16 +402,8 @@
         row.removeAttribute('data-live-armed');
         row.removeAttribute('data-event-state');
         const time = row.querySelector('time');
-        time.setAttribute('datetime', game.date || '');
         const kickoff = ms(game);
-        time.textContent = game.date === today ? (lang === 'en' ? 'Today' : 'Aujourd’hui') : game.date || '';
-        if (Number.isFinite(kickoff)) {
-          const clock = document.createElement('span'); clock.className = 'sports-result__clock';
-          gameClockFormatter ||= new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { timeZone: TZ, hour: '2-digit', minute: '2-digit' });
-          clock.textContent = gameClockFormatter.format(new Date(kickoff));
-          if (game.period && !final) clock.textContent += ` · ${game.period}`;
-          time.appendChild(clock);
-        }
+        renderGameTime(time, game.date, game.time, !final ? game.period || '' : '');
         const score = row.querySelector('.sports-result__score');
         const hasScore = [game.scoreFor, game.scoreAgainst].every(n => n != null && String(n).trim() !== '' && Number.isFinite(Number(n)) && Number(n) >= 0);
         const waiting = Number.isFinite(kickoff) && kickoff < Date.now() - LIVE_TAIL_MS;
@@ -420,10 +425,8 @@
       const orderedRows = [...currentRows].sort((a, b) => {
         const af = a.hasAttribute('data-result'); const bf = b.hasAttribute('data-result');
         if (af !== bf) return af ? 1 : -1;
-        const stamp = row => (row.querySelector('time')?.getAttribute('datetime') || '') + ' ' + (row.querySelector('.sports-result__clock')?.textContent || '');
-        const at = Number(a.getAttribute('data-kickoff-ts')); const bt = Number(b.getAttribute('data-kickoff-ts'));
-        if (Number.isFinite(at) && Number.isFinite(bt) && at !== bt) return af ? bt - at : at - bt;
-        return af ? stamp(b).localeCompare(stamp(a)) : stamp(a).localeCompare(stamp(b));
+        const gameDate = row => { const el = row.querySelector('time'); return { date: (el?.getAttribute('datetime') || '').slice(0, 10), time: el?.dataset.gameTime || '' }; };
+        return SportsDate.compare(gameDate(a), gameDate(b), af);
       });
       if (orderedRows.some((row, i) => row !== currentRows[i])) orderedRows.forEach(row => list.appendChild(row));
       const sourceLink = panel.querySelector('.sports-panel__results-source');
@@ -1105,30 +1108,24 @@
     searchQuery = initial.q;
   }
   function relabelCivilDays() {
-    const today = ymdInToronto();
-    const yest = addDaysYmd(today, -1);
-    const tom = addDaysYmd(today, 1);
-    const word = (ymd) => {
-      if (ymd === today) return lang === 'en' ? 'Today' : 'Aujourd’hui';
-      if (ymd === yest) return lang === 'en' ? 'Yesterday' : 'Hier';
-      if (ymd === tom) return lang === 'en' ? 'Tomorrow' : 'Demain';
-      return '';
-    };
-    root.querySelectorAll('.sports-result time[datetime]').forEach((el) => {
-      const ymd = String(el.getAttribute('datetime') || '').slice(0, 10);
-      let w = word(ymd);
-      if (!w) {
-        // Mot relatif périmé (« Hier », « Demain »… figé au build) → date courte.
-        const cur = (el.querySelector('.sports-result__day') || el).textContent || '';
-        if (!/^(Aujourd|Hier|Demain|Today|Yesterday|Tomorrow)/.test(cur.trim()) || !/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return;
-        try {
-          w = new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { day: 'numeric', month: 'short', timeZone: 'UTC' })
-            .format(new Date(`${ymd}T12:00:00Z`));
-        } catch { return; }
+    if (!SportsDate) return;
+    root.querySelectorAll('.sports-result time[datetime]').forEach(el => {
+      // Keep the published regatta range, but its separate year can age at midnight.
+      const date = String(el.getAttribute('datetime') || '').slice(0, 10);
+      const range = el.querySelector('.sports-result__day--range');
+      if (range) {
+        const value = SportsDate.format(date, el.dataset.gameTime || '', lang, Date.now()).year;
+        let year = el.querySelector('.sports-result__year');
+        if (!value) year?.remove();
+        else { if (!year) { year = document.createElement('span'); year.className = 'sports-result__year'; range.after(year); } year.textContent = value; }
+        return;
       }
-      const dayEl = el.querySelector('.sports-result__day');
-      if (dayEl) dayEl.textContent = w;
-      else if (!el.querySelector('.sports-result__clock')) el.textContent = w;
+      if (!el.hasAttribute('data-game-time')) {
+        const day = el.querySelector('.sports-result__day');
+        if (day) day.textContent = SportsDate.format(date, '', lang, Date.now()).day;
+        return;
+      }
+      renderGameTime(el, date, el.dataset.gameTime, el.dataset.gamePeriod || '');
     });
   }
 
