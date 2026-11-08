@@ -674,7 +674,7 @@ html[data-wide-preview="e"] {
     overflow-x: hidden !important;
     overflow-y: auto !important;
     overscroll-behavior: contain;
-    scrollbar-gutter: auto;
+    scrollbar-gutter: stable;
     padding-right: 0;
     box-sizing: border-box;
     scrollbar-width: thin;
@@ -689,7 +689,7 @@ html[data-wide-preview="e"] {
     --tools-side-left: max(20px, env(safe-area-inset-left, 0px));
   }
 
-  html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar {
+  html[data-wide-preview="e"] .wide-rail-stack .filters-panel .filters::-webkit-scrollbar {
     width: 10px;
   }
   html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar-track {
@@ -761,6 +761,9 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] .wide-rail-stack .filters {
+    /* Même largeur replié/ouvert, sans attendre l’apparition de la barre. */
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
