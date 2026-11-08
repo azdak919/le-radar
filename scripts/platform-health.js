@@ -32,6 +32,9 @@ let sailingAlert = '';
 try { sailingAlert = (JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'sports-sailing.json'), 'utf8')).cicsa || {}).sheetAlert || ''; } catch { /* absent */ }
 if (sailingAlert) deprecations.add(`Voile CICSA : ${sailingAlert}`);
 const problems = lib.evaluate({ repoSizeMb: (info.size || 0) / 1024, pages, dependabotPrs: prs, workflows, deprecations: [...deprecations] });
+let radioHealth;
+try { radioHealth=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data/radio-health.json'),'utf8')); } catch { /* absence => alerte stale */ }
+problems.push(...require('./radio-health-lib').healthProblems(radioHealth));
 const body = lib.renderBody(problems);
 const out = path.join(__dirname, '..', 'data', 'platform-health.md');
 fs.mkdirSync(path.dirname(out), { recursive: true });

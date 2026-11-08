@@ -62,7 +62,7 @@ function safeCssColor(color) {
 }
 
 function getPlayableStream(radio) {
-  if (!radio?.stream) return null;
+  if (!radio?.stream || radio._streamStatus === 'broken') return null;
   const url = radio.stream;
   if (url.startsWith('http:') && location.protocol === 'https:' && !PROXY_BASE) return null;
   if (!PROXY_BASE) return url;
@@ -82,6 +82,7 @@ function markStationHeardLive(id) {
 
 /** Flux muet confirmé par le bot (2 contrôles) : affiché « Hors ligne », revient seul. */
 function isStationOffline(radio) {
+  if (radio?._streamStatus === 'broken') return true;
   if (!radio || radio._streamStatus !== 'silent') return false;
   return !STATIONS_HEARD_LIVE.has(String(radio.id || ''));
 }

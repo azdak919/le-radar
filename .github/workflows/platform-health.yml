@@ -1,10 +1,14 @@
 name: Platform Health
-# Hebdomadaire, la nuit : ce que les bots ne savent pas réparer seuls
+# Quotidien (filet de surveillance radio périmée), la nuit : ce que les bots ne savent pas réparer seuls
 # (taille du dépôt, certificat Pages, PR Dependabot bloquées, workflows
 # désactivés, actions en fin de vie). Une seule issue, mise à jour puis fermée.
 on:
   schedule:
-    - cron: '15 7 * * 3'   # mercredi ~3 h Toronto
+    - cron: '15 7 * * *'   # filet quotidien ~2 h HNE / 3 h HAE Toronto
+  workflow_run:
+    workflows: ["Update Radio Streams"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,6 +26,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
@@ -38,7 +44,11 @@ jobs:
           NUM=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
           if [ "${PROBLEMS:-0}" -gt 0 ]; then
             if [ -n "$NUM" ]; then
+              OLD=$(gh issue view "$NUM" --repo "${{ github.repository }}" --json body --jq '.body | try capture("<!-- radar-health:(?<hash>[a-f0-9]+) -->").hash catch ""')
+            NEW=$(node -p 'require("fs").readFileSync("data/platform-health.md","utf8").match(/radar-health:([a-f0-9]+)/)[1]')
+            if [ "$OLD" != "$NEW" ]; then
               gh issue edit "$NUM" --repo "${{ github.repository }}" --body-file data/platform-health.md
+            fi
             else
               gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file data/platform-health.md
             fi
