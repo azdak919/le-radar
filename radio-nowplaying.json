@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T18:07:29.405Z",
+  "updatedAt": "2026-11-08T19:07:16.010Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -25,11 +25,10 @@
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T18:06:27.359Z"
+      "checkedAt": "2026-11-08T19:06:17.697Z"
     },
     "cism": {
       "id": "cism",
@@ -56,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T18:06:41.350Z"
+      "checkedAt": "2026-11-08T19:06:31.600Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Modular Systems/Future Classics",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "The Magic Roundabout",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
-      "track": "Free Kick",
-      "showTitle": "Modular Systems/Future Classics",
+      "next": {
+        "title": "Bhum Bhum Time",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "18:00"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "The Magic Roundabout",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T18:06:54.156Z"
+      "checkedAt": "2026-11-08T19:06:34.657Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Northern Stagelights",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/northern-stagelights"
-      },
-      "next": {
         "title": "Methods and Madness",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/methods-and-madness"
       },
+      "next": {
+        "title": "Fukubukuro",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/fukubukuro"
+      },
       "track": "",
-      "showTitle": "Northern Stagelights",
+      "showTitle": "Methods and Madness",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T18:07:09.203Z"
+      "checkedAt": "2026-11-08T19:06:55.292Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T18:07:10.243Z"
+      "checkedAt": "2026-11-08T19:06:56.801Z"
     },
     "choq": {
       "id": "choq",
@@ -151,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T18:07:29.055Z"
+      "checkedAt": "2026-11-08T19:07:15.659Z"
     }
   }
 }
