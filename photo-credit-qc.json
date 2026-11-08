@@ -1,21 +1,35 @@
 {
-  "updated": "2026-11-08T03:39:07.997Z",
+  "updated": "2026-11-08T05:09:00.195Z",
   "total": 188,
-  "withImage": 168,
-  "withCredit": 168,
-  "cited": 108,
-  "pending": 37,
+  "withImage": 167,
+  "withCredit": 167,
+  "cited": 109,
+  "pending": 35,
   "missingHero": 0,
   "ok": false,
   "checked": 49,
-  "updatedCount": 3,
-  "citedNew": 6,
-  "fallbackNew": 43,
+  "updatedCount": 5,
+  "citedNew": 8,
+  "fallbackNew": 41,
   "samples": [
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
       "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "source": "Le Délit",
+      "credit": "Photo : DENIS FARLEY",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
       "cited": true,
       "method": "media-credit-featured"
     },

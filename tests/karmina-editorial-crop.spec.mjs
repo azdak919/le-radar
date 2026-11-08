@@ -29,7 +29,7 @@ for (const [name, viewport] of [['desktop', {width:1440,height:1000}], ['mobile'
     await expect(card.locator('.article-media')).not.toContainText('abdallahh');
     const dims = await img.evaluate(el=>({w:el.clientWidth,h:el.clientHeight,nw:el.naturalWidth,nh:el.naturalHeight}));
     expect(dims.nw).toBe(600); expect(dims.nh).toBe(779);
-    expect(dims.w/dims.h).toBeGreaterThan(1.2);
+    expect(dims.w/dims.h).toBeCloseTo(1.5, 1);
     await card.screenshot({animations:'disabled',path:testInfo.outputPath(`karmina-feed-${name}.png`)});
     await page.goto('/article/76bd8d7a1889e2e8/',{waitUntil:'domcontentloaded'});
     await page.addStyleTag({content:'#local-lab-format-bar { display:none!important; }'});
