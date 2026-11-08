@@ -46,13 +46,16 @@ const CFAK_ONAIR_STREAM = 'https://streams.radiomast.io/a372c74f-6c78-48b9-9933-
 // Ces hôtes géo tournent (14223 → 18213 → 18303…). Cataloguer le redirecteur.
 const CHOQ_ONAIR_STREAM = 'https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC';
 
+// CISM : URL publiée dans le lecteur de https://cism893.ca/ (8 nov. 2026).
+// L'ancien hôte ustream.ca a un certificat expiré : ne pas le reproposer.
+const CISM_ONAIR_STREAM = 'https://stream.cism893.ca/';
+
 // === KNOWN GOOD STREAMS (the bot trusts and re-validates these first) ===
 const KNOWN_STREAMS = {
   chyz: CHYZ_ONAIR_STREAM,
   cfak: CFAK_ONAIR_STREAM,
   ckut: 'https://ckut.out.airtime.pro/ckut_a',
-  // HTTPS mount — playable directly on the HTTPS site (the :8000 HTTP one is blocked as mixed content)
-  cism: 'https://stream03.ustream.ca/cism128.mp3',
+  cism: CISM_ONAIR_STREAM,
   cjlo: 'https://cjlo.radioca.st/stream',
   choq: CHOQ_ONAIR_STREAM,
 };
@@ -64,11 +67,7 @@ const STATION_HINTS = {
     'https://ckut.out.airtime.pro/ckut_a',
     'https://icecast.ckut.ca/903fm-192-stereo',
   ],
-  cism: [
-    'https://stream03.ustream.ca/cism128.mp3',
-    'http://stream03.ustream.ca:8000/cism128.mp3',
-    'https://cism893.ca/stream',
-  ],
+  cism: [CISM_ONAIR_STREAM],
   cfou: [
     'http://streamer.xittel.net:8000/cfou',
   ],
@@ -733,6 +732,7 @@ module.exports = {
   promoteCandidate,
   slugFromCandidate,
   applyStreamToRadio,
+  CISM_ONAIR_STREAM,
   CHYZ_ONAIR_STREAM,
   CFAK_ONAIR_STREAM,
   CHOQ_ONAIR_STREAM,

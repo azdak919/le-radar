@@ -4117,7 +4117,10 @@ function showArticleImage(article, media, img, kind, item) {
     if (kind === 'stock' && item?.imageProvider === 'campus-bank') markDeadCampusPhoto(item.stockImage);
     dropArticleImage(article, media, article.classList.contains('article--lead') ? 'lead' : 'compact', kind === 'stock' ? { ...item, stockImage: '' } : item);
   }, { once: true });
-  if (kind === 'photo') applyDocumentContentCrop(img);
+  const reviewedFocal = kind === 'photo' && item?.imageCropSafe === item?.image
+    && Number.isFinite(item?.imageCropFocalY) && item.imageCropFocalY >= 0 && item.imageCropFocalY <= 1;
+  if (kind === 'photo' && !reviewedFocal) applyDocumentContentCrop(img);
+  if (reviewedFocal) img.style.objectPosition = `50% ${item.imageCropFocalY * 100}%`;
   // Photo / dessin d'article en hauteur (jugé recadrable par le bot) : cover
   // 3:2 sans bandes, cadré au tiers haut — visages et sujet restent visibles.
   if (kind === 'photo' && !img.classList.contains('is-doc-crop')) {
@@ -4214,7 +4217,7 @@ function attachArticleImage(article, item, role) {
         img.onerror?.();
         return;
       }
-      if (kind === 'photo' && !isUsableArticleImage(img, role)) {
+      if (kind === 'photo' && !isUsableArticleImage(img, role, item)) {
         const w = img.naturalWidth || 0;
         const h = img.naturalHeight || 0;
         // Photo d’article déjà décodée : on la garde. Le campus n’est pas
@@ -4300,10 +4303,15 @@ const FEATURE_IMAGE_MIN = { width: 640, height: 360, pixels: 240000 };
    plus petites et des cadrages portrait — object-fit recadre de toute façon. */
 const THUMB_IMAGE_MIN = { width: 200, height: 150, pixels: 40000 };
 
-function isUsableArticleImage(img, role) {
+function isUsableArticleImage(img, role, item = {}) {
   const width = img.naturalWidth || 0;
   const height = img.naturalHeight || 0;
   const ratio = width / Math.max(height, 1);
+  // Portrait approuvé par le pipeline, lié à l'image actuelle seulement.
+  // Les exceptions à 600 px ont en plus un cadrage éditorial revu.
+  if (item.image && item.imageCropSafe === item.image && ratio >= 0.66 && ratio < 0.95
+    && width >= (Number.isFinite(item.imageCropFocalY) && item.imageCropFocalY >= 0 && item.imageCropFocalY <= 1 ? 600 : 640)
+    && width / 1.5 >= 360) return true;
   const isThumb = role === 'feature' || role === 'compact';
   const min = role === 'lead' ? LEAD_IMAGE_MIN : (isThumb ? THUMB_IMAGE_MIN : FEATURE_IMAGE_MIN);
   // Dimensions seulement : un dessin éditorial (fond blanc, peu de traits) reste
