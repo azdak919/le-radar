@@ -19,7 +19,7 @@
  */
 
 const fs = require('fs');
-const { applyLeadImagePins, loadPins, normUrl } = require('./lead-image-pins-lib');
+const { applyLeadImagePins, loadPins, normUrl, reviewedSourceCrop } = require('./lead-image-pins-lib');
 const path = require('path');
 const { hasUsableImage } = require('./lead-fallback-lib');
 const {
@@ -119,6 +119,9 @@ function clearLegacyFallback(item) {
 }
 
 function assignSourceImage(item, url, leadReady, cropSafe = false) {
+  const reviewed = reviewedSourceCrop(item, url);
+  if (reviewed && cropSafe) item.imageCropFocalY = reviewed.focalY;
+  else delete item.imageCropFocalY;
   if (item.image && url && !imageUrlsMatch(url, item.image)) {
     clearMirroredLead(item);
   }
@@ -136,9 +139,9 @@ function hasCropSafeImage(item) {
 }
 
 /** Portrait modéré qui remplit encore une une 3:2 une fois recadré au centre. */
-function fillsLeadWhenCropped(width = 0, height = 0) {
+function fillsLeadWhenCropped(width = 0, height = 0, { reviewed = false } = {}) {
   if (!width || !height) return false;
-  return width / height >= LEAD_CROP_MIN_RATIO && width >= 640 && width / 1.5 >= 360;
+  return width / height >= LEAD_CROP_MIN_RATIO && width >= (reviewed ? 600 : 640) && width / 1.5 >= 360;
 }
 
 /** Crédit photo source : lié à l’image retirée, il ne doit pas survivre. */
@@ -277,16 +280,16 @@ function shouldValidateImageOnPage(item = {}, sourceMap = new Map()) {
   return !tokens.some((t) => img.includes(t));
 }
 
-async function probeLeadReady(url, reject = [], opts = {}, { cropSafe = false } = {}) {
+async function probeLeadReady(url, reject = [], opts = {}, { cropSafe = false, item = {} } = {}) {
   if (!url || !isCandidateImageUrl(url, reject) || isWeakImageUrl(url, opts)) return false;
   const dims = await probeRemoteImageSize(url);
   if (!dims) return false;
   if (meetsLeadDisplaySize(dims.width, dims.height)) return true;
-  return !!(cropSafe && isPortraitLeadRatio(dims.width, dims.height) && fillsLeadWhenCropped(dims.width, dims.height));
+  return !!(cropSafe && isPortraitLeadRatio(dims.width, dims.height) && fillsLeadWhenCropped(dims.width, dims.height, { reviewed: !!reviewedSourceCrop(item, url, dims.width, dims.height) }));
 }
 
 async function markSourceLeadQuality(item) {
-  const sourceReady = await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item) });
+  const sourceReady = await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item), item });
   item.leadImageReady = sourceReady;
   return sourceReady;
 }
@@ -715,7 +718,7 @@ async function main() {
           // Ne retirer le stock QUE si la photo SOURCE seule est lead-ready.
           // Sinon (stock Assemblée + logo Exil) on effaçait le bon visuel.
           const sourceLead = item.image && ok(item.image)
-            && await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item) });
+            && await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item), item });
           if (sourceLead) {
             clearStockPhoto(item);
           } else if (item.stockImage && item.image && !ok(item.image)) {
@@ -769,7 +772,7 @@ async function main() {
         if (await photoIsLeadReady(item)) {
           if (doUpdate) {
             const sourceLead = item.image && ok(item.image)
-            && await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item) });
+            && await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item), item });
             // Hôte fragile sans miroir : garder le stock campus comme filet.
             if (sourceLead && !(imageHostIsFragile(item.image) && !item.imageLocal)) {
               clearStockPhoto(item);

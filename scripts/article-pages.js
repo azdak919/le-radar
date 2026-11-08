@@ -76,6 +76,9 @@ function recordOf(item) {
     excerpt: shortExcerpt(item.leadExcerpt || item.excerpt || ''),
     image: imageOf(item),
     credit: creditOf(item),
+    ...(item.imageCropSafe === item.image && imageOf(item) === item.image
+      && Number.isFinite(item.imageCropFocalY) && item.imageCropFocalY >= 0 && item.imageCropFocalY <= 1
+      ? { imageCropFocalY: item.imageCropFocalY } : {}),
   };
 }
 
@@ -123,7 +126,7 @@ function articleMain(a) {
     .filter(Boolean).join('<span class="seo-article__sep" aria-hidden="true"> · </span>');
   const fig = a.image ? `
       <figure class="seo-article__figure">
-        <img src="${esc(a.image)}" alt="${esc(a.title)}" width="1200" height="800" decoding="async" fetchpriority="high" referrerpolicy="no-referrer">
+        <img src="${esc(a.image)}" alt="${esc(a.title)}" width="1200" height="800"${Number.isFinite(a.imageCropFocalY) && a.imageCropFocalY >= 0 && a.imageCropFocalY <= 1 ? ` style="object-position:50% ${a.imageCropFocalY * 100}%;aspect-ratio:3/2"` : ''} decoding="async" fetchpriority="high" referrerpolicy="no-referrer">
         ${a.credit ? `<figcaption class="seo-article__credit">📸 ${esc(a.credit)}</figcaption>` : ''}
       </figure>` : '';
   return `<main class="wire seo-wire seo-article" data-article-id="${esc(a.id)}">
