@@ -123,12 +123,18 @@ test('Laval 15h is live at 15h24 Toronto, 19h is not; CI UTC and DST produce the
 });
 
 test('Today is a Toronto civil day across UTC midnight and DST, not the browser’s local day', () => {
-  const block = board.slice(board.indexOf('  function ymdInToronto('), board.indexOf('  /** Dates de matchs'));
-  const ctx = vm.createContext({ Intl, Date });
+  const block = board.slice(board.indexOf('  let civilDateFormatter;'), board.indexOf('  /** Dates de matchs'));
+  let formatterCreations = 0;
+  const ctx = vm.createContext({ Intl: { DateTimeFormat: class extends Intl.DateTimeFormat {
+    constructor(...args) { super(...args); formatterCreations++; }
+  } }, Date });
   vm.runInContext("const TZ = 'America/Toronto';" + block + ';globalThis.getRange = periodRange', ctx);
+  assert.equal(ctx.getRange('all', new Date('2026-11-08T04:59:59Z')), null);
+  assert.equal(formatterCreations, 0, 'All needs no civil-date formatter');
   for (const [instant, day] of [['2026-11-08T04:59:59Z', '2026-11-07'], ['2026-11-08T05:00:00Z', '2026-11-08'], ['2026-03-08T04:59:59Z', '2026-03-07'], ['2026-03-08T05:00:00Z', '2026-03-08'], ['2026-11-01T05:30:00Z', '2026-11-01'], ['2026-11-01T06:30:00Z', '2026-11-01']]) {
     const range = ctx.getRange('today', new Date(instant)); assert.equal(range.start, day); assert.equal(range.end, day);
   }
+  assert.equal(formatterCreations, 1, 'One formatter serves every civil-day calculation');
 });
 
 test('SSR contains every today game, bilingual Today, accessible institution control and live hydration', () => {

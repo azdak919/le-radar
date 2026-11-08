@@ -90,14 +90,16 @@
   const t = labels[lang];
 
   /** YYYY-MM-DD civil à Québec. */
+  let civilDateFormatter;
   function ymdInToronto(date = new Date()) {
     try {
-      return new Intl.DateTimeFormat('en-CA', {
+      civilDateFormatter ||= new Intl.DateTimeFormat('en-CA', {
         timeZone: TZ,
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
-      }).format(date);
+      });
+      return civilDateFormatter.format(date);
     } catch {
       return date.toISOString().slice(0, 10);
     }
@@ -130,8 +132,8 @@
    * Session = calendrier univ. QC (A: sep–déc, H: jan–avr, É: mai–août).
    */
   function periodRange(periodKey, ref = new Date()) {
-    const today = ymdInToronto(ref);
     if (!periodKey || periodKey === 'all') return null;
+    const today = ymdInToronto(ref);
     if (periodKey === 'today') return { start: today, end: today };
     if (periodKey === 'week') {
       const start = startOfWeekMonday(today);
@@ -424,12 +426,11 @@
   }
   window.addEventListener('radar:sports-updated', event => hydrateSportsBoard(event.detail));
 
-  function panelMatchesPeriod(panel, periodKey) {
+  function panelMatchesPeriod(panel, periodKey, range = periodRange(periodKey)) {
     if (!periodKey || periodKey === 'all') return true;
     // Cartes « liens officiels » sans calendrier : hors filtres temporels.
     if (panel.classList.contains('sports-panel--external')) return false;
     if (periodKey === 'live') return panelIsLiveNow(panel);
-    const range = periodRange(periodKey);
     if (!range) return true;
     const dates = panelGameYmds(panel);
     if (!dates.size) return false;
@@ -642,6 +643,8 @@
     const periodKey = PERIOD_KEYS.has(String(period || 'all').toLowerCase())
       ? String(period || 'all').toLowerCase()
       : 'all';
+    // One civil-date range per refresh, not one Intl calculation per match.
+    const rowRange = periodRange(periodKey);
     const teamId = (team || '').trim();
     const qRaw = query !== undefined ? String(query || '') : searchQuery;
     searchQuery = qRaw;
@@ -677,16 +680,15 @@
       const okSex = isExternal || effectiveSex === 'all' || !pSex || pSex === effectiveSex;
       const okSearch = panelMatchesSearch(panel, tokens);
       // Période : matchs (scores ou à venir) dans la fenêtre ; masque les cartes liens.
-      const okPeriod = panelMatchesPeriod(panel, periodKey);
+      const okPeriod = panelMatchesPeriod(panel, periodKey, rowRange);
       const schoolHay = normalizeSearchText([panel.getAttribute('data-institution-label'), panel.getAttribute('data-institution-campus')].filter(Boolean).join(' '));
       const okSchool = !school.raw || (!isExternal && (school.id
         ? panel.getAttribute('data-institution') === school.id
         : schoolTokens.every(token => schoolHay.includes(token))));
       panel.querySelectorAll('.sports-result').forEach(row => {
         const date = (row.querySelector('time[datetime]')?.getAttribute('datetime') || '').slice(0, 10);
-        const range = periodRange(period);
-        row.hidden = period === 'live' ? !row.classList.contains('sports-result--live')
-          : Boolean(range && (!date || !ymdInRange(date, range)));
+        row.hidden = periodKey === 'live' ? !row.classList.contains('sports-result--live')
+          : Boolean(rowRange && (!date || !ymdInRange(date, rowRange)));
       });
       const show = okSport && okSector && okSex && okSearch && okPeriod && okSchool;
       panel.hidden = !show;
