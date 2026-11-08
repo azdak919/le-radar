@@ -123,7 +123,7 @@ for (const radio of radios) {
 function assertRadioEndpoint(radio, expected, message) {
   if(radio?.stream===expected)return;
   let proof;try{proof=readJson('data/radio-health.json').stations?.[radio?.id];}catch{/* absent => refus */}
-  assert(require('../scripts/radio-health-lib').verifiedReplacement(radio,proof),message+' ou migration officielle entièrement vérifiée');
+  assert(require('../scripts/radio-health-lib').verifiedAdoption(radio,proof),message+' ou adoption officielle durable entièrement vérifiée');
 }
 
 {

@@ -12,19 +12,29 @@ async function publishedAlternatives(radio,{probe=lib.requestSample}={}) {
     const page=await probe(source,{maxBytes:256*1024});
     if(!page.ok || !/text\/html|application\/json/i.test(page.mime||''))continue;
     const text=page.body.toString('utf8');
-    candidates.push(...lib.officialCandidates(text,source));
-    // src relatif explicitement publié dans le lecteur officiel (pas de chemin deviné).
-    for(const match of text.matchAll(/<(?:audio|source)\b[^>]*\bsrc=["']([^"']+)["']/gi)) {
-      try { const url=lib.safeHttps(new URL(match[1],source).href);if(url)candidates.unshift({url,source,kind:'official-player'}); } catch { /* lien invalide */ }
-    }
+    candidates.push(...lib.officialCandidates(text,source,radio));
   }
   const unique=[...new Map(candidates.map(c=>[c.url,c])).values()];
   const expanded=[];
   for(const candidate of unique.slice(0,4)) {
-    if(/\.(?:m3u8?|pls)(?:\?|$)/i.test(candidate.url)) {
+    if(candidate.kind==='official-api-reference') {
+      const response=await probe(candidate.url,{maxBytes:32768});
+      if(!response.ok||!/application\/json/i.test(response.mime||''))continue;
+      let data;try{data=JSON.parse(response.body.toString('utf8'));}catch{continue;}
+      const url=lib.safeHttps(data.audio_stream_uri);
+      if(url&&data.stationId===radio.id)expanded.push({url,source:candidate.source,kind:'official-player',evidence:{...candidate.evidence,apiUrl:candidate.url,apiField:'audio_stream_uri',apiStationId:data.stationId}});
+    } else if(/\.(?:m3u8?|pls)(?:\?|$)/i.test(candidate.url)) {
       const list=await probe(candidate.url,{maxBytes:32768});
-      if(list.ok) for(const url of list.body.toString('utf8').match(/https:\/\/[^\s"'<>]+/g)||[]) {
-        if(lib.safeHttps(url))expanded.push({url,source:candidate.source,playlist:candidate.url,kind:'official-playlist'});
+      if(list.ok) {
+        const text=list.body.toString('utf8');
+        if(/#EXT-X-/i.test(text))continue;
+        const lines=text.split(/\r?\n/);
+        for(const [index,line]of lines.entries()) {
+          const match=line.match(/^File\d+=(.+)$/i),value=match?match[1]:(!line.trim().startsWith('#')?line.trim():'');
+          if(!value||(!match&&!/^https:\/\//i.test(value)))continue;
+          let url;try{url=lib.safeHttps(new URL(value,candidate.url).href);}catch{continue;}
+          if(url)expanded.push({url,source:candidate.source,playlist:candidate.url,kind:'official-playlist',evidence:{...candidate.evidence,playlistLine:index+1,playlistValue:value}});
+        }
       }
     } else expanded.push(candidate);
   }
@@ -38,7 +48,7 @@ async function checkRadio(radio,previous={},deps={}) {
     // L'absence du décodeur est un incident du contrôle, pas une panne de station.
     if(result.error!=='ffmpeg-missing')for(const candidate of await (deps.alternatives||publishedAlternatives)(radio,deps)) {
       const sources=new Set([radio.website,radio.listenUrl].map(lib.safeHttps).filter(Boolean));
-      if(candidate.url===radio.stream||!lib.safeHttps(candidate.url)||!sources.has(lib.safeHttps(candidate.source))||discovery.isJunkStreamUrl(candidate.url))continue;
+      if(candidate.url===radio.stream||!lib.safeHttps(candidate.url)||!sources.has(lib.safeHttps(candidate.source))||discovery.isJunkStreamUrl(candidate.url)||candidate.evidence?.stationId!==radio.id||!['official-player','official-playlist'].includes(candidate.kind))continue;
       const canonical=discovery.canonicalizeStreamUrl(candidate.url)||candidate.url;
       const alternative=await inspect(canonical,{}, {...deps,now,forceAudio:true});
       if(alternative.state==='working'&&alternative.audio?.decoded&&alternative.expiry!=='2d'&&!discovery.isJunkIcyName(alternative.icyName)) {
@@ -47,6 +57,8 @@ async function checkRadio(radio,previous={},deps={}) {
     }
   }
   if(!result.provenance&&previous.url===result.url&&previous.provenance)result.provenance=previous.provenance;
+  if(result.provenance&&result.replacedUrl&&result.state==='working')result.adoption={stationId:radio.id,url:result.url,at:result.checkedAt,provenance:result.provenance,certificates:result.certificates,audio:result.audio,redirects:result.redirects};
+  else if(previous.adoption?.url===result.url)result.adoption=previous.adoption;
   const record=lib.updateRecord(previous,result,now);
   let entry={...radio,_streamChecked:record.checkedAt,_streamStatus:record.state};
   if(record.state==='working') {

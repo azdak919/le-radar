@@ -25,26 +25,29 @@ assert.equal((await inspect({},()=>({decoded:false,state:'broken',error:'audio-u
 assert.equal((await inspect({},()=>({decoded:false,state:'unknown',error:'ffmpeg-missing'}))).state,'unknown');
 assert.equal((await inspect({},()=>({decoded:true,silent:true,meanDb:-100}))).state,'working');
 assert.equal(lib.needsAudio({state:'working',audio:{decoded:true}},now),true);
-const cached={state:'working',audio:{decoded:true,checkedAt:at}};
+const cached={url:good.url,state:'working',audio:{decoded:true,url:good.url,checkedAt:at}};
 assert.equal(lib.needsAudio(cached,now),false);assert.equal(lib.needsAudio(cached,now+27*3600000),true);
 await inspect({},()=>{throw Error('should reuse fresh decoded sample');},cached);
 assert.equal((await lib.requestSample('http://audio.example/live')).error,'https-required');
+const resolver=async()=>[{address:'93.184.216.34',family:4}];
 function fakeTransport(location) {
   return {get(url,options,cb){const req=new EventEmitter();req.destroy=()=>{};queueMicrotask(()=>{
     const res=new EventEmitter();res.statusCode=302;res.headers={location};res.socket={authorized:true,getPeerCertificate:()=>({valid_to:new Date(now+90*lib.DAY).toUTCString()})};res.destroy=()=>{};cb(res);
   });return req;}};
 }
-assert.equal((await lib.requestSample(good.url,{transport:fakeTransport('http://unsafe.example/live')})).error,'https-downgrade');
-assert.equal((await lib.requestSample(good.url,{transport:fakeTransport(good.url)})).error,'redirect-limit');
-const candidates=lib.officialCandidates('https:\\u002F\\u002Fstream.cism893.ca/ "http://old.example/stream" "https://example.org/ads.js"','https://cism893.ca/');
-assert.deepEqual(candidates,[{url:'https://stream.cism893.ca/',source:'https://cism893.ca/',kind:'official-page'}]);
+assert.equal((await lib.requestSample(good.url,{resolver,transport:fakeTransport('http://unsafe.example/live')})).error,'https-downgrade');
+assert.equal((await lib.requestSample(good.url,{resolver,transport:fakeTransport(good.url)})).error,'redirect-limit');
+const candidates=lib.officialCandidates('<header><div class="element-audio-player-live"><audio src="https://stream.cism893.ca/"></audio></div></header>','https://cism893.ca/',{id:'cism'});
+assert.equal(candidates.length,1);assert.equal(candidates[0].url,'https://stream.cism893.ca/');assert.equal(candidates[0].evidence.selector,'header .element-audio-player-live audio');
+assert.deepEqual(lib.officialCandidates('<a href="https://other.example/stream">Partenaire</a><audio src="https://other.example/listen"></audio>','https://station.example/',{id:'a'}),[]);
+
 const r={id:'a',name:'A',stream:'https://old.example/live',website:'https://station.example/'};
 const failed={url:r.stream,state:'broken',error:'CERT_HAS_EXPIRED',checkedAt:at};
-const valid={...good,url:'https://new.example/live',state:'working',expiry:'ok',checkedAt:at,audio:{decoded:true,checkedAt:at,meanDb:-15}};
+const valid={...good,url:'https://new.example/live',state:'working',expiry:'ok',checkedAt:at,redirects:['https://new.example/live'],audio:{decoded:true,url:'https://new.example/live',checkedAt:at,meanDb:-15}};
 const no=await checker.checkRadio(r,{}, {now,inspect:async()=>failed,alternatives:async()=>[]});
 assert.equal(no.entry.stream,r.stream);assert.equal(no.entry._streamStatus,'broken');
 const guessed=await checker.checkRadio(r,{}, {now,inspect:async()=>failed,alternatives:async()=>[{url:valid.url}]});assert.equal(guessed.entry.stream,r.stream);
-const repaired=await checker.checkRadio(r,{}, {now,inspect:async url=>url===r.stream?failed:valid,alternatives:async()=>[{url:valid.url,source:r.website,kind:'official-player'}]});
+const repaired=await checker.checkRadio(r,{}, {now,inspect:async url=>url===r.stream?failed:valid,alternatives:async()=>[{url:valid.url,source:r.website,kind:'official-player',evidence:{stationId:r.id,selector:'[data-station][data-live] audio',attribute:'src',value:valid.url}}]});
 assert.equal(repaired.entry.stream,valid.url);assert.equal(repaired.record.provenance.source,r.website);
 const isolated=await checker.checkAll([r,{...r,id:'b',stream:valid.url}],{}, {now,inspect:async url=>{if(url===r.stream)throw Error('isolated');return valid;},alternatives:async()=>[]});
 assert.equal(isolated.report.stations.a.state,'unknown');assert.equal(isolated.report.stations.b.state,'working');
@@ -74,17 +77,60 @@ const fingerprint=body=>body.match(/radar-health:[a-f0-9]+/)[0];
 assert.equal(fingerprint(p.renderBody(['x'],'yesterday')),fingerprint(p.renderBody(['x'],'today')));
 assert.notEqual(fingerprint(p.renderBody(['x'])),fingerprint(p.renderBody([])));
 function partialTransport(empty=false) {return {get(url,opts,cb){assert.notEqual(opts.rejectUnauthorized,false);const req=new EventEmitter();req.destroy=()=>{};queueMicrotask(()=>{const res=new EventEmitter();res.statusCode=200;res.headers={'content-type':'audio/mpeg'};res.socket={authorized:true,getPeerCertificate:()=>({valid_to:new Date(now+90*lib.DAY).toUTCString()})};res.destroy=()=>{};cb(res);if(!empty)res.emit('data',Buffer.from('partial audio'));});return req;}};}
-const partial=await lib.requestSample(good.url,{transport:partialTransport(),timeoutMs:20});assert.equal(partial.ok,true);assert.equal(partial.body.toString(),'partial audio');
-const empty=await lib.requestSample(good.url,{transport:partialTransport(true),timeoutMs:20});assert.equal(empty.body.length,0);
+const partial=await lib.requestSample(good.url,{resolver,transport:partialTransport(),timeoutMs:20});assert.equal(partial.ok,true);assert.equal(partial.body.toString(),'partial audio');
+const empty=await lib.requestSample(good.url,{resolver,transport:partialTransport(true),timeoutMs:20});assert.equal(empty.body.length,0);
 console.log('radio-health: budget sample, stale, source exacte, empreinte OK');
-const verified={...valid,redirects:[valid.url],certificates:good.certificates,provenance:{url:valid.url,source:r.website,kind:'official-player'}};
-const migrated={...r,stream:valid.url,_streamProvenance:verified.provenance};
-assert.equal(lib.verifiedReplacement(migrated,verified,now),true);
-for(const brokenProof of [{...verified,audio:{decoded:false}},{...verified,certificates:[]},{...verified,redirects:['http://bad.example/live']},{...verified,provenance:{...verified.provenance,source:'https://unofficial.example/'}}])assert.equal(lib.verifiedReplacement(migrated,brokenProof,now),false);
-const junk=await checker.checkRadio(r,{}, {now,inspect:async url=>url===r.stream?failed:valid,alternatives:async()=>[{url:'https://ecoutez.chyz.ca/proxy/tech/stream',source:r.website,kind:'official-player'}]});assert.equal(junk.entry.stream,r.stream);
+const migrated=repaired.entry;
+assert.equal(lib.verifiedAdoption(migrated,repaired.record,now),true);
+for(const brokenProof of [{...repaired.record.adoption,audio:{decoded:false}},{...repaired.record.adoption,certificates:[]},{...repaired.record.adoption,redirects:['http://bad.example/live']},{...repaired.record.adoption,provenance:{...repaired.record.provenance,source:'https://unofficial.example/'}}])assert.equal(lib.verifiedAdoption(migrated,{...repaired.record,adoption:brokenProof},now),false);
+
+const junk=await checker.checkRadio(r,{}, {now,inspect:async url=>url===r.stream?failed:valid,alternatives:async()=>[{url:'https://ecoutez.chyz.ca/proxy/tech/stream',source:r.website,kind:'official-player',evidence:{stationId:r.id,selector:'[data-station][data-live] audio',attribute:'src',value:valid.url}}]});assert.equal(junk.entry.stream,r.stream);
 console.log('radio-health: migration durable strictement prouvée, mount technique refusé');
 assert.equal(fingerprint(p.renderBody(['PR ouverte depuis 31 j'])),fingerprint(p.renderBody(['PR ouverte depuis 32 j'])));
 const oldWorking=lib.updateRecord({}, {...valid,url:'https://older.example/live'},now);
 const newWorking=lib.updateRecord(oldWorking,valid,now+1000);assert.equal(newWorking.history.length,2);assert.equal(newWorking.history[1].url,valid.url);
 const laterFailed=lib.updateRecord(newWorking,failed,now+2000);assert.equal(laterFailed.lastSuccessEvidence.url,valid.url);
 console.log('radio-health: transitions URL, dernière preuve et anti-spam des âges OK');
+// P1 : aucune connexion vers une adresse locale, privée, documentaire ou réservée.
+for(const address of ['127.0.0.1','0.0.0.0','10.1.2.3','100.64.1.1','169.254.169.254','172.16.0.1','192.168.0.1','192.0.2.10','198.18.0.1','198.51.100.1','203.0.113.1','224.1.1.1','255.255.255.255','::1','::ffff:127.0.0.1','fc00::1','fe80::1','2001:db8::1','2002:7f00:1::','3ffe::1','3fff::1'])assert.equal(lib.isPublicAddress(address),false,address);
+for(const address of ['8.8.8.8','93.184.216.34','2606:4700:4700::1111','2001:4860:4860::8888'])assert.equal(lib.isPublicAddress(address),true,address);
+for(const url of ['https://localhost/','https://foo.localhost/','https://127.0.0.1/','https://2130706433/','https://0x7f000001/','https://[::1]/','https://[::ffff:127.0.0.1]/'])assert.equal(lib.safeHttps(url),null,url);
+let connections=0;
+const neverConnect={get(){connections++;throw Error('private connection must not happen');}};
+assert.equal((await lib.requestSample(good.url,{resolver:async()=>[{address:'127.0.0.1',family:4}],transport:neverConnect})).error,'NON_PUBLIC_ADDRESS');
+assert.equal((await lib.requestSample(good.url,{resolver:async()=>[{address:'8.8.8.8',family:4},{address:'10.0.0.1',family:4}],transport:neverConnect})).error,'NON_PUBLIC_ADDRESS');assert.equal(connections,0);
+let resolutions=0,pinned;
+const rebindingResolver=async()=>++resolutions===1?[{address:'93.184.216.34',family:4}]:[{address:'127.0.0.1',family:4}];
+const pinnedTransport={get(url,opts,cb){opts.lookup(new URL(url).hostname,{all:true},(err,addresses)=>{assert.ifError(err);pinned=addresses;});return partialTransport().get(url,opts,cb);}};
+assert.equal((await lib.requestSample(good.url,{resolver:rebindingResolver,transport:pinnedTransport,timeoutMs:20})).ok,true);assert.equal(resolutions,1);assert.equal(pinned[0].address,'93.184.216.34');
+let redirectConnections=0;
+const privateRedirect={get(...args){redirectConnections++;return fakeTransport('https://private.example/live').get(...args);}};
+const redir=await lib.requestSample(good.url,{resolver:async host=>[{address:host==='private.example'?'10.0.0.1':'93.184.216.34',family:4}],transport:privateRedirect});assert.equal(redir.error,'NON_PUBLIC_ADDRESS');assert.equal(redirectConnections,1);
+// P2 : la présence d'un flux partenaire décodable ne lui donne pas l'identité de la station.
+const partnerHtml='<h1>Station A</h1><aside><a href="https://partner.example/stream">Écouter partenaire</a><div data-station="partner" data-live="true"><audio src="https://partner.example/stream"></audio></div></aside>';
+let partnerInspections=0;
+const partnerCheck=await checker.checkRadio(r,{}, {now,inspect:async url=>{partnerInspections++;return url===r.stream?failed:valid;},probe:async()=>({ok:true,mime:'text/html',body:Buffer.from(partnerHtml)})});assert.equal(partnerCheck.entry.stream,r.stream);assert.equal(partnerInspections,1);
+assert.deepEqual(lib.officialCandidates('<script>"<audio data-station=\"a\" data-live=\"true\" src=\"https://partner.example/stream\">"</script>',r.website,r),[]);
+const identified=lib.officialCandidates('<div data-station="a" data-live="true"><audio src="https://new.example/live"></audio></div>',r.website,r);assert.equal(identified.length,1);assert.equal(identified[0].evidence.stationId,'a');
+// P3 : octets invalides sur nouvel endpoint => nouveau décodage obligatoire.
+let decodeCalls=0;
+const changed=await lib.inspect('https://changed.example/live',cached,{now,probe:async()=>good,decode:()=>{decodeCalls++;return {decoded:false,state:'broken',error:'audio-undecodable'};}});assert.equal(decodeCalls,1);assert.equal(changed.state,'broken');
+// P4 : adoption durable distincte de la disponibilité courante et de l'âge du rapport.
+const failedAfterMigration=await checker.checkRadio(migrated,repaired.record,{now:now+3600000,inspect:async()=>({...failed,url:valid.url,checkedAt:new Date(now+3600000).toISOString()}),alternatives:async()=>[]});
+assert.equal(failedAfterMigration.entry._streamStatus,'broken');assert.equal(lib.verifiedAdoption(failedAfterMigration.entry,failedAfterMigration.record,now+100*lib.DAY),true);
+assert.equal(vm.runInContext(`getPlayableStream(${JSON.stringify(failedAfterMigration.entry)})`,player),null);
+assert.match(lib.healthProblems({checkedAt:at,stations:{a:failedAfterMigration.record}},now+100*lib.DAY)[0],/périmée/);
+const recovery=await checker.checkRadio(failedAfterMigration.entry,failedAfterMigration.record,{now:now+2*3600000,inspect:async()=>({...valid,checkedAt:new Date(now+2*3600000).toISOString()}),alternatives:async()=>[]});assert.equal(recovery.entry._streamStatus,'working');assert.equal(lib.verifiedAdoption(recovery.entry,recovery.record,now+2*3600000),true);
+console.log('radio-health P1/P2/P3/P4 : DNS/IP épinglés, partenaire refusé, endpoint redécodé, adoption/panne/rétablissement OK');
+
+// API/playlist : seul un lecteur principal identifié peut référencer la ressource.
+const apiHtml='<audio data-station="a" data-live="true" data-stream-api="https://api.example/live"></audio>';
+for(const stationId of ['partner','a']) {
+ const alternatives=await checker.publishedAlternatives(r,{probe:async url=>url===r.website?{ok:true,mime:'text/html',body:Buffer.from(apiHtml)}:{ok:true,mime:'application/json',body:Buffer.from(JSON.stringify({stationId,audio_stream_uri:valid.url}))}});
+ assert.equal(alternatives.length,stationId==='a'?1:0);if(alternatives.length)assert.equal(alternatives[0].evidence.apiStationId,'a');
+}
+const playlist=await checker.publishedAlternatives(r,{probe:async url=>url===r.website?{ok:true,mime:'text/html',body:Buffer.from('<audio data-station="a" data-live="true" src="https://station.example/live.pls"></audio>')}:{ok:true,mime:'audio/x-scpls',body:Buffer.from('[playlist]\nFile1='+valid.url+'\nFile2=http://downgrade.example/live')}});
+assert.equal(playlist.length,1);assert.equal(playlist[0].kind,'official-playlist');assert.equal(playlist[0].evidence.playlistLine,2);
+const exceptionAfterAdoption=await checker.checkAll([migrated],{stations:{a:repaired.record}},{now,inspect:async()=>{throw Error('station exception');}});
+assert.equal(exceptionAfterAdoption.radios[0]._streamStatus,'unknown');assert.equal(lib.verifiedAdoption(exceptionAfterAdoption.radios[0],exceptionAfterAdoption.report.stations.a,now),true);
+console.log('radio-health: API identité exacte, playlist principale et adoption durable après exception OK');
