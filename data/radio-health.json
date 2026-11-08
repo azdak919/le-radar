@@ -1,0 +1,598 @@
+{
+  "checkedAt": "2026-11-08T06:29:10.227Z",
+  "total": 6,
+  "stations": {
+    "chyz": {
+      "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+      "checkedAt": "2026-11-08T06:29:10.227Z",
+      "redirects": [
+        "https://ecoutez.chyz.ca/proxy/chyz/stream"
+      ],
+      "certificates": [
+        {
+          "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+          "address": "146.190.247.218",
+          "expiresAt": "2027-01-31T02:31:38.000Z"
+        },
+        {
+          "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+          "expiresAt": "2028-09-02T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+          "expiresAt": "2032-09-02T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+          "expiresAt": "2032-09-02T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+          "expiresAt": "2035-06-04T11:04:38.000Z",
+          "kind": "issuer"
+        }
+      ],
+      "mime": "audio/mpeg",
+      "icyName": "No Name",
+      "status": 200,
+      "expiry": "ok",
+      "audio": {
+        "decoded": true,
+        "meanDb": -20,
+        "silent": false,
+        "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+        "checkedAt": "2026-11-08T06:29:10.227Z"
+      },
+      "state": "working",
+      "error": "",
+      "fingerprint": "https://ecoutez.chyz.ca/proxy/chyz/stream|working||ok|",
+      "lastSuccessEvidence": {
+        "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+        "checkedAt": "2026-11-08T06:29:10.227Z",
+        "certificates": [
+          {
+            "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+            "address": "146.190.247.218",
+            "expiresAt": "2027-01-31T02:31:38.000Z"
+          },
+          {
+            "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+            "expiresAt": "2028-09-02T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+            "expiresAt": "2032-09-02T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+            "expiresAt": "2032-09-02T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+            "expiresAt": "2035-06-04T11:04:38.000Z",
+            "kind": "issuer"
+          }
+        ],
+        "audio": {
+          "decoded": true,
+          "meanDb": -20,
+          "silent": false,
+          "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+          "checkedAt": "2026-11-08T06:29:10.227Z"
+        }
+      },
+      "lastSuccess": "2026-11-08T06:29:10.227Z",
+      "failures": 0,
+      "history": [
+        {
+          "at": "2026-11-08T06:29:10.227Z",
+          "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
+          "fingerprint": "https://ecoutez.chyz.ca/proxy/chyz/stream|working||ok|"
+        }
+      ]
+    },
+    "cism": {
+      "url": "https://stream.cism893.ca/",
+      "checkedAt": "2026-11-08T06:29:10.227Z",
+      "redirects": [
+        "https://stream.cism893.ca/"
+      ],
+      "certificates": [
+        {
+          "url": "https://stream.cism893.ca/",
+          "address": "172.67.206.17",
+          "expiresAt": "2027-02-04T11:10:25.000Z"
+        },
+        {
+          "url": "https://stream.cism893.ca/",
+          "expiresAt": "2029-02-20T14:00:00.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://stream.cism893.ca/",
+          "expiresAt": "2028-01-28T00:00:42.000Z",
+          "kind": "issuer"
+        }
+      ],
+      "mime": "audio/mpeg",
+      "icyName": "",
+      "status": 200,
+      "expiry": "ok",
+      "audio": {
+        "decoded": true,
+        "meanDb": -13.2,
+        "silent": false,
+        "url": "https://stream.cism893.ca/",
+        "checkedAt": "2026-11-08T06:29:10.227Z"
+      },
+      "state": "working",
+      "error": "",
+      "fingerprint": "https://stream.cism893.ca/|working||ok|",
+      "lastSuccessEvidence": {
+        "url": "https://stream.cism893.ca/",
+        "checkedAt": "2026-11-08T06:29:10.227Z",
+        "certificates": [
+          {
+            "url": "https://stream.cism893.ca/",
+            "address": "172.67.206.17",
+            "expiresAt": "2027-02-04T11:10:25.000Z"
+          },
+          {
+            "url": "https://stream.cism893.ca/",
+            "expiresAt": "2029-02-20T14:00:00.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://stream.cism893.ca/",
+            "expiresAt": "2028-01-28T00:00:42.000Z",
+            "kind": "issuer"
+          }
+        ],
+        "audio": {
+          "decoded": true,
+          "meanDb": -13.2,
+          "silent": false,
+          "url": "https://stream.cism893.ca/",
+          "checkedAt": "2026-11-08T06:29:10.227Z"
+        }
+      },
+      "lastSuccess": "2026-11-08T06:29:10.227Z",
+      "failures": 0,
+      "history": [
+        {
+          "at": "2026-11-08T06:29:10.227Z",
+          "url": "https://stream.cism893.ca/",
+          "fingerprint": "https://stream.cism893.ca/|working||ok|"
+        }
+      ]
+    },
+    "ckut": {
+      "url": "https://ckut.out.airtime.pro/ckut_a",
+      "checkedAt": "2026-11-08T06:29:10.227Z",
+      "redirects": [
+        "https://ckut.out.airtime.pro/ckut_a"
+      ],
+      "certificates": [
+        {
+          "url": "https://ckut.out.airtime.pro/ckut_a",
+          "address": "176.9.54.134",
+          "expiresAt": "2026-12-15T23:59:59.000Z"
+        },
+        {
+          "url": "https://ckut.out.airtime.pro/ckut_a",
+          "expiresAt": "2034-04-16T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://ckut.out.airtime.pro/ckut_a",
+          "expiresAt": "2038-01-15T12:00:00.000Z",
+          "kind": "issuer"
+        }
+      ],
+      "mime": "audio/mpeg",
+      "icyName": "Airtime!",
+      "status": 200,
+      "expiry": "ok",
+      "audio": {
+        "decoded": true,
+        "meanDb": -19.6,
+        "silent": false,
+        "url": "https://ckut.out.airtime.pro/ckut_a",
+        "checkedAt": "2026-11-08T06:29:10.227Z"
+      },
+      "state": "working",
+      "error": "",
+      "fingerprint": "https://ckut.out.airtime.pro/ckut_a|working||ok|",
+      "lastSuccessEvidence": {
+        "url": "https://ckut.out.airtime.pro/ckut_a",
+        "checkedAt": "2026-11-08T06:29:10.227Z",
+        "certificates": [
+          {
+            "url": "https://ckut.out.airtime.pro/ckut_a",
+            "address": "176.9.54.134",
+            "expiresAt": "2026-12-15T23:59:59.000Z"
+          },
+          {
+            "url": "https://ckut.out.airtime.pro/ckut_a",
+            "expiresAt": "2034-04-16T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://ckut.out.airtime.pro/ckut_a",
+            "expiresAt": "2038-01-15T12:00:00.000Z",
+            "kind": "issuer"
+          }
+        ],
+        "audio": {
+          "decoded": true,
+          "meanDb": -19.6,
+          "silent": false,
+          "url": "https://ckut.out.airtime.pro/ckut_a",
+          "checkedAt": "2026-11-08T06:29:10.227Z"
+        }
+      },
+      "lastSuccess": "2026-11-08T06:29:10.227Z",
+      "failures": 0,
+      "history": [
+        {
+          "at": "2026-11-08T06:29:10.227Z",
+          "url": "https://ckut.out.airtime.pro/ckut_a",
+          "fingerprint": "https://ckut.out.airtime.pro/ckut_a|working||ok|"
+        }
+      ]
+    },
+    "cjlo": {
+      "url": "https://cjlo.radioca.st/stream",
+      "checkedAt": "2026-11-08T06:29:10.227Z",
+      "redirects": [
+        "https://cjlo.radioca.st/stream"
+      ],
+      "certificates": [
+        {
+          "url": "https://cjlo.radioca.st/stream",
+          "address": "195.201.85.142",
+          "expiresAt": "2026-12-26T00:40:45.000Z"
+        },
+        {
+          "url": "https://cjlo.radioca.st/stream",
+          "expiresAt": "2028-09-02T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://cjlo.radioca.st/stream",
+          "expiresAt": "2032-09-02T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://cjlo.radioca.st/stream",
+          "expiresAt": "2032-09-02T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://cjlo.radioca.st/stream",
+          "expiresAt": "2035-06-04T11:04:38.000Z",
+          "kind": "issuer"
+        }
+      ],
+      "mime": "audio/mpeg",
+      "icyName": "CJLO 1690AM - Montreal",
+      "status": 200,
+      "expiry": "ok",
+      "audio": {
+        "decoded": true,
+        "meanDb": -12.3,
+        "silent": false,
+        "url": "https://cjlo.radioca.st/stream",
+        "checkedAt": "2026-11-08T06:29:10.227Z"
+      },
+      "state": "working",
+      "error": "",
+      "fingerprint": "https://cjlo.radioca.st/stream|working||ok|",
+      "lastSuccessEvidence": {
+        "url": "https://cjlo.radioca.st/stream",
+        "checkedAt": "2026-11-08T06:29:10.227Z",
+        "certificates": [
+          {
+            "url": "https://cjlo.radioca.st/stream",
+            "address": "195.201.85.142",
+            "expiresAt": "2026-12-26T00:40:45.000Z"
+          },
+          {
+            "url": "https://cjlo.radioca.st/stream",
+            "expiresAt": "2028-09-02T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://cjlo.radioca.st/stream",
+            "expiresAt": "2032-09-02T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://cjlo.radioca.st/stream",
+            "expiresAt": "2032-09-02T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://cjlo.radioca.st/stream",
+            "expiresAt": "2035-06-04T11:04:38.000Z",
+            "kind": "issuer"
+          }
+        ],
+        "audio": {
+          "decoded": true,
+          "meanDb": -12.3,
+          "silent": false,
+          "url": "https://cjlo.radioca.st/stream",
+          "checkedAt": "2026-11-08T06:29:10.227Z"
+        }
+      },
+      "lastSuccess": "2026-11-08T06:29:10.227Z",
+      "failures": 0,
+      "history": [
+        {
+          "at": "2026-11-08T06:29:10.227Z",
+          "url": "https://cjlo.radioca.st/stream",
+          "fingerprint": "https://cjlo.radioca.st/stream|working||ok|"
+        }
+      ]
+    },
+    "cfak": {
+      "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+      "checkedAt": "2026-11-08T06:29:10.227Z",
+      "redirects": [
+        "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+        "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a"
+      ],
+      "certificates": [
+        {
+          "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "address": "168.119.68.93",
+          "expiresAt": "2026-12-19T23:59:59.000Z"
+        },
+        {
+          "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "expiresAt": "2035-09-23T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "expiresAt": "2038-01-18T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "expiresAt": "2038-01-18T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "address": "38.91.106.34",
+          "expiresAt": "2026-12-10T23:59:59.000Z"
+        },
+        {
+          "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "expiresAt": "2035-09-23T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "expiresAt": "2038-01-18T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "expiresAt": "2038-01-18T23:59:59.000Z",
+          "kind": "issuer"
+        }
+      ],
+      "mime": "audio/mpeg",
+      "icyName": "CFAK - ÇA PART ICI",
+      "status": 200,
+      "expiry": "ok",
+      "audio": {
+        "decoded": true,
+        "meanDb": -15.8,
+        "silent": false,
+        "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+        "checkedAt": "2026-11-08T06:29:10.227Z"
+      },
+      "state": "working",
+      "error": "",
+      "fingerprint": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a|working||ok|",
+      "lastSuccessEvidence": {
+        "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+        "checkedAt": "2026-11-08T06:29:10.227Z",
+        "certificates": [
+          {
+            "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "address": "168.119.68.93",
+            "expiresAt": "2026-12-19T23:59:59.000Z"
+          },
+          {
+            "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "expiresAt": "2035-09-23T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "expiresAt": "2038-01-18T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "expiresAt": "2038-01-18T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "address": "38.91.106.34",
+            "expiresAt": "2026-12-10T23:59:59.000Z"
+          },
+          {
+            "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "expiresAt": "2035-09-23T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "expiresAt": "2038-01-18T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://audio-edge-es6pf.mia.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+            "expiresAt": "2038-01-18T23:59:59.000Z",
+            "kind": "issuer"
+          }
+        ],
+        "audio": {
+          "decoded": true,
+          "meanDb": -15.8,
+          "silent": false,
+          "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "checkedAt": "2026-11-08T06:29:10.227Z"
+        }
+      },
+      "lastSuccess": "2026-11-08T06:29:10.227Z",
+      "failures": 0,
+      "history": [
+        {
+          "at": "2026-11-08T06:29:10.227Z",
+          "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
+          "fingerprint": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a|working||ok|"
+        }
+      ]
+    },
+    "choq": {
+      "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+      "checkedAt": "2026-11-08T06:29:10.227Z",
+      "redirects": [
+        "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+        "https://18303.live.streamtheworld.com/SP_R4799664_SC"
+      ],
+      "certificates": [
+        {
+          "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+          "address": "208.80.55.240",
+          "expiresAt": "2027-04-03T14:38:53.000Z"
+        },
+        {
+          "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+          "expiresAt": "2031-05-03T07:00:00.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+          "expiresAt": "2031-05-30T07:00:00.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+          "expiresAt": "2034-06-29T17:06:20.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+          "address": "192.173.28.40",
+          "expiresAt": "2027-03-16T15:35:49.000Z"
+        },
+        {
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+          "expiresAt": "2040-08-24T11:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+          "expiresAt": "2037-12-31T23:59:59.000Z",
+          "kind": "issuer"
+        },
+        {
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+          "expiresAt": "2037-12-31T23:59:59.000Z",
+          "kind": "issuer"
+        }
+      ],
+      "mime": "audio/mpeg",
+      "icyName": "CHOQ.CA",
+      "status": 200,
+      "expiry": "ok",
+      "audio": {
+        "decoded": true,
+        "meanDb": -23.3,
+        "silent": false,
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+        "checkedAt": "2026-11-08T06:29:10.227Z"
+      },
+      "state": "working",
+      "error": "",
+      "fingerprint": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC|working||ok|",
+      "lastSuccessEvidence": {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+        "checkedAt": "2026-11-08T06:29:10.227Z",
+        "certificates": [
+          {
+            "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+            "address": "208.80.55.240",
+            "expiresAt": "2027-04-03T14:38:53.000Z"
+          },
+          {
+            "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+            "expiresAt": "2031-05-03T07:00:00.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+            "expiresAt": "2031-05-30T07:00:00.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+            "expiresAt": "2034-06-29T17:06:20.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+            "address": "192.173.28.40",
+            "expiresAt": "2027-03-16T15:35:49.000Z"
+          },
+          {
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+            "expiresAt": "2040-08-24T11:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+            "expiresAt": "2037-12-31T23:59:59.000Z",
+            "kind": "issuer"
+          },
+          {
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+            "expiresAt": "2037-12-31T23:59:59.000Z",
+            "kind": "issuer"
+          }
+        ],
+        "audio": {
+          "decoded": true,
+          "meanDb": -23.3,
+          "silent": false,
+          "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+          "checkedAt": "2026-11-08T06:29:10.227Z"
+        }
+      },
+      "lastSuccess": "2026-11-08T06:29:10.227Z",
+      "failures": 0,
+      "history": [
+        {
+          "at": "2026-11-08T06:29:10.227Z",
+          "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
+          "fingerprint": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC|working||ok|"
+        }
+      ]
+    }
+  }
+}
