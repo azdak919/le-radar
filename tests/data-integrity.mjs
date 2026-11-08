@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import vm from 'node:vm';
 
 const require = createRequire(import.meta.url);
 const { resolveCurrentSlot, gridCoverage, fetchChoqGrid, COVERAGE_FLOOR, gridPlausibilityIssues } = require('../scripts/radio-schedule-lib.js');
@@ -213,6 +214,25 @@ for (const radio of radios) {
     CHOQ_ONAIR,
   );
   assert.equal(canonicalizeStreamUrl(CHOQ_ONAIR), CHOQ_ONAIR);
+
+  // CISM : le lecteur officiel a migré ; ne jamais ressusciter le TLS expiré.
+  const CISM_ONAIR = 'https://stream.cism893.ca/';
+  const { CISM_ONAIR_STREAM } = require('../scripts/discover-streams.js');
+  assert.equal(radios.find(r => r.id === 'cism')?.stream, CISM_ONAIR);
+  assert.equal(CISM_ONAIR_STREAM, CISM_ONAIR);
+  assert.match(discover, /cism: CISM_ONAIR_STREAM/, 'flux connu aligné sur le catalogue');
+  assert.match(discover, /cism: \[CISM_ONAIR_STREAM\]/, 'la découverte privilégie uniquement la source officielle actuelle');
+  assert.doesNotMatch(discover, /stream03\.ustream\.ca/, 'ancien HTTP/HTTPS retiré des candidats');
+  assert.equal(canonicalizeStreamUrl(CISM_ONAIR), CISM_ONAIR, 'URL officielle préservée');
+  const utils = readFileSync(new URL('radar-utils.js', root), 'utf8');
+  assert.match(utils, /var PROXY_BASE = ''/, 'aucun nouveau proxy audio');
+  const playable = utils.match(/function getPlayableStream\(radio\) \{[\s\S]*?\n\}/)[0];
+  const ctx = { PROXY_BASE: '', location: { protocol: 'https:' } };
+  vm.createContext(ctx); vm.runInContext(playable, ctx);
+  assert.equal(ctx.getPlayableStream(radios.find(r => r.id === 'cism')), CISM_ONAIR, 'lecteur transmet le flux officiel directement');
+  assert.equal(ctx.getPlayableStream({ stream: 'http://example.org/live' }), null, 'garde contenu mixte conservé');
+
+
 }
 
 /*
