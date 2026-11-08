@@ -1,0 +1,45 @@
+{
+  "updatedAt": "2026-11-07T17:00:00Z",
+  "timezone": "America/Toronto",
+  "stations": {
+    "chyz": {
+      "id": "chyz",
+      "name": "CHYZ 94,3",
+      "sources": [
+        "chyz:https://chyz.ca/horaire/"
+      ],
+      "checkedAt": "2026-11-07T17:00:00Z",
+      "verifiedWeekOf": "2026-11-02",
+      "grid": [
+        {
+          "day": 6,
+          "start": "10:00",
+          "end": "10:30",
+          "title": "Palmarès CHYZ",
+          "url": "https://chyz.ca/emission/palmares-chyz/"
+        },
+        {
+          "day": 6,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Le Ré-Show : Deuxième Service",
+          "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+        },
+        {
+          "day": 6,
+          "start": "13:00",
+          "end": "14:30",
+          "title": "Radio Futura",
+          "url": "https://chyz.ca/emission/radio-futura/"
+        },
+        {
+          "day": 6,
+          "start": "14:30",
+          "end": "18:30",
+          "title": "Football du Rouge et Or",
+          "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
+        }
+      ]
+    }
+  }
+}
