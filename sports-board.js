@@ -1075,18 +1075,33 @@
     const t = getComputedStyle(board).gridTemplateColumns || '';
     return t.split(' ').filter((x) => x && x !== '0px').length || 1;
   }
-  function layoutBoard(board) {
-    if (!board.isConnected) return;
-    const on = boardCols(board) > 1;
-    board.classList.toggle('is-masonry', on);
-    Array.from(board.children).forEach((el) => {
-      if (!on || el.hidden) { el.style.removeProperty('grid-row-end'); return; }
-      const cs = getComputedStyle(el);
-      const h = el.getBoundingClientRect().height
-        + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
-      const span = Math.max(1, Math.ceil((h + MS_GAP) / MS_ROW));
-      const v = `span ${span}`;
-      if (el.style.gridRowEnd !== v) el.style.gridRowEnd = v;
+  function layoutBoards() {
+    // Read all grid modes before changing any class or inline span.
+    const states = boards.filter(board => board.isConnected).map(board => ({
+      board, on: boardCols(board) > 1, children: Array.from(board.children),
+    }));
+    // Prepare every grid before the first height read (global, not per grid).
+    states.forEach(({ board, on, children }) => {
+      board.classList.toggle('is-masonry', on);
+      children.forEach(el => {
+        if ((!on || el.hidden) && el.style.gridRowEnd) el.style.removeProperty('grid-row-end');
+      });
+    });
+    const spans = [];
+    states.forEach(({ on, children }) => {
+      if (!on) return;
+      children.forEach(el => {
+        if (el.hidden) return;
+        const cs = getComputedStyle(el);
+        const h = el.getBoundingClientRect().height
+          + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+        const span = Math.max(1, Math.ceil((h + MS_GAP) / MS_ROW));
+        spans.push({ el, value: `span ${span}` });
+      });
+    });
+    // No layout reads after the first span write.
+    spans.forEach(({ el, value }) => {
+      if (el.style.gridRowEnd !== value) el.style.gridRowEnd = value;
     });
   }
   let msRaf = 0;
@@ -1094,7 +1109,7 @@
     if (msRaf) return;
     msRaf = window.requestAnimationFrame(() => {
       msRaf = 0;
-      boards.forEach(layoutBoard);
+      layoutBoards();
     });
   }
   window.__sportsMasonry = layoutMasonry;

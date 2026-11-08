@@ -65,6 +65,8 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
+      - name: Regenerate sports pages
+        run: node scripts/generate-seo.js --update --sports-only
       - name: Static and data checks
         run: npm run check
 
@@ -85,6 +87,8 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
+      - name: Regenerate sports pages
+        run: node scripts/generate-seo.js --update --sports-only
       - name: Cache Playwright Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache
@@ -118,6 +122,8 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
+      - name: Regenerate sports pages
+        run: node scripts/generate-seo.js --update --sports-only
       - name: Cache Playwright Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache

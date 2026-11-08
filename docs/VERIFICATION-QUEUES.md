@@ -17,3 +17,7 @@ Avec l’historique sportif complet et ses nouvelles régressions, le budget de 
 ### Traces des grandes pages sportives
 
 Les scénarios `sports-identities` et `sports-embed` conservent les traces d’actions, timings et sources en cas d’échec, mais désactivent les instantanés DOM et captures automatiques à chaque action. Le DOM complet de plus de 100 000 éléments reste inchangé; toutes les assertions, les délais de 30 secondes et les captures manuelles obligatoires sont conservés. Sur une comparaison ciblée identique (embed + géométrie 1440), le temps total mesuré passe de 58,06 à 32,34 secondes. Ce résultat ne prouve pas que toute la lenteur produit est résolue : le reset reste autour de 6 secondes dans cette mesure. Les autres fichiers gardent les traces DOM habituelles.
+
+### Pages sportives générées pendant le build
+
+Pour une correction de code, ne pas inclure les deux instantanés HTML sportifs dans le diff : les collecteurs continuent de les actualiser sur main. Les jobs static/critical/full régénèrent seulement ces deux pages avant les contrôles, et Pages les régénère avant Jekyll. Le contrôle du site assemblé exige le marqueur `data-sports-history="complete"` dans les deux langues avant upload. Localement, exécuter `node scripts/generate-seo.js --update --sports-only` avant les tests, sans commiter ces deux sorties dans la PR de code. Les empreintes du service worker excluent HTML/JSON : aucun bump automatique en CI ne doit masquer un verrou périmé.

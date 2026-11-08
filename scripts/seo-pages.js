@@ -1885,9 +1885,9 @@ function sportsHubPage(lang, ctx) {
   }
 
   if (!hasContent) {
-    body += `      <p class="seo-empty">${escapeHtml(t.sportsEmpty)}</p>\n`;
+    body += `      <p class="seo-empty" data-sports-history="complete">${escapeHtml(t.sportsEmpty)}</p>\n`;
   } else {
-    body += `      <div class="sports-board-root" data-sports-board>\n`;
+    body += `      <div class="sports-board-root" data-sports-board data-sports-history="complete">\n`;
     body += `        <p class="sports-board-status">${lang === 'en' ? '“Scheduled now” is estimated from the start time; only a recent official feed confirms live play. A dash means no reported score, not 0.' : '« En cours · horaire » est une estimation selon le coup d’envoi; seul un suivi officiel récent confirme le direct. Un tiret indique un pointage non reçu, pas 0.'}</p>\n`;
     body += `        <div class="sports-filters" role="group" aria-label="${escapeHtml(t.sports)}">\n`;
     const institutionOptions = new Map();

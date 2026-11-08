@@ -78,3 +78,17 @@ assert.equal(S.sportsCicsaSeasonMeta(season, 'en'), 'CICSA 2026-2027 season stan
   assert.equal(S.sportsResultsSourceUrl({ source: 'rseq-s1', leagueId: 'invalid' }), '');
 }
 console.log('OK sports-page-ranges');
+
+// The build marker must also survive a legitimately empty sports bank.
+{
+  const { pages } = S.buildEntityPages({
+    radios: [], sources: [], news: [], institutions: [], schedules: {},
+    sports: { teams: {}, errors: [] }, siteBase: 'https://example.invalid',
+  });
+  for (const path of ['sports/', 'en/sports/']) {
+    const page = pages.find(page => page.path === path);
+    assert.ok(page, path);
+    assert.match(page.html, /<p class="seo-empty"[^>]*data-sports-history="complete"/);
+    assert.doesNotMatch(page.html, /class="sports-panel"/);
+  }
+}
