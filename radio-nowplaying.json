@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T03:37:07.437Z",
+  "updatedAt": "2026-11-08T04:18:37.527Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T03:36:27.774Z"
+      "checkedAt": "2026-11-08T04:17:53.095Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "20:30",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rythmologie (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/rythmologie"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Rythmologie (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T03:36:29.520Z"
+      "checkedAt": "2026-11-08T04:17:54.848Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Howls From Hell/Too Loud For The Crowd",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "SKEwInGTheWaBeS$$",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "stereOphobic",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Howls From Hell/Too Loud For The Crowd",
+      "showTitle": "SKEwInGTheWaBeS$$",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T03:36:33.705Z"
+      "checkedAt": "2026-11-08T04:18:03.726Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T03:36:48.165Z"
+      "checkedAt": "2026-11-08T04:18:18.019Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T03:36:49.706Z"
+      "checkedAt": "2026-11-08T04:18:19.384Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +150,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T03:37:07.086Z"
+      "checkedAt": "2026-11-08T04:18:37.176Z"
     }
   }
 }
