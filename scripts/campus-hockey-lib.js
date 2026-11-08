@@ -597,6 +597,7 @@ async function fetchCampusHockey({ reg = null, now = Date.now() } = {}) {
 module.exports = {
   UQO_SCHEDULE_URL,
   UQAC_EVENTS_URL,
+  STINGERS_W_URL, GAITERS_W_URL, MCGILL_W_URL, CARABINS_W_URL, LAVAL_W_URL,
   resolveNick,
   parseFrDateTime,
   parseUqoScheduleHtml,

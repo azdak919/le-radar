@@ -65,13 +65,15 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
+      - name: Regenerate sports pages
+        run: node scripts/generate-seo.js --update --sports-only
       - name: Static and data checks
         run: npm run check
 
   critical:
     if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (github.event_name != 'workflow_dispatch' || !inputs.full) }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
@@ -85,6 +87,8 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
+      - name: Regenerate sports pages
+        run: node scripts/generate-seo.js --update --sports-only
       - name: Cache Playwright Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache
@@ -95,7 +99,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
       - name: Browser checks (critical)
-        timeout-minutes: 20
+        timeout-minutes: 30
         run: npm run test:browser:ci -- --project=${{ matrix.project }} --workers=1
       - name: Upload browser traces on failure
         if: failure()
@@ -118,6 +122,8 @@ jobs:
           cache: npm
       - name: Install test dependencies
         run: npm ci
+      - name: Regenerate sports pages
+        run: node scripts/generate-seo.js --update --sports-only
       - name: Cache Playwright Chromium
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache

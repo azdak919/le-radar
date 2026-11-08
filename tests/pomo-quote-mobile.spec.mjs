@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { gotoHomeReady } from './home-readiness.mjs';
 
 // Carte citation du Pomo sur téléphone : le chevron ne touche jamais le texte,
 // les actions (icônes 44 px) restent au-dessus du pied de page en verre, les
@@ -58,7 +59,8 @@ for (const app of ['pomo', 'solitaire', '']) {
   test(`barre radio ${app || 'radar'} : 2e ligne de station jamais rognée au début @ci-critical`, async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 412, height: 780 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
     const page = await ctx.newPage();
-    await page.goto(`/${app}${app ? '/' : ''}`, { waitUntil: 'load' });
+    if (app) await page.goto(`/${app}/`, { waitUntil: 'load' });
+    else await gotoHomeReady(page);
     await page.waitForTimeout(1500);
     const frame = page.frames().find((f) => f.url().includes('tuner-embed')) || page.mainFrame();
     // Simule un défilement figé en plein milieu puis la mise en pause (arrière-plan).

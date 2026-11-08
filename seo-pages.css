@@ -1054,7 +1054,7 @@
   border-top: 3px solid var(--sports-panel-c, var(--accent));
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   scroll-margin-top: 5.5rem; /* sous barre radio sticky */
-  transition: box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+  transition: box-shadow 180ms ease, border-color 180ms ease;
   min-width: 0; /* évite le débordement grid */
 }
 /*
@@ -1280,6 +1280,13 @@
   display: grid;
   grid-template-columns: 4.5rem 4.25rem minmax(0, 1fr) 1.25rem;
   column-gap: 8px;
+}
+.sports-panel__results-source {
+  margin: 8px 0 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 .sports-panel__empty {
   margin: 0;

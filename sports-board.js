@@ -90,14 +90,16 @@
   const t = labels[lang];
 
   /** YYYY-MM-DD civil à Québec. */
+  let civilDateFormatter;
   function ymdInToronto(date = new Date()) {
     try {
-      return new Intl.DateTimeFormat('en-CA', {
+      civilDateFormatter ||= new Intl.DateTimeFormat('en-CA', {
         timeZone: TZ,
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
-      }).format(date);
+      });
+      return civilDateFormatter.format(date);
     } catch {
       return date.toISOString().slice(0, 10);
     }
@@ -130,8 +132,8 @@
    * Session = calendrier univ. QC (A: sep–déc, H: jan–avr, É: mai–août).
    */
   function periodRange(periodKey, ref = new Date()) {
-    const today = ymdInToronto(ref);
     if (!periodKey || periodKey === 'all') return null;
+    const today = ymdInToronto(ref);
     if (periodKey === 'today') return { start: today, end: today };
     if (periodKey === 'week') {
       const start = startOfWeekMonday(today);
@@ -307,33 +309,45 @@
     });
   }
 
-  // The shared masthead owns the batched fetch and live polling. Reuse its data;
-  // no request per formation, no second collector, and no full-page reload.
+  // The masthead publishes compact live previews, not the complete season bank.
+  // Overlay reported games without deleting SSR history/futures absent from a preview.
   let hydratedPayload = null;
   let hydratedDay = '';
+  let gameClockFormatter;
   function hydrateSportsBoard(payload) {
     if (!payload || !payload.teams || typeof payload.teams !== 'object') return;
     hydratedPayload = payload; hydratedDay = ymdInToronto();
     const byId = new Map(Object.entries(payload.teams).map(([key, team]) => [team?.id || key, team]));
+    // Opposing teams often share the same kickoff; convert each date/time once per payload.
+    const kickoffCache = new Map();
+    const ms = game => {
+      if (!game?.date || !game?.time) return NaN;
+      const key = `${game.date}|${game.time}`;
+      if (!kickoffCache.has(key)) kickoffCache.set(key, window.RadarSportsFreshness?.zonedTimeToMs?.(game.date, game.time, TZ));
+      return kickoffCache.get(key);
+    };
     scoredPanels.forEach(panel => {
       const team = byId.get(panel.getAttribute('data-team'));
       if (!team || team.sport === 'sailing') return; // multi-day/place renderer remains authoritative
       const next = team.nextGame || team.nextGames?.[0] || null;
       const last = team.lastGame || team.results?.[0] || null;
-      const ms = game => game?.date && game?.time
-        ? window.RadarSportsFreshness?.zonedTimeToMs?.(game.date, game.time, TZ) : NaN;
-      panel.setAttribute('data-next-ts', String(ms(next) || ''));
-      panel.setAttribute('data-next-date', next?.date || '');
-      panel.setAttribute('data-next-time', next?.time || '');
-      panel.setAttribute('data-last-ts', String(ms(last) || ''));
-      panel.setAttribute('data-live-confirmed', next?.liveFeed && next?.liveVerifiedAt ? '1' : '0');
-      panel.setAttribute('data-live-verified-at', next?.liveVerifiedAt || '');
+      if (next) {
+        panel.setAttribute('data-next-ts', String(ms(next) || ''));
+        panel.setAttribute('data-next-date', next.date || '');
+        panel.setAttribute('data-next-time', next.time || '');
+        panel.setAttribute('data-live-confirmed', next.liveFeed && next.liveVerifiedAt ? '1' : '0');
+        panel.setAttribute('data-live-verified-at', next.liveVerifiedAt || '');
+      }
+      if (last) panel.setAttribute('data-last-ts', String(ms(last) || ''));
+      const gameKey = game => game.gameId ? String(game.gameId) : JSON.stringify([
+        game.date, game.time || '', game.opponentRegistryId || game.opponentFullName || game.opponent || '',
+        game.home, game.url,
+      ]);
       const today = ymdInToronto();
       const finals = [...(team.results || []), ...(team.nextGames || []).filter(g => g.final || g.result)];
-      const results = finals.filter(g => g.date === today).sort((a, b) => ms(b) - ms(a));
-      if (!results.length && last) results.push(last);
-      const upcoming = (team.nextGames || []).filter(g => !g.final && !g.result && g.date === today).sort((a, b) => ms(a) - ms(b));
-      if (!upcoming.length && next && !next.final && !next.result) upcoming.push(next);
+      const results = [...finals, ...(last ? [last] : [])].sort((a, b) => String(b.date).localeCompare(String(a.date)) || String(b.time || '').localeCompare(String(a.time || '')));
+      const finalKeys = new Set(results.map(gameKey));
+      const upcoming = [...(team.nextGames || []), ...(next ? [next] : [])].filter(g => !g.final && !g.result && !finalKeys.has(gameKey(g))).sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.time || '').localeCompare(String(b.time || '')));
       const selected = [...upcoming.map(game => ({ game, final: Boolean(game.final || game.result) })), ...results.map(game => ({ game, final: true }))];
       const usable = selected.filter(({ game }) => game?.date && (game.gameId || game.url));
       if (!usable.length) return; // Retain an empty/unavailable notice until a row can replace it.
@@ -343,14 +357,14 @@
         const empty = panel.querySelector('.sports-panel__empty');
         if (empty) empty.replaceWith(list); else panel.appendChild(list);
       }
-      const gameKey = game => game.gameId ? String(game.gameId) : JSON.stringify([
-        game.date, game.time || '', game.opponentRegistryId || game.opponentFullName || game.opponent || '',
-        game.home, game.url,
-      ]);
+      const existingRows = new Map(Array.from(list.querySelectorAll('.sports-result')).map(row => [row.getAttribute('data-hydration-key') || row.getAttribute('data-game-id'), row]));
       const retained = new Set();
       for (const { game, final } of usable) {
         const key = gameKey(game);
-        let row = Array.from(list.querySelectorAll('.sports-result')).find(r => (r.getAttribute('data-hydration-key') || r.getAttribute('data-game-id')) === key);
+        if (retained.has(key)) continue;
+        let row = existingRows.get(key);
+        // A delayed live preview must not turn an already-final result back into an upcoming game.
+        if (row?.hasAttribute('data-result') && !final) continue;
         if (!row) {
           row = document.createElement('li');
           row.className = 'sports-result';
@@ -380,7 +394,8 @@
         time.textContent = game.date === today ? (lang === 'en' ? 'Today' : 'Aujourd’hui') : game.date || '';
         if (Number.isFinite(kickoff)) {
           const clock = document.createElement('span'); clock.className = 'sports-result__clock';
-          clock.textContent = new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }).format(new Date(kickoff));
+          gameClockFormatter ||= new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { timeZone: TZ, hour: '2-digit', minute: '2-digit' });
+          clock.textContent = gameClockFormatter.format(new Date(kickoff));
           if (game.period && !final) clock.textContent += ` · ${game.period}`;
           time.appendChild(clock);
         }
@@ -397,11 +412,22 @@
         badge.textContent = final ? ({ W: lang === 'en' ? 'W' : 'V', L: lang === 'en' ? 'L' : 'D', D: lang === 'en' ? 'T' : 'N' }[game.result] || '') : '→';
         badge.title = state;
         for (const attr of ['data-idle-badge', 'data-idle-badge-class']) badge.removeAttribute(attr);
-        list.appendChild(row); // ordered upcoming first, then source results
+        if (row.parentNode !== list) list.appendChild(row);
       }
-      if (retained.size) list.querySelectorAll('.sports-result').forEach(row => {
-        if (!retained.has(row.getAttribute('data-hydration-key') || row.getAttribute('data-game-id'))) row.remove();
+      // A compact payload is not evidence that older or future games vanished.
+      // Keep every unreported row and restore upcoming-first / newest-result order.
+      const currentRows = Array.from(list.querySelectorAll('.sports-result'));
+      const orderedRows = [...currentRows].sort((a, b) => {
+        const af = a.hasAttribute('data-result'); const bf = b.hasAttribute('data-result');
+        if (af !== bf) return af ? 1 : -1;
+        const stamp = row => (row.querySelector('time')?.getAttribute('datetime') || '') + ' ' + (row.querySelector('.sports-result__clock')?.textContent || '');
+        const at = Number(a.getAttribute('data-kickoff-ts')); const bt = Number(b.getAttribute('data-kickoff-ts'));
+        if (Number.isFinite(at) && Number.isFinite(bt) && at !== bt) return af ? bt - at : at - bt;
+        return af ? stamp(b).localeCompare(stamp(a)) : stamp(a).localeCompare(stamp(b));
       });
+      if (orderedRows.some((row, i) => row !== currentRows[i])) orderedRows.forEach(row => list.appendChild(row));
+      const sourceLink = panel.querySelector('.sports-panel__results-source');
+      if (sourceLink) sourceLink.hidden = Boolean(list.querySelector('[data-result]'));
     });
     const cur = currentFilters();
     // Refresh data without cancelling an embed/deep-link selection.
@@ -410,12 +436,11 @@
   }
   window.addEventListener('radar:sports-updated', event => hydrateSportsBoard(event.detail));
 
-  function panelMatchesPeriod(panel, periodKey) {
+  function panelMatchesPeriod(panel, periodKey, range = periodRange(periodKey)) {
     if (!periodKey || periodKey === 'all') return true;
     // Cartes « liens officiels » sans calendrier : hors filtres temporels.
     if (panel.classList.contains('sports-panel--external')) return false;
     if (periodKey === 'live') return panelIsLiveNow(panel);
-    const range = periodRange(periodKey);
     if (!range) return true;
     const dates = panelGameYmds(panel);
     if (!dates.size) return false;
@@ -628,6 +653,8 @@
     const periodKey = PERIOD_KEYS.has(String(period || 'all').toLowerCase())
       ? String(period || 'all').toLowerCase()
       : 'all';
+    // One civil-date range per refresh, not one Intl calculation per match.
+    const rowRange = periodRange(periodKey);
     const teamId = (team || '').trim();
     const qRaw = query !== undefined ? String(query || '') : searchQuery;
     searchQuery = qRaw;
@@ -663,16 +690,15 @@
       const okSex = isExternal || effectiveSex === 'all' || !pSex || pSex === effectiveSex;
       const okSearch = panelMatchesSearch(panel, tokens);
       // Période : matchs (scores ou à venir) dans la fenêtre ; masque les cartes liens.
-      const okPeriod = panelMatchesPeriod(panel, periodKey);
+      const okPeriod = panelMatchesPeriod(panel, periodKey, rowRange);
       const schoolHay = normalizeSearchText([panel.getAttribute('data-institution-label'), panel.getAttribute('data-institution-campus')].filter(Boolean).join(' '));
       const okSchool = !school.raw || (!isExternal && (school.id
         ? panel.getAttribute('data-institution') === school.id
         : schoolTokens.every(token => schoolHay.includes(token))));
       panel.querySelectorAll('.sports-result').forEach(row => {
         const date = (row.querySelector('time[datetime]')?.getAttribute('datetime') || '').slice(0, 10);
-        const range = periodRange(period);
-        row.hidden = period === 'live' ? !row.classList.contains('sports-result--live')
-          : Boolean(range && (!date || !ymdInRange(date, range)));
+        row.hidden = periodKey === 'live' ? !row.classList.contains('sports-result--live')
+          : Boolean(rowRange && (!date || !ymdInRange(date, rowRange)));
       });
       const show = okSport && okSector && okSex && okSearch && okPeriod && okSchool;
       panel.hidden = !show;
@@ -701,13 +727,14 @@
     root.querySelectorAll('[data-sports-schedule-sort]').forEach((board) => {
       const kids = Array.from(board.querySelectorAll(':scope > .sports-panel'));
       if (kids.length < 2) return;
+      const currentOrder = [...kids];
+      const shownNext = new Map(kids.map(panel => [panel, Math.min(...Array.from(panel.querySelectorAll('.sports-result--next, .sports-result--live'))
+        .filter(row => !row.hidden && row.getAttribute('data-live-excluded') !== '1')
+        .map(row => Number(row.getAttribute('data-kickoff-ts')))
+        .filter(ts => Number.isFinite(ts) && ts >= Date.now() - LIVE_TAIL_MS))]));
       kids.sort((a, b) => {
-        const shownNext = panel => Math.min(...Array.from(panel.querySelectorAll('.sports-result--next, .sports-result--live'))
-          .filter(row => !row.hidden && row.getAttribute('data-live-excluded') !== '1')
-          .map(row => Number(row.getAttribute('data-kickoff-ts')))
-          .filter(ts => Number.isFinite(ts) && ts >= Date.now() - LIVE_TAIL_MS));
-        const ta = shownNext(a);
-        const tb = shownNext(b);
+        const ta = shownNext.get(a);
+        const tb = shownNext.get(b);
         const aOk = Number.isFinite(ta) && ta >= Date.now() - LIVE_TAIL_MS;
         const bOk = Number.isFinite(tb) && tb >= Date.now() - LIVE_TAIL_MS;
         if (aOk && bOk && ta !== tb) return ta - tb;
@@ -720,7 +747,7 @@
         const nb = (b.querySelector('.sports-panel__name-text')?.textContent || '').trim();
         return na.localeCompare(nb, 'fr');
       });
-      kids.forEach((el) => board.appendChild(el));
+      if (kids.some((panel, i) => panel !== currentOrder[i])) kids.forEach((el) => board.appendChild(el));
     });
 
     blocks.forEach((block) => {
@@ -1048,18 +1075,33 @@
     const t = getComputedStyle(board).gridTemplateColumns || '';
     return t.split(' ').filter((x) => x && x !== '0px').length || 1;
   }
-  function layoutBoard(board) {
-    if (!board.isConnected) return;
-    const on = boardCols(board) > 1;
-    board.classList.toggle('is-masonry', on);
-    Array.from(board.children).forEach((el) => {
-      if (!on || el.hidden) { el.style.removeProperty('grid-row-end'); return; }
-      const cs = getComputedStyle(el);
-      const h = el.getBoundingClientRect().height
-        + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
-      const span = Math.max(1, Math.ceil((h + MS_GAP) / MS_ROW));
-      const v = `span ${span}`;
-      if (el.style.gridRowEnd !== v) el.style.gridRowEnd = v;
+  function layoutBoards() {
+    // Read all grid modes before changing any class or inline span.
+    const states = boards.filter(board => board.isConnected).map(board => ({
+      board, on: boardCols(board) > 1, children: Array.from(board.children),
+    }));
+    // Prepare every grid before the first height read (global, not per grid).
+    states.forEach(({ board, on, children }) => {
+      board.classList.toggle('is-masonry', on);
+      children.forEach(el => {
+        if ((!on || el.hidden) && el.style.gridRowEnd) el.style.removeProperty('grid-row-end');
+      });
+    });
+    const spans = [];
+    states.forEach(({ on, children }) => {
+      if (!on) return;
+      children.forEach(el => {
+        if (el.hidden) return;
+        const cs = getComputedStyle(el);
+        const h = el.getBoundingClientRect().height
+          + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+        const span = Math.max(1, Math.ceil((h + MS_GAP) / MS_ROW));
+        spans.push({ el, value: `span ${span}` });
+      });
+    });
+    // No layout reads after the first span write.
+    spans.forEach(({ el, value }) => {
+      if (el.style.gridRowEnd !== value) el.style.gridRowEnd = value;
     });
   }
   let msRaf = 0;
@@ -1067,7 +1109,7 @@
     if (msRaf) return;
     msRaf = window.requestAnimationFrame(() => {
       msRaf = 0;
-      boards.forEach(layoutBoard);
+      layoutBoards();
     });
   }
   window.__sportsMasonry = layoutMasonry;
