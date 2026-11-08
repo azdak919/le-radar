@@ -1,3 +1,4 @@
+const { reviewedSourceCrop } = require('./lead-image-pins-lib');
 /**
  * Extraction et validation d'images d'articles — partagé par fetch-news et ensure-lead-images.
  */
@@ -898,6 +899,9 @@ function looksLikeCameraFile(name = '') {
 function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   if (!width || !height || !isPortraitLeadRatio(width, height)) return false;
   if (width / height < LEAD_CROP_MIN_RATIO) return false;
+  // Affiche du sujet lui-même : exception revue et liée à article + URL + taille.
+  // Aucun nouveau portrait/logo/pub n'est accepté par cette branche.
+  if (reviewedSourceCrop(ctx, ctx.url, width, height) && !ctx.campaignGraphic) return true;
   // Le recadrage 3:2 doit encore remplir la une.
   if (width < LEAD_MIN_WIDTH || width / 1.5 < LEAD_MIN_HEIGHT) return false;
   if (ctx.campaignGraphic) return false;
@@ -1184,7 +1188,7 @@ function leadImageUrlCandidates(raw = '') {
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
   /** Portrait recadrable (crédit Photo/Dessin, pas une affiche) : une 3:2 centrée. */
   const portraitHit = (url, width, height, ctx, source) => (
-    isCropSafePortrait(width, height, { ...ctx, url, screenshotPhotos: !!options.screenshotPhotos })
+    isCropSafePortrait(width, height, { ...ctx, url, link: item.link, screenshotPhotos: !!options.screenshotPhotos })
       ? { url, width, height, source, leadReady: true, cropSafe: true }
       : null
   );
