@@ -74,6 +74,9 @@ test('sports Today is bilingual @ci-critical',async({page})=>{
 test('Laval is live, 19h is not; score/final status hydrate without navigation @ci-critical',async({page})=>{
  test.skip(publicRun,'Synthetic timeline/score is a fixture, never public evidence.');
  const payload=await fixture(page);await page.goto('/sports/?labFrame=1',{waitUntil:'domcontentloaded'});
+ // This synthetic live timeline must not reuse the real match’s completed SSR state.
+ await page.locator('.sports-panel[data-registry="ulaval"][data-sport="football"]').evaluate(panel=>panel.querySelectorAll('.sports-panel__list,.sports-panel__empty').forEach(el=>el.remove()));
+ await page.evaluate(data=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:data})),payload);
  await page.locator('[data-filter-sport="football"]').click();
  await page.locator('[data-filter-period="live"]').click();
  const card=page.locator('.sports-panel[data-registry="ulaval"][data-sport="football"]');
@@ -143,7 +146,7 @@ test('campus match without GameId hydrates with a stable key and retains notice 
 });
 
 
-test('complete session history survives compact and full updates @ci-critical', async ({ page }) => {
+for (const sport of ['football', 'soccer', 'rugby']) test(`complete session history survives compact and full updates ${sport} @ci-critical`, async ({ page }) => {
  test.skip(publicRun, 'Controlled update regression; public counts are verified separately.');
  await page.clock.install({time:new Date('2026-11-07T23:45:00Z')});
  await page.route('**/sports-masthead.json*', route => route.abort());
@@ -151,7 +154,6 @@ test('complete session history survives compact and full updates @ci-critical', 
  await page.goto('/sports/?labFrame=1', { waitUntil:'domcontentloaded' });
  await page.locator('#sports-institution').fill('Université Laval');
  await page.locator('[data-filter-period="session"]').click();
- for (const sport of ['football', 'soccer', 'rugby']) {
   let team = Object.values(source.teams).find(t=>t.registryId==='ulaval' && t.sport===sport && t.results?.length > 1);
   const card = page.locator(`.sports-panel[data-team="${team.id}"]`);
   if (sport === 'football') {
@@ -182,7 +184,6 @@ test('complete session history survives compact and full updates @ci-critical', 
    await page.locator('[data-filter-period="session"]').click();
    await expect(card.locator('.sports-result:visible')).toHaveCount(10);
   }
- }
 });
 
 test('official results link remains available with future-only schedule @ci-critical', async ({page})=>{

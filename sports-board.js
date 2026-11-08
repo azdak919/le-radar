@@ -313,17 +313,24 @@
   // Overlay reported games without deleting SSR history/futures absent from a preview.
   let hydratedPayload = null;
   let hydratedDay = '';
+  let gameClockFormatter;
   function hydrateSportsBoard(payload) {
     if (!payload || !payload.teams || typeof payload.teams !== 'object') return;
     hydratedPayload = payload; hydratedDay = ymdInToronto();
     const byId = new Map(Object.entries(payload.teams).map(([key, team]) => [team?.id || key, team]));
+    // Opposing teams often share the same kickoff; convert each date/time once per payload.
+    const kickoffCache = new Map();
+    const ms = game => {
+      if (!game?.date || !game?.time) return NaN;
+      const key = `${game.date}|${game.time}`;
+      if (!kickoffCache.has(key)) kickoffCache.set(key, window.RadarSportsFreshness?.zonedTimeToMs?.(game.date, game.time, TZ));
+      return kickoffCache.get(key);
+    };
     scoredPanels.forEach(panel => {
       const team = byId.get(panel.getAttribute('data-team'));
       if (!team || team.sport === 'sailing') return; // multi-day/place renderer remains authoritative
       const next = team.nextGame || team.nextGames?.[0] || null;
       const last = team.lastGame || team.results?.[0] || null;
-      const ms = game => game?.date && game?.time
-        ? window.RadarSportsFreshness?.zonedTimeToMs?.(game.date, game.time, TZ) : NaN;
       if (next) {
         panel.setAttribute('data-next-ts', String(ms(next) || ''));
         panel.setAttribute('data-next-date', next.date || '');
@@ -387,7 +394,8 @@
         time.textContent = game.date === today ? (lang === 'en' ? 'Today' : 'Aujourd’hui') : game.date || '';
         if (Number.isFinite(kickoff)) {
           const clock = document.createElement('span'); clock.className = 'sports-result__clock';
-          clock.textContent = new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }).format(new Date(kickoff));
+          gameClockFormatter ||= new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { timeZone: TZ, hour: '2-digit', minute: '2-digit' });
+          clock.textContent = gameClockFormatter.format(new Date(kickoff));
           if (game.period && !final) clock.textContent += ` · ${game.period}`;
           time.appendChild(clock);
         }
@@ -404,18 +412,20 @@
         badge.textContent = final ? ({ W: lang === 'en' ? 'W' : 'V', L: lang === 'en' ? 'L' : 'D', D: lang === 'en' ? 'T' : 'N' }[game.result] || '') : '→';
         badge.title = state;
         for (const attr of ['data-idle-badge', 'data-idle-badge-class']) badge.removeAttribute(attr);
-        list.appendChild(row); // ordered upcoming first, then source results
+        if (row.parentNode !== list) list.appendChild(row);
       }
       // A compact payload is not evidence that older or future games vanished.
       // Keep every unreported row and restore upcoming-first / newest-result order.
-      Array.from(list.querySelectorAll('.sports-result')).sort((a, b) => {
+      const currentRows = Array.from(list.querySelectorAll('.sports-result'));
+      const orderedRows = [...currentRows].sort((a, b) => {
         const af = a.hasAttribute('data-result'); const bf = b.hasAttribute('data-result');
         if (af !== bf) return af ? 1 : -1;
         const stamp = row => (row.querySelector('time')?.getAttribute('datetime') || '') + ' ' + (row.querySelector('.sports-result__clock')?.textContent || '');
         const at = Number(a.getAttribute('data-kickoff-ts')); const bt = Number(b.getAttribute('data-kickoff-ts'));
         if (Number.isFinite(at) && Number.isFinite(bt) && at !== bt) return af ? bt - at : at - bt;
         return af ? stamp(b).localeCompare(stamp(a)) : stamp(a).localeCompare(stamp(b));
-      }).forEach(row => list.appendChild(row));
+      });
+      if (orderedRows.some((row, i) => row !== currentRows[i])) orderedRows.forEach(row => list.appendChild(row));
       const sourceLink = panel.querySelector('.sports-panel__results-source');
       if (sourceLink) sourceLink.hidden = Boolean(list.querySelector('[data-result]'));
     });
@@ -717,13 +727,14 @@
     root.querySelectorAll('[data-sports-schedule-sort]').forEach((board) => {
       const kids = Array.from(board.querySelectorAll(':scope > .sports-panel'));
       if (kids.length < 2) return;
+      const currentOrder = [...kids];
+      const shownNext = new Map(kids.map(panel => [panel, Math.min(...Array.from(panel.querySelectorAll('.sports-result--next, .sports-result--live'))
+        .filter(row => !row.hidden && row.getAttribute('data-live-excluded') !== '1')
+        .map(row => Number(row.getAttribute('data-kickoff-ts')))
+        .filter(ts => Number.isFinite(ts) && ts >= Date.now() - LIVE_TAIL_MS))]));
       kids.sort((a, b) => {
-        const shownNext = panel => Math.min(...Array.from(panel.querySelectorAll('.sports-result--next, .sports-result--live'))
-          .filter(row => !row.hidden && row.getAttribute('data-live-excluded') !== '1')
-          .map(row => Number(row.getAttribute('data-kickoff-ts')))
-          .filter(ts => Number.isFinite(ts) && ts >= Date.now() - LIVE_TAIL_MS));
-        const ta = shownNext(a);
-        const tb = shownNext(b);
+        const ta = shownNext.get(a);
+        const tb = shownNext.get(b);
         const aOk = Number.isFinite(ta) && ta >= Date.now() - LIVE_TAIL_MS;
         const bOk = Number.isFinite(tb) && tb >= Date.now() - LIVE_TAIL_MS;
         if (aOk && bOk && ta !== tb) return ta - tb;
@@ -736,7 +747,7 @@
         const nb = (b.querySelector('.sports-panel__name-text')?.textContent || '').trim();
         return na.localeCompare(nb, 'fr');
       });
-      kids.forEach((el) => board.appendChild(el));
+      if (kids.some((panel, i) => panel !== currentOrder[i])) kids.forEach((el) => board.appendChild(el));
     });
 
     blocks.forEach((block) => {
