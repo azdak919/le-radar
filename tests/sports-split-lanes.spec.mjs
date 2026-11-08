@@ -262,3 +262,21 @@ test('peinture réelle live-only, moins de cartes et rotation sans retour froid 
     if(n===3){await page.addStyleTag({content:'#local-lab-format-bar{display:none!important}'});await page.locator('#masthead-sports-strip').screenshot({path:info.outputPath('sports-live-only.png')});}
   }
 });
+
+
+test('page maintenue après minuit : réallocation DOM même si compte et anciennes clés restent valides @ci-critical', async({page})=>{
+  await page.setViewportSize({width:1920,height:1000});
+  await page.clock.setFixedTime(new Date('2026-11-08T23:50:00-05:00'));
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  const pool=[...Array.from({length:6},(_,i)=>slide(`r${i}`,'result','2026-11-08','19:00',{opponent:'X',opponentCode:'X'})),...Array.from({length:6},(_,i)=>slide(`n${i}`,'next','2026-11-09','19:00',{opponent:'X',opponentCode:'X'}))];
+  pool.forEach(s=>{s.team.code=s.key;s.team.name=s.key;});
+  await page.evaluate(pool=>{sportsSlides=pool;sportsFitCount=4;sportsFitDepth=0;renderSportsStrip();},pool);
+  const cards=page.locator('#masthead-sports-strip > a');await expect(cards).toHaveCount(4);
+  expect(await cards.evaluateAll(cards=>cards.map(c=>c.dataset.sportsKey))).toEqual(['r0','r1','r2','r3']);
+  await page.clock.setFixedTime(new Date('2026-11-09T00:05:00-05:00'));
+  await page.evaluate(()=>rotateSportsSlot(0));
+  expect(await cards.evaluateAll(cards=>cards.map(c=>c.dataset.sportsKey))).toEqual(['r0','r1','n0','n1']);
+  await page.evaluate(()=>{for(let i=0;i<12;i++)rotateSportsSlot(i%4);});
+  expect(await page.evaluate(()=>sportsVisible.map(s=>s.key[0]))).toEqual(['r','r','n','n']);
+});

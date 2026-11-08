@@ -97,6 +97,7 @@ let sportsData = null;
 let sportsSlides = [];
 /** Slides actuellement affichées (1 par slot), comme mastheadWeatherSlots. */
 let sportsVisible = [];
+let sportsStripAllocationSignature = '';
 /** @deprecated remplacé par des timers par slot (indépendants). */
 let sportsNextSlot = 0;
 /** Un timeout par slot : chaque puce tourne à son rythme (marquee inclus). */
@@ -3205,6 +3206,11 @@ function sportsStripPolicy(now = Date.now(), pool = null) {
   return { mode: 'fallback', left: [], right: [], pool: source };
 }
 
+function sportsStripPolicySignature(policy, now = Date.now()) {
+  const keys = pool => pool.map(s => s.key).sort();
+  return JSON.stringify([torontoDayKey(now), policy.mode, keys(policy.left), keys(policy.right), keys(policy.pool)]);
+}
+
 function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const count = Math.max(1, n | 0), policy = sportsStripPolicy(now, pool);
   if (policy.mode !== 'split') return sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.pool), count);
@@ -4226,6 +4232,7 @@ function renderSportsStrip() {
   const board = sportsBoardCount();
   const count = Math.min(board, Math.max(1, sportsSlides.length + 3));
   sportsVisible = pickInitialSportsVisible(count);
+  sportsStripAllocationSignature = sportsStripPolicySignature(sportsStripPolicy());
   if (MASTHEAD_SPORTS_STRIP) {
     MASTHEAD_SPORTS_STRIP.dataset.ctaLayout = 'start';
     MASTHEAD_SPORTS_STRIP.dataset.ctaCount = '0';
@@ -4378,7 +4385,7 @@ function rotateSportsSlot(slot) {
   const policy = sportsStripPolicy();
   const allowed = new Set(policy.pool.map(s => s.key));
   const expected = Math.max(1, sportsSplitVisible(sportsBoardCount()).length);
-  if (sportsVisible.length !== expected || sportsVisible.some(s => s.mode === 'cta' ? policy.pool.length > 0 : !allowed.has(s.key))) {
+  if (sportsStripAllocationSignature !== sportsStripPolicySignature(policy) || sportsVisible.length !== expected || sportsVisible.some(s => s.mode === 'cta' ? policy.pool.length > 0 : !allowed.has(s.key))) {
     renderSportsStrip(); return;
   }
   const n = sportsVisible.length;
@@ -4509,7 +4516,7 @@ function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   const policy = sportsStripPolicy();
   const allowed = new Set(policy.pool.map(s => s.key));
   const expected = Math.max(1, sportsSplitVisible(sportsBoardCount()).length);
-  if (sportsVisible.length !== expected || sportsVisible.some(s => s.mode === 'cta' ? policy.pool.length > 0 : !allowed.has(s.key))) {
+  if (sportsStripAllocationSignature !== sportsStripPolicySignature(policy) || sportsVisible.length !== expected || sportsVisible.some(s => s.mode === 'cta' ? policy.pool.length > 0 : !allowed.has(s.key))) {
     renderSportsStrip(); return;
   }
   const n = sportsVisible.length;
