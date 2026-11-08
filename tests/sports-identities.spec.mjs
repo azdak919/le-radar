@@ -28,8 +28,10 @@ async function fixture(page){
 async function open(page,width,theme,path='/sports/'){
  await page.setViewportSize({width,height:1100});
  if(!publicRun)await fixture(page);
+ await page.emulateMedia({colorScheme:theme});
+ await page.addInitScript(theme=>{try{localStorage.setItem('radar-theme',theme);}catch{}},theme);
  await page.goto(`${path}?labFrame=1`,{waitUntil:'domcontentloaded'});
- await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+ await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
  await expect(page.locator('#sports-institution')).toBeVisible();
 }
 for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
@@ -66,6 +68,20 @@ for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
   await page.screenshot({path:info.outputPath(`${publicRun?'public':'fixture'}-sports-${theme}-${width}.png`)});
  });
 }
+for(const theme of ['light','dark'])test(`sports dynamic theme change to ${theme} preserves geometry @ci-critical`,async({page})=>{
+ await open(page,1440,theme==='light'?'dark':'light');
+ await page.locator('[data-filter-sport="football"]').click();
+ await page.locator('#sports-institution').fill('Université Laval');
+ await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+ await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
+ const card=page.locator('.sports-panel[data-registry="ulaval"][data-sport="football"]');
+ await expect(card).toBeVisible();
+ expect(await contrast(card.locator('.sports-panel__sex'))).toBeGreaterThanOrEqual(4.5);
+ expect(await contrast(card.locator('.sports-panel__live'))).toBeGreaterThanOrEqual(4.5);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);
+ await expect(page.locator('[data-filter-sport="football"]')).toHaveAttribute('aria-pressed','true');
+ expect(new URL(page.url()).searchParams.get('institution')).toBe('ulaval');
+});
 test('sports Today is bilingual @ci-critical',async({page})=>{
  await open(page,390,'light','/en/sports/');
  await expect(page.locator('[data-filter-period="today"]')).toHaveText('Today');
