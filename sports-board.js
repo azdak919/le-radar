@@ -328,7 +328,7 @@
   }
 
   function hydrateSportsBoard(payload) {
-    if (!payload || !payload.teams || typeof payload.teams !== 'object') return;
+    if (!SportsDate || !payload || !payload.teams || typeof payload.teams !== 'object') return;
     hydratedPayload = payload; hydratedDay = ymdInToronto();
     const byId = new Map(Object.entries(payload.teams).map(([key, team]) => [team?.id || key, team]));
     // Opposing teams often share the same kickoff; convert each date/time once per payload.
@@ -560,6 +560,79 @@
     });
   }
 
+  // Préférence par formation + ligue, conservée lors des refresh et du retour arrière.
+  const upcomingStateKey = 'radar-sports-upcoming-expanded-v1';
+  let expandedUpcoming = new Set();
+  const revealedUpcomingTargets = new Set();
+  try { expandedUpcoming = new Set(JSON.parse(sessionStorage.getItem(upcomingStateKey) || '[]')); } catch { /* stockage facultatif */ }
+  function upcomingPanelKey(panel) {
+    return ['data-team', 'data-league', 'data-sector', 'data-sport', 'data-sex', 'data-results-source-url']
+      .map(attr => panel.getAttribute(attr) || '').join('|');
+  }
+  function setUpcomingExpanded(panel, expanded) {
+    const key = upcomingPanelKey(panel);
+    if (expanded) expandedUpcoming.add(key); else expandedUpcoming.delete(key);
+    try { sessionStorage.setItem(upcomingStateKey, JSON.stringify([...expandedUpcoming])); } catch { /* privé */ }
+  }
+  function rowIsFocused(row, game) {
+    return !!game && (row.getAttribute('data-game-id') === game
+      || Array.from(row.querySelectorAll('a[href]')).some(a => {
+        try { return new URL(a.href).searchParams.get('GameId') === game; } catch { return false; }
+      }));
+  }
+  /** Éligibilité de période ET repli de présentation : une seule écriture de hidden. */
+  function applyUpcomingVisibility(panel, periodKey, range, focusedGame = '') {
+    const rows = Array.from(panel.querySelectorAll('.sports-result'));
+    const eligible = new Set(rows.filter(row => {
+      if (rowIsFocused(row, focusedGame)) return true;
+      if (periodKey === 'live') return row.classList.contains('sports-result--live');
+      const date = (row.querySelector('time[datetime]')?.getAttribute('datetime') || '').slice(0, 10);
+      return !(range && (!date || !ymdInRange(date, range)));
+    }));
+    const now = Date.now(), today = ymdInToronto();
+    const future = rows.filter(row => {
+      if (!eligible.has(row) || row.hasAttribute('data-result') || row.classList.contains('sports-result--live')) return false;
+      if (['during', 'awaiting', 'waitlist'].includes(row.getAttribute('data-event-state'))) return false;
+      const raw = row.getAttribute('data-kickoff-ts'), kickoff = raw ? Number(raw) : NaN;
+      const date = (row.querySelector('time[datetime]')?.getAttribute('datetime') || '').slice(0, 10);
+      return Number.isFinite(kickoff) ? kickoff > now : /^\d{4}-\d{2}-\d{2}$/.test(date) && date >= today;
+    }).sort((a, b) => {
+      const stamp = row => Number(row.getAttribute('data-kickoff-ts')) || Date.parse(row.querySelector('time')?.getAttribute('datetime') || '');
+      return stamp(a) - stamp(b);
+    });
+    const targetKey = `${upcomingPanelKey(panel)}|${focusedGame}`;
+    if (!revealedUpcomingTargets.has(targetKey) && future.slice(1).some(row => rowIsFocused(row, focusedGame))) {
+      setUpcomingExpanded(panel, true); revealedUpcomingTargets.add(targetKey);
+    }
+    const expanded = expandedUpcoming.has(upcomingPanelKey(panel));
+    const extras = new Set(future.slice(1).filter(row => !rowIsFocused(row, focusedGame)));
+    for (const row of rows) row.hidden = !eligible.has(row) || (!expanded && extras.has(row));
+    let button = panel.querySelector('[data-upcoming-toggle]');
+    if (!extras.size) { if (button) button.hidden = true; return; }
+    const list = panel.querySelector('.sports-panel__list');
+    if (!list) return;
+    if (!list.id) list.id = `sports-games-${panels.indexOf(panel)}`;
+    if (!button) {
+      button = document.createElement('button'); button.type = 'button';
+      button.className = 'sports-panel__upcoming-toggle'; button.setAttribute('data-upcoming-toggle', '');
+      list.after(button);
+    }
+    button.hidden = false;
+    button.setAttribute('aria-controls', list.id);
+    button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    button.textContent = expanded ? (lang === 'en' ? 'Show less' : 'Réduire')
+      : lang === 'en' ? `See other upcoming games (${extras.size})` : `Voir les autres matchs à venir (${extras.size})`;
+  }
+  root.addEventListener('click', event => {
+    const button = event.target.closest('[data-upcoming-toggle]');
+    if (!button || !root.contains(button)) return;
+    const panel = button.closest('.sports-panel');
+    setUpcomingExpanded(panel, button.getAttribute('aria-expanded') !== 'true');
+    const cur = currentFilters(), selected = readQuery();
+    apply(cur.sport, cur.sector, cur.sex, cur.period, selected.team, searchQuery, gameFocus, { scroll: false });
+    layoutMasonry();
+  });
+
   function clearTeamSpotlight() {
     panels.forEach((p) => p.classList.remove('is-spotlight'));
   }
@@ -589,6 +662,8 @@
       } catch { /* ignore */ }
     }
     if (!row) return null;
+    // Une cible de lien profond est toujours révélée avant le scroll.
+    row.hidden = false;
     row.classList.add('is-spotlight');
     if (scroll) window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -698,11 +773,7 @@
       const okSchool = !school.raw || (!isExternal && (school.id
         ? panel.getAttribute('data-institution') === school.id
         : schoolTokens.every(token => schoolHay.includes(token))));
-      panel.querySelectorAll('.sports-result').forEach(row => {
-        const date = (row.querySelector('time[datetime]')?.getAttribute('datetime') || '').slice(0, 10);
-        row.hidden = periodKey === 'live' ? !row.classList.contains('sports-result--live')
-          : Boolean(rowRange && (!date || !ymdInRange(date, rowRange)));
-      });
+      applyUpcomingVisibility(panel, periodKey, rowRange, gameFocus);
       const show = okSport && okSector && okSex && okSearch && okPeriod && okSchool;
       panel.hidden = !show;
       if (show && !isExternal) visible += 1;
@@ -1140,8 +1211,7 @@
     if (hydratedPayload && hydratedDay !== ymdInToronto()) hydrateSportsBoard(hydratedPayload);
     syncLivePresentation();
     const cur = currentFilters();
-    if (cur.period !== 'all') {
-      apply(cur.sport, cur.sector, cur.sex, cur.period, '', searchQuery);
-    }
+    const selected = readQuery();
+    apply(cur.sport, cur.sector, cur.sex, cur.period, selected.team, searchQuery, gameFocus, { scroll: false });
   }, 30000);
 })();

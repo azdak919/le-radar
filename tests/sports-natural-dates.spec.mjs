@@ -4,7 +4,7 @@ const require=createRequire(import.meta.url),S=require('../scripts/seo-pages'),r
 const NOW=new Date('2026-11-08T06:00:00Z');
 function html(lang,theme,now=NOW,teams=real.teams){
  const NativeDate=global.Date;global.Date=class extends NativeDate{constructor(...a){super(...(a.length?a:[+now]));}static now(){return +now;}};
- let panels;try{panels=Object.values(teams).map(t=>`<section class="sports-panel" data-team="${t.id}" data-sport="volleyball" data-sector="collegial" data-sex="f"><header class="sports-panel__head"><h3>${t.nickname||'Dates'}</h3></header>${S.sportsResultRows(t,{sportsUpcoming:'À venir'},lang)}</section>`).join('');}finally{global.Date=NativeDate;}
+ let panels;try{panels=Object.values(teams).map(t=>`<section class="sports-panel" data-team="${t.id}" data-sport="volleyball" data-sector="collegial" data-sex="f"><header class="sports-panel__head"><h3>${t.nickname||'Dates'}</h3></header>${S.sportsResultRows(t,{sportsUpcoming:lang==='en'?'Upcoming':'À venir'},lang)}</section>`).join('');}finally{global.Date=NativeDate;}
  return `<!doctype html><html lang="${lang}" data-theme="${theme}" data-wide-preview="e"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/style-feed.css"><link rel="stylesheet" href="/style-chrome.css"><link rel="stylesheet" href="/seo-pages.css"><link rel="stylesheet" href="/dev/midwidth-preview.css"><link rel="stylesheet" href="/dev/wide-desktop-preview.css"></head><body><main class="wire seo-wire seo-wire--sports" data-sports-board><details class="sports-sport-block" data-sport="volleyball" open><summary>Volleyball</summary><div class="sports-board" data-sports-schedule-sort>${panels}</div></details></main></body></html>`;
 }
 async function boot(page,markup){await page.route('https://**/*',r=>r.abort());await page.route('**/sports/**',r=>r.request().isNavigationRequest()?r.fulfill({body:markup,contentType:'text/html'}):r.continue());await page.goto('/sports/',{waitUntil:'domcontentloaded'});await page.evaluate(()=>document.fonts.ready);}
@@ -32,4 +32,13 @@ test('même page au minuit Toronto : année séparée, heure absente et histoire
  await page.clock.fastForward(10*60000);await expect(next.locator('.sports-result__day')).toHaveText('Aujourd’hui');await expect(next.locator('.sports-result__year')).toHaveCount(0);
  await expect(page.locator('[data-game-id="yesterday"] .sports-result__day')).toHaveText('Hier');await expect(page.locator('[data-game-id="yesterday"] .sports-result__year')).toHaveText('2026');
  const old=page.locator('[data-game-id="old"]');await expect(old.locator('time')).toHaveAttribute('datetime','2025-11-07');await expect(old.locator('.sports-result__clock')).toHaveCount(0);await expect(page.locator('.sports-result')).toHaveCount(3);
+});
+
+for (const lang of ['fr','en']) test(`mixed upcoming/history and numeric clocks stay identical through hydration and refresh ${lang} @ci-critical`, async ({page}) => {
+ const team = {id:'mixed',sport:'volleyball',results:['9:00','14:00','09:00',''].map((time,i)=>({gameId:'r'+i,date:'2026-11-07',time,opponent:'Historique',result:'W',scoreFor:2,scoreAgainst:1})),nextGames:['14:00','9:00','09:00',''].map((time,i)=>({gameId:'n'+i,date:'2026-11-09',time,opponent:'À venir'}))};
+ const teams={mixed:team}; await page.clock.install({time:NOW}); await boot(page,html(lang,'light',NOW,teams));
+ const before=await snapshot(page); expect(before.map(r=>r.id)).toEqual(['n1','n2','n0','n3','r1','r0','r2','r3']);
+ await scripts(page); expect(await snapshot(page)).toEqual(before);
+ for(let pass=0;pass<2;pass++){await page.evaluate(teams=>window.dispatchEvent(new CustomEvent('radar:sports-updated',{detail:{teams}})),teams);expect(await snapshot(page)).toEqual(before);}
+ for(const id of ['n3','r3'])await expect(page.locator(`[data-game-id="${id}"] .sports-result__clock`)).toHaveCount(0);
 });

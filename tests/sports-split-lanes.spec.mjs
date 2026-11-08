@@ -13,6 +13,7 @@ function slide(key, mode, date, time, extra = {}) {
     game: {
       date,
       time,
+      gameId: key,
       opponent: 'Diablos',
       opponentFullName: 'Diablos',
       opponentCode: 'DIA',
@@ -63,9 +64,7 @@ test('n=1 : préfixe E ; n=2 vendredi 17 h : ce soir puis score, jamais score fr
   expect(one.keys, 'n=1 = ce soir (E)').toEqual(['tonight']);
 
   const two = await splitKeys(page, 2, friday, pool);
-  expect(two.keys[0], 'n=2 premier tab = ce soir').toBe('tonight');
-  expect(two.keys, 'jamais [score froid, ce soir]').not.toEqual(['yesterday', 'tonight']);
-  expect(two.keys[1]).toBe('yesterday');
+  expect(two.keys, 'hier à gauche, aujourd’hui à droite').toEqual(['yesterday', 'tonight']);
 });
 
 test('lundi 10 h n=4 : gauche weekend, droite demain', async ({ page }) => {
@@ -84,8 +83,7 @@ test('lundi 10 h n=4 : gauche weekend, droite demain', async ({ page }) => {
   expect(one.keys, 'n=1 lundi = hier').toEqual(['sun']);
 
   const four = await splitKeys(page, 4, monday, pool);
-  expect(four.keys.slice(0, 2), 'gauche = dimanche puis samedi').toEqual(['sun', 'sat']);
-  expect(four.keys.slice(2), 'droite = mardi puis jeudi').toEqual(['tue', 'thu-next']);
+  expect(four.keys, 'moitié du jour vide : uniquement les résultats de la veille').toEqual(['sun']);
 });
 
 test('n=4 jeudi soir : football visible malgré une file de soccer', async ({ page }) => {
@@ -110,9 +108,7 @@ test('n=4 jeudi soir : football visible malgré une file de soccer', async ({ pa
   ];
   const four = await splitKeys(page, 4, thursdayEve, pool);
   expect(four.ok, four.reason || 'ok').toBe(true);
-  const unique = [...new Set(four.sports.filter(Boolean))];
-  expect(unique.length, `puces=${four.sports.join(',')} keys=${four.keys.join(',')}`).toBeGreaterThan(1);
-  expect(four.sports, 'football noyé sous le soccer').toContain('football');
+  expect(four.keys, 'un seul live confirmé : une seule carte, pas de remplissage').toEqual(['live-soc']);
 });
 
 test('accueil 1280 : plus d’un sport si le snapshot en a plusieurs', async ({ page }) => {
@@ -127,7 +123,7 @@ test('accueil 1280 : plus d’un sport si le snapshot en a plusieurs', async ({ 
     const sports = chips
       .map((c) => (c.dataset.sportsSport || '').toLowerCase())
       .filter((s) => s && s !== 'board');
-    const pool = typeof sportsOpenOrderSlides === 'function' ? sportsOpenOrderSlides() : [];
+    const pool = typeof sportsStripPolicy === 'function' ? sportsStripPolicy().pool : [];
     const poolSports = [...new Set(pool.map((s) => String(
       s.team?.sport || s.game?.sport || '',
     ).toLowerCase()).filter(Boolean))];
@@ -202,4 +198,92 @@ test('390 : une puce, pas de split visuel', async ({ page }) => {
     .toBeGreaterThan(0);
   const n = await strip.locator('.sports-chip').count();
   expect(n, '390 : une seule puce visible').toBe(1);
+});
+
+
+test('1/2/3/N directs : exclusivité, dédup miroir, rotation sans repli et resize @ci-critical', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-11-08T17:00:00-05:00'));
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const livePool = Array.from({length:7}, (_,i)=>slide(`live-${i}`, 'next', '2026-11-08', '16:30', {live:true, sport:i%2?'hockey':'soccer', scoreFor:0, scoreAgainst:0}));
+  const cold = [slide('yesterday', 'result', '2026-11-07', '19:00'), slide('tonight','next','2026-11-08','19:00')];
+  for (const nLive of [1,2,3,7]) {
+    const pool = livePool.slice(0,nLive).concat(cold);
+    const state = await page.evaluate(({pool,nLive})=>{
+      const now=Date.now(); sportsSlides=pool;
+      const first=sportsSplitVisible(4,now);
+      const mirror={...pool[0],key:'mirror',team:{...pool[0].team,code:'DIA'},game:{...pool[0].game,opponentCode:'LAV'}};
+      const dedup=sportsSplitVisible(4,now,pool.concat(mirror));
+      const used=new Set(first.flatMap(s=>[...sportsSlideOccupyKeys(s)]));
+      sportsVisible=first;
+      const next=nextSportsSlide(used,{outgoing:first[0],boardN:first.length});
+      return {keys:first.map(s=>s.key),dedup:dedup.map(s=>s.key),next:next?.key||'',small:sportsSplitVisible(1,now).map(s=>s.key),large:sportsSplitVisible(8,now).map(s=>s.key)};
+    },{pool,nLive});
+    expect(state.keys).toHaveLength(Math.min(4,nLive));expect(new Set(state.keys).size).toBe(state.keys.length);
+    expect(state.keys.every(k=>k.startsWith('live-'))).toBe(true);
+    expect(state.dedup).toHaveLength(Math.min(4,nLive));
+    expect(state.next===''||state.next.startsWith('live-')).toBe(true);
+    expect(state.small).toHaveLength(1);expect(state.large).toHaveLength(nLive);
+  }
+});
+
+test('politique civile à minuit, final/update, horaire inconnu jamais live et moitié vide @ci-critical', async ({page})=>{
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  const pool=[slide('nov7','result','2026-11-07','19:00'),slide('nov8','next','2026-11-08','23:30'),slide('nov9','next','2026-11-09','19:00')];
+  const before=await splitKeys(page,4,'2026-11-08T23:20:00-05:00',pool);
+  expect(before.keys).toEqual(['nov7','nov8']);
+  const after=await splitKeys(page,4,'2026-11-09T00:05:00-05:00',pool);
+  expect(after.keys).toEqual(['nov9']);
+  const state=await page.evaluate(pool=>{
+    const now=Date.parse('2026-11-08T23:45:00-05:00');
+    const unknown={...pool[1].game,live:undefined};
+    const confirmed={...unknown,live:true};
+    const final={...confirmed,live:false,final:true,scoreFor:2,scoreAgainst:1,result:'W'};
+    return {unknown:sportsGameIsLive(unknown,now),live:sportsGameIsLive(confirmed,now),final:sportsGameIsLive(final,now),done:sportsSplitVisible(4,now,[pool[0],{...pool[1],mode:'result',game:final}]).map(s=>s.key)};
+  },pool);
+  expect(state.unknown).toBe(false);expect(state.live).toBe(true);expect(state.final).toBe(false);expect(state.done).toEqual(['nov7','nov8']);
+});
+
+test('peinture réelle live 1/2/3/N, resize, statut final et rotation sans froid @ci-critical', async({page},info)=>{
+  await page.setViewportSize({width:1920,height:1000});
+  await page.clock.setFixedTime(new Date('2026-11-08T17:00:00-05:00'));
+  await page.route('https://**/*',r=>r.abort());
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  for(const n of [1,2,3,7]) {
+    const pool=Array.from({length:n},(_,i)=>slide(`direct-${i}`,'next','2026-11-08','16:30',{live:true,scoreFor:i,scoreAgainst:0,opponent:'X',opponentCode:'X'})).concat(slide('cold','next','2026-11-08','19:00'));
+    pool.forEach(s=>{s.team.code=s.key;s.team.name=s.key;});
+    const expected=await page.evaluate(pool=>{sportsSlides=pool;sportsFitCount=4;sportsFitDepth=0;renderSportsStrip();scheduleSportsRotate();return Math.min(sportsBoardCount(),pool.length-1);},pool);
+    const cards=page.locator('#masthead-sports-strip > a');
+    await expect(cards).toHaveCount(expected);await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(expected);
+    await page.evaluate(()=>rotateSportsSlot(0));await expect(page.locator('#masthead-sports-strip > a[data-sports-key="cold"]')).toHaveCount(0);
+    if(n===3){await page.addStyleTag({content:'#local-lab-format-bar{display:none!important}'});await page.locator('#masthead-sports-strip').screenshot({path:info.outputPath('sports-live-only.png')});}
+    // Voie de mise à jour réellement utilisée par les sondages de statut.
+    await page.evaluate(()=>{const sig=sportsBoardLiveSig(),keys=sportsVisibleLiveKeys();const s=sportsSlides.find(s=>s.key==='direct-0');s.mode='result';s.game={...s.game,live:false,final:true,result:'W',scoreFor:3,scoreAgainst:1};sportsRerenderAfterLiveChange(sig,keys);});
+    if(n>1){
+      await expect(page.locator('#masthead-sports-strip > a[data-sports-key="direct-0"]')).toHaveCount(0);
+      await page.setViewportSize({width:1024,height:900});
+      await expect.poll(()=>cards.evaluateAll(cards=>cards.length>0&&cards.every(c=>c.dataset.sportsLive==='1')&&new Set(cards.map(c=>c.dataset.sportsKey)).size===cards.length)).toBe(true);
+      expect(await cards.count()).toBeLessThanOrEqual(n-1);
+      await page.setViewportSize({width:1920,height:1000});
+      await expect.poll(()=>cards.evaluateAll(cards=>cards.length>0&&cards.every(c=>c.dataset.sportsLive==='1'))).toBe(true);
+    }else{await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(0);}
+  }
+});
+
+
+test('page maintenue après minuit : réallocation DOM même si compte et anciennes clés restent valides @ci-critical', async({page})=>{
+  await page.setViewportSize({width:1920,height:1000});
+  await page.clock.setFixedTime(new Date('2026-11-08T23:50:00-05:00'));
+  await page.goto('/',{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  const pool=[...Array.from({length:6},(_,i)=>slide(`r${i}`,'result','2026-11-08','19:00',{opponent:'X',opponentCode:'X'})),...Array.from({length:6},(_,i)=>slide(`n${i}`,'next','2026-11-09','19:00',{opponent:'X',opponentCode:'X'}))];
+  pool.forEach(s=>{s.team.code=s.key;s.team.name=s.key;});
+  await page.evaluate(pool=>{sportsSlides=pool;sportsFitCount=4;sportsFitDepth=0;renderSportsStrip();},pool);
+  const cards=page.locator('#masthead-sports-strip > a');await expect(cards).toHaveCount(4);
+  expect(await cards.evaluateAll(cards=>cards.map(c=>c.dataset.sportsKey))).toEqual(['r0','r1','r2','r3']);
+  await page.clock.setFixedTime(new Date('2026-11-09T00:05:00-05:00'));
+  await page.evaluate(()=>rotateSportsSlot(0));
+  expect(await cards.evaluateAll(cards=>cards.map(c=>c.dataset.sportsKey))).toEqual(['r0','r1','n0','n1']);
+  await page.evaluate(()=>{for(let i=0;i<12;i++)rotateSportsSlot(i%4);});
+  expect(await page.evaluate(()=>sportsVisible.map(s=>s.key[0]))).toEqual(['r','r','n','n']);
 });
