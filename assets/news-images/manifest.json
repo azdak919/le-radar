@@ -1267,15 +1267,6 @@
       "via": "photon-resize",
       "nameKey": "aureliediouf-261026-iadanslajustice-vol-44.jpg"
     },
-    "8a9c168712edaa07": {
-      "local": "assets/news-images/8a9c168712edaa07.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/HV26_0930_SHIFT_event_DSC8348_900_506_90.jpg",
-      "host": "thelinknewspaper.ca",
-      "bytes": 125094,
-      "updatedAt": "2026-11-05T18:39:09.678Z",
-      "via": "disk",
-      "nameKey": "hv26_0930_shift_event_dsc8348.jpg"
-    },
     "1a0ee66cc728febb": {
       "local": "assets/news-images/1a0ee66cc728febb.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/marissa-sports-article-2.jpg",
@@ -1526,16 +1517,6 @@
       "via": "photon-resize",
       "nameKey": "img_0208.jpg"
     },
-    "5743d8be72ba01da": {
-      "local": "assets/news-images/5743d8be72ba01da.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Maternity_leave_Annabelle_Olumese_900_450.png",
-      "host": "thelinknewspaper.ca",
-      "bytes": 61834,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-07T20:07:44.495Z",
-      "via": "resize-proxy",
-      "nameKey": "04_sports_maternity_leave_annabelle_olumese_900_450.png"
-    },
     "1b096fd682af1769": {
       "local": "assets/news-images/1b096fd682af1769.jpg",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/11/Scitech-3-Rokayah-Bellaoui-scaled.jpg",
@@ -1661,9 +1642,28 @@
       "updatedAt": "2026-11-08T20:08:47.509Z",
       "via": "disk",
       "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
+    },
+    "78903cb565b17597": {
+      "local": "assets/news-images/78903cb565b17597.png",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Maternity_leave_Annabelle_Olumese_690_345.png",
+      "host": "thelinknewspaper.ca",
+      "bytes": 320499,
+      "updatedAt": "2026-11-08T21:37:59.895Z",
+      "via": "disk",
+      "nameKey": "04_sports_maternity_leave_annabelle_olumese_690_345.png"
+    },
+    "b2b58eee19c55729": {
+      "local": "assets/news-images/b2b58eee19c55729.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/HV26_0930_SHIFT_event_DSC8348_690_388_90.jpg",
+      "host": "thelinknewspaper.ca",
+      "bytes": 82578,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-08T21:38:00.139Z",
+      "via": "origin",
+      "nameKey": "hv26_0930_shift_event_dsc8348.jpg"
     }
   },
-  "updatedAt": "2026-11-08T20:37:43.973Z",
+  "updatedAt": "2026-11-08T21:38:00.259Z",
   "count": 167,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
