@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-08T19:07:16.010Z",
+  "updatedAt": "2026-11-08T21:07:28.339Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Radio Futura",
+        "title": "Remparts de Québec",
         "source": "api-live",
-        "start": "13:00",
-        "end": "14:30",
-        "url": "https://chyz.ca/emission/radio-futura/"
+        "start": "13:45",
+        "end": "16:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "next": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
@@ -20,7 +20,7 @@
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "Remparts de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T19:06:17.697Z"
+      "checkedAt": "2026-11-08T21:06:31.163Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge",
+        "title": "Le grand repos",
         "source": "schedule",
-        "start": "13:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-grand-repos"
       },
       "next": {
-        "title": "La Grapevine",
+        "title": "Symbiose",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/la-grapevine"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/symbiose"
       },
       "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "Le grand repos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T19:06:31.600Z"
+      "checkedAt": "2026-11-08T21:06:45.053Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "Bhum Bhum Time",
         "source": "api-live",
         "start": "16:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Desi Beats",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "Airtime - offline",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Bhum Bhum Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T19:06:34.657Z"
+      "checkedAt": "2026-11-08T21:06:47.988Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Methods and Madness",
+        "title": "Grade A Explosives",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/methods-and-madness"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
       "next": {
-        "title": "Fukubukuro",
+        "title": "Bills Country and Western Favourites",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/fukubukuro"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
       "track": "",
-      "showTitle": "Methods and Madness",
+      "showTitle": "Grade A Explosives",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T19:06:55.292Z"
+      "checkedAt": "2026-11-08T21:07:02.471Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T19:06:56.801Z"
+      "checkedAt": "2026-11-08T21:07:03.389Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T19:07:15.659Z"
+      "checkedAt": "2026-11-08T21:07:27.988Z"
     }
   }
 }
