@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08T18:37:27.511Z",
+  "updated": "2026-11-08T20:07:01.635Z",
   "updatedSlot": null,
   "count": 188,
   "freshnessSessions": 3,
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-07T23:00:00.000Z",
-      "lastFetchOk": "2026-11-08T18:36:02.325Z"
+      "lastFetchOk": "2026-11-08T20:05:54.227Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-06T22:00:00.000Z",
-      "lastFetchOk": "2026-11-08T18:36:02.690Z"
+      "lastFetchOk": "2026-11-08T20:05:54.634Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-04T12:00:00.000Z",
-      "lastFetchOk": "2026-11-08T18:36:04.566Z"
+      "lastFetchOk": "2026-11-08T20:05:56.632Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,15 +34,15 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-11-02T15:36:04.000Z",
-      "lastFetchOk": "2026-11-08T18:36:04.825Z"
+      "lastFetchOk": "2026-11-08T20:05:57.008Z"
     },
     "The Link": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-04T23:25:00.000Z",
-      "lastFetchOk": "2026-11-08T18:36:06.076Z"
+      "lastFetchOk": null
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-11-08T18:36:06.927Z"
+      "lastFetchOk": "2026-11-08T20:05:58.395Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-03T20:33:01.000Z",
-      "lastFetchOk": "2026-11-08T18:36:07.683Z"
+      "lastFetchOk": "2026-11-08T20:05:59.157Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-06T15:44:50.000Z",
-      "lastFetchOk": "2026-11-08T18:36:09.412Z"
+      "lastFetchOk": "2026-11-08T20:06:02.216Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-11-08T18:36:09.641Z"
+      "lastFetchOk": "2026-11-08T20:06:02.552Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-06T21:25:55.000Z",
-      "lastFetchOk": "2026-11-08T18:36:10.265Z"
+      "lastFetchOk": "2026-11-08T20:06:03.170Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 9,
       "lastArticle": "2026-11-06T21:21:04.110Z",
-      "lastFetchOk": "2026-11-08T18:36:10.835Z"
+      "lastFetchOk": "2026-11-08T20:06:03.643Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-03T11:05:31.000Z",
-      "lastFetchOk": "2026-11-08T18:36:12.852Z"
+      "lastFetchOk": "2026-11-08T20:06:06.495Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-10-28T13:44:16.000Z",
-      "lastFetchOk": "2026-11-08T18:36:13.090Z"
+      "lastFetchOk": "2026-11-08T20:06:06.707Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-05T19:29:49.000Z",
-      "lastFetchOk": "2026-11-08T18:36:13.243Z"
+      "lastFetchOk": "2026-11-08T20:06:06.876Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-11-08T18:36:14.494Z"
+      "lastFetchOk": "2026-11-08T20:06:08.130Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,15 +130,15 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-11-08T18:36:14.651Z"
+      "lastFetchOk": "2026-11-08T20:06:08.271Z"
     },
     "Le Trait d'Union": {
-      "fetchOk": true,
+      "fetchOk": false,
       "stale": false,
-      "articleCount": 10,
+      "articleCount": 0,
       "freshArticleCount": 0,
-      "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-11-08T18:36:15.526Z"
+      "lastArticle": null,
+      "lastFetchOk": null
     },
     "The Concordian": {
       "fetchOk": true,
@@ -146,15 +146,15 @@
       "articleCount": 6,
       "freshArticleCount": 6,
       "lastArticle": "2026-11-07T04:27:08.000Z",
-      "lastFetchOk": "2026-11-08T18:36:20.785Z"
+      "lastFetchOk": "2026-11-08T20:06:20.782Z"
     },
     "Impact Campus": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-08T16:01:49.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-11-08T20:06:22.078Z"
     },
     "La Griffe": {
       "fetchOk": true,
@@ -162,7 +162,7 @@
       "articleCount": 10,
       "freshArticleCount": 8,
       "lastArticle": "2026-10-27T15:51:37.000Z",
-      "lastFetchOk": "2026-11-08T18:36:33.140Z"
+      "lastFetchOk": "2026-11-08T20:06:22.314Z"
     }
   },
   "items": [
@@ -178,6 +178,7 @@
       "date": "2026-11-08T16:01:49.000Z",
       "excerpt": "Le 13 octobre 2026 est paru l’essai Nouvelle Garde: Le temps du sport féminin écrit par Florence-Agathe Dubé-Moreau aux éditions du Remue-Ménage. Cet ouvrage affiche avec transparence les remous de l’industrie et de la commercialisation du sport masculin tout en relatant",
       "image": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/08110045/images-copie.jpg",
+      "_pageAuthor": "Rosalie Fauchon, journaliste collaboratrice",
       "sourceImageCredit": "Photo : Impact Campus",
       "sourceImageCreditUrl": "https://impactcampus.ca/arts-et-culture/nouvelle-garde-le-temps-du-sport-feminin-un-essai-historique/",
       "sourceImageCreditFrom": "media",
@@ -188,8 +189,7 @@
       "leadExcerpt": "L’année 2024 marque le début d’une nouvelle ère, bgoù la force des femmes se remarque inévitablement par l’établissement de records d’exception et par le lancement de nouvelles ligues féminines. « Cette enfilade en 2024 dégage la voie à une discussion de fond sur les droits des joueuses et sur le sport comme moteur d’égalité de genre » (D-M. 2026, p.26).",
       "imageLocal": "assets/news-images/88b89352679de58d.jpg",
       "imageLocalKey": "88b89352679de58d",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -455,17 +455,17 @@
       "author": "Anthony Tapia Ancinez",
       "date": "2026-11-06T20:38:56.000Z",
       "excerpt": "FC Supra du Québec continues to make history after qualifying for the Canadian Premier League (CPL) playoffs in their debut season. The club has now defeated top-seeded Cavalry FC 2–1 in the first leg of the semifinals.",
-      "image": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
+      "image": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
       "sourceImageCredit": "Photo: Hannah Nobile",
       "sourceImageCreator": "Hannah Nobile",
       "sourceImageCreditUrl": "https://theconcordian.com/2026/11/supra-quebec-cpl-playoffs-win-cavalry/",
       "sourceImageCreditFrom": "rss-content",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "hannahnobile_011126_suprasemis_vol44-3.jpg",
+      "sourceImageCreditImageKey": "hannahnobile_011126_suprasemis_vol44-1.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/6652aa068d12dd9c.webp",
-      "imageLocalKey": "6652aa068d12dd9c"
+      "imageLocal": "assets/news-images/140272a87a1faec2.webp",
+      "imageLocalKey": "140272a87a1faec2"
     },
     {
       "source": "La Pige",
@@ -608,7 +608,7 @@
       "date": "2026-11-06T19:00:00.000Z",
       "excerpt": "Il se fait tard. Des étudiant·e·s de l'Université de Montréal (UdeM) travaillent dans le silence, jusqu’à ce qu’un bruit leur fasse lever la tête en sursaut. Leur regard se tourne vers un coin du local du pavillon Roger-Gaudry, d’où est venu le bruit en question. Pourtant, il",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/5_fantome_charles-david.jpg",
-      "authorCheckedAt": "2026-11-07T20:06:34.481Z",
+      "authorCheckedAt": "2026-11-08T20:07:10.258Z",
       "_pageAuthor": "Charles-David Desrochers",
       "sourceImageCredit": "Photo : Fonds Ernest Cormier, Centre canadien d’architecture",
       "sourceImageCreator": "Fonds Ernest Cormier, Centre canadien d’architecture",
@@ -892,7 +892,7 @@
       "date": "2026-11-05T18:20:38.000Z",
       "excerpt": "Sydney Sweeney is no stranger to the spotlight. As one of Hollywood’s most recognizable young actresses, she has built a career around roles that have made her both critically acclaimed and widely discussed. But when Sweeney became the face of a sports-betting advertisement, the",
       "image": "https://theplantnews.com/wp-content/uploads/2026/11/marissa-sports-article-2.jpg",
-      "authorCheckedAt": "2026-11-07T20:06:34.815Z",
+      "authorCheckedAt": "2026-11-08T20:07:10.489Z",
       "sourceImageCredit": "Image via Novig",
       "sourceImageCreator": "Novig",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/11/05/beyond-the-body-the-sexualization-of-women-in-sports/",
@@ -1096,15 +1096,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-08T18:37:38.216Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Dawson_College_04.jpg",
-      "imageTitle": "Dawson College 04",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg",
+      "imageTitle": "Dawson College 06",
       "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
       "imageCreator": "Jeangagnon",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_04.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_06.jpg",
       "leadExcerpt": "In the past decade, researchers have become increasingly fascinated by the intersectionality that strings mental health with the criminal justice system. And, namely affecting students, this issue raises a question that has become more and more necessary to divulge: why does seeking psychiatric care so often become a matter for the police?",
-      "stockImageLocal": "assets/stock-images/210ca60573c31169.jpg"
+      "stockImageLocal": "assets/stock-images/bb8d1727e78fd5e3.jpg"
     },
     {
       "source": "Montréal Campus",
@@ -1230,7 +1230,8 @@
       "leadExcerpt": "Five of the officers fired were from Station 39 in Montreal-Nord, and two were based at Station 21 downtown. Six of them were already suspended, according to the SPVM. The officers who were dismissed gave up their badges and guns when they were suspended, according to Dagher.",
       "imageLocal": "assets/news-images/b9326fad0c829473.jpg",
       "imageLocalKey": "b9326fad0c829473",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1246,15 +1247,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-07T21:06:42.888Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/21/Universit%C3%A9_de_Montr%C3%A9al_%28_%C3%89cole_polytechnique_de_Montr%C3%A9al_et_Pavillon_Roger-Gaudry%29.JPG",
-      "imageTitle": "Université de Montréal ( École polytechnique de Montréal et Pavillon Roger-Gaudry)",
-      "imageCredit": "Photo : Laurent Bélanger / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Laurent Bélanger",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Roger-Gaudry_II.jpg",
+      "imageTitle": "Pavillon Roger-Gaudry II",
+      "imageCredit": "Photo : Funke / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Funke",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20de%20Montr%C3%A9al%20(%20%C3%89cole%20polytechnique%20de%20Montr%C3%A9al%20et%20Pavillon%20Roger-Gaudry).JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Roger-Gaudry%20II.jpg",
       "leadExcerpt": "La peur nous accompagne partout. Et parce que nous sommes de drôles de créatures, nous la recherchons même volontairement. On regarde un film d’horreur, on écoute une histoire de meurtre sur Netflix avant de dormir ou on paie (trop cher) pour se faire poursuivre dans une maison hantée.",
-      "stockImageLocal": "assets/stock-images/d48b2427bef559f5.jpg"
+      "stockImageLocal": "assets/stock-images/91ab977610b4062c.jpg"
     },
     {
       "source": "Le Délit",
@@ -1410,6 +1411,33 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "author": "Rose Langlois",
+      "date": "2026-11-04T07:00:00.000Z",
+      "excerpt": "Réflexion sur la création du Prix Pascal, premier prix littéraire récompensant l’IA.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
+      "featured": true,
+      "authorCheckedAt": "2026-11-04T12:07:09.892Z",
+      "sourceImageCredit": "Photo : Ana Camila Torchia",
+      "sourceImageCreator": "Ana Camila Torchia",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "prix-litteraire-ia-.png",
+      "sourceImageCreditRev": 17,
+      "leadImageReady": true,
+      "leadExcerpt": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT en novembre 2022. Cet article ne fera malheureusement pas exception à la tendance, car l’IA s’immisce une fois de plus dans nos vies. C’est officiel, le domaine littéraire n’échappe plus à la menace des machines : un prix littéraire récompensant une œuvre coécrite avec l’IA est arrivé, et il se prés",
+      "imageLocal": "assets/news-images/dfe590d051af5947.jpg",
+      "imageLocalKey": "dfe590d051af5947",
+      "imageLocalVia": "resize-proxy"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
       "title": "Francisée, mais pas la bienvenue ?",
       "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "author": "Della Harris",
@@ -1511,33 +1539,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "author": "Rose Langlois",
-      "date": "2026-11-04T07:00:00.000Z",
-      "excerpt": "Réflexion sur la création du Prix Pascal, premier prix littéraire récompensant l’IA.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
-      "featured": true,
-      "authorCheckedAt": "2026-11-04T12:07:09.892Z",
-      "sourceImageCredit": "Photo : Ana Camila Torchia",
-      "sourceImageCreator": "Ana Camila Torchia",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "prix-litteraire-ia-.png",
-      "sourceImageCreditRev": 17,
-      "leadImageReady": true,
-      "leadExcerpt": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT en novembre 2022. Cet article ne fera malheureusement pas exception à la tendance, car l’IA s’immisce une fois de plus dans nos vies. C’est officiel, le domaine littéraire n’échappe plus à la menace des machines : un prix littéraire récompensant une œuvre coécrite avec l’IA est arrivé, et il se prés",
-      "imageLocal": "assets/news-images/dfe590d051af5947.jpg",
-      "imageLocalKey": "dfe590d051af5947",
-      "imageLocalVia": "resize-proxy"
-    },
-    {
       "source": "Impact Campus",
       "institution": "Université Laval",
       "region": "Capitale-Nationale",
@@ -1560,8 +1561,7 @@
       "leadExcerpt": "Les complexités de l’immigration sont au cœur de cette pièce. Les personnages incarnent tous une facette, multipliant les points de vue sur un enjeu toujours central dans le tourbillon politique de notre époque. Pendant un peu moins de deux heures, nous croisons le chemin d’une mère au Québec, soucieuse à outrance d’être présente, malgré la distance, pour sa mère malade vivant à Barcelone.",
       "imageLocal": "assets/news-images/2ac7b56b59fd2ec0.jpg",
       "imageLocalKey": "2ac7b56b59fd2ec0",
-      "imageLocalVia": "resize-proxy",
-      "_retainedFromCache": true
+      "imageLocalVia": "resize-proxy"
     },
     {
       "source": "L'Exemplaire",
@@ -1584,17 +1584,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Les Québécois ont voté à 66,9 % lors de la dernière élection. Ce n’est cependant pas dans toutes les circonscriptions de la province où le taux de vote a été aussi haut. Certaines circonscriptions ont vu des baisses et d’autres des hausses marquées dans la participation de leurs citoyens. Que s'est-il passé plus précisément ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/70/Pavillon_Alexandre-Vachon_01.jpg",
-      "imageTitle": "Pavillon Alexandre-Vachon",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg",
+      "imageTitle": "Pavillon d’optique-photonique",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Alexandre-Vachon_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_d%27optique_photonique_laser_02.jpg",
       "imageLocal": "assets/news-images/356092f6aaafb8d8.jpg",
       "imageLocalKey": "356092f6aaafb8d8",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/12253475a05cb15e.jpg",
+      "stockImageLocal": "assets/stock-images/539b5adacc45f50d.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -1666,17 +1666,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Le virus du Nil occidental dit VNO est transmis à l’homme par le moustique, lui-même infecté par les oiseaux. L’homme est un « hôte terminal » dans cette transmission, c’est-à-dire qu’il ne peut pas transmettre le virus.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Pavillon_Maurice-Pollack.jpg",
-      "imageTitle": "Pavillon Maurice-Pollack",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
+      "imageTitle": "Pavillon Jeanne-Lapointe",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Maurice-Pollack.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
       "imageLocal": "assets/news-images/7a15d9019b06c31f.jpg",
       "imageLocalKey": "7a15d9019b06c31f",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/66b237d2dd7516ea.jpg",
+      "stockImageLocal": "assets/stock-images/1919db41650015a3.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -1699,17 +1699,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Les projections du taux d’incidence par province de 2026 proviennent de l’ Appendice 2 de la Projection du fardeau du cancer au Canada en 2026 . Cette projection n’incluait pas de données pour le Nunavut, les Territoires du Nord-Ouest ou le Yukon.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 10",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
-      "imageLicense": "CC BY-SA 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pavillon_Louis-Jacques-Casault_-_Universit%C3%A9_-Laval_-_Quebec_City_-_October_2007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon Louis-Jacques-Casault - Université -Laval - Quebec City - October 2007",
+      "imageCredit": "Photo : Colin Rose / CC BY-SA 2.0 · Wikimedia Commons",
+      "imageCreator": "Colin Rose",
+      "imageLicense": "CC BY-SA 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2010.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Louis-Jacques-Casault%20-%20Universit%C3%A9%20-Laval%20-%20Quebec%20City%20-%20October%202007.jpg",
       "imageLocal": "assets/news-images/157e1b0794b4afbb.jpg",
       "imageLocalKey": "157e1b0794b4afbb",
       "imageLocalVia": "disk",
-      "stockImageLocal": "assets/stock-images/61ad1fc61b4f15f1.jpg",
+      "stockImageLocal": "assets/stock-images/723254b9789ea506.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -1733,17 +1733,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Pendant la campagne électorale, Éric Duhaime a concentré ses efforts dans la région de Québec, où il estimait avoir de meilleures chances de remporter des sièges . Ancien animateur de Radio X et du FM 93, le chef conservateur était déjà une figure connue du paysage médiatique de la Capitale-Nationale.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Pavillon_DKN%2C_Universit%C3%A9_Laval_05.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 05",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Pavillon_DKN%2C_Universit%C3%A9_Laval_06.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 06",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2005.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2006.jpg",
       "imageLocal": "assets/news-images/af3f79ee87a691ca.jpg",
       "imageLocalKey": "af3f79ee87a691ca",
       "imageLocalVia": "disk",
-      "stockImageLocal": "assets/stock-images/b5ddec82ff714881.jpg",
+      "stockImageLocal": "assets/stock-images/394d452d38b98964.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -1766,17 +1766,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Initialement, le projet pilote àVélo comptait dix stations et cent vélos. Cinq ans plus tard, le projet est toujours en expansion et compte désormais 225 stations et 2300 vélos. Cette augmentation peut notamment s’expliquer par l’accessibilité de ce moyen de transport ainsi que par sa popularité auprès des usagers.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg",
-      "imageTitle": "Pavillon Alphonse-Marie-Parent 05",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg",
+      "imageTitle": "Pavillon Ernest-Lemieux 06",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Alphonse-Marie-Parent_05.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ernest-Lemieux_06.jpg",
       "imageLocal": "assets/news-images/1e1c34fb613861aa.jpg",
       "imageLocalKey": "1e1c34fb613861aa",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/0cd4a52262537f4a.jpg",
+      "stockImageLocal": "assets/stock-images/0c9e04d1a3c8a7bd.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -2432,7 +2432,8 @@
       "leadExcerpt": "Cinema Politica held a screening of the documentary Edward Said: Between Worlds at the Sir George Williams Alumni Auditorium on Oct. 26. The screening was followed by a discussion and question-and-answer with the producer and was moderated by Concordia University professor Yassin Alsalman.",
       "imageLocal": "assets/news-images/a4094afb6ea4b820.jpg",
       "imageLocalKey": "a4094afb6ea4b820",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2499,7 +2500,8 @@
       "leadExcerpt": "The Concordia University Stingers women’s hockey home opener didn’t go their way. The reigning national champions, l’Université de Montréal (UdeM) Carabins, came into Ed Meagher Arena and scored four goals, to defeat the Stingers in convincing fashion.",
       "imageLocal": "assets/news-images/e0e3c9e4644e958d.jpg",
       "imageLocalKey": "e0e3c9e4644e958d",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -2862,17 +2864,18 @@
       "excerpt": "Est-il raisonnable de se blanchir l’anus ?",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
       "featured": true,
-      "leadExcerpt": "En 2017, la demande de blanchiment anal aurait explosé de 23 % dans la clinique médicale londonienne HB Health après que certaines stars comme Kourtney Kardashian aient mentionné avoir eu recours à cette pratique. En uniformisant la couleur de leur peau, certaines femmes se sentiraient plus à l’aise dans leur corps.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/0d84d91b0191efcf.jpg",
-      "imageLocalKey": "0d84d91b0191efcf",
       "sourceImageCredit": "Photo : Ana Camila Torchia",
       "sourceImageCreator": "Ana Camila Torchia",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "blanchissement.png",
-      "sourceImageCreditRev": 17
+      "sourceImageCreditRev": 17,
+      "leadImageReady": true,
+      "leadExcerpt": "En 2017, la demande de blanchiment anal aurait explosé de 23 % dans la clinique médicale londonienne HB Health après que certaines stars comme Kourtney Kardashian aient mentionné avoir eu recours à cette pratique. En uniformisant la couleur de leur peau, certaines femmes se sentiraient plus à l’aise dans leur corps.",
+      "imageLocal": "assets/news-images/0d84d91b0191efcf.jpg",
+      "imageLocalKey": "0d84d91b0191efcf",
+      "imageLocalVia": "disk"
     },
     {
       "source": "Le Délit",
@@ -3091,15 +3094,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-08T10:06:45.125Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Bishop's University campus 2011 03",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Bishop's University campus 2011 04",
       "imageCredit": "Photo : Jason Paris / CC BY 2.0 · Wikimedia Commons",
       "imageCreator": "Jason Paris",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2003.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg",
       "leadExcerpt": "Thanksgiving is one of the more controversial holidays in North America. It’s true; traditionally, it’s been a celebration built on the foundation of something not worth celebrating. The complicated and devastating nature of colonialism isn’t something that should be celebrated without acknowledging the harm that has been done.",
-      "stockImageLocal": "assets/stock-images/63fe9495a34b6ccf.jpg"
+      "stockImageLocal": "assets/stock-images/bdaf73b0c9e8717f.jpg"
     },
     {
       "source": "The Campus",
@@ -3268,15 +3271,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-08T06:18:23.459Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg",
-      "imageTitle": "Bishop's University campus 2011",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg",
+      "imageTitle": "Bishop's University McGreer Hall",
       "imageCredit": "Photo : JasonParis / CC BY 2.0 · Wikimedia Commons",
       "imageCreator": "JasonParis",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_campus_2011.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
       "leadExcerpt": "The crowd roared with joy as the team jumped into the glass celebrating in front of them. Momentum carried for the team as barely two minutes later rookie defenseman Anthony Ménard sprung Senior forward and assistant captain Cody Morton on a breakaway.",
-      "stockImageLocal": "assets/stock-images/362586ceb2bf6e08.jpg"
+      "stockImageLocal": "assets/stock-images/b4e0a6a40eefa8a6.jpg"
     },
     {
       "source": "The Campus",
@@ -3400,7 +3403,8 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/bcfac8b25e181964.jpg",
       "imageLocalKey": "bcfac8b25e181964",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3425,7 +3429,8 @@
       "leadExcerpt": "Concordia introduced a new campus safety texting service on Oct. 5. The service allows community members to contact Campus Safety and Prevention Services (CSPS) to report safety concerns, request assistance or ask questions.",
       "imageLocal": "assets/news-images/96bfbb9152155b1c.jpg",
       "imageLocalKey": "96bfbb9152155b1c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3450,7 +3455,8 @@
       "leadExcerpt": "Erykah Yasmine Kangbeya was a fellow in the 2025-2026 cohort. By working with the DESTA Black Community Network , her research explored the employment barriers affecting formerly incarcerated people in Quebec.",
       "imageLocal": "assets/news-images/8a9c168712edaa07.jpg",
       "imageLocalKey": "8a9c168712edaa07",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3476,7 +3482,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "04_sports_maternity_leave_annabelle_olumese_900_450.png",
-      "sourceImageCreditRev": 17
+      "sourceImageCreditRev": 17,
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3502,7 +3509,8 @@
       "leadExcerpt": "The Concordia University flag football team exited the Réseau du sport étudiant du Québec conference tournament earlier than expected in 2026. After three straight title-game appearances and a 2024 championship, the Stingers exited the quarterfinals on Sunday, Oct. 25, falling 27-13 to the Université du Québec à Montréal (UQAM) Citadins.",
       "imageLocal": "assets/news-images/b596c1b652462aef.jpg",
       "imageLocalKey": "b596c1b652462aef",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3527,7 +3535,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/ca577be8d20c6e15.jpg",
       "imageLocalKey": "ca577be8d20c6e15",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3552,7 +3561,8 @@
       "leadExcerpt": "Female athletes often face judgement not only for their athletic abilities but also for their bodies, clothing and personalities. In a world that celebrates sports for skill, strength and discipline, female athletes face not only the need to prove their ability but also to look the part.",
       "imageLocal": "assets/news-images/4f958476115e3a1c.jpg",
       "imageLocalKey": "4f958476115e3a1c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3577,7 +3587,8 @@
       "leadExcerpt": "The National Monument, called \"Thunderhead,\" was erected in Ottawa to memorialize those affected by Canada's LGBT Purge. It recently had its grand opening, led by purge survivors, community leaders and Indigenous partners. The funding for this monument was given to the LGBT Purge Fund as part of a $145 million settlement after a class action lawsuit by 2SLGBTQI+ service members.",
       "imageLocal": "assets/news-images/563320f463da59c8.jpg",
       "imageLocalKey": "563320f463da59c8",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3602,7 +3613,8 @@
       "leadExcerpt": "A study by Statistics Canada demonstrated that although Canadians have largely held more progressive attitudes regarding gender-based violence, fewer participants in 2025 than in 2018 agreed that individuals should be able to express their identity however they want. In 2018, 85 per cent agreed with this, compared with 77 per cent in 2025.",
       "imageLocal": "assets/news-images/cd3e12eb4c36bb3c.jpg",
       "imageLocalKey": "cd3e12eb4c36bb3c",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3627,7 +3639,8 @@
       "leadExcerpt": "Queer Concordia is a fee levy group at Concordia University and resource centre for queer students on campus. It holds community events and provides a gender-affirming insurance fund for Concordia students.",
       "imageLocal": "assets/news-images/7601567f60f4f05a.jpg",
       "imageLocalKey": "7601567f60f4f05a",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3652,7 +3665,8 @@
       "leadExcerpt": "This semester, Concordia University has partnered with AIDS Community Care Montreal ( ACCM ) to offer free rapid HIV tests to students on both campuses through their mobile clinic. The drop-in clinic titled “Pee to see, swab to know” also offers chlamydia and gonorrhea testing.",
       "imageLocal": "assets/news-images/441ff8f8edd201fc.jpg",
       "imageLocalKey": "441ff8f8edd201fc",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3668,15 +3682,16 @@
       "image": "",
       "authorCheckedAt": "2026-11-07T18:43:37.417Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG",
-      "imageTitle": "Loyola College Building, Concordia University",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG",
+      "imageTitle": "Mackay Street near Concordia University, Montreal",
       "imageCredit": "Photo : Thomas1313 / CC BY-SA 3.0 · Wikimedia Commons",
       "imageCreator": "Thomas1313",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Loyola_College_Building_15.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG",
       "leadExcerpt": "The program lets immigrants obtain a Quebec selection certificate, which helps them apply for permanent residency. International students and foreign workers must provide proof of French proficiency or show they have worked in certain sectors in the province for at least two years.",
-      "stockImageLocal": "assets/stock-images/ca2d98efaaca18bb.jpg"
+      "stockImageLocal": "assets/stock-images/63b014a9599e54ad.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3701,7 +3716,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/f46d07c6dc72d00f.jpg",
       "imageLocalKey": "f46d07c6dc72d00f",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3727,7 +3743,8 @@
       "leadExcerpt": "This is not limited to the U.S. A May 2026 Statistics Canada report found that people in Canada were less accepting of gender diversity in 2025 than in 2018. Among women, 77 per cent agreed with the statement “everyone should be able to express their gender however they choose” in 2025, down from 85 per cent in 2018. For men, it fell from 78 per cent in 2018 to 70 per cent in 2025.",
       "imageLocal": "assets/news-images/f387fd541aef49f8.jpg",
       "imageLocalKey": "f387fd541aef49f8",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3751,7 +3768,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/9d491eeb03790e50.png",
       "imageLocalKey": "9d491eeb03790e50",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3776,7 +3794,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/76b332b258a5d480.jpg",
       "imageLocalKey": "76b332b258a5d480",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3801,7 +3820,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7e2f8d4ab49fc5c8.jpg",
       "imageLocalKey": "7e2f8d4ab49fc5c8",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Griffe",
@@ -3864,7 +3884,7 @@
       "date": "2026-10-26T12:46:28.000Z",
       "excerpt": "Montreal has no shortage of good cinemas, and certainly no shortage of good cinema programming. On any given weekend, you can expect at least one classic, one cult film, and one small-budget indie and/or one francophone gem on top of all the mainstream listings, beckoning you",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/1000059287-e1793018860601.jpg",
-      "authorCheckedAt": "2026-11-07T18:43:45.871Z",
+      "authorCheckedAt": "2026-11-08T20:07:30.533Z",
       "sourceImageCredit": "Photo : Niccolò Fioriti",
       "sourceImageCreator": "Niccolò Fioriti",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/this-was-missing-in-montreal/",
@@ -3886,11 +3906,11 @@
       "lang": "en",
       "title": "Celebrating CAEO Québec’s 50th Anniversary",
       "link": "https://www.mcgilldaily.com/2026/10/celebrating-caeo-quebecs-50th-anniversary/",
-      "author": "Mara Gibea et Justin Friedberg",
+      "author": "Mara Gibea and Justin Friedberg",
       "date": "2026-10-26T12:00:00.000Z",
       "excerpt": "Many are familiar with the Stonewall Uprising as a precedent for LGBTQ+ activism in North America, particularly on university campuses. But what about queer activism on our own campus? Gay McGill, now known as Queer McGill, was established in 1972 to create public queer spaces —",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/Screenshot-2026-10-24-at-8.08.38-PM-724x620.png",
-      "authorCheckedAt": "2026-11-07T18:43:46.562Z",
+      "authorCheckedAt": "2026-11-08T20:07:31.272Z",
       "sourceImageCredit": "Photo : Golnar Saegh",
       "sourceImageCreator": "Golnar Saegh",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/celebrating-caeo-quebecs-50th-anniversary/",
@@ -3916,7 +3936,7 @@
       "date": "2026-10-26T12:00:00.000Z",
       "excerpt": "Good People is a bi-weekly article series highlighting McGill students doing community-oriented work on and around campus. Because it’ s important to celebrate good people doing good things.",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/translaw4.jpeg",
-      "authorCheckedAt": "2026-11-07T18:43:47.254Z",
+      "authorCheckedAt": "2026-11-08T20:07:32.001Z",
       "sourceImageCredit": "Photo : Finn Jacobsen",
       "sourceImageCreator": "Finn Jacobsen",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/trans-law-collective-dismantles-legal-barriers-for-montreals-queer-community/",
@@ -3942,7 +3962,7 @@
       "date": "2026-10-26T12:00:00.000Z",
       "excerpt": "In late 2025, Quebec banned the use of gender-inclusive language in all government communications written in French. With the recent election of Paul St-Pierre Plamondon of the minority Parti Québécois (PQ) who has supported this exclusionary measure, it is now more important",
       "image": "",
-      "authorCheckedAt": "2026-11-07T18:43:47.925Z",
+      "authorCheckedAt": "2026-11-08T20:07:32.710Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg",
       "imageTitle": "Wilson Hall, McGill University",
@@ -3966,7 +3986,7 @@
       "date": "2026-10-26T12:00:00.000Z",
       "excerpt": "When thinking about the “McGill Experience,” a plethora of feelings and images spring into mind: seeing one’s dorm for the first time, meeting new friends at OAP, and walking down to campus on an early autumn morning. There is so much excitement in living on your own for the",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/Untitled_Artwork-1-3.jpg",
-      "authorCheckedAt": "2026-11-07T18:43:48.966Z",
+      "authorCheckedAt": "2026-11-08T20:07:33.767Z",
       "sourceImageCredit": "Photo : Kara Fan",
       "sourceImageCreator": "Kara Fan",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/the-price-of-staying-home/",
@@ -4000,8 +4020,7 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "wikimedia",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Qu%C3%A9bec_-_Maison_de_la_litt%C3%A9rature_20241031.jpg",
-      "stockImageLocal": "assets/stock-images/5e33f63e5a14e5bc.jpg",
-      "_retainedFromCache": true
+      "stockImageLocal": "assets/stock-images/5e33f63e5a14e5bc.jpg"
     },
     {
       "source": "Impact Campus",
@@ -4026,8 +4045,7 @@
       "leadExcerpt": "La Bande Vidéo, une galerie d’art médiatique faisant partie du collectif artistique Méduse, basé au centre-ville de Québec, a mis en exposition une nouvelle œuvre de l’artiste pluridisciplinaire français Boris Labbé, du 10 septembre au 11 octobre. Malgré une impression positive de l’œuvre, le contexte derrière sa création soulève quelques questions.",
       "imageLocal": "assets/news-images/2c17e3929fca2136.jpg",
       "imageLocalKey": "2c17e3929fca2136",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Griffe",
@@ -4158,8 +4176,7 @@
       "leadExcerpt": "Finalement, trois projecteurs à pellicule dotés d’ampoules incandescentes projettent le dernier triptyque. Un marais brumeux d’où émergent nos précédentes alvéoles cylindriques. Deux vers sont obnubilés par de petites sphères orangées. D’autres émergent d’une eau trouble et nous épient. Une lumière dorée enveloppe les algues au sein desquelles ils sont tapis.",
       "imageLocal": "assets/news-images/5e5b9f2b93006f93.jpg",
       "imageLocalKey": "5e5b9f2b93006f93",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Impact Campus",
@@ -4184,8 +4201,7 @@
       "leadExcerpt": "Le réalisateur, Rafaël Ouellet, est notamment connu pour les films Camion et Arsenault et fils pour lesquels il a été nommé au Gala Québec Cinéma. Certain.nes reconnaîtront le nom de la scénariste, India Desjardins, autrice de la série de livres jeunesse Le journal d’Aurélie Laflamme parue en 2006. Hantée est son deuxième scénario de long métrage après 23 décembre.",
       "imageLocal": "assets/news-images/afd3cce84cfb5f1c.jpg",
       "imageLocalKey": "afd3cce84cfb5f1c",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -4207,17 +4223,17 @@
       "sourceImageCreditImageKey": "c1cd7a14-e81e-4399-a55f-d0f111666dac-e1790799322671.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
-      "imageTitle": "Pavillon de médecine dentaire",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/93/Pavillon_des_Services_UL_03.jpg",
+      "imageTitle": "Pavillon des Services",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_des_Services_UL_03.jpg",
       "imageLocal": "assets/news-images/b3c705d98e3955f0.jpg",
       "imageLocalKey": "b3c705d98e3955f0",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/a7235a00dd7907ee.jpg",
+      "stockImageLocal": "assets/stock-images/ce75b7ccff99b3a6.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4239,17 +4255,17 @@
       "sourceImageCreditImageKey": "dsc_2009-2.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg",
-      "imageTitle": "Pavillon Charles-Eugène-Marchand",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Pavillon_de_l%27Est_01.jpg",
+      "imageTitle": "Pavillon de l’Est",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_de_l%27Est_01.jpg",
       "imageLocal": "assets/news-images/ea46ef6162ef9475.jpg",
       "imageLocalKey": "ea46ef6162ef9475",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/9312d68b533a55b8.jpg",
+      "stockImageLocal": "assets/stock-images/2c14dc92c5b3ab5b.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4271,17 +4287,17 @@
       "sourceImageCreditImageKey": "20260930_130623-2.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
-      "imageTitle": "Pavillon J.-A.-DeSève",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Pavillon_Gene-H.-Kruger_02.jpg",
+      "imageTitle": "Pavillon Gene-H.-Kruger",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Gene-H.-Kruger_02.jpg",
       "imageLocal": "assets/news-images/294ffdc14f33c43b.jpg",
       "imageLocalKey": "294ffdc14f33c43b",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/fb0d3ac3bc0ca610.jpg",
+      "stockImageLocal": "assets/stock-images/04f676d202beae5a.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4304,17 +4320,17 @@
       "sourceImageCreditImageKey": "tro_stade-telus-ul.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon Adrien-Pouliot 01",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+      "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Adrien-Pouliot%2001.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
       "imageLocal": "assets/news-images/e4a25ec6e0bc7969.jpg",
       "imageLocalKey": "e4a25ec6e0bc7969",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/f0b7ee2de14eab1a.jpg",
+      "stockImageLocal": "assets/stock-images/f1a23eb08d38a755.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4336,17 +4352,17 @@
       "sourceImageCreditImageKey": "img_2001-scaled-e1791856442129.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/46/Pavillon_H.-Biermans-L.-Moraud_01.jpg",
-      "imageTitle": "Pavillon H.-Biermans-L.-Moraud 01",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Grand_Axe_ULaval.jpg",
+      "imageTitle": "Grand Axe ULaval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_H.-Biermans-L.-Moraud_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Grand_Axe_ULaval.jpg",
       "imageLocal": "assets/news-images/a677e6cc600c71d7.jpg",
       "imageLocalKey": "a677e6cc600c71d7",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/edb0c03bd4709c8a.jpg",
+      "stockImageLocal": "assets/stock-images/638f8d74ce92f23a.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4401,8 +4417,7 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/8149b5b65fc3e09f.webp",
       "imageLocalKey": "8149b5b65fc3e09f",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
@@ -4477,8 +4492,7 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/6e428ca25dadab49.jpg",
       "imageLocalKey": "6e428ca25dadab49",
-      "imageLocalVia": "resize-proxy",
-      "_retainedFromCache": true
+      "imageLocalVia": "resize-proxy"
     },
     {
       "source": "Impact Campus",
@@ -4502,8 +4516,7 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/c70a251541ed71d9.jpg",
       "imageLocalKey": "c70a251541ed71d9",
-      "imageLocalVia": "resize-proxy",
-      "_retainedFromCache": true
+      "imageLocalVia": "resize-proxy"
     },
     {
       "source": "Impact Campus",
@@ -4527,8 +4540,7 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/ed8009c528e4a92c.jpg",
       "imageLocalKey": "ed8009c528e4a92c",
-      "imageLocalVia": "resize-proxy",
-      "_retainedFromCache": true
+      "imageLocalVia": "resize-proxy"
     },
     {
       "source": "Le Polyscope",
@@ -4678,7 +4690,7 @@
       "date": "2026-09-08T10:05:00.000Z",
       "excerpt": "On Aug. 24, the Montreal City Council adopted a motion introduced by the Official Opposition, Projet Montréal, that expresses solidarity with the Palestinian people and civilian casualties under the Israeli siege. Passed by a 54 to 6 vote, the approved motion diverges",
       "image": "",
-      "authorCheckedAt": "2026-11-07T18:43:50.972Z",
+      "authorCheckedAt": "2026-11-08T20:07:35.285Z",
       "leadImageReady": false,
       "imageTitle": "Wilson Hall, McGill University",
       "imageProvider": "campus-bank"
@@ -4817,7 +4829,7 @@
       "date": "2026-09-08T10:04:00.000Z",
       "excerpt": "Based in Montreal, Haitian-Canadian interdisciplinary artist Stina Baudin combines textile, sound, written text, and archival data to represent Black and Afro-diasporic identity. She describes her approach as bricolage, a mixed media practice that transforms readily-available",
       "image": "https://thetribune.ca/wp-content/uploads/2026/09/AE-2-Stina-Baudin-1000x600.jpg",
-      "authorCheckedAt": "2026-11-07T18:43:52.310Z",
+      "authorCheckedAt": "2026-11-08T20:07:36.478Z",
       "sourceImageCredit": "Photo : Stina Baudin",
       "sourceImageCreator": "Stina Baudin",
       "sourceImageCreditUrl": "https://thetribune.ca/a-e/art/know-your-artist-stina-baudin-08092026/",
@@ -4867,7 +4879,7 @@
       "date": "2026-09-08T10:03:00.000Z",
       "excerpt": "In her most recent annual report, Montreal’s Auditor General Andrée Cossette found that the city is far behind its composting target. Right now, about 55 per cent of the waste Montrealers send to the landfill is organic material that could have been composted instead; the city",
       "image": "https://thetribune.ca/wp-content/uploads/2026/09/OP-2-Holden-Callif-scaled.jpg",
-      "authorCheckedAt": "2026-11-07T18:43:54.366Z",
+      "authorCheckedAt": "2026-11-08T20:07:37.717Z",
       "sourceImageCredit": "Photo : Holden Callif",
       "sourceImageCreator": "Holden Callif",
       "sourceImageCreditUrl": "https://thetribune.ca/opinion/commentary/clear-bags-a-simple-remedy-for-montreals-lacklustre-composting-habits-08092026/",

@@ -1644,15 +1644,6 @@
       "via": "origin",
       "nameKey": "images-copie.jpg"
     },
-    "6652aa068d12dd9c": {
-      "local": "assets/news-images/6652aa068d12dd9c.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
-      "host": "theconcordian.com",
-      "bytes": 127956,
-      "updatedAt": "2026-11-08T18:39:54.882Z",
-      "via": "disk",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
-    },
     "0d84d91b0191efcf": {
       "local": "assets/news-images/0d84d91b0191efcf.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
@@ -1661,9 +1652,18 @@
       "updatedAt": "2026-11-08T18:39:54.910Z",
       "via": "disk",
       "nameKey": "blanchissement.png"
+    },
+    "140272a87a1faec2": {
+      "local": "assets/news-images/140272a87a1faec2.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 97778,
+      "updatedAt": "2026-11-08T20:08:47.509Z",
+      "via": "disk",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
     }
   },
-  "updatedAt": "2026-11-08T18:39:55.210Z",
+  "updatedAt": "2026-11-08T20:08:47.815Z",
   "count": 167,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
