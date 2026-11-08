@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { gotoHomeReady, waitHomeReady } from './home-readiness.mjs';
 
 // Ctrl+Shift+R pendant l'écoute : sessionStorage (« armé ») et la session
 // partagée « playing » survivent au rechargement. La page ne doit ni relancer
@@ -14,8 +15,9 @@ test('rechargement : aucune reprise auto ni spinner radio @ci-critical', async (
       leaderId: 't-ghost-closed', updatedAt: Date.now(),
     }));
   });
-  await page.goto('/', { waitUntil: 'load' });
-  await page.reload({ waitUntil: 'load' });
+  await gotoHomeReady(page);
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await waitHomeReady(page);
   await page.waitForTimeout(2000);
   const st = await page.evaluate(() => ({
     plays: window.__plays,

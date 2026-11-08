@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { gotoHomeReady } from './home-readiness.mjs';
 
 // Thème clair dans la PWA : (1) feeds.html charge feeds-page.js ET
 // radar-lifecycle.js — deux écouteurs sur #theme-toggle s'annulaient ;
@@ -15,7 +16,18 @@ test('feeds.html : un seul clic passe en clair @ci-critical', async ({ page }) =
 });
 
 test('accueil : bascule clair puis sombre @ci-critical', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'load' });
+  // A pending nonessential image must not prevent testing the ready application.
+  let requested = false;
+  await page.route('**/__touch-readiness-slow-image.png', () => { requested = true; });
+  await page.addInitScript(() => {
+    document.addEventListener('DOMContentLoaded', () => {
+      window.__readinessImage = new Image();
+      window.__readinessImage.src = '/__touch-readiness-slow-image.png';
+    }, { once: true });
+  });
+  await gotoHomeReady(page);
+  await expect.poll(() => requested).toBe(true);
+  expect(await page.evaluate(() => document.readyState)).toBe('interactive');
   await page.waitForFunction(() => document.getElementById('theme-toggle')?.dataset.themeBound === '1');
   await page.click('#theme-toggle');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
@@ -24,7 +36,7 @@ test('accueil : bascule clair puis sombre @ci-critical', async ({ page }) => {
 });
 
 test('bascule dans un iframe (shell radio) synchronise l’hôte @ci-critical', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'load' });
+  await gotoHomeReady(page);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.evaluate(() => {
     const f = document.createElement('iframe');
@@ -72,7 +84,7 @@ const readTheme = () => {
 };
 
 test('thèmes clair et sombre : couleurs et syntoniseur identique @ci-critical', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'load' });
+  await gotoHomeReady(page);
   await page.waitForFunction(() => document.getElementById('theme-toggle')?.dataset.themeBound === '1');
   const dark = await page.evaluate(readTheme);
   expect(dark.theme).toBe('dark');
@@ -112,7 +124,7 @@ test('thèmes clair et sombre : couleurs et syntoniseur identique @ci-critical',
 test.describe('pastille Plus de sources (tactile)', () => {
   test.use({ hasTouch: true, isMobile: true });
   test('toucher ouvre, toucher ferme, retour au repos @ci-critical', async ({ page }) => {
-    await page.goto('/', { waitUntil: 'load' });
+    await gotoHomeReady(page);
     const btn = page.locator('.filters-toggle').first();
     await expect(btn).toBeVisible({ timeout: 15000 });
     const look = () => btn.evaluate((el) => {

@@ -88,7 +88,8 @@ async function resizeAndSettle(page, width, height = 1080) {
       last = key;
       stable = 0;
     }
-    if (stable >= 2 && snap.chips > 0 && snap.weather > 0) break;
+    const expected1280 = width !== 1280 || (snap.wide === 'e' && !snap.docked && snap.weather === 4);
+    if (stable >= 2 && snap.chips > 0 && snap.weather > 0 && expected1280) break;
     await page.waitForTimeout(80);
   } while (Date.now() < deadline);
   return snap;

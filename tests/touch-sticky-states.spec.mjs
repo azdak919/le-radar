@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { gotoHomeReady } from './home-readiness.mjs';
 import { writeFile } from 'node:fs/promises';
 
 // États collants sur écran tactile : chaque bouton ou pastille visible, touché
@@ -29,7 +30,8 @@ for (const path of PAGES) {
       }, true);
     });
     const documentToken = () => page.evaluate(() => window.__touchAuditDocument);
-    await page.goto(path, { waitUntil: 'load' });
+    if (path === '/') await gotoHomeReady(page);
+    else await page.goto(path, { waitUntil: 'load' });
     await page.waitForTimeout(1200);
     const mark = () => page.evaluate((sel) => {
       const out = [];
@@ -48,7 +50,8 @@ for (const path of PAGES) {
     }, SEL);
     const ids = await mark();
     const reload = async () => {
-      await page.goto(path, { waitUntil: 'domcontentloaded' });
+      if (path === '/') await gotoHomeReady(page);
+      else await page.goto(path, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(1200);
       await mark();
     };
