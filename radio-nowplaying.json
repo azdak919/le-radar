@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T09:07:01.467Z",
+  "updatedAt": "2026-11-08T10:06:55.066Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T09:06:01.560Z"
+      "checkedAt": "2026-11-08T10:05:59.814Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T09:06:03.724Z"
+      "checkedAt": "2026-11-08T10:06:13.927Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,7 +73,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T09:06:06.468Z"
+      "checkedAt": "2026-11-08T10:06:21.342Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,41 +100,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T09:06:20.874Z"
+      "checkedAt": "2026-11-08T10:06:35.515Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "04:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": null,
-      "track": "",
-      "showTitle": "Les nuits CFAK",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-08T09:06:21.865Z"
-    },
-    "choq": {
-      "id": "choq",
-      "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "OPUS",
+        "title": "Les nuits CFAK",
         "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "https://www.choq.ca/balados/opus"
+        "start": "00:01",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
-      "track": "Harmony Tividad — Anything",
+      "track": "",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -142,7 +121,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T09:07:01.117Z"
+      "checkedAt": "2026-11-08T10:06:36.539Z"
+    },
+    "choq": {
+      "id": "choq",
+      "name": "CHOQ.ca",
+      "current": null,
+      "next": {
+        "title": "OPUS",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "opus"
+      },
+      "track": "Harmony Tividad — Anything",
+      "showTitle": "",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-08T10:06:54.715Z"
     }
   }
 }
