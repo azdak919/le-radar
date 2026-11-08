@@ -223,6 +223,10 @@ function fileExists(abs) {
   }
 }
 
+function canMirrorSourceImage(item = {}) {
+  return isHttpUrl(item.image) && item.imageRemoteOnly !== true;
+}
+
 async function main() {
   const news = readJson(NEWS_PATH, null);
   if (!news || !Array.isArray(news.items)) {
@@ -234,9 +238,16 @@ async function main() {
   const manifest = readJson(MANIFEST_PATH, { version: 1, files: {} });
   if (!manifest.files || typeof manifest.files !== 'object') manifest.files = {};
 
+  for (const item of news.items) {
+    if (item.imageRemoteOnly === true) {
+      delete item.imageLocal;
+      delete item.imageLocalKey;
+      delete item.imageLocalVia;
+    }
+  }
   const targets = news.items
     .map((item, index) => ({ item, index }))
-    .filter(({ item }) => isHttpUrl(item.image));
+    .filter(({ item }) => canMirrorSourceImage(item));
 
   console.log(`Miroir images : ${targets.length} URLs source (${news.items.length} articles)`);
 
@@ -456,4 +467,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { resizedCandidates, resizeProxyUrl, photonUrl };
+module.exports = { canMirrorSourceImage, resizedCandidates, resizeProxyUrl, photonUrl };

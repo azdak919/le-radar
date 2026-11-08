@@ -191,3 +191,9 @@ Pipeline banques QC : sync JSON, blacklist durable, playbook agent
 - Découpe `app.js` / `style.css` — **faite** (D2, 2026-08-25) : scripts `radar-*` + feuilles par surface, pas de bundler
 - Skills Grok externes hors repo — ce playbook **est** le skill unique du dépôt
 - Re-seed bulk Commons — volontairement hors pipeline quotidien
+
+### Affiches éditoriales pertinentes (Karmina, 2026-11-08)
+
+Une affiche du film effectivement critiqué peut être retenue après revue visuelle via `reviewedCrop` dans `data/lead-image-pins.json` : lien d’article, URL d’image et dimensions exactes, note de pertinence et `imageCropFocalY` entre 0 et 1. Ce n’est pas une ouverture générale aux portraits, logos ou publicités : les filtres habituels restent inchangés. Cover au ratio de la carte, jamais contain ni étirement. Karmina (600×779) : centre 50 %, dents et titre dans le recadrage.
+
+`imageRemoteOnly: true` exclut le miroir local ; le crédit Éléphant Films n’est pas une licence libre. Ne pas modifier le statut de rétention des archives ni réhéberger l’affiche sans autorisation. Les pins nettoient l’ancien campus et ses crédits ; la fiche, le fil et les métadonnées reprennent la source distante. Régressions : `node tests/karmina-editorial-crop.mjs` et `npx playwright test tests/karmina-editorial-crop.spec.mjs --project=main`. Pour une preuve locale avec les vrais pixels, fournir `KARMINA_IMAGE=/chemin/vers/image-source.jpeg` ; sans ce chemin le test navigateur utilise une image synthétique de même taille.

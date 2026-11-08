@@ -77,6 +77,9 @@ function looksLikeTextCitationSource(name = '') {
 
 const LEAD_IMAGE_FIELDS = [
   'leadImageReady',
+  'imageCropSafe',
+  'imageCropFocalY',
+  'imageRemoteOnly',
   'stockImage',
   'imageTitle',
   'imageCredit',

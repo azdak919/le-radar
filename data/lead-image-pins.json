@@ -34,6 +34,25 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill_University_Montr%C3%A9al.jpeg"
+    },
+    "https://quartierlibre.ca/karmina-vampires-quebecois/": {
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/16_critique-cine.jpeg",
+      "keepSourceImage": true,
+      "leadImageReady": true,
+      "imageCropSafe": "https://quartierlibre.ca/wp-content/uploads/2026/11/16_critique-cine.jpeg",
+      "imageCropFocalY": 0.5,
+      "sourceImageCredit": "Photo : Éléphant Films",
+      "sourceImageCreator": "Éléphant Films",
+      "sourceImageCreditFrom": "figcaption",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditUrl": "https://quartierlibre.ca/karmina-vampires-quebecois/",
+      "reviewedCrop": {
+        "width": 600,
+        "height": 779,
+        "kind": "film-poster",
+        "note": "Affiche du film critiqué, vérifiée sur la page source. Cover centré : dents et titre visibles, sans bandes ni étirement. Crédit ≠ licence libre : URL distante uniquement."
+      },
+      "imageRemoteOnly": true
     }
   }
 }
