@@ -18,7 +18,8 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const { spawnSync } = require('child_process');
+const { createSourceQueue } = require('./sports-source-queue');
+const s1Queue = createSourceQueue();
 
 const ROOT = path.join(__dirname, '..');
 const LEAGUES_PATH = path.join(ROOT, 'sports-leagues.json');
@@ -48,7 +49,16 @@ const liveOnly = process.argv.includes('--live');
 const sailingOnly = process.argv.includes('--sailing-only');
 const GAME_API = 'https://s1.rseq.ca/api/GameApi/GetGameDiffusion/?gameId=';
 
-function getJson(url) {
+function getJson(url, options = {}) {
+  if (new URL(url).hostname === 's1.rseq.ca') {
+    return s1Queue.run(url, signal => { options.onAttempt?.(); return getJsonOnce(url, signal); }, {
+      priority: url.includes('/GameApi/') ? -2 : (options.priority || 0),
+    });
+  }
+  return getJsonOnce(url);
+}
+
+function getJsonOnce(url, signal, redirects = 0) {
   return new Promise((resolve, reject) => {
     const req = https.get(
       url,
@@ -58,19 +68,25 @@ function getJson(url) {
           'User-Agent': 'le-radar.ca sports-bot/1.0 (https://le-radar.ca)',
         },
         timeout: 25000,
+        signal,
       },
       (res) => {
         if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          getJson(res.headers.location).then(resolve, reject);
+          if (redirects >= 4) reject(new Error('too many source redirects'));
+          else getJsonOnce(new URL(res.headers.location, url).href, signal, redirects + 1).then(resolve, reject);
           res.resume();
           return;
         }
         if (res.statusCode !== 200) {
-          reject(new Error(`HTTP ${res.statusCode} ${url}`));
+          const retryAfter = String(res.headers['retry-after'] || '');
+          const retryAfterMs = /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : Math.max(0, Date.parse(retryAfter) - Date.now()) || 0;
+          reject(Object.assign(new Error(`HTTP ${res.statusCode} ${url}`), { status: res.statusCode, retryAfterMs }));
           res.resume();
           return;
         }
         const chunks = [];
+        res.on('error', reject);
+        res.on('aborted', () => reject(new Error('source response aborted')));
         res.on('data', (c) => chunks.push(c));
         res.on('end', () => {
           try {
@@ -81,6 +97,8 @@ function getJson(url) {
         });
       },
     );
+    const hardTimer = setTimeout(() => req.destroy(new Error('source wall-clock timeout')), 25000);
+    req.once('close', () => clearTimeout(hardTimer));
     req.on('error', reject);
     req.on('timeout', () => {
       req.destroy();
@@ -149,6 +167,8 @@ function normalizeGame(game, teamId, meta, reg) {
     name: rawOppName,
     code: rawOppCode,
     sector: meta.sector,
+    sex: meta.sex,
+    sport: meta.sport,
     rseqTeamId: home ? game.VisitingTeamId : game.HomeTeamId,
   });
   const scoreFor = home ? game.HomeTeamScore : game.VisitingTeamScore;
@@ -161,7 +181,9 @@ function normalizeGame(game, teamId, meta, reg) {
     date: gameDate(game),
     time: game.GameTimeFormatted || '',
     opponent: opp.shortName || rawOppName || '',
-    opponentCode: opp.code || String(rawOppCode || '').toUpperCase().slice(0, 4),
+    opponentRseqTeamId: home ? game.VisitingTeamId : game.HomeTeamId,
+    sourceOpponentName: rawOppName,
+    opponentCode: opp.code || String(rawOppCode || '').toUpperCase(),
     home,
     scoreFor,
     scoreAgainst,
@@ -191,7 +213,7 @@ function nextGamesForTeam(games, teamId, meta, reg, liveById = {}) {
       if (day >= today) return true;
       return SportsLive.isLiveRaw(g, now);
     })
-    .sort((a, b) => gameDate(a).localeCompare(gameDate(b)))
+    .sort((a, b) => (SportsFreshness.zonedTimeToMs(gameDate(a), a.GameTimeFormatted || '12:00') || 0) - (SportsFreshness.zonedTimeToMs(gameDate(b), b.GameTimeFormatted || '12:00') || 0))
     .map((g) => {
       const home = g.HomeTeamId === teamId;
       const rawOppName = home ? g.VisitingTeamName : g.HomeTeamName;
@@ -200,6 +222,8 @@ function nextGamesForTeam(games, teamId, meta, reg, liveById = {}) {
         name: rawOppName,
         code: rawOppCode,
         sector: meta.sector,
+        sex: meta.sex,
+        sport: meta.sport,
         rseqTeamId: home ? g.VisitingTeamId : g.HomeTeamId,
       });
       const gameId = g.GameId || null;
@@ -207,7 +231,9 @@ function nextGamesForTeam(games, teamId, meta, reg, liveById = {}) {
         date: gameDate(g),
         time: g.GameTimeFormatted || '',
         opponent: opp.shortName || rawOppName || '',
-        opponentCode: opp.code || String(rawOppCode || '').toUpperCase().slice(0, 4),
+        opponentRseqTeamId: home ? g.VisitingTeamId : g.HomeTeamId,
+        sourceOpponentName: rawOppName,
+        opponentCode: opp.code || String(rawOppCode || '').toUpperCase(),
         home,
         sport: meta.sport,
         competition: meta.label,
@@ -234,7 +260,7 @@ function pastGamesForTeam(games, teamId, meta, reg, liveById = {}) {
     .map((g) => SportsLive.overlayLiveDetail(g, liveById[g.GameId]))
     .filter((g) => SportsLive.isFinalRaw(g, now) && SportsLive.rseqHasScore(g))
     .map((g) => normalizeGame(g, teamId, meta, reg))
-    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    .sort((a, b) => (SportsFreshness.zonedTimeToMs(b.date, b.time || '12:00') || 0) - (SportsFreshness.zonedTimeToMs(a.date, a.time || '12:00') || 0));
 }
 
 function lastGameForTeam(games, teamId, meta, reg) {
@@ -272,8 +298,6 @@ const HOCKEY_SOURCES = [
     site: 'https://universitaire.rseqhockey.com/fr',
   },
 ];
-const HOCKEY_CACHE_URL = String(process.env.HOCKEY_CACHE_URL || 'https://le-radar-hockey.azdak.workers.dev').replace(/\/$/, '');
-const HOCKEY_PYTHON = path.join(__dirname, 'hockey-spordle.py');
 
 function fetchText(url) {
   return new Promise((resolve, reject) => {
@@ -315,6 +339,8 @@ function fetchText(url) {
         });
       },
     );
+    const hardTimer = setTimeout(() => req.destroy(new Error('source wall-clock timeout')), 25000);
+    req.once('close', () => clearTimeout(hardTimer));
     req.on('error', reject);
     req.on('timeout', () => {
       req.destroy();
@@ -432,39 +458,16 @@ function parseHockeyScoreboard(html, src) {
 }
 
 async function loadSpordleTeams(src) {
-  try {
-    const payload = await getJson(`${HOCKEY_CACHE_URL}/v1/html?site=${encodeURIComponent(src.sector)}`);
-    if (payload && payload.ok && payload.html) {
-      process.stderr.write('(worker) ');
-      return parseHockeyScoreboard(payload.html, src);
-    }
-  } catch (err) {
-    process.stderr.write(`(worker: ${err.message}) `);
-  }
-  try {
-    const py = spawnSync('python3', [HOCKEY_PYTHON, '--sector', src.sector], {
-      encoding: 'utf8',
-      timeout: 35000,
-      env: { ...process.env, HOCKEY_CACHE_URL },
-    });
-    if (py.status === 0 && py.stdout) {
-      const payload = JSON.parse(py.stdout);
-      if (payload.ok && Array.isArray(payload.matches)) {
-        process.stderr.write(`(python/${payload.via || 'sidecar'}) `);
-        return parseHockeyMatches(payload.matches, src);
-      }
-    }
-  } catch (err) {
-    process.stderr.write(`(python: ${err.message}) `);
-  }
-  const html = await fetchText(src.url);
-  return parseHockeyScoreboard(html, src);
+  // These origins explicitly refuse automated access (HTTP 403). Do not rotate
+  // networks, impersonate a browser or retry through an edge proxy. Independent
+  // public institutional calendars below remain usable and isolated.
+  throw new Error(`HTTP 403: accès Spordle ${src.sector} suspendu; calendriers institutionnels utilisés lorsqu’ils sont disponibles`);
 }
 
 async function fetchHockeyTeams(reg, { skipCampus = false } = {}) {
   const out = {};
   const errors = [];
-  for (const src of HOCKEY_SOURCES) {
+  await Promise.all(HOCKEY_SOURCES.map(async (src) => {
     process.stderr.write(`sports: hockey ${src.sector} (Spordle)… `);
     try {
       const batch = await loadSpordleTeams(src);
@@ -480,10 +483,10 @@ async function fetchHockeyTeams(reg, { skipCampus = false } = {}) {
         leagueId: `spordle-${src.sector}`,
         label: `Hockey ${src.sector}`,
         error: msg,
-        blocked: /cloudflare challenge/i.test(msg),
+        blocked: /cloudflare challenge|HTTP 403|accès Spordle/i.test(msg),
       });
     }
-  }
+  }));
 
   let campusTeams = {};
   if (skipCampus) {
@@ -645,7 +648,7 @@ function parseSailingSchoolPage(html, school) {
       official.push(r);
     }
   }
-  official.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  official.sort((a, b) => (SportsFreshness.zonedTimeToMs(b.date, b.time || '12:00') || 0) - (SportsFreshness.zonedTimeToMs(a.date, a.time || '12:00') || 0));
   pending.sort((a, b) => String(a.date || '9999').localeCompare(String(b.date || '9999')));
 
   const toEntry = (r, withScore) => {
@@ -1149,6 +1152,29 @@ async function runSailingOnly() {
   console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)} (${payload.teamCount} équipes, voile seulement)`);
 }
 
+function isolateSourceTask(task, leagueId, label) {
+  return task.catch(err => ({ teams: {}, campusTeams: {}, errors: [{ leagueId, label, error: String(err.message || err) }] }));
+}
+function shouldAbortSourceFailures(failed, total, preserved) {
+  return failed > 0 && total > 0 && failed / total > 0.5 && preserved === 0;
+}
+
+function retainUnattemptedErrors(previous, current, queriedLeagueIds) {
+  const checked = new Set(queriedLeagueIds);
+  const known = new Set(current.map(e => e.leagueId));
+  return [...current, ...(previous || []).filter(e => e.leagueId && !checked.has(e.leagueId) && !known.has(e.leagueId))];
+}
+function restoreFailedHockeySectors(teams, previousTeams, errors) {
+  let restored = 0;
+  for (const error of errors) {
+    if (!String(error.leagueId || '').startsWith('spordle-')) continue;
+    const failedSector = error.leagueId.slice('spordle-'.length);
+    const kept = preservePreviousTeams(previousTeams, t => t.source === 'spordle-rseqhockey' && t.sector === failedSector, 'hockey-sector-failed');
+    for (const [key, team] of Object.entries(kept)) if (!teams[key]) { teams[key] = team; restored += 1; }
+  }
+  return restored;
+}
+
 async function main() {
   if (sailingOnly) {
     await runSailingOnly();
@@ -1185,11 +1211,18 @@ async function main() {
   let teamsPreservedOnError = 0;
   const sportsFetched = new Set();
 
-  for (const meta of leagues) {
+  const hockeyTask = liveOnly ? Promise.resolve({ teams: {}, errors: [], campusTeams: {} }) : isolateSourceTask(fetchHockeyTeams(reg), 'spordle-all', 'Hockey source task');
+  const sailingTask = liveOnly ? Promise.resolve({ teams: {}, errors: [] }) : isolateSourceTask(fetchSailingTeams(reg), 'sailing-qc', 'Sailing source task');
+  const sourceHealth = { ...(previousPayload?.sourceHealth || {}) };
+  const urgentLeagues = new Set(SportsLive.findLiveLeagueIds(previousTeams));
+  await Promise.all(leagues.map(async (meta) => {
+    const healthKey = `s1:${meta.id}`;
+    const previousHealth = sourceHealth[healthKey] || {};
+    sourceHealth[healthKey] = { ...previousHealth, queuedAt: new Date().toISOString(), status: 'queued' };
     process.stderr.write(`sports: ${meta.label}… `);
     try {
-      const data = await getJson(API + meta.id);
-      if (!data || data === null) {
+      const data = await getJson(API + meta.id, { priority: urgentLeagues.has(meta.id) ? -1 : 0, onAttempt: () => { sourceHealth[healthKey].lastAttemptAt = new Date().toISOString(); sourceHealth[healthKey].status = 'attempting'; } });
+      if (!data || (Array.isArray(data.Teams) && data.Teams.length === 0 && Object.values(previousTeams).some(t => t.leagueId === meta.id))) {
         // API vide : garder le snapshot précédent de la ligue (pas d’effacement).
         const kept = preserveByLeagueId(previousTeams, meta.id, 's1-null');
         const n = Object.keys(kept).length;
@@ -1201,10 +1234,13 @@ async function main() {
         } else {
           process.stderr.write('null\n');
         }
+        sourceHealth[healthKey] = { ...previousHealth, lastAttemptAt: sourceHealth[healthKey].lastAttemptAt, status: 'empty-preserved', lastSuccessAt: previousHealth.lastSuccessAt || null };
         sportsFetched.add(meta.sport);
         leaguesOk += 1; // réponse reçue (vide), pas une panne réseau
-        continue;
+        return;
       }
+      if (!Array.isArray(data.Teams)) throw new Error('invalid S1 teams payload; previous snapshot retained');
+      sourceHealth[healthKey] = { queuedAt: sourceHealth[healthKey].queuedAt, lastAttemptAt: sourceHealth[healthKey].lastAttemptAt, lastSuccessAt: new Date().toISOString(), status: 'success' };
       const games = allGames(data);
       const liveById = await liveDetailsForGames(games);
       const standings = data.Standings || [];
@@ -1213,11 +1249,13 @@ async function main() {
         const id = t.TeamId;
         if (!id) continue;
         const rawName = t.TeamName || 'Équipe';
-        const rawCode = (t.TeamCode || codeFromName(rawName)).toUpperCase().slice(0, 4);
+        const rawCode = (t.TeamCode || codeFromName(rawName)).toUpperCase();
         const resolved = resolveSportsTeam(reg, {
           name: rawName,
           code: rawCode,
           sector: meta.sector,
+          sex: meta.sex,
+          sport: meta.sport,
           rseqTeamId: id,
         });
         if (resolved.matched) registryHits += 1;
@@ -1237,6 +1275,9 @@ async function main() {
         let entry = {
           id: key,
           rseqTeamId: id,
+          sourceTeamName: rawName,
+          sourceTeamCode: t.TeamCode || null,
+          sourceInstitutionId: t.InstitutionId || null,
           leagueId: meta.id,
           name: resolved.shortName || rawName,
           code: resolved.code || rawCode,
@@ -1250,7 +1291,7 @@ async function main() {
           results,
           lastGame: results[0] || null,
           nextGames: nextGames.slice(0, 12),
-          nextGame: nextGames[0] || null,
+          nextGame: nextGames.find(g => SportsLive.gameMs(g) >= Date.now() - SportsLive.LIVE_TAIL_MS) || nextGames[0] || null,
           record,
           source: 'rseq-s1',
           priority: resolved.priority,
@@ -1273,6 +1314,7 @@ async function main() {
       leaguesOk += 1;
       process.stderr.write(`${teamCount} équipes · ${games.length} matchs\n`);
     } catch (err) {
+      sourceHealth[healthKey] = { ...previousHealth, lastAttemptAt: sourceHealth[healthKey].lastAttemptAt, lastSuccessAt: previousHealth.lastSuccessAt || null, status: 'failed-preserved', error: String(err.message || err) };
       process.stderr.write(`ERREUR ${err.message}\n`);
       errors.push({ leagueId: meta.id, label: meta.label, error: String(err.message || err) });
       sportsFetched.add(meta.sport);
@@ -1287,17 +1329,17 @@ async function main() {
         process.stderr.write(`sports: ${meta.label} → conservé ${n} équipes (run précédent)\n`);
       }
     }
-  }
+  }));
 
-  // Hockey / voile : ignorés en --live (S1 seulement, pour rester sous la minute).
-  const hockey = await fetchHockeyTeams(reg, { skipCampus: liveOnly });
+  // Independent work has progressed concurrently; live is truly S1-only.
+  const hockey = await hockeyTask;
   if (Object.keys(hockey.teams).length) {
     for (const [key, team] of Object.entries(hockey.teams)) {
       if (Array.isArray(team.results)) {
-        team.results.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+        team.results.sort((a, b) => (SportsFreshness.zonedTimeToMs(b.date, b.time || '12:00') || 0) - (SportsFreshness.zonedTimeToMs(a.date, a.time || '12:00') || 0));
       }
       if (Array.isArray(team.nextGames)) {
-        team.nextGames.sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+        team.nextGames.sort((a, b) => (SportsFreshness.zonedTimeToMs(a.date, a.time || '12:00') || 0) - (SportsFreshness.zonedTimeToMs(b.date, b.time || '12:00') || 0));
         if (!team.nextGame && team.nextGames[0]) team.nextGame = team.nextGames[0];
       }
       let entry = mergePreservedPast(team, previousTeams);
@@ -1315,6 +1357,7 @@ async function main() {
       process.stderr.write(`sports: hockey Spordle en panne → conservé ${n} équipes\n`);
     }
   }
+  teamsPreservedOnError += restoreFailedHockeySectors(teams, previousTeams, hockey.errors);
   errors.push(...hockey.errors);
   if (!liveOnly && hockey.campusTeams && Object.keys(hockey.campusTeams).length) {
     const ontoS1 = CampusHockey.overlayCampusHockey(teams, hockey.campusTeams);
@@ -1325,7 +1368,7 @@ async function main() {
   sportsFetched.add('hockey');
 
   // Voile campus QC (ICSA + watchlist) — sport hors S1.
-  const sailing = liveOnly ? { teams: {}, errors: [] } : await fetchSailingTeams(reg);
+  const sailing = await sailingTask;
   if (Object.keys(sailing.teams).length) {
     for (const [key, team] of Object.entries(sailing.teams)) {
       let entry = mergePreservedPast(team, previousTeams);
@@ -1378,10 +1421,12 @@ async function main() {
 
   // Seconde passe fraîcheur (registre peut avoir muté lastGame).
   const prunedTeams = {};
-  for (const [id, team] of Object.entries(teams)) {
+  for (const [id, team] of Object.entries(teams).sort(([a], [b]) => a.localeCompare(b))) {
+    applyRegistryToTeam(team, reg); // also normalize retained/unqueried formations in a live-only pass
     prunedTeams[id] = SportsFreshness.pruneSportsTeam(team);
   }
 
+  registryHits = Object.values(prunedTeams).filter(t => t.registryId).length;
   const sportsCovered = [...new Set(Object.values(prunedTeams).map((t) => t.sport))].sort();
   const catalogSports = [...new Set(leagues.map((l) => l.sport).filter(Boolean))].sort();
   const missingSports = catalogSports.filter((s) => !sportsCovered.includes(s));
@@ -1394,9 +1439,6 @@ async function main() {
 
   // Garde-fous : ne jamais publier un payload catastrophique (cartes vides / panne massive).
   // --live fusionne le snapshot précédent : ces seuils ne s’appliquent qu’au crawl complet.
-  const failRatio = leagues.length
-    ? leaguesFailed / leagues.length
-    : 0;
   if (!liveOnly) {
     if (teamCount < 50) {
       console.error(
@@ -1410,7 +1452,7 @@ async function main() {
       );
       process.exit(1);
     }
-    if (leaguesFailed > 0 && failRatio > 0.5) {
+    if (shouldAbortSourceFailures(leaguesFailed, leagues.length, teamsPreservedOnError)) {
       console.error(
         `sports: ABORT — majorité des ligues S1 en erreur (${leaguesFailed}/${leagues.length}).`,
       );
@@ -1418,6 +1460,14 @@ async function main() {
     }
   }
 
+  if (liveOnly) {
+    const retainedErrors = retainUnattemptedErrors(previousPayload?.errors, errors, leagues.map(l => l.id));
+    errors.splice(0, errors.length, ...retainedErrors);
+  }
+  for (const team of Object.values(prunedTeams)) {
+    if (team.sport === 'hockey' && !team.lastGame && !team.nextGame && !(team.results || []).length
+      && errors.some(e => e.leagueId === `spordle-${team.sector}`)) team.scheduleUnavailable = true;
+  }
   let payload = SportsFreshness.pruneSportsPayload({
     updated: fetchedAt,
     fetchedAt,
@@ -1426,6 +1476,8 @@ async function main() {
     sportsFreshness: { rule: 'B', referenceDate: fetchedAt },
     registry: 'sports-teams.json',
     registryMatched: registryHits,
+    sourceHealth,
+    collectionQueue: { concurrency: 3, ...s1Queue.stats },
     leagueCatalog: catalog.leagueCount || leagues.length,
     leaguesWithTeams,
     leaguesOk,
@@ -1448,6 +1500,7 @@ async function main() {
     JSON.stringify(
       {
         teams: payload.teamCount,
+        collectionQueue: payload.collectionQueue,
         registryMatched: registryHits,
         withLastGame: Object.values(prunedTeams).filter((t) => t.lastGame).length,
         withNextGame: Object.values(prunedTeams).filter((t) => t.nextGame).length,
@@ -1480,7 +1533,8 @@ async function main() {
   }
 }
 
-main().catch((err) => {
+if (require.main === module) main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+module.exports = { allGames, restoreFailedHockeySectors, retainUnattemptedErrors, isolateSourceTask, shouldAbortSourceFailures };

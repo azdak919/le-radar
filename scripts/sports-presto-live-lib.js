@@ -50,13 +50,12 @@ const SPORT_CODES = {
 const MIN_PERIOD_MIN = { basketball: 12, hockey: 18, soccer: 40, football: 15, volleyball: 12 };
 const PERIOD_COUNT = { basketball: 4, hockey: 3, soccer: 2, football: 4, volleyball: 3 };
 /** Tolérance sur l’heure de coup d’envoi RSEQ (match lancé un peu tôt). */
-const EARLY_START_MS = 5 * 60 * 1000;
 
 const FETCH_TIMEOUT_MS = 12000;
 const CRAWL_DELAY_MS = 10000;
 const MAX_BYTES = 4 * 1024 * 1024;
 
-const FEED_FIELDS = ['liveFeed'];
+const FEED_FIELDS = ['liveFeed', 'liveVerifiedAt'];
 
 // ── Texte ─────────────────────────────────────────────────────────────────
 
@@ -117,16 +116,16 @@ const PRESTO_ALIASES = {
   bishop: 'bishops',
   bishops: 'bishops',
   montreal: 'udem',
-  rmc: 'college-militaire-royal',
   'heritage': 'heritage',
 };
 
 /** Index registre : nameKey(alias) → Set(registryId), par secteur. */
 function buildRegistryIndex(registry) {
-  const index = { universitaire: new Map(), collegial: new Map() };
+  const index = { universitaire: new Map(), collegial: new Map(), byId: new Map() };
   const teams = (registry && Array.isArray(registry.teams)) ? registry.teams : [];
   for (const t of teams) {
     if (!t || !t.id) continue;
+    index.byId.set(t.id, t);
     const bucket = index[t.sector] || (index[t.sector] = new Map());
     const names = [t.shortName, t.fullName].concat(Array.isArray(t.aliases) ? t.aliases : []);
     for (const n of names) {
@@ -145,7 +144,8 @@ function registryIdsFor(name, sector, index) {
   if (!k) return out;
   const bucket = index && index[sector];
   if (bucket && bucket.has(k)) for (const id of bucket.get(k)) out.add(id);
-  if (PRESTO_ALIASES[k]) out.add(PRESTO_ALIASES[k]);
+  const alias = PRESTO_ALIASES[k];
+  if (alias && index?.byId?.get(alias)?.sector === sector) out.add(alias);
   return out;
 }
 
@@ -385,7 +385,7 @@ function inferFinal(event) {
 function isPlausible(event, rseqGame, now = Date.now()) {
   const t = SportsLive.gameMs(rseqGame);
   if (!Number.isFinite(t)) return false;
-  if (now < t - EARLY_START_MS) return false;
+  if (now < t) return false; // never publish a future scheduled fixture as live
   if (!SportsLive.inLiveWindow(rseqGame, now)) return false;
   const elapsedMin = (now - t) / 60000;
   const per = MIN_PERIOD_MIN[event.sport] || 10;
@@ -536,6 +536,7 @@ function clearFeedFields(g) {
   delete g.scoreAgainst;
   delete g.period;
   delete g.liveFeed;
+  delete g.liveVerifiedAt;
 }
 
 function resultLetter(a, b) {
@@ -616,6 +617,7 @@ function applyPrestoLive(teams, feeds, { registry, now = Date.now() } = {}) {
           if (facePeriod) game.period = facePeriod;
           else delete game.period;
           game.liveFeed = feed.source;
+          game.liveVerifiedAt = new Date(now).toISOString();
         } else {
           promoteToResult(team, game, sf, sa, feed.source);
         }
@@ -703,6 +705,8 @@ function carryPreviousFeed(teams, previousTeams, okSectors, now = Date.now()) {
         if (p.period) g.period = p.period;
         if (Number.isFinite(p.liveProgress)) g.liveProgress = p.liveProgress;
         g.liveFeed = p.liveFeed;
+        if (p.liveVerifiedAt) g.liveVerifiedAt = p.liveVerifiedAt;
+        else delete g.liveVerifiedAt;
       }
       carried += 1;
     }

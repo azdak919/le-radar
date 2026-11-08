@@ -32,7 +32,7 @@ function gameKey(game, team) {
 }
 
 function gameStamp(game) {
-  return `${String(game?.date || '9999-12-31')}T${String(game?.time || '23:59')}`;
+  return `${String(game?.date || '9999-12-31')}T${String(game?.time || '23:59').replace(/^(\d):/, '0$1:')}`;
 }
 
 const RSEQ_GAME_URL = 'https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=';
@@ -107,11 +107,21 @@ function buildSportsMastheadPayload(payload, {
   }
 
   const selectedResults = pickMastheadResultFaces(resultByMatch, { resultLimit, referenceDate });
+  const rankedNext = [...nextByMatch.values()].sort((a, b) => gameStamp(a[0]?.game).localeCompare(gameStamp(b[0]?.game)));
+  const now = referenceDate.getTime();
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(referenceDate);
+  // Capacity is a floor: never drop today's or next-24h fixtures, including a live playoff,
+  // because earlier pending games exhausted the old fixed 48-match selection.
+  const near = nextGameLimit > 0 ? rankedNext.filter(faces => {
+    const g = faces[0]?.game;
+    const ms = SpF.zonedTimeToMs(g?.date, g?.time || '12:00');
+    return g?.date === today || (ms >= now - 3 * 3600000 && ms <= now + 24 * 3600000);
+  }) : [];
+  const nearSet = new Set(near);
+  const selectedNext = [...near, ...rankedNext.filter(f => !nearSet.has(f)).slice(0, Math.max(0, nextGameLimit - near.length))];
   const selected = [
     ...selectedResults,
-    ...[...nextByMatch.values()]
-      .sort((a, b) => gameStamp(a[0]?.game).localeCompare(gameStamp(b[0]?.game)))
-      .slice(0, nextGameLimit),
+    ...selectedNext,
   ];
   const effectiveResultLimit = Math.max(resultLimit, selectedResults.length);
 

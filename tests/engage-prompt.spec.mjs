@@ -11,6 +11,8 @@ const INSTALL_CASES = [
   { family: 'ios', browser: 'safari', ios: true },
   { family: 'ios', browser: 'chrome_ios', ios: true, iosNonSafari: true },
   { family: 'ios', browser: 'firefox', ios: true, iosNonSafari: true },
+  { family: 'ios', browser: 'brave', ios: true, iosNonSafari: true },
+  { family: 'ios', browser: 'other', ios: true, iosNonSafari: true },
   { family: 'android', browser: 'samsung', android: true },
   { family: 'android', browser: 'firefox', android: true },
   { family: 'android', browser: 'brave', android: true },
@@ -56,6 +58,10 @@ test('étapes install manuel : <strong> rendu pour chaque profil', async ({ page
   for (const plat of INSTALL_CASES) {
     await page.evaluate((p) => window.RadarEngage.preview('install', p), plat);
     await assertStepsRenderStrong(page, `install/${plat.family}/${plat.browser}`);
+    if (plat.family === 'ios') {
+      await expect(page.locator('.engage-prompt__steps li').first()).toContainText('Safari');
+      await expect(page.locator('.engage-prompt__steps')).toContainText('Sur l’écran d’accueil');
+    }
   }
 });
 
@@ -69,4 +75,14 @@ test('accueil EN (Edge) : pas de balises en clair', async ({ page }) => {
   expect(text).toContain('When Edge starts');
   expect(text).not.toContain('<strong>');
   await expect(page.locator('.engage-prompt__steps li strong').first()).toHaveText('Start, home, and new tabs');
+});
+
+test('installation iOS EN : Safari explicite même si le navigateur est inconnu', async ({ page }) => {
+  await ready(page);
+  await page.evaluate(() => {
+    window.RadarTranslate = { getMode: () => 'en' };
+    window.RadarEngage.preview('install', { family: 'ios', browser: 'other', ios: true });
+  });
+  await expect(page.locator('.engage-prompt__steps li').first()).toContainText('Safari');
+  await expect(page.locator('.engage-prompt__steps')).toContainText('Add to Home Screen');
 });

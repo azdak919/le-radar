@@ -29,6 +29,48 @@
     throw new Error('sports-freshness-lib requires session-freshness-lib / RadarSessionFreshness');
   }
 
+  // A sports kickoff is always a Toronto civil time, never the build/browser timezone.
+function zonedTimeToMs(ymd, hhmm, timeZone = 'America/Toronto') {
+  const day = String(ymd || '').slice(0, 10);
+  const m = String(hhmm || '').trim().replace(/\s*h\s*/i, ':').match(/^(\d{1,2}):(\d{2})/);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !m) return NaN;
+  if (Number(m[1]) > 23 || Number(m[2]) > 59) return NaN;
+  const hh = String(Number(m[1])).padStart(2, '0');
+  const mm = m[2];
+  const utc = Date.parse(`${day}T${hh}:${mm}:00Z`);
+  if (!Number.isFinite(utc)) return NaN;
+  let fmt;
+  try {
+    fmt = new Intl.DateTimeFormat('en-CA', {
+      timeZone,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23',
+    });
+  } catch {
+    return NaN;
+  }
+  // Probe both sides of a transition, then round-trip the requested wall time.
+  // A repeated autumn hour chooses its first occurrence; a nonexistent spring
+  // hour is unknown (NaN), never silently moved to a different kickoff.
+  const wallAt = ms => {
+    const parts = Object.fromEntries(fmt.formatToParts(new Date(ms)).map(p => [p.type, p.value]));
+    return Date.parse(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`);
+  };
+  const candidates = new Set();
+  for (const delta of [-86400000, 0, 86400000]) {
+    const probe = utc + delta;
+    const offset = wallAt(probe) - probe;
+    const candidate = utc - offset;
+    if (Number.isFinite(candidate) && wallAt(candidate) === utc) candidates.add(candidate);
+  }
+  return candidates.size ? Math.min(...candidates) : NaN;
+}
+
   function parseGameDay(gameOrDate) {
     const raw = typeof gameOrDate === 'string'
       ? gameOrDate
@@ -280,6 +322,7 @@
   }
 
   return {
+    zonedTimeToMs,
     MASTHEAD_CTA_RESULT_MAX_DAYS_AGO,
     MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO,
     getNextUniversitySessionStart,

@@ -66,3 +66,14 @@ test('viewport 1920 : detectPlatform live = desktop', async ({ page }) => {
   expect(plat.desktop).toBe(true);
   expect(plat.family).not.toBe('mobile_other');
 });
+
+test('iPadOS MacIntel tactile : iOS malgré un agent utilisateur de bureau', async ({ page }) => {
+  const plat = await classify(page, {
+    ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 Version/18.0 Safari/605.1.15',
+    platform: 'MacIntel', maxTouchPoints: 5,
+    coarse: true, narrow: false, desktopWide: true, notAPhoneViewport: true,
+  });
+  expect(plat.family).toBe('ios');
+  expect(plat.desktop).toBe(false);
+  expect(plat.canNativeInstall).toBe(false);
+});

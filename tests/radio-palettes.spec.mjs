@@ -65,7 +65,9 @@ test('honest bilingual hub hierarchy and next-day labels @ci-critical',async({pa
  await open(page,390,'light','/en/schedules/');await expect(page.getByRole('heading',{name:'On the radio right now',exact:true})).toBeVisible();await expect(page.locator('.seo-radio-card[data-air-state="upcoming"] .seo-radio-card__kicker').first()).toHaveText('Next programme');
 });
 test('hub changes from next programme to on air without reloading @ci-critical',async({page})=>{
- await page.clock.install({time:new Date('2026-11-07T17:59:59Z')});await page.goto('/horaires/?labFrame=1',{waitUntil:'domcontentloaded'});
+ const before=new Date('2026-11-07T17:59:59Z');
+ await page.clock.install({time:before});await page.clock.pauseAt(before);
+ await page.goto('/horaires/?labFrame=1',{waitUntil:'domcontentloaded'});
  const card=page.locator('.seo-radio-card[data-schedule-station="chyz"]');await expect(card.locator('.seo-radio-card__kicker')).toHaveText('Prochaine émission');
  await page.clock.runFor(61000);await expect(card).toHaveAttribute('data-air-state','live');await expect(card.locator('.seo-radio-card__kicker')).toHaveText('À l’antenne');await expect(card.locator('.seo-radio-card__show')).toHaveText('Radio Futura');
 });

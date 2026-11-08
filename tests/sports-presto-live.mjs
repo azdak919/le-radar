@@ -133,7 +133,8 @@ test('noms : Presto ↔ registre RSEQ', () => {
   assert.deepEqual(ids('Collège Jean-de-Brébeuf', 'collegial'), ['brebeuf']);
   assert.deepEqual(ids('Mérici Collégial Privé', 'collegial'), ['merici']);
   assert.deepEqual(ids('Cégep Régional de Lanaudière', 'collegial'), ['lanaudiere']);
-  assert.deepEqual(ids("Collège d'Alma", 'collegial'), ['alma']);
+  // An institution name alone does not distinguish its verified blue/white squads.
+  assert.deepEqual(ids("Collège d'Alma", 'collegial'), ['alma', 'alma-2']);
   assert.deepEqual(ids('Laval', 'universitaire'), ['ulaval']);
   assert.deepEqual(ids("Bishop's", 'universitaire'), ['bishops']);
   assert.deepEqual(ids('UQAC', 'universitaire'), ['uqac']);

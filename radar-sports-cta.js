@@ -390,13 +390,8 @@ function sportsIsFavorite(team, favSet) {
 
 /** Instant du match (ms) — date ISO + time « HH:MM » (fuseau du navigateur / QC). */
 function sportsGameMs(game) {
-  if (!game?.date) return NaN;
-  const rawTime = String(game.time || '12:00').trim();
-  const m = rawTime.match(/^(\d{1,2}):(\d{2})/);
-  const hh = m ? String(Math.min(23, Number(m[1]))).padStart(2, '0') : '12';
-  const mm = m ? m[2] : '00';
-  const t = Date.parse(`${game.date}T${hh}:${mm}:00`);
-  return Number.isFinite(t) ? t : NaN;
+  if (!game?.date || !game.time) return NaN;
+  return RadarSportsFreshness.zonedTimeToMs(game.date, game.time);
 }
 
 /** Jour civil America/Toronto (YYYY-MM-DD) — frontière « hier / aujourd’hui ».
@@ -549,7 +544,7 @@ function sportsGameIsLive(game, now = Date.now()) {
   if (sportsGameAwaitingScore(game, now)) return false;
   const t = sportsGameMs(game);
   const inWindow = Number.isFinite(t)
-    && t <= now + SPORTS_LIVE_VISUAL_LEAD_MS
+    && t <= now
     && t >= now - SPORTS_LIVE_VISUAL_TAIL_MS;
   if (game.live === true) return inWindow || !Number.isFinite(t);
   if (sportsGameHasScore(game)) return false;
@@ -1815,25 +1810,22 @@ function sportsLoadedTeamList() {
   return Array.isArray(teams) ? teams : Object.values(teams);
 }
 
-function sportsNicknameFromLoadedTeams({ registryId, shortName, sector } = {}) {
-  const list = sportsLoadedTeamList();
+function sportsNicknameFromLoadedTeams({ registryId, shortName, sector, sex, sport } = {}) {
   const id = String(registryId || '');
-  if (id) {
-    const hit = list.find((t) => t && t.registryId === id && t.nickname && t.sport !== 'sailing');
-    if (hit) return String(hit.nickname).trim();
-  }
   const fold = sportsFoldKey(shortName);
-  if (!fold) return '';
-  const hits = list.filter((t) => t && t.nickname && t.sport !== 'sailing'
-    && sportsFoldKey(t.name || t.shortName) === fold
-    && (!sector || !t.sector || t.sector === sector));
-  const hit = hits.find((t) => !sector || t.sector === sector) || hits[0];
-  return hit ? String(hit.nickname).trim() : '';
+  const sk = sportsNormSex(sex);
+  const hits = sportsLoadedTeamList().filter(t => t && t.nickname && t.sport !== 'sailing'
+    && (id ? t.registryId === id : fold && sportsFoldKey(t.name || t.shortName) === fold)
+    && (!sector || t.sector === sector)
+    && (!sport || t.sport === sport)
+    && sk && sportsNormSex(t.sex || t.leagueLabel) === sk);
+  const names = [...new Set(hits.map(t => String(t.nickname).trim()))];
+  return names.length === 1 ? names[0] : '';
 }
 
 /** Surnom d’une face : table par sexe, puis champ, puis une autre formation du payload. */
 function sportsFacingNickname({
-  nick = '', registryId = '', sex = '', shortName = '', sector = '',
+  nick = '', registryId = '', sex = '', shortName = '', sector = '', sport = '',
 } = {}) {
   const id = String(registryId || '');
   const sk = sportsNormSex(sex);
@@ -1841,7 +1833,7 @@ function sportsFacingNickname({
   if (table && sk && table[sk]) return table[sk];
   const given = String(nick || '').trim();
   if (given) return given;
-  return sportsNicknameFromLoadedTeams({ registryId: id, shortName, sector });
+  return sportsNicknameFromLoadedTeams({ registryId: id, shortName, sector, sex, sport });
 }
 
 /**
@@ -1866,6 +1858,7 @@ function sportsChipTeamShort(team) {
   const faced = sailing ? '' : sportsFacingNickname({
     nick,
     registryId: team?.registryId,
+    sport: team?.sport,
     sex: team?.sex || team?.leagueLabel,
     shortName: team?.name || team?.shortName,
     sector: team?.sector,
@@ -1913,6 +1906,7 @@ function sportsChipOpponentLabel(game, team) {
   const faced = sailing ? '' : sportsFacingNickname({
     nick,
     registryId: game?.opponentRegistryId,
+    sport: game?.sport || team?.sport,
     sex: game?.sex || team?.sex || game?.competition || team?.leagueLabel,
     shortName: game?.opponent,
     sector,
@@ -4819,6 +4813,10 @@ function sportsApplyRseqOverride(game) {
     game.live = false;
     game.result = sf > sa ? 'W' : sf < sa ? 'L' : 'D';
     delete game.period;
+  } else {
+    game.live = true;
+    game.liveFeed = 'rseq-s1';
+    game.liveVerifiedAt = new Date(o.at).toISOString();
   }
   return true;
 }
@@ -4847,6 +4845,7 @@ function sportsRseqPollCandidates(now = Date.now()) {
 }
 
 function sportsRseqScoreValue(n) {
+  if (n == null || String(n).trim() === '') return null;
   const v = Number(n);
   return Number.isFinite(v) && v >= 0 && v !== SPORTS_RSEQ_SCORE_NONE ? v : null;
 }
@@ -4883,7 +4882,7 @@ async function pollRseqLiveGames(force = false) {
       if (row.status !== 'fulfilled' || !row.value) return;
       const prev = sportsRseqOverrides.get(ids[i]);
       const next = row.value;
-      if (prev && prev.home === next.home && prev.visiting === next.visiting && prev.final === next.final) return;
+      // A successfully rechecked unchanged score is still a new source verification.
       sportsRseqOverrides.set(ids[i], next);
       changed = true;
     });
@@ -4926,6 +4925,13 @@ function applySportsPayload(raw) {
     : raw;
   sportsApplyRseqOverrides(sportsData);
   sportsSlides = buildSportsSlides(sportsData);
+  sportsPublishBoardPayload();
+}
+
+function sportsPublishBoardPayload() {
+  if (typeof window === 'undefined' || typeof CustomEvent !== 'function') return;
+  window.RadarSportsBoardSnapshot = sportsData;
+  window.dispatchEvent(new CustomEvent('radar:sports-updated', { detail: sportsData }));
 }
 
 /** Re-rendu minimal après un changement de score live (bot ou RSEQ direct). */
@@ -4951,6 +4957,7 @@ async function pollRseqAndRerender() {
   if (!changed) return;
   sportsApplyRseqOverrides(sportsData);
   sportsSlides = buildSportsSlides(sportsData);
+  sportsPublishBoardPayload();
   sportsRerenderAfterLiveChange(prevSig, prevKeys);
 }
 

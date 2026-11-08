@@ -363,40 +363,22 @@ function guessFullName(shortName, sector) {
  * Surnoms bien établis seulement (ne remplace jamais un nickname déjà saisi).
  * Mieux vaut null que d’inventer un mascotte.
  */
-const CURATED_NICKNAMES = {
-  'edouard-montpetit': 'Cougars',
-  'trois-rivieres': 'Diablos',
-  'sainte-foy': 'Géants',
-  dawson: 'Blues',
-  'john-abbott': 'Islanders',
-  montmorency: 'Nomades',
-  'saint-laurent': 'Cavaliers',
-  limoilou: 'Titans',
-  garneau: 'Boomerang',
-  vanier: 'Cheetahs',
-  ulaval: 'Rouge et Or',
-  mcgill: 'Redbirds',
-  concordia: 'Stingers',
-  udem: 'Carabins',
-  uqam: 'Citadins',
-  usherbrooke: 'Vert & Or',
-  bishops: 'Gaiters',
-  uqtr: 'Patriotes',
-  carleton: 'Ravens',
-  ottawa: 'Gee-Gees',
-  'andre-laurendeau': 'Boomerang',
-};
+// The sourced registry is the sole authority; no second unsourced mascot table.
+const CURATED_NICKNAMES = {};
 
-function syncSportsTeamsRegistry(sailingResult) {
+
+function syncSportsTeamsRegistry(sailingResult, { registryPath = TEAMS_PATH, sportsPath = SPORTS_JSON_PATH } = {}) {
   let raw;
   try {
-    raw = JSON.parse(fs.readFileSync(TEAMS_PATH, 'utf8'));
+    raw = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
   } catch {
     raw = { teams: [] };
   }
   const teams = Array.isArray(raw.teams) ? raw.teams : [];
   const byId = new Map(teams.map((t) => [t.id, t]));
   const byCodeSector = new Map();
+  const byRseqId = new Map(teams.flatMap(t => (t.rseqTeamIds || []).map(id => [String(id), t])));
+  const observedRseqIds = new Map();
   for (const t of teams) {
     const code = String(t.code || '').toUpperCase();
     const sector = t.sector || '';
@@ -406,13 +388,18 @@ function syncSportsTeamsRegistry(sailingResult) {
   // Sports + ids RSEQ observés dans sports.json (avec ou sans registryId).
   const observed = new Map(); // registryId → Set(sport)
   const observedByCode = new Map(); // sector:code → { sports, rseqIds, name, fullName, nickname }
-  if (fs.existsSync(SPORTS_JSON_PATH)) {
+  if (fs.existsSync(sportsPath)) {
     try {
       const payload = require('./sports-payload-lib').unpackSportsPayload(
-        JSON.parse(fs.readFileSync(SPORTS_JSON_PATH, 'utf8')),
+        JSON.parse(fs.readFileSync(sportsPath, 'utf8')),
       );
       for (const team of Object.values(payload.teams || {})) {
-        const rid = team.registryId;
+        const known = byRseqId.get(String(team.rseqTeamId || '')) || byId.get(team.registryId);
+        const rid = known?.id;
+        if (rid && team.rseqTeamId) {
+          if (!observedRseqIds.has(rid)) observedRseqIds.set(rid, new Set());
+          observedRseqIds.get(rid).add(String(team.rseqTeamId));
+        }
         if (rid && team.sport) {
           if (!observed.has(rid)) observed.set(rid, new Set());
           observed.get(rid).add(team.sport);
@@ -424,6 +411,7 @@ function syncSportsTeamsRegistry(sailingResult) {
         if (!observedByCode.has(key)) {
           observedByCode.set(key, {
             sports: new Set(),
+            registryIds: new Set(),
             rseqIds: new Set(),
             name: team.name,
             fullName: team.fullName || null,
@@ -433,6 +421,7 @@ function syncSportsTeamsRegistry(sailingResult) {
           });
         }
         const bucket = observedByCode.get(key);
+        if (rid) bucket.registryIds.add(rid);
         if (team.sport) bucket.sports.add(team.sport);
         if (team.rseqTeamId) bucket.rseqIds.add(String(team.rseqTeamId));
         if (team.name) bucket.name = team.name;
@@ -468,6 +457,7 @@ function syncSportsTeamsRegistry(sailingResult) {
     if (!team.aliases) team.aliases = [];
     const set = new Set(team.sports);
     const rseqSet = new Set(team.rseqTeamIds.map(String));
+    for (const id of observedRseqIds.get(team.id) || []) rseqSet.add(id);
     const before = set.size;
     const beforeRseq = rseqSet.size;
 
@@ -477,10 +467,10 @@ function syncSportsTeamsRegistry(sailingResult) {
     }
     const codeKey = `${team.sector || ''}:${String(team.code || '').toUpperCase()}`;
     const byCode = observedByCode.get(codeKey);
-    if (byCode) {
+    if (byCode && (!byCode.registryIds.size || (byCode.registryIds.size === 1 && byCode.registryIds.has(team.id)))) {
       for (const sp of byCode.sports) set.add(sp);
       for (const rid of byCode.rseqIds) rseqSet.add(rid);
-      if (!team.nickname && byCode.nickname) team.nickname = byCode.nickname;
+      if (!team.identityVerification && !team.nickname && byCode.nickname) team.nickname = byCode.nickname;
       if (!team.fullName && byCode.fullName) team.fullName = byCode.fullName;
     }
     if (sailingIds.has(team.id)) {
@@ -504,7 +494,7 @@ function syncSportsTeamsRegistry(sailingResult) {
 
   // Nouvelles formations observées dans sports.json mais absentes du registre.
   for (const [key, bucket] of observedByCode) {
-    if (byCodeSector.has(key)) continue;
+    if (byCodeSector.has(key) || bucket.registryIds.size) continue;
     const shortName = String(bucket.name || bucket.code || 'Équipe').trim();
     let id = slugRegistryId(shortName, bucket.sector);
     if (byId.has(id)) {
@@ -534,7 +524,7 @@ function syncSportsTeamsRegistry(sailingResult) {
   // Hôtes institutionnels des clubs voile QC (surnom = programme d’excellence,
   // distinct du club : ULaVoile / PolyVoile / McGill Sailing).
   const ensure = [
-    { id: 'mcgill', code: 'MCG', shortName: 'McGill', fullName: 'Université McGill', nickname: 'Redbirds', priority: 2 },
+    { id: 'mcgill', code: 'MCG', shortName: 'McGill', fullName: 'Université McGill', nickname: null, priority: 2 },
     {
       id: 'polytechnique',
       code: 'POLY',
@@ -543,7 +533,7 @@ function syncSportsTeamsRegistry(sailingResult) {
       nickname: null,
       priority: 5,
     },
-    { id: 'ulaval', code: 'LAV', shortName: 'Laval', fullName: 'Université Laval', nickname: 'Rouge et Or', priority: 1 },
+    { id: 'ulaval', code: 'LAV', shortName: 'ULaval', fullName: 'Université Laval', nickname: 'Rouge et Or', priority: 1 },
   ];
   for (const e of ensure) {
     if (byId.has(e.id)) {
@@ -657,7 +647,8 @@ async function main() {
   }
 }
 
-main().catch((err) => {
+if (require.main === module) main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+module.exports = { syncSportsTeamsRegistry };

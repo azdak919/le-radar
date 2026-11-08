@@ -74,7 +74,7 @@ test('sports-teams.json registre des formations', () => {
   const loaded = loadSportsTeamsRegistry();
   const garneau = resolveSportsTeam(loaded, { name: 'Garneau', code: 'GAR', sector: 'collegial' });
   assert.equal(garneau.matched, true);
-  assert.equal(garneau.shortName, 'Garneau');
+  assert.equal(garneau.shortName, 'Cégep Garneau');
   assert.match(garneau.fullName || '', /Garneau/);
   assert.equal(garneau.code, 'GAR');
   const len = resolveSportsTeam(loaded, { name: 'Ch.-Lennoxville', code: 'LEN' });
@@ -120,8 +120,8 @@ test('fetch-sports.js est du JS Node valide', () => {
   assert.match(src, /Cloudflare challenge/);
   assert.match(src, /hockey-spordle-failed/);
   assert.match(src, /campus-hockey-lib/);
-  assert.match(src, /hockey-spordle\.py/);
-  assert.match(src, /HOCKEY_CACHE_URL/);
+  assert.doesNotMatch(src, /hockey-spordle\.py|HOCKEY_CACHE_URL|execFileAsync/);
+  assert.match(src, /HTTP 403: accès Spordle/);
   assert.match(src, /loadSpordleTeams/);
 });
 
