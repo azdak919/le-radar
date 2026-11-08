@@ -16,7 +16,7 @@
    mise à jour.
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'sports-shell-v379';
+const SHELL_CACHE  = 'sports-shell-v381';
 const FONT_CACHE   = 'sports-fonts-v1';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -87,6 +87,7 @@ const SHARED_ASSETS = [
   '../engage-prompt.js',
   '../app-sw-register.js',
   '../sports-board.js',
+  '../scripts/sports-date-lib.js',
   '../assets/icon.svg',
   '../assets/icon-32.png',
   '../assets/emoji/satellite.png',
