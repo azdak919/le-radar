@@ -26,6 +26,9 @@ for (const url of pages) {
         const printUrl = await page.locator('article.fiche').getAttribute('data-print-url');
         expect(printUrl, 'URL de l’article imprimée').toMatch(/^https?:\/\//);
       }
+      // Le prérendu SEO reste volontairement masqué jusqu’au rendu du fil.
+      // Attendre ce signal évite de mesurer ses boîtes rognées sur un runner lent.
+      if (url === '/') await page.locator('#news-list[data-ready]').waitFor({ state: 'attached' });
       await page.waitForTimeout(1500);
 
       const report = await page.evaluate((maxW) => {
