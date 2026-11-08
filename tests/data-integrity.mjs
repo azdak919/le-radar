@@ -119,13 +119,20 @@ for (const radio of radios) {
   assert(nowPlaying[radio.id], `métadonnées à l'antenne manquantes pour ${radio.id}`);
 }
 
+// Une migration future n'est admise qu'avec le rapport TLS/audio/provenance strict.
+function assertRadioEndpoint(radio, expected, message) {
+  if(radio?.stream===expected)return;
+  let proof;try{proof=readJson('data/radio-health.json').stations?.[radio?.id];}catch{/* absent => refus */}
+  assert(require('../scripts/radio-health-lib').verifiedReplacement(radio,proof),message+' ou migration officielle entièrement vérifiée');
+}
+
 {
   // CHYZ : ne pas suivre le <audio> de chyz.ca — il pointe le mount
   // « Tests techniques » (/proxy/tech/stream). L’antenne est le compte
   // Centova `chyz` (tunein/chyz.pls → Title1=CHYZ 94,3 FM).
   const CHYZ_ONAIR = 'https://ecoutez.chyz.ca/proxy/chyz/stream';
   const chyz = radios.find((radio) => radio.id === 'chyz');
-  assert.equal(chyz?.stream, CHYZ_ONAIR, 'CHYZ : flux = mount Centova d’antenne (/proxy/chyz/stream)');
+  assertRadioEndpoint(chyz, CHYZ_ONAIR, 'CHYZ : flux = mount Centova d’antenne (/proxy/chyz/stream)');
   const discover = readFileSync(new URL('scripts/discover-streams.js', root), 'utf8');
   assert(
     discover.includes(`chyz: CHYZ_ONAIR_STREAM`) || discover.includes(`'${CHYZ_ONAIR}'`),
@@ -169,7 +176,7 @@ for (const radio of radios) {
   // ne doit pas figer le 302 vers un audio-edge-* (hôte géo éphémère).
   const CFAK_ONAIR = 'https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a';
   const cfak = radios.find((radio) => radio.id === 'cfak');
-  assert.equal(cfak?.stream, CFAK_ONAIR, 'CFAK : flux = URL RadioMast canonique (pas un edge géo)');
+  assertRadioEndpoint(cfak, CFAK_ONAIR, 'CFAK : flux = URL RadioMast canonique (pas un edge géo)');
   assert.equal(CFAK_ONAIR_STREAM, CFAK_ONAIR);
   assert(
     discover.includes('cfak: CFAK_ONAIR_STREAM') || discover.includes(`'${CFAK_ONAIR}'`),
@@ -195,7 +202,7 @@ for (const radio of radios) {
   // Ne pas figer cet edge géo (même classe que CFAK audio-edge-*).
   const CHOQ_ONAIR = 'https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC';
   const choq = radios.find((radio) => radio.id === 'choq');
-  assert.equal(choq?.stream, CHOQ_ONAIR, 'CHOQ : flux = redirecteur StreamTheWorld (pas un edge géo)');
+  assertRadioEndpoint(choq, CHOQ_ONAIR, 'CHOQ : flux = redirecteur StreamTheWorld (pas un edge géo)');
   assert.equal(CHOQ_ONAIR_STREAM, CHOQ_ONAIR);
   assert(
     discover.includes('choq: CHOQ_ONAIR_STREAM') || discover.includes(`'${CHOQ_ONAIR}'`),
@@ -218,7 +225,7 @@ for (const radio of radios) {
   // CISM : le lecteur officiel a migré ; ne jamais ressusciter le TLS expiré.
   const CISM_ONAIR = 'https://stream.cism893.ca/';
   const { CISM_ONAIR_STREAM } = require('../scripts/discover-streams.js');
-  assert.equal(radios.find(r => r.id === 'cism')?.stream, CISM_ONAIR);
+  assertRadioEndpoint(radios.find(r => r.id === 'cism'), CISM_ONAIR, 'CISM : flux officiel vérifié');
   assert.equal(CISM_ONAIR_STREAM, CISM_ONAIR);
   assert.match(discover, /cism: CISM_ONAIR_STREAM/, 'flux connu aligné sur le catalogue');
   assert.match(discover, /cism: \[CISM_ONAIR_STREAM\]/, 'la découverte privilégie uniquement la source officielle actuelle');
@@ -229,7 +236,8 @@ for (const radio of radios) {
   const playable = utils.match(/function getPlayableStream\(radio\) \{[\s\S]*?\n\}/)[0];
   const ctx = { PROXY_BASE: '', location: { protocol: 'https:' } };
   vm.createContext(ctx); vm.runInContext(playable, ctx);
-  assert.equal(ctx.getPlayableStream(radios.find(r => r.id === 'cism')), CISM_ONAIR, 'lecteur transmet le flux officiel directement');
+  const cismRadio=radios.find(r => r.id === 'cism');
+  assert.equal(ctx.getPlayableStream(cismRadio), cismRadio._streamStatus==='broken'?null:cismRadio.stream, 'lecteur transmet le flux officiel directement');
   assert.equal(ctx.getPlayableStream({ stream: 'http://example.org/live' }), null, 'garde contenu mixte conservé');
 
 

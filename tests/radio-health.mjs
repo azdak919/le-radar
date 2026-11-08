@@ -77,3 +77,14 @@ function partialTransport(empty=false) {return {get(url,opts,cb){assert.notEqual
 const partial=await lib.requestSample(good.url,{transport:partialTransport(),timeoutMs:20});assert.equal(partial.ok,true);assert.equal(partial.body.toString(),'partial audio');
 const empty=await lib.requestSample(good.url,{transport:partialTransport(true),timeoutMs:20});assert.equal(empty.body.length,0);
 console.log('radio-health: budget sample, stale, source exacte, empreinte OK');
+const verified={...valid,redirects:[valid.url],certificates:good.certificates,provenance:{url:valid.url,source:r.website,kind:'official-player'}};
+const migrated={...r,stream:valid.url,_streamProvenance:verified.provenance};
+assert.equal(lib.verifiedReplacement(migrated,verified,now),true);
+for(const brokenProof of [{...verified,audio:{decoded:false}},{...verified,certificates:[]},{...verified,redirects:['http://bad.example/live']},{...verified,provenance:{...verified.provenance,source:'https://unofficial.example/'}}])assert.equal(lib.verifiedReplacement(migrated,brokenProof,now),false);
+const junk=await checker.checkRadio(r,{}, {now,inspect:async url=>url===r.stream?failed:valid,alternatives:async()=>[{url:'https://ecoutez.chyz.ca/proxy/tech/stream',source:r.website,kind:'official-player'}]});assert.equal(junk.entry.stream,r.stream);
+console.log('radio-health: migration durable strictement prouvée, mount technique refusé');
+assert.equal(fingerprint(p.renderBody(['PR ouverte depuis 31 j'])),fingerprint(p.renderBody(['PR ouverte depuis 32 j'])));
+const oldWorking=lib.updateRecord({}, {...valid,url:'https://older.example/live'},now);
+const newWorking=lib.updateRecord(oldWorking,valid,now+1000);assert.equal(newWorking.history.length,2);assert.equal(newWorking.history[1].url,valid.url);
+const laterFailed=lib.updateRecord(newWorking,failed,now+2000);assert.equal(laterFailed.lastSuccessEvidence.url,valid.url);
+console.log('radio-health: transitions URL, dernière preuve et anti-spam des âges OK');

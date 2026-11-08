@@ -4,6 +4,7 @@ const fs=require('fs');
 const path=require('path');
 const lib=require('./radio-health-lib');
 const silence=require('./stream-silence-lib');
+const discovery=require('./discover-streams');
 const ROOT=path.join(__dirname,'..');
 async function publishedAlternatives(radio,{probe=lib.requestSample}={}) {
   const candidates=[];
@@ -37,10 +38,11 @@ async function checkRadio(radio,previous={},deps={}) {
     // L'absence du décodeur est un incident du contrôle, pas une panne de station.
     if(result.error!=='ffmpeg-missing')for(const candidate of await (deps.alternatives||publishedAlternatives)(radio,deps)) {
       const sources=new Set([radio.website,radio.listenUrl].map(lib.safeHttps).filter(Boolean));
-      if(candidate.url===radio.stream||!lib.safeHttps(candidate.url)||!sources.has(lib.safeHttps(candidate.source)))continue;
-      const alternative=await inspect(candidate.url,{}, {...deps,now,forceAudio:true});
-      if(alternative.state==='working'&&alternative.audio?.decoded&&alternative.expiry!=='2d') {
-        result={...alternative,provenance:candidate,replacedUrl:radio.stream,primaryError:primary.error||'certificate-soon'};break;
+      if(candidate.url===radio.stream||!lib.safeHttps(candidate.url)||!sources.has(lib.safeHttps(candidate.source))||discovery.isJunkStreamUrl(candidate.url))continue;
+      const canonical=discovery.canonicalizeStreamUrl(candidate.url)||candidate.url;
+      const alternative=await inspect(canonical,{}, {...deps,now,forceAudio:true});
+      if(alternative.state==='working'&&alternative.audio?.decoded&&alternative.expiry!=='2d'&&!discovery.isJunkIcyName(alternative.icyName)) {
+        result={...alternative,provenance:{...candidate,...(canonical!==candidate.url?{publishedUrl:candidate.url,canonicalizer:'existing-radio-cdn'}:{})},replacedUrl:radio.stream,primaryError:primary.error||'certificate-soon'};break;
       }
     }
   }
@@ -50,7 +52,7 @@ async function checkRadio(radio,previous={},deps={}) {
   if(record.state==='working') {
     entry.stream=record.url;
     if(record.provenance)entry._streamProvenance=record.provenance;
-    if(record.audio?.checkedAt!==previous.audio?.checkedAt)entry=silence.applySilenceSample(entry,radio,{meanDb:record.audio.meanDb});
+    if(record.audio?.checkedAt!==previous.audio?.checkedAt)entry=silence.applySilenceSample(entry,record.url===radio.stream?radio:{id:radio.id},{meanDb:record.audio.meanDb},record.checkedAt);
     else if(radio._streamStatus==='silent')entry._streamStatus='silent';
   }
   return {entry,record};
@@ -81,10 +83,10 @@ async function checkCandidates(registry, radios, report, deps={}) {
     const id=slugFromCandidate(candidate);
     try {
       const {record}=await checkRadio({id,name:candidate.name,website:candidate.website,stream:null},{},{...deps,now});
-      if(record.state==='working'&&record.provenance&&!existing.has(id)) {
+      if(record.state==='working'&&record.provenance&&!existing.has(id)&&deps.canPromote?.(id)) {
         radios.push({...promoteCandidate(candidate,{stream:record.url,status:'working',checked:at}),_streamProvenance:record.provenance});
         report.stations[id]=record;existing.add(id);
-      } else retained.push({...candidate,_lastChecked:at,_failCount:(candidate._failCount||0)+1,_healthError:record.error||'already-listed'});
+      } else retained.push({...candidate,_lastChecked:at,_failCount:(candidate._failCount||0)+1,_healthError:record.error||'catalogue-prerequisites-missing',...(record.state==='working'?{_verifiedStream:record.url,_streamProvenance:record.provenance}:{})});
     } catch {retained.push({...candidate,_lastChecked:at,_healthError:'check-exception'});}
   }
   return {...registry,candidates:retained,_lastHealthDiscovery:at};
@@ -95,7 +97,9 @@ async function main() {
   let previous={};try{previous=JSON.parse(fs.readFileSync(path.join(ROOT,'data/radio-health.json'),'utf8'));}catch{/* premier contrôle */}
   const result=await checkAll(radios,previous);
   let registry={candidates:[]};try{registry=JSON.parse(fs.readFileSync(path.join(ROOT,'radios-candidates.json'),'utf8'));}catch{/* aucune candidature */}
-  registry=await checkCandidates(registry,result.radios,result.report);
+  let schedules={},playing={};
+  try{schedules=JSON.parse(fs.readFileSync(path.join(ROOT,'radio-schedules.json'),'utf8')).stations||{};playing=JSON.parse(fs.readFileSync(path.join(ROOT,'radio-nowplaying.json'),'utf8')).stations||{};}catch{/* prérequis catalogue manquants */}
+  registry=await checkCandidates(registry,result.radios,result.report,{canPromote:id=>!!schedules[id]&&!!playing[id]});
   result.report.total=result.radios.length;
   const problems=lib.healthProblems(result.report);
   console.log(JSON.stringify(result.report,null,2));

@@ -37,7 +37,7 @@ function evaluate(facts, now = Date.now()) {
 }
 
 function renderBody(problems, at = new Date().toISOString()) {
-  const fingerprint=createHash('sha256').update(JSON.stringify([...problems].sort())).digest('hex');
+  const fingerprint=createHash('sha256').update(JSON.stringify(problems.map(p=>p.replace(/\b\d+ (j|Mo)\b/g,'seuil $1')).sort())).digest('hex');
   return [
     `<!-- radar-health:${fingerprint} -->`,
     `Mis à jour automatiquement par platform-health.yml — ${at}.`,

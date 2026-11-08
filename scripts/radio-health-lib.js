@@ -56,7 +56,7 @@ function requestSample(input, {maxBytes=128*1024,timeoutMs=6000,redirects=[],cer
       }
       const chunks=[];let bytes=0;
       res.on('data',chunk=>{chunks.push(chunk.subarray(0,Math.max(0,maxBytes-bytes)));bytes+=chunk.length;if(bytes>=maxBytes)res.destroy();});
-      const done=()=>finish({ok:res.statusCode===200,status:res.statusCode,mime:res.headers['content-type']||'',body:Buffer.concat(chunks),url,state:res.statusCode===200?'received':'unknown',error:res.statusCode===200?'':`http-${res.statusCode}`});
+      const done=()=>finish({ok:res.statusCode===200,status:res.statusCode,mime:res.headers['content-type']||'',icyName:res.headers['icy-name']||'',body:Buffer.concat(chunks),url,state:res.statusCode===200?'received':'unknown',error:res.statusCode===200?'':`http-${res.statusCode}`});
       sampleDone=done;
       res.on('end',done);res.on('close',done);res.on('error',()=>finish({ok:false,state:'unknown',error:'response-error'}));
     });
@@ -73,11 +73,11 @@ function officialCandidates(text, source) {
   return unique.filter(u=>/stream|listen|icecast|radiomast|radioca|\.m3u8?(?:\?|$)|\.pls(?:\?|$)/i.test(u)&&!/(?:doubleclick|google-analytics|facebook|youtube|\.js(?:\?|$)|\.css(?:\?|$))/i.test(u))
     .slice(0,8).map(url=>({url,source,kind:'official-page'}));
 }
-function needsAudio(previous, now=Date.now()) { const at=Date.parse(previous?.audio?.checkedAt); return previous?.state!=='working' || !previous?.audio?.decoded || !Number.isFinite(at) || now-at>AUDIO_TTL; }
+function needsAudio(previous, now=Date.now()) { const at=Date.parse(previous?.audio?.checkedAt); return previous?.state!=='working' || !previous?.audio?.decoded || !Number.isFinite(at) || now-at>=20*3600000; }
 async function inspect(url, previous={}, {now=Date.now(),probe=requestSample,decode=decodeAudio,forceAudio=false}={}) {
   const audioDue=forceAudio||needsAudio(previous,now);
   const result=await probe(url,{maxBytes:audioDue?128*1024:2048});
-  const base={url,checkedAt:new Date(now).toISOString(),redirects:result.redirects||[],certificates:result.certificates||[],mime:result.mime||'',status:result.status||null};
+  const base={url,checkedAt:new Date(now).toISOString(),redirects:result.redirects||[],certificates:result.certificates||[],mime:result.mime||'',icyName:result.icyName||'',status:result.status||null};
   if(!result.ok)return {...base,state:result.state||'unknown',error:result.error||'probe-failed'};
   if(!base.certificates.length)return {...base,state:'unknown',error:'certificate-unknown'};
   const bands=base.certificates.map(c=>expiryBand(c.expiresAt,now));
@@ -92,11 +92,12 @@ async function inspect(url, previous={}, {now=Date.now(),probe=requestSample,dec
 }
 function updateRecord(previous={}, observation, now=Date.now()) {
   const ok=observation.state==='working';
-  const fingerprint=[observation.state,observation.error||'',observation.expiry||'',observation.audio?.silent?'silent':''].join('|');
+  const fingerprint=[observation.url||'',observation.state,observation.error||'',observation.expiry||'',observation.audio?.silent?'silent':''].join('|');
   const oldFingerprint=previous.fingerprint||'';
   const history=[...(previous.history||[])];
-  if(fingerprint!==oldFingerprint)history.push({at:new Date(now).toISOString(),fingerprint});
-  return {...observation,fingerprint,lastSuccess:ok?observation.checkedAt:previous.lastSuccess||null,failures:ok?0:(previous.failures||0)+1,history:history.slice(-12)};
+  if(fingerprint!==oldFingerprint)history.push({at:new Date(now).toISOString(),url:observation.url,fingerprint});
+  const lastSuccessEvidence=ok?{url:observation.url,checkedAt:observation.checkedAt,certificates:observation.certificates,audio:observation.audio,provenance:observation.provenance}:previous.lastSuccessEvidence||null;
+  return {...observation,fingerprint,lastSuccessEvidence,lastSuccess:ok?observation.checkedAt:previous.lastSuccess||null,failures:ok?0:(previous.failures||0)+1,history:history.slice(-12)};
 }
 function healthProblems(report, now=Date.now()) {
   const checked=Date.parse(report?.checkedAt);
@@ -110,4 +111,17 @@ function healthProblems(report, now=Date.now()) {
   }
   return problems;
 }
-module.exports={DAY,AUDIO_TTL,STALE_MS,expiryBand,safeHttps,isHtml,acceptableMime,decodeAudio,requestSample,officialCandidates,needsAudio,inspect,updateRecord,healthProblems};
+function verifiedReplacement(radio, record, now=Date.now()) {
+  const sources=new Set([radio?.website,radio?.listenUrl].map(safeHttps).filter(Boolean));
+  const proof=record?.provenance;
+  const age=now-Date.parse(record?.checkedAt),audioAge=now-Date.parse(record?.audio?.checkedAt);
+  return !!(safeHttps(radio?.stream) && record?.url===radio.stream && record.state==='working'
+    && proof && sources.has(safeHttps(proof.source)) && ['official-page','official-player','official-playlist'].includes(proof.kind)
+    && JSON.stringify(radio._streamProvenance)===JSON.stringify(proof)
+    && Number.isFinite(age) && age>=0 && age<=STALE_MS && record.audio?.decoded
+    && Number.isFinite(audioAge) && audioAge>=0 && audioAge<=AUDIO_TTL
+    && record.certificates?.length && record.certificates.every(c=>Date.parse(c.expiresAt)>now)
+    && record.redirects?.length && record.redirects.every(safeHttps));
+}
+
+module.exports={verifiedReplacement,DAY,AUDIO_TTL,STALE_MS,expiryBand,safeHttps,isHtml,acceptableMime,decodeAudio,requestSample,officialCandidates,needsAudio,inspect,updateRecord,healthProblems};
