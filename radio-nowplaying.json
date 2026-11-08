@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T07:06:39.717Z",
+  "updatedAt": "2026-11-08T09:07:01.467Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T07:06:00.514Z"
+      "checkedAt": "2026-11-08T09:06:01.560Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T07:06:02.540Z"
+      "checkedAt": "2026-11-08T09:06:03.724Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,7 +73,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T07:06:05.243Z"
+      "checkedAt": "2026-11-08T09:06:06.468Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T07:06:19.417Z"
+      "checkedAt": "2026-11-08T09:06:20.874Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T07:06:20.503Z"
+      "checkedAt": "2026-11-08T09:06:21.865Z"
     },
     "choq": {
       "id": "choq",
@@ -129,20 +129,20 @@
       "current": null,
       "next": {
         "title": "OPUS",
-        "source": "api-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
-        "slug": "opus"
+        "url": "https://www.choq.ca/balados/opus"
       },
       "track": "Harmony Tividad — Anything",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T07:06:39.366Z"
+      "checkedAt": "2026-11-08T09:07:01.117Z"
     }
   }
 }
