@@ -123,3 +123,9 @@ assert.equal(authorFromArticleHtml(fixture.replaceAll('Léann Laquerre','Archive
 console.log('Impact Campus : cohérence fil/fiche/RSS/JSON-LD et pages FR/EN, image/crédit intacts');
 
 assert.equal(reconcileAuthor({...impact,author:''},[{...impact,author:'Archives Impact Campus'},{...impact,author:'Léann Laquerre'}],{ledger:{}}).author,'Léann Laquerre');
+
+assert.equal(authors.sourceAuthor('Léann Laquerre & Archives Impact Campus','Impact Campus'),'Léann Laquerre');
+assert.equal(authors.sourceAuthor('Alice Martin & Archives Impact Campus & Bob Roy','Impact Campus'),'Alice Martin et Bob Roy');
+assert.equal(authors.sourceAuthor('Arts & Culture','Impact Campus'),'Arts & Culture');
+assert.equal(authors.sourceAuthor('R&D Collectif & Archives Impact Campus','Impact Campus'),'R&D Collectif');
+assert.equal(authors.sourceAuthor('Léann Laquerre & Archives Impact Campus','Autre média'),'Léann Laquerre & Archives Impact Campus');

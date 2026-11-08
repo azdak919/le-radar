@@ -132,7 +132,7 @@ function normalizeAuthor(name = '') {
 function sourceAuthor(name = '', source = '', lang = 'fr') {
   const normalized = normalizeAuthor(name);
   if (normAuthorKey(source) !== normAuthorKey('Impact Campus')) return normalized;
-  const parts = splitMultiAuthorLabel(name);
+  const parts = splitMultiAuthorLabel(name).flatMap(part => part.split(/\s+&\s+/));
   const retained = parts.filter(part => normAuthorKey(part) !== normAuthorKey('Archives Impact Campus'));
   return retained.length === parts.length ? normalized : joinAuthorNames(retained, lang);
 }
