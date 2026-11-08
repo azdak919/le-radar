@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T02:38:11.290Z",
+  "updatedAt": "2026-11-08T03:37:07.437Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T02:37:32.471Z"
+      "checkedAt": "2026-11-08T03:36:27.774Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T02:37:34.180Z"
+      "checkedAt": "2026-11-08T03:36:29.520Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T02:37:37.083Z"
+      "checkedAt": "2026-11-08T03:36:33.705Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Go Go Radio Magic Show",
-        "source": "schedule-live",
-        "start": "21:30",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
-      },
-      "next": {
         "title": "Brave New Jams",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/brave-new-jams"
       },
+      "next": {
+        "title": "Floydian Slip",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/floydian-slip"
+      },
       "track": "",
-      "showTitle": "The Go Go Radio Magic Show",
+      "showTitle": "Brave New Jams",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T02:37:51.913Z"
+      "checkedAt": "2026-11-08T03:36:48.165Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,28 +122,35 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T02:37:52.786Z"
+      "checkedAt": "2026-11-08T03:36:49.706Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "D'amour et de sexe",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
+      "next": {
+        "title": "OPUS",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "https://www.choq.ca/balados/opus"
+      },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "",
+      "showTitle": "D'amour et de sexe",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T02:38:10.939Z"
+      "checkedAt": "2026-11-08T03:37:07.086Z"
     }
   }
 }
