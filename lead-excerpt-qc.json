@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-08T15:36:49.136Z",
+  "updated": "2026-11-08T16:04:59.361Z",
   "total": 188,
-  "pool": 56,
-  "incomplete": 10,
-  "withLeadExcerpt": 129,
-  "candidates": 10,
-  "enriched": 0,
+  "pool": 57,
+  "incomplete": 11,
+  "withLeadExcerpt": 130,
+  "candidates": 11,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -26,6 +26,15 @@
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
+    },
+    {
+      "title": "NOUVELLE GARDE: Le temps du sport féminin, un essai historique",
+      "link": "https://impactcampus.ca/arts-et-culture/nouvelle-garde-le-temps-du-sport-feminin-un-essai-historique/",
+      "ok": true,
+      "score": 100,
+      "chars": 356,
+      "sample": "L’année 2024 marque le début d’une nouvelle ère, bgoù la force des femmes se remarque inévitablement",
+      "changed": true
     },
     {
       "title": "Portes ouvertes à la Ferme CPR Grenon",
@@ -70,15 +79,6 @@
       "score": 80,
       "chars": 400,
       "sample": "Depuis 25 ans, le Cinéma Beaubien fait partie du paysage culturel montréalais. Bien plus qu’un endro",
-      "changed": false
-    },
-    {
-      "title": "Élections de mi-mandat : des étudiant(e)s du Vermont mobilisé(e)s",
-      "link": "https://montrealcampus.ca/2026/11/04/elections-de-mi-mandat-des-etudiantes-du-vermont-mobilisees/",
-      "ok": true,
-      "score": 70,
-      "chars": 400,
-      "sample": "À l’aube des élections de mi-mandat aux États-Unis, j’ai rencontré des étudiant(e)s de l’Université ",
       "changed": false
     }
   ]
