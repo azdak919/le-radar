@@ -717,6 +717,21 @@ function bindMagazineViewportRelayout() {
   }
 }
 
+/** À la réouverture explicite seulement : une molette de 1 px peut laisser
+ * le premier trait coupé après Réduire → Plus de sources. Ni retour global
+ * en haut, ni déplacement d'une vraie position de lecture/clavier. */
+function settleWideRailNearStart() {
+  if (!isWideRailFiltersActive() || !filtersExpanded || !NEWS_FILTERS) return;
+  const top = NEWS_FILTERS.scrollTop;
+  if (!(top > 0 && top <= 1)) return;
+  const first = NEWS_FILTERS.querySelector('.filter-btn');
+  if (!first) return;
+  const active = document.activeElement;
+  if (NEWS_FILTERS.contains(active) && !first.contains(active)) return;
+  const offset = first.getBoundingClientRect().top - NEWS_FILTERS.getBoundingClientRect().top;
+  if (offset < 0 && offset >= -1.01) NEWS_FILTERS.scrollTop = 0;
+}
+
 function bindFiltersPanel() {
   let filtersUserCollapsed = false;
   let filtersUserPinned = false;
@@ -729,6 +744,7 @@ function bindFiltersPanel() {
     filtersUserPinned = filtersExpanded;
     filtersUserCollapsed = !filtersExpanded;
     syncFiltersPanel();
+    if (filtersExpanded && isWideRailFiltersActive()) window.requestAnimationFrame(settleWideRailNearStart);
     if ((window.scrollY || document.documentElement.scrollTop || 0) !== y) {
       window.scrollTo({ top: y, left: 0, behavior: 'auto' });
     }
