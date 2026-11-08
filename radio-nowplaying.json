@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T22:07:16.450Z",
+  "updatedAt": "2026-11-08T23:07:25.565Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T22:06:22.542Z"
+      "checkedAt": "2026-11-08T23:06:32.944Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T22:06:36.744Z"
+      "checkedAt": "2026-11-08T23:06:46.929Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Desi Beats",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Bhum Bhum Time",
+      "next": {
+        "title": "Bluegrass Rambling",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
+      "track": "",
+      "showTitle": "Desi Beats",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T22:06:41.028Z"
+      "checkedAt": "2026-11-08T23:06:50.007Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
-      },
-      "next": {
         "title": "Bills Country and Western Favourites",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
+      "next": {
+        "title": "No Boundaries",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
+      },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "Bills Country and Western Favourites",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T22:06:55.816Z"
+      "checkedAt": "2026-11-08T23:07:04.643Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +122,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T22:06:57.453Z"
+      "checkedAt": "2026-11-08T23:07:06.040Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Mutations",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "api-live",
@@ -142,14 +136,14 @@
         "slug": "les-rois-de-larene"
       },
       "track": "Harmony Tividad — Anything",
-      "showTitle": "Mutations",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T22:07:16.101Z"
+      "checkedAt": "2026-11-08T23:07:25.214Z"
     }
   }
 }
