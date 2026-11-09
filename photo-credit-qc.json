@@ -1,23 +1,51 @@
 {
-  "updated": "2026-11-09T11:16:04.662Z",
+  "updated": "2026-11-09T17:39:58.952Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
-  "cited": 109,
-  "pending": 37,
+  "cited": 108,
+  "pending": 38,
   "missingHero": 0,
   "ok": false,
-  "checked": 49,
-  "updatedCount": 3,
-  "citedNew": 6,
-  "fallbackNew": 43,
+  "checked": 53,
+  "updatedCount": 7,
+  "citedNew": 9,
+  "fallbackNew": 44,
   "samples": [
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "source": "Le Délit",
-      "credit": "Photo : Bastien Fournier",
+      "title": "Can Music Truly Be Personal? - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The Rocky Horror Picture Show Comes to McGill - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo : Sonia Berman",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Why We Dream: A Search for the Elusive",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Math, now, … A Klein Bottle in St. Michel",
+      "source": "The Plant",
+      "credit": "Image via Charlie Reuter",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",

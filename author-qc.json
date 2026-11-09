@@ -1,10 +1,34 @@
 {
-  "updated": "2026-11-09T11:14:14.286Z",
+  "updated": "2026-11-09T17:37:04.165Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 17,
+  "mismatches": 19,
   "ok": true,
   "samples": [
+    {
+      "title": "Can Music Truly Be Personal? - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/can-music-truly-be-personal/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Jad Morin",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Artificial Intelligence in Journalism: The Daily's Stance - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "The Rocky Horror Picture Show Comes to McGill - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/the-rocky-horror-picture-show-comes-to-mcgill/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Sonia Berman",
+      "reason": "page-byline"
+    },
     {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy/",
@@ -110,14 +134,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "source": "The Tribune",
@@ -142,5 +158,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 17
+  "fixed": 19
 }

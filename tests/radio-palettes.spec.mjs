@@ -2,6 +2,27 @@ import {test,expect} from '@playwright/test';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);const {radioPalette}=require('../scripts/radio-palette-lib');
 const ids=['cfak','choq','chyz','cism','cjlo','ckut'];
+const RadarDay=require('../scripts/radio-day-lib.js');
+// Grille réelle (mise à jour chaque semaine par le bot) : l'instant « en cours »
+// est dérivé des données présentes — semaine vérifiée la plus récente, première
+// émission avec une fin publiée d'une station vérifiée — au lieu d'une date figée
+// qui sort de la semaine affichée au lundi suivant (CI rouge du 9 nov. 2026).
+function torontoInstant(iso,minute){
+ for(const offset of [4,5]){const d=new Date(`${iso}T00:00:00Z`);d.setUTCMinutes(minute+offset*60);const m=RadarDay.moment(d);if(m.iso===iso&&m.minute===minute)return d;}
+ throw new Error(`instant Toronto introuvable ${iso} ${minute}`);
+}
+function airingInstant(payload){
+ const stations=Object.entries(payload?.stations||{});
+ const week=stations.map(([,s])=>s.verifiedWeekOf).filter(w=>/^\d{4}-\d{2}-\d{2}$/.test(w||'')).sort().pop();
+ if(!week)throw new Error('radio-schedules.json : aucune semaine vérifiée');
+ for(const d of RadarDay.weekDates(week))for(const id of ids){
+  const s=payload.stations[id];if(!s||s.verifiedWeekOf!==week||s.unverified)continue;
+  const b=RadarDay.segments(s.grid,d.day).blocks.find(x=>!x.fromPrevious&&x.end-x.start>=2);
+  if(b)return {at:torontoInstant(d.iso,b.start+1),station:id,title:b.slot.title};
+ }
+ throw new Error(`radio-schedules.json : aucune émission datée dans la semaine ${week}`);
+}
+const airing=airingInstant(require('../radio-schedules.json'));
 async function contrast(locator,background=null,property='color'){
  return locator.evaluate((e,{background,property})=>{
   const canvas=document.createElement('canvas');canvas.width=canvas.height=1;const c=canvas.getContext('2d',{willReadFrequently:true});
@@ -12,8 +33,8 @@ async function contrast(locator,background=null,property='color'){
   const a=luminance(s[property]),b=luminance(bg||'#fff');return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
  },{background,property});
 }
-async function open(page,width,theme='light',path='/horaires/'){
- await page.setViewportSize({width,height:1100});await page.clock.setFixedTime(new Date('2026-11-07T18:10:00Z'));
+async function open(page,width,theme='light',path='/horaires/',at=new Date('2026-11-07T18:10:00Z')){
+ await page.setViewportSize({width,height:1100});await page.clock.setFixedTime(at);
  await page.goto(`${path}?labFrame=1`,{waitUntil:'domcontentloaded'});await page.evaluate(t=>document.documentElement.dataset.theme=t,theme);
 }
 // Capture document coordinates from the top, so fixed radio chrome cannot cover
@@ -24,7 +45,7 @@ async function captureSection(page,selector,path){
 }
 for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
  test(`institution palette contrasts and geometry ${theme} ${width}px @ci-critical`,async({page},info)=>{
-  await open(page,width,theme);await expect(page.locator('[data-radio-day-view]')).toHaveAttribute('data-ready','true');
+  await open(page,width,theme,'/horaires/',airing.at);await expect(page.locator('[data-radio-day-view]')).toHaveAttribute('data-ready','true');
   await expect(page.getByRole('region',{name:'En ce moment à la radio'})).toBeVisible();
   await expect(page.locator('.seo-radio-card[data-radio-institution]')).toHaveCount(6);
   const ratios=[];
@@ -35,7 +56,8 @@ for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
    for(const sel of ['.seo-radio-card__name','.seo-radio-card__place','.seo-radio-card__show','.seo-radio-card__when','.seo-radio-card__kicker']){const ratio=await contrast(card.locator(sel));ratios.push(ratio);expect(ratio,`${id} ${sel}`).toBeGreaterThanOrEqual(4.5);}
    const block=track.locator('.radio-day-block').first();if(await block.count())expect(await contrast(block)).toBeGreaterThanOrEqual(4.5);
   }
-  const current=page.locator('.radio-day-block.is-current-time').first();await expect(current).toHaveAttribute('aria-current','time');await expect(current.locator('.radio-day-block__state')).toBeVisible();
+  const current=page.locator('.radio-day-block.is-current-time').first();await expect(current).toHaveAttribute('aria-current','time');
+  await expect(page.locator(`.radio-day-track[data-station="${airing.station}"] .radio-day-block.is-current-time`).first()).toBeVisible();await expect(current.locator('.radio-day-block__state')).toBeVisible();
   expect(await contrast(current.locator('.radio-day-block__state'))).toBeGreaterThanOrEqual(4.5);
   const focus=page.locator('.seo-radio-card a').first();await focus.focus();
   const focusRatio=await focus.evaluate(e=>{const s=getComputedStyle(e);return {outline:s.outlineColor,width:parseFloat(s.outlineWidth),ink:getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()}});

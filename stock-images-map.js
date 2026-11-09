@@ -1,7 +1,8 @@
 /* LE RADAR — miroir local des photos de repli Wikimedia (généré).
  * Régénéré par : node scripts/mirror-stock-images.js --update
  * Clé : URL de l'original Commons (sans requête) → vignette 500 px servie par le site. */
-var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg":"assets/stock-images/bb8d1727e78fd5e3.jpg",
+var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg":"assets/stock-images/2cde5ac76e6846c6.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/3/3b/Dawson_College_04.jpg":"assets/stock-images/210ca60573c31169.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/83/Campus_de_l%27Universit%C3%A9_de_Montr%C3%A9al.JPG":"assets/stock-images/44e69b896d51ed8e.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/7/71/Dawson_College_05.jpg":"assets/stock-images/b6725a5a41507112.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG":"assets/stock-images/6a315b4472db475e.jpg",
@@ -14,12 +15,11 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/f/f3/Da
 "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg":"assets/stock-images/0c9e04d1a3c8a7bd.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg":"assets/stock-images/2879683e6f383c05.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg":"assets/stock-images/3b4417fae26393d1.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg":"assets/stock-images/d75a894c65c0f22f.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg":"assets/stock-images/bdaf73b0c9e8717f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg":"assets/stock-images/b4e0a6a40eefa8a6.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg":"assets/stock-images/bdaf73b0c9e8717f.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg":"assets/stock-images/362586ceb2bf6e08.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg":"assets/stock-images/e61047bee5a9fe27.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG":"assets/stock-images/63b014a9599e54ad.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg":"assets/stock-images/2cde5ac76e6846c6.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/3/38/Qu%C3%A9bec_-_Maison_de_la_litt%C3%A9rature_20241031.jpg":"assets/stock-images/5e33f63e5a14e5bc.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/97/CEGEP_Outaouais.jpg":"assets/stock-images/e0cb1398b3550b77.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/93/Pavillon_des_Services_UL_03.jpg":"assets/stock-images/ce75b7ccff99b3a6.jpg",
@@ -28,7 +28,6 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/f/f3/Da
 "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg":"assets/stock-images/f1a23eb08d38a755.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/a0/Grand_Axe_ULaval.jpg":"assets/stock-images/638f8d74ce92f23a.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/c/c1/A_stack_of_newspapers_%28cropped%29.jpg":"assets/stock-images/958d2af9893096eb.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg":"assets/stock-images/362586ceb2bf6e08.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg":"assets/stock-images/63fe9495a34b6ccf.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg":"assets/stock-images/aefcb1ff0c0aec6b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/8b/Universit%C3%A9_de_Sherbrooke_-_Centre_multifonctionnel.jpg":"assets/stock-images/a677cd0ea4dacce6.jpg",
@@ -138,4 +137,9 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/f/f3/Da
 "https://upload.wikimedia.org/wikipedia/commons/c/ce/Campus_UdeM_sous_la_neige%2C_Montr%C3%A9al_03.jpg":"assets/stock-images/37926215788b236b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/c/cb/UQTR_-_Pavillon_Ringuet.JPG":"assets/stock-images/d68ab398358cb544.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG":"assets/stock-images/bdfe9b689240959e.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/d/d2/Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_%28UQAM%29_-_Montreal%2C_Canada_-_DSC08309.jpg":"assets/stock-images/782107a7f0ebf607.jpg"};
+"https://upload.wikimedia.org/wikipedia/commons/d/d2/Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_%28UQAM%29_-_Montreal%2C_Canada_-_DSC08309.jpg":"assets/stock-images/782107a7f0ebf607.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/1/16/Telus_Stadium%2C_Laval_University.jpg":"assets/stock-images/d370becfa12a7952.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/e/e8/Castor_in_Universit%C3%A9_Laval.jpg":"assets/stock-images/0d92e366e1dfaf83.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/4/4b/Tree_in_a_meadow_at_Universite_Laval.jpg":"assets/stock-images/12e8dcf14099d480.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/a/a6/Tree-lined_path_on_the_Universite_Laval_campus.jpg":"assets/stock-images/1b4347f4a98f0ab7.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/7/73/Snowy_park_at_Universite_Laval_at_night.jpg":"assets/stock-images/7ac333d0f43fcd4c.jpg"};

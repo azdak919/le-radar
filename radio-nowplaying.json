@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T12:06:29.559Z",
+  "updatedAt": "2026-11-09T17:07:21.632Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Lundi Indie",
+        "title": "Spillthepsy",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/spillthepsy/"
       },
       "track": "",
       "showTitle": "",
@@ -21,113 +21,108 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T12:06:03.401Z"
+      "checkedAt": "2026-11-09T17:06:39.883Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Yallah! Lâcher prise avec Rhabibiii",
+        "title": "L'alter ego",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
       },
       "next": {
-        "title": "La collation",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "track": "",
-      "showTitle": "Yallah! Lâcher prise avec Rhabibiii",
+      "showTitle": "L'alter ego",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T12:06:05.304Z"
+      "checkedAt": "2026-11-09T17:06:54.208Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Unmuted",
+        "title": "World Skip The Beat",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Le Lendemain de la veille",
+        "title": "Radio Is Dead",
         "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "Unmuted",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T12:06:07.817Z"
+      "checkedAt": "2026-11-09T17:06:57.816Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Experiments",
+        "title": "Twang City",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
       },
       "next": {
-        "title": "Trawling the Megahertz",
+        "title": "The Tommy John Show",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
       "track": "",
-      "showTitle": "Experiments",
+      "showTitle": "Twang City",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T12:06:21.988Z"
+      "checkedAt": "2026-11-09T17:07:12.446Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "07:59",
-        "url": "https://www.cfak.ca/balados/Folkswagen"
-      },
+      "current": null,
       "next": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "13:59",
+        "url": "https://www.cfak.ca/balados/solenoide"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T12:06:23.415Z"
+      "checkedAt": "2026-11-09T17:07:13.860Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T12:06:29.208Z"
+      "checkedAt": "2026-11-09T17:07:21.282Z"
     }
   }
 }
