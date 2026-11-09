@@ -1,33 +1,17 @@
 {
-  "updated": "2026-11-09T13:06:52.925Z",
+  "updated": "2026-11-09T13:36:39.089Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 19,
+  "mismatches": 17,
   "ok": true,
   "samples": [
     {
-      "title": "Five Minutes from Campus, A New Jazz Club Hits the Scene - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/five-minutes-from-campus-a-new-jazz-club-hits-the-scene/",
+      "title": "Artificial Intelligence in Journalism: The Daily's Stance - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
       "source": "The McGill Daily",
       "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Shai Geballe",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Turning Connections Into Community with Aidan Licoppe - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/turning-connections-into-community-with-aidan-licoppe/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Enid Kohler",
-      "reason": "page-byline"
-    },
-    {
-      "title": "Montreal’s Poetic Autumn - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/montreals-poetic-autumn/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Kate Hansen",
-      "reason": "page-byline"
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     },
     {
       "title": "Vote YES for The Concordian’s fee levy increase",
@@ -158,5 +142,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 19
+  "fixed": 17
 }

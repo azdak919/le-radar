@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-09T13:07:39.100Z",
+  "updated": "2026-11-09T13:37:13.896Z",
   "total": 188,
   "withPhoto": 172,
   "withStock": 28,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 154,
-  "pageScraped": 31,
-  "photosRecovered": 30,
-  "imagesCleared": 18,
+  "leadReadyPhotos": 155,
+  "pageScraped": 32,
+  "photosRecovered": 31,
+  "imagesCleared": 19,
   "stockSearches": 34,
-  "stockFound": 22,
-  "campusBankFound": 19,
+  "stockFound": 21,
+  "campusBankFound": 18,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -39,6 +39,12 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png"
     },
     {
+      "title": "Artificial Intelligence in Journalism: The Daily's Stance - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
       "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
       "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu/",
       "reason": "no-stock-match",
@@ -49,6 +55,12 @@
       "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+    },
+    {
+      "title": "Strong Start to the Season for the Gaiters",
+      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -63,28 +75,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg"
     },
     {
-      "title": "Strong Start to the Season for the Gaiters",
-      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
-      "image": null
-    },
-    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Lula marque l’histoire, Flávio Bolsonaro dans l’eau chaude ?",
-      "link": "https://lecollectif.ca/edition-papier/lula-marque-lhistoire-flavio-bolsonaro-dans-leau-chaude/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lula-marque-lhistoire-Flavio-Bolsonaro-dans-leau-chaude_Source-LinkedIn-Luiz-Inacio-Lula-da-Silva.jpeg"
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
     }
   ]
 }
