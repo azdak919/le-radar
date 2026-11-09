@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-09T19:37:36.732Z",
+  "updated": "2026-11-09T19:56:13.828Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 17,
-  "withLeadExcerpt": 121,
-  "candidates": 17,
-  "enriched": 1,
-  "failed": 8,
+  "incomplete": 18,
+  "withLeadExcerpt": 128,
+  "candidates": 18,
+  "enriched": 9,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -28,12 +28,39 @@
       "changed": false
     },
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
-      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
+      "title": "Quand la mode va trop loin",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
       "ok": true,
       "score": 100,
-      "chars": 258,
-      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "chars": 317,
+      "sample": "En 2017, la demande de blanchiment anal aurait explosé de 23 % dans la clinique médicale londonienne",
+      "changed": true
+    },
+    {
+      "title": "Larger Than Life: Short King Warsame - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/larger-than-life-short-king-warsame/",
+      "ok": true,
+      "score": 96,
+      "chars": 391,
+      "sample": "Image courtesy of Warsame Ahmed In a video that has now amassed over 5,000 views on Instagram, Short",
+      "changed": true
+    },
+    {
+      "title": "When Neutrality Becomes Silence: McGill's Responsibility to Protect Political Dissent - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/when-neutrality-becomes-silence-mcgills-responsibility-to-protect-political-dissent/",
+      "ok": true,
+      "score": 96,
+      "chars": 274,
+      "sample": "Recent discussions about academic freedom and institutional neutrality have brought this contradicti",
+      "changed": true
+    },
+    {
+      "title": "Can Music Truly Be Personal? - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/can-music-truly-be-personal/",
+      "ok": true,
+      "score": 96,
+      "chars": 398,
+      "sample": "Any artist’s willingness to share the custody of their music must not be taken as a sign of it being",
       "changed": true
     },
     {
@@ -46,40 +73,13 @@
       "changed": false
     },
     {
-      "title": "Creative Writing October 2026",
-      "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
+      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
       "ok": true,
-      "score": 70,
-      "chars": 400,
-      "sample": "With the start of the next semester, our very fitting theme for the submissions this issue was renew",
-      "changed": false
-    },
-    {
-      "title": "How Generation Z is Quietly Leading a Revolution",
-      "link": "https://theplantnews.com/2026/11/05/how-generation-z-is-quietly-leading-a-revolution/",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Generation Z is often labelled lazy, spoiled, and constantly complaining about the circumstances of ",
-      "changed": false
-    },
-    {
-      "title": "Empathie, l’oeuvre qui a démystifié la santé mentale",
-      "link": "https://montrealcampus.ca/2026/11/05/empathie-loeuvre-qui-a-demystifie-la-sante-mentale/",
-      "ok": true,
-      "score": 80,
-      "chars": 400,
-      "sample": "La sortie de la série Empathie l’an dernier a généré un engouement majeur. La création de Florence L",
-      "changed": false
-    },
-    {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
-      "ok": true,
-      "score": 80,
-      "chars": 400,
-      "sample": "Depuis 25 ans, le Cinéma Beaubien fait partie du paysage culturel montréalais. Bien plus qu’un endro",
-      "changed": false
+      "score": 100,
+      "chars": 361,
+      "sample": "According to its bargaining team, AMUSE represents approximately 1,300 to 1,600 casual employees, em",
+      "changed": true
     }
   ]
 }
