@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T17:09:23.240Z",
+  "updated": "2026-11-09T17:39:58.952Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
@@ -13,11 +13,18 @@
   "fallbackNew": 44,
   "samples": [
     {
-      "title": "Bulletins La Pige radio 9 novembre",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
+      "title": "Can Music Truly Be Personal? - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "The Rocky Horror Picture Show Comes to McGill - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo : Sonia Berman",
+      "cited": true,
+      "method": "figcaption-bare"
     },
     {
       "title": "Why We Dream: A Search for the Elusive",
@@ -32,13 +39,6 @@
       "credit": "Image via Charlie Reuter",
       "cited": true,
       "method": "via-attribution"
-    },
-    {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "source": "Le Délit",
-      "credit": "Photo : Bastien Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
