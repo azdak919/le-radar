@@ -1,23 +1,44 @@
 {
-  "updated": "2026-11-09T19:58:55.359Z",
+  "updated": "2026-11-09T20:11:12.697Z",
   "total": 188,
   "withImage": 169,
   "withCredit": 169,
-  "cited": 108,
-  "pending": 37,
+  "cited": 109,
+  "pending": 36,
   "missingHero": 0,
   "ok": false,
-  "checked": 53,
-  "updatedCount": 7,
-  "citedNew": 10,
-  "fallbackNew": 43,
+  "checked": 54,
+  "updatedCount": 9,
+  "citedNew": 12,
+  "fallbackNew": 42,
   "samples": [
     {
-      "title": "Larger Than Life: Short King Warsame - The McGill Daily",
-      "source": "The McGill Daily",
-      "credit": "Photo: Courtesy of Warsame Ahmed",
+      "title": "True Crime : jusqu’où aller pour raconter un crime ?",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Wendy Kim Pires",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Les Saguenéens se souviennent à Arvida",
+      "source": "La Pige",
+      "credit": "Photo : Mathieu Bisson",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Marquer contre la fibrose kystique : un succès qui se poursuit",
+      "source": "La Pige",
+      "credit": "Photo : Alexis Auclair",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "La série de victoires des Sags s’arrête à trois",
+      "source": "La Pige",
+      "credit": "Photo : Arthur Bakahche",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Why We Dream: A Search for the Elusive",
@@ -34,20 +55,6 @@
       "method": "via-attribution"
     },
     {
-      "title": "Quand la mode va trop loin",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
       "source": "The Campus",
       "credit": "Photo: The Campus",
@@ -60,6 +67,13 @@
       "credit": "Illustration: Annabelle Olumese",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Une 20e saison positive pour le quai des croisières de La Baie",
+      "source": "La Pige",
+      "credit": "Photo : Saguenayfjord",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
