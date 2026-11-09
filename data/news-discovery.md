@@ -1,6 +1,6 @@
 # Découverte des médias étudiants — journal du bot
 
-Dernière passe : **2026-11-04 20:03 UTC** · sources actives : **20**.
+Dernière passe : **2026-11-09 17:03 UTC** · sources actives : **20**.
 
 Les médias qui respectent les règles sont **ajoutés automatiquement** au fil. Pour retirer une source hors sujet sans qu'elle revienne : ajouter une entrée dans `data/source-blocklist.json` (nom ou site + raison).
 
@@ -14,7 +14,7 @@ _Aucun nouvel ajout._
 |---|---|---|---|
 | Le Griffonnier | Université du Québec à Chicoutimi | https://ceuc.ca/ | aucun flux RSS/Atom public |
 | Le Prétexte | Cégep de Rimouski | https://www.cegep-rimouski.qc.ca/le-pretexte | site de l'établissement (portail institutionnel) |
-| Bandersnatch | John Abbott College | https://bandersnatch.ca/ | flux bloqué par une page anti-robot (collecte impossible) |
+| Bandersnatch | John Abbott College | https://bandersnatch.ca/ | aucun flux RSS/Atom public |
 | La Plume | Cégep de Jonquière | https://laplumejournal.ca/ | flux bloqué par une page anti-robot (collecte impossible) |
 | The Blue Ink | Champlain College Saint-Lambert | https://www.theblueink.ca/ | aucun flux RSS/Atom public |
 | Le Brise-Glace | Cégep de Rimouski | https://lebrise-glace.com/ | liste de blocage : site mort, retiré le 2026-10-23 |
