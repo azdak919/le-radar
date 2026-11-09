@@ -1596,15 +1596,6 @@
       "via": "origin",
       "nameKey": "images-copie.jpg"
     },
-    "140272a87a1faec2": {
-      "local": "assets/news-images/140272a87a1faec2.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
-      "host": "theconcordian.com",
-      "bytes": 97778,
-      "updatedAt": "2026-11-08T20:08:47.509Z",
-      "via": "disk",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
-    },
     "5743d8be72ba01da": {
       "local": "assets/news-images/5743d8be72ba01da.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04_SPORTS_Maternity_leave_Annabelle_Olumese_900_450.png",
@@ -1653,19 +1644,37 @@
       "via": "resize-proxy",
       "nameKey": "portraitgeniemath.png"
     },
-    "0d84d91b0191efcf": {
-      "local": "assets/news-images/0d84d91b0191efcf.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
+    "6652aa068d12dd9c": {
+      "local": "assets/news-images/6652aa068d12dd9c.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
+      "host": "theconcordian.com",
+      "bytes": 127956,
+      "updatedAt": "2026-11-09T08:01:15.281Z",
+      "via": "disk",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
+    },
+    "d0d4eef2f356a4c4": {
+      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
       "host": "www.delitfrancais.com",
-      "bytes": 83501,
+      "bytes": 286051,
+      "updatedAt": "2026-11-09T08:01:15.313Z",
+      "via": "disk",
+      "nameKey": "ak-mbam.jpg"
+    },
+    "59c339c3de7bc16f": {
+      "local": "assets/news-images/59c339c3de7bc16f.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose-scaled.jpg",
+      "host": "thetribune.ca",
+      "bytes": 226699,
       "contentType": "image/jpeg",
-      "updatedAt": "2026-11-09T05:05:53.867Z",
+      "updatedAt": "2026-11-09T08:01:17.600Z",
       "via": "resize-proxy",
-      "nameKey": "blanchissement.png"
+      "nameKey": "news-5-eliot-loose.jpg"
     }
   },
-  "updatedAt": "2026-11-09T06:08:43.821Z",
-  "count": 167,
+  "updatedAt": "2026-11-09T08:01:17.601Z",
+  "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

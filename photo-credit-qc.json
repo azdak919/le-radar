@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T06:10:29.246Z",
+  "updated": "2026-11-09T08:02:56.428Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
@@ -7,15 +7,22 @@
   "pending": 37,
   "missingHero": 0,
   "ok": false,
-  "checked": 49,
-  "updatedCount": 3,
-  "citedNew": 6,
+  "checked": 50,
+  "updatedCount": 4,
+  "citedNew": 7,
   "fallbackNew": 43,
   "samples": [
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
       "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "source": "Le Délit",
+      "credit": "Photo : DENIS FARLEY",
       "cited": true,
       "method": "media-credit-featured"
     },
