@@ -1,6 +1,8 @@
 // Hashtags et étiquettes déterministes (testés dans tests/social-hashtags.mjs).
 // Sujet et lieu déduits UNIQUEMENT du titre, de l'extrait, des catégories et de la source : jamais inventés.
-// X, Facebook, LinkedIn : aucun hashtag. Bluesky : #Québec #PresseÉtudiante + 1 sujet. Tumblr : 10 à 15 étiquettes en minuscules.
+// Décision du 9 nov. 2026 : lieu (#Québec ou #Montréal, jamais #PresseÉtudiante seul) + sujet ou institution.
+// Bluesky, Mastodon, LinkedIn : jusqu'à 3 ; X : 2 ; Facebook : aucun ; Tumblr : 10 à 15 étiquettes en minuscules (plafonds : data/social/policy.json).
+import { POLICY } from './policy.mjs';
 const TOPICS = [
   ['Politique', 'politique', /\b(élection|électoral|vote|gouvernement|ministre|député|caq|legault|parti|politi|election|government|minister)/i],
   ['Sport', 'sport', /\b(hockey|football|soccer|basket|volley|rugby|match|saison|sport|carabins|stingers|rouge et or|gaiters|redbirds|martlets|game|season)/i],
@@ -24,8 +26,29 @@ const blob = it => [it.bare || it.title, it.desc, ...(it.categories || [])].join
 /** Sujet { tag Bluesky/Mastodon, étiquette Tumblr } ou null. */
 export function topicOf(it) { const b = blob(it); const t = TOPICS.find(([, , re]) => re.test(b)); return t ? { tag: t[0], label: t[1] } : null; }
 export const placeOf = it => PLACES[(it.source || '').trim()] || [];
-/** Hashtags Bluesky (cliquables par facettes) : toujours #Québec #PresseÉtudiante, + sujet si détecté. */
-export function bskyTags(it) { const t = topicOf(it); return ['Québec', 'PresseÉtudiante', ...(t ? [t.tag] : [])].map(x => '#' + x); }
+// Institution de la source (étiquette courte, celle que le public utilise).
+export const INSTITUTION_TAGS = { 'Concordia': '#Concordia', 'McGill': '#McGill', 'Université de Montréal': '#UdeM', 'UQAM': '#UQAM', 'Université Laval': '#ULaval', 'UQTR': '#UQTR', 'Cégep de Jonquière': '#CégepDeJonquière', 'Dawson': '#DawsonCollege', 'Université de Sherbrooke': '#UdeS', "Bishop's": '#BishopsU', "Université d'Ottawa": '#uOttawa' };
+/** Lieu : #Montréal pour les sources montréalaises, #Ottawa pour La Rotonde, sinon #Québec (jamais inventé : source inconnue = #Québec). */
+export function placeTag(it) { const c = placeOf(it)[0]; return c === 'Montréal' ? '#Montréal' : c === 'Ottawa' ? '#Ottawa' : '#Québec'; }
+export const institutionTag = it => INSTITUTION_TAGS[placeOf(it)[1]] || '';
+// Sport précis (équipes, ligues, institutions) : étiquette du sport, plus parlante que #Sport.
+export const SPORT_TAGS = [
+  ['#Football', /\b(football|rouge et or|gridiron|vanier cup|coupe vanier)/i], ['#Hockey', /\b(hockey|lnh|nhl)/i], ['#Basketball', /\b(basket)/i],
+  ['#Volleyball', /\b(volley)/i], ['#Soccer', /\b(soccer)/i], ['#Rugby', /\b(rugby)/i], ['#Natation', /\b(natation|swimming)/i], ['#Athlétisme', /\b(athlétisme|track and field)/i],
+];
+export const sportTagOf = text => (SPORT_TAGS.find(([, re]) => re.test(text)) || [])[0] || '';
+/** Hashtags d'un article (ordre : lieu, sujet — ou sport précis —, institution), au plus `max`, sans doublon. */
+export function articleTags(it, max = 3) {
+  if (!(max > 0)) return [];
+  const t = topicOf(it), topic = t ? (t.tag === 'Sport' ? sportTagOf(blob(it)) || '#Sport' : '#' + t.tag) : '';
+  const out = [...new Set([placeTag(it), topic, institutionTag(it)].filter(Boolean))];
+  if (out.length < 2) out.push('#Actualités');
+  return out.slice(0, max);
+}
+export const maxTags = network => POLICY.hashtags?.maxByNetwork?.[network] ?? 0;
+/** Ligne de hashtags d'un réseau ('' si aucun). */
+export const tagLine = (it, network) => articleTags(it, maxTags(network)).join(' ');
+export const bskyTags = it => articleTags(it, maxTags('bluesky'));
 // Tumblr : tout en minuscules, étiquettes les plus suivies d'abord (les 5 premières comptent en recherche),
 // forme sans accent ajoutée là où on la cherche, langue de l'article, 10 à 15 étiquettes dédupliquées.
 const TOPIC_TAGS = {

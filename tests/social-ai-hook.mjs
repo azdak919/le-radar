@@ -56,7 +56,7 @@ assert.equal(e2.aiHook, undefined, 'accroche française refusée sur un article 
 assert.ok(!buildText(e2, [], undefined, { ai: true }).includes(HOOK) && buildText(e2, [], undefined, { ai: true }).includes('Students'), 'repli en anglais');
 const f1 = { ...it, id: 'f1' }; await withHook(f1, { env, fetchImpl: cap(HOOK) });
 assert.match(prompt, /en français/); assert.equal(f1.aiHook, HOOK);
-for (const x of [e1, f1]) { const t = buildBskyText(x, [], { photo: true }); assert.ok(t.includes('#Québec') && t.includes('#PresseÉtudiante'), 'hashtags fixes'); }
+for (const x of [e1, f1]) { const t = buildBskyText(x, [], { photo: true }); assert.ok(/#(Québec|Montréal)/.test(t) && !t.includes('#PresseÉtudiante'), 'hashtags de lieu (jamais #PresseÉtudiante)'); }
 console.log('social-ai-hook : OK');
 
 // Régression 6 nov. (Le Collectif, 2590ab97cedc52e7) : accroche IA = titre paraphrasé → rejetée, et omise si déjà en cache.

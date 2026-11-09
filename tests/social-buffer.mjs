@@ -41,8 +41,8 @@ for (const it of items) {
   if (['The Link', "L'Exemplaire", 'Le Polyscope'].includes(it.source)) assert(/^[^@\s][^\n]* \(@\w+\) · Auteur \d$/.test(foot[0]), 'Média (@) · Auteur');
   assert(!/cliquer ici|lire la suite|•/i.test(t), 'ni phrase parasite ni puce');
 }
-assert.equal(mediaLine({ source: 'Le Délit', author: 'Le Délit' }), 'Le Délit', 'auteur = média : pas de doublon');
-assert.equal(mediaLine({ source: 'Le Délit', author: '' }), 'Le Délit', 'sans auteur : pas de séparateur vide');
+assert.equal(mediaLine({ source: 'Le Délit', author: 'Le Délit' }), '📰 Le Délit', 'auteur = média : pas de doublon');
+assert.equal(mediaLine({ source: 'Le Délit', author: '' }), '📰 Le Délit', 'sans auteur : pas de séparateur vide');
 assert.deepEqual(sentences('Un. Deux ? Trois! quatre'), ['Un.', 'Deux ?', 'Trois! quatre']);
 assert.equal(cutExcerpt('Une phrase. Deux phrases. Trois.', () => true), 'Une phrase. Deux phrases.');
 assert.equal(buildText({ source: 'X', title: 'Charles Tison parle', link: 'https://e.x/1' }), '', 'garde « tison »');
@@ -165,9 +165,9 @@ assert.deepEqual(dz, ['2026-11-01T12:30:00.000Z', '2026-11-02T02:30:00.000Z']);
   const acc = [{ handle: '@montrealcampus', type: 'source', cle_flux: 'Montréal Campus' }];
   const base = { source: 'Montréal Campus', author: 'Emmanuelle Hodoul', bare: 'Titre', title: 'Titre', link: 'https://e.x/a', desc: 'mot '.repeat(200) };
   const w = buildText(base, acc);
-  assert(w.startsWith('Titre\n\nmot') && w.includes('\n\nMontréal Campus (@montrealcampus) · Emmanuelle Hodoul\n'), w);
+  assert(w.startsWith('Titre\n\nmot') && w.includes('\n\n📰 Montréal Campus (@montrealcampus) · Emmanuelle Hodoul\n'), w);
   const wo = buildText({ ...base, source: 'Autre Média' }, acc);
-  assert(wo.includes('\nAutre Média · Emmanuelle Hodoul\n') && !wo.includes('(@'), wo);
+  assert(wo.includes('\n📰 Autre Média · Emmanuelle Hodoul\n') && !wo.includes('(@'), wo);
   for (const t of [w, wo]) { assert(xlen(t) <= LIMITS.x && !t.startsWith('@')); assert(/mot…\n/.test(t), 'extrait raccourci au mot'); }
   assert(xlen(buildText(base, acc, LIMITS.bluesky)) <= 300 && xlen(buildText(base, acc, LIMITS.mastodon)) <= 500);
   const longT = buildText({ ...base, bare: 'Long '.repeat(80).trim(), desc: '' }, acc);

@@ -1,0 +1,24 @@
+{
+ "_doc": "Comptes vérifiés à la main pour les formats natifs (résultats du week-end, À écouter ce soir). teams : clé = registryId de sports.json ; leagues : ligues ; stations : clé = id de radio-schedules.json. Un @ n'est utilisé que sur le réseau où il est listé, jamais deviné. Handles X vérifiés lors du diagnostic du 9 nov. 2026 ; Bluesky : handle résolu en DID. Ne jamais ajouter un compte non vérifié.",
+ "leagues": {
+  "usports": { "nom": "U SPORTS", "x": "@USPORTSca", "preuve": "compte officiel U SPORTS (handle vérifié lors du diagnostic du 9 nov. 2026)" },
+  "rseq": { "nom": "RSEQ", "x": "@RSEQ1", "preuve": "compte officiel du Réseau du sport étudiant du Québec (handle vérifié lors du diagnostic du 9 nov. 2026)" }
+ },
+ "teams": {
+  "ulaval": { "nom": "Rouge et Or", "x": "@rougeetor", "tag": "#RougeEtOr", "institution": "#ULaval", "preuve": "Rouge et Or de l'Université Laval (handle vérifié lors du diagnostic du 9 nov. 2026)" },
+  "udem": { "nom": "Carabins", "x": "@Carabins", "tag": "#Carabins", "institution": "#UdeM", "preuve": "Carabins de l'Université de Montréal (handle vérifié lors du diagnostic du 9 nov. 2026)" },
+  "mcgill": { "nom": "McGill (Redbirds, Martlets)", "x": "@McGillAthletics", "tag": "#McGillAthletics", "institution": "#McGill", "preuve": "McGill Athletics (handle vérifié lors du diagnostic du 9 nov. 2026)" },
+  "usherbrooke": { "nom": "Vert et Or", "x": "@VertetOr", "tag": "#VertEtOr", "institution": "#UdeS", "preuve": "Vert et Or de l'Université de Sherbrooke (handle vérifié lors du diagnostic du 9 nov. 2026)" },
+  "uqtr": { "nom": "Patriotes", "x": "@PatriotesUQTR", "tag": "#Patriotes", "institution": "#UQTR", "preuve": "Patriotes de l'UQTR (handle vérifié lors du diagnostic du 9 nov. 2026)" },
+  "bishops": { "nom": "Gaiters", "x": "@BishopsGaiters", "tag": "#Gaiters", "institution": "#BishopsU", "preuve": "Gaiters de Bishop's (handle vérifié lors du diagnostic du 9 nov. 2026)" },
+  "concordia": { "nom": "Stingers", "tag": "#Stingers", "institution": "#Concordia", "preuve": "aucun compte X vérifié : nom en clair" }
+ },
+ "stations": {
+  "ckut": { "nom": "CKUT 90,3", "x": "@ckut", "tag": "#CKUT" },
+  "cjlo": { "nom": "CJLO 1690", "x": "@CJLO1690AM", "bluesky": "@cjlo.com", "did": "did:plc:knzonsazsdiahavlarsj54fp", "tag": "#CJLO" },
+  "chyz": { "nom": "CHYZ 94,3", "x": "@CHYZ943", "tag": "#CHYZ" },
+  "choq": { "nom": "CHOQ.ca", "x": "@CHOQ_ca", "tag": "#CHOQ" },
+  "cfak": { "nom": "CFAK 88,3", "x": "@CFAK883", "tag": "#CFAK" },
+  "cism": { "nom": "CISM 89,3", "bluesky": "@cism893.bsky.social", "did": "did:plc:aexzzg7owo62awokqbe3iwyr", "tag": "#CISM" }
+ }
+}

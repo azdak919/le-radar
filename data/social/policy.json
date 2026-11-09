@@ -1,0 +1,114 @@
+{
+ "_doc": "Politique sociale du Radar (lue par scripts/social/policy.mjs, testée dans tests/social-policy.mjs). Décision de Charles le 9 nov. 2026 : volume réduit 14 jours pour gagner en qualité, au plus une mention de média par jour sur X, aucun abonnement automatique sur X. Dates en jours civils America/Toronto, `until` inclus : après cette date, les plafonds de base (rate-limit.mjs, buffer-pages.json, DAILY_SLOTS) reprennent d'eux-mêmes.",
+ "volume": {
+  "active": true,
+  "from": "2026-11-09",
+  "until": "2026-11-23",
+  "minPerDay": 3,
+  "perDay": {
+   "bluesky": 5,
+   "mastodon": 5,
+   "tumblr": 5,
+   "x": 5,
+   "facebook": 5,
+   "linkedin": 3
+  },
+  "perHour": {
+   "bluesky": 2,
+   "mastodon": 2,
+   "tumblr": 2
+  },
+  "perSourcePerDay": 1,
+  "xSlots": [
+   "08:30",
+   "11:30",
+   "14:30",
+   "17:30",
+   "21:00"
+  ],
+  "fillAfterHour": 17
+ },
+ "mentions": {
+  "x": {
+   "maxPerSourcePerDay": 1
+  }
+ },
+ "automation": {
+  "x_follow": false,
+  "facebook_follow": false,
+  "bluesky_follow": {
+   "enabled": true,
+   "max_total": 87,
+   "_note": "Plafond figé au nombre de comptes vérifiés déjà suivis (data/social/bluesky-follows.json) : le suivi automatique n'augmente plus."
+  }
+ },
+ "hashtags": {
+  "maxByNetwork": {
+   "bluesky": 3,
+   "mastodon": 3,
+   "x": 2,
+   "linkedin": 3,
+   "facebook": 0,
+   "tumblr": 15
+  }
+ },
+ "formats": {
+  "_doc": "Formats natifs. `publish` = false : aperçu seulement (jamais d'envoi). Passer à true est un changement explicite de la config.",
+  "weekend_results": {
+   "publish": true,
+   "networks": [
+    "bluesky",
+    "mastodon",
+    "x",
+    "tumblr",
+    "facebook",
+    "linkedin"
+   ],
+   "maxPerWeekendPerNetwork": 1,
+   "eligibleWeekdays": [
+    1,
+    2
+   ],
+   "hourFrom": 8,
+   "hourTo": 21,
+   "link": "https://le-radar.ca/sports/",
+   "hashtags": {
+    "bluesky": 4,
+    "mastodon": 5,
+    "x": 2,
+    "linkedin": 3,
+    "facebook": 0,
+    "tumblr": 15
+   },
+   "maxGames": {
+    "uni": 4,
+    "coll": 2
+   },
+   "maxMentionsX": 4,
+   "image": "https://le-radar.ca/assets/og-cover.png",
+   "maxDataAgeH": 36,
+   "sections": [
+    "uni"
+   ],
+   "_sections": "Sections publiées. « uni » = U SPORTS (matchs universitaires, RSEQ conférence) : vérifié contre des sources indépendantes le 9 nov. 2026 (presse et sites officiels des équipes). « coll » = RSEQ collégial : aperçu seulement, aucune source indépendante n'a pu confirmer les scores le 9 nov. ; l'ajouter ici est un changement explicite."
+  },
+  "listen_tonight": {
+   "publish": false,
+   "networks": [],
+   "maxPerDayPerNetwork": 1,
+   "link": "https://le-radar.ca/horaires/",
+   "hashtags": {
+    "bluesky": 3,
+    "mastodon": 3,
+    "x": 2,
+    "linkedin": 3,
+    "facebook": 0,
+    "tumblr": 10
+   },
+   "maxShows": 4,
+   "fromHour": 18,
+   "toHour": 22,
+   "image": "https://le-radar.ca/assets/og-cover.png"
+  }
+ }
+}

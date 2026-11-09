@@ -3,7 +3,9 @@
 // fenêtres de pointe du réseau (data/social/posting-windows.json), jamais en rafale, sans dépasser
 // les places libres (10 par canal, forfait gratuit) ni le plafond quotidien (rodage compris).
 import { createRequire } from 'node:module';
-import { buildText, selectItems, siteLink } from './lib.mjs';
+import { buildTagged, selectItems, siteLink, photoRank } from './lib.mjs';
+import { volumeFor } from './policy.mjs';
+import { tagLine } from './hashtags.mjs';
 import { weightAt, rampAt, TZ } from './schedule.mjs';
 import { titleKey } from './rate-limit.mjs';
 const require = createRequire(import.meta.url);
@@ -18,9 +20,9 @@ export function pageLink(it, mode = 'le-radar') {
   return mode === 'source' ? it.link : siteLink(it);
 }
 
-/** « Média • Auteur • Titre : extrait », lien, « 📸 crédit ». Jamais de @ (noms en clair). */
+/** Titre, extrait, « 📰 Média · Auteur », lien, « 📸 crédit », hashtags (LinkedIn seulement : policy.json). Jamais de @ (noms en clair). */
 export function buildPageText(it, cfg = {}, { credit = '', photo = true, ai = true } = {}) {
-  const text = buildText(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link), ai });
+  const text = buildTagged(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link), ai }, cfg.service ? tagLine(it, cfg.service) : '');
   return text.replace(/(^|[\s(])@(?=\w)/g, '$1');
 }
 
@@ -33,7 +35,9 @@ function dayMaxWeight(network, t, windows) {
 
 /** Plafond du jour : perDay × rodage × poids maximal du jour (fin de semaine LinkedIn ≈ 1). */
 export function dayCap(cfg, network, t, windows) {
-  return Math.round(cfg.perDay * rampAt(cfg.liveSince, t) * dayMaxWeight(network, t, windows));
+  const vol = cfg.policy === false ? null : volumeFor(cfg.service || network, t); // volume réduit (policy.json) : plafond du jour ≤ vol.perDay
+  const perDay = vol ? Math.min(cfg.perDay, vol.perDay) : cfg.perDay;
+  return Math.round(perDay * rampAt(cfg.liveSince, t) * dayMaxWeight(network, t, windows));
 }
 
 /**
@@ -59,7 +63,7 @@ export function planDues({ network, cfg, now = Date.now(), taken = [], free = 10
 }
 
 /** Articles à programmer : non envoyés sur ce réseau, ≤ 48 h, variété (≤ 2/source file comprise), sans quasi-doublon. */
-export function selectForPage(items, { sent = {}, queuedSources = [], queuedTexts = [], slots = 0, now = Date.now(), maxAgeH = PAGE_MAX_AGE_H } = {}) {
+export function selectForPage(items, { sent = {}, queuedSources = [], queuedTexts = [], slots = 0, now = Date.now(), maxAgeH = PAGE_MAX_AGE_H, network = null } = {}) {
   const keys = new Set(Object.values(sent).map(s => s?.k).filter(Boolean));
   const pool = [];
   for (const it of items) {
@@ -67,7 +71,13 @@ export function selectForPage(items, { sent = {}, queuedSources = [], queuedText
     if (sent[it.id] || (k && keys.has(k)) || queuedTexts.some(t => t.includes(it.link) || t.includes(articleId(it.link)))) continue;
     if (k) keys.add(k); pool.push(it);
   }
-  return selectItems(pool, { sentIds: new Set(), queuedSources, slots, maxAgeH, now });
+  const vol = volumeFor(network, now);
+  if (!vol) return selectItems(pool, { sentIds: new Set(), queuedSources, slots, maxAgeH, now });
+  // Volume réduit : les plus solides d'abord (photo du flux), une seule par source ; les autres seulement pour compléter.
+  const strong = selectItems(pool.filter(it => photoRank(it) >= 1), { sentIds: new Set(), queuedSources, slots, maxAgeH, now, perSource: vol.perSource });
+  if (strong.length >= slots) return strong;
+  const ids = new Set(strong.map(i => i.id));
+  return [...strong, ...selectItems(pool.filter(it => !ids.has(it.id)), { sentIds: new Set(), queuedSources: [...queuedSources, ...strong.map(i => i.source)], slots: slots - strong.length, maxAgeH, now, perSource: vol.perSource })];
 }
 
 /** Erreur Buffer/réseau qui signale un refus du lien ou du post (blocage des nouvelles de Meta, etc.). */

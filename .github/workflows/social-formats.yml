@@ -1,0 +1,84 @@
+name: Social — Formats natifs (résultats du week-end, À écouter ce soir)
+
+# « Résultats du week-end » (U SPORTS + RSEQ, depuis sports.json) et « À écouter ce soir » (radio-schedules.json).
+# Chaque passage construit l'aperçu par réseau (artefact + résumé du job) et le contrôle. Rien n'est publié sauf si TOUT est vrai :
+# DRY_RUN=false, data/social/policy.json formats.<format>.publish = true, fenêtre d'envoi (lundi-mardi, 8 h-21 h heure de Montréal
+# pour les résultats), aucun doute sur les données, et rien d'envoyé pour ce week-end sur ce réseau (data/social/formats-state.json).
+# « À écouter ce soir » : publish = false dans policy.json, donc aperçu seulement.
+# Les crons GitHub partent souvent en retard (6-7 h sur ce dépôt) : plusieurs passages lundi et mardi, idempotents.
+on:
+  schedule:
+    - cron: '17 13 * * 1'   # lundi ≈ 8 h 17 heure de Montréal (HNE)
+    - cron: '47 15 * * 1'   # lundi ≈ 10 h 47
+    - cron: '17 18 * * 1'   # lundi ≈ 13 h 17
+    - cron: '17 13 * * 2'   # mardi ≈ 8 h 17 (secours)
+    - cron: '47 15 * * 2'   # mardi ≈ 10 h 47 (secours)
+    - cron: '27 20 * * *'   # chaque jour ≈ 15 h 27 : aperçu « À écouter ce soir » (jamais publié)
+  workflow_dispatch:
+    inputs:
+      format:
+        description: 'Format à construire'
+        type: choice
+        options: [all, weekend_results, listen_tonight]
+        default: all
+      dry_run:
+        description: 'Essai : aperçu seulement, aucun envoi (décoché = publication réelle si la config, la fenêtre et les contrôles le permettent)'
+        type: boolean
+        default: true
+      now:
+        description: 'Simuler cet instant (ISO, ex. 2026-11-10T14:00:00Z) pour l’aperçu ; vide = maintenant'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  formats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Aperçu, contrôles et publication éventuelle
+        env:
+          FORMAT: ${{ github.event_name == 'schedule' && (github.event.schedule == '27 20 * * *' && 'listen_tonight' || 'weekend_results') || inputs.format }}
+          DRY_RUN: ${{ (github.event_name == 'schedule' || !inputs.dry_run) && 'false' || 'true' }}
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
+          TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}
+          TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
+          BUFFER_LINKEDIN_CHANNEL_ID: ${{ vars.BUFFER_LINKEDIN_CHANNEL_ID }}
+          NOW_OVERRIDE: ${{ inputs.now }}
+        run: node scripts/social/formats-run.mjs ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"} --out formats-preview
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: apercu-formats
+          path: formats-preview/
+          if-no-files-found: ignore
+      - name: Commit de l'état (data/social/formats-state.json)
+        if: always()
+        run: |
+          git diff --quiet -- data/social/formats-state.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/social/formats-state.json
+          git commit -s -m "bot(social): état des formats natifs"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/social/formats-state.json\"))'"

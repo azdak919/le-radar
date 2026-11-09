@@ -3,11 +3,12 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
+import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
 const inText = (t, i) => !!t && (t.includes(i.link) || t.includes(siteLink(i)));
 import { resolveImage } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { withHook } from './ai-hook.mjs';
+import { volumeFor, torontoDay, mentionLedger, accountsForPost, mentionedIn, noteMention, POLICY } from './policy.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-sent.json');
@@ -61,9 +62,16 @@ const daily = process.env.DAILY === 'true';
 // EVENING=true (cron ≈ 21 h Toronto) : remplit dès la veille les créneaux du lendemain (8 h 30 → 21 h).
 // Les passes de nuit restent en secours : freeSlots écarte les créneaux déjà pris, aucun doublon.
 const evening = daily && process.env.EVENING === 'true';
-const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : daily ? DAILY_SLOTS : null;
+// Volume réduit (policy.json, 14 jours) : 5 créneaux/jour au lieu de 10, et jamais plus de `perDay` programmés pour le jour visé
+// (file existante comprise). Fin de la période : retour automatique aux 10 créneaux de base.
+const targetT = Date.now() + (evening ? 864e5 : 0), reduced = daily && !process.env.SLOT_TIMES ? volumeFor('x', targetT) : null;
+const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : daily ? (reduced ? POLICY.volume.xSlots : DAILY_SLOTS) : null;
 const dues = times ? freeSlots(slotsToday(times, { dayOffset: evening ? 1 : 0 }), queued.map(p => p.dueAt)) : null;
-const want = dues ? Math.min(slots, dues.length) : slots;
+const onTargetDay = reduced ? queued.filter(p => torontoDay(Date.parse(p.dueAt)) === torontoDay(targetT)).length : 0;
+const dayLeft = reduced ? Math.max(0, reduced.perDay - onTargetDay) : Infinity;
+const want = dues ? Math.min(slots, dues.length, dayLeft) : slots;
+if (reduced) console.log(`Volume réduit actif jusqu'au ${reduced.until} : ${reduced.perDay}/jour sur X, ${onTargetDay} déjà en file pour le ${torontoDay(targetT)}, ${want} à ajouter.`);
+const ledger = mentionLedger({ sent: state.sent, queued, accounts: ACCOUNTS }); // ≤ 1 mention de média par jour sur X
 const sentIds = new Set(Object.keys(state.sent));
 // SHARE_NOW=true : UN article au hasard (récent, ni envoyé ni en file, photo réelle et source hors file si possible), publié tout de suite.
 // SHARE_URL : cet article précis (même article sur tous les réseaux), avec SHARE_NOW.
@@ -76,7 +84,16 @@ const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
   const best = [p => p.img && !p.imgDropped && !qs.has(p.source), p => !qs.has(p.source), p => p.img && !p.imgDropped, () => true]
     .map(f => pool.filter(f)).find(l => l.length) || [];
   return best.length ? [best[Math.floor(Math.random() * best.length)]] : [];
-})() : daily ? selectDaily(items, { sentIds, queuedSources, slots: want, accounts: ACCOUNTS, maxAgeH, evening })
+})() : daily ? (() => {
+  const base = { sentIds, queuedSources, accounts: ACCOUNTS, maxAgeH, evening };
+  if (!reduced) return selectDaily(items, { ...base, slots: want });
+  // Les plus solides d'abord : photo du flux, une seule par source ; on complète (≥ minPerDay) avec les moins solides seulement si besoin.
+  const strong = selectDaily(items, { ...base, slots: want, perSource: reduced.perSource, minPhoto: 1 });
+  const need = Math.min(want, Math.max(0, reduced.minPerDay - onTargetDay)) - strong.length;
+  if (need <= 0) return strong;
+  const used = new Set([...sentIds, ...strong.map(i => i.id)]);
+  return [...strong, ...selectDaily(items, { ...base, sentIds: used, slots: need, perSource: reduced.perSource, queuedSources: [...queuedSources, ...strong.map(i => i.source)] })];
+})()
   : selectItems(items, { sentIds, queuedSources, slots: want, maxAgeH });
 if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${daily ? 'nocturne (veille)' : 'manuel'}`);
 
@@ -85,14 +102,16 @@ for (const it of sel) {
   const im = await resolveImage(it, { used, repeated });
   if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
   await withHook(it);
-  const text = buildText(it, ACCOUNTS, undefined, { credit: im?.credit, photo: !!im, ai: true });
-  if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   const dueAt = dues && !shareNow ? dues[n] : undefined;
+  const day = torontoDay(dueAt ? Date.parse(dueAt) : Date.now());
+  const text = buildXText(it, accountsForPost(it, ACCOUNTS, ledger, day), { credit: im?.credit, photo: !!im, ai: true });
+  if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
+  const mentions = mentionedIn(text, ACCOUNTS); for (const h of mentions) noteMention(ledger, day, h);
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
   if (dry) continue;
   try {
     const post = await channel.add({ text, image: im?.url, dueAt, now: shareNow });
-    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, credit: im ? (im.credit || it.source) : null, ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
+    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, credit: im ? (im.credit || it.source) : null, ...(mentions.length ? { mention: mentions } : {}), ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
     console.log(`→ Buffer : ${post.id} (${shareNow ? 'publication immédiate ' + (post.status || '') + ' ' + (post.externalLink || '') : post.dueAt || 'heure auto'})`);
   } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }

@@ -10,7 +10,7 @@ const acc = [{ handle: '@montrealcampus.bsky.social', type: 'source', cle_flux: 
 const t = buildBskyText(it, acc, { credit: 'Éloïse 📷' });
 assert(graphemes(t) <= 300, `graphèmes : ${graphemes(t)}`);
 assert(t.startsWith('Quand la neurodiversité s’épanouit au travail\n\nFanny Groleau'), 'titre puis extrait');
-assert(t.includes('\n\nMontréal Campus (@montrealcampus.bsky.social) · Valentin Nucci\n' + siteLink(it) + '\n📸 Éloïse 📷'), 'Média (@) · Auteur, fiche, crédit');
+assert(t.includes('\n\n📰 Montréal Campus (@montrealcampus.bsky.social) · Valentin Nucci\n' + siteLink(it) + '\n📸 Éloïse 📷'), 'Média (@) · Auteur, fiche, crédit');
 assert.equal(graphemes('👩🏽‍🎓é'), 2, 'graphèmes, pas code points');
 
 // facettes : octets UTF-8 exacts
