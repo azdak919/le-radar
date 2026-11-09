@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-09T20:36:46.146Z",
+  "updatedAt": "2026-11-09T22:36:58.393Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, Jme Mobilise!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
+        "title": "Femmes de l'ombre",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/femmes-de-lombre/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T20:36:06.219Z"
+      "checkedAt": "2026-11-09T22:36:17.766Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Les criquets crinqués",
         "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
+      "next": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T20:36:20.276Z"
+      "checkedAt": "2026-11-09T22:36:31.537Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T20:36:23.542Z"
+      "checkedAt": "2026-11-09T22:36:34.293Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whip Appeal",
+        "title": "The Pressure Drop",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
       "next": {
-        "title": "Dreamscapes",
+        "title": "Voice of the Voiceless",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
       "track": "",
-      "showTitle": "Whip Appeal",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T20:36:38.502Z"
+      "checkedAt": "2026-11-09T22:36:48.576Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +129,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T20:36:39.675Z"
+      "checkedAt": "2026-11-09T22:36:49.877Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "schedule",
@@ -142,15 +143,15 @@
         "url": "https://www.choq.ca/balados/les-rois-de-larene"
       },
       "track": "Bloc Pub 21 juillet.mp3",
-      "showTitle": "Palmarès CHOQ.ca",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T20:36:45.795Z"
+      "checkedAt": "2026-11-09T22:36:58.043Z"
     }
   }
 }
