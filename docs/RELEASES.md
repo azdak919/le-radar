@@ -3,17 +3,17 @@
 Ce fichier suit l'état des trois canaux de diffusion du Radar. À mettre à jour à chaque
 déploiement notable, changement de cache du service worker ou étiquette Android.
 
-_Dernière mise à jour : 2 novembre 2026._
+_Dernière mise à jour : 9 novembre 2026._
 
 ## 1. Web (GitHub Pages, le-radar.ca)
 
 | Élément | Valeur |
 |---|---|
-| Dernier commit `main` déployé | `30ee3823a` — mise à jour automatique du fil, 2 nov. 2026, 9 h 41 (HNE) |
-| Dernier changement de code déployé | `870470192` — bannières de rubrique écartées par empreinte d'image (EDITORIAL du McGill Daily), #311, 2 nov. |
-| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, sur `30ee3823a`) |
-| Date du déploiement | 2 novembre 2026, 9 h 43 (HNE) |
-| le-radar.ca | ✅ HTTP 200 (vérifié le 2 nov. 2026, 9 h 48 HNE) |
+| Dernier commit `main` déployé | `199cf6cbd` — mise à jour automatique des grilles radio et des sources, 9 nov. 2026, 9 h 15 (HNE) |
+| Dernier changement de code déployé | `13ee37671` — point focal conservé quand l'image d'une fiche est un miroir local, #368, 9 nov. 2026, 0 h 01 (HNE) |
+| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, sur `199cf6cbd`) |
+| Date du déploiement | 9 novembre 2026, 9 h 19 (HNE) |
+| le-radar.ca | ✅ HTTP 200 (vérifié le 9 nov. 2026, 9 h 46 HNE) |
 
 Le site se déploie automatiquement à chaque poussée sur `main`, par artefact depuis le 26 oct.
 (21 h 43 HAE, `41dc6e9bf`; retour arrière : `build_type=legacy`). Vérifier avec
@@ -23,13 +23,19 @@ Le site se déploie automatiquement à chaque poussée sur `main`, par artefact 
 
 | Service worker | Cache actuel en ligne |
 |---|---|
-| `sw.js` (site) | `radar-shell-v986` (+ `radar-offline-v22`) — introduit par `67ca60b02` (1er nov., 17 h 22 HNE) |
-| `sports/sw.js` (Sports) | `sports-shell-v347` — introduit par `67ca60b02` |
+| `sw.js` (site) | `radar-shell-v1013` (+ `radar-offline-v22`) — introduit par `4d0c95dd2` (8 nov., 19 h 56 HNE) |
+| `sports/sw.js` (Sports) | `sports-shell-v387` — introduit par `4d0c95dd2` |
 
 Le `sw.js` et le `sports/sw.js` servis en ligne correspondent à ceux de `main` (pas de version périmée).
 
 ### Historique récent des correctifs PWA
 
+- 2026-11-08 — `4d0c95dd2`, `0fb0c7847` : bandeau sportif, autres cartes
+  conservées et directs prioritaires (#366) (v1013 / v387).
+- 2026-11-07 — `6d4984312` : historique sportif complet et liens vers les
+  résultats officiels (#356).
+- 2026-11-02 — `027d29b78` : coiffe de zone sûre à la teinte du synthé sur
+  iPad (v987).
 - 2026-11-01 — `67ca60b02`, `b0b161ffc` : espaces insécables dans les titres (après
   l'échappement), fiche article bornée à 1360 px (v986 / v347).
 - 2026-11-01 — `50620a653`, `300ee47e0` : pied de page v2 unifié avec icônes des réseaux,
@@ -62,10 +68,10 @@ Le `sw.js` et le `sports/sw.js` servis en ligne correspondent à ceux de `main` 
 | `android-v1.2.2` | 2026-10-23 | ⏭️ jamais construite par F-Droid (dépassée par 1.2.3) |
 | `android-v1.2.3` | 2026-10-23 | ✅ publiée (recette `fa454f12` du 2026-10-24 ; vue sur f-droid.org le 2026-10-28) |
 | `android-v1.2.4` | 2026-10-25 | ✅ publiée (recette MR 54228 du 2026-10-26, saveur `fdroid` ; vue sur f-droid.org le 2026-11-02, après le 29 oct.) |
-| `android-v1.2.5` | 2026-11-01 (9 h 54 HNE, `82c39961e`) | ⏳ recette mise à jour le 2026-11-02, 1 h 33 HNE (« bot: Update LE-RADAR to 10 ») ; CurrentVersion 1.2.5 / 10 ; pas encore publiée |
+| `android-v1.2.5` | 2026-11-01 (9 h 54 HNE, `82c39961e`) | ✅ publiée (recette `ef7a9107` du 2026-11-02, 1 h 33 HNE ; APK sur f-droid.org le 2026-11-04) |
 
-Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-11-02) :
-**1.2.4 (versionCode 9)** (suggérée ; 1.2.3 / 8 et 1.1.1 / 4 encore listées). Recette fdroiddata : CurrentVersion **1.2.5 (10)**. `main` est à **1.2.5 (versionCode 10)**.
+Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-11-09) :
+**1.2.5 (versionCode 10)** (suggérée ; 1.2.4 / 9 et 1.2.3 / 8 encore listées). Recette fdroiddata : CurrentVersion **1.2.5 (10)**. `main` est à **1.2.5 (versionCode 10)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
@@ -75,6 +81,20 @@ le-radar.ca en direct.
 
 Aucun changement dans `mobile/` ni `android/` depuis l'étiquette. Côté site seulement :
 
+- `13ee37671` — point focal conservé quand l'image d'une fiche est un miroir local (#368).
+- `c0e7f0deb` — couvertures portrait déclarées par la source, recadrables, point focal haut (#367).
+- `0fb0c7847`, `4d0c95dd2` — bandeau sportif : autres cartes conservées, directs
+  prioritaires sans être exclusifs (#366).
+- `bb356b771` — un seul prochain match visible par défaut, les autres derrière
+  « Voir les autres matchs à venir » (#360).
+- `6d4984312` — historique sportif des trois sessions récentes et liens
+  « Consulter les résultats sur le site officiel » (#356).
+- `0d498e35f` — identités officielles, filtre Aujourd'hui et fuseau fiable (#354).
+- `ec409ad48`, `dfa7fbb9f`, `9819eb37b` — palettes institutionnelles, grilles
+  radio officielles et lecteur sans clipping (#353, #350, #349).
+- `6b6208a68` — santé TLS/audio des radios, récupération à partir des flux officiels (#361).
+- `7dc532d1e` — Mastodon au pied de page (#342).
+- `027d29b78` — coiffe de zone sûre à la teinte du synthé sur iPad.
 - `870470192` — bannières de rubrique écartées des images d'article (#311).
 - `67ca60b02`, `b0b161ffc` — espaces insécables dans les titres, fiche bornée à 1360 px.
 - `50620a653`, `300ee47e0` — pied de page v2 et icônes des réseaux.
