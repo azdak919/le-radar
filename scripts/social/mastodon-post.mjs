@@ -8,7 +8,8 @@
 // Sans MASTODON_TOKEN : essai. SHARE_NOW=true : un article frais, tout de suite.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, stripUtm, siteLink, buildText, LIMITS, detectLang } from './lib.mjs';
+import { parseFeed, markImages, stripUtm, siteLink, buildTagged, LIMITS, detectLang } from './lib.mjs';
+import { tagLine } from './hashtags.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
@@ -24,17 +25,19 @@ const shareNow = process.env.SHARE_NOW === 'true';
 const save = () => { if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); };
 const len = s => [...String(s).replace(/https?:\/\/\S+/g, 'x'.repeat(23))].length; // Mastodon : lien = 23
 export const camelTag = s => { const w = String(s || '').replace(/[’'`-]/g, ' ').split(/[^\p{L}\p{N}]+/u).filter(Boolean); return w.length ? '#' + w.map(x => x[0].toUpperCase() + x.slice(1)).join('') : ''; };
-/** 3 ou 4 mots-clics CamelCase : #PresseÉtudiante #Québec #<Média> + sujet (1re catégorie). */
-export const mastoTags = it => [...new Set(['#PresseÉtudiante', '#Québec', camelTag(it.source), camelTag((it.categories || [])[0])].filter(t => t.length > 2))].join(' ');
-export const buildMastoText = (it, { credit = '', photo = true } = {}) => { const tags = mastoTags(it); const t = buildText(it, [], LIMITS.mastodon - len(tags) - 2, { credit, photo, len, link: true, ai: false /* jamais d'IA : règles de piaille.fr */ }); return t && `${t}\n\n${tags}`; };
+/** Hashtags CamelCase : lieu (#Québec ou #Montréal) + sujet ou institution, 3 au plus (policy.json). */
+export const mastoTags = it => tagLine(it, 'mastodon');
+export const buildMastoText = (it, accounts = [], { credit = '', photo = true } = {}) => buildTagged(it, accounts, LIMITS.mastodon, { credit, photo, len, link: true, ai: false /* jamais d'IA : règles de piaille.fr */ }, mastoTags(it), '\n\n');
 
+// @ Mastodon vérifiés à la main (data/social/mastodon-accounts.json) : vide tant qu'aucun compte n'est confirmé.
+const ACCOUNTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/mastodon-accounts.json'), 'utf8')).accounts;
 const state = JSON.parse(fs.readFileSync(STATE, 'utf8')); state.sent ||= {};
 if (!state.liveSince) { state.liveSince = new Date().toISOString(); console.log(`Mise en service : ${state.liveSince} (rien d'antérieur ne sera publié).`); }
 
 const xml = await (await fetch(process.env.FEED_URL || 'https://le-radar.ca/feed.xml', { signal: AbortSignal.timeout(30000) })).text();
 const items = parseFeed(xml); if (!items.length) throw new Error('feed.xml vide');
 const repeated = markImages(items);
-const pl = plan(items, state.sent, { network: 'mastodon', liveSince: state.liveSince, accounts: [] });
+const pl = plan(items, state.sent, { network: 'mastodon', liveSince: state.liveSince, accounts: ACCOUNTS });
 const { limits, status } = pl;
 console.log(`Mastodon @${acct} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h (poids horaire ${limits.weight}, rodage ×${limits.ramp}) · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s) (doublon).`);
 for (const it of pl.skip) { console.log(`Sauté (quasi-doublon) : [${it.source}] ${it.id}`); if (!dry) state.sent[it.id] = { at: new Date().toISOString(), skipped: 'dup', source: it.source }; }
@@ -57,7 +60,7 @@ for (const t of todo) {
   if (!it) { console.log(`::warning::${t.id} absent du flux.`); continue; }
   const im = await resolveImage(it, { used, repeated });
   if (!im) { console.log(`::warning::Aucune image du site pour ${it.id} : pas publié, réessai au passage suivant.`); continue; }
-  const text = buildMastoText(it, { credit: im.credit, photo: true }), lang = detectLang(it);
+  const text = buildMastoText(it, ACCOUNTS, { credit: im.credit, photo: true }), lang = detectLang(it);
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   console.log(`\n--- ${++n}. [${it.source}] ${len(text)}/${LIMITS.mastodon} · ${lang} · image ${im.url}\n${text}`);
   if (dry) continue;

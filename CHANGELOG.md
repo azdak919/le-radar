@@ -5,6 +5,10 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Ajouté
+
+- Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats du week-end » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
+
 ## [1.1.0] — 2026-10-07
 
 Application Android 1.1.0 (`versionCode` 3, tag `android-v1.1.0`). Le site est déployé en continu depuis `main` ; ses changements depuis 1.0.0 sont regroupés ici.

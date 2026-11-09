@@ -1,0 +1,49 @@
+name: Social — Bilan hebdomadaire des interactions
+
+# Chaque lundi : interactions par réseau sur 7 jours (Bluesky, Mastodon, Tumblr mesurés ; X, Facebook, LinkedIn : publications envoyées),
+# comptes internes exclus (data/social/internal-accounts.json). Écrit data/social/weekly/AAAA-MM-JJ.md et le résumé du job.
+# Aucun courriel, aucune publication. Lecture seule des réseaux (API publiques, clé d'API Tumblr en lecture).
+on:
+  schedule:
+    - cron: '43 13 * * 1'   # lundi ≈ 8 h 43 heure de Montréal (HNE), peut partir en retard
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Période en jours'
+        type: string
+        default: '7'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Bilan
+        env:
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          DAYS: ${{ inputs.days || '7' }}
+        run: node scripts/social/weekly-report.mjs --days "$DAYS"
+      - name: Commit du bilan (data/social/weekly)
+        run: |
+          [ -z "$(git status --porcelain -- data/social/weekly)" ] && { echo "Rien de nouveau."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/social/weekly
+          git commit -s -m "bot(social): bilan hebdomadaire des interactions"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh

@@ -5,14 +5,16 @@
 // (même id, même image, même heure). L'article est retrouvé dans le flux par l'état buffer-sent.json.
 // Ignore toute publication due dans moins de 10 min ou absente du flux. DRY_RUN=true : lecture seule.
 import fs from 'node:fs';
-import { buildText, formatOk, parseFeed, stripUtm, xlen, LIMITS, hasCdata } from './lib.mjs';
+import { buildXText, formatOk, parseFeed, stripUtm, xlen, LIMITS, hasCdata } from './lib.mjs';
 import { bankCredit } from './image-resolve.mjs';
 import { buildPageText, postMetadata } from './buffer-pages.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
 /** Texte attendu pour un post en file (pur, testable). */
-export function reformatText(it, accounts, { credit = '', img = '' } = {}) {
-  return buildText(it, accounts, LIMITS.x, { credit, photo: !!img });
+export function reformatText(it, accounts, { credit = '', img = '', old = null } = {}) {
+  // Budget de mentions X : reformater ne doit jamais AJOUTER un @ de média (≤ 1/média/jour décidé à la création).
+  const acc = old == null ? accounts : accounts.filter(a => !(a.cle_flux && (a.cle_flux === it.source || a.cle_flux === it.author)) || old.includes(a.handle));
+  return buildXText(it, acc, { credit, photo: !!img });
 }
 
 /** Crédit à jour : banque campus (attribution complète) d'abord, sinon crédit du flux / de l'état. */
@@ -34,7 +36,7 @@ async function main() {
     const state = isX ? rd('data/buffer-sent.json').sent || {} : pagesState[net] || {};
     const ch = isX ? createXBuffer({ key, fallbackId: process.env.BUFFER_CHANNEL_ID || undefined })
       : createXBuffer({ key, service: CFG[net].service, channelName: CFG[net].name, fallbackId: null });
-    const build = (it, credit, img) => isX ? reformatText(it, ACCOUNTS, { credit, img }) : buildPageText(it, CFG[net], { credit, photo: !!img });
+    const build = (it, credit, img, old) => isX ? reformatText(it, ACCOUNTS, { credit, img, old }) : buildPageText(it, CFG[net], { credit, photo: !!img });
     await runChannel({ ch, state, build, dry, isX, metadata: isX ? undefined : postMetadata(CFG[net].service) });
   }
 }
@@ -54,7 +56,7 @@ async function runChannel({ ch, state, build, dry, isX, metadata }) {
       if (!it) { console.log(`! ${p.id} ${fmt(p.dueAt)} article introuvable (état/flux), intact`); continue; }
       const img = p.assets?.[0]?.source || '';
       const credit = currentCredit(it, s, img);
-      const text = build(it, credit, img);
+      const text = build(it, credit, img, p.text);
       if (!text) { console.log(`! ${p.id} texte vide (garde), intact`); continue; }
       if (isX && xlen(text) > LIMITS.x) { console.log(`! ${p.id} ${fmt(p.dueAt)} dépasserait ${LIMITS.x} car., intact`); continue; }
       if (text === p.text) { console.log(`= ${p.id} ${fmt(p.dueAt)} déjà au bon format`); continue; }

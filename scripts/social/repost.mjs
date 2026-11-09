@@ -8,7 +8,7 @@
 // le bot ne le republiera jamais une 3e fois. FORCE=true : remplace même si le texte est correct (ex. mauvaise image). Env : URLS, X_DUE (ISO, même ordre), DRY_RUN, BSKY=true|false.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, stripUtm, formatOk, siteLink } from './lib.mjs';
+import { parseFeed, markImages, buildXText, stripUtm, formatOk, siteLink } from './lib.mjs';
 import { createRequire } from 'node:module';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { buildPageText } from './buffer-pages.mjs';
@@ -94,7 +94,7 @@ if (key) {
       if (okFor(p.text, it)) { console.log(`Déjà correct : ${line}`); if (p.channelService === 'twitter' && /sent|sending|scheduled/.test(p.status)) queuedOk.add(it.id); continue; }
       if (/sent|sending/.test(p.status)) { console.log(`À SUPPRIMER À LA MAIN (API : publié non supprimable) : ${line}`); continue; }
       // En file : crédit corrigé sur place (même id, image, heure) ; supprimé seulement si non corrigeable.
-      const im0 = imgs.get(it.id), fixed = p.channelService === 'twitter' ? buildText(it, ACC, undefined, { credit: im0?.credit, photo: !!im0 }) : buildPageText(it, { link: 'le-radar' }, { credit: im0?.credit, photo: !!im0 });
+      const im0 = imgs.get(it.id), fixed = p.channelService === 'twitter' ? buildXText(it, ACC, { credit: im0?.credit, photo: !!im0 }) : buildPageText(it, { link: 'le-radar' }, { credit: im0?.credit, photo: !!im0 });
       if (fixed && fixed !== p.text && Date.parse(p.dueAt) - Date.now() > 10 * 60e3) {
         console.log(`Format/crédit corrigé en file : ${line}\n  nouveau : ${fixed.split('\n').pop()}`);
         if (!dry) { await x.editText(p.id, fixed); const s = st.sent[it.id]; if (s) { s.credit = it.credit || it.source; wr('data/buffer-sent.json', st); } }
@@ -108,7 +108,7 @@ if (key) {
     const due = dues[n];
     if (!due) { console.log(`X : pas de X_DUE pour ${it.link}, pas de republication.`); continue; }
     if (!(Date.parse(due) > Date.now() + 10 * 60e3)) throw new Error(`X_DUE passé ou trop proche : ${due}`);
-    const im = imgs.get(it.id), text = buildText(it, ACC, undefined, { credit: im?.credit, photo: !!im });
+    const im = imgs.get(it.id), text = buildXText(it, ACC, { credit: im?.credit, photo: !!im });
     console.log(`X : republication programmée ${tz(due)}\n${text}`);
     if (dry) continue;
     const post = await x.add({ text, image: im?.url, dueAt: new Date(due).toISOString() });

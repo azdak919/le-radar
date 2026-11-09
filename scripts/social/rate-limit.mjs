@@ -1,7 +1,8 @@
 // Module commun aux bots sociaux du Radar : plafonds par réseau (fenêtres glissantes),
 // espacement, fraîcheur (jamais de rattrapage) et sélection « comme X » quand le réseau limite.
 // Réutilisé par Bluesky, puis Mastodon.
-import { quality, PER_SOURCE_MAX, norm } from './lib.mjs';
+import { quality, photoRank, PER_SOURCE_MAX, norm } from './lib.mjs';
+import { volumeFor, allowedByNow, postedToday, torontoDay, torontoHour } from './policy.mjs';
 import { effectiveLimits, weightAt } from './schedule.mjs';
 
 // mastodon : règles de piaille.fr (robots de liens de presse : 5/h, 50/jour).
@@ -75,6 +76,8 @@ export function plan(items, sent, { network, liveSince, accounts = [], now = Dat
   const dup = [], pool = [];
   for (const it of all) { const k = titleKey(it); if (k && (seenKeys.has(k) || poolKeys.has(k))) dup.push(it); else { poolKeys.add(k); pool.push(it); } }
   const recentSources = recent.filter(s => s?.source && !s.skipped && !s.dedup).map(s => s.source);
+  const vol = schedule ? volumeFor(network, now) : null;
+  if (vol && base.spread) return planReduced({ pool, dup, limits, r, sent, network, now, vol, accounts });
   if (base.spread) {
     const ranked = rankLikeX(pool, { recentSources, accounts, perSource: Infinity });
     const { go, hold } = paceSpread(ranked, { network, now, limits, status: r, maxH: MAX_FRESH_H });
@@ -84,6 +87,23 @@ export function plan(items, sent, { network, liveSince, accounts = [], now = Dat
   const keep = ranked.slice(0, r.dayLeft), go = keep.slice(0, Math.min(limits.perRun, r.hourLeft));
   const keepIds = new Set(keep.map(i => i.id));
   return { limits, status: r, now: go, hold: keep.slice(go.length), skip: [...pool.filter(i => !keepIds.has(i.id)), ...dup] };
+}
+
+/**
+ * Volume réduit (policy.json) : `vol.perDay` publications par jour civil Toronto (≥ `minPerDay` si possible), réparties selon les
+ * poids horaires du réseau, une seule par source et par jour, les plus solides d'abord (photo du flux, extrait, @ confirmé).
+ * Un article sans photo du flux ne part qu'après `fillAfterHour` h et seulement pour atteindre le minimum du jour.
+ */
+export function planReduced({ pool, dup, limits, r, sent, network, now, vol, accounts = [], windows }) {
+  const today = postedToday(sent, now), done = today.length;
+  const afterFill = torontoHour(now) >= vol.fillAfterHour && done < vol.minPerDay;
+  const eligible = pool.filter(it => photoRank(it) >= 1 || afterFill);
+  const ranked = rankLikeX(eligible, { recentSources: today.map(s => s.source).filter(Boolean), accounts, perSource: vol.perSource });
+  const hourLeft = Math.max(0, Math.min(limits.perHour, vol.perHour) - r.hour);
+  const allowed = Math.max(0, allowedByNow(network, vol.perDay, now, windows) - done);
+  const take = Math.max(0, Math.min(allowed, hourLeft, limits.perRun, vol.perDay - done));
+  const go = ranked.slice(0, take);
+  return { limits: { ...limits, perDay: vol.perDay, perHour: Math.min(limits.perHour, vol.perHour), reduced: true }, status: { ...r, day: done, dayLeft: Math.max(0, vol.perDay - done), hourLeft, left: Math.min(hourLeft, vol.perDay - done) }, now: go, hold: ranked.slice(take), skip: dup };
 }
 
 export const RUN_STEP_MS = 30 * 60e3; // passages toutes les 30 min (cron 20,50)

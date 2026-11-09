@@ -72,7 +72,7 @@ for (const net of networks) {
   const free = Math.max(0, QUEUE_MAX - queued.length);
   const dues = shareUrl ? [undefined] : planDues({ network: net, cfg, now, taken, free });
   const bySource = new Map(Object.values(sent).filter(s => s.postId).map(s => [s.postId, s.source]));
-  const sel = shareUrl ? [pickUrl()] : selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now });
+  const sel = shareUrl ? [pickUrl()] : selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now, network: net });
   console.log(`File : ${queued.length}/${QUEUE_MAX} · places libres : ${free} · créneaux de pointe retenus : ${dues.length} · articles : ${sel.length}`);
   const used = new Map();
   for (let i = 0; i < sel.length; i++) {

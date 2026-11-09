@@ -16,6 +16,7 @@ const tag = (b, t) => { const m = b.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</$
 const plain = h => stripCdata(ent(ent(stripCdata(h || '').replace(/<[^>]*>/g, ' ')))).replace(/\s+/g, ' ').trim();
 export const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 import { createRequire } from 'node:module';
+import { tagLine } from './hashtags.mjs';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 export const { stripCdata, hasCdata } = createRequire(import.meta.url)('../cdata-lib.js');
 export { articleId };
@@ -45,7 +46,8 @@ export function refreshPhotoLine(text, it, assetUrl = '', limit = X_LIMIT) {
   const k = u => String(u || '').replace(/^https?:\/\//, '').replace(/[?#].*$/, '');
   if (assetUrl && k(assetUrl) !== k(it.img)) return null;
   const want = photoLine(it.credit);
-  if (i >= 0) { if (want) lines[i] = want; else lines.splice(i, 1); } else if (want) lines.push(want); else return null;
+  const ti = lines.length > 1 && /^(#[\p{L}\p{N}_]+\s*)+$/u.test(lines[lines.length - 1].trim()) ? lines.length - 1 : -1; // ligne de hashtags : toujours en dernier
+  if (i >= 0) { if (want) lines[i] = want; else lines.splice(i, 1); } else if (want) lines.splice(ti >= 0 ? ti : lines.length, 0, want); else return null;
   // Plafond : raccourcit l'extrait (paragraphe entre deux lignes vides) au mot entier, jamais le lien ni le crédit.
   const e = lines[1] === '' && lines[3] === '' ? 2 : -1;
   while (e > 0 && xlen(lines.join('\n')) > limit && / \S+…?$/.test(lines[e])) lines[e] = lines[e].replace(/[\s,;:.–—-]*\s\S+…?$/, '…');
@@ -166,15 +168,17 @@ export const SITE = 'https://le-radar.ca';
 /** Lien partagé partout : fiche statique le-radar.ca/article/<id>/ (même identifiant que l'appli). */
 export const siteLink = it => { const id = articleId(it?.link || ''); return id ? `${SITE}/article/${id}/` : (it?.link || ''); };
 export const SEP = ' · '; // U+00B7, espacé : séparateur unique du format
+export const MEDIA_ICON = '📰'; // précède le média source (même repère sur tous les réseaux, comme 📸 pour le crédit)
 
-/** « Média (@média) · Auteur (@auteur) » ; @ seulement si cle_flux === nom exact (liste PAR réseau). */
+/** « 📰 Média (@média) · Auteur (@auteur) » ; @ seulement si cle_flux === nom exact (liste PAR réseau). */
 export function mediaLine(it, accounts = []) {
   const src = accounts.find(a => a.type === 'source' && a.cle_flux && a.cle_flux === it.source);
   const au = it.author && accounts.find(a => a.type === 'auteur' && a.cle_flux && a.cle_flux === it.author);
   const media = (it.source || '').trim() ? (src ? `${it.source.trim()} (${src.handle})` : it.source.trim()) : '';
   const name = (it.author || '').trim();
   const author = name && norm(name) !== norm(it.source) ? (au ? `${name} (${au.handle})` : name) : '';
-  return [media, author].filter(Boolean).join(SEP);
+  const line = [media, author].filter(Boolean).join(SEP);
+  return line ? `${MEDIA_ICON} ${line}` : '';
 }
 
 /** Phrases (fin . ! ? … suivie d'une majuscule, d'un chiffre ou d'un guillemet). */
@@ -194,7 +198,7 @@ export function cutExcerpt(ex, fits, max = 2) {
  * Format unique des 5 réseaux (lignes, pas de puces) :
  *   Titre
  *   (ligne vide) Extrait, 1-2 phrases entières
- *   (ligne vide) Média (@média) · Auteur
+ *   (ligne vide) 📰 Média (@média) · Auteur
  *   https://le-radar.ca/article/<id>/
  *   📸 Crédit            (seulement si un crédit réel est connu : jamais de doublon du média)
  * Jamais de séparateur vide ni de doublon. Texte contenant « tison » : '' (refusé).
@@ -211,6 +215,15 @@ export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', pho
   text = stripCdata(text); // dernier filet : jamais de marqueur CDATA dans une publication
   return /tison/i.test(text) || hasCdata(text) ? '' : text;
 }
+
+/** buildText + ligne de hashtags en dernier (sa longueur est réservée avant l'extrait). `sep` = séparateur avant la ligne. */
+export function buildTagged(it, accounts, limit, opts, tags, sep = '\n') {
+  const len = opts?.len || xlen, room = tags ? limit - len(tags) - len(sep) : limit;
+  const text = buildText(it, accounts, room, opts);
+  return text && tags ? `${text}${sep}${tags}` : text;
+}
+/** Texte X : format commun, 280 (xlen), 2 hashtags au plus (policy.json). */
+export const buildXText = (it, accounts = [], opts = {}) => buildTagged(it, accounts, LIMITS.x, opts, tagLine(it, 'x'));
 
 /**
  * Choix des items : non envoyés, ≤ maxAgeH, round-robin par source (plus récente d'abord),
@@ -288,11 +301,11 @@ export function quality(it, accounts = []) {
  * de `slots` candidats, élargit à 72 h. Variété d'abord (≤ perSource par source, file comprise,
  * round-robin), puis qualité (photo réelle, extrait, @ confirmé), puis récence.
  */
-export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H, evening = false } = {}) {
+export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H, evening = false, minPhoto = 0 } = {}) {
   // veille = jour civil précédent (midi UTC du jour − 24 h : robuste au changement d'heure).
   // Passe du soir : les créneaux sont ceux de demain, la « veille » est donc aujourd'hui.
   const prev = evening ? dayOf(now, tz) : dayOf(Date.parse(dayOf(now, tz) + 'T12:00:00Z') - 864e5, 'UTC');
-  const fresh = items.filter(it => !sentIds.has(it.id) && now - it.date <= maxAgeH * 3600e3 && it.date <= now);
+  const fresh = items.filter(it => !sentIds.has(it.id) && now - it.date <= maxAgeH * 3600e3 && it.date <= now && photoRank(it) >= minPhoto);
   let pool = fresh.filter(it => dayOf(it.date, tz) === prev);
   if (pool.length < slots) pool = fresh;
   const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
