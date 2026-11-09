@@ -319,10 +319,16 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
     await page.clock.setFixedTime(new Date('2026-11-08T18:59:00-05:00'));
     await page.route('**/assets/news-images/**', r => r.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"/>' }));
     await page.route('https://**/*', r => r.abort());
-    await page.addInitScript(theme => localStorage.setItem('radar-theme', theme), theme);
-    await page.goto(lang === 'en' ? '/en/?labFrame=1' : '/?labFrame=1', { waitUntil: 'domcontentloaded' });
+    await page.addInitScript(({ theme, lang }) => {
+      localStorage.setItem('radar-theme', theme);
+      localStorage.setItem('radar-translate-mode', lang === 'en' ? 'en' : 'original');
+    }, { theme, lang });
+    // La route SEO /en/ n’embarque pas le traducteur. Tester ici le vrai
+    // choix EN du bandeau public, via sa préférence native sur l’accueil.
+    await page.goto('/?labFrame=1', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('html')).toHaveAttribute('lang', new RegExp(`^${lang}(?:-|$)`));
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+    await expect.poll(() => page.evaluate(() => window.RadarTranslate?.getMode())).toBe(lang === 'en' ? 'en' : 'original');
     await expect(page.locator('#masthead-sports-strip')).toBeVisible();
     const measurements = [];
     for (const n of [7, 1, 2, 3]) {
@@ -369,6 +375,7 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
       const slotWidth = (geometry.inner - geometry.gap * (geometry.slots - 1)) / geometry.slots;
       for (const card of geometry.cards) {
         expect(card.live).toBe('1');
+        expect(card.text).toContain(lang === 'en' ? 'Live' : 'En cours');
         expect(card.height).toBeGreaterThanOrEqual(44);
         expect(card.width).toBeCloseTo(slotWidth, 0);
         expect(card.width).toBeLessThanOrEqual(geometry.inner + 1);
