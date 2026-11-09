@@ -1644,15 +1644,6 @@
       "via": "resize-proxy",
       "nameKey": "image.png"
     },
-    "77c707c2771abe3a": {
-      "local": "assets/news-images/77c707c2771abe3a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 64590,
-      "updatedAt": "2026-11-09T01:47:59.611Z",
-      "via": "disk",
-      "nameKey": "jesus.jpg"
-    },
     "d0d4eef2f356a4c4": {
       "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
@@ -1662,10 +1653,29 @@
       "updatedAt": "2026-11-09T01:47:59.792Z",
       "via": "origin",
       "nameKey": "ak-mbam.jpg"
+    },
+    "0da527b271273a7a": {
+      "local": "assets/news-images/0da527b271273a7a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
+      "host": "www.delitfrancais.com",
+      "bytes": 70585,
+      "updatedAt": "2026-11-09T04:23:31.190Z",
+      "via": "disk",
+      "nameKey": "rocky.jpeg"
+    },
+    "72a7534c65b78c07": {
+      "local": "assets/news-images/72a7534c65b78c07.jpg",
+      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FportraitGenieMath.png?alt=media&token=3113ab51-1f59-4142-8d92-a62179e5bbe3",
+      "host": "firebasestorage.googleapis.com",
+      "bytes": 306223,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-09T04:23:32.757Z",
+      "via": "resize-proxy",
+      "nameKey": "portraitgeniemath.png"
     }
   },
-  "updatedAt": "2026-11-09T03:08:22.274Z",
-  "count": 167,
+  "updatedAt": "2026-11-09T04:23:32.760Z",
+  "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
