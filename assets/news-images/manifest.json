@@ -1644,24 +1644,6 @@
       "via": "resize-proxy",
       "nameKey": "portraitgeniemath.png"
     },
-    "6652aa068d12dd9c": {
-      "local": "assets/news-images/6652aa068d12dd9c.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
-      "host": "theconcordian.com",
-      "bytes": 127956,
-      "updatedAt": "2026-11-09T08:01:15.281Z",
-      "via": "disk",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
-    },
-    "d0d4eef2f356a4c4": {
-      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 286051,
-      "updatedAt": "2026-11-09T08:01:15.313Z",
-      "via": "disk",
-      "nameKey": "ak-mbam.jpg"
-    },
     "59c339c3de7bc16f": {
       "local": "assets/news-images/59c339c3de7bc16f.jpg",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose-scaled.jpg",
@@ -1671,9 +1653,28 @@
       "updatedAt": "2026-11-09T08:01:17.600Z",
       "via": "resize-proxy",
       "nameKey": "news-5-eliot-loose.jpg"
+    },
+    "0d84d91b0191efcf": {
+      "local": "assets/news-images/0d84d91b0191efcf.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 83501,
+      "updatedAt": "2026-11-09T09:08:16.043Z",
+      "via": "disk",
+      "nameKey": "blanchissement.png"
+    },
+    "140272a87a1faec2": {
+      "local": "assets/news-images/140272a87a1faec2.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 155985,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-09T09:08:23.681Z",
+      "via": "resize-proxy",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
     }
   },
-  "updatedAt": "2026-11-09T08:01:17.601Z",
+  "updatedAt": "2026-11-09T09:08:23.684Z",
   "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
