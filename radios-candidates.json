@@ -11,8 +11,9 @@
       "listenUrl": "https://radio.garden/listen/cfou-fm-89-1/QdJ2n1fA",
       "_note": "Retiré du syntoniseur — écoute externe (radio.garden). Réintégrer quand un flux natif est validé.",
       "_pausedReason": "external-listen",
-      "_lastChecked": "2026-11-02T14:33:00.367Z",
-      "_failCount": 127
+      "_lastChecked": "2026-11-09T06:23:34.763Z",
+      "_failCount": 128,
+      "_healthError": "https-required"
     },
     {
       "id": "cjep",
@@ -23,8 +24,9 @@
       "website": "http://cjepradio.com/",
       "_note": "Retiré du syntoniseur — pas de flux direct.",
       "_pausedReason": "no-stream",
-      "_lastChecked": "2026-11-02T14:34:59.884Z",
-      "_failCount": 127
+      "_lastChecked": "2026-11-09T06:23:34.763Z",
+      "_failCount": 128,
+      "_healthError": "https-required"
     },
     {
       "id": "crem",
@@ -35,8 +37,9 @@
       "website": "https://www.agem.quebec/comites/crem/",
       "_note": "Retiré du syntoniseur — pas de flux direct.",
       "_pausedReason": "no-stream",
-      "_lastChecked": "2026-11-02T14:37:18.020Z",
-      "_failCount": 127
+      "_lastChecked": "2026-11-09T06:23:34.763Z",
+      "_failCount": 128,
+      "_healthError": "https-required"
     },
     {
       "id": "cand-ecole-nationale-d-administration-pub-un-anc",
@@ -47,10 +50,12 @@
       "website": "https://ici.radio-canada.ca/tele/le-telejournal-quebec/site/segments/reportage/2511950/radio-x-maurais-respect-internet-intimidation",
       "discoveredFrom": "https://enap.ca/",
       "_discovered": "2026-10-26T13:42:44.464Z",
-      "_failCount": 3,
-      "_lastChecked": "2026-11-02T14:37:35.088Z"
+      "_failCount": 4,
+      "_lastChecked": "2026-11-09T06:23:34.763Z",
+      "_healthError": "https-required"
     }
   ],
   "_lastScan": "2026-11-04T19:57:18.444Z",
-  "_lastRun": "2026-11-02T14:37:35.088Z"
+  "_lastRun": "2026-11-02T14:37:35.088Z",
+  "_lastHealthDiscovery": "2026-11-09T06:23:34.763Z"
 }
