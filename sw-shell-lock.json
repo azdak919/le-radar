@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v1008",
+    "cache": "radar-shell-v1013",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -25,7 +25,7 @@
       "quebec-university-backgrounds-data.js": "2624304eb95e4d9d",
       "radar-lifecycle.js": "434cb5cea8616dfa",
       "radar-news.js": "6ad62bccda258ea6",
-      "radar-sports-cta.js": "5cfe2beb6f5397a8",
+      "radar-sports-cta.js": "16b64a5a717054e4",
       "radar-state.js": "1addac8447b272a8",
       "radar-tuner.js": "da7eecc29375071c",
       "radar-utils.js": "7d624dbff2c4e2d3",
@@ -44,7 +44,7 @@
       "style-feed.css": "1209e7332679564f",
       "style-masthead-chrome.css": "4c1088406c55cb38",
       "style-masthead.css": "88bce9788c070034",
-      "style-sports-strip.css": "81d564ba1e598583",
+      "style-sports-strip.css": "de43521dd8c0c9f2",
       "style-translate-overlay.css": "51298bec3a3a6654",
       "style-tuner.css": "1808906e068f61f1",
       "style.css": "a20a2d2dbde0d6a9",
@@ -102,7 +102,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v382",
+    "cache": "sports-shell-v387",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -118,7 +118,7 @@
       "player-sync.js": "36e84f1afaff7fcb",
       "radar-lifecycle.js": "434cb5cea8616dfa",
       "radar-news.js": "6ad62bccda258ea6",
-      "radar-sports-cta.js": "5cfe2beb6f5397a8",
+      "radar-sports-cta.js": "16b64a5a717054e4",
       "radar-state.js": "1addac8447b272a8",
       "radar-tuner.js": "da7eecc29375071c",
       "radar-utils.js": "7d624dbff2c4e2d3",
@@ -135,7 +135,7 @@
       "style-feed.css": "1209e7332679564f",
       "style-masthead-chrome.css": "4c1088406c55cb38",
       "style-masthead.css": "88bce9788c070034",
-      "style-sports-strip.css": "81d564ba1e598583",
+      "style-sports-strip.css": "de43521dd8c0c9f2",
       "style-tuner.css": "1808906e068f61f1",
       "style.css": "a20a2d2dbde0d6a9",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
