@@ -1783,6 +1783,19 @@
 .sports-board.is-masonry { grid-auto-rows: 4px !important; row-gap: 0 !important; }
 .sports-board.is-masonry > * { align-self: start; }
 
+/* Une colonne (mobile, sans mosaïque) : ~870 fiches et ~8 500 lignes font une
+ * page de ~600 000 px. Les fiches hors écran sautent style, mise en page et
+ * peinture ; le contenu reste dans le DOM (recherche, lecteurs d’écran, ancres).
+ * Hauteur de réserve ≈ moyenne mesurée à 390 px (~700 px avec marges internes), puis la vraie
+ * hauteur est mémorisée (auto). La mosaïque mesure les hauteurs : exclue. */
+.sports-board:not(.is-masonry) > .sports-panel {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 650px;
+}
+@media print {
+  .sports-board > .sports-panel { content-visibility: visible; }
+}
+
 /* Page Sports et mosaïque : bordure fine (1 px) cohérente avec les autres
  * cartes ; la couleur d'équipe ou de statut reste portée par la bordure. */
 .sports-panel { border-top-width: 1px; }
