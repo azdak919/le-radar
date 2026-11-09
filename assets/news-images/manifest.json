@@ -1596,15 +1596,6 @@
       "via": "disk",
       "nameKey": "article-de-juliette-c.jpg"
     },
-    "0da527b271273a7a": {
-      "local": "assets/news-images/0da527b271273a7a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
-      "host": "www.delitfrancais.com",
-      "bytes": 70585,
-      "updatedAt": "2026-11-08T11:28:57.029Z",
-      "via": "disk",
-      "nameKey": "rocky.jpeg"
-    },
     "88b89352679de58d": {
       "local": "assets/news-images/88b89352679de58d.jpg",
       "remote": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/08110045/images-copie.jpg",
@@ -1614,15 +1605,6 @@
       "updatedAt": "2026-11-08T16:05:54.802Z",
       "via": "origin",
       "nameKey": "images-copie.jpg"
-    },
-    "0d84d91b0191efcf": {
-      "local": "assets/news-images/0d84d91b0191efcf.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 83501,
-      "updatedAt": "2026-11-08T18:39:54.910Z",
-      "via": "disk",
-      "nameKey": "blanchissement.png"
     },
     "140272a87a1faec2": {
       "local": "assets/news-images/140272a87a1faec2.webp",
@@ -1661,9 +1643,28 @@
       "updatedAt": "2026-11-08T22:32:18.337Z",
       "via": "resize-proxy",
       "nameKey": "image.png"
+    },
+    "77c707c2771abe3a": {
+      "local": "assets/news-images/77c707c2771abe3a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 64590,
+      "updatedAt": "2026-11-09T01:47:59.611Z",
+      "via": "disk",
+      "nameKey": "jesus.jpg"
+    },
+    "d0d4eef2f356a4c4": {
+      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 286051,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-09T01:47:59.792Z",
+      "via": "origin",
+      "nameKey": "ak-mbam.jpg"
     }
   },
-  "updatedAt": "2026-11-09T00:37:29.262Z",
+  "updatedAt": "2026-11-09T01:47:59.864Z",
   "count": 167,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
