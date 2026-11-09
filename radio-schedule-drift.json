@@ -1,11 +1,13 @@
 {
-  "checkedAt": "2026-11-08T02:22:12.126Z",
+  "checkedAt": "2026-11-09T02:36:36.697Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 5,
+    "drift": [
+      "chyz"
+    ],
     "overhaul": [],
     "unreachable": []
   },
@@ -13,12 +15,22 @@
     {
       "id": "chyz",
       "published": 46,
-      "fresh": 46,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 50,
+      "added": [
+        "mer 17:45–20:30 Remparts de Québec",
+        "mer 22:30–00:00 Nocturne",
+        "jeu 17:45–20:30 Remparts de Québec",
+        "sam 12:00–12:30 Un Monde de Couleurs et de Son",
+        "sam 12:30–16:30 Football du Rouge et Or",
+        "sam 17:45–20:30 Remparts de Québec"
+      ],
+      "removed": [
+        "ven 18:45–21:30 Remparts de Québec",
+        "sam 14:30–18:30 Football du Rouge et Or"
+      ],
+      "changed": 8,
+      "ratio": 0.174,
+      "status": "drift"
     },
     {
       "id": "cism",
