@@ -56,6 +56,7 @@ assert.equal(record.image, url); assert.equal(record.credit, 'Éléphant Films')
 assert.match(html, /object-position:50% 50%;aspect-ratio:3\/2/);
 assert.match(html, /property="og:image" content="https:\/\/quartierlibre/);
 assert.match(html, /"creditText":"Éléphant Films"/); assert.doesNotMatch(html, /abdallahh/);
+const pinnedSnapshot = { ...item }; // fiche épinglée avant l'essai d'une autre image
 E.assignSourceImage(item, 'https://example.org/autre.jpg', true);
 assert.equal(item.imageCropFocalY, undefined); assert.equal(item.imageCropSafe, undefined);
 assert.equal(F.recordOf(item).imageCropFocalY, undefined, 'pas de cadrage transféré');
@@ -68,15 +69,25 @@ const approved = { image: url, imageCropSafe: url, imageCropFocalY: 0.5 };
 assert.ok(box.isUsableArticleImage({naturalWidth:600,naturalHeight:779}, 'lead', approved));
 assert.equal(box.isUsableArticleImage({naturalWidth:600,naturalHeight:779}, 'lead'), false);
 assert.equal(box.isUsableArticleImage({naturalWidth:600,naturalHeight:779}, 'lead', {...approved,image:'autre'}), false);
-// Données publiables : fiche et fil = même URL distante, même vrai crédit.
-const news = JSON.parse(readFileSync(new URL('../news.json', import.meta.url))).items.find(i => i.link === link);
-const stored = JSON.parse(readFileSync(new URL('../data/article-pages.json', import.meta.url))).articles['76bd8d7a1889e2e8'];
-assert.equal(news.image, url); assert.equal(stored.image, url); assert.equal(stored.credit, F.creditOf(news));
-assert.equal(stored.imageCropFocalY, 0.5); assert.equal(news.imageRemoteOnly, true);
-const rss = readFileSync(new URL('../feed.xml', import.meta.url), 'utf8');
-const rssItem = rss.match(/<item>[\s\S]*?<\/item>/g).find(block => block.includes(`<link>${link}</link>`));
+// Rendu publiable depuis une fiche figée (la une épinglée passe par le vrai code : épinglage, fiche, flux RSS).
+// Ces vérifications ne dépendent d'aucune donnée du jour : elles échouent si le recadrage, le point focal, le crédit ou l'URL régressent.
+const G = require('../scripts/generate-feed');
+const published = { ...pinnedSnapshot, date: '2026-11-07T21:00:00.000Z', author: 'Mathilde Jobin', excerpt: 'Un film québécois de 1996 avec des vampires.' };
+assert.equal(published.image, url); assert.equal(published.imageRemoteOnly, true); assert.equal(published.imageCropFocalY, 0.5); assert.equal(published.imageCropSafe, url);
+assert.equal(F.creditOf(published), 'Éléphant Films');
+const rssItem = G.buildItemXml(published);
 assert.ok(rssItem.includes(url)); assert.match(rssItem, /Éléphant Films/); assert.doesNotMatch(rssItem, /abdallahh/);
-const index = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const list = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1])).find(j=>j['@type']==='ItemList');
-assert.equal(list.itemListElement.find(n=>n.url===link).item.image, url);
+// Données publiées (news.json, fiche archivée, flux, accueil) : si l'article y figure encore, elles doivent être identiques à la règle ;
+// l'accueil et le flux tournent, donc l'absence de l'article n'est pas une erreur. Une présence incorrecte reste une erreur.
+const readData = f => readFileSync(new URL('../' + f, import.meta.url), 'utf8');
+const news = JSON.parse(readData('news.json')).items.find(i => i.link === link);
+if (news) { assert.equal(news.image, url); assert.equal(news.imageCropFocalY, 0.5); assert.equal(news.imageRemoteOnly, true); assert.equal(F.creditOf(news), 'Éléphant Films'); }
+const stored = JSON.parse(readData('data/article-pages.json')).articles['76bd8d7a1889e2e8'];
+if (stored) { assert.equal(stored.image, url); assert.equal(stored.imageCropFocalY, 0.5); assert.equal(stored.credit, 'Éléphant Films'); }
+const rssLive = (readData('feed.xml').match(/<item>[\s\S]*?<\/item>/g) || []).find(block => block.includes(`<link>${link}</link>`));
+if (rssLive) { assert.ok(rssLive.includes(url)); assert.match(rssLive, /Éléphant Films/); assert.doesNotMatch(rssLive, /abdallahh/); }
+const index = readData('index.html');
+const list = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1])).find(j => j['@type'] === 'ItemList');
+const listed = list && list.itemListElement.find(n => n.url === link);
+if (listed) assert.equal(listed.item.image, url);
 console.log('OK Karmina : crop revu, garde-fous, fil/fiche/OG/crédit, URL distante uniquement');
