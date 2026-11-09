@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-09T13:37:13.896Z",
+  "updated": "2026-11-09T15:07:37.671Z",
   "total": 188,
   "withPhoto": 172,
   "withStock": 28,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 155,
+  "leadReadyPhotos": 154,
   "pageScraped": 32,
   "photosRecovered": 31,
-  "imagesCleared": 19,
-  "stockSearches": 34,
-  "stockFound": 21,
-  "campusBankFound": 18,
+  "imagesCleared": 18,
+  "stockSearches": 35,
+  "stockFound": 22,
+  "campusBankFound": 19,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -19,6 +19,12 @@
       "link": "https://theconcordian.com/2026/11/lombre-presence-ultime-carl-trahan/",
       "reason": "no-stock-match",
       "image": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_8672.jpg"
+    },
+    {
+      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "reason": "no-stock-match",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
     },
     {
       "title": "Vendredi fou ou achat local : où va l’argent des consommateurs ?",
@@ -39,12 +45,6 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png"
     },
     {
-      "title": "Artificial Intelligence in Journalism: The Daily's Stance - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
       "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
       "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu/",
       "reason": "no-stock-match",
@@ -57,33 +57,33 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
-      "title": "Strong Start to the Season for the Gaiters",
-      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
-    },
-    {
       "title": "Plus de 130 jours de manifestation en Albanie",
       "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "Bishop’s Culture is Community",
-      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
+      "title": "Men’s Club Hockey Perfect Start to the Season",
+      "link": "https://thebucampus.ca/2026/10/27/mens-club-hockey-perfect-start-to-the-season/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "title": "Strong Start to the Season for the Gaiters",
+      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
     },
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
       "image": null
     }
   ]
