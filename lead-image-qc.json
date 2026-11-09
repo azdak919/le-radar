@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-09T11:14:42.823Z",
+  "updated": "2026-11-09T13:37:13.896Z",
   "total": 188,
   "withPhoto": 172,
   "withStock": 28,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 154,
-  "pageScraped": 28,
-  "photosRecovered": 28,
-  "imagesCleared": 18,
+  "leadReadyPhotos": 155,
+  "pageScraped": 32,
+  "photosRecovered": 31,
+  "imagesCleared": 19,
   "stockSearches": 34,
-  "stockFound": 23,
-  "campusBankFound": 19,
+  "stockFound": 21,
+  "campusBankFound": 18,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -37,6 +37,12 @@
       "link": "https://lapige.atmjonquiere.com/2026/11/05/bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=bien-manger-sans-cuisiner-lessor-des-traiteurs-dans-la-region",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png"
+    },
+    {
+      "title": "Artificial Intelligence in Journalism: The Daily's Stance - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
@@ -69,21 +75,15 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg"
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
+      "image": null
     },
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
-      "image": null
-    },
-    {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
-      "reason": "no-stock-match",
       "image": null
     }
   ]

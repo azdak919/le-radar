@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T11:16:04.662Z",
+  "updated": "2026-11-09T13:39:07.836Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
@@ -7,15 +7,43 @@
   "pending": 37,
   "missingHero": 0,
   "ok": false,
-  "checked": 49,
-  "updatedCount": 3,
-  "citedNew": 6,
+  "checked": 53,
+  "updatedCount": 7,
+  "citedNew": 10,
   "fallbackNew": 43,
   "samples": [
+    {
+      "title": "Why We Dream: A Search for the Elusive",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Math, now, … A Klein Bottle in St. Michel",
+      "source": "The Plant",
+      "credit": "Image via Charlie Reuter",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
       "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "source": "Le Délit",
+      "credit": "Photo : DENIS FARLEY",
       "cited": true,
       "method": "media-credit-featured"
     },
