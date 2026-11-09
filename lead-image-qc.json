@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-09T04:23:18.472Z",
+  "updated": "2026-11-09T05:05:28.135Z",
   "total": 188,
   "withPhoto": 172,
   "withStock": 28,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 155,
-  "pageScraped": 30,
-  "photosRecovered": 30,
-  "imagesCleared": 18,
-  "stockSearches": 34,
-  "stockFound": 23,
+  "leadReadyPhotos": 156,
+  "pageScraped": 22,
+  "photosRecovered": 22,
+  "imagesCleared": 12,
+  "stockSearches": 33,
+  "stockFound": 22,
   "campusBankFound": 19,
   "mainPageLeadReady": true,
   "gaps": [
@@ -51,22 +51,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
-      "title": "Strong Start to the Season for the Gaiters",
-      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
-    },
-    {
       "title": "Plus de 130 jours de manifestation en Albanie",
       "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "Bishop’s Culture is Community",
-      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
+      "title": "Strong Start to the Season for the Gaiters",
+      "link": "https://thebucampus.ca/2026/10/27/strong-start-to-the-season-for-the-gaiters/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg"
     },
     {
       "title": "Queer Language is Queer Resistance",
@@ -75,15 +69,21 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
-      "image": null
+      "title": "Bishop’s Culture is Community",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg"
     },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "campus-bank",
       "image": null
     }
   ]
