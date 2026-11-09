@@ -399,14 +399,20 @@ function sportsGameMs(game) {
 /** Jour civil America/Toronto (YYYY-MM-DD) — frontière « hier / aujourd’hui ».
  *  Sert aux matchs comme aux articles : le jour de référence est celui du
  *  Québec, pas celui du fuseau de la personne qui lit. */
+// Formatters reused: the ticker asks for a civil day on every rotation step.
+let torontoDayKeyFormatter;
+let torontoHourFormatter;
 function torontoDayKey(msOrDate = Date.now()) {
   try {
-    return new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'America/Toronto',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }).format(new Date(msOrDate));
+    if (!torontoDayKeyFormatter) {
+      torontoDayKeyFormatter = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Toronto',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+    }
+    return torontoDayKeyFormatter.format(new Date(msOrDate));
   } catch {
     return new Date(msOrDate).toISOString().slice(0, 10);
   }
@@ -415,11 +421,14 @@ function torontoDayKey(msOrDate = Date.now()) {
 /** Heure civile 0–23 America/Toronto. */
 function torontoHour(msOrDate = Date.now()) {
   try {
-    const raw = new Intl.DateTimeFormat('en-GB', {
-      timeZone: 'America/Toronto',
-      hour: '2-digit',
-      hour12: false,
-    }).format(new Date(msOrDate));
+    if (!torontoHourFormatter) {
+      torontoHourFormatter = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'America/Toronto',
+        hour: '2-digit',
+        hour12: false,
+      });
+    }
+    const raw = torontoHourFormatter.format(new Date(msOrDate));
     const n = Number.parseInt(String(raw).replace(/[^\d]/g, ''), 10);
     return Number.isFinite(n) ? n : new Date(msOrDate).getHours();
   } catch {

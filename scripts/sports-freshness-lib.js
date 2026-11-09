@@ -30,46 +30,68 @@
   }
 
   // A sports kickoff is always a Toronto civil time, never the build/browser timezone.
-function zonedTimeToMs(ymd, hhmm, timeZone = 'America/Toronto') {
-  const day = String(ymd || '').slice(0, 10);
-  const m = String(hhmm || '').trim().replace(/\s*h\s*/i, ':').match(/^(\d{1,2}):(\d{2})/);
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !m) return NaN;
-  if (Number(m[1]) > 23 || Number(m[2]) > 59) return NaN;
-  const hh = String(Number(m[1])).padStart(2, '0');
-  const mm = m[2];
-  const utc = Date.parse(`${day}T${hh}:${mm}:00Z`);
-  if (!Number.isFinite(utc)) return NaN;
-  let fmt;
-  try {
-    fmt = new Intl.DateTimeFormat('en-CA', {
-      timeZone,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hourCycle: 'h23',
-    });
-  } catch {
-    return NaN;
+  // Pure function of (day, clock, zone): the masthead ticker sorts and re-checks
+  // the same few hundred kickoffs on every rotation step. Building a new
+  // Intl.DateTimeFormat plus six formatToParts per call cost seconds of main
+  // thread per minute on a throttled phone, so formatters and results are memoized.
+  const zonedFormatters = new Map();
+  function zonedFormatter(timeZone) {
+    if (zonedFormatters.has(timeZone)) return zonedFormatters.get(timeZone);
+    let fmt = null;
+    try {
+      fmt = new Intl.DateTimeFormat('en-CA', {
+        timeZone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23',
+      });
+    } catch {
+      fmt = null;
+    }
+    zonedFormatters.set(timeZone, fmt);
+    return fmt;
   }
-  // Probe both sides of a transition, then round-trip the requested wall time.
-  // A repeated autumn hour chooses its first occurrence; a nonexistent spring
-  // hour is unknown (NaN), never silently moved to a different kickoff.
-  const wallAt = ms => {
-    const parts = Object.fromEntries(fmt.formatToParts(new Date(ms)).map(p => [p.type, p.value]));
-    return Date.parse(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`);
-  };
-  const candidates = new Set();
-  for (const delta of [-86400000, 0, 86400000]) {
-    const probe = utc + delta;
-    const offset = wallAt(probe) - probe;
-    const candidate = utc - offset;
-    if (Number.isFinite(candidate) && wallAt(candidate) === utc) candidates.add(candidate);
+  const ZONED_CACHE_MAX = 20000;
+  const zonedCache = new Map();
+  function zonedTimeToMs(ymd, hhmm, timeZone = 'America/Toronto') {
+    const day = String(ymd || '').slice(0, 10);
+    const m = String(hhmm || '').trim().replace(/\s*h\s*/i, ':').match(/^(\d{1,2}):(\d{2})/);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !m) return NaN;
+    if (Number(m[1]) > 23 || Number(m[2]) > 59) return NaN;
+    const hh = String(Number(m[1])).padStart(2, '0');
+    const mm = m[2];
+    const key = `${day}T${hh}:${mm}|${timeZone}`;
+    if (zonedCache.has(key)) return zonedCache.get(key);
+    const value = computeZonedTimeToMs(day, hh, mm, timeZone);
+    if (zonedCache.size >= ZONED_CACHE_MAX) zonedCache.clear();
+    zonedCache.set(key, value);
+    return value;
   }
-  return candidates.size ? Math.min(...candidates) : NaN;
-}
+  function computeZonedTimeToMs(day, hh, mm, timeZone) {
+    const utc = Date.parse(`${day}T${hh}:${mm}:00Z`);
+    if (!Number.isFinite(utc)) return NaN;
+    const fmt = zonedFormatter(timeZone);
+    if (!fmt) return NaN;
+    // Probe both sides of a transition, then round-trip the requested wall time.
+    // A repeated autumn hour chooses its first occurrence; a nonexistent spring
+    // hour is unknown (NaN), never silently moved to a different kickoff.
+    const wallAt = ms => {
+      const parts = Object.fromEntries(fmt.formatToParts(new Date(ms)).map(p => [p.type, p.value]));
+      return Date.parse(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`);
+    };
+    const candidates = new Set();
+    for (const delta of [-86400000, 0, 86400000]) {
+      const probe = utc + delta;
+      const offset = wallAt(probe) - probe;
+      const candidate = utc - offset;
+      if (Number.isFinite(candidate) && wallAt(candidate) === utc) candidates.add(candidate);
+    }
+    return candidates.size ? Math.min(...candidates) : NaN;
+  }
 
   function parseGameDay(gameOrDate) {
     const raw = typeof gameOrDate === 'string'
@@ -96,16 +118,20 @@ function zonedTimeToMs(ymd, hhmm, timeZone = 'America/Toronto') {
   const MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO = 5;
 
   /** Jour civil America/Toronto (GitHub Actions = UTC). */
+  let torontoDayFormatter;
   function torontoDayKey(msOrDate = Date.now()) {
     const d = msOrDate instanceof Date ? msOrDate : new Date(msOrDate);
     if (!Number.isFinite(d.getTime())) return '';
     try {
-      return new Intl.DateTimeFormat('en-CA', {
-        timeZone: 'America/Toronto',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }).format(d);
+      if (!torontoDayFormatter) {
+        torontoDayFormatter = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'America/Toronto',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        });
+      }
+      return torontoDayFormatter.format(d);
     } catch {
       return dayKey(d);
     }

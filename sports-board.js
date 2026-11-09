@@ -209,10 +209,17 @@
     return panel.getAttribute('data-live') === '1';
   }
 
+  // Write `hidden` only when it changes: an unchanged write still queues a
+  // mutation record, which wakes the masonry observer and forces a relayout of
+  // ~115 000 nodes on every 30 s refresh.
+  function setHidden(el, hidden) {
+    if (el && el.hidden !== hidden) el.hidden = hidden;
+  }
+
   function ensureLivePill(panel, live) {
     let pill = panel.querySelector('.sports-panel__live');
     if (!live) {
-      if (pill) pill.hidden = true;
+      if (pill) setHidden(pill, true);
       return pill;
     }
     if (!pill) {
@@ -225,8 +232,9 @@
     }
     const verifiedAt = Date.parse(panel.getAttribute('data-live-verified-at') || '');
     const confirmed = panel.getAttribute('data-live-confirmed') === '1' && Date.now() - verifiedAt >= 0 && Date.now() - verifiedAt < 5 * 60000;
-    pill.textContent = confirmed ? t.live : lang === 'en' ? 'Scheduled now' : 'En cours · horaire';
-    pill.hidden = false;
+    const pillText = confirmed ? t.live : lang === 'en' ? 'Scheduled now' : 'En cours · horaire';
+    if (pill.textContent !== pillText) pill.textContent = pillText;
+    setHidden(pill, false);
     return pill;
   }
 
@@ -329,7 +337,7 @@
 
   function hydrateSportsBoard(payload) {
     if (!SportsDate || !payload || !payload.teams || typeof payload.teams !== 'object') return;
-    hydratedPayload = payload; hydratedDay = ymdInToronto();
+    hydratedPayload = payload; hydratedDay = ymdInToronto(); printWeekDirty = true;
     const byId = new Map(Object.entries(payload.teams).map(([key, team]) => [team?.id || key, team]));
     // Opposing teams often share the same kickoff; convert each date/time once per payload.
     const kickoffCache = new Map();
@@ -458,7 +466,13 @@
    * (lundi–dimanche, heure du Québec) et leurs matchs de la semaine.
    * Attributs lus par le bloc @media print de style-chrome.css.
    */
+  // The print week only moves with the civil day (or new rows from a live refresh).
+  let printWeekDay = '';
+  let printWeekDirty = true;
   function markPrintWeek() {
+    const day = ymdInToronto();
+    if (!printWeekDirty && day === printWeekDay) return;
+    printWeekDay = day; printWeekDirty = false;
     const range = periodRange('week');
     root.querySelectorAll('.sports-panel').forEach((panel) => {
       panel.toggleAttribute('data-print-week', panelMatchesPeriod(panel, 'week'));
@@ -555,7 +569,7 @@
     buttons.forEach((btn) => {
       const v = (btn.getAttribute(attr) || '').toLowerCase();
       const on = v === value;
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (btn.getAttribute('aria-pressed') !== String(on)) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       btn.classList.toggle('is-active', on);
     });
   }
@@ -606,9 +620,9 @@
     }
     const expanded = expandedUpcoming.has(upcomingPanelKey(panel));
     const extras = new Set(future.slice(1).filter(row => !rowIsFocused(row, focusedGame)));
-    for (const row of rows) row.hidden = !eligible.has(row) || (!expanded && extras.has(row));
+    for (const row of rows) setHidden(row, !eligible.has(row) || (!expanded && extras.has(row)));
     let button = panel.querySelector('[data-upcoming-toggle]');
-    if (!extras.size) { if (button) button.hidden = true; return; }
+    if (!extras.size) { if (button) setHidden(button, true); return; }
     const list = panel.querySelector('.sports-panel__list');
     if (!list) return;
     if (!list.id) list.id = `sports-games-${panels.indexOf(panel)}`;
@@ -617,11 +631,12 @@
       button.className = 'sports-panel__upcoming-toggle'; button.setAttribute('data-upcoming-toggle', '');
       list.after(button);
     }
-    button.hidden = false;
-    button.setAttribute('aria-controls', list.id);
-    button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    button.textContent = expanded ? (lang === 'en' ? 'Show less' : 'Réduire')
+    setHidden(button, false);
+    if (button.getAttribute('aria-controls') !== list.id) button.setAttribute('aria-controls', list.id);
+    if (button.getAttribute('aria-expanded') !== String(expanded)) button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    const label = expanded ? (lang === 'en' ? 'Show less' : 'Réduire')
       : lang === 'en' ? `See other upcoming games (${extras.size})` : `Voir les autres matchs à venir (${extras.size})`;
+    if (button.textContent !== label) button.textContent = label;
   }
   root.addEventListener('click', event => {
     const button = event.target.closest('[data-upcoming-toggle]');
@@ -647,6 +662,48 @@
    * Deep-link ?game=… : la ligne de résultat / prochain cliquée dans l’iframe.
    * data-game-id si présent (pages régénérées) ; sinon href RSEQ GameId=.
    */
+  /*
+   * Fiches hors écran rendues à la demande (content-visibility, seo-pages.css) :
+   * un long défilement doux part de hauteurs de réserve, et les fiches traversées
+   * prennent leur vraie hauteur en route. On vérifie l’arrivée puis on corrige
+   * (au plus 3 fois) pour que la cible finisse bien à l’écran.
+   */
+  function scrollIntoViewSettled(el, block = 'center') {
+    let tries = 0;
+    const go = () => {
+      try { el.scrollIntoView({ behavior: 'smooth', block }); } catch { el.scrollIntoView(); }
+    };
+    const landed = () => {
+      if (!el.isConnected || el.hidden) return true;
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      if (block === 'start') return r.top >= -2 && r.top <= vh * 0.35;
+      return r.bottom > 0 && r.top < vh && Math.abs((r.top + r.bottom) / 2 - vh / 2) <= Math.max(48, vh * 0.25, r.height / 2 - vh / 2);
+    };
+    const settle = () => {
+      if (landed() || tries >= 3) return;
+      tries += 1;
+      go();
+      waitScrollEnd(settle);
+    };
+    go();
+    waitScrollEnd(settle);
+  }
+  function waitScrollEnd(fn) {
+    let done = false;
+    let timer = 0;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      window.clearTimeout(timer);
+      window.removeEventListener('scrollend', onEnd);
+      window.requestAnimationFrame(() => window.requestAnimationFrame(fn));
+    };
+    const onEnd = () => finish();
+    if ('onscrollend' in window) window.addEventListener('scrollend', onEnd, { once: true, passive: true });
+    timer = window.setTimeout(finish, 1200);
+  }
+
   function focusGame(gameId, scroll = true) {
     clearGameSpotlight();
     const id = String(gameId || '').trim();
@@ -668,7 +725,7 @@
     if (scroll) window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         try {
-          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          scrollIntoViewSettled(row, 'center');
         } catch { /* ignore */ }
       });
     });
@@ -704,7 +761,7 @@
     if (scroll) window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         try {
-          panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          scrollIntoViewSettled(panel, 'center');
         } catch { /* ignore */ }
       });
     });
@@ -717,7 +774,7 @@
     const block = first.closest('.sports-sport-block');
     if (block && 'open' in block) block.open = true;
     try {
-      first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollIntoViewSettled(first, 'start');
     } catch { /* ignore */ }
   }
 
@@ -775,7 +832,7 @@
         : schoolTokens.every(token => schoolHay.includes(token))));
       applyUpcomingVisibility(panel, periodKey, rowRange, gameFocus);
       const show = okSport && okSector && okSex && okSearch && okPeriod && okSchool;
-      panel.hidden = !show;
+      setHidden(panel, !show);
       if (show && !isExternal) visible += 1;
       if (show && isExternal) externalVisible += 1;
     });
@@ -785,7 +842,7 @@
       const gSex = (heading.getAttribute('data-sex-group') || '').toLowerCase();
       const board = heading.parentElement;
       if (!board) {
-        heading.hidden = true;
+        setHidden(heading, true);
         return;
       }
       const any = Array.from(board.querySelectorAll('.sports-panel')).some((p) => {
@@ -794,7 +851,7 @@
         if (gSex === 'x' || gSex === '') return !pSex;
         return pSex === gSex;
       });
-      heading.hidden = !any;
+      setHidden(heading, !any);
     });
 
     // Re-trier chaque grille : prochain match le plus proche en premier (H/F indifférent).
@@ -831,7 +888,7 @@
         && (p.getAttribute('data-sport') || '').toLowerCase() === bSport
       ));
       const sportOk = effectiveSport === 'all' || bSport === effectiveSport;
-      block.hidden = !(any && sportOk);
+      setHidden(block, !(any && sportOk));
       if ((effectiveSport !== 'all' || tokens.length) && any && 'open' in block) {
         if (bSport === effectiveSport || tokens.length) block.open = true;
       }
@@ -1107,8 +1164,14 @@
     searchInput.value = initial.q;
     searchQuery = initial.q;
   }
+  // Labels (Hier / Aujourd’hui / Demain, year) only depend on the Toronto civil
+  // day: rewriting ~8 450 <time> elements every 30 s churned the whole page.
+  let relabeledDay = '';
   function relabelCivilDays() {
     if (!SportsDate) return;
+    const today = SportsDate.civilNow(Date.now());
+    if (today === relabeledDay) return;
+    relabeledDay = today;
     root.querySelectorAll('.sports-result time[datetime]').forEach(el => {
       // Keep the published regatta range, but its separate year can age at midnight.
       const date = String(el.getAttribute('datetime') || '').slice(0, 10);
