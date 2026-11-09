@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T21:40:30.691Z",
+  "updated": "2026-11-09T22:09:42.455Z",
   "total": 188,
   "withImage": 168,
   "withCredit": 168,
@@ -7,15 +7,15 @@
   "pending": 35,
   "missingHero": 0,
   "ok": false,
-  "checked": 51,
-  "updatedCount": 8,
-  "citedNew": 10,
+  "checked": 50,
+  "updatedCount": 7,
+  "citedNew": 9,
   "fallbackNew": 41,
   "samples": [
     {
-      "title": "Les étudiants de l’UQAC en grève pour la rémunération des stages",
+      "title": "Neuf Félix plus tard, Angine de Poitrine fait rayonner le Saguenay–Lac Saint-Jean",
       "source": "La Pige",
-      "credit": "Photo : Julianne Landry",
+      "credit": "Photo : p_a_h/Wikimedia Commons",
       "cited": true,
       "method": "body-line"
     },
@@ -34,18 +34,18 @@
       "method": "via-attribution"
     },
     {
-      "title": "Jésus et autres mots-clics",
+      "title": "Affaire Ewert : qui savait quoi ?",
       "source": "Le Délit",
-      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Quand la mode va trop loin",
+      "title": "Le retour du Rocky Horror Picture Show",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
+      "credit": "Photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",
@@ -57,16 +57,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Une 20e saison positive pour le quai des croisières de La Baie",
-      "source": "La Pige",
-      "credit": "Photo : Saguenayfjord",
+      "credit": "Illustration: Annabelle Olumese",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-trailing"
     }
   ]
 }
