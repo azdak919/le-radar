@@ -1,8 +1,9 @@
 {
-  "at": "2026-11-09T15:37:30.885Z",
+  "at": "2026-11-09T16:08:50.424Z",
   "targets": 169,
-  "failed": 1,
+  "failed": 2,
   "failReasons": {
+    "HTTP 403": 1,
     "too large": 1
   }
 }

@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-09T15:36:51.521Z",
+  "updated": "2026-11-09T16:07:39.343Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 14,
-  "withLeadExcerpt": 125,
-  "candidates": 14,
-  "enriched": 0,
+  "incomplete": 15,
+  "withLeadExcerpt": 126,
+  "candidates": 15,
+  "enriched": 1,
   "failed": 5,
   "ok": true,
   "samples": [
@@ -26,6 +26,15 @@
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
+    },
+    {
+      "title": "Les multiples visages de la précarité à l’Université",
+      "link": "https://impactcampus.ca/actualites/les-multiples-visages-de-la-precarite-a-luniversite/",
+      "ok": true,
+      "score": 91,
+      "chars": 400,
+      "sample": "Une table ronde sur la précarité à l’Université Laval a eu lieu le 20 octobre dernier, rassemblant l",
+      "changed": true
     },
     {
       "title": "Creative Writing October 2026",
@@ -70,15 +79,6 @@
       "score": 70,
       "chars": 400,
       "sample": "À l’aube des élections de mi-mandat aux États-Unis, j’ai rencontré des étudiant(e)s de l’Université ",
-      "changed": false
-    },
-    {
-      "title": "Plus rien n’est égal par ailleurs : Un film qui divise, et c’est voulu",
-      "link": "https://lapige.atmjonquiere.com/2026/11/06/plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu/?utm_source=rss&utm_medium=rss&utm_campaign=plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu",
-      "ok": true,
-      "score": 96,
-      "chars": 162,
-      "sample": "Présenté jeudi soir au Cégep de Jonquière, le nouveau documentaire de Martin Bureau a suscité autant",
       "changed": false
     }
   ]
