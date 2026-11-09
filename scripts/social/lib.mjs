@@ -10,12 +10,14 @@ export const MAX_AGE_H = 72;
 
 const ent = s => (s || '').replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d))
   .replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&hellip;/g, '…').replace(/&[lr]squo;/g, '’').replace(/&[lr]dquo;/g, '"').replace(/&amp;/g, '&');
-const dec = s => ent((s || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')).trim();
+// Filet CDATA : fermé, échappé en entités, imbriqué ou tronqué (scripts/cdata-lib.js).
+const dec = s => stripCdata(ent(stripCdata(s || ''))).trim();
 const tag = (b, t) => { const m = b.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`)); return m ? dec(m[1]) : ''; };
-const plain = h => ent(ent((h || '').replace(/<[^>]*>/g, ' '))).replace(/\s+/g, ' ').trim();
+const plain = h => stripCdata(ent(ent(stripCdata(h || '').replace(/<[^>]*>/g, ' ')))).replace(/\s+/g, ' ').trim();
 export const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 import { createRequire } from 'node:module';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
+export const { stripCdata, hasCdata } = createRequire(import.meta.url)('../cdata-lib.js');
 export { articleId };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -206,7 +208,8 @@ export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', pho
   const ex = cutExcerpt(excerpt(it, { ai }), e => len(mk(title, e)) <= limit);
   let text = mk(title, ex);
   while (len(text) > limit && title.length > 10) { title = title.slice(0, -2).trimEnd().replace(/[\s,;:.–—-]+$/, '') + '…'; text = mk(title, ''); }
-  return /tison/i.test(text) ? '' : text;
+  text = stripCdata(text); // dernier filet : jamais de marqueur CDATA dans une publication
+  return /tison/i.test(text) || hasCdata(text) ? '' : text;
 }
 
 /**

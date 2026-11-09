@@ -15,6 +15,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { stripCdata } = require('./cdata-lib');
 
 const ROOT = path.join(__dirname, '..');
 const UNDATED = '0000-00';
@@ -85,7 +86,8 @@ function writeArchive(catalog, root = ROOT) {
   let bytes = 0;
   for (const m of months) {
     const file = path.join(p.dir, `${m}.json`);
-    const text = monthText(m, sortRecords(groups.get(m)), schemaVersion);
+    // Filet CDATA : jamais de marqueur dans le catalogue publié (scripts/cdata-lib.js).
+    const text = stripCdata(monthText(m, sortRecords(groups.get(m)), schemaVersion));
     const prev = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
     if (prev !== text) { fs.writeFileSync(file, text); written.push(m); }
     const size = Buffer.byteLength(text);

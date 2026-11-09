@@ -5,7 +5,7 @@
 // (même id, même image, même heure). L'article est retrouvé dans le flux par l'état buffer-sent.json.
 // Ignore toute publication due dans moins de 10 min ou absente du flux. DRY_RUN=true : lecture seule.
 import fs from 'node:fs';
-import { buildText, formatOk, parseFeed, stripUtm, xlen, LIMITS } from './lib.mjs';
+import { buildText, formatOk, parseFeed, stripUtm, xlen, LIMITS, hasCdata } from './lib.mjs';
 import { bankCredit } from './image-resolve.mjs';
 import { buildPageText, postMetadata } from './buffer-pages.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
@@ -50,6 +50,7 @@ async function runChannel({ ch, state, build, dry, isX, metadata }) {
     let n = 0;
     for (const p of q) {
       const s = byPost.get(p.id), it = find(s);
+      if (hasCdata(p.text)) console.log(`::warning::CDATA dans la file Buffer : ${p.id} (${fmt(p.dueAt)}) ${it ? 'sera réécrit' : 'article introuvable : à supprimer via « Social — supprimer UNE publication contenant du CDATA »'}`);
       if (!it) { console.log(`! ${p.id} ${fmt(p.dueAt)} article introuvable (état/flux), intact`); continue; }
       const img = p.assets?.[0]?.source || '';
       const credit = currentCredit(it, s, img);

@@ -1,0 +1,48 @@
+name: Social — supprimer UNE publication contenant du CDATA
+
+# Manuel seulement. Supprime une publication du Radar (Mastodon, Tumblr, ou file Buffer) SI et seulement
+# si elle contient un marqueur CDATA (<![CDATA[ ou ]]>) : le post est relu avant suppression.
+# Bluesky : utiliser « Bluesky — supprimer une publication » (bluesky-delete-post.yml).
+on:
+  workflow_dispatch:
+    inputs:
+      network:
+        description: 'Réseau'
+        required: true
+        type: choice
+        options: [mastodon, tumblr, buffer]
+      post_id:
+        description: 'ID de la publication (Mastodon : fin de l’URL ; Tumblr : id du post ; Buffer : id du post en file)'
+        required: true
+        type: string
+      dry_run:
+        description: 'Essai seulement'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Supprimer
+        env:
+          NETWORK: ${{ inputs.network }}
+          POST_ID: ${{ inputs.post_id }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
+          TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}
+          TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+        run: node scripts/social/delete-post.mjs

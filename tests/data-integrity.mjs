@@ -500,6 +500,14 @@ for (const [jsonRel, jsRel] of bankPairs) {
   bankPhotoCount += bank.photos.length;
 }
 
+// Aucun marqueur CDATA (<![CDATA[, ]]>, entités comprises) dans les données publiées (9 nov. 2026).
+{
+  const { hasCdata } = require('../scripts/cdata-lib.js');
+  for (const f of ['news.json', 'data/article-pages.json']) {
+    assert(!hasCdata(readFileSync(new URL(f, root), 'utf8')), `${f} : marqueur CDATA — node scripts/scrub-cdata.js --update`);
+  }
+}
+
 console.log(
   `OK données (${articles.length} articles, ${activeSourceNames.size} sources, ${radios.length} radios, ${bankPhotoCount} fonds QC)`
 );

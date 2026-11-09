@@ -404,7 +404,7 @@
 
   function displayExcerpt(meta) {
     const lib = cardLib();
-    const text = String(meta.excerpt || '');
+    const text = lib && lib.stripCdata ? lib.stripCdata(meta.excerpt || '') : String(meta.excerpt || '');
     return lib && meta.author ? lib.stripLeadingByline(text, meta.author) : text;
   }
 

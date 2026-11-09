@@ -3,6 +3,8 @@
  * Partagé par les bots Node ; garder decodeHtmlEntities() dans app.js aligné.
  */
 
+const { stripCdata } = require('./cdata-lib');
+
 const NAMED_HTML_ENTITIES = {
   amp: '&',
   lt: '<',
@@ -101,8 +103,8 @@ function decodeHtmlEntities(str = '', { maxPasses = 3 } = {}) {
   let s = String(str);
   for (let pass = 0; pass < maxPasses; pass += 1) {
     const prev = s;
+    s = stripCdata(s);
     s = s
-      .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
       .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
       .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
       .replace(/&#0?39;/g, '’')
@@ -115,7 +117,8 @@ function decodeHtmlEntities(str = '', { maxPasses = 3 } = {}) {
       .replace(/&gt;/g, '>');
     if (s === prev) break;
   }
-  return s;
+  // Filet : un CDATA révélé à la dernière passe (échappé en entités) ou tronqué ne sort jamais d'ici.
+  return stripCdata(s);
 }
 
 /** Alias historique des scripts existants. */
@@ -127,7 +130,7 @@ const INLINE_TAG_RE = /<\/?(?:span|a|em|strong|b|i|u|s|sup|sub|small|mark|abbr|f
 const INVISIBLE_CHARS_RE = /[\u00AD\u200B-\u200D\u2060\uFEFF]/g;
 
 function stripHtml(html = '') {
-  return decodeHtmlEntities(html)
+  return stripCdata(decodeHtmlEntities(html))
     // Balises en ligne (span, a, em…) : aucune espace, sinon « p</span><span>ermet » devient « p ermet ».
     .replace(INLINE_TAG_RE, '')
     .replace(/<[^>]+>/g, ' ')
