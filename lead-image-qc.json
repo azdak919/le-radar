@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-09T16:08:11.384Z",
+  "updated": "2026-11-09T16:37:27.025Z",
   "total": 188,
   "withPhoto": 172,
   "withStock": 28,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 153,
-  "pageScraped": 32,
-  "photosRecovered": 31,
-  "imagesCleared": 17,
-  "stockSearches": 36,
+  "leadReadyPhotos": 155,
+  "pageScraped": 31,
+  "photosRecovered": 30,
+  "imagesCleared": 18,
+  "stockSearches": 35,
   "stockFound": 22,
   "campusBankFound": 19,
   "mainPageLeadReady": true,
@@ -19,12 +19,6 @@
       "link": "https://theconcordian.com/2026/11/lombre-presence-ultime-carl-trahan/",
       "reason": "no-stock-match",
       "image": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_8672.jpg"
-    },
-    {
-      "title": "Les multiples visages de la précarité à l’Université",
-      "link": "https://impactcampus.ca/actualites/les-multiples-visages-de-la-precarite-a-luniversite/",
-      "reason": "no-stock-match",
-      "image": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/09110351/campus-universite-laval-quebec-etudiants-rentree-88030.jpeg.jpg"
     },
     {
       "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill - The McGill Daily",
@@ -84,6 +78,12 @@
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
       "image": null
     }
   ]

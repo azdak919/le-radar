@@ -1653,19 +1653,28 @@
       "via": "resize-proxy",
       "nameKey": "amuse_photo_2_1024.png"
     },
-    "6652aa068d12dd9c": {
-      "local": "assets/news-images/6652aa068d12dd9c.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
+    "140272a87a1faec2": {
+      "local": "assets/news-images/140272a87a1faec2.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-1.jpg",
       "host": "theconcordian.com",
-      "bytes": 187027,
+      "bytes": 155985,
+      "updatedAt": "2026-11-09T16:37:56.568Z",
+      "via": "disk",
+      "nameKey": "hannahnobile_011126_suprasemis_vol44-1.jpg"
+    },
+    "765fbf0210797099": {
+      "local": "assets/news-images/765fbf0210797099.jpg",
+      "remote": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/09111036/IMG_2102-1.jpg",
+      "host": "cdn.impactcampus.ca",
+      "bytes": 194943,
       "contentType": "image/jpeg",
-      "updatedAt": "2026-11-09T16:08:50.416Z",
+      "updatedAt": "2026-11-09T16:37:58.252Z",
       "via": "resize-proxy",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
+      "nameKey": "img_2102-1.jpg"
     }
   },
-  "updatedAt": "2026-11-09T16:08:50.420Z",
-  "count": 167,
+  "updatedAt": "2026-11-09T16:37:58.255Z",
+  "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
