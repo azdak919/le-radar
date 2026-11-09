@@ -1583,15 +1583,6 @@
       "via": "disk",
       "nameKey": "image-1.jpeg"
     },
-    "0d84d91b0191efcf": {
-      "local": "assets/news-images/0d84d91b0191efcf.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 83501,
-      "updatedAt": "2026-11-09T19:57:31.848Z",
-      "via": "disk",
-      "nameKey": "blanchissement.png"
-    },
     "f7584d1cfb2321f6": {
       "local": "assets/news-images/f7584d1cfb2321f6.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/IMG_2603.jpeg",
@@ -1650,10 +1641,29 @@
       "updatedAt": "2026-11-09T20:09:39.496Z",
       "via": "resize-proxy",
       "nameKey": "auclair_4.jpg"
+    },
+    "d0d4eef2f356a4c4": {
+      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 286051,
+      "updatedAt": "2026-11-09T21:08:14.833Z",
+      "via": "disk",
+      "nameKey": "ak-mbam.jpg"
+    },
+    "7703d369aa76e09d": {
+      "local": "assets/news-images/7703d369aa76e09d.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/DSC_7712.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 156073,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-09T21:08:17.917Z",
+      "via": "resize-proxy",
+      "nameKey": "dsc_7712.jpg"
     }
   },
-  "updatedAt": "2026-11-09T20:38:35.022Z",
-  "count": 166,
+  "updatedAt": "2026-11-09T21:08:17.920Z",
+  "count": 167,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

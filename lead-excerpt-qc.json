@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-09T20:37:20.975Z",
+  "updated": "2026-11-09T21:07:13.937Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 8,
+  "incomplete": 9,
   "withLeadExcerpt": 128,
-  "candidates": 8,
-  "enriched": 1,
+  "candidates": 9,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,12 +28,21 @@
       "changed": false
     },
     {
-      "title": "FASA opens anti-austerity week with town hall and general assembly",
-      "link": "https://thelinknewspaper.ca/article/16534",
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
       "ok": true,
-      "score": 96,
-      "chars": 276,
-      "sample": "The Fine Arts Student Alliance (FASA) held a town hall meeting with fine arts dean Annie Gérin on No",
+      "score": 100,
+      "chars": 258,
+      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "changed": true
+    },
+    {
+      "title": "Les mémoires d’une pieuvre : comme un retour aux sources",
+      "link": "https://lapige.atmjonquiere.com/2026/11/09/les-memoires-dune-pieuvre-comme-un-retour-aux-sources/?utm_source=rss&utm_medium=rss&utm_campaign=les-memoires-dune-pieuvre-comme-un-retour-aux-sources",
+      "ok": true,
+      "score": 100,
+      "chars": 228,
+      "sample": "L’artiste saguenéenne, Marie-Danielle Duval revient exposer dans la région où elle a grandi. Son exp",
       "changed": true
     },
     {
