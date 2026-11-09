@@ -1024,11 +1024,21 @@ function sportsMatchNaturalWidth(chip) {
   return Math.max(boxW, Math.ceil(textW) + 48);
 }
 
-/** Toutes largeurs : CTA et scores en flex égal — retirer les width inline. */
+/** Conserver la largeur d’un slot normal même si le pool live ne le remplit pas. */
 function fitWideSportsMatchSlots() {
   if (!MASTHEAD_SPORTS_STRIP) return;
   const strip = MASTHEAD_SPORTS_STRIP;
   strip.style.removeProperty('--sports-match-w');
+  // La capacité dépend de la place disponible, jamais du nombre de directs.
+  // Sans plafond, flex-grow transforme un direct isolé en ligne pleine largeur.
+  // Même géométrie qu’une rangée remplie : padding réel + gap CSS, sans hauteur
+  // inventée ni match de remplissage. Recalculé aussi après fit et resize.
+  const slots = Math.max(1, sportsBoardCount());
+  const cs = getComputedStyle(strip);
+  const innerWidth = strip.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+  const gap = parseFloat(cs.columnGap) || 0;
+  const slotWidth = Math.max(0, (innerWidth - gap * (slots - 1)) / slots);
+  strip.style.setProperty('--sports-card-slot-width', `${slotWidth}px`);
   strip.querySelectorAll('.sports-chip').forEach((el) => {
     el.style.removeProperty('flex');
     el.style.removeProperty('width');
@@ -4246,6 +4256,7 @@ function renderSportsStrip() {
   MASTHEAD_SPORTS_STRIP.hidden = false;
   MASTHEAD_SPORTS_STRIP.classList.remove('is-empty');
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
+  fitWideSportsMatchSlots();
   MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = sportsVisible.length >= 2 ? '1' : '0';
   // Fit anti-marquee (A) + marquee CTA seulement, après layout stable.
   window.requestAnimationFrame(() => {

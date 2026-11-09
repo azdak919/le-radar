@@ -1,0 +1,53 @@
+{
+  "mode": "next",
+  "team": {
+    "id": "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:99056790-8669-4efe-8565-7f3ef6c8a71b",
+    "rseqTeamId": "99056790-8669-4efe-8565-7f3ef6c8a71b",
+    "sourceTeamName": "Rosemont",
+    "sourceTeamCode": "ROS",
+    "sourceInstitutionId": "53c950c5-945d-4108-83f3-fbac6e0b17f8",
+    "leagueId": "69d65ae8-d390-45a8-8b69-f0080287bef2",
+    "name": "Cégep de Rosemont",
+    "code": "ROS",
+    "sector": "collegial",
+    "sport": "basketball",
+    "sportLabel": "Basketball",
+    "sex": "M",
+    "division": "D3",
+    "usports": false,
+    "leagueLabel": "Basketball collégial masculin D3",
+    "source": "rseq-s1",
+    "priority": 80,
+    "fullName": "Cégep de Rosemont",
+    "nickname": "Gaulois",
+    "registryId": "rosemont",
+    "lastGamePriorSeason": false,
+    "institutionId": "rosemont",
+    "institutionName": "Cégep de Rosemont",
+    "institutionLabel": "Cégep de Rosemont"
+  },
+  "game": {
+    "date": "2026-11-08",
+    "time": "17:00",
+    "opponent": "Collège de Bois-de-Boulogne",
+    "opponentRseqTeamId": "e24a6336-f0ef-42f1-9d23-ac25c3be786d",
+    "sourceOpponentName": "Bois-de-Boulogne",
+    "opponentCode": "BDB",
+    "home": false,
+    "gameId": "90dd208f-4c3c-472d-8086-a183d54a53e9",
+    "opponentFullName": "Collège de Bois-de-Boulogne",
+    "opponentNickname": "Cavaliers",
+    "opponentRegistryId": "bois-de-boulogne",
+    "live": true,
+    "opponentSector": "collegial",
+    "sport": "basketball",
+    "competition": "Basketball collégial masculin D3",
+    "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=90dd208f-4c3c-472d-8086-a183d54a53e9"
+  },
+  "key": "n:collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:99056790-8669-4efe-8565-7f3ef6c8a71b:2026-11-08:17:00:90dd208f-4c3c-472d-8086-a183d54a53e9",
+  "urgency": {
+    "tier": 4,
+    "sortMs": -1794175200000
+  },
+  "tone": "#d88a0a"
+}
