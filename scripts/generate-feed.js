@@ -14,6 +14,7 @@
 const fs = require('fs');
 const { displayAuthorName, displayPhotoCredit, isSuspectAuthorName } = require('./article-card-lib');
 const path = require('path');
+const { stripCdata } = require('./cdata-lib');
 const { pruneToFreshWindow } = require('./source-retention-lib');
 const { buildAcronymMap } = require('./institution-labels-lib');
 
@@ -57,7 +58,8 @@ function loadSourceSites() {
 const XML_INVALID = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF\u00AD]/g;
 
 function stripInvalidXml(text = '') {
-  return String(text).replace(XML_INVALID, '');
+  // Aucun marqueur CDATA ne doit entrer dans le fil (sinon <![CDATA[ imbriqué = texte brut visible).
+  return stripCdata(String(text)).replace(XML_INVALID, '');
 }
 
 /** Ponctuation : pas d'espace avant . , ; espaces fines avant ; ! ? et : en français. */

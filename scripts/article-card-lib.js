@@ -91,12 +91,32 @@ function safeFromCodePoint(code, fallback) {
   }
 }
 
+/**
+ * Filet CDATA côté affichage (mêmes cas que scripts/cdata-lib.js) : fermé, échappé en entités,
+ * imbriqué, TRONQUÉ (sans ]]>) et ]]> orphelin. Protège aussi un news.json déjà en cache.
+ */
+function stripCdata(input) {
+  let s = String(input == null ? '' : input);
+  if (!/!\[cdata\[|\]\](?:>|&(?:amp;)*(?:gt|#0*62|#x0*3e);)|<!\[(?:C(?:D(?:A(?:T(?:A)?)?)?)?)?$/i.test(s)) return s;
+  s = s.replace(/&(?:amp;)*(?:lt|#0*60|#x0*3c);(?=!\[CDATA\[)/gi, '<')
+    .replace(/\]\]&(?:amp;)*(?:gt|#0*62|#x0*3e);/g, ']]>');
+  for (let i = 0; i < 6; i += 1) {
+    const next = s.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/gi, '$1');
+    if (next === s) break;
+    s = next;
+  }
+  const hadOpen = /<!\[CDATA\[/i.test(s);
+  s = s.replace(/<!\[CDATA\[/gi, '').replace(/\]\]>/g, '');
+  if (hadOpen) s = s.replace(/\]{1,2}\s*$/, '');
+  return s.replace(/<!\[(?:C(?:D(?:A(?:T(?:A)?)?)?)?)?$/, '');
+}
+
 function decodeHtmlEntities(str = '') {
   let s = String(str);
   for (let pass = 0; pass < 3; pass += 1) {
     const prev = s;
+    s = stripCdata(s);
     s = s
-      .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
       .replace(/&#(\d+);/g, (m, n) => safeFromCodePoint(parseInt(n, 10), m))
       .replace(/&#x([0-9a-f]+);/gi, (m, n) => safeFromCodePoint(parseInt(n, 16), m))
       .replace(/&#0?39;/gi, '’');
@@ -105,7 +125,7 @@ function decodeHtmlEntities(str = '') {
       .replace(/&gt;/gi, '>');
     if (s === prev) break;
   }
-  return s;
+  return stripCdata(s);
 }
 
 function cleanTitle(title = '') {
@@ -367,6 +387,7 @@ return {
   isSuspectPhotoCredit,
   displayPhotoCredit,
   decodeHtmlEntities,
+  stripCdata,
   cleanTitle,
   stripLeadingByline,
   torontoDay,

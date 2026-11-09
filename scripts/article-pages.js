@@ -17,6 +17,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { scrubDeep } = require('./cdata-lib');
 const { photoCreditLine, isLogoImageUrl } = require('./generate-feed');
 const { articleId } = require('../mobile/app/js/core.js');
 
@@ -103,8 +104,11 @@ function readStore() {
 
 function writeStore(store) {
   // Une ligne par fiche : diffs de bot lisibles, fichier compact.
-  const ids = Object.keys(store.articles).sort();
-  const body = ids.map((id) => `  ${JSON.stringify(id)}: ${JSON.stringify(store.articles[id])}`).join(',\n');
+  // Filet CDATA : une fiche déjà créée garde ses champs « pour toujours » — on y retire tout marqueur.
+  const clean = scrubDeep(store.articles).value;
+  store.articles = clean;
+  const ids = Object.keys(clean).sort();
+  const body = ids.map((id) => `  ${JSON.stringify(id)}: ${JSON.stringify(clean[id])}`).join(',\n');
   fs.writeFileSync(STORE, `{\n "schemaVersion": 1,\n "_doc": "Fiches /article/<id>/ (scripts/article-pages.js). Jamais de retrait : les liens partagés restent valides.",\n "articles": {\n${body}\n }\n}\n`);
 }
 

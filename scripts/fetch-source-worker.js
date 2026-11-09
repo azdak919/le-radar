@@ -18,6 +18,7 @@ const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
 const { pruneToFreshWindow } = require('./source-retention-lib');
 const { decodeEntities, stripHtml, fixDropCapSpacing } = require('./html-entities-lib');
+const { stripCdata } = require('./cdata-lib');
 const { expandAuthorName, extractBylineFromText, authorFromBodyCredits, normalizeAuthor, isEditorialPlaceholder } = require('./author-lib');
 const { isCandidateImageUrl, isWeakImageUrl, unwrapCdnImageUrl } = require('./article-image-lib');
 const { extractPhotoCreditFromHtml } = require('./article-photo-credit-lib');
@@ -72,7 +73,8 @@ function tagFast(block, name, maxLen = 8_000) {
   if (closeIdx === -1) return '';
   // Plafonner le contenu extrait
   const raw = block.slice(start, Math.min(closeIdx, start + maxLen));
-  return decodeEntities(raw.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/gi, '$1').trim());
+  // CDATA fermé, échappé ou TRONQUÉ par maxLen (pas de ]]>) : toujours déballé.
+  return decodeEntities(stripCdata(raw).trim());
 }
 
 const { sanitizeTitle } = require('./news-title-lib');
@@ -281,3 +283,6 @@ process.on('message', async (msg) => {
   }
   process.exit(0);
 });
+
+// Exposé pour les tests (tests/cdata-regression.mjs) ; en worker, le module est lancé directement.
+if (require.main !== module) module.exports = { parseFeed, tagFast, pickExcerpt, truncateExcerpt };

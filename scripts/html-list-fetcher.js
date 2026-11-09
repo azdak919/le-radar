@@ -8,6 +8,8 @@
  *   const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
  */
 
+const { stripCdata } = require('./cdata-lib');
+
 const DAY = 86400000;
 const OK_DAYS = 270;
 const STALE_DAYS = 540;
@@ -16,8 +18,7 @@ const DEAD_DAYS = 730;
 const DATED_PATH_RE = /\/(20\d{2})\/(\d{2})\/(\d{2})\//;
 
 function decodeEntities(str = '') {
-  return str
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+  return stripCdata(stripCdata(String(str))
     .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
     .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
     .replace(/&nbsp;/g, ' ')
@@ -26,7 +27,7 @@ function decodeEntities(str = '') {
     .replace(/&#0?39;|&apos;|&rsquo;/g, '’')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
-    .replace(/&hellip;/gi, '…');
+    .replace(/&hellip;/gi, '…'));
 }
 
 function stripHtml(html = '') {

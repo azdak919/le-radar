@@ -28,6 +28,7 @@
 const fs = require('fs');
 const { isSuspectAuthorName } = require('./article-card-lib');
 const path = require('path');
+const { stripCdata } = require('./cdata-lib');
 const { execFileSync } = require('child_process');
 const { decodeHtmlEntities } = require('./html-entities-lib');
 const { buildEntityPages } = require('./seo-pages');
@@ -140,7 +141,7 @@ function escapeXml(text = '') {
 }
 
 function escapeHtml(text = '') {
-  return String(text)
+  return stripCdata(String(text))
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')

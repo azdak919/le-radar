@@ -286,6 +286,7 @@ function withTimeout(promise, ms, fallback) {
 }
 
 const { decodeEntities, stripHtml, fixDropCapSpacing } = require('./html-entities-lib');
+const { scrubDeep } = require('./cdata-lib');
 
 // === Minimal RSS / Atom parsing ==============================================
 
@@ -1256,6 +1257,8 @@ async function main() {
     news.items = filterNonArticles(news.items || [], { log: console.log });
     news.count = news.items.length;
     applyLeadImagePins(news.items || []);
+    // Filet CDATA : aucun marqueur ne sort vers news.json (titres, accroches, auteurs, crédits).
+    { const { value, changed } = scrubDeep(news.items); news.items = value; if (changed) console.log(`⚠️ CDATA retiré de ${changed} champ(s) avant écriture.`); }
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
     const archiveWrite = writeArchive(serializeHistoricalCatalog(archiveResult.catalog, histConfig).catalog);
     console.log(`✅ Catalogue mensuel : ${archiveWrite.months} mois, ${archiveWrite.written.length} réécrit(s) [${archiveWrite.written.join(', ')}], ${archiveWrite.removed.length} retiré(s), ${archiveWrite.bytes} octets`);
