@@ -242,6 +242,7 @@ const SPORTS_CTA_KEY = 'cta:board';
 let sportsCtaLabelIndex = 0;
 /** Curseur circulaire dans le pool de gauche (résultats ou next). */
 let sportsLeftCursor = 0;
+let sportsPriorityCursors = { live: 0, other: 0, left: 0, right: 0 };
 
 /**
  * Glyphes — d’abord reconnaissables par les pratiquants.
@@ -3203,40 +3204,46 @@ function sportsCompareOpenOrder(a, b, now = Date.now()) {
 }
 
 /** Politique unique pour peinture, resize, refresh et rotation.
- * Directs confirmés seuls ; sinon résultats d'hier à gauche, matchs du jour
+ * Directs prioritaires, non exclusifs ; résultats d'hier à gauche, matchs du jour
  * à droite (jours civils Toronto). Une moitié vide cède sa place à l'autre.
  * Si les deux sont vides, repli explicite sur le pool éditorial général.
  */
 function sportsStripPolicy(now = Date.now(), pool = null) {
   const source = (Array.isArray(pool) ? pool.slice() : sportsOpenOrderSlides(now))
-    .filter(s => s && sportsOpenOrderBucket(s, now) <= SPORTS_OPEN_FAR_NEXT);
+    .filter(s => s?.game && s.key && sportsSlideDayKey(s) && sportsOpenOrderBucket(s, now) <= SPORTS_OPEN_FAR_NEXT);
   source.sort((a, b) => sportsCompareOpenOrder(a, b, now));
   const lives = sportsDedupeMatchSlides(source.filter(s => sportsGameIsLive(s.game, now)));
-  if (lives.length) return { mode: 'live', pool: lives, left: [], right: [] };
   const today = torontoDayKey(now), yesterday = sportsCivilDayShift(today, -1);
   const left = sportsDedupeHomepageResults(source.filter(s => s.mode === 'result'
-    && sportsSlideDayKey(s) === yesterday && !s.game?.priorSeason && !s.team?.lastGamePriorSeason));
-  const right = sportsDedupeMatchSlides(source.filter(s => sportsSlideDayKey(s) === today));
-  if (left.length || right.length) return { mode: 'split', left, right, pool: left.concat(right) };
-  return { mode: 'fallback', left: [], right: [], pool: source };
+    && !sportsGameIsLive(s.game, now) && sportsSlideDayKey(s) === yesterday && !s.game?.priorSeason && !s.team?.lastGamePriorSeason));
+  const right = sportsDedupeMatchSlides(source.filter(s => sportsSlideDayKey(s) === today && !sportsGameIsLive(s.game, now)));
+  if (left.length || right.length) return { mode: 'split', lives, left, right, pool: sportsDedupeMatchSlides(lives.concat(left, right)) };
+  return { mode: 'fallback', lives, left: [], right: [], pool: sportsDedupeMatchSlides(source) };
 }
 
 function sportsStripPolicySignature(policy, now = Date.now()) {
   const keys = pool => pool.map(s => s.key).sort();
-  return JSON.stringify([torontoDayKey(now), policy.mode, keys(policy.left), keys(policy.right), keys(policy.pool)]);
+  return JSON.stringify([torontoDayKey(now), policy.mode, keys(policy.lives), keys(policy.left), keys(policy.right), keys(policy.pool)]);
 }
 
 function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const count = Math.max(1, n | 0), policy = sportsStripPolicy(now, pool);
-  if (policy.mode !== 'split') return sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.pool), count);
-  if (count < 2) return sportsTakeUnusedPrefix(policy.right.concat(policy.left), 1);
   const used = new Set();
-  const left = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.left), Math.ceil(count / 2), used);
-  const right = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.right), count - left.length, used);
-  // Ne pas remplir avec d'autres jours ; réutiliser uniquement la moitié disponible.
-  const extra = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.pool), count - left.length - right.length, used);
+  const hasOthers = policy.pool.some(s => !sportsGameIsLive(s.game, now));
+  // Plusieurs slots : au moins une vraie autre rencontre, même avec beaucoup
+  // de directs. Un seul slot commence par le direct puis alterne en rotation.
+  const liveQuota = hasOthers && count > 1 ? count - 1 : count;
+  const lives = sportsTakeUnusedPrefix(policy.lives, liveQuota, used);
+  const remaining = count - lives.length;
+  if (!remaining) return lives;
+  if (policy.mode !== 'split') return lives.concat(sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.pool), remaining, used));
+  if (count < 2) return sportsTakeUnusedPrefix(policy.right.concat(policy.left), 1, used);
+  const left = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.left), Math.ceil(remaining / 2), used);
+  const right = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.right), remaining - left.length, used);
+  const extra = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.pool), remaining - left.length - right.length, used);
   const leftExtra = extra.filter(s => policy.left.includes(s));
-  return left.concat(leftExtra, right, extra.filter(s => !policy.left.includes(s)));
+  // Les directs sont garantis, mais hier reste visuellement à gauche du jour.
+  return left.concat(leftExtra, lives, right, extra.filter(s => !policy.left.includes(s)));
 }
 
 function sportsSplitPreferBuckets(outgoing, boardN, now = Date.now()) {
@@ -4131,9 +4138,26 @@ function nextSportsSlide(usedKeys, opts = {}) {
   const pool = policy.pool;
   const avoidMatchKeys = opts.avoidMatchKeys instanceof Set
     ? opts.avoidMatchKeys : new Set(opts.avoidMatchKeys || []);
-  // Une rotation reste dans sa moitié ; aucun repli mixte pendant un direct.
-  const lane = policy.mode === 'split' && (opts.boardN | 0) >= 2
-    ? (policy.left.some(s => s.key === opts.outgoing?.key) ? policy.left : policy.right) : pool;
+  const boardN = opts.boardN | 0;
+  const outgoingLive = policy.lives.some(s => s.key === opts.outgoing?.key);
+  const others = pool.filter(s => !sportsGameIsLive(s.game, now));
+  let lane = pool, priorityCursor = null;
+  if (policy.lives.length && (outgoingLive || boardN === 1)) {
+    // Mobile : direct / autre vraie rencontre en alternance. Desktop : les
+    // slots prioritaires tournent entre directs sans effacer les autres.
+    const otherTurn = boardN === 1 && outgoingLive && others.length;
+    lane = otherTurn ? others : policy.lives;
+    priorityCursor = otherTurn ? 'other' : 'live';
+  } else if (policy.mode === 'split' && boardN >= 2) {
+    const otherSlots = boardN - Math.min(policy.lives.length, Math.max(1, boardN - 1));
+    if (policy.lives.length && otherSlots === 1) {
+      lane = others; priorityCursor = 'other';
+    } else {
+      const fromLeft = policy.left.some(s => s.key === opts.outgoing?.key);
+      lane = fromLeft ? policy.left : policy.right;
+      priorityCursor = fromLeft ? 'left' : 'right';
+    }
+  }
   const ranked = lane.length ? lane : pool;
   const isAvailable = (slide) => {
     if (sportsSlideIsUsed(slide, used)) return false;
@@ -4142,13 +4166,14 @@ function nextSportsSlide(usedKeys, opts = {}) {
   };
   if (!ranked.length) return null;
   const seen = new Set();
-  const start = sportsLeftCursor;
+  const start = priorityCursor ? sportsPriorityCursors[priorityCursor] : sportsLeftCursor;
   for (let i = 0; i < ranked.length; i += 1) {
     const s = ranked[(start + i) % ranked.length];
     if (!s || seen.has(s.key || i)) continue;
     seen.add(s.key || i);
     if (!isAvailable(s)) continue;
-    sportsLeftCursor = (start + i + 1) % ranked.length;
+    if (priorityCursor) sportsPriorityCursors[priorityCursor] = (start + i + 1) % ranked.length;
+    else sportsLeftCursor = (start + i + 1) % ranked.length;
     return s;
   }
   return null;
@@ -4225,6 +4250,7 @@ function sportsCtaSlotIndices(visible = sportsVisible) {
 function pickInitialSportsVisible(count) {
   sportsCtaLabelIndex = 0;
   sportsLeftCursor = 0;
+  sportsPriorityCursors = { live: 0, other: 0, left: 0, right: 0 };
   const pool = sportsOpenOrderSlides();
   const n = Math.max(1, count | 0);
   if (!pool.length) return [sportsCtaSlide(0)];
@@ -4255,11 +4281,20 @@ function renderSportsStrip() {
 
   // Rotation L→R : toujours repartir du slot le plus à gauche après un re-paint.
   sportsNextSlot = 0;
+  const focusedChip = document.activeElement?.closest?.('.sports-chip');
+  const focusedIndex = focusedChip?.parentElement === MASTHEAD_SPORTS_STRIP
+    ? [...MASTHEAD_SPORTS_STRIP.children].indexOf(focusedChip) : -1;
+  const focusedKey = focusedIndex >= 0 ? focusedChip.dataset.sportsKey : '';
   const frag = document.createDocumentFragment();
   sportsVisible.forEach((slide) => frag.append(paintSportsChip(slide, false)));
   MASTHEAD_SPORTS_STRIP.replaceChildren(frag);
   MASTHEAD_SPORTS_STRIP.hidden = false;
   MASTHEAD_SPORTS_STRIP.classList.remove('is-empty');
+  if (focusedIndex >= 0) {
+    const chips = [...MASTHEAD_SPORTS_STRIP.children];
+    const target = chips.find(c => c.dataset.sportsKey === focusedKey) || chips[Math.min(focusedIndex, chips.length - 1)];
+    target?.focus({ preventScroll: true });
+  }
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
   fitWideSportsMatchSlots();
   MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = sportsVisible.length >= 2 ? '1' : '0';
@@ -4406,6 +4441,9 @@ function rotateSportsSlot(slot) {
   }
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
+  // Une carte lue au clavier ne change pas sous le focus. Une mise à jour de
+  // statut/politique a déjà été traitée par le resync ci-dessus.
+  if (MASTHEAD_SPORTS_STRIP.children[slot]?.contains(document.activeElement)) return;
   const used = sportsVisibleOccupyKeys();
   const avoidMatchKeys = sportsAdjacentResultMatchKeys(slot);
   const usedSports = new Set(
@@ -4504,7 +4542,9 @@ function rotateSportsSlot(slot) {
   oldChip._leaveTimer = window.setTimeout(() => {
     oldChip._leaveTimer = null;
     if (!oldChip.isConnected) return;
+    const restoreFocus = oldChip.contains(document.activeElement);
     oldChip.replaceWith(newChip);
+    if (restoreFocus) newChip.focus({ preventScroll: true });
     // Uniquement cette puce — ne pas relancer le marquee des voisines.
     window.requestAnimationFrame(() => refreshSportsChipScroll(newChip));
   }, SPORTS_CHIP_LEAVE_MS);

@@ -1,6 +1,14 @@
 import fs from 'node:fs';
 import { expect, test } from '@playwright/test';
 
+// Hors preuves BFCache (contexte manuel séparé), pas de dépendance réseau
+// ni de boucle d’images absentes pour tester la sélection et la géométrie.
+test.beforeEach(async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-11-08T18:59:00-05:00'));
+  await page.route('**/assets/news-images/**', r => r.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"/>' }));
+  await page.route('https://**/*', r => r.abort());
+});
+
 /**
  * go D : n=1 = ordre E ; n≥2 = gauche scores / droite à-venir,
  * live et aujourd’hui volent les bords.
@@ -109,7 +117,10 @@ test('n=4 jeudi soir : football visible malgré une file de soccer', async ({ pa
   ];
   const four = await splitKeys(page, 4, thursdayEve, pool);
   expect(four.ok, four.reason || 'ok').toBe(true);
-  expect(four.keys, 'un seul live confirmé : une seule carte, pas de remplissage').toEqual(['live-soc']);
+  expect(four.keys).toHaveLength(4);
+  expect(four.keys).toContain('live-soc');
+  expect(four.keys).toContain('fb-1');
+  expect(new Set(four.keys).size).toBe(4);
 });
 
 test('accueil 1280 : snapshot multi-sport sans direct, diversité conservée', async ({ page }) => {
@@ -119,7 +130,7 @@ test('accueil 1280 : snapshot multi-sport sans direct, diversité conservée', a
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
   // Ne pas dépendre du nombre de directs de la collecte courante : un seul
-  // direct doit justement rester seul. Ici on teste la diversité hors live.
+  // direct ne doit pas rendre ce test dépendant de la collecte. Ici : hors live.
   const pool = [
     slide('div-foot', 'result', '2026-11-08', '16:00', { sport: 'football' }),
     slide('div-basket', 'result', '2026-11-08', '15:00', { sport: 'basketball' }),
@@ -207,7 +218,7 @@ test('390 : une puce, pas de split visuel', async ({ page }) => {
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
   // Ne pas dépendre du nombre de directs de la collecte courante : un seul
-  // direct doit justement rester seul. Ici on teste la diversité hors live.
+  // direct ne doit pas rendre ce test dépendant de la collecte. Ici : hors live.
   const pool = [
     slide('div-foot', 'result', '2026-11-08', '16:00', { sport: 'football' }),
     slide('div-basket', 'result', '2026-11-08', '15:00', { sport: 'basketball' }),
@@ -223,29 +234,39 @@ test('390 : une puce, pas de split visuel', async ({ page }) => {
 });
 
 
-test('1/2/3/N directs : exclusivité, dédup miroir, rotation sans repli et resize @ci-critical', async ({ page }) => {
+test('0/1/2/3/7 directs : priorité non exclusive, slots rares, miroir et aucune mutation @ci-critical', async ({ page }, info) => {
   await page.clock.setFixedTime(new Date('2026-11-08T17:00:00-05:00'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const livePool = Array.from({length:7}, (_,i)=>slide(`live-${i}`, 'next', '2026-11-08', '16:30', {live:true, sport:i%2?'hockey':'soccer', scoreFor:0, scoreAgainst:0}));
-  const cold = [slide('yesterday', 'result', '2026-11-07', '19:00'), slide('tonight','next','2026-11-08','19:00')];
-  for (const nLive of [1,2,3,7]) {
-    const pool = livePool.slice(0,nLive).concat(cold);
-    const state = await page.evaluate(({pool,nLive})=>{
-      const now=Date.now(); sportsSlides=pool;
-      const first=sportsSplitVisible(4,now);
-      const mirror={...pool[0],key:'mirror',team:{...pool[0].team,code:'DIA'},game:{...pool[0].game,opponentCode:'LAV'}};
-      const dedup=sportsSplitVisible(4,now,pool.concat(mirror));
-      const used=new Set(first.flatMap(s=>[...sportsSlideOccupyKeys(s)]));
-      sportsVisible=first;
-      const next=nextSportsSlide(used,{outgoing:first[0],boardN:first.length});
-      return {keys:first.map(s=>s.key),dedup:dedup.map(s=>s.key),next:next?.key||'',small:sportsSplitVisible(1,now).map(s=>s.key),large:sportsSplitVisible(8,now).map(s=>s.key)};
-    },{pool,nLive});
-    expect(state.keys).toHaveLength(Math.min(4,nLive));expect(new Set(state.keys).size).toBe(state.keys.length);
-    expect(state.keys.every(k=>k.startsWith('live-'))).toBe(true);
-    expect(state.dedup).toHaveLength(Math.min(4,nLive));
-    expect(state.next===''||state.next.startsWith('live-')).toBe(true);
-    expect(state.small).toHaveLength(1);expect(state.large).toHaveLength(nLive);
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  const lives = Array.from({ length: 7 }, (_, i) => slide(`live-${i}`, 'next', '2026-11-08', '16:30', { live: true, sport: i % 2 ? 'hockey' : 'soccer', scoreFor: 0, scoreAgainst: 0 }));
+  const others = [slide('yesterday', 'result', '2026-11-07', '19:00'), slide('today-result', 'result', '2026-11-08', '15:00'), slide('tonight', 'next', '2026-11-08', '19:00')];
+  const report = [];
+  for (const nLive of [0, 1, 2, 3, 7]) for (const slots of [1, 2, 3, 4, 8]) {
+    const pool = lives.slice(0, nLive).concat(others);
+    const state = await page.evaluate(({ pool, slots }) => {
+      const before = JSON.stringify(pool), now = Date.now();
+      const first = sportsSplitVisible(slots, now, pool);
+      const mirror = { ...pool[0], key: 'mirror', team: { ...pool[0].team, code: 'MIRROR' }, game: { ...pool[0].game } };
+      const dedup = sportsSplitVisible(slots, now, pool.concat(mirror));
+      const liveOnly = sportsSplitVisible(slots, now, pool.filter(s => sportsGameIsLive(s.game, now)));
+      return { keys: first.map(s => s.key), ids: first.map(s => s.game.gameId), live: first.filter(s => sportsGameIsLive(s.game, now)).length,
+        days: first.map(s => sportsSlideDayKey(s)), dedup: dedup.map(s => s.game.gameId),
+        liveOnly: liveOnly.map(s => s.key), sourceUnchanged: before === JSON.stringify(pool) };
+    }, { pool, slots });
+    const expected = Math.min(slots, nLive + others.length);
+    expect(state.keys).toHaveLength(expected);
+    expect(state.live).toBe(Math.min(nLive, slots === 1 ? 1 : slots - 1));
+    expect(new Set(state.ids).size).toBe(expected);
+    expect(state.dedup).toHaveLength(expected); expect(new Set(state.dedup).size).toBe(expected);
+    expect(state.liveOnly).toHaveLength(Math.min(slots, nLive));
+    expect(state.liveOnly.every(k => k.startsWith('live-'))).toBe(true);
+    expect(state.sourceUnchanged).toBe(true);
+    expect(state.keys.every(k => pool.some(s => s.key === k))).toBe(true);
+    if (slots > 1) expect(state.keys.some(k => !k.startsWith('live-'))).toBe(true);
+    if (state.days.includes('2026-11-07') && state.days.includes('2026-11-08')) expect(state.days[0]).toBe('2026-11-07');
+    report.push({ nLive, slots, ...state });
   }
+  fs.writeFileSync(info.outputPath('selection-matrix.json'), JSON.stringify(report, null, 2));
 });
 
 test('politique civile à minuit, final/update, horaire inconnu jamais live et moitié vide @ci-critical', async ({page})=>{
@@ -265,33 +286,32 @@ test('politique civile à minuit, final/update, horaire inconnu jamais live et m
   expect(state.unknown).toBe(false);expect(state.live).toBe(true);expect(state.final).toBe(false);expect(state.done).toEqual(['nov7','nov8']);
 });
 
-test('peinture réelle live 1/2/3/N, resize, statut final et rotation sans froid @ci-critical', async({page},info)=>{
-  await page.setViewportSize({width:1920,height:1000});
+test('peinture réelle 0/1/2/3/7 directs + autres, resize, final et rotation @ci-critical', async ({ page }, info) => {
+  await page.setViewportSize({ width: 1920, height: 1000 });
   await page.clock.setFixedTime(new Date('2026-11-08T17:00:00-05:00'));
-  await page.route('https://**/*',r=>r.abort());
-  await page.goto('/',{waitUntil:'domcontentloaded'});
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#masthead-sports-strip')).toBeVisible();
-  for(const n of [1,2,3,7]) {
-    const pool=Array.from({length:n},(_,i)=>slide(`direct-${i}`,'next','2026-11-08','16:30',{live:true,scoreFor:i,scoreAgainst:0,opponent:'X',opponentCode:'X'})).concat(slide('cold','next','2026-11-08','19:00'));
-    pool.forEach(s=>{s.team.code=s.key;s.team.name=s.key;});
-    const expected=await page.evaluate(pool=>{sportsSlides=pool;sportsFitCount=4;sportsFitDepth=0;renderSportsStrip();scheduleSportsRotate();return Math.min(sportsBoardCount(),pool.length-1);},pool);
-    const cards=page.locator('#masthead-sports-strip > a');
-    await expect(cards).toHaveCount(expected);await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(expected);
-    await page.evaluate(()=>rotateSportsSlot(0));await expect(page.locator('#masthead-sports-strip > a[data-sports-key="cold"]')).toHaveCount(0);
-    if(n===3){await page.addStyleTag({content:'#local-lab-format-bar{display:none!important}'});await page.locator('#masthead-sports-strip').screenshot({path:info.outputPath('sports-live-only.png')});}
-    // Voie de mise à jour réellement utilisée par les sondages de statut.
-    await page.evaluate(()=>{const sig=sportsBoardLiveSig(),keys=sportsVisibleLiveKeys();const s=sportsSlides.find(s=>s.key==='direct-0');s.mode='result';s.game={...s.game,live:false,final:true,result:'W',scoreFor:3,scoreAgainst:1};sportsRerenderAfterLiveChange(sig,keys);});
-    if(n>1){
-      await expect(page.locator('#masthead-sports-strip > a[data-sports-key="direct-0"]')).toHaveCount(0);
-      await page.setViewportSize({width:1024,height:900});
-      await expect.poll(()=>cards.evaluateAll(cards=>cards.length>0&&cards.every(c=>c.dataset.sportsLive==='1')&&new Set(cards.map(c=>c.dataset.sportsKey)).size===cards.length)).toBe(true);
-      expect(await cards.count()).toBeLessThanOrEqual(n-1);
-      await page.setViewportSize({width:1920,height:1000});
-      await expect.poll(()=>cards.evaluateAll(cards=>cards.length>0&&cards.every(c=>c.dataset.sportsLive==='1'))).toBe(true);
-    }else{await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(0);}
+  const cards = page.locator('#masthead-sports-strip > a');
+  for (const n of [0, 1, 2, 3, 7]) {
+    const pool = Array.from({ length: n }, (_, i) => slide(`direct-${i}`, 'next', '2026-11-08', '16:30', { live: true, scoreFor: i, scoreAgainst: 0, opponent: 'X', opponentCode: 'X' })).concat(slide('other', 'next', '2026-11-08', '19:00'));
+    pool.forEach(s => { s.team.code = s.key; s.team.name = s.key; });
+    const expected = await page.evaluate(pool => { sportsSlides = pool; sportsFitCount = 4; sportsFitDepth = 0; renderSportsStrip(); scheduleSportsRotate(); return Math.min(sportsBoardCount(), pool.length); }, pool);
+    await expect(cards).toHaveCount(expected);
+    await expect(page.locator('#masthead-sports-strip > a[data-sports-live="1"]')).toHaveCount(Math.min(n, Math.max(0, expected - 1)));
+    await expect(page.locator('#masthead-sports-strip > a[data-sports-key="other"]')).toHaveCount(1);
+    await page.evaluate(() => rotateSportsSlot(0));
+    await expect(page.locator('#masthead-sports-strip > a[data-sports-key="other"]')).toHaveCount(1);
+    if (n === 3) await page.locator('#masthead-sports-strip').screenshot({ path: info.outputPath('sports-priority-and-others.png') });
+    if (n) {
+      await page.evaluate(() => { const sig = sportsBoardLiveSig(), keys = sportsVisibleLiveKeys(); const s = sportsSlides.find(s => s.key === 'direct-0'); s.mode = 'result'; s.game = { ...s.game, live: false, final: true, result: 'W', scoreFor: 3, scoreAgainst: 1 }; sportsRerenderAfterLiveChange(sig, keys); });
+      await expect(page.locator('#masthead-sports-strip > a[data-sports-key="direct-0"][data-sports-live="1"]')).toHaveCount(0);
+      await page.setViewportSize({ width: 1024, height: 900 });
+      await expect.poll(() => cards.evaluateAll(cs => cs.length > 0 && new Set(cs.map(c => c.dataset.sportsKey)).size === cs.length && cs.some(c => c.dataset.sportsLive !== '1'))).toBe(true);
+      if (n > 1) await expect.poll(() => cards.evaluateAll(cs => cs.some(c => c.dataset.sportsLive === '1'))).toBe(true);
+      await page.setViewportSize({ width: 1920, height: 1000 });
+    }
   }
 });
-
 
 test('page maintenue après minuit : réallocation DOM même si compte et anciennes clés restent valides @ci-critical', async({page})=>{
   await page.setViewportSize({width:1920,height:1000});
@@ -331,12 +351,15 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
     await expect.poll(() => page.evaluate(() => window.RadarTranslate?.getMode())).toBe(lang === 'en' ? 'en' : 'original');
     await expect(page.locator('#masthead-sports-strip')).toBeVisible();
     const measurements = [];
-    for (const n of [7, 1, 2, 3]) {
+    for (const n of [7, 0, 1, 2, 3]) {
       const pool = Array.from({ length: n }, (_, i) => ({
         ...rosemontGeometry, key: `geometry-${i}`,
         team: { ...rosemontGeometry.team, id: `geometry-team-${i}`, code: `geometry-${i}` },
         game: { ...rosemontGeometry.game, gameId: `geometry-${i}` },
-      }));
+      })).concat(['2026-11-07', '2026-11-08'].map((date, i) => ({
+        ...rosemontGeometry, mode: 'result', key: `geometry-other-${i}`,
+        game: { ...rosemontGeometry.game, date, gameId: `geometry-other-${i}`, live: false, final: true, scoreFor: 11, scoreAgainst: 10, result: 'W' },
+      })));
       await page.evaluate(pool => {
         sportsSlides = pool; sportsFitCount = null; sportsFitDepth = 0;
         renderSportsStrip(); scheduleSportsRotate();
@@ -370,12 +393,15 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
         };
       });
       measurements.push({ n, ...geometry });
-      expect(geometry.cards.length).toBe(Math.min(n, geometry.slots));
+      expect(geometry.cards.length).toBe(Math.min(n + 2, geometry.slots));
+      expect(geometry.cards.filter(c => c.live === '1')).toHaveLength(Math.min(n, geometry.slots === 1 ? 1 : geometry.slots - 1));
+      if (geometry.slots > 1) expect(geometry.cards.some(c => c.live !== '1')).toBe(true);
       expect(new Set(geometry.cards.map(c => c.key)).size).toBe(geometry.cards.length);
       const slotWidth = (geometry.inner - geometry.gap * (geometry.slots - 1)) / geometry.slots;
       for (const card of geometry.cards) {
-        expect(card.live).toBe('1');
-        expect(card.text).toContain(lang === 'en' ? 'Live' : 'En cours');
+        if (card.live === '1') expect(card.text).toContain(lang === 'en' ? 'Live' : 'En cours');
+        else expect(card.text).toContain('11–10');
+        expect(card.text).not.toMatch(/undefined|NaN/);
         expect(card.height).toBeGreaterThanOrEqual(44);
         expect(card.width).toBeCloseTo(slotWidth, 0);
         expect(card.width).toBeLessThanOrEqual(geometry.inner + 1);
@@ -392,10 +418,10 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
       if (n === 1) {
         expect(geometry.cards[0].width).toBeCloseTo(measurements[0].cards[0].width, 0);
         await page.addStyleTag({ content: '#local-lab-format-bar{display:none!important}' });
-        await page.locator('#masthead-sports-strip').screenshot({ path: info.outputPath('one-live-card.png') });
+        await page.locator('#masthead-sports-strip').screenshot({ path: info.outputPath('one-live-and-other-cards.png') });
         // Rotation ne dilate pas la carte et ne fabrique aucun autre match.
         await page.evaluate(() => rotateSportsSlot(0));
-        await expect(page.locator('#masthead-sports-strip .sports-chip--match')).toHaveCount(1);
+        await expect(page.locator('#masthead-sports-strip .sports-chip--match')).toHaveCount(Math.min(3, geometry.slots));
       }
     }
     fs.writeFileSync(info.outputPath('card-geometry.json'), JSON.stringify(measurements, null, 2));
@@ -439,4 +465,130 @@ test('carte unique : refresh, vrai retour navigateur, resize et focus sans dilat
   await page.setViewportSize({ width: 1440, height: 1000 }); await bounded('desktop-restored');
   fs.writeFileSync(info.outputPath('lifecycle-geometry.json'), JSON.stringify(metrics, null, 2));
   await info.attach('lifecycle-geometry.json', { body: JSON.stringify(metrics, null, 2), contentType: 'application/json' });
+});
+
+
+test('mobile : direct / autres A B C sans starvation, focus et resize @ci-critical', async ({ page }, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.clock.setFixedTime(new Date('2026-11-08T18:59:00-05:00'));
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/?labFrame=1', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  const pool = [slide('live-A', 'next', '2026-11-08', '17:00', { live: true }),
+    slide('y-A', 'result', '2026-11-07', '19:00'), slide('y-B', 'result', '2026-11-07', '18:00'),
+    slide('today-C', 'next', '2026-11-08', '20:00')];
+  pool.forEach(s => { s.team.code = s.key; s.team.name = s.key; });
+  await page.evaluate(pool => { sportsSlides = pool; sportsFitCount = null; sportsFitDepth = 0; renderSportsStrip(); }, pool);
+  const card = page.locator('#masthead-sports-strip .sports-chip--match');
+  await expect(card).toHaveCount(1); await expect(card).toHaveAttribute('data-sports-key', 'live-A');
+  await card.focus(); await page.evaluate(() => rotateSportsSlot(0));
+  await expect(card).toBeFocused(); await expect(card).toHaveAttribute('data-sports-key', 'live-A');
+  await card.evaluate(c => c.blur());
+  const sequence = [];
+  for (let i = 0; i < 6; i++) {
+    await page.evaluate(() => rotateSportsSlot(0));
+    await expect.poll(() => card.getAttribute('data-sports-key')).toBe(await page.evaluate(() => sportsVisible[0].key));
+    sequence.push(await card.getAttribute('data-sports-key'));
+  }
+  expect(sequence.filter((_, i) => i % 2 === 1)).toEqual(['live-A', 'live-A', 'live-A']);
+  expect(new Set(sequence.filter((_, i) => i % 2 === 0))).toEqual(new Set(['y-A', 'y-B', 'today-C']));
+  await card.focus();
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect.poll(() => page.evaluate(() => document.querySelector('#masthead-sports-strip').contains(document.activeElement))).toBe(true);
+  await expect.poll(() => page.locator('#masthead-sports-strip .sports-chip--match').count()).toBeGreaterThan(1);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(card).toHaveCount(1); await expect(card).toBeFocused();
+  fs.writeFileSync(info.outputPath('mobile-fair-rotation.json'), JSON.stringify(sequence, null, 2));
+});
+
+test('jours vides, source absente et direct sans date : pas de match ou heure inventés @ci-critical', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  const fixtures = {
+    yesterday: slide('y', 'result', '2026-11-07', '19:00'),
+    today: slide('t', 'next', '2026-11-08', '20:00'),
+    tomorrow: slide('n', 'next', '2026-11-09', '20:00'),
+    unknown: slide('unknown-time', 'next', '2026-11-08', undefined),
+    invalid: { key: 'missing-date', mode: 'next', team: {}, game: { live: true } },
+  };
+  const state = await page.evaluate(f => {
+    const now = Date.parse('2026-11-08T18:00:00-05:00');
+    const pick = xs => sportsSplitVisible(4, now, xs).map(s => s.key);
+    const before = JSON.stringify(f);
+    const out = { empty: pick([]), missing: pick([null, {}, f.invalid]),
+      onlyYesterday: pick([f.yesterday]), onlyToday: pick([f.today]),
+      fallback: pick([f.tomorrow]), unknown: pick([f.unknown]),
+      unknownLive: sportsGameIsLive(f.unknown.game, now), clock: f.unknown.game.time };
+    out.sourceUnchanged = before === JSON.stringify(f); return out;
+  }, fixtures);
+  expect(state.empty).toEqual([]); expect(state.missing).toEqual([]);
+  expect(state.onlyYesterday).toEqual(['y']); expect(state.onlyToday).toEqual(['t']);
+  expect(state.fallback).toEqual(['n']); expect(state.unknown).toEqual(['unknown-time']);
+  expect(state.unknownLive).toBe(false); expect(state.clock).toBeUndefined(); expect(state.sourceUnchanged).toBe(true);
+  await page.evaluate(() => { sportsSlides = []; renderSportsStrip(); });
+  await expect(page.locator('#masthead-sports-strip')).toBeHidden();
+  await expect(page.locator('#masthead-sports-strip .sports-chip')).toHaveCount(0);
+});
+
+
+test('focus reçu pendant la sortie animée : reste dans la carte sans saut de scroll @ci-critical', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.clock.setFixedTime(new Date('2026-11-08T18:59:00-05:00'));
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/?labFrame=1', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  const pool = [slide('live', 'next', '2026-11-08', '17:00', { live: true }), slide('yesterday', 'result', '2026-11-07', '19:00')];
+  const before = await page.evaluate(pool => {
+    sportsSlides = pool; sportsFitCount = null; sportsFitDepth = 0; renderSportsStrip();
+    window.scrollTo(0, 300); const y = window.scrollY; rotateSportsSlot(0);
+    document.querySelector('#masthead-sports-strip .sports-chip').focus({ preventScroll: true }); return y;
+  }, pool);
+  const card = page.locator('#masthead-sports-strip .sports-chip');
+  await expect(card).toHaveAttribute('data-sports-key', 'yesterday');
+  await expect(card).toBeFocused(); expect(before).toBeGreaterThan(0); expect(await page.evaluate(() => window.scrollY)).toBe(before);
+});
+
+test('direct à cheval sur minuit Toronto puis final : autres matchs conservés et identité inchangée @ci-critical', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  const pool = [slide('carry', 'next', '2026-11-08', '23:30', { live: true }),
+    slide('old-y', 'result', '2026-11-07', '19:00'), slide('today-r', 'result', '2026-11-08', '20:00'),
+    slide('new-day', 'next', '2026-11-09', '19:00')];
+  const state = await page.evaluate(pool => {
+    const pick = time => sportsSplitVisible(3, Date.parse(time), pool).map(s => ({ key: s.key, live: sportsGameIsLive(s.game, Date.parse(time)), day: sportsSlideDayKey(s) }));
+    const before = pick('2026-11-08T23:50:00-05:00'), after = pick('2026-11-09T00:05:00-05:00');
+    pool[0] = { ...pool[0], mode: 'result', game: { ...pool[0].game, live: false, final: true, scoreFor: 2, scoreAgainst: 1, result: 'W' } };
+    return { before, after, final: pick('2026-11-09T00:06:00-05:00'), carryDate: pool[0].game.date, carryId: pool[0].game.gameId };
+  }, pool);
+  expect(state.before.some(s => s.key === 'carry' && s.live)).toBe(true);
+  expect(state.before.some(s => s.key === 'old-y')).toBe(true);
+  expect(state.after.map(s => s.key)).toEqual(['today-r', 'carry', 'new-day']);
+  expect(state.final.filter(s => s.live)).toHaveLength(0);
+  expect(state.final.map(s => s.key)).toContain('carry'); expect(state.final.map(s => s.key)).toContain('new-day');
+  expect(state.carryDate).toBe('2026-11-08'); expect(state.carryId).toBe('carry');
+});
+
+
+test('chaque moitié et chaque direct tournent sans starvation de parité @ci-critical', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-11-08T17:00:00-05:00'));
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  for (const nLive of [1, 7]) {
+    const pool = [...Array.from({ length: nLive }, (_, i) => slide(`live-${i}`, 'next', '2026-11-08', '16:30', { live: true })),
+      ...Array.from({ length: 6 }, (_, i) => slide(`left-${i}`, 'result', '2026-11-07', '19:00')),
+      ...Array.from({ length: 6 }, (_, i) => slide(`right-${i}`, 'next', '2026-11-08', '20:00'))];
+    const seen = await page.evaluate(pool => {
+      sportsSlides = pool; sportsVisible = sportsSplitVisible(3); sportsLeftCursor = 0; sportsPriorityCursors = { live: 0, other: 0, left: 0, right: 0 };
+      const keys = new Set(sportsVisible.map(s => s.key));
+      for (let turn = 0; turn < 24; turn++) for (let slot = 0; slot < sportsVisible.length; slot++) {
+        const next = nextSportsSlide(sportsVisibleOccupyKeys(), { outgoing: sportsVisible[slot], boardN: sportsVisible.length });
+        if (next) sportsVisible[slot] = next;
+        sportsVisible.forEach(s => keys.add(s.key));
+      }
+      return [...keys];
+    }, pool);
+    expect(seen.filter(k => k.startsWith('left-'))).toHaveLength(6);
+    expect(seen.filter(k => k.startsWith('right-'))).toHaveLength(6);
+    expect(seen.filter(k => k.startsWith('live-'))).toHaveLength(nLive);
+  }
 });
