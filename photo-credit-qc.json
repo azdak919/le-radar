@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T21:09:47.798Z",
+  "updated": "2026-11-09T21:40:30.691Z",
   "total": 188,
   "withImage": 168,
   "withCredit": 168,
@@ -8,14 +8,14 @@
   "missingHero": 0,
   "ok": false,
   "checked": 51,
-  "updatedCount": 7,
+  "updatedCount": 8,
   "citedNew": 10,
   "fallbackNew": 41,
   "samples": [
     {
-      "title": "Les mémoires d’une pieuvre : comme un retour aux sources",
+      "title": "Les étudiants de l’UQAC en grève pour la rémunération des stages",
       "source": "La Pige",
-      "credit": "Photo : Diego Pinto de Queiros",
+      "credit": "Photo : Julianne Landry",
       "cited": true,
       "method": "body-line"
     },
@@ -34,9 +34,16 @@
       "method": "via-attribution"
     },
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "title": "Jésus et autres mots-clics",
       "source": "Le Délit",
-      "credit": "Photo : DENIS FARLEY",
+      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Quand la mode va trop loin",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -50,9 +57,9 @@
     {
       "title": "Pregnant, not sidelined",
       "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Une 20e saison positive pour le quai des croisières de La Baie",
