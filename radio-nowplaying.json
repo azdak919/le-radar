@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-09T16:06:45.416Z",
+  "updatedAt": "2026-11-09T17:07:21.632Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "APRIORI",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/apriori/"
-      },
+      "current": null,
       "next": {
         "title": "Spillthepsy",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://chyz.ca/emission/spillthepsy/"
       },
       "track": "",
-      "showTitle": "APRIORI",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T16:06:05.260Z"
+      "checkedAt": "2026-11-09T17:06:39.883Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T16:06:19.266Z"
+      "checkedAt": "2026-11-09T17:06:54.208Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Things Campus",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "World Skip The Beat",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radio Is Dead",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "All Things Campus",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T16:06:23.560Z"
+      "checkedAt": "2026-11-09T17:06:57.816Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "I Think You Might Like This",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
-      },
-      "next": {
         "title": "Twang City",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/twang-city"
       },
+      "next": {
+        "title": "The Tommy John Show",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+      },
       "track": "",
-      "showTitle": "I Think You Might Like This",
+      "showTitle": "Twang City",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T16:06:37.821Z"
+      "checkedAt": "2026-11-09T17:07:12.446Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T16:06:39.281Z"
+      "checkedAt": "2026-11-09T17:07:13.860Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-09T16:06:45.066Z"
+      "checkedAt": "2026-11-09T17:07:21.282Z"
     }
   }
 }
