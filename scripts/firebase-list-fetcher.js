@@ -134,7 +134,8 @@ function parseFirestoreDocument(doc = {}, src = {}) {
   }
 
   const excerpt = extractExcerpt(fields, 280);
-  const image = String(firestoreValue(fields.cover) || firestoreValue(fields.image) || '').trim();
+  const cover = String(firestoreValue(fields.cover) || '').trim();
+  const image = cover || String(firestoreValue(fields.image) || '').trim();
   const author = extractAuthor(fields);
   const credits = extractCredits(fields);
 
@@ -146,6 +147,9 @@ function parseFirestoreDocument(doc = {}, src = {}) {
     excerpt,
     image,
   };
+  // Couverture choisie dans l'admin de la source pour ce billet : signal
+  // éditorial explicite (règle de recadrage des portraits, article-image-lib).
+  if (cover) item.imageDeclaredCover = cover;
 
   // Crédit photo / illustration saisi dans l’admin Polyscope
   if (credits && image) {
@@ -339,6 +343,7 @@ async function classifyFirebaseSource(src = {}) {
 
 module.exports = {
   isFirebaseSource,
+  parseFirestoreDocument,
   slugifyTitle,
   articleLink,
   fetchFirebaseFeed,

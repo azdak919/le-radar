@@ -192,6 +192,10 @@ Pipeline banques QC : sync JSON, blacklist durable, playbook agent
 - Skills Grok externes hors repo — ce playbook **est** le skill unique du dépôt
 - Re-seed bulk Commons — volontairement hors pipeline quotidien
 
+### Couvertures déclarées par la source (Polyscope, 2026-11-08)
+
+Une image en hauteur que la source a explicitement choisie comme couverture de CE billet — champ `cover` Firestore (`imageDeclaredCover`, posé par `firebase-list-fetcher`), image mise en avant WordPress (`wp-post-image` / `wp-block-post-featured-image`), ou og:image qui confirme cette image mise en avant — est recadrable : cover au ratio de la carte, point focal haut `imageCropFocalY = 0.2` (`DECLARED_COVER_FOCAL_Y`), jamais contain, bandes ni étirement. og:image seule, champ `image` générique ou simple taille « full » ne suffisent pas. Les garde-fous restent prioritaires : rejets épinglés, visuel de campagne, mot affiche/poster/infographie en alt, légende ou nom de fichier, capture d’écran, ratio < 0,66 (story), moins de 640 px de large. Un pin revu (`reviewedCrop`) garde son propre focal. Aucun crédit n’est créé : seul le champ `credits` de la source ou les règles de crédit existantes s’appliquent. Fiche SSR : même focal ; un portrait recadrable sans focal revu reprend le tiers haut de la carte (30 %). Régression : `node tests/declared-cover-crop.mjs`.
+
 ### Affiches éditoriales pertinentes (Karmina, 2026-11-08)
 
 Une affiche du film effectivement critiqué peut être retenue après revue visuelle via `reviewedCrop` dans `data/lead-image-pins.json` : lien d’article, URL d’image et dimensions exactes, note de pertinence et `imageCropFocalY` entre 0 et 1. Ce n’est pas une ouverture générale aux portraits, logos ou publicités : les filtres habituels restent inchangés. Cover au ratio de la carte, jamais contain ni étirement. Karmina (600×779) : centre 50 %, dents et titre dans le recadrage.

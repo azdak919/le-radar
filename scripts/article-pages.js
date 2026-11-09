@@ -79,6 +79,11 @@ function recordOf(item) {
     ...(item.imageCropSafe === item.image && imageOf(item) === item.image
       && Number.isFinite(item.imageCropFocalY) && item.imageCropFocalY >= 0 && item.imageCropFocalY <= 1
       ? { imageCropFocalY: item.imageCropFocalY } : {}),
+    // Portrait jugé recadrable sans point focal revu : même cadrage que la
+    // carte du fil (.is-portrait-crop, tiers haut), jamais un centre aveugle.
+    ...(item.imageCropSafe && item.imageCropSafe === item.image && imageOf(item) === item.image
+      && !(Number.isFinite(item.imageCropFocalY) && item.imageCropFocalY >= 0 && item.imageCropFocalY <= 1)
+      ? { imagePortraitCrop: true } : {}),
   };
 }
 
@@ -107,7 +112,13 @@ function merge(store, items, now = new Date().toISOString()) {
     if (!old) added += 1;
     // Champ vide dans le flux du jour (photo purgée, crédit perdu) : on garde l'ancienne valeur.
     const keep = {};
-    if (old) for (const k of ['image', 'credit', 'excerpt', 'author']) if (!r[k] && old[k]) keep[k] = old[k];
+    // Le crédit décrit UNE image : jamais reporté sur une nouvelle image (repli
+    // campus → couverture de la source, 8 nov. 2026).
+    const imageChanged = !!(old && r.image && old.image && r.image !== old.image);
+    if (old) for (const k of ['image', 'credit', 'excerpt', 'author']) {
+      if (k === 'credit' && imageChanged) continue;
+      if (!r[k] && old[k]) keep[k] = old[k];
+    }
     store.articles[r.id] = { ...r, ...keep, firstSeen: (old && old.firstSeen) || now };
   }
   return added;
@@ -120,13 +131,21 @@ function frDate(iso) {
   return `${Number(p.day) === 1 ? '1er' : Number(p.day)} ${MONTHS[Number(p.month) - 1]} ${p.year}`;
 }
 
+const PORTRAIT_CROP_FOCAL_Y = 0.3; // = .article-media img.is-portrait-crop (style-feed.css)
+
+function figureCropStyle(a) {
+  const focal = Number.isFinite(a.imageCropFocalY) && a.imageCropFocalY >= 0 && a.imageCropFocalY <= 1
+    ? a.imageCropFocalY : (a.imagePortraitCrop ? PORTRAIT_CROP_FOCAL_Y : null);
+  return focal == null ? '' : ` style="object-position:50% ${Math.round(focal * 1000) / 10}%;aspect-ratio:3/2"`;
+}
+
 function articleMain(a) {
   const url = `${SITE}/article/${a.id}/`;
   const meta = [a.date ? `<time datetime="${esc(a.date)}">${esc(frDate(a.date))}</time>` : '', a.author ? `<span>${esc(a.author)}</span>` : '']
     .filter(Boolean).join('<span class="seo-article__sep" aria-hidden="true"> · </span>');
   const fig = a.image ? `
       <figure class="seo-article__figure">
-        <img src="${esc(a.image)}" alt="${esc(a.title)}" width="1200" height="800"${Number.isFinite(a.imageCropFocalY) && a.imageCropFocalY >= 0 && a.imageCropFocalY <= 1 ? ` style="object-position:50% ${a.imageCropFocalY * 100}%;aspect-ratio:3/2"` : ''} decoding="async" fetchpriority="high" referrerpolicy="no-referrer">
+        <img src="${esc(a.image)}" alt="${esc(a.title)}" width="1200" height="800"${figureCropStyle(a)} decoding="async" fetchpriority="high" referrerpolicy="no-referrer">
         ${a.credit ? `<figcaption class="seo-article__credit">📸 ${esc(a.credit)}</figcaption>` : ''}
       </figure>` : '';
   return `<main class="wire seo-wire seo-article" data-article-id="${esc(a.id)}">
