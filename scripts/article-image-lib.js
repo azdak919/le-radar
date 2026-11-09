@@ -869,6 +869,9 @@ function imageUrlLooksBannerLike(url = '') {
  * texte, entière elle laisse des bandes. Règle : on prend une autre image.
  */
 const LEAD_MIN_FIT_RATIO = 0.95;
+/** Couverture déclarée en hauteur : cadrage haut sûr (tête, titre, sujet). */
+const DECLARED_COVER_FOCAL_Y = 0.2;
+
 function isPortraitLeadRatio(width = 0, height = 0) {
   if (!width || !height) return false;
   return width / height < LEAD_MIN_FIT_RATIO;
@@ -911,6 +914,11 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   const file = path.split('/').pop().replace(/[_+.-]+/g, ' ');
   if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) return false;
   if (captionLooksLikeCampaignGraphic(text)) return false;
+  // Couverture déclarée par la source pour CE billet (champ cover Firebase,
+  // image mise en avant WordPress, og:image qui la confirme) : choix
+  // éditorial explicite, recadré en cover 3:2 au tiers haut, sans bandes.
+  // Les signaux d'affiche/campagne/capture ci-dessus et ci-dessous priment.
+  if (ctx.declaredCover && !SCREENSHOT_FILE_RE.test(file)) return true;
   // Source qui exporte ses vraies photos en « Capture d’écran, le … » (The Campus,
   // Bishop’s : photo du débat électoral 856×1080) : indice de source explicite.
   if (ctx.screenshotPhotos && SCREENSHOT_FILE_RE.test(file)) return true;
@@ -925,6 +933,11 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
     if (EDITORIAL_PERSON_RE.test(name) && !CREDIT_ORG_RE.test(name.split(/\s+/).slice(0, 4).join(' '))) return true;
   }
   return false;
+}
+
+/** Couverture déclarée par le flux structuré de la source, liée à l'URL actuelle. */
+function isDeclaredCoverImage(item = {}, url = '') {
+  return !!(item?.imageDeclaredCover && url && imageUrlsMatch(item.imageDeclaredCover, url));
 }
 
 function imageUrlLooksPortrait(url = '') {
@@ -1026,6 +1039,11 @@ function compareLeadCandidates(a = {}, b = {}) {
   return (b.score || 0) - (a.score || 0);
 }
 
+/** Image mise en avant déclarée par le CMS (pas la simple taille « full »). */
+function isFeaturedContentImage(img = {}) {
+  return /\bwp-post-image\b/i.test(img.tag || '') || /\bwp-block-post-featured-image\b/i.test(img.tag || '');
+}
+
 function listArticleImageCandidates(html = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   html = stripAdSlots(stripStyleAndScript(html));
   // Plafond après strip : le CSS inline ne cache plus <article>.
@@ -1064,6 +1082,7 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
         h: dimH,
         demoted: isPathDemoted(url, demotePatterns),
         campaignGraphic: !!extra.campaignGraphic,
+        declaredCover: !!extra.declaredCover,
         alt: extra.alt || '',
         caption: extra.caption || '',
       });
@@ -1081,6 +1100,7 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
     const ogInContent = !!ogMatch;
     // Bonus fort si aussi dans le corps ; sinon on accepte quand même (Substack).
     pushMeta(ogImage, ogInContent ? 110 : 95, ogW, ogH, {
+      declaredCover: !!(ogMatch && isFeaturedContentImage(ogMatch)),
       campaignGraphic: !!(ogMatch && ogMatch.campaignGraphic),
       alt: metaContent(html, 'og:image:alt') || (ogMatch && ogMatch.alt) || '',
       caption: (ogMatch && ogMatch.caption) || '',
@@ -1099,9 +1119,8 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
 
   for (let index = 0; index < contentImages.length; index += 1) {
     const img = contentImages[index];
-    const isFeatured = /\bwp-post-image\b/i.test(img.tag)
-      || /\bwp-block-post-featured-image\b/i.test(img.tag)
-      || img.isFull;
+    const declaredCover = isFeaturedContentImage(img);
+    const isFeatured = declaredCover || img.isFull;
     const isThumb = img.isCropThumb;
     let score = (isFeatured ? 85 : 60) + img.w / 10 - (isThumb ? 25 : 0);
     // Image dans une <figure> légendée : placée et décrite par la rédaction,
@@ -1120,6 +1139,7 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
       h: img.h || 0,
       demoted: !!img.demoted,
       campaignGraphic: !!img.campaignGraphic,
+      declaredCover,
       alt: img.alt || '',
       caption: img.caption || '',
     });
@@ -1189,7 +1209,8 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
   /** Portrait recadrable (crédit Photo/Dessin, pas une affiche) : une 3:2 centrée. */
   const portraitHit = (url, width, height, ctx, source) => (
     isCropSafePortrait(width, height, { ...ctx, url, link: item.link, screenshotPhotos: !!options.screenshotPhotos })
-      ? { url, width, height, source, leadReady: true, cropSafe: true }
+      ? { url, width, height, source, leadReady: true, cropSafe: true,
+        ...(ctx.declaredCover ? { declaredCover: true, cropFocalY: DECLARED_COVER_FOCAL_Y } : {}) }
       : null
   );
   const tryUrlOnce = async (url, metaW = 0, metaH = 0, ctx = {}) => {
@@ -1274,6 +1295,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
       h: 0,
       demoted: false,
       campaignGraphic: false,
+      declaredCover: isDeclaredCoverImage(item, item.image),
     });
   }
   ranked.sort(compareLeadCandidates);
@@ -1347,6 +1369,9 @@ module.exports = {
   isPortraitLeadRatio,
   imageUrlLooksPortrait,
   isCropSafePortrait,
+  DECLARED_COVER_FOCAL_Y,
+  isDeclaredCoverImage,
+  isFeaturedContentImage,
   LEAD_CROP_MIN_RATIO,
   clearMirroredLead,
   dropSharedSourceImages,
