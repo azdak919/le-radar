@@ -1,27 +1,27 @@
 {
-  "updated": "2026-11-04T20:10:21.343Z",
+  "updated": "2026-11-09T17:00:25.307Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 277804
+      "ms": 645930
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 58319
+      "ms": 51543
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 354046
+      "ms": 153416
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 102885
+      "ms": 93201
     }
   ],
   "summary": {
@@ -31,38 +31,38 @@
       "dead": 0,
       "stale": 5,
       "candidates": 5,
-      "articles": 183,
-      "withAuthor": 183,
-      "withExcerpt": 183,
+      "articles": 188,
+      "withAuthor": 188,
+      "withExcerpt": 188,
       "authorQc": {
         "ok": true,
-        "mismatches": 16
+        "mismatches": 17
       },
       "leadImageQc": {
-        "fullyCovered": 183,
-        "withPhoto": 165,
-        "withStock": 33,
-        "leadReadyPhotos": 143,
-        "pageScraped": 32,
+        "fullyCovered": 188,
+        "withPhoto": 172,
+        "withStock": 28,
+        "leadReadyPhotos": 155,
+        "pageScraped": 31,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": false,
-        "withCredit": 164,
-        "cited": 90,
-        "pending": 52,
+        "withCredit": 170,
+        "cited": 109,
+        "pending": 37,
         "missingHero": 0
       }
     },
     "backgrounds": {
       "masthead": {
-        "count": 117,
+        "count": 119,
         "maxBank": 200,
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
       },
       "universities": {
-        "count": 130,
+        "count": 135,
         "maxBank": 200,
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
@@ -79,7 +79,7 @@
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
       },
-      "count": 117,
+      "count": 119,
       "maxBank": 200,
       "lastSessionCleanup": "2026-09-01",
       "lastSessionId": "automne"
@@ -149,7 +149,7 @@
     {
       "level": "info",
       "code": "schedule_drift",
-      "message": "Hors programmation : chyz (+3 −0)"
+      "message": "Hors programmation : chyz (+6 −2)"
     }
   ]
 }

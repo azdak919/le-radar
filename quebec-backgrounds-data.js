@@ -1581,5 +1581,28 @@ const QUEBEC_BACKGROUNDS = [
     height: 10240,
     season: "printemps",
     tags: ["mat"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/2/2a/2016-08_Saguenay_river_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "0x010C",
+    link: "https://commons.wikimedia.org/wiki/File:2016-08%20Saguenay%20river%2002.jpg",
+    license: "CC BY-SA 4.0",
+    title: "2016-08 Saguenay river 02",
+    width: 5740,
+    height: 3827,
+    place: "Saguenay",
+    season: "ete",
+    tags: ["mat"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/9/94/Piste_cyclable_Gouin-Est_dans_l%27est_de_Rivi%C3%A8re-des-Prairies%2C_Montr%C3%A9al%2C_Qu%C3%A9bec%2C_Canada.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Maxime Laterreur",
+    link: "https://commons.wikimedia.org/wiki/File:Piste%20cyclable%20Gouin-Est%20dans%20l'est%20de%20Rivi%C3%A8re-des-Prairies%2C%20Montr%C3%A9al%2C%20Qu%C3%A9bec%2C%20Canada.jpg",
+    license: "CC BY 4.0",
+    title: "Piste cyclable Gouin-Est dans l'est de Rivière-des-Prairies, Montréal, Québec, Canada",
+    width: 8160,
+    height: 6144,
+    place: "Montréal",
+    tags: ["mat"],
   }
 ];

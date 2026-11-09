@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "masthead",
-  "lastFaceDetect": "2026-11-04T20:14:01.558Z",
+  "lastFaceDetect": "2026-11-09T17:04:18.894Z",
   "maxBank": 200,
   "seasonInventory": {
     "floors": {
@@ -12,20 +12,20 @@
     },
     "counts": {
       "printemps": 18,
-      "ete": 39,
+      "ete": 40,
       "automne": 30,
       "hiver": 20,
-      "untagged": 10
+      "untagged": 11
     },
     "gaps": [
       "printemps",
       "hiver"
     ],
-    "updated": "2026-11-04T20:01:46.041Z"
+    "updated": "2026-11-09T16:55:27.095Z"
   },
   "lastSessionCleanup": "2026-09-01",
   "lastSessionId": "automne",
-  "updated": "2026-11-04T20:26:40.465Z",
+  "updated": "2026-11-09T17:18:08.716Z",
   "photos": [
     {
       "id": "1eb2382981cc",
@@ -4035,6 +4035,47 @@
       "sessionId": "automne",
       "bank": "masthead",
       "season": "printemps",
+      "tags": [
+        "mat"
+      ]
+    },
+    {
+      "id": "c7c3a47d8272",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/2016-08_Saguenay_river_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:2016-08%20Saguenay%20river%2002.jpg",
+      "title": "2016-08 Saguenay river 02",
+      "credit": "0x010C",
+      "license": "CC BY-SA 4.0",
+      "description": "The Saguenay River and the Sainte-Anne bridge seen from Chicoutimi , Quebec, Canada.",
+      "categories": "Saguenay River|Pont Sainte-Anne|Chicoutimi|Uploaded with VicuñaUploader|Files with coordinates missing SDC location of creation|Images taken in Quebec by 0x010C",
+      "width": 5740,
+      "height": 3827,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-11-09T16:44:41.296Z",
+      "sessionId": "automne",
+      "bank": "masthead",
+      "season": "ete",
+      "tags": [
+        "mat"
+      ]
+    },
+    {
+      "id": "8de3d84e950b",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Piste_cyclable_Gouin-Est_dans_l%27est_de_Rivi%C3%A8re-des-Prairies%2C_Montr%C3%A9al%2C_Qu%C3%A9bec%2C_Canada.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Piste%20cyclable%20Gouin-Est%20dans%20l'est%20de%20Rivi%C3%A8re-des-Prairies%2C%20Montr%C3%A9al%2C%20Qu%C3%A9bec%2C%20Canada.jpg",
+      "title": "Piste cyclable Gouin-Est dans l'est de Rivière-des-Prairies, Montréal, Québec, Canada",
+      "credit": "Maxime Laterreur",
+      "license": "CC BY 4.0",
+      "description": "Gouin-Est bike path in eastern Rivière-des-Prairies, Montreal, Quebec, Canada. Gouin Boulevard East was realigned in the Faubourg Pointe-aux-Prairies area, notably to allow for the creation of wetlands and improve access to the new residential neighbourhood. The Gouin East bike path now follows the former alignment of the boulevard in this area.",
+      "categories": "Images with annotations|Gouin Boulevard, Montreal|Rivière-des-Prairies|Self-published work|Files with coordinates missing SDC location of creation|Bike paths in Montreal",
+      "width": 8160,
+      "height": 6144,
+      "aspect": 1.328,
+      "mime": "image/jpeg",
+      "addedAt": "2026-11-09T16:44:41.296Z",
+      "sessionId": "automne",
+      "bank": "masthead",
       "tags": [
         "mat"
       ]
