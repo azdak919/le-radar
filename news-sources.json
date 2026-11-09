@@ -27,12 +27,12 @@
         }
       },
       "_note": "WordPress + Elementor — byline dans elementor-post-info « Par … » (pas le JSON-LD Rank Math / compte WP Carla Roche). og:title se termine par « - Quartier Libre » (strip). Photos dans theme-post-featured-image ; légendes souvent descriptives sans photographe → crédit média.",
-      "_lastChecked": "2026-11-09T16:57:39.061Z",
+      "_lastChecked": "2026-11-09T17:04:40.249Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-07T23:00:00.000Z",
       "popularity": 1,
-      "_lastFetchOk": "2026-11-09T16:35:54.445Z"
+      "_lastFetchOk": "2026-11-09T17:04:40.249Z"
     },
     {
       "name": "Montréal Campus",
@@ -42,12 +42,12 @@
       "lang": "fr",
       "url": "https://montrealcampus.ca/feed/",
       "site": "https://montrealcampus.ca/",
-      "_lastChecked": "2026-11-09T16:57:39.637Z",
+      "_lastChecked": "2026-11-09T17:04:40.693Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-06T22:00:00.000Z",
       "popularity": 3,
-      "_lastFetchOk": "2026-11-09T16:35:54.811Z"
+      "_lastFetchOk": "2026-11-09T17:04:40.693Z"
     },
     {
       "name": "Le Délit",
@@ -60,12 +60,12 @@
       "wpFeaturedCategories": [
         "slider"
       ],
-      "_lastChecked": "2026-11-09T16:57:40.152Z",
+      "_lastChecked": "2026-11-09T17:04:42.606Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-04T12:00:00.000Z",
       "popularity": 2,
-      "_lastFetchOk": "2026-11-09T16:35:56.705Z"
+      "_lastFetchOk": "2026-11-09T17:04:42.606Z"
     },
     {
       "name": "The McGill Daily",
@@ -96,12 +96,12 @@
         }
       },
       "_note": "Flux RSS : dc:creator « Coordinating » (compte WP) — ignoreRssAuthor + forcePageAuthor. Byline Neve : meta name=author + .meta.author.vcard / rel=author (souvent hors du corps entry-content). og:image / featured souvent logo Daily.png ou bannière editorial_* — rejeter. preferFirstContentImage : vraie photo du corps, pas la meta Yoast. « Screenshot-AAAA-MM-JJ » est le nom d'export de leurs vraies photos (concert Fortner, festival de jazz) : demote, pas reject — le rejet dur envoyait l'article vers une photo libre hors-sujet.",
-      "_lastChecked": "2026-11-09T16:57:40.793Z",
+      "_lastChecked": "2026-11-09T17:04:43.121Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-09T15:02:05.000Z",
       "popularity": 4,
-      "_lastFetchOk": "2026-11-09T16:35:57.048Z"
+      "_lastFetchOk": "2026-11-09T17:04:43.121Z"
     },
     {
       "name": "The Link",
@@ -125,13 +125,13 @@
           ]
         }
       },
-      "_lastChecked": "2026-11-09T16:57:41.329Z",
+      "_lastChecked": "2026-11-09T17:04:44.422Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-04T23:25:00.000Z",
       "popularity": 7,
       "_note": "Journal indépendant de Concordia (EE). Byline : .byline a[href*=/author/]. Graphique générique CSU (abeille/nid d'abeilles Naya Hachwa) réutilisé sur plusieurs articles — à rejeter. Légendes « Photo Prénom Nom » / « Graphic … » en fin de figcaption.",
-      "_lastFetchOk": "2026-11-09T16:35:58.319Z"
+      "_lastFetchOk": "2026-11-09T17:04:44.422Z"
     },
     {
       "name": "Zone Campus",
@@ -141,12 +141,12 @@
       "lang": "fr",
       "url": "https://www.zonecampus.ca/feed/",
       "site": "https://www.zonecampus.ca/",
-      "_lastChecked": "2026-11-09T16:57:42.684Z",
+      "_lastChecked": "2026-11-09T17:04:45.191Z",
       "_failCount": 0,
-      "_status": "ok",
+      "_status": "stale",
       "_lastItemDate": "2026-05-08T14:20:26.000Z",
       "popularity": 9,
-      "_lastFetchOk": "2026-11-09T16:35:59.135Z",
+      "_lastFetchOk": "2026-11-09T17:04:45.191Z",
       "_dormantSince": "2026-10-25T17:15:41.159Z",
       "_dormantNote": "2026-10-25 : pause estivale annoncée (8 mai–8 sept. 2026), aucun article ni infolettre depuis; même flux https://www.zonecampus.ca/feed/."
     },
@@ -177,12 +177,12 @@
           "rev": 1
         }
       },
-      "_lastChecked": "2026-11-09T16:57:43.696Z",
+      "_lastChecked": "2026-11-09T17:04:47.041Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-03T20:33:01.000Z",
       "popularity": 5,
-      "_lastFetchOk": "2026-11-09T16:36:02.088Z"
+      "_lastFetchOk": "2026-11-09T17:04:47.041Z"
     },
     {
       "name": "Le Collectif",
@@ -192,12 +192,12 @@
       "lang": "fr",
       "url": "https://lecollectif.ca/feed/",
       "site": "https://lecollectif.ca/",
-      "_lastChecked": "2026-11-09T16:57:45.687Z",
+      "_lastChecked": "2026-11-09T17:04:48.606Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-06T15:44:50.000Z",
       "popularity": 6,
-      "_lastFetchOk": "2026-11-09T16:36:04.923Z"
+      "_lastFetchOk": "2026-11-09T17:04:48.606Z"
     },
     {
       "name": "Exil",
@@ -208,12 +208,12 @@
       "url": "https://exilecvm.ca/feed/",
       "site": "https://exilecvm.ca/",
       "historyWordpressComSite": "exilecvm.wordpress.com",
-      "_lastChecked": "2026-11-09T16:57:46.704Z",
+      "_lastChecked": "2026-11-09T17:04:48.842Z",
       "_failCount": 0,
-      "_status": "ok",
+      "_status": "stale",
       "_lastItemDate": "2026-04-18T22:22:07.000Z",
       "popularity": 10,
-      "_lastFetchOk": "2026-11-09T16:36:05.159Z",
+      "_lastFetchOk": "2026-11-09T17:04:48.842Z",
       "botHints": {
         "images": {
           "rejectPathPatterns": [
@@ -251,12 +251,12 @@
           "articleBodySelector": "itemprop=articleBody"
         }
       },
-      "_lastChecked": "2026-11-09T16:57:46.926Z",
+      "_lastChecked": "2026-11-09T17:04:49.604Z",
       "_failCount": 0,
       "_status": "ok",
       "_lastItemDate": "2026-11-09T16:41:26.000Z",
       "popularity": 11,
-      "_lastFetchOk": "2026-11-09T16:36:05.888Z"
+      "_lastFetchOk": "2026-11-09T17:04:49.604Z"
     },
     {
       "name": "Le Polyscope",
@@ -296,10 +296,10 @@
       },
       "_status": "ok",
       "_failCount": 0,
-      "_lastChecked": "2026-11-09T16:57:47.697Z",
+      "_lastChecked": "2026-11-09T17:04:50.085Z",
       "_lastItemDate": "2026-11-06T21:21:04.110Z",
       "_note": "SPA React + Firestore public. Extrait = description ou début de body HTML. Lecture REST publique ou clé FIREBASE_POLYSCOPE_API_KEY.",
-      "_lastFetchOk": "2026-11-09T16:36:06.388Z"
+      "_lastFetchOk": "2026-11-09T17:04:50.085Z"
     },
     {
       "name": "The Tribune",
@@ -322,10 +322,10 @@
       "_note": "Flux RSS : dc:creator « Admin ». Byline réelle : ?tribune_author= (ancien thème), lien entry-author si ce n'est pas Admin, signature « Nom, Staff Writer » dans le corps, sinon data/byline-ledger.json (ne pas réécrire une byline déjà prouvée quand le thème redevient Admin).",
       "_status": "ok",
       "_lastItemDate": "2026-11-03T11:05:31.000Z",
-      "_lastChecked": "2026-11-09T16:57:48.530Z",
+      "_lastChecked": "2026-11-09T17:04:52.278Z",
       "_failCount": 0,
       "popularity": 8,
-      "_lastFetchOk": "2026-11-09T16:36:08.400Z"
+      "_lastFetchOk": "2026-11-09T17:04:52.278Z"
     },
     {
       "name": "The Campus",
@@ -365,11 +365,11 @@
       },
       "_status": "ok",
       "_failCount": 0,
-      "_lastChecked": "2026-11-09T16:57:50.670Z",
+      "_lastChecked": "2026-11-09T17:04:52.536Z",
       "site": "https://thebucampus.ca/",
       "_note": "WordPress — byline réelle en tête d'article (« Nom – Sports Editor »), pas le compte WP « The Campus ». Crédit photo souvent dans le nom de fichier (_cred-prenom-nom), pas dans data-image-title d'une autre image. Flux : fusion news/sports/opinions/arts-culture",
       "_lastItemDate": "2026-10-28T13:44:16.000Z",
-      "_lastFetchOk": "2026-11-09T16:36:08.648Z"
+      "_lastFetchOk": "2026-11-09T17:04:52.536Z"
     },
     {
       "name": "The Plant",
@@ -409,9 +409,9 @@
       "_note": "Journal étudiant du Dawson College (cégep, anglais). WordPress — dc:creator souvent « theplantnews » ; byline = paragraphe « By Name » ou « Name » + rôle (News Editor, Managing Editor…). Rejeter logo/stock plant. Repli images : banque campus Dawson (Wikimedia).",
       "_status": "ok",
       "_failCount": 0,
-      "_lastChecked": "2026-11-09T16:57:50.853Z",
+      "_lastChecked": "2026-11-09T17:04:52.687Z",
       "_lastItemDate": "2026-11-05T19:29:49.000Z",
-      "_lastFetchOk": "2026-11-09T16:36:08.820Z"
+      "_lastFetchOk": "2026-11-09T17:04:52.687Z"
     },
     {
       "name": "L'Oisif",
@@ -422,12 +422,12 @@
       "url": "https://cchic.ca/categorie/journal-etudiant-loisif/feed/",
       "site": "https://cchic.ca/categorie/journal-etudiant-loisif/",
       "popularity": 14,
-      "_status": "dead",
+      "_status": "stale",
       "_lastItemDate": "2019-08-23T18:43:43.000Z",
       "_note": "Flux RSS de la rubrique Journal étudiant L'Oisif du Cégep de Chicoutimi. Les articles historiques sont conservés dans le catalogue; la règle de fraîcheur les exclut naturellement du fil vivant.",
-      "_lastChecked": "2026-11-09T16:57:51.008Z",
+      "_lastChecked": "2026-11-09T17:04:54.049Z",
       "_failCount": 0,
-      "_lastFetchOk": "2026-11-09T16:36:10.168Z",
+      "_lastFetchOk": "2026-11-09T17:04:54.049Z",
       "_dormantSince": "2026-10-25T17:15:41.159Z"
     },
     {
@@ -445,12 +445,12 @@
           "forcePageAuthor": true
         }
       },
-      "_status": "dead",
+      "_status": "stale",
       "_lastItemDate": "2018-05-19T20:19:20.000Z",
       "_note": "Flux RSS WordPress du journal étudiant du Collège Lionel-Groulx. Le compte RSS « lagifleblog » est technique : la signature visible de chaque article prévaut. Les articles historiques sont conservés dans le catalogue; la règle de fraîcheur les exclut naturellement du fil vivant.",
-      "_lastChecked": "2026-11-09T16:57:52.414Z",
+      "_lastChecked": "2026-11-09T17:04:54.222Z",
       "_failCount": 0,
-      "_lastFetchOk": "2026-11-09T16:36:10.343Z",
+      "_lastFetchOk": "2026-11-09T17:04:54.222Z",
       "_dormantSince": "2026-10-25T17:15:41.159Z"
     },
     {
@@ -462,7 +462,7 @@
       "url": "https://letdu.org/feed/",
       "site": "https://letdu.org/",
       "popularity": 16,
-      "_status": "dead",
+      "_status": "stale",
       "_lastItemDate": "2024-11-14T14:41:41.000Z",
       "_note": "Adresse corrigée : letdu.org (et non letraitdunion.org, domaine désormais sans lien avec le journal). Flux RSS WordPress fonctionnel; les signatures réelles sont dans le premier paragraphe et non dans le compte WordPress « letdu ».",
       "botHints": {
@@ -471,9 +471,9 @@
           "forcePageAuthor": true
         }
       },
-      "_lastChecked": "2026-11-09T16:57:52.544Z",
+      "_lastChecked": "2026-11-09T17:04:55.081Z",
       "_failCount": 0,
-      "_lastFetchOk": "2026-11-09T16:36:11.131Z",
+      "_lastFetchOk": "2026-11-09T17:04:55.081Z",
       "_dormantSince": "2026-10-25T17:15:41.159Z"
     },
     {
@@ -486,10 +486,10 @@
       "site": "https://theconcordian.com/",
       "_note": "Réactivé (2026-10) — flux WordPress du site theconcordian.com/feed/ (pas Substack).",
       "_status": "ok",
-      "_lastChecked": "2026-11-09T16:57:53.712Z",
+      "_lastChecked": "2026-11-09T17:04:59.806Z",
       "_failCount": 0,
       "_lastItemDate": "2026-11-07T04:27:08.000Z",
-      "_lastFetchOk": "2026-11-09T16:36:11.495Z"
+      "_lastFetchOk": "2026-11-09T17:04:59.806Z"
     },
     {
       "name": "Impact Campus",
@@ -500,10 +500,10 @@
       "url": "https://impactcampus.ca/feed/",
       "site": "https://impactcampus.ca/",
       "_note": "Journal étudiant généraliste ULaval — flux WordPress /feed/.",
-      "_lastChecked": "2026-11-09T16:57:57.356Z",
+      "_lastChecked": "2026-11-09T17:05:02.908Z",
       "_lastItemDate": "2026-11-09T16:05:23.000Z",
       "_failCount": 0,
-      "_lastFetchOk": "2026-11-09T16:36:12.872Z",
+      "_lastFetchOk": "2026-11-09T17:05:02.908Z",
       "_status": "ok"
     },
     {
@@ -539,8 +539,8 @@
       "_status": "ok",
       "_failCount": 0,
       "_lastItemDate": "2026-10-27T15:51:37.000Z",
-      "_lastChecked": "2026-11-09T16:57:59.208Z",
-      "_lastFetchOk": "2026-11-09T16:36:13.131Z"
+      "_lastChecked": "2026-11-09T17:05:03.172Z",
+      "_lastFetchOk": "2026-11-09T17:05:03.172Z"
     }
   ],
   "candidates": [
@@ -624,6 +624,6 @@
     }
   ],
   "_lastRun": "2026-11-09T17:03:43.019Z",
-  "_lastFetchRun": "2026-11-09T16:36:35.221Z",
+  "_lastFetchRun": "2026-11-09T17:05:42.348Z",
   "_lastScan": "2026-11-09T16:57:38.542Z"
 }

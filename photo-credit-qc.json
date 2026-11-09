@@ -1,23 +1,23 @@
 {
-  "updated": "2026-11-09T16:39:26.318Z",
+  "updated": "2026-11-09T17:09:23.240Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
-  "cited": 109,
-  "pending": 37,
+  "cited": 108,
+  "pending": 38,
   "missingHero": 0,
   "ok": false,
   "checked": 53,
   "updatedCount": 7,
-  "citedNew": 10,
-  "fallbackNew": 43,
+  "citedNew": 9,
+  "fallbackNew": 44,
   "samples": [
     {
-      "title": "Les multiples visages de la précarité à l’Université",
-      "source": "Impact Campus",
-      "credit": "Photo : Marie Tremblay",
-      "cited": true,
-      "method": "json-ld"
+      "title": "Bulletins La Pige radio 9 novembre",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Why We Dream: A Search for the Elusive",
@@ -34,18 +34,18 @@
       "method": "via-attribution"
     },
     {
-      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
       "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
       "credit": "Photo : Bastien Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Gaiters Rugby Wraps Up Season with Hard-Fought Home Finales",

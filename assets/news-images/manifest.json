@@ -1633,16 +1633,6 @@
       "via": "disk",
       "nameKey": "blanchissement.png"
     },
-    "bcb477df109aacf4": {
-      "local": "assets/news-images/bcb477df109aacf4.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/billets_canadiens.png",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 118450,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-09T15:07:56.743Z",
-      "via": "resize-proxy",
-      "nameKey": "billets_canadiens.png"
-    },
     "22501656d0d05eeb": {
       "local": "assets/news-images/22501656d0d05eeb.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png",
@@ -1671,9 +1661,19 @@
       "updatedAt": "2026-11-09T16:37:58.252Z",
       "via": "resize-proxy",
       "nameKey": "img_2102-1.jpg"
+    },
+    "9233c6cfb7e0f95b": {
+      "local": "assets/news-images/9233c6cfb7e0f95b.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 78521,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-09T17:08:01.140Z",
+      "via": "resize-proxy",
+      "nameKey": "dsc0108.jpg"
     }
   },
-  "updatedAt": "2026-11-09T16:37:58.255Z",
+  "updatedAt": "2026-11-09T17:08:01.143Z",
   "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
