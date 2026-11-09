@@ -7,6 +7,12 @@ on:
     # (Pôle hip-hop le dimanche n’existait pas encore à la passe du jeudi).
     # Les autres postes no-op s’il n’y a rien de nouveau (pas de commit).
     - cron: '0 9,18 * * *'
+    # Lundi 0 h 05 heure de Montréal (cron GitHub en UTC) : 04:05 UTC en heure
+    # avancée, 05:05 UTC en heure normale. Bascule « Semaine du … » (CHYZ et
+    # autres) avant que static-integrity n'exige la semaine courante. L'autre
+    # créneau tombe dimanche 23 h 05 ou lundi 1 h 05 : sans effet / no-op.
+    - cron: '5 4 * * 1'
+    - cron: '5 5 * * 1'
   workflow_dispatch:
 
 concurrency:
