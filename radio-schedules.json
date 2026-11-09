@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T21:32:32.121Z",
+  "updatedAt": "2026-11-09T05:25:20.089Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -188,6 +188,13 @@
         },
         {
           "day": 3,
+          "start": "17:45",
+          "end": "20:30",
+          "title": "Remparts de Québec",
+          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+        },
+        {
+          "day": 3,
           "start": "18:30",
           "end": "19:30",
           "title": "3600 secondes d'histoire",
@@ -206,6 +213,13 @@
           "end": "22:30",
           "title": "Blasphème",
           "url": "https://chyz.ca/emission/blaspheme/"
+        },
+        {
+          "day": 3,
+          "start": "22:30",
+          "end": "00:00",
+          "title": "Nocturne",
+          "url": "https://chyz.ca/emission/nocture/"
         },
         {
           "day": 4,
@@ -241,6 +255,13 @@
           "end": "19:00",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        },
+        {
+          "day": 4,
+          "start": "17:45",
+          "end": "20:30",
+          "title": "Remparts de Québec",
+          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         },
         {
           "day": 4,
@@ -292,13 +313,6 @@
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
-          "day": 5,
-          "start": "18:45",
-          "end": "21:30",
-          "title": "Remparts de Québec",
-          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
-        },
-        {
           "day": 6,
           "start": "10:00",
           "end": "10:30",
@@ -314,6 +328,20 @@
         },
         {
           "day": 6,
+          "start": "12:00",
+          "end": "12:30",
+          "title": "Un Monde de Couleurs et de Son",
+          "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
+        },
+        {
+          "day": 6,
+          "start": "12:30",
+          "end": "16:30",
+          "title": "Football du Rouge et Or",
+          "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
+        },
+        {
+          "day": 6,
           "start": "13:00",
           "end": "14:30",
           "title": "Radio Futura",
@@ -321,21 +349,21 @@
         },
         {
           "day": 6,
-          "start": "14:30",
-          "end": "18:30",
-          "title": "Football du Rouge et Or",
-          "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
+          "start": "17:45",
+          "end": "20:30",
+          "title": "Remparts de Québec",
+          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         }
       ],
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-08T21:32:32.121Z",
-      "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-08T21:32:32.121Z",
+      "checkedAt": "2026-11-09T05:25:20.089Z",
+      "verifiedWeekOf": "2026-11-09",
+      "attemptedAt": "2026-11-09T05:25:20.089Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "coveragePercent": 36
+      "coveragePercent": 38
     },
     "cism": {
       "grid": [
@@ -1113,9 +1141,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-08T21:32:32.121Z",
-      "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-08T21:32:32.121Z",
+      "checkedAt": "2026-11-09T05:25:20.089Z",
+      "verifiedWeekOf": "2026-11-09",
+      "attemptedAt": "2026-11-09T05:25:20.089Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1282,7 +1310,7 @@
           "day": 1,
           "start": "19:00",
           "end": "20:00",
-          "title": "Lesbo-sons"
+          "title": "Dykes on Mykes"
         },
         {
           "day": 1,
@@ -1378,7 +1406,7 @@
           "day": 2,
           "start": "18:00",
           "end": "19:00",
-          "title": "Prison Radio"
+          "title": "Rez Rock Radio"
         },
         {
           "day": 2,
@@ -1485,8 +1513,14 @@
         {
           "day": 3,
           "start": "22:00",
+          "end": "23:00",
+          "title": "Rhizomatic Hour 1"
+        },
+        {
+          "day": 3,
+          "start": "23:00",
           "end": "00:00",
-          "title": "Lo Signal _First of the Month"
+          "title": "Rhizomatic Hour 2"
         },
         {
           "day": 4,
@@ -1552,7 +1586,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off the Hour: Trib Talks"
+          "title": "Off The Hour: La Voix des Immigrants"
         },
         {
           "day": 4,
@@ -1582,7 +1616,7 @@
           "day": 4,
           "start": "23:00",
           "end": "01:00",
-          "title": "L'aire du Diable"
+          "title": "You Need A Heart To Live 2"
         },
         {
           "day": 5,
@@ -1647,8 +1681,14 @@
         {
           "day": 5,
           "start": "19:00",
+          "end": "20:00",
+          "title": "Listening to Latin America: Blanca-Victoria"
+        },
+        {
+          "day": 5,
+          "start": "20:00",
           "end": "22:00",
-          "title": "LLA/Macondo"
+          "title": "Macondo"
         },
         {
           "day": 5,
@@ -1726,9 +1766,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-08T21:32:32.121Z",
-      "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-08T21:32:32.121Z",
+      "checkedAt": "2026-11-09T05:25:20.089Z",
+      "verifiedWeekOf": "2026-11-09",
+      "attemptedAt": "2026-11-09T05:25:20.089Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2600,9 +2640,9 @@
       "sources": [
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-11-08T21:32:32.121Z",
-      "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-08T21:32:32.121Z",
+      "checkedAt": "2026-11-09T05:25:20.089Z",
+      "verifiedWeekOf": "2026-11-09",
+      "attemptedAt": "2026-11-09T05:25:20.089Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "coveragePercent": 100
@@ -2902,9 +2942,9 @@
         "cfak:https://www.cfak.ca/programmation/",
         "published-page-data:https://www.cfak.ca/_nuxt/static/1793725584/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-08T21:32:32.121Z",
-      "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-08T21:32:32.121Z",
+      "checkedAt": "2026-11-09T05:25:20.089Z",
+      "verifiedWeekOf": "2026-11-09",
+      "attemptedAt": "2026-11-09T05:25:20.089Z",
       "id": "cfak",
       "name": "CFAK 88,3",
       "coveragePercent": 50
@@ -2917,6 +2957,13 @@
           "end": "13:00",
           "title": "OPUS",
           "url": "https://www.choq.ca/balados/opus"
+        },
+        {
+          "day": 0,
+          "start": "14:00",
+          "end": "16:00",
+          "title": "Pôle hip-hop",
+          "url": "https://www.choq.ca/balados/pole-hip-hop"
         },
         {
           "day": 0,
@@ -2940,18 +2987,18 @@
           "url": "https://www.choq.ca/balados/palmareschoq"
         },
         {
-          "day": 1,
-          "start": "19:00",
-          "end": "20:00",
-          "title": "Bitume",
-          "url": "https://www.choq.ca/balados/bitume"
-        },
-        {
           "day": 2,
           "start": "05:00",
           "end": "07:00",
           "title": "Les rois de l'arène",
           "url": "https://www.choq.ca/balados/les-rois-de-larene"
+        },
+        {
+          "day": 2,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Le Monde Dans Mes Oreilles",
+          "url": "https://www.choq.ca/balados/le-monde-dans-mes-oreilles"
         },
         {
           "day": 2,
@@ -2976,24 +3023,10 @@
         },
         {
           "day": 2,
-          "start": "16:00",
-          "end": "17:30",
-          "title": "Passion Psy",
-          "url": "https://www.choq.ca/balados/passion-psy"
-        },
-        {
-          "day": 2,
           "start": "18:00",
           "end": "19:00",
           "title": "Le Studio",
           "url": "https://www.choq.ca/balados/live"
-        },
-        {
-          "day": 3,
-          "start": "11:00",
-          "end": "12:00",
-          "title": "Miroirs d’Orient",
-          "url": "https://www.choq.ca/balados/miroirs-dorient"
         },
         {
           "day": 3,
@@ -3011,10 +3044,10 @@
         },
         {
           "day": 3,
-          "start": "19:00",
-          "end": "20:00",
-          "title": "Les Amazones",
-          "url": "https://www.choq.ca/balados/les-amazones"
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Les chroniques atmosphériques",
+          "url": "https://www.choq.ca/balados/les-chroniques-atmospheriques"
         },
         {
           "day": 4,
@@ -3022,13 +3055,6 @@
           "end": "13:45",
           "title": "Onde de CHOQ",
           "url": "https://www.choq.ca/balados/onde-de-choq"
-        },
-        {
-          "day": 4,
-          "start": "14:00",
-          "end": "15:00",
-          "title": "Dans les airs",
-          "url": "https://www.choq.ca/balados/dans-les-airs"
         },
         {
           "day": 4,
@@ -3043,6 +3069,20 @@
           "end": "18:00",
           "title": "La 3ème demie",
           "url": "https://www.choq.ca/balados/le-12-mtlsup"
+        },
+        {
+          "day": 4,
+          "start": "18:30",
+          "end": "19:45",
+          "title": "Les Apatrides Anonymes",
+          "url": "https://www.choq.ca/balados/apatrides-anonymes"
+        },
+        {
+          "day": 4,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "La nouvelle école des surdoués",
+          "url": "https://www.choq.ca/balados/la-nouvelle-ecole-des-surdoues"
         },
         {
           "day": 4,
@@ -3074,24 +3114,31 @@
         },
         {
           "day": 5,
-          "start": "14:00",
-          "end": "14:30",
-          "title": "Les fleurs du tapis",
-          "url": "https://www.choq.ca/balados/les-fleurs-du-tapis"
-        },
-        {
-          "day": 5,
           "start": "16:00",
           "end": "17:00",
           "title": "Histoire de passer le temps",
           "url": "https://www.choq.ca/balados/histoire-de-passer-le-temps"
         },
         {
+          "day": 5,
+          "start": "17:00",
+          "end": "18:00",
+          "title": "La Niche",
+          "url": "https://www.choq.ca/balados/la-niche"
+        },
+        {
           "day": 6,
-          "start": "10:00",
-          "end": "11:00",
+          "start": "13:55",
+          "end": "14:55",
           "title": "Podcast Nomade: L'art de se rencontrer",
           "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
+        },
+        {
+          "day": 6,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Palmarès CHOQ.ca",
+          "url": "https://www.choq.ca/balados/palmareschoq"
         },
         {
           "day": 6,
@@ -3104,12 +3151,12 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-08T21:32:32.121Z",
-      "verifiedWeekOf": "2026-11-02",
-      "attemptedAt": "2026-11-08T21:32:32.121Z",
+      "checkedAt": "2026-11-09T05:25:20.089Z",
+      "verifiedWeekOf": "2026-11-09",
+      "attemptedAt": "2026-11-09T05:25:20.089Z",
       "id": "choq",
       "name": "CHOQ.ca",
-      "coveragePercent": 16
+      "coveragePercent": 17
     }
   }
 }
