@@ -102,6 +102,13 @@ assert.equal(legacy.imagePortraitCrop, true);
 assert.match(F.renderPage(F.loadTemplate(), legacy), /object-position:50% 30%;aspect-ratio:3\/2/, 'portrait recadrable sans focal = tiers haut CSS');
 assert.doesNotMatch(F.renderPage(F.loadTemplate(), F.recordOf({ link, title: 'x', image: 'https://example.org/paysage.jpg' })), /object-position/);
 
+// Miroir local (assets/news-images) de la même image : focal conservé (fiche publique 9 nov.).
+const mirrored = F.recordOf({ ...item, imageLocal: 'assets/news-images/72a7534c65b78c07.jpg', date: '2026-11-07T12:00:00Z' });
+assert.match(mirrored.image, /\/assets\/news-images\/72a7534c65b78c07\.jpg$/); assert.equal(mirrored.imageCropFocalY, 0.2);
+assert.match(F.renderPage(F.loadTemplate(), mirrored), /object-position:50% 20%;aspect-ratio:3\/2/);
+const stockShown = F.recordOf({ link, title: 'x', image: '', imageCropSafe: '', stockImage: 'https://upload.wikimedia.org/x.jpg', imageCropFocalY: 0.2 });
+assert.equal(stockShown.imageCropFocalY, undefined, 'jamais de focal sur une photo de banque');
+
 // Registre des fiches : l'ancien crédit campus ne suit pas la nouvelle couverture.
 const store = { articles: {} };
 F.merge(store, [{ ...item, image: '', stockImage: 'https://upload.wikimedia.org/campus.jpg', imageCredit: 'Laurent Bélanger / CC BY-SA 4.0', imageProvider: 'campus-bank', imageCropSafe: undefined, imageCropFocalY: undefined, date: '2026-11-07T12:00:00Z' }]);

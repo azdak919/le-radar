@@ -41,6 +41,15 @@ function creditOf(item) {
   return c.replace(/^illustration\s*:\s*/i, 'Illustration : ');
 }
 
+/** La fiche affiche l'image source elle-même (distante ou son miroir local
+ * assets/news-images, même cadrage) : le point focal s'y applique. */
+function showsSourceImage(item = {}) {
+  const shown = imageOf(item);
+  if (!shown || !item.image) return false;
+  const local = String(item.imageLocal || '').trim();
+  return shown === item.image || (/^assets\/news-images\//i.test(local) && shown === `${SITE}/${local}`);
+}
+
 function imageOf(item) {
   if (item._feedNoImage) return '';
   const local = String(item.imageLocal || '').trim();
@@ -76,12 +85,12 @@ function recordOf(item) {
     excerpt: shortExcerpt(item.leadExcerpt || item.excerpt || ''),
     image: imageOf(item),
     credit: creditOf(item),
-    ...(item.imageCropSafe === item.image && imageOf(item) === item.image
+    ...(item.imageCropSafe === item.image && showsSourceImage(item)
       && Number.isFinite(item.imageCropFocalY) && item.imageCropFocalY >= 0 && item.imageCropFocalY <= 1
       ? { imageCropFocalY: item.imageCropFocalY } : {}),
     // Portrait jugé recadrable sans point focal revu : même cadrage que la
     // carte du fil (.is-portrait-crop, tiers haut), jamais un centre aveugle.
-    ...(item.imageCropSafe && item.imageCropSafe === item.image && imageOf(item) === item.image
+    ...(item.imageCropSafe && item.imageCropSafe === item.image && showsSourceImage(item)
       && !(Number.isFinite(item.imageCropFocalY) && item.imageCropFocalY >= 0 && item.imageCropFocalY <= 1)
       ? { imagePortraitCrop: true } : {}),
   };
