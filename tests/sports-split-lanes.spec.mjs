@@ -350,7 +350,7 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
         const cs = getComputedStyle(strip);
         const inner = strip.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         return {
-          inner, slots: sportsBoardCount(), gap: parseFloat(cs.columnGap),
+          inner, boardCapacity: sportsBoardCount(), slots: Math.min(sportsBoardCount(), sportsStripFitFloor()), gap: parseFloat(cs.columnGap),
           cards: [...strip.querySelectorAll('.sports-chip--match')].map(c => {
             const r = c.getBoundingClientRect();
             const line = c.querySelector('.sports-chip__line-inner');
@@ -383,7 +383,7 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
         expect(geometry.cards[0].width).toBeLessThanOrEqual(geometry.inner / 2 + 1);
       }
       if (n === 1) {
-        expect(geometry.cards[0].width).toBeLessThanOrEqual(measurements[0].cards[0].width + 1);
+        expect(geometry.cards[0].width).toBeCloseTo(measurements[0].cards[0].width, 0);
         await page.addStyleTag({ content: '#local-lab-format-bar{display:none!important}' });
         await page.locator('#masthead-sports-strip').screenshot({ path: info.outputPath('one-live-card.png') });
         // Rotation ne dilate pas la carte et ne fabrique aucun autre match.
@@ -411,11 +411,11 @@ test('carte unique : refresh, vrai retour navigateur, resize et focus sans dilat
     await expect.poll(() => card.evaluate(c => {
       const strip = c.parentElement, cs = getComputedStyle(strip);
       const inner = strip.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-      const slots = sportsBoardCount();
+      const slots = Math.min(sportsBoardCount(), sportsStripFitFloor());
       const expected = (inner - parseFloat(cs.columnGap) * (slots - 1)) / slots;
       return Math.abs(c.getBoundingClientRect().width - expected) <= 1 && (inner < 520 || slots >= 2);
     })).toBe(true);
-    const m = await card.evaluate(c => ({ width: c.getBoundingClientRect().width, height: c.getBoundingClientRect().height, slots: sportsBoardCount(), title: c.title }));
+    const m = await card.evaluate(c => ({ width: c.getBoundingClientRect().width, height: c.getBoundingClientRect().height, slots: Math.min(sportsBoardCount(), sportsStripFitFloor()), title: c.title }));
     if (singleSlot) expect(m.slots).toBe(1); else expect(m.slots).toBeGreaterThanOrEqual(2);
     metrics.push({ stage, ...m });
   }

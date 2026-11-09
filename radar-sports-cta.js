@@ -1024,16 +1024,23 @@ function sportsMatchNaturalWidth(chip) {
   return Math.max(boxW, Math.ceil(textW) + 48);
 }
 
+/** Plancher du fit existant : référence d’une rangée normale, même sous-remplie. */
+function sportsStripFitFloor(ctaFloor = (typeof sportsWantedCtaCount === 'function' ? sportsWantedCtaCount() : 1)) {
+  return isWideDesktopComfort()
+    ? (ctaFloor >= 2 ? ctaFloor + 2 : 3)
+    : (sportsStripAvailWidth() >= 520 ? 2 : 1);
+}
+
 /** Conserver la largeur d’un slot normal même si le pool live ne le remplit pas. */
 function fitWideSportsMatchSlots() {
   if (!MASTHEAD_SPORTS_STRIP) return;
   const strip = MASTHEAD_SPORTS_STRIP;
   strip.style.removeProperty('--sports-match-w');
-  // La capacité dépend de la place disponible, jamais du nombre de directs.
+  // Reprendre les slots d’une rangée normale après fit, pas partager le pool réduit.
   // Sans plafond, flex-grow transforme un direct isolé en ligne pleine largeur.
   // Même géométrie qu’une rangée remplie : padding réel + gap CSS, sans hauteur
   // inventée ni match de remplissage. Recalculé aussi après fit et resize.
-  const slots = Math.max(1, sportsBoardCount());
+  const slots = Math.max(1, Math.min(sportsBoardCount(), sportsStripFitFloor()));
   const cs = getComputedStyle(strip);
   const innerWidth = strip.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
   const gap = parseFloat(cs.columnGap) || 0;
@@ -1082,9 +1089,7 @@ function fitSportsStripAfterPaint() {
   // ≥ ~520 px : ne pas jeter le dernier score (round-trip 2560→1920 le perdait).
   // Multi-CTA : au moins un score de chaque côté (sinon le seul part à droite).
   const ctaFloor = (typeof sportsWantedCtaCount === 'function') ? sportsWantedCtaCount() : 1;
-  const floor = isWideDesktopComfort()
-    ? (ctaFloor >= 2 ? ctaFloor + 2 : 3)
-    : (sportsStripAvailWidth() >= 520 ? 2 : 1);
+  const floor = sportsStripFitFloor(ctaFloor);
   let next = count - 1;
   if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
   if (comfort && ctaFloor >= 2) {
