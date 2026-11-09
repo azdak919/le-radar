@@ -36,8 +36,9 @@ async function j(url, headers = {}) {
 }
 const BSKY = 'https://public.api.bsky.app/xrpc';
 async function bluesky({ since, internal }) {
-  const handle = process.env.BLUESKY_HANDLE || 'le-radar.ca';
-  const prof = await j(`${BSKY}/app.bsky.actor.getProfile?actor=${handle}`);
+  const actor = process.env.BLUESKY_HANDLE || 'le-radar.ca'; // en CI la variable peut être un DID : on retombe toujours sur le @handle du profil
+  const prof = await j(`${BSKY}/app.bsky.actor.getProfile?actor=${encodeURIComponent(actor)}`);
+  const handle = prof.handle || actor;
   const all = []; let cur = '';
   for (let page = 0; page < 6; page++) { // pagination : toute la période, 600 posts au plus
     const feed = await j(`${BSKY}/app.bsky.feed.getAuthorFeed?actor=${handle}&limit=100&filter=posts_no_replies${cur ? '&cursor=' + cur : ''}`);

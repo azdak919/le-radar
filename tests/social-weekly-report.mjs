@@ -19,4 +19,7 @@ assert.ok(md.includes('X 20, Facebook 10, LinkedIn 4') && /Aucun courriel envoy�
 // le script ne contient aucun envoi : pas de courriel, pas de publication
 const src = fs.readFileSync('scripts/social/weekly-report.mjs', 'utf8');
 assert.ok(!/sendmail|nodemailer|createRecord|statuses['"`]?,\s*\{\s*method: 'POST'|createPost|method: 'POST'/.test(src), 'lecture seule');
+
+// Bluesky : la variable d'environnement peut être un DID ; le @handle du profil sert à reconnaître les publications du compte.
+assert.match(src, /const handle = prof\.handle \|\| actor/, 'handle résolu depuis le profil (DID accepté)');
 console.log('social-weekly-report : OK');
