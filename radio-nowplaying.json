@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-08T23:07:25.565Z",
+  "updatedAt": "2026-11-09T01:07:22.581Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule",
+        "source": "api-live",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
+      "next": {
+        "title": "Kurdistan, Ici et là-bas",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/kurdistan-ici-et-la-bas/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T23:06:32.944Z"
+      "checkedAt": "2026-11-09T01:06:42.750Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "next": {
         "title": "London café (reprise)",
         "source": "schedule",
         "start": "19:00",
         "end": "20:30",
         "url": "https://cism893.ca/emissions/london-cafe"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "London café (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T23:06:46.929Z"
+      "checkedAt": "2026-11-09T01:06:44.737Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats",
+        "title": "Country Classics",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "next": {
-        "title": "Bluegrass Rambling",
+        "title": "Cha Cha In Blue",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Desi Beats",
+      "showTitle": "Country Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T23:06:50.007Z"
+      "checkedAt": "2026-11-09T01:06:48.111Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bills Country and Western Favourites",
+        "title": "Eastern Promises",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
       },
       "next": {
-        "title": "No Boundaries",
+        "title": "Afro Archives",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "track": "",
-      "showTitle": "Bills Country and Western Favourites",
+      "showTitle": "Eastern Promises",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T23:07:04.643Z"
+      "checkedAt": "2026-11-09T01:07:02.560Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T23:07:06.040Z"
+      "checkedAt": "2026-11-09T01:07:03.565Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-08T23:07:25.214Z"
+      "checkedAt": "2026-11-09T01:07:22.230Z"
     }
   }
 }
