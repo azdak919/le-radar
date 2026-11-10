@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-10T17:14:05.039Z",
+  "updatedAt": "2026-11-10T19:06:44.093Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Émission (presque) sérieuse",
-        "source": "schedule",
+        "source": "api-live",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/emission-presque-serieuse/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Émission (presque) sérieuse",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T17:13:38.434Z"
+      "checkedAt": "2026-11-10T19:06:07.290Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art",
+        "title": "À la bonne heure",
         "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "London café",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "15:00",
+        "end": "16:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
       },
       "track": "",
-      "showTitle": "Les sentinelles de l'art",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T17:13:40.457Z"
+      "checkedAt": "2026-11-10T19:06:09.314Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Universal Break",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voice of Korea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Montreal Sessions",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Universal Break",
+      "showTitle": "Voice of Korea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,82 +81,83 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T17:13:43.169Z"
+      "checkedAt": "2026-11-10T19:06:11.551Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World Beat News",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
+        "title": "Something for the Mood",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
       "next": {
-        "title": "Shaking the Habitual",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "track": "",
-      "showTitle": "World Beat News",
+      "showTitle": "Something for the Mood",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T17:13:57.326Z"
+      "checkedAt": "2026-11-10T19:06:35.382Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Le DOUZE",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "12:59",
-        "url": "https://www.cfak.ca/balados/le-douze"
-      },
+      "current": null,
       "next": {
         "title": "L'Aut'Rock",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:30",
         "end": "19:59",
         "url": "https://www.cfak.ca/balados/lautrock"
       },
       "track": "",
-      "showTitle": "Le DOUZE",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T17:13:58.907Z"
+      "checkedAt": "2026-11-10T19:06:36.949Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
+      "current": {
+        "title": "Onde de CHOQ",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "14:45",
+        "url": "https://www.choq.ca/balados/onde-de-choq"
+      },
       "next": {
-        "title": "L'UQAM en info",
-        "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
+        "title": "Palmarès CHOQ.ca",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://www.choq.ca/balados/palmareschoq"
       },
       "track": "Bloc Pub 21 juillet.mp3",
-      "showTitle": "",
+      "showTitle": "Onde de CHOQ",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T17:14:04.688Z"
+      "checkedAt": "2026-11-10T19:06:43.743Z"
     }
   }
 }
