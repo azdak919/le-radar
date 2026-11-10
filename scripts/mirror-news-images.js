@@ -29,6 +29,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { imageUrlKey } = require('./article-photo-credit-lib');
+const { jpegNeedsFacebookSanitize, sanitizeJpegForFacebook } = require('./jpeg-facebook-safe');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -215,6 +216,18 @@ function localPathFor(key, ext) {
   return path.posix.join('assets/news-images', `${key}${ext}`);
 }
 
+/** Réécrit un JPEG Canva / ICC / XMP déjà en cache. Retourne true si le fichier change. */
+function rewriteUnsafeJpeg(abs) {
+  if (!/\.jpe?g$/i.test(abs)) return false;
+  let buf;
+  try { buf = fs.readFileSync(abs); } catch { return false; }
+  if (!jpegNeedsFacebookSanitize(buf)) return false;
+  const clean = sanitizeJpegForFacebook(buf);
+  if (!clean || clean.equals(buf)) return false;
+  fs.writeFileSync(abs, clean);
+  return true;
+}
+
 function fileExists(abs) {
   try {
     return fs.statSync(abs).size >= MIN_BYTES;
@@ -269,6 +282,10 @@ async function main() {
       item.imageLocal = prior.local;
       item.imageLocalKey = key;
       if (prior.via) item.imageLocalVia = prior.via;
+      if (rewriteUnsafeJpeg(priorPath) && manifest.files[key]) {
+        manifest.files[key].bytes = fs.statSync(priorPath).size;
+        manifest.files[key].updatedAt = new Date().toISOString();
+      }
       reused += 1;
       return;
     }
@@ -279,6 +296,7 @@ async function main() {
         const rel = localPathFor(key, ext === '.jpeg' ? '.jpg' : ext);
         item.imageLocal = rel;
         item.imageLocalKey = key;
+        rewriteUnsafeJpeg(guess);
         manifest.files[key] = {
           local: rel,
           remote,
@@ -294,10 +312,14 @@ async function main() {
     }
 
     try {
-      const { buf, contentType, via } = await downloadWithFallback(remote);
+      let { buf, contentType, via } = await downloadWithFallback(remote);
       const ext = extFrom(contentType, remote);
       const rel = localPathFor(key, ext);
       const abs = path.join(ROOT, rel);
+      if (ext === '.jpg' && jpegNeedsFacebookSanitize(buf)) {
+        const clean = sanitizeJpegForFacebook(buf);
+        if (clean) buf = clean;
+      }
       fs.writeFileSync(abs, buf);
       item.imageLocal = rel;
       item.imageLocalKey = key;

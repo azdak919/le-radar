@@ -42,6 +42,7 @@ const mirrorJs = readFileSync(path.join(root, 'scripts/mirror-news-images.js'), 
 assert.match(mirrorJs, /350_000/, 'miroir : plafond 350 ko, au-delà version réduite (croissance du dépôt)');
 assert.match(mirrorJs, /photonUrl/, 'miroir : Photon si l’origine est trop lourde / down');
 assert.match(mirrorJs, /via: 'photon'/, 'miroir : via photon');
+assert.match(mirrorJs, /jpeg-facebook-safe/, 'miroir : JPEG Canva nettoyé avant mise en ligne');
 
 // Script chargeable (syntaxe)
 const check = spawnSync(process.execPath, ['--check', path.join(root, 'scripts/mirror-news-images.js')], {

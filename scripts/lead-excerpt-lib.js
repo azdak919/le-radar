@@ -13,6 +13,12 @@ const { decodeEntities, stripHtml: stripHtmlDecoded, fixDropCapSpacing } = requi
 const FETCH_TIMEOUT = 12000;
 const LEAD_EXCERPT_MAX = 1200;
 const LEAD_EXCERPT_MIN = 80;
+/**
+ * Double une : un chapô d'une seule phrase (~200 car.) laisse un vide sous
+ * la photo pendant que la une d'à côté descend. On colle les paragraphes
+ * suivants tant qu'on n'atteint pas cette longueur.
+ */
+const LEAD_FILL_MIN = 480;
 const SUBSTANTIVE_MIN = 60;
 const LEAD_SUITABILITY_MIN = 52;
 const SCAN_PARAGRAPH_LIMIT = 10;
@@ -179,8 +185,13 @@ function normalizeLeadParagraph(text = '') {
   s = s.replace(/\.\s*\./g, '.');
   // WP has-drop-cap : première lettre détachée (« L e 18… »)
   s = fixDropCapSpacing(s);
+  // extractBylineFromText ne lit que les 400 premiers caractères et renvoie
+  // ce tronçon comme body même sans auteur. L'adopter coupait tout chapô
+  // à 400 car. — trop court pour remplir la double une.
   const byline = extractBylineFromText(s);
-  if (byline.body.length >= SUBSTANTIVE_MIN) s = byline.body;
+  if (byline.author && byline.body.length >= SUBSTANTIVE_MIN && byline.body.length < s.length) {
+    s = byline.body;
+  }
   return s.replace(/\s+/g, ' ').trim();
 }
 
@@ -301,12 +312,28 @@ function pickBestLeadParagraph(html = '') {
   }
 
   let text = best.text;
-  if (text.length < 200 && best.index < rawParas.length - 1) {
-    const nextNorm = normalizeLeadParagraph(rawParas[best.index + 1]);
-    const nextScored = scoreLeadParagraph(nextNorm, { index: best.index + 1 });
-    if (nextScored.suitable && nextScored.score >= best.score - 12) {
-      text = `${text} ${nextNorm}`.trim();
+  let idx = best.index;
+  let guard = 0;
+  // Le seuil « < 200 » laissait passer un premier paragraphe de 200 car.
+  // pile (Movember) : le paragraphe suivant, pourtant lisible, restait dehors.
+  while (text.length < LEAD_FILL_MIN && guard < 4) {
+    guard += 1;
+    let nextIdx = -1;
+    let nextNorm = '';
+    const horizon = Math.min(rawParas.length, idx + 4);
+    for (let j = idx + 1; j < horizon; j += 1) {
+      if (isJunkParagraph(rawParas[j])) continue;
+      const norm = normalizeLeadParagraph(rawParas[j]);
+      if (!norm) continue;
+      nextIdx = j;
+      nextNorm = norm;
+      break;
     }
+    if (nextIdx < 0) break;
+    const nextScored = scoreLeadParagraph(nextNorm, { index: nextIdx });
+    if (!nextScored.suitable || nextScored.score < best.score - 12) break;
+    text = `${text} ${nextNorm}`.trim();
+    idx = nextIdx;
   }
 
   return {
@@ -342,9 +369,11 @@ function excerptLooksIncomplete(item = {}) {
   if (existing) {
     if (!leadExcerptLooksSuitable(existing)) return true;
     if (excerptEndsAbruptly(existing)) return true;
-    if (existing.length >= 180 && existing.length <= 420 && countSentences(existing) >= 2) return false;
-    if (existing.length > 420 && countSentences(existing) >= 3) return true;
-    if (leadExcerptLooksSuitable(existing) && existing.length >= 180 && endsCompleteSentence(existing)) return false;
+    // Sous le plancher, le bot retourne chercher la suite sur la page.
+    if (existing.length < LEAD_FILL_MIN) return true;
+    if (existing.length <= 900 && countSentences(existing) >= 2 && endsCompleteSentence(existing)) return false;
+    if (existing.length > 900 && countSentences(existing) >= 3) return true;
+    if (endsCompleteSentence(existing)) return false;
     return true;
   }
 
@@ -354,7 +383,7 @@ function excerptLooksIncomplete(item = {}) {
 
   const { body } = extractBylineFromText(ex);
   const text = body || ex;
-  if (text.length < 200) return true;
+  if (text.length < LEAD_FILL_MIN) return true;
   return false;
 }
 
@@ -411,6 +440,7 @@ module.exports = {
   RSS_ITEM_LIMIT,
   LEAD_EXCERPT_MAX,
   LEAD_EXCERPT_MIN,
+  LEAD_FILL_MIN,
   LEAD_SUITABILITY_MIN,
   excerptEndsAbruptly,
   fetchText,
