@@ -1,22 +1,40 @@
 {
-  "updated": "2026-11-10T08:07:25.351Z",
+  "updated": "2026-11-10T08:55:10.049Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 6,
-  "withLeadExcerpt": 130,
-  "candidates": 6,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 58,
+  "withLeadExcerpt": 166,
+  "candidates": 50,
+  "enriched": 36,
+  "failed": 7,
   "ok": true,
   "samples": [
     {
       "title": "Sauve qui peut : l’IA à nos trousses",
       "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
-      "score": 82,
-      "chars": 400,
+      "score": 100,
+      "chars": 431,
       "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
+      "changed": true
+    },
+    {
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "ok": true,
+      "score": 100,
+      "chars": 528,
+      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
+      "changed": true
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": true
     },
     {
       "title": "Francisée, mais pas la bienvenue ?",
@@ -28,31 +46,40 @@
       "changed": false
     },
     {
-      "title": "Gaiters Women’s Soccer: A Season to Remember",
-      "link": "https://thebucampus.ca/2026/11/09/gaiters-womens-soccer-a-season-to-remember/",
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
       "ok": true,
-      "score": 72,
-      "chars": 400,
-      "sample": "25 years in the making! Sunday, Oct. 25, 2026 saw the Gaiters Women’s Soccer team break a long-lasti",
-      "changed": false
+      "score": 100,
+      "chars": 566,
+      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
+      "changed": true
     },
     {
-      "title": "Les multiples visages de la précarité à l’Université",
-      "link": "https://impactcampus.ca/actualites/les-multiples-visages-de-la-precarite-a-luniversite/",
-      "ok": true,
-      "score": 91,
-      "chars": 400,
-      "sample": "Une table ronde sur la précarité à l’Université Laval a eu lieu le 20 octobre dernier, rassemblant l",
-      "changed": false
-    },
-    {
-      "title": "Plus rien n’est égal par ailleurs : Un film qui divise, et c’est voulu",
-      "link": "https://lapige.atmjonquiere.com/2026/11/06/plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu/?utm_source=rss&utm_medium=rss&utm_campaign=plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu",
+      "title": "Quand la mode va trop loin",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
       "ok": true,
       "score": 96,
-      "chars": 162,
-      "sample": "Présenté jeudi soir au Cégep de Jonquière, le nouveau documentaire de Martin Bureau a suscité autant",
+      "chars": 759,
+      "sample": "Consistant à dépigmenter la peau autour de l’anus, cette recherche d’uniformité corporelle vient du ",
+      "changed": true
+    },
+    {
+      "title": "Quand la transidentité effraie",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
+      "ok": true,
+      "score": 100,
+      "chars": 370,
+      "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
       "changed": false
+    },
+    {
+      "title": "Affaire Ewert : qui savait quoi ?",
+      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
+      "ok": true,
+      "score": 100,
+      "chars": 617,
+      "sample": "Jeffrey Ewert est de retour en détention. Le Service correctionnel du Canada (SCC) a annoncé le 24 o",
+      "changed": true
     }
   ]
 }
