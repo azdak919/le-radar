@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-10T10:07:35.968Z",
+  "updated": "2026-11-10T11:38:28.980Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 29,
-  "withLeadExcerpt": 142,
-  "candidates": 29,
-  "enriched": 11,
-  "failed": 2,
+  "incomplete": 19,
+  "withLeadExcerpt": 136,
+  "candidates": 19,
+  "enriched": 0,
+  "failed": 3,
   "ok": true,
   "samples": [
-    {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": false
-    },
     {
       "title": "Sauve qui peut : l’IA à nos trousses",
       "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
@@ -37,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": false
+    },
+    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -44,24 +44,6 @@
       "chars": 370,
       "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
       "changed": false
-    },
-    {
-      "title": "What the Cornell case taught me",
-      "link": "https://theconcordian.com/2026/11/what-the-cornell-case-taught-me/",
-      "ok": true,
-      "score": 100,
-      "chars": 774,
-      "sample": "I think we have all come across the Cornell case by now. The Cornell sexual assault case involves a ",
-      "changed": true
-    },
-    {
-      "title": "Revue de concert : Aya Nakamura",
-      "link": "https://theconcordian.com/2026/11/revue-concert-aya-nakamura-montreal/",
-      "ok": true,
-      "score": 100,
-      "chars": 727,
-      "sample": "La fin de semaine dernière, celle qu’on surnomme « la reine de France », Aya Nakamura, a fait sa pre",
-      "changed": true
     },
     {
       "title": "20 People Spoke for All: BUSRC Attendance Challenges Reflected on This Year’s AGM",
@@ -79,6 +61,24 @@
       "score": 90,
       "chars": 288,
       "sample": "Lina Elbakaye, the CSU internal affairs coordinator, and Harerta Abraha, the newly elected chief ele",
+      "changed": false
+    },
+    {
+      "title": "Is Wearing Makeup Really a Choice? - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
+      "ok": true,
+      "score": 96,
+      "chars": 271,
+      "sample": "In the United States, 38 per cent of women report wearing makeup at least a few times a week, if not",
+      "changed": false
+    },
+    {
+      "title": "FASA opens anti-austerity week with town hall and general assembly",
+      "link": "https://thelinknewspaper.ca/article/16534",
+      "ok": true,
+      "score": 96,
+      "chars": 276,
+      "sample": "The Fine Arts Student Alliance (FASA) held a town hall meeting with fine arts dean Annie Gérin on No",
       "changed": false
     }
   ]

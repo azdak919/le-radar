@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-10T10:08:06.473Z",
+  "updated": "2026-11-10T11:39:00.125Z",
   "total": 188,
   "withPhoto": 168,
   "withStock": 32,
   "withCampusBank": 30,
   "fullyCovered": 188,
   "leadReadyPhotos": 154,
-  "pageScraped": 30,
-  "photosRecovered": 30,
-  "imagesCleared": 17,
+  "pageScraped": 28,
+  "photosRecovered": 28,
+  "imagesCleared": 15,
   "stockSearches": 37,
-  "stockFound": 26,
-  "campusBankFound": 23,
+  "stockFound": 27,
+  "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -31,12 +31,6 @@
       "link": "https://thebucampus.ca/2026/11/09/goodbye-october-hello-movember/",
       "reason": "no-stock-match",
       "image": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png"
-    },
-    {
-      "title": "When Neutrality Becomes Silence: McGill's Responsibility to Protect Political Dissent - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/when-neutrality-becomes-silence-mcgills-responsibility-to-protect-political-dissent/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
       "title": "Bulletins La Pige radio 9 novembre",
@@ -75,10 +69,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "La peur : un plaisir paradoxal",
-      "link": "https://quartierlibre.ca/frisson-le-plaisir-paradoxal-de-la-peur/",
+      "title": "Creative Writing October 2026",
+      "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Campus_de_l%27Universit%C3%A9_de_Montr%C3%A9al.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
+    },
+    {
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pavillon_DKN%2C_Universit%C3%A9_Laval_11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Blackface at McGill",
