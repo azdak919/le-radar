@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T07:06:31.278Z",
+  "updatedAt": "2026-11-10T08:06:39.302Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T07:06:02.226Z"
+      "checkedAt": "2026-11-10T08:06:09.784Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T07:06:04.402Z"
+      "checkedAt": "2026-11-10T08:06:11.918Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Pirate et Libres",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
-      },
-      "next": {
         "title": "Attik / Show For Children",
         "source": "api-live",
         "start": "03:00",
         "end": "05:00"
       },
+      "next": {
+        "title": "The Beat Power Hour",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Pirate et Libres",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T07:06:07.455Z"
+      "checkedAt": "2026-11-10T08:06:14.991Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T07:06:22.158Z"
+      "checkedAt": "2026-11-10T08:06:29.544Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T07:06:23.482Z"
+      "checkedAt": "2026-11-10T08:06:30.465Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T07:06:30.927Z"
+      "checkedAt": "2026-11-10T08:06:38.951Z"
     }
   }
 }
