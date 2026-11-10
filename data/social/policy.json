@@ -74,18 +74,19 @@
    "hourTo": 21,
    "link": "https://le-radar.ca/sports/",
    "hashtags": {
-    "bluesky": 2,
-    "mastodon": 4,
-    "x": 2,
-    "linkedin": 3,
-    "facebook": 1,
+    "_doc": "Hashtags propres à ce format (ligues, sports U, équipes, #SportÉtudiant #Québec), au plus 8. Tumblr : étiquettes natives, pas de # dans le texte. Aucune mention @.",
+    "bluesky": 8,
+    "mastodon": 8,
+    "x": 8,
+    "linkedin": 8,
+    "facebook": 8,
     "tumblr": 15
    },
    "maxGames": {
     "uni": 4,
     "coll": 2
    },
-   "maxMentionsX": 4,
+   "maxMentionsX": 0,
    "image": "https://le-radar.ca/assets/og-cover.png",
    "maxDataAgeH": 36,
    "sections": [
