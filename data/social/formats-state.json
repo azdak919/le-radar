@@ -2,21 +2,6 @@
  "_doc": "État des formats natifs (écrit par scripts/social/formats-run.mjs, commité par le workflow « Social — Formats natifs »). Clé = format puis dimanche du week-end (résultats) ou jour (À écouter ce soir) puis réseau : { at, url|id } ou { failed, attempts, error }. Jamais plus d'une publication par réseau et par clé.",
  "weekend_results": {
   "2026-11-08": {
-   "x": {
-    "at": "2026-11-10T20:28:05.094Z",
-    "id": "6af37e52ead9c53d41bba303",
-    "status": ""
-   },
-   "facebook": {
-    "at": "2026-11-10T20:28:12.527Z",
-    "id": "6af37e57e4acfdf0c706cdc5",
-    "status": ""
-   },
-   "linkedin": {
-    "at": "2026-11-10T20:28:23.313Z",
-    "id": "6af37e5c41bc75bbeb60723c",
-    "status": ""
-   },
    "bluesky": {
     "at": "2026-11-10T21:02:16.699Z",
     "url": "https://bsky.app/profile/did:plc:uxuxieev7fbkiji3xyyhzgae/post/3mzydmelyxy2u",
