@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-10T14:37:58.555Z",
+  "updated": "2026-11-10T15:07:48.295Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 32,
-  "withLeadExcerpt": 139,
-  "candidates": 32,
-  "enriched": 19,
-  "failed": 1,
+  "incomplete": 28,
+  "withLeadExcerpt": 140,
+  "candidates": 28,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
-    {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": false
-    },
     {
       "title": "Sauve qui peut : l’IA à nos trousses",
       "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
@@ -37,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": false
+    },
+    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -46,12 +46,12 @@
       "changed": false
     },
     {
-      "title": "A win for data centres",
-      "link": "https://thelinknewspaper.ca/article/16558",
+      "title": "Cha Cha Real Smooth Crossword",
+      "link": "https://theconcordian.com/2026/11/cha-cha-real-smooth-crossword/",
       "ok": true,
-      "score": 100,
-      "chars": 639,
-      "sample": "Data centres are opening across the country, and due to their high energy demands, Hydro-Québec subm",
+      "score": 90,
+      "chars": 266,
+      "sample": "SIGN UP TO CONTRIBUTE! Subscribe to our Substack to receive new Podcast episodes, our weekly section",
       "changed": true
     },
     {
@@ -61,7 +61,7 @@
       "score": 96,
       "chars": 289,
       "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Concordia’s deficit detrimental to student experience",
@@ -70,7 +70,7 @@
       "score": 100,
       "chars": 279,
       "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
-      "changed": true
+      "changed": false
     },
     {
       "title": "What does it mean for students if Canada joins the Erasmus+ exchange program?",
@@ -79,7 +79,7 @@
       "score": 100,
       "chars": 422,
       "sample": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is d",
-      "changed": true
+      "changed": false
     }
   ]
 }
