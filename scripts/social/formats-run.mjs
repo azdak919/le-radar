@@ -35,7 +35,7 @@ export function buildAll(format, { sports, radio, teamAcc, policy = POLICY, now 
     out.model = { uni: model.uni.map(g => ({ ...g })), coll: model.coll.map(g => ({ ...g })), previewOnly: full.coll.length && !cfg.sections.includes('coll') ? full.coll : [] };
     for (const n of NETS) {
       const spec = NET_SPEC[n], tags = n === 'tumblr' ? [] : resultsTags(model, tagMax(n), teamAcc);
-      const text = buildResultsText(model, spec, { link: cfg.link, teamAcc, tags, maxMentions: n === 'x' ? cfg.maxMentionsX ?? 4 : 0 });
+      const text = buildResultsText(model, spec, { link: cfg.link, teamAcc, tags, maxMentions: 0 });
       const problems = checkText(text, spec, { model, teamAcc });
       out.networks[n] = { text, tags: n === 'tumblr' ? resultsTumblrTags(model, teamAcc) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, problems };
     }

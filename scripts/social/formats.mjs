@@ -8,7 +8,7 @@ void personCredit;
 
 export const SPORT_EMOJI = { football: '🏈', 'flag-football': '🏈', hockey: '🏒', basketball: '🏀', volleyball: '🏐', soccer: '⚽', rugby: '🏉', badminton: '🏸' };
 export const SPORT_WEIGHT = { football: 100, hockey: 95, basketball: 80, volleyball: 70, soccer: 65, rugby: 55, 'flag-football': 20, badminton: 10 };
-export const SPORT_HASH = { football: '#Football', 'flag-football': '#Football', hockey: '#Hockey', basketball: '#Basketball', volleyball: '#Volleyball', soccer: '#Soccer', rugby: '#Rugby', badminton: '#Badminton' };
+export const SPORT_HASH = { football: '#FootballU', 'flag-football': '#FootballU', hockey: '#HockeyU', basketball: '#BasketU', volleyball: '#VolleyU', soccer: '#SoccerU', rugby: '#RugbyU', badminton: '#BadmintonU' };
 const MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
 
 /** « 6-8 nov. » ou « 30 oct.-1 nov. » à partir de deux dates AAAA-MM-JJ. */
@@ -107,19 +107,54 @@ export function publishedModel(model, sections = ['uni', 'coll']) {
 
 // ── Textes ───────────────────────────────────────────────────────────────────
 const lc = s => String(s || '').toLowerCase();
-const camel = s => String(s || '').normalize('NFC').replace(/&/g, ' ').replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean).map(w => w[0].toUpperCase() + w.slice(1)).join('');
+const stripAccents = s => String(s || '').normalize('NFD').replace(/\p{M}/gu, '').normalize('NFC');
+const camel = s => stripAccents(s).replace(/&/g, ' ').replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean).map(w => w[0].toUpperCase() + w.slice(1)).join('');
+const CLOSING_TAGS = ['#SportÉtudiant', '#Québec'];
 
-/** Hashtags du bloc résultats : ligues, sport le plus présent, équipes, institutions ; au plus `max`. */
+/** Hashtag d'équipe : surnom en CamelCase sans accents (ex. #RougeEtOr), jamais le compte athletics. */
+function teamHash(side) {
+  const base = side?.nick || '';
+  if (!base) return '';
+  const tag = '#' + camel(base);
+  return tag === '#' ? '' : tag;
+}
+
+/**
+ * Hashtags du format « Résultats du week-end », groupés pour pouvoir retirer d'abord les équipes si le texte dépasse la limite.
+ * Ligues présentes, sport « U » par sport présent, quelques équipes (surnom, fréquence puis ordre alphabétique), puis #SportÉtudiant #Québec.
+ */
+export function resultsTagGroups(model, teamAcc = {}) {
+  void teamAcc;
+  const leagues = [];
+  if (model.uni.length) leagues.push('#USports');
+  if (model.uni.length || model.coll.length) leagues.push('#RSEQ');
+  const bySport = new Map();
+  for (const x of model.shown) bySport.set(x.sport, (bySport.get(x.sport) || 0) + 1);
+  const sports = [...bySport].sort((a, b) => b[1] - a[1] || (SPORT_WEIGHT[b[0]] ?? 0) - (SPORT_WEIGHT[a[0]] ?? 0)).map(([s]) => SPORT_HASH[s]).filter(Boolean);
+  const counts = new Map();
+  for (const x of model.shown) for (const side of [x.A, x.B]) {
+    if (!side?.reg) continue; // adversaire hors catalogue : pas une équipe québécoise du Radar
+    const tag = teamHash(side);
+    if (!tag) continue;
+    counts.set(tag, (counts.get(tag) || 0) + 1);
+  }
+  const teams = [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'en')).map(([tag]) => tag);
+  return { leagues, sports, teams, closing: [...CLOSING_TAGS] };
+}
+
+/** Hashtags dédoublonnés, au plus `max` (~8) : ligues, sports, équipes (place restante), formalités. */
 export function resultsTags(model, max, teamAcc = {}) {
   if (!(max > 0)) return [];
-  const g = model.shown, out = [];
-  if (model.uni.length) out.push('#USports');
-  out.push('#RSEQ');
-  const bySport = new Map(); for (const x of g) bySport.set(x.sport, (bySport.get(x.sport) || 0) + 1);
-  const sports = [...bySport].sort((a, b) => b[1] - a[1] || (SPORT_WEIGHT[b[0]] ?? 0) - (SPORT_WEIGHT[a[0]] ?? 0)).map(([s]) => SPORT_HASH[s]).filter(Boolean);
-  const teams = [], insts = [];
-  for (const x of model.uni) for (const s of [x.A, x.B]) { const a = teamAcc.teams?.[s.reg]; teams.push(a?.tag || (s.nick ? '#' + camel(s.nick) : '')); if (a?.institution) insts.push(a.institution); }
-  return [...new Set([...out, sports[0], teams[0], sports[1], ...teams.slice(1), ...sports.slice(2), ...insts].filter(Boolean))].slice(0, max);
+  const { leagues, sports, teams, closing } = resultsTagGroups(model, teamAcc);
+  const out = [];
+  const take = (arr, room = max) => { for (const t of arr) if (t && !out.includes(t) && out.length < room) out.push(t); };
+  take(leagues);
+  take(sports);
+  const reserved = closing.filter(t => !out.includes(t)).length;
+  const teamRoom = out.length + reserved <= max ? max - reserved : max;
+  take(teams, teamRoom);
+  take(closing);
+  return out;
 }
 /** Étiquettes Tumblr (minuscules, sans #, 10 à 15). */
 export function resultsTumblrTags(model, teamAcc = {}) {
@@ -130,48 +165,47 @@ export function resultsTumblrTags(model, teamAcc = {}) {
 }
 
 const sexMark = g => (g.sex === 'F' && g.sport !== 'football' ? ' (F)' : '');
-/** Ligne d'un match : « 🏒 Carabins (@Carabins) 4, Martlets 0 (F) ». `mention(side)` rend un @ ou ''. */
+/** Ligne d'un match : « 🏒 Carabins 4, Martlets 0 (F) ». `mention(side)` reste disponible mais le format résultats ne l'utilise plus. */
 export function gameLine(g, mention = () => '') {
   const side = s => { const m = mention(s); return `${s.name}${m ? ` (${m})` : ''} ${s.score}`; };
   return `${SPORT_EMOJI[g.sport] || '🏅'} ${side(g.A)}, ${side(g.B)}${sexMark(g)}`;
 }
 
 /**
- * Texte « Résultats du week-end » pour un réseau. `net` : { limit, len, x (mentions natives X), subheaders }.
- * Ajuste le nombre de lignes pour tenir dans la limite ; renvoie null si même le minimum (2 résultats) ne tient pas.
+ * Texte « Résultats du week-end » pour un réseau. `net` : { limit, len, subheaders }.
+ * Aucune mention @. Si le texte dépasse la limite, on retire d'abord les hashtags d'équipes, puis des lignes de matchs.
+ * Renvoie null si même le minimum (2 résultats, sans hashtags d'équipes) ne tient pas.
  */
 export function buildResultsText(model, net, { link, teamAcc = {}, tags = [], maxMentions = 0 } = {}) {
+  void maxMentions;
   const len = net.len || xlen, nl = s => len(s);
-  const leagueX = id => (net.x ? teamAcc.leagues?.[id]?.x || '' : '');
-  const mentionsLeft = { n: maxMentions };
-  const compose = (uni, coll, withMentions) => {
-    mentionsLeft.n = withMentions ? maxMentions : 0;
-    const seen = new Set();
-    const mention = s => { if (!net.x || mentionsLeft.n <= 0 || seen.has(s.reg)) return ''; const h = teamAcc.teams?.[s.reg]?.x; if (!h) return ''; seen.add(s.reg); mentionsLeft.n--; return h; };
+  const teamSet = new Set(resultsTagGroups(model, teamAcc).teams);
+  const compose = (uni, coll, hash) => {
     const hdr = `🏆 Résultats du week-end (${model.window.label})`;
-    const lg = (name, id) => { const h = withMentions ? leagueX(id) : ''; if (h) mentionsLeft.n--; return h ? `${name} (${h})` : name; };
-    const uniHead = () => [lg('U SPORTS', 'usports'), lg('RSEQ', 'rseq')].join(' · '); // les matchs universitaires sont des matchs U SPORTS de la conférence RSEQ
     const lines = [];
     if (net.subheaders) {
-      if (uni.length) lines.push(uniHead(), ...uni.map(g => gameLine(g, mention)));
-      if (coll.length) lines.push(...(uni.length ? [''] : []), 'RSEQ collégial', ...coll.map(g => gameLine(g, mention)));
+      if (uni.length) lines.push(...uni.map(g => gameLine(g)));
+      if (coll.length) lines.push(...(uni.length ? [''] : []), 'RSEQ collégial', ...coll.map(g => gameLine(g)));
     } else {
-      const lead = uni.length ? uniHead() : lg('RSEQ collégial', 'rseq');
-      lines.push(lead, ...uni.map(g => gameLine(g, mention)), ...coll.map(g => gameLine(g, mention)));
+      lines.push(...uni.map(g => gameLine(g)), ...coll.map(g => gameLine(g)));
     }
     const body = [hdr, lines.join('\n')].join('\n\n');
-    const text = [body, net.subheaders ? `Tous les résultats : ${link}` : link, tags.length ? tags.join(' ') : ''].filter(Boolean).join('\n\n').replace(/\n\n(#\S)/, '\n$1');
-    return text;
+    return [body, net.subheaders ? `Tous les résultats : ${link}` : link, hash.length ? hash.join(' ') : ''].filter(Boolean).join('\n\n').replace(/\n\n(#\S)/, '\n$1');
   };
-  let uni = [...model.uni], coll = [...model.coll];
-  for (const withMentions of [true, false]) {
-    uni = [...model.uni]; coll = [...model.coll];
-    for (;;) {
-      const t = compose(uni, coll, withMentions);
-      if (nl(t) <= net.limit) return t;
-      if (coll.length) coll.pop(); else if (uni.length > 2) uni.pop(); else if (!uni.length && coll.length) coll.pop(); else break;
-      if (uni.length + coll.length < 2) break;
-    }
+  const dropTeamTag = hash => {
+    const idx = hash.reduce((last, t, i) => teamSet.has(t) ? i : last, -1);
+    return idx >= 0 ? hash.filter((_, i) => i !== idx) : null;
+  };
+  let uni = [...model.uni], coll = [...model.coll], hash = [...tags];
+  for (;;) {
+    const t = compose(uni, coll, hash);
+    if (nl(t) <= net.limit) return t;
+    const next = dropTeamTag(hash);
+    if (next) { hash = next; continue; }
+    if (coll.length) coll.pop();
+    else if (uni.length > 2) uni.pop();
+    else break;
+    if (uni.length + coll.length < 2) break;
   }
   return null;
 }
@@ -230,7 +264,7 @@ export const NET_SPEC = {
   linkedin: { limit: 2000, len: s => [...s].length, subheaders: true },
 };
 
-/** Contrôles d'un texte avant toute publication : limite, doublons de lignes, @ vérifiés seulement, scores conformes au modèle. */
+/** Contrôles d'un texte avant toute publication : limite, doublons de lignes, pas de @ dans les résultats (ailleurs : @ vérifiés seulement), scores conformes au modèle. */
 export function checkText(text, net, { model = null, teamAcc = {}, kind = 'weekend_results' } = {}) {
   const problems = [], len = net.len || xlen;
   if (!text) return ['texte vide'];
@@ -238,11 +272,16 @@ export function checkText(text, net, { model = null, teamAcc = {}, kind = 'weeke
   if (/undefined|NaN|\[object|null/.test(text)) problems.push('valeur invalide dans le texte');
   const lines = text.split('\n').filter(Boolean);
   if (new Set(lines).size !== lines.length) problems.push('ligne en double');
-  const known = new Set([
-    ...Object.values(teamAcc.leagues || {}).map(x => x.x), ...Object.values(teamAcc.teams || {}).map(x => x.x),
-    ...Object.values(teamAcc.stations || {}).flatMap(x => [x.x, x.bluesky]),
-  ].filter(Boolean).map(lc));
-  for (const m of text.matchAll(/(^|[\s(])(@[\w.]+)/g)) if (!known.has(lc(m[2]))) problems.push(`@ non vérifié : ${m[2]}`);
+  const foundMentions = [...text.matchAll(/(^|[\s(])(@[\w.]+)/g)].map(m => m[2]);
+  if (kind === 'weekend_results') {
+    if (foundMentions.length) problems.push(`mention @ interdite dans les résultats : ${foundMentions[0]}`);
+  } else {
+    const known = new Set([
+      ...Object.values(teamAcc.leagues || {}).map(x => x.x), ...Object.values(teamAcc.teams || {}).map(x => x.x),
+      ...Object.values(teamAcc.stations || {}).flatMap(x => [x.x, x.bluesky]),
+    ].filter(Boolean).map(lc));
+    for (const m of foundMentions) if (!known.has(lc(m))) problems.push(`@ non vérifié : ${m}`);
+  }
   if (kind === 'weekend_results' && model) {
     const rows = lines.filter(l => /^\p{Extended_Pictographic}/u.test(l) && /\d/.test(l) && !l.startsWith('🏆'));
     const want = model.shown.length;
