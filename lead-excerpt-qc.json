@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-10T18:38:31.547Z",
+  "updated": "2026-11-10T19:08:43.191Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 28,
-  "withLeadExcerpt": 137,
-  "candidates": 28,
-  "enriched": 0,
-  "failed": 4,
+  "incomplete": 31,
+  "withLeadExcerpt": 140,
+  "candidates": 31,
+  "enriched": 6,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -46,40 +46,40 @@
       "changed": false
     },
     {
-      "title": "A year with Soraya Martinez Ferrada",
-      "link": "https://thelinknewspaper.ca/article/16557",
+      "title": "Commemorating 50 years of Concordia’s men’s soccer national championship title",
+      "link": "https://theconcordian.com/2026/11/50-years-concordias-soccer-championship-title/",
+      "ok": true,
+      "score": 100,
+      "chars": 698,
+      "sample": "On Nov. 14, 1976, two years after the merger of Sir George Williams University and Loyola College, t",
+      "changed": true
+    },
+    {
+      "title": "What is DEK Hockey?",
+      "link": "https://theconcordian.com/2026/11/what-is-dek-hockey/",
+      "ok": true,
+      "score": 100,
+      "chars": 415,
+      "sample": "For decades, ice hockey has by far been the most prominent sport in Quebec culture. Every year, when",
+      "changed": true
+    },
+    {
+      "title": "What does rejecting AI actually look like?",
+      "link": "https://theconcordian.com/2026/11/what-does-rejecting-ai-look-like/",
+      "ok": true,
+      "score": 100,
+      "chars": 513,
+      "sample": "As the use of artificial intelligence (AI) becomes increasingly common at Concordia, some students a",
+      "changed": true
+    },
+    {
+      "title": "Renovated facilities and new funding strategies planned for the CRA in upcoming academic year",
+      "link": "https://theconcordian.com/2026/11/cra-wants-internal-help/",
       "ok": true,
       "score": 96,
-      "chars": 289,
-      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
-      "changed": false
-    },
-    {
-      "title": "Concordia’s deficit detrimental to student experience",
-      "link": "https://thelinknewspaper.ca/article/16556",
-      "ok": true,
-      "score": 100,
-      "chars": 279,
-      "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
-      "changed": false
-    },
-    {
-      "title": "What does it mean for students if Canada joins the Erasmus+ exchange program?",
-      "link": "https://thelinknewspaper.ca/article/16554",
-      "ok": true,
-      "score": 100,
-      "chars": 422,
-      "sample": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is d",
-      "changed": false
-    },
-    {
-      "title": "Advocates urge new Quebec government to end cooperation with Israel",
-      "link": "https://thelinknewspaper.ca/article/16549",
-      "ok": true,
-      "score": 89,
-      "chars": 322,
-      "sample": "The demands of the campaign include closing Quebec’s office in Tel Aviv, divesting from companies co",
-      "changed": false
+      "chars": 243,
+      "sample": "CRA director Claude Morin said the department is looking into “rebranding and reorganizing” existing",
+      "changed": true
     }
   ]
 }

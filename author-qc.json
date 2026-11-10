@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-10T18:37:09.355Z",
+  "updated": "2026-11-10T19:07:45.380Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 10,
+  "mismatches": 11,
   "ok": true,
   "samples": [
+    {
+      "title": "CF Montréal is up for sale",
+      "link": "https://theconcordian.com/2026/11/cf-montreal-up-for-sale-joey-saputo/",
+      "source": "The Concordian",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "Sweeping away the dead Republican leaves",
       "link": "https://thelinknewspaper.ca/article/16559",
@@ -86,5 +94,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 10
+  "fixed": 11
 }
