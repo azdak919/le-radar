@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-10T00:07:45.507Z",
+  "updated": "2026-11-10T01:07:24.366Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 11,
-  "withLeadExcerpt": 129,
-  "candidates": 11,
-  "enriched": 4,
+  "incomplete": 10,
+  "withLeadExcerpt": 131,
+  "candidates": 10,
+  "enriched": 3,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,12 +28,30 @@
       "changed": false
     },
     {
-      "title": "Is Wearing Makeup Really a Choice? - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
       "ok": true,
-      "score": 96,
-      "chars": 271,
-      "sample": "In the United States, 38 per cent of women report wearing makeup at least a few times a week, if not",
+      "score": 100,
+      "chars": 258,
+      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "changed": true
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Le documentaire Faites du bruit pour Jésus prend la forme d’une série d’entrevues avec des évangélis",
+      "changed": true
+    },
+    {
+      "title": "Another season of voting",
+      "link": "https://thelinknewspaper.ca/article/16547",
+      "ok": true,
+      "score": 90,
+      "chars": 288,
+      "sample": "Lina Elbakaye, the CSU internal affairs coordinator, and Harerta Abraha, the newly elected chief ele",
       "changed": true
     },
     {
@@ -62,24 +80,6 @@
       "chars": 400,
       "sample": "Generation Z is often labelled lazy, spoiled, and constantly complaining about the circumstances of ",
       "changed": false
-    },
-    {
-      "title": "CSU byelections fee levy campaign: Honey’s Soupe Populaire",
-      "link": "https://theconcordian.com/2026/11/csu-by-elections-honeys-soupe-populaire/",
-      "ok": true,
-      "score": 84,
-      "chars": 228,
-      "sample": "“We believe students deserve reliable access to food, and that supporting one another should be part",
-      "changed": true
-    },
-    {
-      "title": "CSU byelections fee levy campaign: Legal Information Clinic",
-      "link": "https://theconcordian.com/2026/11/csu-byelections-legal-information-clinic/",
-      "ok": true,
-      "score": 90,
-      "chars": 322,
-      "sample": "Sparling also mentioned how the increase would allow the LIC to take on even more cases. “This would",
-      "changed": true
     }
   ]
 }
