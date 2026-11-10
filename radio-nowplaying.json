@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T09:06:52.859Z",
+  "updatedAt": "2026-11-10T09:28:29.844Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:06:01.994Z"
+      "checkedAt": "2026-11-10T09:28:00.850Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:06:04.209Z"
+      "checkedAt": "2026-11-10T09:28:03.155Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:06:07.388Z"
+      "checkedAt": "2026-11-10T09:28:06.936Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:06:23.845Z"
+      "checkedAt": "2026-11-10T09:28:21.475Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:06:25.005Z"
+      "checkedAt": "2026-11-10T09:28:22.326Z"
     },
     "choq": {
       "id": "choq",
@@ -136,20 +136,20 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/balados/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
       },
       "track": "Bloc Pub 21 juillet.mp3",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:06:52.508Z"
+      "checkedAt": "2026-11-10T09:28:29.494Z"
     }
   }
 }
