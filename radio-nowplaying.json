@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T08:06:39.302Z",
+  "updatedAt": "2026-11-10T09:06:52.859Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T08:06:09.784Z"
+      "checkedAt": "2026-11-10T09:06:01.994Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À l'horizon",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/a-lhorizon"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Raconte ton quartier",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+      },
       "track": "",
-      "showTitle": "À l'horizon",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T08:06:11.918Z"
+      "checkedAt": "2026-11-10T09:06:04.209Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T08:06:14.991Z"
+      "checkedAt": "2026-11-10T09:06:07.388Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T08:06:29.544Z"
+      "checkedAt": "2026-11-10T09:06:23.845Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T08:06:30.465Z"
+      "checkedAt": "2026-11-10T09:06:25.005Z"
     },
     "choq": {
       "id": "choq",
@@ -136,20 +136,20 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "api-live",
+        "source": "schedule",
         "start": "05:00",
         "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "url": "https://www.choq.ca/balados/les-rois-de-larene"
       },
       "track": "Bloc Pub 21 juillet.mp3",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T08:06:38.951Z"
+      "checkedAt": "2026-11-10T09:06:52.508Z"
     }
   }
 }
