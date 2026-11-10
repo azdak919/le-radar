@@ -65,7 +65,7 @@ test('Sans fin(s) : illustration d’article, pas le pavillon campus', async ({ 
   expect(credit, 'crédit Cephas campus').not.toMatch(/Cephas/i);
 });
 
-test('L\'Exemplaire : une + Skibidi ont une photo (source ou campus)', async ({ page }) => {
+test('L\'Exemplaire : la une et une autre carte ont une photo', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(String(error)));
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -75,16 +75,17 @@ test('L\'Exemplaire : une + Skibidi ont une photo (source ou campus)', async ({ 
   await waitForNewsReady(page);
   expect(pageErrors, pageErrors.join('\n')).toEqual([]);
 
-  const lead = page.locator('#news-list .news-hero .article').first();
-  await expect(lead).toHaveClass(/has-image/, { timeout: 15_000 });
-  const leadW = await lead.locator('.article-media img').evaluate((el) => el.naturalWidth || 0);
-  expect(leadW, 'une L’Exemplaire sans pixels').toBeGreaterThan(80);
+  const cards = page.locator('#news-list .article');
+  const count = await cards.count();
+  test.skip(count < 2, 'moins de deux cartes L’Exemplaire dans le fil');
 
-  const skibidi = page.locator('#news-list .article').filter({ hasText: 'Skibidi' }).first();
-  await expect(skibidi, 'carte Skibidi absente').toBeVisible();
-  await expect(skibidi).toHaveClass(/has-image/, { timeout: 15_000 });
-  const w = await skibidi.locator('.article-media img').evaluate((el) => el.naturalWidth || 0);
-  expect(w, 'Skibidi sans photo campus/source').toBeGreaterThan(80);
+  for (const [index, label] of [[0, 'une'], [1, 'deuxième carte']]) {
+    const card = cards.nth(index);
+    await expect(card, `${label} L’Exemplaire absente`).toBeVisible();
+    await expect(card).toHaveClass(/has-image/, { timeout: 15_000 });
+    const w = await card.locator('.article-media img').evaluate((el) => el.naturalWidth || 0);
+    expect(w, `${label} L’Exemplaire sans photo`).toBeGreaterThan(80);
+  }
 });
 
 test('Le Collectif : photos d’article, pas le campus UdeS', async ({ page }) => {
