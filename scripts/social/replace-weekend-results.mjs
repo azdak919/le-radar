@@ -75,9 +75,14 @@ async function deleteMastodon(id) {
   console.log(`Mastodon à supprimer : ${st.url}`);
   if (dry) return { gone: false, dry: true };
   await md.deleteStatus(id);
-  const check = await fetch(`${instance}/api/v1/statuses/${id}`, { signal: AbortSignal.timeout(30000) });
-  if (check.status !== 404 && check.status !== 410) throw new Error(`Mastodon : encore en ligne (HTTP ${check.status}).`);
-  return { gone: true };
+  let status = 200;
+  for (let i = 0; i < 8; i++) {
+    await new Promise(r => setTimeout(r, 1500));
+    const check = await fetch(`${instance}/api/v1/statuses/${id}`, { signal: AbortSignal.timeout(30000) });
+    status = check.status;
+    if (status === 404 || status === 410) return { gone: true };
+  }
+  throw new Error(`Mastodon : encore en ligne (HTTP ${status}).`);
 }
 
 async function deleteTumblr(id) {
@@ -112,6 +117,15 @@ async function deleteTumblr(id) {
   console.log(`Tumblr à supprimer : https://${blog}/post/${id}`);
   if (dry) return { gone: false, dry: true };
   await call('POST', `/blog/${blog}/post/delete`, { body: { id } });
+  let still = false;
+  try {
+    const r = await call('GET', `/blog/${blog}/posts`, { query: { id, npf: 'true' } });
+    still = (r?.posts || []).some(p => (p.id_string || String(p.id)) === id);
+  } catch (e) {
+    if (/404/.test(String(e.message))) still = false;
+    else throw e;
+  }
+  if (still) throw new Error('Tumblr : le post est encore dans le blogue après suppression.');
   return { gone: true };
 }
 
@@ -135,10 +149,8 @@ async function main() {
       okWhen: (r, body) => r.status === 404 || r.status === 400 || /not.found|NotFound|not found/i.test(body),
     });
     const mGone = await publicGone('Mastodon public', `https://piaille.fr/api/v1/statuses/${mastoId}`);
-    const tGone = await publicGone('Tumblr public', `https://le-radar-ca.tumblr.com/post/${tumblrId}`, {
-      okWhen: (r, body) => r.status === 404 || r.status === 410 || /This post has ceased to exist|n['’]existe plus|not found/i.test(body),
-    });
-    if (!b.gone || !m.gone || !t.gone || !bGone || !mGone || !tGone) throw new Error('un ancien post est encore en ligne, aucune republication.');
+    // Tumblr sert souvent un défi anti-bot en public : la confirmation passe par l'API dans deleteTumblr.
+    if (!b.gone || !m.gone || !t.gone || !bGone || !mGone) throw new Error('un ancien post est encore en ligne, aucune republication.');
   }
 
   if (dry) {
