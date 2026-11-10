@@ -1,14 +1,23 @@
 {
-  "updated": "2026-11-10T17:37:57.797Z",
+  "updated": "2026-11-10T18:08:01.743Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 31,
+  "incomplete": 29,
   "withLeadExcerpt": 140,
-  "candidates": 31,
-  "enriched": 6,
+  "candidates": 29,
+  "enriched": 3,
   "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -28,15 +37,6 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -46,30 +46,30 @@
       "changed": false
     },
     {
-      "title": "Affaire Ewert : qui savait quoi ?",
-      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
-      "ok": true,
-      "score": 100,
-      "chars": 617,
-      "sample": "Jeffrey Ewert est de retour en détention. Le Service correctionnel du Canada (SCC) a annoncé le 24 o",
-      "changed": true
-    },
-    {
-      "title": "Reel Picks: “For the love of noir!”",
-      "link": "https://theconcordian.com/2026/11/reel-picks-for-the-love-of-noir/",
+      "title": "Why is everybody a DJ?",
+      "link": "https://theconcordian.com/2026/11/concordia-offers-a-class-on-djing/",
       "ok": true,
       "score": 96,
-      "chars": 656,
-      "sample": "Adapted from Jim Thompson’s 1963 novel, Stephen Frears’s The Grifters follows three con artists whos",
+      "chars": 588,
+      "sample": "A laptop, a pair of headphones and a USB drive full of music are all one needs to get started nowada",
       "changed": true
     },
     {
-      "title": "Human Connection: No plus one required",
-      "link": "https://theconcordian.com/2026/11/human-connection-montreal-social-group/",
+      "title": "KATSEYE brings their WILDWORLD TOUR to Montreal",
+      "link": "https://theconcordian.com/2026/11/katseye-wildworld-tour-montreal-review/",
       "ok": true,
-      "score": 94,
-      "chars": 561,
-      "sample": "Since launching in 2025, Montreal’s Human Connection, a social experience company, has hosted events",
+      "score": 100,
+      "chars": 560,
+      "sample": "On the road for their WILDWORLD TOUR, KATSEYE stopped in Montreal on Oct. 30 to deliver dance-filled",
+      "changed": true
+    },
+    {
+      "title": "QUICKSPINS: Bktherula — N5ON",
+      "link": "https://theconcordian.com/2026/11/quickspins-n5on-bktherula-album-review/",
+      "ok": true,
+      "score": 100,
+      "chars": 494,
+      "sample": "Bktherula has always been a pioneer, making space for women artists in rap’s growing “rage” subgenre",
       "changed": true
     },
     {
@@ -79,7 +79,7 @@
       "score": 100,
       "chars": 186,
       "sample": "Kira-Madina Storch builds worlds of mythology and fiction using paint and canvas. Her imagination wa",
-      "changed": true
+      "changed": false
     }
   ]
 }

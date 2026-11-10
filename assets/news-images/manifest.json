@@ -1517,26 +1517,6 @@
       "via": "resize-proxy",
       "nameKey": "05_news_quebec_data_centres_halle_keays_1_900_675.png"
     },
-    "0778534408f1b09a": {
-      "local": "assets/news-images/0778534408f1b09a.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/DominicCorbett_1126_RemembranceDay_Vol44.jpg",
-      "host": "theconcordian.com",
-      "bytes": 67470,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-10T17:08:50.750Z",
-      "via": "photon-resize",
-      "nameKey": "dominiccorbett_1126_remembranceday_vol44.jpg"
-    },
-    "a18202d8e732b37c": {
-      "local": "assets/news-images/a18202d8e732b37c.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Monotony-1-768x1024.jpg",
-      "host": "theconcordian.com",
-      "bytes": 94118,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-10T17:38:51.205Z",
-      "via": "origin",
-      "nameKey": "monotony-1.jpg"
-    },
     "0da527b271273a7a": {
       "local": "assets/news-images/0da527b271273a7a.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
@@ -1555,16 +1535,6 @@
       "via": "disk",
       "nameKey": "article-de-juliette-c.jpg"
     },
-    "c457dee3c91d1476": {
-      "local": "assets/news-images/c457dee3c91d1476.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/viz-Rita-article-issue-9.jpg",
-      "host": "theconcordian.com",
-      "bytes": 45142,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-10T17:38:53.347Z",
-      "via": "photon-resize",
-      "nameKey": "viz-rita-article-issue-9.jpg"
-    },
     "f8d91ea235bb168c": {
       "local": "assets/news-images/f8d91ea235bb168c.webp",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0254.png",
@@ -1574,10 +1544,30 @@
       "updatedAt": "2026-11-10T17:38:57.413Z",
       "via": "photon-resize",
       "nameKey": "img_0254.png"
+    },
+    "1bbdf967529f6556": {
+      "local": "assets/news-images/1bbdf967529f6556.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/0-MSP26-1109-DJClass-1889-1024x683.jpg",
+      "host": "theconcordian.com",
+      "bytes": 138551,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-10T18:09:01.347Z",
+      "via": "origin",
+      "nameKey": "0-msp26-1109-djclass-1889.jpg"
+    },
+    "f95ef077efdfddfe": {
+      "local": "assets/news-images/f95ef077efdfddfe.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/katseye-p3t4l.jpg",
+      "host": "theconcordian.com",
+      "bytes": 98492,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-10T18:09:02.247Z",
+      "via": "photon-resize",
+      "nameKey": "katseye-p3t4l.jpg"
     }
   },
-  "updatedAt": "2026-11-10T17:38:57.415Z",
-  "count": 158,
+  "updatedAt": "2026-11-10T18:09:05.301Z",
+  "count": 157,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
