@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-10T06:37:37.903Z",
+  "updated": "2026-11-10T08:07:56.091Z",
   "total": 188,
   "withPhoto": 168,
   "withStock": 32,
   "withCampusBank": 30,
   "fullyCovered": 188,
-  "leadReadyPhotos": 153,
+  "leadReadyPhotos": 155,
   "pageScraped": 30,
   "photosRecovered": 30,
   "imagesCleared": 17,
-  "stockSearches": 37,
-  "stockFound": 27,
-  "campusBankFound": 23,
+  "stockSearches": 35,
+  "stockFound": 26,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,12 +25,6 @@
       "link": "https://lapige.atmjonquiere.com/2026/11/06/vendredi-fou-ou-achat-local-ou-va-largent-des-consommateurs/?utm_source=rss&utm_medium=rss&utm_campaign=vendredi-fou-ou-achat-local-ou-va-largent-des-consommateurs",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2023/11/salonmetierdart.jpg"
-    },
-    {
-      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
-      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "Goodbye October, Hello Movember!",
@@ -75,16 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "Creative Writing October 2026",
-      "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Dawson_College_05.jpg"
-    },
-    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
+      "reason": "no-stock-match",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
     }
   ]
 }
