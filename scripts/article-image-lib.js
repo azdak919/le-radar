@@ -886,6 +886,7 @@ function isPortraitLeadRatio(width = 0, height = 0) {
  * légende, et aucun mot d'affiche dans l'alt, la légende ou le nom de fichier.
  */
 const LEAD_CROP_MIN_RATIO = 0.66;
+const LEAD_CROP_MIN_RATIO_SCREENSHOT = 0.64;
 const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infographi\p{L}*|programmation|programme|horaires?|calendrier|stor(?:y|ies)|invitations?|logos?|slogans?|menu|annonces?|communiqu[ée]s?|campagnes?|campaigns?|visuels?|textes?|texts?|quotes?|citations?)(?=$|[^\p{L}])/iu;
 const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
 const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+)*\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
@@ -901,7 +902,11 @@ function looksLikeCameraFile(name = '') {
 
 function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   if (!width || !height || !isPortraitLeadRatio(width, height)) return false;
-  if (width / height < LEAD_CROP_MIN_RATIO) return false;
+  // The Campus exporte ses images en « Capture d’écran » un peu plus hautes que
+  // 2:3 (illustration Movember 686×1048, 10 nov. 2026) : marge de 0,02 pour
+  // cette seule source. Une story 9:16 (0,56) reste refusée.
+  const campusShot = !!(ctx.screenshotPhotos && SCREENSHOT_FILE_RE.test(decodeURIComponent(String(ctx.url || ''))));
+  if (width / height < (campusShot ? LEAD_CROP_MIN_RATIO_SCREENSHOT : LEAD_CROP_MIN_RATIO)) return false;
   // Affiche du sujet lui-même : exception revue et liée à article + URL + taille.
   // Aucun nouveau portrait/logo/pub n'est accepté par cette branche.
   if (reviewedSourceCrop(ctx, ctx.url, width, height) && !ctx.campaignGraphic) return true;
