@@ -1,37 +1,79 @@
 {
-  "updated": "2026-11-10T13:40:14.265Z",
+  "updated": "2026-11-10T14:10:00.924Z",
   "total": 188,
-  "withImage": 165,
-  "withCredit": 165,
-  "cited": 105,
-  "pending": 35,
+  "withImage": 160,
+  "withCredit": 160,
+  "cited": 101,
+  "pending": 34,
   "missingHero": 0,
   "ok": false,
-  "checked": 50,
-  "updatedCount": 6,
+  "checked": 49,
+  "updatedCount": 11,
   "citedNew": 9,
-  "fallbackNew": 41,
+  "fallbackNew": 40,
   "samples": [
     {
-      "title": "CF Montréal et COP 31 : reportages radio du 9 novembre",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
+      "title": "Sweeping away the dead Republican leaves",
+      "source": "The Link",
+      "credit": "Photo: The Link",
       "cited": false,
       "method": null
     },
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "title": "Montreal Roses advance to the 2026 NSL final",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Concordia’s radical history of student activism",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Nostalgia Nook: Once upon a CD",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Video killed the fanfic star",
+      "source": "The Link",
+      "credit": "Photo: Harrison Campbell",
+      "cited": true,
+      "method": "filename-byline"
+    },
+    {
+      "title": "Your guide to Montreal’s classical music scene",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Uncensored: One bed, two standards",
+      "source": "The Link",
+      "credit": "Photo: Lordan Bennett",
+      "cited": true,
+      "method": "filename-byline"
+    },
+    {
+      "title": "Affaire Ewert : qui savait quoi ?",
       "source": "Le Délit",
-      "credit": "Photo : DENIS FARLEY",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Jésus et autres mots-clics",
+      "title": "Le retour du Rocky Horror Picture Show",
       "source": "Le Délit",
-      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
-      "cited": true,
-      "method": "media-credit-featured"
+      "credit": "Photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Why We Dream: A Search for the Elusive",
@@ -46,13 +88,6 @@
       "credit": "Image via Charlie Reuter",
       "cited": true,
       "method": "via-attribution"
-    },
-    {
-      "title": "Pregnant, not sidelined",
-      "source": "The Link",
-      "credit": "Illustration: Annabelle Olumese",
-      "cited": true,
-      "method": "figcaption-trailing"
     }
   ]
 }
