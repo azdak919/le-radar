@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T09:28:29.844Z",
+  "updatedAt": "2026-11-10T11:06:37.113Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:28:00.850Z"
+      "checkedAt": "2026-11-10T11:06:08.025Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Raconte ton quartier",
         "source": "schedule",
         "start": "06:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/raconte-ton-quartier"
       },
+      "next": {
+        "title": "450DB",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/450db"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Raconte ton quartier",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:28:03.155Z"
+      "checkedAt": "2026-11-10T11:06:10.356Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Attik / Show For Children",
-        "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
-      },
-      "next": {
         "title": "The Beat Power Hour",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt1",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:28:06.936Z"
+      "checkedAt": "2026-11-10T11:06:13.493Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:28:21.475Z"
+      "checkedAt": "2026-11-10T11:06:28.081Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,28 +128,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:28:22.326Z"
+      "checkedAt": "2026-11-10T11:06:29.490Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
+      "next": {
+        "title": "Le Monde Dans Mes Oreilles",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "slug": "le-monde-dans-mes-oreilles"
+      },
       "track": "Bloc Pub 21 juillet.mp3",
-      "showTitle": "",
+      "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T09:28:29.494Z"
+      "checkedAt": "2026-11-10T11:06:36.763Z"
     }
   }
 }
