@@ -1,5 +1,5 @@
 {
- "_doc": "État des formats natifs (écrit par scripts/social/formats-run.mjs, commité par le workflow « Social — Formats natifs »). Clé = format puis dimanche du week-end (résultats) ou jour (À écouter ce soir) puis réseau : { at, url|id } ou { failed, attempts, error }. Jamais plus d'une publication par réseau et par clé.",
+ "_doc": "État des formats natifs (écrit par scripts/social/formats-run.mjs, commité par le workflow « Social — Formats natifs »). Clé = format puis dimanche de la fin de semaine (résultats) ou jour (À écouter ce soir) puis réseau : { at, url|id } ou { failed, attempts, error }. Jamais plus d'une publication par réseau et par clé.",
  "weekend_results": {
   "2026-11-08": {
    "bluesky": {

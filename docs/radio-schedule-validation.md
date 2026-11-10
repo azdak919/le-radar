@@ -18,7 +18,7 @@ Périmètre : collecte et affichage des grilles, sans changement du lecteur audi
 - **CFAK** : https://www.cfak.ca/programmation/ ne fournit que les débuts. Les
   fins dérivées sont signalées comme estimées. Un jour contenant un seul début
   a une fin **inconnue**, pas une fin inventée à 07:00 ni une durée de 24 h.
-  Le plancher passe de 80 à 70 % : les deux anciens `00:00–07:00` du week-end
+  Le plancher passe de 80 à 70 % : les deux anciens `00:00–07:00` de la fin de semaine
   ajoutaient artificiellement 14 h. La couverture bornée des cinq jours de
   semaine est d'environ 71 %. Ce changement ne remplit aucun trou de source.
 - **Fraîcheur** : une collecte rejetée ou indisponible conserve la date de

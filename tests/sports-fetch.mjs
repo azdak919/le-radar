@@ -127,7 +127,7 @@ test('fetch-sports.js est du JS Node valide', () => {
 
 test('update-sports.yml couvre les heures de consultation QC', () => {
   const yml = readFileSync(join(ROOT, '.github/workflows/update-sports.yml'), 'utf8');
-  // 6 passes quotidiennes + week-end après-midi
+  // 6 passes quotidiennes + fin de semaine après-midi
   assert.match(yml, /30 11 \* \* \*/);
   assert.match(yml, /15 16 \* \* \*/);
   assert.match(yml, /45 20 \* \* \*/);

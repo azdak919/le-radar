@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Formats natifs : fenêtre du week-end, dédoublonnage et cohérence des matchs, sélection, textes par réseau,
+// Formats natifs : fenêtre de la fin de semaine, dédoublonnage et cohérence des matchs, sélection, textes par réseau,
 // @ vérifiés seulement, hashtags, « À écouter ce soir », contrôles et garde de publication.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -9,10 +9,10 @@ import { POLICY } from '../scripts/social/policy.mjs';
 const T = iso => Date.parse(iso);
 const teamAcc = JSON.parse(fs.readFileSync('data/social/team-accounts.json', 'utf8'));
 
-// ── fenêtre : dernier week-end terminé (ven.-dim., Toronto)
+// ── fenêtre : dernière fin de semaine terminée (ven.-dim., Toronto)
 assert.deepEqual(weekendWindow(T('2026-11-10T14:00:00Z')), { start: '2026-11-06', end: '2026-11-08', key: '2026-11-08', label: '6-8 nov.' }, 'mardi 10 nov.');
 assert.equal(weekendWindow(T('2026-11-09T22:00:00Z')).key, '2026-11-08', 'lundi');
-assert.equal(weekendWindow(T('2026-11-15T17:00:00Z')).key, '2026-11-08', 'dimanche : le week-end précédent');
+assert.equal(weekendWindow(T('2026-11-15T17:00:00Z')).key, '2026-11-08', 'dimanche : la fin de semaine précédente');
 assert.equal(weekendWindow(T('2026-11-16T14:00:00Z')).key, '2026-11-15');
 assert.equal(frenchRange('2026-10-30', '2026-11-01'), '30 oct.-1 nov.'); assert.equal(frenchRange('2026-11-06', '2026-11-08'), '6-8 nov.');
 assert.equal(frenchTime('19:00'), '19 h'); assert.equal(frenchTime('18:30'), '18 h 30'); assert.equal(frenchTime('09:05'), '9 h 05');
@@ -68,7 +68,7 @@ for (const n of Object.keys(NET_SPEC)) {
   const text = buildResultsText(pub, spec, { link: 'https://le-radar.ca/sports/', teamAcc, tags });
   assert.ok(text && spec.len(text) <= spec.limit, `${n} : tient dans la limite`);
   assert.deepEqual(checkText(text, spec, { model: pub, teamAcc }), [], `${n} : contrôles`);
-  assert.ok(text.startsWith('🏆 Résultats du week-end (6-8 nov.)') && text.includes('https://le-radar.ca/sports/'));
+  assert.ok(text.startsWith('🏆 Résultats de la fin de semaine (6-8 nov.)') && text.includes('https://le-radar.ca/sports/'));
   assert.ok(text.includes('Rouge et Or') && /42/.test(text) && !/undefined|NaN/.test(text));
   assert.equal(/@\w/.test(text), false, `${n} : aucune mention @`);
   assert.equal(/(^|\s)#\p{L}/u.test(text), tags.length > 0, `${n} : hashtags selon policy`);
@@ -107,7 +107,7 @@ const approvedTags = resultsTags(approved, 8, teamAcc);
 assert.deepEqual(approvedTags, ['#USports', '#RSEQ', '#FootballU', '#HockeyU', '#Carabins', '#RougeEtOr', '#SportÉtudiant', '#Québec']);
 const approvedText = buildResultsText(approved, NET_SPEC.x, { link: 'https://le-radar.ca/sports/', teamAcc, tags: approvedTags });
 assert.equal(approvedText, [
-  '🏆 Résultats du week-end (6-8 nov.)',
+  '🏆 Résultats de la fin de semaine (6-8 nov.)',
   '',
   '🏈 Carabins 28, Redbirds 21',
   '🏈 Rouge et Or 42, Stingers 4',

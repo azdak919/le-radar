@@ -12,8 +12,8 @@ Tout vit dans le dépôt (aucune routine externe). La source de vérité est `da
 
 ## Formats natifs
 
-- `scripts/social/formats-run.mjs` construit « Résultats du week-end » (U SPORTS ; le collégial RSEQ reste en aperçu) et « À écouter ce soir » (`radio-schedules.json`). Les résultats n’ont aucune mention @ : hashtags dynamiques selon les ligues, sports (#FootballU, #HockeyU, etc.) et équipes présentes, plus #SportÉtudiant et #Québec (au plus 8 ; on retire d’abord les hashtags d’équipes si le texte dépasse la limite X).
-- Workflow `social-formats.yml` : essai à blanc par défaut (aperçu en artefact et résumé du job). Publication réelle seulement si `formats.<format>.publish` est vrai, dans la fenêtre prévue, données fraîches et cohérentes, au plus une fois par week-end et par réseau (`data/social/formats-state.json`). Au moindre doute, rien n’est publié.
+- `scripts/social/formats-run.mjs` construit « Résultats de la fin de semaine » (U SPORTS ; le collégial RSEQ reste en aperçu) et « À écouter ce soir » (`radio-schedules.json`). Les résultats n’ont aucune mention @ : hashtags dynamiques selon les ligues, sports (#FootballU, #HockeyU, etc.) et équipes présentes, plus #SportÉtudiant et #Québec (au plus 8 ; on retire d’abord les hashtags d’équipes si le texte dépasse la limite X).
+- Workflow `social-formats.yml` : essai à blanc par défaut (aperçu en artefact et résumé du job). Publication réelle seulement si `formats.<format>.publish` est vrai, dans la fenêtre prévue, données fraîches et cohérentes, au plus une fois par fin de semaine et par réseau (`data/social/formats-state.json`). Au moindre doute, rien n’est publié.
 - `listen_tonight.publish` est faux : aucun envoi.
 
 ## Bilan hebdomadaire

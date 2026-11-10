@@ -1,5 +1,5 @@
 // Formats natifs du Radar (logique pure, testée dans tests/social-formats.mjs) :
-//  - « Résultats du week-end » (U SPORTS + RSEQ) depuis sports.json ;
+//  - « Résultats de la fin de semaine » (U SPORTS + RSEQ) depuis sports.json ;
 //  - « À écouter ce soir » depuis radio-schedules.json.
 // Aucune publication ici : ce module construit des modèles et des textes par réseau, avec contrôles de cohérence.
 import { torontoDay, torontoHour, torontoWeekday } from './policy.mjs';
@@ -18,7 +18,7 @@ export function frenchRange(a, b) {
 }
 const addDays = (iso, n) => new Date(Date.parse(iso + 'T12:00:00Z') + n * 864e5).toISOString().slice(0, 10);
 
-/** Dernier week-end terminé (vendredi → dimanche, jours civils Toronto) : le dimanche le plus récent strictement avant aujourd'hui. */
+/** Dernière fin de semaine terminée (vendredi → dimanche, jours civils Toronto) : le dimanche le plus récent strictement avant aujourd'hui. */
 export function weekendWindow(now = Date.now()) {
   const today = torontoDay(now), dow = torontoWeekday(now);
   const sunday = addDays(today, -(dow === 0 ? 7 : dow));
@@ -29,7 +29,7 @@ const shortCollege = s => String(s || '').replace(/^(Collège|Cégep|College)\s+
 const isInt = n => Number.isInteger(n) && n >= 0;
 
 /**
- * Parties du week-end, dédoublonnées par identifiant de match (chaque match figure dans la fiche des deux équipes).
+ * Parties de la fin de semaine, dédoublonnées par identifiant de match (chaque match figure dans la fiche des deux équipes).
  * Un match vu des deux côtés doit être symétrique (scores et résultat) ; sinon il est écarté et signalé (`rejected`).
  * Un match vu d'un seul côté (adversaire hors catalogue) est gardé, marqué « single ».
  */
@@ -120,7 +120,7 @@ function teamHash(side) {
 }
 
 /**
- * Hashtags du format « Résultats du week-end », groupés pour pouvoir retirer d'abord les équipes si le texte dépasse la limite.
+ * Hashtags du format « Résultats de la fin de semaine », groupés pour pouvoir retirer d'abord les équipes si le texte dépasse la limite.
  * Ligues présentes, sport « U » par sport présent, quelques équipes (surnom, fréquence puis ordre alphabétique), puis #SportÉtudiant #Québec.
  */
 export function resultsTagGroups(model, teamAcc = {}) {
@@ -172,7 +172,7 @@ export function gameLine(g, mention = () => '') {
 }
 
 /**
- * Texte « Résultats du week-end » pour un réseau. `net` : { limit, len, subheaders }.
+ * Texte « Résultats de la fin de semaine » pour un réseau. `net` : { limit, len, subheaders }.
  * Aucune mention @. Si le texte dépasse la limite, on retire d'abord les hashtags d'équipes, puis des lignes de matchs.
  * Renvoie null si même le minimum (2 résultats, sans hashtags d'équipes) ne tient pas.
  */
@@ -181,7 +181,7 @@ export function buildResultsText(model, net, { link, teamAcc = {}, tags = [], ma
   const len = net.len || xlen, nl = s => len(s);
   const teamSet = new Set(resultsTagGroups(model, teamAcc).teams);
   const compose = (uni, coll, hash) => {
-    const hdr = `🏆 Résultats du week-end (${model.window.label})`;
+    const hdr = `🏆 Résultats de la fin de semaine (${model.window.label})`;
     const lines = [];
     if (net.subheaders) {
       if (uni.length) lines.push(...uni.map(g => gameLine(g)));

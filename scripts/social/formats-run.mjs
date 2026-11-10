@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// Formats natifs : « Résultats du week-end » et « À écouter ce soir ».
+// Formats natifs : « Résultats de la fin de semaine » et « À écouter ce soir ».
 //  - Construit les textes par réseau, les contrôle, écrit l'aperçu (dossier + résumé du job).
 //  - Ne publie QUE si : DRY_RUN=false, policy.json formats.<format>.publish = true, fenêtre d'envoi (lun.-mar. 8-21 h heure de Toronto
-//    pour les résultats), aucun doute sur les données, et rien d'envoyé pour ce week-end sur ce réseau (data/social/formats-state.json).
+//    pour les résultats), aucun doute sur les données, et rien d'envoyé pour cette fin de semaine sur ce réseau (data/social/formats-state.json).
 // Usage : node scripts/social/formats-run.mjs [--format weekend_results|listen_tonight|all] [--now ISO] [--out dossier]   (DRY_RUN=false pour publier)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -57,8 +57,8 @@ export function buildAll(format, { sports, radio, teamAcc, policy = POLICY, now 
 }
 
 export function previewMarkdown(built, { dry, willPublish, reason }) {
-  const L = [`## Format « ${built.format === 'weekend_results' ? 'Résultats du week-end' : 'À écouter ce soir'} » — ${dry ? 'essai (rien n\'est publié)' : willPublish ? 'publication réelle' : 'aperçu seulement'}`, ''];
-  if (built.window) L.push(`Week-end : ${built.window.start} au ${built.window.end}.`, '');
+  const L = [`## Format « ${built.format === 'weekend_results' ? 'Résultats de la fin de semaine' : 'À écouter ce soir'} » — ${dry ? 'essai (rien n\'est publié)' : willPublish ? 'publication réelle' : 'aperçu seulement'}`, ''];
+  if (built.window) L.push(`Fin de semaine : ${built.window.start} au ${built.window.end}.`, '');
   L.push(`Décision : ${reason}`, '');
   if (built.doubts.length) L.push(`Doutes / alertes : ${built.doubts.join(' ; ')}.`, '');
   for (const [n, v] of Object.entries(built.networks)) L.push(`### ${n} (${v.len}/${v.limit})`, '', '```text', v.text || '(aucun texte)', '```', v.problems.length ? `Problèmes : ${v.problems.join(' ; ')}` : 'Contrôles : OK', n === 'tumblr' ? `Étiquettes Tumblr : ${v.tags.join(', ')}` : '', '');
@@ -69,7 +69,7 @@ export function previewMarkdown(built, { dry, willPublish, reason }) {
 // ── Publication ──────────────────────────────────────────────────────────────
 const LANG = 'fr';
 async function publishOne(net, text, built, cfg, env) {
-  const link = cfg.link, title = built.format === 'weekend_results' ? 'Résultats du week-end : U SPORTS et RSEQ' : 'À écouter ce soir sur les radios campus';
+  const link = cfg.link, title = built.format === 'weekend_results' ? 'Résultats de la fin de semaine : U SPORTS et RSEQ' : 'À écouter ce soir sur les radios campus';
   const desc = built.format === 'weekend_results' ? 'Résultats des matchs universitaires du Québec, mis à jour par LE-RADAR.ca.' : 'Les émissions de la soirée sur les radios campus du Québec.';
   const header = text.split('\n')[0];
   if (net === 'bluesky') {
@@ -85,7 +85,7 @@ async function publishOne(net, text, built, cfg, env) {
     const md = createMastodon({ instance: env.MASTODON_INSTANCE || 'https://piaille.fr', token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
     const recent = await md.listStatuses(40); if (recent.some(s => String(s.content || '').includes(header.replace(/^🏆 /, '').slice(0, 30)))) return { dedup: true };
     const mediaId = await md.uploadImage(cfg.image, title); if (!mediaId) throw new Error('image Mastodon refusée');
-    const p = await md.post({ status: text, mediaId, lang: LANG, key: idemKey(`${built.format}:${built.window?.key || torontoDay(Date.now())}:mastodon`) });
+    const p = await md.post({ status: text, mediaId, lang: LANG, key: idemKey(`${built.format}:${built.window?.key || torontoDay(Date.now())}:mastodon:${text}`) });
     return { url: p.url, id: p.id };
   }
   if (net === 'tumblr') {

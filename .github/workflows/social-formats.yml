@@ -1,9 +1,9 @@
-name: Social — Formats natifs (résultats du week-end, À écouter ce soir)
+name: Social — Formats natifs (résultats de la fin de semaine, À écouter ce soir)
 
-# « Résultats du week-end » (U SPORTS + RSEQ, depuis sports.json) et « À écouter ce soir » (radio-schedules.json).
+# « Résultats de la fin de semaine » (U SPORTS + RSEQ, depuis sports.json) et « À écouter ce soir » (radio-schedules.json).
 # Chaque passage construit l'aperçu par réseau (artefact + résumé du job) et le contrôle. Rien n'est publié sauf si TOUT est vrai :
 # DRY_RUN=false, data/social/policy.json formats.<format>.publish = true, fenêtre d'envoi (lundi-mardi, 8 h-21 h heure de Montréal
-# pour les résultats), aucun doute sur les données, et rien d'envoyé pour ce week-end sur ce réseau (data/social/formats-state.json).
+# pour les résultats), aucun doute sur les données, et rien d'envoyé pour cette fin de semaine sur ce réseau (data/social/formats-state.json).
 # « À écouter ce soir » : publish = false dans policy.json, donc aperçu seulement.
 # Les crons GitHub partent souvent en retard (6-7 h sur ce dépôt) : plusieurs passages lundi et mardi, idempotents.
 on:
