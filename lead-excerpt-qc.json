@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-10T19:08:43.191Z",
+  "updated": "2026-11-10T19:38:09.156Z",
   "total": 188,
   "pool": 58,
   "incomplete": 31,
@@ -9,15 +9,6 @@
   "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -37,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -46,39 +46,39 @@
       "changed": false
     },
     {
-      "title": "Commemorating 50 years of Concordia’s men’s soccer national championship title",
-      "link": "https://theconcordian.com/2026/11/50-years-concordias-soccer-championship-title/",
+      "title": "Quebec expects direct consultation on Erasmus+",
+      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
       "ok": true,
-      "score": 100,
-      "chars": 698,
-      "sample": "On Nov. 14, 1976, two years after the merger of Sir George Williams University and Loyola College, t",
+      "score": 95,
+      "chars": 293,
+      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
       "changed": true
     },
     {
-      "title": "What is DEK Hockey?",
-      "link": "https://theconcordian.com/2026/11/what-is-dek-hockey/",
+      "title": "Carney government weakening pesticide regulation, warns Green Party Leader Elizabeth May",
+      "link": "https://theconcordian.com/2026/11/carney-weakening-pesticide-regulation/",
       "ok": true,
       "score": 100,
-      "chars": 415,
-      "sample": "For decades, ice hockey has by far been the most prominent sport in Quebec culture. Every year, when",
+      "chars": 284,
+      "sample": "The initiative follows Bill C-30, which passed last June. Among new budgetary measures, C-30 amended",
       "changed": true
     },
     {
-      "title": "What does rejecting AI actually look like?",
-      "link": "https://theconcordian.com/2026/11/what-does-rejecting-ai-look-like/",
-      "ok": true,
-      "score": 100,
-      "chars": 513,
-      "sample": "As the use of artificial intelligence (AI) becomes increasingly common at Concordia, some students a",
-      "changed": true
-    },
-    {
-      "title": "Renovated facilities and new funding strategies planned for the CRA in upcoming academic year",
-      "link": "https://theconcordian.com/2026/11/cra-wants-internal-help/",
+      "title": "As Big Tech invests more in eye-tracking tools, Canadians’ data is left unprotected",
+      "link": "https://theconcordian.com/2026/11/big-tech-eye-tracking-data-unprotected/",
       "ok": true,
       "score": 96,
-      "chars": 243,
-      "sample": "CRA director Claude Morin said the department is looking into “rebranding and reorganizing” existing",
+      "chars": 293,
+      "sample": "Research shows the potential for patterns of eye movement to distinguish children from adults, revea",
+      "changed": true
+    },
+    {
+      "title": "Two federal byelections to take place in Montreal on Dec. 7",
+      "link": "https://theconcordian.com/2026/11/2-byelections-in-montreal-on-dec-7/",
+      "ok": true,
+      "score": 96,
+      "chars": 215,
+      "sample": "The ridings holding elections in Montreal will be Rosemont—La Petite-Patrie and Laurier–Sainte-Marie",
       "changed": true
     }
   ]
