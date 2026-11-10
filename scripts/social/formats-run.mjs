@@ -85,7 +85,7 @@ async function publishOne(net, text, built, cfg, env) {
     const md = createMastodon({ instance: env.MASTODON_INSTANCE || 'https://piaille.fr', token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
     const recent = await md.listStatuses(40); if (recent.some(s => String(s.content || '').includes(header.replace(/^🏆 /, '').slice(0, 30)))) return { dedup: true };
     const mediaId = await md.uploadImage(cfg.image, title); if (!mediaId) throw new Error('image Mastodon refusée');
-    const p = await md.post({ status: text, mediaId, lang: LANG, key: idemKey(`${built.format}:${built.window?.key || torontoDay(Date.now())}:mastodon`) });
+    const p = await md.post({ status: text, mediaId, lang: LANG, key: idemKey(`${built.format}:${built.window?.key || torontoDay(Date.now())}:mastodon:${text}`) });
     return { url: p.url, id: p.id };
   }
   if (net === 'tumblr') {
