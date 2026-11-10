@@ -1535,16 +1535,6 @@
       "via": "disk",
       "nameKey": "article-de-juliette-c.jpg"
     },
-    "f8d91ea235bb168c": {
-      "local": "assets/news-images/f8d91ea235bb168c.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0254.png",
-      "host": "theconcordian.com",
-      "bytes": 307060,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-10T17:38:57.413Z",
-      "via": "photon-resize",
-      "nameKey": "img_0254.png"
-    },
     "1bbdf967529f6556": {
       "local": "assets/news-images/1bbdf967529f6556.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/0-MSP26-1109-DJClass-1889-1024x683.jpg",
@@ -1564,10 +1554,30 @@
       "updatedAt": "2026-11-10T18:09:02.247Z",
       "via": "photon-resize",
       "nameKey": "katseye-p3t4l.jpg"
+    },
+    "7aaa523e2d53d058": {
+      "local": "assets/news-images/7aaa523e2d53d058.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Online-version.png",
+      "host": "theconcordian.com",
+      "bytes": 159328,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-10T18:39:31.358Z",
+      "via": "photon-resize",
+      "nameKey": "online-version.png"
+    },
+    "8f7b55006cb9ee4d": {
+      "local": "assets/news-images/8f7b55006cb9ee4d.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/DSC5654.jpeg",
+      "host": "theconcordian.com",
+      "bytes": 149500,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-10T18:39:33.957Z",
+      "via": "photon-resize",
+      "nameKey": "dsc5654.jpeg"
     }
   },
-  "updatedAt": "2026-11-10T18:09:05.301Z",
-  "count": 157,
+  "updatedAt": "2026-11-10T18:39:34.131Z",
+  "count": 158,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
