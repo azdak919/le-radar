@@ -1,14 +1,23 @@
 {
-  "updated": "2026-11-10T23:25:24.113Z",
+  "updated": "2026-11-10T23:32:30.824Z",
   "total": 188,
   "pool": 58,
   "incomplete": 31,
   "withLeadExcerpt": 140,
   "candidates": 31,
   "enriched": 0,
-  "failed": 2,
+  "failed": 6,
   "ok": true,
   "samples": [
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -25,15 +34,6 @@
       "score": 100,
       "chars": 431,
       "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
@@ -55,30 +55,30 @@
       "changed": false
     },
     {
-      "title": "Quebec expects direct consultation on Erasmus+",
-      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "title": "A year with Soraya Martinez Ferrada",
+      "link": "https://thelinknewspaper.ca/article/16557",
       "ok": true,
-      "score": 95,
-      "chars": 293,
-      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
+      "score": 96,
+      "chars": 289,
+      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
       "changed": false
     },
     {
-      "title": "As Big Tech invests more in eye-tracking tools, Canadians’ data is left unprotected",
-      "link": "https://theconcordian.com/2026/11/big-tech-eye-tracking-data-unprotected/",
+      "title": "Concordia’s deficit detrimental to student experience",
+      "link": "https://thelinknewspaper.ca/article/16556",
       "ok": true,
-      "score": 96,
-      "chars": 293,
-      "sample": "Research shows the potential for patterns of eye movement to distinguish children from adults, revea",
+      "score": 100,
+      "chars": 279,
+      "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
       "changed": false
     },
     {
-      "title": "Two federal byelections to take place in Montreal on Dec. 7",
-      "link": "https://theconcordian.com/2026/11/2-byelections-in-montreal-on-dec-7/",
+      "title": "What does it mean for students if Canada joins the Erasmus+ exchange program?",
+      "link": "https://thelinknewspaper.ca/article/16554",
       "ok": true,
-      "score": 96,
-      "chars": 215,
-      "sample": "The ridings holding elections in Montreal will be Rosemont—La Petite-Patrie and Laurier–Sainte-Marie",
+      "score": 100,
+      "chars": 422,
+      "sample": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is d",
       "changed": false
     }
   ]
