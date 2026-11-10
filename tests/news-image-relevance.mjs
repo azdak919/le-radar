@@ -105,6 +105,9 @@ assert.equal(A.isCropSafePortrait(856, 1080, { url: shot }), false, 'sans indice
 assert.equal(A.isCropSafePortrait(856, 1080, { url: shot, screenshotPhotos: true }), true, 'The Campus : vraie photo');
 assert.equal(A.isCropSafePortrait(856, 1080, { url: shot.replace('capture-decran', 'affiche-capture-decran'), screenshotPhotos: true }), false, 'affiche : refus');
 assert.equal(A.isCropSafePortrait(600, 1080, { url: shot, screenshotPhotos: true }), false, 'trop en hauteur : refus');
+assert.equal(A.isCropSafePortrait(686, 1048, { url: 'https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png', screenshotPhotos: true }), true, 'The Campus Movember 686×1048 : illustration acceptée');
+assert.equal(A.isCropSafePortrait(686, 1048, { url: 'https://example.org/wp-content/uploads/2026/11/dessin.png' }), false, 'hors The Campus : seuil 0,66 inchangé');
+assert.equal(A.isCropSafePortrait(608, 1080, { url: shot, screenshotPhotos: true }), false, 'story 9:16 The Campus : refus');
 assert.equal(A.imageOptionsFromHints({ screenshotPhotos: true }).screenshotPhotos, true);
 const sources = JSON.parse(readFileSync(new URL('../news-sources.json', import.meta.url), 'utf8'));
 const campusSrc = (sources.sources || Object.values(sources).flat()).find((s) => s && s.name === 'The Campus');
