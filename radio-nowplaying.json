@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T11:06:37.113Z",
+  "updatedAt": "2026-11-10T12:06:36.083Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T11:06:08.025Z"
+      "checkedAt": "2026-11-10T12:06:08.219Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Raconte ton quartier",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
-      },
-      "next": {
         "title": "450DB",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/450db"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Raconte ton quartier",
+      "showTitle": "450DB",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T11:06:10.356Z"
+      "checkedAt": "2026-11-10T12:06:10.143Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Beat Power Hour",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Tuesday Morning After Pt1",
         "source": "api-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt2",
+        "source": "api-live",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "The Beat Power Hour",
+      "showTitle": "Tuesday Morning After Pt1",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T11:06:13.493Z"
+      "checkedAt": "2026-11-10T12:06:14.410Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,45 +101,39 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T11:06:28.081Z"
+      "checkedAt": "2026-11-10T12:06:28.338Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "07:59",
         "url": "https://www.cfak.ca/balados/Folkswagen"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "08:59",
+        "url": "https://www.cfak.ca/balados/palmares-cfak"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T11:06:29.490Z"
+      "checkedAt": "2026-11-10T12:06:29.720Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
-      },
+      "current": null,
       "next": {
         "title": "Le Monde Dans Mes Oreilles",
         "source": "api-live",
@@ -148,14 +142,14 @@
         "slug": "le-monde-dans-mes-oreilles"
       },
       "track": "Bloc Pub 21 juillet.mp3",
-      "showTitle": "Les rois de l'arène",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T11:06:36.763Z"
+      "checkedAt": "2026-11-10T12:06:35.733Z"
     }
   }
 }
