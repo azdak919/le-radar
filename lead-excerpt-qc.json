@@ -1,32 +1,14 @@
 {
-  "updated": "2026-11-10T08:55:10.049Z",
+  "updated": "2026-11-10T10:07:35.968Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 58,
-  "withLeadExcerpt": 166,
-  "candidates": 50,
-  "enriched": 36,
-  "failed": 7,
+  "incomplete": 29,
+  "withLeadExcerpt": 142,
+  "candidates": 29,
+  "enriched": 11,
+  "failed": 2,
   "ok": true,
   "samples": [
-    {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": true
-    },
-    {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
-      "ok": true,
-      "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
-      "changed": true
-    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -34,7 +16,16 @@
       "score": 96,
       "chars": 439,
       "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": false
     },
     {
       "title": "Francisée, mais pas la bienvenue ?",
@@ -46,24 +37,6 @@
       "changed": false
     },
     {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
-    },
-    {
-      "title": "Quand la mode va trop loin",
-      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
-      "ok": true,
-      "score": 96,
-      "chars": 759,
-      "sample": "Consistant à dépigmenter la peau autour de l’anus, cette recherche d’uniformité corporelle vient du ",
-      "changed": true
-    },
-    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -73,13 +46,40 @@
       "changed": false
     },
     {
-      "title": "Affaire Ewert : qui savait quoi ?",
-      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
+      "title": "What the Cornell case taught me",
+      "link": "https://theconcordian.com/2026/11/what-the-cornell-case-taught-me/",
       "ok": true,
       "score": 100,
-      "chars": 617,
-      "sample": "Jeffrey Ewert est de retour en détention. Le Service correctionnel du Canada (SCC) a annoncé le 24 o",
+      "chars": 774,
+      "sample": "I think we have all come across the Cornell case by now. The Cornell sexual assault case involves a ",
       "changed": true
+    },
+    {
+      "title": "Revue de concert : Aya Nakamura",
+      "link": "https://theconcordian.com/2026/11/revue-concert-aya-nakamura-montreal/",
+      "ok": true,
+      "score": 100,
+      "chars": 727,
+      "sample": "La fin de semaine dernière, celle qu’on surnomme « la reine de France », Aya Nakamura, a fait sa pre",
+      "changed": true
+    },
+    {
+      "title": "20 People Spoke for All: BUSRC Attendance Challenges Reflected on This Year’s AGM",
+      "link": "https://thebucampus.ca/2026/11/09/20-people-spoke-for-all-busrc-attendance-challenges-reflected-on-this-years-agm/",
+      "ok": true,
+      "score": 96,
+      "chars": 350,
+      "sample": "BUSRC narrowly avoided disaster at its last Annual General Meeting (AGM) on Oct. 26, as 20 students,",
+      "changed": false
+    },
+    {
+      "title": "Another season of voting",
+      "link": "https://thelinknewspaper.ca/article/16547",
+      "ok": true,
+      "score": 90,
+      "chars": 288,
+      "sample": "Lina Elbakaye, the CSU internal affairs coordinator, and Harerta Abraha, the newly elected chief ele",
+      "changed": false
     }
   ]
 }

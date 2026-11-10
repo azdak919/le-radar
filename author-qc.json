@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-10T08:53:23.409Z",
+  "updated": "2026-11-10T10:06:52.670Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 12,
+  "mismatches": 13,
   "ok": true,
   "samples": [
     {
@@ -78,6 +78,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "source": "The Tribune",
+      "fieldAuthor": "Ellen Lurie et Managing Editor",
+      "canonicalAuthor": "Ellen Lurie and Managing Editor",
+      "reason": "page-byline-overrides-rss"
+    },
+    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "source": "The Tribune",
@@ -102,5 +110,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 12
+  "fixed": 13
 }
