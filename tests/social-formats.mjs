@@ -78,7 +78,7 @@ assert.ok((xText.match(/@\w+/g) || []).length <= 4 && xText.includes('@USPORTS' 
 assert.ok(!xText.includes('Stingers (@'), 'Concordia : aucun compte vérifié → nom en clair');
 const tiny = { ...NET_SPEC.x, limit: 60 }; assert.equal(buildResultsText(pub, tiny, { link: 'https://le-radar.ca/sports/', teamAcc }), null, 'jamais de texte tronqué : null si le minimum ne tient pas');
 assert.equal(gameLine(model.uni[0], s => (s.reg === 'ulaval' ? '@rougeetor' : '')).includes('(@rougeetor)'), true);
-assert.ok(resultsTags(pub, 4, teamAcc)[0] === '#USPORTS' && resultsTags(pub, 2, teamAcc).length === 2 && resultsTags(pub, 0, teamAcc).length === 0);
+assert.ok(resultsTags(pub, 4, teamAcc)[0] === '#USports' && resultsTags(pub, 2, teamAcc).length === 2 && resultsTags(pub, 0, teamAcc).length === 0);
 const tt = resultsTumblrTags(pub, teamAcc); assert.ok(tt.length >= 10 && tt.length <= 15 && tt.every(x => x === x.toLowerCase() && !/[#,]/.test(x)) && tt.includes('usports'), tt.join('|'));
 // contrôles : @ inconnu, ligne en double, score faux
 const spec = NET_SPEC.mastodon;

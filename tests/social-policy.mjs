@@ -53,13 +53,13 @@ const later = T('2026-11-25T17:00:00Z');
 assert.equal(plan(day.map(x => ({ ...x, date: new Date(later - 3600e3) })), {}, { network: 'bluesky', liveSince, now: later }).limits.reduced, undefined, 'après le 23 nov. : plafonds de base');
 assert.equal(plan(day, {}, { network: 'bluesky', liveSince, now, schedule: false }).limits.reduced, undefined, 'schedule:false (tests) : base');
 
-// ── hashtags : plafonds par réseau, X = 2, Facebook = 0, jamais #PresseÉtudiante seul
+// ── hashtags : plafonds par réseau, X = 2, Facebook = 1, jamais #PresseÉtudiante
 const art = { id: 'a', source: 'Le Délit', author: 'A B', title: 'Hockey : les Stingers gagnent', bare: 'Hockey : les Stingers gagnent', link: 'https://www.delitfrancais.com/x/', desc: 'Hockey à McGill.', img: 'x' };
 const acc = [{ handle: '@DelitFrancais', type: 'source', cle_flux: 'Le Délit' }];
 const xt = buildXText(art, acc, { credit: 'Marie Tremblay' });
-assert.ok(xlen(xt) <= 280 && /\n#Montréal #Hockey$/.test(xt), xt);
+assert.ok(xlen(xt) <= 280 && /\n#McGill #Hockey$/.test(xt), xt);
 assert.ok(!/#PresseÉtudiante/.test(JSON.stringify(POLICY)));
-assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 3, mastodon: 3, x: 2, linkedin: 3, facebook: 0, tumblr: 15 });
+assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 2, mastodon: 4, x: 2, linkedin: 3, facebook: 1, tumblr: 15 });
 
 // ── X : au plus une mention par média et par jour
 const accounts = [{ handle: '@DelitFrancais', type: 'source', cle_flux: 'Le Délit' }, { handle: '@Linknewspaper', type: 'source', cle_flux: 'The Link' }];
