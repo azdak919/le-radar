@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-10T01:38:48.960Z",
+  "updated": "2026-11-10T02:08:20.247Z",
   "total": 188,
   "withPhoto": 167,
   "withStock": 33,
   "withCampusBank": 31,
   "fullyCovered": 188,
-  "leadReadyPhotos": 149,
-  "pageScraped": 30,
-  "photosRecovered": 30,
+  "leadReadyPhotos": 150,
+  "pageScraped": 28,
+  "photosRecovered": 28,
   "imagesCleared": 16,
-  "stockSearches": 40,
-  "stockFound": 30,
-  "campusBankFound": 26,
+  "stockSearches": 39,
+  "stockFound": 29,
+  "campusBankFound": 25,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,7 +21,7 @@
       "image": null
     },
     {
-      "title": "Artificial Intelligence in Journalism: The Daily's Stance - The McGill Daily",
+      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
       "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
@@ -45,22 +45,28 @@
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
     },
     {
+      "title": "When Neutrality Becomes Silence: McGill's Responsibility to Protect Political Dissent - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/when-neutrality-becomes-silence-mcgills-responsibility-to-protect-political-dissent/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+    },
+    {
       "title": "CSU byelections fee levy campaign: Honey’s Soupe Populaire",
       "link": "https://theconcordian.com/2026/11/csu-by-elections-honeys-soupe-populaire/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8197/28541561483_fa2e96b0b7_b.jpg"
     },
     {
-      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
-      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Laisser couler l’eau",
       "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
       "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
+      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Plus de 130 jours de manifestation en Albanie",
@@ -72,19 +78,13 @@
       "title": "CSU byelections fee levy campaign: Art Matters",
       "link": "https://theconcordian.com/2026/11/csu-byelections-art-matters/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
-      "title": "FASA opens anti-austerity week with town hall and general assembly",
-      "link": "https://thelinknewspaper.ca/article/16534",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Loyola_College_Building_15.JPG"
-    },
-    {
-      "title": "I Love Friendsgiving",
-      "link": "https://thebucampus.ca/2026/10/27/i-love-friendsgiving/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Editorial: Lowering immigration, but at what cost?",
+      "link": "https://thelinknewspaper.ca/article/16517",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
     }
   ]
 }
