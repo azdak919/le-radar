@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-10T20:40:45.253Z",
+  "updated": "2026-11-10T21:13:58.587Z",
   "count": 23,
   "items": [
     {
@@ -338,6 +338,42 @@
       ]
     },
     {
+      "name": "L'Oisif",
+      "institution": "Cégep de Chicoutimi",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/cegepchicoutimi/",
+          "handle": "@cegepchicoutimi",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/CegepChicoutimi",
+          "handle": "CegepChicoutimi",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://www.twitter.com/CegepChicoutimi",
+          "handle": "@CegepChicoutimi",
+          "stats": "",
+          "label": "X"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/channel/UCK61mhwLjnBG2QgN5vex2bw",
+          "handle": "@UCK61mhwLjnBG2QgN5vex2bw",
+          "stats": "",
+          "label": "YouTube"
+        }
+      ]
+    },
+    {
       "name": "La Gifle",
       "institution": "Collège Lionel-Groulx",
       "type": "cegep",
@@ -349,28 +385,6 @@
           "handle": "WordPresscom",
           "stats": "",
           "label": "Facebook"
-        }
-      ]
-    },
-    {
-      "name": "The Concordian",
-      "institution": "Concordia University",
-      "type": "universite",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "facebook",
-          "url": "https://www.facebook.com/theconcordian",
-          "handle": "theconcordian",
-          "stats": "",
-          "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/theconcordian",
-          "handle": "@theconcordian",
-          "stats": "",
-          "label": "X"
         }
       ]
     },
@@ -531,20 +545,6 @@
           "handle": "cjlo1690am",
           "stats": "",
           "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/CJLO1690AM",
-          "handle": "@CJLO1690AM",
-          "stats": "",
-          "label": "X"
-        },
-        {
-          "type": "youtube",
-          "url": "https://www.youtube.com/user/CJLO1690",
-          "handle": "@CJLO1690",
-          "stats": "",
-          "label": "YouTube"
         }
       ]
     },
@@ -589,13 +589,6 @@
           "handle": "@choq.ca",
           "stats": "",
           "label": "Instagram"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/choq_ca",
-          "handle": "@choq_ca",
-          "stats": "",
-          "label": "X"
         }
       ]
     }
