@@ -1,5 +1,38 @@
 {
  "_doc": "État des formats natifs (écrit par scripts/social/formats-run.mjs, commité par le workflow « Social — Formats natifs »). Clé = format puis dimanche du week-end (résultats) ou jour (À écouter ce soir) puis réseau : { at, url|id } ou { failed, attempts, error }. Jamais plus d'une publication par réseau et par clé.",
- "weekend_results": {},
+ "weekend_results": {
+  "2026-11-08": {
+   "bluesky": {
+    "at": "2026-11-10T20:27:58.848Z",
+    "url": "https://bsky.app/profile/did:plc:uxuxieev7fbkiji3xyyhzgae/post/3mzybozzac52h",
+    "uri": "at://did:plc:uxuxieev7fbkiji3xyyhzgae/app.bsky.feed.post/3mzybozzac52h"
+   },
+   "mastodon": {
+    "at": "2026-11-10T20:28:01.123Z",
+    "url": "https://piaille.fr/@leradar/117594028834792768",
+    "id": "117594028834792768"
+   },
+   "x": {
+    "at": "2026-11-10T20:28:05.094Z",
+    "id": "6af37e52ead9c53d41bba303",
+    "status": ""
+   },
+   "tumblr": {
+    "at": "2026-11-10T20:28:06.767Z",
+    "url": "https://le-radar-ca.tumblr.com/post/832928466206932992",
+    "id": "832928466206932992"
+   },
+   "facebook": {
+    "at": "2026-11-10T20:28:12.527Z",
+    "id": "6af37e57e4acfdf0c706cdc5",
+    "status": ""
+   },
+   "linkedin": {
+    "at": "2026-11-10T20:28:23.313Z",
+    "id": "6af37e5c41bc75bbeb60723c",
+    "status": ""
+   }
+  }
+ },
  "listen_tonight": {}
 }
