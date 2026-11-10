@@ -1,0 +1,30 @@
+name: Mastodon — mettre à jour bannière et avatar
+
+# Manuel seulement. Envoie data/social/mastodon-banner.jpg (1500×500) et
+# data/social/mastodon-avatar.png (carré) au compte du Radar. Ne touche ni au nom,
+# ni à la bio, ni aux champs, ni aux publications.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Envoyer les images
+        env:
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+        run: |
+          set -euo pipefail
+          code=$(curl -s -o /tmp/r.json -w '%{http_code}' -X PATCH "$MASTODON_INSTANCE/api/v1/accounts/update_credentials" \
+            -H "Authorization: Bearer $MASTODON_TOKEN" \
+            -F "header=@data/social/mastodon-banner.jpg;type=image/jpeg" \
+            -F "avatar=@data/social/mastodon-avatar.png;type=image/png")
+          echo "HTTP $code"
+          python3 -c "import json;d=json.load(open('/tmp/r.json'));print(d.get('acct'),d.get('header'),d.get('avatar'))"
+          test "$code" = 200
