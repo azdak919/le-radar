@@ -6,7 +6,10 @@
  * _site/assets/news-images/ (même domaine, même cache PWA, même app Android).
  *
  * plan() est pur : quoi téléverser, quoi supprimer.
- *  - upload : fichier local absent de la Release et non suivi par git ;
+ *  - upload : fichier local non suivi par git, absent de la Release,
+ *    ou déjà publié sous le même nom mais avec une taille différente
+ *    (JPEG Canva réécrit sur place). `sizes` est optionnel : sans taille,
+ *    on ne republie pas un fichier déjà nommé.
  *  - delete : fichier de la Release absent du dossier local (purgé par le
  *    miroir, comme aujourd'hui) depuis plus de graceDays (un article
  *    publié juste avant ne perd jamais son image).
@@ -14,11 +17,18 @@
 const TAG = 'mirror-images';
 const IMG = /\.(jpe?g|png|webp|gif|avif)$/i;
 
-function plan({ local = [], tracked = [], remote = [], now = Date.now(), graceDays = 2 }) {
+function plan({ local = [], tracked = [], remote = [], sizes = {}, now = Date.now(), graceDays = 2 }) {
   const loc = new Set(local.filter((n) => IMG.test(n)));
   const trk = new Set(tracked);
   const rem = new Map(remote.map((r) => [r.name, r]));
-  const upload = [...loc].filter((n) => !rem.has(n) && !trk.has(n)).sort();
+  const upload = [...loc].filter((n) => {
+    if (trk.has(n)) return false;
+    const published = rem.get(n);
+    if (!published) return true;
+    const localSize = sizes[n];
+    const remoteSize = Number(published.size);
+    return Number.isFinite(localSize) && Number.isFinite(remoteSize) && localSize !== remoteSize;
+  }).sort();
   const cutoff = now - graceDays * 86400000;
   const del = remote
     .filter((r) => IMG.test(r.name) && !loc.has(r.name) && Date.parse(r.createdAt || r.created_at || 0) < cutoff)

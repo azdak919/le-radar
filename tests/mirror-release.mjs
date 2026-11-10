@@ -8,6 +8,21 @@ const p = plan({ now, local: ['a.jpg', 'b.png', 'old.jpg', 'manifest.json'], tra
   remote: [{ name: 'b.png', createdAt: old }, { name: 'gone.jpg', createdAt: old }, { name: 'justgone.webp', createdAt: fresh }] });
 assert.deepEqual(p.upload, ['a.jpg'], 'nouvelle image seulement (ni suivie par git, ni déjà publiée, ni manifest)');
 assert.deepEqual(p.delete, ['gone.jpg'], 'purgée et plus vieille que le délai de grâce');
+const rewritten = plan({
+  now,
+  local: ['dirty.jpg', 'same.jpg', 'tracked.jpg'],
+  tracked: ['tracked.jpg'],
+  remote: [
+    { name: 'dirty.jpg', size: 82573, createdAt: old },
+    { name: 'same.jpg', size: 100, createdAt: old },
+    { name: 'tracked.jpg', size: 1, createdAt: old },
+  ],
+  sizes: { 'dirty.jpg': 81723, 'same.jpg': 100, 'tracked.jpg': 50 },
+});
+assert.deepEqual(rewritten.upload, ['dirty.jpg'], 'JPEG réécrit : même nom, taille différente, republier');
+assert.deepEqual(rewritten.delete, []);
+assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /\.size/);
+assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /sizes/);
 assert.ok(!TAG.startsWith('android-v'));
 // Le déploiement Pages recopie la Release dans le site ; l'ignore empêche de recommitter les nouvelles.
 assert.match(readFileSync('.github/workflows/pages-deploy.yml', 'utf8'), /mirror-release\.js restore _site\/assets\/news-images/);
