@@ -1029,16 +1029,6 @@
       "via": "resize-proxy",
       "nameKey": "silent-disco.png"
     },
-    "69a04023345230f5": {
-      "local": "assets/news-images/69a04023345230f5.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_8852-877x1024.jpg",
-      "host": "theconcordian.com",
-      "bytes": 45149,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-10T08:56:10.174Z",
-      "via": "origin",
-      "nameKey": "img_8852.jpg"
-    },
     "9f7cd4e71064c31d": {
       "local": "assets/news-images/9f7cd4e71064c31d.webp",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0208.jpg",
@@ -1564,9 +1554,19 @@
       "updatedAt": "2026-11-10T14:39:40.212Z",
       "via": "resize-proxy",
       "nameKey": "05_news_quebec_data_centres_halle_keays_1_900_675.png"
+    },
+    "0778534408f1b09a": {
+      "local": "assets/news-images/0778534408f1b09a.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/DominicCorbett_1126_RemembranceDay_Vol44.jpg",
+      "host": "theconcordian.com",
+      "bytes": 67470,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-10T17:08:50.750Z",
+      "via": "photon-resize",
+      "nameKey": "dominiccorbett_1126_remembranceday_vol44.jpg"
     }
   },
-  "updatedAt": "2026-11-10T16:10:16.630Z",
+  "updatedAt": "2026-11-10T17:08:50.753Z",
   "count": 157,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",

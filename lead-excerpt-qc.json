@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-10T16:08:13.043Z",
+  "updated": "2026-11-10T17:07:50.401Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 28,
+  "incomplete": 29,
   "withLeadExcerpt": 139,
-  "candidates": 28,
-  "enriched": 0,
-  "failed": 3,
+  "candidates": 29,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -46,6 +46,15 @@
       "changed": false
     },
     {
+      "title": "Why Remembrance Day still matters, now more than ever",
+      "link": "https://theconcordian.com/2026/11/why-remembrance-day-still-matters-now-more-than-ever/",
+      "ok": true,
+      "score": 96,
+      "chars": 509,
+      "sample": "On the afternoon of Oct. 17, one week before this year’s Poppy Campaign began, a grass fire was burn",
+      "changed": true
+    },
+    {
       "title": "Cha Cha Real Smooth Crossword",
       "link": "https://theconcordian.com/2026/11/cha-cha-real-smooth-crossword/",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 279,
       "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
-      "changed": false
-    },
-    {
-      "title": "What does it mean for students if Canada joins the Erasmus+ exchange program?",
-      "link": "https://thelinknewspaper.ca/article/16554",
-      "ok": true,
-      "score": 100,
-      "chars": 422,
-      "sample": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is d",
       "changed": false
     }
   ]
