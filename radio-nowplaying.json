@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T22:06:44.205Z",
+  "updatedAt": "2026-11-10T22:28:36.919Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T22:06:04.194Z"
+      "checkedAt": "2026-11-10T22:27:49.347Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T22:06:18.345Z"
+      "checkedAt": "2026-11-10T22:28:03.226Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T22:06:21.620Z"
+      "checkedAt": "2026-11-10T22:28:05.758Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
         "title": "feminemix",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/feminemix"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T22:06:36.028Z"
+      "checkedAt": "2026-11-10T22:28:29.817Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T22:06:37.168Z"
+      "checkedAt": "2026-11-10T22:28:31.225Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T22:06:43.855Z"
+      "checkedAt": "2026-11-10T22:28:36.569Z"
     }
   }
 }
