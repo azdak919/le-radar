@@ -1,13 +1,27 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
-const { plan, TAG, isTransient } = createRequire(import.meta.url)('../scripts/mirror-release-lib.js');
+const { plan, TAG, isTransient, keepNamesFromPages, SOCIAL_KEEP_DAYS } = createRequire(import.meta.url)('../scripts/mirror-release-lib.js');
 const now = Date.parse('2026-10-27T12:00:00Z');
 const old = '2026-10-20T00:00:00Z', fresh = '2026-10-27T11:00:00Z';
-const p = plan({ now, local: ['a.jpg', 'b.png', 'old.jpg', 'manifest.json'], tracked: ['old.jpg'],
+const p = plan({ now, graceDays: 2, local: ['a.jpg', 'b.png', 'old.jpg', 'manifest.json'], tracked: ['old.jpg'],
   remote: [{ name: 'b.png', createdAt: old }, { name: 'gone.jpg', createdAt: old }, { name: 'justgone.webp', createdAt: fresh }] });
 assert.deepEqual(p.upload, ['a.jpg'], 'nouvelle image seulement (ni suivie par git, ni déjà publiée, ni manifest)');
 assert.deepEqual(p.delete, ['gone.jpg'], 'purgée et plus vieille que le délai de grâce');
+const kept = plan({ now, graceDays: 2, local: ['a.jpg'], keep: ['gone.jpg'],
+  remote: [{ name: 'gone.jpg', createdAt: old }, { name: 'other.jpg', createdAt: old }] });
+assert.deepEqual(kept.delete, ['other.jpg'], 'image encore citée par une fiche récente : conservée dans la Release');
+const mid = plan({ now, local: ['a.jpg'],
+  remote: [{ name: 'gone.jpg', createdAt: old }, { name: 'ancient.jpg', createdAt: '2026-10-01T00:00:00Z' }] });
+assert.deepEqual(mid.delete, ['ancient.jpg'], `grâce par défaut ${SOCIAL_KEEP_DAYS} jours : une image de 7 jours reste en ligne`);
+const pages = { articles: {
+  recent: { image: 'https://le-radar.ca/assets/news-images/abc123.jpg', date: '2026-10-24T12:00:00Z' },
+  stale: { image: 'https://le-radar.ca/assets/news-images/old999.webp', firstSeen: '2026-10-01T00:00:00Z' },
+  remote: { image: 'https://upload.wikimedia.org/foo.jpg', date: '2026-10-26T00:00:00Z' },
+} };
+assert.deepEqual(keepNamesFromPages(pages, { now }), ['abc123.jpg']);
+assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /keepNamesFromPages/);
+assert.equal(SOCIAL_KEEP_DAYS, 10);
 const rewritten = plan({
   now,
   local: ['dirty.jpg', 'same.jpg', 'tracked.jpg'],

@@ -9,7 +9,7 @@ import path from 'node:path';
 import { parseFeed, markImages, QUEUE_MAX, refreshPhotoLine, stripUtm } from './lib.mjs';
 import { createRequire } from 'node:module';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
-import { resolveImage } from './image-resolve.mjs';
+import { resolveImage, publicMedia, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
@@ -101,6 +101,7 @@ for (const net of networks) {
     const it = sel[i], dueAt = dues[i];
     const im = await resolveImage(it, { used, repeated });
     if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+    if (!await publicMedia(im.url)) { console.log(`::warning::Image inaccessible ou trop lourde, non ajoutée à Buffer : ${im.url} (${it.id})`); continue; }
     const imageUrl = await imageUrlForNetwork(cfg.service, im.url);
     await withHook(it);
     const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
@@ -115,6 +116,7 @@ for (const net of networks) {
     } catch (e) {
       if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); }
       const why = e.message.slice(0, 400);
+      if (isMediaRefusal(e)) { console.log(`::warning::${net} : image refusée par Buffer, article sauté (${why})`); continue; }
       console.log(`::warning::${net} : Buffer a refusé la publication (${why}) — arrêt de ${net} pour ce passage.`);
       problems.push(`- **${net}** : ${isRejection(why) ? 'lien ou publication refusé' : 'erreur Buffer'} pour ${it.link} — ${why}`);
       break;
