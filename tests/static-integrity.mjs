@@ -1299,7 +1299,7 @@ assert(
   'radios/ckut/index.html : grille hebdomadaire tronquée — scheduleTable ne doit plus couper à 8 créneaux/jour'
 );
 // Ordre lundi → dimanche : sur cinq colonnes, la semaine occupe la première
-// rangée et le week-end la seconde. L'ordre 0-6 des données couperait samedi
+// rangée et la fin de semaine la seconde. L'ordre 0-6 des données couperait samedi
 // et dimanche de part et d'autre du retour à la ligne.
 const ckutDays = [...ckutPage.matchAll(/<div class="seo-day[^"]*"[^>]*>\s*<h3>([^<]+)<\/h3>/g)]
   .map((m) => m[1]);

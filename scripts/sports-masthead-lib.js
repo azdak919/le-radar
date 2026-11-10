@@ -16,7 +16,7 @@ const SpF = require('./sports-freshness-lib');
 const MASTHEAD_NEXT_GAME_LIMIT = 48;
 /**
  * Plancher de capacité documenté pour la fenêtre puces (5 j civils).
- * Les matchs récents ne sont jamais tronqués : le volume RSEQ de week-end
+ * Les matchs récents ne sont jamais tronqués : le volume RSEQ de fin de semaine
  * a déjà dépassé 80 puis 128 (7 sept. / 14 sept. 2026).
  */
 const MASTHEAD_RESULT_LIMIT = 128;

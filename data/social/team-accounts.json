@@ -1,5 +1,5 @@
 {
- "_doc": "Comptes vérifiés à la main pour les formats natifs (résultats du week-end, À écouter ce soir). teams : clé = registryId de sports.json ; leagues : ligues ; stations : clé = id de radio-schedules.json. Un @ n'est utilisé que sur le réseau où il est listé, jamais deviné. Handles X vérifiés lors du diagnostic du 9 nov. 2026 ; Bluesky : handle résolu en DID. Ne jamais ajouter un compte non vérifié.",
+ "_doc": "Comptes vérifiés à la main pour les formats natifs (résultats de la fin de semaine, À écouter ce soir). teams : clé = registryId de sports.json ; leagues : ligues ; stations : clé = id de radio-schedules.json. Un @ n'est utilisé que sur le réseau où il est listé, jamais deviné. Handles X vérifiés lors du diagnostic du 9 nov. 2026 ; Bluesky : handle résolu en DID. Ne jamais ajouter un compte non vérifié.",
  "leagues": {
   "usports": { "nom": "U SPORTS", "x": "@USPORTSca", "preuve": "compte officiel U SPORTS (handle vérifié lors du diagnostic du 9 nov. 2026)" },
   "rseq": { "nom": "RSEQ", "x": "@RSEQ1", "preuve": "compte officiel du Réseau du sport étudiant du Québec (handle vérifié lors du diagnostic du 9 nov. 2026)" }

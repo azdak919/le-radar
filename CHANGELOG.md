@@ -7,11 +7,12 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
-- Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats du week-end » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
+- Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats de la fin de semaine » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
 
 ### Modifié
 
-- Format « Résultats du week-end » : plus aucune mention @ (X, Mastodon, Buffer et les autres réseaux du même format). Hashtags dynamiques selon les ligues et sports présents (#USports, #RSEQ, #FootballU, #HockeyU, etc.), quelques équipes en CamelCase, puis #SportÉtudiant et #Québec (au plus 8). Si le texte dépasse la limite X, on retire d’abord les hashtags d’équipes.
+- Libellé « fin de semaine » à la place de « week-end » dans les textes français visibles (titre des résultats, gabarits sociaux, documentation). Les identifiants techniques (`weekend_results`, etc.) et les textes anglais restent inchangés.
+- Format « Résultats de la fin de semaine » : plus aucune mention @ (X, Mastodon, Buffer et les autres réseaux du même format). Hashtags dynamiques selon les ligues et sports présents (#USports, #RSEQ, #FootballU, #HockeyU, etc.), quelques équipes en CamelCase, puis #SportÉtudiant et #Québec (au plus 8). Si le texte dépasse la limite X, on retire d’abord les hashtags d’équipes.
 - Hashtags sociaux : plafonds par réseau (Mastodon 2–4, Bluesky 1–2, X 1–2, Facebook 0–1, LinkedIn 2–3), institution et sport avant le lieu, ville réelle (#Saguenay, #Sherbrooke, #TroisRivières), institution citée dans le texte prioritaire, pas de #Actualités, #USports en CamelCase, et un mot déjà présent n’est pas rehashtaggé en lieu ou en sujet.
 
 ### Corrigé
@@ -156,7 +157,7 @@ Application Android 1.1.0 (`versionCode` 3, tag `android-v1.1.0`). Le site est d
 - « À venir » s’affichait sans heure : la sonde navigateur ignorait le champ `datetime` (horodatage Unix) de l’API de CISM et écrasait l’heure calculée par le bot.
 - Au repos, le panneau « À l’antenne » et le dial changeaient à 0,4 s d’intervalle et nommaient donc deux stations différentes ; ils basculent maintenant ensemble. Le panneau ne fait plus un fondu toutes les 8 s sur un contenu identique.
 - Défilement horizontal moins flou : décalage arrondi au pixel entier et suppression des promotions de couche GPU redondantes (`translateZ(0)`, `backface-visibility`) qui figeaient la rastérisation du texte.
-- Grille horaire ordonnée lundi → dimanche : la semaine occupe la première rangée, le week-end la seconde.
+- Grille horaire ordonnée lundi → dimanche : la semaine occupe la première rangée, la fin de semaine la seconde.
 - La CI publie enfin le dossier `horaires/` (absent des six workflows).
 - Quality Gate : 7 tests dépassaient les 30 s sur `page.goto('/', { waitUntil: 'load' })`. Mesuré — `domcontentloaded` à 412 ms, `load` à 1 404 ms, avec **35 requêtes externes** bloquantes (Google Fonts, umami, la photo Wikimedia du mât). Les tests qui n'ont besoin d'aucune de ces ressources attendent désormais `domcontentloaded` ; le serveur de test passe en `ThreadingHTTPServer`.
 - Les consignes internes des stations (« Desi Beats (must be .mp3!!) ») étaient filtrées dans la grille hebdomadaire mais pas dans le flux en direct, d'où leur retour dans « À venir ».

@@ -1504,7 +1504,7 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
   //
   // Ordre lundi → dimanche (et non l'index 0-6 des données, qui commence le
   // dimanche) : sur cinq colonnes, la première rangée est alors la semaine et
-  // la seconde le week-end, au lieu de couper samedi et dimanche en deux.
+  // la seconde la fin de semaine, au lieu de couper samedi et dimanche en deux.
   const days = [1, 2, 3, 4, 5, 6, 0];
   const todayDay = scheduleTodayDay();
   const slotStates = scheduleSlotStates(grid);

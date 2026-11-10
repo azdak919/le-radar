@@ -29,7 +29,7 @@ des littéraux/références liées : aucun JavaScript distant n’est exécuté.
 Les **36 fins sont maintenant sourcées**, contre 34 estimées et deux inconnues
 avant cette correction. Les 36 fins reprennent maintenant les bornes exactes
 publiées, dont 13 corrections de durée significatives (11 plages étirées vers
-la suivante et les deux fins de week-end auparavant inconnues). Exemples :
+la suivante et les deux fins de semaine auparavant inconnues). Exemples :
 
 - samedi/dimanche Les nuits CFAK : `hdeb: 0`, `hfin: 459`, soit 00:00–04:59;
 - lundi Solénoïde : `1300`–`1359`, soit 13:00–13:59, pas jusqu’à 18:00;
