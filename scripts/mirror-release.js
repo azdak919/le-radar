@@ -6,7 +6,7 @@
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { TAG, IMG, plan, isTransient } = require('./mirror-release-lib');
+const { TAG, IMG, plan, isTransient, keepNamesFromPages } = require('./mirror-release-lib');
 
 const ROOT = path.join(__dirname, '..');
 const DIR = path.join(ROOT, 'assets', 'news-images');
@@ -51,7 +51,11 @@ if (mode === 'restore') {
   const tracked = execFileSync('git', ['ls-files', '--', 'assets/news-images'], { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean).map((p) => path.basename(p));
   const remote = remoteAssets();
-  const p = plan({ local, tracked, remote, sizes });
+  let keep = [];
+  try {
+    keep = keepNamesFromPages(JSON.parse(fs.readFileSync(path.join(ROOT, 'data/article-pages.json'), 'utf8')));
+  } catch { /* registre absent : seule la grâce s'applique */ }
+  const p = plan({ local, tracked, remote, sizes, keep });
   console.log(`mirror-release sync${dry ? ' (simulation)' : ''} : ${p.upload.length} à téléverser, ${p.delete.length} à supprimer, ${remote.length} dans la Release`);
   if (!dry) {
     for (let i = 0; i < p.upload.length; i += 20) {

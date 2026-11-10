@@ -38,11 +38,29 @@ export function dims(b){ // JPEG/PNG/GIF/WebP
       i+=2+b.readUInt16BE(i+2);} }
   return null; }
 const cache=new Map();
+/** Plafond Buffer / X : au-delà, createPost est refusé (image trop lourde). */
+export const SOCIAL_MEDIA_MAX_BYTES = 5 * 1024 * 1024;
+/** Une URL n'est envoyée à Buffer que si elle répond 200, image/*, HTTPS et ≤ 5 Mo. */
+export function isPublicMedia({ status, contentType, bytes, url, maxBytes = SOCIAL_MEDIA_MAX_BYTES } = {}) {
+  return status === 200 && /^image\//i.test(contentType || '') && /^https:\/\//.test(url || '')
+    && Number(bytes) > 0 && Number(bytes) <= maxBytes;
+}
 export async function probe(url){ if(cache.has(url)) return cache.get(url);
   let r=null; try{ const res=await fetch(url,{headers:UA,redirect:'follow',signal:AbortSignal.timeout(20000)});
     const ct=res.headers.get('content-type')||''; if(res.ok&&/^image\//.test(ct)&&res.url.startsWith('https://')){
       const b=Buffer.from(await res.arrayBuffer()); r={...dims(b),finalUrl:res.url,ct,bytes:b.length}; } }catch{}
   cache.set(url,r); return r; }
+/** Sonde l'URL publique : 200 + image/* + HTTPS + taille admissible, sinon null. */
+export async function publicMedia(url, { maxBytes = SOCIAL_MEDIA_MAX_BYTES } = {}) {
+  if (!url || !/^https:\/\//.test(url)) return null;
+  const p = await probe(url);
+  if (!p || !isPublicMedia({ status: 200, contentType: p.ct, bytes: p.bytes, url: p.finalUrl, maxBytes })) return null;
+  return p;
+}
+/** Refus Buffer liés à l'image : on saute l'article, on n'arrête pas toute la file. */
+export function isMediaRefusal(err) {
+  return /file size limit|media URL|publicly accessible|uploading that image|attached media or link/i.test(String(err?.message || err || ''));
+}
 const pages=new Map();
 export async function page(url){ if(!pages.has(url)) pages.set(url, fetch(url,{headers:UA,signal:AbortSignal.timeout(20000)}).then(r=>r.ok?r.text():'').catch(()=>''));
   return pages.get(url); }

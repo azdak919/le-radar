@@ -14,6 +14,10 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Format « Résultats du week-end » : plus aucune mention @ (X, Mastodon, Buffer et les autres réseaux du même format). Hashtags dynamiques selon les ligues et sports présents (#USports, #RSEQ, #FootballU, #HockeyU, etc.), quelques équipes en CamelCase, puis #SportÉtudiant et #Québec (au plus 8). Si le texte dépasse la limite X, on retire d’abord les hashtags d’équipes.
 - Hashtags sociaux : plafonds par réseau (Mastodon 2–4, Bluesky 1–2, X 1–2, Facebook 0–1, LinkedIn 2–3), institution et sport avant le lieu, ville réelle (#Saguenay, #Sherbrooke, #TroisRivières), institution citée dans le texte prioritaire, pas de #Actualités, #USports en CamelCase, et un mot déjà présent n’est pas rehashtaggé en lieu ou en sujet.
 
+### Corrigé
+
+- Buffer (X, Facebook, LinkedIn) : une image n’est jointe que si l’URL publique répond 200, `image/*` et pèse au plus 5 Mo ; sinon l’article est sauté plutôt que de faire échouer la publication. Les images encore citées par une fiche récente restent dans la Release `mirror-images` pendant 10 jours, pour que Buffer ne retravaille pas une URL déjà 404 sur le-radar.ca.
+
 ## [1.1.0] — 2026-10-07
 
 Application Android 1.1.0 (`versionCode` 3, tag `android-v1.1.0`). Le site est déployé en continu depuis `main` ; ses changements depuis 1.0.0 sont regroupés ici.
