@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-10T21:38:27.645Z",
+  "updated": "2026-11-10T22:08:07.772Z",
   "total": 188,
   "pool": 58,
   "incomplete": 31,
-  "withLeadExcerpt": 141,
+  "withLeadExcerpt": 140,
   "candidates": 31,
-  "enriched": 1,
-  "failed": 1,
+  "enriched": 0,
+  "failed": 4,
   "ok": true,
   "samples": [
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -34,6 +25,15 @@
       "score": 100,
       "chars": 431,
       "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
@@ -73,12 +73,12 @@
       "changed": false
     },
     {
-      "title": "As Big Tech invests more in eye-tracking tools, Canadians’ data is left unprotected",
-      "link": "https://theconcordian.com/2026/11/big-tech-eye-tracking-data-unprotected/",
+      "title": "A year with Soraya Martinez Ferrada",
+      "link": "https://thelinknewspaper.ca/article/16557",
       "ok": true,
       "score": 96,
-      "chars": 293,
-      "sample": "Research shows the potential for patterns of eye movement to distinguish children from adults, revea",
+      "chars": 289,
+      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
       "changed": false
     }
   ]
