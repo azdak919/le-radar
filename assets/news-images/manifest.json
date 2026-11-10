@@ -1029,16 +1029,6 @@
       "via": "resize-proxy",
       "nameKey": "silent-disco.png"
     },
-    "9f7cd4e71064c31d": {
-      "local": "assets/news-images/9f7cd4e71064c31d.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0208.jpg",
-      "host": "theconcordian.com",
-      "bytes": 81234,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-07T05:07:27.405Z",
-      "via": "photon-resize",
-      "nameKey": "img_0208.jpg"
-    },
     "1b096fd682af1769": {
       "local": "assets/news-images/1b096fd682af1769.jpg",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/11/Scitech-3-Rokayah-Bellaoui-scaled.jpg",
@@ -1337,16 +1327,6 @@
       "via": "origin",
       "nameKey": "angine_de_poitrine_in_may_2026_at_the_great_escape_50.jpg"
     },
-    "538d74dde9131954": {
-      "local": "assets/news-images/538d74dde9131954.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/legal-information-clinic.jpg",
-      "host": "theconcordian.com",
-      "bytes": 20858,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-10T08:56:10.167Z",
-      "via": "origin",
-      "nameKey": "legal-information-clinic.jpg"
-    },
     "90e82346c399a337": {
       "local": "assets/news-images/90e82346c399a337.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/SSA26_hall_stairs_7014_900_600_90.jpg",
@@ -1547,27 +1527,57 @@
       "via": "photon-resize",
       "nameKey": "dominiccorbett_1126_remembranceday_vol44.jpg"
     },
-    "d0d4eef2f356a4c4": {
-      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 282907,
-      "updatedAt": "2026-11-10T17:16:50.705Z",
-      "via": "disk",
-      "nameKey": "ak-mbam.jpg"
+    "a18202d8e732b37c": {
+      "local": "assets/news-images/a18202d8e732b37c.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Monotony-1-768x1024.jpg",
+      "host": "theconcordian.com",
+      "bytes": 94118,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-10T17:38:51.205Z",
+      "via": "origin",
+      "nameKey": "monotony-1.jpg"
     },
-    "77c707c2771abe3a": {
-      "local": "assets/news-images/77c707c2771abe3a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+    "0da527b271273a7a": {
+      "local": "assets/news-images/0da527b271273a7a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
       "host": "www.delitfrancais.com",
-      "bytes": 61446,
-      "updatedAt": "2026-11-10T17:16:50.705Z",
+      "bytes": 70585,
+      "updatedAt": "2026-11-10T17:38:53.276Z",
       "via": "disk",
-      "nameKey": "jesus.jpg"
+      "nameKey": "rocky.jpeg"
+    },
+    "cdf081914623d574": {
+      "local": "assets/news-images/cdf081914623d574.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/article-de-juliette-c.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 223663,
+      "updatedAt": "2026-11-10T17:38:53.277Z",
+      "via": "disk",
+      "nameKey": "article-de-juliette-c.jpg"
+    },
+    "c457dee3c91d1476": {
+      "local": "assets/news-images/c457dee3c91d1476.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/viz-Rita-article-issue-9.jpg",
+      "host": "theconcordian.com",
+      "bytes": 45142,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-10T17:38:53.347Z",
+      "via": "photon-resize",
+      "nameKey": "viz-rita-article-issue-9.jpg"
+    },
+    "f8d91ea235bb168c": {
+      "local": "assets/news-images/f8d91ea235bb168c.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0254.png",
+      "host": "theconcordian.com",
+      "bytes": 307060,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-10T17:38:57.413Z",
+      "via": "photon-resize",
+      "nameKey": "img_0254.png"
     }
   },
-  "updatedAt": "2026-11-10T17:16:50.713Z",
-  "count": 157,
+  "updatedAt": "2026-11-10T17:38:57.415Z",
+  "count": 158,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
