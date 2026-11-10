@@ -25,10 +25,10 @@ assert.ok(!formatOk(withCredit.replace(site, it.link), it, 'Yann Rifflard'), 'li
 assert.ok(!formatOk('@Linknewspaper ' + withCredit, it, 'Yann Rifflard'), '@ en tête → à corriger');
 
 const r = reformatText(it, acc, { credit: 'Yann Rifflard', img: 'https://x/y.jpg' });
-assert.equal(r, withCredit + '\n#Montréal #Hockey', 'X : 2 hashtags (lieu + sport précis) en dernière ligne');
+assert.equal(r, withCredit + '\n#Concordia #Hockey', 'X : 2 hashtags (institution + sport précis) en dernière ligne');
 assert.ok(formatOk(r, it, 'Yann Rifflard'), 'formatOk tolère la ligne de hashtags');
 assert.ok(r.includes(' · ') && r.includes('(@Linknewspaper)') && !r.includes(' • '));
-assert.equal(reformatText(it, acc, { credit: '', img: '' }), noCredit + '\n#Montréal #Hockey');
+assert.equal(reformatText(it, acc, { credit: '', img: '' }), noCredit + '\n#Concordia #Hockey');
 // reformater n'ajoute jamais le @ d'un média absent du texte d'origine (budget ≤ 1 mention/jour)
 assert.ok(!reformatText(it, acc, { credit: '', img: '', old: 'ancien texte sans @' }).includes('@Linknewspaper'));
 assert.ok(reformatText(it, acc, { credit: '', img: '', old: 'avec (@Linknewspaper)' }).includes('@Linknewspaper'));

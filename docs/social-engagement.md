@@ -7,7 +7,7 @@ Tout vit dans le dépôt (aucune routine externe). La source de vérité est `da
 - **Volume réduit** : 3 à 5 publications par jour et par réseau (LinkedIn 3), jusqu’au `volume.until` (2026-11-23, inclus). Passé cette date, les limites de base reprennent d’elles-mêmes. Pour prolonger ou modifier : changer `until` ou `perDay`.
 - **Qualité** : une seule publication par source et par jour, les articles avec image d’abord ; sans image (hors Tumblr, où elle reste obligatoire) seulement après 17 h et sous le minimum de 3.
 - **Mentions** : le média source est nommé dans le format natif de chaque réseau. Seuls les comptes vérifiés (`data/social/*-accounts.json`) sont mentionnés ; sur X, au plus un média par jour.
-- **Hashtags** : #Québec ou #Montréal et une étiquette de sujet ou d’institution, jamais #PresseEtudiante seul (`hashtags.maxByNetwork`).
+- **Hashtags** : institution, sport précis et ville d’abord (ex. #ULaval, #Hockey, #Saguenay), jamais #PresseÉtudiante ni #Actualités. Plafonds : Mastodon 2 à 4, Bluesky 1 à 2, X 1 à 2, Facebook 0 à 1, LinkedIn 2 à 3 (`hashtags.maxByNetwork`). Un hashtag de lieu ou de sujet déjà écrit dans le texte n’est pas répété. Accents conservés (CamelCase).
 - **Abonnements automatiques** : `automation.x_follow` et `facebook_follow` à faux (aucun mécanisme n’existe). L’abonnement Bluesky ne grossit plus (`max_total`).
 
 ## Formats natifs

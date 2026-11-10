@@ -9,6 +9,10 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 - Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats du week-end » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
 
+### Modifié
+
+- Hashtags sociaux : plafonds par réseau (Mastodon 2–4, Bluesky 1–2, X 1–2, Facebook 0–1, LinkedIn 2–3), institution et sport avant le lieu, ville réelle (#Saguenay, #Sherbrooke, #TroisRivières), institution citée dans le texte prioritaire, pas de #Actualités, #USports en CamelCase, et un mot déjà présent n’est pas rehashtaggé en lieu ou en sujet.
+
 ## [1.1.0] — 2026-10-07
 
 Application Android 1.1.0 (`versionCode` 3, tag `android-v1.1.0`). Le site est déployé en continu depuis `main` ; ses changements depuis 1.0.0 sont regroupés ici.

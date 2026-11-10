@@ -113,7 +113,7 @@ const camel = s => String(s || '').normalize('NFC').replace(/&/g, ' ').replace(/
 export function resultsTags(model, max, teamAcc = {}) {
   if (!(max > 0)) return [];
   const g = model.shown, out = [];
-  if (model.uni.length) out.push('#USPORTS');
+  if (model.uni.length) out.push('#USports');
   out.push('#RSEQ');
   const bySport = new Map(); for (const x of g) bySport.set(x.sport, (bySport.get(x.sport) || 0) + 1);
   const sports = [...bySport].sort((a, b) => b[1] - a[1] || (SPORT_WEIGHT[b[0]] ?? 0) - (SPORT_WEIGHT[a[0]] ?? 0)).map(([s]) => SPORT_HASH[s]).filter(Boolean);

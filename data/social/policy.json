@@ -43,12 +43,13 @@
   }
  },
  "hashtags": {
+  "_doc": "Plafonds : Mastodon 2-4, Bluesky 1-2, X 1-2, Facebook 0-1, LinkedIn 2-3, Tumblr 10-15. Instagram et Threads ne sont pas publiés.",
   "maxByNetwork": {
-   "bluesky": 3,
-   "mastodon": 3,
+   "bluesky": 2,
+   "mastodon": 4,
    "x": 2,
    "linkedin": 3,
-   "facebook": 0,
+   "facebook": 1,
    "tumblr": 15
   }
  },
@@ -73,11 +74,11 @@
    "hourTo": 21,
    "link": "https://le-radar.ca/sports/",
    "hashtags": {
-    "bluesky": 4,
-    "mastodon": 5,
+    "bluesky": 2,
+    "mastodon": 4,
     "x": 2,
     "linkedin": 3,
-    "facebook": 0,
+    "facebook": 1,
     "tumblr": 15
    },
    "maxGames": {
@@ -98,11 +99,11 @@
    "maxPerDayPerNetwork": 1,
    "link": "https://le-radar.ca/horaires/",
    "hashtags": {
-    "bluesky": 3,
-    "mastodon": 3,
+    "bluesky": 2,
+    "mastodon": 4,
     "x": 2,
     "linkedin": 3,
-    "facebook": 0,
+    "facebook": 1,
     "tumblr": 10
    },
    "maxShows": 4,

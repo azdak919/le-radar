@@ -47,12 +47,12 @@ assert.equal(li.length, 0, 'plafond LinkedIn atteint par la file');
 // format : pas de @, lien configurable, crédit 📸, jamais de nom personnel
 const it = { id: 'g1', source: 'Le Délit', author: 'Jeanne Roy', title: 'Le Délit – Jeanne Roy : Grève au campus', bare: 'Grève au campus', link: 'https://www.delitfrancais.com/2026/11/01/greve/', desc: 'Les associations étudiantes votent une grève de deux jours pour le climat.', date: new Date(T('2026-11-01T15:00:00Z')) };
 const fb = buildPageText(it, CFG.facebook, { credit: 'Marie Tremblay' });
-assert.equal(fb, 'Grève au campus\n\nLes associations étudiantes votent une grève de deux jours pour le climat.\n\n📰 Le Délit · Jeanne Roy\n' + pageLink(it, 'le-radar') + '\n📸 Marie Tremblay');
+assert.equal(fb, 'Grève au campus\n\nLes associations étudiantes votent une grève de deux jours pour le climat.\n\n📰 Le Délit · Jeanne Roy\n' + pageLink(it, 'le-radar') + '\n📸 Marie Tremblay\n#McGill');
 assert.match(pageLink(it, 'le-radar'), /^https:\/\/le-radar\.ca\/article\/[0-9a-f]{16}\/$/);
 for (const n of ['facebook', 'linkedin']) assert.equal(CFG[n].link, 'le-radar', `${n} : lien vers la fiche le-radar.ca`);
 const ln = buildPageText(it, CFG.linkedin, {});
-assert(ln.endsWith('\n📰 Le Délit · Jeanne Roy\n' + pageLink(it) + '\n#Montréal #Politique #McGill'), 'sans crédit : pas de ligne 📸 ; LinkedIn : 2-3 hashtags en dernier');
-assert(!/#\p{L}/u.test(fb), 'Facebook : aucun hashtag');
+assert(ln.endsWith('\n📰 Le Délit · Jeanne Roy\n' + pageLink(it) + '\n#McGill #Montréal #Politique'), 'sans crédit : pas de ligne 📸 ; LinkedIn : 2-3 hashtags en dernier');
+assert(fb.endsWith('\n#McGill'), 'Facebook : un hashtag spécifique en dernier');
 const at = buildPageText({ ...it, source: 'The Link', author: '@sana' }, CFG.facebook);
 assert(!/(^|\s)@\w/.test(at), 'aucun @');
 assert(!/tison/i.test(JSON.stringify(CFG)) && !/tison/i.test(fb));
