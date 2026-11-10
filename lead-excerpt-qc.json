@@ -1,14 +1,23 @@
 {
-  "updated": "2026-11-10T20:08:10.210Z",
+  "updated": "2026-11-10T20:37:54.688Z",
   "total": 188,
   "pool": 58,
   "incomplete": 32,
   "withLeadExcerpt": 140,
   "candidates": 32,
-  "enriched": 2,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -28,24 +37,6 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
-      "title": "Jésus et autres mots-clics",
-      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
-      "ok": true,
-      "score": 100,
-      "chars": 1120,
-      "sample": "Disponible sur la plateforme de Télé-Québec, le documentaire Faites du bruit pour Jésus, s’interroge",
-      "changed": true
-    },
-    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -55,13 +46,22 @@
       "changed": false
     },
     {
+      "title": "Affaire Ewert : qui savait quoi ?",
+      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
+      "ok": true,
+      "score": 100,
+      "chars": 617,
+      "sample": "Jeffrey Ewert est de retour en détention. Le Service correctionnel du Canada (SCC) a annoncé le 24 o",
+      "changed": true
+    },
+    {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "link": "https://quartierlibre.ca/elections-quen-pense-la-communaute-universitaire/",
       "ok": true,
       "score": 100,
       "chars": 1153,
       "sample": "Le Parti québécois (PQ) a été élu dans la nuit du 5 octobre dernier aux élections provinciales et va",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Carney government weakening pesticide regulation, warns Green Party Leader Elizabeth May",

@@ -1556,15 +1556,6 @@
       "via": "photon-resize",
       "nameKey": "p1055703.jpeg"
     },
-    "77c707c2771abe3a": {
-      "local": "assets/news-images/77c707c2771abe3a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 61446,
-      "updatedAt": "2026-11-10T20:09:04.234Z",
-      "via": "disk",
-      "nameKey": "jesus.jpg"
-    },
     "c84d225eacf01e81": {
       "local": "assets/news-images/c84d225eacf01e81.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2024/06/campus_votersurlecampus-1.jpg",
@@ -1574,10 +1565,29 @@
       "updatedAt": "2026-11-10T20:09:04.412Z",
       "via": "origin",
       "nameKey": "campus_votersurlecampus-1.jpg"
+    },
+    "cdf081914623d574": {
+      "local": "assets/news-images/cdf081914623d574.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/article-de-juliette-c.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 223663,
+      "updatedAt": "2026-11-10T20:38:41.470Z",
+      "via": "disk",
+      "nameKey": "article-de-juliette-c.jpg"
+    },
+    "51cb2e84bcd6cf81": {
+      "local": "assets/news-images/51cb2e84bcd6cf81.png",
+      "remote": "https://theconcordian.com/wp-content/uploads/2013/09/LIFE_sleeping-01.png",
+      "host": "theconcordian.com",
+      "bytes": 289417,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-10T20:38:41.807Z",
+      "via": "origin",
+      "nameKey": "life_sleeping-01.png"
     }
   },
-  "updatedAt": "2026-11-10T20:09:16.676Z",
-  "count": 158,
+  "updatedAt": "2026-11-10T20:38:45.156Z",
+  "count": 159,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
