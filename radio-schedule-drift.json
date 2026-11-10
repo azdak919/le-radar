@@ -1,36 +1,26 @@
 {
-  "checkedAt": "2026-11-09T02:36:36.697Z",
+  "checkedAt": "2026-11-10T04:35:46.223Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
     "stable": 5,
-    "drift": [
-      "chyz"
-    ],
+    "drift": [],
     "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 46,
+      "published": 50,
       "fresh": 50,
-      "added": [
-        "mer 17:45–20:30 Remparts de Québec",
-        "mer 22:30–00:00 Nocturne",
-        "jeu 17:45–20:30 Remparts de Québec",
-        "sam 12:00–12:30 Un Monde de Couleurs et de Son",
-        "sam 12:30–16:30 Football du Rouge et Or",
-        "sam 17:45–20:30 Remparts de Québec"
-      ],
-      "removed": [
-        "ven 18:45–21:30 Remparts de Québec",
-        "sam 14:30–18:30 Football du Rouge et Or"
-      ],
-      "changed": 8,
-      "ratio": 0.174,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
@@ -44,8 +34,8 @@
     },
     {
       "id": "ckut",
-      "published": 100,
-      "fresh": 100,
+      "published": 102,
+      "fresh": 102,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -55,12 +45,12 @@
     {
       "id": "cjlo",
       "published": 123,
-      "fresh": 123,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -74,8 +64,8 @@
     },
     {
       "id": "choq",
-      "published": 27,
-      "fresh": 27,
+      "published": 28,
+      "fresh": 28,
       "added": [],
       "removed": [],
       "changed": 0,
