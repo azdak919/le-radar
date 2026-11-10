@@ -1,30 +1,65 @@
 {
-  "updated": "2026-11-10T17:17:48.766Z",
+  "updated": "2026-11-10T17:40:00.326Z",
   "total": 188,
-  "withImage": 158,
-  "withCredit": 158,
+  "withImage": 161,
+  "withCredit": 161,
   "cited": 107,
-  "pending": 27,
+  "pending": 28,
   "missingHero": 0,
   "ok": false,
-  "checked": 41,
-  "updatedCount": 4,
-  "citedNew": 8,
-  "fallbackNew": 33,
+  "checked": 46,
+  "updatedCount": 9,
+  "citedNew": 9,
+  "fallbackNew": 37,
   "samples": [
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "title": "Reel Picks: “For the love of noir!”",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Human Connection: No plus one required",
+      "source": "The Concordian",
+      "credit": "Illustration: Zelda Dover",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
+    {
+      "title": "The magic of world-building through art",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "If you don’t know the answer, AI does",
+      "source": "The Concordian",
+      "credit": "Illustration: Manasi Iyampillay",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
+    {
+      "title": "No one wants to grow old anymore",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Affaire Ewert : qui savait quoi ?",
       "source": "Le Délit",
-      "credit": "Photo : DENIS FARLEY",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Jésus et autres mots-clics",
+      "title": "Le retour du Rocky Horror Picture Show",
       "source": "Le Délit",
-      "credit": "Photo : Photo tirée du site Internet de Télé-Québec",
-      "cited": true,
-      "method": "media-credit-featured"
+      "credit": "Photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Why We Dream: A Search for the Elusive",

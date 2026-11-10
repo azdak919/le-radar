@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-10T17:15:43.956Z",
+  "updated": "2026-11-10T17:37:57.797Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 29,
+  "incomplete": 31,
   "withLeadExcerpt": 140,
-  "candidates": 29,
-  "enriched": 2,
-  "failed": 2,
+  "candidates": 31,
+  "enriched": 6,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -37,40 +37,49 @@
       "changed": false
     },
     {
-      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
-      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
+      "title": "Quand la transidentité effraie",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
       "score": 100,
-      "chars": 497,
-      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "chars": 370,
+      "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
+      "changed": false
+    },
+    {
+      "title": "Affaire Ewert : qui savait quoi ?",
+      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
+      "ok": true,
+      "score": 100,
+      "chars": 617,
+      "sample": "Jeffrey Ewert est de retour en détention. Le Service correctionnel du Canada (SCC) a annoncé le 24 o",
       "changed": true
     },
     {
-      "title": "Jésus et autres mots-clics",
-      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
-      "ok": true,
-      "score": 100,
-      "chars": 1120,
-      "sample": "Disponible sur la plateforme de Télé-Québec, le documentaire Faites du bruit pour Jésus, s’interroge",
-      "changed": true
-    },
-    {
-      "title": "A year with Soraya Martinez Ferrada",
-      "link": "https://thelinknewspaper.ca/article/16557",
+      "title": "Reel Picks: “For the love of noir!”",
+      "link": "https://theconcordian.com/2026/11/reel-picks-for-the-love-of-noir/",
       "ok": true,
       "score": 96,
-      "chars": 289,
-      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
-      "changed": false
+      "chars": 656,
+      "sample": "Adapted from Jim Thompson’s 1963 novel, Stephen Frears’s The Grifters follows three con artists whos",
+      "changed": true
     },
     {
-      "title": "Concordia’s deficit detrimental to student experience",
-      "link": "https://thelinknewspaper.ca/article/16556",
+      "title": "Human Connection: No plus one required",
+      "link": "https://theconcordian.com/2026/11/human-connection-montreal-social-group/",
+      "ok": true,
+      "score": 94,
+      "chars": 561,
+      "sample": "Since launching in 2025, Montreal’s Human Connection, a social experience company, has hosted events",
+      "changed": true
+    },
+    {
+      "title": "The magic of world-building through art",
+      "link": "https://theconcordian.com/2026/11/the-magic-of-world-building-through-art/",
       "ok": true,
       "score": 100,
-      "chars": 279,
-      "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
-      "changed": false
+      "chars": 186,
+      "sample": "Kira-Madina Storch builds worlds of mythology and fiction using paint and canvas. Her imagination wa",
+      "changed": true
     }
   ]
 }
