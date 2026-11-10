@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-10T15:07:48.295Z",
+  "updated": "2026-11-10T16:08:13.043Z",
   "total": 188,
   "pool": 58,
   "incomplete": 28,
-  "withLeadExcerpt": 140,
+  "withLeadExcerpt": 139,
   "candidates": 28,
-  "enriched": 1,
-  "failed": 2,
+  "enriched": 0,
+  "failed": 3,
   "ok": true,
   "samples": [
-    {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
     {
       "title": "Francisée, mais pas la bienvenue ?",
       "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
@@ -37,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": false
+    },
+    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -52,7 +52,7 @@
       "score": 90,
       "chars": 266,
       "sample": "SIGN UP TO CONTRIBUTE! Subscribe to our Substack to receive new Podcast episodes, our weekly section",
-      "changed": true
+      "changed": false
     },
     {
       "title": "A year with Soraya Martinez Ferrada",
