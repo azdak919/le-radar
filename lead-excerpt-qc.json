@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-10T22:08:07.772Z",
+  "updated": "2026-11-10T23:25:24.113Z",
   "total": 188,
   "pool": 58,
   "incomplete": 31,
   "withLeadExcerpt": 140,
   "candidates": 31,
   "enriched": 0,
-  "failed": 4,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -55,15 +55,6 @@
       "changed": false
     },
     {
-      "title": "Carney government weakening pesticide regulation, warns Green Party Leader Elizabeth May",
-      "link": "https://theconcordian.com/2026/11/carney-weakening-pesticide-regulation/",
-      "ok": true,
-      "score": 100,
-      "chars": 284,
-      "sample": "The initiative follows Bill C-30, which passed last June. Among new budgetary measures, C-30 amended",
-      "changed": false
-    },
-    {
       "title": "Quebec expects direct consultation on Erasmus+",
       "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
       "ok": true,
@@ -73,12 +64,21 @@
       "changed": false
     },
     {
-      "title": "A year with Soraya Martinez Ferrada",
-      "link": "https://thelinknewspaper.ca/article/16557",
+      "title": "As Big Tech invests more in eye-tracking tools, Canadians’ data is left unprotected",
+      "link": "https://theconcordian.com/2026/11/big-tech-eye-tracking-data-unprotected/",
       "ok": true,
       "score": 96,
-      "chars": 289,
-      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
+      "chars": 293,
+      "sample": "Research shows the potential for patterns of eye movement to distinguish children from adults, revea",
+      "changed": false
+    },
+    {
+      "title": "Two federal byelections to take place in Montreal on Dec. 7",
+      "link": "https://theconcordian.com/2026/11/2-byelections-in-montreal-on-dec-7/",
+      "ok": true,
+      "score": 96,
+      "chars": 215,
+      "sample": "The ridings holding elections in Montreal will be Rosemont—La Petite-Patrie and Laurier–Sainte-Marie",
       "changed": false
     }
   ]
