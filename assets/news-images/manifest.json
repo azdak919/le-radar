@@ -799,16 +799,6 @@
       "via": "origin",
       "nameKey": "img_4100.jpg"
     },
-    "8db6d4b1d42ad4d5": {
-      "local": "assets/news-images/8db6d4b1d42ad4d5.jpg",
-      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Untitled_Artwork-8.jpeg",
-      "host": "www.mcgilldaily.com",
-      "bytes": 75346,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-02T13:07:54.378Z",
-      "via": "resize-proxy",
-      "nameKey": "untitled_artwork-8.jpeg"
-    },
     "05d21acd6748e519": {
       "local": "assets/news-images/05d21acd6748e519.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/McGill-Daily.jpg",
@@ -1127,16 +1117,6 @@
       "via": "resize-proxy",
       "nameKey": "contributor.png"
     },
-    "12b3f7a73bf93008": {
-      "local": "assets/news-images/12b3f7a73bf93008.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/AurelieDiouf-261026-IAdanslajustice-VOL-44.jpg",
-      "host": "theconcordian.com",
-      "bytes": 127188,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-05T18:08:41.793Z",
-      "via": "photon-resize",
-      "nameKey": "aureliediouf-261026-iadanslajustice-vol-44.jpg"
-    },
     "1a0ee66cc728febb": {
       "local": "assets/news-images/1a0ee66cc728febb.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/marissa-sports-article-2.jpg",
@@ -1296,16 +1276,6 @@
       "updatedAt": "2026-11-07T04:08:06.955Z",
       "via": "origin",
       "nameKey": "img_8852.jpg"
-    },
-    "cb96026b8a3d22aa": {
-      "local": "assets/news-images/cb96026b8a3d22aa.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_8672.jpg",
-      "host": "theconcordian.com",
-      "bytes": 94385,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-07T05:07:26.701Z",
-      "via": "origin",
-      "nameKey": "img_8672.jpg"
     },
     "9f7cd4e71064c31d": {
       "local": "assets/news-images/9f7cd4e71064c31d.webp",
@@ -1565,15 +1535,6 @@
       "via": "origin",
       "nameKey": "image-9.jpg"
     },
-    "6652aa068d12dd9c": {
-      "local": "assets/news-images/6652aa068d12dd9c.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_011126_SupraSemis_VOL44-3.jpg",
-      "host": "theconcordian.com",
-      "bytes": 187027,
-      "updatedAt": "2026-11-09T20:09:37.217Z",
-      "via": "disk",
-      "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
-    },
     "2309473b1b25990e": {
       "local": "assets/news-images/2309473b1b25990e.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-8.jpg",
@@ -1662,10 +1623,20 @@
       "updatedAt": "2026-11-09T22:08:08.856Z",
       "via": "resize-proxy",
       "nameKey": "article-de-juliette-c.jpg"
+    },
+    "538d74dde9131954": {
+      "local": "assets/news-images/538d74dde9131954.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/legal-information-clinic.jpg",
+      "host": "theconcordian.com",
+      "bytes": 21016,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-10T00:08:49.141Z",
+      "via": "origin",
+      "nameKey": "legal-information-clinic.jpg"
     }
   },
-  "updatedAt": "2026-11-09T22:45:11.114Z",
-  "count": 167,
+  "updatedAt": "2026-11-10T00:08:49.143Z",
+  "count": 164,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

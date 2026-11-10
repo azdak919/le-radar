@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-09T22:44:23.400Z",
+  "updated": "2026-11-10T00:07:45.507Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 7,
-  "withLeadExcerpt": 128,
-  "candidates": 7,
-  "enriched": 0,
+  "incomplete": 11,
+  "withLeadExcerpt": 129,
+  "candidates": 11,
+  "enriched": 4,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -26,6 +26,15 @@
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
+    },
+    {
+      "title": "Is Wearing Makeup Really a Choice? - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
+      "ok": true,
+      "score": 96,
+      "chars": 271,
+      "sample": "In the United States, 38 per cent of women report wearing makeup at least a few times a week, if not",
+      "changed": true
     },
     {
       "title": "Les multiples visages de la précarité à l’Université",
@@ -55,13 +64,22 @@
       "changed": false
     },
     {
-      "title": "Plus rien n’est égal par ailleurs : Un film qui divise, et c’est voulu",
-      "link": "https://lapige.atmjonquiere.com/2026/11/06/plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu/?utm_source=rss&utm_medium=rss&utm_campaign=plus-rien-nest-egal-par-ailleurs-un-film-qui-divise-et-cest-voulu",
+      "title": "CSU byelections fee levy campaign: Honey’s Soupe Populaire",
+      "link": "https://theconcordian.com/2026/11/csu-by-elections-honeys-soupe-populaire/",
       "ok": true,
-      "score": 96,
-      "chars": 162,
-      "sample": "Présenté jeudi soir au Cégep de Jonquière, le nouveau documentaire de Martin Bureau a suscité autant",
-      "changed": false
+      "score": 84,
+      "chars": 228,
+      "sample": "“We believe students deserve reliable access to food, and that supporting one another should be part",
+      "changed": true
+    },
+    {
+      "title": "CSU byelections fee levy campaign: Legal Information Clinic",
+      "link": "https://theconcordian.com/2026/11/csu-byelections-legal-information-clinic/",
+      "ok": true,
+      "score": 90,
+      "chars": 322,
+      "sample": "Sparling also mentioned how the increase would allow the LIC to take on even more cases. “This would",
+      "changed": true
     }
   ]
 }
