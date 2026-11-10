@@ -3235,6 +3235,126 @@ function sportsStripPolicySignature(policy, now = Date.now()) {
   return JSON.stringify([torontoDayKey(now), policy.mode, keys(policy.lives), keys(policy.left), keys(policy.right), keys(policy.pool)]);
 }
 
+/** Clé de diversité : sport + niveau (univ./collégial) + ligue. */
+function sportsSlideLevel(slide) {
+  const sector = String(slide?.team?.sector || slide?.game?.opponentSector || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  if (sector === 'universitaire') return 'universitaire';
+  if (sector === 'collegial') return 'collegial';
+  return '';
+}
+
+function sportsSlideLeagueKey(slide) {
+  const id = String(slide?.team?.leagueId || slide?.game?.leagueId || '').trim();
+  if (id) return `id:${id}`;
+  const label = String(slide?.team?.leagueLabel || slide?.game?.competition || '').trim().toLowerCase();
+  if (label) return `lb:${label}`;
+  const div = String(slide?.team?.division || slide?.game?.division || '').trim().toLowerCase();
+  const sex = String(slide?.team?.sex || slide?.game?.sex || '').trim().toLowerCase();
+  return `dv:${div}|${sex}`;
+}
+
+function sportsSlideDiversityKey(slide) {
+  return `${sportsSlideSport(slide)}|${sportsSlideLevel(slide)}|${sportsSlideLeagueKey(slide)}`;
+}
+
+/**
+ * Tourne entre les groupes (clé de diversité), sans changer l’ordre interne
+ * de chaque groupe et sans retirer de carte.
+ */
+function sportsRoundRobinByDiversity(slides) {
+  if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
+  const items = slides.filter(Boolean);
+  const order = [];
+  const queues = new Map();
+  for (const s of items) {
+    const key = sportsSlideDiversityKey(s);
+    if (!queues.has(key)) {
+      queues.set(key, []);
+      order.push(key);
+    }
+    queues.get(key).push(s);
+  }
+  if (order.length < 2) return items.slice();
+  const out = [];
+  while (out.length < items.length) {
+    let progressed = false;
+    for (const key of order) {
+      const q = queues.get(key);
+      if (!q.length) continue;
+      out.push(q.shift());
+      progressed = true;
+    }
+    if (!progressed) break;
+  }
+  return out;
+}
+
+/**
+ * Quand la semaine à venir et des résultats récents coexistent, on les
+ * alterne. L’ordre interne de chaque famille est conservé.
+ */
+function sportsMixWeekAndResults(slides) {
+  if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
+  const nexts = [];
+  const results = [];
+  for (const s of slides) {
+    if (!s) continue;
+    if (s.mode === 'result') results.push(s);
+    else nexts.push(s);
+  }
+  if (!nexts.length || !results.length) return sportsRoundRobinByDiversity(slides);
+  const remainingNext = sportsRoundRobinByDiversity(nexts);
+  const remainingResult = sportsRoundRobinByDiversity(results);
+  const out = [];
+  let lastKey = '';
+  let wantResult = false;
+  const pull = (arr) => {
+    if (!arr.length) return null;
+    let idx = 0;
+    if (lastKey) {
+      const alt = arr.findIndex((s) => sportsSlideDiversityKey(s) !== lastKey);
+      if (alt >= 0) idx = alt;
+    }
+    const [slide] = arr.splice(idx, 1);
+    lastKey = sportsSlideDiversityKey(slide);
+    return slide;
+  };
+  while (remainingNext.length || remainingResult.length) {
+    const primary = wantResult ? remainingResult : remainingNext;
+    const secondary = wantResult ? remainingNext : remainingResult;
+    const slide = pull(primary.length ? primary : secondary);
+    if (!slide) break;
+    out.push(slide);
+    wantResult = !wantResult;
+  }
+  return out;
+}
+
+/**
+ * Diversité du bandeau : directs déjà isolés par l’appelant. Ici, tournoi
+ * sport+ligue+niveau, et mélange à-venir de la semaine / résultats récents
+ * (sans hisser un score froid devant aujourd’hui ou demain).
+ */
+function sportsInterleaveByDiversity(slides, now = Date.now()) {
+  if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
+  const items = slides.filter(Boolean);
+  const hot = [];
+  const mid = [];
+  const far = [];
+  for (const s of items) {
+    const b = sportsOpenOrderBucket(s, now);
+    if (b <= SPORTS_OPEN_TOMORROW_NEXT) hot.push(s);
+    else if (b === SPORTS_OPEN_WEEK_NEXT || b === SPORTS_OPEN_OLDER_RESULT) mid.push(s);
+    else far.push(s);
+  }
+  return sportsRoundRobinByDiversity(hot)
+    .concat(sportsMixWeekAndResults(mid))
+    .concat(sportsRoundRobinByDiversity(far));
+}
+
 function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const count = Math.max(1, n | 0), policy = sportsStripPolicy(now, pool);
   const used = new Set();
@@ -3245,11 +3365,11 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const lives = sportsTakeUnusedPrefix(policy.lives, liveQuota, used);
   const remaining = count - lives.length;
   if (!remaining) return lives;
-  if (policy.mode !== 'split') return lives.concat(sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.pool), remaining, used));
+  if (policy.mode !== 'split') return lives.concat(sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.pool, now), remaining, used));
   if (count < 2) return sportsTakeUnusedPrefix(policy.right.concat(policy.left), 1, used);
-  const left = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.left), Math.ceil(remaining / 2), used);
-  const right = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.right), remaining - left.length, used);
-  const extra = sportsTakeUnusedPrefix(sportsInterleaveBySport(policy.pool), remaining - left.length - right.length, used);
+  const left = sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.left, now), Math.ceil(remaining / 2), used);
+  const right = sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.right, now), remaining - left.length, used);
+  const extra = sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.pool, now), remaining - left.length - right.length, used);
   const leftExtra = extra.filter(s => policy.left.includes(s));
   // Les directs sont garantis, mais hier reste visuellement à gauche du jour.
   return left.concat(leftExtra, lives, right, extra.filter(s => !policy.left.includes(s)));
@@ -4167,7 +4287,8 @@ function nextSportsSlide(usedKeys, opts = {}) {
       priorityCursor = fromLeft ? 'left' : 'right';
     }
   }
-  const ranked = lane.length ? lane : pool;
+  const ranked = sportsInterleaveByDiversity(lane.length ? lane : pool, now);
+  const avoidDiversity = opts.avoidDiversityKeys instanceof Set ? opts.avoidDiversityKeys : null;
   const isAvailable = (slide) => {
     if (sportsSlideIsUsed(slide, used)) return false;
     const matchKey = sportsResultMatchKey(slide);
@@ -4176,14 +4297,26 @@ function nextSportsSlide(usedKeys, opts = {}) {
   if (!ranked.length) return null;
   const seen = new Set();
   const start = priorityCursor ? sportsPriorityCursors[priorityCursor] : sportsLeftCursor;
+  let fallback = null;
+  let fallbackShift = 0;
   for (let i = 0; i < ranked.length; i += 1) {
     const s = ranked[(start + i) % ranked.length];
     if (!s || seen.has(s.key || i)) continue;
     seen.add(s.key || i);
     if (!isAvailable(s)) continue;
+    const divKey = sportsSlideDiversityKey(s);
+    if (avoidDiversity && avoidDiversity.size && avoidDiversity.has(divKey)) {
+      if (!fallback) { fallback = s; fallbackShift = i; }
+      continue;
+    }
     if (priorityCursor) sportsPriorityCursors[priorityCursor] = (start + i + 1) % ranked.length;
     else sportsLeftCursor = (start + i + 1) % ranked.length;
     return s;
+  }
+  if (fallback) {
+    if (priorityCursor) sportsPriorityCursors[priorityCursor] = (start + fallbackShift + 1) % ranked.length;
+    else sportsLeftCursor = (start + fallbackShift + 1) % ranked.length;
+    return fallback;
   }
   return null;
 }
@@ -4461,9 +4594,16 @@ function rotateSportsSlot(slot) {
       .map((s) => String(s.team?.sport || '').toLowerCase())
       .filter(Boolean),
   );
+  const avoidDiversityKeys = new Set(
+    sportsVisible
+      .filter((_, i) => i !== slot)
+      .map((s) => sportsSlideDiversityKey(s))
+      .filter(Boolean),
+  );
 
   let replacement = nextSportsSlide(used, {
     usedSports,
+    avoidDiversityKeys,
     avoidMatchKeys,
     outgoing: sportsVisible[slot],
     boardN: n,
@@ -4485,6 +4625,7 @@ function rotateSportsSlot(slot) {
     sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
     replacement = nextSportsSlide(used, {
       usedSports,
+      avoidDiversityKeys,
       avoidSport: avoid,
       avoidMatchKeys,
       outgoing: sportsVisible[slot],
@@ -4508,6 +4649,7 @@ function rotateSportsSlot(slot) {
       const leftAvoidMatchKeys = sportsAdjacentResultMatchKeys(i);
       const alt = nextSportsSlide(leftUsed, {
         usedSports,
+        avoidDiversityKeys,
         avoidSport: avoid,
         avoidMatchKeys: leftAvoidMatchKeys,
       });

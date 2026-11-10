@@ -244,3 +244,112 @@ assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
   assert.ok(sportsSrc.includes('if (sportsSailAwaitingHidden(g, now)) continue;'), 'bandeau : régate en attente non choisie');
   assert.ok(sportsSrc.includes('if (sportsResultSpotlight(game, now)) return { tier: 0'), 'bandeau : spotlight 24 h prioritaire');
 }
+
+
+// Diversité bandeau : tournoi sport+ligue+niveau, mélange à-venir / résultats,
+// ordre interne conservé, aucune carte retirée, déterministe.
+{
+  const SPORTS_OPEN_TOMORROW_NEXT = 4;
+  const SPORTS_OPEN_WEEK_NEXT = 5;
+  const SPORTS_OPEN_OLDER_RESULT = 6;
+  const SPORTS_OPEN_FAR_NEXT = 7;
+  const ctx = {
+    Date,
+    Map,
+    SPORTS_OPEN_TOMORROW_NEXT,
+    SPORTS_OPEN_WEEK_NEXT,
+    SPORTS_OPEN_OLDER_RESULT,
+    SPORTS_OPEN_FAR_NEXT,
+    sportsSlideSport: (slide) => String(slide?.team?.sport || slide?.game?.sport || '').toLowerCase(),
+    sportsOpenOrderBucket: (slide) => slide.bucket,
+  };
+  vm.runInNewContext(
+    `${sourceBetween('function sportsSlideLevel', 'function sportsSplitVisible')}
+     this.api = {
+       sportsSlideDiversityKey, sportsRoundRobinByDiversity,
+       sportsMixWeekAndResults, sportsInterleaveByDiversity,
+     };`,
+    ctx,
+  );
+  const { api } = ctx;
+  const now = Date.parse('2026-11-10T10:00:00-05:00');
+  const card = (id, { sport, sector, league, mode = 'next', bucket = SPORTS_OPEN_WEEK_NEXT, time = '21:00' }) => ({
+    id,
+    key: id,
+    mode,
+    bucket,
+    game: { sport, competition: league, date: bucket === SPORTS_OPEN_OLDER_RESULT ? '2026-11-08' : '2026-11-13', time },
+    team: { sport, sector, leagueLabel: league },
+  });
+  const ids = (slides) => [...slides].map((s) => s.id);
+
+  const d2 = [
+    card('d2-a', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2', time: '21:00' }),
+    card('d2-b', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2', time: '21:00' }),
+    card('d2-c', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2', time: '21:00' }),
+    card('d2-d', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2', time: '21:00' }),
+  ];
+  const others = [
+    card('d1-a', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial féminin D1', time: '18:30' }),
+    card('uni-a', { sport: 'basketball', sector: 'universitaire', league: 'Basketball universitaire masculin', time: '18:00' }),
+    card('hock-a', { sport: 'hockey', sector: 'universitaire', league: 'Hockey universitaire féminin D1', time: '19:30' }),
+  ];
+  const mixedLeagues = [...d2, ...others];
+  const once = api.sportsInterleaveByDiversity(mixedLeagues, now);
+  const twice = api.sportsInterleaveByDiversity(mixedLeagues, now);
+  assert.deepEqual(ids(once), ids(twice), 'intercalage déterministe');
+  assert.deepEqual(
+    [...ids(once)].sort(),
+    [...ids(mixedLeagues)].sort(),
+    'aucune carte retirée',
+  );
+  const firstKeys = [...once].slice(0, 4).map((s) => api.sportsSlideDiversityKey(s));
+  assert.equal(new Set(firstKeys).size, 4, `4 premières clés distinctes, got ${firstKeys.join(' | ')}`);
+  const d2Ids = new Set(d2.map((s) => s.id));
+  assert.deepEqual(
+    ids([...once].filter((s) => d2Ids.has(s.id))),
+    ids(d2),
+    'ordre chronologique conservé dans un même groupe',
+  );
+
+  const upcoming = [
+    card('week-d2-a', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2' }),
+    card('week-d2-b', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2' }),
+    card('week-d2-c', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2' }),
+    card('week-d2-d', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2' }),
+  ];
+  const recent = [
+    card('res-vb-a', { sport: 'volleyball', sector: 'collegial', league: 'Volleyball collégial masculin D3', mode: 'result', bucket: SPORTS_OPEN_OLDER_RESULT, time: '15:00' }),
+    card('res-fb-a', { sport: 'football', sector: 'collegial', league: 'Football collégial masculin D1', mode: 'result', bucket: SPORTS_OPEN_OLDER_RESULT, time: '14:00' }),
+    card('res-vb-b', { sport: 'volleyball', sector: 'collegial', league: 'Volleyball collégial masculin D3', mode: 'result', bucket: SPORTS_OPEN_OLDER_RESULT, time: '13:00' }),
+  ];
+  const weekMix = api.sportsInterleaveByDiversity([...upcoming, ...recent], now);
+  const firstSix = [...weekMix].slice(0, 6);
+  assert.ok(firstSix.some((s) => s.mode === 'next'), 'les 6 premières gardent des à-venir');
+  assert.ok(firstSix.some((s) => s.mode === 'result'), 'les 6 premières mélangent des résultats récents');
+  assert.deepEqual(
+    ids([...weekMix].filter((s) => s.id.startsWith('res-vb'))),
+    ['res-vb-a', 'res-vb-b'],
+    'ordre des résultats conservé au sein du groupe',
+  );
+
+  // Demain reste devant un score froid : le football de demain n’est pas
+  // évincé par une file de soccer ni par des résultats plus vieux.
+  const hot = [
+    card('live-soc', { sport: 'soccer', sector: 'collegial', league: 'Soccer collégial', time: '20:15', bucket: 0 }),
+    ...Array.from({ length: 8 }, (_, i) => card(`soc-${i}`, {
+      sport: 'soccer', sector: 'collegial', league: 'Soccer collégial',
+      time: `18:${String(i).padStart(2, '0')}`, bucket: SPORTS_OPEN_TOMORROW_NEXT,
+    })),
+    card('fb-1', { sport: 'football', sector: 'universitaire', league: 'Football universitaire', time: '19:30', bucket: SPORTS_OPEN_TOMORROW_NEXT }),
+    card('rug-1', { sport: 'rugby', sector: 'collegial', league: 'Rugby collégial', time: '20:00', bucket: SPORTS_OPEN_TOMORROW_NEXT }),
+  ];
+  const cold = [
+    card('old-soc', { sport: 'soccer', sector: 'collegial', league: 'Soccer collégial', mode: 'result', bucket: SPORTS_OPEN_OLDER_RESULT, time: '15:00' }),
+    card('old-fb', { sport: 'football', sector: 'universitaire', league: 'Football universitaire', mode: 'result', bucket: SPORTS_OPEN_OLDER_RESULT, time: '13:00' }),
+  ];
+  const hotOrder = api.sportsInterleaveByDiversity([...hot, ...cold], now);
+  assert.deepEqual(ids([...hotOrder].slice(0, 3)), ['live-soc', 'fb-1', 'rug-1'], 'direct puis autres sports de demain, scores froids ensuite');
+  assert.ok(ids([...hotOrder].slice(0, 4)).includes('fb-1'), 'football de demain visible dans le préfixe');
+  assert.ok(ids(hotOrder).indexOf('old-fb') > ids(hotOrder).indexOf('fb-1'), 'score froid derrière demain');
+}
