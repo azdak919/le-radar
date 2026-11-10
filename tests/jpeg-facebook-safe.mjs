@@ -55,6 +55,16 @@ assert.equal(clean[clean.length - 1], 0xd9);
 assert.equal(sanitizeJpegForFacebook(Buffer.from('nope')), null);
 assert.equal(jpegNeedsFacebookSanitize(Buffer.from([0x89, 0x50, 0x4e, 0x47])), false);
 
+const dpiOnly = Buffer.concat([
+  Buffer.from([0xff, 0xd8]),
+  segment(0xe0, Buffer.from('JFIF\0\x01\x01\x00\x00\x01\x00\x01\x00\x00', 'ascii')),
+  segment(0xc0, sof),
+  Buffer.from([0xff, 0xda]),
+  sos,
+  Buffer.from([0xff, 0xd9]),
+]);
+assert.equal(jpegNeedsFacebookSanitize(dpiOnly), false, 'densité 1×1 sans ICC/XMP : on n’y touche pas');
+
 const relay = facebookRelayUrl('https://le-radar.ca/assets/news-images/86d6a581397ae00f.jpg');
 assert.match(relay, /^https:\/\/wsrv\.nl\/\?url=/);
 assert.match(relay, /output=jpg/);

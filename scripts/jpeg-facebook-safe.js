@@ -4,7 +4,9 @@
  * Les exports Canva (« Lightspeed Local ») gardent un JFIF densité 1×1,
  * un profil ICC minuscule et un paquet XMP. Buffer les transmet tels quels
  * et Facebook répond « trouble uploading that image » (fichier jugé corrompu).
- * On retire les segments APPn et on pose un JFIF 72 dpi. Le flux compressé
+ * On retire les segments APPn en plus (ICC, XMP, EXIF) et on pose un JFIF
+ * 72 dpi. Un JFIF densité 1×1 sans autre APPn passe déjà : le réécrire
+ * changerait presque tout le miroir pour rien. Le flux compressé
  * (DQT, SOF, DHT, SOS) ne change pas : mêmes pixels.
  */
 
@@ -43,25 +45,18 @@ function walk(buf, onSegment) {
   return false;
 }
 
-/** Vrai si un APPn autre que JFIF 72 dpi est présent, ou si le JFIF est absent / bizarre. */
+/** Vrai si un APPn autre que JFIF est présent (ICC, XMP, EXIF). */
 function jpegNeedsFacebookSanitize(input) {
   const buf = Buffer.isBuffer(input) ? input : Buffer.from(input || []);
   if (!isJpeg(buf)) return false;
-  let app0ok = false;
   let otherApp = false;
   walk(buf, ({ marker, offset, len }) => {
     if (marker === 0xda) return true;
-    if (marker === 0xe0 && len >= 16 && buf.toString('ascii', offset + 2, offset + 7) === 'JFIF\0') {
-      const units = buf[offset + 9];
-      const xd = buf.readUInt16BE(offset + 10);
-      const yd = buf.readUInt16BE(offset + 12);
-      app0ok = units === 1 && xd === 72 && yd === 72;
-    } else if (marker >= 0xe0 && marker <= 0xef) {
-      otherApp = true;
-    }
+    const isJfif = marker === 0xe0 && len >= 16 && buf.toString('ascii', offset + 2, offset + 7) === 'JFIF\0';
+    if (!isJfif && marker >= 0xe0 && marker <= 0xef) otherApp = true;
     return false;
   });
-  return otherApp || !app0ok;
+  return otherApp;
 }
 
 /**

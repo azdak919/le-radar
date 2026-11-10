@@ -14,8 +14,11 @@ const REPO = process.env.GITHUB_REPOSITORY || 'azdak919/le-radar';
 const gh = (args, opts = {}) => execFileSync('gh', args, { encoding: 'utf8', maxBuffer: 1 << 26, ...opts });
 
 function remoteAssets() {
-  const out = gh(['api', '--paginate', `repos/${REPO}/releases/tags/${TAG}`, '--jq', '.assets[] | [.id, .name, .created_at] | @tsv']);
-  return out.split('\n').filter(Boolean).map((l) => { const [id, name, createdAt] = l.split('\t'); return { id, name, createdAt }; });
+  const out = gh(['api', '--paginate', `repos/${REPO}/releases/tags/${TAG}`, '--jq', '.assets[] | [.id, .name, .size, .created_at] | @tsv']);
+  return out.split('\n').filter(Boolean).map((l) => {
+    const [id, name, size, createdAt] = l.split('\t');
+    return { id, name, size: Number(size), createdAt };
+  });
 }
 
 const [mode, ...rest] = process.argv.slice(2);
@@ -41,10 +44,14 @@ if (mode === 'restore') {
 } else if (mode === 'sync') {
   const dry = rest.includes('--dry-run');
   const local = fs.readdirSync(DIR).filter((n) => IMG.test(n));
+  const sizes = {};
+  for (const n of local) {
+    try { sizes[n] = fs.statSync(path.join(DIR, n)).size; } catch { /* disparu entre la liste et la mesure */ }
+  }
   const tracked = execFileSync('git', ['ls-files', '--', 'assets/news-images'], { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean).map((p) => path.basename(p));
   const remote = remoteAssets();
-  const p = plan({ local, tracked, remote });
+  const p = plan({ local, tracked, remote, sizes });
   console.log(`mirror-release sync${dry ? ' (simulation)' : ''} : ${p.upload.length} à téléverser, ${p.delete.length} à supprimer, ${remote.length} dans la Release`);
   if (!dry) {
     for (let i = 0; i < p.upload.length; i += 20) {
