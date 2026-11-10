@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-10T16:06:35.349Z",
+  "updatedAt": "2026-11-10T17:07:01.454Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "L'art des Histoires",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:30",
-        "url": "https://chyz.ca/emission/lart-des-histoires/"
-      },
+      "current": null,
       "next": {
         "title": "Émission (presque) sérieuse",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/emission-presque-serieuse/"
       },
       "track": "",
-      "showTitle": "L'art des Histoires",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T16:06:07.058Z"
+      "checkedAt": "2026-11-10T17:06:31.184Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T16:06:09.760Z"
+      "checkedAt": "2026-11-10T17:06:33.417Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ecolibrium/Environment in Canada",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Universal Break",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Voice of Korea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Ecolibrium/Environment in Canada",
+      "showTitle": "Universal Break",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,66 +74,66 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T16:06:12.483Z"
+      "checkedAt": "2026-11-10T17:06:37.084Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mirror Journal",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
-      },
-      "next": {
         "title": "World Beat News",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/world-beat-news"
       },
+      "next": {
+        "title": "Shaking the Habitual",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+      },
       "track": "",
-      "showTitle": "Mirror Journal",
+      "showTitle": "World Beat News",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T16:06:26.427Z"
+      "checkedAt": "2026-11-10T17:06:51.414Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le DOUZE",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "12:59",
         "url": "https://www.cfak.ca/balados/le-douze"
       },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "19:59",
+        "url": "https://www.cfak.ca/balados/lautrock"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le DOUZE",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T16:06:28.479Z"
+      "checkedAt": "2026-11-10T17:06:52.852Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le Monde Dans Mes Oreilles",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "le-monde-dans-mes-oreilles"
-      },
+      "current": null,
       "next": {
         "title": "L'UQAM en info",
         "source": "api-live",
@@ -149,14 +142,14 @@
         "slug": "uqam-en-info"
       },
       "track": "Bloc Pub 21 juillet.mp3",
-      "showTitle": "Le Monde Dans Mes Oreilles",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-10T16:06:34.998Z"
+      "checkedAt": "2026-11-10T17:07:01.104Z"
     }
   }
 }
