@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-10T19:37:16.351Z",
+  "updated": "2026-11-10T20:07:01.487Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 10,
+  "mismatches": 11,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "link": "https://quartierlibre.ca/elections-quen-pense-la-communaute-universitaire/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Rose Fortin",
+      "reason": "page-byline"
+    },
     {
       "title": "Sweeping away the dead Republican leaves",
       "link": "https://thelinknewspaper.ca/article/16559",
@@ -86,5 +94,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 10
+  "fixed": 11
 }

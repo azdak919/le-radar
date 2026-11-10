@@ -1526,15 +1526,6 @@
       "via": "disk",
       "nameKey": "rocky.jpeg"
     },
-    "cdf081914623d574": {
-      "local": "assets/news-images/cdf081914623d574.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/article-de-juliette-c.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 223663,
-      "updatedAt": "2026-11-10T17:38:53.277Z",
-      "via": "disk",
-      "nameKey": "article-de-juliette-c.jpg"
-    },
     "1f328f69e32d0ba8": {
       "local": "assets/news-images/1f328f69e32d0ba8.webp",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0030.jpeg",
@@ -1564,10 +1555,29 @@
       "updatedAt": "2026-11-10T19:39:12.984Z",
       "via": "photon-resize",
       "nameKey": "p1055703.jpeg"
+    },
+    "77c707c2771abe3a": {
+      "local": "assets/news-images/77c707c2771abe3a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 61446,
+      "updatedAt": "2026-11-10T20:09:04.234Z",
+      "via": "disk",
+      "nameKey": "jesus.jpg"
+    },
+    "c84d225eacf01e81": {
+      "local": "assets/news-images/c84d225eacf01e81.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2024/06/campus_votersurlecampus-1.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 89853,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-10T20:09:04.412Z",
+      "via": "origin",
+      "nameKey": "campus_votersurlecampus-1.jpg"
     }
   },
-  "updatedAt": "2026-11-10T19:39:13.249Z",
-  "count": 157,
+  "updatedAt": "2026-11-10T20:09:16.676Z",
+  "count": 158,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
