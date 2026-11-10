@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-10T13:13:52.981Z",
+  "updated": "2026-11-10T13:37:20.797Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 11,
+  "mismatches": 12,
   "ok": true,
   "samples": [
+    {
+      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy/",
@@ -94,5 +102,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 11
+  "fixed": 12
 }
