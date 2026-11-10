@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-10T11:53:49.754Z",
+  "updated": "2026-11-10T21:26:42.948Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5423,23 +5423,28 @@
       "via": "save-page-now",
       "source": "The Campus",
       "snapshot": "https://web.archive.org/web/20261110115334/https://thebucampus.ca/2026/11/09/too-successful-or-forgotten-many-menstrual-product-boxes-empty-on-campus/"
+    },
+    "https://lapige.atmjonquiere.com/2026/11/10/cf-montreal-et-cop-31-reportages-radio-du-9-novembre/": {
+      "at": "2026-11-10T21:25:11.574Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261110212456/https://lapige.atmjonquiere.com/2026/11/10/cf-montreal-et-cop-31-reportages-radio-du-9-novembre/"
     }
   },
   "stats": {
-    "total": 943,
+    "total": 944,
     "lastRun": {
-      "saved": 12,
+      "saved": 1,
       "skipped": 0,
-      "failed": 8,
-      "stoppedEarly": false
+      "failed": 4,
+      "stoppedEarly": true
     }
   },
   "sources": {
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 27,
-      "checkedAt": "2026-11-03T11:18:05.931Z",
-      "stale": true
+      "checkedAt": "2026-11-10T21:24:38.015Z"
     },
     "The Tribune": {
       "host": "thetribune.ca",
@@ -5464,12 +5469,12 @@
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
       "pages": 9,
-      "checkedAt": "2026-11-03T21:13:48.556Z"
+      "checkedAt": "2026-11-10T21:24:44.258Z"
     },
     "Quartier Libre": {
       "host": "quartierlibre.ca",
       "pages": 40,
-      "checkedAt": "2026-11-03T21:13:49.416Z"
+      "checkedAt": "2026-11-10T21:24:51.802Z"
     },
     "The Plant": {
       "host": "theplantnews.com",
