@@ -14,6 +14,7 @@ import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
+const { jpegNeedsFacebookSanitize, facebookRelayUrl } = createRequire(import.meta.url)('../jpeg-facebook-safe.js');
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-pages-sent.json');
@@ -26,6 +27,27 @@ const feedArg = args.includes('--feed') ? args[args.indexOf('--feed') + 1] : nul
 const networks = (process.env.PAGES || 'facebook,linkedin').split(',').map(s => s.trim()).filter(n => CFG[n]);
 const issueFile = process.env.PAGES_ISSUE_FILE || '';
 const fixedIds = { facebook: process.env.BUFFER_FACEBOOK_CHANNEL_ID, linkedin: process.env.BUFFER_LINKEDIN_CHANNEL_ID };
+
+/** Facebook refuse les JPEG Canva (ICC + XMP). On lui donne un JPEG ré-encodé. */
+async function imageUrlForNetwork(service, url) {
+  if (service !== 'facebook' || !url) return url;
+  try {
+    const res = await fetch(url, {
+      redirect: 'follow',
+      headers: { 'user-agent': 'Mozilla/5.0 (compatible; LeRadarBot/1.0; +https://le-radar.ca)' },
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) return url;
+    const buf = Buffer.from(await res.arrayBuffer());
+    if (!jpegNeedsFacebookSanitize(buf)) return url;
+    const relay = facebookRelayUrl(url);
+    console.log(`Image JPEG refusée par Facebook (métadonnées), relais : ${relay}`);
+    return relay;
+  } catch (e) {
+    console.log(`::warning::lecture image Facebook ${url} : ${e.message}`);
+    return url;
+  }
+}
 
 const xml = feedArg ? fs.readFileSync(feedArg, 'utf8')
   : await (await fetch(process.env.FEED_URL || 'https://le-radar.ca/feed.xml', { signal: AbortSignal.timeout(30000) })).text();
@@ -79,13 +101,14 @@ for (const net of networks) {
     const it = sel[i], dueAt = dues[i];
     const im = await resolveImage(it, { used, repeated });
     if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+    const imageUrl = await imageUrlForNetwork(cfg.service, im.url);
     await withHook(it);
     const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
     if (/tison/i.test(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
-    console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
+    console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}`);
     if (dry) continue;
     try {
-      const post = await ch.add({ text, image: im?.url, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service) });
+      const post = await ch.add({ text, image: imageUrl, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service) });
       sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt, ...(shareUrl ? { shareNow: true, link: post.externalLink || null } : {}) };
       save();
       console.log(`→ Buffer ${net} : ${post.id} (${post.dueAt || dueAt})`);
