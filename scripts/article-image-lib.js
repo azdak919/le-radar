@@ -376,6 +376,13 @@ function articleImageRegions(html = '') {
     if (featured) chunks.push(featured[0]);
   }
 
+  // Thème Csco (The Concordian) : vedette hors entry-content, souvent en
+  // lazy-load, légende sœur juste après </figure>.
+  const cscoFeatured = html.match(
+    /<figure[^>]*class=["'][^"']*cs-entry__post-media[^"']*["'][\s\S]*?<\/figure>(?:\s*<figcaption\b[^>]*>[\s\S]*?<\/figcaption>)?/i,
+  );
+  if (cscoFeatured) chunks.push(cscoFeatured[0]);
+
   // Elementor — image à la une (souvent hors entry-content)
   const elFeatured = html.match(
     /class=["'][^"']*elementor-widget-theme-post-featured-image[^"']*["'][\s\S]{0,4000}?(?:<\/div>\s*){2,4}/i,
@@ -473,7 +480,9 @@ function promoteImageUrl(raw = '', options = {}) {
 
 /** src réel d'une balise <img>, y compris chargement paresseux (Elementor, etc.). */
 function imgTagSrc(tag = '') {
-  for (const attr of ['data-lazy-src', 'data-src', 'data-orig-file', 'data-large_image', 'src']) {
+  // data-pk-src : thème Csco (The Concordian). Le src est un placeholder
+  // data:image ; sans cet attribut la vedette disparaissait du sélecteur.
+  for (const attr of ['data-pk-src', 'data-lazy-src', 'data-src', 'data-orig-file', 'data-large_image', 'src']) {
     const m = tag.match(new RegExp(`${attr}=["']([^"']+)["']`, 'i'));
     if (!m) continue;
     const val = m[1].trim();
@@ -481,8 +490,8 @@ function imgTagSrc(tag = '') {
     if (/^data:image\//i.test(val)) continue;
     if (val) return val;
   }
-  // Repli srcset : prendre la plus large candidate
-  const srcset = tag.match(/\bsrcset=["']([^"']+)["']/i);
+  // Repli srcset, y compris data-pk-srcset / data-srcset (lazy-load Csco).
+  const srcset = tag.match(/\b(?:data-pk-srcset|data-lazy-srcset|data-srcset|srcset)=["']([^"']+)["']/i);
   if (srcset) {
     let best = '';
     let bestW = 0;
@@ -506,6 +515,13 @@ function figureCaptionText(fig = '') {
   return cap[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
+/** Légende sœur juste après </figure> (thème Csco : cs-entry__caption-text). */
+function siblingFigcaptionAfter(content = '', figureEnd = 0) {
+  const rest = String(content).slice(figureEnd);
+  const m = rest.match(/^\s*<figcaption\b[^>]*>[\s\S]*?<\/figcaption>/i);
+  return m ? m[0] : '';
+}
+
 /** Légende qui décrit un visuel de campagne / slogan, pas une photo de presse. */
 function captionLooksLikeCampaignGraphic(text = '') {
   return /\b(?:slogans?|visuel(?:s)? de campagne|campagne de financement|fundraising campaign|campaign (?:banner|graphic|visual|poster))\b/i.test(
@@ -524,7 +540,10 @@ function captionedFigureImageKeys(content = '') {
 
 function captionedFigureMeta(content = '') {
   const byKey = new Map();
-  for (const fig of content.match(/<figure[^>]*>[\s\S]*?<\/figure>/gi) || []) {
+  const re = /<figure[^>]*>[\s\S]*?<\/figure>/gi;
+  let figMatch;
+  while ((figMatch = re.exec(content))) {
+    const fig = figMatch[0] + siblingFigcaptionAfter(content, figMatch.index + figMatch[0].length);
     const text = figureCaptionText(fig);
     const campaignGraphic = captionLooksLikeCampaignGraphic(text);
     const hasCaption = text.length >= 12;
@@ -649,10 +668,17 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
 
 function articleImageIsValidOnPage(html = '', imageUrl = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   if (!html || !imageUrl) return false;
-  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options, baseUrl);
-  if (!contentImages.length) return false;
   const keys = new Set(leadImageUrlCandidates(imageUrl).map(normalizeImagePath));
-  return contentImages.some((img) => keys.has(normalizeImagePath(img.url)) || imageUrlsMatch(img.url, imageUrl));
+  const onPage = (url) => !!(url && (keys.has(normalizeImagePath(url)) || imageUrlsMatch(url, imageUrl)));
+  const contentImages = collectContentImages(articleImageRegions(html), extraRejectPatterns, options, baseUrl);
+  if (contentImages.some((img) => onPage(img.url))) return true;
+  // Couverture déclarée (og:image / Twitter) : une vedette en lazy-load hors
+  // du corps (data-pk-src, thème Csco) reste une image de CET article.
+  const cleaned = stripAdSlots(stripStyleAndScript(html));
+  for (const key of ['og:image', 'og:image:secure_url', 'twitter:image', 'twitter:image:src']) {
+    if (onPage(metaContent(cleaned, key))) return true;
+  }
+  return false;
 }
 
 function isCandidateImageUrl(raw = '', extraRejectPatterns = []) {
@@ -888,7 +914,7 @@ function isPortraitLeadRatio(width = 0, height = 0) {
 const LEAD_CROP_MIN_RATIO = 0.66;
 const LEAD_CROP_MIN_RATIO_SCREENSHOT = 0.64;
 const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infographi\p{L}*|programmation|programme|horaires?|calendrier|stor(?:y|ies)|invitations?|logos?|slogans?|menu|annonces?|communiqu[ée]s?|campagnes?|campaigns?|visuels?|textes?|texts?|quotes?|citations?)(?=$|[^\p{L}])/iu;
-const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
+const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|graphics?|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
 const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+)*\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
 const CREDIT_ORG_RE = /(?:^|\s)(?:courtoisie|gracieuset[ée]|courtesy|universit[ée]|university|c[ée]gep|coll[eè]ge|college|association|f[ée]d[ée]ration|comit[ée]|syndicat|service|archives?|soci[ée]t[ée]|ville|minist[eè]re|gouvernement|union|club|groupe|r[ée]daction|staff)(?=\s|$)/iu;
 function looksLikeCameraFile(name = '') {

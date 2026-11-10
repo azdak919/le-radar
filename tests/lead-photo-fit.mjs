@@ -36,6 +36,7 @@ const {
   needsImageEnrichment,
   imageUrlLooksBannerLike,
   clearMirroredLead,
+  articleImageIsValidOnPage,
 } = require('../scripts/article-image-lib.js');
 
 let failed = 0;
@@ -489,6 +490,9 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(!isCropSafePortrait(819, 1024, { alt: 'Photo : FEUS', url: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg' }), 'affiche FEUS (sigle) toujours écartée');
   check(!isCropSafePortrait(800, 1000, { alt: 'Photo : Courtoisie Université Laval' }), 'crédit d’organisme → écartée');
   check(!isCropSafePortrait(1080, 1920, { alt: 'Photo : Marie Tremblay' }), 'story 9:16 → écartée (trop haute)');
+  check(isCropSafePortrait(800, 1000, { caption: 'Graphic by Zelda Dover // The Concordian' }), 'illustration « Graphic by » (Concordian) → recadrée');
+  check(isCropSafePortrait(800, 1000, { caption: 'Illustration by Zelda Dover // The Concordian' }), 'illustration « Illustration by » → recadrée');
+  check(!isCropSafePortrait(800, 1000, { alt: 'Affiche du spectacle. Graphic by Zelda Dover' }), 'affiche + Graphic by → toujours écartée');
   check(!isCropSafePortrait(800, 1000, { alt: 'Affiche du spectacle. Photo : Marie Tremblay' }), 'mot « affiche » → écartée');
   check(!isCropSafePortrait(800, 1000, { alt: 'Photo : Marie Tremblay', url: 'https://x/infographie-budget-800x1000.jpg' }), 'fichier « infographie » → écarté');
   check(!isCropSafePortrait(800, 1000, {}), 'portrait sans crédit → règle inchangée (écarté)');
@@ -519,6 +523,56 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(/is-portrait-crop/.test(radar) && /is-portrait-crop[\s\S]{0,40}object-position: 50% 30%/.test(readFileSync(new URL('../style-feed.css', import.meta.url), 'utf8')), 'portrait recadré (cover, tiers haut), jamais en bandes');
   check(/kind === 'stock' && item\.imageProvider !== 'campus-bank'\) return;/.test(radar), 'client : délai dépassé ne remplace pas une photo thématique par le campus');
   check(/commons\/thumb\/\$\{orig\[1\]\}/.test(radar), 'client : vignette Commons directe (sans redirections FilePath)');
+}
+
+
+// ── Illustration éditoriale Concordian (« Graphic by », lazy-load Csco) ──
+// 10 nov. 2026 : « What does rejecting AI actually look like? » — vedette
+// 1920×1080, data-pk-src, légende sœur hors <figure>, alt og « AI ».
+{
+  const img = 'https://theconcordian.com/wp-content/uploads/2026/11/IMG_0251.png';
+  const link = 'https://theconcordian.com/2026/11/what-does-rejecting-ai-look-like/';
+  const html = `<html><head>
+    <meta property="og:image" content="${img}" />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content="AI" />
+    <meta name="twitter:image" content="${img}" />
+  </head><body class="postid-92473">
+  <main><article class="post-92473">
+    <div class="cs-entry__header">
+      <h1 class="cs-entry__title"><span>What does rejecting AI actually look like?</span></h1>
+      <figure class="cs-entry__post-media post-media">
+        <img width="800" height="450"
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII="
+          class="attachment-csco-medium-uncropped size-csco-medium-uncropped pk-lazyload wp-post-image" alt=""
+          data-pk-src="https://theconcordian.com/wp-content/uploads/2026/11/IMG_0251-800x450.png"
+          data-pk-srcset="${img} 1920w, https://theconcordian.com/wp-content/uploads/2026/11/IMG_0251-800x450.png 800w" />
+      </figure>
+      <figcaption class="cs-entry__caption-text wp-caption-text">
+        Graphic by Zelda Dover // The Concordian
+      </figcaption>
+    </div>
+    <div class="entry-content"><p>${'As the use of artificial intelligence becomes common at Concordia. '}</p></div>
+  </article></main></body></html>`;
+  const found = imageFromArticleHtml(html, [], {}, link);
+  assert(found.url === img, 'Concordian Graphic by : og:image / vedette lazy-load retenue');
+  assert(found.w === 1920 && found.h === 1080, 'Concordian Graphic by : dimensions 1920×1080');
+  assert(meetsLeadDisplaySize(found.w, found.h), 'Concordian Graphic by : format paysage prêt pour la une');
+  const top = listArticleImageCandidates(html, [], {}, link)[0];
+  assert(top?.url === img, 'Concordian Graphic by : premier candidat = illustration');
+  assert(/Graphic by Zelda Dover/i.test(top.caption || ''), 'Concordian Graphic by : légende sœur rattachée');
+  assert(!top.campaignGraphic, 'Concordian Graphic by : pas un visuel de campagne');
+  assert(articleImageIsValidOnPage(html, img, [], {}, link), 'Concordian Graphic by : validée sur la page (data-pk-src + og:image)');
+  const credit = require('../scripts/article-photo-credit-lib.js').resolveSourcePhotoCredit(
+    { link, image: img, source: 'The Concordian', lang: 'en' }, html);
+  assert(credit && /Zelda Dover/i.test(credit.creditLine || credit.creator || ''), 'Concordian Graphic by : crédit Zelda Dover');
+  const puzzle = require('../scripts/non-article-filter.js').nonArticleReason({
+    title: 'What does rejecting AI actually look like?',
+    link,
+    excerpt: 'As the use of artificial intelligence (AI) becomes increasingly common at Concordia, some students are raising concerns about its role in their academics.',
+  });
+  assert(!puzzle, 'filtre PR384 : l’article sur l’IA n’est pas un mot croisé / une promo');
 }
 
 if (failed) {
