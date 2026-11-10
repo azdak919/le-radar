@@ -11,6 +11,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Workflow manuel ponctuel pour retirer les publications « Résultats du week-end » encore en ligne et les republier une fois avec le titre « fin de semaine ».
 - Libellé « fin de semaine » à la place de « week-end » dans les textes français visibles (titre des résultats, gabarits sociaux, documentation). Les identifiants techniques (`weekend_results`, etc.) et les textes anglais restent inchangés.
 - Format « Résultats de la fin de semaine » : plus aucune mention @ (X, Mastodon, Buffer et les autres réseaux du même format). Hashtags dynamiques selon les ligues et sports présents (#USports, #RSEQ, #FootballU, #HockeyU, etc.), quelques équipes en CamelCase, puis #SportÉtudiant et #Québec (au plus 8). Si le texte dépasse la limite X, on retire d’abord les hashtags d’équipes.
 - Hashtags sociaux : plafonds par réseau (Mastodon 2–4, Bluesky 1–2, X 1–2, Facebook 0–1, LinkedIn 2–3), institution et sport avant le lieu, ville réelle (#Saguenay, #Sherbrooke, #TroisRivières), institution citée dans le texte prioritaire, pas de #Actualités, #USports en CamelCase, et un mot déjà présent n’est pas rehashtaggé en lieu ou en sujet.
