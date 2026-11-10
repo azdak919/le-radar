@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-10T14:07:43.304Z",
+  "updated": "2026-11-10T14:37:58.555Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 29,
-  "withLeadExcerpt": 126,
-  "candidates": 29,
-  "enriched": 1,
-  "failed": 15,
+  "incomplete": 32,
+  "withLeadExcerpt": 139,
+  "candidates": 32,
+  "enriched": 19,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -46,40 +46,40 @@
       "changed": false
     },
     {
-      "title": "Affaire Ewert : qui savait quoi ?",
-      "link": "https://www.delitfrancais.com/2026/10/28/affaire-ewert-qui-savait-quoi/",
+      "title": "A win for data centres",
+      "link": "https://thelinknewspaper.ca/article/16558",
       "ok": true,
       "score": 100,
-      "chars": 617,
-      "sample": "Jeffrey Ewert est de retour en détention. Le Service correctionnel du Canada (SCC) a annoncé le 24 o",
+      "chars": 639,
+      "sample": "Data centres are opening across the country, and due to their high energy demands, Hydro-Québec subm",
       "changed": true
     },
     {
-      "title": "CF Montréal et COP 31 : reportages radio du 9 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/10/cf-montreal-et-cop-31-reportages-radio-du-9-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=cf-montreal-et-cop-31-reportages-radio-du-9-novembre",
+      "title": "A year with Soraya Martinez Ferrada",
+      "link": "https://thelinknewspaper.ca/article/16557",
+      "ok": true,
+      "score": 96,
+      "chars": 289,
+      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
+      "changed": true
+    },
+    {
+      "title": "Concordia’s deficit detrimental to student experience",
+      "link": "https://thelinknewspaper.ca/article/16556",
       "ok": true,
       "score": 100,
-      "chars": 198,
-      "sample": "La COP 31 a débuté lundi le 9 novembre à Antalya, en Turquie. Des délégations gouvernementales et de",
-      "changed": false
+      "chars": 279,
+      "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
+      "changed": true
     },
     {
-      "title": "20 People Spoke for All: BUSRC Attendance Challenges Reflected on This Year’s AGM",
-      "link": "https://thebucampus.ca/2026/11/09/20-people-spoke-for-all-busrc-attendance-challenges-reflected-on-this-years-agm/",
+      "title": "What does it mean for students if Canada joins the Erasmus+ exchange program?",
+      "link": "https://thelinknewspaper.ca/article/16554",
       "ok": true,
-      "score": 96,
-      "chars": 350,
-      "sample": "BUSRC narrowly avoided disaster at its last Annual General Meeting (AGM) on Oct. 26, as 20 students,",
-      "changed": false
-    },
-    {
-      "title": "Is Wearing Makeup Really a Choice? - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
-      "ok": true,
-      "score": 96,
-      "chars": 271,
-      "sample": "In the United States, 38 per cent of women report wearing makeup at least a few times a week, if not",
-      "changed": false
+      "score": 100,
+      "chars": 422,
+      "sample": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is d",
+      "changed": true
     }
   ]
 }
