@@ -139,3 +139,11 @@ marque (radar) et la fusion des couleurs nationales (le pourpre).
 
 **Pourpre = qui nous sommes. Rouge = c'est en direct. Bleu = c'est la radio.**
 Rester sobre : une couleur par rôle, beaucoup de blanc, la typographie fait le travail.
+
+---
+
+## 7. Autocollant
+
+Autocollant carré 3 × 3 po (fond noir, logo satellite, « LE-RADAR.ca » en Source Serif 4 Bold,
+slogan, langues du site, code QR vers `https://le-radar.ca`). Fichiers d'impression, aperçu,
+fiche fournisseur et crédits : [`assets/kit/autocollant/`](../assets/kit/autocollant/README.md).
