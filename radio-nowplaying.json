@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T17:36:48.315Z",
+  "updatedAt": "2026-11-11T17:41:38.473Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T17:36:20.966Z"
+      "checkedAt": "2026-11-11T17:41:06.582Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T17:36:23.508Z"
+      "checkedAt": "2026-11-11T17:41:08.557Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T17:36:26.286Z"
+      "checkedAt": "2026-11-11T17:41:11.135Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "North-South Hockey",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "next": {
         "title": "The Fluid Mosaic",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "North-South Hockey",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T17:36:40.493Z"
+      "checkedAt": "2026-11-11T17:41:34.651Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T17:36:42.280Z"
+      "checkedAt": "2026-11-11T17:41:36.241Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "D'Leesa — Moonlight",
+      "track": "Tom Misch — Slow Tonight (Clean)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T17:36:47.964Z"
+      "checkedAt": "2026-11-11T17:41:38.122Z"
     }
   }
 }
