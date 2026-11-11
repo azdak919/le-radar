@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-11T15:37:38.447Z",
+  "updated": "2026-11-11T16:07:22.882Z",
   "total": 188,
   "pool": 57,
-  "incomplete": 32,
+  "incomplete": 33,
   "withLeadExcerpt": 144,
-  "candidates": 32,
-  "enriched": 0,
+  "candidates": 33,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -16,15 +16,6 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
@@ -46,13 +37,31 @@
       "changed": false
     },
     {
-      "title": "Quand la transidentité effraie",
-      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
-      "chars": 370,
-      "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
+    },
+    {
+      "title": "Jésus et autres mots-clics",
+      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
+      "ok": true,
+      "score": 100,
+      "chars": 1120,
+      "sample": "Disponible sur la plateforme de Télé-Québec, le documentaire Faites du bruit pour Jésus, s’interroge",
+      "changed": true
+    },
+    {
+      "title": "Trois facultés de l’UdeS en grève",
+      "link": "https://lecollectif.ca/a-la-une/trois-facultes-de-ludes-en-greve/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi po",
+      "changed": true
     },
     {
       "title": "L’autre, un film intime qui frappe fort",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 318,
       "sample": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e éditi",
-      "changed": false
-    },
-    {
-      "title": "Craquer un jour, polluer toujours",
-      "link": "https://www.delitfrancais.com/2026/11/11/craquer-un-jour-polluer-toujours/",
-      "ok": true,
-      "score": 100,
-      "chars": 246,
-      "sample": "En même temps, avec la devise de Temu, « Shop like a billionaire », c’est vrai que c’est tentant. Ma",
       "changed": false
     }
   ]
