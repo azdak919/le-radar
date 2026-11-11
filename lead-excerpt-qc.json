@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-11T16:07:22.882Z",
+  "updated": "2026-11-11T17:38:43.544Z",
   "total": 188,
   "pool": 57,
   "incomplete": 33,
   "withLeadExcerpt": 144,
   "candidates": 33,
-  "enriched": 2,
-  "failed": 1,
+  "enriched": 1,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -16,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
@@ -37,21 +46,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Quand la transidentité effraie",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
-      "title": "Jésus et autres mots-clics",
-      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
-      "ok": true,
-      "score": 100,
-      "chars": 1120,
-      "sample": "Disponible sur la plateforme de Télé-Québec, le documentaire Faites du bruit pour Jésus, s’interroge",
+      "chars": 370,
+      "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
       "changed": true
     },
     {
@@ -61,7 +61,7 @@
       "score": 100,
       "chars": 474,
       "sample": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi po",
-      "changed": true
+      "changed": false
     },
     {
       "title": "L’autre, un film intime qui frappe fort",
