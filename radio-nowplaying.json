@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T18:36:40.723Z",
+  "updatedAt": "2026-11-11T19:36:37.875Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Radio-Ciné",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "14:00",
-        "end": "14:30",
-        "url": "https://chyz.ca/emission/radio-cine/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T18:36:12.573Z"
+      "checkedAt": "2026-11-11T19:36:03.441Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "Vibrance: voyage dance vers Montréal et ailleurs",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/vibrance"
       },
+      "next": {
+        "title": "Le cours de math",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T18:36:14.897Z"
+      "checkedAt": "2026-11-11T19:36:05.409Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Radyo Kapwa",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "All Da Way Live",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "Radyo Kapwa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T18:36:18.092Z"
+      "checkedAt": "2026-11-11T19:36:07.481Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
-      },
-      "next": {
         "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
+      "next": {
+        "title": "Patch Notes",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
+      },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Cherry Vamp and the Sonic Coffin",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T18:36:32.987Z"
+      "checkedAt": "2026-11-11T19:36:31.101Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +122,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T18:36:34.395Z"
+      "checkedAt": "2026-11-11T19:36:32.423Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Onde de CHOQ",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -141,15 +135,15 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Dolphin Hyperspace — Dolphin Mode feat. Bad Snacks & Justin Brown",
-      "showTitle": "Onde de CHOQ",
+      "track": "The Avalanches — Subways",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T18:36:40.373Z"
+      "checkedAt": "2026-11-11T19:36:37.524Z"
     }
   }
 }
