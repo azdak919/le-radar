@@ -1395,6 +1395,14 @@
       } catch { /* source suivante */ }
     }
     if (!sportsState.data) sportsState.error = true;
+    if (sportsState.pendingTeam && sportsState.data) {
+      const team = sportsTeamById(sportsState.pendingTeam);
+      if (team && team.name) {
+        sportsState.q = team.name;
+        saveSportsFilters();
+      }
+      sportsState.pendingTeam = '';
+    }
     sportsState.loading = false;
     const screen = document.getElementById('screen');
     if (screen && location.hash.startsWith('#/sports')) {
@@ -1509,8 +1517,7 @@
         <button type="button" data-action="sports-tab" data-tab="avenir" aria-pressed="${tab === 'avenir'}">À venir</button>
       </nav>
       <div data-sports-filters-wrap>${sportsFiltersHtml()}</div>
-      ${sportsBoard()}
-      <a class="wide link" data-action="external" href="https://le-radar.ca/sports/" target="_blank" rel="noopener noreferrer">Ouvrir la page Sports complète dans le navigateur</a>`;
+      ${sportsBoard()}`;
   }
 
   function viewSettings() {
@@ -1862,6 +1869,41 @@
     return '';
   }
 
+  function sportsTeamById(id) {
+    const teams = sportsState.data && sportsState.data.teams;
+    if (!teams || !id) return null;
+    if (teams[id]) return teams[id];
+    for (const team of Object.values(teams)) {
+      if (team && (team.id === id || team.code === id)) return team;
+    }
+    return null;
+  }
+
+  /** Puce ou lien /sports/ : on reste dans l’onglet, on n’ouvre pas le site. */
+  function openSportsInApp(href) {
+    let url;
+    try { url = new URL(href, 'https://le-radar.ca/'); } catch { return false; }
+    const host = url.hostname.replace(/^www\./, '');
+    if (host !== 'le-radar.ca' && host !== 'localhost' && host !== '127.0.0.1') return false;
+    const parts = url.pathname.split('/').filter(Boolean);
+    const board = parts[0] === 'sports' || (parts[0] === 'en' && parts[1] === 'sports');
+    if (!board) return false;
+    const sport = (url.searchParams.get('sport') || 'all').toLowerCase();
+    sportsState.sport = sport || 'all';
+    sportsState.sector = 'all';
+    sportsState.sex = 'all';
+    sportsState.period = 'all';
+    sportsState.limit = SPORTS_PAGE;
+    const teamId = url.searchParams.get('team') || '';
+    const team = teamId ? sportsTeamById(teamId) : null;
+    sportsState.q = team && team.name ? team.name : '';
+    sportsState.pendingTeam = team ? '' : teamId;
+    saveSportsFilters();
+    if (location.hash === '#/sports') render();
+    else location.hash = '#/sports';
+    return true;
+  }
+
   /* Fond « verre » : recopie la photo du mât affichée (#bg-photo-layer)
      dès qu’elle est chargée ; suit ses changements, sans seconde rotation. */
   function bindGlassBackground() {
@@ -1966,6 +2008,7 @@
         const url = siteUrl(blank.getAttribute('href'));
         if (url) {
           event.preventDefault();
+          if (openSportsInApp(url)) return;
           await openExternal(url);
           return;
         }
@@ -1983,7 +2026,9 @@
           if (info) await openExternal(info.url);
           return;
         }
-        await openExternal(el.getAttribute('href'));
+        const href = el.getAttribute('href');
+        if (openSportsInApp(href)) return;
+        await openExternal(href);
         return;
       }
       if (action === 'tuner-play') {

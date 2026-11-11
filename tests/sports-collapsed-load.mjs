@@ -59,4 +59,18 @@ for (const rel of ['sports/index.html', 'en/sports/index.html']) {
   assert.ok(!html.includes(`src="${up}/sports-load.js" defer`), `${rel} : le script part avant le corps`);
 }
 
+const shell = read('nav-shell.js');
+assert.match(shell, /display-mode: standalone/);
+assert.match(shell, /function blankLeavesApp/);
+assert.match(shell, /location\.assign\(url\.href\)/);
+assert.match(shell, /Pomo \/ Solitaire/);
+
+const appHtml = read('mobile/app/index.html');
+const appJs = read('mobile/app/js/app.js');
+assert.match(appHtml, /<a href="#\/sports" class="masthead-icon masthead-sports"/);
+assert.ok(!/masthead-sports"[^>]*data-action="external"/.test(appHtml), 'APK : le trophée ne sort pas de l’app');
+assert.match(appHtml, /<a href="#\/sports">Sports<\/a>/);
+assert.match(appJs, /function openSportsInApp/);
+assert.ok(!appJs.includes('Ouvrir la page Sports complète'), 'APK : plus de lien vers la page du site');
+
 console.log('sports-collapsed-load : OK');

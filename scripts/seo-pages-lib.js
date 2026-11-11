@@ -818,8 +818,9 @@ const SECTIONS = [
   { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
   { id: 'radios', key: 'footerSchedules', path: { fr: 'horaires/', en: 'en/schedules/' } },
   // data-sports-reset : depuis /sports/?sport=… recharge sans filtres. Nouvel
-  // onglet hors /sports/ pour que la radio continue — sur le tableau,
-  // sports-board.js intercepte et reste dans le même onglet.
+  // onglet hors /sports/ pour que la radio continue dans un onglet de bureau.
+  // PWA installée : nav-shell.js retire ce nouvel onglet et reste dans l’app
+  // (comme Pomo et Solitaire). Sur le tableau, sports-board.js intercepte.
   {
     id: 'sports',
     key: 'sportsFooter',

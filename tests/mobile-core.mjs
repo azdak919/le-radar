@@ -204,6 +204,10 @@ for (const rel of ['mobile/www/js/translate.js', 'mobile/www/css/translate-menu.
   assert.equal(st.isFile(), true, rel);
 }
 assert.equal(read('mobile/www/js/translate.js'), read('translate.js'));
+assert.match(shell, /<a href="#\/sports" class="masthead-icon masthead-sports"/);
+assert.match(shell, /<a href="#\/sports">Sports<\/a>/);
+assert.doesNotMatch(appJs, /Ouvrir la page Sports complète/);
+assert.match(appJs, /function openSportsInApp/);
 assert.match(shell, /id="wire-title"/);
 assert.match(shell, /Le fil étudiant/);
 assert.match(appJs, /theme-cycle/);
