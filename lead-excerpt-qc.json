@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-11T20:07:37.913Z",
+  "updated": "2026-11-11T21:38:45.342Z",
   "total": 188,
   "pool": 57,
-  "incomplete": 35,
+  "incomplete": 34,
   "withLeadExcerpt": 144,
-  "candidates": 35,
-  "enriched": 1,
-  "failed": 1,
+  "candidates": 34,
+  "enriched": 0,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -55,15 +55,6 @@
       "changed": false
     },
     {
-      "title": "La peur de vieillir de plus en plus répandu",
-      "link": "https://quartierlibre.ca/peur-de-vieillir/",
-      "ok": true,
-      "score": 100,
-      "chars": 488,
-      "sample": "L’idée de vivre jeune et au meilleur de sa forme le plus longtemps possible sans vieillir semble cha",
-      "changed": true
-    },
-    {
       "title": "Stingers 7, Gee-Gees 0: Pure Stingers domination",
       "link": "https://thelinknewspaper.ca/article/16560",
       "ok": true,
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 282,
       "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
+      "changed": false
+    },
+    {
+      "title": "Trois facultés de l’UdeS en grève",
+      "link": "https://lecollectif.ca/a-la-une/trois-facultes-de-ludes-en-greve/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi po",
       "changed": false
     }
   ]
