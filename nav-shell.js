@@ -163,6 +163,31 @@
     return r !== '/offline.html' && r !== '/tuner-embed.html' && r !== '/sports-embed.html' && r !== '/sports-ad-embed.html' && r !== '/easter-egg.html' && !r.startsWith('/dev/');
   }
 
+  /**
+   * PWA installée (et WebView Capacitor si le site y tourne).
+   * Un target=_blank sur Sports sortirait de l’app ; Pomo et Solitaire
+   * n’en ont pas, donc ils restent dans la fenêtre. Ici on fait pareil.
+   * Dans un onglet de bureau, le nouvel onglet reste : la radio continue.
+   */
+  function isInstalledSurface() {
+    try {
+      if (window.matchMedia('(display-mode: standalone)').matches) return true;
+      if (window.matchMedia('(display-mode: minimal-ui)').matches) return true;
+      if (window.matchMedia('(display-mode: window-controls-overlay)').matches) return true;
+      if (navigator.standalone === true) return true;
+    } catch { /* pas de matchMedia */ }
+    try {
+      const cap = window.Capacitor;
+      if (cap && typeof cap.isNativePlatform === 'function' && cap.isNativePlatform()) return true;
+    } catch { /* pas Capacitor */ }
+    return false;
+  }
+
+  function blankLeavesApp(link) {
+    const target = (link.getAttribute('target') || '').toLowerCase();
+    return Boolean(target && target !== '_self' && !isInstalledSurface());
+  }
+
   // A page already displayed inside the shell must delegate its own internal
   // links to the host. Otherwise the iframe changes page by itself: listening
   // continues, but the address/history fall out of sync with what is shown.
@@ -173,7 +198,7 @@
 
       const link = event.target?.closest?.('a[href]');
       if (!link || link.hasAttribute('download')) return;
-      if (link.target && link.target !== '' && link.target !== '_self') return;
+      if (blankLeavesApp(link)) return;
 
       let url;
       try {
@@ -185,6 +210,7 @@
       if (url.hash && pathNorm(url.pathname) === pathNorm(location.pathname) && url.search === location.search) return;
 
       event.preventDefault();
+      if ((link.getAttribute('target') || '').toLowerCase() === '_blank') event.stopPropagation();
       window.top.postMessage({ type: NAVIGATE_MESSAGE, href: url.href }, location.origin);
     }, true);
     return;
@@ -323,7 +349,7 @@
     const a = event.target?.closest?.('a[href]');
     if (!a) return;
     if (a.hasAttribute('download')) return;
-    if (a.target && a.target !== '' && a.target !== '_self') return;
+    if (blankLeavesApp(a)) return;
 
     let url;
     try {
@@ -336,7 +362,15 @@
       return; // in-page anchor
     }
     if (!isShellPath(url.pathname)) return;
-    if (!shouldUseShell()) return;
+    if (!shouldUseShell()) {
+      // PWA : Sports (target=_blank) reste dans l’app, comme Pomo / Solitaire.
+      if (isInstalledSurface() && (a.getAttribute('target') || '').toLowerCase() === '_blank') {
+        event.preventDefault();
+        event.stopPropagation();
+        location.assign(url.href);
+      }
+      return;
+    }
 
     event.preventDefault();
     event.stopPropagation();

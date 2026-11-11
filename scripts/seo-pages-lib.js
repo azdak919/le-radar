@@ -818,8 +818,9 @@ const SECTIONS = [
   { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
   { id: 'radios', key: 'footerSchedules', path: { fr: 'horaires/', en: 'en/schedules/' } },
   // data-sports-reset : depuis /sports/?sport=… recharge sans filtres. Nouvel
-  // onglet hors /sports/ pour que la radio continue — sur le tableau,
-  // sports-board.js intercepte et reste dans le même onglet.
+  // onglet hors /sports/ pour que la radio continue dans un onglet de bureau.
+  // PWA installée : nav-shell.js retire ce nouvel onglet et reste dans l’app
+  // (comme Pomo et Solitaire). Sur le tableau, sports-board.js intercepte.
   {
     id: 'sports',
     key: 'sportsFooter',
@@ -1061,6 +1062,10 @@ function renderPage({
   bodyHtml, jsonLd, siteBase, updated, robots = 'index,follow', alternate = true,
   extraScripts = [],
   extraStyles = [],
+  /** Scripts classiques (pas defer) : le chargement sports doit partir avant le corps. */
+  blockingScripts = [],
+  /** Fragment déjà échappé, inséré juste après le viewport. */
+  extraHead = '',
   wireClass = '',
   /** Si défini : le h1 devient un lien (ex. reset filtres « Au tableau »). */
   h1Href = null,
@@ -1113,7 +1118,7 @@ function renderPage({
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="${escapeHtml(description)}" />
+${extraHead}    <meta name="description" content="${escapeHtml(description)}" />
     <meta name="robots" content="${escapeHtml(robots)}" />
     <meta name="theme-color" content="#ffffff" />
     <meta http-equiv="Content-Security-Policy" content="${CSP}" />
@@ -1149,7 +1154,7 @@ ${appHeadHtml}    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="${up}style-feed.css" />
     <link rel="stylesheet" href="${up}style-chrome.css" />
     <link rel="stylesheet" href="${up}seo-pages.css" />
-${extraStyles.map((src) => `    <link rel="stylesheet" href="${up}${escapeHtml(src)}" />`).join('\n')}${extraStyles.length ? '\n' : ''}${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
+${extraStyles.map((src) => `    <link rel="stylesheet" href="${up}${escapeHtml(src)}" />`).join('\n')}${extraStyles.length ? '\n' : ''}${renderWideLayoutAssets(up)}${(Array.isArray(blockingScripts) ? blockingScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}"></script>\n`).join('')}${renderTunerCriticalCss()}
     <script src="${up}nav-shell.js" defer></script>
     <script src="${up}cast.js" defer></script>
     <script src="${up}mobile-playback.js" defer></script>

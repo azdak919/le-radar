@@ -889,8 +889,17 @@
       ));
       const sportOk = effectiveSport === 'all' || bSport === effectiveSport;
       setHidden(block, !(any && sportOk));
-      if ((effectiveSport !== 'all' || tokens.length) && any && 'open' in block) {
-        if (bSport === effectiveSport || tokens.length) block.open = true;
+      // Fermé au chargement. Un filtre (sport, école, période, recherche,
+      // équipe) n’ouvre que les sections qui ont encore des fiches.
+      const narrow = effectiveSport !== 'all'
+        || sectorKey !== 'all'
+        || effectiveSex !== 'all'
+        || periodKey !== 'all'
+        || tokens.length > 0
+        || Boolean(school.raw)
+        || Boolean(teamId);
+      if (narrow && any && 'open' in block) {
+        if (effectiveSport === 'all' || bSport === effectiveSport || tokens.length) block.open = true;
       }
     });
 

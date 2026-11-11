@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="sports-panel-total" content="867" />
     <meta name="description" content="Résultats et prochains matchs de 867 formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus." />
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#ffffff" />
@@ -45,10 +46,12 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
     <link rel="stylesheet" href="../seo-pages.css" />
+    <link rel="stylesheet" href="../style-translate-overlay.css" />
     <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e102" />
     <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e102" />
     <script src="../dev/midwidth-preview.js?v=wide-auto-e102"></script>
     <script src="../dev/wide-desktop-preview.js?v=wide-auto-e102"></script>
+    <script src="../sports-load.js"></script>
     <!--
       CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
       dès le premier paint (avant le CSS mis en cache / le JS async).
@@ -374,7 +377,7 @@
           </div>
         </div>
         <p class="sports-board-status" data-sports-status role="status" aria-live="polite" aria-atomic="true">867 entrées</p>
-        <details class="sports-sport-block" data-sport="hockey" id="sport-hockey" open>
+        <details class="sports-sport-block" data-sport="hockey" id="sport-hockey">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏒</span>
             <span class="sports-sport-block__label">Hockey</span>
@@ -2995,7 +2998,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="football" id="sport-football" open>
+        <details class="sports-sport-block" data-sport="football" id="sport-football">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏈</span>
             <span class="sports-sport-block__label">Football</span>
@@ -5465,7 +5468,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="soccer" id="sport-soccer" open>
+        <details class="sports-sport-block" data-sport="soccer" id="sport-soccer">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">⚽</span>
             <span class="sports-sport-block__label">Soccer</span>
@@ -12520,7 +12523,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="basketball" id="sport-basketball" open>
+        <details class="sports-sport-block" data-sport="basketball" id="sport-basketball">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏀</span>
             <span class="sports-sport-block__label">Basketball</span>
@@ -24948,7 +24951,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="volleyball" id="sport-volleyball" open>
+        <details class="sports-sport-block" data-sport="volleyball" id="sport-volleyball">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏐</span>
             <span class="sports-sport-block__label">Volleyball</span>
@@ -44747,7 +44750,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="rugby" id="sport-rugby" open>
+        <details class="sports-sport-block" data-sport="rugby" id="sport-rugby">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏉</span>
             <span class="sports-sport-block__label">Rugby</span>
@@ -46998,7 +47001,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="flag-football" id="sport-flag-football" open>
+        <details class="sports-sport-block" data-sport="flag-football" id="sport-flag-football">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🚩</span>
             <span class="sports-sport-block__label">Flag-football</span>
@@ -52246,7 +52249,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="soccer-interieur" id="sport-soccer-interieur" open>
+        <details class="sports-sport-block" data-sport="soccer-interieur" id="sport-soccer-interieur">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">⚽</span>
             <span class="sports-sport-block__label">Soccer intérieur</span>
@@ -53931,7 +53934,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="futsal" id="sport-futsal" open>
+        <details class="sports-sport-block" data-sport="futsal" id="sport-futsal">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">⚽</span>
             <span class="sports-sport-block__label">Futsal</span>
@@ -54440,7 +54443,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="baseball" id="sport-baseball" open>
+        <details class="sports-sport-block" data-sport="baseball" id="sport-baseball">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">⚾</span>
             <span class="sports-sport-block__label">Baseball</span>
@@ -55223,7 +55226,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="badminton" id="sport-badminton" open>
+        <details class="sports-sport-block" data-sport="badminton" id="sport-badminton">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏸</span>
             <span class="sports-sport-block__label">Badminton</span>
@@ -57919,7 +57922,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="natation" id="sport-natation" open>
+        <details class="sports-sport-block" data-sport="natation" id="sport-natation">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏊</span>
             <span class="sports-sport-block__label">Natation</span>
@@ -58398,7 +58401,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="athletisme" id="sport-athletisme" open>
+        <details class="sports-sport-block" data-sport="athletisme" id="sport-athletisme">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏃</span>
             <span class="sports-sport-block__label">Athlétisme</span>
@@ -58673,7 +58676,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="cross-country" id="sport-cross-country" open>
+        <details class="sports-sport-block" data-sport="cross-country" id="sport-cross-country">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🏃</span>
             <span class="sports-sport-block__label">Cross-country</span>
@@ -59500,7 +59503,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="golf" id="sport-golf" open>
+        <details class="sports-sport-block" data-sport="golf" id="sport-golf">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">⛳</span>
             <span class="sports-sport-block__label">Golf</span>
@@ -59859,7 +59862,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="cheerleading" id="sport-cheerleading" open>
+        <details class="sports-sport-block" data-sport="cheerleading" id="sport-cheerleading">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">📣</span>
             <span class="sports-sport-block__label">Cheerleading</span>
@@ -60060,7 +60063,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="ultimate" id="sport-ultimate" open>
+        <details class="sports-sport-block" data-sport="ultimate" id="sport-ultimate">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">🥏</span>
             <span class="sports-sport-block__label">Ultimate</span>
@@ -60841,7 +60844,7 @@
 </section>
           </div>
         </details>
-        <details class="sports-sport-block" data-sport="sailing" id="sport-sailing" open>
+        <details class="sports-sport-block" data-sport="sailing" id="sport-sailing">
           <summary class="sports-sport-block__title">
             <span class="sports-sport-block__glyph" aria-hidden="true">⛵</span>
             <span class="sports-sport-block__label">Voile</span>
