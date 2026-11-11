@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-11T12:08:15.333Z",
+  "updated": "2026-11-11T13:08:02.976Z",
   "total": 188,
   "pool": 57,
-  "incomplete": 40,
-  "withLeadExcerpt": 141,
-  "candidates": 40,
-  "enriched": 13,
+  "incomplete": 33,
+  "withLeadExcerpt": 143,
+  "candidates": 33,
+  "enriched": 3,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -16,7 +16,7 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Francisée, mais pas la bienvenue ?",
@@ -55,30 +55,30 @@
       "changed": false
     },
     {
-      "title": "Élections de mi-mandat : l’Amérique résiste",
-      "link": "https://www.delitfrancais.com/2026/11/11/elections-de-mi-mandat-lamerique-resiste/",
-      "ok": true,
-      "score": 100,
-      "chars": 509,
-      "sample": "Mardi soir, dans les locaux de Gerts, le rideau est tiré. La question posée et le débat, lancé : qui",
-      "changed": true
-    },
-    {
-      "title": "Théorie raciste : débattre, est-ce légitimer?",
-      "link": "https://www.delitfrancais.com/2026/11/11/theorie-raciste-debattre-est-ce-legitimer/",
-      "ok": true,
-      "score": 96,
-      "chars": 697,
-      "sample": "Souffler sur un feu peut l’éteindre comme l’attiser. On peut aussi refuser d’y toucher et le priver ",
-      "changed": true
-    },
-    {
-      "title": "Prouve que tu existes",
-      "link": "https://www.delitfrancais.com/2026/11/11/prouve-que-tu-existes/",
+      "title": "Trois chaires de recherche pour répondre aux défis de demain",
+      "link": "https://lecollectif.ca/a-la-une/trois-chaires-de-recherche-pour-repondre-aux-defis-de-demain/",
       "ok": true,
       "score": 100,
       "chars": 779,
-      "sample": "Depuis que l’équipe éditoriale a choisi la résistance comme thème de cette édition, mon cerveau vit ",
+      "sample": "Transport durable, matériaux de construction écologiques et intelligence artificielle : trois projet",
+      "changed": true
+    },
+    {
+      "title": "L’ADISQ 2026 : les artistes d’ici à l’honneur",
+      "link": "https://lecollectif.ca/a-la-une/ladisq-2026-les-artistes-dici-a-lhonneur/",
+      "ok": true,
+      "score": 100,
+      "chars": 318,
+      "sample": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e éditi",
+      "changed": true
+    },
+    {
+      "title": "Les Alouettes s’envolent vers la Coupe Grey",
+      "link": "https://lecollectif.ca/a-la-une/les-alouettes-senvolent-vers-la-coupe-grey/",
+      "ok": true,
+      "score": 100,
+      "chars": 832,
+      "sample": "Ils ont eu chaud, mais ils ont tenu le coup. Le 7 novembre dernier, les Alouettes de Montréal ont tr",
       "changed": true
     }
   ]
