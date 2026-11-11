@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T09:42:58.233Z",
+  "updatedAt": "2026-11-11T11:06:45.730Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T09:42:20.150Z"
+      "checkedAt": "2026-11-11T11:06:06.178Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Club classique",
         "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/club-classique"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Club classique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T09:42:34.052Z"
+      "checkedAt": "2026-11-11T11:06:20.071Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T09:42:36.658Z"
+      "checkedAt": "2026-11-11T11:06:23.708Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Morning Electro-shock",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Morning Electro-shock",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T09:42:50.851Z"
+      "checkedAt": "2026-11-11T11:06:37.955Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +129,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T09:42:52.005Z"
+      "checkedAt": "2026-11-11T11:06:39.110Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T09:42:57.883Z"
+      "checkedAt": "2026-11-11T11:06:45.379Z"
     }
   }
 }
