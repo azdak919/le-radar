@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-11T18:38:49.960Z",
+  "updated": "2026-11-11T19:37:44.000Z",
   "total": 188,
   "pool": 57,
-  "incomplete": 33,
-  "withLeadExcerpt": 140,
-  "candidates": 33,
-  "enriched": 2,
-  "failed": 5,
+  "incomplete": 34,
+  "withLeadExcerpt": 144,
+  "candidates": 34,
+  "enriched": 5,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -16,15 +16,6 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
@@ -46,6 +37,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -55,12 +55,12 @@
       "changed": false
     },
     {
-      "title": "Quebec expects direct consultation on Erasmus+",
-      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "title": "Stingers 7, Gee-Gees 0: Pure Stingers domination",
+      "link": "https://thelinknewspaper.ca/article/16560",
       "ok": true,
-      "score": 95,
-      "chars": 293,
-      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
+      "score": 96,
+      "chars": 158,
+      "sample": "The Concordia University men’s hockey team obliterated the Ottawa Gee-Gees 7-0 on Nov. 7, with goalt",
       "changed": true
     },
     {
@@ -70,7 +70,7 @@
       "score": 100,
       "chars": 282,
       "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Trois facultés de l’UdeS en grève",
