@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-11T14:37:49.384Z",
+  "updated": "2026-11-11T14:58:23.646Z",
   "total": 188,
   "pool": 57,
   "incomplete": 32,
   "withLeadExcerpt": 144,
   "candidates": 32,
-  "enriched": 1,
-  "failed": 13,
+  "enriched": 12,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "L’autre, un film intime qui frappe fort",
-      "link": "https://impactcampus.ca/arts-et-culture/lautre-un-film-intime-qui-frappe-fort/",
+      "title": "A year with Soraya Martinez Ferrada",
+      "link": "https://thelinknewspaper.ca/article/16557",
       "ok": true,
-      "score": 100,
-      "chars": 253,
-      "sample": "Après huit ans, Alexandre Franchi est de retour avec L’autre, un film aussi personnel que son précéd",
+      "score": 96,
+      "chars": 289,
+      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
       "changed": true
     },
     {
-      "title": "L’ADISQ 2026 : les artistes d’ici à l’honneur",
-      "link": "https://lecollectif.ca/a-la-une/ladisq-2026-les-artistes-dici-a-lhonneur/",
+      "title": "Concordia’s deficit detrimental to student experience",
+      "link": "https://thelinknewspaper.ca/article/16556",
       "ok": true,
       "score": 100,
-      "chars": 318,
-      "sample": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e éditi",
-      "changed": false
+      "chars": 279,
+      "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
+      "changed": true
     },
     {
-      "title": "Craquer un jour, polluer toujours",
-      "link": "https://www.delitfrancais.com/2026/11/11/craquer-un-jour-polluer-toujours/",
+      "title": "What does it mean for students if Canada joins the Erasmus+ exchange program?",
+      "link": "https://thelinknewspaper.ca/article/16554",
       "ok": true,
       "score": 100,
-      "chars": 246,
-      "sample": "En même temps, avec la devise de Temu, « Shop like a billionaire », c’est vrai que c’est tentant. Ma",
-      "changed": false
+      "chars": 422,
+      "sample": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is d",
+      "changed": true
     }
   ]
 }

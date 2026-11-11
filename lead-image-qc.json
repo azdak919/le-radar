@@ -1,31 +1,19 @@
 {
-  "updated": "2026-11-11T14:38:31.428Z",
+  "updated": "2026-11-11T14:59:06.828Z",
   "total": 188,
   "withPhoto": 172,
   "withStock": 28,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 159,
+  "leadReadyPhotos": 160,
   "pageScraped": 12,
   "photosRecovered": 12,
   "imagesCleared": 0,
-  "stockSearches": 30,
+  "stockSearches": 28,
   "stockFound": 24,
   "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Video killed the fanfic star",
-      "link": "https://thelinknewspaper.ca/article/16544",
-      "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Fanfic_illiteracy_Harrison_Campbell_690_418_90.jpeg"
-    },
-    {
-      "title": "Concordia’s radical history of student activism",
-      "link": "https://thelinknewspaper.ca/article/16546",
-      "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/BSP_4223_690_461_90.jpg"
-    },
     {
       "title": "Comment rester humain dans un monde artificiel?",
       "link": "https://www.delitfrancais.com/2026/11/11/comment-rester-humain-dans-un-monde-artificiel/",
@@ -57,34 +45,46 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
       "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
       "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "On Mental Health’s Legalities and Limits: Analysing P-38",
-      "link": "https://theplantnews.com/2026/11/05/on-mental-healths-legalities-and-limits-analysing-p-38/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Dawson_College_04.jpg"
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "reason": "no-stock-match",
+      "image": null
     },
     {
       "title": "Creative Writing October 2026",
       "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Dawson_College_05.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
+    },
+    {
+      "title": "On Mental Health’s Legalities and Limits: Analysing P-38",
+      "link": "https://theplantnews.com/2026/11/05/on-mental-healths-legalities-and-limits-analysing-p-38/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/88/Coll%C3%A8ge_Dawson%2C_fa%C3%A7ade_sur_Sherbrooke_O%2C_Montr%C3%A9al_2005-11-10.JPG"
     },
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
+      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "reason": "no-stock-match",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
     }
   ]
 }
