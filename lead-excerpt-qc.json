@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-11T00:38:15.300Z",
+  "updated": "2026-11-11T02:08:05.306Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 31,
+  "incomplete": 32,
   "withLeadExcerpt": 140,
-  "candidates": 31,
-  "enriched": 0,
+  "candidates": 32,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -37,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -44,6 +44,15 @@
       "chars": 370,
       "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
       "changed": false
+    },
+    {
+      "title": "Jeu d’esprit : quand la psyché se dévoile sur toile",
+      "link": "https://www.delitfrancais.com/2026/10/28/jeu-desprit-quand-la-psyche-se-devoile-sur-toile/",
+      "ok": true,
+      "score": 100,
+      "chars": 497,
+      "sample": "Rendez-vous au pavillon Jean-Noël Desmarais du Musée des beaux-arts de Montréal (MBAM). Descendez l’",
+      "changed": true
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -70,15 +79,6 @@
       "score": 95,
       "chars": 293,
       "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
-      "changed": false
-    },
-    {
-      "title": "As Big Tech invests more in eye-tracking tools, Canadians’ data is left unprotected",
-      "link": "https://theconcordian.com/2026/11/big-tech-eye-tracking-data-unprotected/",
-      "ok": true,
-      "score": 96,
-      "chars": 293,
-      "sample": "Research shows the potential for patterns of eye movement to distinguish children from adults, revea",
       "changed": false
     }
   ]
