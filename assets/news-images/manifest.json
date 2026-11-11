@@ -1586,15 +1586,6 @@
       "via": "resize-proxy",
       "nameKey": "dscf5500.png"
     },
-    "0d84d91b0191efcf": {
-      "local": "assets/news-images/0d84d91b0191efcf.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Blanchissement.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 83501,
-      "updatedAt": "2026-11-11T03:39:16.645Z",
-      "via": "disk",
-      "nameKey": "blanchissement.png"
-    },
     "fe5ce14e6fa35b84": {
       "local": "assets/news-images/fe5ce14e6fa35b84.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/JVC26_1105_Phensy_0266_900_1259_90.jpg",
@@ -1684,9 +1675,18 @@
       "updatedAt": "2026-11-11T09:10:10.261Z",
       "via": "origin",
       "nameKey": "nst26_concordia_5754.jpg"
+    },
+    "d0d4eef2f356a4c4": {
+      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 282907,
+      "updatedAt": "2026-11-11T11:08:48.668Z",
+      "via": "disk",
+      "nameKey": "ak-mbam.jpg"
     }
   },
-  "updatedAt": "2026-11-11T09:10:10.266Z",
+  "updatedAt": "2026-11-11T11:08:48.682Z",
   "count": 169,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
