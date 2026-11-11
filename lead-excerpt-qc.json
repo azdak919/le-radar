@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-11T21:46:16.406Z",
+  "updated": "2026-11-11T22:09:33.291Z",
   "total": 188,
   "pool": 57,
-  "incomplete": 34,
+  "incomplete": 35,
   "withLeadExcerpt": 144,
-  "candidates": 34,
-  "enriched": 0,
-  "failed": 1,
+  "candidates": 35,
+  "enriched": 2,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -46,13 +46,22 @@
       "changed": false
     },
     {
-      "title": "Quand la transidentité effraie",
-      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
+      "title": "Jésus et autres mots-clics",
+      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
       "ok": true,
       "score": 100,
-      "chars": 370,
-      "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
-      "changed": false
+      "chars": 1120,
+      "sample": "Disponible sur la plateforme de Télé-Québec, le documentaire Faites du bruit pour Jésus, s’interroge",
+      "changed": true
+    },
+    {
+      "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
+      "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
+      "ok": true,
+      "score": 100,
+      "chars": 950,
+      "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
+      "changed": true
     },
     {
       "title": "Stingers 7, Gee-Gees 0: Pure Stingers domination",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 282,
       "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
-      "changed": false
-    },
-    {
-      "title": "Trois facultés de l’UdeS en grève",
-      "link": "https://lecollectif.ca/a-la-une/trois-facultes-de-ludes-en-greve/",
-      "ok": true,
-      "score": 100,
-      "chars": 474,
-      "sample": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi po",
       "changed": false
     }
   ]

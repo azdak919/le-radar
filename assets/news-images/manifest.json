@@ -639,16 +639,6 @@
       "via": "resize-proxy",
       "nameKey": "image.jpeg"
     },
-    "2545f71ffd33f31b": {
-      "local": "assets/news-images/2545f71ffd33f31b.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/587D85BE-5ABB-4716-8EA0-5EB24A0D87EE_1_201_a.jpeg",
-      "host": "quartierlibre.ca",
-      "bytes": 314850,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-10T08:56:10.186Z",
-      "via": "resize-proxy",
-      "nameKey": "587d85be-5abb-4716-8ea0-5eb24a0d87ee_1_201_a.jpeg"
-    },
     "95f3d6858c702a65": {
       "local": "assets/news-images/95f3d6858c702a65.jpg",
       "remote": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg",
@@ -1635,15 +1625,6 @@
       "via": "resize-proxy",
       "nameKey": "image1-nicolas-hamel.jpg"
     },
-    "5d5cc28afe493224": {
-      "local": "assets/news-images/5d5cc28afe493224.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/TransFilmHorreur.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 211566,
-      "updatedAt": "2026-11-11T17:39:38.136Z",
-      "via": "disk",
-      "nameKey": "transfilmhorreur.png"
-    },
     "fe819ff3735bd272": {
       "local": "assets/news-images/fe819ff3735bd272.jpg",
       "remote": "https://montrealcampus.ca/wp-content/uploads/2026/11/image-8.jpeg",
@@ -1693,9 +1674,28 @@
       "updatedAt": "2026-11-11T20:08:26.377Z",
       "via": "resize-proxy",
       "nameKey": "05_news_quebec_data_centres_halle_keays_1_690_518.png"
+    },
+    "77c707c2771abe3a": {
+      "local": "assets/news-images/77c707c2771abe3a.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
+      "host": "www.delitfrancais.com",
+      "bytes": 61446,
+      "updatedAt": "2026-11-11T22:10:53.899Z",
+      "via": "disk",
+      "nameKey": "jesus.jpg"
+    },
+    "c1bb94a2949277ba": {
+      "local": "assets/news-images/c1bb94a2949277ba.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/image3-1.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 20583,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-11T22:10:54.256Z",
+      "via": "origin",
+      "nameKey": "image3-1.jpg"
     }
   },
-  "updatedAt": "2026-11-11T21:47:07.714Z",
+  "updatedAt": "2026-11-11T22:10:54.261Z",
   "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
