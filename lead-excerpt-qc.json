@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-11T14:58:23.646Z",
+  "updated": "2026-11-11T15:37:38.447Z",
   "total": 188,
   "pool": 57,
   "incomplete": 32,
   "withLeadExcerpt": 144,
   "candidates": 32,
-  "enriched": 12,
+  "enriched": 0,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -16,15 +16,6 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
-    {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
       "changed": false
     },
     {
@@ -46,6 +37,15 @@
       "changed": false
     },
     {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": false
+    },
+    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "A year with Soraya Martinez Ferrada",
-      "link": "https://thelinknewspaper.ca/article/16557",
-      "ok": true,
-      "score": 96,
-      "chars": 289,
-      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
-      "changed": true
-    },
-    {
-      "title": "Concordia’s deficit detrimental to student experience",
-      "link": "https://thelinknewspaper.ca/article/16556",
+      "title": "L’autre, un film intime qui frappe fort",
+      "link": "https://impactcampus.ca/arts-et-culture/lautre-un-film-intime-qui-frappe-fort/",
       "ok": true,
       "score": 100,
-      "chars": 279,
-      "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
-      "changed": true
+      "chars": 253,
+      "sample": "Après huit ans, Alexandre Franchi est de retour avec L’autre, un film aussi personnel que son précéd",
+      "changed": false
     },
     {
-      "title": "What does it mean for students if Canada joins the Erasmus+ exchange program?",
-      "link": "https://thelinknewspaper.ca/article/16554",
+      "title": "L’ADISQ 2026 : les artistes d’ici à l’honneur",
+      "link": "https://lecollectif.ca/a-la-une/ladisq-2026-les-artistes-dici-a-lhonneur/",
       "ok": true,
       "score": 100,
-      "chars": 422,
-      "sample": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is d",
-      "changed": true
+      "chars": 318,
+      "sample": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e éditi",
+      "changed": false
+    },
+    {
+      "title": "Craquer un jour, polluer toujours",
+      "link": "https://www.delitfrancais.com/2026/11/11/craquer-un-jour-polluer-toujours/",
+      "ok": true,
+      "score": 100,
+      "chars": 246,
+      "sample": "En même temps, avec la devise de Temu, « Shop like a billionaire », c’est vrai que c’est tentant. Ma",
+      "changed": false
     }
   ]
 }
