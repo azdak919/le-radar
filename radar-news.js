@@ -2641,9 +2641,10 @@ function balanceMagazineColumns() {
   })();
   const briefCols = wideE ? briefWideColumnCount() : 1;
   const tightBrief = wideE && briefCols === 1;
-  // Multi-col : 20 px, pas ~1 carte. Une rangée de trop (3440/3840)
-  // dépassait le hero ; à 3840 il fallait au contraire finir la rangée.
-  const wideOvershootTol = tightBrief ? 8 : (wideE ? Math.max(tol, 20) : tol);
+  // Multi-col : 20 px, pas ~1 carte. Math.max(tol, 20) remontait le plafond
+  // à 40, puis le gain net gardait une rangée partielle (~80 px sous la une).
+  // À 3840 on finit la rangée seulement si elle reste dans ce plafond.
+  const wideOvershootTol = tightBrief ? 8 : (wideE ? 20 : tol);
 
   const trimBriefOrphanRow = () => {
     if (briefCols < 2) return;
@@ -2677,8 +2678,29 @@ function balanceMagazineColumns() {
       const el = safeCreateArticle(item, 'compact');
       if (!el) return;
       appendBeforeMagazineSpacer(brief, el);
+      const overshoot = magazineColumnContentHeight(brief) - magazineColumnContentHeight(hero);
+      if (overshoot > wideOvershootTol) {
+        demoteBriefCardToTail(brief, el);
+        return;
+      }
       markPromotedToBrief(item);
       removeTailArticleForItem(item);
+    }
+  };
+
+  /** Rangée ouverte qui dépasse le plafond : retirer l’orpheline. */
+  const dropOpenBriefRow = () => {
+    if (briefCols < 2) return;
+    let guard = 0;
+    while (guard < briefCols) {
+      guard += 1;
+      const cards = [...brief.querySelectorAll('.article--compact')];
+      if (cards.length % briefCols === 0 || cards.length <= hardMin) return;
+      const hH = magazineColumnContentHeight(hero);
+      const bH = magazineColumnContentHeight(brief);
+      const gap = hH - bH;
+      if (gap <= wideOvershootTol && bH <= hH + wideOvershootTol) return;
+      if (!demoteBriefCardToTail(brief, cards[cards.length - 1])) return;
     }
   };
 
@@ -2743,9 +2765,11 @@ function balanceMagazineColumns() {
       const overshoot = afterBrief - afterHero;
 
       if (overshoot > overshootMax) {
-        // Nouvelle rangée plus haute que le hero : seulement si le vide
-        // restant était plus grand que le dépassement (net gain).
-        if (gap > overshoot) {
+        // Nouvelle rangée plus haute que le hero. En une colonne, on la
+        // garde si le vide qu’elle comble est plus grand que le dépassement.
+        // En plusieurs colonnes, une rangée partielle sous la une est refusée.
+        const keepPartialRow = briefCols < 2 && gap > overshoot;
+        if (keepPartialRow) {
           markPromotedToBrief(item);
           removeTailArticleForItem(item);
         } else {
@@ -2779,7 +2803,16 @@ function balanceMagazineColumns() {
       const hH = magazineColumnContentHeight(hero);
       const bH = magazineColumnContentHeight(brief);
       const goodMax = tightBrief ? 24 : (wideE ? Math.min(GOOD_GAP_MAX, 56) : GOOD_GAP_MAX);
-      if (bH <= hH + tol && (hH - bH) <= goodMax && brief.querySelectorAll('.article--compact').length >= hardMin) {
+      const overshootCap = (wideE && briefCols >= 2) ? wideOvershootTol : tol;
+      const briefN = brief.querySelectorAll('.article--compact').length;
+      const rowOpen = briefCols >= 2 && briefN % briefCols !== 0;
+      const gap = hH - bH;
+      if (
+        bH <= hH + overshootCap
+        && gap <= goodMax
+        && briefN >= hardMin
+        && !(rowOpen && gap > wideOvershootTol)
+      ) {
         ensureMagazineColumnSpacers(hero, brief);
         return;
       }
@@ -2797,6 +2830,7 @@ function balanceMagazineColumns() {
     if (purgeBriefCardsFromHeroInstitutions(brief)) trimBriefIfTaller();
     trimBriefOrphanRow();
     completeLastBriefRow();
+    dropOpenBriefRow();
 
     // --- 4) Midwidth : priorité = zéro grand vide sous les vedettes.
     // (Le spacer flex sous le hero est très visible en rail étroit.)
@@ -2869,6 +2903,7 @@ function balanceMagazineColumns() {
         }
         trimBriefOrphanRow();
         completeLastBriefRow();
+        dropOpenBriefRow();
       }
       ensureMagazineColumnSpacers(hero, brief);
       if (wideE && tightBrief) {

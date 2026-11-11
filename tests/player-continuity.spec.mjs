@@ -160,6 +160,10 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
   // sur #radar-player attend le vrai document ; locator('html') se résout tout
   // de suite sur about:blank, où l'audio n'existe pas encore.
   await tuner.locator('#radar-player').evaluate((player) => {
+    // Un `waiting` à l'arrêt est ignoré : un src posé sans lecture peut
+    // l'émettre. La connexion annulable n'existe qu'une fois la lecture
+    // demandée (paused === false).
+    Object.defineProperty(player, 'paused', { configurable: true, get: () => false });
     player.dispatchEvent(new Event('waiting'));
   });
 

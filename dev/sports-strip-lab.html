@@ -194,7 +194,7 @@
       <div><code>CE PM</code> — aujourd’hui à partir de 12 h.</div>
       <div><code>AM</code> / <code>PM</code> — Demain seulement, sans « ce ».</div>
       <div><strong>Hier</strong> — une ligne, pas d’AM/PM.</div>
-      <div>Pas d’AM/PM sur <strong>En direct</strong> (score) ni <strong>Prochain match</strong>.</div>
+      <div>Pas d’AM/PM sur <strong>En cours</strong> (score) ni <strong>Prochain match</strong>.</div>
     </div>
     <nav class="toc">
       <a href="#today-next">Aujourd’hui</a>
@@ -810,22 +810,25 @@
       return tag;
     }
     function liveChip({ tone, home, homeNum, away, awayNum, period, sub, cta, wrap = true, glyph = '🏒' }) {
-      const score = `${homeNum}–${awayNum}`;
+      // 0–0 sans période : le match n’a pas de pointage, pas un vrai zéro-zéro.
+      const score = (!period && homeNum === '0' && awayNum === '0')
+        ? 'vs'
+        : `${homeNum}–${awayNum}`;
       const inner = `<span class="sports-chip__name">${home}</span> <span class="sports-chip__score">${score}</span> <span class="sports-chip__name sports-chip__opp">${away}</span>`;
       const subLine = [period, sub].filter(Boolean).join(' · ');
       if (cta) {
         return stripCta({
-          state: 'live', tone, tag: 'En direct', glyph,
+          state: 'live', tone, tag: 'En cours', glyph,
           score, text: inner, sub: subLine,
         });
       }
-      const a = matchChip({ tone, glyph, live: true, inner, sub: subLine, kicker: 'En direct', lamp: 'live' });
+      const a = matchChip({ tone, glyph, live: true, inner, sub: subLine, kicker: 'En cours', lamp: 'live' });
       if (!wrap) return a;
       return `<div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">${a}</div>`;
     }
     function matchChip({ tone, glyph, inner, sub, badge, badgeMod, live, kicker, lamp, dateLine }) {
       if (!kicker) {
-        if (live) { kicker = 'En direct'; lamp = lamp || 'live'; }
+        if (live) { kicker = 'En cours'; lamp = lamp || 'live'; }
         else {
           const first = String(sub || '').split('·')[0].trim();
           if (/^Aujourd/i.test(first) || /^À venir/i.test(first)) { kicker = 'Aujourd’hui'; lamp = lamp || 'soon'; }
@@ -876,6 +879,7 @@
         : state === 'result' ? 'past'
         : 'idle';
       const skipMeridiem = brand
+        || tagLabel === 'En cours'
         || tagLabel === 'En direct'
         || tagLabel === 'Prochain'
         || tagLabel === 'Prochain match'
@@ -990,7 +994,7 @@
         <article class="case">
           <p class="now-label">Maintenant (pastille + A 2–1 B)</p>
           ${stripCta({
-            state: 'live', tone: '#c8102e', tag: 'En direct', glyph: '🏒',
+            state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '🏒',
             score: '2–1',
             text: 'Redbirds 2–1 Stingers',
             sub: '19 h 00 · 2e période · Hockey universitaire',
