@@ -1,14 +1,23 @@
 {
-  "updated": "2026-11-11T03:38:23.925Z",
+  "updated": "2026-11-11T05:07:45.323Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 32,
+  "incomplete": 31,
   "withLeadExcerpt": 140,
-  "candidates": 32,
-  "enriched": 1,
-  "failed": 6,
+  "candidates": 31,
+  "enriched": 5,
+  "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
     {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
@@ -28,24 +37,6 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
-      "title": "Quand la mode va trop loin",
-      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
-      "ok": true,
-      "score": 96,
-      "chars": 759,
-      "sample": "Consistant à dépigmenter la peau autour de l’anus, cette recherche d’uniformité corporelle vient du ",
-      "changed": true
-    },
-    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -53,6 +44,15 @@
       "chars": 370,
       "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
       "changed": false
+    },
+    {
+      "title": "Quebec expects direct consultation on Erasmus+",
+      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "ok": true,
+      "score": 95,
+      "chars": 293,
+      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
+      "changed": true
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -64,22 +64,22 @@
       "changed": false
     },
     {
-      "title": "A year with Soraya Martinez Ferrada",
-      "link": "https://thelinknewspaper.ca/article/16557",
-      "ok": true,
-      "score": 96,
-      "chars": 289,
-      "sample": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing o",
-      "changed": false
-    },
-    {
-      "title": "Concordia’s deficit detrimental to student experience",
-      "link": "https://thelinknewspaper.ca/article/16556",
+      "title": "Carney government weakening pesticide regulation, warns Green Party Leader Elizabeth May",
+      "link": "https://theconcordian.com/2026/11/carney-weakening-pesticide-regulation/",
       "ok": true,
       "score": 100,
-      "chars": 279,
-      "sample": "Students at Concordia University are still affected by the university’s ongoing deficit, which was i",
-      "changed": false
+      "chars": 284,
+      "sample": "The initiative follows Bill C-30, which passed last June. Among new budgetary measures, C-30 amended",
+      "changed": true
+    },
+    {
+      "title": "As Big Tech invests more in eye-tracking tools, Canadians’ data is left unprotected",
+      "link": "https://theconcordian.com/2026/11/big-tech-eye-tracking-data-unprotected/",
+      "ok": true,
+      "score": 96,
+      "chars": 293,
+      "sample": "Research shows the potential for patterns of eye movement to distinguish children from adults, revea",
+      "changed": true
     }
   ]
 }
