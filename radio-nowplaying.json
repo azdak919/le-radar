@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T16:36:43.153Z",
+  "updatedAt": "2026-11-11T17:36:48.315Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T16:36:06.086Z"
+      "checkedAt": "2026-11-11T17:36:20.966Z"
     },
     "cism": {
       "id": "cism",
@@ -48,75 +48,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T16:36:08.012Z"
+      "checkedAt": "2026-11-11T17:36:23.508Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "If You Got Ears",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "ffiles",
-      "showTitle": "",
+      "next": {
+        "title": "Radyo Kapwa",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T16:36:10.138Z"
+      "checkedAt": "2026-11-11T17:36:26.286Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
-      },
-      "next": {
         "title": "North-South Hockey",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
+      "next": {
+        "title": "The Fluid Mosaic",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+      },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "North-South Hockey",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T16:36:24.214Z"
+      "checkedAt": "2026-11-11T17:36:40.493Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le DOUZE",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "12:59",
         "url": "https://www.cfak.ca/balados/le-douze"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le DOUZE",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T16:36:37.140Z"
+      "checkedAt": "2026-11-11T17:36:42.280Z"
     },
     "choq": {
       "id": "choq",
@@ -129,7 +141,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Bloc Pub 21 juillet.mp3",
+      "track": "D'Leesa — Moonlight",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -137,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T16:36:42.802Z"
+      "checkedAt": "2026-11-11T17:36:47.964Z"
     }
   }
 }
