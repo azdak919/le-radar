@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-11T19:39:34.241Z",
+  "updated": "2026-11-11T20:09:34.231Z",
   "total": 188,
   "withImage": 171,
   "withCredit": 171,
@@ -8,16 +8,23 @@
   "missingHero": 0,
   "ok": false,
   "checked": 43,
-  "updatedCount": 3,
+  "updatedCount": 4,
   "citedNew": 7,
   "fallbackNew": 36,
   "samples": [
     {
-      "title": "Stingers 7, Gee-Gees 0: Pure Stingers domination",
-      "source": "The Link",
-      "credit": "Photo: Brendan Schwartz",
+      "title": "La peur de vieillir de plus en plus répandu",
+      "source": "Quartier Libre",
+      "credit": "Photo : Pixabay",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "A win for data centres",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Why We Dream: A Search for the Elusive",

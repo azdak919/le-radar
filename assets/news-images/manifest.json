@@ -521,16 +521,6 @@
       "via": "resize-proxy",
       "nameKey": "marche_pour_le_climat_27-09-2019_montreal_07.jpg"
     },
-    "6dacc4b050f7ad54": {
-      "local": "assets/news-images/6dacc4b050f7ad54.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/88270D3E-2B87-40EB-A414-863E9BE35178.jpeg",
-      "host": "quartierlibre.ca",
-      "bytes": 35332,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-10T08:56:10.190Z",
-      "via": "origin",
-      "nameKey": "88270d3e-2b87-40eb-a414-863e9be35178.jpeg"
-    },
     "1e1c34fb613861aa": {
       "local": "assets/news-images/1e1c34fb613861aa.jpg",
       "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/IMG_1693.jpeg",
@@ -1268,16 +1258,6 @@
       "via": "origin",
       "nameKey": "nst26_0918_soraya_mayor_6359.jpg"
     },
-    "de9a04b37003961a": {
-      "local": "assets/news-images/de9a04b37003961a.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Quebec_data_centres_Halle_Keays_1_900_675.png",
-      "host": "thelinknewspaper.ca",
-      "bytes": 105621,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-10T14:39:40.212Z",
-      "via": "resize-proxy",
-      "nameKey": "05_news_quebec_data_centres_halle_keays_1_900_675.png"
-    },
     "1f328f69e32d0ba8": {
       "local": "assets/news-images/1f328f69e32d0ba8.webp",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0030.jpeg",
@@ -1693,9 +1673,29 @@
       "updatedAt": "2026-11-11T19:38:28.896Z",
       "via": "origin",
       "nameKey": "bs26_1107_stingers_hockey_gee_gees_2294_2.jpg"
+    },
+    "c799f42dc83a4431": {
+      "local": "assets/news-images/c799f42dc83a4431.png",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/8_peur-de-vieillir.png",
+      "host": "quartierlibre.ca",
+      "bytes": 52615,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-11T20:08:23.766Z",
+      "via": "origin",
+      "nameKey": "8_peur-de-vieillir.png"
+    },
+    "5d50c090673b037d": {
+      "local": "assets/news-images/5d50c090673b037d.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Quebec_data_centres_Halle_Keays_1_690_518.png",
+      "host": "thelinknewspaper.ca",
+      "bytes": 67877,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-11T20:08:26.377Z",
+      "via": "resize-proxy",
+      "nameKey": "05_news_quebec_data_centres_halle_keays_1_690_518.png"
     }
   },
-  "updatedAt": "2026-11-11T19:38:28.899Z",
+  "updatedAt": "2026-11-11T20:08:26.381Z",
   "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
