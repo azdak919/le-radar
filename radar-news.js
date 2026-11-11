@@ -469,6 +469,21 @@ function syncWideRailFiltersFit() {
   const head = stack.querySelector('.wire-head');
   const stickyTop = wideStickyTopPx();
   const rawTop = stack.getBoundingClientRect().top;
+  const scroller = document.scrollingElement;
+  const gapBottom = scroller
+    ? scroller.scrollHeight - scroller.scrollTop - window.innerHeight
+    : 0;
+  /* Saut en bas de page : from-top est encore celui du mât (rail court).
+     Le recalculer sur le sticky agrandit le rail, allonge scrollHeight
+     (le fond n'est plus à 4 px) et le décolle (~40 px). On gèle la
+     hauteur déjà posée. Un scroll graduel met à jour tant que l'écart
+     reste grand, donc « Réduire » s'aligne encore en haut et à 480 px. */
+  if (gapBottom <= 48 && stack.style.getPropertyValue('--wide-stack-from-top')) {
+    syncWideFiltersToggleWidth();
+    const rowsKept = Number.parseFloat(FILTERS_PANEL.style.getPropertyValue('--filters-collapsed-rows')) || 3;
+    const countKept = NEWS_FILTERS.querySelectorAll('.filter-btn').length;
+    return countKept > rowsKept;
+  }
   /* Plancher = offset sticky. En haut de page rawTop > sticky (sous le mât).
      Collé : rawTop ≈ sticky. En bas de page le rail se décolle et rawTop
      chute — s’en servir pour la hauteur fait grandir le rail, le recoller,

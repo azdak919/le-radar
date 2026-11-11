@@ -281,7 +281,7 @@ test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ 
   const payload = livePayload();
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*cours/i);
   await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
   await expect(cta.locator('.sports-chip__score')).toHaveText('vs');
   const text = await cta.locator('.sports-chip__line-inner').innerText();
@@ -303,7 +303,7 @@ test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
   const payload = livePayload({ offsetMs: -2 * 60 * 1000 });
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*cours/i);
   await expect(cta.locator('.sports-chip__score')).toHaveText('vs');
   const sub = await cta.locator('.sports-chip__sub-text').innerText();
   const kick = kickoffClockFromPayload(payload);
@@ -321,7 +321,7 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
     period: '1re mi-temps',
   }));
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*cours/i);
   await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
   await expect(cta.locator('.sports-chip__score')).toHaveText('1–0');
   const text = await cta.locator('.sports-chip__line-inner').innerText();
@@ -335,9 +335,12 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
 });
 
 test('CTA live : un direct prioritaire ne fige pas la rotation', async ({ page }) => {
-  const cta = await openWithSports(page, livePlusYesterdayPayload());
+  await openWithSports(page, livePlusYesterdayPayload());
+  // Hier reste à gauche. Le direct est une carte du bandeau, pas forcément la première.
+  const cta = page.locator('#masthead-sports-strip .sports-chip[data-cta-state="live"]').first();
+  await expect(cta).toBeVisible();
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*cours/i);
   const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   const pool = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
@@ -377,9 +380,10 @@ test('bandeau : deux directs visibles, reliquat ensuite', async ({ page }) => {
   expect(firstNonLive, 'Concordia après les directs').toBeGreaterThanOrEqual(2);
   const liveVisible = info.visible.filter((s) => s.live);
   expect(liveVisible.length, 'les deux directs sont des cartes distinctes').toBeGreaterThanOrEqual(2);
-  const chips = page.locator('#masthead-sports-strip .sports-chip');
-  await expect(chips.nth(0)).toHaveAttribute('data-cta-state', 'live');
-  await expect(chips.nth(1)).toHaveAttribute('data-cta-state', 'live');
+  // Hier peut rester à gauche du jour. Les deux directs sont dans le bandeau,
+  // pas forcément sur les deux premiers slots.
+  const liveChips = page.locator('#masthead-sports-strip .sports-chip[data-cta-state="live"]');
+  await expect(liveChips).toHaveCount(2);
 });
 
 test('iPad tactile : la CTA participe à la cascade', async ({ browser }) => {
@@ -506,8 +510,9 @@ test('CTA : sans live, à-venir d’aujourd’hui avant hier', async ({ page }) 
   })));
   expect(seq[0], 'B : ce soir avant hier').toMatchObject({ mode: 'next', code: 'STH' });
   expect(seq.some((s) => s.mode === 'result' && s.code === 'CON'), 'hier en reliquat').toBe(true);
-  const cta = page.locator('#masthead-sports-strip .sports-chip').first();
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
+  // Le résultat d'hier reste à gauche. La carte du jour est celle en « next ».
+  const today = page.locator('#masthead-sports-strip .sports-chip[data-cta-state="next"]').first();
+  await expect(today.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
 });
 
 test('CTA : à venir dans l’heure passe devant hier', async ({ page }) => {
@@ -532,9 +537,9 @@ test('CTA : à venir dans l’heure passe devant hier', async ({ page }) => {
   })));
   expect(seq[0], 'dans l’heure avant hier').toMatchObject({ mode: 'next', code: 'STH' });
   expect(seq.some((s) => s.mode === 'result' && s.code === 'CON')).toBe(true);
-  const cta = page.locator('#masthead-sports-strip .sports-chip').first();
-  await expect(cta).toHaveAttribute('data-cta-state', 'next');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
+  const today = page.locator('#masthead-sports-strip .sports-chip[data-cta-state="next"]').first();
+  await expect(today).toHaveAttribute('data-cta-state', 'next');
+  await expect(today.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
 });
 
 test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async ({ page }) => {

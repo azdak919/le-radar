@@ -2025,7 +2025,8 @@ html[data-embed="tuner"] .tuner {
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner,
 html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) .tuner {
-  background: transparent !important;
+  /* La barre porte son fond. Transparent laissait un bandeau vide sous le popover. */
+  background: var(--tuner-session-base, #101816) !important;
   border: 0 !important;
 }
 html[data-embed="tuner"] .tuner .tuner-step,

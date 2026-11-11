@@ -960,10 +960,11 @@ function sportsStripCramped() {
   const minScore = comfort ? 0 : (wide ? 100 : 118);
   const minCta = wide ? 120 : 148;
 
+  // Depuis « une seule famille » (2026-08-31) aucune puce n'a .sports-chip--cta.
+  // L'absence de cette classe n'est pas un bandeau trop étroit.
   const cta = strip.querySelector('.sports-chip--cta');
-  if (!cta) return true;
-  if (!comfort && !wide && cta.clientWidth + 0.5 < minCta) return true;
-  if (!wide) {
+  if (cta && !comfort && !wide && cta.clientWidth + 0.5 < minCta) return true;
+  if (cta && !wide) {
     const tag = cta.querySelector('.sports-chip__cta-tag');
     if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
   }
@@ -3359,9 +3360,12 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const count = Math.max(1, n | 0), policy = sportsStripPolicy(now, pool);
   const used = new Set();
   const hasOthers = policy.pool.some(s => !sportsGameIsLive(s.game, now));
-  // Plusieurs slots : au moins une vraie autre rencontre, même avec beaucoup
-  // de directs. Un seul slot commence par le direct puis alterne en rotation.
-  const liveQuota = hasOthers && count > 1 ? count - 1 : count;
+  // Tous les directs visibles s'il reste une place pour une autre rencontre.
+  // Un seul slot commence par le direct puis alterne en rotation.
+  // À 2 cartes et 2 directs, les deux restent : pas de place pour le reliquat.
+  const liveWant = policy.lives.length;
+  const reserveOther = hasOthers && count > liveWant ? 1 : 0;
+  const liveQuota = Math.min(liveWant, Math.max(0, count - reserveOther));
   const lives = sportsTakeUnusedPrefix(policy.lives, liveQuota, used);
   const remaining = count - lives.length;
   if (!remaining) return lives;
@@ -4277,6 +4281,15 @@ function nextSportsSlide(usedKeys, opts = {}) {
     const otherTurn = boardN === 1 && outgoingLive && others.length;
     lane = otherTurn ? others : policy.lives;
     priorityCursor = otherTurn ? 'other' : 'live';
+    // Bandeau plein de directs (iPad : 2 cartes, 2 lives). Aucun autre
+    // direct n'est libre, donc ce slot cède au résultat resté hors cadre.
+    // Un bandeau plus large montre déjà ce résultat : on n'efface pas un
+    // direct pour le recopier.
+    const liveFree = policy.lives.some((s) => !sportsSlideIsUsed(s, used));
+    if (!otherTurn && others.length && !liveFree && boardN > 0 && boardN <= policy.lives.length) {
+      lane = others;
+      priorityCursor = 'other';
+    }
   } else if (policy.mode === 'split' && boardN >= 2) {
     const otherSlots = boardN - Math.min(policy.lives.length, Math.max(1, boardN - 1));
     if (policy.lives.length && otherSlots === 1) {

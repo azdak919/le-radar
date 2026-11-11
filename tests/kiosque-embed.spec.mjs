@@ -190,7 +190,7 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
       return Number(s.opacity) > 0.5 && s.pointerEvents !== 'none';
     })).toBe(true);
 
-    const openState = await page.evaluate(() => {
+    const readOpenState = () => page.evaluate(() => {
       const bar = document.getElementById('tuner');
       const creditEl = document.querySelector('a.tuner-embed-credit');
       const slot = document.getElementById('tuner-vol-slot');
@@ -216,6 +216,10 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
         barBoxShadowNone: getComputedStyle(bar).boxShadow === 'none',
       };
     });
+    // L'ouverture peint la bulle sur la frame suivante. On attend ce layout,
+    // les seuils (largeur, hauteur, opacité) ne changent pas.
+    await expect.poll(async () => (await readOpenState())?.popoverVisible, { timeout: 2000 }).toBe(true);
+    const openState = await readOpenState();
     expect(openState).toBeTruthy();
     expect(openState.popoverVisible, 'popover visible').toBe(true);
     expect(openState.popoverExtendsBelowBar, 'popover s’étend sous la barre').toBe(true);

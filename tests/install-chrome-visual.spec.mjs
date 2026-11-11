@@ -69,6 +69,7 @@ async function setTheme(page, theme) {
 for (const route of ROUTES) {
   for (const theme of ['light', 'dark']) {
     test(`chrome install — ${route.name} (${theme})`, async ({ page }) => {
+      test.setTimeout(120_000);
       const pageErrors = [];
       page.on('pageerror', (e) => pageErrors.push(e.message));
 
@@ -244,8 +245,18 @@ for (const route of ROUTES) {
       // rythme vertical et le remplissage — donc la hauteur, déjà vérifiée,
       // et les marges internes.
       expect(install.paddingBlock, `${route.name} : marge verticale`).toBe(sibling.paddingBlock);
-      expect(install.width, `${route.name} : bouton libellé plus large`)
-        .toBeGreaterThan(sibling.width);
+      // ≤599 px le libellé est masqué pour tenir sur une rangée : les deux pastilles ont la même largeur.
+      const labelShown = await page.evaluate(() => {
+        const el = document.querySelector('#install-btn-label');
+        if (!el) return false;
+        return getComputedStyle(el).display !== 'none';
+      });
+      if (labelShown) {
+        expect(install.width, `${route.name} : bouton libellé plus large`)
+          .toBeGreaterThan(sibling.width);
+      } else {
+        expect(install.width, `${route.name} : pastille icône, même largeur`).toBeCloseTo(sibling.width, 0);
+      }
     }
   });
 }

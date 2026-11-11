@@ -246,9 +246,13 @@
   overflow: hidden;
 }
 .masthead-sports-strip .sports-chip--match .sports-chip__line {
-  flex: 0 0 auto;
+  /* flex-shrink 0 laissait la ligne grandir avec le texte : le marquee
+     mesurait overflow 0 et le titre long restait coupé sans défiler. */
+  flex: 1 1 auto;
+  min-width: 0;
   display: block;
   max-width: 100%;
+  overflow: hidden;
 }
 .masthead-sports-strip .sports-chip__line-inner {
   display: inline-block;
