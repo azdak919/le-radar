@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-11T13:08:02.976Z",
+  "updated": "2026-11-11T14:37:49.384Z",
   "total": 188,
   "pool": 57,
-  "incomplete": 33,
-  "withLeadExcerpt": 143,
-  "candidates": 33,
-  "enriched": 3,
-  "failed": 1,
+  "incomplete": 32,
+  "withLeadExcerpt": 144,
+  "candidates": 32,
+  "enriched": 1,
+  "failed": 13,
   "ok": true,
   "samples": [
     {
@@ -16,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
       "changed": false
     },
     {
@@ -37,15 +46,6 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
-    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -55,12 +55,12 @@
       "changed": false
     },
     {
-      "title": "Trois chaires de recherche pour répondre aux défis de demain",
-      "link": "https://lecollectif.ca/a-la-une/trois-chaires-de-recherche-pour-repondre-aux-defis-de-demain/",
+      "title": "L’autre, un film intime qui frappe fort",
+      "link": "https://impactcampus.ca/arts-et-culture/lautre-un-film-intime-qui-frappe-fort/",
       "ok": true,
       "score": 100,
-      "chars": 779,
-      "sample": "Transport durable, matériaux de construction écologiques et intelligence artificielle : trois projet",
+      "chars": 253,
+      "sample": "Après huit ans, Alexandre Franchi est de retour avec L’autre, un film aussi personnel que son précéd",
       "changed": true
     },
     {
@@ -70,16 +70,16 @@
       "score": 100,
       "chars": 318,
       "sample": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e éditi",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Les Alouettes s’envolent vers la Coupe Grey",
-      "link": "https://lecollectif.ca/a-la-une/les-alouettes-senvolent-vers-la-coupe-grey/",
+      "title": "Craquer un jour, polluer toujours",
+      "link": "https://www.delitfrancais.com/2026/11/11/craquer-un-jour-polluer-toujours/",
       "ok": true,
       "score": 100,
-      "chars": 832,
-      "sample": "Ils ont eu chaud, mais ils ont tenu le coup. Le 7 novembre dernier, les Alouettes de Montréal ont tr",
-      "changed": true
+      "chars": 246,
+      "sample": "En même temps, avec la devise de Temu, « Shop like a billionaire », c’est vrai que c’est tentant. Ma",
+      "changed": false
     }
   ]
 }
