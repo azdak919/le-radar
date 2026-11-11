@@ -1675,15 +1675,6 @@
       "via": "resize-proxy",
       "nameKey": "05_news_quebec_data_centres_halle_keays_1_690_518.png"
     },
-    "77c707c2771abe3a": {
-      "local": "assets/news-images/77c707c2771abe3a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/jesus-930x620.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 61446,
-      "updatedAt": "2026-11-11T22:10:53.899Z",
-      "via": "disk",
-      "nameKey": "jesus.jpg"
-    },
     "c1bb94a2949277ba": {
       "local": "assets/news-images/c1bb94a2949277ba.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/image3-1.jpg",
@@ -1693,9 +1684,18 @@
       "updatedAt": "2026-11-11T22:10:54.256Z",
       "via": "origin",
       "nameKey": "image3-1.jpg"
+    },
+    "5d5cc28afe493224": {
+      "local": "assets/news-images/5d5cc28afe493224.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/TransFilmHorreur.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 211566,
+      "updatedAt": "2026-11-11T23:39:50.713Z",
+      "via": "disk",
+      "nameKey": "transfilmhorreur.png"
     }
   },
-  "updatedAt": "2026-11-11T22:10:54.261Z",
+  "updatedAt": "2026-11-11T23:39:50.722Z",
   "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",

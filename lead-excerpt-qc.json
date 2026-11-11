@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-11T22:09:33.291Z",
+  "updated": "2026-11-11T23:38:46.092Z",
   "total": 188,
   "pool": 57,
   "incomplete": 35,
-  "withLeadExcerpt": 144,
+  "withLeadExcerpt": 140,
   "candidates": 35,
   "enriched": 2,
-  "failed": 6,
+  "failed": 5,
   "ok": true,
   "samples": [
     {
@@ -46,12 +46,21 @@
       "changed": false
     },
     {
-      "title": "Jésus et autres mots-clics",
-      "link": "https://www.delitfrancais.com/2026/10/28/jesus-et-autres-mots-clics/",
+      "title": "Quand la transidentité effraie",
+      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
       "score": 100,
-      "chars": 1120,
-      "sample": "Disponible sur la plateforme de Télé-Québec, le documentaire Faites du bruit pour Jésus, s’interroge",
+      "chars": 370,
+      "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
+      "changed": true
+    },
+    {
+      "title": "Quebec expects direct consultation on Erasmus+",
+      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "ok": true,
+      "score": 95,
+      "chars": 293,
+      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
       "changed": true
     },
     {
@@ -61,7 +70,7 @@
       "score": 100,
       "chars": 950,
       "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Stingers 7, Gee-Gees 0: Pure Stingers domination",
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 158,
       "sample": "The Concordia University men’s hockey team obliterated the Ottawa Gee-Gees 7-0 on Nov. 7, with goalt",
-      "changed": false
-    },
-    {
-      "title": "48e édition du Gala de l’ADISQ : Le duo d’extraterrestres au sommet",
-      "link": "https://montrealcampus.ca/2026/11/11/le-duo-dextraterrestres-au-sommet/",
-      "ok": true,
-      "score": 100,
-      "chars": 282,
-      "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
       "changed": false
     }
   ]
