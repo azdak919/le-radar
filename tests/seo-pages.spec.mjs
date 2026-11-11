@@ -249,6 +249,27 @@ test('wide E : Le Radar défile avec les sources ; En bref comble le vide', asyn
   expect(gap, `vide sous En bref trop grand (${Math.round(gap)} px)`).toBeLessThan(220);
 });
 
+/** Pistes réelles. `minmax(0px, 1fr)` contient un espace : un split naïf compte 2. */
+function gridTrackCount(value) {
+  const s = String(value || '').trim();
+  if (!s || s === 'none') return 0;
+  let depth = 0;
+  let count = 0;
+  let token = false;
+  for (const ch of s) {
+    if (ch === '(') { depth += 1; token = true; continue; }
+    if (ch === ')') { depth = Math.max(0, depth - 1); continue; }
+    if (depth === 0 && /\s/.test(ch)) {
+      if (token) count += 1;
+      token = false;
+      continue;
+    }
+    token = true;
+  }
+  if (token) count += 1;
+  return count;
+}
+
 test('wide E : En bref ne dépasse pas la une (1920) et complète la rangée (3840)', async ({ page }) => {
   const measure = async (width) => {
     await page.setViewportSize({ width, height: 1080 });
@@ -256,21 +277,19 @@ test('wide E : En bref ne dépasse pas la une (1920) et complète la rangée (38
     await expect.poll(async () => page.locator('.brief-rail .article--compact').count(), { timeout: 12_000 })
       .toBeGreaterThan(0);
     await page.waitForTimeout(500);
-    return page.evaluate(() => {
+    const raw = await page.evaluate(() => {
       const last = (sel) => {
         const cards = [...document.querySelectorAll(sel)];
         return cards.at(-1)?.getBoundingClientRect().bottom ?? 0;
       };
-      const cols = getComputedStyle(document.querySelector('.brief-rail'))
-        .gridTemplateColumns.split(' ').filter(Boolean).length;
-      const n = document.querySelectorAll('.brief-rail .article--compact').length;
       return {
         overshoot: last('.brief-rail > .article') - last('.news-hero > .article'),
         gap: last('.news-hero > .article') - last('.brief-rail > .article'),
-        cols,
-        n,
+        tracks: getComputedStyle(document.querySelector('.brief-rail')).gridTemplateColumns,
+        n: document.querySelectorAll('.brief-rail .article--compact').length,
       };
     });
+    return { ...raw, cols: gridTrackCount(raw.tracks) };
   };
 
   const at1920 = await measure(1920);
@@ -415,9 +434,13 @@ test('wide E : faits packés et footer en colonnes, pas étalés', async ({ page
 
   const foot = page.locator('.site-foot');
   await expect(foot).toBeVisible();
-  const display = await foot.evaluate((el) => getComputedStyle(el).display);
+  // Pied v2 : la grille est `.site-foot__top` (marque | colonnes). L'ancien
+  // `.site-foot` wide E est exclu dès que nav-shell pose `--v2`.
+  const grid = foot.locator('.site-foot__top');
+  const target = (await grid.count()) ? grid : foot;
+  const display = await target.evaluate((el) => getComputedStyle(el).display);
   expect(display).toBe('grid');
-  const cols = await foot.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length);
+  const cols = gridTrackCount(await target.evaluate((el) => getComputedStyle(el).gridTemplateColumns));
   expect(cols).toBeGreaterThanOrEqual(2);
 });
 
@@ -427,29 +450,47 @@ test('wide E : footer en 2 colonnes, liens en ligne, crédits à droite', async 
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     const foot = page.locator('.site-foot').first();
     await expect(foot).toBeVisible();
-    const layout = await foot.evaluate((el) => {
-      const cs = getComputedStyle(el);
+    const raw = await foot.evaluate((el) => {
+      const v2 = el.classList.contains('site-foot--v2');
+      const grid = v2 ? el.querySelector('.site-foot__top') : el;
+      const cs = getComputedStyle(grid);
       const brand = el.querySelector('.site-foot__brand');
-      const links = el.querySelector('.site-foot__links');
+      const links = el.querySelector('.site-foot__cols, .site-foot__links');
       const credit = el.querySelector('.site-foot__credit');
       const br = brand?.getBoundingClientRect();
       const lr = links?.getBoundingClientRect();
       const cr = credit?.getBoundingClientRect();
-      const dir = links ? getComputedStyle(links).flexDirection : '';
+      const linkCs = links ? getComputedStyle(links) : null;
       return {
+        v2,
         display: cs.display,
-        cols: cs.gridTemplateColumns.split(' ').filter(Boolean).length,
+        tracks: cs.gridTemplateColumns,
         brandX: br ? Math.round(br.x) : null,
+        brandBottom: br ? Math.round(br.bottom) : null,
         linksX: lr ? Math.round(lr.x) : null,
         creditX: cr ? Math.round(cr.x) : null,
-        flexDir: dir,
+        creditY: cr ? Math.round(cr.y) : null,
+        flexDir: linkCs && linkCs.display === 'flex' ? linkCs.flexDirection : '',
+        linkTracks: linkCs && linkCs.display === 'grid' ? linkCs.gridTemplateColumns : '',
       };
     });
+    const layout = {
+      ...raw,
+      cols: gridTrackCount(raw.tracks),
+      linkCols: gridTrackCount(raw.linkTracks),
+    };
     expect(layout.display, `${path} : grille`).toBe('grid');
-    expect(layout.cols, `${path} : 2 pistes`).toBe(2);
-    expect(layout.flexDir, `${path} : liens en ligne`).toBe('row');
-    expect(layout.creditX, `${path} : crédits à droite`).toBeGreaterThan(layout.brandX + 80);
-    expect(Math.abs(layout.linksX - layout.brandX), `${path} : liens sous la marque`).toBeLessThan(40);
+    expect(layout.cols, `${path} : 2 pistes`).toBeGreaterThanOrEqual(2);
+    if (layout.v2) {
+      expect(layout.linksX, `${path} : colonnes à droite de la marque`).toBeGreaterThan(layout.brandX + 80);
+      expect(layout.linkCols, `${path} : au moins deux colonnes de liens`).toBeGreaterThanOrEqual(2);
+      expect(layout.creditY, `${path} : crédits sous la marque`).toBeGreaterThan(layout.brandBottom - 4);
+    } else {
+      expect(layout.cols, `${path} : 2 pistes`).toBe(2);
+      expect(layout.flexDir, `${path} : liens en ligne`).toBe('row');
+      expect(layout.creditX, `${path} : crédits à droite`).toBeGreaterThan(layout.brandX + 80);
+      expect(Math.abs(layout.linksX - layout.brandX), `${path} : liens sous la marque`).toBeLessThan(40);
+    }
   }
 });
 

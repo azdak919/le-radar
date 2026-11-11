@@ -133,6 +133,8 @@ jobs:
       - name: Install Chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
+      # Ubuntu 24.04 : ImageMagick 6, binaire `convert` (pas `magick`).
+      # Le test d’affiche accepte les deux.
       - name: Install ImageMagick
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends imagemagick
       - name: Browser checks (full suite)

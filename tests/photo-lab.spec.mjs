@@ -123,10 +123,26 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#status')).not.toContainText('qrSide');
 });
 
+/** Ubuntu 24.04 installe ImageMagick 6 (`convert`). IM7 expose `magick`. */
+function renderPosterFixture(file) {
+  const args = ['-size', '1600x2400', 'xc:#6c2163', file];
+  let lastErr;
+  for (const bin of ['magick', 'convert']) {
+    try {
+      execFileSync(bin, args, { stdio: 'ignore' });
+      return;
+    } catch (err) {
+      lastErr = err;
+      if (err?.code !== 'ENOENT') throw err;
+    }
+  }
+  throw lastErr;
+}
+
 test('labo local : téléverser une image pour l’affiche', async ({ page }) => {
   const dir = mkdtempSync(join(tmpdir(), 'affiche-upload-'));
   const file = join(dir, 'pavillon-test.jpg');
-  execFileSync('magick', ['-size', '1600x2400', 'xc:#6c2163', file]);
+  renderPosterFixture(file);
   await page.goto(`${BASE}/affiches/`, { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#photo-upload-box')).toBeVisible();
   await page.locator('#photo-upload').setInputFiles(file);

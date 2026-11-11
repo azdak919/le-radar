@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
 
 /**
- * Téléphone : CTA / météo / synthé — une ligne, marquee L→R puis retour,
- * ensuite seulement changement d’info. Pas de wrap 2 lignes.
+ * Téléphone : match / météo / synthé — chaque ligne reste nowrap.
+ * La puce match a deux lignes (noms, puis méta) ; aucune ne wrap.
+ * Pas de chrome `.sports-chip--cta` depuis le 2026-08-31.
  */
 
 const weather = [
@@ -34,11 +35,16 @@ test('téléphone 390 : une ligne, marquee si overflow, pas de wrap', async ({ p
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const strip = page.locator('#masthead-sports-strip');
-  await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
-  const ctaWhiteSpace = await strip.locator('.sports-chip--cta .sports-chip__cta-text').first().evaluate(
+  const chip = strip.locator('.sports-chip--match').first();
+  await expect(chip).toBeVisible({ timeout: 8000 });
+  const lineWhiteSpace = await chip.locator('.sports-chip__line-inner').evaluate(
     (el) => getComputedStyle(el).whiteSpace,
   );
-  expect(ctaWhiteSpace, 'CTA une ligne').toBe('nowrap');
+  expect(lineWhiteSpace, 'noms du match sur une ligne').toBe('nowrap');
+  const matchSubSpace = await chip.locator('.sports-chip__sub-text').evaluate(
+    (el) => getComputedStyle(el).whiteSpace,
+  );
+  expect(matchSubSpace, 'méta du match sur une ligne').toBe('nowrap');
 
   await page.waitForFunction(() => document.getElementById('tuner')?.classList.contains('is-dial-ready'));
   const subWhiteSpace = await page.locator('#tuner-now-sub, .tuner-now-sub').first().evaluate(
