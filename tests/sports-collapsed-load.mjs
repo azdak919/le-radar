@@ -59,6 +59,11 @@ for (const rel of ['sports/index.html', 'en/sports/index.html']) {
   assert.ok(!html.includes(`src="${up}/sports-load.js" defer`), `${rel} : le script part avant le corps`);
 }
 
+const board = read('sports-board.js');
+assert.match(board, /periodKey !== 'all'/);
+assert.match(board, /Boolean\(school\.raw\)/);
+assert.match(board, /n’ouvre que les sections qui ont encore des fiches/);
+
 const shell = read('nav-shell.js');
 assert.match(shell, /display-mode: standalone/);
 assert.match(shell, /function blankLeavesApp/);
