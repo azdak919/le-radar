@@ -11,3 +11,5 @@ Ne pas éditer les `.woff2` à la main. Si la liste des langues change :
 ```
 python3 scripts/subset-poster-lang-fonts.py
 ```
+
+`coverage.json` liste les caractères couverts ; `python3 scripts/subset-poster-lang-fonts.py --check` le vérifie sans dépendre de fontTools (CI).

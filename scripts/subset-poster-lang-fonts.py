@@ -12,13 +12,12 @@ import tempfile
 import urllib.request
 from pathlib import Path
 
-from fontTools.subset import Options, Subsetter, load_font, save_font
-from fontTools.ttLib import TTFont
-
 ROOT = Path(__file__).resolve().parents[1]
 BUILDER = ROOT / "affiches" / "poster-builder.js"
 OUT = ROOT / "assets" / "kit" / "fonts" / "langs"
 CACHE = Path(tempfile.gettempdir()) / "le-radar-noto-src"
+COVERAGE = OUT / "coverage.json"
+
 
 NOTO_BASE = "https://raw.githubusercontent.com/notofonts/notofonts.github.io/main/fonts"
 CJK_BASE = "https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/SubsetOTF"
@@ -74,6 +73,7 @@ def download(url: str, dest: Path) -> Path:
 
 
 def subset(src: Path, dest: Path, text: str) -> None:
+    from fontTools.subset import Options, Subsetter, load_font, save_font
     options = Options()
     options.flavor = "woff2"
     options.layout_features = ["*"]
@@ -97,6 +97,7 @@ def subset(src: Path, dest: Path, text: str) -> None:
 
 
 def cmap_of(path: Path) -> set[str]:
+    from fontTools.ttLib import TTFont
     font = TTFont(path)
     chars: set[str] = set()
     for table in font["cmap"].tables:
@@ -106,24 +107,27 @@ def cmap_of(path: Path) -> set[str]:
     return chars
 
 
+def write_coverage(chars: set[str]) -> None:
+    import json
+    payload = {"chars": "".join(sorted(chars, key=ord))}
+    COVERAGE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def verify_coverage(text: str) -> None:
+    import json
     needed = {ch for ch in text if ch != "\u0000"}
-    coverage: set[str] = set()
-    missing_files = []
-    for _family, filename, _url in FONTS:
-        dest = OUT / filename
-        if not dest.is_file():
-            missing_files.append(filename)
-            continue
-        coverage |= {ch for ch in cmap_of(dest) if ch in needed}
+    missing_files = [filename for _family, filename, _url in FONTS if not (OUT / filename).is_file()]
     if missing_files:
         raise SystemExit(f"fontes manquantes dans {OUT} : {', '.join(missing_files)}")
     if not (OUT / "OFL.txt").is_file():
         raise SystemExit(f"licence OFL manquante dans {OUT}")
-    missing = sorted(ch for ch in needed if ch not in coverage)
+    if not COVERAGE.is_file():
+        raise SystemExit(f"manifeste de couverture manquant : {COVERAGE}")
+    listed = set(json.loads(COVERAGE.read_text(encoding="utf-8"))["chars"])
+    missing = sorted(ch for ch in needed if ch not in listed)
     if missing:
         shown = " ".join(f"U+{ord(ch):04X} {ch}" for ch in missing)
-        raise SystemExit(f"glyphes manquants dans langs/*.woff2 : {shown}")
+        raise SystemExit(f"glyphes absents de coverage.json : {shown}")
 
 
 def main() -> int:
@@ -146,6 +150,7 @@ def main() -> int:
         print(f"  {filename:42} {dest.stat().st_size:6} o  {len(useful):3} glyphes utiles")
     ofl = download(OFL_URL, OUT / "OFL.txt")
     print(f"  OFL.txt copié ({ofl.stat().st_size} o)")
+    write_coverage(coverage)
     verify_coverage(text)
     print("couverture complète")
     return 0
