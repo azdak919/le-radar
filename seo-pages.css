@@ -997,6 +997,15 @@
   transform: rotate(-45deg);
   opacity: 0.8;
 }
+/* Chargement du tableau : même carte que la langue. Le centre est le trophée. */
+.translate-progress--sports .translate-progress__logo {
+  width: 2.55rem;
+  height: 2.55rem;
+  border-radius: 0;
+  object-fit: contain;
+  background: transparent;
+  box-shadow: none;
+}
 .sports-sport-block[hidden],
 .sports-panel[hidden],
 .sports-result[hidden],
