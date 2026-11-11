@@ -3360,12 +3360,9 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const count = Math.max(1, n | 0), policy = sportsStripPolicy(now, pool);
   const used = new Set();
   const hasOthers = policy.pool.some(s => !sportsGameIsLive(s.game, now));
-  // Tous les directs visibles s'il reste une place pour une autre rencontre.
-  // Un seul slot commence par le direct puis alterne en rotation.
-  // À 2 cartes et 2 directs, les deux restent : pas de place pour le reliquat.
-  const liveWant = policy.lives.length;
-  const reserveOther = hasOthers && count > liveWant ? 1 : 0;
-  const liveQuota = Math.min(liveWant, Math.max(0, count - reserveOther));
+  // Plusieurs slots : au moins une vraie autre rencontre, même avec beaucoup
+  // de directs. Un seul slot commence par le direct puis alterne en rotation.
+  const liveQuota = hasOthers && count > 1 ? count - 1 : count;
   const lives = sportsTakeUnusedPrefix(policy.lives, liveQuota, used);
   const remaining = count - lives.length;
   if (!remaining) return lives;
@@ -4291,13 +4288,22 @@ function nextSportsSlide(usedKeys, opts = {}) {
       priorityCursor = 'other';
     }
   } else if (policy.mode === 'split' && boardN >= 2) {
-    const otherSlots = boardN - Math.min(policy.lives.length, Math.max(1, boardN - 1));
-    if (policy.lives.length && otherSlots === 1) {
-      lane = others; priorityCursor = 'other';
+    const liveFree = policy.lives.some((s) => !sportsSlideIsUsed(s, used));
+    // iPad (~820, 2 cartes) : le reliquat est déjà à gauche. Ce slot cède
+    // au direct resté hors cadre, sinon la première carte ne tourne pas.
+    // Au-delà de 2 cartes le reliquat continue de tourner dans sa moitié.
+    if (!outgoingLive && liveFree && boardN === 2) {
+      lane = policy.lives;
+      priorityCursor = 'live';
     } else {
-      const fromLeft = policy.left.some(s => s.key === opts.outgoing?.key);
-      lane = fromLeft ? policy.left : policy.right;
-      priorityCursor = fromLeft ? 'left' : 'right';
+      const otherSlots = boardN - Math.min(policy.lives.length, Math.max(1, boardN - 1));
+      if (policy.lives.length && otherSlots === 1) {
+        lane = others; priorityCursor = 'other';
+      } else {
+        const fromLeft = policy.left.some(s => s.key === opts.outgoing?.key);
+        lane = fromLeft ? policy.left : policy.right;
+        priorityCursor = fromLeft ? 'left' : 'right';
+      }
     }
   }
   const ranked = sportsInterleaveByDiversity(lane.length ? lane : pool, now);

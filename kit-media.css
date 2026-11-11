@@ -288,8 +288,9 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   align-items: stretch;
 }
-@media (max-width: 1099.98px) {
-  /* iPad : l'affiche générique occupe la rangée, pas une colonne de 220 px. */
+@media (min-width: 800px) and (max-width: 999.98px) {
+  /* iPad Air / Pro 11 (820–834) : l'affiche générique occupe la rangée.
+     768 et 1024 restent en colonnes égales, sinon une carte devient ~2× plus haute. */
   .kit-grid--poster .kit-card--feature { grid-column: 1 / -1; }
 }
 @media (min-width: 1100px) {
