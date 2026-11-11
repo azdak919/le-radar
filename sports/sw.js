@@ -10,13 +10,19 @@
 
    POURQUOI CE WORKER EXISTE
    La page est entièrement prérendue : sports-board.js ne fait que filtrer du
-   HTML déjà présent, sans aucun fetch. Mettre le shell en cache suffit donc
-   à rendre « SPORTS Étudiants » utilisable hors ligne, scores compris — ce
-   ceux de la dernière visite, ce que la page indique déjà par sa date de
-   mise à jour.
+   HTML déjà présent, sans aucun fetch. Le cache rend « SPORTS Étudiants »
+   utilisable hors ligne, scores compris — ceux de la dernière visite.
+
+   Le document ne reste pas sur cette dernière visite quand le réseau répond.
+   Un cache de plus de 20 min attend le serveur (repli cache si ça échoue).
+   Un cache récent s'affiche tout de suite ; si le Last-Modified a changé,
+   la page se recharge une fois. Sans ça, le 11 nov. 2026 à 14 h 19 l'écran
+   montrait encore « 00 h 18 » alors que le serveur était à 13 h 47.
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'sports-shell-v399';
+importScripts('../scripts/sports-document-refresh.js');
+
+const SHELL_CACHE  = 'sports-shell-v400';
 const FONT_CACHE   = 'sports-fonts-v1';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -88,6 +94,7 @@ const SHARED_ASSETS = [
   '../app.js',
   '../engage-prompt.js',
   '../app-sw-register.js',
+  '../scripts/sports-document-refresh.js',
   '../sports-board.js',
   '../scripts/sports-date-lib.js',
   '../assets/icon.svg',
@@ -182,7 +189,97 @@ async function cacheFirst(cacheName, request) {
   return response;
 }
 
+let pendingDocumentToken = '';
+
+function isSportsDocument(request) {
+  if (request.mode === 'navigate' || request.destination === 'document') return true;
+  try {
+    const path = new URL(request.url).pathname;
+    if (!path.startsWith(SCOPE_PATH)) return false;
+    const rest = path.slice(SCOPE_PATH.length);
+    return rest === '' || rest === 'index.html';
+  } catch {
+    return false;
+  }
+}
+
+function rememberDocumentUpdate(token) {
+  if (!token) return;
+  pendingDocumentToken = token;
+  self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+    for (const client of clients) {
+      client.postMessage({ type: 'sports-document-updated', token });
+    }
+  });
+}
+
+self.addEventListener('message', (event) => {
+  if (!event.data || event.data.type !== 'sports-document-status') return;
+  if (!pendingDocumentToken || !event.source) return;
+  event.source.postMessage({ type: 'sports-document-updated', token: pendingDocumentToken });
+});
+
+async function pullSportsDocument(cache, request, cached) {
+  const response = await fetch(request);
+  if (!isCacheableResponse(response, request)) {
+    return { response: cached || response, token: '' };
+  }
+  const previous = sportsRevisionToken(cached);
+  const next = sportsRevisionToken(response);
+  await cache.put(request, response.clone());
+  return {
+    response,
+    token: sportsDocumentChanged(previous, next) ? next : '',
+  };
+}
+
+async function refreshSportsDocument(cacheName, request) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+  const plan = sportsShellPlan({
+    hasCache: Boolean(cached),
+    cacheAgeMs: sportsCacheAgeMs(cached, Date.now()),
+  });
+  const pull = pullSportsDocument(cache, request, cached);
+
+  if (plan === 'cache-then-refresh') {
+    pull.then((got) => {
+      if (got.token) rememberDocumentUpdate(got.token);
+    }).catch(() => {});
+    return cached;
+  }
+
+  if (plan === 'network') {
+    try {
+      return (await pull).response;
+    } catch {
+      return new Response('Service unavailable', { status: 503 });
+    }
+  }
+
+  // Cache trop vieux : attendre le serveur, sinon repeindre l'ancien
+  // et recharger quand la copie neuve est enfin en cache.
+  let timer;
+  const timeout = new Promise((resolve) => {
+    timer = setTimeout(() => resolve(null), 8000);
+  });
+  try {
+    const got = await Promise.race([pull, timeout]);
+    if (got) return got.response;
+    pull.then((late) => {
+      if (late.token) rememberDocumentUpdate(late.token);
+    }).catch(() => {});
+    return cached;
+  } catch {
+    return cached || new Response('Service unavailable', { status: 503 });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function staleWhileRevalidate(cacheName, request) {
+  if (isSportsDocument(request)) return refreshSportsDocument(cacheName, request);
+
   const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
 
