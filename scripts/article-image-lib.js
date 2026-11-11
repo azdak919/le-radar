@@ -399,13 +399,18 @@ function articleImageRegions(html = '') {
 }
 
 function normalizeImagePath(raw = '') {
+  const src = decodeEntities(String(raw || '').trim());
+  if (!src) return '';
+  // src relatif (/images/… de The Link) : new URL sans base échoue et la
+  // légende de la <figure> ne se rattache jamais.
+  let u;
   try {
-    const u = new URL(decodeEntities(raw));
-    const file = decodeURIComponent(u.pathname).split('/').pop() || '';
-    return file.replace(/-\d+x\d+(?=\.[a-z]+$)/i, '').toLowerCase();
+    u = new URL(src);
   } catch {
-    return '';
+    try { u = new URL(src, 'https://img.local'); } catch { return ''; }
   }
+  const file = decodeURIComponent(u.pathname).split('/').pop() || '';
+  return file.replace(/-\d+x\d+(?=\.[a-z]+$)/i, '').toLowerCase();
 }
 
 function imageUrlsMatch(a = '', b = '') {
@@ -1011,11 +1016,15 @@ function isPortraitLeadRatio(width = 0, height = 0) {
  */
 const LEAD_CROP_MIN_RATIO = 0.66;
 const LEAD_CROP_MIN_RATIO_SCREENSHOT = 0.64;
+/** The Link, fichier sous /images/articles/ : graphique 900×1582 (0,57). */
+const LEAD_CROP_MIN_RATIO_EDITORIAL = 0.55;
 const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infographi\p{L}*|programmation|programme|horaires?|calendrier|stor(?:y|ies)|invitations?|logos?|slogans?|menu|annonces?|communiqu[ée]s?|campagnes?|campaigns?|visuels?|textes?|texts?|quotes?|citations?)(?=$|[^\p{L}])/iu;
 const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|graphics?|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
 /** The Link : « Graphic Naya Hachwa » sans « by » ni deux-points. */
 const GRAPHIC_NAME_RE = /(?:^|[^\p{L}])graphics?\s+(\p{Lu})/giu;
-const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+)*\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
+/** « Photo Jade-S. Vachon-Côté » / « Photo Nicholas Tremblay » sans « : » ni « by ». */
+const BARE_MEDIA_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|dessins?|illustrations?)\s+(\p{Lu})/giu;
+const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+\.?)*\.?\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
 const CREDIT_ORG_RE = /(?:^|\s)(?:courtoisie|gracieuset[ée]|courtesy|universit[ée]|university|c[ée]gep|coll[eè]ge|college|association|f[ée]d[ée]ration|comit[ée]|syndicat|service|archives?|soci[ée]t[ée]|ville|minist[eè]re|gouvernement|union|club|groupe|r[ée]daction|staff)(?=\s|$)/iu;
 function looksLikeCameraFile(name = '') {
   // « IMG 0067 900 1200 90 jpg » (séparateurs déjà normalisés en espaces)
@@ -1030,9 +1039,14 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   if (!width || !height || !isPortraitLeadRatio(width, height)) return false;
   // The Campus exporte ses images en « Capture d’écran » un peu plus hautes que
   // 2:3 (illustration Movember 686×1048, 10 nov. 2026) : marge de 0,02 pour
-  // cette seule source. Une story 9:16 (0,56) reste refusée.
+  // cette seule source. Une story 9:16 hors /images/articles/ (0,56) reste refusée.
+  // The Link : le visuel de l’article (900×1582, Archives) descend à 0,55.
+  const editorial = isEditorialArticleImage(ctx.url);
   const campusShot = !!(ctx.screenshotPhotos && SCREENSHOT_FILE_RE.test(decodeURIComponent(String(ctx.url || ''))));
-  if (width / height < (campusShot ? LEAD_CROP_MIN_RATIO_SCREENSHOT : LEAD_CROP_MIN_RATIO)) return false;
+  const floor = editorial
+    ? LEAD_CROP_MIN_RATIO_EDITORIAL
+    : (campusShot ? LEAD_CROP_MIN_RATIO_SCREENSHOT : LEAD_CROP_MIN_RATIO);
+  if (width / height < floor) return false;
   // Affiche du sujet lui-même : exception revue et liée à article + URL + taille.
   // Aucun nouveau portrait/logo/pub n'est accepté par cette branche.
   if (reviewedSourceCrop(ctx, ctx.url, width, height) && !ctx.campaignGraphic) return true;
@@ -1045,6 +1059,11 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   const file = path.split('/').pop().replace(/[_+.-]+/g, ' ');
   if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) return false;
   if (captionLooksLikeCampaignGraphic(text)) return false;
+  // Fichier d’article ExpressionEngine (/images/articles/) : c’est le visuel
+  // du billet (JVC26, NST26, aicha.online, graphique 900×1582). On le garde
+  // plutôt qu’une photo de campus. Affiche, campagne et abeille CSU restent
+  // écartées. Le plancher 0,66 des autres sources ne bouge pas.
+  if (editorial && !ctx.campaignGraphic) return true;
   // Couverture déclarée par la source pour CE billet (champ cover Firebase,
   // image mise en avant WordPress, og:image qui la confirme) : choix
   // éditorial explicite, recadré en cover 3:2 au tiers haut, sans bandes.
@@ -1062,7 +1081,7 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   // Crédité à une personne (« Dessin: Wendy Kim Pires ») : Prénom Nom.
   // Un sigle ou un organisme (« Photo : FEUS », affiche FEUS du Collectif ;
   // « Courtoisie », « Université… ») ne suffit pas.
-  for (const re of [EDITORIAL_CREDIT_RE, GRAPHIC_NAME_RE]) {
+  for (const re of [EDITORIAL_CREDIT_RE, GRAPHIC_NAME_RE, BARE_MEDIA_CREDIT_RE]) {
     for (const m of text.matchAll(re)) {
       const name = text.slice(m.index + m[0].length - 1).split(/[|,;()\n]/)[0].trim();
       if (EDITORIAL_PERSON_RE.test(name) && !CREDIT_ORG_RE.test(name.split(/\s+/).slice(0, 4).join(' '))) return true;
@@ -1086,8 +1105,17 @@ function isDeclaredCoverImage(item = {}, url = '') {
   return !!(item?.imageDeclaredCover && url && imageUrlsMatch(item.imageDeclaredCover, url));
 }
 
+/** Taille encodée dans l’URL : WordPress `-800x1100` ou CE Image `_900_1273_90`. */
+function imageDimensionsFromUrl(url = '') {
+  const wp = wpSizeFromImageUrl(url);
+  if (wp) return wp;
+  const ce = ceImageResize(url);
+  if (ce && ce.w && ce.h) return { width: ce.w, height: ce.h };
+  return null;
+}
+
 function imageUrlLooksPortrait(url = '') {
-  const size = wpSizeFromImageUrl(url);
+  const size = imageDimensionsFromUrl(url);
   return !!(size && isPortraitLeadRatio(size.width, size.height));
 }
 
@@ -1538,6 +1566,7 @@ module.exports = {
   isWeakImageUrl,
   isBannerLikeRatio,
   wpSizeFromImageUrl,
+  imageDimensionsFromUrl,
   imageUrlLooksBannerLike,
   isPortraitLeadRatio,
   imageUrlLooksPortrait,
@@ -1546,6 +1575,7 @@ module.exports = {
   isDeclaredCoverImage,
   isFeaturedContentImage,
   LEAD_CROP_MIN_RATIO,
+  LEAD_CROP_MIN_RATIO_EDITORIAL,
   clearMirroredLead,
   dropSharedSourceImages,
   keepNewestSharedImage,

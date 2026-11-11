@@ -43,7 +43,10 @@ const {
   clearMirroredLead,
   isPortraitLeadRatio,
   imageUrlLooksPortrait,
+  imageDimensionsFromUrl,
+  isCropSafePortrait,
   LEAD_CROP_MIN_RATIO,
+  LEAD_CROP_MIN_RATIO_EDITORIAL,
 } = require('./article-image-lib');
 const {
   findStockPhoto,
@@ -167,12 +170,23 @@ async function replacePortraitLead(item, { reject = [], opts = {}, resolve = res
   if (!item || !item.image) return null;
   // Photo / dessin crédité, déjà jugé recadrable : on le centre, on le garde.
   if (hasCropSafeImage(item)) return null;
-  let portrait = imageUrlLooksPortrait(item.image);
+  let dims = imageDimensionsFromUrl(item.image);
+  let portrait = !!(dims && isPortraitLeadRatio(dims.width, dims.height));
   if (!portrait) {
-    const dims = await probe(item.image);
+    const probed = await probe(item.image);
+    if (probed && probed.width && probed.height) dims = probed;
     portrait = !!(dims && isPortraitLeadRatio(dims.width, dims.height));
   }
   if (!portrait) return null;
+  // Portrait déjà recadrable d'après l'URL (CE Image _900_1273, fichier
+  // /images/articles/). Un 429 sur la page ne doit pas l'effacer au profit
+  // du campus : on le garde sans re-télécharger le HTML.
+  if (dims && isCropSafePortrait(dims.width, dims.height, { url: item.image, link: item.link })) {
+    assignSourceImage(item, item.image, true, true);
+    clearLegacyFallback(item);
+    clearStockPhoto(item);
+    return 'cropped';
+  }
   const portraitUrl = item.image;
   let resolved = null;
   try { resolved = await resolve(item, reject, opts); } catch { resolved = null; }
@@ -291,7 +305,14 @@ async function probeLeadReady(url, reject = [], opts = {}, { cropSafe = false, i
   const dims = await probeRemoteImageSize(url);
   if (!dims) return false;
   if (meetsLeadDisplaySize(dims.width, dims.height)) return true;
-  return !!(cropSafe && isPortraitLeadRatio(dims.width, dims.height) && fillsLeadWhenCropped(dims.width, dims.height, { reviewed: !!reviewedSourceCrop(item, url, dims.width, dims.height) }));
+  if (!(cropSafe && isPortraitLeadRatio(dims.width, dims.height))) return false;
+  if (fillsLeadWhenCropped(dims.width, dims.height, { reviewed: !!reviewedSourceCrop(item, url, dims.width, dims.height) })) return true;
+  // Graphique The Link plus haut que 2:3 (Archives 900×1582) : une fois
+  // jugé recadrable, le plancher éditorial suffit. Le 0,66 global reste.
+  return isEditorialArticleImage(url)
+    && dims.width / dims.height >= LEAD_CROP_MIN_RATIO_EDITORIAL
+    && dims.width >= 640
+    && dims.width / 1.5 >= 360;
 }
 
 async function markSourceLeadQuality(item) {
