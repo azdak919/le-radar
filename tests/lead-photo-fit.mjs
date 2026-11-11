@@ -499,6 +499,9 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(!isCropSafePortrait(400, 560, { alt: QL_ALT }), 'trop petit pour une une recadrée');
   check(isCropSafePortrait(900, 1200, { url: 'https://thelinknewspaper.ca/images/articles/_resized/IMG_0067.jpg' }), 'fichier d’appareil IMG_0067 (The Link) → photo recadrée');
   check(isCropSafePortrait(900, 1178, { url: 'https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg' }), 'fichier d’appareil _U2A7376 → photo recadrée');
+  check(isCropSafePortrait(800, 1100, { url: 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_SPORTS_NBA_Flopping_Dia_Diekmann_900_1200_90.jpg' }), 'fichier The Link au nom du crédit (Dia Diekmann) → recadré');
+  check(isCropSafePortrait(800, 1100, { caption: 'The council did not reach quorum. Graphic Naya Hachwa', url: 'https://thelinknewspaper.ca/article-art.jpg' }), 'légende « Graphic Prénom Nom » sans by → recadrée');
+  check(!isCropSafePortrait(800, 1100, { caption: 'Graphic design is not a person', url: 'https://x/a.jpg' }), '« graphic design » sans nom → écarté');
   check(!isCropSafePortrait(819, 1024, { url: 'https://x/FEUS2026-819x1024.jpg' }), 'sigle + année ≠ fichier d’appareil');
   check(!isCropSafePortrait(964, 1024, { alt: 'image couverture magazine Quartier Libre volume 33 n.1', url: 'https://x/AC7688E9-8982-4425-804C-B4DD9D09D6B6_1_201_a-964x1024.jpeg' }), 'couverture de magazine (texte) → écartée');
   check(fillsLeadWhenCropped(724, 1024) && !fillsLeadWhenCropped(540, 1024), 'recadrage 3:2 remplit la une');
@@ -573,6 +576,41 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
     excerpt: 'As the use of artificial intelligence (AI) becomes increasingly common at Concordia, some students are raising concerns about its role in their academics.',
   });
   assert(!puzzle, 'filtre PR384 : l’article sur l’IA n’est pas un mot croisé / une promo');
+}
+
+// The Link, 10 nov. 2026 : les graphiques et photos sont dans l'article
+// (crop CE Image 300×200, ou fichier au nom du crédit). Le robot les jetait
+// et collait le pavillon Hall. Le graphique abeille CSU réutilisé reste rejeté.
+{
+  const {
+    promoteImageUrl,
+    isWeakImageUrl,
+    isCandidateImageUrl: candidate,
+    imageFromArticleHtml: fromHtml,
+  } = require('../scripts/article-image-lib.js');
+  const crop = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_SPORTS_NBA_Flopping_Dia_Diekmann_300_200_90_s_c1.jpg';
+  const png = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Canada_in_Erasmus_Plus_Aia_Segal_300_200_s_c1.PNG';
+  const kept = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Quebec_data_centres_Halle_Keays_1_900_675.png';
+  const bee = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/00.graphics.CSU.Naya_Hachwa_900_674_90.jpeg';
+  assert(isWeakImageUrl(crop), 'crop CE Image 300×200 est une vignette');
+  assert(!isWeakImageUrl(kept), 'graphique déjà en 900×675 n’est pas une vignette');
+  assert(promoteImageUrl(crop).endsWith('05_SPORTS_NBA_Flopping_Dia_Diekmann_900_600_90.jpg'), 'crop jpg promu en 900×600');
+  const pngLead = promoteImageUrl(png);
+  assert(/Aia_Segal_900_675\.PNG$/.test(pngLead), 'crop png promu en 900×675');
+  const { leadImageProbeUrls } = require('../scripts/article-image-lib.js');
+  const pngProbes = leadImageProbeUrls(pngLead);
+  assert(pngProbes[0] === pngLead, 'le probe commence par le graphique 900×675');
+  assert(pngProbes.some((u) => /Aia_Segal_900_600_90\.PNG$/.test(u)), 'repli probe 900×600 si le 900×675 manque');
+  assert(promoteImageUrl(kept) === kept, 'fichier déjà grand inchangé');
+  assert(!candidate(bee), 'graphique CSU réutilisé (Naya Hachwa) toujours rejeté');
+  const html = `<html><head>
+    <meta property="og:image" content="https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Bioblitz_Anne_Zhao_900_600_90.jpg" />
+  </head><body><article>
+    <img width="300" height="200" src="${crop}" alt="Diving in the NBA needs to come to an end. Graphic by Dia Diekmann" />
+    <p>${'The NBA’s best players are resorting to acting instead of simply playing the game. '.repeat(4)}</p>
+  </article></body></html>`;
+  const found = fromHtml(html, [], { preferSizeFull: true, preferFirstContentImage: true }, 'https://thelinknewspaper.ca/article/16553');
+  assert(/Dia_Diekmann_900_600_90\.jpg$/.test(found.url), 'The Link preferFirst : le crop du corps est promu, pas jeté');
 }
 
 if (failed) {
