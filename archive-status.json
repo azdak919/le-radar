@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-11T01:28:32.705Z",
+  "updated": "2026-11-11T11:26:34.964Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5436,7 +5436,7 @@
     "lastRun": {
       "saved": 0,
       "skipped": 0,
-      "failed": 5,
+      "failed": 6,
       "stoppedEarly": true
     }
   },
@@ -5454,12 +5454,13 @@
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 138,
-      "checkedAt": "2026-11-04T01:37:51.714Z"
+      "checkedAt": "2026-11-04T01:37:51.714Z",
+      "stale": true
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
       "pages": 235,
-      "checkedAt": "2026-11-04T01:38:02.517Z"
+      "checkedAt": "2026-11-11T11:25:24.988Z"
     },
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
