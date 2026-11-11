@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-11-11T12:06:46.664Z",
+  "updatedAt": "2026-11-11T13:06:33.163Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mercredi Bonbon",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
+      "next": {
+        "title": "Conduite Antisportive",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mercredi Bonbon",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T12:06:09.548Z"
+      "checkedAt": "2026-11-11T13:06:08.615Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "La 13",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/la-13e"
+      },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T12:06:23.418Z"
+      "checkedAt": "2026-11-11T13:06:10.445Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,62 +81,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T12:06:25.632Z"
+      "checkedAt": "2026-11-11T13:06:12.840Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
-      "track": "",
-      "showTitle": "Morning Electro-shock",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-11T12:06:39.213Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "07:59",
-        "url": "https://www.cfak.ca/balados/Folkswagen"
-      },
       "next": {
-        "title": "Palmarès CFAK",
+        "title": "Are We There Yet?",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T12:06:40.397Z"
+      "checkedAt": "2026-11-11T13:06:26.470Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "08:59",
+        "url": "https://www.cfak.ca/balados/palmares-cfak"
+      },
+      "next": {
+        "title": "Le NEUF",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:59",
+        "url": "https://www.cfak.ca/balados/le-neuf"
+      },
+      "track": "",
+      "showTitle": "Palmarès CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-11T13:06:27.485Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T12:06:46.314Z"
+      "checkedAt": "2026-11-11T13:06:32.813Z"
     }
   }
 }
