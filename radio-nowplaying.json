@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T05:06:52.033Z",
+  "updatedAt": "2026-11-11T06:06:43.496Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T05:06:02.836Z"
+      "checkedAt": "2026-11-11T06:06:00.311Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Fréquence 440",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
+      },
       "track": "",
-      "showTitle": "Les sentinelles de l'art (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T05:06:16.746Z"
+      "checkedAt": "2026-11-11T06:06:14.217Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T05:06:19.097Z"
+      "checkedAt": "2026-11-11T06:06:17.784Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Morning Electro-shock",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T05:06:43.062Z"
+      "checkedAt": "2026-11-11T06:06:31.945Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T05:06:44.131Z"
+      "checkedAt": "2026-11-11T06:06:33.214Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-11T05:06:51.682Z"
+      "checkedAt": "2026-11-11T06:06:43.145Z"
     }
   }
 }
