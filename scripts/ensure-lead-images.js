@@ -24,6 +24,7 @@ const path = require('path');
 const { hasUsableImage } = require('./lead-fallback-lib');
 const {
   isCandidateImageUrl,
+  isEditorialArticleImage,
   isWeakImageUrl,
   imageRejectPatternsFromHints,
   imageOptionsFromHints,
@@ -31,6 +32,7 @@ const {
   meetsLeadDisplaySize,
   meetsFeatureDisplaySize,
   leadImageUrlCandidates,
+  leadImageProbeUrls,
   probeRemoteImageSize,
   fetchText,
   articleImageIsValidOnPage,
@@ -356,7 +358,7 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
 
   // Photo source déjà correcte pour vedette/feature : ne pas injecter de stock.
   if (item.image && hasSourcePhoto(item, sourceMap)) {
-    for (const candidate of leadImageUrlCandidates(item.image)) {
+    for (const candidate of leadImageProbeUrls(item.image)) {
       const dims = await probeRemoteImageSize(candidate);
       if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) return false;
       // Vignette / panorama source : garder la photo de l'article, pas le campus.
@@ -739,12 +741,18 @@ async function main() {
         if (resolved?.url && doUpdate) {
           // leadReady : vraie photo → garder. Sinon défaut de site faible
           // (logo partagé) : ne pas l'imposer, laisser la file stock.
-          if (resolved.leadReady !== false) {
-            assignSourceImage(item, resolved.url, true, !!resolved.cropSafe, resolved.cropFocalY);
+          if (resolved.leadReady !== false || isEditorialArticleImage(resolved.url)) {
+            assignSourceImage(
+              item,
+              resolved.url,
+              resolved.leadReady !== false,
+              !!resolved.cropSafe,
+              resolved.cropFocalY,
+            );
             clearLegacyFallback(item);
-            clearStockPhoto(item);
+            if (resolved.leadReady !== false) clearStockPhoto(item);
             pageScraped += 1;
-            photosRecovered += 1;
+            if (resolved.leadReady !== false) photosRecovered += 1;
           } else {
             pageScraped += 1;
             // Ne pas écrire le logo faible dans item.image

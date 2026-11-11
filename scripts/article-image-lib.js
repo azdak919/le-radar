@@ -427,11 +427,104 @@ function toAbsoluteImageUrl(raw = '', baseUrl = '') {
   }
 }
 
+/**
+ * Vignette CE Image / ExpressionEngine (The Link).
+ *   STEM_300_200_90_s_c1.jpg  → crop
+ *   STEM_300_200_s_c1.PNG     → crop sans qualité
+ *   STEM_900_600_90.jpg       → taille d'affichage
+ *   STEM_900_675.png          → graphique (deux nombres, pas de qualité)
+ * Le nom peut contenir des underscores : l'ancien `[^/_]+` ne voyait que DSC06923.
+ */
+function ceImageResize(raw = '') {
+  let u;
+  try { u = new URL(String(raw || '').trim()); } catch { return null; }
+  const path = decodeURIComponent(u.pathname);
+  if (!/\/images\/made\/|_resized\/|_s_c\d+\./i.test(path)) return null;
+  const file = path.split('/').pop() || '';
+  // Du plus spécifique au plus court. Un `.*` gourmand sinon avale
+  // `_300` dans le nom et lit `_200_90_s_c1` comme taille.
+  const patterns = [
+    { re: /^(.*)_(\d{2,4})_(\d{2,4})_(\d{1,3})_s_c\d+(\.[a-z]{3,4})$/i, q: 4, ext: 5, cropped: true },
+    { re: /^(.*)_(\d{2,4})_(\d{2,4})_s_c\d+(\.[a-z]{3,4})$/i, q: 0, ext: 4, cropped: true },
+    { re: /^(.*)_(\d{2,4})_(\d{2,4})_(\d{1,3})(\.[a-z]{3,4})$/i, q: 4, ext: 5, cropped: false },
+    { re: /^(.*)_(\d{2,4})_(\d{2,4})(\.[a-z]{3,4})$/i, q: 0, ext: 4, cropped: false },
+  ];
+  for (const pat of patterns) {
+    const m = file.match(pat.re);
+    if (!m) continue;
+    const w = parseInt(m[2], 10);
+    const h = parseInt(m[3], 10);
+    if (w < 50 || h < 50) continue;
+    const dir = path.slice(0, path.length - file.length);
+    return {
+      origin: u.origin,
+      path,
+      dir,
+      file,
+      stem: m[1],
+      w,
+      h,
+      quality: pat.q ? (m[pat.q] || '') : '',
+      ext: m[pat.ext],
+      cropped: pat.cropped,
+    };
+  }
+  return null;
+}
+
+/** Fichier source sans le préfixe /images/made ni le suffixe de taille. */
+function ceImageOriginalUrl(ce) {
+  if (!ce) return '';
+  const bareDir = ce.dir.replace(/\/images\/made\//i, '/');
+  return `${ce.origin}${bareDir}${ce.stem}${ce.ext}`;
+}
+
+function ceImageMadeUrl(ce, w, h, quality = '') {
+  if (!ce) return '';
+  const q = quality ? `_${quality}` : '';
+  return `${ce.origin}${ce.dir}${ce.stem}_${w}_${h}${q}${ce.ext}`;
+}
+
+/**
+ * Tailles sœurs d'un fichier CE Image. Les graphiques The Link (png, ou
+ * sans segment de qualité) sont publiés en STEM_900_675. Les photos en
+ * STEM_900_600_90. L'original suit, au cas où la taille made n'existe pas.
+ */
+function ceImageSiblingUrls(ce) {
+  if (!ce) return [];
+  const urls = [];
+  const push = (u) => { if (u && !urls.includes(u)) urls.push(u); };
+  const graphicLike = /\.png$/i.test(ce.ext) || !ce.quality;
+  if (graphicLike) push(ceImageMadeUrl(ce, 900, 675, ''));
+  push(ceImageMadeUrl(ce, 900, 600, ce.quality || '90'));
+  push(ceImageOriginalUrl(ce));
+  return urls;
+}
+
+/**
+ * Image sous /images/articles/ (The Link et équivalents EE).
+ * Ce n'est pas un logo de site : on la garde même si elle n'est pas au format vedette.
+ */
+function isEditorialArticleImage(raw = '') {
+  let path = String(raw || '');
+  try { path = decodeURIComponent(new URL(path).pathname); } catch { /* relatif */ }
+  path = path.toLowerCase();
+  if (!path || isPathRejected(path)) return false;
+  return /\/images\/(?:made\/)?(?:images\/)?articles\//.test(path);
+}
+
 /** The Link (ExpressionEngine) / WordPress : vignette → pleine résolution. */
 function upgradeCmsImageUrl(raw = '') {
   const src = String(raw || '').trim();
   if (!src) return '';
   const out = [];
+
+  const ce = ceImageResize(src);
+  if (ce && (ce.cropped || ce.w < 640 || ce.h < 360)) {
+    for (const alt of ceImageSiblingUrls(ce)) {
+      if (alt !== src) out.push(alt);
+    }
+  }
 
   const made = src.match(/\/images\/made\/images\/articles\/_resized\/([^/_]+)(?:_\d+_\d+_\d+)?(\.[a-z]{3,4})$/i);
   if (made) {
@@ -637,15 +730,17 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     if (/\b(?:antidote|publicit[eé]|annonceur|commandit[eé])\b/i.test(alt)) continue;
     let src = toAbsoluteImageUrl(rawSrc, baseUrl);
     if (!src || !isCandidateImageUrl(src, extraRejectPatterns)) continue;
-    // WP -600x315 / -750x375 → version pleine avant rejet « weak »
+    // WP -600x315 / -750x375 et crop CE Image _300_200_90_s_c1 → pleine taille.
     const promoted = promoteImageUrl(src, options);
+    const upgraded = !!(promoted && promoted !== src);
     if (promoted) src = promoted;
     else if (isWeakImageUrl(src, options)) continue;
-    const w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
-    const h = parseInt((tag.match(/height=["'](\d+)["']/i) || [])[1], 10) || 0;
-    // Ne pas jeter une image dont on a promu l'URL (w HTML peut rester 150)
-    if (w > 0 && w < 400 && promoted === rawSrc) continue;
-    if (w > 0 && w < 400 && !promoted) continue;
+    let w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
+    let h = parseInt((tag.match(/height=["'](\d+)["']/i) || [])[1], 10) || 0;
+    // Ne pas jeter une image dont on a promu l'URL (w HTML peut rester 150).
+    // Les dimensions HTML ne décrivent plus le fichier promu.
+    if (upgraded) { w = 0; h = 0; }
+    if (w > 0 && w < 400 && !upgraded) continue;
     const isFull = /\bsize-full\b/i.test(tag) || !/-\d{2,4}x\d{2,4}\./i.test(src);
     const isCropThumb = /-\d{2,4}x\d{2,4}\./i.test(src);
     const figMeta = captionedMeta.get(normalizeImagePath(src))
@@ -784,6 +879,9 @@ function isWeakImageUrl(raw = '', options = {}) {
       if (w < 640 || h < 360 || w * h < FEATURE_MIN_PIXELS) return true;
     }
   }
+  // CE Image (The Link) : STEM_300_200_90_s_c1.jpg est une vignette, pas la photo.
+  const ce = ceImageResize(raw);
+  if (ce && (ce.cropped || ce.w < 640 || ce.h < 360 || ce.w * ce.h < FEATURE_MIN_PIXELS)) return true;
   return /article-tile|size-article-tile/.test(path);
 }
 
@@ -915,6 +1013,8 @@ const LEAD_CROP_MIN_RATIO = 0.66;
 const LEAD_CROP_MIN_RATIO_SCREENSHOT = 0.64;
 const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infographi\p{L}*|programmation|programme|horaires?|calendrier|stor(?:y|ies)|invitations?|logos?|slogans?|menu|annonces?|communiqu[ée]s?|campagnes?|campaigns?|visuels?|textes?|texts?|quotes?|citations?)(?=$|[^\p{L}])/iu;
 const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|graphics?|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
+/** The Link : « Graphic Naya Hachwa » sans « by » ni deux-points. */
+const GRAPHIC_NAME_RE = /(?:^|[^\p{L}])graphics?\s+(\p{Lu})/giu;
 const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+)*\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
 const CREDIT_ORG_RE = /(?:^|\s)(?:courtoisie|gracieuset[ée]|courtesy|universit[ée]|university|c[ée]gep|coll[eè]ge|college|association|f[ée]d[ée]ration|comit[ée]|syndicat|service|archives?|soci[ée]t[ée]|ville|minist[eè]re|gouvernement|union|club|groupe|r[ée]daction|staff)(?=\s|$)/iu;
 function looksLikeCameraFile(name = '') {
@@ -956,14 +1056,29 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   // Nom de fichier d'appareil photo (IMG_0067, DSC_1234, _U2A7376) : une vraie
   // photo, même sans alt (The Link, 900×1200) — pas une affiche montée.
   if (looksLikeCameraFile(file)) return true;
+  // The Link nomme le fichier par le crédit : « …_Dia_Diekmann_900_600_90.jpg »,
+  // « …_Halle_Keays.png ». C'est la photo ou le graphique de l'article.
+  if (/thelinknewspaper\.ca/i.test(String(ctx.url || '')) && looksLikeNamedCreditFile(file)) return true;
   // Crédité à une personne (« Dessin: Wendy Kim Pires ») : Prénom Nom.
   // Un sigle ou un organisme (« Photo : FEUS », affiche FEUS du Collectif ;
   // « Courtoisie », « Université… ») ne suffit pas.
-  for (const m of text.matchAll(EDITORIAL_CREDIT_RE)) {
-    const name = text.slice(m.index + m[0].length - 1).split(/[|,;()\n]/)[0].trim();
-    if (EDITORIAL_PERSON_RE.test(name) && !CREDIT_ORG_RE.test(name.split(/\s+/).slice(0, 4).join(' '))) return true;
+  for (const re of [EDITORIAL_CREDIT_RE, GRAPHIC_NAME_RE]) {
+    for (const m of text.matchAll(re)) {
+      const name = text.slice(m.index + m[0].length - 1).split(/[|,;()\n]/)[0].trim();
+      if (EDITORIAL_PERSON_RE.test(name) && !CREDIT_ORG_RE.test(name.split(/\s+/).slice(0, 4).join(' '))) return true;
+    }
   }
   return false;
+}
+
+/** « Dia Diekmann » en fin de fichier The Link, taille CE Image déjà retirée. */
+function looksLikeNamedCreditFile(name = '') {
+  const stem = String(name)
+    .replace(/\s+(?:jpe?g|png|webp|heic)$/i, '')
+    .replace(/\s+\d{2,4}\s+\d{2,4}(?:\s+\d{1,3})?(?:\s+s\s+c\d+)?$/i, '')
+    .replace(/\s+\d$/i, '')
+    .trim();
+  return /(?:^|\s)\p{Lu}\p{Ll}+\s+\p{Lu}\p{Ll}+$/u.test(stem);
 }
 
 /** Couverture déclarée par le flux structuré de la source, liée à l'URL actuelle. */
@@ -1123,14 +1238,19 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
 
   // og:image / Twitter : toujours candidats (Substack n'embarque souvent que
   // des miniatures dans le HTML — la couverture est uniquement en meta).
-  if (!preferFirstContentImage) {
+  // preferFirstContentImage les classe derrière la photo du corps, sans les
+  // supprimer : The Link perdait son graphique quand le corps ne montrait
+  // qu'un crop, et og:image était ignoré.
+  {
     const ogImage = metaContent(html, 'og:image');
     const ogW = parseInt(metaContent(html, 'og:image:width'), 10) || 0;
     const ogH = parseInt(metaContent(html, 'og:image:height'), 10) || 0;
     const ogMatch = ogImage && contentImages.find((img) => imageUrlsMatch(img.url, ogImage));
     const ogInContent = !!ogMatch;
-    // Bonus fort si aussi dans le corps ; sinon on accepte quand même (Substack).
-    pushMeta(ogImage, ogInContent ? 110 : 95, ogW, ogH, {
+    const ogScore = preferFirstContentImage
+      ? (ogInContent ? 70 : 45)
+      : (ogInContent ? 110 : 95);
+    pushMeta(ogImage, ogScore, ogW, ogH, {
       declaredCover: !!(ogMatch && isFeaturedContentImage(ogMatch)),
       campaignGraphic: !!(ogMatch && ogMatch.campaignGraphic),
       alt: metaContent(html, 'og:image:alt') || (ogMatch && ogMatch.alt) || '',
@@ -1140,7 +1260,8 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
     for (const key of ['twitter:image', 'twitter:image:src']) {
       const tw = metaContent(html, key);
       const twMatch = tw && contentImages.find((img) => imageUrlsMatch(img.url, tw));
-      pushMeta(tw, twMatch ? 95 : 85, 0, 0, {
+      const twScore = preferFirstContentImage ? (twMatch ? 60 : 40) : (twMatch ? 95 : 85);
+      pushMeta(tw, twScore, 0, 0, {
         campaignGraphic: !!(twMatch && twMatch.campaignGraphic),
         alt: metaContent(html, 'twitter:image:alt') || (twMatch && twMatch.alt) || '',
         caption: (twMatch && twMatch.caption) || '',
@@ -1236,6 +1357,26 @@ function leadImageUrlCandidates(raw = '') {
   return ordered;
 }
 
+/**
+ * Comme leadImageUrlCandidates, plus les tailles sœurs CE Image.
+ * Sert au probe (404 sur 900×600 → 900×675, puis l'original).
+ * tryUpgradeExistingImage ne l'utilise pas : une image déjà grande
+ * ne doit pas être remplacée par une sœur qui existe aussi.
+ */
+function leadImageProbeUrls(raw = '') {
+  const ordered = leadImageUrlCandidates(raw);
+  const seen = new Set(ordered);
+  for (const u of [...ordered]) {
+    for (const alt of ceImageSiblingUrls(ceImageResize(u))) {
+      if (alt && !seen.has(alt)) {
+        seen.add(alt);
+        ordered.push(alt);
+      }
+    }
+  }
+  return ordered;
+}
+
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
   /** Portrait recadrable (crédit Photo/Dessin, pas une affiche) : une 3:2 centrée. */
   const portraitHit = (url, width, height, ctx, source) => (
@@ -1286,7 +1427,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
 
   /** Ne retourne un hit « prêt vedette » que si leadReady !== false. */
   const tryUrlLeadReady = async (url, metaW = 0, metaH = 0, ctx = {}) => {
-    for (const candidate of leadImageUrlCandidates(url)) {
+    for (const candidate of leadImageProbeUrls(url)) {
       const hit = await tryUrlOnce(candidate, metaW, metaH, ctx);
       if (hit && hit.leadReady !== false) return hit;
     }
@@ -1294,7 +1435,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
   };
 
   const tryUrlAny = async (url, metaW = 0, metaH = 0, ctx = {}) => {
-    for (const candidate of leadImageUrlCandidates(url)) {
+    for (const candidate of leadImageProbeUrls(url)) {
       const hit = await tryUrlOnce(candidate, metaW, metaH, ctx);
       if (hit) return hit;
     }
@@ -1393,6 +1534,7 @@ module.exports = {
   articleImageIsValidOnPage,
   imageUrlsMatch,
   isCandidateImageUrl,
+  isEditorialArticleImage,
   isWeakImageUrl,
   isBannerLikeRatio,
   wpSizeFromImageUrl,
@@ -1429,6 +1571,7 @@ module.exports = {
   toAbsoluteImageUrl,
   resizeFromImageUrl,
   leadImageUrlCandidates,
+  leadImageProbeUrls,
   sleep,
   decodeEntities,
 };
