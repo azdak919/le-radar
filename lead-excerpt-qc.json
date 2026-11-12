@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-12T05:08:44.275Z",
+  "updated": "2026-11-12T06:26:00.090Z",
   "total": 188,
   "pool": 57,
   "incomplete": 37,
-  "withLeadExcerpt": 144,
+  "withLeadExcerpt": 143,
   "candidates": 37,
   "enriched": 2,
-  "failed": 3,
+  "failed": 5,
   "ok": true,
   "samples": [
     {
@@ -46,15 +46,6 @@
       "changed": false
     },
     {
-      "title": "Quand la mode va trop loin",
-      "link": "https://www.delitfrancais.com/2026/10/28/quand-la-mode-va-trop-loin/",
-      "ok": true,
-      "score": 96,
-      "chars": 759,
-      "sample": "Consistant à dépigmenter la peau autour de l’anus, cette recherche d’uniformité corporelle vient du ",
-      "changed": true
-    },
-    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -64,12 +55,21 @@
       "changed": false
     },
     {
-      "title": "CF Montréal et COP 31 : reportages radio du 9 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/10/cf-montreal-et-cop-31-reportages-radio-du-9-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=cf-montreal-et-cop-31-reportages-radio-du-9-novembre",
+      "title": "Listening to The Echo of Grenada",
+      "link": "https://thelinknewspaper.ca/article/16563",
       "ok": true,
       "score": 100,
-      "chars": 198,
-      "sample": "La COP 31 a débuté lundi le 9 novembre à Antalya, en Turquie. Des délégations gouvernementales et de",
+      "chars": 388,
+      "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
+      "changed": true
+    },
+    {
+      "title": "Quebec expects direct consultation on Erasmus+",
+      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "ok": true,
+      "score": 95,
+      "chars": 293,
+      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
       "changed": true
     },
     {

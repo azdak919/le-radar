@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-12T05:06:59.308Z",
+  "updated": "2026-11-12T06:25:00.107Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 10,
+  "mismatches": 11,
   "ok": true,
   "samples": [
+    {
+      "title": "Listening to The Echo of Grenada",
+      "link": "https://thelinknewspaper.ca/article/16563",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Agena-Loire Kwizera",
+      "reason": "page-byline"
+    },
     {
       "title": "Editorial: Sweeping away the dead Republican leaves",
       "link": "https://thelinknewspaper.ca/article/16559",
@@ -86,5 +94,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 10
+  "fixed": 11
 }
