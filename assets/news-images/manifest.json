@@ -1669,15 +1669,6 @@
       "via": "resize-proxy",
       "nameKey": "ao3.png"
     },
-    "9399e5062e1c9deb": {
-      "local": "assets/news-images/9399e5062e1c9deb.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 84631,
-      "updatedAt": "2026-11-12T19:39:00.354Z",
-      "via": "disk",
-      "nameKey": "lacrymobastien-1.png"
-    },
     "fafdf0a33ef79228": {
       "local": "assets/news-images/fafdf0a33ef79228.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/14-15_Cynisme-724x1024.jpg",
@@ -1697,9 +1688,18 @@
       "updatedAt": "2026-11-12T20:38:59.732Z",
       "via": "origin",
       "nameKey": "respirer_dsf7286web_stephanebourgeois.jpg"
+    },
+    "c57a8c4869c18c73": {
+      "local": "assets/news-images/c57a8c4869c18c73.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/della-harris.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 283041,
+      "updatedAt": "2026-11-12T22:16:29.142Z",
+      "via": "disk",
+      "nameKey": "della-harris.png"
     }
   },
-  "updatedAt": "2026-11-12T22:06:20.673Z",
+  "updatedAt": "2026-11-12T22:16:29.155Z",
   "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
