@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T15:06:44.011Z",
+  "updatedAt": "2026-11-12T15:54:09.571Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,7 +29,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T15:06:05.144Z"
+      "checkedAt": "2026-11-12T15:53:22.342Z"
     },
     "cism": {
       "id": "cism",
@@ -56,7 +56,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T15:06:19.150Z"
+      "checkedAt": "2026-11-12T15:53:36.187Z"
     },
     "ckut": {
       "id": "ckut",
@@ -82,21 +82,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T15:06:21.799Z"
+      "checkedAt": "2026-11-12T15:53:38.591Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Democracy Now",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
         "title": "Chi and Ri",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/chi-and-ri"
@@ -104,12 +104,12 @@
       "track": "",
       "showTitle": "Democracy Now",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T15:06:36.130Z"
+      "checkedAt": "2026-11-12T15:54:02.422Z"
     },
     "cfak": {
       "id": "cfak",
@@ -136,7 +136,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T15:06:37.532Z"
+      "checkedAt": "2026-11-12T15:54:03.504Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Fyore — BASSAR",
+      "track": "Waahli — Fais le pas",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T15:06:43.662Z"
+      "checkedAt": "2026-11-12T15:54:09.220Z"
     }
   }
 }
