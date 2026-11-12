@@ -1,30 +1,37 @@
 {
-  "updated": "2026-11-12T19:40:08.936Z",
+  "updated": "2026-11-12T20:39:57.231Z",
   "total": 188,
-  "withImage": 170,
-  "withCredit": 170,
-  "cited": 115,
+  "withImage": 171,
+  "withCredit": 171,
+  "cited": 116,
   "pending": 29,
   "missingHero": 0,
   "ok": false,
-  "checked": 43,
-  "updatedCount": 4,
-  "citedNew": 8,
+  "checked": 44,
+  "updatedCount": 5,
+  "citedNew": 9,
   "fallbackNew": 35,
   "samples": [
+    {
+      "title": "Les jeunes cyniques ? Plutôt idéalistes !",
+      "source": "Quartier Libre",
+      "credit": "Photo : Wendy Kim Pires",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Respirer sous l’eau, quand la forme noie le fond",
+      "source": "Montréal Campus",
+      "credit": "Photo : Stéphane Bourgeois",
+      "cited": true,
+      "method": "figcaption-mention"
+    },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "source": "Le Délit",
-      "credit": "Photo : Bastien Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "Why We Dream: A Search for the Elusive",

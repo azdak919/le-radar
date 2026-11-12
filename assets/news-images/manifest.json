@@ -301,16 +301,6 @@
       "via": "resize-proxy",
       "nameKey": "capture-decran-le-2026-10-28-a-09.43.54.png"
     },
-    "cdaa958721d9ad90": {
-      "local": "assets/news-images/cdaa958721d9ad90.jpg",
-      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/Cafeteria_Gabrielle.jpg",
-      "host": "montrealcampus.ca",
-      "bytes": 125294,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:26.411Z",
-      "via": "resize-proxy",
-      "nameKey": "cafeteria_gabrielle.jpg"
-    },
     "34ecd821609b6280": {
       "local": "assets/news-images/34ecd821609b6280.png",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/09/SPORTS-1-Gwen-Heffernan-1000x600.png",
@@ -1687,10 +1677,30 @@
       "updatedAt": "2026-11-12T19:39:00.354Z",
       "via": "disk",
       "nameKey": "lacrymobastien-1.png"
+    },
+    "fafdf0a33ef79228": {
+      "local": "assets/news-images/fafdf0a33ef79228.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/14-15_Cynisme-724x1024.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 107487,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-12T20:38:59.715Z",
+      "via": "origin",
+      "nameKey": "14-15_cynisme.jpg"
+    },
+    "f6415156bb81db12": {
+      "local": "assets/news-images/f6415156bb81db12.jpg",
+      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/Respirer_DSF7286WEB_StephaneBourgeois.jpg",
+      "host": "montrealcampus.ca",
+      "bytes": 203777,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-12T20:38:59.732Z",
+      "via": "origin",
+      "nameKey": "respirer_dsf7286web_stephanebourgeois.jpg"
     }
   },
-  "updatedAt": "2026-11-12T19:39:00.370Z",
-  "count": 169,
+  "updatedAt": "2026-11-12T20:38:59.736Z",
+  "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

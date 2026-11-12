@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-12T19:37:59.491Z",
+  "updated": "2026-11-12T20:38:09.172Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 34,
-  "withLeadExcerpt": 143,
-  "candidates": 34,
-  "enriched": 1,
-  "failed": 3,
+  "incomplete": 33,
+  "withLeadExcerpt": 142,
+  "candidates": 33,
+  "enriched": 3,
+  "failed": 4,
   "ok": true,
   "samples": [
     {
@@ -28,12 +28,30 @@
       "changed": false
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "title": "Les jeunes cyniques ? Plutôt idéalistes !",
+      "link": "https://quartierlibre.ca/les-jeunes-cyniques/",
       "ok": true,
       "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
+      "chars": 996,
+      "sample": "Face à la crise climatique, au coût de la vie et à l’accès difficile à la propriété, certain·e·s jeu",
+      "changed": true
+    },
+    {
+      "title": "Quebec expects direct consultation on Erasmus+",
+      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "ok": true,
+      "score": 95,
+      "chars": 293,
+      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
+      "changed": true
+    },
+    {
+      "title": "Respirer sous l’eau, quand la forme noie le fond",
+      "link": "https://montrealcampus.ca/2026/11/12/respirer-sous-leau-quand-la-forme-noie-le-fond/",
+      "ok": true,
+      "score": 100,
+      "chars": 281,
+      "sample": "Reliant trois histoires par le thème de la mort, la nouvelle pièce de théâtre de Klervi Thienpont, R",
       "changed": true
     },
     {
@@ -61,24 +79,6 @@
       "score": 100,
       "chars": 418,
       "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
-      "changed": false
-    },
-    {
-      "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
-      "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
-      "ok": true,
-      "score": 100,
-      "chars": 950,
-      "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
-      "changed": false
-    },
-    {
-      "title": "Stingers 7, Gee-Gees 0: Pure Stingers domination",
-      "link": "https://thelinknewspaper.ca/article/16560",
-      "ok": true,
-      "score": 96,
-      "chars": 158,
-      "sample": "The Concordia University men’s hockey team obliterated the Ottawa Gee-Gees 7-0 on Nov. 7, with goalt",
       "changed": false
     }
   ]
