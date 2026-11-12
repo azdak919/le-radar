@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-11-12T00:41:44.897Z",
+  "checkedAt": "2026-11-12T15:11:42.292Z",
   "total": 6,
   "stations": {
     "chyz": {
       "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
-      "checkedAt": "2026-11-12T00:41:44.897Z",
+      "checkedAt": "2026-11-12T15:11:42.292Z",
       "redirects": [
         "https://ecoutez.chyz.ca/proxy/chyz/stream"
       ],
@@ -41,17 +41,17 @@
       "expiry": "ok",
       "audio": {
         "decoded": true,
-        "meanDb": -18.3,
+        "meanDb": -25.6,
         "silent": false,
         "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
-        "checkedAt": "2026-11-11T06:13:48.302Z"
+        "checkedAt": "2026-11-12T15:11:42.292Z"
       },
       "state": "working",
       "error": "",
       "fingerprint": "https://ecoutez.chyz.ca/proxy/chyz/stream|working||ok|",
       "lastSuccessEvidence": {
         "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
-        "checkedAt": "2026-11-12T00:41:44.897Z",
+        "checkedAt": "2026-11-12T15:11:42.292Z",
         "certificates": [
           {
             "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
@@ -81,13 +81,13 @@
         ],
         "audio": {
           "decoded": true,
-          "meanDb": -18.3,
+          "meanDb": -25.6,
           "silent": false,
           "url": "https://ecoutez.chyz.ca/proxy/chyz/stream",
-          "checkedAt": "2026-11-11T06:13:48.302Z"
+          "checkedAt": "2026-11-12T15:11:42.292Z"
         }
       },
-      "lastSuccess": "2026-11-12T00:41:44.897Z",
+      "lastSuccess": "2026-11-12T15:11:42.292Z",
       "failures": 0,
       "history": [
         {
@@ -99,7 +99,7 @@
     },
     "cism": {
       "url": "https://stream.cism893.ca/",
-      "checkedAt": "2026-11-12T00:41:44.897Z",
+      "checkedAt": "2026-11-12T15:11:42.292Z",
       "redirects": [
         "https://stream.cism893.ca/"
       ],
@@ -126,17 +126,17 @@
       "expiry": "ok",
       "audio": {
         "decoded": true,
-        "meanDb": -11.3,
+        "meanDb": -12.8,
         "silent": false,
         "url": "https://stream.cism893.ca/",
-        "checkedAt": "2026-11-11T06:13:48.302Z"
+        "checkedAt": "2026-11-12T15:11:42.292Z"
       },
       "state": "working",
       "error": "",
       "fingerprint": "https://stream.cism893.ca/|working||ok|",
       "lastSuccessEvidence": {
         "url": "https://stream.cism893.ca/",
-        "checkedAt": "2026-11-12T00:41:44.897Z",
+        "checkedAt": "2026-11-12T15:11:42.292Z",
         "certificates": [
           {
             "url": "https://stream.cism893.ca/",
@@ -156,13 +156,13 @@
         ],
         "audio": {
           "decoded": true,
-          "meanDb": -11.3,
+          "meanDb": -12.8,
           "silent": false,
           "url": "https://stream.cism893.ca/",
-          "checkedAt": "2026-11-11T06:13:48.302Z"
+          "checkedAt": "2026-11-12T15:11:42.292Z"
         }
       },
-      "lastSuccess": "2026-11-12T00:41:44.897Z",
+      "lastSuccess": "2026-11-12T15:11:42.292Z",
       "failures": 0,
       "history": [
         {
@@ -174,7 +174,7 @@
     },
     "ckut": {
       "url": "https://ckut.out.airtime.pro/ckut_a",
-      "checkedAt": "2026-11-12T00:41:44.897Z",
+      "checkedAt": "2026-11-12T15:11:42.292Z",
       "redirects": [
         "https://ckut.out.airtime.pro/ckut_a"
       ],
@@ -201,17 +201,17 @@
       "expiry": "ok",
       "audio": {
         "decoded": true,
-        "meanDb": -31,
+        "meanDb": -17.4,
         "silent": false,
         "url": "https://ckut.out.airtime.pro/ckut_a",
-        "checkedAt": "2026-11-11T06:13:48.302Z"
+        "checkedAt": "2026-11-12T15:11:42.292Z"
       },
       "state": "working",
       "error": "",
       "fingerprint": "https://ckut.out.airtime.pro/ckut_a|working||ok|",
       "lastSuccessEvidence": {
         "url": "https://ckut.out.airtime.pro/ckut_a",
-        "checkedAt": "2026-11-12T00:41:44.897Z",
+        "checkedAt": "2026-11-12T15:11:42.292Z",
         "certificates": [
           {
             "url": "https://ckut.out.airtime.pro/ckut_a",
@@ -231,13 +231,13 @@
         ],
         "audio": {
           "decoded": true,
-          "meanDb": -31,
+          "meanDb": -17.4,
           "silent": false,
           "url": "https://ckut.out.airtime.pro/ckut_a",
-          "checkedAt": "2026-11-11T06:13:48.302Z"
+          "checkedAt": "2026-11-12T15:11:42.292Z"
         }
       },
-      "lastSuccess": "2026-11-12T00:41:44.897Z",
+      "lastSuccess": "2026-11-12T15:11:42.292Z",
       "failures": 0,
       "history": [
         {
@@ -249,7 +249,7 @@
     },
     "cjlo": {
       "url": "https://cjlo.radioca.st/stream",
-      "checkedAt": "2026-11-12T00:41:44.897Z",
+      "checkedAt": "2026-11-12T15:11:42.292Z",
       "redirects": [
         "https://cjlo.radioca.st/stream"
       ],
@@ -286,17 +286,17 @@
       "expiry": "ok",
       "audio": {
         "decoded": true,
-        "meanDb": -14.3,
+        "meanDb": -17.4,
         "silent": false,
         "url": "https://cjlo.radioca.st/stream",
-        "checkedAt": "2026-11-11T06:13:48.302Z"
+        "checkedAt": "2026-11-12T15:11:42.292Z"
       },
       "state": "working",
       "error": "",
       "fingerprint": "https://cjlo.radioca.st/stream|working||ok|",
       "lastSuccessEvidence": {
         "url": "https://cjlo.radioca.st/stream",
-        "checkedAt": "2026-11-12T00:41:44.897Z",
+        "checkedAt": "2026-11-12T15:11:42.292Z",
         "certificates": [
           {
             "url": "https://cjlo.radioca.st/stream",
@@ -326,13 +326,13 @@
         ],
         "audio": {
           "decoded": true,
-          "meanDb": -14.3,
+          "meanDb": -17.4,
           "silent": false,
           "url": "https://cjlo.radioca.st/stream",
-          "checkedAt": "2026-11-11T06:13:48.302Z"
+          "checkedAt": "2026-11-12T15:11:42.292Z"
         }
       },
-      "lastSuccess": "2026-11-12T00:41:44.897Z",
+      "lastSuccess": "2026-11-12T15:11:42.292Z",
       "failures": 0,
       "history": [
         {
@@ -344,7 +344,7 @@
     },
     "cfak": {
       "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
-      "checkedAt": "2026-11-12T00:41:44.897Z",
+      "checkedAt": "2026-11-12T15:11:42.292Z",
       "redirects": [
         "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
         "https://audio-edge-qse4n.yyz.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a"
@@ -352,7 +352,7 @@
       "certificates": [
         {
           "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
-          "address": "107.181.235.130",
+          "address": "168.119.68.93",
           "expiresAt": "2026-12-19T23:59:59.000Z"
         },
         {
@@ -397,21 +397,21 @@
       "expiry": "ok",
       "audio": {
         "decoded": true,
-        "meanDb": -16.3,
+        "meanDb": -28.6,
         "silent": false,
         "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
-        "checkedAt": "2026-11-11T06:13:48.302Z"
+        "checkedAt": "2026-11-12T15:11:42.292Z"
       },
       "state": "working",
       "error": "",
       "fingerprint": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a|working||ok|",
       "lastSuccessEvidence": {
         "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
-        "checkedAt": "2026-11-12T00:41:44.897Z",
+        "checkedAt": "2026-11-12T15:11:42.292Z",
         "certificates": [
           {
             "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
-            "address": "107.181.235.130",
+            "address": "168.119.68.93",
             "expiresAt": "2026-12-19T23:59:59.000Z"
           },
           {
@@ -452,13 +452,13 @@
         ],
         "audio": {
           "decoded": true,
-          "meanDb": -16.3,
+          "meanDb": -28.6,
           "silent": false,
           "url": "https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a",
-          "checkedAt": "2026-11-11T06:13:48.302Z"
+          "checkedAt": "2026-11-12T15:11:42.292Z"
         }
       },
-      "lastSuccess": "2026-11-12T00:41:44.897Z",
+      "lastSuccess": "2026-11-12T15:11:42.292Z",
       "failures": 0,
       "history": [
         {
@@ -470,10 +470,10 @@
     },
     "choq": {
       "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
-      "checkedAt": "2026-11-12T00:41:44.897Z",
+      "checkedAt": "2026-11-12T15:11:42.292Z",
       "redirects": [
         "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
-        "https://18213.live.streamtheworld.com/SP_R4799664_SC"
+        "https://18303.live.streamtheworld.com/SP_R4799664_SC"
       ],
       "certificates": [
         {
@@ -497,22 +497,22 @@
           "kind": "issuer"
         },
         {
-          "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
-          "address": "208.92.55.142",
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+          "address": "192.173.28.40",
           "expiresAt": "2027-03-16T15:35:49.000Z"
         },
         {
-          "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
           "expiresAt": "2040-08-24T11:59:59.000Z",
           "kind": "issuer"
         },
         {
-          "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
           "expiresAt": "2037-12-31T23:59:59.000Z",
           "kind": "issuer"
         },
         {
-          "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
+          "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
           "expiresAt": "2037-12-31T23:59:59.000Z",
           "kind": "issuer"
         }
@@ -523,17 +523,17 @@
       "expiry": "ok",
       "audio": {
         "decoded": true,
-        "meanDb": -21.4,
+        "meanDb": -22.5,
         "silent": false,
         "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
-        "checkedAt": "2026-11-11T06:13:48.302Z"
+        "checkedAt": "2026-11-12T15:11:42.292Z"
       },
       "state": "working",
       "error": "",
       "fingerprint": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC|working||ok|",
       "lastSuccessEvidence": {
         "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
-        "checkedAt": "2026-11-12T00:41:44.897Z",
+        "checkedAt": "2026-11-12T15:11:42.292Z",
         "certificates": [
           {
             "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
@@ -556,35 +556,35 @@
             "kind": "issuer"
           },
           {
-            "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
-            "address": "208.92.55.142",
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
+            "address": "192.173.28.40",
             "expiresAt": "2027-03-16T15:35:49.000Z"
           },
           {
-            "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
             "expiresAt": "2040-08-24T11:59:59.000Z",
             "kind": "issuer"
           },
           {
-            "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
             "expiresAt": "2037-12-31T23:59:59.000Z",
             "kind": "issuer"
           },
           {
-            "url": "https://18213.live.streamtheworld.com/SP_R4799664_SC",
+            "url": "https://18303.live.streamtheworld.com/SP_R4799664_SC",
             "expiresAt": "2037-12-31T23:59:59.000Z",
             "kind": "issuer"
           }
         ],
         "audio": {
           "decoded": true,
-          "meanDb": -21.4,
+          "meanDb": -22.5,
           "silent": false,
           "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC",
-          "checkedAt": "2026-11-11T06:13:48.302Z"
+          "checkedAt": "2026-11-12T15:11:42.292Z"
         }
       },
-      "lastSuccess": "2026-11-12T00:41:44.897Z",
+      "lastSuccess": "2026-11-12T15:11:42.292Z",
       "failures": 0,
       "history": [
         {
