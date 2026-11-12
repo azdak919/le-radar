@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-12T02:07:29.506Z",
+  "updated": "2026-11-12T03:07:56.675Z",
   "total": 188,
   "pool": 57,
-  "incomplete": 35,
+  "incomplete": 36,
   "withLeadExcerpt": 144,
-  "candidates": 35,
+  "candidates": 36,
   "enriched": 1,
   "failed": 1,
   "ok": true,
@@ -16,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
@@ -37,15 +46,6 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
       "title": "Quand la transidentité effraie",
       "link": "https://www.delitfrancais.com/2026/10/28/quand-la-transidentite-effraie/",
       "ok": true,
@@ -53,6 +53,15 @@
       "chars": 370,
       "sample": "Dans son article « Les femmes trans dans l’horreur », Jenni Holtz explique les conséquences très rée",
       "changed": false
+    },
+    {
+      "title": "Refugee advocates renew calls for Canada to withdraw from U.S. border agreement",
+      "link": "https://thelinknewspaper.ca/article/16561",
+      "ok": true,
+      "score": 100,
+      "chars": 418,
+      "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
+      "changed": true
     },
     {
       "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 158,
       "sample": "The Concordia University men’s hockey team obliterated the Ottawa Gee-Gees 7-0 on Nov. 7, with goalt",
-      "changed": false
-    },
-    {
-      "title": "48e édition du Gala de l’ADISQ : Le duo d’extraterrestres au sommet",
-      "link": "https://montrealcampus.ca/2026/11/11/le-duo-dextraterrestres-au-sommet/",
-      "ok": true,
-      "score": 100,
-      "chars": 282,
-      "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
       "changed": false
     }
   ]
