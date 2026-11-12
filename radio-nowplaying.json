@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T11:00:22.814Z",
+  "updatedAt": "2026-11-12T12:06:45.271Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T10:59:33.412Z"
+      "checkedAt": "2026-11-12T12:06:05.718Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Jimmy et Neutron",
         "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
       },
       "next": {
-        "title": "La lecture pis toi",
+        "title": "La collation",
         "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Jimmy et Neutron",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T10:59:47.299Z"
+      "checkedAt": "2026-11-12T12:06:19.826Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
+        "title": "OFC Podcast Radio",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Total €clipse of The ☾harts",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "track": "",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,61 +74,62 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T10:59:49.972Z"
+      "checkedAt": "2026-11-12T12:06:22.545Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Daydream Nation",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
       "next": {
-        "title": "Free City Radio",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/free-city-radio"
+        "title": "Everything Everywhere",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
       "track": "",
       "showTitle": "Daydream Nation",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
+        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T11:00:14.234Z"
+      "checkedAt": "2026-11-12T12:06:37.036Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "07:59",
         "url": "https://www.cfak.ca/balados/Folkswagen"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "08:59",
+        "url": "https://www.cfak.ca/balados/palmares-cfak"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T11:00:15.369Z"
+      "checkedAt": "2026-11-12T12:06:38.469Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +142,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "ausgangv22026",
+      "track": "Charlotte Adigéry & Bolis Pupul — Googoo Gaga",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T11:00:22.463Z"
+      "checkedAt": "2026-11-12T12:06:44.921Z"
     }
   }
 }
