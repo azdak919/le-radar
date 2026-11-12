@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T06:59:18.341Z",
+  "updatedAt": "2026-11-12T08:06:38.681Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T06:58:39.858Z"
+      "checkedAt": "2026-11-12T08:05:59.161Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Les Charlottes",
         "source": "schedule",
         "start": "02:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/les-charlottes"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "06:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Les Charlottes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T06:58:53.765Z"
+      "checkedAt": "2026-11-12T08:06:13.238Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Freeform Air",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "William Shatner's Whiskey Tears",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "Off The Hook",
+      "showTitle": "Freeform Air",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T06:58:56.612Z"
+      "checkedAt": "2026-11-12T08:06:15.736Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T06:59:10.885Z"
+      "checkedAt": "2026-11-12T08:06:30.339Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T06:59:12.177Z"
+      "checkedAt": "2026-11-12T08:06:31.471Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "NINTH REALM — Cohorts of the Abyss",
+      "track": "Together to the Stars — Malachite",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T06:59:17.990Z"
+      "checkedAt": "2026-11-12T08:06:38.330Z"
     }
   }
 }
