@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-11T22:14:48.284Z",
+  "updated": "2026-11-12T11:50:38.945Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -5436,7 +5436,7 @@
     "lastRun": {
       "saved": 0,
       "skipped": 0,
-      "failed": 3,
+      "failed": 10,
       "stoppedEarly": true
     }
   },
@@ -5484,7 +5484,7 @@
     "Montréal Campus": {
       "host": "montrealcampus.ca",
       "pages": 38,
-      "checkedAt": "2026-11-04T11:31:42.651Z"
+      "checkedAt": "2026-11-12T11:47:30.241Z"
     },
     "Zone Campus": {
       "host": "zonecampus.ca",
@@ -5504,12 +5504,13 @@
     "Le Délit": {
       "host": "www.delitfrancais.com",
       "pages": 136,
-      "checkedAt": "2026-11-05T11:28:19.804Z"
+      "checkedAt": "2026-11-05T11:28:19.804Z",
+      "stale": true
     },
     "Le Polyscope": {
       "host": "www.polyscope.qc.ca",
       "pages": 36,
-      "checkedAt": "2026-11-05T11:28:15.136Z"
+      "checkedAt": "2026-11-12T11:47:36.472Z"
     },
     "Impact Campus": {
       "host": "impactcampus.ca",
