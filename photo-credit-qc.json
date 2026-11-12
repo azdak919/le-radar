@@ -1,19 +1,54 @@
 {
-  "updated": "2026-11-12T17:46:51.947Z",
+  "updated": "2026-11-12T19:06:58.584Z",
   "total": 188,
-  "withImage": 171,
-  "withCredit": 171,
+  "withImage": 170,
+  "withCredit": 170,
   "cited": 115,
   "pending": 29,
   "missingHero": 0,
   "ok": false,
-  "checked": 42,
-  "updatedCount": 3,
-  "citedNew": 7,
+  "checked": 47,
+  "updatedCount": 8,
+  "citedNew": 12,
   "fallbackNew": 35,
   "samples": [
     {
-      "title": "Quand la mode va trop loin",
+      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtral",
+      "source": "Impact Campus",
+      "credit": "Photo : Stéphane Bourgeois",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Coup de tonnerre sur l’industrie musicale",
+      "source": "Le Délit",
+      "credit": "Photo : KaChauWong",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Un mois sans AO3",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Il est médecin, she does the dishes",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "IA : l’employée de la décennie?",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
       "cited": true,
