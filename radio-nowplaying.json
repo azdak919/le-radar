@@ -1,61 +1,62 @@
 {
-  "updatedAt": "2026-11-12T14:06:51.502Z",
+  "updatedAt": "2026-11-12T15:06:44.011Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Jeudi Révolte",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
-      },
-      "next": {
         "title": "Sons de Cloches",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/sons-de-cloches/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "Jeudi Révolte",
+      "showTitle": "Sons de Cloches",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T14:06:10.070Z"
+      "checkedAt": "2026-11-12T15:06:05.144Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Une fenêtre sur le monde",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
-      },
-      "next": {
         "title": "Présentement à l'écoute",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
       },
+      "next": {
+        "title": "La grande ludothèque",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
       "track": "",
-      "showTitle": "Une fenêtre sur le monde",
+      "showTitle": "Présentement à l'écoute",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T14:06:24.160Z"
+      "checkedAt": "2026-11-12T15:06:19.150Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +82,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T14:06:27.196Z"
+      "checkedAt": "2026-11-12T15:06:21.799Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Everything Everywhere",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "Chi and Ri",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/chi-and-ri"
+      },
       "track": "",
-      "showTitle": "Everything Everywhere",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T14:06:42.822Z"
+      "checkedAt": "2026-11-12T15:06:36.130Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +136,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T14:06:44.193Z"
+      "checkedAt": "2026-11-12T15:06:37.532Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +149,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Musique Nomade — Eadse - Still Around (Live)",
+      "track": "Fyore — BASSAR",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +157,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T14:06:51.151Z"
+      "checkedAt": "2026-11-12T15:06:43.662Z"
     }
   }
 }
