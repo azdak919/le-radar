@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-12T22:02:11.024Z",
+  "updatedAt": "2026-11-12T23:06:23.711Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule",
+        "source": "api-live",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T22:01:52.212Z"
+      "checkedAt": "2026-11-12T23:06:06.809Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Entropie",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/entropie"
-      },
-      "next": {
         "title": "La rumba latina",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/la-rumba"
       },
+      "next": {
+        "title": "La courbe 2.0",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/la-courbe-2-0"
+      },
       "track": "",
-      "showTitle": "Entropie",
+      "showTitle": "La rumba latina",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T22:01:54.391Z"
+      "checkedAt": "2026-11-12T23:06:08.911Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hour: La Voix des Immigrants",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Upstage",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
-      "track": "Positive Vibes",
-      "showTitle": "Off The Hour: La Voix des Immigrants",
+      "next": {
+        "title": "Grey Matters",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
+      "track": "Off The Hour: La Voix des Immigrants",
+      "showTitle": "Upstage",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T22:01:59.450Z"
+      "checkedAt": "2026-11-12T23:06:13.269Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
-      },
-      "next": {
         "title": "Unheard Of",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/unheard-of"
       },
+      "next": {
+        "title": "Electric Messiah",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
+      },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Unheard Of",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T22:02:02.053Z"
+      "checkedAt": "2026-11-12T23:06:15.833Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,20 +129,20 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T22:02:03.202Z"
+      "checkedAt": "2026-11-12T23:06:16.911Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "La 3ème demie",
+        "title": "Les Apatrides Anonymes",
         "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
+        "start": "18:30",
+        "end": "19:45",
+        "slug": "apatrides-anonymes"
       },
-      "track": "Safia Nolin — ET SI, DE",
+      "track": "STEINZ — ZIGZAG",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -143,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T22:02:10.674Z"
+      "checkedAt": "2026-11-12T23:06:23.361Z"
     }
   }
 }
