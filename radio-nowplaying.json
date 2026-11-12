@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T08:06:38.681Z",
+  "updatedAt": "2026-11-12T09:06:58.544Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T08:05:59.161Z"
+      "checkedAt": "2026-11-12T09:06:04.934Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Charlottes",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/les-charlottes"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "La lecture pis toi",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+      },
       "track": "",
-      "showTitle": "Les Charlottes",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T08:06:13.238Z"
+      "checkedAt": "2026-11-12T09:06:19.041Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "Freeform Air",
+      "next": {
+        "title": "Total €clipse of The ☾harts",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "07:00"
+      },
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T08:06:15.736Z"
+      "checkedAt": "2026-11-12T09:06:21.997Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T08:06:30.339Z"
+      "checkedAt": "2026-11-12T09:06:38.258Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,20 +128,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T08:06:31.471Z"
+      "checkedAt": "2026-11-12T09:06:39.868Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "Together to the Stars — Malachite",
+      "track": "Thierry Larose — Conversation dans le noir",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T08:06:38.330Z"
+      "checkedAt": "2026-11-12T09:06:58.193Z"
     }
   }
 }
