@@ -1,31 +1,19 @@
 {
-  "updated": "2026-11-12T14:40:19.989Z",
+  "updated": "2026-11-12T15:08:45.149Z",
   "total": 188,
   "withPhoto": 172,
-  "withStock": 30,
+  "withStock": 29,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 149,
+  "leadReadyPhotos": 160,
   "pageScraped": 12,
   "photosRecovered": 12,
   "imagesCleared": 0,
-  "stockSearches": 39,
-  "stockFound": 26,
-  "campusBankFound": 22,
+  "stockSearches": 28,
+  "stockFound": 24,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Concordia’s radical history of student activism",
-      "link": "https://thelinknewspaper.ca/article/16546",
-      "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/BSP_4223_690_461_90.jpg"
-    },
-    {
-      "title": "Video killed the fanfic star",
-      "link": "https://thelinknewspaper.ca/article/16544",
-      "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Fanfic_illiteracy_Harrison_Campbell_690_418_90.jpeg"
-    },
     {
       "title": "Comment rester humain dans un monde artificiel?",
       "link": "https://www.delitfrancais.com/2026/11/11/comment-rester-humain-dans-un-monde-artificiel/",
@@ -60,19 +48,13 @@
       "title": "Creative Writing October 2026",
       "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Dawson_College_04.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Dawson_College_05.jpg"
     },
     {
       "title": "On avance quand même",
       "link": "https://quartierlibre.ca/on-avance-quand-meme-la-peur/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Roger-Gaudry_II.jpg"
-    },
-    {
-      "title": "Bulletins La Pige radio 9 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/09/bulletins-la-pige-radio-9-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-9-novembre",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Pavillon_principal_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG"
     },
     {
       "title": "Blackface at McGill",
@@ -85,6 +67,24 @@
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "CF Montréal et COP 31 : reportages radio du 9 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/10/cf-montreal-et-cop-31-reportages-radio-du-9-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=cf-montreal-et-cop-31-reportages-radio-du-9-novembre",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+    },
+    {
+      "title": "Goodbye October, Hello Movember!",
+      "link": "https://thebucampus.ca/2026/11/09/goodbye-october-hello-movember/",
+      "reason": "no-stock-match",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png"
+    },
+    {
+      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
+      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "reason": "no-stock-match",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
     }
   ]
 }
