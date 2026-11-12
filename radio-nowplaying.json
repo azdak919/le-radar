@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-11-12T02:06:34.645Z",
+  "updatedAt": "2026-11-12T02:57:13.906Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Blasphème",
-        "source": "schedule",
+        "source": "api-live",
         "start": "21:30",
         "end": "22:30",
         "url": "https://chyz.ca/emission/blaspheme/"
       },
+      "next": {
+        "title": "Nocturne",
+        "source": "schedule-live",
+        "start": "22:30",
+        "end": "00:00",
+        "url": "https://chyz.ca/emission/nocture/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Blasphème",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:06:08.491Z"
+      "checkedAt": "2026-11-12T02:56:47.585Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:06:10.419Z"
+      "checkedAt": "2026-11-12T02:56:49.570Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:06:12.672Z"
+      "checkedAt": "2026-11-12T02:56:52.320Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:06:26.487Z"
+      "checkedAt": "2026-11-12T02:57:06.620Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:06:27.989Z"
+      "checkedAt": "2026-11-12T02:57:07.667Z"
     },
     "choq": {
       "id": "choq",
@@ -135,7 +142,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Shreez — 12H30",
+      "track": "Jess Williamson — Dark Day in Dallas",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -143,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:06:34.295Z"
+      "checkedAt": "2026-11-12T02:57:13.555Z"
     }
   }
 }
