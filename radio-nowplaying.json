@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T18:54:48.486Z",
+  "updatedAt": "2026-11-12T20:06:18.213Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:53:25.404Z"
+      "checkedAt": "2026-11-12T20:06:04.068Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Rythmologie",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "15:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
       },
       "next": {
-        "title": "La session live",
+        "title": "Entropie",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/entropie"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:53:27.590Z"
+      "checkedAt": "2026-11-12T20:06:06.228Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
+        "title": "Positive Vibes",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "title": "Off The Hour: La Voix des Immigrants",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:53:30.231Z"
+      "checkedAt": "2026-11-12T20:06:08.547Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Give Me Shelter",
+        "title": "Weirdo Rippers",
         "source": "schedule-live",
-        "start": "13:30",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/give-me-shelter"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "next": {
-        "title": "Secondhand Sounds",
+        "title": "Hooked On Sonics",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "track": "",
-      "showTitle": "Give Me Shelter",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:53:32.730Z"
+      "checkedAt": "2026-11-12T20:06:10.395Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:53:33.949Z"
+      "checkedAt": "2026-11-12T20:06:11.437Z"
     },
     "choq": {
       "id": "choq",
@@ -130,20 +130,20 @@
       "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
-        "source": "schedule",
+        "source": "api-live",
         "start": "15:30",
         "end": "16:30",
-        "url": "https://www.choq.ca/balados/palmareschoq"
+        "slug": "palmareschoq"
       },
-      "track": "",
+      "track": "LaMascotte — DansLeBon",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:54:48.135Z"
+      "checkedAt": "2026-11-12T20:06:17.863Z"
     }
   }
 }
