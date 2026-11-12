@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-11-12T01:06:51.377Z",
+  "updatedAt": "2026-11-12T02:06:34.645Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Remparts de Québec",
-        "source": "api-live",
-        "start": "17:45",
-        "end": "20:30",
-        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Blasphème",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "21:30",
         "end": "22:30",
         "url": "https://chyz.ca/emission/blaspheme/"
       },
       "track": "",
-      "showTitle": "Remparts de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-12T01:06:24.010Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "next": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T01:06:26.198Z"
+      "checkedAt": "2026-11-12T02:06:08.491Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "next": {
+        "title": "La carte cadeau (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
+      "track": "",
+      "showTitle": "Mix Anglo",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-12T02:06:10.419Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,35 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T01:06:29.464Z"
+      "checkedAt": "2026-11-12T02:06:12.672Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
-      },
-      "next": {
         "title": "There's a Synth in the House",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
+      "next": {
+        "title": "Sippin' On Sound",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/sippin-on-sound"
+      },
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "There's a Synth in the House",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T01:06:44.054Z"
+      "checkedAt": "2026-11-12T02:06:26.487Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T01:06:44.990Z"
+      "checkedAt": "2026-11-12T02:06:27.989Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +135,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Only The Righteous — Serre Moi",
+      "track": "Shreez — 12H30",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T01:06:51.026Z"
+      "checkedAt": "2026-11-12T02:06:34.295Z"
     }
   }
 }
