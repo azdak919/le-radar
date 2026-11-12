@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-12T20:38:09.172Z",
+  "updated": "2026-11-12T22:05:21.084Z",
   "total": 188,
   "pool": 52,
   "incomplete": 33,
-  "withLeadExcerpt": 142,
+  "withLeadExcerpt": 140,
   "candidates": 33,
-  "enriched": 3,
-  "failed": 4,
+  "enriched": 1,
+  "failed": 3,
   "ok": true,
   "samples": [
     {
@@ -34,16 +34,7 @@
       "score": 100,
       "chars": 996,
       "sample": "Face à la crise climatique, au coût de la vie et à l’accès difficile à la propriété, certain·e·s jeu",
-      "changed": true
-    },
-    {
-      "title": "Quebec expects direct consultation on Erasmus+",
-      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
-      "ok": true,
-      "score": 95,
-      "chars": 293,
-      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Respirer sous l’eau, quand la forme noie le fond",
@@ -52,7 +43,7 @@
       "score": 100,
       "chars": 281,
       "sample": "Reliant trois histoires par le thème de la mort, la nouvelle pièce de théâtre de Klervi Thienpont, R",
-      "changed": true
+      "changed": false
     },
     {
       "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtral",
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 418,
       "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
+      "changed": false
+    },
+    {
+      "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
+      "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
+      "ok": true,
+      "score": 100,
+      "chars": 950,
+      "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
       "changed": false
     }
   ]
