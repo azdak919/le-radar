@@ -1,79 +1,78 @@
 {
-  "updatedAt": "2026-11-12T02:57:13.906Z",
+  "updatedAt": "2026-11-12T04:07:01.972Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Blasphème",
-        "source": "api-live",
-        "start": "21:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/blaspheme/"
-      },
-      "next": {
         "title": "Nocturne",
         "source": "schedule-live",
         "start": "22:30",
         "end": "00:00",
         "url": "https://chyz.ca/emission/nocture/"
       },
+      "next": {
+        "title": "Jeudi Révolte",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
+      },
       "track": "",
-      "showTitle": "Blasphème",
+      "showTitle": "Nocturne",
       "host": "",
-      "source": "api-live",
+      "source": "schedule-live",
       "sources": [
-        "api-live",
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:56:47.585Z"
+      "checkedAt": "2026-11-12T04:06:12.692Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "La carte cadeau (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "La carte cadeau (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:56:49.570Z"
+      "checkedAt": "2026-11-12T04:06:26.547Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
+        "title": "Rhizomatic Hour 2",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Rhizomatic Hour 1",
+        "title": "Off The Hook",
         "source": "api-live",
-        "start": "22:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Rhizomatic Hour 2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +80,28 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:56:52.320Z"
+      "checkedAt": "2026-11-12T04:06:29.350Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "There's a Synth in the House",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+        "title": "The Night Watch",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
       },
-      "next": {
-        "title": "Sippin' On Sound",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/sippin-on-sound"
-      },
+      "next": null,
       "track": "",
-      "showTitle": "There's a Synth in the House",
+      "showTitle": "The Night Watch",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:57:06.620Z"
+      "checkedAt": "2026-11-12T04:06:53.512Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:57:07.667Z"
+      "checkedAt": "2026-11-12T04:06:54.675Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +135,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Jess Williamson — Dark Day in Dallas",
+      "track": "Altamira — Going Home, Sorry.",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T02:57:13.555Z"
+      "checkedAt": "2026-11-12T04:07:01.621Z"
     }
   }
 }
