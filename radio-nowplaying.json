@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T18:06:32.169Z",
+  "updatedAt": "2026-11-12T18:54:48.486Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:06:04.419Z"
+      "checkedAt": "2026-11-12T18:53:25.404Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:06:18.430Z"
+      "checkedAt": "2026-11-12T18:53:27.590Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,17 +74,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:06:21.083Z"
+      "checkedAt": "2026-11-12T18:53:30.231Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "What's Happening in NDG",
+        "title": "Give Me Shelter",
         "source": "schedule-live",
-        "start": "13:00",
+        "start": "13:30",
         "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "url": "http://www.cjlo.com/shows/give-me-shelter"
       },
       "next": {
         "title": "Secondhand Sounds",
@@ -94,15 +94,14 @@
         "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "track": "",
-      "showTitle": "What's Happening in NDG",
+      "showTitle": "Give Me Shelter",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:06:23.238Z"
+      "checkedAt": "2026-11-12T18:53:32.730Z"
     },
     "cfak": {
       "id": "cfak",
@@ -123,34 +122,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:06:25.067Z"
+      "checkedAt": "2026-11-12T18:53:33.949Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Onde de CHOQ",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
+        "source": "schedule",
         "start": "15:30",
         "end": "16:30",
-        "slug": "palmareschoq"
+        "url": "https://www.choq.ca/balados/palmareschoq"
       },
-      "track": "annonce_lphf",
-      "showTitle": "Onde de CHOQ",
+      "track": "",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T18:06:31.818Z"
+      "checkedAt": "2026-11-12T18:54:48.135Z"
     }
   }
 }
