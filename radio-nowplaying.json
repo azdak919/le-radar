@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T00:00:46.611Z",
+  "updatedAt": "2026-11-12T01:06:51.377Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T00:00:06.834Z"
+      "checkedAt": "2026-11-12T01:06:24.010Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T00:00:09.553Z"
+      "checkedAt": "2026-11-12T01:06:26.198Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Rhizomatic Hour 1",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T00:00:12.520Z"
+      "checkedAt": "2026-11-12T01:06:29.464Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -95,7 +95,7 @@
       },
       "next": {
         "title": "There's a Synth in the House",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
@@ -105,10 +105,11 @@
       "host": "",
       "source": "schedule",
       "sources": [
+        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T00:00:36.569Z"
+      "checkedAt": "2026-11-12T01:06:44.054Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +130,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T00:00:37.806Z"
+      "checkedAt": "2026-11-12T01:06:44.990Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +143,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "ausgangv22026",
+      "track": "Only The Righteous — Serre Moi",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +151,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T00:00:46.261Z"
+      "checkedAt": "2026-11-12T01:06:51.026Z"
     }
   }
 }
