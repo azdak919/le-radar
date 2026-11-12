@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-12T16:07:54.327Z",
+  "updated": "2026-11-12T16:37:36.368Z",
   "total": 188,
   "pool": 57,
   "incomplete": 37,
   "withLeadExcerpt": 144,
   "candidates": 37,
   "enriched": 0,
-  "failed": 6,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -16,15 +16,6 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
-    {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": false
     },
     {
@@ -43,6 +34,15 @@
       "score": 100,
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": false
     },
     {
