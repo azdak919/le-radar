@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T13:06:56.523Z",
+  "updatedAt": "2026-11-12T14:06:51.502Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T13:06:08.241Z"
+      "checkedAt": "2026-11-12T14:06:10.070Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Une fenêtre sur le monde",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
       },
+      "next": {
+        "title": "Présentement à l'écoute",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Une fenêtre sur le monde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T13:06:22.186Z"
+      "checkedAt": "2026-11-12T14:06:24.160Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "OFC Podcast Radio",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Folk Directions",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Under The Olive Tree",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "OFC Podcast Radio",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,61 +81,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T13:06:24.592Z"
+      "checkedAt": "2026-11-12T14:06:27.196Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Free City Radio",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/free-city-radio"
-      },
-      "next": {
         "title": "Everything Everywhere",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
-      "track": "",
-      "showTitle": "Free City Radio",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-12T13:06:48.491Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
-      },
       "next": {
-        "title": "Le NEUF",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:59",
-        "url": "https://www.cfak.ca/balados/le-neuf"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Everything Everywhere",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T13:06:49.608Z"
+      "checkedAt": "2026-11-12T14:06:42.822Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Le NEUF",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:59",
+        "url": "https://www.cfak.ca/balados/le-neuf"
+      },
+      "next": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "11:59",
+        "url": "https://www.cfak.ca/balados/a-nous-le-futur"
+      },
+      "track": "",
+      "showTitle": "Le NEUF",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-12T14:06:44.193Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +148,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Adieu Narcisse — Le monstre",
+      "track": "Musique Nomade — Eadse - Still Around (Live)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T13:06:56.172Z"
+      "checkedAt": "2026-11-12T14:06:51.151Z"
     }
   }
 }
