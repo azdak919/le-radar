@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T09:06:58.544Z",
+  "updatedAt": "2026-11-12T10:06:40.055Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T09:06:04.934Z"
+      "checkedAt": "2026-11-12T10:06:02.226Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T09:06:19.041Z"
+      "checkedAt": "2026-11-12T10:06:16.087Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T09:06:21.997Z"
+      "checkedAt": "2026-11-12T10:06:18.519Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T09:06:38.258Z"
+      "checkedAt": "2026-11-12T10:06:32.627Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,20 +128,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T09:06:39.868Z"
+      "checkedAt": "2026-11-12T10:06:33.562Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Thierry Larose — Conversation dans le noir",
+      "track": "Adieu Narcisse — Elle a raison",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-12T09:06:58.193Z"
+      "checkedAt": "2026-11-12T10:06:39.704Z"
     }
   }
 }
