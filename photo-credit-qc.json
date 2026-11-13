@@ -1,23 +1,23 @@
 {
-  "updated": "2026-11-13T18:09:40.021Z",
+  "updated": "2026-11-13T18:39:31.012Z",
   "total": 188,
-  "withImage": 172,
-  "withCredit": 172,
-  "cited": 118,
+  "withImage": 171,
+  "withCredit": 171,
+  "cited": 117,
   "pending": 29,
   "missingHero": 0,
   "ok": false,
-  "checked": 44,
-  "updatedCount": 5,
-  "citedNew": 9,
+  "checked": 43,
+  "updatedCount": 4,
+  "citedNew": 8,
   "fallbackNew": 35,
   "samples": [
     {
-      "title": "Joey Saputo announces sale of CF Montreal",
-      "source": "The Link",
-      "credit": "Photo: Nicolas Tremblay",
+      "title": "Mal à l’épaule, mal au dos : et si c’était votre travail ?",
+      "source": "La Pige",
+      "credit": "Photo : Augustin Spièce",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "body-line"
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -25,13 +25,6 @@
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Souriez, vous êtes filmés !",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "Why We Dream: A Search for the Elusive",

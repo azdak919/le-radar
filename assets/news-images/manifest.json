@@ -741,16 +741,6 @@
       "via": "origin",
       "nameKey": "lennon.jpg"
     },
-    "e8fabd6c27ec8909": {
-      "local": "assets/news-images/e8fabd6c27ec8909.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_3325.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 89228,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:03.939Z",
-      "via": "resize-proxy",
-      "nameKey": "img_3325.jpg"
-    },
     "2bf3bfaf723c2921": {
       "local": "assets/news-images/2bf3bfaf723c2921.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-1-1.jpg",
@@ -1686,15 +1676,6 @@
       "via": "disk",
       "nameKey": "lacrymobastien-1.png"
     },
-    "f95e150fc854f62b": {
-      "local": "assets/news-images/f95e150fc854f62b.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/CoucheTard-scaled.jpeg",
-      "host": "www.delitfrancais.com",
-      "bytes": 265706,
-      "updatedAt": "2026-11-13T18:08:40.226Z",
-      "via": "disk",
-      "nameKey": "couchetard.jpeg"
-    },
     "8de8955b46d69bfa": {
       "local": "assets/news-images/8de8955b46d69bfa.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/NST26_Can_Champ_CF_MTL_9962_900_600_90.jpg",
@@ -1704,10 +1685,20 @@
       "updatedAt": "2026-11-13T18:08:41.219Z",
       "via": "origin",
       "nameKey": "nst26_can_champ_cf_mtl_9962.jpg"
+    },
+    "7923141d202a227f": {
+      "local": "assets/news-images/7923141d202a227f.png",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/illustration_sst_sans_personne.png",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 147737,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-13T18:38:34.218Z",
+      "via": "origin",
+      "nameKey": "illustration_sst_sans_personne.png"
     }
   },
-  "updatedAt": "2026-11-13T18:08:41.223Z",
-  "count": 171,
+  "updatedAt": "2026-11-13T18:38:34.222Z",
+  "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

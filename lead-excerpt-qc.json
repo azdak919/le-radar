@@ -1,14 +1,23 @@
 {
-  "updated": "2026-11-13T18:07:43.023Z",
+  "updated": "2026-11-13T18:37:38.377Z",
   "total": 188,
   "pool": 52,
   "incomplete": 33,
-  "withLeadExcerpt": 144,
+  "withLeadExcerpt": 143,
   "candidates": 33,
-  "enriched": 3,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "ok": true,
+      "score": 100,
+      "chars": 566,
+      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
+      "changed": true
+    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +37,12 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "title": "Mal à l’épaule, mal au dos : et si c’était votre travail ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/mal-a-lepaule-mal-au-dos-et-si-cetait-votre-travail/?utm_source=rss&utm_medium=rss&utm_campaign=mal-a-lepaule-mal-au-dos-et-si-cetait-votre-travail",
       "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "score": 99,
+      "chars": 506,
+      "sample": "Pour la première fois, la Commission des normes, de l’équité, de la santé et de la sécurité du trava",
       "changed": true
     },
     {
@@ -43,7 +52,7 @@
       "score": 100,
       "chars": 181,
       "sample": "The Saputo family founded the team in 1992, which was then called Montreal Impact. The team entered ",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Les jeunes cyniques ? Plutôt idéalistes !",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 342,
       "sample": "Durant tout le mois de novembre, le Trident présente la pièce La version qui n’intéresse personne, b",
-      "changed": true
-    },
-    {
-      "title": "Listening to The Echo of Grenada",
-      "link": "https://thelinknewspaper.ca/article/16563",
-      "ok": true,
-      "score": 100,
-      "chars": 388,
-      "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
       "changed": false
     }
   ]
