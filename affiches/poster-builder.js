@@ -662,43 +662,58 @@ function pickPosterSports(masthead, campus, limit = 3) {
   return out.slice(0, limit);
 }
 
+const CAMPUS_PAGE_PATHS = {
+  laval: 'etablissements/universite-laval/',
+  mcgill: 'etablissements/mcgill-university/',
+  udem: 'etablissements/universite-de-montreal/',
+  uqam: 'etablissements/universite-du-quebec-a-montreal/',
+  concordia: 'etablissements/concordia-university/',
+  sherbrooke: 'etablissements/universite-de-sherbrooke/',
+  bishops: 'etablissements/bishops-university/',
+};
+
+/* Une v3 : bandeau Radar plein, une dominante, un grand QR d’appel en haut,
+ * vedettes à titres seuls, bande sports/radio lisible, En bref numéroté. */
 function composeFrontPage(ctx, w, h, opts) {
   const c = frontInk();
   const articles = (opts.articles || []).filter(Boolean);
-  const briefs = (opts.briefs || []).filter(Boolean);
   const images = opts.articleImages || new Map();
   const withQr = Boolean(opts.qr);
   const glass = opts.layout === 'verre';
   const bilingual = opts.lang === 'bilingue';
   const showLangs = opts.langs !== false;
-  const margin = Math.round(Math.min(w, h) * 0.036);
-  const barH = Math.max(8, Math.round(h * 0.009));
+  const u = Math.min(w / 110, h / 170);
+  const px = (n) => Math.max(1, Math.round(n * u));
+  const margin = px(4);
   const site = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.SITE)
     ? RadarMagazineFrontPage.SITE
     : 'https://le-radar.ca';
-  const todayIso = opts.date || new Date().toISOString();
   const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const todayIso = opts.date || new Date().toISOString();
   const dateLabel = Front && Front.frDate ? Front.frDate(todayIso, { weekday: true }) : '';
   const capDate = dateLabel ? dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1) : '';
   const dateEn = (bilingual && Front && Front.enDate) ? Front.enDate(todayIso, { weekday: true }) : '';
-  const campus = opts.campus && opts.campus !== 'toutes' && opts.campus !== 'generique'
-    ? campusOf(opts.campus)
-    : null;
+  const campusSlug = opts.campus && opts.campus !== 'toutes' && opts.campus !== 'generique' ? opts.campus : null;
+  const campus = campusSlug ? campusOf(campusSlug) : null;
   const uniLabel = campus
-    ? (bilingual && campus.lineEn && campus.lineEn !== campus.line
-      ? `${campus.line}  ·  ${campus.lineEn}`
-      : campus.line)
+    ? (bilingual && campus.lineEn && campus.lineEn !== campus.line ? `${campus.line}  ·  ${campus.lineEn}` : campus.line)
     : '';
+  const ctaUrl = `${site}/${(campusSlug && CAMPUS_PAGE_PATHS[campusSlug]) || ''}`;
+  const ctaLabel = site.replace(/^https?:\/\//, '').replace(/\/$/, '');
   const photo = opts.photoImg || null;
-  const credit = (glass && photo && opts.credit)
-    ? posterCredit(opts.credit, opts.license, opts.photoUrl || '')
-    : '';
+  const credit = (glass && photo && opts.credit) ? posterCredit(opts.credit, opts.license, opts.photoUrl || '') : '';
   const radioLines = opts.radioLines || [];
   const sportsLines = opts.sportsLines || [];
 
+  const ink = c.ink;
+  const mute = glass ? '#3F3A35' : c.mute;
+  const DEEP = '#3B1236';
+  const LILAC = '#E9C8E3';
+
+  /* Fond */
   if (glass && photo) {
     coverPhoto(ctx, photo, 0, 0, w, h, opts.focalX ?? 0.5, opts.focalY ?? 0.42);
-    ctx.fillStyle = 'rgba(18, 16, 14, 0.32)';
+    ctx.fillStyle = 'rgba(18, 16, 14, 0.38)';
     ctx.fillRect(0, 0, w, h);
   } else if (glass) {
     ctx.fillStyle = '#2A2420';
@@ -707,21 +722,19 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.fillStyle = c.paper;
     ctx.fillRect(0, 0, w, h);
   }
-  ctx.fillStyle = PURPLE;
-  ctx.fillRect(0, 0, w, barH);
 
   const measure = (font, text) => {
     ctx.font = font;
-    const m = ctx.measureText(text);
+    const m = ctx.measureText(text || 'Hg');
     return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || parseFloat(font) || 12;
   };
   const wrapFit = (text, fontFn, maxW, maxSize, minSize, maxLines) => {
-    let size = maxSize;
+    let size = Math.max(minSize, Math.round(maxSize));
     let lines = [text || ''];
-    while (size > minSize) {
+    while (true) {
       ctx.font = fontFn(size);
       lines = wrapWords(ctx, text || '', maxW);
-      if (lines.length <= maxLines) break;
+      if (lines.length <= maxLines || size <= minSize) break;
       size -= 1;
     }
     if (lines.length > maxLines) {
@@ -732,447 +745,527 @@ function composeFrontPage(ctx, w, h, opts) {
     }
     return { size, lines };
   };
-
-  const ink = c.ink;
-  const mute = glass ? '#3F3A35' : c.mute;
-  const markSize = Math.round(Math.min(w, h) * 0.028);
-  const logoS = Math.round(markSize * 1.12);
-  const x0 = margin;
-  const x1 = w - margin;
-  const contentW = x1 - x0;
-  const sloganSize = Math.round(markSize * 0.34);
-  const dSize = Math.round(markSize * 0.4);
-  const fit = Math.min(w / (11 * REF_DPI), h / (17 * REF_DPI));
-  const footCap = Math.round(62 * fit);
-  const fLang = Math.min(26 * fit, footCap * 0.48);
-  const iconS = Math.min(36 * fit, footCap * 0.64);
-  const siteQr = Math.round(Math.min(w, h) * 0.062);
-  const footPad = Math.round(margin * 0.16);
-  const legalSize = Math.max(10, Math.round(Math.min(w, h) * 0.01));
-  const qrCol = withQr ? siteQr + margin * 0.3 : 0;
-  const legalMax = Math.max(80, contentW - qrCol);
-  const langsMax = contentW;
-  ctx.font = `400 ${legalSize}px "LR Sans"`;
-  const legalLines = [
-    ...wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax),
-    ...(bilingual ? wrapWords(ctx, INDEP_EN, legalMax) : []),
-  ];
-  const legalLineH = measure(`400 ${legalSize}px "LR Sans"`, legalLines[0] || INDEP_1);
-  const legalH = legalLines.length * (legalLineH + 3);
-  const langsMetrics = showLangs
-    ? measureLangsFooter(ctx, { maxW: langsMax, size: fLang, iconS, lineGap: 4, iconGap: 6 })
-    : { height: 0, lines: [] };
-  const creditSize = credit ? Math.max(8, Math.round(Math.min(w, h) * 0.008)) : 0;
-  const creditH = credit ? creditSize + 5 : 0;
-  const qrBlock = withQr ? siteQr + Math.round(legalSize * 1.25) : 0;
-  const footTopH = Math.max(qrBlock, legalH) + footPad;
-  const footH = footTopH + langsMetrics.height + creditH + footPad;
-  const footY = h - margin * 0.55 - footH;
-
-  const hasFold = briefs.length > 0 || radioLines.length > 0 || sportsLines.length > 0;
-  const foldH = hasFold ? Math.round(Math.min(w, h) * 0.15) : 0;
-  const foldGap = hasFold ? Math.round(margin * 0.22) : 0;
-  const contentBottom = footY - (hasFold ? foldH + foldGap + Math.round(margin * 0.12) : Math.round(margin * 0.1));
-
-  /* Bandeau de tête */
-  let headY = barH + Math.round(margin * 0.4);
-  headY += logoS + Math.round(margin * 0.14);
-  const sloganMax = contentW;
-  ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  wrapWords(ctx, SLOGAN, sloganMax).forEach((line) => {
-    headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 3;
-  });
-  if (bilingual) {
-    ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    wrapWords(ctx, SLOGAN_EN, sloganMax).forEach((line) => {
-      headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 2;
+  const drawLines = (fit, fontFn, x, y, color, lead = 1.16, floor = Infinity) => {
+    let yy = y;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    fit.lines.forEach((line) => {
+      ctx.font = fontFn(fit.size);
+      if (yy + fit.size > floor) return;
+      ctx.fillText(line, x, yy);
+      yy += Math.round(fit.size * lead);
     });
-  }
-  if (uniLabel) {
-    const uniSize = Math.round(markSize * 0.36);
-    ctx.font = `600 ${uniSize}px "LR Sans Semi", "LR Sans"`;
-    headY += measure(ctx.font, uniLabel) + 3;
-  }
-  headY += Math.round(margin * 0.22);
-  if (glass) {
-    frostedRect(ctx, margin * 0.4, barH + 3, w - margin * 0.8, headY - barH - 2, Math.round(margin * 0.18), {
-      fill: 'rgba(255, 252, 247, 0.84)',
-    });
-  }
-
-  let y = barH + Math.round(margin * 0.4);
-  if (assets.logo) ctx.drawImage(assets.logo, x0, y, logoS, logoS);
-  fillTracked(ctx, TITLE, y + Math.round((logoS - markSize) / 2), markSize, PURPLE, x0 + logoS + Math.round(logoS * 0.16));
-  if (capDate) {
-    ctx.font = `400 ${dSize}px "LR Sans"`;
-    ctx.fillStyle = mute;
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(capDate, x1, y + logoS / 2 - (dateEn ? dSize * 0.35 : 0));
-    if (dateEn) {
-      ctx.font = `400 ${Math.round(dSize * 0.86)}px "LR Sans"`;
-      ctx.fillText(dateEn, x1, y + logoS / 2 + dSize * 0.55);
+    return yy;
+  };
+  const sans = (wt) => (s) => `${wt} ${s}px ${wt >= 600 ? '"LR Sans Semi", "LR Sans"' : '"LR Sans"'}`;
+  const serif = (s) => `700 ${s}px "LR Serif"`;
+  const fitOne = (text, fontFn, size, maxW) => {
+    ctx.font = fontFn(size);
+    let t = String(text || '');
+    while (t.length > 3 && textW(ctx, t) > maxW) t = `${t.slice(0, -2).trimEnd()}…`;
+    return t;
+  };
+  /* Titre qui coule sur toute la largeur puis se resserre à côté d’un QR. */
+  const fitFlow = (text, fontFn, maxSize, minSize, y, fullW, narrowW, narrowFromY, floor, lead = 1.1) => {
+    const words = String(text || '').split(/\s+/).filter(Boolean);
+    let size = Math.max(minSize, Math.round(maxSize));
+    let out = null;
+    while (true) {
+      ctx.font = fontFn(size);
+      const lh = Math.round(size * lead);
+      const lines = [];
+      let yy = y;
+      let i = 0;
+      let overflow = false;
+      while (i < words.length) {
+        if (yy + size > floor) { overflow = true; break; }
+        const maxW = (yy + size > narrowFromY) ? narrowW : fullW;
+        let line = words[i];
+        i += 1;
+        while (i < words.length && textW(ctx, `${line} ${words[i]}`) <= maxW) { line = `${line} ${words[i]}`; i += 1; }
+        lines.push({ text: line, y: yy, maxW });
+        yy += lh;
+      }
+      out = { size, lines, end: yy, overflow };
+      if (!overflow || size <= minSize) break;
+      size -= 1;
     }
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-  }
-  y += logoS + Math.round(margin * 0.14);
-  wrapWords(ctx, SLOGAN, sloganMax).forEach((line) => {
-    ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    ctx.fillStyle = mute;
-    ctx.textBaseline = 'top';
-    ctx.fillText(line, x0, y);
-    y += measure(ctx.font, line) + 3;
-  });
-  if (bilingual) {
-    wrapWords(ctx, SLOGAN_EN, sloganMax).forEach((line) => {
-      ctx.font = `400 ${sloganSize}px "LR Sans"`;
-      ctx.fillStyle = mute;
-      ctx.textBaseline = 'top';
-      ctx.fillText(line, x0, y);
-      y += measure(ctx.font, line) + 2;
-    });
-  }
-  if (uniLabel) {
-    const uniSize = Math.round(markSize * 0.36);
-    ctx.font = `600 ${uniSize}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = PURPLE;
-    ctx.textBaseline = 'top';
-    ctx.fillText(uniLabel, x0, y);
-    y += measure(ctx.font, uniLabel) + 3;
-  }
-  y += Math.round(margin * 0.08);
-  if (!glass) {
-    ctx.strokeStyle = c.rule;
-    ctx.lineWidth = Math.max(1, Math.round(h / 900));
-    ctx.beginPath();
-    ctx.moveTo(x0, y);
-    ctx.lineTo(x1, y);
-    ctx.stroke();
-    ctx.lineWidth = Math.max(1, Math.round(h / 1800));
-    ctx.beginPath();
-    ctx.moveTo(x0, y + Math.max(2, Math.round(h / 700)));
-    ctx.lineTo(x1, y + Math.max(2, Math.round(h / 700)));
-    ctx.stroke();
-    y += Math.max(2, Math.round(h / 700)) + Math.round(margin * 0.18);
-  } else {
-    y += Math.round(margin * 0.2);
-  }
-
-  const radius = glass ? Math.round(margin * 0.16) : 0;
-  const pad = glass ? Math.round(margin * 0.12) : 0;
-  const filet = Math.max(1, Math.round(h / 1400));
-
-  const drawCreditLine = (text, cx, cy, maxW) => {
-    if (!text) return 0;
-    const size = Math.max(8, Math.round(Math.min(w, h) * 0.008));
-    ctx.font = `400 ${size}px "LR Sans"`;
-    let line = String(text).replace(/\s+/g, ' ').trim();
-    while (line.length > 4 && textW(ctx, line) > maxW) line = line.slice(0, -1).trimEnd();
-    if (textW(ctx, line) > maxW) return 0;
-    ctx.fillStyle = mute;
-    ctx.textBaseline = 'top';
-    ctx.fillText(line, cx, cy);
-    return size + 3;
-  };
-  const drawKicker = (label, yy, left, frosted) => {
-    const size = Math.max(9, Math.round(Math.min(w, h) * 0.011));
-    const font = `700 ${size}px "LR Sans Semi", "LR Sans"`;
-    const start = left ?? x0;
-    ctx.font = font;
-    const hgt = measure(font, label.toUpperCase());
-    if (frosted) {
-      const padX = Math.round(size * 0.5);
-      const padY = Math.round(size * 0.28);
-      ctx.font = font;
-      const tw = textW(ctx, label.toUpperCase());
-      frostedRect(ctx, start - padX, yy - padY, tw + padX * 2, hgt + padY * 2, Math.round(size * 0.4), {
-        fill: 'rgba(255, 252, 247, 0.9)',
-      });
+    if (out.overflow && out.lines.length) {
+      const last = out.lines[out.lines.length - 1];
+      let t = last.text;
+      ctx.font = fontFn(out.size);
+      while (t.length > 4 && textW(ctx, `${t}…`) > last.maxW) t = t.slice(0, -1).trimEnd();
+      last.text = `${t.replace(/[\s,;:]+$/, '')}…`;
     }
-    ctx.font = font;
-    ctx.fillStyle = PURPLE;
+    return out;
+  };
+  const drawFlow = (f, fontFn, x, color) => {
+    ctx.font = fontFn(f.size);
+    ctx.fillStyle = color;
     ctx.textBaseline = 'top';
-    ctx.fillText(label.toUpperCase(), start, yy);
-    return yy + hgt + Math.round(size * 0.4);
+    f.lines.forEach((l) => ctx.fillText(l.text, x, l.y));
+    return f.end;
   };
-  const fillPlaceholder = (x, yy, tw, th, label) => {
-    ctx.fillStyle = glass ? 'rgba(90, 84, 76, 0.28)' : c.photoBg;
-    ctx.fillRect(x, yy, tw, th);
-    if (!label) return;
-    const size = Math.max(11, Math.round(th * 0.08));
-    ctx.font = `600 ${size}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = mute;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(label, x + tw / 2, yy + th / 2);
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
+  const panel = (x, y, pw, ph, fill) => {
+    if (glass) frostedRect(ctx, x, y, pw, ph, px(1.2), fill ? { fill } : undefined);
   };
-  const paintImage = (img, x, yy, tw, th, fy, source) => {
-    if (img) {
-      ctx.save();
-      roundedRectPath(ctx, x, yy, tw, th, glass ? Math.round(radius * 0.45) : 0);
-      ctx.clip();
-      coverPhoto(ctx, img, x, yy, tw, th, 0.5, fy ?? 0.5);
-      ctx.restore();
-    } else fillPlaceholder(x, yy, tw, th, source || '');
-  };
-  const vRule = (x, y1, y2) => {
+  const rule = (xA, xB, yy, weight = 1) => {
     if (glass) return;
     ctx.strokeStyle = c.rule;
-    ctx.lineWidth = filet;
-    ctx.beginPath();
-    ctx.moveTo(x, y1);
-    ctx.lineTo(x, y2);
-    ctx.stroke();
-  };
-  const hRule = (xA, xB, yy) => {
-    if (glass) return;
-    ctx.strokeStyle = c.rule;
-    ctx.lineWidth = filet;
+    ctx.lineWidth = Math.max(1, Math.round(u * 0.12 * weight));
     ctx.beginPath();
     ctx.moveTo(xA, yy);
     ctx.lineTo(xB, yy);
     ctx.stroke();
   };
-
-  const drawStory = (art, box, kind) => {
-    if (!art || box.w < 8 || box.h < 8) return;
-    const { x, y: by, w: bw, h: bh } = box;
-    if (glass) frostedRect(ctx, x, by, bw, bh, radius);
-    const ip = pad;
-    const ix = x + ip;
-    const iy = by + ip;
-    const iw = bw - ip * 2;
-    const ih = bh - ip * 2;
-    const floor = by + bh - ip;
-    const isLead = kind === 'lead';
-    const isSec = kind === 'secondary';
-    const qr = withQr && art.pageUrl
-      ? Math.round(Math.min(iw, ih) * (isLead ? 0.18 : isSec ? 0.22 : 0.24))
-      : 0;
-    const img = art.key ? images.get(art.key) : null;
-    const imgRatio = isLead ? 0.40 : isSec ? 0.38 : 0.36;
-    let ty = iy;
-    const kicker = isLead
-      ? (bilingual ? 'À la une  ·  Front page' : 'À la une')
-      : '';
-    if (kicker) ty = drawKicker(kicker, ty, ix);
-    const imgH = Math.max(24, Math.min(Math.round(ih * imgRatio), Math.round(iw / (isLead ? 1.75 : 1.55))));
-    paintImage(img, ix, ty, iw, imgH, art.focalY, art.source);
-    ty += imgH + 3;
-    if (art.credit) ty += drawCreditLine(art.credit, ix, ty, iw);
-    const titleMax = Math.round(Math.min(iw, ih) * (isLead ? 0.1 : isSec ? 0.1 : 0.095));
-    const titleMin = isLead ? 14 : 11;
-    const titleW = iw;
-    const tFit = wrapFit(art.title, (s) => `700 ${s}px "LR Serif"`, titleW, titleMax, titleMin, isLead ? 3 : 3);
-    tFit.lines.forEach((line) => {
-      ctx.font = `700 ${tFit.size}px "LR Serif"`;
-      ctx.fillStyle = ink;
-      ctx.textBaseline = 'top';
-      const hh = measure(ctx.font, line);
-      if (ty + hh > floor) return;
-      ctx.fillText(line, ix, ty);
-      ty += hh + Math.round(tFit.size * 0.06);
-    });
-    const meta = [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
-    if (meta) {
-      const ms = Math.max(9, Math.round(tFit.size * (isLead ? 0.3 : 0.36)));
-      ctx.font = `600 ${ms}px "LR Sans Semi", "LR Sans"`;
-      ctx.fillStyle = PURPLE;
-      const mh = measure(ctx.font, meta);
-      if (ty + mh < floor) {
-        ctx.fillText(meta, ix, ty);
-        ty += mh + Math.round(ms * 0.35);
+  const vrule = (x, yA, yB) => {
+    if (glass) return;
+    ctx.strokeStyle = c.rule;
+    ctx.lineWidth = Math.max(1, Math.round(u * 0.12));
+    ctx.beginPath();
+    ctx.moveTo(x, yA);
+    ctx.lineTo(x, yB);
+    ctx.stroke();
+  };
+  const label = (text, x, y, color = PURPLE, size = px(1.6)) => {
+    ctx.font = `700 ${size}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    ctx.fillText(text.toUpperCase(), x, y);
+    return y + Math.round(size * 1.45);
+  };
+  const paintImage = (img, x, y, iw, ih, fy, source) => {
+    ctx.save();
+    roundedRectPath(ctx, x, y, iw, ih, glass ? px(0.6) : 0);
+    ctx.clip();
+    if (img) coverPhoto(ctx, img, x, y, iw, ih, 0.5, fy ?? 0.5);
+    else {
+      ctx.fillStyle = glass ? 'rgba(90, 84, 76, 0.28)' : c.photoBg;
+      ctx.fillRect(x, y, iw, ih);
+      if (source) {
+        ctx.font = `600 ${px(1.8)}px "LR Sans Semi", "LR Sans"`;
+        ctx.fillStyle = mute;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(source, x + iw / 2, y + ih / 2);
+        ctx.textAlign = 'left';
       }
     }
-    const hook = isLead ? (art.hookLong || art.hook || '') : (art.hook || art.hookShort || '');
-    const hookW = iw - (qr ? qr + 8 : 0);
-    if (hook) {
-      const hs = Math.max(10, Math.round(Math.min(w, h) * (isLead ? 0.0155 : isSec ? 0.013 : 0.012)));
-      const room = floor - ty - 2;
-      const maxLines = Math.max(2, Math.min(isLead ? 7 : isSec ? 5 : 4, Math.floor(room / (hs * 1.2))));
-      const hFit = wrapFit(hook, (s) => `400 ${s}px "LR Sans"`, hookW, hs, 9, maxLines);
-      hFit.lines.forEach((line) => {
-        ctx.font = `400 ${hFit.size}px "LR Sans"`;
-        ctx.fillStyle = ink;
-        ctx.textBaseline = 'top';
-        const hh = measure(ctx.font, line);
-        if (ty + hh > floor) return;
-        ctx.fillText(line, ix, ty);
-        ty += hh + Math.round(hFit.size * 0.18);
-      });
-    }
-    if (qr) {
-      const qx = ix + iw - qr;
-      const qy = Math.min(Math.max(iy + imgH + 6, floor - qr), floor - qr);
-      drawQrCode(ctx, qx, qy, qr, art.pageUrl);
-    }
+    ctx.restore();
   };
+  const creditLine = (text, x, y, maxW) => {
+    if (!text) return 0;
+    const s = Math.max(8, px(0.85));
+    ctx.font = `400 ${s}px "LR Sans"`;
+    ctx.fillStyle = mute;
+    ctx.textBaseline = 'top';
+    ctx.fillText(fitOne(String(text).replace(/\s+/g, ' ').trim(), (z) => `400 ${z}px "LR Sans"`, s, maxW), x, y);
+    return s + px(0.4);
+  };
+  const metaOf = (art) => [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
 
-  const n = articles.length;
+  const x0 = margin;
+  const x1 = w - margin;
+  const contentW = x1 - x0;
+  const gap = px(2.2);
+
+  /* 1. Bandeau Radar plein */
+  const logoS = px(9.5);
+  const titleS = px(7.4);
+  const tagS = px(1.9);
+  const mastTop = 0;
+  let mastH = px(2.6) + logoS + px(1.2) + Math.round(tagS * 1.35) * (bilingual ? 2 : 1) + px(2);
+  ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
+  ctx.fillRect(0, mastTop, w, mastH);
+  ctx.fillStyle = DEEP;
+  ctx.fillRect(0, mastTop + mastH - px(0.6), w, px(0.6));
+  let my = px(2.6);
+  if (assets.logo) {
+    ctx.save();
+    roundedRectPath(ctx, x0, my, logoS, logoS, px(1.4));
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.restore();
+    const inset = px(0.7);
+    ctx.drawImage(assets.logo, x0 + inset, my + inset, logoS - inset * 2, logoS - inset * 2);
+  }
+  fillTracked(ctx, TITLE, my + Math.round((logoS - titleS) / 2), titleS, '#ffffff', x0 + logoS + px(2));
+  const rightBlockX = x1;
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'top';
+  let ry = my + px(0.4);
+  if (uniLabel) {
+    const uS = px(2.6);
+    ctx.font = `700 ${uS}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(fitOne(uniLabel, (z) => `700 ${z}px "LR Sans Semi", "LR Sans"`, uS, contentW * 0.36), rightBlockX, ry);
+    ry += Math.round(uS * 1.35);
+  }
+  if (capDate) {
+    const dS = px(1.9);
+    ctx.font = `400 ${dS}px "LR Sans"`;
+    ctx.fillStyle = LILAC;
+    ctx.fillText(capDate, rightBlockX, ry);
+    ry += Math.round(dS * 1.3);
+    if (dateEn) {
+      ctx.font = `400 ${Math.round(dS * 0.9)}px "LR Sans"`;
+      ctx.fillText(dateEn, rightBlockX, ry);
+    }
+  }
+  ctx.textAlign = 'left';
+  my += logoS + px(1.2);
+  ctx.font = `400 ${tagS}px "LR Sans"`;
+  ctx.fillStyle = '#ffffff';
+  ctx.textBaseline = 'top';
+  ctx.fillText(fitOne(SLOGAN, sans(400), tagS, contentW), x0, my);
+  my += Math.round(tagS * 1.35);
+  if (bilingual) {
+    ctx.fillStyle = LILAC;
+    ctx.fillText(fitOne(SLOGAN_EN, sans(400), tagS, contentW), x0, my);
+  }
+
+  /* 2. Pied : mention d’indépendance + ligne des langues */
+  const legalSize = Math.max(9, px(1.15));
+  const fit = Math.min(w / (11 * REF_DPI), h / (17 * REF_DPI));
+  const fLang = Math.min(26 * fit, Math.round(62 * fit) * 0.48);
+  const iconS = Math.min(36 * fit, Math.round(62 * fit) * 0.64);
+  ctx.font = `400 ${legalSize}px "LR Sans"`;
+  const legalLines = [
+    ...wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, contentW),
+    ...(bilingual ? wrapWords(ctx, INDEP_EN, contentW) : []),
+  ];
+  const legalLineH = Math.round(legalSize * 1.3);
+  const langsMetrics = showLangs
+    ? measureLangsFooter(ctx, { maxW: contentW, size: fLang, iconS, lineGap: 4, iconGap: 6 })
+    : { height: 0, lines: [] };
+  const creditS = credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
+  const footPad = px(0.9);
+  const footH = footPad + legalLines.length * legalLineH + (langsMetrics.height ? px(0.6) + langsMetrics.height : 0) + creditS + footPad;
+  const footY = h - px(1.2) - footH;
+
+  /* 3. Répartition verticale */
   const lead = articles[0] || null;
   const rest = articles.slice(1);
-  const colGap = Math.round(margin * 0.22);
-  const rowGap = Math.round(margin * 0.2);
-  const top = y;
+  const sideArts = rest.slice(0, 2);
+  const gridArts = rest.slice(2, 6);
+  const briefs = [...rest.slice(6), ...(opts.briefs || [])].filter(Boolean);
+  const hasBand = sportsLines.length > 0 || radioLines.length > 0;
+  const top = mastTop + mastH + px(2.4);
+  const bottom = footY - px(1.4);
+  const avail = bottom - top;
+  const want = {
+    lead: lead ? 62 : 0,
+    grid: gridArts.length ? 36 : 0,
+    band: hasBand ? 21 : 0,
+    briefs: briefs.length ? 20 : 0,
+  };
+  const blocks = Object.keys(want).filter((k) => want[k]);
+  const gapsH = Math.max(0, blocks.length - 1) * px(2.4);
+  const totalWant = blocks.reduce((s, k) => s + want[k], 0) || 1;
+  /* Les blocs absents rendent leur place : priorité à la une et aux brèves. */
+  const scale = (avail - gapsH) / (totalWant * u);
+  const bh = {};
+  blocks.forEach((k) => { bh[k] = Math.round(want[k] * u * (k === 'band' ? Math.min(scale, 1.15) : scale)); });
+  const spare = (avail - gapsH) - blocks.reduce((s, k) => s + bh[k], 0);
+  if (spare > 0 && bh.lead) bh.lead += spare;
+  else if (spare > 0 && blocks.length) bh[blocks[0]] += spare;
 
+  let cy = top;
   if (!lead) {
-    if (glass) frostedRect(ctx, x0, y, contentW, Math.round(margin * 1.5), radius);
-    ctx.font = `400 ${Math.round(markSize * 0.42)}px "LR Sans"`;
-    ctx.fillStyle = mute;
-    ctx.fillText('Aucun article à afficher. Cochez au moins un titre.', x0 + (glass ? 12 : 0), y + (glass ? 14 : 0));
-  } else {
-    const areaH = contentBottom - top;
-    const sideN = n === 2 ? 1 : n === 4 ? 3 : Math.min(2, rest.length);
-    const hasSide = sideN > 0;
-    const hasGrid = rest.length > sideN;
-    const leadShare = hasGrid ? (rest.length - sideN >= 5 ? 0.46 : 0.5) : 0.96;
-    const leadBottom = top + Math.round(areaH * leadShare);
-    const leadW = hasSide ? Math.round(contentW * 0.62) : contentW;
-    const sideX = x0 + leadW + colGap;
-    const sideW = x1 - sideX;
-    drawStory(lead, { x: x0, y: top, w: leadW, h: leadBottom - top }, 'lead');
-    if (hasSide) {
-      vRule(x0 + leadW + Math.round(colGap / 2), top, leadBottom);
-      const sideArts = rest.slice(0, sideN);
-      const cellH = Math.floor((leadBottom - top - rowGap * (sideArts.length - 1)) / sideArts.length);
-      sideArts.forEach((art, i) => {
-        const cy = top + i * (cellH + rowGap);
-        if (i > 0) hRule(sideX, x1, cy - Math.round(rowGap / 2));
-        drawStory(art, { x: sideX, y: cy, w: sideW, h: cellH }, 'secondary');
-      });
-    }
-    const gridArts = rest.slice(sideN);
-    if (gridArts.length) {
-      const gy = leadBottom + rowGap;
-      const kicker = bilingual ? 'Vedettes  ·  Features' : 'Vedettes';
-      const gyText = drawKicker(kicker, gy, x0, glass);
-      const gridH = contentBottom - gyText;
-      const count = gridArts.length;
-      const firstCols = count <= 2 ? count : 3;
-      const firstN = Math.min(firstCols, count);
-      const secondN = count - firstN;
-      const rows = secondN ? 2 : 1;
-      const rowH = Math.floor((gridH - (rows > 1 ? rowGap : 0)) / rows);
+    panel(x0, cy, contentW, px(8));
+    ctx.font = `400 ${px(2.2)}px "LR Sans"`;
+    ctx.fillStyle = glass ? ink : mute;
+    ctx.textBaseline = 'top';
+    ctx.fillText('Aucun article à afficher. Cochez au moins un titre.', x0 + px(1.5), cy + px(2.5));
+  }
 
-      const placeRow = (arts, rowY, rowHeight) => {
-        const cols = arts.length;
-        const cellW = Math.floor((contentW - colGap * (cols - 1)) / cols);
-        arts.forEach((art, i) => {
-          const cx = x0 + i * (cellW + colGap);
-          if (i > 0) vRule(cx - Math.round(colGap / 2), rowY, rowY + rowHeight);
-          drawStory(art, { x: cx, y: rowY, w: cellW, h: rowHeight }, 'grid');
-        });
-      };
-      placeRow(gridArts.slice(0, firstN), gyText, rowH);
-      if (secondN) {
-        const y2 = gyText + rowH + rowGap;
-        hRule(x0, x1, y2 - Math.round(rowGap / 2));
-        placeRow(gridArts.slice(firstN), y2, rowH);
+  /* 4. La une + colonne d’appel (grand QR) */
+  if (lead) {
+    const rowH = bh.lead;
+    const showCta = withQr || sideArts.length > 0;
+    const rightW = showCta ? Math.round(contentW * 0.32) : 0;
+    const leadW = showCta ? contentW - rightW - gap : contentW;
+    const p = glass ? px(1.4) : 0;
+    panel(x0, cy, leadW, rowH);
+    const lx = x0 + p;
+    const lw = leadW - p * 2;
+    let ly = cy + p;
+    const floor = cy + rowH - p;
+    const img = lead.key ? images.get(lead.key) : null;
+    const leadQr = withQr && lead.pageUrl ? px(12) : 0;
+    const capS = px(1.3);
+    const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
+    ctx.font = serif(px(5.6));
+    const tProbe = wrapFit(lead.title, serif, lw, px(5.6), px(3), 3);
+    const titleH = tProbe.lines.length * Math.round(tProbe.size * 1.08);
+    const creditH = lead.credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
+    const imgH = Math.max(px(12), Math.min(Math.round(lw / 1.55), floor - ly - px(1.2) - creditH - titleH - px(1) - qrRowH));
+    paintImage(img, lx, ly, lw, imgH, lead.focalY, lead.source);
+    /* Étiquette À la une posée sur la photo */
+    const kick = bilingual ? 'À la une  ·  Front page' : 'À la une';
+    const kS = px(1.7);
+    ctx.font = `700 ${kS}px "LR Sans Semi", "LR Sans"`;
+    const kW = textW(ctx, kick.toUpperCase()) + px(2.2);
+    ctx.fillStyle = PURPLE;
+    ctx.fillRect(lx, ly, kW, Math.round(kS * 2));
+    ctx.fillStyle = '#ffffff';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(kick.toUpperCase(), lx + px(1.1), ly + Math.round(kS));
+    ctx.textBaseline = 'top';
+    ly += imgH + px(0.4);
+    if (lead.credit) ly += creditLine(lead.credit, lx, ly, lw);
+    ly += px(0.8);
+    ly = drawLines(tProbe, serif, lx, ly, ink, 1.08, floor);
+    ly += px(0.8);
+    const textW2 = lw - (leadQr ? leadQr + px(2.4) : 0);
+    const meta = metaOf(lead);
+    if (meta) {
+      ctx.font = `600 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = PURPLE;
+      ctx.fillText(fitOne(meta, sans(600), px(1.9), textW2), lx, ly);
+    }
+    const hookY = ly + (meta ? px(3) : 0);
+    const hook = lead.hook || lead.hookShort || '';
+    if (hook && floor - hookY > px(2.4)) {
+      const lines = Math.max(1, Math.min(5, Math.floor((floor - hookY) / Math.round(px(2.1) * 1.25))));
+      const hFit = wrapFit(hook, sans(400), textW2, px(2.1), Math.max(9, px(1.6)), lines);
+      drawLines(hFit, sans(400), lx, hookY, ink, 1.25, floor);
+    }
+    if (leadQr) {
+      const qx = lx + lw - leadQr;
+      const qy = Math.min(ly, floor - leadQr - px(2));
+      drawQrCode(ctx, qx, qy, leadQr, lead.pageUrl);
+      ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = mute;
+      ctx.textAlign = 'center';
+      ctx.fillText(bilingual ? 'Lire · Read' : 'Lire l’article', qx + leadQr / 2, qy + leadQr + px(0.4));
+      ctx.textAlign = 'left';
+    }
+    if (showCta) {
+      const rx = x0 + leadW + gap;
+      vrule(rx - Math.round(gap / 2), cy, cy + rowH);
+      let ry2 = cy;
+      if (withQr) {
+        /* Carte d’appel : un seul gros QR, en haut (le bas d’un babillard est souvent masqué). */
+        const cardP = px(1.6);
+        const qrS = Math.min(rightW - cardP * 2, px(glass ? 21 : 22));
+        const head = bilingual ? 'Scanne · Scan' : 'Scanne-moi';
+        const sub = campus
+          ? (bilingual ? 'Ton campus en direct · Your campus, live' : 'Ton campus en direct')
+          : (bilingual ? 'Tout le Radar · All student news' : 'Tout le Radar étudiant');
+        const sub2 = 'Journaux · radios · sports';
+        const headS = px(3.4);
+        const subFit = wrapFit(sub, sans(600), rightW - cardP * 2, px(1.9), Math.max(9, px(1.4)), 2);
+        const cardH = cardP + Math.round(headS * 1.25) + subFit.lines.length * Math.round(subFit.size * 1.25) + px(0.6) + qrS + px(3.2) + px(2.4) + cardP;
+        ctx.fillStyle = glass ? 'rgba(59, 18, 54, 0.92)' : DEEP;
+        roundedRectPath(ctx, rx, ry2, rightW, cardH, px(1.2));
+        ctx.fill();
+        let cyy = ry2 + cardP;
+        ctx.font = `700 ${headS}px "LR Sans Semi", "LR Sans"`;
+        ctx.fillStyle = '#ffffff';
+        ctx.textBaseline = 'top';
+        ctx.fillText(head, rx + cardP, cyy);
+        cyy += Math.round(headS * 1.25);
+        cyy = drawLines(subFit, sans(600), rx + cardP, cyy, LILAC, 1.25);
+        cyy += px(0.6);
+        const qx = rx + Math.round((rightW - qrS) / 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(qx - px(0.6), cyy - px(0.6), qrS + px(1.2), qrS + px(1.2));
+        drawQrCode(ctx, qx, cyy, qrS, ctaUrl);
+        cyy += qrS + px(1.2);
+        ctx.font = `700 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.fillText(fitOne(ctaLabel, sans(700), px(1.9), rightW - cardP * 2), rx + rightW / 2, cyy);
+        cyy += px(2.6);
+        ctx.font = `400 ${px(1.5)}px "LR Sans"`;
+        ctx.fillStyle = LILAC;
+        ctx.fillText(sub2, rx + rightW / 2, cyy);
+        ctx.textAlign = 'left';
+        ry2 += cardH + px(1.8);
+      }
+      if (sideArts.length) {
+        const sideH = cy + rowH - ry2;
+        if (sideH > px(6)) {
+          panel(rx, ry2, rightW, sideH);
+          const sp = glass ? px(1.2) : 0;
+          let sy = ry2 + sp;
+          sy = label(bilingual ? 'Aussi · Also' : 'Aussi à lire', rx + sp, sy);
+          /* Pas de titre tronqué à une ligne : s’il manque de place, le second passe en bref. */
+          const needPer = px(7.4);
+          let shown = sideArts;
+          if (sideArts.length > 1 && Math.floor((ry2 + sideH - sp - sy) / sideArts.length) < needPer) {
+            shown = sideArts.slice(0, 1);
+            briefs.unshift(...sideArts.slice(1));
+          }
+          const per = Math.floor((ry2 + sideH - sp - sy) / shown.length);
+          shown.forEach((art, i) => {
+            const by = sy + i * per;
+            if (i > 0) rule(rx, rx + rightW, by - px(0.6));
+            let yy = by + (i > 0 ? px(0.4) : 0);
+            ctx.font = `600 ${px(1.45)}px "LR Sans Semi", "LR Sans"`;
+            ctx.fillStyle = PURPLE;
+            ctx.fillText(fitOne(metaOf(art), sans(600), px(1.45), rightW - sp * 2), rx + sp, yy);
+            yy += px(2.1);
+            const room = by + per - yy - px(0.3);
+            const tMax = Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
+            const maxL = Math.max(2, Math.min(4, Math.floor(room / (tMax * 1.1))));
+            const f = wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
+            drawLines(f, serif, rx + sp, yy, ink, 1.1, by + per + px(0.2));
+          });
+        }
       }
     }
+    cy += rowH + px(2.4);
   }
 
-  /* Pli du bas : En bref / radio / sports, colonnes seulement si elles ont du contenu. */
-  if (hasFold) {
-    const fy = footY - foldH - foldGap;
-    const foldCols = [
-      briefs.length ? { title: bilingual ? 'En bref  ·  In brief' : 'En bref', items: briefs.map((b) => ({ kicker: b.source, line: b.title, meta: b.dateLabel })) } : null,
-      radioLines.length ? { title: bilingual ? 'Radio  ·  On air' : 'Radio en direct', items: radioLines } : null,
-      sportsLines.length ? { title: bilingual ? 'Sports  ·  Scoreboard' : 'Sports étudiants', items: sportsLines } : null,
-    ].filter(Boolean);
-    if (glass) frostedRect(ctx, margin * 0.4, fy - 2, w - margin * 0.8, foldH + 4, radius, { fill: 'rgba(255, 252, 247, 0.86)' });
-    else {
-      ctx.strokeStyle = c.rule;
-      ctx.lineWidth = Math.max(1, Math.round(h / 900));
-      ctx.beginPath();
-      ctx.moveTo(x0, fy);
-      ctx.lineTo(x1, fy);
-      ctx.stroke();
-    }
-    const fCols = foldCols.length;
-    const fGap = colGap;
-    const fW = Math.floor((contentW - fGap * (fCols - 1)) / fCols);
-    const fPad = Math.round(margin * 0.06);
-    foldCols.forEach((col, i) => {
-      const cx = x0 + i * (fW + fGap);
-      if (i > 0) vRule(cx - Math.round(fGap / 2), fy + 6, fy + foldH - 4);
-      let ty = drawKicker(col.title, fy + fPad + 4, cx, false);
-      const size = Math.max(10, Math.round(Math.min(w, h) * 0.011));
-      const metaS = Math.max(8, Math.round(size * 0.78));
-      col.items.forEach((item) => {
-        if (ty > fy + foldH - 8) return;
-        const line = item.line || '';
-        const fitted = wrapFit(line, (s) => `700 ${s}px "LR Serif"`, fW - 4, size, 9, 2);
-        ctx.font = `600 ${metaS}px "LR Sans Semi", "LR Sans"`;
-        ctx.fillStyle = PURPLE;
+  /* 5. Vedettes : photo + titre, QR moyen, sans extrait */
+  if (gridArts.length && bh.grid) {
+    const rowH = bh.grid;
+    rule(x0, x1, cy - px(1.2), 2);
+    const cols = gridArts.length;
+    const cw = Math.floor((contentW - gap * (cols - 1)) / cols);
+    gridArts.forEach((art, i) => {
+      const gx = x0 + i * (cw + gap);
+      if (i > 0) vrule(gx - Math.round(gap / 2), cy, cy + rowH);
+      const p = glass ? px(1) : 0;
+      panel(gx, cy, cw, rowH);
+      const ix = gx + p;
+      const iw = cw - p * 2;
+      let iy = cy + p;
+      const floor = cy + rowH - p;
+      const img = art.key ? images.get(art.key) : null;
+      const imgH = Math.min(Math.round(rowH * 0.36), Math.round(iw / 1.45));
+      paintImage(img, ix, iy, iw, imgH, art.focalY, art.source);
+      /* Numéro de vedette, repère pour le QR */
+      const nS = px(2.2);
+      ctx.fillStyle = PURPLE;
+      ctx.fillRect(ix, iy, Math.round(nS * 1.7), Math.round(nS * 1.7));
+      ctx.font = `700 ${nS}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(i + 1), ix + Math.round(nS * 0.85), iy + Math.round(nS * 0.9));
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      iy += imgH + px(0.3);
+      if (art.credit) iy += creditLine(art.credit, ix, iy, iw);
+      iy += px(0.5);
+      const qr = withQr && art.pageUrl ? Math.min(px(8), Math.round(iw * 0.34)) : 0;
+      const qrTop = floor - qr;
+      const metaH = px(4);
+      const f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(2.1)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      drawFlow(f, serif, ix, ink);
+      const meta = metaOf(art);
+      if (meta) {
+        const mS = Math.max(8, px(1.35));
+        const mw = iw - (qr ? qr + px(1) : 0);
+        const mf = wrapFit(meta.replace('  ·  ', ' · '), sans(600), mw, mS, Math.max(8, px(1.1)), 2);
+        const mh = mf.lines.length * Math.round(mf.size * 1.25);
+        drawLines(mf, sans(600), ix, floor - mh, PURPLE, 1.25);
+      }
+      if (qr) drawQrCode(ctx, ix + iw - qr, floor - qr, qr, art.pageUrl);
+    });
+    cy += rowH + px(2.4);
+  }
+
+  /* 6. Bande Sports étudiants + Radio en ondes */
+  if (hasBand && bh.band) {
+    const rowH = bh.band;
+    ctx.fillStyle = glass ? 'rgba(59, 18, 54, 0.9)' : DEEP;
+    roundedRectPath(ctx, x0, cy, contentW, rowH, glass ? px(1.2) : px(0.6));
+    ctx.fill();
+    const bp = px(1.6);
+    const parts = [];
+    if (sportsLines.length) parts.push({ title: bilingual ? 'Sports étudiants · Varsity' : 'Sports étudiants', items: sportsLines, weight: radioLines.length ? 2 : 1 });
+    if (radioLines.length) parts.push({ title: bilingual ? 'En ondes · On air' : 'En ondes', items: radioLines, weight: 1 });
+    const tw = parts.reduce((s, p2) => s + p2.weight, 0);
+    let bx = x0 + bp;
+    const innerW = contentW - bp * 2 - gap * (parts.length - 1);
+    parts.forEach((part, pi) => {
+      const pw = Math.round(innerW * (part.weight / tw));
+      if (pi > 0) {
+        ctx.fillStyle = 'rgba(255,255,255,0.22)';
+        ctx.fillRect(bx - Math.round(gap / 2), cy + bp, Math.max(1, px(0.12)), rowH - bp * 2);
+      }
+      let by = label(part.title, bx, cy + bp, LILAC, px(1.7));
+      const cols = part.weight === 2 || (parts.length === 1 && part.items.length > 2) ? 2 : 1;
+      const colW = Math.floor((pw - (cols - 1) * gap) / cols);
+      const perCol = Math.ceil(part.items.length / cols);
+      const rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
+      part.items.forEach((item, ii) => {
+        const col = Math.floor(ii / perCol);
+        const r = ii % perCol;
+        const ix = bx + col * (colW + gap);
+        let iy = by + r * rowsH;
         const tag = [item.kicker, item.meta].filter(Boolean).join('  ·  ');
         if (tag) {
-          ctx.fillText(tag, cx, ty);
-          ty += measure(ctx.font, tag) + 1;
+          ctx.font = `600 ${px(1.4)}px "LR Sans Semi", "LR Sans"`;
+          ctx.fillStyle = LILAC;
+          ctx.fillText(fitOne(tag, sans(600), px(1.4), colW), ix, iy);
+          iy += px(2);
         }
-        fitted.lines.forEach((ln) => {
-          ctx.font = `700 ${fitted.size}px "LR Serif"`;
-          ctx.fillStyle = ink;
-          ctx.textBaseline = 'top';
-          const hh = measure(ctx.font, ln);
-          if (ty + hh > fy + foldH - 4) return;
-          ctx.fillText(ln, cx, ty);
-          ty += hh + 1;
-        });
-        ty += 4;
+        const maxL = rowsH > px(6.5) ? 2 : 1;
+        const f = wrapFit(item.line || '', sans(700), colW, px(2.4), Math.max(10, px(1.6)), maxL);
+        drawLines(f, sans(700), ix, iy, '#ffffff', 1.15, by + (r + 1) * rowsH);
       });
+      bx += pw + gap;
+    });
+    cy += rowH + px(2.4);
+  }
+
+  /* 7. En bref numéroté */
+  if (briefs.length && bh.briefs) {
+    const rowH = bh.briefs;
+    const p = glass ? px(1.2) : 0;
+    panel(x0, cy, contentW, rowH);
+    if (!glass) rule(x0, x1, cy - px(1.2), 2);
+    let by = label(bilingual ? 'En bref · In brief' : 'En bref', x0 + p, cy + p);
+    const itemH = px(6.6);
+    const cols = contentW > px(80) ? 3 : 2;
+    const rowsFit = Math.max(1, Math.floor((cy + rowH - p - by) / itemH));
+    const count = Math.min(briefs.length, rowsFit * cols);
+    const perCol = Math.ceil(count / cols);
+    const colW = Math.floor((contentW - p * 2 - gap * (cols - 1)) / cols);
+    const numS = px(3);
+    briefs.slice(0, count).forEach((b, i) => {
+      const col = Math.floor(i / perCol);
+      const r = i % perCol;
+      const bx = x0 + p + col * (colW + gap);
+      const iy = by + r * itemH;
+      if (col > 0 && r === 0) vrule(bx - Math.round(gap / 2), by, by + perCol * itemH - px(0.6));
+      ctx.font = `700 ${numS}px "LR Serif"`;
+      ctx.fillStyle = PURPLE;
+      ctx.textBaseline = 'top';
+      ctx.fillText(String(i + 1), bx, iy);
+      const tx = bx + px(3.4);
+      const tW = colW - px(3.4);
+      ctx.font = `600 ${px(1.3)}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = PURPLE;
+      ctx.fillText(fitOne(metaOf(b), sans(600), px(1.3), tW), tx, iy);
+      const f = wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
+      drawLines(f, serif, tx, iy + px(1.9), ink, 1.12, iy + itemH);
     });
   }
 
+  /* 8. Pied */
   if (glass) {
-    frostedRect(ctx, margin * 0.4, footY - 3, w - margin * 0.8, h - (footY - 3) - margin * 0.2, Math.round(margin * 0.16), {
-      fill: 'rgba(255, 252, 247, 0.86)',
-    });
-  } else {
-    ctx.strokeStyle = c.rule;
-    ctx.lineWidth = Math.max(1, Math.round(h / 900));
-    ctx.beginPath();
-    ctx.moveTo(x0, footY);
-    ctx.lineTo(x1, footY);
-    ctx.stroke();
-  }
+    frostedRect(ctx, margin * 0.5, footY - px(0.4), w - margin, h - footY - px(0.6), px(1.2), { fill: 'rgba(255, 252, 247, 0.88)' });
+  } else rule(x0, x1, footY, 1.5);
   let ly = footY + footPad;
   legalLines.forEach((line) => {
     ctx.font = `400 ${legalSize}px "LR Sans"`;
     ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
     ctx.fillText(line, x0, ly);
-    ly += legalLineH + 3;
+    ly += legalLineH;
   });
-  let langsY = footY + footPad + Math.max(qrBlock, legalH) + 2;
   if (showLangs && langsMetrics.height) {
-    drawLangsFooter(ctx, {
-      y: langsY,
-      maxW: langsMax,
-      size: fLang,
-      iconS,
-      color: mute,
-      lineGap: 4,
-      iconGap: 6,
-    });
-    langsY += langsMetrics.height;
+    ly += px(0.6);
+    drawLangsFooter(ctx, { y: ly, maxW: contentW, size: fLang, iconS, color: mute, lineGap: 4, iconGap: 6 });
+    ly += langsMetrics.height;
   }
-  if (credit) drawCreditLine(credit, x0, Math.min(langsY + 2, h - margin * 0.4 - creditSize), langsMax);
-  if (withQr) {
-    const qx = x1 - siteQr;
-    const qy = footY + footPad;
-    drawQrCode(ctx, qx, qy, siteQr, `${site}/`);
-    const capS = Math.max(8, Math.round(legalSize * 0.9));
-    ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = ink;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText('le-radar.ca', qx + siteQr / 2, qy + siteQr + 3);
-    ctx.textAlign = 'left';
-  }
+  if (credit) creditLine(credit, x0, ly + px(0.2), contentW);
 }
 function drawRadar(ctx, w, h, cx, cy) {
   const reach = Math.hypot(Math.max(cx, w - cx), Math.max(h - cy, cy));
@@ -1782,7 +1875,7 @@ function renderUneList() {
     const place = selected.findIndex((a) => a.key === art.key);
     role.textContent = art.included === false
       ? 'Retiré'
-      : (place === 0 ? 'À la une' : 'Vedette');
+      : (place === 0 ? 'À la une' : place <= 6 ? 'Vedette' : 'En bref');
     const title = document.createElement('span');
     title.className = 'une-title';
     title.textContent = art.title;
@@ -1904,7 +1997,7 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     articles: selectedUneArticles(),
     briefs: state.uneBriefs || [],
     radioLines: pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
-    sportsLines: pickPosterSports(bars.sports, campus, 3),
+    sportsLines: pickPosterSports(bars.sports, campus, 4),
     articleImages: images || new Map(),
     photoImg: photoImg || null,
     credit: photo?.credit,
