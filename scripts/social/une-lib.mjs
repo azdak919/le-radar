@@ -9,7 +9,8 @@ import { createRequire } from 'node:module';
 import { torontoDay } from './policy.mjs';
 import { xlen, SITE } from './lib.mjs';
 import { NET_SPEC } from './formats.mjs';
-import { institutionTag } from './hashtags.mjs';
+import { institutionTag, sportTagOf } from './hashtags.mjs';
+import { detectLang } from './lib.mjs';
 
 const require = createRequire(import.meta.url);
 const front = require('../magazine-front-page-lib.js');
@@ -83,11 +84,61 @@ export function selectUne(news, slot, { now = Date.now(), state = {}, max = 4, p
   if (slot.id === 'soir') cand = cand.filter(it => ymdOf(it.date) === slot.day);
   cand = cand.slice(0, max);
   const li = cand.findIndex(hasImg); if (li > 0) cand = [cand[li], ...cand.slice(0, li), ...cand.slice(li + 1)];
-  const items = cand.map(it => ({ ...front.normalize(it, '..'), byline: byline(it), tag: institutionTag({ source: it.source, title: it.title, desc: it.excerpt || '' }), siteImage: siteImage(it) })).filter(x => x.id);
+  const items = cand.map(it => ({ ...front.normalize(it, '..'), lang: it.lang || detectLang({ title: it.title }), place: institutionLabel(it), sport: sportEmoji(it), byline: byline(it), tag: institutionTag({ source: it.source, title: it.title, desc: it.excerpt || '' }), siteImage: siteImage(it) })).filter(x => x.id);
   const skip = !items.length;
   const why = skip ? (slot.id === 'soir' ? 'rien de nouveau depuis le matin : publication sautée' : 'aucun article nouveau à la une : publication sautée') : `${items.length} article(s)`;
   return { items, lead: items[0] || null, ids: items.map(x => x.id), skip, why, doubts, available: picked.length };
 }
+/** Établissement en français (publications en français seulement ; aucun logo d'université). */
+const FR_INSTITUTIONS = {
+  'concordia university': 'Université Concordia', 'mcgill university': 'Université McGill', "bishop's university": "Université Bishop's",
+  'dawson college': 'Collège Dawson', 'vanier college': 'Collège Vanier', 'john abbott college': 'Collège John-Abbott', 'champlain college': 'Collège Champlain',
+  'université du québec à montréal (uqam)': 'UQAM', 'université du québec à trois-rivières': 'UQTR',
+};
+export function institutionLabel(it) {
+  const raw = String(it?.institution || '').replace(/\s*\([^)]*\)\s*$/, '').replace(/\s+/g, ' ').trim();
+  if (!raw) return '';
+  const hit = FR_INSTITUTIONS[raw.toLowerCase()];
+  if (hit) return hit;
+  return /\b(university|college)\b/i.test(raw) ? '' : raw; // nom anglais inconnu : on ne l'affiche pas plutôt que d'afficher de l'anglais
+}
+/** Émoji du sport étudiant (titre ou extrait) ; '' si l'article n'est pas sportif. */
+const SPORT_EMOJI = { '#Football': '🏈', '#Hockey': '🏒', '#Basketball': '🏀', '#Volleyball': '🏐', '#Soccer': '⚽', '#Rugby': '🏉', '#Natation': '🏊', '#Athlétisme': '🏃' };
+export const sportEmoji = it => SPORT_EMOJI[sportTagOf([it?.title, it?.excerpt].filter(Boolean).join(' '))] || '';
+
+/**
+ * Français seulement : un article en anglais passe par le module de traduction du Radar (translate.js, injecté par
+ * `translate(texte)`) pour son titre et son résumé. Échec, écho de l'original ou résultat encore anglais : l'article est
+ * exclu (jamais d'anglais publié). Auteurs et médias inchangés. « week-end » → « fin de semaine ».
+ */
+export async function frenchOnly(items, translate) {
+  const kept = [], excluded = [];
+  const ART = { ce: 'cette', le: 'la', un: 'une', du: 'de la', au: 'à la', dernier: 'dernière', prochain: 'prochaine' };
+  const fdS = t => String(t || '')
+    .replace(/\b(ce|le|un|du|au|dernier|prochain)\s+week-?end\b/gi, (m, a) => { const r = ART[a.toLowerCase()]; return (a[0] === a[0].toUpperCase() ? r[0].toUpperCase() + r.slice(1) : r) + ' fin de semaine'; })
+    .replace(/\b(les|des|ces)\s+week-?ends\b/gi, '$1 fins de semaine')
+    .replace(/\bweek-?ends?\b/gi, m => /s$/i.test(m) ? 'fins de semaine' : 'fin de semaine');
+  for (const x of items) {
+    const en = x.lang === 'en' || detectLang({ title: x.title }) === 'en';
+    if (!en) { kept.push({ ...x, title: fdS(x.title), hook: fdS(x.hook) }); continue; }
+    let title = '', hook = '';
+    try {
+      title = String(await translate(x.title) || '').trim();
+      if (x.hook) { hook = String(await translate(x.hook) || '').trim(); if (!hook || hook === x.hook || detectLang({ title: hook }) === 'en') hook = ''; }
+    } catch { title = ''; }
+    if (!title || title === x.title.trim() || detectLang({ title }) === 'en') { excluded.push({ id: x.id, title: x.title, why: 'traduction indisponible' }); continue; }
+    if (!/[.]$/.test(x.title.trim())) title = title.replace(/\.$/, '');
+    kept.push({ ...x, originalTitle: x.title, title: fdS(title), hook: fdS(hook), translated: true, lang: 'fr' });
+  }
+  return { kept, excluded };
+}
+/** Au plus `max` articles, la une étant le premier qui a une photo. */
+export function finalizeItems(items, max = 4) {
+  let out = items.slice(0, max);
+  const li = out.findIndex(x => x.image || x.siteImage); if (li > 0) out = [out[li], ...out.slice(0, li), ...out.slice(li + 1)];
+  return out;
+}
+
 /** Image publique de l'article sur le-radar.ca (repli si l'hébergement de l'affiche échoue). */
 export function siteImage(it) {
   const local = String(it?.imageLocal || '');
@@ -134,10 +185,10 @@ export function buildUneText(model, net, spec = NET_SPEC[net], { tags = [] } = {
     const T = x => cut ? clip(x.title, cut) : x.title;
     let body;
     if (long) {
-      body = items.map((x, i) => `${i + 1}. ${T(x)}\n✍️ ${x.byline}\n${x.pageUrl}`).join('\n\n');
+      body = items.map((x, i) => `${i + 1}. ${x.sport ? x.sport + ' ' : ''}${T(x)}\n✍️ ${x.byline}\n${x.pageUrl}`).join('\n\n');
       body += `\n\nToute la une : ${HOME}`;
     } else {
-      body = items.map(x => `▪️ ${T(x)} — ${x.byline}`).join('\n') + '\n\n' + (items.length === 1 ? items[0].pageUrl : HOME);
+      body = items.map(x => `${x.sport || '▪️'} ${T(x)} — ${x.byline}`).join('\n') + '\n\n' + (items.length === 1 ? items[0].pageUrl : HOME);
     }
     return [head, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };

@@ -11,7 +11,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText } from './une-lib.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -113,6 +113,7 @@ async function publishOne(net, entry, env) {
 export function previewMarkdown(slot, sel, texts, images, { dry, reason }) {
   const L = [`## ${slot.label} (${slot.key}) — ${dry ? 'essai DRY_RUN, rien n\'est publié' : 'passage réel'}`, '', `Décision : ${reason}`, ''];
   if (sel.doubts?.length) L.push(`Doutes : ${sel.doubts.join(' ; ')}.`, '');
+  for (const t of sel.translated || []) L.push(`Traduit : « ${t.from} » → « ${t.to} »`);
   if (images) for (const [f, v] of Object.entries(images)) L.push(`Image ${f} : ${path.basename(v.file)} (${v.width}×${v.height}, ${Math.round(v.bytes / 1024)} Ko, ${v.shown} article(s), photo ${v.photo ? 'oui' : 'non'})`);
   L.push('');
   for (const [n, v] of Object.entries(texts || {})) L.push(`### ${n} (${v.len}/${v.limit}, image ${v.image})`, '', '```text', v.text || '(aucun texte)', '```', v.problems.length ? `Problèmes : ${v.problems.join(' ; ')}` : 'Contrôles : OK', n === 'tumblr' ? `Étiquettes Tumblr : ${v.tags.join(', ')}` : '', '');
@@ -139,8 +140,21 @@ async function main() {
   if (entry?.texts && !dry) {
     reason = 'reprise du créneau figé (réessai des réseaux en échec).'; sel = { doubts: [] };
   } else {
-    sel = selectUne(rd(arg('news', 'news.json')), slot, { now, state, max: CFG.maxItems || 4, maxNewsAgeH: CFG.maxNewsAgeH ?? 6 });
-    console.log(`Sélection ${slot.key} : ${sel.why}${sel.doubts.length ? ' ; doutes : ' + sel.doubts.join(' ; ') : ''}`);
+    sel = selectUne(rd(arg('news', 'news.json')), slot, { now, state, max: 8, maxNewsAgeH: CFG.maxNewsAgeH ?? 6 });
+    // Français seulement : titres et résumés anglais traduits par translate.js ; en cas d'échec, l'article est exclu.
+    if (sel.items.some(x => x.lang === 'en')) {
+      const { createTranslator } = await import('./une-render.mjs');
+      let tr = null;
+      try { tr = await createTranslator(); } catch (e) { console.log(`::warning::traduction indisponible (${String(e.message).slice(0, 120)}) : articles anglais exclus.`); }
+      const fr = await frenchOnly(sel.items, tr ? tr.translate : async () => '');
+      if (tr) await tr.close();
+      for (const x of fr.excluded) console.log(`Exclu (anglais non traduit) : ${x.title}`);
+      sel.translated = fr.kept.filter(x => x.translated).map(x => ({ from: x.originalTitle, to: x.title }));
+      sel.items = fr.kept;
+    }
+    sel.items = finalizeItems(sel.items, CFG.maxItems || 4); sel.ids = sel.items.map(x => x.id); sel.lead = sel.items[0] || null;
+    if (!sel.items.length && !sel.skip) { sel.skip = true; sel.why = 'aucun article publiable en français : publication sautée'; }
+    console.log(`Sélection ${slot.key} : ${sel.items.length} article(s)${sel.doubts.length ? ' ; doutes : ' + sel.doubts.join(' ; ') : ''}`);
     if (sel.skip) { reason = sel.why; fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), previewMarkdown(slot, sel, null, null, { dry, reason })); console.log(reason); if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${slot.label} : ${reason}\n`); return; }
     const model = { slot, items: sel.items };
     texts = buildUneAll(model, POLICY.hashtags?.maxByNetwork || {});
@@ -155,7 +169,7 @@ async function main() {
     const md = previewMarkdown(slot, sel, texts, images, { dry, reason });
     fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), md);
     for (const [n, v] of Object.entries(texts)) fs.writeFileSync(path.join(out, `texte-${slot.id}-${n}.txt`), (v.text || '') + '\n');
-    fs.writeFileSync(path.join(out, `une-${slot.id}.json`), JSON.stringify({ at: new Date(now).toISOString(), reason, slot, ids: sel.ids, alt: altText(model), texts, images }, null, 1));
+    fs.writeFileSync(path.join(out, `une-${slot.id}.json`), JSON.stringify({ at: new Date(now).toISOString(), reason, slot, ids: sel.ids, translated: sel.translated || [], alt: altText(model), texts, images }, null, 1));
     if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + '\n');
     console.log(`\n=== ${slot.label} : ${reason}`);
     for (const [n, v] of Object.entries(texts)) console.log(`\n[${n}] ${v.len}/${v.limit}${v.problems.length ? ' PROBLÈMES : ' + v.problems.join(', ') : ''}\n${v.text}`);

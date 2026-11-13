@@ -1,84 +1,85 @@
 @font-face { font-family: 'LR Serif'; src: url(../scripts/og-fonts/SourceSerif4Display-Bold.ttf); font-weight: 700; }
 @font-face { font-family: 'LR Sans'; src: url(../scripts/og-fonts/Inter-Regular.ttf); font-weight: 400; }
 @font-face { font-family: 'LR Sans'; src: url(../scripts/og-fonts/Inter-SemiBold.ttf); font-weight: 600 700; }
-:root { --purple: #6C2163; --purple-deep: #4A1544; --paper: #F7F2EB; --ink: #1E1A17; --mute: #5E5A54; --rule: #D9CFC4; }
+:root { --purple: #6C2163; --deep: #3E1139; --paper: #F7F2EB; --ink: #1E1A17; --mute: #5E5A54; --rule: #D9CFC4; --accent: #F28C28; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--paper); }
 body { font-family: 'LR Sans', system-ui, sans-serif; color: var(--ink); font-synthesis: none; -webkit-font-smoothing: antialiased; }
 .card { position: relative; overflow: hidden; background: var(--paper); display: flex; flex-direction: column; }
-.mast { background: var(--purple); color: #fff; display: flex; align-items: center; gap: 22px; padding: 0 44px; flex: none; }
-.mast .logo { background: #fff; border-radius: 18px; display: grid; place-items: center; flex: none; }
+.card.matin { --accent: #F28C28; } .card.soir { --accent: #8FA8FF; }
+.portrait { width: 1080px; height: 1350px; } .paysage { width: 1200px; height: 675px; }
+
+/* Bandeau commun (v3 : violet plein, marque en serif) */
+.mast { position: relative; z-index: 2; background: var(--purple); color: #fff; display: flex; align-items: center; gap: 20px; padding: 0 40px; flex: none; height: 132px; }
+.paysage .mast { height: 88px; padding: 0 30px; gap: 14px; }
+.mast .logo { background: #fff; border-radius: 18px; display: grid; place-items: center; flex: none; width: 88px; height: 88px; }
+.paysage .mast .logo { width: 60px; height: 60px; border-radius: 13px; }
 .mast .logo img { width: 78%; height: 78%; }
-.mast .brand { font-family: 'LR Serif'; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
+.mast .brand { font: 700 60px/1 'LR Serif'; letter-spacing: -0.5px; }
+.paysage .mast .brand { font-size: 42px; }
 .mast .slot { margin-left: auto; text-align: right; }
-.mast .slot b { display: block; font-weight: 700; }
-.mast .slot span { opacity: .85; }
-.badge { position: absolute; left: 0; top: 0; background: var(--purple); color: #fff; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-.photo { position: relative; overflow: hidden; background: linear-gradient(135deg, var(--purple), var(--purple-deep)); flex: none; }
-.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo .credit { position: absolute; right: 0; bottom: 0; background: rgba(0,0,0,.55); color: #fff; padding: 4px 10px; font-size: 15px; max-width: 70%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.photo.empty::after { content: 'LE-RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'LR Serif'; }
-.title { font-family: 'LR Serif'; font-weight: 700; line-height: 1.08; letter-spacing: -0.3px; overflow: hidden; }
-.by { color: var(--purple); font-weight: 700; }
-.hook { color: var(--ink); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; line-height: 1.35; }
-.by .src { color: var(--mute); font-weight: 400; }
-.list { display: flex; flex-direction: column; }
-.item { display: grid; align-items: start; border-top: 2px solid var(--rule); }
-.item .num { font-family: 'LR Serif'; color: #fff; background: var(--purple); display: grid; place-items: center; border-radius: 10px; }
-.item .t { font-family: 'LR Serif'; font-weight: 700; line-height: 1.12; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; }
-.foot { margin-top: auto; background: var(--purple-deep); color: #fff; display: flex; align-items: center; justify-content: space-between; flex: none; }
-.foot .url { font-weight: 700; }
-.foot .legal { opacity: .75; }
+.mast .slot b { display: inline-block; font-weight: 700; font-size: 30px; background: var(--accent); color: var(--deep); padding: 6px 16px; border-radius: 999px; }
+.mast .slot span { display: block; font-size: 22px; opacity: .9; margin-top: 6px; }
+.paysage .mast .slot b { font-size: 22px; padding: 4px 12px; } .paysage .mast .slot span { font-size: 17px; margin-top: 4px; }
 
-/* Portrait 4:5, 1080 × 1350 (Facebook, Tumblr) */
-.portrait { width: 1080px; height: 1350px; }
-.portrait .mast { height: 150px; }
-.portrait .mast .logo { width: 96px; height: 96px; }
-.portrait .mast .brand { font-size: 64px; }
-.portrait .mast .slot b { font-size: 34px; }
-.portrait .mast .slot span { font-size: 24px; }
-.portrait .photo { height: 490px; }
-.portrait .badge { font-size: 22px; padding: 10px 18px; }
-.portrait .lead { padding: 26px 44px 18px; }
-.portrait .lead .title { font-size: 58px; max-height: calc(58px * 1.08 * 3 + 4px); }
-.portrait .hook { font-size: 25px; margin-top: 12px; }
-.portrait .lead .by { font-size: 26px; margin-top: 12px; }
-.portrait .list { padding: 0 44px; }
-.portrait .item { grid-template-columns: 52px 1fr; gap: 18px; padding: 16px 0; }
-.portrait .item .num { width: 52px; height: 52px; font-size: 30px; }
-.portrait .item .t { font-size: 33px; -webkit-line-clamp: 2; }
-.portrait .item .by { font-size: 21px; margin-top: 6px; }
-.portrait .foot { height: 84px; padding: 0 44px; }
-.portrait .foot .url { font-size: 32px; }
-.portrait .foot .legal { font-size: 17px; text-align: right; max-width: 560px; }
+.main { position: relative; flex: 1; min-height: 0; display: grid; }
+.photo, .thumb { position: relative; overflow: hidden; background: linear-gradient(135deg, var(--purple), var(--deep)); }
+.photo img, .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo.empty::after { content: 'LE-RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.3); font: 700 60px 'LR Serif'; }
+.thumb.empty::after { content: ''; }
+.badge { position: absolute; left: 0; top: 0; background: var(--purple); color: #fff; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 20px; padding: 9px 16px; }
+.paysage .badge { font-size: 15px; padding: 6px 12px; }
+.credit { position: absolute; right: 0; bottom: 0; background: rgba(0,0,0,.55); color: #fff; padding: 4px 10px; font-size: 15px; max-width: 70%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.paysage .credit { font-size: 12px; }
+.lead { min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.lead > * { flex: none; }
+.kick { display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--purple); font-size: 20px; margin-bottom: 8px; }
+.kick .emo { font-size: 1.35em; letter-spacing: 0; }
+.title { font: 700 58px/1.1 'LR Serif'; letter-spacing: -0.4px; overflow: hidden; max-height: calc(58px * 1.1 * 3 + 6px); }
+.by { margin-top: 10px; font-size: 25px; }
+.by .who { font-weight: 700; color: var(--purple); }
+.by .src { color: var(--mute); }
+.hook { margin-top: 10px; font-size: 23px; line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; }
+.side { min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.side h2 { font-size: 18px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--purple); font-weight: 700; padding: 0 0 8px; }
+.list { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.item { display: grid; grid-template-columns: 150px 1fr; gap: 18px; align-items: start; padding: 14px 0; border-top: 2px solid var(--rule); }
+.item .thumb { width: 150px; height: 104px; border-radius: 10px; }
+.item .num { position: absolute; left: 0; top: 0; background: var(--purple); color: #fff; font: 700 24px/1 'LR Serif'; padding: 7px 11px; border-bottom-right-radius: 10px; }
+.item .kick { font-size: 15px; margin-bottom: 4px; }
+.item .t { font: 700 30px/1.13 'LR Serif'; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.item .by { font-size: 19px; margin-top: 5px; }
+.paysage .title { font-size: 38px; max-height: calc(38px * 1.1 * 3 + 6px); }
+.paysage .kick { font-size: 15px; margin-bottom: 5px; }
+.paysage .by { font-size: 18px; margin-top: 8px; }
+.paysage .hook { font-size: 17px; margin-top: 7px; }
+.paysage .item { grid-template-columns: 96px 1fr; gap: 12px; padding: 10px 0; }
+.paysage .item .thumb { width: 96px; height: 72px; border-radius: 8px; }
+.paysage .item .num { font-size: 17px; padding: 5px 8px; }
+.paysage .item .kick { font-size: 12px; margin-bottom: 2px; }
+.paysage .item .t { font-size: 22px; }
+.paysage .item .by { font-size: 14px; margin-top: 3px; }
+.paysage .side h2 { font-size: 14px; }
+.foot { position: relative; z-index: 2; background: var(--deep); color: #fff; display: flex; align-items: center; justify-content: space-between; flex: none; height: 76px; padding: 0 40px; }
+.foot .url { font-weight: 700; font-size: 32px; }
+.foot .legal { opacity: .8; font-size: 17px; }
+.paysage .foot { height: 52px; padding: 0 30px; } .paysage .foot .url { font-size: 24px; } .paysage .foot .legal { font-size: 13px; }
 
-/* Paysage 16:9, 1200 × 675 (X, Bluesky, Mastodon, LinkedIn) */
-.paysage { width: 1200px; height: 675px; }
-.paysage .mast { height: 96px; padding: 0 32px; gap: 16px; }
-.paysage .mast .logo { width: 64px; height: 64px; border-radius: 14px; }
-.paysage .mast .brand { font-size: 44px; }
-.paysage .mast .slot b { font-size: 26px; }
-.paysage .mast .slot span { font-size: 19px; }
-.paysage .body { flex: 1; display: grid; grid-template-columns: 640px 1fr; min-height: 0; }
-.paysage .leadcol { display: flex; flex-direction: column; border-right: 2px solid var(--rule); min-height: 0; }
-.paysage .photo { height: 300px; }
-.paysage .badge { font-size: 17px; padding: 7px 14px; }
-.paysage .lead { padding: 16px 28px 10px 32px; }
-.paysage .lead .title { font-size: 38px; max-height: calc(38px * 1.08 * 3 + 4px); }
-.paysage .lead .by { font-size: 20px; margin-top: 10px; }
-.paysage .hook { font-size: 18px; margin-top: 8px; }
-.paysage .side { padding: 10px 30px 0 26px; display: flex; flex-direction: column; min-height: 0; }
-.paysage .side h2 { font-size: 18px; letter-spacing: 1px; text-transform: uppercase; color: var(--purple); font-weight: 700; padding: 8px 0 10px; }
-.paysage .item { grid-template-columns: 40px 1fr; gap: 14px; padding: 14px 0; }
-.paysage .item .num { width: 40px; height: 40px; font-size: 23px; border-radius: 8px; }
-.paysage .item .t { font-size: 25px; -webkit-line-clamp: 3; }
-.paysage .item .by { font-size: 16px; margin-top: 6px; }
-.paysage .foot { height: 58px; padding: 0 32px; }
-.paysage .foot .url { font-size: 25px; }
-.paysage .foot .legal { font-size: 14px; }
-.paysage.solo .body { grid-template-columns: 1fr; }
-.paysage.solo .leadcol { border-right: 0; display: grid; grid-template-columns: 560px 1fr; }
-.paysage.solo .photo { height: 100%; }
-.paysage.solo .lead > * { flex: none; }
-.paysage.solo .lead { padding: 30px 34px; display: flex; flex-direction: column; justify-content: center; }
-.paysage.solo .lead .title { font-size: 46px; max-height: calc(46px * 1.08 * 6 + 4px); }
+/* Gabarit retenu (panel du 12 nov. 2026, piste B « Verre ») : photo pleine page, cartes verre dépoli (v5 verre). Les pistes A « Journal » et C « Bloc violet » ont été écartées. */
+.piste-b .main { display: flex; flex-direction: column; justify-content: flex-end; gap: 18px; padding: 0 36px 26px; }
+.piste-b .photo { position: absolute; inset: 0; }
+.piste-b .photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,10,28,0) 25%, rgba(30,10,28,.55) 70%, rgba(30,10,28,.8)); z-index: 1; }
+.piste-b .photo .badge, .piste-b .photo .credit { z-index: 2; }
+.piste-b .photo .badge { top: 22px; left: 36px; border-radius: 999px; }
+.piste-b .photo .credit { top: 22px; bottom: auto; right: 36px; border-radius: 999px; }
+.piste-b .lead, .piste-b .side { position: relative; z-index: 2; background: rgba(255,255,255,.84); backdrop-filter: blur(18px) saturate(1.2); border: 1px solid rgba(255,255,255,.6); border-radius: 26px; box-shadow: 0 18px 50px rgba(20,0,20,.35); }
+.piste-b .lead { padding: 24px 30px 22px; }
+.piste-b .side { padding: 18px 26px 6px; flex: none; }
+.piste-b .item:first-child { border-top: 0; }
+.piste-b.paysage .main { display: grid; grid-template-columns: 1fr 430px; align-items: end; gap: 18px; padding: 0 26px 18px; }
+.piste-b.paysage .photo .badge { top: 16px; left: 26px; } .piste-b.paysage .photo .credit { top: 16px; right: 26px; }
+.piste-b.paysage .lead { padding: 16px 22px 14px; border-radius: 20px; }
+.piste-b.paysage .side { padding: 12px 18px 2px; border-radius: 20px; align-self: stretch; margin-top: 48px; }
+.piste-b.paysage .item .t { -webkit-line-clamp: 3; }
+.piste-b.paysage.solo .main { grid-template-columns: 720px; }
+

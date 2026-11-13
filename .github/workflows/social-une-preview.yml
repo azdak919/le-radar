@@ -38,6 +38,8 @@ jobs:
       - name: Install Chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
+      - name: Police émoji (émojis de sport dans les images)
+        run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
       - name: Fil réel du site (lecture seule)
         run: curl -fsS --retry 3 https://le-radar.ca/news.json -o /tmp/news-live.json || cp news.json /tmp/news-live.json
       - name: Essai DRY_RUN, matin et soir

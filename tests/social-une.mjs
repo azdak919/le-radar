@@ -91,6 +91,39 @@ assert.ok(U.uneTumblrTags(m.items).length <= 15);
 const live = U.selectUne(real, U.slotFor('soir', Date.parse(real.updated)), { now: Date.parse(real.updated) });
 if (!live.skip) for (const [n, v] of Object.entries(U.buildUneAll({ slot: U.slotFor('soir', Date.parse(real.updated)), items: live.items }, POLICY.hashtags.maxByNetwork))) assert.deepEqual(v.problems, [], `réel ${n}`);
 
+
+// ── Français seulement : traduction par translate.js (injectée), exclusion si échec ──
+const enItem = (id, title, extra = {}) => ({ id, title, hook: '', lang: 'en', byline: 'Jane Doe · The Link', source: 'The Link', ...extra });
+const fakeTr = async t => ({ 'Stingers win the home opener this weekend': 'Les Stingers gagnent leur premier match à domicile ce week-end.', 'Students rally for housing': 'Les étudiants manifestent pour le logement' })[t] || '';
+const fr = await U.frenchOnly([
+  enItem('a', 'Stingers win the home opener this weekend'),
+  enItem('b', 'Students rally for housing', { hook: 'The rally drew hundreds of students to the campus.' }),
+  enItem('c', 'Untranslatable headline for the students'),
+  { id: 'd', title: 'Un titre déjà en français pour la fin de semaine', lang: 'fr', byline: 'Impact Campus' },
+], fakeTr);
+assert.deepEqual(fr.kept.map(x => x.id), ['a', 'b', 'd']);
+assert.equal(fr.kept[0].title, 'Les Stingers gagnent leur premier match à domicile cette fin de semaine', '« week-end » → « fin de semaine », point final retiré');
+assert.equal(fr.kept[0].byline, 'Jane Doe · The Link', 'auteur et média inchangés');
+assert.equal(fr.kept[1].hook, '', 'résumé non traduit : retiré, jamais publié en anglais');
+assert.deepEqual(fr.excluded.map(x => x.id), ['c'], 'traduction impossible : article exclu');
+const echo = await U.frenchOnly([enItem('e', 'Students rally for housing')], async t => t);
+assert.equal(echo.kept.length, 0, 'écho de l’original : exclu');
+const boom = await U.frenchOnly([enItem('f', 'Students rally for housing')], async () => { throw new Error('réseau'); });
+assert.equal(boom.kept.length, 0, 'erreur réseau : exclu');
+const stillEn = await U.frenchOnly([enItem('g', 'Students rally for housing')], async () => 'The students rally for the housing in the city');
+assert.equal(stillEn.kept.length, 0, 'encore anglais : exclu');
+assert.deepEqual(U.finalizeItems([{ id: 1 }, { id: 2, siteImage: 'x' }, { id: 3 }], 2).map(x => x.id), [2, 1]);
+// Établissements en français, aucune étiquette anglaise ; émojis de sport étudiant.
+assert.equal(U.institutionLabel({ institution: 'Concordia University' }), 'Université Concordia');
+assert.equal(U.institutionLabel({ institution: "Bishop's University" }), "Université Bishop's");
+assert.equal(U.institutionLabel({ institution: 'Cégep de Jonquière (ATM – journalisme)' }), 'Cégep de Jonquière');
+assert.equal(U.institutionLabel({ institution: 'Some Unknown College' }), '');
+assert.equal(U.sportEmoji({ title: 'Le Rouge et Or remporte la Coupe Vanier' }), '🏈');
+assert.equal(U.sportEmoji({ title: 'Victoire des Carabins au hockey' }), '🏒');
+assert.equal(U.sportEmoji({ title: 'Une pièce de théâtre' }), '');
+const sportText = U.buildUneText({ slot: sSlot, items: [{ ...m.items[0], sport: '🏒' }] }, 'x');
+assert.match(sportText, /🏒 /, 'émoji de sport dans le texte');
+
 // ── Workflow : planifié, déclenchement manuel, DRY_RUN, fenêtres été/hiver, verrou partagé ──
 const wf = fs.readFileSync(new URL('../.github/workflows/social-une.yml', import.meta.url), 'utf8');
 assert.match(wf, /workflow_dispatch:/); assert.match(wf, /dry_run:/); assert.match(wf, /DRY_RUN:/);

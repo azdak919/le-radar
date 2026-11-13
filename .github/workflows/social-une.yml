@@ -87,6 +87,8 @@ jobs:
       - name: Install Chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
+      - name: Police émoji (émojis de sport dans les images)
+        run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
       - name: Sélection, images, contrôles et publication éventuelle
         env:
           UNE_SLOT: ${{ inputs.slot || 'auto' }}

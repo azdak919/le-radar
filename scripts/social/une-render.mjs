@@ -19,12 +19,13 @@ function startServer(port) {
 /** Modèle passé à la page : seulement ce qu'elle affiche. Images : miroir le-radar.ca d'abord (le dépôt n'a pas les fichiers miroir). */
 export function pageModel(model) {
   return {
-    slot: { label: model.slot.label, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()) },
-    items: model.items.map((x, i) => ({ title: x.title, byline: x.byline, hook: i === 0 ? x.hook || '' : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
+    slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()) },
+    items: model.items.map((x, i) => ({ title: x.title, byline: x.byline, place: x.place || '', sport: x.sport || '', hook: i === 0 ? x.hook || '' : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
   };
 }
 
-export async function renderImages(model, { outDir, formats = ['portrait', 'paysage'], prefix = 'une', port = Number(process.env.UNE_PORT || 4193) } = {}) {
+export const PISTE = 'b';
+export async function renderImages(model, { outDir, formats = ['portrait', 'paysage'], prefix = 'une', piste = PISTE, port = Number(process.env.UNE_PORT || 4193) } = {}) {
   const { chromium } = await import('@playwright/test');
   fs.mkdirSync(outDir, { recursive: true });
   const server = await startServer(port), browser = await chromium.launch();
@@ -34,7 +35,7 @@ export async function renderImages(model, { outDir, formats = ['portrait', 'pays
       const { width, height } = IMAGE_SIZES[format];
       const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
       await page.goto(`http://127.0.0.1:${port}/affiches/social-une.html`, { waitUntil: 'load' });
-      const info = await page.evaluate(arg => window.renderUne(arg), { model: pageModel(model), format });
+      const info = await page.evaluate(arg => window.renderUne(arg), { model: pageModel(model), format, piste });
       const file = path.join(outDir, `${prefix}-${format}-${width}x${height}.jpg`);
       let buf;
       for (const quality of [88, 80, 72, 64]) { buf = await page.locator('#card').screenshot({ type: 'jpeg', quality }); if (buf.length <= MAX_IMAGE_BYTES) break; }
@@ -45,4 +46,21 @@ export async function renderImages(model, { outDir, formats = ['portrait', 'pays
     }
   } finally { await browser.close(); server.kill(); }
   return out;
+}
+
+/**
+ * Traduction vers le français avec le module du site (translate.js, window.RadarTranslate.translateText), chargé dans un
+ * navigateur sans tête : mêmes moteurs, même filtrage et même cache que le site. Renvoie { translate(texte), close() }.
+ */
+export async function createTranslator({ port = Number(process.env.UNE_PORT || 4193) + 1, timeoutMs = 20000 } = {}) {
+  const { chromium } = await import('@playwright/test');
+  const server = await startServer(port), browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.goto(`http://127.0.0.1:${port}/affiches/social-une.html`, { waitUntil: 'load' });
+  await page.addScriptTag({ url: '/translate.js' });
+  const translate = text => Promise.race([
+    page.evaluate(t => window.RadarTranslate.translateText(t, 'fr'), String(text || '')),
+    new Promise((_, rej) => setTimeout(() => rej(new Error('délai de traduction dépassé')), timeoutMs)),
+  ]);
+  return { translate, close: async () => { await browser.close(); server.kill(); } };
 }
