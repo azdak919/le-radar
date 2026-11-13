@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T16:57:23.691Z",
+  "updatedAt": "2026-11-13T23:06:25.572Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -344,9 +344,9 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-13T16:57:23.691Z",
+      "checkedAt": "2026-11-13T23:06:25.572Z",
       "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-13T16:57:23.691Z",
+      "attemptedAt": "2026-11-13T23:06:25.572Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
       "coveragePercent": 37
@@ -1127,9 +1127,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-13T16:57:23.691Z",
+      "checkedAt": "2026-11-13T23:06:25.572Z",
       "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-13T16:57:23.691Z",
+      "attemptedAt": "2026-11-13T23:06:25.572Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1752,9 +1752,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-13T16:57:23.691Z",
+      "checkedAt": "2026-11-13T23:06:25.572Z",
       "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-13T16:57:23.691Z",
+      "attemptedAt": "2026-11-13T23:06:25.572Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2626,14 +2626,12 @@
       "sources": [
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-11-12T23:02:47.518Z",
+      "checkedAt": "2026-11-13T23:06:25.572Z",
       "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-13T16:57:23.691Z",
+      "attemptedAt": "2026-11-13T23:06:25.572Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
-      "coveragePercent": 100,
-      "unverified": true,
-      "retainedReason": "source-unavailable"
+      "coveragePercent": 100
     },
     "cfak": {
       "grid": [
@@ -2938,9 +2936,9 @@
         "cfak:https://www.cfak.ca/programmation/",
         "published-page-data:https://www.cfak.ca/_nuxt/static/1794505537/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-13T16:57:23.691Z",
+      "checkedAt": "2026-11-13T23:06:25.572Z",
       "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-13T16:57:23.691Z",
+      "attemptedAt": "2026-11-13T23:06:25.572Z",
       "id": "cfak",
       "name": "CFAK 88,3",
       "coveragePercent": 50
@@ -3124,13 +3122,6 @@
         },
         {
           "day": 6,
-          "start": "10:00",
-          "end": "11:00",
-          "title": "Podcast Nomade: L'art de se rencontrer",
-          "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
-        },
-        {
-          "day": 6,
           "start": "15:00",
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
@@ -3147,9 +3138,9 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-13T16:57:23.691Z",
+      "checkedAt": "2026-11-13T23:06:25.572Z",
       "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-13T16:57:23.691Z",
+      "attemptedAt": "2026-11-13T23:06:25.572Z",
       "id": "choq",
       "name": "CHOQ.ca",
       "coveragePercent": 17
