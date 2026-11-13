@@ -715,7 +715,10 @@ test('wide : marquee sports et météo bougent avant la cascade', async ({ page 
   const armed = await page.evaluate(() => {
     const chip = document.querySelector('#masthead-sports-strip .sports-chip--match');
     const inner = chip.querySelector('.sports-chip__line-inner');
-    inner.textContent = 'Cougars (Édouard-Montpetit) 7-0 Cheetahs (André-Laurendeau)';
+    const sub = chip.querySelector('.sports-chip__sub-text');
+    const longLine = 'Cougars (Édouard-Montpetit) 7-0 Cheetahs (André-Laurendeau)';
+    inner.textContent = longLine;
+    if (sub) sub.textContent = longLine;
     refreshSportsChipScroll(chip);
     const city = [...document.querySelectorAll('.masthead-weather__city.is-active')]
       .find((el) => el.dataset.weatherCity !== 'montreal' && el.dataset.weatherCity !== 'quebec');
@@ -724,9 +727,42 @@ test('wide : marquee sports et météo bougent avant la cascade', async ({ page 
     scheduleWeatherCascade({ firstHold: true });
     window.__wxCity = city.dataset.weatherCity;
     const name = city.querySelector('.masthead-weather__name-text');
+    const sportsMotion = getComputedStyle(inner);
+    const subMotion = sub ? getComputedStyle(sub) : null;
+    const lineSpeed = (el, prop) => {
+      if (!el) return 0;
+      const loop = el.querySelector(':scope > .sports-chip__loop');
+      const prevLoop = loop ? loop.style.display : '';
+      if (loop) loop.style.display = 'none';
+      const prevPad = el.style.paddingRight;
+      el.style.paddingRight = '0';
+      const width = el.scrollWidth;
+      el.style.paddingRight = prevPad;
+      if (loop) loop.style.display = prevLoop;
+      const dur = parseFloat(el.style.getPropertyValue(prop)) || 0;
+      return dur > 0 ? (width + 48) / dur : 0;
+    };
+    const seekX = (el, animName) => {
+      if (!el) return 'none';
+      const anim = el.getAnimations().find((a) => a.animationName === animName);
+      if (!anim) return 'none';
+      anim.pause();
+      anim.currentTime = 3200;
+      return getComputedStyle(el).transform;
+    };
     return {
-      sportsAnim: getComputedStyle(inner).animationName,
+      sportsAnim: sportsMotion.animationName,
+      sportsDirection: sportsMotion.animationDirection,
+      sportsIteration: sportsMotion.animationIterationCount,
+      sportsTiming: sportsMotion.animationTimingFunction,
+      sportsLoop: !!inner.querySelector(':scope > .sports-chip__loop'),
       sportsScroll: parseFloat(chip.style.getPropertyValue('--sports-scroll')) || 0,
+      sportsTitlePx: lineSpeed(inner, '--sports-scroll-duration'),
+      sportsSubAnim: subMotion ? subMotion.animationName : '',
+      sportsSubPx: lineSpeed(sub, '--sports-scroll-duration-sub'),
+      sportsSubLoop: !!(sub && sub.querySelector(':scope > .sports-chip__loop')),
+      sportsTx: seekX(inner, 'sports-chip-scroll'),
+      sportsSubTx: seekX(sub, 'sports-chip-scroll-sub'),
       weatherHold: weatherBoardHoldMs(),
       weatherOverflow: city.classList.contains('is-overflowing'),
       weatherMax: getComputedStyle(name).maxWidth,
@@ -734,7 +770,21 @@ test('wide : marquee sports et météo bougent avant la cascade', async ({ page 
     };
   });
   expect(armed.sportsAnim, 'marquee scores armé').toBe('sports-chip-scroll');
+  expect(armed.sportsDirection, 'le texte ne revient pas en arrière').toBe('normal');
+  expect(armed.sportsIteration, 'boucle continue').toBe('infinite');
+  expect(armed.sportsTiming, 'vitesse constante').toBe('linear');
+  expect(armed.sportsLoop, 'copie pour rentrer par la droite').toBe(true);
   expect(armed.sportsScroll, 'décalage du texte long').toBeGreaterThan(8);
+  expect(armed.sportsTitlePx, 'titre ~34 px/s').toBeGreaterThan(30);
+  expect(armed.sportsTitlePx, 'titre ~34 px/s').toBeLessThan(38);
+  expect(armed.sportsSubAnim, 'sous-ligne animée à part').toBe('sports-chip-scroll-sub');
+  expect(armed.sportsSubLoop, 'copie de la sous-ligne').toBe(true);
+  expect(armed.sportsSubPx, 'sous-ligne ~22 px/s').toBeGreaterThan(19);
+  expect(armed.sportsSubPx, 'sous-ligne ~22 px/s').toBeLessThan(26);
+  expect(armed.sportsSubPx, 'la ligne du bas est plus lente').toBeLessThan(armed.sportsTitlePx * 0.8);
+  expect(translateX(armed.sportsTx), `titre parti vers la gauche (${armed.sportsTx})`).toBeLessThan(-4);
+  expect(translateX(armed.sportsSubTx), `sous-ligne partie vers la gauche (${armed.sportsSubTx})`).toBeLessThan(-4);
+  expect(Math.abs(translateX(armed.sportsSubTx)), 'la sous-ligne a moins avancé').toBeLessThan(Math.abs(translateX(armed.sportsTx)));
   expect(armed.weatherOverflow, 'ville longue en défilement').toBe(true);
   expect(armed.weatherAnim, 'marquee météo armé').toBe('weather-name-scroll');
   expect(armed.weatherMax, 'le nom peut dépasser sa case').not.toBe('100%');
@@ -742,20 +792,16 @@ test('wide : marquee sports et météo bougent avant la cascade', async ({ page 
 
   await page.waitForTimeout(4500);
   const moved = await page.evaluate(() => {
-    const inner = [...document.querySelectorAll('#masthead-sports-strip .sports-chip__line-inner')]
-      .find((el) => /Laurendeau/.test(el.textContent || ''));
     const city = document.querySelector(
       `.masthead-weather__city.is-active[data-weather-city="${window.__wxCity}"]`,
     );
     const name = city?.querySelector('.masthead-weather__name-text');
     return {
-      sportsTx: inner ? getComputedStyle(inner).transform : 'none',
       weatherTx: name ? getComputedStyle(name).transform : 'none',
       leaving: !!city?.classList.contains('is-leaving'),
       id: city?.dataset.weatherCity || '',
     };
   });
-  expect(translateX(moved.sportsTx), `texte sports parti vers la fin (${moved.sportsTx})`).toBeLessThan(-4);
   expect(moved.leaving, 'la ville ne part pas avant la fin du marquee').toBe(false);
   expect(moved.id).toBeTruthy();
   expect(translateX(moved.weatherTx), `nom météo en cours de défilement (${moved.weatherTx})`).toBeLessThan(-4);
