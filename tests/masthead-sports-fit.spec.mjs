@@ -384,7 +384,7 @@ test('mât : point médian centré entre date et heure', async ({ page }) => {
 });
 
 /**
- * CTA SPORTS téléphone : sous-ligne longue → boucle continue,
+ * CTA SPORTS téléphone : sous-ligne longue → marquee L→R (aller-retour),
  * pas de wrap 2 lignes, pas d’ellipse.
  */
 test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ page }) => {
@@ -430,11 +430,7 @@ test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ p
       whiteSpace: cs.whiteSpace,
       textOverflow: cs.textOverflow,
       animationName: cs.animationName,
-      text: (() => {
-        const clone = subInner.cloneNode(true);
-        clone.querySelectorAll('.sports-chip__loop').forEach((node) => node.remove());
-        return (clone.textContent || '').trim();
-      })(),
+      text: (subInner.textContent || '').trim(),
     };
   }, longSub);
   expect(ready.ok, `préparation CTA : ${ready.reason || 'ok'}`).toBe(true);
@@ -504,11 +500,7 @@ test('puce score : titre long défile L→R, jamais d’ellipsis …', async ({ 
       scroll: chip.style.getPropertyValue('--sports-scroll'),
       textOverflow: cs.textOverflow,
       animation: cs.animationName,
-      label: (() => {
-        const clone = inner.cloneNode(true);
-        clone.querySelectorAll('.sports-chip__loop').forEach((node) => node.remove());
-        return (clone.textContent || '').trim();
-      })(),
+      label: (inner.textContent || '').trim(),
     };
   }, longTitle);
 
@@ -520,7 +512,7 @@ test('puce score : titre long défile L→R, jamais d’ellipsis …', async ({ 
   expect(ready.animation, 'titre doit animer sports-chip-scroll').toMatch(/sports-chip-scroll/);
 
   const titleEl = match.locator('.sports-chip__line-inner');
-  // Délai 1,6 s, puis la ligne part vers la gauche sans revenir.
+  // Delay 1,6 s + hold 24 % de 8 s ≈ 3,5 s avant le 1er pixel.
   const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
   await page.waitForTimeout(5200);
   const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
@@ -566,11 +558,7 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
       scroll: chip.style.getPropertyValue('--sports-scroll'),
       textOverflow: cs.textOverflow,
       animation: cs.animationName,
-      label: (() => {
-        const clone = text.cloneNode(true);
-        clone.querySelectorAll('.sports-chip__loop').forEach((node) => node.remove());
-        return (clone.textContent || '').trim();
-      })(),
+      label: text.textContent,
     };
   }, longTitle);
 
@@ -584,17 +572,11 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   await expect(cta).toHaveClass(/is-overflowing/);
   const titleEl = cta.locator('.sports-chip__cta-text');
   // Le DOM conserve le libellé complet (pas de troncature JS « … »).
-  // La copie de boucle est dans le nœud : on la retire avant de comparer.
-  const visibleTitle = await titleEl.evaluate((el) => {
-    const clone = el.cloneNode(true);
-    clone.querySelectorAll('.sports-chip__loop').forEach((node) => node.remove());
-    return (clone.textContent || '').replace(/\s+/g, ' ').trim();
-  });
-  expect(visibleTitle).toBe(longTitle);
+  await expect(titleEl).toHaveText(longTitle);
   const computedOverflow = await titleEl.evaluate((el) => getComputedStyle(el).textOverflow);
   expect(computedOverflow).toBe('clip');
 
-  // Délai CTA 0,7 s, puis défilement continu vers la gauche.
+  // Delay CTA 0,7 s + hold ~10 % de 5,5 s → mouvement après ~1,3 s.
   const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
   await page.waitForTimeout(2200);
   const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
@@ -718,30 +700,14 @@ test('pause sports : lecture ~9 s, marquee complète si overflow', async ({ page
     const hold = typeof sportsBoardHoldMs === 'function' ? sportsBoardHoldMs() : null;
     const overflowing = [...document.querySelectorAll('#masthead-sports-strip .sports-chip')]
       .some((el) => el.classList.contains('is-overflowing') || el.classList.contains('is-sub-overflowing'));
-    const node = overflowing
-      ? [...document.querySelectorAll('#masthead-sports-strip .sports-chip__line-inner, #masthead-sports-strip .sports-chip__sub-text, #masthead-sports-strip .sports-chip__cta-text, #masthead-sports-strip .sports-chip__cta-sub-text')]
-        .find((el) => {
-          const name = getComputedStyle(el).animationName;
-          return name && name !== 'none';
-        })
-      : null;
-    const motion = node ? getComputedStyle(node) : null;
-    return {
-      hold,
-      overflowing,
-      continuous: !!motion
-        && motion.animationIterationCount === 'infinite'
-        && motion.animationDirection === 'normal'
-        && motion.animationTimingFunction === 'linear',
-    };
+    return { hold, overflowing };
   });
   expect(info.hold, 'sportsBoardHoldMs exposé').toEqual(expect.any(Number));
   expect(info.hold, `hold ${info.hold} ms trop court`).toBeGreaterThanOrEqual(9000);
   if (!info.overflowing) {
     expect(info.hold, `hold ${info.hold} ms trop long sans marquee`).toBeLessThanOrEqual(12000);
   } else {
-    expect(info.hold, `hold ${info.hold} ms trop court pour une boucle`).toBeGreaterThanOrEqual(9000);
-    expect(info.continuous, 'le texte boucle sans aller-retour').toBe(true);
+    expect(info.hold, `hold ${info.hold} ms trop court pour un aller-retour`).toBeGreaterThanOrEqual(14000);
   }
 });
 
