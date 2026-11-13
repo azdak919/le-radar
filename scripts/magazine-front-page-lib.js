@@ -489,11 +489,37 @@
   }
 
   const SEX_LABEL = { F: 'féminin', M: 'masculin', X: 'mixte' };
+  /* « (F) » ou « (H) » d’après la donnée (F/M, W, women/men…) ; inconnu ou mixte : rien. */
+  function genderMark(sex) {
+    const k = String(sex || '').trim().toLowerCase();
+    if (['f', 'w', 'women', 'woman', 'femmes', 'féminin', 'feminin', 'female'].includes(k)) return '(F)';
+    if (['m', 'h', 'men', 'man', 'hommes', 'masculin', 'male'].includes(k)) return '(H)';
+    return '';
+  }
   /**
    * Bilan d’une période passée : résultats réels (sports.json dépaqueté),
    * filtrés par établissement, variés (un par sport et sexe à tour de rôle,
    * universitaire d’abord), plus récents en premier. Rien n’est inventé.
    */
+  /* Nom d’équipe (registre des formations) + établissement entre parenthèses ;
+   * l’équipe de l’établissement de l’affiche s’affiche seule. Sans surnom : l’établissement seul. */
+  function teamLabel(nickname, shortName, own = false) {
+    const nick = frTypo(String(nickname || '').trim());
+    const inst = frTypo(String(shortName || '').trim());
+    if (!nick) return inst;
+    if (own || !inst || inst === nick) return nick;
+    return `${nick} (${inst})`;
+  }
+  function gameSides(team, g, campus) {
+    const ownInst = team.institutionName || team.institutionLabel || team.fullName || '';
+    const own = Boolean(campus) && itemMatchesCampus({ institution: ownInst }, campus);
+    const oppOwn = Boolean(campus) && itemMatchesCampus({ institution: g.opponentFullName || g.opponent || '' }, campus);
+    return {
+      who: teamLabel(team.nickname, team.shortName || team.name || team.fullName, own),
+      vs: teamLabel(g.opponentNickname, g.opponent || g.opponentFullName, oppOwn),
+    };
+  }
+
   function periodResults(teams = [], win = null, campus = null, limit = 4) {
     if (!win || !win.from) return { items: [], played: 0, wins: 0 };
     const seen = new Set();
@@ -533,11 +559,11 @@
       }
     }
     const items = out.map(({ team, g }) => {
-      const who = team.nickname && team.name && !team.name.includes(team.nickname) ? team.name : (team.name || team.fullName || '');
-      const vs = g.opponentNickname || g.opponent || g.opponentFullName || '';
-      const sport = [team.sportLabel || team.sport || '', SEX_LABEL[team.sex] || ''].filter(Boolean).join(' ');
+      const { who, vs } = gameSides(team, g, campus);
+      const sport = [team.sportLabel || team.sport || '', genderMark(team.sex)].filter(Boolean).join(' ');
       return {
         kicker: sport,
+        gender: genderMark(team.sex),
         emoji: sportEmoji(team.sportLabel || team.sport),
         line: `${who} ${g.scoreFor}–${g.scoreAgainst} ${vs}`.trim(),
         meta: frDate(`${g.date}T12:00:00`).replace(/\s\d{4}$/, ''),
@@ -605,6 +631,9 @@
     bylineOf,
     manualSelection,
     periodResults,
+    teamLabel,
+    gameSides,
+    genderMark,
     frTypo,
     mastheadSegments,
     sportEmoji,

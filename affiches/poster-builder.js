@@ -92,6 +92,7 @@ const GREETINGS_EN = {
 
 /* Phrase sous « Scanne-moi » : FR, puis EN (mode bilingue des établissements autorisés). */
 const UNE_TAGLINES = {
+  direct: { label: 'Le fil étudiant en direct', fr: 'Le fil étudiant en direct', en: 'Live student news' },
   auto: { label: 'Automatique (campus ou tout le Radar)' },
   fil: { label: 'Le fil étudiant', fr: 'Le fil étudiant', en: 'The student news feed' },
   tout: { label: 'Tout le Radar étudiant', fr: 'Tout le Radar étudiant', en: 'All student news' },
@@ -244,7 +245,7 @@ const state = {
   layout: 'classique',
   uneCampus: 'toutes',
   unePeriod: 'jour',
-  uneTagline: 'auto',
+  uneTagline: 'direct',
   unePeriodInfo: null,
   uneCandidates: [],
   uneAutoArticles: [],
@@ -687,7 +688,9 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
     const inst = team.institutionName || team.institutionLabel || team.fullName || team.name || '';
     if (campus && !itemMatchesCampusPoster({ institution: inst }, campus)) return;
     const sport = team.sportLabel || team.sport || '';
-    const sportTag = [sport, { F: 'féminin', M: 'masculin' }[team.sex] || ''].filter(Boolean).join(' ');
+    /* Genre explicite « (F) » / « (H) » seulement si la donnée le dit ; jamais deviné. */
+    const gender = typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.genderMark ? RadarMagazineFrontPage.genderMark(team.sex) : '';
+    const sportTag = [sport, gender].filter(Boolean).join(' ');
     const name = team.name || team.fullName || '';
     const uniBoost = team.sector === 'universitaire' ? 0 : 1;
     (team.nextGames || []).forEach((game) => {
@@ -696,14 +699,16 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
       if (seen.has(id) || seen.has(key) || !game.date || game.date < today) return;
       seen.add(id);
       seen.add(key);
-      const vs = game.opponentNickname || game.opponent || game.opponentFullName || '';
+      const F = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+      const sides = F && F.gameSides ? F.gameSides(team, game, campus) : { who: name, vs: game.opponentNickname || game.opponent || '' };
       const verb = game.home ? 'reçoit' : 'visite';
       upcoming.push({
         sort: `${uniBoost}-${game.date}-${game.time || ''}`,
         today: game.date === today,
         kicker: sportTag,
+        gender,
         emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
-        line: `${name} ${verb} ${vs}`,
+        line: `${sides.who} ${verb} ${sides.vs}`,
         upcoming: true,
         meta: [posterShortDate(game.date), posterClock(game.time)].filter(Boolean).join(' · '),
       });
@@ -715,8 +720,13 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
       results.push({
         sort: `${uniBoost}-${game.date}`,
         kicker: sportTag,
+        gender,
         emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
-        line: `${name} ${game.scoreFor}–${game.scoreAgainst} ${game.opponentNickname || game.opponent || ''}`,
+        line: (() => {
+          const F = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+          const sd = F && F.gameSides ? F.gameSides(team, game, campus) : { who: name, vs: game.opponentNickname || game.opponent || '' };
+          return `${sd.who} ${game.scoreFor}–${game.scoreAgainst} ${sd.vs}`;
+        })(),
         meta: posterShortDate(game.date) || game.date,
       });
     });
@@ -1019,30 +1029,43 @@ function composeFrontPage(ctx, w, h, opts) {
   ctx.font = `400 ${tagS}px "LR Sans"`;
   const tagW = Math.max(ctx.measureText(SLOGAN).width, bilingual ? ctx.measureText(SLOGAN_EN).width : 0);
   const extraW = x1 - (x0 + tagW + px(3));
-  const extra = opts.mastExtras && opts.mastExtras.lines && opts.mastExtras.lines.length && extraW >= px(16) ? opts.mastExtras : null;
+  const extra = opts.mastExtras && opts.mastExtras.lines && opts.mastExtras.lines.length && extraW >= px(16) ? { ...opts.mastExtras, lines: opts.mastExtras.lines.slice() } : null;
   const exHeadS = px(1.35);
   const exLineS = px(1.65);
   const extraH = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
   /* Sous l’accroche, à côté de l’encart : matchs à venir de l’établissement (dates absolues),
    * retirés de la bande sports pour éviter tout doublon. */
-  const gameS = Math.max(10, Math.round(tagS * 0.82));
-  const gameLineH = Math.round(gameS * 1.32);
-  const gameRows = extra ? Math.max(0, Math.floor((extraH - tagRowsH - px(0.3)) / gameLineH)) : 0;
+  const gameS = Math.max(10, Math.round(tagS * 0.8));
+  const gameLineH = Math.round(gameS * 1.3);
+  /* 2 à 4 matchs selon le format : l’en-tête grandit un peu, l’encart radio s’aligne dessus. */
+  const gameTarget = { letter: 2, legal: 3, tabloid: 3, 'ecran-paysage': 2, 'ecran-portrait': 3 }[fmtSpec.id] || 2;
   const mastGames = [];
-  if (gameRows) {
-    const pool = (opts.mastGames || []).filter((g) => g && g.upcoming);
-    pool.slice(0, gameRows).forEach((g) => mastGames.push(g));
-    if (!mastGames.length) {
-      const bandKeys = new Set(sportsLines.map((x) => `${x.line}|${x.meta}`));
-      (opts.mastGames || []).filter((g) => g && !g.upcoming && !bandKeys.has(`${g.line}|${g.meta}`)).slice(0, gameRows).forEach((g) => mastGames.push(g));
-    }
+  {
+    const up = (opts.mastGames || []).filter((g) => g && g.upcoming);
+    const bandKeys = new Set(sportsLines.filter((x) => !x.upcoming).map((x) => `${x.line}|${x.meta}`));
+    const pool = up.length ? up : (opts.mastGames || []).filter((g) => g && !g.upcoming && !bandKeys.has(`${g.line}|${g.meta}`));
+    pool.slice(0, gameTarget).forEach((g) => mastGames.push(g));
   }
+  const leftH = tagRowsH + (mastGames.length ? px(0.3) + mastGames.length * gameLineH : 0);
+  /* L’encart de droite garde autant de lignes que la colonne de gauche en occupe (ni vide ni débord). */
+  if (extra) {
+    const per = Math.round(exLineS * 1.3);
+    const head = Math.round(exHeadS * 1.35);
+    while (extra.lines.length > 1 && head + extra.lines.length * per > Math.max(leftH, head + per) + px(0.5)) extra.lines = extra.lines.slice(0, -1);
+  }
+  let extrasW = 0;
+  if (extra) {
+    ctx.font = `600 ${exLineS}px "LR Sans Semi", "LR Sans"`;
+    extrasW = Math.min(extraW, Math.max(...extra.lines.map((l) => ctx.measureText(l).width)));
+  }
+  const gameW = x1 - x0 - (extra ? extrasW + px(3) : 0);
+  const extraHFit = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
   if (mastGames.length) {
     const used = new Set(mastGames.map((g) => `${g.line}|${g.meta}`));
     sportsLines = sportsLines.filter((x) => !used.has(`${x.line}|${x.meta}`));
   }
   sportsLines = sportsLines.slice(0, plan.sports);
-  const mastH = rowTop + logoRowH + px(1.2) + Math.max(tagRowsH, extraH) + px(2);
+  const mastH = rowTop + logoRowH + px(1.2) + Math.max(leftH, extraHFit) + px(2);
   ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
   ctx.fillRect(0, mastTop, w, mastH);
   ctx.fillStyle = DEEP;
@@ -1104,13 +1127,13 @@ function composeFrontPage(ctx, w, h, opts) {
     let gy = my + px(0.3);
     const gameFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
     mastGames.forEach((g) => {
-      const text = `${g.emoji ? `${g.emoji} ` : ''}${g.meta} · ${g.line}`;
+      const text = `${g.emoji ? `${g.emoji} ` : ''}${g.gender ? `${g.gender} ` : ''}${g.meta} · ${g.line}`;
       let z = gameS;
       ctx.font = gameFont(z);
-      while (z > Math.round(gameS * 0.75) && ctx.measureText(text).width > tagW) { z -= 1; ctx.font = gameFont(z); }
+      while (z > Math.round(gameS * 0.72) && ctx.measureText(text).width > gameW) { z -= 1; ctx.font = gameFont(z); }
       ctx.fillStyle = '#ffffff';
       ctx.textBaseline = 'top';
-      ctx.fillText(fitOne(text, gameFont, z, tagW), x0, gy);
+      ctx.fillText(fitOne(text, gameFont, z, gameW), x0, gy);
       gy += gameLineH;
     });
   }
@@ -1135,7 +1158,9 @@ function composeFrontPage(ctx, w, h, opts) {
   const creditS = credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
   const footPad = px(0.9);
   const footH = footPad + nameLineH + legalLines.length * legalLineH + (langsMetrics.height ? px(0.6) + langsMetrics.height : 0) + creditS + footPad;
-  const footY = h - px(1.2) - footH;
+  /* Marge sûre d’impression : le pied reste à au moins 0,25 po du bord bas (zone non imprimable). */
+  const safeIn = plan.screen ? px(1.2) : Math.max(px(1.2), Math.round((w / fmtSpec.wIn) * 0.25));
+  const footY = h - safeIn - footH;
 
   /* 3. Répartition verticale */
   const lead = articles[0] || null;
@@ -1516,7 +1541,7 @@ function composeFrontPage(ctx, w, h, opts) {
         const lineMax = Math.min(px(2.4), Math.floor(room / 1.2));
         /* Emoji de sport (police couleur LR Emoji) devant le match ou le résultat. */
         const indent = item.emoji ? Math.round(lineMax * 1.35) : 0;
-        const f = wrapFit(item.line || '', sans(700), colW - indent, lineMax, Math.max(10, px(1.6)), maxL);
+        const f = wrapFit(item.line || '', sans(700), colW - indent, lineMax, Math.max(10, px(1.3)), maxL);
         if (item.emoji && iy + f.size <= by + (r + 1) * rowsH) {
           ctx.font = `${f.size}px "LR Emoji"`;
           ctx.textBaseline = 'top';
@@ -1536,11 +1561,13 @@ function composeFrontPage(ctx, w, h, opts) {
     panel(x0, cy, contentW, rowH);
     if (!glass) rule(x0, x1, cy - px(1.2), 2);
     let by = label(bilingual ? 'En bref · In brief' : 'En bref', x0 + p, cy + p);
-    const itemH = px(6.6);
+    /* Rangées : autant que la hauteur le permet (min. 5,9 u), puis réparties sans vide en bas. */
     const cols = plan.briefCols;
-    const rowsFit = Math.max(1, Math.floor((cy + rowH - p - by) / itemH));
+    const availB = cy + rowH - p - by;
+    const rowsFit = Math.max(1, Math.floor(availB / px(5.9)));
     const count = Math.min(briefs.length, rowsFit * cols);
     const perCol = Math.ceil(count / cols);
+    const itemH = Math.max(px(5.9), Math.min(px(7.4), Math.floor(availB / Math.max(1, perCol))));
     const colW = Math.floor((contentW - p * 2 - gap * (cols - 1)) / cols);
     const numS = px(3);
     briefs.slice(0, count).forEach((b, i) => {
@@ -2426,7 +2453,7 @@ function uneRadioShows(bars, campus, info, limit = 2) {
 }
 function uneMastExtras(mode, bars, campus, info, sportsLines) {
   if (!info || mode === 'aucun') return null;
-  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 2 : 1);
+  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 3 : 1);
   const next = (sportsLines || []).find((x) => x.upcoming);
   const pool = state.uneCandidates || [];
   const ref = (info.to || posterTodayYmd());
@@ -3094,7 +3121,7 @@ function applyChoice(name, value) {
     return;
   }
   if (name === 'uneTagline') {
-    state.uneTagline = Object.prototype.hasOwnProperty.call(UNE_TAGLINES, value) ? value : 'auto';
+    state.uneTagline = Object.prototype.hasOwnProperty.call(UNE_TAGLINES, value) ? value : 'direct';
   }
   if (name === 'uneCampus') {
     state.uneCampus = value || 'toutes';

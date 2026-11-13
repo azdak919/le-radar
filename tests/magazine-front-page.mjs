@@ -249,3 +249,19 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   const en = front.normalize({ title: 'Title: test', lang: 'en', link: 'https://ex.org/b', source: 'S', date: '2026-11-12T15:00:00Z' });
   assert.equal(en.title, 'Title: test', 'titres anglais inchangés');
 }
+
+// Genre « (F) » / « (H) » d’après la donnée seulement ; noms d’équipes + établissement.
+{
+  assert.equal(front.genderMark('F'), '(F)');
+  assert.equal(front.genderMark('M'), '(H)');
+  assert.equal(front.genderMark(''), '', 'genre inconnu : rien');
+  assert.equal(front.genderMark('X'), '', 'mixte : rien, pas de devinette');
+  const laval = { slug: 'laval', line: 'Université Laval', label: 'Université Laval' };
+  const team = { name: 'ULaval', nickname: 'Rouge et Or', institutionName: 'Université Laval', sex: 'F' };
+  const g = { opponent: 'Concordia', opponentNickname: 'Stingers', opponentFullName: 'Université Concordia' };
+  assert.deepEqual(front.gameSides(team, g, laval), { who: 'Rouge et Or', vs: 'Stingers (Concordia)' });
+  const general = front.gameSides(team, g, null);
+  assert.equal(general.who, 'Rouge et Or (ULaval)', 'affiche générale : établissement entre parenthèses');
+  assert.equal(front.gameSides({ ...team, nickname: '' }, { opponent: "Bishop's", opponentFullName: "Bishop's University" }, laval).vs, 'Bishop’s', 'sans surnom : établissement seul');
+  assert.equal(front.teamLabel('Gaiters', "Bishop's", false), 'Gaiters (Bishop’s)');
+}
