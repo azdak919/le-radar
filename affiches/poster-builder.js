@@ -25,33 +25,53 @@ const SLOGAN_EN = 'Student newspapers, radio and sports from Quebec, all in one 
 const INDEP_1 = 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.';
 const INDEP_2 = 'Les contenus appartiennent à leurs publications d’origine.';
 const INDEP_EN = 'Independent, unofficial and not affiliated. Content belongs to the original publications.';
-/* Licence du dépôt (LICENSE : GNU GPL v2). Le contenu des médias reste à leurs auteurs (INDEP_2). */
-const LICENSE_FR = 'Logiciel libre — GNU GPL v2';
-const LICENSE_EN = 'Free software — GNU GPL v2';
-const LICENSE_BI = 'Logiciel libre / Free software — GNU GPL v2';
+/* Gabarits d’affiches : 🄯 Azdak, CC BY-SA 4.0. Le code du dépôt reste GNU GPL v2
+ * (LICENSE). Les contenus des médias et les photos restent à leurs titulaires (INDEP_2). */
+const LICENSE_LINE = '\u{1F12F} Azdak CC BY-SA 4.0';
+const LICENSE_FR = LICENSE_LINE;
+const LICENSE_EN = LICENSE_LINE;
+const LICENSE_BI = LICENSE_LINE;
+const LICENSE_MARK = '\u{1F12F}';
 
-function posterLicenseText(kind) {
-  if (kind === 'en') return LICENSE_EN;
-  if (kind === 'bilingue') return LICENSE_BI;
-  return LICENSE_FR;
+function posterLicenseText() {
+  return LICENSE_LINE;
 }
 
-function licenseFont(size) {
-  return `400 ${size}px "LR Serif", "Source Serif 4", serif`;
+/* Même graisse et famille que la mention d’indépendance (LR Sans = Inter Regular).
+ * Le glyphe copyleft (U+1F12F) vient d’un sous-ensemble Noto Sans Symbols (LR Copyleft). */
+function licenseSansFont(size) {
+  return `400 ${size}px "LR Sans"`;
+}
+function licenseMarkFont(size) {
+  return `400 ${size}px "LR Copyleft", "LR Sans"`;
 }
 
-function drawPosterLicense(ctx, { text, x, y, maxW, size, color }) {
-  ctx.font = licenseFont(size);
+function measurePosterLicense(ctx, size) {
+  const rest = 'Azdak CC BY-SA 4.0';
+  const gap = Math.max(2, Math.round(size * 0.22));
+  ctx.textBaseline = 'top';
+  ctx.font = licenseMarkFont(size);
+  const mm = ctx.measureText(LICENSE_MARK);
+  const markW = mm.width;
+  const markH = (mm.actualBoundingBoxAscent || 0) + (mm.actualBoundingBoxDescent || 0) || size;
+  ctx.font = licenseSansFont(size);
+  const rm = ctx.measureText(rest);
+  const restW = rm.width;
+  const restH = (rm.actualBoundingBoxAscent || 0) + (rm.actualBoundingBoxDescent || 0) || size;
+  return { rest, gap, markW, restW, width: markW + gap + restW, height: Math.max(markH, restH) };
+}
+
+function drawPosterLicense(ctx, { x, y, size, color }) {
+  const m = measurePosterLicense(ctx, size);
+  const x0 = x - m.width / 2;
   ctx.fillStyle = color;
   ctx.textBaseline = 'top';
-  ctx.textAlign = 'center';
-  const line = typeof fitOne === 'function'
-    ? fitOne(text, (z) => licenseFont(z), size, maxW)
-    : text;
-  ctx.fillText(line, x, y);
   ctx.textAlign = 'left';
-  const m = ctx.measureText(line);
-  return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
+  ctx.font = licenseMarkFont(size);
+  ctx.fillText(LICENSE_MARK, x0, y);
+  ctx.font = licenseSansFont(size);
+  ctx.fillText(m.rest, x0 + m.markW + m.gap, y);
+  return m.height;
 }
 
 const INK = '#F1F2F4';
@@ -483,6 +503,7 @@ async function loadFonts() {
     new FontFace('LR Sans Semi', 'url(../scripts/og-fonts/Inter-SemiBold.ttf)'),
     new FontFace('LR Script', 'url(../assets/kit/fonts/Caveat-Bold.ttf)'),
     new FontFace('LR Emoji', 'url(../assets/kit/fonts/emoji/noto-color-emoji-sports.woff2)'),
+    new FontFace('LR Copyleft', 'url(../assets/kit/fonts/noto-sans-symbols-copyleft.woff2)', { weight: '400', style: 'normal', unicodeRange: 'U+1F12F' }),
     ...LANG_FONT_FILES.map(([family, file]) => new FontFace(
       family,
       `url(../assets/kit/fonts/langs/${file})`,
@@ -971,6 +992,19 @@ function composeFrontPage(ctx, w, h, opts) {
       if (!f.cut) return f;
     }
     return null;
+  };
+  /* Extrait réel de l’article seulement (hook / chapô / excerpt déjà tronqué en phrases). */
+  const hookText = (art) => {
+    const raw = [art?.hook, art?.hookShort, art?.hookLong, art?.leadExcerpt, art?.excerpt]
+      .map((t) => String(t || '').replace(/\s+/g, ' ').trim())
+      .filter((t) => t && !t.endsWith('…') && !t.endsWith('...'));
+    return raw[0] || '';
+  };
+  const paintHook = (text, x, y, maxW, maxSize, minSize, maxLines, color, floorY) => {
+    if (!text || maxLines < 1 || floorY - y < minSize) return y;
+    const f = wholeFit(text, sans(400), maxW, maxSize, minSize, maxLines);
+    if (!f) return y;
+    return drawLines(f, sans(400), x, y, color, 1.25, floorY);
   };
   const drawLines = (fit, fontFn, x, y, color, lead = 1.16, floor = Infinity) => {
     let yy = y;
@@ -1607,7 +1641,7 @@ function composeFrontPage(ctx, w, h, opts) {
       const metaS = metaLead.size;
       const metaLines = metaLead.lines;
       const metaH = metaLines.length * Math.round(metaS * 1.3);
-      const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
+      const hook = hookText(lead);
       const hS = px(1.95);
       const hLineH = Math.round(hS * 1.25);
       const textTop = tall ? ly + px(4.6) : ly + phH * (textTopEst + 0.08);
@@ -1628,10 +1662,9 @@ function composeFrontPage(ctx, w, h, opts) {
       }
       const qrInCol = tall && qrBlockH > 0;
       const roomHook = floor - pad - qrBlockH - (textTop + tH + px(0.8) + metaH + px(0.6));
-      const hookLines = hook ? Math.max(0, Math.min(4, Math.floor(roomHook / hLineH))) : 0;
-      /* Chapeau entier ou rien : jamais de points de suspension sur la une. */
-      let hFit = hookLines ? wrapFit(hook, sans(400), textWq, hS, Math.max(9, px(1.6)), hookLines) : null;
-      if (hFit && /…$/.test(hFit.lines[hFit.lines.length - 1] || '')) hFit = null;
+      const hookLines = hook ? Math.max(0, Math.min(6, Math.floor(roomHook / hLineH))) : 0;
+      /* Chapeau entier ou première phrase entière : jamais de points de suspension. */
+      const hFit = hookLines ? wholeFit(hook, sans(400), textWq, hS, Math.max(9, px(1.6)), hookLines) : null;
       const hookH = hFit ? hFit.lines.length * hLineH : 0;
       const stackH = tH + px(0.8) + metaH + (hookH ? px(0.6) + hookH : 0);
       let ty = Math.max(textTop, floor - pad - qrBlockH - stackH);
@@ -1659,14 +1692,34 @@ function composeFrontPage(ctx, w, h, opts) {
       metaLines.forEach((line, i) => fillWithSpan(line, lx + pad, ty + i * Math.round(metaS * 1.3), '#F1D9EE', lead.source, metaColor(lead, BG_OVERLAY, '#F1D9EE')));
       noteSignature(lead, 'lead', metaLead);
       ty += metaH;
-      if (hFit) drawLines(hFit, sans(400), lx + pad, ty + px(0.6), '#ffffff', 1.25, floor);
+      /* Chapeau dans l’espace réellement libre au-dessus du QR (pas seulement l’estimation roomHook). */
+      const tile = qrS ? qrS + px(1.6) : 0;
+      const qy = qrS ? floor - pad - tile - px(1.8) : floor - pad;
+      const hookTop = ty + px(0.55);
+      const hookFloor = (qrInCol && qrS) ? qy - px(0.3) : (floor - pad);
+      if (hook && hookFloor - hookTop >= px(1.8)) {
+        const hSize = Math.min(hS, Math.max(px(1.35), Math.round((hookFloor - hookTop) * 0.16)));
+        const hl = Math.max(1, Math.min(8, Math.floor((hookFloor - hookTop) / Math.round(hSize * 1.25))));
+        paintHook(hook, lx + pad, hookTop, textWq, hSize, Math.max(8, px(1.2)), hl, '#ffffff', hookFloor);
+      } else if (hook && qrInCol && qrS) {
+        /* Lettre / colonne étroite : le QR est déjà sous la signature ; le vide est à sa droite. */
+        const hookX = lx + pad + tile + px(0.7);
+        const hookW = (lx + colW - pad) - hookX;
+        const sideTop = Math.max(ty + px(0.25), qy);
+        const sideFloor = floor - pad;
+        if (hookW >= px(7) && sideFloor - sideTop >= px(1.8)) {
+          const hSize = Math.min(hS, Math.max(px(1.25), Math.round(hookW * 0.08)));
+          const hl = Math.max(1, Math.min(8, Math.floor((sideFloor - sideTop) / Math.round(hSize * 1.22))));
+          paintHook(hook, hookX, sideTop, hookW, hSize, Math.max(8, px(1.1)), hl, '#ffffff', sideFloor);
+        }
+      } else if (hFit) {
+        drawLines(hFit, sans(400), lx + pad, ty + px(0.6), '#ffffff', 1.25, hookFloor);
+      }
       ctx.restore();
       if (qrS) {
         /* Tuile blanche (zone calme) pour que le QR se lise sur la photo. */
-        const tile = qrS + px(1.6);
         /* Image verticale entière à droite : QR en bas de la colonne de texte ; sinon en bas à droite. */
         const qx = qrInCol ? lx + pad : lx + lw - pad - tile;
-        const qy = floor - pad - tile - px(1.8);
         ctx.fillStyle = '#ffffff';
         roundedRectPath(ctx, qx, qy, tile, tile + px(1.8), px(0.5));
         ctx.fill();
@@ -1716,11 +1769,10 @@ function composeFrontPage(ctx, w, h, opts) {
     noteSignature(lead, 'lead', metaLead);
     const meta = metaLines.length > 0;
     const hookY = ly + (meta ? px(0.6) + metaLines.length * metaLh : 0);
-    const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
+    const hook = hookText(lead);
     if (hook && floor - hookY > px(2.4)) {
-      const lines = Math.max(1, Math.min(5, Math.floor((floor - hookY) / Math.round(px(2.1) * 1.25))));
-      const hFit = wholeFit(hook, sans(400), textW2, px(2.1), Math.max(9, px(1.6)), lines);
-      if (hFit) drawLines(hFit, sans(400), lx, hookY, ink, 1.25, floor);
+      const lines = Math.max(1, Math.min(6, Math.floor((floor - hookY) / Math.round(px(2.1) * 1.25))));
+      paintHook(hook, lx, hookY, textW2, px(2.1), Math.max(9, px(1.6)), lines, ink, floor);
     }
     if (leadQr) {
       const qx = lx + lw - leadQr;
@@ -1905,22 +1957,13 @@ function composeFrontPage(ctx, w, h, opts) {
             const maxL = Math.max(plan.screen ? 1 : 2, Math.min(4, Math.floor(room / (tMax * 1.1))));
             const f = sideFit(art, per) || sideFit(art, per, Math.max(9, px(1.2))) || wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
             const endY = drawLines(f, serif, rx + sp, yy, ink, 1.1, by + per + px(0.2));
-            /* Un seul article dans l’encart : son chapeau comble la place plutôt qu’un vide. */
+            /* Chapeau réel dans l’espace restant, phrase entière seulement. */
             const hookRoom = by + per - endY - px(0.8);
-            const hook = art.hookShort || art.hook || '';
-            if (shown.length === 1 && hook && hookRoom >= px(2.2)) {
+            const hook = hookText(art);
+            if (hook && hookRoom >= px(2.2)) {
               const hs = px(1.5);
               const hl = Math.max(1, Math.floor(hookRoom / Math.round(hs * 1.3)));
-              ctx.font = sans(400)(hs);
-              const all = wrapWords(ctx, hook.replace(/…$/, ''), rightW - sp * 2);
-              /* Chapeau entier seulement (jamais de « … ») ; à défaut, sa première phrase entière. */
-              let lines = all.length <= hl ? all : null;
-              if (!lines) {
-                const first = (hook.replace(/…$/, '').match(/^.+?[.!?»](?=\s|$)/) || [''])[0];
-                const fl = first ? wrapWords(ctx, first, rightW - sp * 2) : [];
-                if (fl.length && fl.length <= hl) lines = fl;
-              }
-              if (lines) drawLines({ size: hs, lines }, sans(400), rx + sp, endY + px(0.5), mute, 1.3, by + per);
+              paintHook(hook, rx + sp, endY + px(0.5), rightW - sp * 2, hs, Math.max(8, px(1.15)), hl, mute, by + per);
             }
           });
         }
@@ -1929,7 +1972,7 @@ function composeFrontPage(ctx, w, h, opts) {
     cy += rowH + px(2.4);
   }
 
-  /* 5. Vedettes : photo + titre, QR moyen, sans extrait */
+  /* 5. Vedettes : photo + titre, QR moyen, extrait réel s’il tient en phrases entières. */
   if (gridArts.length && bh.grid) {
     const rowH = bh.grid;
     rule(x0, x1, cy - px(1.2), 2);
@@ -1966,12 +2009,22 @@ function composeFrontPage(ctx, w, h, opts) {
       const mw = iw - (qr ? qr + px(1) : 0);
       const mS = Math.max(8, px(1.3));
       const gridMeta = metaPick(art, mw, sans(600), mS, { withDate: true, maxH: px(8), minSize: Math.max(7, px(0.95)), lead: 1.25 });
-      const metaH = Math.max(px(4.2), gridMeta.lines.length * Math.round(gridMeta.size * 1.25));
-      let f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, mw, qrTop - px(0.6), floor - metaH, 1.1);
+      const sigH = Math.max(px(2.4), gridMeta.lines.length * Math.round(gridMeta.size * 1.25));
+      const titleFloor = floor - sigH;
+      let f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, mw, qrTop - px(0.6), titleFloor, 1.1);
       /* Titre entier : on descend le corps plutôt que de couper. */
-      if (f.cut) f = fitFlow(art.title, serif, px(2.9), Math.max(9, px(1.35)), iy, iw, mw, qrTop - px(0.6), floor - metaH, 1.1);
-      drawFlow(f, serif, ix, ink);
-      paintSignature(art, 'vedette', ix, floor - metaH, mw, mS, PURPLE, BG_LIGHT, { withDate: true, maxH: metaH, minSize: Math.max(7, px(0.95)), lead: 1.25 });
+      if (f.cut) f = fitFlow(art.title, serif, px(2.9), Math.max(9, px(1.35)), iy, iw, mw, qrTop - px(0.6), titleFloor, 1.1);
+      const titleEnd = drawFlow(f, serif, ix, ink);
+      const sigY = floor - sigH;
+      paintSignature(art, 'vedette', ix, sigY, mw, mS, PURPLE, BG_LIGHT, { withDate: true, maxH: sigH, minSize: Math.max(7, px(0.95)), lead: 1.25 });
+      const hookTop = titleEnd + px(0.35);
+      const hookFloor = sigY - px(0.15);
+      const hook = hookText(art);
+      if (hook && hookFloor - hookTop >= px(1.3)) {
+        const hs = Math.min(px(1.65), Math.max(px(1.15), Math.round((hookFloor - hookTop) * 0.2)));
+        const hl = Math.max(1, Math.floor((hookFloor - hookTop) / Math.round(hs * 1.25)));
+        paintHook(hook, ix, hookTop, mw, hs, Math.max(8, px(1.05)), hl, mute, hookFloor);
+      }
       if (qr) drawQrCode(ctx, ix + iw - qr, floor - qr, qr, art.pageUrl);
     });
     cy += rowH + px(2.4);
@@ -2123,7 +2176,16 @@ function composeFrontPage(ctx, w, h, opts) {
       const tW = colW - px(3.4);
       const briefPaint = paintSignature(b, 'bref', tx, iy, tW, px(1.3), PURPLE, BG_LIGHT, { withDate: true, maxH: Math.min(px(3.8), Math.round(itemH * 0.48)), minSize: Math.max(7, px(0.95)), lead: 1.25 });
       const f = briefFit(b.title, tW, itemH - briefPaint.height - px(0.2)) || wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
-      drawLines(f, serif, tx, iy + briefPaint.height + px(0.2), ink, 1.12, iy + itemH);
+      const titleTop = iy + briefPaint.height + px(0.2);
+      const endY = drawLines(f, serif, tx, titleTop, ink, 1.12, iy + itemH);
+      const hook = hookText(b);
+      const hookTop = endY + px(0.25);
+      const hookFloor = iy + itemH - px(0.2);
+      if (hook && hookFloor - hookTop >= px(1.9)) {
+        const hs = px(1.4);
+        const hl = Math.max(1, Math.min(3, Math.floor((hookFloor - hookTop) / Math.round(hs * 1.22))));
+        paintHook(hook, tx, hookTop, tW, hs, Math.max(8, px(1.05)), hl, mute, hookFloor);
+      }
     });
   }
 
@@ -2165,10 +2227,8 @@ function composeFrontPage(ctx, w, h, opts) {
   }
   const uneLicKind = (opts.lang === 'en' || opts.locale === 'en') ? 'en' : (bilingual ? 'bilingue' : 'fr');
   drawPosterLicense(ctx, {
-    text: posterLicenseText(uneLicKind),
     x: w / 2,
     y: ly,
-    maxW: contentW,
     size: licSize,
     color: mute,
   });
@@ -2537,9 +2597,7 @@ function compose(opts) {
     const licKind = kind === 'bilingue' ? 'bilingue' : 'fr';
     const licText = posterLicenseText(licKind);
     let fLic = Math.max(10, Math.round((credit ? fCredit : fLegal) * 0.92));
-    ctx.font = licenseFont(fLic);
-    const lm = ctx.measureText(licText);
-    let licH = (lm.actualBoundingBoxAscent || 0) + (lm.actualBoundingBoxDescent || 0) || fLic;
+    let licH = measurePosterLicense(ctx, fLic).height;
     const creditBottom = credit
       ? (cy + (h - cy - creditH) / 2) + creditH
       : cy;
@@ -2550,9 +2608,7 @@ function compose(opts) {
       const room = (h - safe) - (creditBottom + minGap);
       if (room < licH && room >= 8) {
         fLic = Math.max(8, Math.floor(room));
-        ctx.font = licenseFont(fLic);
-        const sm = ctx.measureText(licText);
-        licH = (sm.actualBoundingBoxAscent || 0) + (sm.actualBoundingBoxDescent || 0) || fLic;
+        licH = measurePosterLicense(ctx, fLic).height;
         licYMax = h - safe - licH;
       }
     }
@@ -2560,10 +2616,8 @@ function compose(opts) {
     licenseY = licY;
     if (licY + licH <= h && licY >= 0) {
       drawPosterLicense(ctx, {
-        text: licText,
         x: w / 2,
         y: licY,
-        maxW: legalMax,
         size: fLic,
         color: SOFT,
       });
@@ -3342,7 +3396,7 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     articleImages: images || new Map(),
     photoImg: photoImg || null,
     credit: photo?.credit,
-    license: photo?.license,
+    license: photoLicense(photo),
     photoUrl: photo?.url,
     focalX: state.focalX,
     focalY: state.focalY,
@@ -3478,7 +3532,7 @@ function paintPreview(img, photo, uneOpts) {
     dpi: PREVIEW_DPI,
     photoImg: img || null,
     credit: photo?.credit,
-    license: photo?.license,
+    license: photoLicense(photo),
     photoUrl: photo?.url,
     focalX: state.focalX,
     focalY: state.focalY,
@@ -3735,7 +3789,7 @@ async function downloadPrint(kind = 'pdf') {
       dpi,
       photoImg: img,
       credit: photo?.credit,
-      license: photo?.license,
+      license: photoLicense(photo),
       photoUrl: photo?.url,
       focalX: state.focalX,
       focalY: state.focalY,
@@ -4317,6 +4371,13 @@ function posterPersonCredit(c) {
   const t = String(c || '').replace(/^(photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').trim();
   if (!t || /wiki|commons|unsplash|pexels|pixabay|shutterstock|getty|istock|courtoisie|courtesy|archives?|stock|@|https?:|\d/i.test(t)) return false;
   return /^\p{Lu}[\p{L}'’.-]+(?:\s+(?:(?:de|du|des|da|di|van|von|den|der|la|le|el|al|bin)\s+)*\p{Lu}[\p{L}'’.-]+)+$/u.test(t);
+}
+function photoLicense(photo) {
+  const lic = String(photo && photo.license ? photo.license : '').trim();
+  if (lic) return lic;
+  const src = String(photo && photo.source ? photo.source : '');
+  if (/public domain|domaine public/i.test(src)) return 'Public domain';
+  return '';
 }
 function posterCredit(credit, license, url) {
   const c = String(credit || '').trim();

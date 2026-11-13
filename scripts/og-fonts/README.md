@@ -7,5 +7,6 @@ soit le même que le mât :
 - **Source Serif 4 Display Bold** — Adobe (`SOURCE-SERIF-LICENSE.md`)
 - **Inter Regular / SemiBold** — The Inter Project Authors (`INTER-LICENSE.txt`)
 
-Ne pas servir ces fichiers sur le site : le navigateur charge encore
-Google Fonts. Ici, c’est seulement le rendu PNG hors ligne.
+Ces fichiers servent aussi au studio d’affiches (`affiches/poster-builder.js`,
+familles `LR Serif` et `LR Sans`) et aux rendus PNG hors ligne
+(`scripts/generate-og-image.py`, `scripts/generate-campus-posters.py`).
