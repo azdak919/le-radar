@@ -57,6 +57,7 @@
   "_doc": "Formats natifs. `publish` = false : aperçu seulement (jamais d'envoi). Passer à true est un changement explicite de la config.",
   "weekend_results": {
    "publish": true,
+   "story": { "_doc": "Story 9:16 1080×1920 : publication DÉSACTIVÉE (Charles, 13 nov. 2026 : « À revoir entièrement »). Rendue en aperçu seulement ; ne passer à true qu’après validation de Charles dans une PR.", "publish": false },
    "networks": [
     "bluesky",
     "mastodon",

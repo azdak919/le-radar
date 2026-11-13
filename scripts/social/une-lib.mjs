@@ -41,8 +41,11 @@ export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrai
 export const STORY_FOR = { instagram: 'story' };
 export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
 /** Formats à rendre pour une liste de réseaux (aperçu : tous). */
-export const formatsFor = (nets, all = false) => all ? ['portrait', 'story', 'paysage']
-  : [...new Set(nets.flatMap(n => [IMAGE_FOR[n], STORY_FOR[n]]).filter(Boolean))];
+// Story 9:16 : publication DÉSACTIVÉE par défaut (décision de Charles, 13 nov. 2026 : refonte à valider). Seul
+// formats.une.story.publish === true dans data/social/policy.json la réactive ; l'aperçu (DRY_RUN) la rend toujours.
+export const storyEnabled = (cfg) => cfg?.story?.publish === true;
+export const formatsFor = (nets, all = false, { story = false } = {}) => all ? ['portrait', 'story', 'paysage']
+  : [...new Set(nets.flatMap(n => [IMAGE_FOR[n], story ? STORY_FOR[n] : null]).filter(Boolean))];
 /** Poids maximal d'une image (Bluesky : 976 Ko ; X : 5 Mo ; Mastodon : 8 Mo ; Facebook, LinkedIn, Tumblr : plus). */
 export const MAX_IMAGE_BYTES = 950 * 1024;
 
