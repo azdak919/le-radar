@@ -1,4 +1,11 @@
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { expect, test } from '@playwright/test';
+import { swappedPosterBuilder } from './lib/campus-compose-a9.mjs';
+
+const POSTER_BUILDER = join(dirname(fileURLToPath(import.meta.url)), '..', 'affiches', 'poster-builder.js');
+const A9_BUILDER = swappedPosterBuilder(readFileSync(POSTER_BUILDER, 'utf8'));
 
 /**
  * /affiches/ : toutes les combinaisons du studio (refonte t991u).
@@ -214,6 +221,50 @@ test('affiche campus : gabarit a9e8f52 (pas de bandeau mauve, Scanne-moi pas sou
   await expect(page.locator('#preview')).toHaveAttribute('data-state', /pret|erreur/, { timeout: 25000 });
   const uneFlag = await page.evaluate(() => document.body.dataset.campusLayout || '');
   expect(uneFlag).toBe('');
+  expect(errors).toEqual([]);
+});
+
+
+async function canvasHash(page) {
+  return page.locator('#preview canvas').evaluate(async (c) => {
+    const data = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+    const buf = await crypto.subtle.digest('SHA-256', data);
+    return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+  });
+}
+
+test('affiche campus : chaque établissement, rendu pixel-identique à a9e8f52 @ci-critical', async ({ page }) => {
+  test.setTimeout(180000);
+  const errors = [];
+  await offline(page, errors);
+  const currentBuilder = readFileSync(POSTER_BUILDER, 'utf8');
+  const slot = { body: currentBuilder };
+  await page.route('**/affiches/poster-builder.js*', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/javascript; charset=utf-8',
+      body: slot.body,
+    });
+  });
+  const slugs = ['generique', ...UNIS.filter((u) => u !== 'toutes')];
+  const diffs = [];
+  for (const slug of slugs) {
+    const url = `/affiches/?modele=campus&campus=${slug}&format=tabloid&qr=oui`;
+    slot.body = currentBuilder;
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await ready(page);
+    await expect(page.locator('body')).toHaveAttribute('data-campus-layout', 'a9e8f52');
+    const layout = await page.evaluate(() => window.__campusLayout);
+    expect(layout, slug).toMatchObject({ titleBand: false, scanneMoi: false, qrIn: 2.25 });
+    const current = await canvasHash(page);
+
+    slot.body = A9_BUILDER;
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await ready(page);
+    const reference = await canvasHash(page);
+    if (current !== reference) diffs.push(slug);
+  }
+  expect(diffs, `écart de pixels vs compose() a9e8f52 : ${diffs.join(', ')}`).toEqual([]);
   expect(errors).toEqual([]);
 });
 

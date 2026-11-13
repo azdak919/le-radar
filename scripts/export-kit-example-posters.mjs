@@ -89,8 +89,13 @@ async function attachLocalPhotos(page) {
     }
     const file = cachedPath(route.request().url(), map);
     if (!file) {
-      // Pas en cache : on va chercher la photo publique (sinon l’aperçu sortait sans photo).
-      console.warn('  photo hors cache, téléchargée :', route.request().url().slice(0, 100));
+      const url = route.request().url();
+      // Vignettes de la grille du studio : inutiles pour l’aperçu, et très lentes hors cache.
+      if (/[?&]width=\d+/.test(url) && !/[?&]width=(1400|2048|2560)\b/.test(url)) {
+        await route.abort();
+        return;
+      }
+      console.warn('  photo hors cache, téléchargée :', url.slice(0, 100));
       await route.continue();
       return;
     }
@@ -138,9 +143,11 @@ async function pickPhoto(page, hint) {
 }
 
 async function capture(page, dest) {
+  await page.waitForFunction(() => document.body?.dataset?.campusLayout === 'a9e8f52', { timeout: 20000 });
+  await page.waitForFunction(() => document.getElementById('preview')?.dataset.state === 'pret', { timeout: 20000 }).catch(() => {});
   // Attendre la photo : sinon l’aperçu sort sans fond (course observée sur Laval).
   await page.waitForLoadState('networkidle').catch(() => {});
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(400);
   const data = await page.locator('#preview canvas').evaluate((c) => {
     // Aperçu net (2×) pour la galerie du kit : 660 × 1020 px.
     const o = document.createElement('canvas');
@@ -167,18 +174,24 @@ async function main() {
         console.log('skip', ex.id);
         continue;
       }
-      await page.goto(`${BASE}/affiches/?campus=${ex.campus}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      const q = new URLSearchParams({
+        campus: ex.campus,
+        qr: ex.qr ? 'oui' : 'non',
+        greeting: ex.greeting || 'none',
+        lang: ex.lang || 'standard',
+        format: 'tabloid',
+      });
+      if (ex.photo) q.set('photo', ex.photo);
+      await page.goto(`${BASE}/affiches/?${q}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
       await page.locator('#preview canvas').waitFor({ timeout: 20000 });
       await page.evaluate(() => document.fonts.ready);
-      await page.locator(`label:has(input[name="campus"][value="${ex.campus}"])`).click();
-      await page.waitForTimeout(300);
-      if (ex.lang === 'bilingue') {
-        const bi = page.locator('label:has(input[name="lang"][value="bilingue"])');
-        if (await bi.isVisible()) await bi.click();
+      const layout = await page.evaluate(() => document.body?.dataset?.campusLayout || '');
+      if (layout !== 'a9e8f52') {
+        throw new Error(`${ex.id} : gabarit campus inattendu (${layout || 'vide'}), pas a9e8f52`);
       }
-      await page.selectOption('#greeting', ex.greeting || 'none');
-      await page.locator(`label:has(input[name="qr"][value="${ex.qr ? 'oui' : 'non'}"])`).click();
-      await pickPhoto(page, ex.photo);
+      // L’URL règle déjà campus / photo / langue / salutation / QR ; la grille reste un repli.
+      const hasPhoto = await page.evaluate(() => Boolean(document.querySelector('#preview canvas')?.width));
+      if (!hasPhoto) await pickPhoto(page, ex.photo);
       await capture(page, dest);
       console.log('OK', ex.id);
     }

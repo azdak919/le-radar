@@ -9,6 +9,7 @@
   const compose = grid.getAttribute('data-compose') || '../affiches/';
   const filterBox = document.getElementById('kit-poster-filter');
   const countEl = document.getElementById('kit-poster-count');
+  const PREVIEW_V = 'a9e8f52-2';
   const FORMATS = [
     ['tabloid', '11 × 17'],
     ['letter', lang === 'en' ? 'Letter' : 'Lettre'],
@@ -41,7 +42,7 @@
     art.dataset.campus = ex.campus;
     const label = lang === 'en' ? ex.labelEn : ex.labelFr;
     const meta = lang === 'en' ? ex.metaEn : ex.metaFr;
-    const src = `${base}affiche-ex-${encodeURIComponent(ex.id)}-preview.jpg`;
+    const src = `${base}affiche-ex-${encodeURIComponent(ex.id)}-preview.jpg?v=${PREVIEW_V}`;
     const pdfWord = lang === 'en' ? 'Make the PDF' : 'Composer le PDF';
     const links = FORMATS.map(([id, txt]) => `<a href="${esc(composeUrl(ex, id))}" aria-label="${esc(`${pdfWord} ${txt} — ${label}, ${meta}`)}">${esc(txt)}</a>`).join('');
     art.innerHTML = `<a class="kit-card__preview kit-card__preview--photo" href="${esc(composeUrl(ex))}" aria-label="${esc(`${lang === 'en' ? 'Customize' : 'Personnaliser'} : ${label}, ${meta}`)}">
@@ -114,7 +115,7 @@
     });
   });
 
-  fetch(`${base}examples.json`, { cache: 'no-cache' })
+  fetch(`${base}examples.json?v=${PREVIEW_V}`, { cache: 'no-cache' })
     .then((r) => r.json())
     .then((data) => {
       const examples = (data.examples || []).filter((ex) => ex.id && ex.campus && ex.campus !== 'generique');
