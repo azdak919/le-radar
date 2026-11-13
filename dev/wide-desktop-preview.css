@@ -671,15 +671,15 @@ html[data-wide-preview="e"] {
     flex: 1 1 auto;
     min-height: 0 !important;
     max-height: none !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
     overflow-y: auto !important;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
     padding-right: 0;
     box-sizing: border-box;
     scrollbar-width: thin;
-    scrollbar-color: color-mix(in srgb, var(--ink-soft, #9aa) 55%, transparent)
-      color-mix(in srgb, var(--bg-soft, #1a1a1a) 80%, #000 20%);
+    /* Piste transparente : le pouce ne dessine pas un rail sur les coins. */
+    scrollbar-color: color-mix(in srgb, var(--ink-soft, #9aa) 62%, transparent) transparent;
   }
   /* FABs overlay : collés au bord droit du cadre (loupe + flèche ensemble). */
   html[data-wide-preview="e"] .page-tools {
@@ -690,16 +690,16 @@ html[data-wide-preview="e"] {
   }
 
   html[data-wide-preview="e"] .wide-rail-stack .filters-panel .filters::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
   html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar-track {
-    background: color-mix(in srgb, var(--bg-soft, #1c1c1c) 70%, #000 30%);
-    border-radius: 999px;
-    margin: 4px 0;
-    border: 1px solid color-mix(in srgb, var(--rule, #333) 70%, transparent);
+    background: transparent;
+    border: 0;
+    /* Sous les coins 12px, et au-dessus du cadre qui coupe le pouce à plat. */
+    margin: 14px 0 18px;
   }
   html[data-wide-preview="e"] .wide-rail-stack .filters-panel.is-expanded .filters::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--ink-soft, #aaa) 45%, transparent);
+    background: color-mix(in srgb, var(--ink-soft, #aaa) 62%, transparent);
     border-radius: 999px;
     border: 2px solid transparent;
     background-clip: padding-box;
@@ -1525,7 +1525,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
   html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text {
-    animation: sports-chip-scroll-sub var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both !important;
+    animation: sports-chip-scroll-sub var(--sports-scroll-duration-sub, 8s) linear var(--sports-scroll-delay, 1.6s) infinite backwards !important;
     transform: unset;
     max-width: none !important;
     overflow: visible !important;
@@ -1545,7 +1545,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text,
   html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text,
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
-    animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both !important;
+    animation: sports-cta-scroll-sub var(--sports-scroll-duration-sub, 5.5s) linear var(--sports-scroll-delay, 0.7s) infinite backwards !important;
     transform: unset;
     max-width: none !important;
     overflow: visible !important;

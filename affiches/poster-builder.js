@@ -351,12 +351,43 @@ function loadImage(src, cors = true) {
   return job;
 }
 
+/* Noto Sans Regular (400) auto-hébergé, sous-ensemble des endonymes (assets/kit/fonts/langs/). */
+const LANG_FONT_FILES = [
+  ['Noto Sans', 'noto-sans.woff2'],
+  ['Noto Sans Canadian Aboriginal', 'noto-sans-canadian-aboriginal.woff2'],
+  ['Noto Sans Ethiopic', 'noto-sans-ethiopic.woff2'],
+  ['Noto Sans Arabic', 'noto-sans-arabic.woff2'],
+  ['Noto Sans Bengali', 'noto-sans-bengali.woff2'],
+  ['Noto Sans Gujarati', 'noto-sans-gujarati.woff2'],
+  ['Noto Sans Hebrew', 'noto-sans-hebrew.woff2'],
+  ['Noto Sans Devanagari', 'noto-sans-devanagari.woff2'],
+  ['Noto Sans JP', 'noto-sans-jp.woff2'],
+  ['Noto Sans Kannada', 'noto-sans-kannada.woff2'],
+  ['Noto Sans KR', 'noto-sans-kr.woff2'],
+  ['Noto Sans Malayalam', 'noto-sans-malayalam.woff2'],
+  ['Noto Sans Gurmukhi', 'noto-sans-gurmukhi.woff2'],
+  ['Noto Sans Tamil', 'noto-sans-tamil.woff2'],
+  ['Noto Sans Telugu', 'noto-sans-telugu.woff2'],
+  ['Noto Sans Thai', 'noto-sans-thai.woff2'],
+  ['Noto Sans SC', 'noto-sans-sc.woff2'],
+  ['Noto Sans TC', 'noto-sans-tc.woff2'],
+];
+const LANG_FONT_FAMILIES = LANG_FONT_FILES.map(([family]) => family).concat('LR Sans');
+function langTypeface(size) {
+  return `400 ${size}px ${LANG_FONT_FAMILIES.map((family) => `"${family}"`).join(', ')}`;
+}
+
 async function loadFonts() {
   const faces = [
     new FontFace('LR Serif', 'url(../scripts/og-fonts/SourceSerif4Display-Bold.ttf)'),
     new FontFace('LR Sans', 'url(../scripts/og-fonts/Inter-Regular.ttf)'),
     new FontFace('LR Sans Semi', 'url(../scripts/og-fonts/Inter-SemiBold.ttf)'),
     new FontFace('LR Script', 'url(../assets/kit/fonts/Caveat-Bold.ttf)'),
+    ...LANG_FONT_FILES.map(([family, file]) => new FontFace(
+      family,
+      `url(../assets/kit/fonts/langs/${file})`,
+      { weight: '400', style: 'normal' },
+    )),
   ];
   await Promise.all(faces.map(async (f) => {
     await f.load();
@@ -558,6 +589,7 @@ function compose(opts) {
   const clipW = Math.round(Number(opts.clipW) || w);
   const clipH = Math.round(Number(opts.clipH) || h);
   const canvas = document.createElement('canvas');
+  canvas.style.fontSynthesis = 'none';
   canvas.width = clipW;
   canvas.height = clipH;
   if (canvas.width !== clipW || canvas.height !== clipH) {
@@ -623,11 +655,15 @@ function compose(opts) {
   const creditH = credit ? measure(credit, fCredit) : 0;
   const fLang = Math.min(28 * fit, footCap * 0.5);
   const iconS = Math.min(40 * fit, footCap * 0.7);
-  const langFont = `400 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans"`;
+  const langFont = langTypeface(fLang);
   ctx.font = langFont;
   const langMax = w - 2 * safe - 80 * fit;
   const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
-  const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
+  const langLineH = langLines.length ? (() => {
+    ctx.font = langFont;
+    const m = ctx.measureText(langLines[0] || 'Français');
+    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || fLang;
+  })() : 0;
   const langsH = opts.langs
     ? iconS + 8 + langLines.length * (langLineH + 5)
     : 0;
@@ -893,6 +929,7 @@ function paintPreview(img, photo) {
   view.height = Math.max(1, Math.round(cssH * dpr));
   view.style.width = `${cssW}px`;
   view.style.height = `${cssH}px`;
+  view.style.fontSynthesis = 'none';
   const vctx = view.getContext('2d', { alpha: false });
   vctx.imageSmoothingEnabled = true;
   vctx.imageSmoothingQuality = 'high';

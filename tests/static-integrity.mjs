@@ -712,6 +712,13 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('non officiel et sans affiliation'), 'générateur public : « et » plutôt qu’un tiret');
   assert(builderJs.includes('TRANSLATE_LANGS'), 'générateur public : langues du module de traduction');
   assert(existsSync(join(root, 'assets/kit/translate-mark.svg')), 'icône de traduction pour le pied d’affiche');
+  assert(builderJs.includes('LANG_FONT_FILES'), 'générateur public : fontes d’endonymes auto-hébergées');
+  assert(builderJs.includes('langTypeface'), 'générateur public : pile typographique des langues à graisse 400');
+  assert(builderJs.includes("weight: '400'"), 'générateur public : Noto des langues en Regular 400');
+  assert(!builder.includes('Noto+Sans+JP:wght@500'), 'générateur public : plus de Noto CJK 500 via Google Fonts');
+  assert(builderJs.includes("fontSynthesis = 'none'"), 'générateur public : pas de graisse synthétisée sur le canevas');
+  const langFontsCheck = spawnSync('python3', [join(root, 'scripts/subset-poster-lang-fonts.py'), '--check'], { encoding: 'utf8' });
+  assert.equal(langFontsCheck.status, 0, langFontsCheck.stderr || langFontsCheck.stdout || 'fontes d’endonymes : couverture incomplète');
   assert(
     !/stroke-width/.test(readFileSync(join(root, 'assets/kit/translate-mark.svg'), 'utf8')),
     'icône traduction : pas de stroke (plus en gras)',
@@ -1975,7 +1982,8 @@ assert(
     && styleCss.includes('.sports-chip--match .sports-chip__sub')
     && /\.sports-chip--match\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
     && /\.sports-chip--match\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
-    && /sports-chip-scroll[^;]*alternate\s+both/.test(cssFlat)
+    && /sports-chip-scroll(?!-sub)[^;]*alternate\s+both/.test(cssFlat)
+    && /sports-chip-scroll-sub[^;]*linear[^;]*infinite/.test(cssFlat)
     && styleCss.includes('@keyframes sports-chip-scroll')
     && styleCss.includes('@keyframes sports-chip-scroll-sub'),
   'puces scores : 2 lignes ; marquee L→R si overflow ; CTA marquee ; 0 ellipsis',
@@ -2003,6 +2011,8 @@ assert(
     && /SPORTS_BOARD_HOLD_MS\s*=\s*9000/.test(appJs)
     && /SPORTS_BOARD_HOLD_CAP_MS\s*=\s*12000/.test(appJs)
     && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
+    && /SPORTS_LOOP_SUB_PX_PER_S\s*=\s*22/.test(appJs)
+    && appJs.includes('function sportsSyncSubLoop')
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
     && appJs.includes('SPORTS_SCROLL_READ_DELAY_MS')
     && appJs.includes('MARQUEE_READ_DELAY_MS')
@@ -2037,18 +2047,19 @@ assert(
     'wide : le marquee sports n’est pas gelé par transform:none, le nom météo peut dépasser',
   );
 }
-// Marquee site : alternate both + delay — jamais infinite. 2 = 1 aller-retour ;
-// CTA delay 0.7s ; strip / puces 1.6s.
+// Titre sports + dial : alternate, 1 aller-retour. Ligne du bas : boucle continue.
 assert(
-  !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
-    && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
-    && !/sports-cta-scroll[^;]*infinite/.test(cssFlat)
-    && /sports-cta-scroll[^;]*alternate\s+both/.test(cssFlat)
+  !/sports-chip-scroll(?!-sub)[^;]*infinite/.test(cssFlat)
+    && /sports-chip-scroll-sub[^;]*--sports-scroll-duration-sub[^;]*linear[^;]*infinite/.test(cssFlat)
+    && !/sports-cta-scroll(?!-sub)[^;]*infinite/.test(cssFlat)
+    && /sports-cta-scroll(?!-sub)[^;]*alternate\s+both/.test(cssFlat)
+    && /sports-cta-scroll-sub[^;]*--sports-scroll-duration-sub[^;]*linear[^;]*infinite/.test(cssFlat)
     && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
+    && /--sports-loop-gap:\s*48px/.test(cssFlat)
     && /tunerMarquee[^;]*alternate\s+both/.test(cssFlat)
     && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs)
     && appJs.includes('function marqueeAlternateCount'),
-  'CSS/JS : marquees sports + dial = alternate both, delay 1.6s, pas infinite',
+  'CSS/JS : titre sports et dial en aller-retour ; ligne du bas en boucle continue',
 );
 // Magazine mid : CSS 2 col dès 768 (iPad portrait). Le JS d'équilibre /
 // graine En bref / extraits mid doit partager ce seuil — à 900 px les

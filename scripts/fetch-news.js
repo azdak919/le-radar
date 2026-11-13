@@ -51,6 +51,7 @@ const {
   imageRejectPatternsFromHints,
   imageOptionsFromHints,
   unwrapCdnImageUrl,
+  promoteImageUrl,
   stripStyleAndScript,
   imageUrlsMatch,
   clearMirroredLead,
@@ -458,7 +459,10 @@ function firstImage(block) {
   for (const raw of candidates) {
     if (!raw) continue;
     const unwrapped = unwrapCdnImageUrl(raw) || raw;
-    // Préférer l'original S3 Substack au CDN redimensionné.
+    // Crop CE Image / WP : promouvoir avant le test « weak », sinon The Link
+    // (_300_200_90_s_c1) perd sa photo dès le flux.
+    const promoted = promoteImageUrl(unwrapped) || promoteImageUrl(raw);
+    if (promoted && isCandidateImageUrl(promoted) && !isWeakImageUrl(promoted)) return promoted;
     if (unwrapped && isCandidateImageUrl(unwrapped) && !isWeakImageUrl(unwrapped)) return unwrapped;
     if (isCandidateImageUrl(raw) && !isWeakImageUrl(raw)) return raw;
   }

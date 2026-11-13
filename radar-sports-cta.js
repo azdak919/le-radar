@@ -135,8 +135,9 @@ try {
  * Feedback prod 2026-08-29 : 9–14 s de pause après la vague = trop long.
  * Feedback prod 2026-09-01 : 7,5 s = trop nerveux ; ~9 s au repos.
  * Sans défilement : ~9–12 s selon le nombre de cartes.
- * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
- *   (même esprit que MARQUEE_REST_MS du dial radio). Jamais de « … ».
+ * Avec marquee : le titre fait 1 aller-retour + pause au repos.
+ *   La ligne du bas, si elle déborde, boucle en continu (copie par la droite).
+ *   Jamais de « … ».
  */
 const SPORTS_READ_MIN_MS = 6500;
 const SPORTS_READ_PER_CHAR_MS = 32;
@@ -145,9 +146,13 @@ const SPORTS_READ_MAX_MS = 10000;
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
  */
-/** Synchro style.css `--sports-scroll-duration` (marquee L→R). */
+/** Synchro style.css `--sports-scroll-duration` (marquee L→R du titre). */
 const SPORTS_SCROLL_ONE_WAY_MS = 5500;
 const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
+/** Ligne du bas seulement : trou entre les copies, vitesse, plafond. */
+const SPORTS_LOOP_GAP_PX = 48;
+const SPORTS_LOOP_SUB_PX_PER_S = 22;
+const SPORTS_LOOP_MAX_MS = 18000;
 /** Délai lecture avant scroll — aligné MARQUEE_READ_DELAY_MS / CSS --sports-scroll-delay. */
 const SPORTS_SCROLL_READ_DELAY_MS = MARQUEE_READ_DELAY_MS;
 /** Pause au repos après le retour (re-ack du début de ligne). */
@@ -1007,6 +1012,9 @@ function sportsMatchNaturalWidth(chip) {
     flex: chip.style.flex,
   };
   const inners = [...chip.querySelectorAll('.sports-chip__line-inner, .sports-chip__sub-text')];
+  const loops = [...chip.querySelectorAll('.sports-chip__loop')];
+  const loopDisplay = loops.map((el) => el.style.display);
+  loops.forEach((el) => { el.style.display = 'none'; });
   const saved = inners.map((el) => ({
     el,
     maxWidth: el.style.maxWidth,
@@ -1026,6 +1034,7 @@ function sportsMatchNaturalWidth(chip) {
     el.style.maxWidth = maxWidth;
     el.style.overflow = overflow;
   });
+  loops.forEach((el, i) => { el.style.display = loopDisplay[i]; });
   chip.style.width = prev.width;
   chip.style.minWidth = prev.minWidth;
   chip.style.maxWidth = prev.maxWidth;
@@ -3214,20 +3223,22 @@ function sportsCompareOpenOrder(a, b, now = Date.now()) {
 }
 
 /** Politique unique pour peinture, resize, refresh et rotation.
- * Directs prioritaires, non exclusifs ; résultats d'hier à gauche, matchs du jour
- * à droite (jours civils Toronto). Une moitié vide cède sa place à l'autre.
- * Si les deux sont vides, repli explicite sur le pool éditorial général.
+ * Directs prioritaires, non exclusifs. n≥2 et les deux familles présentes :
+ * gauche = scores passés (aujourd’hui, hier, puis J−2…J−5), droite = matchs
+ * à venir (ce soir, demain, semaine, au-delà). Une moitié sans carte cède
+ * ses slots à l’autre, dans l’ordre de chaleur. Jours civils Toronto.
  */
 function sportsStripPolicy(now = Date.now(), pool = null) {
   const source = (Array.isArray(pool) ? pool.slice() : sportsOpenOrderSlides(now))
     .filter(s => s?.game && s.key && sportsSlideDayKey(s) && sportsOpenOrderBucket(s, now) <= SPORTS_OPEN_FAR_NEXT);
   source.sort((a, b) => sportsCompareOpenOrder(a, b, now));
   const lives = sportsDedupeMatchSlides(source.filter(s => sportsGameIsLive(s.game, now)));
-  const today = torontoDayKey(now), yesterday = sportsCivilDayShift(today, -1);
   const left = sportsDedupeHomepageResults(source.filter(s => s.mode === 'result'
-    && !sportsGameIsLive(s.game, now) && sportsSlideDayKey(s) === yesterday && !s.game?.priorSeason && !s.team?.lastGamePriorSeason));
-  const right = sportsDedupeMatchSlides(source.filter(s => sportsSlideDayKey(s) === today && !sportsGameIsLive(s.game, now)));
-  if (left.length || right.length) return { mode: 'split', lives, left, right, pool: sportsDedupeMatchSlides(lives.concat(left, right)) };
+    && !sportsGameIsLive(s.game, now) && !s.game?.priorSeason && !s.team?.lastGamePriorSeason));
+  const right = sportsDedupeMatchSlides(source.filter(s => s.mode === 'next' && !sportsGameIsLive(s.game, now)));
+  const combined = sportsDedupeMatchSlides(lives.concat(left, right));
+  if (left.length && right.length) return { mode: 'split', lives, left, right, pool: combined };
+  if (left.length || right.length || lives.length) return { mode: 'fill', lives, left, right, pool: combined };
   return { mode: 'fallback', lives, left: [], right: [], pool: sportsDedupeMatchSlides(source) };
 }
 
@@ -3357,8 +3368,14 @@ function sportsInterleaveByDiversity(slides, now = Date.now()) {
 }
 
 function sportsSplitVisible(n, now = Date.now(), pool = null) {
-  const count = Math.max(1, n | 0), policy = sportsStripPolicy(now, pool);
+  const count = Math.max(1, n | 0);
+  const policy = sportsStripPolicy(now, pool);
   const used = new Set();
+  // n=1 : le plus chaud (ordre E), pas un split.
+  if (count < 2) {
+    const heat = policy.pool.slice().sort((a, b) => sportsCompareOpenOrder(a, b, now));
+    return sportsTakeUnusedPrefix(heat, count, used);
+  }
   const hasOthers = policy.pool.some(s => !sportsGameIsLive(s.game, now));
   // Plusieurs slots : au moins une vraie autre rencontre, même avec beaucoup
   // de directs. Un seul slot commence par le direct puis alterne en rotation.
@@ -3366,14 +3383,37 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const lives = sportsTakeUnusedPrefix(policy.lives, liveQuota, used);
   const remaining = count - lives.length;
   if (!remaining) return lives;
-  if (policy.mode !== 'split') return lives.concat(sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.pool, now), remaining, used));
-  if (count < 2) return sportsTakeUnusedPrefix(policy.right.concat(policy.left), 1, used);
-  const left = sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.left, now), Math.ceil(remaining / 2), used);
-  const right = sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.right, now), remaining - left.length, used);
-  const extra = sportsTakeUnusedPrefix(sportsInterleaveByDiversity(policy.pool, now), remaining - left.length - right.length, used);
-  const leftExtra = extra.filter(s => policy.left.includes(s));
-  // Les directs sont garantis, mais hier reste visuellement à gauche du jour.
-  return left.concat(leftExtra, lives, right, extra.filter(s => !policy.left.includes(s)));
+
+  const pastList = sportsInterleaveByDiversity(policy.left, now);
+  const futureList = sportsInterleaveByDiversity(policy.right, now);
+  let nPast = 0;
+  let nFuture = 0;
+  if (!pastList.length) {
+    nFuture = remaining;
+  } else if (!futureList.length) {
+    nPast = remaining;
+  } else if (remaining % 2 === 0) {
+    nPast = remaining / 2;
+    nFuture = remaining / 2;
+  } else {
+    const pastHot = Math.min(...policy.left.map((s) => sportsOpenOrderBucket(s, now)));
+    const futureHot = Math.min(...policy.right.map((s) => sportsOpenOrderBucket(s, now)));
+    if (futureHot < pastHot) {
+      nFuture = Math.ceil(remaining / 2);
+      nPast = remaining - nFuture;
+    } else {
+      nPast = Math.ceil(remaining / 2);
+      nFuture = remaining - nPast;
+    }
+  }
+  let left = sportsTakeUnusedPrefix(pastList, nPast, used);
+  let right = sportsTakeUnusedPrefix(futureList, nFuture, used);
+  const shortPast = nPast - left.length;
+  const shortFuture = nFuture - right.length;
+  // Moitié vide : les slots libres prennent l’autre famille, même priorité.
+  if (shortPast > 0) right = right.concat(sportsTakeUnusedPrefix(futureList, shortPast, used));
+  if (shortFuture > 0) left = left.concat(sportsTakeUnusedPrefix(pastList, shortFuture, used));
+  return left.concat(lives, right);
 }
 
 function sportsSplitPreferBuckets(outgoing, boardN, now = Date.now()) {
@@ -3794,20 +3834,77 @@ function sportsMeasureOverflow(viewport, inner, _hadOverflow) {
   // texte et overflow ≈ 0, donc pas de marquee et troncature « … ».
   const viewW = viewport.clientWidth;
   if (viewW < 2) return 0;
+  const loop = inner.querySelector(':scope > .sports-chip__loop');
+  const prevLoop = loop ? loop.style.display : '';
+  if (loop) loop.style.display = 'none';
   const prevMax = inner.style.maxWidth;
   const prevOverflow = inner.style.overflow;
   const prevTextOverflow = inner.style.textOverflow;
   const prevWidth = inner.style.width;
+  const prevPad = inner.style.paddingRight;
   inner.style.maxWidth = 'none';
   inner.style.width = 'max-content';
   inner.style.overflow = 'visible';
   inner.style.textOverflow = 'clip';
-  const overflow = Math.max(0, inner.scrollWidth - viewW);
+  inner.style.paddingRight = '0';
+  const textWidth = inner.scrollWidth;
+  const overflow = Math.max(0, textWidth - viewW);
   inner.style.maxWidth = prevMax;
   inner.style.overflow = prevOverflow;
   inner.style.textOverflow = prevTextOverflow;
   inner.style.width = prevWidth;
+  inner.style.paddingRight = prevPad;
+  if (loop) loop.style.display = prevLoop;
+  sportsMeasuredTextWidth.set(inner, textWidth);
   return overflow;
+}
+
+const sportsMeasuredTextWidth = new WeakMap();
+
+function sportsPlainMarqueeText(el) {
+  if (!el) return '';
+  let text = '';
+  el.childNodes.forEach((node) => {
+    if (node.nodeType === 1 && node.classList.contains('sports-chip__loop')) return;
+    text += node.textContent || '';
+  });
+  return text;
+}
+
+/** Une boucle de la ligne du bas. Plancher = une voie du titre, plafond 18 s. */
+function sportsSubLoopDurationMs(textWidth, floorMs = SPORTS_SCROLL_ONE_WAY_MS) {
+  const distance = Math.max(0, Number(textWidth) || 0) + SPORTS_LOOP_GAP_PX;
+  const ms = (distance / SPORTS_LOOP_SUB_PX_PER_S) * 1000;
+  const floor = Number(floorMs) > 0 ? Number(floorMs) : SPORTS_SCROLL_ONE_WAY_MS;
+  return Math.round(Math.min(SPORTS_LOOP_MAX_MS, Math.max(floor, ms)));
+}
+
+function sportsSyncSubLoop(el, overflow, floorMs) {
+  if (!el) return;
+  const existing = el.querySelector(':scope > .sports-chip__loop');
+  if (!(overflow > 2) || sportsReducedMotion) {
+    existing?.remove();
+    el.style.removeProperty('--sports-scroll-duration-sub');
+    return;
+  }
+  const source = sportsPlainMarqueeText(el);
+  if (!existing || existing.dataset.loopSrc !== source) {
+    existing?.remove();
+    const copy = el.cloneNode(true);
+    copy.querySelectorAll('.sports-chip__loop').forEach((node) => node.remove());
+    copy.className = 'sports-chip__loop';
+    copy.setAttribute('aria-hidden', 'true');
+    copy.setAttribute('translate', 'no');
+    copy.removeAttribute('id');
+    copy.removeAttribute('style');
+    copy.dataset.loopSrc = source;
+    el.append(copy);
+  }
+  const textW = sportsMeasuredTextWidth.get(el) || 0;
+  const duration = `${(sportsSubLoopDurationMs(textW, floorMs) / 1000).toFixed(1)}s`;
+  if ((el.style.getPropertyValue('--sports-scroll-duration-sub') || '').trim() !== duration) {
+    el.style.setProperty('--sports-scroll-duration-sub', duration);
+  }
 }
 
 /**
@@ -3836,10 +3933,10 @@ function sportsApplyScrollState(chip, {
   if (!had) chip.classList.add(flag);
 }
 
-/** 1 aller-retour CSS (trips) + durée d’une voie — synchro dwell / keyframes. */
-function sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label) {
+/** Aller-retour du titre seulement. La ligne du bas a sa propre boucle. */
+function sportsSyncMarqueeCycle(chip, titleOverflow, _subOverflow, label) {
   if (!chip) return;
-  if (titleOverflow > 2 || subOverflow > 2) {
+  if (titleOverflow > 2) {
     const isMatch = chip.classList.contains('sports-chip--match');
     const oneWay = isMatch ? SPORTS_MATCH_SCROLL_ONE_WAY_MS : SPORTS_SCROLL_ONE_WAY_MS;
     const floor = chip.classList.contains('sports-chip--cta')
@@ -3912,7 +4009,8 @@ function refreshSportsChipScroll(chipOrRoot = null) {
         prop: '--sports-scroll-sub',
         overflow: subOverflow,
       });
-      const label = [titleInner?.textContent || '', subInner?.textContent || '']
+      sportsSyncSubLoop(subInner, subOverflow, SPORTS_MATCH_SCROLL_ONE_WAY_MS);
+      const label = [sportsPlainMarqueeText(titleInner), sportsPlainMarqueeText(subInner)]
         .filter(Boolean)
         .join(' · ');
       sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label);
@@ -3950,7 +4048,8 @@ function refreshSportsChipScroll(chipOrRoot = null) {
       prop: '--sports-scroll-sub',
       overflow: subOverflow,
     });
-    const label = [titleInner?.textContent || '', subInner?.textContent || '']
+    sportsSyncSubLoop(subInner, subOverflow, SPORTS_SCROLL_ONE_WAY_MS);
+    const label = [sportsPlainMarqueeText(titleInner), sportsPlainMarqueeText(subInner)]
       .filter(Boolean)
       .join(' · ');
     sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label);
@@ -4405,8 +4504,9 @@ function sportsCtaSlotIndices(visible = sportsVisible) {
 }
 
 /**
- * Première peinture : go D. n=1 préfixe E ; n≥2 split gauche scores /
- * droite à-venir (live + aujourd’hui volent les bords). Pas de chrome CTA.
+ * Première peinture : n=1 préfixe E ; n≥2 moitié gauche = scores passés,
+ * moitié droite = à-venir (directs au centre, priorité). Un côté vide
+ * se remplit avec l’autre famille. Pas de chrome CTA.
  */
 function pickInitialSportsVisible(count) {
   sportsCtaLabelIndex = 0;
@@ -4537,8 +4637,9 @@ function sportsChipNeedsMarquee(chip) {
  * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
  * la carte et enregistrer l’info.
  * · Texte entier visible : dwell = lecture estimée (puces ~6,5–10 s ; CTA ~8 s).
- * · Texte qui défile : **toujours** 1 aller-retour marquee + pause repos
- *   (ne jamais changer la carte au milieu du scroll).
+ * · Titre qui défile : 1 aller-retour + pause repos.
+ * · Ligne du bas qui défile : au moins une boucle continue.
+ *   La carte attend le plus long des deux.
  */
 function sportsSlotDwellMs(slot) {
   const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
@@ -4549,7 +4650,7 @@ function sportsSlotDwellMs(slot) {
   const subEl = isCta
     ? sportsCtaActiveLabel(chip)?.querySelector('.sports-chip__cta-sub-text')
     : chip?.querySelector('.sports-chip__sub-text');
-  const label = [labelEl?.textContent || '', subEl?.textContent || '']
+  const label = [sportsPlainMarqueeText(labelEl), sportsPlainMarqueeText(subEl)]
     .filter(Boolean)
     .join(' · ');
   const readMs = sportsLabelReadingMs(label);
@@ -4558,14 +4659,23 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    const oneWay = chip.classList.contains('sports-chip--match')
-      ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
-      : SPORTS_SCROLL_ONE_WAY_MS;
-    const trips = parseFloat(chip.style.getPropertyValue('--sports-scroll-trips')) || marqueeAlternateCount(oneWay, floor);
-    const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
+    let motion = 0;
+    if (chip.classList.contains('is-overflowing')) {
+      const oneWay = chip.classList.contains('sports-chip--match')
+        ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
+        : SPORTS_SCROLL_ONE_WAY_MS;
+      const trips = parseFloat(chip.style.getPropertyValue('--sports-scroll-trips')) || marqueeAlternateCount(oneWay, floor);
+      const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
+      motion = Math.max(motion, oneWay * n);
+    }
+    if (chip.classList.contains('is-sub-overflowing')) {
+      const raw = subEl?.style?.getPropertyValue?.('--sports-scroll-duration-sub') || '';
+      const loopMs = parseFloat(raw) * 1000;
+      motion = Math.max(motion, Number.isFinite(loopMs) && loopMs > 0 ? loopMs : SPORTS_SCROLL_ONE_WAY_MS);
+    }
     return Math.max(
       floor,
-      SPORTS_SCROLL_READ_DELAY_MS + oneWay * n + SPORTS_SCROLL_POST_PAUSE_MS,
+      SPORTS_SCROLL_READ_DELAY_MS + motion + SPORTS_SCROLL_POST_PAUSE_MS,
     );
   }
   return floor;

@@ -301,17 +301,16 @@
    * overflow-x/y mixtes sont ramenés à auto en CSS — on élargit la ligne. */
   line-height: 1.35;
 }
-/* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
- * La pastille reste fixe ; seul le texte d’info défile.
- * Durée 5,5 s (CTA) / 8 s (puces scores) × alternate = 1 aller-retour.
- * Le JS attend ce cycle + pause à l’origine avant la cascade. */
+/* Titre trop long : aller-retour (5,5 s CTA / 8 s puces), puis repos.
+ * Ligne du bas trop longue : boucle continue, copie par la droite, 22 px/s.
+ * Le JS attend le plus long des deux avant de changer la carte. */
 .masthead-sports-strip {
-  /* Holds aux extrémités = moins d’à-coups aux virages. Titre et sous-ligne
-   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts.
-   * 2 alternate (pas infinite) + delay lecture — 1 aller-retour puis repos. */
+  /* Holds aux extrémités du titre. 2 alternate = 1 aller-retour puis repos. */
   --sports-scroll-duration: 5.5s;
   --sports-scroll-delay: 1.6s;
   --sports-scroll-trips: 2;
+  --sports-scroll-duration-sub: 8s;
+  --sports-loop-gap: 48px;
 }
 .masthead-sports-strip .sports-chip--match {
   --sports-scroll-duration: 8s;
@@ -333,7 +332,7 @@
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration-sub, 8s) linear var(--sports-scroll-delay, 1.6s) infinite backwards;
   will-change: transform;
 }
 /* CTA hors marquee : clip sur le texte seul — jamais d’ellipsis, jamais sur
@@ -357,6 +356,7 @@
     overflow: hidden;
     text-overflow: clip;
   }
+  .masthead-sports-strip .sports-chip__loop { display: none !important; }
 }
 /* Ancienne classe sigle : gardée si un autre surface la réutilise. */
 .masthead-sports-strip .sports-chip__code { font-weight: 800; letter-spacing: 0.03em; }
@@ -800,18 +800,19 @@
   100% { transform: translateY(0); opacity: 1; }
 }
 /* Marquee : le texte de la couche visible seulement, jamais la couche sortante.
- * Titre → --sports-scroll ; sous-ligne → --sports-scroll-sub (décalages distincts). */
+ * Titre → aller-retour (--sports-scroll). Sous-ligne → boucle continue. */
 .masthead-sports-strip .sports-chip--cta {
   --sports-scroll-delay: 0.7s;
   --sports-scroll-trips: 2;
+  --sports-scroll-duration-sub: 5.5s;
 }
 @keyframes sports-cta-scroll {
   0%, 10% { transform: translateX(0); }
   90%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
 @keyframes sports-cta-scroll-sub {
-  0%, 12% { transform: translateX(0); }
-  88%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
 }
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
   max-width: none;
@@ -824,12 +825,35 @@
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both;
+  animation: sports-cta-scroll-sub var(--sports-scroll-duration-sub, 5.5s) linear var(--sports-scroll-delay, 0.7s) infinite backwards;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
-  0%, 28% { transform: translateX(0); }
-  72%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+.masthead-sports-strip .sports-chip__sub-text:has(> .sports-chip__loop),
+.masthead-sports-strip .sports-chip__cta-sub-text:has(> .sports-chip__loop) {
+  position: relative;
+  padding-right: var(--sports-loop-gap, 48px);
+}
+.masthead-sports-strip .sports-chip__loop {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  display: inline-block;
+  width: max-content;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  white-space: nowrap;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  animation: none !important;
+  transform: none !important;
+  pointer-events: none;
 }
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-text,
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-sub-text {
@@ -1015,14 +1039,16 @@
   0%, 28% { --sc-fade-l: 0px; --sc-fade-r: 14px; }
   72%, 100% { --sc-fade-l: 14px; --sc-fade-r: 0px; }
 }
-.masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub,
 .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line {
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
   animation: sports-chip-fade var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
 }
 .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub {
-  animation-name: sports-chip-fade-sub;
+  --sc-fade-l: 8px;
+  --sc-fade-r: 14px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
 }
 /* Mouvement réduit : texte figé au début, seul le bord droit (texte caché) fond. */
 @media (prefers-reduced-motion: reduce) {

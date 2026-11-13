@@ -10,8 +10,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 /**
- * go D : n=1 = ordre E ; n≥2 = gauche scores / droite à-venir,
- * live et aujourd’hui volent les bords.
+ * n=1 = ordre E. n≥2 = gauche scores passés / droite matchs à venir.
+ * Directs prioritaires, au centre. Un côté sans carte se remplit
+ * avec l’autre famille, dans l’ordre de chaleur.
  */
 
 function slide(key, mode, date, time, extra = {}) {
@@ -92,7 +93,36 @@ test('lundi 10 h n=4 : gauche weekend, droite demain', async ({ page }) => {
   expect(one.keys, 'n=1 lundi = hier').toEqual(['sun']);
 
   const four = await splitKeys(page, 4, monday, pool);
-  expect(four.keys, 'moitié du jour vide : uniquement les résultats de la veille').toEqual(['sun']);
+  expect(four.keys, 'gauche = weekend, droite = à venir').toEqual(['sun', 'sat', 'tue', 'thu-next']);
+});
+
+test('mercredi : gauche scores du dimanche, droite vendredi, pas d’alternance', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible({ timeout: 8000 });
+
+  const wednesday = '2026-11-11T15:00:00-05:00';
+  const pool = [
+    slide('sun-a', 'result', '2026-11-08', '14:00', { sport: 'volleyball' }),
+    slide('sun-b', 'result', '2026-11-08', '16:00', { sport: 'volleyball' }),
+    slide('fri-a', 'next', '2026-11-13', '19:00', { sport: 'volleyball' }),
+    slide('fri-b', 'next', '2026-11-13', '21:00', { sport: 'volleyball' }),
+  ];
+  const four = await splitKeys(page, 4, wednesday, pool);
+  expect(four.keys, '2 scores puis 2 à venir').toEqual(['sun-b', 'sun-a', 'fri-a', 'fri-b']);
+
+  const futuresOnly = pool.filter((s) => s.mode === 'next');
+  const filled = await splitKeys(page, 4, wednesday, futuresOnly);
+  expect(filled.keys, 'aucun score : les slots prennent les à venir, plus chaud d’abord').toEqual(['fri-a', 'fri-b']);
+
+  const shortPast = [
+    slide('sun-a', 'result', '2026-11-08', '14:00', { sport: 'volleyball' }),
+    slide('fri-a', 'next', '2026-11-13', '19:00', { sport: 'volleyball' }),
+    slide('fri-b', 'next', '2026-11-13', '21:00', { sport: 'volleyball' }),
+    slide('sat-next', 'next', '2026-11-14', '15:00', { sport: 'volleyball' }),
+  ];
+  const gap = await splitKeys(page, 4, wednesday, shortPast);
+  expect(gap.keys, 'un seul score : le vide à gauche se remplit à droite').toEqual(['sun-a', 'fri-a', 'fri-b', 'sat-next']);
 });
 
 test('n=4 jeudi soir : football visible malgré une file de soccer', async ({ page }) => {
@@ -263,7 +293,12 @@ test('0/1/2/3/7 directs : priorité non exclusive, slots rares, miroir et aucune
     expect(state.sourceUnchanged).toBe(true);
     expect(state.keys.every(k => pool.some(s => s.key === k))).toBe(true);
     if (slots > 1) expect(state.keys.some(k => !k.startsWith('live-'))).toBe(true);
-    if (state.days.includes('2026-11-07') && state.days.includes('2026-11-08')) expect(state.days[0]).toBe('2026-11-07');
+    const iResult = state.keys.findIndex(k => k === 'yesterday' || k === 'today-result');
+    const iTonight = state.keys.indexOf('tonight');
+    if (iResult >= 0 && iTonight >= 0) expect(iResult, 'score passé avant un match à venir').toBeLessThan(iTonight);
+    const iTodayResult = state.keys.indexOf('today-result');
+    const iYesterday = state.keys.indexOf('yesterday');
+    if (iTodayResult >= 0 && iYesterday >= 0) expect(iTodayResult).toBeLessThan(iYesterday);
     report.push({ nLive, slots, ...state });
   }
   fs.writeFileSync(info.outputPath('selection-matrix.json'), JSON.stringify(report, null, 2));
@@ -273,9 +308,9 @@ test('politique civile à minuit, final/update, horaire inconnu jamais live et m
   await page.goto('/',{waitUntil:'domcontentloaded'});
   const pool=[slide('nov7','result','2026-11-07','19:00'),slide('nov8','next','2026-11-08','23:30'),slide('nov9','next','2026-11-09','19:00')];
   const before=await splitKeys(page,4,'2026-11-08T23:20:00-05:00',pool);
-  expect(before.keys).toEqual(['nov7','nov8']);
+  expect(before.keys).toEqual(['nov7','nov8','nov9']);
   const after=await splitKeys(page,4,'2026-11-09T00:05:00-05:00',pool);
-  expect(after.keys).toEqual(['nov9']);
+  expect(after.keys).toEqual(['nov7','nov9']);
   const state=await page.evaluate(pool=>{
     const now=Date.parse('2026-11-08T23:45:00-05:00');
     const unknown={...pool[1].game,live:undefined};
@@ -283,7 +318,7 @@ test('politique civile à minuit, final/update, horaire inconnu jamais live et m
     const final={...confirmed,live:false,final:true,scoreFor:2,scoreAgainst:1,result:'W'};
     return {unknown:sportsGameIsLive(unknown,now),live:sportsGameIsLive(confirmed,now),final:sportsGameIsLive(final,now),done:sportsSplitVisible(4,now,[pool[0],{...pool[1],mode:'result',game:final}]).map(s=>s.key)};
   },pool);
-  expect(state.unknown).toBe(false);expect(state.live).toBe(true);expect(state.final).toBe(false);expect(state.done).toEqual(['nov7','nov8']);
+  expect(state.unknown).toBe(false);expect(state.live).toBe(true);expect(state.final).toBe(false);expect(state.done).toEqual(['nov8','nov7']);
 });
 
 test('peinture réelle 0/1/2/3/7 directs + autres, resize, final et rotation @ci-critical', async ({ page }, info) => {
@@ -322,7 +357,7 @@ test('page maintenue après minuit : réallocation DOM même si compte et ancien
   pool.forEach(s=>{s.team.code=s.key;s.team.name=s.key;});
   await page.evaluate(pool=>{sportsSlides=pool;sportsFitCount=4;sportsFitDepth=0;renderSportsStrip();},pool);
   const cards=page.locator('#masthead-sports-strip > a');await expect(cards).toHaveCount(4);
-  expect(await cards.evaluateAll(cards=>cards.map(c=>c.dataset.sportsKey))).toEqual(['r0','r1','r2','r3']);
+  expect(await cards.evaluateAll(cards=>cards.map(c=>c.dataset.sportsKey))).toEqual(['r0','r1','n0','n1']);
   await page.clock.setFixedTime(new Date('2026-11-09T00:05:00-05:00'));
   await page.evaluate(()=>rotateSportsSlot(0));
   expect(await cards.evaluateAll(cards=>cards.map(c=>c.dataset.sportsKey))).toEqual(['r0','r1','n0','n1']);
@@ -561,7 +596,7 @@ test('direct à cheval sur minuit Toronto puis final : autres matchs conservés 
     return { before, after, final: pick('2026-11-09T00:06:00-05:00'), carryDate: pool[0].game.date, carryId: pool[0].game.gameId };
   }, pool);
   expect(state.before.some(s => s.key === 'carry' && s.live)).toBe(true);
-  expect(state.before.some(s => s.key === 'old-y')).toBe(true);
+  expect(state.before.some(s => s.key === 'today-r'), 'le score du jour passe devant celui d’hier').toBe(true);
   expect(state.after.map(s => s.key)).toEqual(['today-r', 'carry', 'new-day']);
   expect(state.final.filter(s => s.live)).toHaveLength(0);
   expect(state.final.map(s => s.key)).toContain('carry'); expect(state.final.map(s => s.key)).toContain('new-day');

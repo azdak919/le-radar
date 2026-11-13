@@ -499,6 +499,9 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(!isCropSafePortrait(400, 560, { alt: QL_ALT }), 'trop petit pour une une recadrée');
   check(isCropSafePortrait(900, 1200, { url: 'https://thelinknewspaper.ca/images/articles/_resized/IMG_0067.jpg' }), 'fichier d’appareil IMG_0067 (The Link) → photo recadrée');
   check(isCropSafePortrait(900, 1178, { url: 'https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg' }), 'fichier d’appareil _U2A7376 → photo recadrée');
+  check(isCropSafePortrait(800, 1100, { url: 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_SPORTS_NBA_Flopping_Dia_Diekmann_900_1200_90.jpg' }), 'fichier The Link au nom du crédit (Dia Diekmann) → recadré');
+  check(isCropSafePortrait(800, 1100, { caption: 'The council did not reach quorum. Graphic Naya Hachwa', url: 'https://thelinknewspaper.ca/article-art.jpg' }), 'légende « Graphic Prénom Nom » sans by → recadrée');
+  check(!isCropSafePortrait(800, 1100, { caption: 'Graphic design is not a person', url: 'https://x/a.jpg' }), '« graphic design » sans nom → écarté');
   check(!isCropSafePortrait(819, 1024, { url: 'https://x/FEUS2026-819x1024.jpg' }), 'sigle + année ≠ fichier d’appareil');
   check(!isCropSafePortrait(964, 1024, { alt: 'image couverture magazine Quartier Libre volume 33 n.1', url: 'https://x/AC7688E9-8982-4425-804C-B4DD9D09D6B6_1_201_a-964x1024.jpeg' }), 'couverture de magazine (texte) → écartée');
   check(fillsLeadWhenCropped(724, 1024) && !fillsLeadWhenCropped(540, 1024), 'recadrage 3:2 remplit la une');
@@ -573,6 +576,90 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
     excerpt: 'As the use of artificial intelligence (AI) becomes increasingly common at Concordia, some students are raising concerns about its role in their academics.',
   });
   assert(!puzzle, 'filtre PR384 : l’article sur l’IA n’est pas un mot croisé / une promo');
+}
+
+// The Link, 10 nov. 2026 : les graphiques et photos sont dans l'article
+// (crop CE Image 300×200, ou fichier au nom du crédit). Le robot les jetait
+// et collait le pavillon Hall. Le graphique abeille CSU réutilisé reste rejeté.
+{
+  const {
+    promoteImageUrl,
+    isWeakImageUrl,
+    isCandidateImageUrl: candidate,
+    imageFromArticleHtml: fromHtml,
+  } = require('../scripts/article-image-lib.js');
+  const crop = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_SPORTS_NBA_Flopping_Dia_Diekmann_300_200_90_s_c1.jpg';
+  const png = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Canada_in_Erasmus_Plus_Aia_Segal_300_200_s_c1.PNG';
+  const kept = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Quebec_data_centres_Halle_Keays_1_900_675.png';
+  const bee = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/00.graphics.CSU.Naya_Hachwa_900_674_90.jpeg';
+  assert(isWeakImageUrl(crop), 'crop CE Image 300×200 est une vignette');
+  assert(!isWeakImageUrl(kept), 'graphique déjà en 900×675 n’est pas une vignette');
+  assert(promoteImageUrl(crop).endsWith('05_SPORTS_NBA_Flopping_Dia_Diekmann_900_600_90.jpg'), 'crop jpg promu en 900×600');
+  const pngLead = promoteImageUrl(png);
+  assert(/Aia_Segal_900_675\.PNG$/.test(pngLead), 'crop png promu en 900×675');
+  const { leadImageProbeUrls } = require('../scripts/article-image-lib.js');
+  const pngProbes = leadImageProbeUrls(pngLead);
+  assert(pngProbes[0] === pngLead, 'le probe commence par le graphique 900×675');
+  assert(pngProbes.some((u) => /Aia_Segal_900_600_90\.PNG$/.test(u)), 'repli probe 900×600 si le 900×675 manque');
+  assert(promoteImageUrl(kept) === kept, 'fichier déjà grand inchangé');
+  assert(!candidate(bee), 'graphique CSU réutilisé (Naya Hachwa) toujours rejeté');
+  const html = `<html><head>
+    <meta property="og:image" content="https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Bioblitz_Anne_Zhao_900_600_90.jpg" />
+  </head><body><article>
+    <img width="300" height="200" src="${crop}" alt="Diving in the NBA needs to come to an end. Graphic by Dia Diekmann" />
+    <p>${'The NBA’s best players are resorting to acting instead of simply playing the game. '.repeat(4)}</p>
+  </article></body></html>`;
+  const found = fromHtml(html, [], { preferSizeFull: true, preferFirstContentImage: true }, 'https://thelinknewspaper.ca/article/16553');
+  assert(/Dia_Diekmann_900_600_90\.jpg$/.test(found.url), 'The Link preferFirst : le crop du corps est promu, pas jeté');
+}
+
+// The Link, 11 nov. 2026 : les portraits d'article (graphique 900×1582,
+// photo JVC26 / NST26, fichier aicha.online) partaient au campus. Le src
+// relatif ne rattachait pas la légende, et un 429 effaçait le portrait.
+{
+  const {
+    isCropSafePortrait,
+    listArticleImageCandidates: listCandidates,
+    imageDimensionsFromUrl,
+  } = require('../scripts/article-image-lib.js');
+  const { replacePortraitLead, hasCropSafeImage } = require('../scripts/ensure-lead-images.js');
+  const check = (ok, msg) => { if (ok) console.log(`  ✓ ${msg}`); else { failed += 1; console.error(`  ✗ ${msg}`); } };
+  const made = (file) => `https://thelinknewspaper.ca/images/made/images/articles/_resized/${file}`;
+  const jvc = made('JVC26_1105_Phensy_0266_900_1259_90.jpg');
+  const aicha = made('05.fringe.dear_america.aicha.online_900_1174_90.jpeg');
+  const nst = made('NST26_Concordia_5754_900_1350_90.jpg');
+  const archives = made('05_FRINGE_Archives_Gaies_Halle_Keays_900_1582.png');
+  const poster = made('affiche_soiree_900_1400.jpg');
+  check(isCropSafePortrait(900, 1259, { url: jvc }), 'JVC26 900×1259 sous /images/articles/ → gardé');
+  check(isCropSafePortrait(900, 1174, { url: aicha }), 'aicha.online 900×1174 → gardé');
+  check(isCropSafePortrait(900, 1350, { url: nst }), 'NST26 900×1350 → gardé');
+  check(isCropSafePortrait(900, 1582, { url: archives }), 'Archives Halle Keays 900×1582 (0,57) → gardé');
+  check(!isCropSafePortrait(900, 1582, { caption: 'Graphic Halle Keays', url: 'https://example.org/archives.png' }), 'même ratio hors /images/articles/ : plancher 0,66 inchangé');
+  check(!isCropSafePortrait(1080, 1920, { alt: 'Photo : Marie Tremblay' }), 'story 9:16 hors The Link → toujours écartée');
+  check(!isCropSafePortrait(900, 2000, { url: archives.replace('1582', '2000') }), 'sous 0,55 même dans /images/articles/ → écarté');
+  check(!isCropSafePortrait(900, 1400, { url: poster }), 'affiche dans /images/articles/ → écartée');
+  check(!isCropSafePortrait(800, 1100, {}), 'portrait sans crédit ni chemin éditorial → écarté');
+  check(isCropSafePortrait(900, 1259, { caption: 'Technologist Christina Phensy. Photo Jade-S. Vachon-Côté', url: 'https://example.org/photo.jpg' }), '« Photo Jade-S. Vachon-Côté » sans deux-points → crédit');
+  check(!isCropSafePortrait(800, 1000, { alt: 'Photo : FEUS', url: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg' }), 'sigle FEUS toujours écarté');
+  const dims = imageDimensionsFromUrl(made('05_SPORTS_NBA_Flopping_Dia_Diekmann_900_1273_90.jpg'));
+  check(dims && dims.width === 900 && dims.height === 1273, 'taille CE Image _900_1273 lue dans l’URL');
+  const html = `<html><body><article class="content-inner"><figure class="entry-images">
+    <a href="${jvc}"><img src="/images/made/images/articles/_resized/JVC26_1105_Phensy_0266_900_1259_90.jpg" alt=""></a>
+    <figcaption>Technologist Christina Phensy wants to help people connect. Photo Jade-S. Vachon-Côté</figcaption>
+    </figure><p>${'The name plays on the French phrase presque vu. '.repeat(6)}</p></article></body></html>`;
+  const top = listCandidates(html, [], { preferFirstContentImage: true }, 'https://thelinknewspaper.ca/article/16543')[0];
+  check(top && /Jade-S\. Vachon-Côté/.test(top.caption || ''), 'src relatif : la figcaption se rattache');
+  const it = {
+    link: 'https://thelinknewspaper.ca/article/16553',
+    image: made('05_SPORTS_NBA_Flopping_Dia_Diekmann_900_1273_90.jpg'),
+    stockImage: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG',
+    imageProvider: 'campus-bank',
+  };
+  const r = await replacePortraitLead(it, { resolve: async () => { throw new Error('429'); }, probe: async () => { throw new Error('pas de probe'); } });
+  check(r === 'cropped' && hasCropSafeImage(it) && !it.stockImage, '429 : portrait éditorial gardé, campus retiré');
+  const bare = { link: 'https://example.com/a', image: 'https://example.com/portrait-800x1100.jpg' };
+  const cleared = await replacePortraitLead(bare, { resolve: async () => null, probe: async () => { throw new Error('pas de probe'); } });
+  check(cleared === 'cleared' && !bare.image, 'portrait sans crédit : toujours retiré');
 }
 
 if (failed) {

@@ -1960,8 +1960,9 @@ function sportsHubPage(lang, ctx) {
       const fCount = group.filter((team) => sportsEffectiveSexKey(team) === 'F').length;
       const mCount = group.filter((team) => sportsEffectiveSexKey(team) === 'M').length;
       const xCount = group.filter((team) => sportsEffectiveSexKey(team) === 'X').length;
-      // <details open> : repliable au clic sur le titre, lisible sans JS.
-      body += `        <details class="sports-sport-block" data-sport="${escapeHtml(sport)}" id="sport-${escapeHtml(sport)}" open>\n`;
+      // Fermé au chargement. Le titre reste un <summary> natif (sans JS).
+      // Un filtre, une ancre ou une équipe ouvre seulement la section utile.
+      body += `        <details class="sports-sport-block" data-sport="${escapeHtml(sport)}" id="sport-${escapeHtml(sport)}">\n`;
       body += `          <summary class="sports-sport-block__title">\n`;
       body += `            <span class="sports-sport-block__glyph" aria-hidden="true">${glyph}</span>\n`;
       body += `            <span class="sports-sport-block__label">${escapeHtml(label)}</span>\n`;
@@ -2037,6 +2038,9 @@ function sportsHubPage(lang, ctx) {
       siteBase: ctx.siteBase,
       updated,
       extraScripts: ['scripts/sports-date-lib.js', 'sports-board.js'],
+      extraStyles: ['style-translate-overlay.css'],
+      blockingScripts: ['sports-load.js'],
+      extraHead: `    <meta name="sports-panel-total" content="${teams.length}" />\n`,
       wireClass: 'seo-wire--sports',
       chromeCurrent: 'sports',
       // Seul le volet français est une app installable : il porte le
