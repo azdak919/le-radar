@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-13T15:07:40.932Z",
+  "updated": "2026-11-13T16:27:23.211Z",
   "total": 188,
   "pool": 52,
   "incomplete": 32,
   "withLeadExcerpt": 143,
   "candidates": 32,
   "enriched": 0,
-  "failed": 13,
+  "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,30 +55,30 @@
       "changed": false
     },
     {
+      "title": "Listening to The Echo of Grenada",
+      "link": "https://thelinknewspaper.ca/article/16563",
+      "ok": true,
+      "score": 100,
+      "chars": 388,
+      "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
+      "changed": false
+    },
+    {
+      "title": "Refugee advocates renew calls for Canada to withdraw from U.S. border agreement",
+      "link": "https://thelinknewspaper.ca/article/16561",
+      "ok": true,
+      "score": 100,
+      "chars": 418,
+      "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
+      "changed": false
+    },
+    {
       "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
       "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
       "ok": true,
       "score": 100,
       "chars": 950,
       "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
-      "changed": false
-    },
-    {
-      "title": "48e édition du Gala de l’ADISQ : Le duo d’extraterrestres au sommet",
-      "link": "https://montrealcampus.ca/2026/11/11/le-duo-dextraterrestres-au-sommet/",
-      "ok": true,
-      "score": 100,
-      "chars": 282,
-      "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
-      "changed": false
-    },
-    {
-      "title": "Trois facultés de l’UdeS en grève",
-      "link": "https://lecollectif.ca/a-la-une/trois-facultes-de-ludes-en-greve/",
-      "ok": true,
-      "score": 100,
-      "chars": 474,
-      "sample": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi po",
       "changed": false
     }
   ]
