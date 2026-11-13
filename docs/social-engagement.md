@@ -19,3 +19,12 @@ Tout vit dans le dépôt (aucune routine externe). La source de vérité est `da
 ## Bilan hebdomadaire
 
 `social-weekly-report.yml` (lundi) écrit `data/social/weekly/AAAA-MM-JJ.md` et le résumé du job : abonnés, interactions externes par réseau (comptes internes de `internal-accounts.json` exclus). Lecture seule : ni courriel ni publication.
+
+## La une du matin et du soir
+
+Deux rendez-vous par jour, en plus des publications existantes : « La une du matin » vers 7 h 45 et « La une du soir » vers 19 h 30, heure de Montréal, sur Bluesky, Mastodon, Tumblr, X, Facebook et LinkedIn (`.github/workflows/social-une.yml`, `scripts/social/une-run.mjs`).
+
+- Contenu : la une réelle du jour (même sélection que l’accueil et l’affiche « Aujourd’hui », sport professionnel exclu), titres, tous les auteurs (sinon le média), liens le-radar.ca et hashtags, sans mention @. Le soir ne reprend aucun article du matin et saute la publication s’il n’y a rien de nouveau.
+- Image : `affiches/social-une.html` rendu sans tête, portrait 1080 × 1350 (Facebook, Tumblr) ou paysage 1200 × 675 (X, Bluesky, Mastodon, LinkedIn), sans code QR, avec texte alternatif. Les images sont hébergées sur la branche `social-une-media` (jamais fusionnée dans main).
+- Fenêtres d’envoi : matin 7 h 30 à 10 h 30, soir 19 h 15 à 22 h 30 (`data/social/policy.json`, `formats.une`). Crons pour l’heure d’été et l’heure d’hiver, plus un passage après chaque « Social — Mastodon ». `data/social/une-state.json` garantit une seule publication par réseau et par créneau ; un réseau en échec est réessayé seul (3 essais au plus).
+- Essai sans envoi : déclenchement manuel avec `dry_run` coché (défaut), ou le workflow d’aperçu des PR (`social-une-preview.yml`).

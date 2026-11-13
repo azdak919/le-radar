@@ -111,6 +111,34 @@
    "fromHour": 18,
    "toHour": 22,
    "image": "https://le-radar.ca/assets/og-cover.png"
+  },
+  "une": {
+   "_doc": "« La une du matin » et « La une du soir » (scripts/social/une-run.mjs, workflow social-une.yml). Décision de Charles le 12 nov. 2026 : deux rendez-vous par jour, EN PLUS des publications existantes (hors plafonds de volume), publication réelle dès la fusion. Fenêtres en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées) : une seule publication par réseau et par créneau. Le soir ne reprend aucun article du matin et saute s'il n'y a rien de nouveau. Aucune mention @.",
+   "publish": true,
+   "networks": [
+    "bluesky",
+    "mastodon",
+    "x",
+    "tumblr",
+    "facebook",
+    "linkedin"
+   ],
+   "slots": {
+    "matin": {
+     "id": "matin",
+     "target": "07:45",
+     "from": "07:30",
+     "to": "10:30"
+    },
+    "soir": {
+     "id": "soir",
+     "target": "19:30",
+     "from": "19:15",
+     "to": "22:30"
+    }
+   },
+   "maxItems": 4,
+   "maxNewsAgeH": 6
   }
  }
 }

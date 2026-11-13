@@ -1,0 +1,54 @@
+name: Social — Aperçu de la une (PR, sans envoi)
+
+# Essai DRY_RUN de « La une du matin et du soir » sur le code d'une PR : images et textes de chaque réseau en artefact
+# (« apercu-une ») et dans le résumé du job. Aucun secret, aucun envoi, aucune écriture (contents: read).
+on:
+  pull_request:
+    paths:
+      - 'scripts/social/une-*.mjs'
+      - 'affiches/social-une.*'
+      - '.github/workflows/social-une*.yml'
+      - 'data/social/policy.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social-une-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apercu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Cache Playwright Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Fil réel du site (lecture seule)
+        run: curl -fsS --retry 3 https://le-radar.ca/news.json -o /tmp/news-live.json || cp news.json /tmp/news-live.json
+      - name: Essai DRY_RUN, matin et soir
+        env:
+          DRY_RUN: 'true'
+        run: |
+          node scripts/social/une-run.mjs --slot matin --now news --news /tmp/news-live.json --out une-preview
+          node scripts/social/une-run.mjs --slot soir --now news --news /tmp/news-live.json --out une-preview
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: apercu-une
+          path: une-preview/
+          if-no-files-found: ignore
