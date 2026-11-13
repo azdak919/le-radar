@@ -37,6 +37,12 @@ async function painted(page) {
   });
 }
 
+/* Aucune coupure « … » ni ligne perdue dans la une (règle sans troncature) : composeFrontPage note chaque coupure. */
+async function noCuts(page, what) {
+  const cuts = await page.evaluate(() => (window.__uneCuts || []).slice());
+  expect(cuts, `texte coupé (${what})`).toEqual([]);
+}
+
 async function noDimText(page) {
   const dim = await page.evaluate(() => [...document.querySelectorAll('.dash p')]
     .filter((e) => e.offsetParent && getComputedStyle(e).color === 'rgb(68, 71, 77)').map((e) => e.id || e.className));
@@ -65,6 +71,7 @@ for (const uni of UNIS) {
       await expect(status).toContainText(new RegExp(`de ${o.t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}|Aucun article`));
       const p = await painted(page);
       expect(p.colors, `aperçu peint (${uni} / ${o.v})`).toBeGreaterThan(6);
+      await noCuts(page, `${uni} / ${o.v}`);
     }
     await page.selectOption('#une-media', 'tous');
     await ready(page);
@@ -85,6 +92,7 @@ test('la une : chaque période, avec et sans photo, chaque encart du haut @ci-cr
     await ready(page);
     await expect(page.locator('#une-status')).not.toContainText('Impossible');
     expect((await painted(page)).colors, `période ${per}`).toBeGreaterThan(6);
+    await noCuts(page, `période ${per}`);
   }
   for (const layout of ['classique', 'verre']) {
     await page.locator(`label:has(input[name="layout"][value="${layout}"])`).click();
@@ -96,6 +104,7 @@ test('la une : chaque période, avec et sans photo, chaque encart du haut @ci-cr
       await ready(page);
       expect(page.url()).toContain(ent === 'radio' ? 'modele=une' : `entete=${ent}`);
       expect((await painted(page)).colors, `${layout} / ${ent}`).toBeGreaterThan(6);
+      await noCuts(page, `${layout} / ${ent}`);
     }
   }
   expect(errors).toEqual([]);
@@ -113,6 +122,7 @@ test('la une : chaque format au bon rapport, noms longs @ci-critical', async ({ 
     await ready(page);
     const p = await painted(page);
     expect(Math.abs(p.ratio - r), `rapport ${fmt}`).toBeLessThan(0.02);
+    await noCuts(page, `format ${fmt}`);
   }
   expect(errors).toEqual([]);
 });

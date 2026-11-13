@@ -843,6 +843,17 @@ const CAMPUS_PAGE_PATHS = {
 /* Une v3 : bandeau Radar plein, une dominante, un grand QR d’appel en haut,
  * vedettes à titres seuls, bande sports/radio lisible, En bref numéroté. */
 function composeFrontPage(ctx, w, h, opts) {
+  /* Toute coupure (« … ») réellement dessinée est notée : les tests et les exports la refusent. */
+  const cuts = [];
+  if (typeof window !== 'undefined') {
+    window.__uneCuts = cuts;
+    if (new URLSearchParams(location.search).has('debugcuts')) {
+      const where = new Map();
+      window.__uneCutWhere = where;
+      const push = cuts.push.bind(cuts);
+      cuts.push = (x) => { where.set(x, (new Error().stack || '').split('\n').slice(2, 7).map((l) => (l.match(/:(\d+):\d+\)?$/) || [])[1]).join('<')); return push(x); };
+    }
+  }
   const c = frontInk();
   const articles = (opts.articles || []).filter(Boolean);
   const images = opts.articleImages || new Map();
@@ -916,16 +927,29 @@ function composeFrontPage(ctx, w, h, opts) {
       let last = lines[maxLines - 1] || '';
       while (last.length > 4 && textW(ctx, `${last}…`) > maxW) last = last.slice(0, -1).trimEnd();
       lines[maxLines - 1] = /[….]$/.test(last) ? last : `${last}…`;
+      return { size, lines, cut: text };
     }
     return { size, lines };
+  };
+  /* Texte entier ou première phrase entière, sinon rien (jamais « … »). */
+  const wholeFit = (text, fontFn, maxW, maxSize, minSize, maxLines) => {
+    const full = String(text || '').trim();
+    if (!full || maxLines < 1) return null;
+    const first = (full.match(/^.+?[.!?…»](?=\s+[A-ZÀ-ÖØ-Þ«])/) || [])[0];
+    for (const t of first && first !== full ? [full, first] : [full]) {
+      const f = wrapFit(t, fontFn, maxW, maxSize, minSize, maxLines);
+      if (!f.cut) return f;
+    }
+    return null;
   };
   const drawLines = (fit, fontFn, x, y, color, lead = 1.16, floor = Infinity) => {
     let yy = y;
     ctx.fillStyle = color;
     ctx.textBaseline = 'top';
+    if (fit.cut) cuts.push(fit.cut);
     fit.lines.forEach((line) => {
       ctx.font = fontFn(fit.size);
-      if (yy + fit.size > floor) return;
+      if (yy + fit.size > floor) { cuts.push(line); return; }
       ctx.fillText(line, x, yy);
       yy += Math.round(fit.size * lead);
     });
@@ -998,8 +1022,9 @@ function composeFrontPage(ctx, w, h, opts) {
   };
   const drawRichLines = (fit, fontFn, x, y, color, dim, lead = 1.16, floor = Infinity, bgs = null) => {
     let yy = y;
+    if (fit.cut) cuts.push(fit.cut);
     fit.lines.forEach((line) => {
-      if (yy + fit.size > floor) return;
+      if (yy + fit.size > floor) { cuts.push(line); return; }
       drawRich(line, fontFn, fit.size, x, yy, color, dim, false, bgs);
       yy += Math.round(fit.size * lead);
     });
@@ -1008,7 +1033,9 @@ function composeFrontPage(ctx, w, h, opts) {
   const fitOne = (text, fontFn, size, maxW) => {
     ctx.font = fontFn(size);
     let t = String(text || '');
+    const orig = t;
     while (t.length > 3 && textW(ctx, t) > maxW) t = `${t.slice(0, -2).trimEnd()}…`;
+    if (t !== orig) cuts.push(orig);
     return t;
   };
   /* Titre qui coule sur toute la largeur puis se resserre à côté d’un QR. */
@@ -1042,10 +1069,12 @@ function composeFrontPage(ctx, w, h, opts) {
       ctx.font = fontFn(out.size);
       while (t.length > 4 && textW(ctx, `${t}…`) > last.maxW) t = t.slice(0, -1).trimEnd();
       last.text = `${t.replace(/[\s,;:]+$/, '')}…`;
+      out.cut = String(text || '');
     }
     return out;
   };
   const drawFlow = (f, fontFn, x, color) => {
+    if (f.cut) cuts.push(f.cut);
     ctx.font = fontFn(f.size);
     ctx.fillStyle = color;
     ctx.textBaseline = 'top';
@@ -1105,8 +1134,15 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.font = `400 ${s}px "LR Sans"`;
     ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
-    ctx.fillText(fitOne(String(text).replace(/\s+/g, ' ').trim(), (z) => `400 ${z}px "LR Sans"`, s, maxW), x, y);
-    return s + px(0.4);
+    /* Crédit entier (attribution) : une ligne, sinon deux, jamais coupé. */
+    const t = String(text).replace(/\s+/g, ' ').trim();
+    let lines = wrapWords(ctx, t, maxW);
+    if (lines.length > 2) {
+      ctx.font = `400 ${Math.max(7, Math.round(s * 0.85))}px "LR Sans"`;
+      lines = wrapWords(ctx, t, maxW);
+    }
+    lines.forEach((l, i) => ctx.fillText(l, x, y + i * Math.round(s * 1.15)));
+    return lines.length * Math.round(s * 1.15) - Math.round(s * 0.15) + px(0.4);
   };
   const metaOf = (art) => [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
   /* Signature « Par Nom · Média » : tous les noms si la place le permet, sinon « et al. », sinon le média seul. */
@@ -1189,9 +1225,26 @@ function composeFrontPage(ctx, w, h, opts) {
   ctx.font = `400 ${tagS}px "LR Sans"`;
   const tagW = Math.max(ctx.measureText(SLOGAN).width, bilingual ? ctx.measureText(SLOGAN_EN).width : 0);
   const extraW = x1 - (x0 + tagW + px(3));
-  const extra = opts.mastExtras && opts.mastExtras.lines && opts.mastExtras.lines.length && extraW >= px(16) ? { ...opts.mastExtras, lines: opts.mastExtras.lines.slice() } : null;
+  let extra = opts.mastExtras && opts.mastExtras.lines && opts.mastExtras.lines.length && extraW >= px(16) ? { ...opts.mastExtras, lines: opts.mastExtras.lines.slice() } : null;
   const exHeadS = px(1.35);
   const exLineS = px(1.65);
+  /* Aucune coupure dans l’encart : une ligne qui ne tient pas même à 70 % est remplacée par la suivante ;
+   * un titre trop long se réduit au nom de la station ; un encart « strict » (match) perd tout plutôt qu’une moitié. */
+  if (extra) {
+    ctx.font = `600 ${Math.round(exLineS * 0.7)}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    const fits = (l) => ctx.measureText(l).width <= extraW;
+    const kept = extra.lines.filter(fits);
+    extra.lines = extra.strict && kept.length !== extra.lines.length ? [] : kept;
+    /* Combo : une émission + le chiffre (s’il tient), toujours dans cet ordre. */
+    if (extra.tail !== undefined) extra.lines = [extra.lines[0], extra.tail && fits(extra.tail) ? extra.tail : null].filter(Boolean);
+    ctx.font = `600 ${exHeadS}px "LR Sans Semi", "LR Sans"`;
+    if (ctx.measureText(String(extra.title || '').toUpperCase()).width > extraW) {
+      const short = String(extra.colorText || '');
+      if (short && ctx.measureText(short.toUpperCase()).width <= extraW) extra.title = short;
+      else extra.lines = [];
+    }
+    if (!extra.lines.length) extra = null;
+  }
   const extraH = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
   /* Sous l’accroche, à côté de l’encart : matchs à venir de l’établissement (dates absolues),
    * retirés de la bande sports pour éviter tout doublon. */
@@ -1208,7 +1261,7 @@ function composeFrontPage(ctx, w, h, opts) {
     const pool = up.length ? up : (opts.mastGames || []).filter((g) => g && !g.upcoming && !bandKeys.has(`${g.line}|${g.meta}`));
     pool.slice(0, gameTarget).forEach((g) => mastGames.push(g));
   }
-  const leftH = tagRowsH + (mastGames.length ? px(0.3) + mastGames.length * gameLineH : 0);
+  let leftH = tagRowsH + (mastGames.length ? px(0.3) + mastGames.length * gameLineH : 0);
   /* L’encart de droite garde autant de lignes que la colonne de gauche en occupe (ni vide ni débord). */
   if (extra) {
     const per = Math.round(exLineS * 1.3);
@@ -1222,6 +1275,16 @@ function composeFrontPage(ctx, w, h, opts) {
     extrasW = Math.min(extraW, Math.max(...extra.lines.map((l) => ctx.measureText(l).width)));
   }
   const gameW = x1 - x0 - (extra ? extrasW + px(3) : 0);
+  /* Matchs sous l’accroche : celui qui ne tient pas entier (même à 72 %) est retiré, jamais coupé. */
+  {
+    ctx.font = `600 ${Math.round(gameS * 0.72)}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    for (let i = mastGames.length - 1; i >= 0; i -= 1) {
+      const g = mastGames[i];
+      const text = `${g.emoji ? `${g.emoji} ` : ''}${g.gender ? `${g.gender} ` : ''}${g.meta} · ${g.line}`;
+      if (ctx.measureText(text).width > gameW) mastGames.splice(i, 1);
+    }
+    leftH = tagRowsH + (mastGames.length ? px(0.3) + mastGames.length * gameLineH : 0);
+  }
   const extraHFit = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
   if (mastGames.length) {
     const used = new Set(mastGames.map((g) => `${g.line}|${g.meta}`));
@@ -1387,10 +1450,8 @@ function composeFrontPage(ctx, w, h, opts) {
   let cy = top;
   if (!lead) {
     panel(x0, cy, contentW, px(8));
-    ctx.font = `400 ${px(2.2)}px "LR Sans"`;
-    ctx.fillStyle = glass ? ink : mute;
-    ctx.textBaseline = 'top';
-    ctx.fillText(fitOne('Aucun article sur cette période. Choisissez une période plus longue.', sans(400), px(2.2), contentW - px(3)), x0 + px(1.5), cy + px(2.5));
+    const none = wrapFit('Aucun article sur cette période. Choisissez une période plus longue.', sans(400), contentW - px(3), px(2.2), Math.max(9, px(1.3)), 2);
+    drawLines(none, sans(400), x0 + px(1.5), cy + (none.lines.length > 1 ? px(1.4) : px(2.5)), glass ? ink : mute, 1.25);
     /* Sans article : la bande garde sa hauteur normale sous le message, sans s’étirer. */
     cy += px(8) + px(2.4);
   }
@@ -1592,8 +1653,8 @@ function composeFrontPage(ctx, w, h, opts) {
     const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
     if (hook && floor - hookY > px(2.4)) {
       const lines = Math.max(1, Math.min(5, Math.floor((floor - hookY) / Math.round(px(2.1) * 1.25))));
-      const hFit = wrapFit(hook, sans(400), textW2, px(2.1), Math.max(9, px(1.6)), lines);
-      drawLines(hFit, sans(400), lx, hookY, ink, 1.25, floor);
+      const hFit = wholeFit(hook, sans(400), textW2, px(2.1), Math.max(9, px(1.6)), lines);
+      if (hFit) drawLines(hFit, sans(400), lx, hookY, ink, 1.25, floor);
     }
     if (leadQr) {
       const qx = lx + lw - leadQr;
@@ -1711,10 +1772,8 @@ function composeFrontPage(ctx, w, h, opts) {
       if (sideArts.length) {
         const sideH = cy + rowH - ry2;
         if (sideH > px(6)) {
-          panel(rx, ry2, rightW, sideH);
           const sp = glass ? px(1.2) : 0;
-          let sy = ry2 + sp;
-          sy = label(bilingual ? 'Aussi · Also' : 'Aussi à lire', rx + sp, sy);
+          const sy = ry2 + sp + Math.round(px(1.6) * 1.45); /* sous l’étiquette « Aussi à lire », dessinée après le choix */
           /* Pas de titre tronqué à une ligne : s’il manque de place, le second passe en bref. */
           const needPer = px(plan.screen ? 5.4 : 6.6);
           let shown = sideArts;
@@ -1723,23 +1782,43 @@ function composeFrontPage(ctx, w, h, opts) {
             shown = sideArts.slice(0, fitN);
             if (!plan.screen) briefs.unshift(...sideArts.slice(fitN));
           }
-          /* Titre entier ou article déplacé en bref : jamais de « … » dans l’encart (règle sans troncature). */
-          const sideFit = (art, per) => {
-            const room = per - px(2.1) - px(0.7);
-            const tMax = plan.screen
-              ? Math.max(px(1.7), Math.min(px(2.4), Math.floor(room / (room >= px(5) ? 2.2 : 1.15))))
-              : Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
-            const maxL = Math.max(plan.screen ? 1 : 2, Math.min(4, Math.floor(room / (tMax * 1.1))));
-            const f = wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
-            return !/…$/.test(f.lines[f.lines.length - 1] || '');
+          /* Titre entier ou article déplacé en bref : jamais de « … » ni de ligne perdue (règle sans troncature).
+           * sideFit rend la mise en forme qui tient en entier dans la hauteur, ou null. */
+          const sideFit = (art, per, minS = Math.max(10, px(1.45))) => {
+            const room = per - px(2.1) - px(0.7) - px(0.4);
+            const cap = Math.min(plan.screen ? px(2.4) : px(2.5), Math.floor(room / 1.1));
+            for (let sz = cap; sz >= minS; sz -= 1) {
+              const lh = Math.round(sz * 1.1);
+              const n = Math.floor((room - sz) / lh) + 1;
+              if (n < 1) continue;
+              ctx.font = serif(sz);
+              const lines = wrapWords(ctx, art.title || '', rightW - sp * 2);
+              if (lines.length <= n) return { size: sz, lines };
+            }
+            return null;
           };
-          for (let k = 0; k < 3 && shown.length > 1; k += 1) {
-            const perTry = Math.floor((ry2 + sideH - sp - sy) / shown.length);
+          const avail = ry2 + sideH - sp - sy;
+          for (let k = 0; k < 4 && shown.length; k += 1) {
+            const perTry = Math.floor(avail / shown.length);
             const bad = shown.filter((a) => !sideFit(a, perTry));
             if (!bad.length) break;
-            shown = shown.filter((a) => !bad.includes(a));
-            if (!shown.length) { shown = [bad.shift()]; }
-            if (!plan.screen) briefs.unshift(...bad.filter((a) => !shown.includes(a)));
+            let keep = shown.filter((a) => !bad.includes(a));
+            if (!keep.length) {
+              /* Aucun ne tient à plusieurs : le premier qui tient seul, sur toute la hauteur. */
+              const alone = shown.find((a) => sideFit(a, avail)) || shown.find((a) => sideFit(a, avail, Math.max(9, px(1.2))));
+              keep = alone ? [alone] : [shown[0]];
+            }
+            if (!plan.screen) briefs.unshift(...shown.filter((a) => !keep.includes(a)));
+            shown = keep;
+          }
+          /* Rien ne tient en entier : pas d’encart (l’article passe en bref) plutôt qu’un titre coupé. */
+          if (shown.length && !shown.every((a) => sideFit(a, Math.floor(avail / shown.length)) || sideFit(a, Math.floor(avail / shown.length), Math.max(9, px(1.2))))) {
+            if (!plan.screen) briefs.unshift(...shown);
+            shown = [];
+          }
+          if (shown.length) {
+            panel(rx, ry2, rightW, sideH);
+            label(bilingual ? 'Aussi · Also' : 'Aussi à lire', rx + sp, ry2 + sp);
           }
           const per = Math.floor((ry2 + sideH - sp - sy) / shown.length);
           shown.forEach((art, i) => {
@@ -1754,7 +1833,7 @@ function composeFrontPage(ctx, w, h, opts) {
               ? Math.max(px(1.7), Math.min(px(2.4), Math.floor(room / (room >= px(5) ? 2.2 : 1.15))))
               : Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
             const maxL = Math.max(plan.screen ? 1 : 2, Math.min(4, Math.floor(room / (tMax * 1.1))));
-            const f = wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
+            const f = sideFit(art, per) || sideFit(art, per, Math.max(9, px(1.2))) || wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
             const endY = drawLines(f, serif, rx + sp, yy, ink, 1.1, by + per + px(0.2));
             /* Un seul article dans l’encart : son chapeau comble la place plutôt qu’un vide. */
             const hookRoom = by + per - endY - px(0.8);
@@ -1815,7 +1894,9 @@ function composeFrontPage(ctx, w, h, opts) {
       const qr = articleQr && art.pageUrl ? Math.min(px(8), Math.round(iw * 0.34)) : 0;
       const qrTop = floor - qr;
       const metaH = px(5.2);
-      const f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      let f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      /* Titre entier : on descend le corps plutôt que de couper. */
+      if (f.cut) f = fitFlow(art.title, serif, px(2.9), Math.max(9, px(1.35)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
       drawFlow(f, serif, ix, ink);
       {
         const mS = Math.max(8, px(1.3));
@@ -1865,9 +1946,9 @@ function composeFrontPage(ctx, w, h, opts) {
       const colW = Math.floor((pw - (cols - 1) * gap) / cols);
       const itemMinH = px(2) + Math.round(px(2.1) * 1.15) + px(0.4);
       const fitRows = Math.max(1, Math.floor((cy + rowH - bp - by) / itemMinH));
-      const items = part.items.slice(0, fitRows * cols);
-      const perCol = Math.ceil(items.length / cols);
-      const rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
+      let items = part.items.slice(0, fitRows * cols);
+      let perCol = Math.ceil(items.length / cols);
+      let rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
       /* Même corps pour toutes les lignes de la bande : le plus petit qui tient (pas de tailles disparates). */
       const fitItem = (item, cap) => {
         const room = rowsH - (item.kicker || item.meta ? px(2) : 0);
@@ -1881,6 +1962,15 @@ function composeFrontPage(ctx, w, h, opts) {
         const indent2 = item.emoji ? Math.round(two * 1.35) : 0;
         return wrapFit(item.line || '', sans(700), colW - indent2, two, minS, 2);
       };
+      /* Une ligne qui ne tient pas entière (deux lignes au plus) cède sa place à la suivante : jamais de « … ». */
+      {
+        const ok = part.items.filter((it) => !fitItem(it, Infinity).cut);
+        if (ok.length !== part.items.length) {
+          items = ok.slice(0, fitRows * cols);
+          perCol = Math.ceil(items.length / cols);
+          rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
+        }
+      }
       const bandCap = items.length ? Math.min(...items.map((it) => fitItem(it, Infinity).size)) : px(2.4);
       items.forEach((item, ii) => {
         const col = Math.floor(ii / perCol);
@@ -1919,13 +2009,24 @@ function composeFrontPage(ctx, w, h, opts) {
     /* Rangées : autant que la hauteur le permet (min. 5,9 u), puis réparties sans vide en bas. */
     const cols = plan.briefCols;
     const availB = cy + rowH - p - by;
+    const colW = Math.floor((contentW - p * 2 - gap * (cols - 1)) / cols);
+    /* Titre entier, jamais coupé : on réduit le corps, on passe à 3 lignes si la rangée le permet,
+     * sinon le bref est retiré (plutôt qu’un « … »). */
+    const briefFit = (title, tW, hAvail) => {
+      for (let sz = px(1.95); sz >= Math.max(8, px(1.25)); sz -= 1) {
+        ctx.font = serif(sz);
+        const lines = wrapWords(ctx, title || '', tW);
+        if (lines.length * Math.round(sz * 1.12) <= hAvail) return { size: sz, lines };
+      }
+      return null;
+    };
+    const usable = briefs.filter((b) => briefFit(b.title, colW - px(3.4), px(5.9) - px(1.9)));
     const rowsFit = Math.max(1, Math.floor(availB / px(5.9)));
-    const count = Math.min(briefs.length, rowsFit * cols);
+    const count = Math.min(usable.length, rowsFit * cols);
     const perCol = Math.ceil(count / cols);
     const itemH = Math.max(px(5.9), Math.min(px(7.4), Math.floor(availB / Math.max(1, perCol))));
-    const colW = Math.floor((contentW - p * 2 - gap * (cols - 1)) / cols);
     const numS = px(3);
-    briefs.slice(0, count).forEach((b, i) => {
+    usable.slice(0, count).forEach((b, i) => {
       const col = Math.floor(i / perCol);
       const r = i % perCol;
       const bx = x0 + p + col * (colW + gap);
@@ -1939,7 +2040,7 @@ function composeFrontPage(ctx, w, h, opts) {
       const tW = colW - px(3.4);
       ctx.font = `600 ${px(1.3)}px "LR Sans Semi", "LR Sans"`;
       fillWithSpan(metaPick(b, tW, sans(600), px(1.3), 1, true)[0] || '', tx, iy, PURPLE, b.source, metaColor(b, BG_LIGHT, PURPLE));
-      const f = wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
+      const f = briefFit(b.title, tW, itemH - px(1.9)) || wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
       drawLines(f, serif, tx, iy + px(1.9), ink, 1.12, iy + itemH);
     });
   }
@@ -2271,7 +2372,8 @@ function compose(opts) {
   const big = Math.round(816 * fit);
   const logoY = playTop + Math.round(700 * fit);
   /* Sous le QR (règle de Charles) : « Scanne-moi » puis « Le fil étudiant, en direct » (EN en bilingue). */
-  const tagKey = UNE_TAGLINES[opts.tagline] && UNE_TAGLINES[opts.tagline].fr ? opts.tagline : 'direct';
+  const tagKey = UNE_TAGLINES[opts.tagline] && UNE_TAGLINES[opts.tagline].fr ? opts.tagline
+    : (opts.tagline === 'auto' ? (campus && campus.line ? 'campus' : 'tout') : 'direct');
   const scanHead = kind === 'bilingue' ? 'Scanne-moi · Scan me' : 'Scanne-moi';
   const scanTag = UNE_TAGLINES[tagKey].fr;
   const scanTagEn = kind === 'bilingue' ? UNE_TAGLINES[tagKey].en : '';
@@ -2694,7 +2796,7 @@ function syncModelUi() {
     dash.dataset.model = state.model;
     dash.dataset.layout = isUneModel() ? (state.layout || 'classique') : '';
   }
-  ['une-box', 'une-sports-box', 'une-layout-box', 'une-uni-box', 'une-media-box', 'une-period-box', 'une-tagline-box', 'une-entete-box'].forEach((id) => {
+  ['une-box', 'une-sports-box', 'une-layout-box', 'une-uni-box', 'une-media-box', 'une-period-box', 'une-entete-box'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.hidden = !isUneModel();
   });
@@ -3022,7 +3124,7 @@ function uneRadioShows(bars, campus, info, limit = 2) {
 }
 function uneMastExtras(mode, bars, campus, info, sportsLines) {
   if (!info || mode === 'aucun') return null;
-  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 4 : 1);
+  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 8 : 3);
   const next = (sportsLines || []).find((x) => x.upcoming);
   const pool = state.uneCandidates || [];
   const ref = (info.to || posterTodayYmd());
@@ -3035,9 +3137,9 @@ function uneMastExtras(mode, bars, campus, info, sportsLines) {
   const stat = week.length ? (Front && Front.numbersLine ? Front.numbersLine(week, { suffix: 'en 7 jours' }) : `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}`) : '';
   const pick = {
     radio: radio ? { title: `À l’antenne de ${radio.name}`, lines: radio.shows, colorText: radio.name, colorInst: radio.institution } : null,
-    match: next ? { title: 'Prochain match', lines: [`${next.emoji ? `${next.emoji} ` : ''}${next.line}`, next.meta.charAt(0).toUpperCase() + next.meta.slice(1)] } : null,
+    match: next ? { title: 'Prochain match', strict: true, lines: [`${next.emoji ? `${next.emoji} ` : ''}${next.line}`, next.meta.charAt(0).toUpperCase() + next.meta.slice(1)] } : null,
     chiffre: stat ? { title: 'À surveiller', lines: [stat] } : null,
-    combo: radio ? { title: 'À surveiller', lines: [`${radio.name} · ${radio.shows[0]}`, stat].filter(Boolean), colorText: radio.name, colorInst: radio.institution } : null,
+    combo: radio ? { title: 'À surveiller', lines: radio.shows.map((x) => `${radio.name} · ${x}`), tail: stat, colorText: radio.name, colorInst: radio.institution } : null,
   };
   return pick[mode] || pick.match || pick.chiffre || null;
 }
@@ -3216,6 +3318,7 @@ async function preview() {
     }
     if (gen !== previewGen) return;
     status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
+    if (isUneModel()) document.body.dataset.posterCoupures = String((window.__uneCuts || []).length);
     frame.dataset.state = 'pret';
   } catch (err) {
     if (gen !== previewGen) return;

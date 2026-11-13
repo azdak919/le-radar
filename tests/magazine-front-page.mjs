@@ -359,5 +359,8 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['A'] }, { source: 'Impact Campus', authors: ['B'] }]), '2 articles · 2 médias');
   assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['Ana Roy'] }, { source: 'Quartier Libre', authors: ['Léo Côté', 'Ana Roy'] }]), '2 articles · 2 signatures');
   assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: [] }]), '1 article de Quartier Libre');
+  assert.equal(F.numbersLine([{ source: 'Le Polyscope', authors: [] }], { suffix: 'en 7 jours' }), '1 article en 7 jours du Polyscope');
+  assert.equal(F.numbersLine([{ source: 'Impact Campus', authors: [] }]), '1 article d’Impact Campus');
+  assert.equal(F.numbersLine([{ source: 'Les Inspirés', authors: [] }]), '1 article des Inspirés');
   assert.doesNotMatch(F.numbersLine(Array(9).fill({ source: 'Quartier Libre', authors: ['X'] })), /1 média/);
 }

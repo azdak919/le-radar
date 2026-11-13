@@ -725,7 +725,15 @@
     const people = new Set();
     list.forEach((a) => (a.authors || []).forEach((x) => { const k = foldName(String(x || '')); if (k) people.add(k); }));
     if (people.size >= 2) return `${arts}${suffix} · ${people.size} signatures`;
-    return `${arts}${suffix} de ${medias[0]}`;
+    return `${arts}${suffix} ${deMedia(medias[0])}`;
+  }
+  /* « de Le Polyscope » → « du Polyscope », « de Les… » → « des… », élision devant voyelle. */
+  function deMedia(name) {
+    const n = String(name || '').trim();
+    if (/^Le\s/.test(n)) return `du ${n.slice(3)}`;
+    if (/^Les\s/.test(n)) return `des ${n.slice(4)}`;
+    if (/^[AEIOUYÀÂÉÈÊËÎÏÔÛÙ]/i.test(n)) return `d’${n}`;
+    return `de ${n}`;
   }
 
   return {

@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=une-12">
+  <link rel="stylesheet" href="./poster-builder.css?v=une-13">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -100,25 +100,42 @@
           <p class="field-hint js-une-only" hidden>Articles, sports et radio réels du site, aux couleurs de chaque établissement. Imprimé ou écran d’affichage.</p>
         </fieldset>
 
-        <fieldset>
-          <legend>Format</legend>
-          <div class="choices">
-            <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
-            <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
-            <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
-            <label class="js-une-only"><input type="radio" name="format" value="ecran-paysage"> Écran 16:9 (1920 × 1080, PNG)</label>
-            <label class="js-une-only"><input type="radio" name="format" value="ecran-portrait"> Écran 9:16 (1080 × 1920, PNG)</label>
-          </div>
+        <fieldset class="js-une-only" id="une-uni-box" hidden>
+          <legend>Établissement</legend>
+          <select class="greeting" name="uneCampus" id="une-campus" aria-describedby="une-campus-hint">
+            <option value="toutes" selected>Toutes les universités</option>
+          </select>
+          <p class="field-hint" id="une-campus-hint">Ne garder que les articles, les matchs et la radio de cet établissement. L’affiche n’invente rien : s’il y a peu d’articles, elle prend ceux qui existent.</p>
         </fieldset>
 
-        <fieldset>
-          <legend>Résolution</legend>
+        <fieldset class="js-une-only" id="une-media-box" hidden>
+          <legend>Média</legend>
+          <select class="greeting" name="uneMedia" id="une-media" aria-describedby="une-media-hint">
+            <option value="tous" selected>Tous les médias</option>
+          </select>
+          <p class="field-hint" id="une-media-hint">Tous les médias de l’établissement, ou un seul journal.</p>
+        </fieldset>
+
+        <fieldset class="js-une-only" id="une-period-box" hidden>
+          <legend>Période</legend>
+          <select class="greeting" name="unePeriod" id="une-period" aria-describedby="une-period-hint">
+            <option value="jour" selected>Aujourd’hui (les plus récents)</option>
+            <option value="demain">Demain (affiche du lendemain)</option>
+            <option value="fds">Fin de semaine</option>
+            <option value="semaine">Dernière semaine</option>
+            <option value="mois">Dernier mois</option>
+            <option value="session">Cette session</option>
+          </select>
+          <p class="field-hint" id="une-period-hint">Articles choisis par date de publication et répartis sur la période. Le libellé s’affiche dans le bandeau.</p>
+        </fieldset>
+
+        <fieldset class="js-une-only" id="une-layout-box" hidden>
+          <legend>Fond</legend>
           <div class="choices">
-            <label><input type="radio" name="dpi" value="300"> 300 dpi</label>
-            <label><input type="radio" name="dpi" value="600" checked> 600 dpi</label>
-            <label id="dpi-1200-choice" hidden><input type="radio" name="dpi" value="1200"> 1200 dpi</label>
+            <label><input type="radio" name="layout" value="classique" checked> Sans photo (fond uni)</label>
+            <label><input type="radio" name="layout" value="verre"> Avec photo du campus</label>
           </div>
-          <p class="field-hint" id="dpi-hint">600 dpi par défaut. 300 pour un babillard.</p>
+          <p class="field-hint">Avec photo : articles en cartes de verre dépoli et en-tête qui laisse voir la photo. Choisissez la photo plus bas.</p>
         </fieldset>
 
         <fieldset class="js-campus-only">
@@ -144,6 +161,27 @@
             <label><input type="radio" name="campus" value="poly"> Polytechnique</label>
             <label><input type="radio" name="campus" value="hec"> HEC Montréal</label>
           </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Format</legend>
+          <div class="choices">
+            <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
+            <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
+            <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
+            <label class="js-une-only"><input type="radio" name="format" value="ecran-paysage"> Écran 16:9 (1920 × 1080, PNG)</label>
+            <label class="js-une-only"><input type="radio" name="format" value="ecran-portrait"> Écran 9:16 (1080 × 1920, PNG)</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Résolution</legend>
+          <div class="choices">
+            <label><input type="radio" name="dpi" value="300"> 300 dpi</label>
+            <label><input type="radio" name="dpi" value="600" checked> 600 dpi</label>
+            <label id="dpi-1200-choice" hidden><input type="radio" name="dpi" value="1200"> 1200 dpi</label>
+          </div>
+          <p class="field-hint" id="dpi-hint">600 dpi par défaut. 300 pour un babillard.</p>
         </fieldset>
 
         <fieldset id="lang-box">
@@ -195,6 +233,7 @@
         </fieldset>
 
 
+
         <fieldset>
           <legend>Code QR</legend>
           <div class="choices">
@@ -205,45 +244,7 @@
           <p class="field-hint js-une-only" hidden>Un code par article, vers sa fiche sur le-radar.ca, et un code vers l’accueil.</p>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-layout-box" hidden>
-          <legend>Fond</legend>
-          <div class="choices">
-            <label><input type="radio" name="layout" value="classique" checked> Sans photo (fond uni)</label>
-            <label><input type="radio" name="layout" value="verre"> Avec photo du campus</label>
-          </div>
-          <p class="field-hint">Avec photo : articles en cartes de verre dépoli et en-tête qui laisse voir la photo. Choisissez la photo plus bas.</p>
-        </fieldset>
-
-        <fieldset class="js-une-only" id="une-uni-box" hidden>
-          <legend>Établissement</legend>
-          <select class="greeting" name="uneCampus" id="une-campus" aria-describedby="une-campus-hint">
-            <option value="toutes" selected>Toutes les universités</option>
-          </select>
-          <p class="field-hint" id="une-campus-hint">Ne garder que les articles, les matchs et la radio de cet établissement. L’affiche n’invente rien : s’il y a peu d’articles, elle prend ceux qui existent.</p>
-        </fieldset>
-
-        <fieldset class="js-une-only" id="une-media-box" hidden>
-          <legend>Média</legend>
-          <select class="greeting" name="uneMedia" id="une-media" aria-describedby="une-media-hint">
-            <option value="tous" selected>Tous les médias</option>
-          </select>
-          <p class="field-hint" id="une-media-hint">Tous les médias de l’établissement, ou un seul journal.</p>
-        </fieldset>
-
-        <fieldset class="js-une-only" id="une-period-box" hidden>
-          <legend>Période</legend>
-          <select class="greeting" name="unePeriod" id="une-period" aria-describedby="une-period-hint">
-            <option value="jour" selected>Aujourd’hui (les plus récents)</option>
-            <option value="demain">Demain (affiche du lendemain)</option>
-            <option value="fds">Fin de semaine</option>
-            <option value="semaine">Dernière semaine</option>
-            <option value="mois">Dernier mois</option>
-            <option value="session">Cette session</option>
-          </select>
-          <p class="field-hint" id="une-period-hint">Articles choisis par date de publication et répartis sur la période. Le libellé s’affiche dans le bandeau.</p>
-        </fieldset>
-
-        <fieldset class="js-une-only" id="une-tagline-box" hidden>
+        <fieldset id="une-tagline-box">
           <legend>Phrase sous « Scanne-moi »</legend>
           <select class="greeting" name="uneTagline" id="une-tagline">
             <option value="direct" selected>Le fil étudiant, en direct</option>
@@ -252,6 +253,7 @@
             <option value="tout">Tout le Radar étudiant</option>
             <option value="campus">Ton campus en direct</option>
           </select>
+          <p class="field-hint">Sous le code QR, sur la une comme sur l’affiche campus.</p>
         </fieldset>
 
         <fieldset class="js-une-only" id="une-entete-box" hidden>
@@ -372,10 +374,10 @@
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e92"></script>
   <script src="../scripts/session-freshness-lib.js"></script>
   <script src="../scripts/news-housekeeping-lib.js"></script>
-  <script src="../scripts/magazine-front-page-lib.js"></script>
+  <script src="../scripts/magazine-front-page-lib.js?v=une-13"></script>
   <script src="../scripts/sports-payload-lib.js"></script>
   <script src="../scripts/institution-color-lib.js?v=ets-1"></script>
   <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
-  <script src="./poster-builder.js?v=une-12"></script>
+  <script src="./poster-builder.js?v=une-13"></script>
 </body>
 </html>
