@@ -80,9 +80,12 @@
     const sp = el('section', 'sports glass'); const grid = el('div', 'grid');
     sports.forEach((r) => grid.append(score(r)));
     sp.append(el('h2', '', sports[0] && sports[0].kind === 'avenir' ? 'Sport étudiant · à l’affiche aujourd’hui' : 'Sport étudiant · résultats'), grid);
-    const foot = el('footer', 'foot'); const fr = el('div', 'legal');
-    fr.append(el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources'), el('span', 'ind', 'Projet indépendant'));
-    foot.append(el('span', 'url', 'le-radar.ca'), fr);
+    // Pied conforme aux affiches : icône + marque « LE‑RADAR.ca » (serif), nom complet (serif) centré, puis la ligne d'indépendance centrée.
+    const foot = el('footer', 'foot'); const fm = el('p', 'fmark'); const fi = el('img', 'ficon'); fi.src = '../assets/icon.svg'; fi.alt = '';
+    fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca'));
+    const full = el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources');
+    foot.append(fm, full);
+    foot.append(el('p', 'ind', 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.'));
     const main = el('div', 'main'); const colA = el('div', 'col a'); const colB = el('div', 'col b');
     colA.append(ph, leadBox);
     if (others.length) colB.append(side);
