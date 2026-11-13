@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T01:36:23.086Z",
+  "updatedAt": "2026-11-13T05:06:23.694Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Crooch Control",
+        "title": "Vendredi Nostalgie",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/crooch-control/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T01:36:07.305Z"
+      "checkedAt": "2026-11-13T05:06:08.054Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La courbe 2.0",
+        "title": "La grande ludothèque (reprise)",
         "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/la-courbe-2-0"
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "La courbe 2.0",
+      "showTitle": "La grande ludothèque (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T01:36:09.599Z"
+      "checkedAt": "2026-11-13T05:06:09.876Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Other Worlds on Earth/Dromostexte",
+        "title": "You Need A Heart To Live 2",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "01:00"
       },
       "next": {
-        "title": "Chaud Pour/Francis",
+        "title": "Listen! You Smell Something?",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Other Worlds on Earth/Dromostexte",
+      "showTitle": "You Need A Heart To Live 2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,82 +74,82 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T01:36:12.836Z"
+      "checkedAt": "2026-11-13T05:06:12.832Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Maiden Voyage",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/maiden-voyage"
+        "title": "Finally Midnight",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
-        "title": "The 514",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-514"
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "Maiden Voyage",
+      "showTitle": "Finally Midnight",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T01:36:15.179Z"
+      "checkedAt": "2026-11-13T05:06:14.980Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T01:36:16.215Z"
+      "checkedAt": "2026-11-13T05:06:16.373Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "La nouvelle école des surdoués",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "21:00",
-        "slug": "la-nouvelle-ecole-des-surdoues"
-      },
+      "current": null,
       "next": {
-        "title": "Le grand maître des jeux",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "epwebstermixe (1)",
-      "showTitle": "La nouvelle école des surdoués",
+      "track": "ZØRZA — Against Theocracy",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T01:36:22.735Z"
+      "checkedAt": "2026-11-13T05:06:23.343Z"
     }
   }
 }
