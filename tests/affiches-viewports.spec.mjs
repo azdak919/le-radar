@@ -86,17 +86,6 @@ test.describe('affiches — largeurs labo', () => {
     });
   }
 
-  test('1280 : langues du site ne rapetissent pas l’aperçu', async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 720 });
-    await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
-    const before = await waitPreview(page);
-    await page.locator('label:has(input[name="langs"][value="oui"])').click();
-    await page.waitForTimeout(400);
-    const after = await page.locator('#preview canvas').boundingBox();
-    expect(after.height).toBeGreaterThan(before.height * 0.92);
-    expect(after.width).toBeGreaterThan(before.width * 0.92);
-    expect(after.height).toBeGreaterThan(after.width);
-  });
 
   test('390 : photo + cadrage restent utilisables', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });

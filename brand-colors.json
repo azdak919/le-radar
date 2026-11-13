@@ -1,13 +1,22 @@
 {
-  "_comment": "Couleurs officielles (ou dominantes sur le site institutionnel) des établissements liés aux sources d'actualités. Utilisé par app.js pour les pastilles d'articles.",
+  "_comment": "Source unique des couleurs d'établissement du site (pastilles d'articles, radios, affiches « Une », La une sociale). « aliases » : noms courts, sigles et surnoms sportifs qui renvoient à l'entrée (comparaison sans accents ni casse).",
   "institutions": {
     "Université de Montréal": {
       "color": "#0057AC",
-      "source": "Guide de marque UdeM — Pantone 293 / bleu institutionnel"
+      "source": "Guide de marque UdeM — Pantone 293 / bleu institutionnel",
+      "aliases": [
+        "Montréal",
+        "UdeM",
+        "Carabins"
+      ]
     },
     "UQAM": {
       "color": "#0079BE",
-      "source": "Réseau UQ / site uqam.ca — bleu institutionnel"
+      "source": "Réseau UQ / site uqam.ca — bleu institutionnel",
+      "aliases": [
+        "Université du Québec à Montréal",
+        "Citadins"
+      ]
     },
     "Université du Québec à Montréal (UQAM)": {
       "color": "#0079BE",
@@ -15,7 +24,13 @@
     },
     "Université McGill": {
       "color": "#ED1B2F",
-      "source": "Guide d'identité visuelle McGill — rouge"
+      "source": "Guide d'identité visuelle McGill — rouge",
+      "aliases": [
+        "McGill",
+        "MCG",
+        "Redbirds",
+        "Martlets"
+      ]
     },
     "McGill University": {
       "color": "#ED1B2F",
@@ -23,27 +38,56 @@
     },
     "Concordia University": {
       "color": "#912338",
-      "source": "Site concordia.ca — bordeaux institutionnel"
+      "source": "Site concordia.ca — bordeaux institutionnel",
+      "aliases": [
+        "Concordia",
+        "Université Concordia",
+        "Stingers"
+      ]
     },
     "Université du Québec à Trois-Rivières": {
-      "color": "#00CB88",
-      "source": "Site uqtr.ca — vert institutionnel"
+      "color": "#006534",
+      "source": "Charte graphique UQTR, « Couleurs officielles » (oraprdnt.uqtr.uquebec.ca, fiche 9) — vert Pantone 349 ; confirmé par la page Logos et normes graphiques du réseau UQ",
+      "aliases": [
+        "UQTR",
+        "Patriotes"
+      ]
     },
     "Université Laval": {
       "color": "#E30513",
-      "source": "Guide identité ULaval — rouge primaire #e30513"
+      "source": "Guide identité ULaval — rouge primaire #e30513",
+      "aliases": [
+        "Laval",
+        "ULaval",
+        "Rouge et Or"
+      ]
     },
     "Université de Sherbrooke": {
       "color": "#00A759",
-      "source": "Charte UdeS — vert fierté (RGB web #00A759)"
+      "source": "Charte UdeS — vert fierté (RGB web #00A759)",
+      "aliases": [
+        "Sherbrooke",
+        "UdeS",
+        "Vert & Or",
+        "Vert et Or"
+      ]
     },
     "Polytechnique Montréal": {
       "color": "#C41E3A",
-      "source": "Identité Polytechnique Montréal — rouge institutionnel"
+      "source": "Identité Polytechnique Montréal — rouge institutionnel",
+      "aliases": [
+        "Polytechnique",
+        "Poly"
+      ]
     },
     "Bishop's University": {
       "color": "#582C83",
-      "source": "Site ubishops.ca — pourpre institutionnel"
+      "source": "Site ubishops.ca — pourpre institutionnel",
+      "aliases": [
+        "Bishop's",
+        "Université Bishop’s",
+        "Gaiters"
+      ]
     },
     "Université du Québec à Chicoutimi": {
       "color": "#5A7411",
@@ -51,19 +95,35 @@
     },
     "Université du Québec à Chicoutimi (UQAC)": {
       "color": "#5A7411",
-      "source": "Réseau UQ — couleurs établissements (Pantone 575)"
+      "source": "Réseau UQ — couleurs établissements (Pantone 575)",
+      "aliases": [
+        "UQAC",
+        "Inuk"
+      ]
     },
     "Université du Québec à Rimouski (UQAR)": {
       "color": "#004990",
-      "source": "Réseau UQ — couleurs établissements (Pantone 280)"
+      "source": "Réseau UQ — couleurs établissements (Pantone 280)",
+      "aliases": [
+        "UQAR",
+        "Université du Québec à Rimouski"
+      ]
     },
     "Dawson College": {
       "color": "#135CB2",
-      "source": "dawsoncollege.qc.ca (thème 2022) — bleu institutionnel #135CB2 ; marine #002F6E en appui"
+      "source": "dawsoncollege.qc.ca (thème 2022) — bleu institutionnel #135CB2 ; marine #002F6E en appui",
+      "aliases": [
+        "Dawson",
+        "Cégep Dawson"
+      ]
     },
     "Cégep du Vieux Montréal": {
       "color": "#CF1F1F",
-      "source": "Site cvm.qc.ca — rouge institutionnel"
+      "source": "Site cvm.qc.ca — rouge institutionnel",
+      "aliases": [
+        "Vieux Montréal",
+        "CVM"
+      ]
     },
     "Cégep de Jonquière (ATM – journalisme)": {
       "color": "#FF8B00",
@@ -83,15 +143,24 @@
     },
     "Collège de Maisonneuve": {
       "color": "#002768",
-      "source": "Site cmaisonneuve.qc.ca — bleu emblématique"
+      "source": "Site cmaisonneuve.qc.ca — bleu emblématique",
+      "aliases": [
+        "Maisonneuve"
+      ]
     },
     "Collège Lionel-Groulx": {
       "color": "#2F98D6",
-      "source": "Site clg.qc.ca — bleu institutionnel"
+      "source": "Site clg.qc.ca — bleu institutionnel",
+      "aliases": [
+        "Lionel-Groulx"
+      ]
     },
     "Collège Montmorency": {
       "color": "#002768",
-      "source": "Guide normes graphiques Montmorency — bleu foncé"
+      "source": "Guide normes graphiques Montmorency — bleu foncé",
+      "aliases": [
+        "Montmorency"
+      ]
     },
     "Cégep Montmorency": {
       "color": "#002768",
@@ -103,7 +172,91 @@
     },
     "John Abbott College": {
       "color": "#2E7D32",
-      "source": "auto — discover-news-sources (à remplacer par la couleur officielle)"
+      "source": "auto — discover-news-sources (à remplacer par la couleur officielle)",
+      "aliases": [
+        "John Abbott",
+        "Cégep John Abbott"
+      ]
+    },
+    "École de technologie supérieure": {
+      "color": "#E40032",
+      "source": "Normes graphiques ÉTS (etsmtl.ca/a-propos/logos-et-identite-visuelle) — rouge Pantone 185C",
+      "aliases": [
+        "ÉTS",
+        "ETS",
+        "École de technologie supérieure (ÉTS)",
+        "Piranhas"
+      ]
+    },
+    "Université du Québec en Outaouais": {
+      "color": "#005982",
+      "source": "Réseau UQ, page « Logos et normes graphiques » (reseau.uquebec.ca) — UQO",
+      "aliases": [
+        "UQO"
+      ]
+    },
+    "Carleton University": {
+      "color": "#E91C24",
+      "source": "Carleton Logo Guidelines (janv. 2023) — Carleton Red, Pantone 185",
+      "aliases": [
+        "Carleton",
+        "Université Carleton",
+        "Ravens"
+      ]
+    },
+    "University of Ottawa": {
+      "color": "#8F001A",
+      "source": "uOttawa visual brand identity (uottawa.ca/about-us/administration-services/brand) — Primary Garnet",
+      "aliases": [
+        "uOttawa",
+        "Université d’Ottawa",
+        "Université d'Ottawa",
+        "Gee-Gees"
+      ]
+    },
+    "Dalhousie University": {
+      "color": "#FFD400",
+      "source": "The Dal Brand (dal.ca/about/our-story/dal-brand.html) — Beak Gold",
+      "aliases": [
+        "Dalhousie",
+        "Université Dalhousie",
+        "Tigers"
+      ]
+    },
+    "University of New Brunswick": {
+      "color": "#E4002B",
+      "source": "UNB Corporate Identity Manual — rouge Pantone 185 (valeur web standard du Pantone 185 C)",
+      "aliases": [
+        "UNB",
+        "Université du Nouveau-Brunswick",
+        "Reds"
+      ]
+    },
+    "Collège militaire royal de Saint-Jean": {
+      "color": "#004C97",
+      "source": "Guide des normes du logo des Remparts, CMR Saint-Jean — bleu officiel Pantone 2945 C",
+      "aliases": [
+        "CMR Saint-Jean",
+        "CMR",
+        "RMC Saint-Jean",
+        "Remparts"
+      ]
+    },
+    "Cégep Garneau": {
+      "color": "#006944",
+      "source": "Guide des normes visuelles du Cégep Garneau (juin 2024) — vert foncé Pantone 3425 C",
+      "aliases": [
+        "Garneau",
+        "Élans"
+      ]
+    },
+    "Cégep de Sainte-Foy": {
+      "color": "#002C77",
+      "source": "Programme d’identité visuelle du Cégep de Sainte-Foy — bleu Pantone 288",
+      "aliases": [
+        "Sainte-Foy",
+        "Dynamiques"
+      ]
     }
   },
   "fallback_palette": [

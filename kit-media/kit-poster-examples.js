@@ -30,7 +30,6 @@
     if (ex.photo) q.set('photo', ex.photo);
     if (ex.greeting && ex.greeting !== 'none') q.set('greeting', ex.greeting);
     if (ex.lang) q.set('lang', ex.lang);
-    q.set('langs', ex.langs ? 'oui' : 'non');
     q.set('qr', ex.qr ? 'oui' : 'non');
     if (format) q.set('format', format);
     return `${compose}?${q.toString()}`;

@@ -684,7 +684,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('DPI_LAB'), 'générateur public : 1200 dpi réservé au labo local');
   assert(builderJs.includes('DEFAULT_DPI = 600'), 'générateur public : 600 dpi par défaut');
   assert(builder.includes('name="dpi"'), 'générateur public : choix de résolution');
-  assert(builder.includes('name="langs" value="oui" checked'), 'affiche générique : langues du site par défaut');
+  assert(!builder.includes('name="langs"'), 'aucune option de rangée de langues (t984u)');
   assert(builderJs.includes('syncGenericLangs'), 'affiche générique : langues rétablies sur Générique');
   assert(builder.includes('id="dpi-1200-choice" hidden'), '1200 dpi masqué hors labo local');
   assert(builder.includes('id="photo-upload-box" hidden'), 'affiches : téléversement masqué hors labo local');
@@ -719,6 +719,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes("fontSynthesis = 'none'"), 'générateur public : pas de graisse synthétisée sur le canevas');
   const langFontsCheck = spawnSync('python3', [join(root, 'scripts/subset-poster-lang-fonts.py'), '--check'], { encoding: 'utf8' });
   assert.equal(langFontsCheck.status, 0, langFontsCheck.stderr || langFontsCheck.stdout || 'fontes d’endonymes : couverture incomplète');
+  const emojiFontCheck = spawnSync('python3', [join(root, 'scripts/subset-poster-emoji-font.py'), '--check'], { encoding: 'utf8' });
+  assert.equal(emojiFontCheck.status, 0, emojiFontCheck.stderr || emojiFontCheck.stdout || 'police emoji de sport : couverture incomplète');
+  assert(builderJs.includes("'LR Emoji'"), 'générateur public : emojis de sport en police couleur auto-hébergée');
   assert(
     !/stroke-width/.test(readFileSync(join(root, 'assets/kit/translate-mark.svg'), 'utf8')),
     'icône traduction : pas de stroke (plus en gras)',

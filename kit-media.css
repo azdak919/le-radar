@@ -346,3 +346,25 @@
 .kit-swatch__name{font-weight:600}
 .kit-swatch__var{color:var(--muted)}
 .kit-type{padding-left:1.1em}
+
+/* Une du Radar et règles (refonte t991u). */
+@font-face { font-family: 'LR Serif'; src: url('scripts/og-fonts/SourceSerif4Display-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+.kit-cta__btn { background: #6c2163; } /* pourpre de marque fixe : blanc AA aussi en thème sombre */
+.kit-cta--row { display: flex; flex-wrap: wrap; gap: 8px; }
+.kit-cta__btn--ghost { background: transparent; color: var(--ink); border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--rule)); }
+@media (hover: hover) and (pointer: fine) {
+.kit-cta__btn--ghost:hover { color: var(--ink); border-color: var(--accent); }
+}
+.kit-toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 14px 0 0; font-size: 14px; font-weight: 600; }
+.kit-toc a { color: var(--accent); text-decoration: none; }
+.kit-toc a:hover { text-decoration: underline; }
+.kit-note { margin: 0; font-size: 13px; color: var(--muted); }
+.kit-type__lr { font-family: 'LR Serif', var(--serif); font-weight: 700; font-size: 1.4em; }
+.kit-rules { padding-left: 1.2em; }
+.kit-rules li { margin: 0 0 6px; }
+@media (min-width: 360px) and (max-width: 599px) {
+  .kit-grid--poster { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 10px; }
+}
+.kit-more { margin: 0 0 18px; }
+.kit-more > summary { cursor: pointer; font-weight: 600; color: var(--ink); list-style-position: inside; padding: 6px 0; }
+.kit-more[open] > summary { margin-bottom: 10px; }

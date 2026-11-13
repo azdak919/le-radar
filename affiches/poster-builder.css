@@ -416,3 +416,116 @@ select.greeting:focus {
 body:has(#local-lab-format-bar) .dash-controls {
   padding-bottom: 120px;
 }
+
+/* Modèle « Une du Radar » : cacher les réglages campus, liste d’articles. */
+.dash[data-model="une"] .js-campus-only,
+.dash:not([data-model="une"]) .js-une-only { display: none; }
+.dash[data-model="une"] .js-une-only[hidden],
+.dash[data-model="une"] #une-box[hidden] { display: block; }
+.dash[data-model="une"] .js-une-only.field-hint[hidden] { display: block; }
+
+.une-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.une-list li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: start;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.une-list li.is-lead { border-color: color-mix(in srgb, var(--purple) 55%, var(--line)); }
+.une-list .une-check {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--purple);
+}
+.une-list .une-meta { min-width: 0; }
+.une-list .une-role {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.une-list .une-title {
+  display: block;
+  font: 600 12.5px/1.3 var(--sans);
+  color: var(--ink);
+}
+.une-list .une-source {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.une-list button {
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--soft);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+.une-list button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.une-list button:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+#une-status { margin: 0 0 8px; }
+
+.dash[data-model="une"][data-layout="verre"] #photo-box {
+  display: block;
+}
+.dash[data-model="une"][data-layout="classique"] #photo-box,
+.dash[data-model="une"]:not([data-layout]) #photo-box {
+  display: none;
+}
+#une-uni-box select.greeting { margin-top: 0; }
+
+.une-list .une-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.une-list .une-lead input { accent-color: var(--purple); margin: 0; }
+.une-list { max-height: 520px; overflow: auto; }
+.une-list .une-role-pick {
+  grid-column: 1 / -1;
+  justify-self: start;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+}
+#une-sports-list li { grid-template-columns: minmax(0, 1fr); }
+
+/* Le studio est posé dans .seo-wire : la règle du site « .seo-wire p { color: var(--ink-soft) } » (#44474d)
+ * rendait les indications quasi illisibles sur le fond sombre (contraste ≈ 2:1). On rétablit les couleurs du studio. */
+.seo-wire .dash :is(.dash-lead, .status, .field-hint, .photo-meta, .crop-lead, .crop-hint) { color: var(--muted); }

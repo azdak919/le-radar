@@ -10,6 +10,13 @@ const FORMATS = {
   letter: { id: 'letter', label: 'Lettre 8,5 × 11 po', file: 'lettre', wIn: 8.5, hIn: 11 },
   legal: { id: 'legal', label: 'Légal 8,5 × 14 po', file: 'legal', wIn: 8.5, hIn: 14 },
 };
+/* Écrans d’affichage dynamique (Une seulement) : taille exacte en pixels, PNG.
+ * Hors du bloc FORMATS : les affiches imprimées du kit ne changent pas. 1 « po » virtuel = 100 px. */
+const SCREEN_FORMATS = {
+  'ecran-paysage': { id: 'ecran-paysage', label: 'Écran 16:9 · 1920 × 1080 px', file: 'ecran-1920x1080', wIn: 19.2, hIn: 10.8, pxW: 1920, pxH: 1080, screen: true },
+  'ecran-portrait': { id: 'ecran-portrait', label: 'Écran 9:16 · 1080 × 1920 px', file: 'ecran-1080x1920', wIn: 10.8, hIn: 19.2, pxW: 1080, pxH: 1920, screen: true },
+};
+Object.assign(FORMATS, SCREEN_FORMATS);
 
 const TITLE = 'LE-RADAR.ca';
 const SLOGAN = 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
@@ -24,6 +31,8 @@ const SOFT = '#C2C6CD';
 const MUTED = '#888D96';
 const BG = '#0E0F12';
 const PURPLE = '#6C2163';
+/* Verbe atténué des matchs dans l’en-tête : blanc 0,65 sur le violet, opaque (4,9:1). */
+const mastDimColor = 'rgb(197, 171, 196)';
 const TRACK = -0.02;
 
 /* Endonymes — mêmes libellés que le module de traduction du site. */
@@ -82,6 +91,39 @@ const GREETINGS_EN = {
   independant: 'Independent',
   ncompte: 'No account needed',
 };
+
+/* Phrase sous « Scanne-moi » : FR, puis EN (mode bilingue des établissements autorisés). */
+const UNE_TAGLINES = {
+  direct: { label: 'Le fil étudiant, en direct', fr: 'Le fil étudiant, en direct', en: 'Student news, live' },
+  auto: { label: 'Automatique (campus ou tout le Radar)' },
+  fil: { label: 'Le fil étudiant', fr: 'Le fil étudiant', en: 'The student news feed' },
+  tout: { label: 'Tout le Radar étudiant', fr: 'Tout le Radar étudiant', en: 'All student news' },
+  campus: { label: 'Ton campus en direct', fr: 'Ton campus en direct', en: 'Your campus, live' },
+};
+const UNE_PERIOD_LABELS = {
+  jour: 'Aujourd’hui (les plus récents)',
+  demain: 'Demain (affiche du lendemain)',
+  fds: 'Fin de semaine',
+  semaine: 'Dernière semaine',
+  mois: 'Dernier mois',
+  session: 'Cette session',
+};
+/* Format → densité de la une : en Lettre, moins d’articles plutôt que tout rétrécir. */
+const UNE_FORMAT_PLAN = {
+  tabloid: { k: 1, side: 2, grid: 4, sports: 4, radio: 3, briefCols: 3, want: { lead: 62, grid: 36, band: 21, briefs: 20 } },
+  legal: { k: 0.9, side: 2, grid: 3, sports: 4, radio: 3, briefCols: 2, want: { lead: 56, grid: 36, band: 20, briefs: 22 } },
+  letter: { k: 0.84, side: 1, grid: 3, sports: 2, radio: 2, briefCols: 2, want: { lead: 50, grid: 33, band: 15, briefs: 14 } },
+  /* Écrans : lecture en quelques secondes, à distance. Pas de brèves, pas de QR d’article. */
+  'ecran-paysage': { k: 1.5, side: 3, grid: 0, sports: 4, radio: 2, briefCols: 0, screen: true, rightFrac: 0.42, cardRow: true, want: { lead: 50, grid: 0, band: 12, briefs: 0 } },
+  'ecran-portrait': { k: 1.4, side: 0, grid: 3, sports: 4, radio: 2, briefCols: 0, screen: true, want: { lead: 62, grid: 38, band: 20, briefs: 0 } },
+};
+
+/* Bilingue seulement pour Concordia, McGill et Bishop’s ; « tous les établissements » reste en français (règle de Charles). */
+function uneBilingualAllowed(slug) {
+  if (!slug || slug === 'toutes' || slug === 'generique') return false;
+  const campus = CAMPUSES.find((c) => c.slug === slug);
+  return Boolean(campus && campus.bilingual);
+}
 
 const CAMPUSES = [
   { slug: 'generique', line: null, lineEn: null, bilingual: false, places: null, hints: null, label: 'Générique' },
@@ -189,7 +231,7 @@ const state = {
   campus: 'generique',
   lang: 'standard',
   greeting: 'none',
-  langs: true,
+  langs: false, /* t984u : aucune rangée de langues sur une affiche ni un PDF */
   showUni: true,
   qr: true,
   dpi: DEFAULT_DPI,
@@ -202,6 +244,28 @@ const state = {
   zoom: 0.9,
   photoOpen: false,
   uploads: [],
+  model: 'campus',
+  layout: 'classique',
+  uneCampus: 'toutes',
+  uneMedia: 'tous', /* « tous les médias de l’établissement » ou le slug d’un média */
+  uneMediaList: [],
+  unePeriod: 'jour',
+  uneTagline: 'direct',
+  uneLeadPhoto: 'surimpression',
+  uneMastGlass: 'givre',
+  uneRoles: { aussi: [], vedettes: [], bref: [], masquer: [] },
+  uneSportBand: [],
+  uneSportSlogan: [],
+  uneSportHide: [],
+  unePeriodInfo: null,
+  uneCandidates: [],
+  uneAutoArticles: [],
+  uneAutoBriefs: [],
+  uneManualIds: [],
+  uneLeadId: '',
+  uneSports: null,
+  uneSidebars: null,
+  uneStatus: '',
 };
 
 let lastPhotoImg = null;
@@ -276,6 +340,7 @@ function canvasAllocates(w, h) {
 }
 
 function px(fmt, dpi = outputDpi()) {
+  if (fmt && fmt.screen) return { w: fmt.pxW, h: fmt.pxH };
   return { w: Math.round(fmt.wIn * dpi), h: Math.round(fmt.hIn * dpi) };
 }
 
@@ -339,7 +404,13 @@ function loadImage(src, cors = true) {
       imageCache.delete(key);
       reject(new Error('timeout'));
     }, 14000);
-    img.onload = () => { clearTimeout(t); resolve(img); };
+    /* Image vraiment chargée et décodée (pas de vignette vide, pas de chargement paresseux) avant tout rendu. */
+    img.onload = () => {
+      clearTimeout(t);
+      if (!(img.naturalWidth > 0 && img.naturalHeight > 0)) { imageCache.delete(key); reject(new Error(`image vide : ${src}`)); return; }
+      const done = () => resolve(img);
+      if (typeof img.decode === 'function') img.decode().then(done, done); else done();
+    };
     img.onerror = () => {
       clearTimeout(t);
       imageCache.delete(key);
@@ -383,6 +454,7 @@ async function loadFonts() {
     new FontFace('LR Sans', 'url(../scripts/og-fonts/Inter-Regular.ttf)'),
     new FontFace('LR Sans Semi', 'url(../scripts/og-fonts/Inter-SemiBold.ttf)'),
     new FontFace('LR Script', 'url(../assets/kit/fonts/Caveat-Bold.ttf)'),
+    new FontFace('LR Emoji', 'url(../assets/kit/fonts/emoji/noto-color-emoji-sports.woff2)'),
     ...LANG_FONT_FILES.map(([family, file]) => new FontFace(
       family,
       `url(../assets/kit/fonts/langs/${file})`,
@@ -436,6 +508,1579 @@ function coverDraw(ctx, img, tw, th, fx = 0.5, fy = 0.42, scale = 0.9, angleDeg 
   ctx.fillRect(0, 0, tw, th);
 }
 
+/* Point focal vertical automatique : centre de l’énergie des contours (visages, sujets, scène),
+ * calculé une fois sur une vignette 64 px. Repli 0,42 si l’image est illisible (CORS). */
+function photoFocalY(img) {
+  if (!img) return 0.42;
+  if (typeof img.__lrFocalY === 'number') return img.__lrFocalY;
+  let fy = 0.42;
+  try {
+    const sw = img.naturalWidth || img.width || 0;
+    const sh = img.naturalHeight || img.height || 0;
+    if (sw && sh && typeof document !== 'undefined') {
+      const W = 64;
+      const H = Math.max(8, Math.round(W * sh / sw));
+      const c = document.createElement('canvas');
+      c.width = W;
+      c.height = H;
+      const g = c.getContext('2d', { willReadFrequently: true });
+      g.drawImage(img, 0, 0, W, H);
+      const d = g.getImageData(0, 0, W, H).data;
+      const lum = (i) => d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
+      let sum = 0;
+      let acc = 0;
+      for (let y = 1; y < H - 1; y += 1) {
+        let row = 0;
+        for (let x = 1; x < W - 1; x += 1) {
+          const i = (y * W + x) * 4;
+          row += Math.abs(lum(i + 4) - lum(i - 4)) + Math.abs(lum(i + W * 4) - lum(i - W * 4));
+        }
+        sum += row;
+        acc += row * (y + 0.5);
+      }
+      if (sum > 0) fy = Math.max(0.25, Math.min(0.7, acc / sum / H));
+    }
+  } catch { fy = 0.42; }
+  try { img.__lrFocalY = fy; } catch { /* objet figé */ }
+  return fy;
+}
+
+/* Opacité minimale du voile violet pour que le texte (couleur `txt`) garde le contraste visé
+ * sur 99 % des pixels réels de la zone (échantillon réduit). Plafond 0,94 (en-tête opaque d’origine). */
+function contrastRatio(a, b) {
+  const lin = (c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const L = (rgb) => 0.2126 * lin(rgb[0]) + 0.7152 * lin(rgb[1]) + 0.0722 * lin(rgb[2]);
+  const la = L(a);
+  const lb = L(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+function mastVeilAlpha(ctx, x, y, w, h, veil, txt, target = 4.5) {
+  let px = null;
+  try {
+    const W = 96;
+    const H = Math.max(4, Math.round(W * h / w));
+    const c = document.createElement('canvas');
+    c.width = W;
+    c.height = H;
+    const g = c.getContext('2d', { willReadFrequently: true });
+    g.drawImage(ctx.canvas, x, y, w, h, 0, 0, W, H);
+    px = g.getImageData(0, 0, W, H).data;
+  } catch { return 0.94; }
+  const pass = (a) => {
+    let bad = 0;
+    const n = px.length / 4;
+    for (let i = 0; i < px.length; i += 4) {
+      const bl = [0, 1, 2].map((k) => a * veil[k] + (1 - a) * px[i + k]);
+      if (contrastRatio(txt, bl) < target) bad += 1;
+    }
+    return bad / n <= 0.01;
+  };
+  for (let a = 0.5; a < 0.94; a += 0.02) if (pass(a)) return Math.round(a * 100) / 100;
+  return 0.94;
+}
+
+function coverPhoto(ctx, img, x, y, tw, th, fx = 0.5, fy = 0.5) {
+  if (!img || tw <= 0 || th <= 0) return;
+  const sw = img.naturalWidth || img.width || 0;
+  const sh = img.naturalHeight || img.height || 0;
+  if (!sw || !sh) return;
+  const ratio = tw / th;
+  let cw;
+  let ch;
+  if (sw / sh > ratio) {
+    ch = sh;
+    cw = ch * ratio;
+  } else {
+    cw = sw;
+    ch = cw / ratio;
+  }
+  cw = Math.max(1, Math.min(cw, sw));
+  ch = Math.max(1, Math.min(ch, sh));
+  const left = Math.max(0, Math.min(fx * sw - cw / 2, sw - cw));
+  const top = Math.max(0, Math.min(fy * sh - ch / 2, sh - ch));
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x, y, tw, th);
+  ctx.clip();
+  ctx.drawImage(img, left, top, cw, ch, x, y, tw, th);
+  ctx.restore();
+}
+
+function roundedRectPath(ctx, x, y, w, h, r) {
+  const rad = Math.max(0, Math.min(r, w / 2, h / 2));
+  ctx.beginPath();
+  ctx.moveTo(x + rad, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rad);
+  ctx.arcTo(x + w, y + h, x, y + h, rad);
+  ctx.arcTo(x, y + h, x, y, rad);
+  ctx.arcTo(x, y, x + w, y, rad);
+  ctx.closePath();
+}
+
+function frostedRect(ctx, x, y, w, h, r, {
+  fill = 'rgba(255, 252, 247, 0.78)',
+  stroke = 'rgba(255, 255, 255, 0.62)',
+  blur = 16,
+} = {}) {
+  if (w < 2 || h < 2) return;
+  const sx = Math.max(0, Math.floor(x));
+  const sy = Math.max(0, Math.floor(y));
+  const sw = Math.min(ctx.canvas.width - sx, Math.ceil(w + (x - sx)));
+  const sh = Math.min(ctx.canvas.height - sy, Math.ceil(h + (y - sy)));
+  if (sw > 2 && sh > 2) {
+    try {
+      const snap = ctx.getImageData(sx, sy, sw, sh);
+      const tmp = document.createElement('canvas');
+      tmp.width = sw;
+      tmp.height = sh;
+      tmp.getContext('2d').putImageData(snap, 0, 0);
+      const scale = 0.25;
+      const off = document.createElement('canvas');
+      off.width = Math.max(1, Math.round(sw * scale));
+      off.height = Math.max(1, Math.round(sh * scale));
+      const octx = off.getContext('2d');
+      octx.imageSmoothingEnabled = true;
+      octx.drawImage(tmp, 0, 0, off.width, off.height);
+      ctx.save();
+      roundedRectPath(ctx, x, y, w, h, r);
+      ctx.clip();
+      ctx.filter = `blur(${blur}px)`;
+      ctx.drawImage(off, sx, sy, sw, sh);
+      ctx.filter = 'none';
+      ctx.restore();
+    } catch {
+      /* canevas souillé ou cliché impossible : le voile opaque suffit */
+    }
+  }
+  ctx.save();
+  roundedRectPath(ctx, x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = Math.max(1, Math.min(w, h) * 0.004);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawQrCode(ctx, x, y, size, text) {
+  const api = (typeof qrcodegen !== 'undefined' && qrcodegen.QrCode) ? qrcodegen.QrCode : null;
+  if (!api || !text || size < 8) return;
+  const qr = api.encodeText(String(text), api.Ecc.MEDIUM);
+  const n = qr.size;
+  const quiet = 2;
+  const dim = n + quiet * 2;
+  const off = document.createElement('canvas');
+  off.width = dim;
+  off.height = dim;
+  const octx = off.getContext('2d', { alpha: false });
+  octx.fillStyle = '#ffffff';
+  octx.fillRect(0, 0, dim, dim);
+  octx.fillStyle = '#111111';
+  for (let row = 0; row < n; row += 1) {
+    for (let col = 0; col < n; col += 1) {
+      if (qr.getModule(col, row)) octx.fillRect(col + quiet, row + quiet, 1, 1);
+    }
+  }
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(off, x, y, size, size);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+}
+
+function frontInk() {
+  return {
+    paper: '#F4F0E6',
+    ink: '#1A1917',
+    mute: '#5E5A54',
+    rule: '#C9C2B4',
+    photoBg: '#E4DED1',
+  };
+}
+
+function posterTodayYmd() {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
+}
+
+function posterClock(time) {
+  const raw = String(time || '').trim();
+  const m = raw.match(/^(\d{1,2})(?::(\d{2}))?/);
+  if (!m) return raw.replace(':', ' h ');
+  const h = String(Number(m[1]));
+  const min = m[2] && m[2] !== '00' ? ` h ${m[2]}` : ' h';
+  return `${h}${min}`;
+}
+
+function pickPosterRadio(nowplaying, radios, campus, limit = 3) {
+  const stations = nowplaying && nowplaying.stations;
+  if (!stations) return [];
+  const list = Array.isArray(stations)
+    ? stations
+    : Object.keys(stations).map((id) => ({ id, ...stations[id] }));
+  const radioMeta = new Map((radios || []).map((r) => [r.id, r]));
+  const rows = [];
+  for (const st of list) {
+    const meta = radioMeta.get(st.id) || {};
+    const inst = meta.institution || '';
+    if (campus && !itemMatchesCampusPoster({ institution: inst }, campus)) continue;
+    const current = st.current || null;
+    if (!current || !current.title) continue;
+    const when = [posterClock(current.start), posterClock(current.end)].filter(Boolean).join('–');
+    rows.push({
+      kicker: st.name || meta.name || st.id,
+      line: current.title,
+      meta: when,
+    });
+    if (rows.length >= limit) break;
+  }
+  return rows;
+}
+
+function itemMatchesCampusPoster(item, campus) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  if (Front && typeof Front.itemMatchesCampus === 'function') return Front.itemMatchesCampus(item, campus);
+  return !campus;
+}
+
+/* Date absolute courte pour l’imprimé (« Ven. 13 nov. ») : jamais « demain » ni « aujourd’hui ». */
+const FR_MONTH_SHORT = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+function posterShortDate(ymd) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(ymd || ''));
+  if (!m) return '';
+  const wd = new Date(`${ymd}T12:00:00Z`).getUTCDay();
+  const d = Number(m[3]);
+  return `${['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'][wd]}\u00A0${d === 1 ? '1er' : d}\u00A0${FR_MONTH_SHORT[Number(m[2]) - 1]}`;
+}
+
+function posterNextYmd() {
+  const d = new Date(`${posterTodayYmd()}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
+  const teams = masthead && masthead.teams;
+  if (!teams || typeof teams !== 'object') return [];
+  const realToday = posterTodayYmd();
+  /* Jour visé : aujourd’hui ou, pour l’affiche du lendemain, demain (matchs à venir seulement). */
+  const today = targetYmd || realToday;
+  const upcoming = [];
+  const results = [];
+  const seen = new Set();
+  Object.values(teams).forEach((team) => {
+    if (!team) return;
+    const inst = team.institutionName || team.institutionLabel || team.fullName || team.name || '';
+    if (campus && !itemMatchesCampusPoster({ institution: inst }, campus)) return;
+    const sport = team.sportLabel || team.sport || '';
+    /* Genre explicite « (F) » / « (H) » seulement si la donnée le dit ; jamais deviné. */
+    const gender = typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.genderMark ? RadarMagazineFrontPage.genderMark(team.sex) : '';
+    const sportTag = [sport, gender].filter(Boolean).join(' ');
+    const name = team.name || team.fullName || '';
+    const uniBoost = team.sector === 'universitaire' ? 0 : 1;
+    (team.nextGames || []).forEach((game) => {
+      const id = game.gameId || `${name}-${game.date}-${game.opponent}`;
+      const key = `${game.date}|${game.time || ''}|${sportTag}|${game.opponentNickname || game.opponent || ''}`;
+      if (seen.has(id) || seen.has(key) || !game.date || game.date < today) return;
+      seen.add(id);
+      seen.add(key);
+      const F = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+      const sides = F && F.gameSides ? F.gameSides(team, game, campus) : { who: name, vs: game.opponentNickname || game.opponent || '' };
+      const verb = game.home ? 'reçoit' : 'visite';
+      upcoming.push({
+        sort: `${uniBoost}-${game.date}-${game.time || ''}`,
+        today: game.date === today,
+        kicker: sportTag,
+        gender,
+        emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
+        line: `${sides.who} ${verb} ${sides.vs}`,
+        upcoming: true,
+        meta: [posterShortDate(game.date), posterClock(game.time)].filter(Boolean).join(' · '),
+      });
+    });
+    (team.results || []).forEach((game) => {
+      const id = `r-${game.gameId || `${name}-${game.date}`}`;
+      if (seen.has(id) || game.scoreFor == null || game.scoreAgainst == null) return;
+      seen.add(id);
+      results.push({
+        sort: `${uniBoost}-${game.date}`,
+        kicker: sportTag,
+        gender,
+        emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
+        line: (() => {
+          const F = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+          const sd = F && F.gameSides ? F.gameSides(team, game, campus) : { who: name, vs: game.opponentNickname || game.opponent || '' };
+          return `${sd.who} ${game.scoreFor}–${game.scoreAgainst} ${sd.vs}`;
+        })(),
+        meta: posterShortDate(game.date) || game.date,
+      });
+    });
+  });
+  upcoming.sort((a, b) => {
+    if (a.today !== b.today) return a.today ? -1 : 1;
+    return String(a.sort).localeCompare(String(b.sort));
+  });
+  results.sort((a, b) => String(b.sort).localeCompare(String(a.sort)));
+  const out = [...upcoming.slice(0, limit)];
+  /* Affiche du lendemain : des matchs à venir seulement, jamais d’anciens résultats. */
+  if (out.length < limit) out.push(...results.slice(0, limit - out.length));
+  return out.slice(0, limit);
+}
+
+const CAMPUS_PAGE_PATHS = {
+  laval: 'etablissements/universite-laval/',
+  mcgill: 'etablissements/mcgill-university/',
+  udem: 'etablissements/universite-de-montreal/',
+  uqam: 'etablissements/universite-du-quebec-a-montreal/',
+  concordia: 'etablissements/concordia-university/',
+  sherbrooke: 'etablissements/universite-de-sherbrooke/',
+  bishops: 'etablissements/bishops-university/',
+};
+
+/* Une v3 : bandeau Radar plein, une dominante, un grand QR d’appel en haut,
+ * vedettes à titres seuls, bande sports/radio lisible, En bref numéroté. */
+function composeFrontPage(ctx, w, h, opts) {
+  /* Toute coupure (« … ») réellement dessinée est notée : les tests et les exports la refusent. */
+  const cuts = [];
+  if (typeof window !== 'undefined') {
+    window.__uneCuts = cuts;
+    if (new URLSearchParams(location.search).has('debugcuts')) {
+      const where = new Map();
+      window.__uneCutWhere = where;
+      const push = cuts.push.bind(cuts);
+      cuts.push = (x) => { where.set(x, (new Error().stack || '').split('\n').slice(2, 7).map((l) => (l.match(/:(\d+):\d+\)?$/) || [])[1]).join('<')); return push(x); };
+    }
+  }
+  const c = frontInk();
+  const articles = (opts.articles || []).filter(Boolean);
+  const images = opts.articleImages || new Map();
+  const withQr = Boolean(opts.qr);
+  const glass = opts.layout === 'verre';
+  const showLangs = false; /* t984u : rangée de langues retirée de toutes les affiches */
+  const fmtSpec = FORMATS[opts.format] || FORMATS.tabloid;
+  const plan = UNE_FORMAT_PLAN[fmtSpec.id] || UNE_FORMAT_PLAN.tabloid;
+  /* 1 u ≈ 0,1 po sur le Tabloid ; un peu plus serré en Légal et en Lettre. */
+  const u = (w / fmtSpec.wIn) * 0.1 * plan.k;
+  const articleQr = withQr && !plan.screen;
+  const px = (n) => Math.max(1, Math.round(n * u));
+  const margin = px(4);
+  const site = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.SITE)
+    ? RadarMagazineFrontPage.SITE
+    : 'https://le-radar.ca';
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const todayIso = opts.date || new Date().toISOString();
+  const dateLabel = Front && Front.frDate ? Front.frDate(todayIso, { weekday: true }) : '';
+  const capDate = dateLabel ? dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1) : '';
+  const campusSlug = opts.campus && opts.campus !== 'toutes' && opts.campus !== 'generique' ? opts.campus : null;
+  const campus = campusSlug ? campusOf(campusSlug) : null;
+  /* Loi 96 : établissement francophone → français seulement. */
+  const bilingual = opts.lang === 'bilingue' && uneBilingualAllowed(campusSlug);
+  const period = opts.period || null;
+  const dateEn = (bilingual && Front && Front.enDate) ? Front.enDate(todayIso, { weekday: true }) : '';
+  const uniLabel = campus
+    ? (bilingual && campus.lineEn && campus.lineEn !== campus.line ? `${campus.line}  ·  ${campus.lineEn}` : campus.line)
+    : '';
+  const ctaUrl = `${site}/${(campusSlug && CAMPUS_PAGE_PATHS[campusSlug]) || ''}`;
+  const ctaLabel = site.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const photo = opts.photoImg || null;
+  const credit = (glass && photo && opts.credit) ? posterCredit(opts.credit, opts.license, opts.photoUrl || '') : '';
+  const radioLines = (opts.radioLines || []).slice(0, plan.radio);
+  let sportsLines = (opts.sportsLines || []).slice();
+
+  const ink = c.ink;
+  const mute = glass ? '#3F3A35' : c.mute;
+  const DEEP = '#3B1236';
+  const LILAC = '#E9C8E3';
+
+  /* Fond */
+  if (glass && photo) {
+    coverPhoto(ctx, photo, 0, 0, w, h, opts.focalX ?? 0.5, opts.focalY ?? 0.42);
+    ctx.fillStyle = 'rgba(18, 16, 14, 0.38)';
+    ctx.fillRect(0, 0, w, h);
+  } else if (glass) {
+    ctx.fillStyle = '#2A2420';
+    ctx.fillRect(0, 0, w, h);
+  } else {
+    ctx.fillStyle = c.paper;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  const measure = (font, text) => {
+    ctx.font = font;
+    const m = ctx.measureText(text || 'Hg');
+    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || parseFloat(font) || 12;
+  };
+  const wrapFit = (text, fontFn, maxW, maxSize, minSize, maxLines) => {
+    let size = Math.max(minSize, Math.round(maxSize));
+    let lines = [text || ''];
+    while (true) {
+      ctx.font = fontFn(size);
+      lines = wrapWords(ctx, text || '', maxW);
+      if (lines.length <= maxLines || size <= minSize) break;
+      size -= 1;
+    }
+    if (lines.length > maxLines) {
+      lines = lines.slice(0, maxLines);
+      let last = lines[maxLines - 1] || '';
+      while (last.length > 4 && textW(ctx, `${last}…`) > maxW) last = last.slice(0, -1).trimEnd();
+      lines[maxLines - 1] = /[….]$/.test(last) ? last : `${last}…`;
+      return { size, lines, cut: text };
+    }
+    return { size, lines };
+  };
+  /* Texte entier ou première phrase entière, sinon rien (jamais « … »). */
+  const wholeFit = (text, fontFn, maxW, maxSize, minSize, maxLines) => {
+    const full = String(text || '').trim();
+    if (!full || maxLines < 1) return null;
+    const first = (full.match(/^.+?[.!?…»](?=\s+[A-ZÀ-ÖØ-Þ«])/) || [])[0];
+    for (const t of first && first !== full ? [full, first] : [full]) {
+      const f = wrapFit(t, fontFn, maxW, maxSize, minSize, maxLines);
+      if (!f.cut) return f;
+    }
+    return null;
+  };
+  const drawLines = (fit, fontFn, x, y, color, lead = 1.16, floor = Infinity) => {
+    let yy = y;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    if (fit.cut) cuts.push(fit.cut);
+    fit.lines.forEach((line) => {
+      ctx.font = fontFn(fit.size);
+      if (yy + fit.size > floor) { cuts.push(line); return; }
+      ctx.fillText(line, x, yy);
+      yy += Math.round(fit.size * lead);
+    });
+    return yy;
+  };
+  const sans = (wt) => (s) => `${wt} ${s}px ${wt >= 600 ? '"LR Sans Semi", "LR Sans"' : '"LR Sans"'}`;
+  const serif = (s) => `700 ${s}px "LR Serif"`;
+  /* Verbe de rencontre (« reçoit », « visite », « chez », « vs », « à ») plus pâle que les noms,
+   * comme la bande sports du site (.sports-chip__vs : poids 500, 0,88 em, blanc atténué). */
+  /* Couleur d’établissement (brand-colors.json, module partagé avec La une sociale) ajustée AA sur les fonds donnés ; repli : accent. */
+  const IC = typeof RadarInstitutionColor !== 'undefined' ? RadarInstitutionColor : null;
+  const instColor = (name, bgs, accent) => (IC && opts.brand ? IC.paint(name, opts.brand, bgs, accent) : accent);
+  const BG_LIGHT = glass ? [[255, 252, 247], [199, 197, 193]] : [[244, 240, 230], [255, 255, 255]];
+  const BG_BAND = [[59, 18, 54], [79, 42, 74]];
+  const BG_MAST = [[108, 33, 99], [59, 18, 54], [67, 67, 67]];
+  const BG_OVERLAY = [[20, 8, 20], [72, 62, 72]];
+  /* Texte d’une couleur, avec un passage (nom du média, de la station) dans la couleur de l’établissement. */
+  const fillWithSpan = (text, x, y, base, span, spanColor, align = 'left') => {
+    let i = span && spanColor && spanColor !== base ? text.indexOf(span) : -1;
+    if (i < 0 && span && spanColor && spanColor !== base) {
+      /* Nom du média coupé en fin ou en début de ligne : la partie visible garde la couleur. */
+      const words = String(span).split(/\s+/);
+      for (let k = words.length - 1; k >= 1 && i < 0; k -= 1) {
+        const head = words.slice(0, k).join(' ');
+        const tail = words.slice(words.length - k).join(' ');
+        if (text.trimEnd().endsWith(head)) { span = head; i = text.trimEnd().length - head.length; }
+        else if (text.startsWith(tail)) { span = tail; i = 0; }
+      }
+    }
+    if (i < 0) { ctx.fillStyle = base; ctx.fillText(text, x, y); return; }
+    const parts = [[text.slice(0, i), base], [span, spanColor], [text.slice(i + span.length), base]];
+    const total = ctx.measureText(text).width;
+    const prevAlign = ctx.textAlign;
+    let xx = align === 'right' ? x - total : x;
+    ctx.textAlign = 'left';
+    parts.forEach(([t, col]) => { if (!t) return; ctx.fillStyle = col; ctx.fillText(t, xx, y); xx += ctx.measureText(t).width; });
+    ctx.textAlign = prevAlign;
+  };
+  const metaColor = (art, bgs, accent) => instColor(art && art.institution, bgs, accent);
+  const drawRich = (text, fontFn, size, x, y, color, dim, emojiFont = false, bgs = null) => {
+    const m = /( (?:reçoit|visite|chez|vs|à|hosts|visits|at) )/.exec(text);
+    const parts0 = m ? [[text.slice(0, m.index), false], [m[1], true], [text.slice(m.index + m[1].length), false]] : [[text, false]];
+    /* Parenthèses d’établissement (« (Concordia) ») dans la couleur de l’établissement. */
+    const parts = [];
+    parts0.forEach(([t, isDim]) => {
+      if (isDim || !bgs) { parts.push([t, isDim]); return; }
+      let last = 0;
+      t.replace(/\(([^)]+)\)/g, (all, inner, at) => {
+        if (at > last) parts.push([t.slice(last, at), false]);
+        const col = instColor(inner, bgs, '');
+        parts.push([all, false, col || '']);
+        last = at + all.length;
+        return all;
+      });
+      if (last < t.length) parts.push([t.slice(last), false]);
+    });
+    const tail = emojiFont ? ', "LR Emoji"' : '';
+    ctx.textBaseline = 'alphabetic';
+    const base = y + Math.round(size * 0.93);
+    let xx = x;
+    parts.forEach(([t, isDim, col]) => {
+      if (!t) return;
+      const z = isDim ? Math.round(size * 0.88) : size;
+      ctx.font = isDim ? `500 ${z}px "LR Sans"${tail}` : `${fontFn(z)}${tail}`;
+      ctx.fillStyle = isDim ? dim : (col || color);
+      ctx.fillText(t, xx, base);
+      xx += ctx.measureText(t).width;
+    });
+    ctx.textBaseline = 'top';
+  };
+  const drawRichLines = (fit, fontFn, x, y, color, dim, lead = 1.16, floor = Infinity, bgs = null) => {
+    let yy = y;
+    if (fit.cut) cuts.push(fit.cut);
+    fit.lines.forEach((line) => {
+      if (yy + fit.size > floor) { cuts.push(line); return; }
+      drawRich(line, fontFn, fit.size, x, yy, color, dim, false, bgs);
+      yy += Math.round(fit.size * lead);
+    });
+    return yy;
+  };
+  const fitOne = (text, fontFn, size, maxW) => {
+    ctx.font = fontFn(size);
+    let t = String(text || '');
+    const orig = t;
+    while (t.length > 3 && textW(ctx, t) > maxW) t = `${t.slice(0, -2).trimEnd()}…`;
+    if (t !== orig) cuts.push(orig);
+    return t;
+  };
+  /* Titre qui coule sur toute la largeur puis se resserre à côté d’un QR. */
+  const fitFlow = (text, fontFn, maxSize, minSize, y, fullW, narrowW, narrowFromY, floor, lead = 1.1) => {
+    const words = String(text || '').split(/[^\S\u00A0\u202F]+/).filter(Boolean);
+    let size = Math.max(minSize, Math.round(maxSize));
+    let out = null;
+    while (true) {
+      ctx.font = fontFn(size);
+      const lh = Math.round(size * lead);
+      const lines = [];
+      let yy = y;
+      let i = 0;
+      let overflow = false;
+      while (i < words.length) {
+        if (yy + size > floor) { overflow = true; break; }
+        const maxW = (yy + size > narrowFromY) ? narrowW : fullW;
+        let line = words[i];
+        i += 1;
+        while (i < words.length && textW(ctx, `${line} ${words[i]}`) <= maxW) { line = `${line} ${words[i]}`; i += 1; }
+        lines.push({ text: line, y: yy, maxW });
+        yy += lh;
+      }
+      out = { size, lines, end: yy, overflow };
+      if (!overflow || size <= minSize) break;
+      size -= 1;
+    }
+    if (out.overflow && out.lines.length) {
+      const last = out.lines[out.lines.length - 1];
+      let t = last.text;
+      ctx.font = fontFn(out.size);
+      while (t.length > 4 && textW(ctx, `${t}…`) > last.maxW) t = t.slice(0, -1).trimEnd();
+      last.text = `${t.replace(/[\s,;:]+$/, '')}…`;
+      out.cut = String(text || '');
+    }
+    return out;
+  };
+  const drawFlow = (f, fontFn, x, color) => {
+    if (f.cut) cuts.push(f.cut);
+    ctx.font = fontFn(f.size);
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    f.lines.forEach((l) => ctx.fillText(l.text, x, l.y));
+    return f.end;
+  };
+  const panel = (x, y, pw, ph, fill) => {
+    if (glass) frostedRect(ctx, x, y, pw, ph, px(1.2), fill ? { fill } : undefined);
+  };
+  const rule = (xA, xB, yy, weight = 1) => {
+    if (glass) return;
+    ctx.strokeStyle = c.rule;
+    ctx.lineWidth = Math.max(1, Math.round(u * 0.12 * weight));
+    ctx.beginPath();
+    ctx.moveTo(xA, yy);
+    ctx.lineTo(xB, yy);
+    ctx.stroke();
+  };
+  const vrule = (x, yA, yB) => {
+    if (glass) return;
+    ctx.strokeStyle = c.rule;
+    ctx.lineWidth = Math.max(1, Math.round(u * 0.12));
+    ctx.beginPath();
+    ctx.moveTo(x, yA);
+    ctx.lineTo(x, yB);
+    ctx.stroke();
+  };
+  const label = (text, x, y, color = PURPLE, size = px(1.6)) => {
+    ctx.font = `700 ${size}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'top';
+    ctx.fillText(text.toUpperCase(), x, y);
+    return y + Math.round(size * 1.45);
+  };
+  const paintImage = (img, x, y, iw, ih, fy, source) => {
+    ctx.save();
+    roundedRectPath(ctx, x, y, iw, ih, glass ? px(0.6) : 0);
+    ctx.clip();
+    if (img) coverPhoto(ctx, img, x, y, iw, ih, 0.5, fy ?? 0.5);
+    else {
+      ctx.fillStyle = glass ? 'rgba(90, 84, 76, 0.28)' : c.photoBg;
+      ctx.fillRect(x, y, iw, ih);
+      if (source) {
+        ctx.font = `600 ${px(1.8)}px "LR Sans Semi", "LR Sans"`;
+        ctx.fillStyle = mute;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(source, x + iw / 2, y + ih / 2);
+        ctx.textAlign = 'left';
+      }
+    }
+    ctx.restore();
+  };
+  const creditLine = (text, x, y, maxW) => {
+    if (!text) return 0;
+    const s = Math.max(8, px(0.85));
+    ctx.font = `400 ${s}px "LR Sans"`;
+    ctx.fillStyle = mute;
+    ctx.textBaseline = 'top';
+    /* Crédit entier (attribution) : une ligne, sinon deux, jamais coupé. */
+    const t = String(text).replace(/\s+/g, ' ').trim();
+    let lines = wrapWords(ctx, t, maxW);
+    if (lines.length > 2) {
+      ctx.font = `400 ${Math.max(7, Math.round(s * 0.85))}px "LR Sans"`;
+      lines = wrapWords(ctx, t, maxW);
+    }
+    lines.forEach((l, i) => ctx.fillText(l, x, y + i * Math.round(s * 1.15)));
+    return lines.length * Math.round(s * 1.15) - Math.round(s * 0.15) + px(0.4);
+  };
+  const metaOf = (art) => [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
+  /* Signature « Par Nom · Média » : tous les noms si la place le permet, sinon « et al. », sinon le média seul. */
+  const bylineFor = (art, maxNames = Infinity) => (Front && Front.bylineOf
+    ? Front.bylineOf(art.authors || [], art.source || '', { maxNames })
+    : (art.source || ''));
+  const metaPick = (art, maxW, fontFn, size, lines = 1, withDate = true) => {
+    const names = (art.authors || []).length;
+    const tries = [];
+    [Infinity, 2, 1].forEach((mx) => {
+      if (mx !== Infinity && names <= mx) return;
+      const b = bylineFor(art, mx);
+      if (withDate && art.dateLabel) tries.push(`${b} · ${art.dateLabel}`);
+      tries.push(b);
+    });
+    tries.push(art.source || '');
+    ctx.font = fontFn(size);
+    for (const t of tries) {
+      const wl = wrapWords(ctx, t, maxW);
+      if (wl.length <= lines) return wl;
+    }
+    return [fitOne(tries[tries.length - 1], fontFn, size, maxW)];
+  };
+
+  const x0 = margin;
+  const x1 = w - margin;
+  const contentW = x1 - x0;
+  const gap = px(2.2);
+
+  /* 1. Bandeau Radar plein */
+  const logoS = px(plan.screen ? 8 : 9.5);
+  /* Page étroite : le titre rétrécit pour laisser au moins 26 u au bloc de droite. */
+  let titleS = px(plan.screen ? 6.6 : 7.4);
+  ctx.font = `700 ${titleS}px "LR Serif"`;
+  while (titleS > px(4) && x0 + logoS + px(2) + trackedWidth(ctx, TITLE, titleS) > x1 - px(29)) titleS -= 1;
+  const tagS = px(1.9);
+  const mastTop = 0;
+  /* Bloc de droite (université, période, date) : coupé en lignes, jamais tronqué. */
+  ctx.font = `700 ${titleS}px "LR Serif"`;
+  const titleRight = x0 + logoS + px(2) + trackedWidth(ctx, TITLE, titleS);
+  const maxRight = Math.max(px(20), x1 - titleRight - px(3));
+  const rightLines = [];
+  /* Jamais de coupure dans une date : lignes seulement après une virgule, taille ajustée pour tenir. */
+  const pushNoBreak = (text, wt, size, color) => {
+    if (!text) return;
+    const segs = Front && Front.mastheadSegments ? Front.mastheadSegments(text) : [String(text).replace(/ /g, '\u00A0')];
+    const minS = Math.max(9, Math.round(size * 0.62));
+    const fits = (t, sz) => { ctx.font = sans(wt)(sz); return ctx.measureText(t).width <= maxRight; };
+    const lines = [];
+    segs.forEach((seg) => {
+      const cand = lines.length ? `${lines[lines.length - 1]}\u00A0${seg}` : '';
+      if (cand && fits(cand, Math.round(size * 0.9))) lines[lines.length - 1] = cand;
+      else lines.push(seg);
+    });
+    let sz = Math.round(size);
+    while (sz > minS && !lines.every((l) => fits(l, sz))) sz -= 1;
+    lines.forEach((line) => rightLines.push({ text: line, wt, size: sz, color }));
+  };
+  if (campus) {
+    pushNoBreak(campus.line, 700, px(2.5), '#ffffff');
+    if (bilingual && campus.lineEn && campus.lineEn !== campus.line) pushNoBreak(campus.lineEn, 400, px(1.9), LILAC);
+  }
+  if (period && period.id && !period.live) {
+    /* Période passée : la plage (avec l’année) remplace la date du jour, qui sonnerait faux. */
+    pushNoBreak(period.fr, 700, px(2.1), '#ffffff');
+    if (bilingual && period.en) pushNoBreak(period.en, 400, px(1.75), LILAC);
+  } else {
+    const frDay = period && period.id === 'demain' ? period.fr : capDate;
+    const enDay = period && period.id === 'demain' ? (bilingual ? period.en : '') : dateEn;
+    pushNoBreak(frDay, 700, px(2.1), '#ffffff');
+    if (enDay) pushNoBreak(enDay, 400, px(1.7), LILAC);
+    if (opts.mastNote) pushNoBreak(opts.mastNote, 400, px(1.6), LILAC);
+    if (bilingual && opts.mastNoteEn) pushNoBreak(opts.mastNoteEn, 400, px(1.45), LILAC);
+  }
+  const rightH = rightLines.reduce((sum, l) => sum + Math.round(l.size * 1.3), 0);
+  const rowTop = px(2.6);
+  const logoRowH = Math.max(logoS, rightH + px(0.4));
+  /* Encart du haut à droite (à côté de l’accroche) : grille radio, match, chiffre clé — données réelles seulement. */
+  const tagRowsH = Math.round(tagS * 1.35) * (bilingual ? 2 : 1);
+  ctx.font = `400 ${tagS}px "LR Sans"`;
+  const tagW = Math.max(ctx.measureText(SLOGAN).width, bilingual ? ctx.measureText(SLOGAN_EN).width : 0);
+  const extraW = x1 - (x0 + tagW + px(3));
+  let extra = opts.mastExtras && opts.mastExtras.lines && opts.mastExtras.lines.length && extraW >= px(16) ? { ...opts.mastExtras, lines: opts.mastExtras.lines.slice() } : null;
+  const exHeadS = px(1.35);
+  const exLineS = px(1.65);
+  /* Aucune coupure dans l’encart : une ligne qui ne tient pas même à 70 % est remplacée par la suivante ;
+   * un titre trop long se réduit au nom de la station ; un encart « strict » (match) perd tout plutôt qu’une moitié. */
+  if (extra) {
+    ctx.font = `600 ${Math.round(exLineS * 0.7)}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    const fits = (l) => ctx.measureText(l).width <= extraW;
+    const kept = extra.lines.filter(fits);
+    extra.lines = extra.strict && kept.length !== extra.lines.length ? [] : kept;
+    /* Combo : une émission + le chiffre (s’il tient), toujours dans cet ordre. */
+    if (extra.tail !== undefined) extra.lines = [extra.lines[0], extra.tail && fits(extra.tail) ? extra.tail : null].filter(Boolean);
+    ctx.font = `600 ${exHeadS}px "LR Sans Semi", "LR Sans"`;
+    if (ctx.measureText(String(extra.title || '').toUpperCase()).width > extraW) {
+      const short = String(extra.colorText || '');
+      if (short && ctx.measureText(short.toUpperCase()).width <= extraW) extra.title = short;
+      else extra.lines = [];
+    }
+    if (!extra.lines.length) extra = null;
+  }
+  const extraH = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
+  /* Sous l’accroche, à côté de l’encart : matchs à venir de l’établissement (dates absolues),
+   * retirés de la bande sports pour éviter tout doublon. */
+  const gameS = Math.max(10, Math.round(tagS * 0.8));
+  const gameLineH = Math.round(gameS * 1.3);
+  /* 2 à 4 matchs selon le format : l’en-tête grandit un peu, l’encart radio s’aligne dessus. */
+  const gameTarget = { letter: 3, legal: 3, tabloid: 4, 'ecran-paysage': 2, 'ecran-portrait': 3 }[fmtSpec.id] || 2;
+  /* Émissions de l’encart radio : autant que la hauteur en tient (3 en Lettre, 4 en Tabloïd). */
+  const extraTarget = { letter: 3, legal: 3, tabloid: 4, 'ecran-paysage': 2, 'ecran-portrait': 3 }[fmtSpec.id] || 2;
+  const mastGames = [];
+  {
+    const up = (opts.mastGames || []).filter((g) => g && (g.upcoming || opts.mastGamesManual));
+    const bandKeys = new Set(sportsLines.filter((x) => !x.upcoming).map((x) => `${x.line}|${x.meta}`));
+    const pool = up.length ? up : (opts.mastGames || []).filter((g) => g && !g.upcoming && !bandKeys.has(`${g.line}|${g.meta}`));
+    pool.slice(0, gameTarget).forEach((g) => mastGames.push(g));
+  }
+  let leftH = tagRowsH + (mastGames.length ? px(0.3) + mastGames.length * gameLineH : 0);
+  /* L’encart de droite garde autant de lignes que la colonne de gauche en occupe (ni vide ni débord). */
+  if (extra) {
+    const per = Math.round(exLineS * 1.3);
+    const head = Math.round(exHeadS * 1.35);
+    extra.lines = extra.lines.slice(0, extraTarget);
+    while (extra.lines.length > 1 && head + extra.lines.length * per > Math.max(leftH, head + per) + Math.round(per * 0.6)) extra.lines = extra.lines.slice(0, -1);
+  }
+  let extrasW = 0;
+  if (extra) {
+    ctx.font = `600 ${exLineS}px "LR Sans Semi", "LR Sans"`;
+    extrasW = Math.min(extraW, Math.max(...extra.lines.map((l) => ctx.measureText(l).width)));
+  }
+  const gameW = x1 - x0 - (extra ? extrasW + px(3) : 0);
+  /* Matchs sous l’accroche : celui qui ne tient pas entier (même à 72 %) est retiré, jamais coupé. */
+  {
+    ctx.font = `600 ${Math.round(gameS * 0.72)}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    for (let i = mastGames.length - 1; i >= 0; i -= 1) {
+      const g = mastGames[i];
+      const text = `${g.emoji ? `${g.emoji} ` : ''}${g.gender ? `${g.gender} ` : ''}${g.meta} · ${g.line}`;
+      if (ctx.measureText(text).width > gameW) mastGames.splice(i, 1);
+    }
+    leftH = tagRowsH + (mastGames.length ? px(0.3) + mastGames.length * gameLineH : 0);
+  }
+  const extraHFit = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
+  if (mastGames.length) {
+    const used = new Set(mastGames.map((g) => `${g.line}|${g.meta}`));
+    sportsLines = sportsLines.filter((x) => !used.has(`${x.line}|${x.meta}`));
+  }
+  sportsLines = sportsLines.slice(0, plan.sports);
+  const mastH = rowTop + logoRowH + px(1.2) + Math.max(leftH, extraHFit) + px(2);
+  const mastMode = glass && photo ? (opts.mastGlass || 'givre') : 'opaque';
+  if (mastMode === 'opaque') {
+    ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
+    ctx.fillRect(0, mastTop, w, mastH);
+  } else {
+    /* La photo de fond transparaît dans l’en-tête : verre givré (flou) ou voile violet simple.
+     * L’opacité est calculée sur la photo réelle pour que le plus petit texte lilas reste AA (≥ 4,5:1). */
+    if (mastMode === 'givre') {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, mastTop, w, mastH);
+      ctx.clip();
+      ctx.filter = `blur(${Math.max(2, px(1.2))}px)`;
+      ctx.drawImage(ctx.canvas, 0, mastTop, w, mastH, 0, mastTop, w, mastH);
+      ctx.filter = 'none';
+      ctx.restore();
+    }
+    /* Le texte le plus pâle de l’en-tête (verbe atténué des matchs) fixe l’opacité minimale. */
+    const a = mastVeilAlpha(ctx, 0, mastTop, w, mastH, [108, 33, 99], [197, 171, 196], 4.5);
+    ctx.fillStyle = `rgba(108, 33, 99, ${a.toFixed(3)})`;
+    ctx.fillRect(0, mastTop, w, mastH);
+  }
+  ctx.fillStyle = DEEP;
+  ctx.fillRect(0, mastTop + mastH - px(0.6), w, px(0.6));
+  let my = rowTop;
+  if (assets.logo) {
+    ctx.save();
+    roundedRectPath(ctx, x0, my, logoS, logoS, px(1.4));
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.restore();
+    const inset = px(0.7);
+    ctx.drawImage(assets.logo, x0 + inset, my + inset, logoS - inset * 2, logoS - inset * 2);
+  }
+  fillTracked(ctx, TITLE, my + Math.round((logoS - titleS) / 2), titleS, '#ffffff', x0 + logoS + px(2));
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'top';
+  /* Bloc de droite centré sur la rangée du logo : pas de vide sous la date. */
+  let ry = my + Math.max(px(0.4), Math.round((logoRowH - rightH) / 2));
+  rightLines.forEach((l) => {
+    ctx.font = sans(l.wt)(l.size);
+    ctx.fillStyle = l.color;
+    ctx.fillText(l.text, x1, ry);
+    ry += Math.round(l.size * 1.3);
+  });
+  ctx.textAlign = 'left';
+  my += logoRowH + px(1.2);
+  if (extra) {
+    let ey = my;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.font = `600 ${exHeadS}px "LR Sans Semi", "LR Sans"`;
+    {
+      /* Nom de la station dans la couleur de son établissement (AA sur l’en-tête). */
+      const head = fitOne(String(extra.title || '').toUpperCase(), sans(600), exHeadS, extraW);
+      const span = extra.colorText ? String(extra.colorText).toUpperCase() : '';
+      fillWithSpan(head, x1, ey, LILAC, span, extra.colorInst ? instColor(extra.colorInst, BG_MAST, LILAC) : '', 'right');
+    }
+    ey += Math.round(exHeadS * 1.35);
+    /* Taille commune à toutes les lignes (t984u) : la plus longue fixe la taille (au plus −30 %),
+     * puis troncature propre « … » seulement si elle ne tient toujours pas. Même style partout. */
+    const emojiFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    let exZ = exLineS;
+    ctx.font = emojiFont(exZ);
+    const widest = () => Math.max(...extra.lines.map((l) => ctx.measureText(l).width));
+    while (exZ > Math.round(exLineS * 0.7) && widest() > extraW) { exZ -= 1; ctx.font = emojiFont(exZ); }
+    extra.lines.forEach((line) => {
+      ctx.font = emojiFont(exZ);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(fitOne(line, emojiFont, exZ, extraW), x1, ey);
+      ey += Math.round(exLineS * 1.3);
+    });
+    ctx.textAlign = 'left';
+  }
+  ctx.font = `400 ${tagS}px "LR Sans"`;
+  ctx.fillStyle = '#ffffff';
+  ctx.textBaseline = 'top';
+  ctx.fillText(fitOne(SLOGAN, sans(400), tagS, contentW), x0, my);
+  my += Math.round(tagS * 1.35);
+  if (bilingual) {
+    ctx.fillStyle = LILAC;
+    ctx.fillText(fitOne(SLOGAN_EN, sans(400), tagS, contentW), x0, my);
+    my += Math.round(tagS * 1.35);
+  }
+  if (mastGames.length) {
+    let gy = my + px(0.3);
+    const gameFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    mastGames.forEach((g) => {
+      const text = `${g.emoji ? `${g.emoji} ` : ''}${g.gender ? `${g.gender} ` : ''}${g.meta} · ${g.line}`;
+      let z = gameS;
+      ctx.font = gameFont(z);
+      while (z > Math.round(gameS * 0.72) && ctx.measureText(text).width > gameW) { z -= 1; ctx.font = gameFont(z); }
+      /* Sur le violet de l’en-tête, 0,55 tomberait à 3,9:1 : 0,65 (4,9:1, AA). */
+      drawRich(fitOne(text, gameFont, z, gameW), (q) => `600 ${q}px "LR Sans Semi", "LR Sans"`, z, x0, gy, '#ffffff', mastDimColor, true, BG_MAST);
+      gy += gameLineH;
+    });
+  }
+
+  /* 2. Pied : mention d’indépendance + ligne des langues */
+  const legalSize = Math.max(9, px(1.15));
+  const fit = Math.min(w / (11 * REF_DPI), h / (17 * REF_DPI));
+  const fLang = Math.min(26 * fit, Math.round(62 * fit) * 0.48);
+  const iconS = Math.min(36 * fit, Math.round(62 * fit) * 0.64);
+  ctx.font = `400 ${legalSize}px "LR Sans"`;
+  const legalLines = [
+    ...wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, contentW),
+    ...(bilingual ? wrapWords(ctx, INDEP_EN, contentW) : []),
+  ];
+  const legalLineH = Math.round(legalSize * 1.3);
+  /* Nom complet du Radar (signature du pied du site), centré au-dessus de la mention d’indépendance. */
+  const nameSize = Math.max(10, px(1.45));
+  const nameLineH = Math.round(nameSize * 1.35);
+  const langsMetrics = showLangs
+    ? measureLangsFooter(ctx, { maxW: contentW, size: fLang, iconS, lineGap: 4, iconGap: 6 })
+    : { height: 0, lines: [] };
+  const creditS = credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
+  const footPad = px(0.9);
+  const footH = footPad + nameLineH + legalLines.length * legalLineH + (langsMetrics.height ? px(0.6) + langsMetrics.height : 0) + creditS + footPad;
+  /* Marge sûre d’impression : le pied reste à au moins 0,25 po du bord bas (zone non imprimable). */
+  const safeIn = plan.screen ? px(1.2) : Math.max(px(1.2), Math.round((w / fmtSpec.wIn) * 0.25));
+  const footY = h - safeIn - footH;
+
+  /* 3. Répartition verticale */
+  const lead = articles[0] || null;
+  const rest = articles.slice(1);
+  const sideArts = rest.slice(0, plan.side);
+  const gridArts = rest.slice(plan.side, plan.side + plan.grid);
+  const briefs = plan.screen ? [] : [...rest.slice(plan.side + plan.grid), ...(opts.briefs || [])].filter(Boolean);
+  const hasBand = sportsLines.length > 0 || radioLines.length > 0;
+  const top = mastTop + mastH + px(2.4);
+  const bottom = footY - px(1.4);
+  const avail = bottom - top;
+  const want = {
+    lead: lead ? plan.want.lead : 0,
+    grid: gridArts.length ? plan.want.grid : 0,
+    band: hasBand ? plan.want.band : 0,
+    briefs: briefs.length ? plan.want.briefs : 0,
+  };
+  const blocks = Object.keys(want).filter((k) => want[k]);
+  const gapsH = Math.max(0, blocks.length - 1) * px(2.4);
+  const totalWant = blocks.reduce((s, k) => s + want[k], 0) || 1;
+  /* Les blocs absents rendent leur place : priorité à la une et aux brèves. */
+  const scale = (avail - gapsH) / (totalWant * u);
+  const bh = {};
+  blocks.forEach((k) => { bh[k] = Math.round(want[k] * u * (k === 'band' ? Math.min(scale, 1.15) : scale)); });
+  const spare = (avail - gapsH) - blocks.reduce((s, k) => s + bh[k], 0);
+  if (spare > 0 && bh.lead) bh.lead += spare;
+  else if (spare > 0 && blocks.length && lead) bh[blocks[0]] += spare;
+  /* La bande garde au moins une rangée lisible ; la une cède la différence. */
+  if (bh.band && bh.band < px(11) && bh.lead) {
+    const d = px(11) - bh.band;
+    bh.band += d;
+    bh.lead -= d;
+  }
+
+  let cy = top;
+  if (!lead) {
+    panel(x0, cy, contentW, px(8));
+    const none = wrapFit('Aucun article sur cette période. Choisissez une période plus longue.', sans(400), contentW - px(3), px(2.2), Math.max(9, px(1.3)), 2);
+    drawLines(none, sans(400), x0 + px(1.5), cy + (none.lines.length > 1 ? px(1.4) : px(2.5)), glass ? ink : mute, 1.25);
+    /* Sans article : la bande garde sa hauteur normale sous le message, sans s’étirer. */
+    cy += px(8) + px(2.4);
+  }
+
+  /* 4. La une + colonne d’appel (grand QR) */
+  if (lead) {
+    const rowH = bh.lead;
+    const showCta = withQr || sideArts.length > 0;
+    const rightW = showCta ? Math.round(contentW * (plan.rightFrac || 0.32)) : 0;
+    const leadW = showCta ? contentW - rightW - gap : contentW;
+    const p = glass ? px(1.4) : 0;
+    panel(x0, cy, leadW, rowH);
+    const lx = x0 + p;
+    const lw = leadW - p * 2;
+    let ly = cy + p;
+    const floor = cy + rowH - p;
+    const img = lead.key ? images.get(lead.key) : null;
+    const capS = px(1.3);
+    const creditH = lead.credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
+    /* Le titre cède d’abord (taille, lignes), puis le QR, pour garder une vraie photo. */
+    const minImg = Math.round((floor - ly) * (plan.screen ? 0.42 : 0.3));
+    let leadQr = articleQr && lead.pageUrl ? px(12) : 0;
+    let tProbe = null;
+    let titleH = 0;
+    for (let ts = 5.6; ts >= 3; ts -= 0.4) {
+      tProbe = wrapFit(lead.title, serif, lw, px(ts), px(3), 3);
+      titleH = tProbe.lines.length * Math.round(tProbe.size * 1.08);
+      const rest = floor - ly - px(1.2) - creditH - titleH - px(1) - (leadQr ? leadQr + px(2.2) : px(6));
+      if (rest >= minImg) break;
+    }
+    const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
+    const leadMode = opts.leadPhoto || 'surimpression';
+    const autoFy = img ? (lead.focalY ?? photoFocalY(img)) : (lead.focalY ?? 0.5);
+    if (leadMode === 'surimpression' && img) {
+      /* Option C (focus-group) : la photo occupe tout le bloc de la une, à son ratio presque natif ;
+       * titre, signature et chapeau posés sur un dégradé sombre en bas (contraste AA), QR sur tuile blanche. */
+      const phH = floor - ly;
+      ctx.save();
+      roundedRectPath(ctx, lx, ly, lw, phH, glass ? px(0.6) : 0);
+      ctx.clip();
+      /* Le sujet est gardé dans les 55 % du haut, au-dessus du texte. */
+      /* Image très verticale (affiche, illustration en portrait) : un recadrage plein bloc n’en garderait qu’une
+       * bande (t985u, « Les jeunes cyniques ? ») ; elle est alors montrée ENTIÈRE à droite, sur un fond flou
+       * de la même image, et le texte prend la colonne de gauche. */
+      const isw = img.naturalWidth || img.width || 1;
+      const ish = img.naturalHeight || img.height || 1;
+      const tall = isw / ish < (lw / phH) * 0.62;
+      let colW = lw;
+      if (tall) {
+        ctx.filter = `blur(${Math.max(4, px(2.4))}px)`;
+        coverPhoto(ctx, img, lx - px(3), ly - px(3), lw + px(6), phH + px(6), 0.5, 0.5);
+        ctx.filter = 'none';
+        ctx.fillStyle = 'rgba(20, 8, 20, 0.55)';
+        ctx.fillRect(lx, ly, lw, phH);
+        const imgW = Math.min(Math.round(phH * isw / ish), Math.round(lw * 0.5));
+        const imgH = Math.round(imgW * ish / isw);
+        ctx.drawImage(img, lx + lw - imgW, ly + Math.round((phH - imgH) / 2), imgW, imgH);
+        colW = lw - imgW;
+      } else {
+        coverPhoto(ctx, img, lx, ly, lw, phH, 0.5, Math.max(0.2, autoFy - 0.08));
+      }
+      ctx.restore();
+      /* Le texte reste sous la moitié haute : visages et scène dégagés (verdict focus-group). */
+      const textTopEst = tall ? 0.12 : 0.42;
+      const kick = bilingual ? 'À la une  ·  Front page' : 'À la une';
+      const kS = px(1.7);
+      ctx.font = `700 ${kS}px "LR Sans Semi", "LR Sans"`;
+      const kW = textW(ctx, kick.toUpperCase()) + px(2.2);
+      ctx.fillStyle = PURPLE;
+      ctx.fillRect(lx, ly, kW, Math.round(kS * 2));
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(kick.toUpperCase(), lx + px(1.1), ly + Math.round(kS));
+      ctx.textBaseline = 'top';
+      /* Crédit photo en haut à droite, sur pastille sombre. */
+      if (lead.credit) {
+        const cs = Math.max(8, px(0.85));
+        ctx.font = `400 ${cs}px "LR Sans"`;
+        const ct = fitOne(lead.credit, sans(400), cs, lw * 0.6);
+        const cw = textW(ctx, ct) + px(1.2);
+        ctx.fillStyle = 'rgba(20, 8, 20, 0.7)';
+        ctx.fillRect(lx + lw - cw, ly, cw, cs + px(0.6));
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(ct, lx + lw - cw + px(0.6), ly + px(0.3));
+      }
+      const pad = px(1.6);
+      const qrS = leadQr ? Math.min(leadQr, px(11)) : 0;
+      const tw = colW - pad * 2;
+      const textWq = tw - (qrS && !tall ? qrS + px(1.6) + px(1.8) : 0);
+      /* Pile de texte calée en bas : chapeau, signature, titre (de bas en haut). */
+      const metaS = px(1.8);
+      const metaLines = metaPick(lead, textWq, sans(600), metaS, 2, true);
+      const metaH = metaLines.length * Math.round(metaS * 1.3);
+      const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
+      const hS = px(1.95);
+      const hLineH = Math.round(hS * 1.25);
+      const textTop = tall ? ly + px(4.6) : ly + phH * (textTopEst + 0.08);
+      /* Image entière à droite : le QR passe sous le texte, dans la colonne de gauche (l’image reste dégagée) ;
+       * si la colonne ne peut tout tenir, il revient sur l’image, en bas à droite. */
+      let qrBlockH = tall && qrS ? qrS + px(1.6) + px(1.8) + px(1.4) : 0;
+      let tfit = null;
+      let tH = 0;
+      const fitsCol = () => tH + px(0.8) + metaH + qrBlockH <= floor - pad - textTop;
+      for (let pass = 0; pass < 2; pass += 1) {
+        for (let ts = 5.2; ts >= 2.8; ts -= 0.4) {
+          tfit = wrapFit(lead.title, serif, textWq, px(ts), px(2.8), 3);
+          tH = tfit.lines.length * Math.round(tfit.size * 1.08);
+          if (tall ? fitsCol() : tH <= phH * 0.3) break;
+        }
+        if (!tall || fitsCol() || !qrBlockH) break;
+        qrBlockH = 0;
+      }
+      const qrInCol = tall && qrBlockH > 0;
+      const roomHook = floor - pad - qrBlockH - (textTop + tH + px(0.8) + metaH + px(0.6));
+      const hookLines = hook ? Math.max(0, Math.min(4, Math.floor(roomHook / hLineH))) : 0;
+      /* Chapeau entier ou rien : jamais de points de suspension sur la une. */
+      let hFit = hookLines ? wrapFit(hook, sans(400), textWq, hS, Math.max(9, px(1.6)), hookLines) : null;
+      if (hFit && /…$/.test(hFit.lines[hFit.lines.length - 1] || '')) hFit = null;
+      const hookH = hFit ? hFit.lines.length * hLineH : 0;
+      const stackH = tH + px(0.8) + metaH + (hookH ? px(0.6) + hookH : 0);
+      let ty = Math.max(textTop, floor - pad - qrBlockH - stackH);
+      /* Dégradé sombre calé sur le texte : déjà 0,78 au haut du titre (blanc AA sur tout pixel). */
+      {
+        const g0 = Math.max(ly, ty - px(7));
+        const grad = ctx.createLinearGradient(0, g0, 0, floor);
+        const kTop = Math.min(0.95, (ty - g0) / Math.max(1, floor - g0));
+        grad.addColorStop(0, 'rgba(20, 8, 20, 0)');
+        grad.addColorStop(kTop, 'rgba(20, 8, 20, 0.78)');
+        grad.addColorStop(1, 'rgba(20, 8, 20, 0.9)');
+        ctx.save();
+        roundedRectPath(ctx, lx, ly, lw, phH, glass ? px(0.6) : 0);
+        ctx.clip();
+        ctx.fillStyle = grad;
+        ctx.fillRect(lx, g0, colW, floor - g0);
+        ctx.restore();
+      }
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.55)';
+      ctx.shadowBlur = px(0.6);
+      ty = drawLines(tfit, serif, lx + pad, ty, '#ffffff', 1.08, floor);
+      ty += px(0.8);
+      ctx.font = `600 ${metaS}px "LR Sans Semi", "LR Sans"`;
+      metaLines.forEach((line, i) => fillWithSpan(line, lx + pad, ty + i * Math.round(metaS * 1.3), '#F1D9EE', lead.source, metaColor(lead, BG_OVERLAY, '#F1D9EE')));
+      ty += metaH;
+      if (hFit) drawLines(hFit, sans(400), lx + pad, ty + px(0.6), '#ffffff', 1.25, floor);
+      ctx.restore();
+      if (qrS) {
+        /* Tuile blanche (zone calme) pour que le QR se lise sur la photo. */
+        const tile = qrS + px(1.6);
+        /* Image verticale entière à droite : QR en bas de la colonne de texte ; sinon en bas à droite. */
+        const qx = qrInCol ? lx + pad : lx + lw - pad - tile;
+        const qy = floor - pad - tile - px(1.8);
+        ctx.fillStyle = '#ffffff';
+        roundedRectPath(ctx, qx, qy, tile, tile + px(1.8), px(0.5));
+        ctx.fill();
+        drawQrCode(ctx, qx + px(0.8), qy + px(0.8), qrS, lead.pageUrl);
+        ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
+        ctx.fillStyle = mute;
+        ctx.textAlign = 'center';
+        ctx.fillText(bilingual ? 'Lire · Read' : 'Lire l’article', qx + tile / 2, qy + qrS + px(1.1));
+        ctx.textAlign = 'left';
+      }
+    } else {
+    const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
+    let imgH = Math.min(Math.round(lw / 1.55), floor - ly - px(1.2) - creditH - titleH - px(1) - qrRowH);
+    if (leadMode === 'ratio') {
+      /* Option A (focus-group) : ratio plancher 2:1 ; le titre et le chapeau cèdent d’abord. */
+      imgH = Math.max(imgH, Math.min(Math.round(lw / 2), floor - ly - px(1.2) - creditH - Math.round(px(3) * 1.08) * 2 - px(1) - qrRowH));
+    }
+    if (imgH < minImg && leadQr) {
+      const give = Math.min(leadQr - px(9), minImg - imgH);
+      leadQr -= Math.max(0, give);
+      imgH += Math.max(0, give);
+    }
+    imgH = Math.max(px(10), imgH);
+    paintImage(img, lx, ly, lw, imgH, autoFy, lead.source);
+    /* Étiquette À la une posée sur la photo */
+    const kick = bilingual ? 'À la une  ·  Front page' : 'À la une';
+    const kS = px(1.7);
+    ctx.font = `700 ${kS}px "LR Sans Semi", "LR Sans"`;
+    const kW = textW(ctx, kick.toUpperCase()) + px(2.2);
+    ctx.fillStyle = PURPLE;
+    ctx.fillRect(lx, ly, kW, Math.round(kS * 2));
+    ctx.fillStyle = '#ffffff';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(kick.toUpperCase(), lx + px(1.1), ly + Math.round(kS));
+    ctx.textBaseline = 'top';
+    ly += imgH + px(0.4);
+    if (lead.credit) ly += creditLine(lead.credit, lx, ly, lw);
+    ly += px(0.8);
+    ly = drawLines(tProbe, serif, lx, ly, ink, 1.08, floor);
+    ly += px(0.8);
+    const textW2 = lw - (leadQr ? leadQr + px(2.4) : 0);
+    const metaLines = metaPick(lead, textW2, sans(600), px(1.9), 2, true);
+    ctx.font = `600 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
+    metaLines.forEach((line, i) => fillWithSpan(line, lx, ly + i * px(2.4), PURPLE, lead.source, metaColor(lead, BG_LIGHT, PURPLE)));
+    const meta = metaLines.length > 0;
+    const hookY = ly + (meta ? px(0.6) + metaLines.length * px(2.4) : 0);
+    const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
+    if (hook && floor - hookY > px(2.4)) {
+      const lines = Math.max(1, Math.min(5, Math.floor((floor - hookY) / Math.round(px(2.1) * 1.25))));
+      const hFit = wholeFit(hook, sans(400), textW2, px(2.1), Math.max(9, px(1.6)), lines);
+      if (hFit) drawLines(hFit, sans(400), lx, hookY, ink, 1.25, floor);
+    }
+    if (leadQr) {
+      const qx = lx + lw - leadQr;
+      const qy = ly; /* sous le titre, jamais par-dessus */
+      drawQrCode(ctx, qx, qy, leadQr, lead.pageUrl);
+      ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = mute;
+      ctx.textAlign = 'center';
+      ctx.fillText(bilingual ? 'Lire · Read' : 'Lire l’article', qx + leadQr / 2, qy + leadQr + px(0.4));
+      ctx.textAlign = 'left';
+    }
+    }
+    if (showCta) {
+      const rx = x0 + leadW + gap;
+      vrule(rx - Math.round(gap / 2), cy, cy + rowH);
+      let ry2 = cy;
+      if (withQr) {
+        /* Carte d’appel : un seul gros QR, en haut (le bas d’un babillard est souvent masqué). */
+        const cardP = px(1.6);
+        const head = bilingual ? 'Scanne · Scan' : 'Scanne-moi';
+        const tagKey = UNE_TAGLINES[opts.tagline] && opts.tagline !== 'auto' ? opts.tagline : (campus ? 'campus' : 'tout');
+        const tag = UNE_TAGLINES[tagKey];
+        const sub2 = 'Journaux · radios · sports';
+        const headS = px(3.4);
+        const innerW = rightW - cardP * 2;
+        const wrapW = plan.cardRow ? Math.round(innerW * 0.5) - px(1.6) : innerW;
+        const subFr = wrapFit(tag.fr, sans(600), wrapW, px(2), Math.max(9, px(1.4)), 2);
+        const subEn = bilingual && tag.en ? wrapFit(tag.en, sans(400), wrapW, px(1.7), Math.max(9, px(1.3)), 2) : null;
+        const subH = subFr.lines.length * Math.round(subFr.size * 1.25) + (subEn ? subEn.lines.length * Math.round(subEn.size * 1.25) : 0);
+        const labelH = px(2.6) + px(2.4);
+        const textH = Math.round(headS * 1.25) + subH + labelH;
+        let qrS;
+        let cardH;
+        let textX;
+        let textWd;
+        if (plan.cardRow) {
+          /* Écran paysage : QR à droite, texte centré à gauche. */
+          qrS = Math.max(px(12), Math.min(Math.round(innerW * 0.5), px(13), rowH - cardP * 2 - px(10)));
+          cardH = Math.max(textH, qrS) + cardP * 2;
+          textX = rx + cardP;
+          textWd = innerW - qrS - px(1.6);
+        } else {
+          const fixedH = cardP + Math.round(headS * 1.25) + subH + px(0.6) + px(3.2) + px(2.4) + cardP;
+          /* Le QR ne déborde jamais de la rangée : il rétrécit d’abord (plancher 1,4 po). */
+          qrS = Math.max(px(14), Math.min(innerW, px(glass ? 21 : 22), rowH - fixedH));
+          cardH = fixedH + qrS;
+          textX = rx + cardP;
+          textWd = innerW;
+        }
+        ctx.fillStyle = glass ? 'rgba(59, 18, 54, 0.92)' : DEEP;
+        roundedRectPath(ctx, rx, ry2, rightW, cardH, px(1.2));
+        ctx.fill();
+        const midX = textX + textWd / 2;
+        let cyy = plan.cardRow ? ry2 + Math.round((cardH - textH) / 2) : ry2 + cardP;
+        let hS = headS;
+        ctx.font = sans(700)(hS);
+        while (hS > px(1.8) && textW(ctx, head) > textWd) { hS -= 1; ctx.font = sans(700)(hS); }
+        ctx.fillStyle = '#ffffff';
+        ctx.textBaseline = 'top';
+        ctx.textAlign = 'center';
+        ctx.fillText(head, midX, cyy + Math.round((headS - hS) / 2));
+        cyy += Math.round(headS * 1.25);
+        const centerLines = (f, fontFn, color) => {
+          ctx.font = fontFn(f.size);
+          ctx.fillStyle = color;
+          f.lines.forEach((line) => { ctx.fillText(line, midX, cyy); cyy += Math.round(f.size * 1.25); });
+        };
+        centerLines(subFr, sans(600), LILAC);
+        if (subEn) centerLines(subEn, sans(400), '#F3E3F0');
+        ctx.textAlign = 'left';
+        let qx;
+        let qy;
+        if (plan.cardRow) {
+          qx = rx + rightW - cardP - qrS;
+          qy = ry2 + Math.round((cardH - qrS) / 2);
+          cyy += px(0.4);
+        } else {
+          cyy += px(0.6);
+          qx = rx + Math.round((rightW - qrS) / 2);
+          qy = cyy;
+          cyy += qrS + px(1.2);
+        }
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(qx - px(0.6), qy - px(0.6), qrS + px(1.2), qrS + px(1.2));
+        drawQrCode(ctx, qx, qy, qrS, ctaUrl);
+        /* Marque officielle : LE-RADAR.ca en Source Serif Display, comme le bandeau du site. */
+        /* Icône officielle (assets/icon.svg, comme le bandeau) à gauche du mot-marque, centrée sur sa hauteur. */
+        let brandS = px(2.1);
+        const iconFor = (z) => (assets.logo ? Math.round(z * 1.25) : 0);
+        const iconGap = (z) => (assets.logo ? Math.round(z * 0.35) : 0);
+        while (brandS > px(1.2) && iconFor(brandS) + iconGap(brandS) + trackedWidth(ctx, TITLE, brandS) > textWd) brandS -= 1;
+        const bIcon = iconFor(brandS);
+        const bRowW = bIcon + iconGap(brandS) + trackedWidth(ctx, TITLE, brandS);
+        const bx0 = Math.round(midX - bRowW / 2);
+        if (assets.logo) {
+          const iy = cyy - px(0.2) + Math.round((brandS * 1.05 - bIcon) / 2);
+          ctx.save();
+          roundedRectPath(ctx, bx0, iy, bIcon, bIcon, Math.round(bIcon * 0.18));
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+          ctx.restore();
+          const ins = Math.max(1, Math.round(bIcon * 0.08));
+          ctx.drawImage(assets.logo, bx0 + ins, iy + ins, bIcon - ins * 2, bIcon - ins * 2);
+        }
+        fillTracked(ctx, TITLE, cyy - px(0.2), brandS, '#ffffff', bx0 + bIcon + iconGap(brandS));
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        cyy += Math.round(brandS * 1.1) + px(0.2);
+        ctx.font = `400 ${px(1.5)}px "LR Sans"`;
+        ctx.fillStyle = LILAC;
+        ctx.fillText(fitOne(sub2, sans(400), px(1.5), textWd), midX, cyy);
+        ctx.textAlign = 'left';
+        ry2 += cardH + px(1.8);
+      }
+      if (sideArts.length) {
+        const sideH = cy + rowH - ry2;
+        if (sideH > px(6)) {
+          const sp = glass ? px(1.2) : 0;
+          const sy = ry2 + sp + Math.round(px(1.6) * 1.45); /* sous l’étiquette « Aussi à lire », dessinée après le choix */
+          /* Pas de titre tronqué à une ligne : s’il manque de place, le second passe en bref. */
+          const needPer = px(plan.screen ? 5.4 : 6.6);
+          let shown = sideArts;
+          const fitN = Math.max(1, Math.floor((ry2 + sideH - sp - sy) / needPer));
+          if (sideArts.length > fitN) {
+            shown = sideArts.slice(0, fitN);
+            if (!plan.screen) briefs.unshift(...sideArts.slice(fitN));
+          }
+          /* Titre entier ou article déplacé en bref : jamais de « … » ni de ligne perdue (règle sans troncature).
+           * sideFit rend la mise en forme qui tient en entier dans la hauteur, ou null. */
+          const sideFit = (art, per, minS = Math.max(10, px(1.45))) => {
+            const room = per - px(2.1) - px(0.7) - px(0.4);
+            const cap = Math.min(plan.screen ? px(2.4) : px(2.5), Math.floor(room / 1.1));
+            for (let sz = cap; sz >= minS; sz -= 1) {
+              const lh = Math.round(sz * 1.1);
+              const n = Math.floor((room - sz) / lh) + 1;
+              if (n < 1) continue;
+              ctx.font = serif(sz);
+              const lines = wrapWords(ctx, art.title || '', rightW - sp * 2);
+              if (lines.length <= n) return { size: sz, lines };
+            }
+            return null;
+          };
+          const avail = ry2 + sideH - sp - sy;
+          for (let k = 0; k < 4 && shown.length; k += 1) {
+            const perTry = Math.floor(avail / shown.length);
+            const bad = shown.filter((a) => !sideFit(a, perTry));
+            if (!bad.length) break;
+            let keep = shown.filter((a) => !bad.includes(a));
+            if (!keep.length) {
+              /* Aucun ne tient à plusieurs : le premier qui tient seul, sur toute la hauteur. */
+              const alone = shown.find((a) => sideFit(a, avail)) || shown.find((a) => sideFit(a, avail, Math.max(9, px(1.2))));
+              keep = alone ? [alone] : [shown[0]];
+            }
+            if (!plan.screen) briefs.unshift(...shown.filter((a) => !keep.includes(a)));
+            shown = keep;
+          }
+          /* Rien ne tient en entier : pas d’encart (l’article passe en bref) plutôt qu’un titre coupé. */
+          if (shown.length && !shown.every((a) => sideFit(a, Math.floor(avail / shown.length)) || sideFit(a, Math.floor(avail / shown.length), Math.max(9, px(1.2))))) {
+            if (!plan.screen) briefs.unshift(...shown);
+            shown = [];
+          }
+          if (shown.length) {
+            panel(rx, ry2, rightW, sideH);
+            label(bilingual ? 'Aussi · Also' : 'Aussi à lire', rx + sp, ry2 + sp);
+          }
+          const per = Math.floor((ry2 + sideH - sp - sy) / shown.length);
+          shown.forEach((art, i) => {
+            const by = sy + i * per;
+            if (i > 0) rule(rx, rx + rightW, by - px(0.6));
+            let yy = by + (i > 0 ? px(0.4) : 0);
+            ctx.font = `600 ${px(1.45)}px "LR Sans Semi", "LR Sans"`;
+            fillWithSpan(metaPick(art, rightW - sp * 2, sans(600), px(1.45), 1, true)[0] || '', rx + sp, yy, PURPLE, art.source, metaColor(art, BG_LIGHT, PURPLE));
+            yy += px(2.1);
+            const room = by + per - yy - px(0.3);
+            const tMax = plan.screen
+              ? Math.max(px(1.7), Math.min(px(2.4), Math.floor(room / (room >= px(5) ? 2.2 : 1.15))))
+              : Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
+            const maxL = Math.max(plan.screen ? 1 : 2, Math.min(4, Math.floor(room / (tMax * 1.1))));
+            const f = sideFit(art, per) || sideFit(art, per, Math.max(9, px(1.2))) || wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
+            const endY = drawLines(f, serif, rx + sp, yy, ink, 1.1, by + per + px(0.2));
+            /* Un seul article dans l’encart : son chapeau comble la place plutôt qu’un vide. */
+            const hookRoom = by + per - endY - px(0.8);
+            const hook = art.hookShort || art.hook || '';
+            if (shown.length === 1 && hook && hookRoom >= px(2.2)) {
+              const hs = px(1.5);
+              const hl = Math.max(1, Math.floor(hookRoom / Math.round(hs * 1.3)));
+              ctx.font = sans(400)(hs);
+              const all = wrapWords(ctx, hook.replace(/…$/, ''), rightW - sp * 2);
+              /* Chapeau entier seulement (jamais de « … ») ; à défaut, sa première phrase entière. */
+              let lines = all.length <= hl ? all : null;
+              if (!lines) {
+                const first = (hook.replace(/…$/, '').match(/^.+?[.!?»](?=\s|$)/) || [''])[0];
+                const fl = first ? wrapWords(ctx, first, rightW - sp * 2) : [];
+                if (fl.length && fl.length <= hl) lines = fl;
+              }
+              if (lines) drawLines({ size: hs, lines }, sans(400), rx + sp, endY + px(0.5), mute, 1.3, by + per);
+            }
+          });
+        }
+      }
+    }
+    cy += rowH + px(2.4);
+  }
+
+  /* 5. Vedettes : photo + titre, QR moyen, sans extrait */
+  if (gridArts.length && bh.grid) {
+    const rowH = bh.grid;
+    rule(x0, x1, cy - px(1.2), 2);
+    const cols = gridArts.length;
+    const cw = Math.floor((contentW - gap * (cols - 1)) / cols);
+    gridArts.forEach((art, i) => {
+      const gx = x0 + i * (cw + gap);
+      if (i > 0) vrule(gx - Math.round(gap / 2), cy, cy + rowH);
+      const p = glass ? px(1) : 0;
+      panel(gx, cy, cw, rowH);
+      const ix = gx + p;
+      const iw = cw - p * 2;
+      let iy = cy + p;
+      const floor = cy + rowH - p;
+      const img = art.key ? images.get(art.key) : null;
+      const imgH = Math.min(Math.round(rowH * (cols <= 2 ? 0.52 : 0.36)), Math.round(iw / (cols <= 2 ? 1.7 : 1.45)));
+      paintImage(img, ix, iy, iw, imgH, art.focalY, art.source);
+      /* Numéro de vedette, repère pour le QR */
+      const nS = px(2.2);
+      ctx.fillStyle = PURPLE;
+      ctx.fillRect(ix, iy, Math.round(nS * 1.7), Math.round(nS * 1.7));
+      ctx.font = `700 ${nS}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(i + 1), ix + Math.round(nS * 0.85), iy + Math.round(nS * 0.9));
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      iy += imgH + px(0.3);
+      if (art.credit) iy += creditLine(art.credit, ix, iy, iw);
+      iy += px(0.5);
+      const qr = articleQr && art.pageUrl ? Math.min(px(8), Math.round(iw * 0.34)) : 0;
+      const qrTop = floor - qr;
+      const metaH = px(5.2);
+      let f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      /* Titre entier : on descend le corps plutôt que de couper. */
+      if (f.cut) f = fitFlow(art.title, serif, px(2.9), Math.max(9, px(1.35)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      drawFlow(f, serif, ix, ink);
+      {
+        const mS = Math.max(8, px(1.3));
+        const mw = iw - (qr ? qr + px(1) : 0);
+        const ml = metaPick(art, mw, sans(600), mS, 3, true);
+        const mh = ml.length * Math.round(mS * 1.25);
+        ctx.font = sans(600)(mS);
+        ctx.textBaseline = 'top';
+        ml.forEach((line, li) => fillWithSpan(line, ix, floor - mh + li * Math.round(mS * 1.25), PURPLE, art.source, metaColor(art, BG_LIGHT, PURPLE)));
+      }
+      if (qr) drawQrCode(ctx, ix + iw - qr, floor - qr, qr, art.pageUrl);
+    });
+    cy += rowH + px(2.4);
+  }
+
+  /* 6. Bande Sports étudiants + Radio en ondes */
+  if (hasBand && bh.band) {
+    const rowH = bh.band;
+    ctx.fillStyle = glass ? 'rgba(59, 18, 54, 0.9)' : DEEP;
+    roundedRectPath(ctx, x0, cy, contentW, rowH, glass ? px(1.2) : px(0.6));
+    ctx.fill();
+    const bp = px(1.6);
+    const parts = [];
+    const recap = opts.recap || null;
+    if (recap) {
+      /* Période passée : bilan réel (résultats + chiffres), pas de direct radio. */
+      parts.push({ title: bilingual ? 'Bilan sportif · Results' : 'Bilan sportif', items: sportsLines, weight: (recap.stats || []).length ? 2 : 1 });
+      if ((recap.stats || []).length) parts.push({ title: bilingual ? 'En chiffres · By the numbers' : 'En chiffres', items: recap.stats, weight: 1 });
+    } else {
+      if (sportsLines.length) parts.push({ title: bilingual ? 'Sports étudiants · Varsity' : 'Sports étudiants', items: sportsLines, weight: radioLines.length ? 2 : 1 });
+      if (radioLines.length) parts.push({ title: bilingual ? 'En ondes · On air' : 'En ondes', items: radioLines, weight: 1 });
+    }
+    const tw = parts.reduce((s, p2) => s + p2.weight, 0);
+    let bx = x0 + bp;
+    const innerW = contentW - bp * 2 - gap * (parts.length - 1);
+    parts.forEach((part, pi) => {
+      const pw = Math.round(innerW * (part.weight / tw));
+      if (pi > 0) {
+        ctx.fillStyle = 'rgba(255,255,255,0.22)';
+        ctx.fillRect(bx - Math.round(gap / 2), cy + bp, Math.max(1, px(0.12)), rowH - bp * 2);
+      }
+      let by = label(part.title, bx, cy + bp, LILAC, px(1.7));
+      /* Colonnes : autant que la largeur le permet (au moins 24 u chacune), sans case vide. */
+      const maxCols = part.weight === 2 ? 2 : (parts.length === 1 ? 3 : 1);
+      const roomCols = Math.max(1, Math.floor((pw + gap) / (px(24) + gap)));
+      const cols = Math.max(1, Math.min(maxCols, roomCols, part.items.length));
+      const colW = Math.floor((pw - (cols - 1) * gap) / cols);
+      const itemMinH = px(2) + Math.round(px(2.1) * 1.15) + px(0.4);
+      const fitRows = Math.max(1, Math.floor((cy + rowH - bp - by) / itemMinH));
+      let items = part.items.slice(0, fitRows * cols);
+      let perCol = Math.ceil(items.length / cols);
+      let rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
+      /* Même corps pour toutes les lignes de la bande : le plus petit qui tient (pas de tailles disparates). */
+      const fitItem = (item, cap) => {
+        const room = rowsH - (item.kicker || item.meta ? px(2) : 0);
+        const minS = Math.max(10, px(1.3));
+        const one = Math.min(cap, px(2.4), Math.floor(room / 1.2));
+        const indent1 = item.emoji ? Math.round(one * 1.35) : 0;
+        const f1 = wrapFit(item.line || '', sans(700), colW - indent1, one, minS, 1);
+        if (!/…$/.test(f1.lines[0] || '') || room < Math.round(minS * 1.15) * 2) return f1;
+        /* Deux lignes dès que la hauteur les tient : corps limité à la hauteur, jamais de points de suspension. */
+        const two = Math.max(minS, Math.min(cap, px(2.4), Math.floor(room / 2.3)));
+        const indent2 = item.emoji ? Math.round(two * 1.35) : 0;
+        return wrapFit(item.line || '', sans(700), colW - indent2, two, minS, 2);
+      };
+      /* Une ligne qui ne tient pas entière (deux lignes au plus) cède sa place à la suivante : jamais de « … ». */
+      {
+        const ok = part.items.filter((it) => !fitItem(it, Infinity).cut);
+        if (ok.length !== part.items.length) {
+          items = ok.slice(0, fitRows * cols);
+          perCol = Math.ceil(items.length / cols);
+          rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
+        }
+      }
+      const bandCap = items.length ? Math.min(...items.map((it) => fitItem(it, Infinity).size)) : px(2.4);
+      items.forEach((item, ii) => {
+        const col = Math.floor(ii / perCol);
+        const r = ii % perCol;
+        const ix = bx + col * (colW + gap);
+        let iy = by + r * rowsH;
+        const tag = [item.kicker, item.meta].filter(Boolean).join('  ·  ');
+        if (tag) {
+          ctx.font = `600 ${px(1.4)}px "LR Sans Semi", "LR Sans"`;
+          ctx.fillStyle = LILAC;
+          ctx.fillText(fitOne(tag, sans(600), px(1.4), colW), ix, iy);
+          iy += px(2);
+        }
+        /* Emoji de sport (police couleur LR Emoji) devant le match ou le résultat. */
+        const f = fitItem(item, bandCap);
+        if (item.emoji && iy + f.size <= by + (r + 1) * rowsH) {
+          ctx.font = `${f.size}px "LR Emoji"`;
+          ctx.textBaseline = 'top';
+          ctx.fillText(item.emoji, ix, iy);
+        }
+        /* Sur le violet foncé de la bande : 0,55 comme le site (5,2:1) ; 0,6 en verre (photo dessous). */
+        drawRichLines(f, sans(700), ix + (item.emoji ? Math.round(f.size * 1.35) : 0), iy, '#ffffff', glass ? 'rgba(245, 246, 248, 0.6)' : 'rgba(245, 246, 248, 0.55)', 1.15, by + (r + 1) * rowsH, BG_BAND);
+      });
+      bx += pw + gap;
+    });
+    cy += rowH + px(2.4);
+  }
+
+  /* 7. En bref numéroté */
+  if (briefs.length && bh.briefs) {
+    const rowH = bh.briefs;
+    const p = glass ? px(1.2) : 0;
+    panel(x0, cy, contentW, rowH);
+    if (!glass) rule(x0, x1, cy - px(1.2), 2);
+    let by = label(bilingual ? 'En bref · In brief' : 'En bref', x0 + p, cy + p);
+    /* Rangées : autant que la hauteur le permet (min. 5,9 u), puis réparties sans vide en bas. */
+    const cols = plan.briefCols;
+    const availB = cy + rowH - p - by;
+    const colW = Math.floor((contentW - p * 2 - gap * (cols - 1)) / cols);
+    /* Titre entier, jamais coupé : on réduit le corps, on passe à 3 lignes si la rangée le permet,
+     * sinon le bref est retiré (plutôt qu’un « … »). */
+    const briefFit = (title, tW, hAvail) => {
+      for (let sz = px(1.95); sz >= Math.max(8, px(1.25)); sz -= 1) {
+        ctx.font = serif(sz);
+        const lines = wrapWords(ctx, title || '', tW);
+        if (lines.length * Math.round(sz * 1.12) <= hAvail) return { size: sz, lines };
+      }
+      return null;
+    };
+    const usable = briefs.filter((b) => briefFit(b.title, colW - px(3.4), px(5.9) - px(1.9)));
+    const rowsFit = Math.max(1, Math.floor(availB / px(5.9)));
+    const count = Math.min(usable.length, rowsFit * cols);
+    const perCol = Math.ceil(count / cols);
+    const itemH = Math.max(px(5.9), Math.min(px(7.4), Math.floor(availB / Math.max(1, perCol))));
+    const numS = px(3);
+    usable.slice(0, count).forEach((b, i) => {
+      const col = Math.floor(i / perCol);
+      const r = i % perCol;
+      const bx = x0 + p + col * (colW + gap);
+      const iy = by + r * itemH;
+      if (col > 0 && r === 0) vrule(bx - Math.round(gap / 2), by, by + perCol * itemH - px(0.6));
+      ctx.font = `700 ${numS}px "LR Serif"`;
+      ctx.fillStyle = PURPLE;
+      ctx.textBaseline = 'top';
+      ctx.fillText(String(i + 1), bx, iy);
+      const tx = bx + px(3.4);
+      const tW = colW - px(3.4);
+      ctx.font = `600 ${px(1.3)}px "LR Sans Semi", "LR Sans"`;
+      fillWithSpan(metaPick(b, tW, sans(600), px(1.3), 1, true)[0] || '', tx, iy, PURPLE, b.source, metaColor(b, BG_LIGHT, PURPLE));
+      const f = briefFit(b.title, tW, itemH - px(1.9)) || wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
+      drawLines(f, serif, tx, iy + px(1.9), ink, 1.12, iy + itemH);
+    });
+  }
+
+  /* 8. Pied */
+  if (glass) {
+    frostedRect(ctx, margin * 0.5, footY - px(0.4), w - margin, h - footY - px(0.6), px(1.2), { fill: 'rgba(255, 252, 247, 0.88)' });
+  } else rule(x0, x1, footY, 1.5);
+  let ly = footY + footPad;
+  ctx.font = `400 ${nameSize}px "LR Sans"`;
+  ctx.fillStyle = glass ? '#2A2622' : '#3A3732';
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'center';
+  ctx.fillText(fitOne(NAME_FULL, sans(400), nameSize, contentW), w / 2, ly);
+  ctx.textAlign = 'left';
+  ly += nameLineH;
+  legalLines.forEach((line) => {
+    ctx.font = `400 ${legalSize}px "LR Sans"`;
+    ctx.fillStyle = mute;
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'center';
+    ctx.fillText(line, w / 2, ly);
+    ctx.textAlign = 'left';
+    ly += legalLineH;
+  });
+  if (showLangs && langsMetrics.height) {
+    ly += px(0.6);
+    drawLangsFooter(ctx, { y: ly, maxW: contentW, size: fLang, iconS, color: mute, lineGap: 4, iconGap: 6 });
+    ly += langsMetrics.height;
+  }
+  if (credit) {
+    const cs = Math.max(8, px(0.85));
+    ctx.font = `400 ${cs}px "LR Sans"`;
+    ctx.fillStyle = mute;
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'center';
+    ctx.fillText(fitOne(String(credit).replace(/\s+/g, ' ').trim(), (z) => `400 ${z}px "LR Sans"`, cs, contentW), w / 2, ly + px(0.2));
+    ctx.textAlign = 'left';
+  }
+}
 function drawRadar(ctx, w, h, cx, cy) {
   const reach = Math.hypot(Math.max(cx, w - cx), Math.max(h - cy, cy));
   ctx.strokeStyle = 'rgba(241, 242, 244, 0.07)';
@@ -463,7 +2108,8 @@ function textW(ctx, text) {
 }
 
 function wrapWords(ctx, text, maxW) {
-  const words = String(text).split(/\s+/);
+  /* Espaces insécables (U+00A0, U+202F) jamais coupées : dates, « : ; ! ? ». */
+  const words = String(text).split(/[^\S\u00A0\u202F]+/);
   const lines = [];
   let cur = '';
   for (const word of words) {
@@ -544,6 +2190,57 @@ function wrapJoin(ctx, parts, maxW) {
   return lines;
 }
 
+function measureLangsFooter(ctx, { maxW, size, iconS = 0, lineGap = 5, iconGap = 8 }) {
+  const font = langTypeface(size);
+  ctx.font = font;
+  const lines = wrapJoin(ctx, TRANSLATE_LANGS, maxW);
+  let lineH = 0;
+  if (lines.length) {
+    ctx.font = font;
+    const m = ctx.measureText(lines[0] || 'Français');
+    lineH = (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
+  }
+  const height = lines.length
+    ? (iconS ? iconS + iconGap : 0) + lines.length * (lineH + lineGap)
+    : 0;
+  return { lines, lineH, height, font, size, iconS, lineGap, iconGap };
+}
+
+function drawTranslateMark(ctx, x, y, size, color) {
+  if (!assets.translate || size < 2) return;
+  if (!color || color === SOFT) {
+    ctx.drawImage(assets.translate, x, y, size, size);
+    return;
+  }
+  const off = document.createElement('canvas');
+  off.width = Math.max(1, Math.round(size));
+  off.height = Math.max(1, Math.round(size));
+  const octx = off.getContext('2d');
+  octx.drawImage(assets.translate, 0, 0, off.width, off.height);
+  octx.globalCompositeOperation = 'source-in';
+  octx.fillStyle = color;
+  octx.fillRect(0, 0, off.width, off.height);
+  ctx.drawImage(off, x, y);
+}
+
+function drawLangsFooter(ctx, {
+  y, maxW, size, iconS = 0, color, lineGap = 5, iconGap = 8,
+}) {
+  const measured = measureLangsFooter(ctx, { maxW, size, iconS, lineGap, iconGap });
+  if (!measured.lines.length) return measured;
+  let cy = y;
+  if (iconS && assets.translate) {
+    drawTranslateMark(ctx, (pageWidth(ctx) - iconS) / 2, cy, iconS, color);
+  }
+  let ly = cy + (iconS ? iconS + iconGap : 0);
+  ctx.font = measured.font;
+  measured.lines.forEach((line) => {
+    fillCentered(ctx, line, ly, color);
+    ly += measured.lineH + lineGap;
+  });
+  return measured;
+}
+
 function fillCentered(ctx, text, y, color) {
   ctx.fillStyle = color;
   ctx.textBaseline = 'top';
@@ -603,6 +2300,12 @@ function compose(opts) {
   ctx.save();
   ctx.translate(-clipX, -clipY);
 
+  if (opts.model === 'une') {
+    composeFrontPage(ctx, w, h, opts);
+    ctx.restore();
+    return canvas;
+  }
+
   const refW = 11 * REF_DPI;
   const refH = 17 * REF_DPI;
   const safe = Math.round(0.45 * REF_DPI * (h / refH));
@@ -655,27 +2358,35 @@ function compose(opts) {
   const creditH = credit ? measure(credit, fCredit) : 0;
   const fLang = Math.min(28 * fit, footCap * 0.5);
   const iconS = Math.min(40 * fit, footCap * 0.7);
-  const langFont = langTypeface(fLang);
-  ctx.font = langFont;
   const langMax = w - 2 * safe - 80 * fit;
-  const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
-  const langLineH = langLines.length ? (() => {
-    ctx.font = langFont;
-    const m = ctx.measureText(langLines[0] || 'Français');
-    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || fLang;
-  })() : 0;
-  const langsH = opts.langs
-    ? iconS + 8 + langLines.length * (langLineH + 5)
-    : 0;
+  const langsMetrics = opts.langs
+    ? measureLangsFooter(ctx, { maxW: langMax, size: fLang, iconS, lineGap: 5, iconGap: 8 })
+    : { height: 0, lines: [] };
+  const langsH = langsMetrics.height;
   const markH = Math.max(footLogo, fMark);
-  const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
+  const qrIn = fmt.id === 'tabloid' ? 2.4 : 2.6; // ≈ 1,7 po imprimés en Lettre (fit 0,65)
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
   const playTop = barH + 12 * fit;
   const big = Math.round(816 * fit);
   const logoY = playTop + Math.round(700 * fit);
-  const qrTop = playTop + Math.round(3680 * fit);
+  /* Sous le QR (règle de Charles) : « Scanne-moi » puis « Le fil étudiant, en direct » (EN en bilingue). */
+  const tagKey = UNE_TAGLINES[opts.tagline] && UNE_TAGLINES[opts.tagline].fr ? opts.tagline
+    : (opts.tagline === 'auto' ? (campus && campus.line ? 'campus' : 'tout') : 'direct');
+  const scanHead = kind === 'bilingue' ? 'Scanne-moi · Scan me' : 'Scanne-moi';
+  const scanTag = UNE_TAGLINES[tagKey].fr;
+  const scanTagEn = kind === 'bilingue' ? UNE_TAGLINES[tagKey].en : '';
+  const fScan = Math.round(104 * fit);
+  const fScanTag = Math.round(62 * fit);
+  const fScanEn = Math.round(44 * fit);
+  const scanH = opts.qr && assets.qr
+    ? Math.round(22 * fit) + Math.round(fScan * 1.2) + Math.round(fScanTag * 1.3) + (scanTagEn ? Math.round(fScanEn * 1.3) : 0)
+    : 0;
+  /* Pied empilé sous le QR, mot-symbole et nom complet bien séparés (aucun chevauchement en Lettre). */
+  const footStackH = scanH + Math.round(32 * fit) + markH + Math.round(fMark * 0.5) + nameH + Math.round(18 * fit)
+    + legalH + (credit ? Math.round(18 * fit) + creditH : 0);
+  const qrTop = Math.min(playTop + Math.round(3680 * fit), h - safe - footStackH - qrSide);
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
   ctx.fillStyle = PURPLE;
@@ -697,9 +2408,24 @@ function compose(opts) {
     ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
   }
 
-  const qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
+  let qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
+  if (scanH) {
+    let sy = qrBottom + Math.round(22 * fit);
+    ctx.font = `600 ${fScan}px "LR Sans Semi", "LR Sans"`;
+    fillCentered(ctx, scanHead, sy, '#ffffff');
+    sy += Math.round(fScan * 1.2);
+    ctx.font = `400 ${fScanTag}px "LR Sans"`;
+    fillCentered(ctx, scanTag, sy, INK);
+    sy += Math.round(fScanTag * 1.3);
+    if (scanTagEn) {
+      ctx.font = `400 ${fScanEn}px "LR Sans"`;
+      fillCentered(ctx, scanTagEn, sy, SOFT);
+      sy += Math.round(fScanEn * 1.3);
+    }
+    qrBottom = sy;
+  }
   const pad = 32 * fit;
-  const gMark = 14 * fit;
+  const gMark = Math.round(fMark * 0.5);
   const gName = 18 * fit;
   const gLegal = 18 * fit;
 
@@ -727,16 +2453,8 @@ function compose(opts) {
   });
   cy = legalStart + legalH + (langsH ? gLegal : 0);
   if (opts.langs && langsH) {
-    if (assets.translate) {
-      ctx.drawImage(assets.translate, (w - iconS) / 2, cy, iconS, iconS);
-    }
-    let ly = cy + iconS + 8;
-    ctx.font = langFont;
-    langLines.forEach((line) => {
-      fillCentered(ctx, line, ly, SOFT);
-      ly += langLineH + 5;
-    });
-    cy = ly;
+    drawLangsFooter(ctx, { y: cy, maxW: langMax, size: fLang, iconS, color: SOFT, lineGap: 5, iconGap: 8 });
+    cy += langsH;
   }
   if (credit) {
     const creditY = cy + (h - cy - creditH) / 2;
@@ -747,57 +2465,76 @@ function compose(opts) {
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(226 * fit);
   const titleY = playTop + Math.round(1630 * fit);
-  fillTracked(ctx, TITLE, titleY, titleSize, INK);
-  let y = titleY + titleSize + Math.round(109 * fit);
-  const maxW = w - 2 * safe - 80;
-  let sloganSize = Math.round(74 * fit);
-  ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
-    sloganSize -= 1;
+  /* Bloc titre, accroche, établissement, salutation ; renvoie le bas du bloc. */
+  const drawTitleBlock = () => {
+    fillTracked(ctx, TITLE, titleY, titleSize, INK);
+    let y = titleY + titleSize + Math.round(109 * fit);
+    const maxW = w - 2 * safe - 80;
+    let sloganSize = Math.round(74 * fit);
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  }
-  const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
-  const uniSize = Math.round(70 * fit);
-  const uniCore = Math.round(uniSize * 1.22);
-  const gapBlock = Math.round(86 * fit);
-  const gapLang = Math.round(47 * fit);
-  ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
-  if (kind === 'bilingue') {
-    ctx.font = `400 ${enSize}px "LR Sans"`;
-    const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
-    enLines.forEach((line, i) => {
-      const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
-      y += fillCentered(ctx, line, y, SOFT) + extra;
-    });
-  }
-  if (opts.showUni !== false) {
-    const uniParts = uniLockupParts(campus, kind);
-    if (uniParts) {
-      y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
+    while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
+      sloganSize -= 1;
+      ctx.font = `400 ${sloganSize}px "LR Sans"`;
     }
-  }
-  const greet = GREETINGS[opts.greeting];
-  if (greet) {
-    const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
-    const gSize = Math.round((biGreet ? 156 : 187) * fit);
-    y += Math.round(39 * fit);
+    const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
+    const uniSize = Math.round(70 * fit);
+    const uniCore = Math.round(uniSize * 1.22);
+    const gapBlock = Math.round(86 * fit);
+    const gapLang = Math.round(47 * fit);
+    ctx.font = `400 ${sloganSize}px "LR Sans"`;
+    y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
+    if (kind === 'bilingue') {
+      ctx.font = `400 ${enSize}px "LR Sans"`;
+      const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
+      enLines.forEach((line, i) => {
+        const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
+        y += fillCentered(ctx, line, y, SOFT) + extra;
+      });
+    }
+    if (opts.showUni !== false) {
+      const uniParts = uniLockupParts(campus, kind);
+      if (uniParts) {
+        y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
+      }
+    }
+    const greet = GREETINGS[opts.greeting];
+    if (greet) {
+      const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
+      const gSize = Math.round((biGreet ? 156 : 187) * fit);
+      y += Math.round(39 * fit);
+      ctx.save();
+      ctx.translate(w / 2, y + gSize * 0.15);
+      ctx.rotate((-8 * Math.PI) / 180);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.font = `700 ${gSize}px "LR Script"`;
+      ctx.fillStyle = INK;
+      ctx.fillText(greet, 0, 0);
+      if (biGreet) {
+        ctx.font = `700 ${Math.round(gSize * 0.5)}px "LR Script"`;
+        ctx.fillStyle = SOFT;
+        ctx.fillText(GREETINGS_EN[opts.greeting], 0, gSize * 0.95);
+      }
+      ctx.restore();
+      y += Math.round(gSize * (biGreet ? 1.6 : 1.25));
+    }
+    return y;
+  };
+  if (photo) {
+    /* Bandeau violet semi-transparent derrière le titre sur photo (règle de Charles) : la photo reste visible,
+     * le texte garde le contraste AA (photo déjà assombrie à 58 % ; violet à 60 % → ≥ 4,5:1 même pour le gris). */
     ctx.save();
-    ctx.translate(w / 2, y + gSize * 0.15);
-    ctx.rotate((-8 * Math.PI) / 180);
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.font = `700 ${gSize}px "LR Script"`;
-    ctx.fillStyle = INK;
-    ctx.fillText(greet, 0, 0);
-    if (biGreet) {
-      ctx.font = `700 ${Math.round(gSize * 0.5)}px "LR Script"`;
-      ctx.fillStyle = SOFT;
-      ctx.fillText(GREETINGS_EN[opts.greeting], 0, gSize * 0.95);
-    }
+    ctx.beginPath();
+    ctx.rect(0, 0, 0, 0);
+    ctx.clip();
+    const yEnd = drawTitleBlock();
     ctx.restore();
+    const bandTop = titleY - Math.round(70 * fit);
+    const bandBottom = Math.min(qrTop - Math.round(40 * fit), yEnd + Math.round(30 * fit));
+    ctx.fillStyle = 'rgba(108, 33, 99, 0.6)';
+    ctx.fillRect(0, bandTop, w, bandBottom - bandTop);
   }
-
+  drawTitleBlock();
   ctx.restore();
   return canvas;
 }
@@ -806,8 +2543,92 @@ function isCampusPhoto(p) {
   return p.campus === true || (Array.isArray(p.tags) && p.tags.includes('campus'));
 }
 
+function photoBankCampus() {
+  if (isUneModel()) {
+    const slug = (state.uneCampus && state.uneCampus !== 'toutes')
+      ? state.uneCampus
+      : (state.campus && state.campus !== 'generique' ? state.campus : 'laval');
+    return campusOf(slug);
+  }
+  return campusOf(state.campus);
+}
+
+function uneUsesPhoto() {
+  return isUneModel() && state.layout === 'verre';
+}
+
+function ensureUnePhoto() {
+  if (!uneUsesPhoto()) return;
+  const photos = filteredPhotos();
+  if (state.photoId && photos.some((p) => photoKeyId(p) === state.photoId)) return;
+  const first = photos[0];
+  if (first) {
+    state.photoId = photoKeyId(first);
+    resetCrop(first);
+  }
+}
+
+function fillUneCampusSelect() {
+  const sel = document.getElementById('une-campus');
+  if (!sel || sel.dataset.filled === '1') return;
+  CAMPUSES.filter((c) => c.slug !== 'generique').forEach((c) => {
+    const opt = document.createElement('option');
+    opt.value = c.slug;
+    opt.textContent = c.line;
+    sel.appendChild(opt);
+  });
+  sel.dataset.filled = '1';
+  if (state.uneCampus && state.uneCampus !== 'toutes') sel.value = state.uneCampus;
+}
+
+function mediaSlug(name) {
+  return String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+function fillUneMediaSelect() {
+  const sel = document.getElementById('une-media');
+  if (!sel) return;
+  const keep = state.uneMedia || 'tous';
+  sel.replaceChildren();
+  const all = document.createElement('option');
+  all.value = 'tous';
+  all.textContent = state.uneCampus && state.uneCampus !== 'toutes' ? 'Tous les médias de l’établissement' : 'Tous les médias';
+  sel.append(all);
+  (state.uneMediaList || []).forEach((m) => {
+    const opt = document.createElement('option');
+    opt.value = m.slug;
+    opt.textContent = m.name;
+    sel.append(opt);
+  });
+  sel.value = (state.uneMediaList || []).some((m) => m.slug === keep) ? keep : 'tous';
+}
+/* Réglages partageables : l’URL reflète le modèle, le format et toutes les options visibles. */
+function syncSettingsUrl() {
+  try {
+    const url = new URL(window.location.href);
+    const set = (k, v, def) => { if (v && v !== def) url.searchParams.set(k, v); else url.searchParams.delete(k); };
+    url.searchParams.set('modele', state.model);
+    set('format', state.format, 'tabloid');
+    set('qr', state.qr ? 'oui' : 'non', 'oui');
+    set('lang', state.lang, 'standard');
+    if (isUneModel()) {
+      ['campus', 'greeting', 'photo'].forEach((k) => url.searchParams.delete(k));
+      set('uni', state.uneCampus, 'toutes');
+      set('media', state.uneMedia, 'tous');
+      set('periode', state.unePeriod, 'jour');
+      set('layout', state.layout, 'classique');
+      set('entete', state.uneMastExtra, 'radio');
+      set('phrase', state.uneTagline, 'direct');
+    } else {
+      ['uni', 'media', 'periode', 'layout', 'entete', 'phrase', 'articles', 'une', 'aussi', 'vedettes', 'bref', 'masquer', 'slogan', 'bande', 'sportsmasques'].forEach((k) => url.searchParams.delete(k));
+      set('campus', state.campus, 'generique');
+      set('greeting', state.greeting, 'none');
+    }
+    window.history.replaceState(null, '', url.toString());
+  } catch { /* ignore */ }
+}
+
 function filteredPhotos() {
-  const campus = campusOf(state.campus);
+  const campus = photoBankCampus();
   const bank = campus.places
     ? state.photos.filter((p) => isCampusPhoto(p) && photoMatches(p, campus))
     : state.photos;
@@ -857,9 +2678,10 @@ function renderChoices() {
   }
   const n = photos.length;
   const nLocal = photos.filter(isLocalPhoto).length;
-  const base = state.campus === 'generique'
+  const bankCampus = photoBankCampus();
+  const base = (!isUneModel() && state.campus === 'generique')
     ? `${n} photos de toute la banque`
-    : `${n} photos pour ${campusOf(state.campus).label}`;
+    : `${n} photos pour ${bankCampus.label}`;
   document.getElementById('photo-meta').textContent = nLocal
     ? `${base} · ${nLocal} téléversée${nLocal > 1 ? 's' : ''}`
     : base;
@@ -877,6 +2699,20 @@ function specLine() {
 }
 
 function recipeLine() {
+  if (isUneModel()) {
+    const bits = [FORMATS[state.format].label, 'Une du Radar'];
+    const n = selectedUneArticles().length;
+    bits.push(n ? `${n} article${n > 1 ? 's' : ''}` : 'Aucun article');
+    if (uneSelectedBriefs().length) bits.push(`${uneSelectedBriefs().length} en bref`);
+    if (uneManualMode()) bits.push('Sélection manuelle');
+    bits.push(state.layout === 'verre' ? 'Verre dépoli' : 'Classique');
+    if (state.uneCampus && state.uneCampus !== 'toutes') bits.push(campusOf(state.uneCampus).label);
+    if (state.unePeriod && state.unePeriod !== 'jour') bits.push(UNE_PERIOD_LABELS[state.unePeriod]);
+    bits.push(state.lang === 'bilingue' ? 'Bilingue' : 'Français');
+    if (state.langs) bits.push('Langues');
+    if (state.qr) bits.push('QR');
+    return bits.join(' · ');
+  }
   const bits = [
     FORMATS[state.format].label,
     campusOf(state.campus).label,
@@ -889,6 +2725,514 @@ function recipeLine() {
   return bits.join(' · ');
 }
 
+function isUneModel() {
+  return state.model === 'une';
+}
+
+function uneManualMode() {
+  return (state.uneManualIds || []).length > 0;
+}
+
+function selectedUneArticles() {
+  if (uneManualMode()) {
+    const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+    return Front ? Front.manualSelection(state.uneCandidates || [], state.uneManualIds, state.uneLeadId) : [];
+  }
+  return state.uneAutoArticles || [];
+}
+
+function uneSelectedBriefs() {
+  return uneManualMode() ? [] : (state.uneAutoBriefs || []);
+}
+
+const UNE_ROLE_KEYS = ['aussi', 'vedettes', 'bref', 'masquer'];
+function uneRolesActive() {
+  const r = state.uneRoles || {};
+  return UNE_ROLE_KEYS.some((k) => (r[k] || []).length);
+}
+/* Rôles manuels (une, aussi à lire, vedettes, en bref, masqué) : places libres complétées par l’auto. */
+function uneArticlesWithRoles() {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const base = selectedUneArticles();
+  const briefsBase = uneSelectedBriefs();
+  if (!Front || !Front.assignRoles || (!uneRolesActive() && !state.uneLeadId)) return { articles: base, briefs: briefsBase };
+  const plan = UNE_FORMAT_PLAN[state.format] || UNE_FORMAT_PLAN.tabloid;
+  const seen = new Set();
+  const pool = [...base, ...briefsBase, ...(state.uneCandidates || [])].filter((a) => a && !seen.has(a.id) && seen.add(a.id));
+  const r = state.uneRoles || {};
+  const out = Front.assignRoles(pool, { une: state.uneLeadId, ...r }, { side: plan.side, grid: plan.grid, briefs: plan.screen ? 0 : 6 });
+  return { articles: [out.lead, ...out.side, ...out.grid].filter(Boolean), briefs: out.briefs };
+}
+function uneSportsManualActive() {
+  return (state.uneSportBand || []).length + (state.uneSportSlogan || []).length + (state.uneSportHide || []).length > 0;
+}
+
+/* Réglage partageable : ids d’articles et une dans l’URL, comme les autres paramètres. */
+function syncUneSelectionUrl() {
+  try {
+    const url = new URL(window.location.href);
+    if (uneManualMode()) {
+      url.searchParams.set('articles', state.uneManualIds.join(','));
+      if (state.uneLeadId) url.searchParams.set('une', state.uneLeadId);
+      else url.searchParams.delete('une');
+    } else {
+      url.searchParams.delete('articles');
+      if (state.uneLeadId) url.searchParams.set('une', state.uneLeadId);
+      else url.searchParams.delete('une');
+    }
+    const r = state.uneRoles || {};
+    UNE_ROLE_KEYS.forEach((k) => { if ((r[k] || []).length) url.searchParams.set(k, r[k].join(',')); else url.searchParams.delete(k); });
+    [['slogan', state.uneSportSlogan], ['bande', state.uneSportBand], ['sportsmasques', state.uneSportHide]].forEach(([k, v]) => {
+      if ((v || []).length) url.searchParams.set(k, v.join(','));
+      else url.searchParams.delete(k);
+    });
+    window.history.replaceState(null, '', url.toString());
+  } catch { /* ignore */ }
+}
+
+function syncModelUi() {
+  const dash = document.querySelector('.dash');
+  if (dash) {
+    dash.dataset.model = state.model;
+    dash.dataset.layout = isUneModel() ? (state.layout || 'classique') : '';
+  }
+  ['une-box', 'une-sports-box', 'une-layout-box', 'une-uni-box', 'une-media-box', 'une-period-box', 'une-entete-box'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.hidden = !isUneModel();
+  });
+  fillUneCampusSelect();
+  syncLangChoice();
+  const crop = document.getElementById('crop-tools');
+  const pane = document.getElementById('preview-pane');
+  if (isUneModel() && !uneUsesPhoto()) {
+    if (crop) crop.hidden = true;
+    if (pane) pane.classList.remove('has-crop');
+  } else {
+    syncCropUi();
+  }
+  const lead = document.querySelector('.dash-lead');
+  if (lead) {
+    lead.textContent = isUneModel()
+      ? 'Articles, sports et radio viennent du site, en temps réel. Choisissez l’établissement, le média, la période et le fond, puis exportez.'
+      : 'Paramètres d’abord, photo ensuite. L’affiche reste à droite.';
+  }
+}
+
+function renderUneList() {
+  const list = document.getElementById('une-list');
+  const status = document.getElementById('une-status');
+  const reset = document.getElementById('une-auto');
+  if (!list) return;
+  if (status) status.textContent = state.uneStatus || '';
+  if (reset) reset.hidden = !(uneManualMode() || uneRolesActive() || state.uneLeadId || uneSportsManualActive());
+  list.replaceChildren();
+  const manual = uneManualMode();
+  const autoIds = new Set((state.uneAutoArticles || []).concat(state.uneAutoBriefs || []).map((a) => a.id));
+  const chosen = new Set(state.uneManualIds || []);
+  const leadId = selectedUneArticles()[0]?.id || '';
+  (state.uneCandidates || []).slice(0, 80).forEach((art) => {
+    const li = document.createElement('li');
+    if (art.id === leadId) li.classList.add('is-lead');
+    const check = document.createElement('input');
+    check.type = 'checkbox';
+    check.className = 'une-check';
+    check.checked = manual ? chosen.has(art.id) : false;
+    check.setAttribute('aria-label', `Intégrer : ${art.title}`);
+    check.addEventListener('change', () => {
+      const ids = (state.uneManualIds || []).filter((id) => id !== art.id);
+      if (check.checked) ids.push(art.id);
+      state.uneManualIds = ids;
+      if (state.uneLeadId && !ids.includes(state.uneLeadId)) state.uneLeadId = '';
+      syncUneSelectionUrl();
+      renderUneList();
+      preview();
+    });
+    const meta = document.createElement('div');
+    meta.className = 'une-meta';
+    const role = document.createElement('span');
+    role.className = 'une-role';
+    const place = selectedUneArticles().findIndex((a) => a.id === art.id);
+    role.textContent = place === 0 ? 'À la une'
+      : place > 0 ? 'Sur l’affiche'
+        : (!manual && autoIds.has(art.id) ? 'Auto' : '');
+    const title = document.createElement('span');
+    title.className = 'une-title';
+    title.textContent = art.title;
+    const source = document.createElement('span');
+    source.className = 'une-source';
+    source.textContent = [art.byline || art.source, art.dateLabel].filter(Boolean).join(' · ');
+    meta.append(role, title, source);
+    const leadLab = document.createElement('label');
+    leadLab.className = 'une-lead';
+    const lead = document.createElement('input');
+    lead.type = 'radio';
+    lead.name = 'une-lead-pick';
+    lead.checked = art.id === leadId;
+    lead.addEventListener('change', () => {
+      if (!lead.checked) return;
+      const ids = uneManualMode() ? (state.uneManualIds || []).slice() : selectedUneArticles().map((a) => a.id);
+      if (!ids.includes(art.id)) ids.push(art.id);
+      state.uneManualIds = ids;
+      state.uneLeadId = art.id;
+      syncUneSelectionUrl();
+      renderUneList();
+      preview();
+    });
+    leadLab.append(lead, document.createTextNode(' Une'));
+    /* Rôle manuel : auto par défaut ; le choix est gardé dans l’URL (aussi=, vedettes=, bref=, masquer=). */
+    const roleSel = document.createElement('select');
+    roleSel.className = 'une-role-pick';
+    roleSel.setAttribute('aria-label', `Rôle : ${art.title}`);
+    [['', 'Auto'], ['vedettes', 'Vedette'], ['aussi', 'Aussi à lire'], ['bref', 'En bref'], ['masquer', 'Masquer']].forEach(([v, t]) => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = t;
+      roleSel.append(opt);
+    });
+    const roles = state.uneRoles || {};
+    roleSel.value = UNE_ROLE_KEYS.find((k) => (roles[k] || []).includes(art.id)) || '';
+    roleSel.addEventListener('change', () => {
+      const next = {};
+      UNE_ROLE_KEYS.forEach((k) => { next[k] = (roles[k] || []).filter((id) => id !== art.id); });
+      if (roleSel.value) next[roleSel.value].push(art.id);
+      state.uneRoles = next;
+      syncUneSelectionUrl();
+      renderUneList();
+      preview();
+    });
+    li.append(check, meta, leadLab, roleSel);
+    list.append(li);
+  });
+}
+
+/* Sports du studio : chaque match ou résultat réel peut aller sous le slogan, dans la bande (ou le bilan) ou être masqué. */
+async function renderUneSportsList() {
+  const list = document.getElementById('une-sports-list');
+  if (!list || !isUneModel()) return;
+  await loadUneSportsHistory();
+  const campus = (state.uneCampus && state.uneCampus !== 'toutes') ? campusOf(state.uneCampus) : null;
+  const cands = uneSportsCandidates(campus, state.unePeriodInfo);
+  list.replaceChildren();
+  cands.slice(0, 60).forEach((item) => {
+    const li = document.createElement('li');
+    const meta = document.createElement('div');
+    meta.className = 'une-meta';
+    const title = document.createElement('span');
+    title.className = 'une-title';
+    title.textContent = [item.emoji, item.kicker, '—', item.line].filter(Boolean).join(' ');
+    const src = document.createElement('span');
+    src.className = 'une-source';
+    src.textContent = [item.meta, item.upcoming ? 'à venir' : 'résultat'].filter(Boolean).join(' · ');
+    meta.append(title, src);
+    const sel = document.createElement('select');
+    sel.className = 'une-role-pick';
+    sel.setAttribute('aria-label', `Place : ${item.line}`);
+    [['', 'Auto'], ['slogan', 'Sous le slogan'], ['bande', 'Bande / bilan'], ['masquer', 'Masquer']].forEach(([v, t]) => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = t;
+      sel.append(opt);
+    });
+    sel.value = (state.uneSportSlogan || []).includes(item.id) ? 'slogan'
+      : (state.uneSportBand || []).includes(item.id) ? 'bande'
+        : (state.uneSportHide || []).includes(item.id) ? 'masquer' : '';
+    sel.addEventListener('change', () => {
+      const drop = (arr) => (arr || []).filter((id) => id !== item.id);
+      state.uneSportSlogan = drop(state.uneSportSlogan);
+      state.uneSportBand = drop(state.uneSportBand);
+      state.uneSportHide = drop(state.uneSportHide);
+      if (sel.value === 'slogan') state.uneSportSlogan.push(item.id);
+      if (sel.value === 'bande') state.uneSportBand.push(item.id);
+      if (sel.value === 'masquer') state.uneSportHide.push(item.id);
+      syncUneSelectionUrl();
+      preview();
+    });
+    li.append(meta, sel);
+    list.append(li);
+  });
+}
+
+async function loadUneFeed() {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  if (!Front) {
+    state.uneStatus = 'Module de une introuvable.';
+    renderUneList();
+    return;
+  }
+  state.uneStatus = 'Chargement des articles du site…';
+  { const fr = document.getElementById('preview'); if (fr) fr.dataset.state = 'occupe'; }
+  renderUneList();
+  try {
+    const res = await fetch('../news.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`news.json (${res.status})`);
+    const data = await res.json();
+    const now = data.updated ? new Date(data.updated) : new Date();
+    const campus = (state.uneCampus && state.uneCampus !== 'toutes')
+      ? campusOf(state.uneCampus)
+      : null;
+    const featureN = Front.POSTER_PAGE_COUNT || 9;
+    const briefN = Front.POSTER_BRIEF_COUNT || 6;
+    const period = state.unePeriod || 'jour';
+    /* Médias de l’établissement (ou de tout le fil) : choix « tous » ou un seul média. */
+    const inScope = Front.frontPageCards(data.items || [], now, '..', campus, Infinity, 'session').items || [];
+    const mediaMap = new Map();
+    (data.items || []).forEach((it) => {
+      if (!it || !it.source) return;
+      if (campus && !inScope.some((c) => c.source === it.source)) return;
+      const slug = it.sourceSlug || mediaSlug(it.source);
+      if (!mediaMap.has(slug)) mediaMap.set(slug, it.source);
+    });
+    state.uneMediaList = [...mediaMap.entries()].map(([slug, name]) => ({ slug, name })).sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    if (state.uneMedia !== 'tous' && !mediaMap.has(state.uneMedia)) state.uneMedia = 'tous';
+    fillUneMediaSelect();
+    const items = state.uneMedia === 'tous'
+      ? (data.items || [])
+      : (data.items || []).filter((it) => it && (it.sourceSlug || mediaSlug(it.source || '')) === state.uneMedia);
+    const all = Front.frontPageCards(items, now, '..', campus, Infinity, period);
+    const cards = Front.frontPageCards(items, now, '..', campus, featureN + briefN, period);
+    state.unePeriodInfo = cards.period || null;
+    state.uneCandidates = all.items;
+    state.uneAutoArticles = cards.items.slice(0, featureN);
+    state.uneAutoBriefs = cards.items.slice(featureN);
+    /* Sélection manuelle : on garde les articles encore présents (université, période). */
+    const known = new Set(all.items.map((c) => c.id));
+    state.uneManualIds = (state.uneManualIds || []).filter((id) => known.has(id));
+    if (state.uneLeadId && !known.has(state.uneLeadId)) state.uneLeadId = '';
+    const n = selectedUneArticles().length;
+    const b = uneSelectedBriefs().length;
+    const per = state.unePeriodInfo && state.unePeriodInfo.id !== 'jour' ? ` (${state.unePeriodInfo.fr.charAt(0).toLowerCase()}${state.unePeriodInfo.fr.slice(1)})` : '';
+    const mediaName = state.uneMedia !== 'tous' ? (state.uneMediaList.find((m) => m.slug === state.uneMedia) || {}).name : '';
+    const where = (mediaName ? ` de ${mediaName}` : '') + (campus ? ` pour ${campus.line}` : (mediaName ? '' : ' du fil actuel')) + per;
+    const how = uneManualMode() ? 'sélection manuelle' : 'sélection automatique';
+    state.uneStatus = all.items.length
+      ? `${all.items.length} article${all.items.length > 1 ? 's' : ''}${where}. Sur l’affiche : ${n}${b ? ` + ${b} en bref` : ''} (${how}). Cochez pour choisir vous-même.`
+      : (campus
+        ? `Aucun article pour ${campus.line} sur cette période. L’affiche n’invente pas de titres.`
+        : 'Aucun article dans le fil pour cette période.');
+  } catch (err) {
+    state.uneCandidates = [];
+    state.uneAutoArticles = [];
+    state.uneAutoBriefs = [];
+    state.uneStatus = `Impossible de lire le fil : ${err.message}`;
+  }
+  renderUneList();
+  renderUneSportsList();
+}
+
+/* Toutes les images des articles, attendues AVANT la composition (t985u) : chaque candidat (miroir public,
+ * puis URL d’origine) est essayé ; une image introuvable est remplacée par l’encart neutre au nom du média
+ * et signalée (statut du studio + data-poster-images sur <body> pour les exports automatisés). */
+async function loadUneImages(articles) {
+  const map = new Map();
+  const missing = [];
+  await Promise.all((articles || []).map(async (art) => {
+    if (!art?.key) return;
+    const candidates = (art.images && art.images.length)
+      ? art.images
+      : (art.image ? [art.image] : []);
+    for (const src of candidates) {
+      try {
+        map.set(art.key, await loadImage(src, true));
+        return;
+      } catch {
+        /* essayer le miroir public, puis l’URL d’origine */
+      }
+    }
+    if (candidates.length) missing.push(art.title || art.key);
+  }));
+  map.missing = missing;
+  state.uneMissingImages = missing;
+  if (typeof document !== 'undefined' && document.body) {
+    document.body.dataset.posterImages = missing.length ? `manquantes:${missing.length}` : 'pretes';
+  }
+  return map;
+}
+function uneMissingImagesNote() {
+  const list = state.uneMissingImages || [];
+  return list.length ? ` Image introuvable (encart neutre au nom du média si elle doit s’afficher) : ${list.map((t) => `« ${t} »`).join(', ')}.` : '';
+}
+
+async function loadUneSidebars() {
+  if (state.uneSidebars) return state.uneSidebars;
+  const grab = (url) => fetch(url, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const [nowplaying, radios, sports, schedules, brand] = await Promise.all([
+    grab('../radio-nowplaying.json'),
+    grab('../radios.json'),
+    grab('../sports-masthead.json'),
+    grab('../radio-schedules.json'),
+    grab('../brand-colors.json'),
+  ]);
+  /* Couleurs officielles des établissements (mêmes que les pastilles du site et La une sociale). */
+  state.uneBrand = (brand && brand.institutions) || null;
+  state.uneSidebars = { nowplaying, radios, sports, schedules };
+  return state.uneSidebars;
+}
+
+/* Bilan d’une période passée : sports.json complet (dépaqueté), chargé à la demande. */
+async function loadUneSportsHistory() {
+  if (state.uneSports) return state.uneSports;
+  try {
+    const res = await fetch('../sports.json', { cache: 'no-cache' });
+    if (!res.ok) return null;
+    const raw = await res.json();
+    const P = typeof RadarSportsPayload !== 'undefined' ? RadarSportsPayload : null;
+    const data = P && typeof P.unpackSportsPayload === 'function' ? P.unpackSportsPayload(raw) : raw;
+    state.uneSports = data && data.teams ? data.teams : null;
+  } catch {
+    state.uneSports = null;
+  }
+  return state.uneSports;
+}
+
+function unePeriodRecap(campus) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const win = state.unePeriodInfo;
+  if (!Front || !win || win.live || !state.uneSports) return null;
+  const res = Front.periodResults(state.uneSports, win, campus, 4);
+  if (!res.items.length) return null;
+  const pool = state.uneCandidates || [];
+  const medias = new Set(pool.map((a) => a.source).filter(Boolean)).size;
+  const stats = [];
+  if (pool.length) stats.push({ kicker: 'Journaux étudiants', line: Front.numbersLine ? Front.numbersLine(pool) : `${pool.length} article${pool.length > 1 ? 's' : ''} · ${medias} média${medias > 1 ? 's' : ''}` });
+  stats.push({ kicker: 'Matchs', line: campus ? `${res.played} joué${res.played > 1 ? 's' : ''} · ${res.wins} victoire${res.wins > 1 ? 's' : ''}` : `${res.played} match${res.played > 1 ? 's' : ''} joué${res.played > 1 ? 's' : ''}` });
+  return { items: res.items, stats };
+}
+
+/* Encart du haut à droite. Verdict du focus-group (A) : 2 émissions à venir de la station campus
+ * (grille radio-schedules.json) ; repli générique : prochain match, sinon chiffre clé, sinon rien. */
+const UNE_MAST_EXTRAS = ['radio', 'match', 'chiffre', 'combo', 'aucun'];
+const FR_WEEKDAY_SHORT = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
+function uneRadioShows(bars, campus, info, limit = 2) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const radios = Array.isArray(bars.radios) ? bars.radios : ((bars.radios && (bars.radios.radios || bars.radios.stations)) || []);
+  const list = Array.isArray(radios) ? radios : Object.values(radios);
+  const stations = (bars.schedules && bars.schedules.stations) || {};
+  const station = list.find((r) => r && stations[r.id] && (stations[r.id].grid || []).length
+    && (!campus || itemMatchesCampusPoster({ institution: r.institution || '' }, campus)));
+  if (!station) return null;
+  const grid = stations[station.id].grid || [];
+  const realToday = posterTodayYmd();
+  const startYmd = (info && info.live && info.target) || realToday;
+  const nowHm = startYmd === realToday
+    ? new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date())
+    : '07:00';
+  /* Émissions originales de jour ou de soir, étalées, sans reprise ni rotation automatique (t984u). */
+  const out = Front && Front.pickRadioShows
+    ? Front.pickRadioShows(grid, startYmd, nowHm, limit).map((x) => `${posterShortDate(x.ymd)} · ${posterClock(x.start)} · ${x.title}`)
+    : [];
+  return out.length ? { name: station.name || station.id, institution: station.institution || '', shows: out } : null;
+}
+function uneMastExtras(mode, bars, campus, info, sportsLines) {
+  if (!info || mode === 'aucun') return null;
+  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 8 : 3);
+  const next = (sportsLines || []).find((x) => x.upcoming);
+  const pool = state.uneCandidates || [];
+  const ref = (info.to || posterTodayYmd());
+  const from = new Date(`${ref}T12:00:00Z`);
+  from.setUTCDate(from.getUTCDate() - 6);
+  const fromYmd = from.toISOString().slice(0, 10);
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const week = pool.filter((a) => a.date && Front && Front.mtlYmd && Front.mtlYmd(a.date) >= fromYmd);
+  const medias = new Set(week.map((a) => a.source).filter(Boolean)).size;
+  const stat = week.length ? (Front && Front.numbersLine ? Front.numbersLine(week, { suffix: 'en 7 jours' }) : `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}`) : '';
+  const pick = {
+    radio: radio ? { title: `À l’antenne de ${radio.name}`, lines: radio.shows, colorText: radio.name, colorInst: radio.institution } : null,
+    match: next ? { title: 'Prochain match', strict: true, lines: [`${next.emoji ? `${next.emoji} ` : ''}${next.line}`, next.meta.charAt(0).toUpperCase() + next.meta.slice(1)] } : null,
+    chiffre: stat ? { title: 'À surveiller', lines: [stat] } : null,
+    combo: radio ? { title: 'À surveiller', lines: radio.shows.map((x) => `${radio.name} · ${x}`), tail: stat, colorText: radio.name, colorInst: radio.institution } : null,
+  };
+  return pick[mode] || pick.match || pick.chiffre || null;
+}
+
+/* Candidats sports du studio : matchs à venir (bandeau sports) et résultats réels (sports.json). */
+function uneSportsCandidates(campus, info) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const bars = state.uneSidebars || {};
+  const live = !info || info.live;
+  const up = pickPosterSports(bars.sports, campus, 40, live && info ? info.target : posterNextYmd()).filter((x) => x.upcoming);
+  let res = [];
+  if (Front && Front.periodResults && state.uneSports) {
+    let win = info;
+    if (live) {
+      const to = posterTodayYmd();
+      const d = new Date(`${to}T12:00:00Z`);
+      d.setUTCDate(d.getUTCDate() - 30);
+      win = { from: d.toISOString().slice(0, 10), to };
+    }
+    res = Front.periodResults(state.uneSports, win, campus, Infinity).items;
+    /* En direct, la bande garde le format court des matchs (« Dim. 25 oct. ») ; le bilan garde le sien. */
+    if (live) res = res.map((x) => ({ ...x, meta: posterShortDate(x.date) || x.meta }));
+  }
+  const all = [...up, ...res];
+  all.forEach((x) => { if (!x.id && Front && Front.sportItemId) x.id = Front.sportItemId(x); });
+  const seen = new Set();
+  return all.filter((x) => !seen.has(x.id) && seen.add(x.id));
+}
+
+function uneComposeOpts(dpi, images, photoImg, photo) {
+  const campusSlug = (state.uneCampus && state.uneCampus !== 'toutes') ? state.uneCampus : null;
+  const campus = campusSlug ? campusOf(campusSlug) : null;
+  const bars = state.uneSidebars || {};
+  const info = state.unePeriodInfo;
+  const past = Boolean(info && !info.live);
+  const recap = past ? unePeriodRecap(campus) : null;
+  const ahead = Boolean(info && info.id === 'demain');
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const autoBand = recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 8, info && info.target));
+  autoBand.forEach((x) => { if (!x.id && Front && Front.sportItemId) x.id = Front.sportItemId(x); });
+  const sportCands = uneSportsManualActive() ? uneSportsCandidates(campus, info) : [];
+  /* Sélection manuelle des sports (bande ou bilan) : ids choisis dans l’ordre, sinon l’auto moins les masqués. */
+  const sportsLines = Front && Front.applySportSelection
+    ? Front.applySportSelection(sportCands, autoBand, state.uneSportBand, state.uneSportHide)
+    : autoBand;
+  const autoSlogan = pickPosterSports(bars.sports, campus, 6, info && info.live ? info.target : posterNextYmd());
+  autoSlogan.forEach((x) => { if (!x.id && Front && Front.sportItemId) x.id = Front.sportItemId(x); });
+  const sloganManual = (state.uneSportSlogan || []).length > 0;
+  const mastGames = Front && Front.applySportSelection
+    ? Front.applySportSelection(sportCands, autoSlogan, state.uneSportSlogan, state.uneSportHide)
+    : autoSlogan;
+  /* Note du bandeau (périodes en direct) : ce que l’affiche contient vraiment. */
+  const games = sportsLines.some((x) => x.upcoming);
+  const mastNote = past ? '' : (games ? `Nouvelles récentes et matchs ${ahead ? 'à venir' : 'du jour'}` : 'Les nouvelles les plus récentes');
+  const mastNoteEn = past ? '' : (games ? `Latest news and ${ahead ? 'upcoming' : 'today’s'} games` : 'The latest news');
+  return {
+    model: 'une',
+    format: state.format,
+    qr: state.qr,
+    langs: false,
+    lang: state.lang,
+    layout: state.layout,
+    campus: campusSlug,
+    dpi,
+    articles: uneArticlesWithRoles().articles,
+    briefs: uneArticlesWithRoles().briefs,
+    /* « En ondes » = émission en cours : sans objet pour le lendemain (grille inconnue). */
+    radioLines: (recap || past || ahead) ? [] : pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
+    sportsLines,
+    /* Période passée : matchs à partir du lendemain (ceux du jour peuvent être joués à l’impression). */
+    mastGames,
+    mastGamesManual: sloganManual,
+    mastExtras: uneMastExtras(state.uneMastExtra || 'radio', bars, campus, info, sportsLines),
+    mastNote,
+    mastNoteEn,
+    recap: recap ? { stats: recap.stats } : null,
+    period: state.unePeriodInfo,
+    tagline: state.uneTagline,
+    brand: state.uneBrand || null,
+    leadPhoto: state.uneLeadPhoto,
+    mastGlass: state.uneMastGlass,
+    articleImages: images || new Map(),
+    photoImg: photoImg || null,
+    credit: photo?.credit,
+    license: photo?.license,
+    photoUrl: photo?.url,
+    focalX: state.focalX,
+    focalY: state.focalY,
+    cropScale: state.zoom,
+    angle: state.angle,
+  };
+}
+
 function previewFit() {
   const pane = document.getElementById('preview-pane');
   const crop = document.getElementById('crop-tools');
@@ -899,14 +3243,17 @@ function previewFit() {
   return { maxW, maxH };
 }
 
-function paintPreview(img, photo) {
+function paintPreview(img, photo, uneOpts) {
   const out = document.getElementById('preview');
-  const canvas = compose({
+  const canvas = compose(isUneModel()
+    ? uneComposeOpts(PREVIEW_DPI, uneOpts?.articleImages, img, photo)
+    : {
     format: state.format,
     campus: state.campus,
     lang: state.lang,
     greeting: state.greeting,
-    langs: state.langs,
+    tagline: state.uneTagline,
+    langs: false,
     showUni: state.showUni,
     qr: state.qr,
     dpi: PREVIEW_DPI,
@@ -942,23 +3289,44 @@ async function preview() {
   const recipe = document.getElementById('recipe');
   const frame = document.getElementById('preview');
   const gen = ++previewGen;
-  const photo = currentPhoto();
+  const photo = (!isUneModel() || uneUsesPhoto()) ? currentPhoto() : null;
   if (recipe) recipe.textContent = recipeLine();
   frame.classList.add('is-busy');
+  frame.dataset.state = 'occupe'; /* repère des tests et exports : « pret » quand l’aperçu final est peint */
   try {
-    paintPreview(null, photo);
-    if (photo) {
-      const img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
+    if (isUneModel()) {
+      paintPreview(null, photo, { articleImages: new Map() });
+      await loadUneSidebars();
+      if ((state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) || uneSportsManualActive()) await loadUneSportsHistory();
+      const images = await loadUneImages(uneArticlesWithRoles().articles);
       if (gen !== previewGen) return;
-      lastPhotoImg = img;
-      paintPreview(img, photo);
+      let bg = null;
+      if (photo) {
+        try { bg = await loadImage(printUrl(photo), !isLocalPhoto(photo)); } catch { bg = null; }
+      }
+      if (gen !== previewGen) return;
+      lastPhotoImg = bg;
+      paintPreview(bg, photo, { articleImages: images });
+    } else {
+      paintPreview(null, photo);
+      if (photo) {
+        const img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
+        if (gen !== previewGen) return;
+        lastPhotoImg = img;
+        paintPreview(img, photo);
+      }
     }
     if (gen !== previewGen) return;
-    status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>`;
+    status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
+    if (isUneModel()) document.body.dataset.posterCoupures = String((window.__uneCuts || []).length);
+    frame.dataset.state = 'pret';
   } catch (err) {
     if (gen !== previewGen) return;
+    frame.dataset.state = 'erreur';
     paintPreview(null, null);
-    status.textContent = `Photo indisponible — fond radar. ${err.message}`;
+    status.textContent = isUneModel()
+      ? `Aperçu indisponible. ${err.message}`
+      : `Photo indisponible — fond radar. ${err.message}`;
   } finally {
     if (gen === previewGen) frame.classList.remove('is-busy');
   }
@@ -1095,6 +3463,25 @@ async function rasterTiles(opts, w, h) {
   return tiles;
 }
 
+function printFileStem(fmt, dpi) {
+  if (isUneModel()) {
+    const layout = state.layout === 'verre' ? 'verre' : 'classique';
+    const uni = (state.uneCampus && state.uneCampus !== 'toutes') ? `-${state.uneCampus}` : '';
+    const per = state.unePeriod && state.unePeriod !== 'jour' ? `-${state.unePeriod}` : '';
+    const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
+    const langs = state.langs ? '-langues' : '';
+    const qr = state.qr ? '-qr' : '';
+    return `le-radar-affiche-une-${layout}${uni}${per}-${fmt.file}-${lang}${langs}${qr}${fmt.screen ? '' : `-${dpi}dpi`}`;
+  }
+  const campus = campusOf(state.campus);
+  const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
+  const uni = state.showUni ? '' : '-sans-etab';
+  const qr = state.qr ? '-qr' : '';
+  const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
+  const langs = state.langs ? '-langues' : '';
+  return `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${dpi}dpi`;
+}
+
 async function downloadPrint(kind = 'pdf') {
   const buttons = [document.getElementById('dl'), document.getElementById('dl-jpg'), document.getElementById('dl-bottom'), document.getElementById('dl-jpg-bottom')];
   const status = document.getElementById('status');
@@ -1103,29 +3490,45 @@ async function downloadPrint(kind = 'pdf') {
   try {
     const fmt = FORMATS[state.format];
     const dpi = outputDpi();
-    const photo = currentPhoto();
+    const photo = (!isUneModel() || uneUsesPhoto()) ? currentPhoto() : null;
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
+    if (isUneModel()) await loadUneSidebars();
+    if (isUneModel() && ((state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) || uneSportsManualActive())) await loadUneSportsHistory();
+    const uneImages = isUneModel() ? await loadUneImages(uneArticlesWithRoles().articles) : null;
     const { w, h } = px(fmt, dpi);
-    const composeOpts = {
+    const composeOpts = isUneModel()
+      ? uneComposeOpts(dpi, uneImages, img, photo)
+      : {
       format: state.format,
       campus: state.campus,
       lang: state.lang,
       greeting: state.greeting,
-      langs: state.langs,
+      tagline: state.uneTagline,
+      langs: false,
       showUni: state.showUni,
       qr: state.qr,
       dpi,
       photoImg: img,
       credit: photo?.credit,
       license: photo?.license,
-    photoUrl: photo?.url,
       photoUrl: photo?.url,
       focalX: state.focalX,
       focalY: state.focalY,
       cropScale: state.zoom,
       angle: state.angle,
     };
+    if (fmt.screen) {
+      /* Écran : PNG à la taille exacte en pixels, quel que soit le bouton. */
+      const canvas = compose(composeOpts);
+      if (canvas.width !== w || canvas.height !== h) throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
+      const png = await new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('PNG indisponible'))), 'image/png'));
+      const name = `${printFileStem(fmt, dpi)}.png`;
+      const how = await saveBlob(png, name);
+      if (how === 'abort') { status.textContent = 'Téléchargement annulé.'; return; }
+      status.textContent = `PNG ${name} · ${fmt.label} · taille exacte pour l’écran.${isUneModel() ? uneMissingImagesNote() : ''}`;
+      return;
+    }
     let jpegBlob = null;
     let tiles = null;
     if (!mustTile(w, h)) {
@@ -1141,13 +3544,7 @@ async function downloadPrint(kind = 'pdf') {
       const { w: sw, h: sh } = px(fmt, safe);
       const canvas = compose({ ...composeOpts, dpi: safe });
       jpegBlob = await jpegOfCanvas(canvas);
-      const campus = campusOf(state.campus);
-      const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
-      const uni = state.showUni ? '' : '-sans-etab';
-      const qr = state.qr ? '-qr' : '';
-      const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
-      const langs = state.langs ? '-langues' : '';
-      const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${safe}dpi`;
+      const stem = printFileStem(fmt, safe);
       const how = await saveBlob(jpegBlob, `${stem}.jpg`);
       if (how === 'abort') {
         status.textContent = 'Téléchargement annulé.';
@@ -1158,13 +3555,7 @@ async function downloadPrint(kind = 'pdf') {
       status.innerHTML = `JPEG <strong>${escapeAttr(stem)}.jpg</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(safe)} dpi · ${escapeAttr(mb)} Mo (Safari ne tient pas un JPEG ${escapeAttr(dpi)} dpi). Le PDF reste à ${escapeAttr(dpi)} dpi.${escapeAttr(shareHint)}`;
       return;
     }
-    const campus = campusOf(state.campus);
-    const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
-    const uni = state.showUni ? '' : '-sans-etab';
-    const qr = state.qr ? '-qr' : '';
-    const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
-    const langs = state.langs ? '-langues' : '';
-    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${dpi}dpi`;
+    const stem = printFileStem(fmt, dpi);
     let blob;
     let name;
     if (kind === 'pdf') {
@@ -1187,7 +3578,7 @@ async function downloadPrint(kind = 'pdf') {
     const mb = (blob.size / 1_048_576).toFixed(1);
     const tiled = tiles ? ' Composé en tuiles (limite Safari).' : '';
     const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
-    status.innerHTML = `Fichier <strong>${escapeAttr(name)}</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(dpi)} dpi · ${escapeAttr(mb)} Mo.${escapeAttr(tiled)}${escapeAttr(shareHint)} Imprimez à 100 %, sans « ajuster à la page ».`;
+    status.innerHTML = `Fichier <strong>${escapeAttr(name)}</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(dpi)} dpi · ${escapeAttr(mb)} Mo.${escapeAttr(tiled)}${escapeAttr(shareHint)} Imprimez à 100 %, sans « ajuster à la page ».${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
   } catch (err) {
     status.textContent = `Téléchargement impossible : ${err.message}`;
   } finally {
@@ -1286,7 +3677,8 @@ function syncDpiLabels() {
 
 function syncLangChoice() {
   const campus = campusOf(state.campus);
-  const allowed = campus.bilingual;
+  /* Loi 96 : la Une d’un établissement francophone reste en français. */
+  const allowed = isUneModel() ? uneBilingualAllowed(state.uneCampus) : campus.bilingual;
   const bi = document.querySelector('label:has(input[name="lang"][value="bilingue"])');
   if (bi) bi.hidden = !allowed;
   if (!allowed && state.lang === 'bilingue') {
@@ -1295,7 +3687,7 @@ function syncLangChoice() {
     if (fr) fr.checked = true;
   }
   const uniBox = document.getElementById('uni-toggle');
-  if (uniBox) uniBox.hidden = !campus.line;
+  if (uniBox) uniBox.hidden = isUneModel() || !campus.line;
 }
 
 function resetCrop(photo) {
@@ -1328,11 +3720,64 @@ function syncCropUi() {
 function applyQuery() {
   let q;
   try { q = new URLSearchParams(location.search); } catch { return; }
+  const model = q.get('modele') || q.get('model');
+  if (model === 'une' || model === 'campus') {
+    state.model = model;
+    const input = document.querySelector(`input[name="model"][value="${model}"]`);
+    if (input) input.checked = true;
+  }
   const campus = q.get('campus');
   if (campus && CAMPUSES.some((c) => c.slug === campus)) {
     state.campus = campus;
+    if (state.model !== 'une') state.model = 'campus';
     const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
     if (input) input.checked = true;
+    const modelCampus = document.querySelector('input[name="model"][value="campus"]');
+    if (modelCampus && state.model === 'campus') modelCampus.checked = true;
+  }
+  const layout = q.get('layout') || q.get('mise');
+  if (layout === 'verre' || layout === 'classique') {
+    state.layout = layout;
+    const input = document.querySelector(`input[name="layout"][value="${layout}"]`);
+    if (input) input.checked = true;
+  }
+  const uni = q.get('uni') || q.get('uneCampus') || q.get('universite');
+  if (uni && (uni === 'toutes' || CAMPUSES.some((c) => c.slug === uni))) {
+    state.uneCampus = uni;
+  }
+  const entete = q.get('entete');
+  if (entete && UNE_MAST_EXTRAS.includes(entete)) state.uneMastExtra = entete;
+  { const sel = document.getElementById('une-entete'); if (sel) sel.value = state.uneMastExtra || 'radio'; }
+  const media = q.get('media');
+  if (media && /^[a-z0-9-]{2,60}$/.test(media)) state.uneMedia = media;
+  const periode = q.get('periode') || q.get('period');
+  if (periode && Object.prototype.hasOwnProperty.call(UNE_PERIOD_LABELS, periode)) {
+    state.unePeriod = periode;
+    const sel = document.getElementById('une-period');
+    if (sel) sel.value = periode;
+  }
+  const picks = (q.get('articles') || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{16}$/.test(x));
+  if (picks.length) state.uneManualIds = picks;
+  const leadPick = q.get('une');
+  if (leadPick && /^[0-9a-f]{16}$/.test(leadPick)) {
+    state.uneLeadId = leadPick;
+    if (state.uneManualIds.length && !state.uneManualIds.includes(leadPick)) state.uneManualIds.push(leadPick);
+  }
+  const ids16 = (k) => (q.get(k) || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{16}$/.test(x));
+  const ids8 = (k) => (q.get(k) || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{8}$/.test(x));
+  state.uneRoles = { aussi: ids16('aussi'), vedettes: ids16('vedettes'), bref: ids16('bref'), masquer: ids16('masquer') };
+  state.uneSportSlogan = ids8('slogan');
+  state.uneSportBand = ids8('bande');
+  state.uneSportHide = ids8('sportsmasques');
+  const photoUne = q.get('photoune');
+  if (['bande', 'ratio', 'surimpression'].includes(photoUne)) state.uneLeadPhoto = photoUne;
+  const enteteFond = q.get('entetefond');
+  if (['opaque', 'voile', 'givre'].includes(enteteFond)) state.uneMastGlass = enteteFond;
+  const phrase = q.get('phrase') || q.get('tagline');
+  if (phrase && Object.prototype.hasOwnProperty.call(UNE_TAGLINES, phrase)) {
+    state.uneTagline = phrase;
+    const sel = document.getElementById('une-tagline');
+    if (sel) sel.value = phrase;
   }
   const photo = q.get('photo');
   if (photo) state.photoHint = photo;
@@ -1348,7 +3793,6 @@ function applyQuery() {
     format: Object.keys(FORMATS),
     lang: ['standard', 'bilingue', 'minimal'],
     qr: ['oui', 'non'],
-    langs: ['oui', 'non'],
   };
   Object.entries(presets).forEach(([name, allowed]) => {
     const value = q.get(name);
@@ -1358,7 +3802,6 @@ function applyQuery() {
     if (name === 'format') state.format = value;
     if (name === 'lang') state.lang = value;
     if (name === 'qr') state.qr = value === 'oui';
-    if (name === 'langs') state.langs = value === 'oui';
   });
 }
 
@@ -1375,12 +3818,63 @@ function applyPhotoHint() {
 
 function syncGenericLangs() {
   if (state.campus !== 'generique') return;
-  state.langs = true;
-  const oui = document.querySelector('input[name="langs"][value="oui"]');
-  if (oui) oui.checked = true;
+  state.langs = false;
 }
 
 function applyChoice(name, value) {
+  if (name === 'model') {
+    state.model = value === 'une' ? 'une' : 'campus';
+    if (!isUneModel() && FORMATS[state.format]?.screen) {
+      state.format = 'tabloid';
+      const tab = document.querySelector('input[name="format"][value="tabloid"]');
+      if (tab) tab.checked = true;
+    }
+    if (isUneModel() && state.layout === 'verre') ensureUnePhoto();
+    syncModelUi();
+    renderChoices();
+    syncSettingsUrl();
+    if (isUneModel()) {
+      loadUneFeed().then(() => preview());
+      return;
+    }
+  }
+  if (name === 'layout') {
+    state.layout = value === 'verre' ? 'verre' : 'classique';
+    if (state.layout === 'verre') ensureUnePhoto();
+    syncModelUi();
+    renderChoices();
+  }
+  if (name === 'unePeriod') {
+    state.unePeriod = Object.prototype.hasOwnProperty.call(UNE_PERIOD_LABELS, value) ? value : 'jour';
+    syncSettingsUrl();
+    loadUneFeed().then(() => preview());
+    return;
+  }
+  if (name === 'uneTagline') {
+    state.uneTagline = Object.prototype.hasOwnProperty.call(UNE_TAGLINES, value) ? value : 'direct';
+  }
+  if (name === 'uneMedia') {
+    state.uneMedia = value || 'tous';
+    syncSettingsUrl();
+    loadUneFeed().then(() => preview());
+    return;
+  }
+  if (name === 'uneEntete') {
+    state.uneMastExtra = UNE_MAST_EXTRAS.includes(value) ? value : 'radio';
+  }
+  if (name === 'uneCampus') {
+    state.uneCampus = value || 'toutes';
+    state.uneMedia = 'tous';
+    syncSettingsUrl();
+    syncLangChoice();
+    if (state.layout === 'verre') {
+      state.photoId = null;
+      ensureUnePhoto();
+      renderChoices();
+    }
+    loadUneFeed().then(() => preview());
+    return;
+  }
   if (name === 'format') {
     state.format = value;
     syncDpiLab();
@@ -1401,12 +3895,12 @@ function applyChoice(name, value) {
   }
   if (name === 'lang') state.lang = value;
   if (name === 'qr') state.qr = value === 'oui';
-  if (name === 'langs') state.langs = value === 'oui';
   if (name === 'showUni') state.showUni = value === 'oui';
   if (name === 'photo') {
     state.photoId = value || null;
     resetCrop(currentPhoto());
   }
+  syncSettingsUrl();
   preview();
 }
 
@@ -1474,6 +3968,21 @@ function bind() {
       upload.value = '';
     });
   }
+  const autoBtn = document.getElementById('une-auto');
+  if (autoBtn) {
+    autoBtn.addEventListener('click', () => {
+      state.uneManualIds = [];
+      state.uneLeadId = '';
+      state.uneRoles = { aussi: [], vedettes: [], bref: [], masquer: [] };
+      state.uneSportBand = [];
+      state.uneSportSlogan = [];
+      state.uneSportHide = [];
+      syncUneSelectionUrl();
+      renderUneList();
+      renderUneSportsList();
+      preview();
+    });
+  }
   document.getElementById('dl').addEventListener('click', () => downloadPrint('pdf'));
   document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
   document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
@@ -1520,6 +4029,7 @@ async function main() {
   syncUploadLab();
   syncDpiLabels();
   syncLangChoice();
+  syncModelUi();
   await loadFonts();
   await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
@@ -1542,7 +4052,9 @@ async function main() {
     return true;
   });
   applyPhotoHint();
+  if (isUneModel() && state.layout === 'verre') ensureUnePhoto();
   renderChoices();
+  if (isUneModel()) await loadUneFeed();
   await preview();
 }
 

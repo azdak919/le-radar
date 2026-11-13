@@ -1,0 +1,124 @@
+name: Social — La une du matin et du soir
+
+# « La une du matin » (≈ 7 h 45) et « La une du soir » (≈ 19 h 30), heure de Montréal, sur Bluesky, Mastodon, Tumblr, X, Facebook et LinkedIn,
+# EN PLUS des publications existantes. Image rendue sans tête (affiches/social-une.html), liens cliquables dans le texte, aucune mention @.
+# Fenêtres d'envoi (data/social/policy.json formats.une.slots) : matin 7 h 30-10 h 30, soir 19 h 15-22 h 30, heure de Montréal.
+# Les crons GitHub sont en UTC et partent souvent en retard : on en pose pour l'heure d'été (HAE) ET l'heure d'hiver (HNE), plus des secours,
+# et on se greffe aussi sur la fin de « Social — Mastodon » (lancé aux 30 min par le Worker le-radar-news-trigger, plus ponctuel).
+# La porte (job « gate ») ne fait rien hors fenêtre ni si le créneau est déjà traité : data/social/une-state.json garantit une seule
+# publication par réseau et par créneau ; chaque réseau est traité séparément (un réseau en panne ne bloque pas les autres, 3 essais au plus).
+# Aperçu sans envoi d'une PR : social-une-preview.yml.
+on:
+  schedule:
+    - cron: '41 11,12 * * *'   # matin : 7 h 41 HAE / 7 h 41 HNE (l'autre heure tombe hors fenêtre et ne fait rien)
+    - cron: '13,43 13 * * *'   # matin, secours : 9 h 13-9 h 43 HAE / 8 h 13-8 h 43 HNE
+    - cron: '23 23 * * *'      # soir : 19 h 23 HAE
+    - cron: '23,53 0 * * *'    # soir : 19 h 23 HNE (20 h 23 HAE, secours)
+    - cron: '23 1 * * *'       # soir, secours : 20 h 23 HNE / 21 h 23 HAE
+  workflow_run:
+    workflows: ['Social — Mastodon (@leradar@piaille.fr)']
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: 'Créneau (auto = selon l’heure de Montréal)'
+        type: choice
+        options: [auto, matin, soir]
+        default: auto
+      dry_run:
+        description: 'Essai : aperçus seulement, rien n’est hébergé ni publié (décoché = publication réelle si le créneau est dû)'
+        type: boolean
+        default: true
+      now:
+        description: 'Simuler cet instant (ISO, ex. 2026-11-13T12:45:00Z) ; vide = maintenant'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      due: ${{ steps.g.outputs.due }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          sparse-checkout: |
+            scripts
+            data/social
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - id: g
+        env:
+          UNE_SLOT: ${{ inputs.slot || 'auto' }}
+          DRY_RUN: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
+          NOW_OVERRIDE: ${{ inputs.now || '' }}
+        run: node scripts/social/une-run.mjs --gate ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"}
+
+  une:
+    needs: gate
+    if: needs.gate.outputs.due == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: data-writers-social
+      cancel-in-progress: false
+      queue: max
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Cache Playwright Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Police émoji (émojis de sport dans les images)
+        run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
+      - name: Sélection, images, contrôles et publication éventuelle
+        env:
+          UNE_SLOT: ${{ inputs.slot || 'auto' }}
+          DRY_RUN: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
+          NOW_OVERRIDE: ${{ inputs.now || '' }}
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
+          TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}
+          TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
+          BUFFER_LINKEDIN_CHANNEL_ID: ${{ vars.BUFFER_LINKEDIN_CHANNEL_ID }}
+        run: node scripts/social/une-run.mjs --slot "$UNE_SLOT" ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"} --out une-preview
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: apercu-une
+          path: une-preview/
+          if-no-files-found: ignore
+      - name: Commit de l'état (data/social/une-state.json)
+        if: always()
+        run: |
+          git diff --quiet -- data/social/une-state.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/social/une-state.json
+          git commit -s -m "bot(social): état de la une du matin et du soir"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/social/une-state.json\"))'"

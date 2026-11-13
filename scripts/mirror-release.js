@@ -6,7 +6,7 @@
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { TAG, IMG, plan, isTransient, keepNamesFromPages } = require('./mirror-release-lib');
+const { TAG, IMG, plan, isTransient, keepNamesFromPages, keepNamesFromSocial } = require('./mirror-release-lib');
 
 const ROOT = path.join(__dirname, '..');
 const DIR = path.join(ROOT, 'assets', 'news-images');
@@ -55,6 +55,9 @@ if (mode === 'restore') {
   try {
     keep = keepNamesFromPages(JSON.parse(fs.readFileSync(path.join(ROOT, 'data/article-pages.json'), 'utf8')));
   } catch { /* registre absent : seule la grâce s'applique */ }
+  // Images des publications Buffer en file ou récentes : gardées tant que la plateforme peut encore les télécharger.
+  const social = ['data/buffer-sent.json', 'data/buffer-pages-sent.json'].map((f) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8')); } catch { return null; } });
+  keep = [...new Set([...keep, ...keepNamesFromSocial(social)])];
   const p = plan({ local, tracked, remote, sizes, keep });
   console.log(`mirror-release sync${dry ? ' (simulation)' : ''} : ${p.upload.length} à téléverser, ${p.delete.length} à supprimer, ${remote.length} dans la Release`);
   if (!dry) {
