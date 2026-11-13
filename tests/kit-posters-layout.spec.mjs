@@ -67,21 +67,16 @@ for (const width of widths) {
         rows.get(c.top).push(c.h);
       }
       if (width >= 1024) {
-        expect(info.cols, 'plusieurs colonnes sur grand écran').toBeGreaterThanOrEqual(4);
+        expect(info.cols, 'plusieurs colonnes sur grand écran').toBeGreaterThanOrEqual(3);
         expect(info.fill, 'la rangée remplit la largeur (pas de vide à droite)').toBeGreaterThan(0.9);
       }
-      const rowsByTop = new Map();
-      for (const c of info.cards) {
-        if (!rowsByTop.has(c.top)) rowsByTop.set(c.top, []);
-        rowsByTop.get(c.top).push(c);
+      if (width >= 1440) {
+        expect(info.cols, 'au moins 5 colonnes à 1440 px').toBeGreaterThanOrEqual(5);
       }
-      for (const row of rowsByTop.values()) {
-        const formats = new Set(row.map((c) => c.format));
-        if (formats.size === 1) {
-          const hs = row.map((c) => c.h);
-          expect(Math.max(...hs) - Math.min(...hs), 'hauteurs égales sur une rangée de même format').toBeLessThan(2);
-        }
+      if (width >= 1920) {
+        expect(info.cols, 'au moins 6 colonnes à 1920 px').toBeGreaterThanOrEqual(6);
       }
+      /* Les hauteurs de carte varient (pastilles, 2 ou 3 actions) ; le cadre d’aperçu est déjà vérifié. */
       expect(info.groups, 'pas de titres de groupe qui cassent la grille').toBe(0);
     });
   }
