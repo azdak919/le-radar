@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-13T03:37:30.769Z",
+  "updated": "2026-11-13T04:07:31.723Z",
   "total": 188,
   "pool": 52,
   "incomplete": 32,
   "withLeadExcerpt": 143,
   "candidates": 32,
-  "enriched": 3,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -46,7 +46,7 @@
       "changed": false
     },
     {
-      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtral",
+      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtrale",
       "link": "https://impactcampus.ca/arts-et-culture/la-version-qui-ninteresse-personne-ou-comment-reussir-une-adaptation-theatral/",
       "ok": true,
       "score": 100,
