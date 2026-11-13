@@ -111,6 +111,17 @@ assert.deepEqual(missingNav, [], `établissements absents de la liste studio : $
 const unknownNav = navSlugs.filter((s) => !slugs.includes(s));
 assert.deepEqual(unknownNav, [], `liens de campus inconnus du studio : ${unknownNav.join(', ')}`);
 
+const meta = JSON.parse(readFileSync(join(dir, 'gallery-meta.json'), 'utf8'));
+assert.ok(meta.featured, 'gallery-meta : featured manquant');
+assert.ok(meta.periods, 'gallery-meta : periods manquant');
+const featured = examples.find((ex) => ex.id === meta.featured);
+assert.ok(featured && featured.kind === 'une', `gallery-meta : exemple featured inconnu (${meta.featured})`);
+assert.ok(meta.periods[meta.featured]?.fr, 'gallery-meta : période de l’exemple featured manquante');
+for (const ex of examples.filter((e) => e.kind === 'une')) {
+  const per = meta.periods[ex.id];
+  assert.ok(per && per.fr, `gallery-meta : période manquante pour ${ex.id}`);
+}
+
 const stamp = JSON.parse(readFileSync(join(dir, 'stamp.json'), 'utf8'));
 assert.equal(stamp.fingerprint, posterContentFingerprint(root),
   'affiches du kit périmées : le texte, les établissements ou les exemples ont changé. Relancer npm run kit:generic-posters && npm run kit:example-posters');

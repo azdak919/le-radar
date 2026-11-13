@@ -3454,6 +3454,15 @@ async function preview() {
     if (gen !== previewGen) return;
     status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
     if (isUneModel()) document.body.dataset.posterCoupures = String((window.__uneCuts || []).length);
+    if (isUneModel() && state.unePeriodInfo) {
+      frame.dataset.periodId = state.unePeriodInfo.id || '';
+      frame.dataset.periodFr = state.unePeriodInfo.fr || '';
+      frame.dataset.periodEn = state.unePeriodInfo.en || '';
+    } else {
+      delete frame.dataset.periodId;
+      delete frame.dataset.periodFr;
+      delete frame.dataset.periodEn;
+    }
     frame.dataset.state = 'pret';
   } catch (err) {
     if (gen !== previewGen) return;
@@ -4165,7 +4174,7 @@ function bind() {
       requestAnimationFrame(() => { sizeStudioDash(); applyPreviewView(); });
     });
   });
-  if (dash && !dash.dataset.mobilePane) dash.dataset.mobilePane = 'preview';
+  if (dash && !dash.dataset.mobilePane) dash.dataset.mobilePane = 'controls';
   document.querySelectorAll('.dash-flow fieldset').forEach((fs) => {
     const hint = fs.querySelector('.field-hint:not(#une-status)');
     if (hint && hint.textContent.trim()) {

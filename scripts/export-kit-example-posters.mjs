@@ -152,6 +152,21 @@ function dests(ex) {
   };
 }
 
+function writeGalleryMeta(periods) {
+  const featured = 'une-udem-ql-lettre-semaine';
+  const now = new Date();
+  const ymd = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
+  const featuredPeriod = periods[featured] || {};
+  const meta = {
+    generatedAt: now.toISOString(),
+    previewV: `${ymd}-${featuredPeriod.id || 'semaine'}`,
+    featured,
+    periods,
+  };
+  writeFileSync(join(outDir, 'gallery-meta.json'), `${JSON.stringify(meta, null, 2)}\n`);
+  return meta;
+}
+
 function deriveFiles(srcPath, ex) {
   const [pw, ph] = PREVIEW[ex.format] || PREVIEW.tabloid;
   const { preview, file } = dests(ex);
@@ -197,6 +212,9 @@ async function main() {
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, acceptDownloads: true });
     await attachLocalPhotos(page);
     const examples = catalog.examples.filter((ex) => !only || ex.id === only || ex.kind === only);
+    let existingMeta = {};
+    try { existingMeta = JSON.parse(readFileSync(join(outDir, 'gallery-meta.json'), 'utf8')); } catch { /* premier passage */ }
+    const periods = { ...(existingMeta.periods || {}) };
     for (const ex of examples) {
       const out = dests(ex);
       if (!force && existsSync(out.preview) && existsSync(out.file)) {
@@ -220,8 +238,18 @@ async function main() {
       const srcPath = join(tmp, `${ex.id}-${suggested}`);
       await download.saveAs(srcPath);
       const written = await deriveFiles(srcPath, ex);
+      if ((ex.kind || 'campus') === 'une') {
+        const period = await page.evaluate(() => {
+          const el = document.getElementById('preview');
+          if (!el || !el.dataset.periodFr) return null;
+          return { id: el.dataset.periodId || '', fr: el.dataset.periodFr, en: el.dataset.periodEn || '' };
+        });
+        if (period && period.fr) periods[ex.id] = period;
+      }
       console.log('OK', ex.id, '→', written.file);
     }
+    const meta = writeGalleryMeta(periods);
+    console.log('gallery-meta', meta.previewV);
   } finally {
     await browser.close();
     server.kill('SIGTERM');

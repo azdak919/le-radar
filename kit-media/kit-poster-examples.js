@@ -8,7 +8,7 @@
   const compose = grid.getAttribute('data-compose') || '../affiches/';
   const filterBox = document.getElementById('kit-poster-filter');
   const countEl = document.getElementById('kit-poster-count');
-  const PREVIEW_V = 'mix-1';
+  let PREVIEW_V = 'mix-2';
   const PREVIEW_WH = {
     tabloid: [660, 1020],
     letter: [660, 854],
@@ -249,10 +249,68 @@
     });
   });
 
-  fetch(`${base}examples.json?v=${PREVIEW_V}`, { cache: 'no-cache' })
-    .then((r) => r.json())
-    .then((data) => {
+  function fillFeatured(examples, meta) {
+    const fig = document.getElementById('kit-une-example');
+    if (!fig) return;
+    const id = fig.dataset.featured || (meta && meta.featured);
+    const ex = (examples || []).find((e) => e.id === id);
+    const period = meta && meta.periods && id ? meta.periods[id] : null;
+    const img = fig.querySelector('img');
+    const link = document.getElementById('kit-une-example-link') || fig.querySelector('a');
+    const cap = document.getElementById('kit-une-example-caption');
+    const v = PREVIEW_V;
+    if (ex && link) {
+      const screen = ex.format === 'ecran-paysage' || ex.format === 'ecran-portrait';
+      const name = screen ? `affiche-ex-${ex.id}.png` : `affiche-ex-${ex.id}-600dpi.pdf`;
+      link.href = `${base}${name}?v=${v}`;
+    }
+    if (ex && img) {
+      img.src = `${base}affiche-ex-${ex.id}-preview.jpg?v=${v}`;
+    }
+    if (!cap) return;
+    const label = lang === 'en' ? (ex && ex.labelEn) : (ex && ex.labelFr);
+    const when = period ? (lang === 'en' ? period.en : period.fr) : '';
+    if (lang === 'en') {
+      const head = 'Example — <strong>Quartier Libre</strong> front page (Université de Montréal), letter, last week, light paper background.';
+      cap.innerHTML = when
+        ? `${head} ${when}. The thumbnail is the downloadable file, scaled down.`
+        : `${head} The thumbnail is the downloadable file, scaled down. The date shown matches the generated content.`;
+      if (img && when) img.alt = `Quartier Libre front page, Université de Montréal, letter, ${when}`;
+    } else {
+      const head = 'Exemple — La une de <strong>Quartier Libre</strong> (Université de Montréal), format lettre, dernière semaine, fond clair.';
+      cap.innerHTML = when
+        ? `${head} ${when}. L’aperçu est le fichier téléchargeable, réduit.`
+        : `${head} L’aperçu est le fichier téléchargeable, réduit. La date affichée suit le contenu généré.`;
+      if (img && when) img.alt = `La une Quartier Libre, Université de Montréal, format lettre, ${when}`;
+    }
+  }
+
+  function openCharteForHash() {
+    const ids = ['identite', 'logos', 'bannieres', 'regles', 'banners', 'rules', 'charte'];
+    const hash = (location.hash || '').replace(/^#/, '');
+    if (!ids.includes(hash)) return;
+    const box = document.querySelector('.kit-charte');
+    if (box && !box.open) box.open = true;
+    const target = document.getElementById(hash);
+    if (target) target.scrollIntoView();
+  }
+
+  document.querySelectorAll('.kit-toc a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', () => {
+      setTimeout(openCharteForHash, 0);
+    });
+  });
+  window.addEventListener('hashchange', openCharteForHash);
+  openCharteForHash();
+
+  Promise.all([
+    fetch(`${base}gallery-meta.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+    fetch(`${base}examples.json`, { cache: 'no-cache' }).then((r) => r.json()),
+  ])
+    .then(([meta, data]) => {
+      if (meta && meta.previewV) PREVIEW_V = meta.previewV;
       const examples = (data.examples || []).filter((ex) => ex.id);
+      fillFeatured(examples, meta);
       mount(examples);
       buildFilter(examples);
       applyFilter('all');

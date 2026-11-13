@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
     <link rel="stylesheet" href="../seo-pages.css" />
-    <link rel="stylesheet" href="../kit-media.css?v=kit-2" />
+    <link rel="stylesheet" href="../kit-media.css?v=kit-3" />
     <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e102" />
     <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e102" />
     <script src="../dev/midwidth-preview.js?v=wide-auto-e102"></script>
@@ -97,11 +97,11 @@
       <section class="kit-section" id="une">
         <h2>La une du Radar</h2>
         <p>Une page de journal composée en direct avec les vrais articles des médias étudiants, les matchs et résultats du sport étudiant et les prochaines émissions de la radio du campus. Rien n’est inventé : s’il y a peu d’articles, l’affiche prend ceux qui existent.</p>
-        <figure class="kit-example">
-          <a href="../assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-600dpi.pdf?v=mix-1" aria-label="Télécharger l’exemple de une Quartier Libre en PDF">
-            <img src="../assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-preview.jpg?v=mix-1" width="660" height="854" alt="La une Quartier Libre, Université de Montréal, lettre, dernière semaine de novembre 2026">
+        <figure class="kit-example" id="kit-une-example" data-featured="une-udem-ql-lettre-semaine">
+          <a href="../assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-600dpi.pdf" id="kit-une-example-link" aria-label="Télécharger l’exemple de une Quartier Libre en PDF">
+            <img src="../assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-preview.jpg" width="660" height="854" alt="La une Quartier Libre, Université de Montréal, format lettre, dernière semaine, fond clair">
           </a>
-          <figcaption>Exemple — La une de <strong>Quartier Libre</strong> (Université de Montréal), format lettre, dernière semaine, fond clair. Novembre 2026. L’aperçu est le fichier PDF téléchargeable, réduit.</figcaption>
+          <figcaption id="kit-une-example-caption">Exemple — La une de <strong>Quartier Libre</strong> (Université de Montréal), format lettre, dernière semaine, fond clair. L’aperçu est le fichier PDF téléchargeable, réduit. La date affichée suit le contenu généré.</figcaption>
         </figure>
         <div class="kit-block" role="group" aria-labelledby="kit-une-title">
         <h3 class="kit-block__title" id="kit-une-title">Composer la une</h3>
@@ -195,6 +195,8 @@
       </section>
 
 
+      <details class="kit-charte" id="charte">
+      <summary>Charte : identité, logos, bannières et règles</summary>
       <section class="kit-section" id="identite">
         <h2>Identité visuelle</h2>
         <h3>Couleurs</h3>
@@ -326,6 +328,7 @@
         </ul>
         <p>Questions des médias : <a href="mailto:azdak-qc@proton.me" data-contact-channel="email">Nous joindre</a></p>
       </section>
+      </details>
     </main>
 
       <!-- RADAR:FOOTER:START -->
@@ -381,6 +384,6 @@
     <script src="../nav-shell.js" defer></script>
     <script src="../native-tuner.js" defer></script>
     <script src="../engage-prompt.js" defer></script>
-    <script src="./kit-poster-examples.js?v=mix-1" defer></script>
+    <script src="./kit-poster-examples.js?v=mix-2" defer></script>
   </body>
 </html>

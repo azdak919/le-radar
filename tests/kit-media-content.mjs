@@ -45,6 +45,13 @@ for (const m of html.matchAll(/href="\.\.\/(assets\/[^"#?]+)"[^>]*download/g)) {
 }
 // Français propre : pas de « week-end », plus de rangée de langues, plus d’anglicismes repérés.
 assert.ok(!/week-?end/i.test(text), '« fin de semaine », jamais « week-end »');
+assert.ok(!/\b(?:novembre|décembre|janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre)\s+20\d\d/i.test(html),
+  'pas de date figée dans le HTML du kit : la légende de la une suit le contenu généré (gallery-meta.json)');
+const charte = html.includes('class="kit-charte"') || html.includes("class='kit-charte'");
+assert.ok(charte, 'charte repliée (details.kit-charte) manquante');
+assert.ok(!html.includes('<details class="kit-charte" open') && !html.includes('<details open class="kit-charte"'),
+  'la charte doit être repliée par défaut');
+
 assert.ok(!/·\s*langues/.test(text), 'mention de la rangée de langues retirée');
 const examples = JSON.parse(readFileSync(join(root, 'assets/kit/affiches/examples.json'), 'utf8')).examples;
 assert.ok(examples.every((e) => !('langs' in e) && !/langues|languages/.test(e.metaFr + e.metaEn)), 'exemples sans rangée de langues');

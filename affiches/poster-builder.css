@@ -6,18 +6,18 @@
 .affiche-wire .seo-title { margin-bottom: 8px; }
 
 .dash {
-  --studio-bg: #0e0f12;
-  --bg: #0e0f12;
-  --panel: #14161c;
-  --line: #26282d;
-  --ink: #f1f2f4;
-  --soft: #c2c6cd;
-  --muted: #888d96;
+  --studio-bg: #ece9e4;
+  --bg: #f6f4f0;
+  --panel: #fffcf8;
+  --line: #d8d3cb;
+  --ink: #17161c;
+  --soft: #3d3c44;
+  --muted: #5a5860;
   --purple: #6c2163;
   --sans: Inter, ui-sans-serif, system-ui, sans-serif;
   --serif: "Source Serif 4", Georgia, serif;
   --top: 0px;
-  color-scheme: dark;
+  color-scheme: light;
   color: var(--ink);
   background: var(--studio-bg);
   display: grid;
@@ -731,21 +731,21 @@ body:has(#local-lab-format-bar) .affiche-wire--studio .dash-controls {
   backdrop-filter: blur(8px);
 }
 
-html[data-theme="light"] .dash {
-  --studio-bg: #ece9e4;
-  --bg: #f6f4f0;
-  --panel: #fffcf8;
-  --line: #d8d3cb;
-  --ink: #17161c;
-  --soft: #3d3c44;
-  --muted: #5a5860;
-  color-scheme: light;
-  color: var(--ink);
-}
 html[data-theme="light"] .dash .btn { color: #fff; }
 html[data-theme="light"] .dash .btn-ghost { color: var(--ink); }
 html[data-theme="light"] .preview-frame {
   box-shadow: 0 20px 50px #00000022, 0 0 0 1px #00000014;
+}
+html[data-theme="dark"] .dash {
+  --studio-bg: #0e0f12;
+  --bg: #0e0f12;
+  --panel: #14161c;
+  --line: #26282d;
+  --ink: #f1f2f4;
+  --soft: #c2c6cd;
+  --muted: #888d96;
+  color-scheme: dark;
+  color: var(--ink);
 }
 
 @media (max-width: 900px) {
