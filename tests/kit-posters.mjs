@@ -53,7 +53,7 @@ for (const [id, file] of previews) {
 }
 
 // PDF et fichiers liés depuis la page.
-const links = [...html.matchAll(/(?:href|src)="\.\.\/(assets\/kit\/affiches\/[^"]+)"/g)].map((m) => m[1]);
+const links = [...html.matchAll(/(?:href|src)="\.\.\/(assets\/kit\/affiches\/[^"]+)"/g)].map((m) => m[1].replace(/[?#].*$/, ''));
 assert.ok(links.some((l) => l.endsWith('.pdf')), 'aucun PDF lié sur la page du kit');
 for (const rel of new Set(links)) {
   const file = join(root, rel);

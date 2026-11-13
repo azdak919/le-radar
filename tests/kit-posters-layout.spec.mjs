@@ -87,7 +87,7 @@ test('galerie d’affiches : aperçus campus sans bandeau mauve ni Scanne-moi @c
   test.setTimeout(60000);
   await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
   await page.goto('/kit-media/', { waitUntil: 'domcontentloaded' });
-  const cards = page.locator('#kit-poster-grid .kit-card--example');
+  const cards = page.locator('#kit-poster-grid .kit-card--poster');
   await expect(cards.first()).toBeVisible();
   const n = await cards.count();
   expect(n).toBeGreaterThan(10);
