@@ -516,6 +516,7 @@
       const sport = [team.sportLabel || team.sport || '', SEX_LABEL[team.sex] || ''].filter(Boolean).join(' ');
       return {
         kicker: sport,
+        emoji: sportEmoji(team.sportLabel || team.sport),
         line: `${who} ${g.scoreFor}–${g.scoreAgainst} ${vs}`.trim(),
         meta: frDate(`${g.date}T12:00:00`).replace(/\s\d{4}$/, ''),
         date: g.date,
@@ -526,6 +527,36 @@
     const wins = campus ? games.filter(({ g }) => (g.result || (g.scoreFor > g.scoreAgainst ? 'W' : '')) === 'W').length : 0;
     return { items, played, wins };
   }
+
+  /* Emoji de sport devant un match ou un résultat. Toute clé ajoutée ici doit avoir son glyphe
+   * dans la police auto-hébergée (assets/kit/fonts/emoji/, scripts/subset-poster-emoji-font.py). */
+  const SPORT_EMOJI_FALLBACK = '🏅';
+  const SPORT_EMOJI = [
+    [/flag[- ]?football|football/, '🏈'],
+    [/hockey/, '🏒'],
+    [/basket/, '🏀'],
+    [/volley/, '🏐'],
+    [/futsal|soccer/, '⚽'],
+    [/rugby/, '🏉'],
+    [/baseball|softball/, '⚾'],
+    [/badminton/, '🏸'],
+    [/tennis/, '🎾'],
+    [/golf/, '⛳'],
+    [/natation|swim/, '🏊'],
+    [/cross[- ]?country|athletisme|athletics|track/, '🏃'],
+    [/ultimate|frisbee/, '🥏'],
+    [/voile|sailing/, '⛵'],
+    [/cheer/, '📣'],
+    [/curling/, '🥌'],
+    [/\bski|snowboard/, '⛷️'],
+  ];
+  function sportEmoji(sport) {
+    const k = String(sport || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    if (!k) return SPORT_EMOJI_FALLBACK;
+    const hit = SPORT_EMOJI.find(([re]) => re.test(k));
+    return hit ? hit[1] : SPORT_EMOJI_FALLBACK;
+  }
+  const SPORT_EMOJI_ALL = [...new Set(SPORT_EMOJI.map(([, e]) => e).concat(SPORT_EMOJI_FALLBACK))];
 
   function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null, limit = FRONT_PAGE_COUNT, period = 'jour') {
     const picked = selectFrontPage(items, referenceDate, campus, limit, period);
@@ -545,6 +576,8 @@
     bylineOf,
     manualSelection,
     periodResults,
+    sportEmoji,
+    SPORT_EMOJI_ALL,
     isProSportItem,
     periodWindow,
     FRONT_PAGE_COUNT,

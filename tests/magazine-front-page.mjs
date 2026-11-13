@@ -207,4 +207,19 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.ok(r.items.every((it) => it.date >= win.from && it.date <= win.to));
   assert.equal(front.periodResults(teams, win, { slug: 'udem', line: 'Université de Montréal', label: 'x' }, 4).items.length, 0, 'aucune donnée : bande retirée');
   assert.equal(front.periodResults(teams, front.periodWindow('jour'), laval, 4).items.length, 0);
+  assert.ok(r.items.every((it) => front.SPORT_EMOJI_ALL.includes(it.emoji)), 'emoji de sport sur chaque résultat');
+  assert.ok(r.items.some((it) => it.emoji === '🏐') && r.items.some((it) => it.emoji === '🏒'), 'emoji selon le sport de la donnée');
+}
+
+// Emojis de sport : selon le sport de la donnée, repli neutre, tous couverts par la police auto-hébergée.
+{
+  const cases = { Football: '🏈', 'Flag football': '🏈', Hockey: '🏒', Basketball: '🏀', Volleyball: '🏐', Soccer: '⚽',
+    'Soccer intérieur': '⚽', Futsal: '⚽', Rugby: '🏉', Baseball: '⚾', Badminton: '🏸', Natation: '🏊', Athlétisme: '🏃',
+    'Cross-country': '🏃', Golf: '⛳', Ultimate: '🥏', Voile: '⛵', Cheerleading: '📣', 'hockey-feminin': '🏒' };
+  for (const [sport, emoji] of Object.entries(cases)) assert.equal(front.sportEmoji(sport), emoji, sport);
+  assert.equal(front.sportEmoji('Escrime'), '🏅', 'sport inconnu : repli neutre');
+  assert.equal(front.sportEmoji(''), '🏅');
+  assert.equal(front.sportEmoji(undefined), '🏅');
+  const cov = JSON.parse(readFileSync(new URL('../assets/kit/fonts/emoji/coverage.json', import.meta.url), 'utf8'));
+  for (const e of front.SPORT_EMOJI_ALL) assert.ok(cov.emojis.includes(e), `glyphe ${e} absent de la police emoji`);
 }

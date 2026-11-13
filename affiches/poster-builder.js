@@ -435,6 +435,7 @@ async function loadFonts() {
     new FontFace('LR Sans', 'url(../scripts/og-fonts/Inter-Regular.ttf)'),
     new FontFace('LR Sans Semi', 'url(../scripts/og-fonts/Inter-SemiBold.ttf)'),
     new FontFace('LR Script', 'url(../assets/kit/fonts/Caveat-Bold.ttf)'),
+    new FontFace('LR Emoji', 'url(../assets/kit/fonts/emoji/noto-color-emoji-sports.woff2)'),
     ...LANG_FONT_FILES.map(([family, file]) => new FontFace(
       family,
       `url(../assets/kit/fonts/langs/${file})`,
@@ -667,6 +668,7 @@ function pickPosterSports(masthead, campus, limit = 3) {
     const inst = team.institutionName || team.institutionLabel || team.fullName || team.name || '';
     if (campus && !itemMatchesCampusPoster({ institution: inst }, campus)) return;
     const sport = team.sportLabel || team.sport || '';
+    const sportTag = [sport, { F: 'féminin', M: 'masculin' }[team.sex] || ''].filter(Boolean).join(' ');
     const name = team.name || team.fullName || '';
     const uniBoost = team.sector === 'universitaire' ? 0 : 1;
     (team.nextGames || []).forEach((game) => {
@@ -678,7 +680,8 @@ function pickPosterSports(masthead, campus, limit = 3) {
       upcoming.push({
         sort: `${uniBoost}-${game.date}-${game.time || ''}`,
         today: game.date === today,
-        kicker: sport,
+        kicker: sportTag,
+        emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
         line: `${name} ${verb} ${vs}`,
         meta: [game.date === today ? 'aujourd’hui' : (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`) : ''), posterClock(game.time)].filter(Boolean).join(' · '),
       });
@@ -689,7 +692,8 @@ function pickPosterSports(masthead, campus, limit = 3) {
       seen.add(id);
       results.push({
         sort: `${uniBoost}-${game.date}`,
-        kicker: sport,
+        kicker: sportTag,
+        emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
         line: `${name} ${game.scoreFor}–${game.scoreAgainst} ${game.opponentNickname || game.opponent || ''}`,
         meta: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate
           ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`)
@@ -1366,8 +1370,16 @@ function composeFrontPage(ctx, w, h, opts) {
         }
         const room = by + (r + 1) * rowsH - iy;
         const maxL = room >= Math.round(px(2.2) * 1.15) * 2 ? 2 : 1;
-        const f = wrapFit(item.line || '', sans(700), colW, Math.min(px(2.4), Math.floor(room / 1.2)), Math.max(10, px(1.6)), maxL);
-        drawLines(f, sans(700), ix, iy, '#ffffff', 1.15, by + (r + 1) * rowsH);
+        const lineMax = Math.min(px(2.4), Math.floor(room / 1.2));
+        /* Emoji de sport (police couleur LR Emoji) devant le match ou le résultat. */
+        const indent = item.emoji ? Math.round(lineMax * 1.35) : 0;
+        const f = wrapFit(item.line || '', sans(700), colW - indent, lineMax, Math.max(10, px(1.6)), maxL);
+        if (item.emoji && iy + f.size <= by + (r + 1) * rowsH) {
+          ctx.font = `${f.size}px "LR Emoji"`;
+          ctx.textBaseline = 'top';
+          ctx.fillText(item.emoji, ix, iy);
+        }
+        drawLines(f, sans(700), ix + (item.emoji ? Math.round(f.size * 1.35) : 0), iy, '#ffffff', 1.15, by + (r + 1) * rowsH);
       });
       bx += pw + gap;
     });
