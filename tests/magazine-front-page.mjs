@@ -64,7 +64,8 @@ const now = new Date(news.updated || Date.now());
 const picked = front.selectFrontPage(news.items, now);
 const fresh = freshness.filterFreshItems(news.items, now);
 const normal = housekeeping.housekeepingNormalItems(fresh, now);
-const expected = [...normal].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+const expected = [...normal].filter((item) => !front.isProSportItem(item))
+  .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
   .slice(0, 5);
 
 assert.equal(picked.items.length, expected.length);
