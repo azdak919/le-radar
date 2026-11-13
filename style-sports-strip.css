@@ -297,67 +297,40 @@
    * overflow-x/y mixtes sont ramenés à auto en CSS — on élargit la ligne. */
   line-height: 1.35;
 }
-/* Défilement continu du texte trop long (scores ET accroche CTA SPORTS).
- * La pastille reste fixe. Le texte part vers la gauche et une copie
- * rentre par la droite — boucle de panneau, jamais d’aller-retour.
- * Titre 34 px/s (--sports-scroll-duration). Ligne du bas 22 px/s
- * (--sports-scroll-duration-sub) : plus lente, elle ne colle pas au titre.
- * Le JS calcule la durée et attend la boucle la plus longue avant
- * de changer la carte. Repos 5,5 s = plancher SPORTS_SCROLL_ONE_WAY_MS. */
+/* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
+ * La pastille reste fixe ; seul le texte d’info défile.
+ * Durée 5,5 s (CTA) / 8 s (puces scores) × alternate = 1 aller-retour.
+ * Le JS attend ce cycle + pause à l’origine avant la cascade. */
 .masthead-sports-strip {
+  /* Holds aux extrémités = moins d’à-coups aux virages. Titre et sous-ligne
+   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts.
+   * 2 alternate (pas infinite) + delay lecture — 1 aller-retour puis repos. */
   --sports-scroll-duration: 5.5s;
-  --sports-scroll-duration-sub: 8.5s;
   --sports-scroll-delay: 1.6s;
-  --sports-loop-gap: 48px;
+  --sports-scroll-trips: 2;
 }
 .masthead-sports-strip .sports-chip--match {
   --sports-scroll-duration: 8s;
-  --sports-scroll-duration-sub: 12.4s;
 }
 @keyframes sports-chip-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  /* Hold à l’origine (début + retour) puis à l’extrémité. Le JS attend
+   * encore une pause au repos après le cycle avant de changer l’info. */
+  0%, 24% { transform: translateX(0); }
+  76%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
 .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 8s) linear var(--sports-scroll-delay, 1.6s) infinite backwards;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration-sub, 12.4s) linear var(--sports-scroll-delay, 1.6s) infinite backwards;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
-}
-/* Copie absolue : hors flux, donc la mesure d’overflow reste celle du texte.
- * left:100% + padding-right du parent = le trou, puis la même ligne. */
-.masthead-sports-strip .sports-chip__line-inner:has(> .sports-chip__loop),
-.masthead-sports-strip .sports-chip__sub-text:has(> .sports-chip__loop),
-.masthead-sports-strip .sports-chip__cta-text:has(> .sports-chip__loop),
-.masthead-sports-strip .sports-chip__cta-sub-text:has(> .sports-chip__loop) {
-  position: relative;
-  padding-right: var(--sports-loop-gap, 48px);
-}
-.masthead-sports-strip .sports-chip__loop {
-  position: absolute;
-  left: 100%;
-  top: 0;
-  display: inline-block;
-  width: max-content;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  overflow: visible;
-  white-space: nowrap;
-  font: inherit;
-  letter-spacing: inherit;
-  color: inherit;
-  animation: none !important;
-  transform: none !important;
-  pointer-events: none;
 }
 /* CTA hors marquee : clip sur le texte seul — jamais d’ellipsis, jamais sur
  * toute la couche (sinon head+sub se collapsaient sans marquee). */
@@ -379,9 +352,6 @@
     max-width: 100%;
     overflow: hidden;
     text-overflow: clip;
-  }
-  .masthead-sports-strip .sports-chip__loop {
-    display: none !important;
   }
 }
 /* Ancienne classe sigle : gardée si un autre surface la réutilise. */
@@ -826,37 +796,36 @@
   100% { transform: translateY(0); opacity: 1; }
 }
 /* Marquee : le texte de la couche visible seulement, jamais la couche sortante.
- * Titre → --sports-scroll (34 px/s). Sous-ligne → --sports-scroll-sub,
- * durée --sports-scroll-duration-sub (22 px/s). */
+ * Titre → --sports-scroll ; sous-ligne → --sports-scroll-sub (décalages distincts). */
 .masthead-sports-strip .sports-chip--cta {
   --sports-scroll-delay: 0.7s;
-  --sports-scroll-duration-sub: 8.5s;
+  --sports-scroll-trips: 2;
 }
 @keyframes sports-cta-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  0%, 10% { transform: translateX(0); }
+  90%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
 @keyframes sports-cta-scroll-sub {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  0%, 12% { transform: translateX(0); }
+  88%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
 }
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) linear var(--sports-scroll-delay, 0.7s) infinite backwards;
+  animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-cta-scroll-sub var(--sports-scroll-duration-sub, 8.5s) linear var(--sports-scroll-delay, 0.7s) infinite backwards;
+  animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  0%, 28% { transform: translateX(0); }
+  72%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
 }
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-text,
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-sub-text {
@@ -1027,16 +996,29 @@
 }
 /* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
 
-/* Boucle continue : le texte entre à droite et sort à gauche, donc les deux
- * bords restent fondus. Sans débordement, pas de classe, donc aucun fondu. */
-@property --sc-fade-l { syntax: "<length>"; inherits: false; initial-value: 8px; }
+/* Défilement « En cours » : fondu seulement du côté où du texte reste caché.
+ * Les bords du masque suivent la même course (durée, délai, aller-retours,
+ * courbe, paliers) que le texte : au départ, aucun fondu à gauche ; en bout
+ * de course, aucun fondu à droite — texte net aux deux extrémités.
+ * Sans débordement, pas de classe is-*-overflowing, donc aucun fondu. */
+@property --sc-fade-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
 @property --sc-fade-r { syntax: "<length>"; inherits: false; initial-value: 14px; }
+@keyframes sports-chip-fade {
+  0%, 24% { --sc-fade-l: 0px; --sc-fade-r: 14px; }
+  76%, 100% { --sc-fade-l: 14px; --sc-fade-r: 0px; }
+}
+@keyframes sports-chip-fade-sub {
+  0%, 28% { --sc-fade-l: 0px; --sc-fade-r: 14px; }
+  72%, 100% { --sc-fade-l: 14px; --sc-fade-r: 0px; }
+}
 .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub,
 .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line {
-  --sc-fade-l: 8px;
-  --sc-fade-r: 14px;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
+  animation: sports-chip-fade var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
+}
+.masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub {
+  animation-name: sports-chip-fade-sub;
 }
 /* Mouvement réduit : texte figé au début, seul le bord droit (texte caché) fond. */
 @media (prefers-reduced-motion: reduce) {

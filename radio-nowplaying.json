@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T05:06:23.694Z",
+  "updatedAt": "2026-11-13T06:06:25.560Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T05:06:08.054Z"
+      "checkedAt": "2026-11-13T06:05:58.682Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T05:06:09.876Z"
+      "checkedAt": "2026-11-13T06:06:00.800Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "You Need A Heart To Live 2",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor's Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "You Need A Heart To Live 2",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T05:06:12.832Z"
+      "checkedAt": "2026-11-13T06:06:04.886Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Finally Midnight",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "02:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Finally Midnight",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T05:06:14.980Z"
+      "checkedAt": "2026-11-13T06:06:17.040Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T05:06:16.373Z"
+      "checkedAt": "2026-11-13T06:06:18.042Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "ZØRZA — Against Theocracy",
+      "track": "Miserere Luminis — Les fleurs de l’exil",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T05:06:23.343Z"
+      "checkedAt": "2026-11-13T06:06:25.209Z"
     }
   }
 }

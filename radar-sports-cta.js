@@ -135,30 +135,22 @@ try {
  * Feedback prod 2026-08-29 : 9–14 s de pause après la vague = trop long.
  * Feedback prod 2026-09-01 : 7,5 s = trop nerveux ; ~9 s au repos.
  * Sans défilement : ~9–12 s selon le nombre de cartes.
- * Avec marquee : une boucle continue (texte vers la gauche, copie par la
- *   droite) + pause. Jamais d’aller-retour, jamais de « … ».
+ * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
+ *   (même esprit que MARQUEE_REST_MS du dial radio). Jamais de « … ».
  */
 const SPORTS_READ_MIN_MS = 6500;
 const SPORTS_READ_PER_CHAR_MS = 32;
 const SPORTS_READ_MAX_MS = 10000;
 /**
- * Plancher d’une boucle, synchro CSS `--sports-scroll-duration` (5,5 s).
- * La durée réelle suit la largeur du texte (SPORTS_LOOP_PX_PER_S).
+ * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
+ * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
  */
+/** Synchro style.css `--sports-scroll-duration` (marquee L→R). */
 const SPORTS_SCROLL_ONE_WAY_MS = 5500;
-/** Trou entre les deux copies — synchro CSS `--sports-loop-gap`. */
-const SPORTS_LOOP_GAP_PX = 48;
-/** Titre : assez lent pour lire un nom, constant. */
-const SPORTS_LOOP_PX_PER_S = 34;
-/**
- * Ligne du bas (9 px, date · compétition) : plus lente que le titre.
- * Même vitesse en px/s collait les deux lignes comme un seul bloc.
- */
-const SPORTS_LOOP_SUB_PX_PER_S = 22;
-const SPORTS_LOOP_MAX_MS = 18000;
+const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
 /** Délai lecture avant scroll — aligné MARQUEE_READ_DELAY_MS / CSS --sports-scroll-delay. */
 const SPORTS_SCROLL_READ_DELAY_MS = MARQUEE_READ_DELAY_MS;
-/** La carte reste encore un instant après une boucle complète. Le texte, lui, continue. */
+/** Pause au repos après le retour (re-ack du début de ligne). */
 const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
@@ -169,11 +161,11 @@ const SPORTS_SLOT_STAGGER_MS = 1100;
  * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban
  * sans laisser les cartes figées ~12–16 s (prod 2026-08-29).
  * 2026-09-01 : +1,5 s au repos (7,5 → 9 s). Cap 12 s seulement SANS marquee :
- * une boucle continue ne doit pas être coupée avant d’avoir montré tout le texte.
+ * un aller-retour L→R + retour à l’origine ne doit pas être coupé.
  */
 const SPORTS_CASCADE_STEP_MS = 440;
 const SPORTS_BOARD_HOLD_MS = 9000;
-/** Plafond hors marquee — une boucle longue peut dépasser. */
+/** Plafond hors marquee — un cycle L→R + retour peut dépasser. */
 const SPORTS_BOARD_HOLD_CAP_MS = 12000;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
 const SPORTS_ARRIVE_MS = 640;
@@ -1000,7 +992,7 @@ function sportsStripCramped() {
   return false;
 }
 
-/** Wide : ne plus purger le marquee scores — overflow → boucle continue. */
+/** Wide : ne plus purger le marquee scores — overflow → L→R + retour. */
 function clearWideSportsMarqueeClasses() {
   /* no-op : puces scores et CTA gardent is-overflowing pour le défilement. */
 }
@@ -1014,9 +1006,6 @@ function sportsMatchNaturalWidth(chip) {
     flex: chip.style.flex,
   };
   const inners = [...chip.querySelectorAll('.sports-chip__line-inner, .sports-chip__sub-text')];
-  const loops = [...chip.querySelectorAll('.sports-chip__loop')];
-  const loopDisplay = loops.map((el) => el.style.display);
-  loops.forEach((el) => { el.style.display = 'none'; });
   const saved = inners.map((el) => ({
     el,
     maxWidth: el.style.maxWidth,
@@ -1036,7 +1025,6 @@ function sportsMatchNaturalWidth(chip) {
     el.style.maxWidth = maxWidth;
     el.style.overflow = overflow;
   });
-  loops.forEach((el, i) => { el.style.display = loopDisplay[i]; });
   chip.style.width = prev.width;
   chip.style.minWidth = prev.minWidth;
   chip.style.maxWidth = prev.maxWidth;
@@ -3632,7 +3620,7 @@ function sportsCtaActiveLabel(chip) {
  *   (garde-fou `marqueur-non-tronque`).
  * · Glyphe sport (⚽…) : fixe, frère de la fenêtre de défilement — **ne défile pas**.
  * · Titre (`.sports-chip__cta-text`) et sous-ligne (`.sports-chip__cta-sub-text`)
- *   défilent en boucle s’ils débordent — **jamais** d’ellipsis « … » (clip + marquee).
+ *   défilent L→R s’ils débordent — **jamais** d’ellipsis « … » (clip + marquee).
  */
 function fillSportsCtaLayer(layer, slide) {
   layer.replaceChildren();
@@ -3830,105 +3818,26 @@ function bindSportsCtaPause(chip) {
  * contrainte CSS est active, ce qui laissait l’ellipsis figée sur le titre.
  * On ne touche pas aux classes d’animation (évite de relancer le marquee).
  */
-/** Largeur du texte mesurée hors copie de boucle (durée = cette largeur + trou). */
-const sportsMeasuredTextWidth = new WeakMap();
-
 function sportsMeasureOverflow(viewport, inner, _hadOverflow) {
   if (!viewport || !inner) return 0;
   // Largeur de clip AVANT de lever max-width : sinon le flex grandit avec le
   // texte et overflow ≈ 0, donc pas de marquee et troncature « … ».
   const viewW = viewport.clientWidth;
   if (viewW < 2) return 0;
-  const loop = inner.querySelector(':scope > .sports-chip__loop');
-  const prevLoop = loop ? loop.style.display : '';
-  if (loop) loop.style.display = 'none';
   const prevMax = inner.style.maxWidth;
   const prevOverflow = inner.style.overflow;
   const prevTextOverflow = inner.style.textOverflow;
   const prevWidth = inner.style.width;
-  const prevPad = inner.style.paddingRight;
   inner.style.maxWidth = 'none';
   inner.style.width = 'max-content';
   inner.style.overflow = 'visible';
   inner.style.textOverflow = 'clip';
-  inner.style.paddingRight = '0';
-  const textWidth = inner.scrollWidth;
-  const overflow = Math.max(0, textWidth - viewW);
+  const overflow = Math.max(0, inner.scrollWidth - viewW);
   inner.style.maxWidth = prevMax;
   inner.style.overflow = prevOverflow;
   inner.style.textOverflow = prevTextOverflow;
   inner.style.width = prevWidth;
-  inner.style.paddingRight = prevPad;
-  if (loop) loop.style.display = prevLoop;
-  sportsMeasuredTextWidth.set(inner, textWidth);
   return overflow;
-}
-
-/** Texte visible, sans la copie de boucle (sinon le libellé est compté deux fois). */
-function sportsPlainMarqueeText(el) {
-  if (!el) return '';
-  let text = '';
-  el.childNodes.forEach((node) => {
-    if (node.nodeType === 1 && node.classList.contains('sports-chip__loop')) return;
-    text += node.textContent || '';
-  });
-  return text;
-}
-
-/**
- * Une boucle à vitesse constante.
- * Plancher titre 5,5 s (CTA) ou 8 s (puces). La ligne du bas reprend
- * le même plancher allongé au ratio 34/22, pour garder l’écart de vitesse
- * même sur un texte court. Plafond 18 s au titre, allongé pareil en bas.
- */
-function sportsLoopDurationMs(textWidth, floorMs = SPORTS_SCROLL_ONE_WAY_MS, pxPerS = SPORTS_LOOP_PX_PER_S) {
-  const distance = Math.max(0, Number(textWidth) || 0) + SPORTS_LOOP_GAP_PX;
-  const speed = Number(pxPerS) > 0 ? Number(pxPerS) : SPORTS_LOOP_PX_PER_S;
-  const ms = (distance / speed) * 1000;
-  const base = Number(floorMs) > 0 ? Number(floorMs) : SPORTS_SCROLL_ONE_WAY_MS;
-  const floor = Math.round(base * SPORTS_LOOP_PX_PER_S / speed);
-  const cap = Math.round(SPORTS_LOOP_MAX_MS * SPORTS_LOOP_PX_PER_S / speed);
-  return Math.round(Math.min(cap, Math.max(floor, ms)));
-}
-
-/**
- * Copie le texte qui déborde pour une boucle sans saut.
- * La copie est hors flux (CSS) et ne porte pas la classe animée.
- */
-function sportsSyncLoopCopy(el, overflow) {
-  if (!el) return;
-  const existing = el.querySelector(':scope > .sports-chip__loop');
-  if (!(overflow > 2) || sportsReducedMotion) {
-    existing?.remove();
-    el.style.removeProperty('--sports-scroll-duration');
-    el.style.removeProperty('--sports-scroll-duration-sub');
-    return;
-  }
-  const source = sportsPlainMarqueeText(el);
-  if (!existing || existing.dataset.loopSrc !== source) {
-    existing?.remove();
-    const copy = el.cloneNode(true);
-    copy.querySelectorAll('.sports-chip__loop').forEach((node) => node.remove());
-    copy.className = 'sports-chip__loop';
-    copy.setAttribute('aria-hidden', 'true');
-    copy.setAttribute('translate', 'no');
-    copy.removeAttribute('id');
-    copy.removeAttribute('style');
-    copy.dataset.loopSrc = source;
-    el.append(copy);
-  }
-  const textW = sportsMeasuredTextWidth.get(el) || 0;
-  const isSub = el.classList.contains('sports-chip__sub-text')
-    || el.classList.contains('sports-chip__cta-sub-text');
-  const matchLine = !!el.closest('.sports-chip--match') && !el.closest('.sports-chip--cta');
-  const floor = matchLine ? SPORTS_MATCH_SCROLL_ONE_WAY_MS : SPORTS_SCROLL_ONE_WAY_MS;
-  const pxPerS = isSub ? SPORTS_LOOP_SUB_PX_PER_S : SPORTS_LOOP_PX_PER_S;
-  const prop = isSub ? '--sports-scroll-duration-sub' : '--sports-scroll-duration';
-  const duration = `${(sportsLoopDurationMs(textW, floor, pxPerS) / 1000).toFixed(1)}s`;
-  el.style.removeProperty(isSub ? '--sports-scroll-duration' : '--sports-scroll-duration-sub');
-  if ((el.style.getPropertyValue(prop) || '').trim() !== duration) {
-    el.style.setProperty(prop, duration);
-  }
 }
 
 /**
@@ -3957,11 +3866,22 @@ function sportsApplyScrollState(chip, {
   if (!had) chip.classList.add(flag);
 }
 
-/** Nettoie l’ancien cycle aller-retour. La durée vit sur chaque ligne (boucle). */
-function sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, _label) {
+/** 1 aller-retour CSS (trips) + durée d’une voie — synchro dwell / keyframes. */
+function sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label) {
   if (!chip) return;
-  chip.style.removeProperty('--sports-scroll-trips');
-  if (!(titleOverflow > 2 || subOverflow > 2)) {
+  if (titleOverflow > 2 || subOverflow > 2) {
+    const isMatch = chip.classList.contains('sports-chip--match');
+    const oneWay = isMatch ? SPORTS_MATCH_SCROLL_ONE_WAY_MS : SPORTS_SCROLL_ONE_WAY_MS;
+    const floor = chip.classList.contains('sports-chip--cta')
+      ? SPORTS_CTA_DWELL_MS
+      : sportsLabelReadingMs(label);
+    const trips = marqueeAlternateCount(oneWay, floor);
+    chip.style.setProperty('--sports-scroll-trips', String(trips));
+    if (isMatch) {
+      chip.style.setProperty('--sports-scroll-duration', `${(oneWay / 1000).toFixed(1)}s`);
+    }
+  } else {
+    chip.style.removeProperty('--sports-scroll-trips');
     chip.style.removeProperty('--sports-scroll-duration');
   }
 }
@@ -4022,9 +3942,7 @@ function refreshSportsChipScroll(chipOrRoot = null) {
         prop: '--sports-scroll-sub',
         overflow: subOverflow,
       });
-      sportsSyncLoopCopy(titleInner, titleOverflow);
-      sportsSyncLoopCopy(subInner, subOverflow);
-      const label = [sportsPlainMarqueeText(titleInner), sportsPlainMarqueeText(subInner)]
+      const label = [titleInner?.textContent || '', subInner?.textContent || '']
         .filter(Boolean)
         .join(' · ');
       sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label);
@@ -4062,9 +3980,7 @@ function refreshSportsChipScroll(chipOrRoot = null) {
       prop: '--sports-scroll-sub',
       overflow: subOverflow,
     });
-    sportsSyncLoopCopy(titleInner, titleOverflow);
-    sportsSyncLoopCopy(subInner, subOverflow);
-    const label = [sportsPlainMarqueeText(titleInner), sportsPlainMarqueeText(subInner)]
+    const label = [titleInner?.textContent || '', subInner?.textContent || '']
       .filter(Boolean)
       .join(' · ');
     sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label);
@@ -4267,7 +4183,7 @@ function paintSportsChip(slide, animate = false) {
    * Deux lignes comme la CTA, largeur chip :
    *   haut  — noms (acronymes univ. à gauche) + vs / score
    *   bas   — date · compétition (même méta que sous-ligne CTA)
-   * Marquee continu si overflow — **jamais** de troncature « … ».
+   * Marquee L→R si overflow — **jamais** de troncature « … ».
    */
   const body = document.createElement('span');
   body.className = 'sports-chip__body';
@@ -4590,8 +4506,8 @@ function sportsLabelReadingMs(text) {
 
 /**
  * True si la puce a besoin d’un marquee (dwell allongé).
- * CTA et puces scores : overflow → boucle continue avant la cascade
- * (jamais de « … »). Le fit retire encore une carte
+ * CTA et puces scores : overflow → aller L→R + retour à l’origine
+ * avant la cascade (jamais de « … »). Le fit retire encore une carte
  * d’abord ; le marquee est le filet si le texte déborde encore.
  */
 function sportsChipNeedsMarquee(chip) {
@@ -4634,8 +4550,8 @@ function sportsChipNeedsMarquee(chip) {
  * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
  * la carte et enregistrer l’info.
  * · Texte entier visible : dwell = lecture estimée (puces ~6,5–10 s ; CTA ~8 s).
- * · Texte qui défile : **toujours** une boucle complète + pause
- *   (ne jamais changer la carte avant d’avoir lu toute la ligne).
+ * · Texte qui défile : **toujours** 1 aller-retour marquee + pause repos
+ *   (ne jamais changer la carte au milieu du scroll).
  */
 function sportsSlotDwellMs(slot) {
   const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
@@ -4646,7 +4562,7 @@ function sportsSlotDwellMs(slot) {
   const subEl = isCta
     ? sportsCtaActiveLabel(chip)?.querySelector('.sports-chip__cta-sub-text')
     : chip?.querySelector('.sports-chip__sub-text');
-  const label = [sportsPlainMarqueeText(labelEl), sportsPlainMarqueeText(subEl)]
+  const label = [labelEl?.textContent || '', subEl?.textContent || '']
     .filter(Boolean)
     .join(' · ');
   const readMs = sportsLabelReadingMs(label);
@@ -4655,23 +4571,17 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    const titled = sportsActiveLoopMs(labelEl);
-    const sub = sportsActiveLoopMs(subEl);
-    const loopMs = Math.max(titled, sub, SPORTS_SCROLL_ONE_WAY_MS);
+    const oneWay = chip.classList.contains('sports-chip--match')
+      ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
+      : SPORTS_SCROLL_ONE_WAY_MS;
+    const trips = parseFloat(chip.style.getPropertyValue('--sports-scroll-trips')) || marqueeAlternateCount(oneWay, floor);
+    const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
     return Math.max(
       floor,
-      SPORTS_SCROLL_READ_DELAY_MS + loopMs + SPORTS_SCROLL_POST_PAUSE_MS,
+      SPORTS_SCROLL_READ_DELAY_MS + oneWay * n + SPORTS_SCROLL_POST_PAUSE_MS,
     );
   }
   return floor;
-}
-
-function sportsActiveLoopMs(el) {
-  const raw = el?.style?.getPropertyValue?.('--sports-scroll-duration-sub')
-    || el?.style?.getPropertyValue?.('--sports-scroll-duration')
-    || '';
-  const ms = parseFloat(raw) * 1000;
-  return Number.isFinite(ms) && ms > 0 ? ms : 0;
 }
 
 /** Délai après rotateSportsSlot avant de re-mesurer / re-planifier le dwell. */
@@ -4861,7 +4771,8 @@ function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   const delay = Math.max(0, sportsSlotDwellMs(slot) + initialStagger);
   sportsSlotTimers[slot] = window.setTimeout(() => {
     sportsSlotTimers[slot] = null;
-    // Ne pas couper un marquee en cours : le dwell a déjà couvert une boucle.
+    // Ne pas couper un marquee en cours : si overflow encore actif et temps
+    // écoulé trop court, le dwell a déjà inclus l’aller-retour ; on rotate.
     const settleMs = rotateSportsSlot(slot) || 80;
     // Attendre sortie+entrée, puis mesurer overflow sur la *nouvelle* carte
     // avant de reprogrammer le prochain dwell (sinon lecture seule trop courte).
@@ -4894,7 +4805,7 @@ function sportsBoardHoldMs() {
     if (chip && sportsChipNeedsMarquee(chip)) marquee = true;
   });
   // Sans marquee : rester dans une pause lisible (~9–12 s).
-  // Avec marquee : le hold couvre une boucle continue + pause. Le texte ne revient pas.
+  // Avec marquee : le hold couvre aller L→R + retour à l’origine + pause.
   if (!marquee) hold = Math.min(SPORTS_BOARD_HOLD_CAP_MS, hold);
   return hold;
 }
@@ -5012,10 +4923,7 @@ function patchVisibleLiveScorebugs() {
     if (!team || !game || !sportsGameIsLive(game)) return;
     const scoreEl = chip.querySelector('.sports-chip__score');
     const txt = sportsLiveScoreText(game);
-    if (scoreEl && scoreEl.textContent !== txt) {
-      scoreEl.textContent = txt;
-      refreshSportsChipScroll(chip);
-    }
+    if (scoreEl && scoreEl.textContent !== txt) scoreEl.textContent = txt;
   });
 }
 
