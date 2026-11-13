@@ -12,7 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -168,7 +168,8 @@ async function main() {
     const model = { slot, items: sel.items, sports, radio };
     texts = buildUneAll(model, POLICY.hashtags?.maxByNetwork || {});
     const { renderImages } = await import('./une-render.mjs');
-    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats: formatsFor(nets, dry) });
+    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats: formatsFor(nets, dry, { story: storyEnabled(CFG) }) });
+    if (!dry && !storyEnabled(CFG)) delete images.story; // jamais hébergée ni envoyée tant que formats.une.story.publish n’est pas true
     const bad = Object.entries(texts).filter(([n, v]) => nets.includes(n) && v.problems.length);
     if (dry) reason = 'essai (DRY_RUN) : aucun envoi.';
     else if (!CFG.publish) reason = 'publication désactivée dans data/social/policy.json (formats.une.publish = false).';
