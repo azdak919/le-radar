@@ -3306,6 +3306,16 @@ function updateViewLabel() {
   if (btn100) btn100.setAttribute('aria-pressed', String(previewView.mode === 'free' && Math.abs(previewView.scale - 1) < 0.02));
 }
 
+function sizeStudioDash() {
+  const dash = document.querySelector('.affiche-wire--studio .dash');
+  if (!dash) return;
+  const top = dash.getBoundingClientRect().top;
+  const gap = 16;
+  const h = Math.max(360, Math.round(window.innerHeight - top - gap));
+  dash.style.height = `${h}px`;
+  dash.style.maxHeight = `${h}px`;
+}
+
 function applyPreviewView() {
   const frame = document.getElementById('preview');
   const vp = previewViewportEl();
@@ -4152,7 +4162,7 @@ function bind() {
       document.querySelectorAll('.dash-mobile-switch__btn').forEach((b) => {
         b.setAttribute('aria-pressed', String(b.dataset.pane === pane));
       });
-      requestAnimationFrame(() => applyPreviewView());
+      requestAnimationFrame(() => { sizeStudioDash(); applyPreviewView(); });
     });
   });
   if (dash && !dash.dataset.mobilePane) dash.dataset.mobilePane = 'preview';
@@ -4197,13 +4207,17 @@ function bind() {
   let fitTimer = 0;
   const refit = () => {
     clearTimeout(fitTimer);
-    fitTimer = setTimeout(() => applyPreviewView(), 40);
+    fitTimer = setTimeout(() => {
+      sizeStudioDash();
+      applyPreviewView();
+    }, 40);
   };
+  sizeStudioDash();
   if (pane && typeof ResizeObserver !== 'undefined') {
     new ResizeObserver(refit).observe(pane);
-  } else {
-    window.addEventListener('resize', refit);
   }
+  window.addEventListener('resize', refit);
+  window.visualViewport?.addEventListener('resize', refit);
 }
 
 /* posterCredit:start — même règle que bankAttribution (scripts/social/image-resolve.mjs, feedCredit) :

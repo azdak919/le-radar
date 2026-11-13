@@ -541,7 +541,7 @@ body:has(#local-lab-format-bar) .dash-controls {
   padding-bottom: 0;
   display: flex;
   flex-direction: column;
-  min-height: calc(100dvh - 7.5rem);
+  min-height: 0;
 }
 .affiche-wire--studio .seo-crumbs { margin-bottom: 6px; }
 .affiche-wire--studio .seo-title {
@@ -555,7 +555,8 @@ body:has(#local-lab-format-bar) .dash-controls {
 }
 .affiche-wire--studio .dash {
   flex: 1 1 auto;
-  height: auto;
+  height: calc(100dvh - 8rem);
+  max-height: calc(100dvh - 8rem);
   min-height: 0;
   width: 100%;
   margin: 0 0 16px;
@@ -748,8 +749,9 @@ html[data-theme="light"] .preview-frame {
   .affiche-wire--studio .dash {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - 6.5rem);
-    height: auto;
+    height: calc(100dvh - 6.5rem);
+    max-height: calc(100dvh - 6.5rem);
+    min-height: 0;
   }
   .dash-mobile-switch {
     display: flex;
