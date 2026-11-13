@@ -32,6 +32,31 @@ assert.deepEqual(front.imageCandidates(item, '..'), [
   '../assets/news-images/abc.jpg',
   'https://le-radar.ca/assets/news-images/abc.jpg',
 ]);
+
+/* Image distante seulement (imageRemoteOnly, pas de miroir) : l’origine, puis relais CORS
+ * (Photon, wsrv.nl) pour le canevas des affiches — sans réhéberger le fichier. */
+const remoteOnly = {
+  title: 'Karmina, des vampires québécois !',
+  source: 'Quartier Libre',
+  image: 'https://quartierlibre.ca/wp-content/uploads/2026/11/16_critique-cine.jpeg',
+  imageRemoteOnly: true,
+};
+const karminaUrl = remoteOnly.image;
+assert.deepEqual(front.imageCandidates(remoteOnly, '..'), [
+  karminaUrl,
+  `https://i0.wp.com/quartierlibre.ca/wp-content/uploads/2026/11/16_critique-cine.jpeg?ssl=1`,
+  `https://wsrv.nl/?url=${encodeURIComponent(karminaUrl)}&w=1400&we&output=jpg&q=82`,
+]);
+assert.equal(front.imageSrc(remoteOnly, '..'), karminaUrl);
+assert.deepEqual(
+  front.imageCandidates({ ...item, image: karminaUrl }, '..'),
+  [
+    '../assets/news-images/abc.jpg',
+    'https://le-radar.ca/assets/news-images/abc.jpg',
+    karminaUrl,
+  ],
+  'avec miroir local, pas de relais tiers',
+);
 assert.equal(front.frDate('2026-11-01T15:00:00Z'), '1er novembre 2026');
 
 const news = JSON.parse(readFileSync(join(root, 'news.json'), 'utf8'));

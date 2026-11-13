@@ -178,6 +178,45 @@ for (const slug of ['generique', ...UNIS.filter((u) => u !== 'toutes')]) {
   });
 }
 
+test('affiche campus : gabarit a9e8f52 (pas de bandeau mauve, Scanne-moi pas sous le QR) @ci-critical', async ({ page }) => {
+  test.setTimeout(60000);
+  const errors = [];
+  await offline(page, errors);
+  for (const [format, qrIn] of [['letter', 1.65], ['tabloid', 2.25]]) {
+    await page.goto(`/affiches/?modele=campus&campus=laval&format=${format}&qr=oui`, { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('#preview canvas')).toBeVisible({ timeout: 20000 });
+    await expect(page.locator('#preview')).toHaveAttribute('data-state', /pret|erreur/, { timeout: 25000 });
+    await expect(page.locator('body')).toHaveAttribute('data-campus-layout', 'a9e8f52');
+    const layout = await page.evaluate(() => window.__campusLayout);
+    expect(layout, format).toMatchObject({ qrIn, titleBand: false, scanneMoi: false });
+    expect(layout.qrTop).toBeGreaterThan(layout.titleY);
+    expect(layout.barH).toBeGreaterThan(0);
+    /* Bandeau de titre : une bande violette pleine au milieu (ajout 96e52dc24) doit rester absente. */
+    const mid = await page.locator('#preview canvas').evaluate((c, titleY) => {
+      const g = c.getContext('2d');
+      const y0 = Math.max(0, Math.round(titleY - c.height * 0.02));
+      const y1 = Math.min(c.height, Math.round(titleY + c.height * 0.12));
+      const d = g.getImageData(0, y0, c.width, y1 - y0).data;
+      let purple = 0;
+      const n = d.length / 4;
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i];
+        const gv = d[i + 1];
+        const b = d[i + 2];
+        if (r > 50 && r > gv * 1.5 && b > gv && gv < 90) purple += 1;
+      }
+      return { share: purple / n, y0, y1 };
+    }, layout.titleY);
+    expect(mid.share, `bandeau violet ${format} (part=${mid.share})`).toBeLessThan(0.12);
+  }
+  /* La une n’écrit pas ce contrat campus et conserve son propre Scanne-moi. */
+  await page.goto('/affiches/?modele=une&uni=laval&format=letter', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#preview')).toHaveAttribute('data-state', /pret|erreur/, { timeout: 25000 });
+  const uneFlag = await page.evaluate(() => document.body.dataset.campusLayout || '');
+  expect(uneFlag).toBe('');
+  expect(errors).toEqual([]);
+});
+
 for (const [name, vp] of [['mobile', { width: 390, height: 844 }], ['ordinateur', { width: 1440, height: 900 }]]) {
   test(`studio lisible et sans débordement : ${name} @ci-critical`, async ({ page }) => {
     const errors = [];

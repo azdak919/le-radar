@@ -2301,6 +2301,10 @@ function compose(opts) {
   ctx.translate(-clipX, -clipY);
 
   if (opts.model === 'une') {
+    if (typeof window !== 'undefined') {
+      window.__campusLayout = null;
+      if (typeof document !== 'undefined' && document.body) delete document.body.dataset.campusLayout;
+    }
     composeFrontPage(ctx, w, h, opts);
     ctx.restore();
     return canvas;
@@ -2364,29 +2368,17 @@ function compose(opts) {
     : { height: 0, lines: [] };
   const langsH = langsMetrics.height;
   const markH = Math.max(footLogo, fMark);
-  const qrIn = fmt.id === 'tabloid' ? 2.4 : 2.6; // ≈ 1,7 po imprimés en Lettre (fit 0,65)
+  /* Gabarit campus figé à a9e8f52 (affiches Laval imprimées). Ne pas y reporter
+   * les ajouts postérieurs (bandeau violet de titre, « Scanne-moi » sous le QR,
+   * QR agrandi et pied recalculé) : Charles n’a pas demandé de changer ces affiches. */
+  const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
   const playTop = barH + 12 * fit;
   const big = Math.round(816 * fit);
   const logoY = playTop + Math.round(700 * fit);
-  /* Sous le QR (règle de Charles) : « Scanne-moi » puis « Le fil étudiant, en direct » (EN en bilingue). */
-  const tagKey = UNE_TAGLINES[opts.tagline] && UNE_TAGLINES[opts.tagline].fr ? opts.tagline
-    : (opts.tagline === 'auto' ? (campus && campus.line ? 'campus' : 'tout') : 'direct');
-  const scanHead = kind === 'bilingue' ? 'Scanne-moi · Scan me' : 'Scanne-moi';
-  const scanTag = UNE_TAGLINES[tagKey].fr;
-  const scanTagEn = kind === 'bilingue' ? UNE_TAGLINES[tagKey].en : '';
-  const fScan = Math.round(104 * fit);
-  const fScanTag = Math.round(62 * fit);
-  const fScanEn = Math.round(44 * fit);
-  const scanH = opts.qr && assets.qr
-    ? Math.round(22 * fit) + Math.round(fScan * 1.2) + Math.round(fScanTag * 1.3) + (scanTagEn ? Math.round(fScanEn * 1.3) : 0)
-    : 0;
-  /* Pied empilé sous le QR, mot-symbole et nom complet bien séparés (aucun chevauchement en Lettre). */
-  const footStackH = scanH + Math.round(32 * fit) + markH + Math.round(fMark * 0.5) + nameH + Math.round(18 * fit)
-    + legalH + (credit ? Math.round(18 * fit) + creditH : 0);
-  const qrTop = Math.min(playTop + Math.round(3680 * fit), h - safe - footStackH - qrSide);
+  const qrTop = playTop + Math.round(3680 * fit);
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
   ctx.fillStyle = PURPLE;
@@ -2408,24 +2400,9 @@ function compose(opts) {
     ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
   }
 
-  let qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
-  if (scanH) {
-    let sy = qrBottom + Math.round(22 * fit);
-    ctx.font = `600 ${fScan}px "LR Sans Semi", "LR Sans"`;
-    fillCentered(ctx, scanHead, sy, '#ffffff');
-    sy += Math.round(fScan * 1.2);
-    ctx.font = `400 ${fScanTag}px "LR Sans"`;
-    fillCentered(ctx, scanTag, sy, INK);
-    sy += Math.round(fScanTag * 1.3);
-    if (scanTagEn) {
-      ctx.font = `400 ${fScanEn}px "LR Sans"`;
-      fillCentered(ctx, scanTagEn, sy, SOFT);
-      sy += Math.round(fScanEn * 1.3);
-    }
-    qrBottom = sy;
-  }
+  const qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
   const pad = 32 * fit;
-  const gMark = Math.round(fMark * 0.5);
+  const gMark = 14 * fit;
   const gName = 18 * fit;
   const gLegal = 18 * fit;
 
@@ -2465,76 +2442,72 @@ function compose(opts) {
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(226 * fit);
   const titleY = playTop + Math.round(1630 * fit);
-  /* Bloc titre, accroche, établissement, salutation ; renvoie le bas du bloc. */
-  const drawTitleBlock = () => {
-    fillTracked(ctx, TITLE, titleY, titleSize, INK);
-    let y = titleY + titleSize + Math.round(109 * fit);
-    const maxW = w - 2 * safe - 80;
-    let sloganSize = Math.round(74 * fit);
+  fillTracked(ctx, TITLE, titleY, titleSize, INK);
+  let y = titleY + titleSize + Math.round(109 * fit);
+  const maxW = w - 2 * safe - 80;
+  let sloganSize = Math.round(74 * fit);
+  ctx.font = `400 ${sloganSize}px "LR Sans"`;
+  while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
+    sloganSize -= 1;
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
-      sloganSize -= 1;
-      ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    }
-    const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
-    const uniSize = Math.round(70 * fit);
-    const uniCore = Math.round(uniSize * 1.22);
-    const gapBlock = Math.round(86 * fit);
-    const gapLang = Math.round(47 * fit);
-    ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
-    if (kind === 'bilingue') {
-      ctx.font = `400 ${enSize}px "LR Sans"`;
-      const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
-      enLines.forEach((line, i) => {
-        const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
-        y += fillCentered(ctx, line, y, SOFT) + extra;
-      });
-    }
-    if (opts.showUni !== false) {
-      const uniParts = uniLockupParts(campus, kind);
-      if (uniParts) {
-        y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
-      }
-    }
-    const greet = GREETINGS[opts.greeting];
-    if (greet) {
-      const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
-      const gSize = Math.round((biGreet ? 156 : 187) * fit);
-      y += Math.round(39 * fit);
-      ctx.save();
-      ctx.translate(w / 2, y + gSize * 0.15);
-      ctx.rotate((-8 * Math.PI) / 180);
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.font = `700 ${gSize}px "LR Script"`;
-      ctx.fillStyle = INK;
-      ctx.fillText(greet, 0, 0);
-      if (biGreet) {
-        ctx.font = `700 ${Math.round(gSize * 0.5)}px "LR Script"`;
-        ctx.fillStyle = SOFT;
-        ctx.fillText(GREETINGS_EN[opts.greeting], 0, gSize * 0.95);
-      }
-      ctx.restore();
-      y += Math.round(gSize * (biGreet ? 1.6 : 1.25));
-    }
-    return y;
-  };
-  if (photo) {
-    /* Bandeau violet semi-transparent derrière le titre sur photo (règle de Charles) : la photo reste visible,
-     * le texte garde le contraste AA (photo déjà assombrie à 58 % ; violet à 60 % → ≥ 4,5:1 même pour le gris). */
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(0, 0, 0, 0);
-    ctx.clip();
-    const yEnd = drawTitleBlock();
-    ctx.restore();
-    const bandTop = titleY - Math.round(70 * fit);
-    const bandBottom = Math.min(qrTop - Math.round(40 * fit), yEnd + Math.round(30 * fit));
-    ctx.fillStyle = 'rgba(108, 33, 99, 0.6)';
-    ctx.fillRect(0, bandTop, w, bandBottom - bandTop);
   }
-  drawTitleBlock();
+  const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
+  const uniSize = Math.round(70 * fit);
+  const uniCore = Math.round(uniSize * 1.22);
+  const gapBlock = Math.round(86 * fit);
+  const gapLang = Math.round(47 * fit);
+  ctx.font = `400 ${sloganSize}px "LR Sans"`;
+  y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
+  if (kind === 'bilingue') {
+    ctx.font = `400 ${enSize}px "LR Sans"`;
+    const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
+    enLines.forEach((line, i) => {
+      const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
+      y += fillCentered(ctx, line, y, SOFT) + extra;
+    });
+  }
+  if (opts.showUni !== false) {
+    const uniParts = uniLockupParts(campus, kind);
+    if (uniParts) {
+      y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
+    }
+  }
+  const greet = GREETINGS[opts.greeting];
+  if (greet) {
+    const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
+    const gSize = Math.round((biGreet ? 156 : 187) * fit);
+    y += Math.round(39 * fit);
+    ctx.save();
+    ctx.translate(w / 2, y + gSize * 0.15);
+    ctx.rotate((-8 * Math.PI) / 180);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = `700 ${gSize}px "LR Script"`;
+    ctx.fillStyle = INK;
+    ctx.fillText(greet, 0, 0);
+    if (biGreet) {
+      ctx.font = `700 ${Math.round(gSize * 0.5)}px "LR Script"`;
+      ctx.fillStyle = SOFT;
+      ctx.fillText(GREETINGS_EN[opts.greeting], 0, gSize * 0.95);
+    }
+    ctx.restore();
+  }
+
+  /* Contrat de régression : gabarit campus a9e8f52 (pas de bandeau mauve de titre, pas de « Scanne-moi » sous le QR). */
+  if (typeof window !== 'undefined') {
+    window.__campusLayout = {
+      qrIn,
+      qrTop,
+      barH,
+      titleY,
+      titleBand: false,
+      scanneMoi: false,
+    };
+    if (typeof document !== 'undefined' && document.body) {
+      document.body.dataset.campusLayout = 'a9e8f52';
+    }
+  }
+
   ctx.restore();
   return canvas;
 }
