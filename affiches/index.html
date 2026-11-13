@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=une-3">
+  <link rel="stylesheet" href="./poster-builder.css?v=une-6">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -105,6 +105,8 @@
             <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
             <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
             <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
+            <label class="js-une-only"><input type="radio" name="format" value="ecran-paysage"> Écran 16:9 (1920 × 1080, PNG)</label>
+            <label class="js-une-only"><input type="radio" name="format" value="ecran-portrait"> Écran 9:16 (1080 × 1920, PNG)</label>
           </div>
         </fieldset>
 
@@ -251,6 +253,7 @@
         <fieldset class="js-une-only" id="une-box" hidden>
           <legend>Articles</legend>
           <p class="field-hint" id="une-status">Chargement des articles du site…</p>
+          <button type="button" class="photo-more" id="une-auto" hidden>Revenir à la sélection automatique</button>
           <ol class="une-list" id="une-list"></ol>
         </fieldset>
 
@@ -348,7 +351,8 @@
   <script src="../scripts/session-freshness-lib.js"></script>
   <script src="../scripts/news-housekeeping-lib.js"></script>
   <script src="../scripts/magazine-front-page-lib.js"></script>
+  <script src="../scripts/sports-payload-lib.js"></script>
   <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
-  <script src="./poster-builder.js?v=une-5"></script>
+  <script src="./poster-builder.js?v=une-6"></script>
 </body>
 </html>

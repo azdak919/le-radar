@@ -156,3 +156,55 @@ assert.ok(front.isProSportItem({ title: 'Les Alouettes s’envolent vers la Coup
 assert.ok(front.isProSportItem({ title: 'CF Montréal et COP 31 : reportages radio' }));
 assert.ok(!front.isProSportItem({ title: 'Stingers 7, Gee-Gees 0: Pure Stingers domination' }));
 assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsmore' }));
+
+/* Signatures (plusieurs auteurs, Impact Campus, rédaction, rôles) */
+{
+  const names = front.authorNames({ author: 'Arianne Dion, Étienne Dumas et Élise Paré', source: 'L’Exemplaire' });
+  assert.deepEqual(names, ['Arianne Dion', 'Étienne Dumas', 'Élise Paré']);
+  assert.equal(front.bylineOf(names, 'L’Exemplaire'), 'Par Arianne Dion, Étienne Dumas et Élise Paré · L’Exemplaire');
+  assert.equal(front.bylineOf(names, 'L’Exemplaire', { maxNames: 2 }), 'Par Arianne Dion et al. · L’Exemplaire');
+  assert.equal(front.bylineOf(front.authorNames({ author: 'Juliette Fournier et Félicitée Audet', source: 'Montréal Campus' }), 'Montréal Campus'),
+    'Par Juliette Fournier et Félicitée Audet · Montréal Campus');
+  assert.deepEqual(front.authorNames({ author: 'Archives Impact Campus & Léann Bonin', source: 'Impact Campus' }), ['Léann Bonin']);
+  assert.deepEqual(front.authorNames({ author: 'Rosalie Fauchon, journaliste collaboratrice', source: 'Impact Campus' }), ['Rosalie Fauchon']);
+  assert.deepEqual(front.authorNames({ author: 'The Link', source: 'The Link' }), []);
+  assert.equal(front.bylineOf([], 'The Link'), 'The Link', 'auteur inconnu : le média seul');
+  const card = front.normalize({ title: 'T', link: 'https://ex.org/a', source: 'Montréal Campus', author: 'Émile Brochu et Agathe Nogues', date: '2026-11-10T12:00:00Z' });
+  assert.equal(card.byline, 'Par Émile Brochu et Agathe Nogues · Montréal Campus');
+}
+
+/* Sélection manuelle */
+{
+  const cards = [
+    { id: 'a', date: '2026-11-12T10:00:00Z' }, { id: 'b', date: '2026-11-10T10:00:00Z' },
+    { id: 'c', date: '2026-11-11T10:00:00Z' }, { id: 'd', date: '2026-11-09T10:00:00Z' },
+  ];
+  assert.deepEqual(front.manualSelection(cards, ['b', 'd', 'c']).map((c) => c.id), ['c', 'b', 'd']);
+  assert.deepEqual(front.manualSelection(cards, ['b', 'd', 'c'], 'd').map((c) => c.id), ['d', 'c', 'b']);
+  assert.deepEqual(front.manualSelection(cards, ['zz', 'a']).map((c) => c.id), ['a'], 'ids inconnus ignorés');
+  assert.deepEqual(front.manualSelection(cards, []), []);
+}
+
+/* Bilan d’une période passée (résultats réels, filtrés, variés, dédoublonnés) */
+{
+  const win = front.periodWindow('semaine', new Date('2026-11-13T00:06:40Z'));
+  const g = (date, sf, sa, opp, extra = {}) => ({ date, time: '19:00', scoreFor: sf, scoreAgainst: sa, opponent: opp, opponentNickname: opp, opponentRegistryId: opp.toLowerCase(), ...extra });
+  const teams = [
+    { name: 'ULaval', registryId: 'laval', institutionName: 'Université Laval', sector: 'universitaire', sport: 'hockey', sportLabel: 'Hockey', sex: 'F',
+      results: [g('2026-11-08', 1, 5, 'Gaiters'), g('2026-11-01', 3, 2, 'Martlets'), g('2026-11-07', 2, 2, 'Stingers', { priorSeason: true })] },
+    { name: 'ULaval', registryId: 'laval', institutionName: 'Université Laval', sector: 'universitaire', sport: 'volleyball', sportLabel: 'Volleyball', sex: 'F',
+      results: [g('2026-11-08', 3, 1, 'Martlets'), g('2026-11-07', 3, 0, 'Carabins')] },
+    { name: 'Concordia', registryId: 'concordia', institutionName: 'Université Concordia', sector: 'universitaire', sport: 'basketball', sportLabel: 'Basketball', sex: 'M',
+      results: [g('2026-11-07', 89, 88, 'Gaiters')], nextGames: [{ date: '2026-11-20' }] },
+  ];
+  const laval = { slug: 'laval', line: 'Université Laval', label: 'Université Laval' };
+  const r = front.periodResults(teams, win, laval, 4);
+  assert.equal(r.played, 3, 'hors période et saison passée exclus');
+  assert.equal(r.wins, 2);
+  assert.equal(r.items.length, 3);
+  assert.notEqual(r.items[0].kicker, r.items[1].kicker, 'sports variés en tête');
+  assert.match(r.items[0].line, /^ULaval \d+–\d+ /);
+  assert.ok(r.items.every((it) => it.date >= win.from && it.date <= win.to));
+  assert.equal(front.periodResults(teams, win, { slug: 'udem', line: 'Université de Montréal', label: 'x' }, 4).items.length, 0, 'aucune donnée : bande retirée');
+  assert.equal(front.periodResults(teams, front.periodWindow('jour'), laval, 4).items.length, 0);
+}

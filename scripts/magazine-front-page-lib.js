@@ -236,6 +236,38 @@
     return PRO_SPORT_RE.test(String((item && item.title) || ''));
   }
 
+  /* Signatures : même source que les fiches (item.author, vide si = média),
+   * même correctif Impact Campus (compte « Archives Impact Campus » écarté, PR363). */
+  const AUTHOR_ROLE_RE = /^(?:journaliste|collaborat|rédact|redact|chef|managing|editor|éditeur|staff|contributor|writer|reporter|photographe|photographer|columnist|chroniqueu)/i;
+  function authorKey(s) {
+    return foldName(s);
+  }
+  function authorNames(item) {
+    const raw = String((item && item.author) || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+      .replace(/^(?:Par|By)\s+/i, '');
+    if (!raw || authorKey(raw) === authorKey(item.source || '')) return [];
+    if (/^(?:the\s+)?editorial\s+(?:team|staff|board)$|^(?:la\s+|l['’])?\s*rédaction$/i.test(raw)) return ['la rédaction'];
+    const parts = raw.split(/\s*,\s*|\s+et\s+|\s+and\s+|\s+&\s+/i)
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .filter((p) => !AUTHOR_ROLE_RE.test(p))
+      .filter((p) => !(authorKey(item.source) === authorKey('Impact Campus') && authorKey(p) === authorKey('Archives Impact Campus')))
+      .filter((p) => authorKey(p) !== authorKey(item.source || ''));
+    const seen = new Set();
+    return parts.filter((p) => { const k = authorKey(p); if (seen.has(k)) return false; seen.add(k); return true; });
+  }
+  /** « Par A, B et C · Média » ; maxNames → « Par A et al. · Média » ; sans auteur → « Média ». */
+  function bylineOf(names = [], source = '', { maxNames = Infinity, en = false } = {}) {
+    const list = (names || []).filter(Boolean);
+    const src = String(source || '').trim();
+    if (!list.length) return src;
+    let who;
+    if (list.length > maxNames) who = `${list[0]} et al.`;
+    else if (list.length === 1) who = list[0];
+    else who = `${list.slice(0, -1).join(', ')} ${en ? 'and' : 'et'} ${list[list.length - 1]}`;
+    return [`Par ${who}`, src].filter(Boolean).join(' · ');
+  }
+
   function hasImage(item) {
     return Boolean(item && !item._feedNoImage && (item.imageLocal || item.image || item.stockImage));
   }
@@ -278,6 +310,7 @@
     const scoped = inWindow.filter((item) => !isProSportItem(item));
     const pool = campus ? scoped.filter((item) => itemMatchesCampus(item, campus)) : scoped;
     const sorted = sortByDateDesc(pool);
+    if (limit === Infinity) return { lead: sorted[0] || null, features: sorted.slice(1), items: sorted, period: win, available: sorted.length };
     const cap = Math.max(0, Number(limit) || FRONT_PAGE_COUNT);
     let picked = win.id === 'jour' ? sorted.slice(0, Math.min(cap, sorted.length)) : spreadPick(sorted, cap);
     if (win.id !== 'jour') {
@@ -404,6 +437,8 @@
       title: String(item.title || '').replace(/\s+/g, ' ').trim(),
       source: String(item.source || '').trim(),
       author: String(item.author || '').trim(),
+      authors: authorNames(item),
+      byline: bylineOf(authorNames(item), String(item.source || '').trim()),
       date: item.date || '',
       dateLabel: frDate(item.date || ''),
       hook: hookOf(item, 220),
@@ -417,6 +452,79 @@
       pageUrl,
       originUrl: safeHttpUrl(item.link) || String(item.link || '').trim(),
     };
+  }
+
+  /**
+   * Sélection manuelle : seulement les cartes cochées (ids d’articles), la une
+   * choisie en tête, le reste du plus récent au plus ancien. Ids inconnus ignorés.
+   */
+  function manualSelection(cards = [], ids = [], leadId = '') {
+    const want = new Set((ids || []).filter(Boolean));
+    if (leadId) want.add(leadId);
+    const picked = sortByDateDesc(cards.filter((c) => c && want.has(c.id)));
+    const li = leadId ? picked.findIndex((c) => c.id === leadId) : -1;
+    return li > 0 ? [picked[li], ...picked.slice(0, li), ...picked.slice(li + 1)] : picked;
+  }
+
+  const SEX_LABEL = { F: 'féminin', M: 'masculin', X: 'mixte' };
+  /**
+   * Bilan d’une période passée : résultats réels (sports.json dépaqueté),
+   * filtrés par établissement, variés (un par sport et sexe à tour de rôle,
+   * universitaire d’abord), plus récents en premier. Rien n’est inventé.
+   */
+  function periodResults(teams = [], win = null, campus = null, limit = 4) {
+    if (!win || !win.from) return { items: [], played: 0, wins: 0 };
+    const seen = new Set();
+    const games = [];
+    (Array.isArray(teams) ? teams : Object.values(teams || {})).forEach((team) => {
+      if (!team) return;
+      const inst = team.institutionName || team.institutionLabel || '';
+      if (campus && !itemMatchesCampus({ institution: inst }, campus)) return;
+      (team.results || []).forEach((g) => {
+        if (!g || g.priorSeason || g.scoreFor == null || g.scoreAgainst == null || !g.date) return;
+        if (g.date < win.from || g.date > win.to) return;
+        const pair = [team.registryId || team.name, g.opponentRegistryId || g.opponent].sort().join('~');
+        const id = g.gameId || `${g.date}|${g.time || ''}|${pair}|${team.sport}|${team.sex || ''}`;
+        if (seen.has(id)) return;
+        seen.add(id);
+        games.push({ team, g });
+      });
+    });
+    const groups = new Map();
+    games.sort((a, b) => {
+      const ua = a.team.sector === 'universitaire' ? 0 : 1;
+      const ub = b.team.sector === 'universitaire' ? 0 : 1;
+      if (ua !== ub) return ua - ub;
+      return String(b.g.date + (b.g.time || '')).localeCompare(String(a.g.date + (a.g.time || '')));
+    });
+    games.forEach((x) => {
+      const k = `${x.team.sector}|${x.team.sport}|${x.team.sex || ''}`;
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(x);
+    });
+    const lanes = [...groups.values()];
+    const out = [];
+    for (let r = 0; out.length < limit && lanes.some((l) => l.length > r); r += 1) {
+      for (const lane of lanes) {
+        if (out.length >= limit) break;
+        if (lane[r]) out.push(lane[r]);
+      }
+    }
+    const items = out.map(({ team, g }) => {
+      const who = team.nickname && team.name && !team.name.includes(team.nickname) ? team.name : (team.name || team.fullName || '');
+      const vs = g.opponentNickname || g.opponent || g.opponentFullName || '';
+      const sport = [team.sportLabel || team.sport || '', SEX_LABEL[team.sex] || ''].filter(Boolean).join(' ');
+      return {
+        kicker: sport,
+        line: `${who} ${g.scoreFor}–${g.scoreAgainst} ${vs}`.trim(),
+        meta: frDate(`${g.date}T12:00:00`).replace(/\s\d{4}$/, ''),
+        date: g.date,
+        result: g.result || (g.scoreFor > g.scoreAgainst ? 'W' : g.scoreFor < g.scoreAgainst ? 'L' : 'T'),
+      };
+    });
+    const played = games.length;
+    const wins = campus ? games.filter(({ g }) => (g.result || (g.scoreFor > g.scoreAgainst ? 'W' : '')) === 'W').length : 0;
+    return { items, played, wins };
   }
 
   function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null, limit = FRONT_PAGE_COUNT, period = 'jour') {
@@ -433,6 +541,10 @@
 
   return {
     POSTER_PERIODS,
+    authorNames,
+    bylineOf,
+    manualSelection,
+    periodResults,
     isProSportItem,
     periodWindow,
     FRONT_PAGE_COUNT,

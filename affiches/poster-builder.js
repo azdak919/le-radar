@@ -9,6 +9,9 @@ const FORMATS = {
   tabloid: { id: 'tabloid', label: '11 × 17 po', file: '11x17', wIn: 11, hIn: 17 },
   letter: { id: 'letter', label: 'Lettre 8,5 × 11 po', file: 'lettre', wIn: 8.5, hIn: 11 },
   legal: { id: 'legal', label: 'Légal 8,5 × 14 po', file: 'legal', wIn: 8.5, hIn: 14 },
+  /* Écrans d’affichage dynamique : taille exacte en pixels, PNG (1 « po » virtuel = 100 px). */
+  'ecran-paysage': { id: 'ecran-paysage', label: 'Écran 16:9 · 1920 × 1080 px', file: 'ecran-1920x1080', wIn: 19.2, hIn: 10.8, pxW: 1920, pxH: 1080, screen: true },
+  'ecran-portrait': { id: 'ecran-portrait', label: 'Écran 9:16 · 1080 × 1920 px', file: 'ecran-1080x1920', wIn: 10.8, hIn: 19.2, pxW: 1080, pxH: 1920, screen: true },
 };
 
 const TITLE = 'LE-RADAR.ca';
@@ -102,6 +105,9 @@ const UNE_FORMAT_PLAN = {
   tabloid: { k: 1, side: 2, grid: 4, sports: 4, radio: 3, briefCols: 3, want: { lead: 62, grid: 36, band: 21, briefs: 20 } },
   legal: { k: 0.9, side: 2, grid: 3, sports: 4, radio: 3, briefCols: 2, want: { lead: 56, grid: 36, band: 20, briefs: 22 } },
   letter: { k: 0.84, side: 1, grid: 3, sports: 2, radio: 2, briefCols: 2, want: { lead: 50, grid: 33, band: 15, briefs: 14 } },
+  /* Écrans : lecture en quelques secondes, à distance. Pas de brèves, pas de QR d’article. */
+  'ecran-paysage': { k: 1.5, side: 3, grid: 0, sports: 4, radio: 2, briefCols: 0, screen: true, rightFrac: 0.42, cardRow: true, want: { lead: 50, grid: 0, band: 12, briefs: 0 } },
+  'ecran-portrait': { k: 1.4, side: 0, grid: 3, sports: 4, radio: 2, briefCols: 0, screen: true, want: { lead: 62, grid: 38, band: 20, briefs: 0 } },
 };
 
 function uneBilingualAllowed(slug) {
@@ -235,8 +241,12 @@ const state = {
   unePeriod: 'jour',
   uneTagline: 'auto',
   unePeriodInfo: null,
-  uneArticles: [],
-  uneBriefs: [],
+  uneCandidates: [],
+  uneAutoArticles: [],
+  uneAutoBriefs: [],
+  uneManualIds: [],
+  uneLeadId: '',
+  uneSports: null,
   uneSidebars: null,
   uneStatus: '',
 };
@@ -313,6 +323,7 @@ function canvasAllocates(w, h) {
 }
 
 function px(fmt, dpi = outputDpi()) {
+  if (fmt && fmt.screen) return { w: fmt.pxW, h: fmt.pxH };
   return { w: Math.round(fmt.wIn * dpi), h: Math.round(fmt.hIn * dpi) };
 }
 
@@ -715,6 +726,7 @@ function composeFrontPage(ctx, w, h, opts) {
   const plan = UNE_FORMAT_PLAN[fmtSpec.id] || UNE_FORMAT_PLAN.tabloid;
   /* 1 u ≈ 0,1 po sur le Tabloid ; un peu plus serré en Légal et en Lettre. */
   const u = (w / fmtSpec.wIn) * 0.1 * plan.k;
+  const articleQr = withQr && !plan.screen;
   const px = (n) => Math.max(1, Math.round(n * u));
   const margin = px(4);
   const site = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.SITE)
@@ -898,6 +910,27 @@ function composeFrontPage(ctx, w, h, opts) {
     return s + px(0.4);
   };
   const metaOf = (art) => [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
+  /* Signature « Par Nom · Média » : tous les noms si la place le permet, sinon « et al. », sinon le média seul. */
+  const bylineFor = (art, maxNames = Infinity) => (Front && Front.bylineOf
+    ? Front.bylineOf(art.authors || [], art.source || '', { maxNames })
+    : (art.source || ''));
+  const metaPick = (art, maxW, fontFn, size, lines = 1, withDate = true) => {
+    const names = (art.authors || []).length;
+    const tries = [];
+    [Infinity, 2, 1].forEach((mx) => {
+      if (mx !== Infinity && names <= mx) return;
+      const b = bylineFor(art, mx);
+      if (withDate && art.dateLabel) tries.push(`${b} · ${art.dateLabel}`);
+      tries.push(b);
+    });
+    tries.push(art.source || '');
+    ctx.font = fontFn(size);
+    for (const t of tries) {
+      const wl = wrapWords(ctx, t, maxW);
+      if (wl.length <= lines) return wl;
+    }
+    return [fitOne(tries[tries.length - 1], fontFn, size, maxW)];
+  };
 
   const x0 = margin;
   const x1 = w - margin;
@@ -905,8 +938,11 @@ function composeFrontPage(ctx, w, h, opts) {
   const gap = px(2.2);
 
   /* 1. Bandeau Radar plein */
-  const logoS = px(9.5);
-  const titleS = px(7.4);
+  const logoS = px(plan.screen ? 8 : 9.5);
+  /* Page étroite : le titre rétrécit pour laisser au moins 26 u au bloc de droite. */
+  let titleS = px(plan.screen ? 6.6 : 7.4);
+  ctx.font = `700 ${titleS}px "LR Serif"`;
+  while (titleS > px(4) && x0 + logoS + px(2) + trackedWidth(ctx, TITLE, titleS) > x1 - px(29)) titleS -= 1;
   const tagS = px(1.9);
   const mastTop = 0;
   /* Bloc de droite (université, période, date) : coupé en lignes, jamais tronqué. */
@@ -995,7 +1031,7 @@ function composeFrontPage(ctx, w, h, opts) {
   const rest = articles.slice(1);
   const sideArts = rest.slice(0, plan.side);
   const gridArts = rest.slice(plan.side, plan.side + plan.grid);
-  const briefs = [...rest.slice(plan.side + plan.grid), ...(opts.briefs || [])].filter(Boolean);
+  const briefs = plan.screen ? [] : [...rest.slice(plan.side + plan.grid), ...(opts.briefs || [])].filter(Boolean);
   const hasBand = sportsLines.length > 0 || radioLines.length > 0;
   const top = mastTop + mastH + px(2.4);
   const bottom = footY - px(1.4);
@@ -1016,6 +1052,12 @@ function composeFrontPage(ctx, w, h, opts) {
   const spare = (avail - gapsH) - blocks.reduce((s, k) => s + bh[k], 0);
   if (spare > 0 && bh.lead) bh.lead += spare;
   else if (spare > 0 && blocks.length) bh[blocks[0]] += spare;
+  /* La bande garde au moins une rangée lisible ; la une cède la différence. */
+  if (bh.band && bh.band < px(11) && bh.lead) {
+    const d = px(11) - bh.band;
+    bh.band += d;
+    bh.lead -= d;
+  }
 
   let cy = top;
   if (!lead) {
@@ -1030,7 +1072,7 @@ function composeFrontPage(ctx, w, h, opts) {
   if (lead) {
     const rowH = bh.lead;
     const showCta = withQr || sideArts.length > 0;
-    const rightW = showCta ? Math.round(contentW * 0.32) : 0;
+    const rightW = showCta ? Math.round(contentW * (plan.rightFrac || 0.32)) : 0;
     const leadW = showCta ? contentW - rightW - gap : contentW;
     const p = glass ? px(1.4) : 0;
     panel(x0, cy, leadW, rowH);
@@ -1042,8 +1084,8 @@ function composeFrontPage(ctx, w, h, opts) {
     const capS = px(1.3);
     const creditH = lead.credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
     /* Le titre cède d’abord (taille, lignes), puis le QR, pour garder une vraie photo. */
-    const minImg = Math.round((floor - ly) * 0.3);
-    let leadQr = withQr && lead.pageUrl ? px(12) : 0;
+    const minImg = Math.round((floor - ly) * (plan.screen ? 0.42 : 0.3));
+    let leadQr = articleQr && lead.pageUrl ? px(12) : 0;
     let tProbe = null;
     let titleH = 0;
     for (let ts = 5.6; ts >= 3; ts -= 0.4) {
@@ -1078,14 +1120,13 @@ function composeFrontPage(ctx, w, h, opts) {
     ly = drawLines(tProbe, serif, lx, ly, ink, 1.08, floor);
     ly += px(0.8);
     const textW2 = lw - (leadQr ? leadQr + px(2.4) : 0);
-    const meta = metaOf(lead);
-    if (meta) {
-      ctx.font = `600 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
-      ctx.fillStyle = PURPLE;
-      ctx.fillText(fitOne(meta, sans(600), px(1.9), textW2), lx, ly);
-    }
-    const hookY = ly + (meta ? px(3) : 0);
-    const hook = lead.hook || lead.hookShort || '';
+    const metaLines = metaPick(lead, textW2, sans(600), px(1.9), 2, true);
+    ctx.font = `600 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = PURPLE;
+    metaLines.forEach((line, i) => ctx.fillText(line, lx, ly + i * px(2.4)));
+    const meta = metaLines.length > 0;
+    const hookY = ly + (meta ? px(0.6) + metaLines.length * px(2.4) : 0);
+    const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
     if (hook && floor - hookY > px(2.4)) {
       const lines = Math.max(1, Math.min(5, Math.floor((floor - hookY) / Math.round(px(2.1) * 1.25))));
       const hFit = wrapFit(hook, sans(400), textW2, px(2.1), Math.max(9, px(1.6)), lines);
@@ -1114,23 +1155,42 @@ function composeFrontPage(ctx, w, h, opts) {
         const sub2 = 'Journaux · radios · sports';
         const headS = px(3.4);
         const innerW = rightW - cardP * 2;
-        const subFr = wrapFit(tag.fr, sans(600), innerW, px(2), Math.max(9, px(1.4)), 2);
-        const subEn = bilingual && tag.en ? wrapFit(tag.en, sans(400), innerW, px(1.7), Math.max(9, px(1.3)), 2) : null;
+        const wrapW = plan.cardRow ? Math.round(innerW * 0.5) - px(1.6) : innerW;
+        const subFr = wrapFit(tag.fr, sans(600), wrapW, px(2), Math.max(9, px(1.4)), 2);
+        const subEn = bilingual && tag.en ? wrapFit(tag.en, sans(400), wrapW, px(1.7), Math.max(9, px(1.3)), 2) : null;
         const subH = subFr.lines.length * Math.round(subFr.size * 1.25) + (subEn ? subEn.lines.length * Math.round(subEn.size * 1.25) : 0);
-        const fixedH = cardP + Math.round(headS * 1.25) + subH + px(0.6) + px(3.2) + px(2.4) + cardP;
-        /* Le QR ne déborde jamais de la rangée : il rétrécit d’abord (plancher 1,6 po). */
-        const qrS = Math.max(px(14), Math.min(innerW, px(glass ? 21 : 22), rowH - fixedH));
-        const cardH = fixedH + qrS;
+        const labelH = px(2.6) + px(2.4);
+        const textH = Math.round(headS * 1.25) + subH + labelH;
+        let qrS;
+        let cardH;
+        let textX;
+        let textWd;
+        if (plan.cardRow) {
+          /* Écran paysage : QR à droite, texte centré à gauche. */
+          qrS = Math.max(px(12), Math.min(Math.round(innerW * 0.5), px(13), rowH - cardP * 2 - px(10)));
+          cardH = Math.max(textH, qrS) + cardP * 2;
+          textX = rx + cardP;
+          textWd = innerW - qrS - px(1.6);
+        } else {
+          const fixedH = cardP + Math.round(headS * 1.25) + subH + px(0.6) + px(3.2) + px(2.4) + cardP;
+          /* Le QR ne déborde jamais de la rangée : il rétrécit d’abord (plancher 1,4 po). */
+          qrS = Math.max(px(14), Math.min(innerW, px(glass ? 21 : 22), rowH - fixedH));
+          cardH = fixedH + qrS;
+          textX = rx + cardP;
+          textWd = innerW;
+        }
         ctx.fillStyle = glass ? 'rgba(59, 18, 54, 0.92)' : DEEP;
         roundedRectPath(ctx, rx, ry2, rightW, cardH, px(1.2));
         ctx.fill();
-        const midX = rx + rightW / 2;
-        let cyy = ry2 + cardP;
-        ctx.font = `700 ${headS}px "LR Sans Semi", "LR Sans"`;
+        const midX = textX + textWd / 2;
+        let cyy = plan.cardRow ? ry2 + Math.round((cardH - textH) / 2) : ry2 + cardP;
+        let hS = headS;
+        ctx.font = sans(700)(hS);
+        while (hS > px(1.8) && textW(ctx, head) > textWd) { hS -= 1; ctx.font = sans(700)(hS); }
         ctx.fillStyle = '#ffffff';
         ctx.textBaseline = 'top';
         ctx.textAlign = 'center';
-        ctx.fillText(head, midX, cyy);
+        ctx.fillText(head, midX, cyy + Math.round((headS - hS) / 2));
         cyy += Math.round(headS * 1.25);
         const centerLines = (f, fontFn, color) => {
           ctx.font = fontFn(f.size);
@@ -1140,20 +1200,29 @@ function composeFrontPage(ctx, w, h, opts) {
         centerLines(subFr, sans(600), LILAC);
         if (subEn) centerLines(subEn, sans(400), '#F3E3F0');
         ctx.textAlign = 'left';
-        cyy += px(0.6);
-        const qx = rx + Math.round((rightW - qrS) / 2);
+        let qx;
+        let qy;
+        if (plan.cardRow) {
+          qx = rx + rightW - cardP - qrS;
+          qy = ry2 + Math.round((cardH - qrS) / 2);
+          cyy += px(0.4);
+        } else {
+          cyy += px(0.6);
+          qx = rx + Math.round((rightW - qrS) / 2);
+          qy = cyy;
+          cyy += qrS + px(1.2);
+        }
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(qx - px(0.6), cyy - px(0.6), qrS + px(1.2), qrS + px(1.2));
-        drawQrCode(ctx, qx, cyy, qrS, ctaUrl);
-        cyy += qrS + px(1.2);
+        ctx.fillRect(qx - px(0.6), qy - px(0.6), qrS + px(1.2), qrS + px(1.2));
+        drawQrCode(ctx, qx, qy, qrS, ctaUrl);
         ctx.font = `700 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
-        ctx.fillText(fitOne(ctaLabel, sans(700), px(1.9), rightW - cardP * 2), rx + rightW / 2, cyy);
+        ctx.fillText(fitOne(ctaLabel, sans(700), px(1.9), textWd), midX, cyy);
         cyy += px(2.6);
         ctx.font = `400 ${px(1.5)}px "LR Sans"`;
         ctx.fillStyle = LILAC;
-        ctx.fillText(sub2, rx + rightW / 2, cyy);
+        ctx.fillText(fitOne(sub2, sans(400), px(1.5), textWd), midX, cyy);
         ctx.textAlign = 'left';
         ry2 += cardH + px(1.8);
       }
@@ -1165,11 +1234,12 @@ function composeFrontPage(ctx, w, h, opts) {
           let sy = ry2 + sp;
           sy = label(bilingual ? 'Aussi · Also' : 'Aussi à lire', rx + sp, sy);
           /* Pas de titre tronqué à une ligne : s’il manque de place, le second passe en bref. */
-          const needPer = px(7.4);
+          const needPer = px(plan.screen ? 5.4 : 7.4);
           let shown = sideArts;
-          if (sideArts.length > 1 && Math.floor((ry2 + sideH - sp - sy) / sideArts.length) < needPer) {
-            shown = sideArts.slice(0, 1);
-            briefs.unshift(...sideArts.slice(1));
+          const fitN = Math.max(1, Math.floor((ry2 + sideH - sp - sy) / needPer));
+          if (sideArts.length > fitN) {
+            shown = sideArts.slice(0, fitN);
+            if (!plan.screen) briefs.unshift(...sideArts.slice(fitN));
           }
           const per = Math.floor((ry2 + sideH - sp - sy) / shown.length);
           shown.forEach((art, i) => {
@@ -1178,11 +1248,13 @@ function composeFrontPage(ctx, w, h, opts) {
             let yy = by + (i > 0 ? px(0.4) : 0);
             ctx.font = `600 ${px(1.45)}px "LR Sans Semi", "LR Sans"`;
             ctx.fillStyle = PURPLE;
-            ctx.fillText(fitOne(metaOf(art), sans(600), px(1.45), rightW - sp * 2), rx + sp, yy);
+            ctx.fillText(metaPick(art, rightW - sp * 2, sans(600), px(1.45), 1, true)[0] || '', rx + sp, yy);
             yy += px(2.1);
             const room = by + per - yy - px(0.3);
-            const tMax = Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
-            const maxL = Math.max(2, Math.min(4, Math.floor(room / (tMax * 1.1))));
+            const tMax = plan.screen
+              ? Math.max(px(1.7), Math.min(px(2.4), Math.floor(room / (room >= px(5) ? 2.2 : 1.15))))
+              : Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
+            const maxL = Math.max(plan.screen ? 1 : 2, Math.min(4, Math.floor(room / (tMax * 1.1))));
             const f = wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
             drawLines(f, serif, rx + sp, yy, ink, 1.1, by + per + px(0.2));
           });
@@ -1208,7 +1280,7 @@ function composeFrontPage(ctx, w, h, opts) {
       let iy = cy + p;
       const floor = cy + rowH - p;
       const img = art.key ? images.get(art.key) : null;
-      const imgH = Math.min(Math.round(rowH * 0.36), Math.round(iw / 1.45));
+      const imgH = Math.min(Math.round(rowH * (cols <= 2 ? 0.52 : 0.36)), Math.round(iw / (cols <= 2 ? 1.7 : 1.45)));
       paintImage(img, ix, iy, iw, imgH, art.focalY, art.source);
       /* Numéro de vedette, repère pour le QR */
       const nS = px(2.2);
@@ -1224,18 +1296,17 @@ function composeFrontPage(ctx, w, h, opts) {
       iy += imgH + px(0.3);
       if (art.credit) iy += creditLine(art.credit, ix, iy, iw);
       iy += px(0.5);
-      const qr = withQr && art.pageUrl ? Math.min(px(8), Math.round(iw * 0.34)) : 0;
+      const qr = articleQr && art.pageUrl ? Math.min(px(8), Math.round(iw * 0.34)) : 0;
       const qrTop = floor - qr;
-      const metaH = px(4);
+      const metaH = px(5.2);
       const f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(2.1)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
       drawFlow(f, serif, ix, ink);
-      const meta = metaOf(art);
-      if (meta) {
-        const mS = Math.max(8, px(1.35));
+      {
+        const mS = Math.max(8, px(1.3));
         const mw = iw - (qr ? qr + px(1) : 0);
-        const mf = wrapFit(meta.replace('  ·  ', ' · '), sans(600), mw, mS, Math.max(8, px(1.1)), 2);
-        const mh = mf.lines.length * Math.round(mf.size * 1.25);
-        drawLines(mf, sans(600), ix, floor - mh, PURPLE, 1.25);
+        const ml = metaPick(art, mw, sans(600), mS, 3, true);
+        const mh = ml.length * Math.round(mS * 1.25);
+        drawLines({ size: mS, lines: ml }, sans(600), ix, floor - mh, PURPLE, 1.25);
       }
       if (qr) drawQrCode(ctx, ix + iw - qr, floor - qr, qr, art.pageUrl);
     });
@@ -1250,8 +1321,15 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.fill();
     const bp = px(1.6);
     const parts = [];
-    if (sportsLines.length) parts.push({ title: bilingual ? 'Sports étudiants · Varsity' : 'Sports étudiants', items: sportsLines, weight: radioLines.length ? 2 : 1 });
-    if (radioLines.length) parts.push({ title: bilingual ? 'En ondes · On air' : 'En ondes', items: radioLines, weight: 1 });
+    const recap = opts.recap || null;
+    if (recap) {
+      /* Période passée : bilan réel (résultats + chiffres), pas de direct radio. */
+      parts.push({ title: bilingual ? 'Bilan sportif · Results' : 'Bilan sportif', items: sportsLines, weight: (recap.stats || []).length ? 2 : 1 });
+      if ((recap.stats || []).length) parts.push({ title: bilingual ? 'En chiffres · By the numbers' : 'En chiffres', items: recap.stats, weight: 1 });
+    } else {
+      if (sportsLines.length) parts.push({ title: bilingual ? 'Sports étudiants · Varsity' : 'Sports étudiants', items: sportsLines, weight: radioLines.length ? 2 : 1 });
+      if (radioLines.length) parts.push({ title: bilingual ? 'En ondes · On air' : 'En ondes', items: radioLines, weight: 1 });
+    }
     const tw = parts.reduce((s, p2) => s + p2.weight, 0);
     let bx = x0 + bp;
     const innerW = contentW - bp * 2 - gap * (parts.length - 1);
@@ -1262,7 +1340,8 @@ function composeFrontPage(ctx, w, h, opts) {
         ctx.fillRect(bx - Math.round(gap / 2), cy + bp, Math.max(1, px(0.12)), rowH - bp * 2);
       }
       let by = label(part.title, bx, cy + bp, LILAC, px(1.7));
-      const cols = part.weight === 2 || (parts.length === 1 && part.items.length > 2) ? 2 : 1;
+      const wantCols = part.weight === 2 || (parts.length === 1 && part.items.length > 2) ? 2 : 1;
+      const cols = wantCols === 2 && (pw - gap) / 2 >= px(26) ? 2 : 1;
       const colW = Math.floor((pw - (cols - 1) * gap) / cols);
       const itemMinH = px(2) + Math.round(px(2.1) * 1.15) + px(0.4);
       const fitRows = Math.max(1, Math.floor((cy + rowH - bp - by) / itemMinH));
@@ -1319,7 +1398,7 @@ function composeFrontPage(ctx, w, h, opts) {
       const tW = colW - px(3.4);
       ctx.font = `600 ${px(1.3)}px "LR Sans Semi", "LR Sans"`;
       ctx.fillStyle = PURPLE;
-      ctx.fillText(fitOne(metaOf(b), sans(600), px(1.3), tW), tx, iy);
+      ctx.fillText(metaPick(b, tW, sans(600), px(1.3), 1, true)[0] || '', tx, iy);
       const f = wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
       drawLines(f, serif, tx, iy + px(1.9), ink, 1.12, iy + itemH);
     });
@@ -1334,7 +1413,9 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.font = `400 ${legalSize}px "LR Sans"`;
     ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
-    ctx.fillText(line, x0, ly);
+    ctx.textAlign = 'center';
+    ctx.fillText(line, w / 2, ly);
+    ctx.textAlign = 'left';
     ly += legalLineH;
   });
   if (showLangs && langsMetrics.height) {
@@ -1342,7 +1423,15 @@ function composeFrontPage(ctx, w, h, opts) {
     drawLangsFooter(ctx, { y: ly, maxW: contentW, size: fLang, iconS, color: mute, lineGap: 4, iconGap: 6 });
     ly += langsMetrics.height;
   }
-  if (credit) creditLine(credit, x0, ly + px(0.2), contentW);
+  if (credit) {
+    const cs = Math.max(8, px(0.85));
+    ctx.font = `400 ${cs}px "LR Sans"`;
+    ctx.fillStyle = mute;
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'center';
+    ctx.fillText(fitOne(String(credit).replace(/\s+/g, ' ').trim(), (z) => `400 ${z}px "LR Sans"`, cs, contentW), w / 2, ly + px(0.2));
+    ctx.textAlign = 'left';
+  }
 }
 function drawRadar(ctx, w, h, cx, cy) {
   const reach = Math.hypot(Math.max(cx, w - cx), Math.max(h - cy, cy));
@@ -1870,7 +1959,8 @@ function recipeLine() {
     const bits = [FORMATS[state.format].label, 'Une du Radar'];
     const n = selectedUneArticles().length;
     bits.push(n ? `${n} article${n > 1 ? 's' : ''}` : 'Aucun article');
-    if ((state.uneBriefs || []).length) bits.push(`${state.uneBriefs.length} en bref`);
+    if (uneSelectedBriefs().length) bits.push(`${uneSelectedBriefs().length} en bref`);
+    if (uneManualMode()) bits.push('Sélection manuelle');
     bits.push(state.layout === 'verre' ? 'Verre dépoli' : 'Classique');
     if (state.uneCampus && state.uneCampus !== 'toutes') bits.push(campusOf(state.uneCampus).label);
     if (state.unePeriod && state.unePeriod !== 'jour') bits.push(UNE_PERIOD_LABELS[state.unePeriod]);
@@ -1895,8 +1985,36 @@ function isUneModel() {
   return state.model === 'une';
 }
 
+function uneManualMode() {
+  return (state.uneManualIds || []).length > 0;
+}
+
 function selectedUneArticles() {
-  return (state.uneArticles || []).filter((a) => a.included !== false);
+  if (uneManualMode()) {
+    const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+    return Front ? Front.manualSelection(state.uneCandidates || [], state.uneManualIds, state.uneLeadId) : [];
+  }
+  return state.uneAutoArticles || [];
+}
+
+function uneSelectedBriefs() {
+  return uneManualMode() ? [] : (state.uneAutoBriefs || []);
+}
+
+/* Réglage partageable : ids d’articles et une dans l’URL, comme les autres paramètres. */
+function syncUneSelectionUrl() {
+  try {
+    const url = new URL(window.location.href);
+    if (uneManualMode()) {
+      url.searchParams.set('articles', state.uneManualIds.join(','));
+      if (state.uneLeadId) url.searchParams.set('une', state.uneLeadId);
+      else url.searchParams.delete('une');
+    } else {
+      url.searchParams.delete('articles');
+      url.searchParams.delete('une');
+    }
+    window.history.replaceState(null, '', url.toString());
+  } catch { /* ignore */ }
 }
 
 function syncModelUi() {
@@ -1930,18 +2048,29 @@ function syncModelUi() {
 function renderUneList() {
   const list = document.getElementById('une-list');
   const status = document.getElementById('une-status');
+  const reset = document.getElementById('une-auto');
   if (!list) return;
   if (status) status.textContent = state.uneStatus || '';
+  if (reset) reset.hidden = !uneManualMode();
   list.replaceChildren();
-  state.uneArticles.forEach((art, index) => {
+  const manual = uneManualMode();
+  const autoIds = new Set((state.uneAutoArticles || []).concat(state.uneAutoBriefs || []).map((a) => a.id));
+  const chosen = new Set(state.uneManualIds || []);
+  const leadId = selectedUneArticles()[0]?.id || '';
+  (state.uneCandidates || []).slice(0, 80).forEach((art) => {
     const li = document.createElement('li');
-    if (art.included !== false && selectedUneArticles()[0]?.key === art.key) li.classList.add('is-lead');
+    if (art.id === leadId) li.classList.add('is-lead');
     const check = document.createElement('input');
     check.type = 'checkbox';
     check.className = 'une-check';
-    check.checked = art.included !== false;
+    check.checked = manual ? chosen.has(art.id) : false;
+    check.setAttribute('aria-label', `Intégrer : ${art.title}`);
     check.addEventListener('change', () => {
-      art.included = check.checked;
+      const ids = (state.uneManualIds || []).filter((id) => id !== art.id);
+      if (check.checked) ids.push(art.id);
+      state.uneManualIds = ids;
+      if (state.uneLeadId && !ids.includes(state.uneLeadId)) state.uneLeadId = '';
+      syncUneSelectionUrl();
       renderUneList();
       preview();
     });
@@ -1949,44 +2078,37 @@ function renderUneList() {
     meta.className = 'une-meta';
     const role = document.createElement('span');
     role.className = 'une-role';
-    const selected = selectedUneArticles();
-    const place = selected.findIndex((a) => a.key === art.key);
-    role.textContent = art.included === false
-      ? 'Retiré'
-      : (place === 0 ? 'À la une' : place <= 6 ? 'Vedette' : 'En bref');
+    const place = selectedUneArticles().findIndex((a) => a.id === art.id);
+    role.textContent = place === 0 ? 'À la une'
+      : place > 0 ? 'Sur l’affiche'
+        : (!manual && autoIds.has(art.id) ? 'Auto' : '');
     const title = document.createElement('span');
     title.className = 'une-title';
     title.textContent = art.title;
     const source = document.createElement('span');
     source.className = 'une-source';
-    source.textContent = [art.source, art.dateLabel].filter(Boolean).join(' · ');
+    source.textContent = [art.byline || art.source, art.dateLabel].filter(Boolean).join(' · ');
     meta.append(role, title, source);
-    const up = document.createElement('button');
-    up.type = 'button';
-    up.textContent = '↑';
-    up.setAttribute('aria-label', 'Monter');
-    up.disabled = index === 0;
-    up.addEventListener('click', () => moveUneArticle(index, -1));
-    const down = document.createElement('button');
-    down.type = 'button';
-    down.textContent = '↓';
-    down.setAttribute('aria-label', 'Descendre');
-    down.disabled = index === state.uneArticles.length - 1;
-    down.addEventListener('click', () => moveUneArticle(index, 1));
-    li.append(check, meta, up, down);
+    const leadLab = document.createElement('label');
+    leadLab.className = 'une-lead';
+    const lead = document.createElement('input');
+    lead.type = 'radio';
+    lead.name = 'une-lead-pick';
+    lead.checked = art.id === leadId;
+    lead.addEventListener('change', () => {
+      if (!lead.checked) return;
+      const ids = uneManualMode() ? (state.uneManualIds || []).slice() : selectedUneArticles().map((a) => a.id);
+      if (!ids.includes(art.id)) ids.push(art.id);
+      state.uneManualIds = ids;
+      state.uneLeadId = art.id;
+      syncUneSelectionUrl();
+      renderUneList();
+      preview();
+    });
+    leadLab.append(lead, document.createTextNode(' Une'));
+    li.append(check, meta, leadLab);
     list.append(li);
   });
-}
-
-function moveUneArticle(index, delta) {
-  const next = index + delta;
-  if (next < 0 || next >= state.uneArticles.length) return;
-  const arr = state.uneArticles;
-  const tmp = arr[index];
-  arr[index] = arr[next];
-  arr[next] = tmp;
-  renderUneList();
-  preview();
 }
 
 async function loadUneFeed() {
@@ -2008,23 +2130,31 @@ async function loadUneFeed() {
       : null;
     const featureN = Front.POSTER_PAGE_COUNT || 9;
     const briefN = Front.POSTER_BRIEF_COUNT || 6;
-    const cards = Front.frontPageCards(data.items || [], now, '..', campus, featureN + briefN, state.unePeriod || 'jour');
+    const period = state.unePeriod || 'jour';
+    const all = Front.frontPageCards(data.items || [], now, '..', campus, Infinity, period);
+    const cards = Front.frontPageCards(data.items || [], now, '..', campus, featureN + briefN, period);
     state.unePeriodInfo = cards.period || null;
-    state.uneArticles = cards.items.slice(0, featureN).map((card) => ({ ...card, included: true }));
-    state.uneBriefs = cards.items.slice(featureN);
-    const n = state.uneArticles.length;
-    const b = state.uneBriefs.length;
+    state.uneCandidates = all.items;
+    state.uneAutoArticles = cards.items.slice(0, featureN);
+    state.uneAutoBriefs = cards.items.slice(featureN);
+    /* Sélection manuelle : on garde les articles encore présents (université, période). */
+    const known = new Set(all.items.map((c) => c.id));
+    state.uneManualIds = (state.uneManualIds || []).filter((id) => known.has(id));
+    if (state.uneLeadId && !known.has(state.uneLeadId)) state.uneLeadId = '';
+    const n = selectedUneArticles().length;
+    const b = uneSelectedBriefs().length;
     const per = state.unePeriodInfo && state.unePeriodInfo.id !== 'jour' ? ` (${state.unePeriodInfo.fr.charAt(0).toLowerCase()}${state.unePeriodInfo.fr.slice(1)})` : '';
     const where = (campus ? ` pour ${campus.line}` : ' du fil actuel') + per;
-    const briefBit = b ? ` et ${b} en bref` : '';
-    state.uneStatus = n
-      ? `${n} article${n > 1 ? 's' : ''}${where} (1 à la une, ${Math.max(0, n - 1)} autre${n - 1 > 1 ? 's' : ''} en vedette ou en bref selon le format)${briefBit}.`
+    const how = uneManualMode() ? 'sélection manuelle' : 'sélection automatique';
+    state.uneStatus = all.items.length
+      ? `${all.items.length} article${all.items.length > 1 ? 's' : ''}${where}. Sur l’affiche : ${n}${b ? ` + ${b} en bref` : ''} (${how}). Cochez pour choisir vous-même.`
       : (campus
         ? `Aucun article pour ${campus.line} sur cette période. L’affiche n’invente pas de titres.`
-        : 'Aucun article frais dans le fil.');
+        : 'Aucun article dans le fil pour cette période.');
   } catch (err) {
-    state.uneArticles = [];
-    state.uneBriefs = [];
+    state.uneCandidates = [];
+    state.uneAutoArticles = [];
+    state.uneAutoBriefs = [];
     state.uneStatus = `Impossible de lire le fil : ${err.message}`;
   }
   renderUneList();
@@ -2061,10 +2191,42 @@ async function loadUneSidebars() {
   return state.uneSidebars;
 }
 
+/* Bilan d’une période passée : sports.json complet (dépaqueté), chargé à la demande. */
+async function loadUneSportsHistory() {
+  if (state.uneSports) return state.uneSports;
+  try {
+    const res = await fetch('../sports.json', { cache: 'no-cache' });
+    if (!res.ok) return null;
+    const raw = await res.json();
+    const P = typeof RadarSportsPayload !== 'undefined' ? RadarSportsPayload : null;
+    const data = P && typeof P.unpackSportsPayload === 'function' ? P.unpackSportsPayload(raw) : raw;
+    state.uneSports = data && data.teams ? data.teams : null;
+  } catch {
+    state.uneSports = null;
+  }
+  return state.uneSports;
+}
+
+function unePeriodRecap(campus) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const win = state.unePeriodInfo;
+  if (!Front || !win || win.id === 'jour' || !state.uneSports) return null;
+  const res = Front.periodResults(state.uneSports, win, campus, 4);
+  if (!res.items.length) return null;
+  const pool = state.uneCandidates || [];
+  const medias = new Set(pool.map((a) => a.source).filter(Boolean)).size;
+  const stats = [];
+  if (pool.length) stats.push({ kicker: 'Journaux étudiants', line: `${pool.length} article${pool.length > 1 ? 's' : ''} · ${medias} média${medias > 1 ? 's' : ''}` });
+  stats.push({ kicker: 'Matchs', line: campus ? `${res.played} joué${res.played > 1 ? 's' : ''} · ${res.wins} victoire${res.wins > 1 ? 's' : ''}` : `${res.played} match${res.played > 1 ? 's' : ''} joué${res.played > 1 ? 's' : ''}` });
+  return { items: res.items, stats };
+}
+
 function uneComposeOpts(dpi, images, photoImg, photo) {
   const campusSlug = (state.uneCampus && state.uneCampus !== 'toutes') ? state.uneCampus : null;
   const campus = campusSlug ? campusOf(campusSlug) : null;
   const bars = state.uneSidebars || {};
+  const past = Boolean(state.unePeriodInfo && state.unePeriodInfo.id !== 'jour');
+  const recap = past ? unePeriodRecap(campus) : null;
   return {
     model: 'une',
     format: state.format,
@@ -2075,9 +2237,10 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     campus: campusSlug,
     dpi,
     articles: selectedUneArticles(),
-    briefs: state.uneBriefs || [],
-    radioLines: pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
-    sportsLines: pickPosterSports(bars.sports, campus, 4),
+    briefs: uneSelectedBriefs(),
+    radioLines: recap ? [] : (past ? [] : pickPosterRadio(bars.nowplaying, bars.radios, campus, 3)),
+    sportsLines: recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 4)),
+    recap: recap ? { stats: recap.stats } : null,
     period: state.unePeriodInfo,
     tagline: state.uneTagline,
     articleImages: images || new Map(),
@@ -2154,6 +2317,7 @@ async function preview() {
     if (isUneModel()) {
       paintPreview(null, photo, { articleImages: new Map() });
       await loadUneSidebars();
+      if (state.unePeriod && state.unePeriod !== 'jour') await loadUneSportsHistory();
       const images = await loadUneImages(selectedUneArticles());
       if (gen !== previewGen) return;
       let bg = null;
@@ -2324,7 +2488,7 @@ function printFileStem(fmt, dpi) {
     const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
     const langs = state.langs ? '-langues' : '';
     const qr = state.qr ? '-qr' : '';
-    return `le-radar-affiche-une-${layout}${uni}${per}-${fmt.file}-${lang}${langs}${qr}-${dpi}dpi`;
+    return `le-radar-affiche-une-${layout}${uni}${per}-${fmt.file}-${lang}${langs}${qr}${fmt.screen ? '' : `-${dpi}dpi`}`;
   }
   const campus = campusOf(state.campus);
   const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
@@ -2347,6 +2511,7 @@ async function downloadPrint(kind = 'pdf') {
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
     if (isUneModel()) await loadUneSidebars();
+    if (isUneModel() && state.unePeriod && state.unePeriod !== 'jour') await loadUneSportsHistory();
     const uneImages = isUneModel() ? await loadUneImages(selectedUneArticles()) : null;
     const { w, h } = px(fmt, dpi);
     const composeOpts = isUneModel()
@@ -2369,6 +2534,17 @@ async function downloadPrint(kind = 'pdf') {
       cropScale: state.zoom,
       angle: state.angle,
     };
+    if (fmt.screen) {
+      /* Écran : PNG à la taille exacte en pixels, quel que soit le bouton. */
+      const canvas = compose(composeOpts);
+      if (canvas.width !== w || canvas.height !== h) throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
+      const png = await new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('PNG indisponible'))), 'image/png'));
+      const name = `${printFileStem(fmt, dpi)}.png`;
+      const how = await saveBlob(png, name);
+      if (how === 'abort') { status.textContent = 'Téléchargement annulé.'; return; }
+      status.textContent = `PNG ${name} · ${fmt.label} · taille exacte pour l’écran.`;
+      return;
+    }
     let jpegBlob = null;
     let tiles = null;
     if (!mustTile(w, h)) {
@@ -2591,6 +2767,13 @@ function applyQuery() {
     const sel = document.getElementById('une-period');
     if (sel) sel.value = periode;
   }
+  const picks = (q.get('articles') || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{16}$/.test(x));
+  if (picks.length) state.uneManualIds = picks;
+  const leadPick = q.get('une');
+  if (leadPick && /^[0-9a-f]{16}$/.test(leadPick)) {
+    state.uneLeadId = leadPick;
+    if (!state.uneManualIds.includes(leadPick)) state.uneManualIds.push(leadPick);
+  }
   const phrase = q.get('phrase') || q.get('tagline');
   if (phrase && Object.prototype.hasOwnProperty.call(UNE_TAGLINES, phrase)) {
     state.uneTagline = phrase;
@@ -2646,6 +2829,11 @@ function syncGenericLangs() {
 function applyChoice(name, value) {
   if (name === 'model') {
     state.model = value === 'une' ? 'une' : 'campus';
+    if (!isUneModel() && FORMATS[state.format]?.screen) {
+      state.format = 'tabloid';
+      const tab = document.querySelector('input[name="format"][value="tabloid"]');
+      if (tab) tab.checked = true;
+    }
     if (isUneModel() && state.layout === 'verre') ensureUnePhoto();
     syncModelUi();
     renderChoices();
@@ -2770,6 +2958,16 @@ function bind() {
     upload.addEventListener('change', async () => {
       await addUploadedFiles(upload.files);
       upload.value = '';
+    });
+  }
+  const autoBtn = document.getElementById('une-auto');
+  if (autoBtn) {
+    autoBtn.addEventListener('click', () => {
+      state.uneManualIds = [];
+      state.uneLeadId = '';
+      syncUneSelectionUrl();
+      renderUneList();
+      preview();
     });
   }
   document.getElementById('dl').addEventListener('click', () => downloadPrint('pdf'));
