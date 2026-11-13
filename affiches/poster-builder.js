@@ -926,28 +926,72 @@ function composeFrontPage(ctx, w, h, opts) {
   const serif = (s) => `700 ${s}px "LR Serif"`;
   /* Verbe de rencontre (« reçoit », « visite », « chez », « vs », « à ») plus pâle que les noms,
    * comme la bande sports du site (.sports-chip__vs : poids 500, 0,88 em, blanc atténué). */
-  const drawRich = (text, fontFn, size, x, y, color, dim, emojiFont = false) => {
+  /* Couleur d’établissement (brand-colors.json, module partagé avec La une sociale) ajustée AA sur les fonds donnés ; repli : accent. */
+  const IC = typeof RadarInstitutionColor !== 'undefined' ? RadarInstitutionColor : null;
+  const instColor = (name, bgs, accent) => (IC && opts.brand ? IC.paint(name, opts.brand, bgs, accent) : accent);
+  const BG_LIGHT = glass ? [[255, 252, 247], [199, 197, 193]] : [[244, 240, 230], [255, 255, 255]];
+  const BG_BAND = [[59, 18, 54], [79, 42, 74]];
+  const BG_MAST = [[108, 33, 99], [59, 18, 54], [67, 67, 67]];
+  const BG_OVERLAY = [[20, 8, 20], [72, 62, 72]];
+  /* Texte d’une couleur, avec un passage (nom du média, de la station) dans la couleur de l’établissement. */
+  const fillWithSpan = (text, x, y, base, span, spanColor, align = 'left') => {
+    let i = span && spanColor && spanColor !== base ? text.indexOf(span) : -1;
+    if (i < 0 && span && spanColor && spanColor !== base) {
+      /* Nom du média coupé en fin ou en début de ligne : la partie visible garde la couleur. */
+      const words = String(span).split(/\s+/);
+      for (let k = words.length - 1; k >= 1 && i < 0; k -= 1) {
+        const head = words.slice(0, k).join(' ');
+        const tail = words.slice(words.length - k).join(' ');
+        if (text.trimEnd().endsWith(head)) { span = head; i = text.trimEnd().length - head.length; }
+        else if (text.startsWith(tail)) { span = tail; i = 0; }
+      }
+    }
+    if (i < 0) { ctx.fillStyle = base; ctx.fillText(text, x, y); return; }
+    const parts = [[text.slice(0, i), base], [span, spanColor], [text.slice(i + span.length), base]];
+    const total = ctx.measureText(text).width;
+    const prevAlign = ctx.textAlign;
+    let xx = align === 'right' ? x - total : x;
+    ctx.textAlign = 'left';
+    parts.forEach(([t, col]) => { if (!t) return; ctx.fillStyle = col; ctx.fillText(t, xx, y); xx += ctx.measureText(t).width; });
+    ctx.textAlign = prevAlign;
+  };
+  const metaColor = (art, bgs, accent) => instColor(art && art.institution, bgs, accent);
+  const drawRich = (text, fontFn, size, x, y, color, dim, emojiFont = false, bgs = null) => {
     const m = /( (?:reçoit|visite|chez|vs|à|hosts|visits|at) )/.exec(text);
-    const parts = m ? [[text.slice(0, m.index), false], [m[1], true], [text.slice(m.index + m[1].length), false]] : [[text, false]];
+    const parts0 = m ? [[text.slice(0, m.index), false], [m[1], true], [text.slice(m.index + m[1].length), false]] : [[text, false]];
+    /* Parenthèses d’établissement (« (Concordia) ») dans la couleur de l’établissement. */
+    const parts = [];
+    parts0.forEach(([t, isDim]) => {
+      if (isDim || !bgs) { parts.push([t, isDim]); return; }
+      let last = 0;
+      t.replace(/\(([^)]+)\)/g, (all, inner, at) => {
+        if (at > last) parts.push([t.slice(last, at), false]);
+        const col = instColor(inner, bgs, '');
+        parts.push([all, false, col || '']);
+        last = at + all.length;
+        return all;
+      });
+      if (last < t.length) parts.push([t.slice(last), false]);
+    });
     const tail = emojiFont ? ', "LR Emoji"' : '';
     ctx.textBaseline = 'alphabetic';
     const base = y + Math.round(size * 0.93);
     let xx = x;
-    parts.forEach(([t, isDim]) => {
+    parts.forEach(([t, isDim, col]) => {
       if (!t) return;
       const z = isDim ? Math.round(size * 0.88) : size;
       ctx.font = isDim ? `500 ${z}px "LR Sans"${tail}` : `${fontFn(z)}${tail}`;
-      ctx.fillStyle = isDim ? dim : color;
+      ctx.fillStyle = isDim ? dim : (col || color);
       ctx.fillText(t, xx, base);
       xx += ctx.measureText(t).width;
     });
     ctx.textBaseline = 'top';
   };
-  const drawRichLines = (fit, fontFn, x, y, color, dim, lead = 1.16, floor = Infinity) => {
+  const drawRichLines = (fit, fontFn, x, y, color, dim, lead = 1.16, floor = Infinity, bgs = null) => {
     let yy = y;
     fit.lines.forEach((line) => {
       if (yy + fit.size > floor) return;
-      drawRich(line, fontFn, fit.size, x, yy, color, dim);
+      drawRich(line, fontFn, fit.size, x, yy, color, dim, false, bgs);
       yy += Math.round(fit.size * lead);
     });
     return yy;
@@ -1228,8 +1272,12 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.textAlign = 'right';
     ctx.textBaseline = 'top';
     ctx.font = `600 ${exHeadS}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = LILAC;
-    ctx.fillText(fitOne(String(extra.title || '').toUpperCase(), sans(600), exHeadS, extraW), x1, ey);
+    {
+      /* Nom de la station dans la couleur de son établissement (AA sur l’en-tête). */
+      const head = fitOne(String(extra.title || '').toUpperCase(), sans(600), exHeadS, extraW);
+      const span = extra.colorText ? String(extra.colorText).toUpperCase() : '';
+      fillWithSpan(head, x1, ey, LILAC, span, extra.colorInst ? instColor(extra.colorInst, BG_MAST, LILAC) : '', 'right');
+    }
     ey += Math.round(exHeadS * 1.35);
     extra.lines.forEach((line) => {
       const emojiFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
@@ -1262,7 +1310,7 @@ function composeFrontPage(ctx, w, h, opts) {
       ctx.font = gameFont(z);
       while (z > Math.round(gameS * 0.72) && ctx.measureText(text).width > gameW) { z -= 1; ctx.font = gameFont(z); }
       /* Sur le violet de l’en-tête, 0,55 tomberait à 3,9:1 : 0,65 (4,9:1, AA). */
-      drawRich(fitOne(text, gameFont, z, gameW), (q) => `600 ${q}px "LR Sans Semi", "LR Sans"`, z, x0, gy, '#ffffff', mastDimColor, true);
+      drawRich(fitOne(text, gameFont, z, gameW), (q) => `600 ${q}px "LR Sans Semi", "LR Sans"`, z, x0, gy, '#ffffff', mastDimColor, true, BG_MAST);
       gy += gameLineH;
     });
   }
@@ -1445,8 +1493,7 @@ function composeFrontPage(ctx, w, h, opts) {
       ty = drawLines(tfit, serif, lx + pad, ty, '#ffffff', 1.08, floor);
       ty += px(0.8);
       ctx.font = `600 ${metaS}px "LR Sans Semi", "LR Sans"`;
-      ctx.fillStyle = '#F1D9EE';
-      metaLines.forEach((line, i) => ctx.fillText(line, lx + pad, ty + i * Math.round(metaS * 1.3)));
+      metaLines.forEach((line, i) => fillWithSpan(line, lx + pad, ty + i * Math.round(metaS * 1.3), '#F1D9EE', lead.source, metaColor(lead, BG_OVERLAY, '#F1D9EE')));
       ty += metaH;
       if (hFit) drawLines(hFit, sans(400), lx + pad, ty + px(0.6), '#ffffff', 1.25, floor);
       ctx.restore();
@@ -1498,8 +1545,7 @@ function composeFrontPage(ctx, w, h, opts) {
     const textW2 = lw - (leadQr ? leadQr + px(2.4) : 0);
     const metaLines = metaPick(lead, textW2, sans(600), px(1.9), 2, true);
     ctx.font = `600 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = PURPLE;
-    metaLines.forEach((line, i) => ctx.fillText(line, lx, ly + i * px(2.4)));
+    metaLines.forEach((line, i) => fillWithSpan(line, lx, ly + i * px(2.4), PURPLE, lead.source, metaColor(lead, BG_LIGHT, PURPLE)));
     const meta = metaLines.length > 0;
     const hookY = ly + (meta ? px(0.6) + metaLines.length * px(2.4) : 0);
     const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
@@ -1642,8 +1688,7 @@ function composeFrontPage(ctx, w, h, opts) {
             if (i > 0) rule(rx, rx + rightW, by - px(0.6));
             let yy = by + (i > 0 ? px(0.4) : 0);
             ctx.font = `600 ${px(1.45)}px "LR Sans Semi", "LR Sans"`;
-            ctx.fillStyle = PURPLE;
-            ctx.fillText(metaPick(art, rightW - sp * 2, sans(600), px(1.45), 1, true)[0] || '', rx + sp, yy);
+            fillWithSpan(metaPick(art, rightW - sp * 2, sans(600), px(1.45), 1, true)[0] || '', rx + sp, yy, PURPLE, art.source, metaColor(art, BG_LIGHT, PURPLE));
             yy += px(2.1);
             const room = by + per - yy - px(0.3);
             const tMax = plan.screen
@@ -1719,7 +1764,9 @@ function composeFrontPage(ctx, w, h, opts) {
         const mw = iw - (qr ? qr + px(1) : 0);
         const ml = metaPick(art, mw, sans(600), mS, 3, true);
         const mh = ml.length * Math.round(mS * 1.25);
-        drawLines({ size: mS, lines: ml }, sans(600), ix, floor - mh, PURPLE, 1.25);
+        ctx.font = sans(600)(mS);
+        ctx.textBaseline = 'top';
+        ml.forEach((line, li) => fillWithSpan(line, ix, floor - mh + li * Math.round(mS * 1.25), PURPLE, art.source, metaColor(art, BG_LIGHT, PURPLE)));
       }
       if (qr) drawQrCode(ctx, ix + iw - qr, floor - qr, qr, art.pageUrl);
     });
@@ -1797,7 +1844,7 @@ function composeFrontPage(ctx, w, h, opts) {
           ctx.fillText(item.emoji, ix, iy);
         }
         /* Sur le violet foncé de la bande : 0,55 comme le site (5,2:1) ; 0,6 en verre (photo dessous). */
-        drawRichLines(f, sans(700), ix + (item.emoji ? Math.round(f.size * 1.35) : 0), iy, '#ffffff', glass ? 'rgba(245, 246, 248, 0.6)' : 'rgba(245, 246, 248, 0.55)', 1.15, by + (r + 1) * rowsH);
+        drawRichLines(f, sans(700), ix + (item.emoji ? Math.round(f.size * 1.35) : 0), iy, '#ffffff', glass ? 'rgba(245, 246, 248, 0.6)' : 'rgba(245, 246, 248, 0.55)', 1.15, by + (r + 1) * rowsH, BG_BAND);
       });
       bx += pw + gap;
     });
@@ -1833,8 +1880,7 @@ function composeFrontPage(ctx, w, h, opts) {
       const tx = bx + px(3.4);
       const tW = colW - px(3.4);
       ctx.font = `600 ${px(1.3)}px "LR Sans Semi", "LR Sans"`;
-      ctx.fillStyle = PURPLE;
-      ctx.fillText(metaPick(b, tW, sans(600), px(1.3), 1, true)[0] || '', tx, iy);
+      fillWithSpan(metaPick(b, tW, sans(600), px(1.3), 1, true)[0] || '', tx, iy, PURPLE, b.source, metaColor(b, BG_LIGHT, PURPLE));
       const f = wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
       drawLines(f, serif, tx, iy + px(1.9), ink, 1.12, iy + itemH);
     });
@@ -2724,12 +2770,15 @@ async function loadUneImages(articles) {
 async function loadUneSidebars() {
   if (state.uneSidebars) return state.uneSidebars;
   const grab = (url) => fetch(url, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  const [nowplaying, radios, sports, schedules] = await Promise.all([
+  const [nowplaying, radios, sports, schedules, brand] = await Promise.all([
     grab('../radio-nowplaying.json'),
     grab('../radios.json'),
     grab('../sports-masthead.json'),
     grab('../radio-schedules.json'),
+    grab('../brand-colors.json'),
   ]);
+  /* Couleurs officielles des établissements (mêmes que les pastilles du site et La une sociale). */
+  state.uneBrand = (brand && brand.institutions) || null;
   state.uneSidebars = { nowplaying, radios, sports, schedules };
   return state.uneSidebars;
 }
@@ -2797,7 +2846,7 @@ function uneRadioShows(bars, campus, info, limit = 2) {
         out.push(`${posterShortDate(day.toISOString().slice(0, 10))} · ${posterClock(g.start)} · ${g.title}`);
       });
   }
-  return out.length ? { name: station.name || station.id, shows: out } : null;
+  return out.length ? { name: station.name || station.id, institution: station.institution || '', shows: out } : null;
 }
 function uneMastExtras(mode, bars, campus, info, sportsLines) {
   if (!info || mode === 'aucun') return null;
@@ -2813,10 +2862,10 @@ function uneMastExtras(mode, bars, campus, info, sportsLines) {
   const medias = new Set(week.map((a) => a.source).filter(Boolean)).size;
   const stat = week.length ? `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}` : '';
   const pick = {
-    radio: radio ? { title: `À l’antenne de ${radio.name}`, lines: radio.shows } : null,
+    radio: radio ? { title: `À l’antenne de ${radio.name}`, lines: radio.shows, colorText: radio.name, colorInst: radio.institution } : null,
     match: next ? { title: 'Prochain match', lines: [`${next.emoji ? `${next.emoji} ` : ''}${next.line}`, next.meta.charAt(0).toUpperCase() + next.meta.slice(1)] } : null,
     chiffre: stat ? { title: 'À surveiller', lines: [stat] } : null,
-    combo: radio ? { title: 'À surveiller', lines: [`${radio.name} · ${radio.shows[0]}`, stat].filter(Boolean) } : null,
+    combo: radio ? { title: 'À surveiller', lines: [`${radio.name} · ${radio.shows[0]}`, stat].filter(Boolean), colorText: radio.name, colorInst: radio.institution } : null,
   };
   return pick[mode] || pick.match || pick.chiffre || null;
 }
@@ -2895,6 +2944,7 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     recap: recap ? { stats: recap.stats } : null,
     period: state.unePeriodInfo,
     tagline: state.uneTagline,
+    brand: state.uneBrand || null,
     leadPhoto: state.uneLeadPhoto,
     mastGlass: state.uneMastGlass,
     articleImages: images || new Map(),
