@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T17:37:04.356Z",
+  "updatedAt": "2026-11-13T17:59:31.269Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:36:29.762Z"
+      "checkedAt": "2026-11-13T17:59:05.969Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:36:43.605Z"
+      "checkedAt": "2026-11-13T17:59:19.942Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:36:45.785Z"
+      "checkedAt": "2026-11-13T17:59:22.364Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Charts & Crafts",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/charts-and-crafts"
       },
       "next": {
         "title": "the castle",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-castle"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Charts & Crafts",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:36:57.755Z"
+      "checkedAt": "2026-11-13T17:59:24.338Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,20 +128,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:36:58.970Z"
+      "checkedAt": "2026-11-13T17:59:25.736Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Montréal au courant",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "12:45",
-        "end": "12:55",
-        "slug": "montreal-au-courant"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Arca — Syncope",
+      "track": "Genevieve Stokes — Moon Walker",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:37:04.006Z"
+      "checkedAt": "2026-11-13T17:59:30.920Z"
     }
   }
 }
