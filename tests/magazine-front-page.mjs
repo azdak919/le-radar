@@ -64,7 +64,8 @@ const now = new Date(news.updated || Date.now());
 const picked = front.selectFrontPage(news.items, now);
 const fresh = freshness.filterFreshItems(news.items, now);
 const normal = housekeeping.housekeepingNormalItems(fresh, now);
-const expected = [...normal].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+const expected = [...normal].filter((item) => !front.isProSportItem(item))
+  .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
   .slice(0, 5);
 
 assert.equal(picked.items.length, expected.length);
@@ -405,16 +406,27 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.match(pb, /kickerInstitution/);
   assert.match(pb, /kickerKind === 'media'/);
   assert.match(pb, /instColor\(item\.kickerInstitution \|\| item\.kicker, BG_BAND, LILAC\)/);
-  // Date d’abord : une longue signature ne fait pas disparaître la date absolue (True Crime, t1002u).
+  // Signature Une : tous les auteurs + média + date ; jamais de repli qui omet un auteur.
   const trueCrime = {
     authors: ['Josephine Dao Devenyns'],
     source: 'Quartier Libre',
     dateLabel: '9\u00A0novembre\u00A02026',
   };
-  const dateTries = F.bylineDateTries(trueCrime, true);
-  const firstWithout = dateTries.findIndex((x) => !x.includes('novembre'));
-  assert.ok(firstWithout > 0, 'au moins une variante avec la date');
-  assert.ok(dateTries.slice(0, firstWithout).every((x) => x.includes('novembre')));
-  assert.ok(dateTries.some((x) => x.includes('Quartier Libre') && x.includes('novembre')));
-  assert.match(pb, /Front\.bylineDateTries/);
+  const sig = F.signatureOf(trueCrime, { withDate: true });
+  assert.match(sig, /Par Josephine Dao Devenyns/);
+  assert.match(sig, /Quartier Libre/);
+  assert.match(sig, /novembre/);
+  const duo = F.signatureOf({
+    authors: ['Samuel Girard', 'Mathilde Jobin'],
+    source: 'Quartier Libre',
+    dateLabel: '7\u00A0novembre\u00A02026',
+  });
+  assert.match(duo, /Par Samuel Girard et Mathilde Jobin/);
+  assert.doesNotMatch(duo, /et al/);
+  assert.equal(F.signatureOf({ authors: [], source: 'Quartier Libre', dateLabel: '1\u00A0janvier\u00A02026' }), 'Quartier Libre · 1\u00A0janvier\u00A02026');
+  assert.doesNotMatch(pb, /bylineDateTries/);
+  assert.match(pb, /Front\.signatureOf/);
+  assert.match(pb, /window\.__uneSignatures/);
+  assert.match(pb, /paintSignature\(/);
+  assert.doesNotMatch(pb, /metaPick\([^\n]*,\s*[123],\s*true\)/);
 }
