@@ -28,6 +28,7 @@ on:
       - Verify Live Article Links
       - Detect Radio Schedule Drift
       - Probe Indigenous MT engines
+      - Update kit-media examples
     types: [completed]
   schedule:
     - cron: '7,37 * * * *'

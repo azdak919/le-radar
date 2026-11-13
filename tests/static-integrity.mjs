@@ -647,8 +647,11 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
   assert(builder.includes('Imprimer une affiche'), 'générateur public : titre');
+  assert(builder.includes('<legend>Fond</legend>'), 'affiches : étape Fond (grille photo)');
   assert(
-    builder.indexOf('<legend>Code QR</legend>') < builder.indexOf('<legend>Photo</legend>'),
+    builder.indexOf('<legend>Établissement</legend>') < builder.indexOf('<legend>Fond</legend>')
+      && builder.indexOf('<legend>Période</legend>') < builder.indexOf('<legend>Fond</legend>')
+      && builder.indexOf('<legend>Fond</legend>') < builder.indexOf('<legend>Code QR</legend>'),
     'affiches : paramètres avant la grille photo',
   );
   assert(!builder.includes('n’apparaît qu’en local'), 'affiches : pas de mention labo dans le texte public');
@@ -694,7 +697,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('value="600" checked'), 'générateur public : 600 dpi coché');
   assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
   assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
-  assert(builderJs.includes('view.style.width'), 'générateur public : canvas d’aperçu pas 300×150 par défaut');
+  assert(
+    builderJs.includes('view.style.width') || (builderJs.includes('canvas.style.width') && builderJs.includes('previewView.natW')),
+    'générateur public : canvas d’aperçu pas 300×150 par défaut',
+  );
   assert(builder.includes('PDF 600 dpi'), 'générateur public : bouton PDF 600 dpi');
   assert(builder.includes('id="dl-jpg"'), 'générateur public : JPEG en second');
   assert(builderJs.includes("downloadPrint(kind = 'pdf')") || builderJs.includes('downloadPrint(kind = "pdf")') || builderJs.includes("kind = 'pdf'"), 'générateur public : PDF par défaut');

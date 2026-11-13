@@ -1,0 +1,58 @@
+name: Update kit-media examples
+
+# Régénère les unes d’exemple du kit (vignettes = fichiers téléchargeables)
+# pour que la date affichée suive le contenu réel. Les affiches campus
+# (gabarit a9e8f52) ne sont pas retracées.
+on:
+  schedule:
+    # Tous les jours vers 7 h (America/Toronto) : après la passe nouvelles de 6 h.
+    # 12:00 UTC = 7 h HNE / 8 h HAE.
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  # Un seul écrivain à la fois par famille de fichiers (file FIFO) ; carte dans scripts/data-writer-groups.json.
+  group: data-writers-site
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.11'
+      - name: Pillow (PDF et aperçus issus du même rendu)
+        run: pip install --quiet pillow
+      - name: Cache Playwright Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Exporter les unes d’exemple
+        run: npm run kit:example-posters -- --only=une --force
+      - name: Publier si le contenu a changé
+        run: |
+          git add assets/kit/affiches/affiche-ex-une-* assets/kit/affiches/gallery-meta.json assets/kit/affiches/stamp.json
+          git diff --cached --quiet && { echo "Aucun changement."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git commit -s -m "bot(kit-media): régénérer les exemples de une"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node tests/kit-posters.mjs"

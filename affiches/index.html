@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=une-16">
+  <link rel="stylesheet" href="./poster-builder.css?v=studio-4">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -68,7 +68,7 @@
   <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
   <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
 
-  <main class="seo-wire affiche-wire">
+  <main class="seo-wire affiche-wire affiche-wire--studio">
     <nav class="seo-crumbs" aria-label="Fil d’Ariane">
       <a href="../">Accueil</a>
       <span aria-hidden="true">/</span>
@@ -79,18 +79,22 @@
     <h1 class="seo-title">Imprimer une affiche</h1>
     <p class="seo-lead">Composez la une du Radar ou une affiche campus, à imprimer (Lettre, Légal, Tabloïd) ou à diffuser sur un écran.</p>
 
-    <div class="dash">
+    <div class="dash" data-mobile-pane="controls">
       <form class="dash-controls" id="form" onsubmit="return false;">
-        <p class="dash-lead">Paramètres d’abord, photo ensuite. L’affiche reste à droite.</p>
-        <div class="dash-actions">
+        <div class="dash-mobile-switch" role="tablist" aria-label="Vue">
+          <button type="button" class="dash-mobile-switch__btn" data-pane="preview" aria-pressed="false">Aperçu</button>
+          <button type="button" class="dash-mobile-switch__btn" data-pane="controls" aria-pressed="true">Réglages</button>
+        </div>
+        <header class="dash-railhead">
           <div class="btn-row">
             <button class="btn" type="button" id="dl">PDF 600 dpi</button>
             <button class="btn btn-ghost" type="button" id="dl-jpg">JPEG 600 dpi</button>
           </div>
           <p class="status" id="status">Chargement…</p>
-        </div>
+        </header>
+        <div class="dash-flow">
 
-        <fieldset>
+        <fieldset data-step="modele">
           <legend>Modèle</legend>
           <div class="choices">
             <label><input type="radio" name="model" value="campus" checked> Affiche campus</label>
@@ -100,7 +104,32 @@
           <p class="field-hint js-une-only" hidden>Articles, sports et radio réels du site, aux couleurs de chaque établissement. Imprimé ou écran d’affichage.</p>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-uni-box" hidden>
+<fieldset class="js-campus-only" data-step="etablissement">
+          <legend>Établissement</legend>
+          <select class="greeting" name="campus" id="campus-select" aria-label="Établissement">
+            <option value="generique" selected>Générique</option>
+            <option value="laval">Université Laval</option>
+            <option value="mcgill">Université McGill</option>
+            <option value="udem">Université de Montréal</option>
+            <option value="uqam">UQAM</option>
+            <option value="concordia">Université Concordia</option>
+            <option value="sherbrooke">Université de Sherbrooke</option>
+            <option value="bishops">Université Bishop’s</option>
+            <option value="uqtr">UQTR</option>
+            <option value="uqac">UQAC</option>
+            <option value="uqar">UQAR</option>
+            <option value="uqo">UQO</option>
+            <option value="uqat">UQAT</option>
+            <option value="teluq">TÉLUQ</option>
+            <option value="ets">ÉTS</option>
+            <option value="enap">ENAP</option>
+            <option value="inrs">INRS</option>
+            <option value="poly">Polytechnique</option>
+            <option value="hec">HEC Montréal</option>
+          </select>
+        </fieldset>
+
+<fieldset class="js-une-only" id="une-uni-box" hidden data-step="etablissement">
           <legend>Établissement</legend>
           <select class="greeting" name="uneCampus" id="une-campus" aria-describedby="une-campus-hint">
             <option value="toutes" selected>Toutes les universités</option>
@@ -108,7 +137,7 @@
           <p class="field-hint" id="une-campus-hint">Ne garder que les articles, les matchs et la radio de cet établissement. L’affiche n’invente rien : s’il y a peu d’articles, elle prend ceux qui existent.</p>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-media-box" hidden>
+<fieldset class="js-une-only" id="une-media-box" hidden data-step="media">
           <legend>Média</legend>
           <select class="greeting" name="uneMedia" id="une-media" aria-describedby="une-media-hint">
             <option value="tous" selected>Tous les médias</option>
@@ -116,7 +145,7 @@
           <p class="field-hint" id="une-media-hint">Tous les médias de l’établissement, ou un seul journal.</p>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-period-box" hidden>
+<fieldset class="js-une-only" id="une-period-box" hidden data-step="periode">
           <legend>Période</legend>
           <select class="greeting" name="unePeriod" id="une-period" aria-describedby="une-period-hint">
             <option value="jour" selected>Aujourd’hui (les plus récents)</option>
@@ -129,7 +158,7 @@
           <p class="field-hint" id="une-period-hint">Articles choisis par date de publication et répartis sur la période. Le libellé s’affiche dans le bandeau.</p>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-layout-box" hidden>
+<fieldset class="js-une-only" id="une-layout-box" hidden data-step="fond">
           <legend>Fond</legend>
           <div class="choices">
             <label><input type="radio" name="layout" value="classique" checked> Sans photo (fond uni)</label>
@@ -138,32 +167,21 @@
           <p class="field-hint">Avec photo : articles en cartes de verre dépoli et en-tête qui laisse voir la photo. Choisissez la photo plus bas.</p>
         </fieldset>
 
-        <fieldset class="js-campus-only">
-          <legend>Établissement</legend>
-          <div class="choices">
-            <label><input type="radio" name="campus" value="generique" checked> Générique</label>
-            <label><input type="radio" name="campus" value="laval"> Université Laval</label>
-            <label><input type="radio" name="campus" value="mcgill"> Université McGill</label>
-            <label><input type="radio" name="campus" value="udem"> Université de Montréal</label>
-            <label><input type="radio" name="campus" value="uqam"> UQAM</label>
-            <label><input type="radio" name="campus" value="concordia"> Université Concordia</label>
-            <label><input type="radio" name="campus" value="sherbrooke"> Université de Sherbrooke</label>
-            <label><input type="radio" name="campus" value="bishops"> Université Bishop’s</label>
-            <label><input type="radio" name="campus" value="uqtr"> UQTR</label>
-            <label><input type="radio" name="campus" value="uqac"> UQAC</label>
-            <label><input type="radio" name="campus" value="uqar"> UQAR</label>
-            <label><input type="radio" name="campus" value="uqo"> UQO</label>
-            <label><input type="radio" name="campus" value="uqat"> UQAT</label>
-            <label><input type="radio" name="campus" value="teluq"> TÉLUQ</label>
-            <label><input type="radio" name="campus" value="ets"> ÉTS</label>
-            <label><input type="radio" name="campus" value="enap"> ENAP</label>
-            <label><input type="radio" name="campus" value="inrs"> INRS</label>
-            <label><input type="radio" name="campus" value="poly"> Polytechnique</label>
-            <label><input type="radio" name="campus" value="hec"> HEC Montréal</label>
+<fieldset id="photo-box" class="js-campus-only" data-step="fond">
+          <legend>Fond</legend>
+          <div class="photo-grid" id="photo-grid"></div>
+          <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
+          <div id="photo-upload-box" hidden>
+            <label class="photo-upload">
+              <input type="file" id="photo-upload" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple>
+              Téléverser une image
+            </label>
+            <p class="field-hint">Labo local seulement. JPEG, PNG ou WebP — l’image reste dans cet onglet.</p>
           </div>
+          <p class="photo-meta" id="photo-meta"></p>
         </fieldset>
 
-        <fieldset>
+<fieldset data-step="format">
           <legend>Format</legend>
           <div class="choices">
             <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
@@ -174,7 +192,7 @@
           </div>
         </fieldset>
 
-        <fieldset>
+<fieldset>
           <legend>Résolution</legend>
           <div class="choices">
             <label><input type="radio" name="dpi" value="300"> 300 dpi</label>
@@ -184,7 +202,7 @@
           <p class="field-hint" id="dpi-hint">600 dpi par défaut. 300 pour un babillard.</p>
         </fieldset>
 
-        <fieldset id="lang-box">
+<fieldset id="lang-box">
           <legend>Texte</legend>
           <div class="choices">
             <label><input type="radio" name="lang" value="standard" checked> Français</label>
@@ -193,7 +211,7 @@
           <p class="field-hint">Bilingue offert seulement pour Concordia, McGill et Bishop’s. Les établissements francophones restent en français.</p>
         </fieldset>
 
-        <fieldset id="uni-toggle" class="js-campus-only" hidden>
+<fieldset id="uni-toggle" class="js-campus-only" hidden>
           <legend>Nom de l’établissement</legend>
           <div class="choices">
             <label><input type="radio" name="showUni" value="oui" checked> Afficher</label>
@@ -201,7 +219,7 @@
           </div>
         </fieldset>
 
-        <fieldset class="js-campus-only">
+<fieldset class="js-campus-only">
           <legend>Message manuscrit</legend>
           <select class="greeting" name="greeting" id="greeting" aria-describedby="greeting-hint">
             <option value="none" selected>Aucun</option>
@@ -232,9 +250,7 @@
           <p class="field-hint" id="greeting-hint">Signature à la main. En bilingue, une ligne anglaise s’ajoute.</p>
         </fieldset>
 
-
-
-        <fieldset>
+<fieldset>
           <legend>Code QR</legend>
           <div class="choices">
             <label><input type="radio" name="qr" value="non"> Sans</label>
@@ -244,7 +260,7 @@
           <p class="field-hint js-une-only" hidden>Un code par article, vers sa fiche sur le-radar.ca, et un code vers l’accueil.</p>
         </fieldset>
 
-        <fieldset id="une-tagline-box">
+<fieldset id="une-tagline-box">
           <legend>Phrase sous « Scanne-moi »</legend>
           <select class="greeting" name="uneTagline" id="une-tagline">
             <option value="direct" selected>Le fil étudiant, en direct</option>
@@ -256,7 +272,7 @@
           <p class="field-hint">Sous le code QR, sur la une comme sur l’affiche campus.</p>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-entete-box" hidden>
+<fieldset class="js-une-only" id="une-entete-box" hidden>
           <legend>Encart du haut</legend>
           <select class="greeting" name="uneEntete" id="une-entete" aria-describedby="une-entete-hint">
             <option value="radio" selected>Radio du campus</option>
@@ -268,33 +284,19 @@
           <p class="field-hint" id="une-entete-hint">À côté du slogan : prochaines émissions de jour de la radio étudiante. Sans données réelles, l’encart passe au match, puis au chiffre, ou disparaît.</p>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-box" hidden>
+<fieldset class="js-une-only" id="une-box" hidden>
           <legend>Articles</legend>
           <p class="field-hint" id="une-status">Chargement des articles du site…</p>
           <button type="button" class="photo-more" id="une-auto" hidden>Revenir à la sélection automatique</button>
           <ol class="une-list" id="une-list"></ol>
         </fieldset>
 
-        <fieldset class="js-une-only" id="une-sports-box" hidden>
+<fieldset class="js-une-only" id="une-sports-box" hidden>
           <legend>Sports</legend>
           <p class="field-hint">Auto par défaut. Placez un match ou un résultat sous le slogan, dans la bande (ou le bilan), ou masquez-le.</p>
           <ol class="une-list" id="une-sports-list"></ol>
         </fieldset>
-
-        <fieldset id="photo-box" class="js-campus-only">
-          <legend>Photo</legend>
-          <div class="photo-grid" id="photo-grid"></div>
-          <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
-          <div id="photo-upload-box" hidden>
-            <label class="photo-upload">
-              <input type="file" id="photo-upload" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple>
-              Téléverser une image
-            </label>
-            <p class="field-hint">Labo local seulement. JPEG, PNG ou WebP — l’image reste dans cet onglet.</p>
-          </div>
-          <p class="photo-meta" id="photo-meta"></p>
-        </fieldset>
-
+        </div>
         <div class="dash-actions dash-actions--end">
           <div class="btn-row">
             <button class="btn" type="button" id="dl-bottom">PDF 600 dpi</button>
@@ -304,8 +306,17 @@
       </form>
 
       <section class="dash-preview" id="preview-pane" aria-label="Aperçu">
+        <div class="preview-toolbar" id="preview-toolbar">
+          <button type="button" class="preview-tool" id="view-zoom-out" title="Zoom arrière" aria-label="Zoom arrière">−</button>
+          <button type="button" class="preview-tool" id="view-zoom-in" title="Zoom avant" aria-label="Zoom avant">+</button>
+          <button type="button" class="preview-tool" id="view-fit" title="Ajuster à l’écran" aria-label="Ajuster à l’écran">Ajuster</button>
+          <button type="button" class="preview-tool" id="view-100" title="Taille 100 %" aria-label="Taille 100 %">100 %</button>
+          <span class="preview-zoom-readout" id="view-zoom-label">Ajuster</span>
+        </div>
+        <div class="preview-viewport" id="preview-viewport">
         <div class="preview-stage" id="preview-stage">
           <div class="preview-frame" id="preview"></div>
+        </div>
         </div>
         <aside class="crop-tools" id="crop-tools" hidden>
           <p class="crop-lead">Cadrage</p>
@@ -378,6 +389,6 @@
   <script src="../scripts/sports-payload-lib.js"></script>
   <script src="../scripts/institution-color-lib.js?v=ets-1"></script>
   <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
-  <script src="./poster-builder.js?v=une-16"></script>
+  <script src="./poster-builder.js?v=studio-4"></script>
 </body>
 </html>
