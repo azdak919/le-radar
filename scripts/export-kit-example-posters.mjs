@@ -157,7 +157,7 @@ async function capture(page, dest) {
 
 async function main() {
   const server = await startServer();
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
     await attachLocalPhotos(page);
@@ -177,7 +177,6 @@ async function main() {
         if (await bi.isVisible()) await bi.click();
       }
       await page.selectOption('#greeting', ex.greeting || 'none');
-      await page.locator(`label:has(input[name="langs"][value="${ex.langs ? 'oui' : 'non'}"])`).click();
       await page.locator(`label:has(input[name="qr"][value="${ex.qr ? 'oui' : 'non'}"])`).click();
       await pickPhoto(page, ex.photo);
       await capture(page, dest);

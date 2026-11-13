@@ -525,3 +525,7 @@ body:has(#local-lab-format-bar) .dash-controls {
   color: inherit;
 }
 #une-sports-list li { grid-template-columns: minmax(0, 1fr); }
+
+/* Le studio est posé dans .seo-wire : la règle du site « .seo-wire p { color: var(--ink-soft) } » (#44474d)
+ * rendait les indications quasi illisibles sur le fond sombre (contraste ≈ 2:1). On rétablit les couleurs du studio. */
+.seo-wire .dash :is(.dash-lead, .status, .field-hint, .photo-meta, .crop-lead, .crop-hint) { color: var(--muted); }
