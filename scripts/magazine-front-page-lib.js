@@ -362,21 +362,63 @@
   }
 
   /**
+   * Relais CORS publics (Photon, puis wsrv.nl) pour peindre une image distante
+   * sur un canevas (affiche) quand l’origine n’envoie pas ACAO et qu’aucun
+   * miroir local n’est retenu — cas typique de imageRemoteOnly (licence non
+   * libre, ex. Karmina / Éléphant Films). Ces relais ne réhébergent pas le
+   * fichier dans assets/news-images/.
+   */
+  function photonUrl(url = '') {
+    try {
+      const u = new URL(url);
+      if (u.protocol !== 'https:') return '';
+      const host = u.hostname.toLowerCase();
+      if (host === 'i0.wp.com' || host.endsWith('.wp.com')) return url;
+      if (host === 'wsrv.nl' || host === 'images.weserv.nl') return url;
+      if (host === 'le-radar.ca' || host.endsWith('.le-radar.ca')) return '';
+      if (host === 'upload.wikimedia.org' || host.endsWith('.wikimedia.org')) return '';
+      return `https://i0.wp.com/${host}${u.pathname}${u.search ? `${u.search}&ssl=1` : '?ssl=1'}`;
+    } catch {
+      return '';
+    }
+  }
+  function corsRelayUrls(url = '') {
+    const out = [];
+    const photon = photonUrl(url);
+    if (photon && photon !== url) out.push(photon);
+    try {
+      const u = new URL(url);
+      const host = u.hostname.toLowerCase();
+      if (u.protocol === 'https:' && host !== 'wsrv.nl' && host !== 'images.weserv.nl') {
+        out.push(`https://wsrv.nl/?url=${encodeURIComponent(url)}&w=1400&we&output=jpg&q=82`);
+      }
+    } catch { /* URL invalide */ }
+    return out;
+  }
+
+  /**
    * Images à dessiner, en ordre : miroir local du fil, même fichier sur le-radar.ca
    * (CORS ouvert, utile hors déploiement), puis l’URL https déjà retenue par la
-   * collecte (affiches-texte exclues en amont).
+   * collecte (affiches-texte exclues en amont). Sans miroir local, Photon et
+   * wsrv.nl suivent l’origine pour le canevas de l’affiche (ACAO).
    */
   function imageCandidates(item, base = '..') {
     if (item && item._feedNoImage) return [];
     const out = [];
     const local = String(item.imageLocal || '').trim();
-    if (/^assets\/news-images\//i.test(local)) {
+    const hasLocal = /^assets\/news-images\//i.test(local);
+    if (hasLocal) {
       const prefix = String(base || '.').replace(/\/+$/, '');
       out.push(`${prefix}/${local}`);
       out.push(`${SITE}/${local}`);
     }
     const url = String(item.image || item.stockImage || '').trim();
     if (/^https:\/\//i.test(url) && !out.includes(url)) out.push(url);
+    if (!hasLocal && /^https:\/\//i.test(url)) {
+      for (const relay of corsRelayUrls(url)) {
+        if (!out.includes(relay)) out.push(relay);
+      }
+    }
     return out;
   }
 
@@ -776,6 +818,8 @@
     hookOf,
     imageSrc,
     imageCandidates,
+    photonUrl,
+    corsRelayUrls,
     cropFocalY,
     photoCredit,
     frDate,
