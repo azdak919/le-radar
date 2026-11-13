@@ -20,7 +20,7 @@ function startServer(port) {
 export function pageModel(model) {
   return {
     slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()) },
-    sports: model.sports || [],
+    sports: model.sports || [], radio: model.radio || [],
     items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, place: x.place || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
   };
 }
@@ -28,6 +28,7 @@ export function pageModel(model) {
 export async function renderImages(model, { outDir, formats = ['portrait', 'story', 'paysage'], prefix = 'une', port = Number(process.env.UNE_PORT || 4193) } = {}) {
   const { chromium } = await import('@playwright/test');
   fs.mkdirSync(outDir, { recursive: true });
+  fs.writeFileSync(path.join(outDir, `${prefix}-page.json`), JSON.stringify(pageModel(model), null, 1));
   const server = await startServer(port), browser = await chromium.launch();
   const out = {};
   try {

@@ -11,10 +11,10 @@ body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-syn
 /* Thèmes du site (style.css : :root et [data-theme="dark"]). Matin = clair, soir = sombre. */
 .card.clair { --bg: #ffffff; --bg-soft: #f6f6f4; --ink: #16181c; --ink-soft: #44474d; --muted: #5f646c; --rule: #e7e7e3; --accent: #6c2163; --on-accent: #ffffff;
   --veil: rgba(255,255,255,.80); --glass: rgba(255,255,255,.80); --glass-line: rgba(22,24,28,.10); --shadow: 0 14px 40px rgba(22,24,28,.16); --pill: #F28C28; --on-pill: #16181c; --foot: #6c2163; --on-foot: #ffffff; }
-.card.sombre { --bg: #2b1b35; --bg-soft: #33213f; --ink: #f6eff6; --ink-soft: #e1d4e2; --muted: #c8b8ca; --rule: rgba(255,255,255,.16); --accent: #f2b8e4; --on-accent: #2b1b35;
-  --veil: rgba(43,27,53,.58); --shadow: 0 16px 44px rgba(12,0,16,.5); --pill: #F6C177; --on-pill: #2b1b35; --foot: #2b1b35; --on-foot: #f6eff6; }
-/* Soir « Crépuscule » (focus-group du 12 nov. 2026, le noir était pénible) : cadre violet nuit, cartes de verre claires (texte foncé, AA ≥ 5,7:1 même sur photo sombre). */
-.card.sombre .glass { --glass: rgba(251,248,251,.93); --glass-line: rgba(255,255,255,.7); --ink: #1d1720; --ink-soft: #453c4a; --muted: #5f5664; --rule: #e6dde6; --accent: #6c2163; --on-accent: #ffffff; }
+.card.sombre { --bg: #15213b; --bg-soft: #1c2a48; --ink: #f3f6fb; --ink-soft: #d6deec; --muted: #b3bfd6; --rule: rgba(255,255,255,.16); --accent: #f0b3e0; --on-accent: #15213b;
+  --veil: rgba(21,33,59,.72); --glass: rgba(36,52,88,.92); --glass-line: rgba(255,255,255,.16); --shadow: 0 14px 40px rgba(0,6,20,.45); --pill: #F6C177; --on-pill: #15213b; --foot: #1c2a48; --on-foot: #f3f6fb; }
+/* Soir « Marine » (choix de Charles, 12 nov. 2026) : cadre et cartes bleu marine, texte clair, pastille ambre. Verre opaque à 92 %
+   (au lieu de 74 %) : même sur une zone blanche, le texte le plus pâle reste à ≥ 5,2:1 (AA). */
 .card { position: relative; overflow: hidden; background: var(--bg); color: var(--ink); display: flex; flex-direction: column; }
 .portrait { width: 1080px; height: 1350px; } .paysage { width: 1200px; height: 675px; } .story { width: 1080px; height: 1920px; }
 
@@ -34,20 +34,20 @@ body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-syn
 
 .main { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; padding: 0 0 20px; }
 .col { min-height: 0; display: flex; flex-direction: column; gap: 14px; }
-.col.a { flex: 1 1 auto; }
+.col.a { flex: 1 1 auto; padding: 18px 32px 0; }
 .col.b { flex: none; padding: 0 32px; }
 
 /* Photo de la une : pleine largeur, dégagée (seul le bas est effleuré par la carte). */
 .photo, .thumb { position: relative; overflow: hidden; background: linear-gradient(135deg, #6c2163, #3e1139); }
-.photo { flex: 1 1 0; min-height: 0; }
+.photo { flex: 1 1 0; min-height: 0; margin: -18px -26px 16px; border-radius: 24px 24px 0 0; }
 .photo img, .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .photo.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
-.badge { position: absolute; left: 32px; top: 22px; background: #6c2163; color: #fff; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 20px; line-height: 1; padding: 10px 16px; border-radius: 999px; }
-.credit { position: absolute; right: 32px; top: 22px; background: rgba(0,0,0,.6); color: #fff; padding: 6px 12px; font-size: 16px; line-height: 1.2; border-radius: 999px; max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.badge { position: absolute; left: 22px; top: 20px; background: #6c2163; color: #fff; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 20px; line-height: 1; padding: 10px 16px; border-radius: 999px; }
+.credit { position: absolute; right: 20px; top: 20px; background: rgba(0,0,0,.6); color: #fff; padding: 6px 12px; font-size: 16px; line-height: 1.2; border-radius: 999px; max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .glass { position: relative; z-index: 2; color: var(--ink); background: var(--glass); -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3); border: 1px solid var(--glass-line); border-radius: 24px; box-shadow: var(--shadow); }
-.lead { flex: none; margin: -56px 32px 0; padding: 18px 26px 18px; display: flex; flex-direction: column; overflow: hidden; }
-.lead > * { flex: none; }
+.lead { flex: 1 1 auto; min-height: 0; padding: 18px 26px 18px; display: flex; flex-direction: column; overflow: hidden; }
+.lead > :not(.photo) { flex: none; }
 .kick { display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-size: 19px; line-height: 1.2; margin-bottom: 8px; }
 .kick .emo { font-size: 1.3em; letter-spacing: 0; line-height: 1; }
 .title { font-weight: 700; font-size: 50px; line-height: 1.1; letter-spacing: -0.01em; overflow: hidden; max-height: calc(50px * 1.12 * 3 + 6px); text-wrap: pretty; }
@@ -78,6 +78,7 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .lg .emo { font-size: 22px; line-height: 1; }
 .tm { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 22px; line-height: 1.35; color: var(--ink-soft); }
 .tm .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.lg .lgt { font-weight: 700; color: var(--ink-soft); }
 .tm small { font-size: 16px; color: var(--muted); font-weight: 400; }
 .tm .pt { font-weight: 700; font-size: 28px; font-variant-numeric: tabular-nums lining-nums; color: var(--ink-soft); }
 .tm.win { color: var(--ink); font-weight: 700; } .tm.win .pt { color: var(--ink); }
@@ -105,10 +106,11 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .paysage .brand { gap: 12px; } .paysage .brand .logo { width: 48px; height: 48px; } .paysage .wm { font-size: 38px; }
 .paysage .slot b { font-size: 20px; padding: 7px 13px; } .paysage .slot span { font-size: 15px; margin-top: 5px; }
 .paysage .main { flex-direction: row; gap: 18px; padding: 0 22px 12px 0; }
-.paysage .col.a { flex: 0 0 620px; }
+.paysage .col.a { flex: 0 0 640px; padding: 12px 0 0 22px; }
 .paysage .col.b { flex: 1 1 0; padding: 12px 0 0; gap: 10px; }
-.paysage .badge { left: 22px; top: 14px; font-size: 14px; padding: 7px 11px; } .paysage .credit { right: 14px; top: 14px; font-size: 12px; }
-.paysage .lead { margin: -54px 0 0 22px; padding: 14px 20px; border-radius: 18px; }
+.paysage .badge { left: 14px; top: 12px; font-size: 14px; padding: 7px 11px; } .paysage .credit { right: 12px; top: 12px; font-size: 12px; }
+.paysage .lead { padding: 14px 20px; border-radius: 18px; }
+.paysage .photo { margin: -14px -20px 10px; border-radius: 18px 18px 0 0; }
 .paysage .kick { font-size: 14px; margin-bottom: 5px; }
 .paysage .title { font-size: 34px; max-height: calc(34px * 1.12 * 3 + 6px); }
 .paysage .by { font-size: 17px; margin-top: 6px; }
@@ -135,3 +137,20 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .paysage.nosport .side { flex: 1 1 auto; }
 .paysage .col.b .side:only-child { flex: 1 1 auto; }
 
+
+/* Radio étudiante : colonne à droite de « Aussi à la une » (comble le vide), sous la liste en paysage. */
+.sbody { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; min-height: 0; }
+.sbody:not(:has(.radio)) { grid-template-columns: minmax(0, 1fr); }
+.radio { border-left: 1px solid var(--rule); padding: 4px 0 8px 20px; display: flex; flex-direction: column; justify-content: center; gap: 12px; min-height: 0; overflow: hidden; }
+.radio h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.show .st { display: flex; gap: 8px; align-items: baseline; font-weight: 700; font-size: 19px; line-height: 1.2; }
+.show .st .emo { font-size: 18px; } .show .stt { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.show .sta { font-weight: 700; color: var(--accent); }
+.show .when { margin-top: 2px; font-size: 14px; }
+.paysage .sbody { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 6px; flex: 1 1 auto; }
+.paysage .radio { border-left: 0; border-top: 1px solid var(--rule); padding: 6px 0 8px; gap: 5px; justify-content: flex-start; }
+.paysage .show { display: flex; align-items: baseline; gap: 8px; } .paysage .show .when { margin: 0; }
+.paysage .radio h3 { font-size: 11px; width: 100%; } .paysage .show { flex: 1 1 0; min-width: 0; }
+.paysage .show .st { font-size: 14px; } .paysage .show .st .emo { font-size: 13px; } .paysage .show .when { font-size: 11px; }
+.paysage .show .stt { -webkit-line-clamp: 1; }
+.paysage .show .when { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

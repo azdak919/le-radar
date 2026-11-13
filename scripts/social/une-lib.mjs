@@ -115,15 +115,23 @@ export function institutionLabel(it) {
 }
 /** Émoji du sport étudiant (titre ou extrait) ; '' si l'article n'est pas sportif. */
 const SPORT_EMOJI = { '#Football': '🏈', '#Hockey': '🏒', '#Basketball': '🏀', '#Volleyball': '🏐', '#Soccer': '⚽', '#Rugby': '🏉', '#Natation': '🏊', '#Athlétisme': '🏃' };
+const D3 = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'], M3 = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juill.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+/** « jeu. 12 nov. » (date absolue, jamais « aujourd'hui » ni « hier »). */
+export function frShort(ymd) { const [y, m, d] = ymd.split('-').map(Number); return `${D3[new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay()]} ${d === 1 ? '1er' : d} ${M3[m - 1]}`; }
+/** « 19 h », « 19 h 30 ». */
+export const frHour = t => { const [h, m] = String(t || '').split(':').map(Number); return Number.isFinite(h) ? `${h} h${m ? ' ' + String(m).padStart(2, '0') : ''}` : ''; };
+const SEX = { M: 'H', F: 'F', X: 'mixte' };
 const CODE_EMOJI = { football: '🏈', 'flag-football': '🏈', hockey: '🏒', basketball: '🏀', volleyball: '🏐', 'volleyball-plage': '🏐', soccer: '⚽', 'soccer-interieur': '⚽', futsal: '⚽', rugby: '🏉', natation: '🏊', athletisme: '🏃', 'cross-country': '🏃', badminton: '🏸', voile: '⛵', golf: '⛳', tennis: '🎾', ultimate: '🥏', curling: '🥌', ski: '⛷️', baseball: '⚾' };
 export const sportCodeEmoji = code => CODE_EMOJI[String(code || '').toLowerCase()] || '🏅';
 const SHORT_INST = { 'Université Laval': 'Laval', 'Université de Montréal': 'Montréal', 'Université de Sherbrooke': 'Sherbrooke', 'Université McGill': 'McGill', 'Université Concordia': 'Concordia', "Université Bishop's": "Bishop's", 'Université du Québec à Montréal': 'UQAM', 'Université du Québec à Trois-Rivières': 'UQTR', 'Université du Québec à Chicoutimi': 'UQAC', 'Université du Québec à Rimouski': 'UQAR', 'Université du Québec en Outaouais': 'UQO', 'École de technologie supérieure': 'ÉTS' };
-const teamLabel = (nick, inst) => {
+export const teamLabelFor = (nick, inst) => teamLabel(nick, inst);
+function teamLabel(nick, inst) {
+  const sub = (String(inst || '').match(/\s+—\s+(.*)$/) || [])[1] || ''; // ex. « équipe Blanc » : deux équipes du même cégep
   const i = String(inst || '').replace(/\s+—\s+.*$/, '').trim();
   const fr = FR_INSTITUTIONS[i.toLowerCase()] || i;
   const short = SHORT_INST[fr] || fr.replace(/^(Cégep|Collège) (de |du |d’|d')?/, '').trim();
-  return { name: String(nick || short || '').trim(), inst: nick ? short : '' };
-};
+  return { name: String(nick || short || '').trim(), inst: nick ? short + (sub ? `, ${sub}` : '') : '' };
+}
 /**
  * Résultats sportifs étudiants récents (sports-masthead.json du site, RSEQ) : une rencontre par gameId, score connu,
  * saison en cours, jouée dans les `days` jours civils précédant `day` (Montréal). Universitaire d'abord, puis le plus récent.
@@ -131,11 +139,12 @@ const teamLabel = (nick, inst) => {
  */
 export function pickSports(masthead, day, { max = 3, days = 2 } = {}) {
   const teams = Object.values(masthead?.teams || {}), seen = new Set(), res = [], next = [];
-  const from = new Date(Date.parse(day + 'T12:00:00Z') - days * 864e5).toISOString().slice(0, 10);
-  const when = d => d === day ? 'aujourd’hui' : d === new Date(Date.parse(day + 'T12:00:00Z') - 864e5).toISOString().slice(0, 10) ? 'hier' : frDay(d);
+  const from = addDays(day, -days);
   for (const t of teams) {
     if (!t || !t.sport) continue;
     const me = teamLabel(t.nickname, t.institutionLabel || t.fullName || t.name);
+    const label = `${t.sportLabel || t.sport}${SEX[t.sex] ? ` (${SEX[t.sex]})` : ''}`;
+    const base = { emoji: sportCodeEmoji(t.sport), sport: label, league: t.leagueLabel || '', uni: t.sector === 'universitaire' };
     for (const g of t.results || []) {
       const id = g.gameId || `${t.id}:${g.date}`;
       if (seen.has(id) || g.priorSeason || g.scoreFor == null || g.scoreAgainst == null || !g.date || g.date < from || g.date > day) continue;
@@ -143,8 +152,7 @@ export function pickSports(masthead, day, { max = 3, days = 2 } = {}) {
       const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
       if (!me.name || !op.name) continue;
       const a = { ...me, score: Number(g.scoreFor) }, b = { ...op, score: Number(g.scoreAgainst) };
-      res.push({ kind: 'resultat', emoji: sportCodeEmoji(t.sport), league: t.leagueLabel || t.sportLabel || '', date: g.date, when: when(g.date),
-        teams: a.score >= b.score ? [a, b] : [b, a], tie: a.score === b.score, uni: t.sector === 'universitaire' });
+      res.push({ ...base, kind: 'resultat', gameId: g.gameId || '', date: g.date, when: `Final · ${frShort(g.date)}`, teams: a.score >= b.score ? [a, b] : [b, a], tie: a.score === b.score });
     }
     for (const g of t.nextGames || []) {
       const id = g.gameId || `${t.id}:${g.date}:n`;
@@ -153,8 +161,7 @@ export function pickSports(masthead, day, { max = 3, days = 2 } = {}) {
       const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
       if (!me.name || !op.name) continue;
       const host = g.home ? me : op, guest = g.home ? op : me;
-      next.push({ kind: 'avenir', emoji: sportCodeEmoji(t.sport), league: t.leagueLabel || t.sportLabel || '', date: g.date, when: 'aujourd’hui' + (g.time ? ' · ' + String(g.time).replace(':', ' h ') : ''),
-        teams: [guest, host], uni: t.sector === 'universitaire', time: g.time || '' });
+      next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when: [frShort(g.date), frHour(g.time)].filter(Boolean).join(' · '), teams: [guest, host], time: g.time || '' });
     }
   }
   const order = (x, y) => (y.uni - x.uni) || String(y.date).localeCompare(String(x.date));
@@ -163,10 +170,34 @@ export function pickSports(masthead, day, { max = 3, days = 2 } = {}) {
   if (res.length) return vary(res.sort(order)).slice(0, max);
   return next.sort((x, y) => (y.uni - x.uni) || String(x.time).localeCompare(String(y.time))).slice(0, max);
 }
-/** Ligne texte d'un résultat (réseaux) : « 🏀 Stingers (Concordia) 68-44 Redbirds (McGill) ». */
+const team = t => `${t.name}${t.inst ? ` (${t.inst})` : ''}`;
+/** Ligne texte : « 🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · jeu. 12 nov. ». */
 export const sportsLine = r => r.kind === 'resultat'
-  ? `${r.emoji} ${r.teams[0].name}${r.teams[0].inst ? ` (${r.teams[0].inst})` : ''} ${r.teams[0].score}-${r.teams[1].score} ${r.teams[1].name}${r.teams[1].inst ? ` (${r.teams[1].inst})` : ''}`
-  : `${r.emoji} ${r.teams[0].name} chez ${r.teams[1].name}, ${r.when}`;
+  ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${team(r.teams[1])} · ${r.when}`
+  : `${r.emoji} ${r.sport} · ${team(r.teams[0])} chez ${team(r.teams[1])} · ${r.when}`;
+
+// ── Radio étudiante : émissions à venir (radio-schedules.json, grille hebdo, day = 0 dimanche … 6 samedi, heure de Montréal) ──
+const seeded = str => { let h = 1779033703 ^ str.length; for (const c of str) { h = Math.imul(h ^ c.charCodeAt(0), 3432918353); h = (h << 13) | (h >>> 19); } return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; };
+/**
+ * Émissions de radio étudiante à venir, tirées au hasard (graine = date) : matin → émissions du jour après l'heure du créneau,
+ * soir → émissions du lendemain. Une par station d'abord, de 7 h à 23 h, sans reprise ni bouche-trou. Rien si aucune grille.
+ */
+export function pickRadio(schedules, slot, { max = 3 } = {}) {
+  const day = slot.id === 'soir' ? addDays(slot.day, 1) : slot.day;
+  const [y, m, d] = day.split('-').map(Number), dow = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
+  const after = slot.id === 'soir' ? 7 * 60 : Math.max(7 * 60, hm(slot.target || '07:45'));
+  const rnd = seeded(`radio:${day}`), byStation = [];
+  for (const st of Object.values(schedules?.stations || {})) {
+    const shows = (st.grid || []).filter(g => g.day === dow && g.title && hm(g.start) >= after && hm(g.start) <= 23 * 60
+      && !/\breprise\b|\brediffusion\b|^(les nuits|late night|.*\blate night\b|musique|programmation musicale)/i.test(g.title) && !/^(CJLO|CKUT|CISM|CHYZ|CFAK|CHOQ)\b.*(late|nuit)/i.test(g.title));
+    if (!shows.length || !st.name) continue;
+    const pick = shows[Math.floor(rnd() * shows.length)];
+    byStation.push({ emoji: '📻', title: pick.title.trim(), station: st.name, date: day, start: pick.start, when: `${frShort(day)} · ${frHour(pick.start)}`, r: rnd() });
+  }
+  return byStation.sort((a, b) => a.r - b.r).slice(0, max).sort((a, b) => hm(a.start) - hm(b.start)).map(({ r, ...x }) => x);
+}
+/** « 📻 Punk-o-rama · CHYZ 94,3 · ven. 13 nov. · 11 h ». */
+export const radioLine = x => `${x.emoji} ${x.title} · ${x.station} · ${x.when}`;
 
 /** Typographie française pour l'affichage : apostrophe courbe, guillemets « », espaces fines insécables avant ; : ! ? et dans les guillemets. */
 export function frTypo(s) {
@@ -254,7 +285,7 @@ const SPORTS_NETS = new Set(['facebook', 'linkedin', 'tumblr', 'instagram']);
 export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : NET_SPEC[net], { tags = [] } = {}) {
   const len = spec.len || xlen, long = !!spec.subheaders;
   const head = `${model.slot.emoji} ${model.slot.label} du Radar · ${frDay(model.slot.day)}`;
-  const compose = (items, hash, cut, sports) => {
+  const compose = (items, hash, cut, sports, radio) => {
     const T = x => cut ? clip(x.title, cut) : x.title;
     let body;
     if (spec.nolink) {
@@ -265,14 +296,16 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
       body = items.map(x => `${x.sport || '▪️'} ${T(x)} — ${x.byline}`).join('\n') + '\n\n' + (items.length === 1 ? items[0].pageUrl : HOME);
     }
     if (sports.length) body += `\n\n🏟️ Sport étudiant (${sports[0].kind === 'resultat' ? 'résultats' : 'à l’affiche'}) :\n` + sports.map(sportsLine).join('\n');
+    if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
     if (spec.nolink) body += '\n\nToute la une : lien en bio (le-radar.ca)';
     else if (long) body += `\n\nToute la une : ${HOME}`;
     return [head, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
-  let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports || [])] : [];
+  let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports || [])] : [], radio = SPORTS_NETS.has(net) ? [...(model.radio || [])] : [];
   for (;;) {
-    const t = compose(items, hash, cut, sports);
+    const t = compose(items, hash, cut, sports, radio);
     if (len(t) <= spec.limit) return t;
+    if (radio.length) { radio = radio.slice(0, -1); continue; }
     if (sports.length) { sports = sports.slice(0, -1); continue; }
     if (items.length > 1) { items = items.slice(0, -1); continue; }
     if (hash.length > 1) { hash = hash.slice(0, -1); continue; }

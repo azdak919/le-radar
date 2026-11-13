@@ -125,18 +125,27 @@ const sportText = U.buildUneText({ slot: sSlot, items: [{ ...m.items[0], sport: 
 assert.match(sportText, /🏒 /, 'émoji de sport dans le texte');
 
 // ── Résultats sportifs étudiants (sports-masthead.json) : récents, dédoublonnés, rien d'inventé ──
-const team = (o) => ({ sport: 'basketball', sector: 'universitaire', leagueLabel: 'Basketball universitaire féminin', results: [], nextGames: [], ...o });
+const team = (o) => ({ sport: 'basketball', sportLabel: 'Basketball', sex: 'F', sector: 'universitaire', leagueLabel: 'Basketball universitaire féminin', results: [], nextGames: [], ...o });
 const mh = { teams: {
   a: team({ id: 'a', nickname: 'Stingers', institutionLabel: 'Université Concordia', results: [{ gameId: 'g1', date: '2026-11-11', scoreFor: 55, scoreAgainst: 54, opponentNickname: 'Martlets', opponentFullName: 'Université McGill' }, { gameId: 'old', date: '2026-11-01', scoreFor: 1, scoreAgainst: 0, opponentNickname: 'X', opponentFullName: 'Université Laval' }] }),
   b: team({ id: 'b', nickname: 'Martlets', institutionLabel: 'Université McGill', results: [{ gameId: 'g1', date: '2026-11-11', scoreFor: 54, scoreAgainst: 55, opponentNickname: 'Stingers', opponentFullName: 'Université Concordia' }, { gameId: 'p', date: '2026-11-11', scoreFor: 3, scoreAgainst: 2, priorSeason: true, opponentNickname: 'Y', opponentFullName: 'UQAM' }] }),
-  c: team({ id: 'c', sport: 'hockey', nickname: 'Carabins', institutionLabel: 'Université de Montréal', nextGames: [{ gameId: 'n1', date: '2026-11-12', time: '19:00', home: true, opponentNickname: 'Patriotes', opponentFullName: 'Université du Québec à Trois-Rivières' }] }),
+  c: team({ id: 'c', sport: 'hockey', sportLabel: 'Hockey', sex: 'M', nickname: 'Carabins', institutionLabel: 'Université de Montréal', nextGames: [{ gameId: 'n1', date: '2026-11-12', time: '19:00', home: true, opponentNickname: 'Patriotes', opponentFullName: 'Université du Québec à Trois-Rivières' }] }),
 } };
 const sp = U.pickSports(mh, '2026-11-12');
 assert.equal(sp.length, 1, 'une rencontre par gameId ; ancienne et saison précédente exclues');
-assert.equal(U.sportsLine(sp[0]), '🏀 Stingers (Concordia) 55-54 Martlets (McGill)');
-assert.equal(sp[0].when, 'hier');
+assert.equal(U.sportsLine(sp[0]), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · mer. 11 nov.', 'date absolue, (F)/(H), établissement entre parenthèses');
+assert.doesNotMatch(JSON.stringify(sp), /aujourd|hier/);
 const nx = U.pickSports({ teams: { c: mh.teams.c } }, '2026-11-12');
-assert.equal(nx[0].kind, 'avenir', 'repli : rencontres du jour'); assert.match(U.sportsLine(nx[0]), /^🏒 Patriotes chez Carabins, aujourd’hui · 19 h 00$/);
+assert.equal(nx[0].kind, 'avenir', 'repli : rencontres du jour'); assert.equal(U.sportsLine(nx[0]), '🏒 Hockey (H) · Patriotes (UQTR) chez Carabins (Montréal) · jeu. 12 nov. · 19 h');
+assert.equal(U.teamLabelFor('Couguars', 'Cégep de Chicoutimi — équipe Blanc').inst, 'Chicoutimi, équipe Blanc', 'deux équipes du même cégep distinguées');
+// ── Radio étudiante : à venir, tirage reproductible, une par station ──
+const rs = { stations: { a: { name: 'CHYZ 94,3', grid: [{ day: 5, start: '11:00', title: 'Punk-o-rama' }, { day: 5, start: '02:00', title: 'Nuit' }, { day: 4, start: '20:00', title: 'Jeudi soir' }] }, b: { name: 'CISM 89,3', grid: [{ day: 5, start: '15:00', title: 'Le Séismix' }, { day: 5, start: '16:00', title: 'Club classique (reprise)' }] } } };
+const soirSlot = { id: 'soir', day: '2026-11-12', target: '19:30' }, matinSlot = { id: 'matin', day: '2026-11-12', target: '07:45' };
+const rr = U.pickRadio(rs, soirSlot);
+assert.deepEqual(rr.map(U.radioLine), ['📻 Punk-o-rama · CHYZ 94,3 · ven. 13 nov. · 11 h', '📻 Le Séismix · CISM 89,3 · ven. 13 nov. · 15 h'], 'soir : lendemain, sans nuit ni reprise');
+assert.deepEqual(U.pickRadio(rs, soirSlot), rr, 'reproductible');
+assert.deepEqual(U.pickRadio(rs, matinSlot).map(x => x.title), ['Jeudi soir'], 'matin : émissions du jour à venir');
+assert.deepEqual(U.pickRadio(null, soirSlot), [], 'sans grille : rien');
 assert.deepEqual(U.pickSports({ teams: {} }, '2026-11-12'), [], 'sans donnée récente : rien');
 assert.deepEqual(U.pickSports(null, '2026-11-12'), []);
 // ── Typographie française de l'image ──
@@ -148,8 +157,9 @@ assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formats
 assert.ok(!U.NETS.includes('instagram'), 'Instagram hors des réseaux publiés');
 const igModel = { slot: sSlot, items: m.items, sports: sp };
 const ig = U.buildUneAll(igModel).instagram;
-assert.deepEqual(ig.problems, []); assert.doesNotMatch(ig.text, /https?:\/\//); assert.match(ig.text, /lien en bio/); assert.match(ig.text, /🏀 Stingers/);
+assert.deepEqual(ig.problems, []); assert.doesNotMatch(ig.text, /https?:\/\//); assert.match(ig.text, /lien en bio/); assert.match(ig.text, /🏀 Basketball \(F\) · Stingers/);
 assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
+assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30');
 
 // ── Workflow : planifié, déclenchement manuel, DRY_RUN, fenêtres été/hiver, verrou partagé ──
 const wf = fs.readFileSync(new URL('../.github/workflows/social-une.yml', import.meta.url), 'utf8');

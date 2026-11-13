@@ -39,15 +39,19 @@
   }
   function score(r) {
     const c = el('div', 'score' + (r.kind === 'avenir' ? ' next' : ''));
-    const head = el('p', 'lg'); head.append(el('span', 'emo', r.emoji), el('span', 'lgt', r.league)); c.append(head);
+    const head = el('p', 'lg'); head.append(el('span', 'emo', r.emoji), el('span', 'lgt', r.sport)); c.append(head);
     r.teams.forEach((t, i) => {
       const row = el('p', 'tm' + (r.kind === 'resultat' && i === 0 && !r.tie ? ' win' : ''));
-      const nm = el('span', 'nm', t.name); if (t.inst) nm.append(el('small', '', ' ' + t.inst));
+      const nm = el('span', 'nm', t.name); if (t.inst) nm.append(el('small', '', NB + '(' + t.inst + ')'));
       row.append(nm); if (r.kind === 'resultat') row.append(el('b', 'pt', String(t.score)));
       c.append(row);
     });
-    c.append(el('p', 'when', r.kind === 'resultat' ? 'Final · ' + r.when : r.when.replace(/^./, (x) => x.toUpperCase())));
+    c.append(el('p', 'when', r.when));
     return c;
+  }
+  function radioRow(x) {
+    const r = el('div', 'show'); const t = el('p', 'st'); t.append(el('span', 'emo', x.emoji), el('span', 'stt', x.title));
+    const m = el('p', 'when'); m.append(el('b', 'sta', x.station), document.createTextNode(' · ' + x.when)); r.append(t, m); return r;
   }
   function fit(node, min, lines) {
     let size = parseFloat(getComputedStyle(node).fontSize);
@@ -65,7 +69,7 @@
     const slot = el('div', 'slot'); slot.append(el('b', '', model.slot.label), el('span', '', model.slot.dayLabel));
     mast.append(brand, slot);
     const ph = photo(lead, 'photo', 'À la une');
-    const leadBox = el('section', 'lead glass'); const k = kicker(lead); if (k) leadBox.append(k);
+    const leadBox = el('section', 'lead glass'); leadBox.append(ph); const k = kicker(lead); if (k) leadBox.append(k);
     const lt = el('h1', 'title', lead.title); leadBox.append(lt, byline(lead));
     const hook = lead.hook ? el('p', 'hook', lead.hook) : null; if (hook) leadBox.append(hook);
     const list = el('div', 'list'); const thumbs = [];
@@ -76,10 +80,12 @@
       const th = photo(it, 'thumb'); thumbs.push(th.ready); th.append(el('span', 'num', String(i + 2)));
       row.append(th, tx); list.append(row);
     });
-    const side = el('aside', 'side glass'); side.append(el('h2', '', 'Aussi à la une'), list);
+    const side = el('aside', 'side glass'); const sbody = el('div', 'sbody'); sbody.append(list); side.append(el('h2', '', 'Aussi à la une'), sbody);
     const sp = el('section', 'sports glass'); const grid = el('div', 'grid');
     sports.forEach((r) => grid.append(score(r)));
-    sp.append(el('h2', '', sports[0] && sports[0].kind === 'avenir' ? 'Sport étudiant · à l’affiche aujourd’hui' : 'Sport étudiant · résultats'), grid);
+    sp.append(el('h2', '', sports[0] && sports[0].kind === 'avenir' ? 'Sport étudiant · à l’affiche' : 'Sport étudiant · résultats'), grid);
+    // Radio étudiante (radio-schedules.json) : à droite de « Aussi à la une » (4:5, story), sous la liste en paysage.
+    const radio = (model.radio || []).slice(0, format === 'paysage' ? 2 : 3); const rb = el('div', 'radio'); if (radio.length) { rb.append(el('h3', '', 'À l’écoute · radio étudiante')); radio.forEach((x) => rb.append(radioRow(x))); }
     // Pied conforme aux affiches : icône + marque « LE‑RADAR.ca » (serif), nom complet (serif) centré, puis la ligne d'indépendance centrée.
     const foot = el('footer', 'foot'); const fm = el('p', 'fmark'); const fi = el('img', 'ficon'); fi.src = '../assets/icon.svg'; fi.alt = '';
     fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca'));
@@ -87,7 +93,8 @@
     foot.append(fm, full);
     foot.append(el('p', 'ind', 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.'));
     const main = el('div', 'main'); const colA = el('div', 'col a'); const colB = el('div', 'col b');
-    colA.append(ph, leadBox);
+    colA.append(leadBox);
+    if (radio.length) sbody.append(rb);
     if (others.length) colB.append(side);
     if (sports.length) colB.append(sp);
     main.append(colA); if (colB.childNodes.length) main.append(colB);
@@ -96,19 +103,23 @@
     await Promise.all([document.fonts.ready, ...thumbs, new Promise((r) => { if (li.complete) r(); else { li.onload = r; li.onerror = r; } }), new Promise((r) => { if (!bgi.isConnected || bgi.complete) r(); else { bgi.onload = r; bgi.onerror = r; } })]);
     const solo = !others.length;
     fit(lt, format === 'paysage' ? 28 : 40, solo ? 5 : 3);
-    const boxes = [card, main, colA, colB, leadBox, side, list, sp, grid];
-    const over = () => boxes.some((b) => b.isConnected && b.scrollHeight > b.clientHeight + 2) || ph.clientHeight < (format === 'paysage' ? 200 : format === 'story' ? 460 : 370);
+    const boxes = [card, main, colA, colB, leadBox, side, list, sp, grid, rb];
+    const over = () => boxes.some((b) => b.isConnected && b.scrollHeight > b.clientHeight + 2) || ph.clientHeight < (format === 'paysage' ? 180 : format === 'story' ? 420 : 340);
     if (hook) hook.style.webkitLineClamp = String(solo ? 5 : format === 'paysage' ? 2 : 3);
     const steps = [
       () => { if (!hook || !hook.isConnected) return false; const n = Number(hook.style.webkitLineClamp) - 1; if (n < 1) hook.remove(); else hook.style.webkitLineClamp = String(n); return true; },
+      () => { if (rb.children.length > 2 && rb.scrollHeight > rb.clientHeight + 2) { rb.lastChild.remove(); return true; } return false; },
       () => { if (grid.children.length > 2) { grid.lastChild.remove(); return true; } return false; },
       () => { if (list.children.length > 2) { list.lastChild.remove(); return true; } return false; },
       () => { if (grid.children.length > 1) { grid.lastChild.remove(); return true; } return false; },
       () => { if (list.children.length > 1) { list.lastChild.remove(); return true; } return false; },
+      () => { if (rb.isConnected && rb.scrollHeight > rb.clientHeight + 2) { rb.remove(); card.classList.add('noradio'); return true; } return false; },
       () => { if (sp.isConnected) { sp.remove(); card.classList.add('nosport'); return true; } return false; },
     ];
     for (const step of steps) { while (over() && step()) { /* rogner dans l'ordre */ } if (!over()) break; }
+    while (rb.isConnected && rb.children.length > 2 && rb.scrollHeight > rb.clientHeight + 2) rb.lastChild.remove();
+    if (rb.isConnected && rb.children.length < 2) rb.remove(); // titre seul : pas de bloc vide
     card.dataset.cols = String(grid.children.length);
-    return { shown: 1 + list.children.length, photo: Boolean(src), sports: sp.isConnected ? grid.children.length : 0, overflow: over() };
+    return { shown: 1 + list.children.length, photo: Boolean(src), sports: sp.isConnected ? grid.children.length : 0, radio: rb.isConnected ? rb.querySelectorAll('.show').length : 0, overflow: over() };
   };
 }());

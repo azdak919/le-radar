@@ -12,7 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, pickSports, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -115,7 +115,7 @@ export function previewMarkdown(slot, sel, texts, images, { dry, reason }) {
   const L = [`## ${slot.label} (${slot.key}) — ${dry ? 'essai DRY_RUN, rien n\'est publié' : 'passage réel'}`, '', `Décision : ${reason}`, ''];
   if (sel.doubts?.length) L.push(`Doutes : ${sel.doubts.join(' ; ')}.`, '');
   for (const t of sel.translated || []) L.push(`Traduit : « ${t.from} » → « ${t.to} »`);
-  if (images) for (const [f, v] of Object.entries(images)) L.push(`Image ${f} : ${path.basename(v.file)} (${v.width}×${v.height}, ${Math.round(v.bytes / 1024)} Ko, ${v.shown} article(s), ${v.sports} résultat(s) sportif(s), photo ${v.photo ? 'oui' : 'non'})`);
+  if (images) for (const [f, v] of Object.entries(images)) L.push(`Image ${f} : ${path.basename(v.file)} (${v.width}×${v.height}, ${Math.round(v.bytes / 1024)} Ko, ${v.shown} article(s), ${v.sports} résultat(s) sportif(s), ${v.radio} émission(s) radio, photo ${v.photo ? 'oui' : 'non'})`);
   L.push('');
   for (const [n, v] of Object.entries(texts || {})) L.push(`### ${n} (${v.len}/${v.limit}, image ${v.image})`, '', '```text', v.text || '(aucun texte)', '```', v.problems.length ? `Problèmes : ${v.problems.join(' ; ')}` : 'Contrôles : OK', n === 'tumblr' ? `Étiquettes Tumblr : ${v.tags.join(', ')}` : '', '');
   return L.join('\n');
@@ -161,7 +161,11 @@ async function main() {
     let sports = [];
     try { sports = pickSports(rd(arg('sports', 'sports-masthead.json')), slot.day, { max: 3, days: 2 }); } catch (e) { console.log(`::warning::résultats sportifs illisibles (${String(e.message).slice(0, 120)}) : image sans bloc sport.`); }
     console.log(`Sport étudiant : ${sports.length} ${sports[0]?.kind === 'avenir' ? 'rencontre(s) à l’affiche' : 'résultat(s)'}`);
-    const model = { slot, items: sel.items, sports };
+    // Radio étudiante : émissions à venir (matin : du jour ; soir : du lendemain), tirage reproductible par date ; rien si aucune grille.
+    let radio = [];
+    try { radio = pickRadio(rd(arg('radio', 'radio-schedules.json')), slot, { max: 3 }); } catch (e) { console.log(`::warning::grilles radio illisibles (${String(e.message).slice(0, 120)}) : image sans bloc radio.`); }
+    console.log(`Radio étudiante : ${radio.length} émission(s)`);
+    const model = { slot, items: sel.items, sports, radio };
     texts = buildUneAll(model, POLICY.hashtags?.maxByNetwork || {});
     const { renderImages } = await import('./une-render.mjs');
     images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats: formatsFor(nets, dry) });
