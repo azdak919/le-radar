@@ -94,12 +94,24 @@ function sanitizeJpegForFacebook(input) {
 }
 
 /** URL wsrv qui ré-encode en JPEG simple. Facebook va chercher ce fichier, pas l'original. */
+/**
+ * Vignette Wikimedia (tailles standard 1280 / 1920 px seulement ; 1600 et 2560 répondent 400).
+ * Wikimedia limite wsrv.nl (429, relais en 404) : pour une photo Commons, on prend la vignette
+ * réencodée par Wikimedia, plus légère et sans ICC/XMP, que Facebook et LinkedIn acceptent.
+ */
+function wikimediaThumbUrl(url, width = 1280) {
+  const m = String(url || '').match(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/(commons|[a-z]{2,3})\/(?!thumb\/)([0-9a-f])\/([0-9a-f]{2})\/([^/?#]+)$/i);
+  if (!m) return '';
+  return `https://upload.wikimedia.org/wikipedia/${m[1]}/thumb/${m[2]}/${m[3]}/${m[4]}/${width}px-${m[4]}`;
+}
+
 function facebookRelayUrl(url) {
   return `https://wsrv.nl/?url=${encodeURIComponent(url)}&output=jpg&q=85`;
 }
 
 module.exports = {
   jpegNeedsFacebookSanitize,
+  wikimediaThumbUrl,
   sanitizeJpegForFacebook,
   facebookRelayUrl,
 };

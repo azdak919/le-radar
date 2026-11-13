@@ -5,7 +5,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
 const inText = (t, i) => !!t && (t.includes(i.link) || t.includes(siteLink(i)));
-import { resolveImage, publicMedia, isMediaRefusal } from './image-resolve.mjs';
+import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
+import { createRequire as _cr } from 'node:module';
+const { wikimediaThumbUrl } = _cr(import.meta.url)('../jpeg-facebook-safe.js');
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { withHook } from './ai-hook.mjs';
 import { volumeFor, torontoDay, mentionLedger, accountsForPost, mentionedIn, noteMention, POLICY } from './policy.mjs';
@@ -101,8 +103,9 @@ const used = new Map(); let n = 0;
 for (const it of sel) {
   const im = await resolveImage(it, { used, repeated });
   if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
-  const pub = await publicMedia(im.url);
+  const pub = await mediaForNetwork(im.url, 'x', { thumb: wikimediaThumbUrl });
   if (!pub) { console.log(`::warning::Image inaccessible ou trop lourde, non ajoutée à Buffer : ${im.url} (${it.id})`); continue; }
+  im.url = pub.url;
   await withHook(it);
   const dueAt = dues && !shareNow ? dues[n] : undefined;
   const day = torontoDay(dueAt ? Date.parse(dueAt) : Date.now());
@@ -113,7 +116,7 @@ for (const it of sel) {
   if (dry) continue;
   try {
     const post = await channel.add({ text, image: im?.url, dueAt, now: shareNow });
-    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, credit: im ? (im.credit || it.source) : null, ...(mentions.length ? { mention: mentions } : {}), ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
+    state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, image: im?.url || null, credit: im ? (im.credit || it.source) : null, ...(mentions.length ? { mention: mentions } : {}), ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
     console.log(`→ Buffer : ${post.id} (${shareNow ? 'publication immédiate ' + (post.status || '') + ' ' + (post.externalLink || '') : post.dueAt || 'heure auto'})`);
   } catch (e) {

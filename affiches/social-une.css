@@ -1,0 +1,180 @@
+/* Polices officielles du site (mobile/app/fonts) : Source Serif 4 (marque, titres) et Inter (texte). */
+@font-face { font-family: 'Source Serif 4'; src: url(../mobile/app/fonts/source-serif-4-700.woff2) format('woff2'); font-weight: 700; }
+@font-face { font-family: 'Source Serif 4'; src: url(../mobile/app/fonts/source-serif-4-600.woff2) format('woff2'); font-weight: 600; }
+@font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-400.woff2) format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-600.woff2) format('woff2'); font-weight: 600; }
+@font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-700.woff2) format('woff2'); font-weight: 700; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-synthesis: none; -webkit-font-smoothing: antialiased; font-kerning: normal; }
+.serif, .wm, .title, .item .t, .tm .pt, .num { font-family: 'Source Serif 4', 'Noto Color Emoji', Georgia, serif; }
+
+/* Thèmes du site (style.css : :root et [data-theme="dark"]). Matin = clair, soir = sombre. */
+.card.clair { --bg: #ffffff; --bg-soft: #f6f6f4; --ink: #16181c; --ink-soft: #44474d; --muted: #5f646c; --rule: #e7e7e3; --accent: #6c2163; --on-accent: #ffffff;
+  --veil: rgba(255,255,255,.80); --glass: rgba(255,255,255,.80); --glass-line: rgba(22,24,28,.10); --shadow: 0 14px 40px rgba(22,24,28,.16); --pill: #F28C28; --on-pill: #16181c; --foot: #6c2163; --on-foot: #ffffff; }
+.card.sombre { --bg: #15213b; --bg-soft: #1c2a48; --ink: #f3f6fb; --ink-soft: #d6deec; --muted: #b3bfd6; --rule: rgba(255,255,255,.16); --accent: #f0b3e0; --on-accent: #15213b;
+  --veil: rgba(21,33,59,.72); --glass: rgba(36,52,88,.92); --glass-line: rgba(255,255,255,.16); --shadow: 0 14px 40px rgba(0,6,20,.45); --pill: #F6C177; --on-pill: #15213b; --foot: #1c2a48; --on-foot: #f3f6fb; }
+/* Soir « Marine » (choix de Charles, 12 nov. 2026) : cadre et cartes bleu marine, texte clair, pastille ambre. Verre opaque à 92 %
+   (au lieu de 74 %) : même sur une zone blanche, le texte le plus pâle reste à ≥ 5,2:1 (AA). */
+.card { position: relative; overflow: hidden; background: var(--bg); color: var(--ink); display: flex; flex-direction: column; }
+.portrait { width: 1080px; height: 1350px; } .paysage { width: 1200px; height: 675px; } .story { width: 1080px; height: 1920px; }
+
+/* Fond : la photo de la une floutée sous un voile au thème (verre dépoli des cartes). */
+.bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--bg-soft); }
+.bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(46px) saturate(1.25); transform: scale(1.2); }
+.bg::after { content: ''; position: absolute; inset: 0; background: var(--veil); }
+
+/* Bandeau : marque officielle (icône + « LE‑RADAR.ca » en Source Serif 4 gras, −0,02 em). */
+.mast { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex: none; height: 116px; padding: 0 40px; background: var(--bg); border-bottom: 1px solid var(--rule); }
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand .logo { width: 68px; height: 68px; display: block; }
+.wm { font-weight: 700; font-size: 56px; letter-spacing: -0.02em; line-height: 1; color: var(--ink); white-space: nowrap; }
+.slot { text-align: right; }
+.slot b { display: inline-block; font-weight: 700; font-size: 28px; line-height: 1; background: var(--pill); color: var(--on-pill); padding: 10px 18px; border-radius: 999px; }
+.slot span { display: block; font-size: 22px; color: var(--ink-soft); margin-top: 8px; font-weight: 600; }
+
+.main { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; padding: 0 0 10px; }
+.col { min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.col.a { flex: 1 1 auto; padding: 12px 24px 0; }
+.col.b { flex: none; padding: 0 24px; }
+
+/* Photo de la une : pleine largeur, dégagée (seul le bas est effleuré par la carte). */
+.photo, .thumb { position: relative; overflow: hidden; background: linear-gradient(135deg, #6c2163, #3e1139); }
+.photo { flex: 1 1 0; min-height: 0; margin: -18px -26px 16px; border-radius: 24px 24px 0 0; }
+.photo img, .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
+.badge { position: absolute; left: 22px; top: 20px; background: #6c2163; color: #fff; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 20px; line-height: 1; padding: 10px 16px; border-radius: 999px; }
+.credit { position: absolute; right: 20px; top: 20px; background: rgba(0,0,0,.6); color: #fff; padding: 6px 12px; font-size: 16px; line-height: 1.2; border-radius: 999px; max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.glass { position: relative; z-index: 2; color: var(--ink); background: var(--glass); -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3); border: 1px solid var(--glass-line); border-radius: 24px; box-shadow: var(--shadow); }
+.lead { flex: 1 1 auto; min-height: 0; padding: 18px 26px 12px; display: flex; flex-direction: column; overflow: hidden; }
+.lead > :not(.photo) { flex: none; }
+.kick { display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-size: 19px; line-height: 1.2; margin-bottom: 8px; }
+.kick .emo { font-size: 1.3em; letter-spacing: 0; line-height: 1; }
+.title { font-weight: 700; font-size: 50px; line-height: 1.1; letter-spacing: -0.01em; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; text-wrap: pretty; }
+.by { margin-top: 10px; font-size: 24px; line-height: 1.3; }
+.by { color: var(--muted); font-weight: 500; }
+.by .lbl { color: var(--muted); font-weight: 500; }
+.by .who { color: var(--ink); font-weight: 600; margin-inline-start: .35em; } .by .who.solo { margin: 0; }
+.by .src { color: var(--muted); font-weight: 500; }
+.hook { margin-top: 10px; font-size: 22px; line-height: 1.38; color: var(--ink-soft); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; text-wrap: pretty; }
+
+h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.side { padding: 10px 24px 0; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.side h2 { padding-bottom: 2px; }
+.list { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: center; padding: 8px 0; border-top: 1px solid var(--rule); }
+.item:first-child { border-top: 0; }
+.item .thumb { width: 120px; height: 84px; border-radius: 10px; }
+.num { position: absolute; left: 0; top: 0; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 22px; line-height: 1; padding: 6px 10px; border-bottom-right-radius: 10px; }
+.item .kick { font-size: 14px; margin-bottom: 3px; }
+.item .t { font-weight: 700; font-size: 26px; line-height: 1.14; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-wrap: pretty; }
+.item .by { font-size: 18px; margin-top: 4px; }
+
+/* Sport étudiant : « Résultats » | « Prochains matchs », rencontres compactes sur deux lignes. */
+.sports { flex: none; padding: 10px 24px 10px; }
+.sports h2 { padding-bottom: 2px; }
+.grid { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 0 22px; }
+.grid[data-cols="1"] { --cols: 1; }
+/* Une seule colonne : ses rencontres se répartissent sur toute la largeur (deux par rangée), sans vide. */
+.card:not(.paysage) .grid[data-cols="1"] .scol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 22px; align-content: start; }
+.card:not(.paysage) .grid[data-cols="1"] .scol h3 { grid-column: 1 / -1; }
+.card:not(.paysage) .grid[data-cols="1"] .scol h3 + .mt + .mt { border-top: 0; padding-top: 2px; }
+.scol { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 6px; }
+.scol + .scol { border-left: 1px solid var(--rule); padding-left: 22px; }
+.scol h3 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.mt { min-width: 0; padding-top: 6px; border-top: 1px solid var(--rule); }
+.scol h3 + .mt { border-top: 0; padding-top: 2px; }
+.mh { font-size: 14px; line-height: 1.25; color: var(--muted); font-weight: 600; white-space: nowrap; overflow: hidden; }
+.mh .emo { font-size: 15px; margin-right: 6px; } .mh .sp { color: var(--ink-soft); font-weight: 700; }
+.ml { font-size: 19px; line-height: 1.3; white-space: nowrap; overflow: hidden; color: var(--ink-soft); }
+.ml b { font-weight: 500; } .mt.next .ml b { font-weight: 600; color: var(--ink); } .ml .in { font-size: .8em; color: var(--muted); }
+.ml .tn.win b { font-weight: 700; color: var(--ink); } .ml .sc { font-variant-numeric: tabular-nums lining-nums; font-weight: 600; }
+.ml .sc.win { font-weight: 800; color: var(--ink); } .ml .dash { margin: 0 3px; color: var(--muted); }
+.ml .vb { color: var(--muted); font-weight: 400; }
+.ml.wrap, .ml.wrap .tn { white-space: normal; text-wrap: balance; }
+/* Pied (règles des affiches) : icône + « LE‑RADAR.ca » en Source Serif 4, nom complet en serif centré juste au-dessus de la ligne d'indépendance centrée. */
+.foot { position: relative; z-index: 2; flex: none; padding: 10px 40px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px; background: var(--foot); color: var(--on-foot); }
+.sombre .foot { border-top: 1px solid var(--rule); }
+.fmark { display: flex; align-items: center; gap: 12px; }
+.fmark .ficon { width: 38px; height: 38px; display: block; }
+.fmark .wm { font-size: 34px; color: inherit; }
+.foot .full { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; font-size: 20px; line-height: 1.25; }
+.foot .ind { font-size: 15px; line-height: 1.3; opacity: .88; }
+/* Solo (une seule nouvelle) : la carte respire. */
+
+
+/* Story Instagram 9:16 : zones réservées à l'interface (haut ≈ 250 px, bas ≈ 250 px) couvertes par le bandeau et le pied pleins. */
+.story .mast { height: 250px; padding-top: 150px; align-items: center; background: transparent; border-bottom: 0; }
+.story .foot { padding-bottom: 0; }
+/* Bande basse de la story (zone sûre Instagram/Facebook) : la prochaine édition, en grand, rien d'essentiel. */
+.nextEd { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 14px -40px 0; padding: 22px 40px 150px; background: var(--pill); color: var(--on-pill); width: calc(100% + 80px); text-align: center; }
+.nextEd .lbl { font-size: 18px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.nextEd b { font: 700 34px/1.15 'Source Serif 4', serif; } .nextEd .url { font-size: 20px; font-weight: 600; }
+.story .title { -webkit-line-clamp: 4; }
+.story .title { font-size: 56px; }
+
+/* Paysage 16:9 (repli) : photo + une à gauche, liste et sport à droite. */
+.paysage .mast { height: 76px; padding: 0 28px; }
+.paysage .brand { gap: 12px; } .paysage .brand .logo { width: 48px; height: 48px; } .paysage .wm { font-size: 38px; }
+.paysage .slot b { font-size: 20px; padding: 7px 13px; } .paysage .slot span { font-size: 15px; margin-top: 5px; }
+.paysage .main { flex-direction: row; gap: 18px; padding: 0 22px 12px 0; }
+.paysage .col.a { flex: 0 0 600px; padding: 12px 0 0 22px; }
+.paysage .col.b { flex: 1 1 0; padding: 12px 0 0; gap: 10px; }
+.paysage .badge { left: 14px; top: 12px; font-size: 14px; padding: 7px 11px; } .paysage .credit { right: 12px; top: 12px; font-size: 12px; }
+.paysage .lead { padding: 14px 20px; border-radius: 18px; }
+.paysage .photo { margin: -14px -20px 10px; border-radius: 18px 18px 0 0; }
+.paysage .kick { font-size: 14px; margin-bottom: 5px; }
+.paysage .title { font-size: 31px; }
+.paysage .by { font-size: 17px; margin-top: 6px; }
+.paysage .hook { font-size: 16px; margin-top: 6px; }
+.paysage h2 { font-size: 13px; }
+.paysage .side { padding: 8px 16px 2px; border-radius: 18px; flex: 0 1 auto; }
+.paysage .sports { flex: 1 1 auto; display: flex; flex-direction: column; } .paysage .sports .grid { flex: 1; align-content: space-between; }
+.paysage .item { grid-template-columns: 84px 1fr; gap: 12px; padding: 5px 0; }
+.paysage .item .thumb { width: 84px; height: 60px; border-radius: 8px; }
+.paysage .num { font-size: 15px; padding: 4px 7px; }
+.paysage .item .kick { font-size: 11px; margin-bottom: 2px; }
+.paysage .item .t { font-size: 19px; }
+.paysage .item .by { font-size: 14px; margin-top: 3px; }
+.paysage .item .kick { font-size: 12px; }
+.paysage .sports { padding: 10px 16px 12px; border-radius: 18px; }
+.paysage .sports h2 { padding-bottom: 2px; }
+.paysage .lg { font-size: 11px; min-height: 0; margin-bottom: 3px; } .paysage .lg .emo { font-size: 15px; }
+.paysage .score { padding: 0 12px; }
+.paysage .tm { font-size: 15px; } .paysage .tm small { font-size: 12px; } .paysage .tm .pt { font-size: 18px; }
+.paysage .when { font-size: 11px; margin-top: 2px; }
+.paysage .foot { padding: 7px 28px 8px; gap: 1px; } .paysage .fmark { gap: 8px; } .paysage .fmark .ficon { width: 24px; height: 24px; } .paysage .fmark .wm { font-size: 22px; }
+.paysage .foot .full { font-size: 13px; } .paysage .foot .ind { font-size: 11px; }
+.paysage .side .list { flex: none; justify-content: flex-start; }
+.paysage .side .item:last-child { padding-bottom: 6px; }
+.paysage.nosport .side { flex: 1 1 auto; }
+.paysage .col.b .side:only-child { flex: 1 1 auto; }
+
+
+/* Radio étudiante : colonne à droite de « Aussi à la une » (comble le vide), sous la liste en paysage. */
+.sbody { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; min-height: 0; }
+.sbody:not(:has(.radio)) { grid-template-columns: minmax(0, 1fr); }
+.radio { border-left: 1px solid var(--rule); padding: 0 0 4px 20px; display: flex; flex-direction: column; justify-content: flex-start; gap: 7px; min-height: 0; overflow: hidden; }
+.radio h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.show .st { display: flex; gap: 8px; align-items: baseline; font-weight: 700; font-size: 18px; line-height: 1.18; }
+.show .st .emo { font-size: 18px; } .show .stt { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.show .sta { font-weight: 700; color: var(--accent); }
+.show .when { margin-top: 1px; font-size: 14px; }
+.paysage .sbody { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 6px; flex: 1 1 auto; }
+.paysage .radio { border-left: 0; border-top: 1px solid var(--rule); padding: 6px 0 8px; gap: 5px; justify-content: flex-start; }
+.paysage .show { display: flex; align-items: baseline; gap: 8px; } .paysage .show .when { margin: 0; }
+.paysage .radio h3 { font-size: 11px; width: 100%; } .paysage .show { flex: 1 1 0; min-width: 0; }
+.paysage .show .st { font-size: 14px; } .paysage .show .st .emo { font-size: 13px; } .paysage .show .when { font-size: 11px; }
+.paysage .show .stt { -webkit-line-clamp: 1; }
+.paysage .show .when { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Paysage : trop étroit pour deux colonnes de noms complets → résultats d'abord, prochains matchs dessous (une colonne). */
+.paysage .grid { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+.paysage .scol + .scol { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 4px; }
+.paysage .scol { gap: 3px; } .paysage .scol h3 { font-size: 10px; }
+.paysage .mt { padding-top: 3px; } .paysage .mh { font-size: 11px; } .paysage .mh .emo { font-size: 11px; } .paysage .ml { font-size: 14px; line-height: 1.25; }
+.paysage .sports { padding: 8px 16px 8px; }
+/* Story (focus-group du 13 nov. 2026) : plein écran sur téléphone, les lignes secondaires grossissent un peu pour rester lisibles. */
+.story .mh { font-size: 16px; } .story .mh .emo { font-size: 17px; } .story .ml { font-size: 21px; }
+.story .show .when { font-size: 16px; } .story .scol h3, .story .radio h3 { font-size: 15px; }
+.story .item .by { font-size: 19px; } .story .item .kick { font-size: 15px; }

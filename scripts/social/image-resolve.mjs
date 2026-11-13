@@ -48,7 +48,7 @@ export function isPublicMedia({ status, contentType, bytes, url, maxBytes = SOCI
 export async function probe(url){ if(cache.has(url)) return cache.get(url);
   let r=null; try{ const res=await fetch(url,{headers:UA,redirect:'follow',signal:AbortSignal.timeout(20000)});
     const ct=res.headers.get('content-type')||''; if(res.ok&&/^image\//.test(ct)&&res.url.startsWith('https://')){
-      const b=Buffer.from(await res.arrayBuffer()); r={...dims(b),finalUrl:res.url,ct,bytes:b.length}; } }catch{}
+      const b=Buffer.from(await res.arrayBuffer()); r={...dims(b),finalUrl:res.url,ct,bytes:b.length,buf:b}; } }catch{}
   cache.set(url,r); return r; }
 /** Sonde l'URL publique : 200 + image/* + HTTPS + taille admissible, sinon null. */
 export async function publicMedia(url, { maxBytes = SOCIAL_MEDIA_MAX_BYTES } = {}) {
@@ -56,6 +56,33 @@ export async function publicMedia(url, { maxBytes = SOCIAL_MEDIA_MAX_BYTES } = {
   const p = await probe(url);
   if (!p || !isPublicMedia({ status: 200, contentType: p.ct, bytes: p.bytes, url: p.finalUrl, maxBytes })) return null;
   return p;
+}
+/**
+ * Plafonds par réseau (Buffer transmet l'URL ; la plateforme télécharge l'image au moment de publier).
+ * X : 5 Mo. Facebook : 4 Mo et JPEG sans ICC/XMP. LinkedIn : 5 Mo, ≤ 36 Mpx ; au-delà de ~20 Mpx
+ * le téléversement LinkedIn expire (« media or link too large / timed out »), d'où une marge.
+ */
+export const MEDIA_LIMITS = { x: { bytes: 5 * 1024 * 1024, pixels: 20e6 }, facebook: { bytes: 4 * 1024 * 1024, pixels: 20e6 }, linkedin: { bytes: 5 * 1024 * 1024, pixels: 20e6 } };
+export function withinLimits(p, service) {
+  const L = MEDIA_LIMITS[service] || MEDIA_LIMITS.x; if (!p) return false;
+  return p.bytes > 0 && p.bytes <= L.bytes && (!p.w || !p.h || p.w * p.h <= L.pixels);
+}
+/**
+ * URL d'image à confier à Buffer pour `service`, vérifiée MAINTENANT (200, image/*, HTTPS, poids et pixels
+ * du réseau ; Facebook : JPEG sans métadonnées refusées). Ordre : URL du Radar ; vignette Wikimedia ;
+ * relais réencodé. Aucune candidate valable → null (l'article est sauté sur ce réseau, jamais d'URL morte).
+ * `check(buf)` : contrôle facultatif du contenu (ex. JPEG Canva pour Facebook).
+ */
+export async function mediaForNetwork(url, service, { thumb = () => '', relay = () => '', check = null } = {}) {
+  const tried = [];
+  for (const u of [url, thumb(url, 1920), thumb(url, 1280), relay(url)].filter(Boolean)) {
+    if (tried.includes(u)) continue; tried.push(u);
+    const p = await publicMedia(u, { maxBytes: (MEDIA_LIMITS[service] || MEDIA_LIMITS.x).bytes });
+    if (!p || !withinLimits(p, service)) continue;
+    if (check && !check(p.buf)) continue;
+    return { url: p.finalUrl, bytes: p.bytes, width: p.w, height: p.h, tried };
+  }
+  return null;
 }
 /** Refus Buffer liés à l'image : on saute l'article, on n'arrête pas toute la file. */
 export function isMediaRefusal(err) {

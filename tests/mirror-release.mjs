@@ -53,4 +53,13 @@ const wf = readFileSync('.github/workflows/pages-deploy.yml', 'utf8');
 assert.match(wf, /id: d\n\s+uses: actions\/deploy-pages@v5\n\s+continue-on-error: true/);
 assert.match(wf, /id: d2\n\s+if: steps\.d\.outcome == 'failure'\n\s+uses: actions\/deploy-pages@v5\n(?![\s\S]*continue-on-error[\s\S]*id: d2)/);
 assert.equal((wf.match(/continue-on-error/g) || []).length, 1);
+// Images des publications Buffer (file ou récentes) : gardées même si l'article a changé de photo.
+{
+  const { keepNamesFromSocial } = createRequire(import.meta.url)('../scripts/mirror-release-lib.js');
+  const now = Date.parse('2026-11-10T12:00:00Z');
+  const x = { sent: { a: { at: '2026-11-09T09:39:00Z', dueAt: '2026-11-10T22:30:00Z', image: 'https://le-radar.ca/assets/news-images/153b89f00897bc8e.jpg' }, old: { at: '2026-10-01T00:00:00Z', image: 'https://le-radar.ca/assets/news-images/vieux.jpg' }, ext: { at: '2026-11-09T00:00:00Z', image: 'https://quartierlibre.ca/x.jpg' } } };
+  const pages = { facebook: { b: { at: '2026-11-09T09:39:00Z', image: 'https://le-radar.ca/assets/news-images/cb96026b8a3d22aa.jpg' } } };
+  assert.deepEqual(keepNamesFromSocial([x, pages, null], { now }), ['153b89f00897bc8e.jpg', 'cb96026b8a3d22aa.jpg']);
+  assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /keepNamesFromSocial/);
+}
 console.log('mirror-release ok');
