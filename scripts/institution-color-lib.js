@@ -2,35 +2,47 @@
  * Couleur d'établissement partagée (affiches « Une », La une sociale) :
  * couleur officielle de brand-colors.json, ajustée pour un contraste d'au moins 4,5:1
  * sur chaque fond donné ; repli : accent du support (couleur inconnue → '').
- * Mêmes alias et même algorithme que La une sociale (PR407, af17e4c6) — à réutiliser là aussi.
+ * Source unique : brand-colors.json (couleurs ET alias « aliases »), partagée avec La une sociale.
  */
 (function (root, factory) {
   const api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.RadarInstitutionColor = api;
 }(typeof self !== 'undefined' ? self : this, () => {
-  const BRAND_ALIAS = {
-    concordia: 'Concordia University', mcgill: 'Université McGill', 'montréal': 'Université de Montréal', udem: 'Université de Montréal',
-    laval: 'Université Laval', ulaval: 'Université Laval', sherbrooke: 'Université de Sherbrooke', udes: 'Université de Sherbrooke',
-    uqtr: 'Université du Québec à Trois-Rivières', uqac: 'Université du Québec à Chicoutimi (UQAC)', uqar: 'Université du Québec à Rimouski (UQAR)',
-    uqam: 'UQAM', "bishop's": "Bishop's University", polytechnique: 'Polytechnique Montréal', poly: 'Polytechnique Montréal',
-    dawson: 'Dawson College', 'john abbott': 'John Abbott College', maisonneuve: 'Collège de Maisonneuve', montmorency: 'Collège Montmorency',
-    'lionel-groulx': 'Collège Lionel-Groulx', 'vieux montréal': 'Cégep du Vieux Montréal',
-  };
+  /* Comparaison tolérante : sans accents, sans casse, apostrophes et espaces normalisés. */
+  function norm(s) {
+    return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’`]/g, "'")
+      .replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+  /* Index nom / alias → couleur, construit depuis brand-colors.json seulement (aucune couleur ni alias en dur). */
+  const cache = new WeakMap();
+  function index(B) {
+    if (cache.has(B)) return cache.get(B);
+    const map = new Map();
+    for (const [key, entry] of Object.entries(B)) {
+      if (!entry || typeof entry !== 'object' || !/^#[0-9a-f]{6}$/i.test(String(entry.color || '').trim())) continue;
+      for (const n of [key, ...(Array.isArray(entry.aliases) ? entry.aliases : [])]) {
+        const k = norm(n);
+        if (k && !map.has(k)) map.set(k, entry.color.trim());
+      }
+    }
+    cache.set(B, map);
+    return map;
+  }
   function institutionColor(name, brand) {
-    const B = brand || {};
-    const raw = String(name || '').replace(/\s+—\s+.*$/, '').replace(/’/g, "'").trim();
+    const B = brand && typeof brand === 'object' ? (brand.institutions || brand) : {};
+    const raw = String(name || '').replace(/\s+—\s+.*$/, '').trim();
     if (!raw) return '';
+    const map = index(B);
     const head = raw.split(',')[0].trim();
-    const keys = [
-      raw, head, raw.replace(/\s*\([^)]*\)\s*$/, ''),
-      BRAND_ALIAS[head.toLowerCase()] || '',
-      BRAND_ALIAS[head.replace(/^(Université|Cégep|Collège)\s+(de\s+|du\s+|d')?/i, '').toLowerCase()] || '',
-    ];
-    for (const k of keys) if (k && B[k] && B[k].color) return B[k].color;
-    const low = raw.toLowerCase();
-    const hit = Object.keys(B).find((k) => k.toLowerCase() === low);
-    return hit ? B[hit].color : '';
+    const inParen = (/\(([^)]+)\)\s*$/.exec(raw) || [])[1] || '';
+    const bare = raw.replace(/\s*\([^)]*\)\s*$/, '');
+    const keys = [raw, head, bare, inParen, head.replace(/^(Université|Cégep|Collège|University|College)\s+(de\s+|du\s+|d['’]\s*|of\s+)?/i, '')];
+    for (const k of keys) {
+      const hit = k && map.get(norm(k));
+      if (hit) return hit;
+    }
+    return '';
   }
   function hex(h) {
     const m = /^#?([0-9a-f]{6})$/i.exec(String(h || '').trim());
@@ -59,5 +71,5 @@
   function paint(name, brand, bgs, accent) {
     return aaColor(institutionColor(name, brand), bgs) || accent;
   }
-  return { BRAND_ALIAS, institutionColor, aaColor, paint, ratio, hex };
+  return { institutionColor, aaColor, paint, ratio, hex, norm };
 }));

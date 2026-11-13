@@ -16,8 +16,40 @@ assert.equal(IC.institutionColor('Concordia', B), '#912338', 'nom court du sport
 assert.equal(IC.institutionColor('UdeS', B), '#00A759');
 assert.equal(IC.institutionColor('Bishop’s', B), '#582C83', 'apostrophe typographique');
 assert.equal(IC.institutionColor('Université de Montréal', B), '#0057AC');
-assert.equal(IC.institutionColor('ÉTS', B), '', 'inconnue : vide');
-assert.equal(IC.paint('ÉTS', B, ['#F4F0E6'], '#6C2163'), '#6C2163', 'repli : accent');
+// ÉTS (t986u/t988u) : l'entrée manquait dans brand-colors.json et aucun alias ne couvrait « ÉTS »/« ETS ».
+for (const n of ['ÉTS', 'ETS', '(ÉTS)', 'École de technologie supérieure', 'Piranhas', 'ets']) assert.equal(IC.institutionColor(n, B), '#E40032', n);
+assert.equal(IC.institutionColor('Université du Québec à Montréal', B), '#0079BE', 'radio CHOQ');
+assert.equal(IC.institutionColor('Établissement inconnu', B), '', 'inconnue : vide');
+assert.equal(IC.paint('Établissement inconnu', B, ['#F4F0E6'], '#6C2163'), '#6C2163', 'repli : accent');
+
+// Source unique : aucune couleur ni table d'alias en dur dans le module partagé ni dans l'outil d'affiches.
+const lib = readFileSync(join(root, 'scripts/institution-color-lib.js'), 'utf8');
+assert.doesNotMatch(lib, /#[0-9a-f]{6}/i, 'aucune couleur en dur dans institution-color-lib.js');
+assert.doesNotMatch(lib, /BRAND_ALIAS/, 'alias lus dans brand-colors.json');
+for (const [k, e] of Object.entries(B)) {
+  assert.match(e.color, /^#[0-9A-Fa-f]{6}$/, `${k} : couleur`);
+  assert.ok(e.source && e.source.length > 5, `${k} : source`);
+  if (e.aliases) assert.ok(Array.isArray(e.aliases) && e.aliases.every((a) => typeof a === 'string' && a.trim()), `${k} : alias`);
+}
+
+// Tout établissement qui peut s'afficher sur une affiche a sa couleur : équipes universitaires du RSEQ
+// (bandeau, bilan), établissements des médias et des radios.
+const teams = JSON.parse(readFileSync(join(root, 'sports-teams.json'), 'utf8')).teams;
+const missing = teams.filter((t) => t.sector === 'universitaire')
+  .filter((t) => !(IC.institutionColor(t.fullName, B) || IC.institutionColor(t.shortName, B) || IC.institutionColor(t.code, B)))
+  .map((t) => t.fullName);
+assert.deepEqual(missing, [], `établissements sportifs sans couleur : ${missing.join(', ')}`);
+for (const t of teams.filter((x) => x.sector === 'universitaire')) {
+  const viaShort = IC.institutionColor(t.shortName, B);
+  if (viaShort) assert.equal(viaShort, IC.institutionColor(t.fullName, B), `${t.shortName} = ${t.fullName}`);
+}
+const srcRaw = JSON.parse(readFileSync(join(root, 'news-sources.json'), 'utf8'));
+const sources = Array.isArray(srcRaw) ? srcRaw : (srcRaw.sources || Object.values(srcRaw));
+const radiosRaw = JSON.parse(readFileSync(join(root, 'radios.json'), 'utf8'));
+const radios = Array.isArray(radiosRaw) ? radiosRaw : (radiosRaw.radios || radiosRaw.stations || Object.values(radiosRaw));
+const shown = [...new Set([...sources.map((s) => s && s.institution), ...radios.map((r) => r && (r.institution || r.university))].filter(Boolean))];
+const noColor = shown.filter((n) => !IC.institutionColor(n, B));
+assert.deepEqual(noColor, [], `médias ou radios sans couleur : ${noColor.join(', ')}`);
 assert.equal(IC.paint('', B, ['#F4F0E6'], '#6C2163'), '#6C2163');
 
 const sets = {
