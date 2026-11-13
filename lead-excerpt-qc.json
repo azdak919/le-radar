@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-13T08:07:37.997Z",
+  "updated": "2026-11-13T09:49:57.632Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 34,
+  "incomplete": 33,
   "withLeadExcerpt": 143,
-  "candidates": 34,
-  "enriched": 2,
+  "candidates": 33,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -43,7 +34,7 @@
       "score": 100,
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Les jeunes cyniques ? Plutôt idéalistes !",
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 388,
       "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
+      "changed": false
+    },
+    {
+      "title": "Refugee advocates renew calls for Canada to withdraw from U.S. border agreement",
+      "link": "https://thelinknewspaper.ca/article/16561",
+      "ok": true,
+      "score": 100,
+      "chars": 418,
+      "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
       "changed": false
     }
   ]
