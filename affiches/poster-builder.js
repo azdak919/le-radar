@@ -230,7 +230,7 @@ const state = {
   campus: 'generique',
   lang: 'standard',
   greeting: 'none',
-  langs: true,
+  langs: false, /* t984u : aucune rangée de langues sur une affiche ni un PDF */
   showUni: true,
   qr: true,
   dpi: DEFAULT_DPI,
@@ -401,7 +401,13 @@ function loadImage(src, cors = true) {
       imageCache.delete(key);
       reject(new Error('timeout'));
     }, 14000);
-    img.onload = () => { clearTimeout(t); resolve(img); };
+    /* Image vraiment chargée et décodée (pas de vignette vide, pas de chargement paresseux) avant tout rendu. */
+    img.onload = () => {
+      clearTimeout(t);
+      if (!(img.naturalWidth > 0 && img.naturalHeight > 0)) { imageCache.delete(key); reject(new Error(`image vide : ${src}`)); return; }
+      const done = () => resolve(img);
+      if (typeof img.decode === 'function') img.decode().then(done, done); else done();
+    };
     img.onerror = () => {
       clearTimeout(t);
       imageCache.delete(key);
@@ -839,7 +845,7 @@ function composeFrontPage(ctx, w, h, opts) {
   const images = opts.articleImages || new Map();
   const withQr = Boolean(opts.qr);
   const glass = opts.layout === 'verre';
-  const showLangs = opts.langs !== false;
+  const showLangs = false; /* t984u : rangée de langues retirée de toutes les affiches */
   const fmtSpec = FORMATS[opts.format] || FORMATS.tabloid;
   const plan = UNE_FORMAT_PLAN[fmtSpec.id] || UNE_FORMAT_PLAN.tabloid;
   /* 1 u ≈ 0,1 po sur le Tabloid ; un peu plus serré en Légal et en Lettre. */
@@ -1279,14 +1285,17 @@ function composeFrontPage(ctx, w, h, opts) {
       fillWithSpan(head, x1, ey, LILAC, span, extra.colorInst ? instColor(extra.colorInst, BG_MAST, LILAC) : '', 'right');
     }
     ey += Math.round(exHeadS * 1.35);
+    /* Taille commune à toutes les lignes (t984u) : la plus longue fixe la taille (au plus −30 %),
+     * puis troncature propre « … » seulement si elle ne tient toujours pas. Même style partout. */
+    const emojiFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    let exZ = exLineS;
+    ctx.font = emojiFont(exZ);
+    const widest = () => Math.max(...extra.lines.map((l) => ctx.measureText(l).width));
+    while (exZ > Math.round(exLineS * 0.7) && widest() > extraW) { exZ -= 1; ctx.font = emojiFont(exZ); }
     extra.lines.forEach((line) => {
-      const emojiFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
-      /* Rétrécir avant de tronquer : la ligne d’émission reste entière. */
-      let z = exLineS;
-      ctx.font = emojiFont(z);
-      while (z > Math.round(exLineS * 0.7) && ctx.measureText(line).width > extraW) { z -= 1; ctx.font = emojiFont(z); }
+      ctx.font = emojiFont(exZ);
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(fitOne(line, emojiFont, z, extraW), x1, ey);
+      ctx.fillText(fitOne(line, emojiFont, exZ, extraW), x1, ey);
       ey += Math.round(exLineS * 1.3);
     });
     ctx.textAlign = 'left';
@@ -1420,10 +1429,29 @@ function composeFrontPage(ctx, w, h, opts) {
       roundedRectPath(ctx, lx, ly, lw, phH, glass ? px(0.6) : 0);
       ctx.clip();
       /* Le sujet est gardé dans les 55 % du haut, au-dessus du texte. */
-      coverPhoto(ctx, img, lx, ly, lw, phH, 0.5, Math.max(0.2, autoFy - 0.08));
+      /* Image très verticale (affiche, illustration en portrait) : un recadrage plein bloc n’en garderait qu’une
+       * bande (t985u, « Les jeunes cyniques ? ») ; elle est alors montrée ENTIÈRE à droite, sur un fond flou
+       * de la même image, et le texte prend la colonne de gauche. */
+      const isw = img.naturalWidth || img.width || 1;
+      const ish = img.naturalHeight || img.height || 1;
+      const tall = isw / ish < (lw / phH) * 0.62;
+      let colW = lw;
+      if (tall) {
+        ctx.filter = `blur(${Math.max(4, px(2.4))}px)`;
+        coverPhoto(ctx, img, lx - px(3), ly - px(3), lw + px(6), phH + px(6), 0.5, 0.5);
+        ctx.filter = 'none';
+        ctx.fillStyle = 'rgba(20, 8, 20, 0.55)';
+        ctx.fillRect(lx, ly, lw, phH);
+        const imgW = Math.min(Math.round(phH * isw / ish), Math.round(lw * 0.5));
+        const imgH = Math.round(imgW * ish / isw);
+        ctx.drawImage(img, lx + lw - imgW, ly + Math.round((phH - imgH) / 2), imgW, imgH);
+        colW = lw - imgW;
+      } else {
+        coverPhoto(ctx, img, lx, ly, lw, phH, 0.5, Math.max(0.2, autoFy - 0.08));
+      }
       ctx.restore();
       /* Le texte reste sous la moitié haute : visages et scène dégagés (verdict focus-group). */
-      const textTopEst = 0.42;
+      const textTopEst = tall ? 0.12 : 0.42;
       const kick = bilingual ? 'À la une  ·  Front page' : 'À la une';
       const kS = px(1.7);
       ctx.font = `700 ${kS}px "LR Sans Semi", "LR Sans"`;
@@ -1447,31 +1475,40 @@ function composeFrontPage(ctx, w, h, opts) {
       }
       const pad = px(1.6);
       const qrS = leadQr ? Math.min(leadQr, px(11)) : 0;
-      const tw = lw - pad * 2;
-      const textWq = tw - (qrS ? qrS + px(1.6) + px(1.8) : 0);
+      const tw = colW - pad * 2;
+      const textWq = tw - (qrS && !tall ? qrS + px(1.6) + px(1.8) : 0);
       /* Pile de texte calée en bas : chapeau, signature, titre (de bas en haut). */
-      let tfit = null;
-      let tH = 0;
-      for (let ts = 5.2; ts >= 2.8; ts -= 0.4) {
-        tfit = wrapFit(lead.title, serif, textWq, px(ts), px(2.8), 3);
-        tH = tfit.lines.length * Math.round(tfit.size * 1.08);
-        if (tH <= phH * 0.3) break;
-      }
       const metaS = px(1.8);
       const metaLines = metaPick(lead, textWq, sans(600), metaS, 2, true);
       const metaH = metaLines.length * Math.round(metaS * 1.3);
       const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
       const hS = px(1.95);
       const hLineH = Math.round(hS * 1.25);
-      const textTop = ly + phH * (textTopEst + 0.08);
-      const roomHook = floor - pad - (textTop + tH + px(0.8) + metaH + px(0.6));
+      const textTop = tall ? ly + px(4.6) : ly + phH * (textTopEst + 0.08);
+      /* Image entière à droite : le QR passe sous le texte, dans la colonne de gauche (l’image reste dégagée) ;
+       * si la colonne ne peut tout tenir, il revient sur l’image, en bas à droite. */
+      let qrBlockH = tall && qrS ? qrS + px(1.6) + px(1.8) + px(1.4) : 0;
+      let tfit = null;
+      let tH = 0;
+      const fitsCol = () => tH + px(0.8) + metaH + qrBlockH <= floor - pad - textTop;
+      for (let pass = 0; pass < 2; pass += 1) {
+        for (let ts = 5.2; ts >= 2.8; ts -= 0.4) {
+          tfit = wrapFit(lead.title, serif, textWq, px(ts), px(2.8), 3);
+          tH = tfit.lines.length * Math.round(tfit.size * 1.08);
+          if (tall ? fitsCol() : tH <= phH * 0.3) break;
+        }
+        if (!tall || fitsCol() || !qrBlockH) break;
+        qrBlockH = 0;
+      }
+      const qrInCol = tall && qrBlockH > 0;
+      const roomHook = floor - pad - qrBlockH - (textTop + tH + px(0.8) + metaH + px(0.6));
       const hookLines = hook ? Math.max(0, Math.min(4, Math.floor(roomHook / hLineH))) : 0;
       /* Chapeau entier ou rien : jamais de points de suspension sur la une. */
       let hFit = hookLines ? wrapFit(hook, sans(400), textWq, hS, Math.max(9, px(1.6)), hookLines) : null;
       if (hFit && /…$/.test(hFit.lines[hFit.lines.length - 1] || '')) hFit = null;
       const hookH = hFit ? hFit.lines.length * hLineH : 0;
       const stackH = tH + px(0.8) + metaH + (hookH ? px(0.6) + hookH : 0);
-      let ty = Math.max(textTop, floor - pad - stackH);
+      let ty = Math.max(textTop, floor - pad - qrBlockH - stackH);
       /* Dégradé sombre calé sur le texte : déjà 0,78 au haut du titre (blanc AA sur tout pixel). */
       {
         const g0 = Math.max(ly, ty - px(7));
@@ -1484,7 +1521,7 @@ function composeFrontPage(ctx, w, h, opts) {
         roundedRectPath(ctx, lx, ly, lw, phH, glass ? px(0.6) : 0);
         ctx.clip();
         ctx.fillStyle = grad;
-        ctx.fillRect(lx, g0, lw, floor - g0);
+        ctx.fillRect(lx, g0, colW, floor - g0);
         ctx.restore();
       }
       ctx.save();
@@ -1500,7 +1537,8 @@ function composeFrontPage(ctx, w, h, opts) {
       if (qrS) {
         /* Tuile blanche (zone calme) pour que le QR se lise sur la photo. */
         const tile = qrS + px(1.6);
-        const qx = lx + lw - pad - tile;
+        /* Image verticale entière à droite : QR en bas de la colonne de texte ; sinon en bas à droite. */
+        const qx = qrInCol ? lx + pad : lx + lw - pad - tile;
         const qy = floor - pad - tile - px(1.8);
         ctx.fillStyle = '#ffffff';
         roundedRectPath(ctx, qx, qy, tile, tile + px(1.8), px(0.5));
@@ -1682,6 +1720,24 @@ function composeFrontPage(ctx, w, h, opts) {
             shown = sideArts.slice(0, fitN);
             if (!plan.screen) briefs.unshift(...sideArts.slice(fitN));
           }
+          /* Titre entier ou article déplacé en bref : jamais de « … » dans l’encart (règle sans troncature). */
+          const sideFit = (art, per) => {
+            const room = per - px(2.1) - px(0.7);
+            const tMax = plan.screen
+              ? Math.max(px(1.7), Math.min(px(2.4), Math.floor(room / (room >= px(5) ? 2.2 : 1.15))))
+              : Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
+            const maxL = Math.max(plan.screen ? 1 : 2, Math.min(4, Math.floor(room / (tMax * 1.1))));
+            const f = wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
+            return !/…$/.test(f.lines[f.lines.length - 1] || '');
+          };
+          for (let k = 0; k < 3 && shown.length > 1; k += 1) {
+            const perTry = Math.floor((ry2 + sideH - sp - sy) / shown.length);
+            const bad = shown.filter((a) => !sideFit(a, perTry));
+            if (!bad.length) break;
+            shown = shown.filter((a) => !bad.includes(a));
+            if (!shown.length) { shown = [bad.shift()]; }
+            if (!plan.screen) briefs.unshift(...bad.filter((a) => !shown.includes(a)));
+          }
           const per = Math.floor((ry2 + sideH - sp - sy) / shown.length);
           shown.forEach((art, i) => {
             const by = sy + i * per;
@@ -1705,15 +1761,14 @@ function composeFrontPage(ctx, w, h, opts) {
               const hl = Math.max(1, Math.floor(hookRoom / Math.round(hs * 1.3)));
               ctx.font = sans(400)(hs);
               const all = wrapWords(ctx, hook.replace(/…$/, ''), rightW - sp * 2);
-              let lines = all.slice(0, hl);
-              if (all.length > hl) {
-                /* Coupure à un mot entier, jamais au milieu d’un mot. */
-                const words = lines[hl - 1].split(' ');
-                while (words.length > 1 && textW(ctx, `${words.join(' ')}…`) > rightW - sp * 2) words.pop();
-                if (words.length > 1 && words[words.length - 1].length <= 3) words.pop();
-                lines[hl - 1] = `${words.join(' ').replace(/[,;:]$/, '')}…`;
+              /* Chapeau entier seulement (jamais de « … ») ; à défaut, sa première phrase entière. */
+              let lines = all.length <= hl ? all : null;
+              if (!lines) {
+                const first = (hook.replace(/…$/, '').match(/^.+?[.!?»](?=\s|$)/) || [''])[0];
+                const fl = first ? wrapWords(ctx, first, rightW - sp * 2) : [];
+                if (fl.length && fl.length <= hl) lines = fl;
               }
-              drawLines({ size: hs, lines }, sans(400), rx + sp, endY + px(0.5), mute, 1.3, by + per);
+              if (lines) drawLines({ size: hs, lines }, sans(400), rx + sp, endY + px(0.5), mute, 1.3, by + per);
             }
           });
         }
@@ -2205,14 +2260,28 @@ function compose(opts) {
     : { height: 0, lines: [] };
   const langsH = langsMetrics.height;
   const markH = Math.max(footLogo, fMark);
-  const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
+  const qrIn = fmt.id === 'tabloid' ? 2.4 : 2.6; // ≈ 1,7 po imprimés en Lettre (fit 0,65)
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
   const playTop = barH + 12 * fit;
   const big = Math.round(816 * fit);
   const logoY = playTop + Math.round(700 * fit);
-  const qrTop = playTop + Math.round(3680 * fit);
+  /* Sous le QR (règle de Charles) : « Scanne-moi » puis « Le fil étudiant, en direct » (EN en bilingue). */
+  const tagKey = UNE_TAGLINES[opts.tagline] && UNE_TAGLINES[opts.tagline].fr ? opts.tagline : 'direct';
+  const scanHead = kind === 'bilingue' ? 'Scanne-moi · Scan me' : 'Scanne-moi';
+  const scanTag = UNE_TAGLINES[tagKey].fr;
+  const scanTagEn = kind === 'bilingue' ? UNE_TAGLINES[tagKey].en : '';
+  const fScan = Math.round(104 * fit);
+  const fScanTag = Math.round(62 * fit);
+  const fScanEn = Math.round(44 * fit);
+  const scanH = opts.qr && assets.qr
+    ? Math.round(22 * fit) + Math.round(fScan * 1.2) + Math.round(fScanTag * 1.3) + (scanTagEn ? Math.round(fScanEn * 1.3) : 0)
+    : 0;
+  /* Pied empilé sous le QR, mot-symbole et nom complet bien séparés (aucun chevauchement en Lettre). */
+  const footStackH = scanH + Math.round(32 * fit) + markH + Math.round(fMark * 0.5) + nameH + Math.round(18 * fit)
+    + legalH + (credit ? Math.round(18 * fit) + creditH : 0);
+  const qrTop = Math.min(playTop + Math.round(3680 * fit), h - safe - footStackH - qrSide);
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
   ctx.fillStyle = PURPLE;
@@ -2234,9 +2303,24 @@ function compose(opts) {
     ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
   }
 
-  const qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
+  let qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
+  if (scanH) {
+    let sy = qrBottom + Math.round(22 * fit);
+    ctx.font = `600 ${fScan}px "LR Sans Semi", "LR Sans"`;
+    fillCentered(ctx, scanHead, sy, '#ffffff');
+    sy += Math.round(fScan * 1.2);
+    ctx.font = `400 ${fScanTag}px "LR Sans"`;
+    fillCentered(ctx, scanTag, sy, INK);
+    sy += Math.round(fScanTag * 1.3);
+    if (scanTagEn) {
+      ctx.font = `400 ${fScanEn}px "LR Sans"`;
+      fillCentered(ctx, scanTagEn, sy, SOFT);
+      sy += Math.round(fScanEn * 1.3);
+    }
+    qrBottom = sy;
+  }
   const pad = 32 * fit;
-  const gMark = 14 * fit;
+  const gMark = Math.round(fMark * 0.5);
   const gName = 18 * fit;
   const gLegal = 18 * fit;
 
@@ -2276,57 +2360,76 @@ function compose(opts) {
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(226 * fit);
   const titleY = playTop + Math.round(1630 * fit);
-  fillTracked(ctx, TITLE, titleY, titleSize, INK);
-  let y = titleY + titleSize + Math.round(109 * fit);
-  const maxW = w - 2 * safe - 80;
-  let sloganSize = Math.round(74 * fit);
-  ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
-    sloganSize -= 1;
+  /* Bloc titre, accroche, établissement, salutation ; renvoie le bas du bloc. */
+  const drawTitleBlock = () => {
+    fillTracked(ctx, TITLE, titleY, titleSize, INK);
+    let y = titleY + titleSize + Math.round(109 * fit);
+    const maxW = w - 2 * safe - 80;
+    let sloganSize = Math.round(74 * fit);
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  }
-  const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
-  const uniSize = Math.round(70 * fit);
-  const uniCore = Math.round(uniSize * 1.22);
-  const gapBlock = Math.round(86 * fit);
-  const gapLang = Math.round(47 * fit);
-  ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
-  if (kind === 'bilingue') {
-    ctx.font = `400 ${enSize}px "LR Sans"`;
-    const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
-    enLines.forEach((line, i) => {
-      const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
-      y += fillCentered(ctx, line, y, SOFT) + extra;
-    });
-  }
-  if (opts.showUni !== false) {
-    const uniParts = uniLockupParts(campus, kind);
-    if (uniParts) {
-      y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
+    while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
+      sloganSize -= 1;
+      ctx.font = `400 ${sloganSize}px "LR Sans"`;
     }
-  }
-  const greet = GREETINGS[opts.greeting];
-  if (greet) {
-    const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
-    const gSize = Math.round((biGreet ? 156 : 187) * fit);
-    y += Math.round(39 * fit);
+    const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
+    const uniSize = Math.round(70 * fit);
+    const uniCore = Math.round(uniSize * 1.22);
+    const gapBlock = Math.round(86 * fit);
+    const gapLang = Math.round(47 * fit);
+    ctx.font = `400 ${sloganSize}px "LR Sans"`;
+    y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
+    if (kind === 'bilingue') {
+      ctx.font = `400 ${enSize}px "LR Sans"`;
+      const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
+      enLines.forEach((line, i) => {
+        const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
+        y += fillCentered(ctx, line, y, SOFT) + extra;
+      });
+    }
+    if (opts.showUni !== false) {
+      const uniParts = uniLockupParts(campus, kind);
+      if (uniParts) {
+        y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
+      }
+    }
+    const greet = GREETINGS[opts.greeting];
+    if (greet) {
+      const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
+      const gSize = Math.round((biGreet ? 156 : 187) * fit);
+      y += Math.round(39 * fit);
+      ctx.save();
+      ctx.translate(w / 2, y + gSize * 0.15);
+      ctx.rotate((-8 * Math.PI) / 180);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.font = `700 ${gSize}px "LR Script"`;
+      ctx.fillStyle = INK;
+      ctx.fillText(greet, 0, 0);
+      if (biGreet) {
+        ctx.font = `700 ${Math.round(gSize * 0.5)}px "LR Script"`;
+        ctx.fillStyle = SOFT;
+        ctx.fillText(GREETINGS_EN[opts.greeting], 0, gSize * 0.95);
+      }
+      ctx.restore();
+      y += Math.round(gSize * (biGreet ? 1.6 : 1.25));
+    }
+    return y;
+  };
+  if (photo) {
+    /* Bandeau violet semi-transparent derrière le titre sur photo (règle de Charles) : la photo reste visible,
+     * le texte garde le contraste AA (photo déjà assombrie à 58 % ; violet à 60 % → ≥ 4,5:1 même pour le gris). */
     ctx.save();
-    ctx.translate(w / 2, y + gSize * 0.15);
-    ctx.rotate((-8 * Math.PI) / 180);
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.font = `700 ${gSize}px "LR Script"`;
-    ctx.fillStyle = INK;
-    ctx.fillText(greet, 0, 0);
-    if (biGreet) {
-      ctx.font = `700 ${Math.round(gSize * 0.5)}px "LR Script"`;
-      ctx.fillStyle = SOFT;
-      ctx.fillText(GREETINGS_EN[opts.greeting], 0, gSize * 0.95);
-    }
+    ctx.beginPath();
+    ctx.rect(0, 0, 0, 0);
+    ctx.clip();
+    const yEnd = drawTitleBlock();
     ctx.restore();
+    const bandTop = titleY - Math.round(70 * fit);
+    const bandBottom = Math.min(qrTop - Math.round(40 * fit), yEnd + Math.round(30 * fit));
+    ctx.fillStyle = 'rgba(108, 33, 99, 0.6)';
+    ctx.fillRect(0, bandTop, w, bandBottom - bandTop);
   }
-
+  drawTitleBlock();
   ctx.restore();
   return canvas;
 }
@@ -2748,8 +2851,12 @@ async function loadUneFeed() {
   renderUneSportsList();
 }
 
+/* Toutes les images des articles, attendues AVANT la composition (t985u) : chaque candidat (miroir public,
+ * puis URL d’origine) est essayé ; une image introuvable est remplacée par l’encart neutre au nom du média
+ * et signalée (statut du studio + data-poster-images sur <body> pour les exports automatisés). */
 async function loadUneImages(articles) {
   const map = new Map();
+  const missing = [];
   await Promise.all((articles || []).map(async (art) => {
     if (!art?.key) return;
     const candidates = (art.images && art.images.length)
@@ -2763,8 +2870,18 @@ async function loadUneImages(articles) {
         /* essayer le miroir public, puis l’URL d’origine */
       }
     }
+    if (candidates.length) missing.push(art.title || art.key);
   }));
+  map.missing = missing;
+  state.uneMissingImages = missing;
+  if (typeof document !== 'undefined' && document.body) {
+    document.body.dataset.posterImages = missing.length ? `manquantes:${missing.length}` : 'pretes';
+  }
   return map;
+}
+function uneMissingImagesNote() {
+  const list = state.uneMissingImages || [];
+  return list.length ? ` Image introuvable (encart neutre au nom du média si elle doit s’afficher) : ${list.map((t) => `« ${t} »`).join(', ')}.` : '';
 }
 
 async function loadUneSidebars() {
@@ -2808,7 +2925,7 @@ function unePeriodRecap(campus) {
   const pool = state.uneCandidates || [];
   const medias = new Set(pool.map((a) => a.source).filter(Boolean)).size;
   const stats = [];
-  if (pool.length) stats.push({ kicker: 'Journaux étudiants', line: `${pool.length} article${pool.length > 1 ? 's' : ''} · ${medias} média${medias > 1 ? 's' : ''}` });
+  if (pool.length) stats.push({ kicker: 'Journaux étudiants', line: Front.numbersLine ? Front.numbersLine(pool) : `${pool.length} article${pool.length > 1 ? 's' : ''} · ${medias} média${medias > 1 ? 's' : ''}` });
   stats.push({ kicker: 'Matchs', line: campus ? `${res.played} joué${res.played > 1 ? 's' : ''} · ${res.wins} victoire${res.wins > 1 ? 's' : ''}` : `${res.played} match${res.played > 1 ? 's' : ''} joué${res.played > 1 ? 's' : ''}` });
   return { items: res.items, stats };
 }
@@ -2831,21 +2948,10 @@ function uneRadioShows(bars, campus, info, limit = 2) {
   const nowHm = startYmd === realToday
     ? new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date())
     : '07:00';
-  const out = [];
-  const seen = new Set();
-  for (let d = 0; d < 7 && out.length < limit; d += 1) {
-    const day = new Date(`${startYmd}T12:00:00Z`);
-    day.setUTCDate(day.getUTCDate() + d);
-    const wd = day.getUTCDay();
-    grid.filter((g) => g.day === wd && g.title && (d > 0 || String(g.start) >= nowHm))
-      .sort((a, b) => String(a.start).localeCompare(String(b.start)))
-      .forEach((g) => {
-        if (out.length >= limit || seen.has(g.title)) return;
-        if (Front && Front.isProSportItem && Front.isProSportItem({ title: g.title })) return;
-        seen.add(g.title);
-        out.push(`${posterShortDate(day.toISOString().slice(0, 10))} · ${posterClock(g.start)} · ${g.title}`);
-      });
-  }
+  /* Émissions originales de jour ou de soir, étalées, sans reprise ni rotation automatique (t984u). */
+  const out = Front && Front.pickRadioShows
+    ? Front.pickRadioShows(grid, startYmd, nowHm, limit).map((x) => `${posterShortDate(x.ymd)} · ${posterClock(x.start)} · ${x.title}`)
+    : [];
   return out.length ? { name: station.name || station.id, institution: station.institution || '', shows: out } : null;
 }
 function uneMastExtras(mode, bars, campus, info, sportsLines) {
@@ -2860,7 +2966,7 @@ function uneMastExtras(mode, bars, campus, info, sportsLines) {
   const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
   const week = pool.filter((a) => a.date && Front && Front.mtlYmd && Front.mtlYmd(a.date) >= fromYmd);
   const medias = new Set(week.map((a) => a.source).filter(Boolean)).size;
-  const stat = week.length ? `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}` : '';
+  const stat = week.length ? (Front && Front.numbersLine ? Front.numbersLine(week, { suffix: 'en 7 jours' }) : `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}`) : '';
   const pick = {
     radio: radio ? { title: `À l’antenne de ${radio.name}`, lines: radio.shows, colorText: radio.name, colorInst: radio.institution } : null,
     match: next ? { title: 'Prochain match', lines: [`${next.emoji ? `${next.emoji} ` : ''}${next.line}`, next.meta.charAt(0).toUpperCase() + next.meta.slice(1)] } : null,
@@ -2925,7 +3031,7 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     model: 'une',
     format: state.format,
     qr: state.qr,
-    langs: state.langs,
+    langs: false,
     lang: state.lang,
     layout: state.layout,
     campus: campusSlug,
@@ -2978,7 +3084,8 @@ function paintPreview(img, photo, uneOpts) {
     campus: state.campus,
     lang: state.lang,
     greeting: state.greeting,
-    langs: state.langs,
+    tagline: state.uneTagline,
+    langs: false,
     showUni: state.showUni,
     qr: state.qr,
     dpi: PREVIEW_DPI,
@@ -3041,7 +3148,7 @@ async function preview() {
       }
     }
     if (gen !== previewGen) return;
-    status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>`;
+    status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
   } catch (err) {
     if (gen !== previewGen) return;
     paintPreview(null, null);
@@ -3225,7 +3332,8 @@ async function downloadPrint(kind = 'pdf') {
       campus: state.campus,
       lang: state.lang,
       greeting: state.greeting,
-      langs: state.langs,
+      tagline: state.uneTagline,
+      langs: false,
       showUni: state.showUni,
       qr: state.qr,
       dpi,
@@ -3246,7 +3354,7 @@ async function downloadPrint(kind = 'pdf') {
       const name = `${printFileStem(fmt, dpi)}.png`;
       const how = await saveBlob(png, name);
       if (how === 'abort') { status.textContent = 'Téléchargement annulé.'; return; }
-      status.textContent = `PNG ${name} · ${fmt.label} · taille exacte pour l’écran.`;
+      status.textContent = `PNG ${name} · ${fmt.label} · taille exacte pour l’écran.${isUneModel() ? uneMissingImagesNote() : ''}`;
       return;
     }
     let jpegBlob = null;
@@ -3298,7 +3406,7 @@ async function downloadPrint(kind = 'pdf') {
     const mb = (blob.size / 1_048_576).toFixed(1);
     const tiled = tiles ? ' Composé en tuiles (limite Safari).' : '';
     const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
-    status.innerHTML = `Fichier <strong>${escapeAttr(name)}</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(dpi)} dpi · ${escapeAttr(mb)} Mo.${escapeAttr(tiled)}${escapeAttr(shareHint)} Imprimez à 100 %, sans « ajuster à la page ».`;
+    status.innerHTML = `Fichier <strong>${escapeAttr(name)}</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(dpi)} dpi · ${escapeAttr(mb)} Mo.${escapeAttr(tiled)}${escapeAttr(shareHint)} Imprimez à 100 %, sans « ajuster à la page ».${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
   } catch (err) {
     status.textContent = `Téléchargement impossible : ${err.message}`;
   } finally {
@@ -3510,7 +3618,6 @@ function applyQuery() {
     format: Object.keys(FORMATS),
     lang: ['standard', 'bilingue', 'minimal'],
     qr: ['oui', 'non'],
-    langs: ['oui', 'non'],
   };
   Object.entries(presets).forEach(([name, allowed]) => {
     const value = q.get(name);
@@ -3520,7 +3627,6 @@ function applyQuery() {
     if (name === 'format') state.format = value;
     if (name === 'lang') state.lang = value;
     if (name === 'qr') state.qr = value === 'oui';
-    if (name === 'langs') state.langs = value === 'oui';
   });
 }
 
@@ -3537,9 +3643,7 @@ function applyPhotoHint() {
 
 function syncGenericLangs() {
   if (state.campus !== 'generique') return;
-  state.langs = true;
-  const oui = document.querySelector('input[name="langs"][value="oui"]');
-  if (oui) oui.checked = true;
+  state.langs = false;
 }
 
 function applyChoice(name, value) {
@@ -3603,7 +3707,6 @@ function applyChoice(name, value) {
   }
   if (name === 'lang') state.lang = value;
   if (name === 'qr') state.qr = value === 'oui';
-  if (name === 'langs') state.langs = value === 'oui';
   if (name === 'showUni') state.showUni = value === 'oui';
   if (name === 'photo') {
     state.photoId = value || null;

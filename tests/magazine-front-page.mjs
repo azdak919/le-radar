@@ -328,3 +328,36 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.ok(cr(mix(0.55, [245, 246, 248], [0x3b, 0x12, 0x36]), [0x3b, 0x12, 0x36]) >= 4.5, 'verbe atténué de la bande : AA');
   assert.ok(cr([255, 255, 255], mix(0.78, [20, 8, 20], [255, 255, 255])) >= 4.5, 'titre blanc sur dégradé, même sur pixel blanc : AA');
 }
+
+// t984u : émissions de radio originales, de jour ou de soir, étalées ; taille commune ; aucune rangée de langues.
+{
+  const F = require('../scripts/magazine-front-page-lib.js');
+  const grid = [
+    { day: 5, start: '01:00', title: 'Mix franco' }, { day: 5, start: '02:00', title: 'Club classique (reprise)' },
+    { day: 5, start: '04:00', title: 'Le Séismix' }, { day: 5, start: '07:00', title: 'Quartier libre' },
+    { day: 5, start: '08:00', title: 'La collation' }, { day: 5, start: '10:00', title: 'Accents ouverts' },
+    { day: 5, start: '13:00', title: 'Le palmarès' }, { day: 5, start: '18:00', title: 'Mix électro' },
+    { day: 5, start: '20:00', title: 'Le 120e parallèle (reprise)' }, { day: 5, start: '23:00', title: 'Rebelles soniques (reprise)' },
+  ];
+  const shows = F.pickRadioShows(grid, '2026-11-13', '00:30', 3);
+  assert.deepEqual(shows.map((x) => `${x.start} ${x.title}`), ['07:00 Quartier libre', '10:00 Accents ouverts', '13:00 Le palmarès']);
+  for (const x of F.pickRadioShows(grid, '2026-11-13', '00:30', 6)) {
+    assert.ok(x.start >= '07:00' && x.start <= '22:00', `heure raisonnable : ${x.start}`);
+    assert.doesNotMatch(x.title, /reprise|^mix/i);
+  }
+  const src = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert.match(src, /Front\.pickRadioShows\(grid, startYmd, nowHm, limit\)/);
+  assert.match(src, /const widest = \(\) => Math\.max\(\.\.\.extra\.lines\.map/, 'taille commune aux lignes radio');
+  assert.doesNotMatch(src, /while \(z > Math\.round\(exLineS \* 0\.7\) && ctx\.measureText\(line\)/, 'plus de rétrécissement ligne par ligne');
+  assert.match(src, /const showLangs = false;/, 'aucune rangée de langues');
+  assert.doesNotMatch(readFileSync(join(root, 'affiches/index.html'), 'utf8'), /name="langs"/);
+  // t985u : images attendues et décodées, image manquante signalée ; image verticale montrée entière.
+  assert.match(src, /img\.decode\(\)\.then\(done, done\)/);
+  assert.match(src, /document\.body\.dataset\.posterImages = missing\.length/);
+  assert.match(src, /const tall = isw \/ ish < \(lw \/ phH\) \* 0\.62;/);
+  // t987u : « En chiffres » avec un seul média (verdict focus-group : signatures, repli nom du média).
+  assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['A'] }, { source: 'Impact Campus', authors: ['B'] }]), '2 articles · 2 médias');
+  assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['Ana Roy'] }, { source: 'Quartier Libre', authors: ['Léo Côté', 'Ana Roy'] }]), '2 articles · 2 signatures');
+  assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: [] }]), '1 article de Quartier Libre');
+  assert.doesNotMatch(F.numbersLine(Array(9).fill({ source: 'Quartier Libre', authors: ['X'] })), /1 média/);
+}
