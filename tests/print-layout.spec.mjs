@@ -82,6 +82,12 @@ test('impression accueil : typo, pastille, QR, sans URL utm @ci-critical', async
   await page.locator('#news-list[data-ready]').waitFor({ state: 'attached' });
   await page.waitForTimeout(1500);
   await page.emulateMedia({ media: 'print', colorScheme: 'dark' });
+  /* Le fil du dépôt n’a pas toujours un article « frais » au moment de la CI :
+   * on pose la classe sur une horloge existante pour vérifier la feuille d’impression. */
+  await page.evaluate(() => {
+    const el = document.querySelector('.article-time.is-fresh') || document.querySelector('.article-time');
+    if (el) el.classList.add('is-fresh');
+  });
 
   const styles = await page.evaluate(() => {
     const title = document.querySelector('.article-title');
