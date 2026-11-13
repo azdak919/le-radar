@@ -60,8 +60,8 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Labo photo' })).toHaveCount(0);
   await expect(page.locator('label:has(input[name="format"][value="letter"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="format"][value="legal"])')).toBeVisible();
-  await expect(page.locator('label:has(input[name="campus"][value="uqtr"])')).toBeVisible();
-  await expect(page.locator('label:has(input[name="campus"][value="hec"])')).toBeVisible();
+  await expect(page.locator('#campus-select option[value="uqtr"]')).toHaveCount(1);
+  await expect(page.locator('#campus-select option[value="hec"]')).toHaveCount(1);
   await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
   await page.locator('#preview canvas').waitFor({ timeout: 20000 });
@@ -90,14 +90,14 @@ test('générateur d’affiches public', async ({ page }) => {
   expect(n).toBeGreaterThan(20);
   const bilingue = page.locator('label:has(input[name="lang"][value="bilingue"])');
   await expect(bilingue).toBeHidden();
-  await page.locator('label:has(input[name="campus"][value="mcgill"])').click();
+  await page.locator('#campus-select').selectOption('mcgill');
   await expect(bilingue).toBeVisible();
-  await page.locator('label:has(input[name="campus"][value="udem"])').click();
+  await page.locator('#campus-select').selectOption('udem');
   const udemTitles = (await page.locator('#photo-grid label').evaluateAll((els) => els.map((e) => e.getAttribute('title') || ''))).join(' ').toLowerCase();
   expect(udemTitles).not.toContain('uqam');
   expect(udemTitles).not.toContain('hall building');
   expect(udemTitles).not.toContain('mcgill');
-  await page.locator('label:has(input[name="campus"][value="laval"])').click();
+  await page.locator('#campus-select').selectOption('laval');
   await expect(bilingue).toBeHidden();
   await page.locator('#photo-more').click();
   const lavalTitles = (await page.locator('#photo-grid label').evaluateAll((els) => els.map((e) => e.getAttribute('title') || ''))).join(' ').toLowerCase();
@@ -112,7 +112,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('input[name="langs"]')).toHaveCount(0);
   await expect(page.locator('.solid--radar')).toBeVisible();
   await expect(page.locator('#uni-toggle')).toBeVisible();
-  await page.locator('label:has(input[name="campus"][value="concordia"])').click();
+  await page.locator('#campus-select').selectOption('concordia');
   await page.locator('#photo-grid label').nth(1).click();
   await expect(page.locator('#status')).toContainText('300 dpi', { timeout: 20000 });
   await expect(page.locator('#status')).not.toContainText('qrSide');

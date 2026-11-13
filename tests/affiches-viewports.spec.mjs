@@ -41,14 +41,14 @@ test.describe('affiches — largeurs labo', () => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/?campus=laval', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('#greeting')).toHaveValue('none');
-    await expect(page.locator('input[name="campus"][value="laval"]')).toBeChecked();
+    await expect(page.locator('#campus-select')).toHaveValue('laval');
     await expect(page.locator('label:has(input[name="lang"][value="bilingue"])')).toBeHidden();
   });
 
   test('?photo=ernest-lemieux sélectionne la résidence', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/?campus=laval&photo=ernest-lemieux', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('input[name="campus"][value="laval"]')).toBeChecked();
+    await expect(page.locator('#campus-select')).toHaveValue('laval');
     await expect(page.locator('#photo-more')).toBeVisible({ timeout: 20000 });
     const lemieux = page.locator('#photo-grid label[title*="Ernest-Lemieux" i] input');
     await expect(lemieux).toBeChecked({ timeout: 20000 });
@@ -91,7 +91,7 @@ test.describe('affiches — largeurs labo', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
     await waitPreview(page);
-    await page.locator('label:has(input[name="campus"][value="laval"])').click();
+    await page.locator('#campus-select').selectOption('laval');
     await page.locator('#photo-more').click();
     const laval = page.locator('#photo-grid label').nth(1);
     await laval.click();
@@ -107,7 +107,7 @@ test.describe('affiches — largeurs labo', () => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
     await waitPreview(page);
-    await page.locator('label:has(input[name="campus"][value="laval"])').click();
+    await page.locator('#campus-select').selectOption('laval');
     await page.locator('#photo-grid label').nth(1).click();
     await expect(page.locator('#crop-tools')).toBeVisible();
     const pane = page.locator('#preview-pane');
@@ -115,8 +115,9 @@ test.describe('affiches — largeurs labo', () => {
     const canvas = await page.locator('#preview canvas').boundingBox();
     const crop = await page.locator('#crop-tools').boundingBox();
     expect(canvas.height).toBeGreaterThan(280);
-    expect(crop.x).toBeGreaterThan(canvas.x + canvas.width - 8);
-    expect(crop.x - (canvas.x + canvas.width)).toBeLessThan(48);
+    const vp = await page.locator('#preview-viewport').boundingBox();
+    expect(vp.width, 'l’aperçu occupe la largeur restante (cadrage en surimpression)').toBeGreaterThan(640);
+    expect(crop.width).toBeLessThan(280);
   });
 
   test('iPad 11 portrait : l’aperçu remplit la scène', async ({ page }) => {

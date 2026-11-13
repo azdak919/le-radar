@@ -3271,14 +3271,105 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
   };
 }
 
+const previewView = { mode: 'fit', scale: 1, x: 0, y: 0, natW: 0, natH: 0 };
+
+function previewViewportEl() {
+  return document.getElementById('preview-viewport') || document.getElementById('preview-pane');
+}
+
 function previewFit() {
-  const pane = document.getElementById('preview-pane');
-  const crop = document.getElementById('crop-tools');
+  const vp = previewViewportEl();
   const pad = 8;
-  const cropW = crop && !crop.hidden ? crop.getBoundingClientRect().width + 16 : 0;
-  const maxW = Math.max(160, (pane?.clientWidth || window.innerWidth * 0.45) - cropW - pad * 2);
-  const maxH = Math.max(220, (pane?.clientHeight || window.innerHeight - 72) - pad);
+  const maxW = Math.max(160, (vp?.clientWidth || window.innerWidth * 0.55) - pad * 2);
+  const maxH = Math.max(220, (vp?.clientHeight || window.innerHeight * 0.6) - pad);
   return { maxW, maxH };
+}
+
+function previewFitScale() {
+  if (!previewView.natW || !previewView.natH) return 1;
+  const { maxW, maxH } = previewFit();
+  return Math.min(maxW / previewView.natW, maxH / previewView.natH);
+}
+
+function currentViewScale() {
+  return previewView.mode === 'fit' ? previewFitScale() : previewView.scale;
+}
+
+function updateViewLabel() {
+  const el = document.getElementById('view-zoom-label');
+  const fitBtn = document.getElementById('view-fit');
+  const btn100 = document.getElementById('view-100');
+  if (!el) return;
+  if (previewView.mode === 'fit') el.textContent = 'Ajuster';
+  else el.textContent = `${Math.round(previewView.scale * 100)} %`;
+  if (fitBtn) fitBtn.setAttribute('aria-pressed', String(previewView.mode === 'fit'));
+  if (btn100) btn100.setAttribute('aria-pressed', String(previewView.mode === 'free' && Math.abs(previewView.scale - 1) < 0.02));
+}
+
+function applyPreviewView() {
+  const frame = document.getElementById('preview');
+  const vp = previewViewportEl();
+  if (!frame || !vp) return;
+  const canvas = frame.querySelector('canvas');
+  if (!canvas || !previewView.natW) return;
+  const s = currentViewScale();
+  const w = previewView.natW * s;
+  const h = previewView.natH * s;
+  const minX = Math.min(0, vp.clientWidth - w);
+  const minY = Math.min(0, vp.clientHeight - h);
+  const maxX = Math.max(0, vp.clientWidth - w);
+  const maxY = Math.max(0, vp.clientHeight - h);
+  if (previewView.mode === 'fit') {
+    previewView.x = 0;
+    previewView.y = 0;
+  } else {
+    previewView.x = Math.min(maxX, Math.max(minX, previewView.x));
+    previewView.y = Math.min(maxY, Math.max(minY, previewView.y));
+  }
+  const x = (vp.clientWidth - w) / 2 + previewView.x;
+  const y = (vp.clientHeight - h) / 2 + previewView.y;
+  frame.style.width = `${previewView.natW}px`;
+  frame.style.height = `${previewView.natH}px`;
+  frame.style.transformOrigin = '0 0';
+  frame.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+  if (canvas) {
+    canvas.style.width = `${previewView.natW}px`;
+    canvas.style.height = `${previewView.natH}px`;
+  }
+  updateViewLabel();
+}
+
+function setPreviewFit() {
+  previewView.mode = 'fit';
+  previewView.scale = previewFitScale();
+  previewView.x = 0;
+  previewView.y = 0;
+  applyPreviewView();
+}
+
+function setPreview100() {
+  previewView.mode = 'free';
+  previewView.scale = 1;
+  previewView.x = 0;
+  previewView.y = 0;
+  applyPreviewView();
+}
+
+function zoomPreviewAt(factor, cx, cy) {
+  const vp = previewViewportEl();
+  if (!vp || !previewView.natW) return;
+  const prev = currentViewScale();
+  const next = Math.min(8, Math.max(0.15, prev * factor));
+  const rect = vp.getBoundingClientRect();
+  const px = (cx ?? (rect.left + rect.width / 2)) - rect.left;
+  const py = (cy ?? (rect.top + rect.height / 2)) - rect.top;
+  const contentX = (px - (vp.clientWidth - previewView.natW * prev) / 2 - previewView.x) / prev;
+  const contentY = (py - (vp.clientHeight - previewView.natH * prev) / 2 - previewView.y) / prev;
+  previewView.mode = 'free';
+  previewView.scale = next;
+  previewView.x = px - contentX * next - (vp.clientWidth - previewView.natW * next) / 2;
+  previewView.y = py - contentY * next - (vp.clientHeight - previewView.natH * next) / 2;
+  applyPreviewView();
 }
 
 function paintPreview(img, photo, uneOpts) {
@@ -3304,22 +3395,18 @@ function paintPreview(img, photo, uneOpts) {
     cropScale: state.zoom,
     angle: state.angle,
   });
-  const { maxW, maxH } = previewFit();
-  const cssScale = Math.min(maxW / canvas.width, maxH / canvas.height);
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const cssW = Math.max(1, Math.round(canvas.width * cssScale));
-  const cssH = Math.max(1, Math.round(canvas.height * cssScale));
+  previewView.natW = canvas.width;
+  previewView.natH = canvas.height;
   const view = document.createElement('canvas');
-  view.width = Math.max(1, Math.round(cssW * dpr));
-  view.height = Math.max(1, Math.round(cssH * dpr));
-  view.style.width = `${cssW}px`;
-  view.style.height = `${cssH}px`;
+  view.width = canvas.width;
+  view.height = canvas.height;
   view.style.fontSynthesis = 'none';
   const vctx = view.getContext('2d', { alpha: false });
   vctx.imageSmoothingEnabled = true;
   vctx.imageSmoothingQuality = 'high';
-  vctx.drawImage(canvas, 0, 0, view.width, view.height);
+  vctx.drawImage(canvas, 0, 0);
   out.replaceChildren(view);
+  applyPreviewView();
 }
 
 async function preview() {
@@ -3768,8 +3855,8 @@ function applyQuery() {
   if (campus && CAMPUSES.some((c) => c.slug === campus)) {
     state.campus = campus;
     if (state.model !== 'une') state.model = 'campus';
-    const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
-    if (input) input.checked = true;
+    const sel = document.getElementById('campus-select');
+    if (sel) sel.value = campus;
     const modelCampus = document.querySelector('input[name="model"][value="campus"]');
     if (modelCampus && state.model === 'campus') modelCampus.checked = true;
   }
@@ -3979,22 +4066,103 @@ function bind() {
     else preview();
   });
   const frame = document.getElementById('preview');
+  const viewport = previewViewportEl();
   let drag = null;
-  frame.addEventListener('pointerdown', (ev) => {
+  let pointers = new Map();
+  let pinchStart = null;
+  const onPointerDown = (ev) => {
+    if (ev.button != null && ev.button !== 0) return;
+    pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    (viewport || frame).setPointerCapture?.(ev.pointerId);
+    if (pointers.size === 2) {
+      const [a, b] = [...pointers.values()];
+      const dist = Math.hypot(a.x - b.x, a.y - b.y);
+      pinchStart = { dist, scale: currentViewScale(), cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 };
+      drag = null;
+      return;
+    }
+    const zoomed = previewView.mode !== 'fit' || currentViewScale() > previewFitScale() + 0.02;
+    if (zoomed) {
+      drag = { kind: 'pan', x: ev.clientX, y: ev.clientY, px: previewView.x, py: previewView.y };
+      viewport?.classList.add('is-panning');
+      ev.preventDefault();
+      return;
+    }
     if (!currentPhoto()) return;
-    drag = { x: ev.clientX, y: ev.clientY, fx: state.focalX, fy: state.focalY };
-    frame.setPointerCapture(ev.pointerId);
-  });
-  frame.addEventListener('pointermove', (ev) => {
+    drag = { kind: 'crop', x: ev.clientX, y: ev.clientY, fx: state.focalX, fy: state.focalY };
+  };
+  const onPointerMove = (ev) => {
+    if (pointers.has(ev.pointerId)) pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    if (pinchStart && pointers.size >= 2) {
+      const [a, b] = [...pointers.values()];
+      const dist = Math.hypot(a.x - b.x, a.y - b.y);
+      if (pinchStart.dist > 0) {
+        const factor = dist / pinchStart.dist;
+        previewView.mode = 'free';
+        /* Reprendre depuis l’échelle de départ, pas un produit cumulatif. */
+        const target = Math.min(8, Math.max(0.15, pinchStart.scale * factor));
+        const prev = currentViewScale();
+        zoomPreviewAt(target / prev, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      }
+      return;
+    }
     if (!drag) return;
+    if (drag.kind === 'pan') {
+      previewView.mode = 'free';
+      previewView.scale = currentViewScale();
+      previewView.x = drag.px + (ev.clientX - drag.x);
+      previewView.y = drag.py + (ev.clientY - drag.y);
+      applyPreviewView();
+      ev.preventDefault();
+      return;
+    }
     const box = frame.getBoundingClientRect();
     state.focalX = clamp(drag.fx - (ev.clientX - drag.x) / box.width, 0, 1);
     state.focalY = clamp(drag.fy - (ev.clientY - drag.y) / box.height, 0, 1);
     syncCropUi();
     if (lastPhotoImg) paintPreview(lastPhotoImg, currentPhoto());
+  };
+  const onPointerUp = (ev) => {
+    pointers.delete(ev.pointerId);
+    if (pointers.size < 2) pinchStart = null;
+    if (pointers.size === 0) {
+      drag = null;
+      viewport?.classList.remove('is-panning');
+    }
+  };
+  const host = viewport || frame;
+  host.addEventListener('pointerdown', onPointerDown);
+  host.addEventListener('pointermove', onPointerMove);
+  host.addEventListener('pointerup', onPointerUp);
+  host.addEventListener('pointercancel', onPointerUp);
+  host.addEventListener('wheel', (ev) => {
+    if (!(ev.ctrlKey || ev.metaKey)) return;
+    ev.preventDefault();
+    zoomPreviewAt(ev.deltaY < 0 ? 1.12 : 1 / 1.12, ev.clientX, ev.clientY);
+  }, { passive: false });
+  document.getElementById('view-zoom-in')?.addEventListener('click', () => zoomPreviewAt(1.25));
+  document.getElementById('view-zoom-out')?.addEventListener('click', () => zoomPreviewAt(1 / 1.25));
+  document.getElementById('view-fit')?.addEventListener('click', () => setPreviewFit());
+  document.getElementById('view-100')?.addEventListener('click', () => setPreview100());
+  const dash = document.querySelector('.dash');
+  document.querySelectorAll('.dash-mobile-switch__btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const pane = btn.dataset.pane || 'preview';
+      if (dash) dash.dataset.mobilePane = pane;
+      document.querySelectorAll('.dash-mobile-switch__btn').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.pane === pane));
+      });
+      requestAnimationFrame(() => applyPreviewView());
+    });
   });
-  frame.addEventListener('pointerup', () => { drag = null; });
-  frame.addEventListener('pointercancel', () => { drag = null; });
+  if (dash && !dash.dataset.mobilePane) dash.dataset.mobilePane = 'preview';
+  document.querySelectorAll('.dash-flow fieldset').forEach((fs) => {
+    const hint = fs.querySelector('.field-hint:not(#une-status)');
+    if (hint && hint.textContent.trim()) {
+      const legend = fs.querySelector('legend');
+      (legend || fs).title = hint.textContent.trim();
+    }
+  });
   document.getElementById('photo-more').addEventListener('click', () => {
     state.photoOpen = !state.photoOpen;
     renderChoices();
@@ -4025,15 +4193,11 @@ function bind() {
   document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
   document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
   document.getElementById('dl-jpg-bottom').addEventListener('click', () => downloadPrint('jpeg'));
-  const pane = document.getElementById('preview-pane');
+  const pane = previewViewportEl() || document.getElementById('preview-pane');
   let fitTimer = 0;
   const refit = () => {
-    if (!previewGen) return;
     clearTimeout(fitTimer);
-    fitTimer = setTimeout(() => {
-      if (lastPhotoImg) paintPreview(lastPhotoImg, currentPhoto());
-      else paintPreview(null, currentPhoto());
-    }, 80);
+    fitTimer = setTimeout(() => applyPreviewView(), 40);
   };
   if (pane && typeof ResizeObserver !== 'undefined') {
     new ResizeObserver(refit).observe(pane);
