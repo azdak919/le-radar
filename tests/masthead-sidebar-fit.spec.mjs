@@ -35,8 +35,16 @@ async function measureChrome(page) {
     const strip = document.getElementById('masthead-sports-strip');
     const docked = !!weatherEl?.classList.contains('masthead-weather--docked');
     const cities = [...(weatherEl?.querySelectorAll('.masthead-weather__city.is-active') || [])];
-    const limit = actions?.getBoundingClientRect().left ?? 0;
-    const dateOverlap = date ? date.getBoundingClientRect().right - limit : 0;
+    const actionsBox = actions?.getBoundingClientRect();
+    const dateBox = date?.getBoundingClientRect();
+    const limit = actionsBox?.left ?? 0;
+    // Sous 600 px la date est sur sa propre rangée (display:contents).
+    // date.right − actions.left mesure alors la largeur de la date, pas un chevauchement.
+    let dateOverlap = 0;
+    if (dateBox && actionsBox && dateBox.width > 0 && actionsBox.width > 0) {
+      const sameRow = actionsBox.top < dateBox.bottom - 1 && actionsBox.bottom > dateBox.top + 1;
+      if (sameRow) dateOverlap = dateBox.right - limit;
+    }
     let cityOverlap = 0;
     let dockEscape = 0;
     if (docked) {
@@ -119,7 +127,10 @@ test('mât : toutes tailles + sidebar — météo et sports restent dans leur ca
     let snap;
     do {
       snap = await measureChrome(page);
-      if (fitOk(snap)) break;
+      // À 1000 px la météo tient encore dans le mât une frame avant le dock
+      // (≤1023). Attendre le dock, sinon l'assert part trop tôt.
+      const dockReady = w > 1023 || snap.docked;
+      if (fitOk(snap) && dockReady) break;
       await page.waitForTimeout(80);
     } while (Date.now() < deadline);
     expect(fitOk(snap), `${w}x${h}: ${JSON.stringify(snap)}`).toBe(true);

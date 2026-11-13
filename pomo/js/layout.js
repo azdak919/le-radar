@@ -73,6 +73,8 @@
     }
   }
 
+  let bootRevealQueued = false;
+
   function updateChromeInsets() {
     const root = document.documentElement;
     const bar = document.querySelector('.top-right-actions');
@@ -92,11 +94,20 @@
       root.style.setProperty('--content-pad-bottom', `${bottomPad}px`);
     }
 
-    // Les décalages viennent d'une mesure du DOM : impossible de les connaître
-    // avant peinture, contrairement à `data-layout` que le script de tête pose
-    // déjà. C'est la seule part du démarrage que le fondu couvre — on révèle
-    // dès qu'elle est posée. (Filet de 1,5 s dans layout-boot.js.)
-    if (root.hasAttribute('data-booting')) root.removeAttribute('data-booting');
+    // Les insets sont mesurés ici, mais syncWidgetScale (DCL, après ce
+    // listener) et son ResizeObserver posent encore l'échelle du widget.
+    // Révéler tout de suite montrait la carte pleine largeur, puis le
+    // compact centré (~51 px) une fois le latch wide arrivé. Deux frames
+    // laissent cette échelle se stabiliser sous le fondu. Filet 1,5 s
+    // dans layout-boot.js si ce script ne tourne pas.
+    if (root.hasAttribute('data-booting') && !bootRevealQueued) {
+      bootRevealQueued = true;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (root.hasAttribute('data-booting')) root.removeAttribute('data-booting');
+        });
+      });
+    }
   }
 
   let chromeInsetsObserver = null;

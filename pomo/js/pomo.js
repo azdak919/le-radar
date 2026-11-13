@@ -655,13 +655,13 @@ function syncWidgetScale() {
   }
 
   function fitPhoneScale() {
-    // Appliquer le mode phone tout de suite (avant le 2e rAF) pour éviter le flash compact
+    // Mode phone tout de suite pour éviter un flash compact avant la mesure.
     setPomoScaleMode('phone');
 
     const apply = () => {
-      if (window.innerWidth > maxW || container.classList.contains('is-minimized')) return;
+      if (window.innerWidth > maxW || container.classList.contains('is-minimized')) return true;
       let base = computeBase();
-      if (base == null) return;
+      if (base == null) return false;
 
       widget.style.setProperty('--pw-base', `${base}px`);
 
@@ -672,8 +672,11 @@ function syncWidgetScale() {
         iter++;
       }
       if (detectPomoOverflow(widget)) {
-        // Avec citation réduite, rester en phone même en overflow léger
-        if (!quoteMinimized) {
+        // Téléphone étroit : la carte compacte (272 px, centrée) décale le
+        // widget d’environ 51 px après la révélation. On reste en phone et
+        // on continue de réduire --pw-base.
+        const phoneMax = window.ATARAXIA_LAYOUT_BOOT?.PHONE_LAYOUT_MAX || 430;
+        if (!quoteMinimized && window.innerWidth > phoneMax) {
           _pomoWideLatched = true;
           setPomoScaleMode('wide');
           widget.style.removeProperty('--pw-base');
@@ -683,10 +686,15 @@ function syncWidgetScale() {
       } else {
         _pomoWideLatched = false;
       }
+      return true;
     };
 
-    // 1er frame : mode phone déjà posé ; 2e : mesures stables après reflow
-    requestAnimationFrame(() => requestAnimationFrame(apply));
+    // Mesure synchrone : getBoundingClientRect force le layout. Le latch
+    // wide ou le --pw-base final sont posés dans ce tour de DCL, avant que
+    // updateChromeInsets lève data-booting. Un double rAF laissait le test
+    // (et la peinture) voir la carte phone, puis le compact 272 px centré
+    // (~51 px). Repli rAF seulement si le widget n'a pas encore de taille.
+    if (!apply()) requestAnimationFrame(() => requestAnimationFrame(apply));
   }
 
   fitPhoneScale();

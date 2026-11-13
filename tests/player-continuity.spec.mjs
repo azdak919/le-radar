@@ -75,13 +75,20 @@ test('le panneau À l’antenne reste bleu lorsque le synthétiseur est arrêté
 test('À l’antenne ouvre l’horaire dans un nouvel onglet sans quitter le lecteur', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.locator('#tuner-select').selectOption('chyz');
+  // Dès 1280 px, #tuner-nowair est masqué. S'il n'y a pas d'émission en
+  // cours, le slot « À l'antenne » l'est aussi : le clic utile est « À venir ».
+  // Les deux ouvrent la fiche du poste dans un nouvel onglet.
+  const trigger = page.locator(
+    '#tuner-nowair-wide .tuner-wide-slot--live, #tuner-nowair-wide .tuner-wide-slot--next, #tuner-nowair',
+  ).filter({ visible: true }).first();
+  await expect(trigger).toBeVisible();
   const [schedule] = await Promise.all([
     page.waitForEvent('popup'),
-    page.locator('#tuner-nowair').click(),
+    trigger.click(),
   ]);
   // L'ancre #horaire ouvre la fiche directement sur la grille de la semaine,
   // sans faire défiler les faits de la station.
-  await expect(schedule).toHaveURL(/\/radios\/chyz\/#horaire$/);
+  await expect(schedule).toHaveURL(/\/radios\/chyz\/#horaire(-avenir)?$/);
   await expect(page).toHaveURL(/\/$/);
 });
 
@@ -153,6 +160,10 @@ test('le bouton annule une connexion audio en attente', async ({ page }) => {
   // sur #radar-player attend le vrai document ; locator('html') se résout tout
   // de suite sur about:blank, où l'audio n'existe pas encore.
   await tuner.locator('#radar-player').evaluate((player) => {
+    // Un `waiting` à l'arrêt est ignoré : un src posé sans lecture peut
+    // l'émettre. La connexion annulable n'existe qu'une fois la lecture
+    // demandée (paused === false).
+    Object.defineProperty(player, 'paused', { configurable: true, get: () => false });
     player.dispatchEvent(new Event('waiting'));
   });
 

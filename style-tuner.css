@@ -1119,7 +1119,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     height: auto;
     min-height: 36px;
     align-self: stretch;
-    background: rgba(255, 255, 255, 0.12);
+    /* !important : embed.css force transparent sur .tuner-step après cette feuille. */
+    background: rgba(255, 255, 255, 0.12) !important;
     box-shadow: none;
   }
   html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step {
@@ -1135,13 +1136,13 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step:active,
   html:not([data-surface="kiosque-v1"]) #tuner-next.tuner-step:active {
     transform: none;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.2) !important;
   }
   @media (hover: hover) and (pointer: fine) {
   html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step:hover,
   html:not([data-surface="kiosque-v1"]) #tuner-next.tuner-step:hover {
     transform: none;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.2) !important;
   }
   }
   html:not([data-surface="kiosque-v1"]) #tuner-prev.tuner-step svg,

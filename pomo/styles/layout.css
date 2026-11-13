@@ -860,9 +860,9 @@ html[data-layout="wide"] .quote-action-row .btn:hover {
  *
  * `data-layout` est posé avant le premier rendu par js/layout-boot.js : les
  * proportions sont donc justes d'emblée. Restent les décalages mesurés sur le
- * DOM (--toolbar-offset, --content-pad-*), qu'aucun script ne peut connaître
- * avant peinture : le contenu les attend derrière un fondu de 180 ms, levé par
- * updateChromeInsets() à la première frame mesurée.
+ * DOM (--toolbar-offset, --content-pad-*) et l'échelle du widget, posés au
+ * DCL : le contenu les attend derrière un fondu de 180 ms, levé par
+ * updateChromeInsets() deux frames après la première mesure.
  *
  * Le fond n'est PAS masqué : la photo s'installe tout de suite, seule l'UI
  * arrive en fondu. Et seul le JS masque — un JS en panne ne peut donc pas

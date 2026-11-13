@@ -22,30 +22,39 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
 
   const countAt = async (width) => {
     await page.setViewportSize({ width, height: 900 });
-    // Debounce resize 40 ms + 2 rAF fit
+    // Debounce resize 40 ms + fit. Le premier compte > 0 est encore celui
+    // de la largeur précédente : on attend deux lectures identiques.
     await page.waitForTimeout(120);
-    await expect
-      .poll(async () => strip.locator('.sports-chip').count(), { timeout: 4000 })
-      .toBeGreaterThan(0);
-    return strip.locator('.sports-chip').count();
+    let last = -1;
+    let stable = 0;
+    await expect.poll(async () => {
+      const n = await strip.locator('.sports-chip').count();
+      if (n > 0 && n === last) stable += 1;
+      else stable = 0;
+      last = n;
+      return stable;
+    }, { timeout: 4000 }).toBeGreaterThanOrEqual(2);
+    return last;
   };
 
   const compact = await countAt(1280);
   expect(compact).toBeGreaterThanOrEqual(2);
-  expect(compact).toBeLessThanOrEqual(4);
-  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
+  // 1280 n'est pas le confort (≥1440) : le plancher large est 5, impair.
+  expect(compact).toBeLessThanOrEqual(5);
+  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--match/);
   const wide = await countAt(1440);
   expect(wide).toBeGreaterThanOrEqual(2);
   expect(wide).toBeLessThanOrEqual(9);
-  expect(await strip.locator('.sports-chip--cta').count()).toBe(1);
-  expect(await strip.locator('.sports-chip:not(.sports-chip--cta)').count()).toBe(wide - 1);
+  expect(await strip.locator('.sports-chip--cta').count()).toBe(0);
+  // Info et match sont la même famille (plus de puce --cta). Les deux comptent.
+  expect(await strip.locator('.sports-chip:not(.sports-chip--cta)').count()).toBe(wide);
   await expect(strip).toHaveAttribute('data-cta-pinned', '1');
 
   const mid = await countAt(900);
   expect(mid).toBeLessThanOrEqual(wide);
   expect(mid).toBeGreaterThanOrEqual(1);
   if (mid >= 2) {
-    await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
+    await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--match/);
   }
 
   // Focus-group A : météo ⊥ sports — pas de plafond weatherN.
@@ -84,8 +93,8 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   };
   const tab768 = await countAt(768);
   expect(tab768).toBeGreaterThanOrEqual(2);
-  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
-  await expect(strip.locator('.sports-chip:not(.sports-chip--cta)').first()).toBeVisible();
+  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--match/);
+  await expect(strip.locator('.sports-chip--match').first()).toBeVisible();
   await pairRatioWhenTwo();
   const tab900 = await countAt(900);
   expect(tab900).toBeGreaterThanOrEqual(2);
@@ -95,7 +104,8 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   const phone = await countAt(360);
   expect(phone).toBe(1);
   await expect(strip.locator('.sports-chip')).toHaveCount(1);
-  await expect(strip.locator('.sports-chip--cta')).toHaveCount(1);
+  await expect(strip.locator('.sports-chip--match')).toHaveCount(1);
+  await expect(strip.locator('.sports-chip--cta')).toHaveCount(0);
   await expect(strip).toHaveAttribute('data-count', '1');
   await expect(strip).toHaveAttribute('data-cta-pinned', '0');
   // Pastille visible (pas coupée hors flux). Marque possible : repos, direct,
@@ -110,8 +120,8 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   // En élargissant, on retrouve des scores + CTA (fit remesuré depuis zéro).
   const back = await countAt(1280);
   expect(back).toBeGreaterThanOrEqual(2);
-  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
-  await expect(strip.locator('.sports-chip:not(.sports-chip--cta)').first()).toBeVisible();
+  await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--match/);
+  await expect(strip.locator('.sports-chip--match').first()).toBeVisible();
 
   expect(pageErrors).toEqual([]);
 });
@@ -159,6 +169,8 @@ test('mât : la date longue se compacte au lieu de passer sous les icônes', asy
       .poll(async () => {
         const [date, row] = await Promise.all([dateEl.boundingBox(), actions.boundingBox()]);
         if (!date || !row) return null;
+        const sameRow = row.y < date.y + date.height - 1 && row.y + row.height > date.y + 1;
+        if (!sameRow) return 0;
         return Math.round(date.x + date.width - row.x);
       }, { timeout: 8000 })
       .toBeLessThanOrEqual(0);
@@ -288,7 +300,8 @@ test('mât mobile 390/430 : date et heure non clipées', async ({ page }) => {
         // FR « 15 h 03 » ou EN « 15:03 »
         const timeOk = /^\d{1,2}(?:\s*h\s*|:)\d{2}$/i.test((time.textContent || '').trim())
           && tb.right <= hb.right + 1.5;
-        const chipOk = hb.right <= ab.left + 1;
+        const sameRow = ab.top < hb.bottom - 1 && ab.bottom > hb.top + 1;
+        const chipOk = sameRow ? hb.right <= ab.left + 1 : hb.right <= window.innerWidth + 1;
         // Visible dès qu’il y a #bg-photo-layer (plus d’attente .loaded)
         const visible = parseFloat(getComputedStyle(host).opacity || '1') > 0.5;
         return dateOk && timeOk && chipOk && visible;
@@ -396,45 +409,33 @@ test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ p
 
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  const cta = strip.locator('.sports-chip--cta');
+  const cta = strip.locator('.sports-chip--match').first();
   await expect(cta).toBeVisible({ timeout: 8000 });
 
   const longSub = 'ven. 28 août, 20 h 30 · Soccer collégial masculin D2 · mis à jour à 21 h 56';
   const ready = await page.evaluate((sub) => {
-    const chip = document.querySelector('.sports-chip--cta');
-    const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
-      || chip?.querySelector('.sports-chip__cta-label');
-    if (!chip || !layer) return { ok: false, reason: 'no-cta' };
-    const text = layer.querySelector('.sports-chip__cta-text');
-    let subView = layer.querySelector('.sports-chip__cta-sub');
-    let subInner = layer.querySelector('.sports-chip__cta-sub-text');
-    if (text) text.textContent = '⚽ Sherbrooke reçoit Granby';
-    if (!subView) {
-      subView = document.createElement('span');
-      subView.className = 'sports-chip__cta-sub';
-      layer.append(subView);
-    }
-    if (!subInner) {
-      subView.replaceChildren();
-      subInner = document.createElement('span');
-      subInner.className = 'sports-chip__cta-sub-text';
-      subView.append(subInner);
-    }
+    const chip = document.querySelector('.sports-chip--match');
+    const subView = chip?.querySelector('.sports-chip__sub');
+    const subInner = chip?.querySelector('.sports-chip__sub-text');
+    if (!chip || !subView || !subInner) return { ok: false, reason: 'no-match-sub' };
+    chip.style.flex = '0 0 220px';
+    chip.style.maxWidth = '220px';
+    chip.style.width = '220px';
     subInner.textContent = sub;
     if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);
     const cs = getComputedStyle(subInner);
     return {
       ok: true,
       isSub: chip.classList.contains('is-sub-overflowing'),
-      hasSubText: !!layer.querySelector('.sports-chip__cta-sub-text'),
+      hasSubText: !!chip.querySelector('.sports-chip__sub-text'),
       whiteSpace: cs.whiteSpace,
       textOverflow: cs.textOverflow,
       animationName: cs.animationName,
       text: (subInner.textContent || '').trim(),
     };
   }, longSub);
-  expect(ready.ok, `préparation CTA : ${ready.reason || 'ok'}`).toBe(true);
-  expect(ready.hasSubText, 'markup .sports-chip__cta-sub-text requis').toBe(true);
+  expect(ready.ok, `préparation carte : ${ready.reason || 'ok'}`).toBe(true);
+  expect(ready.hasSubText, 'markup .sports-chip__sub-text requis').toBe(true);
   expect(ready.isSub, 'refreshSportsChipScroll doit activer is-sub-overflowing').toBe(true);
   expect(ready.whiteSpace, 'sous-ligne une ligne').toBe('nowrap');
   expect(ready.textOverflow, 'pas d’ellipse').toBe('clip');
@@ -449,11 +450,11 @@ test('390 / 430 : pastille Prochain/Hier/Aujourd’hui à gauche de l’accroche
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     const strip = page.locator('#masthead-sports-strip');
-    await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
-    const tag = strip.locator('.sports-chip--cta .sports-chip__cta-tag');
+    await expect(strip.locator('.sports-chip--match')).toBeVisible({ timeout: 8000 });
+    const tag = strip.locator('.sports-chip--match .sports-chip__cta-tag').first();
     await expect(tag).toContainText(/prochain|hier|aujourd|demain|venir|en cours|sports|août|avant-hier/i);
     const geo = await page.evaluate(() => {
-      const chip = document.querySelector('.sports-chip--cta');
+      const chip = document.querySelector('.sports-chip--match');
       const tagEl = chip?.querySelector('.sports-chip__cta-tag');
       const copy = chip?.querySelector('.sports-chip__line');
       if (!chip || !tagEl || !copy) return { ok: false };
@@ -530,18 +531,15 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
 
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  const cta = strip.locator('.sports-chip--cta');
+  const cta = strip.locator('.sports-chip--match').first();
   await expect(cta).toBeVisible({ timeout: 8000 });
 
-  // Titre volontairement long + largeur CTA bornée (FG A : moins de scores
-  // élargit la CTA — sans force flex, le libellé tenait parfois sans marquee).
-  const longTitle = '⚽ Collège Montmorency reçoit Bois-de-Boulogne Collégial';
+  // Titre volontairement long + largeur bornée : sans ça le libellé tient parfois.
+  const longTitle = 'Collège Montmorency reçoit Bois-de-Boulogne Collégial';
   const ready = await page.evaluate((title) => {
-    const chip = document.querySelector('.sports-chip--cta');
-    const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
-      || chip?.querySelector('.sports-chip__cta-label');
-    const text = layer?.querySelector('.sports-chip__cta-text');
-    if (!chip || !text) return { ok: false, reason: 'no-cta-text' };
+    const chip = document.querySelector('.sports-chip--match');
+    const text = chip?.querySelector('.sports-chip__line-inner');
+    if (!chip || !text) return { ok: false, reason: 'no-match-text' };
     // Borne la fenêtre de titre pour forcer un overflow mesurable.
     chip.style.flex = '0 0 220px';
     chip.style.maxWidth = '220px';
@@ -570,15 +568,15 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   expect(ready.animation, 'titre doit animer sports-cta-scroll').toMatch(/sports-cta-scroll|sports-chip-scroll/);
 
   await expect(cta).toHaveClass(/is-overflowing/);
-  const titleEl = cta.locator('.sports-chip__cta-text');
+  const titleEl = cta.locator('.sports-chip__line-inner');
   // Le DOM conserve le libellé complet (pas de troncature JS « … »).
   await expect(titleEl).toHaveText(longTitle);
   const computedOverflow = await titleEl.evaluate((el) => getComputedStyle(el).textOverflow);
   expect(computedOverflow).toBe('clip');
 
-  // Delay CTA 0,7 s + hold ~10 % de 5,5 s → mouvement après ~1,3 s.
+  // Delay 1,6 s + hold 24 % de 8 s ≈ 3,5 s avant le premier pixel.
   const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
-  await page.waitForTimeout(2200);
+  await page.waitForTimeout(5200);
   const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
   expect(left1, 'le titre doit glisser (marquee L→R)').toBeLessThan(left0 - 1);
 
@@ -590,17 +588,18 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  const cta = strip.locator('.sports-chip--cta').first();
+  const cta = strip.locator('.sports-chip--match').first();
   await expect(cta).toBeVisible({ timeout: 8000 });
 
   const longTitle = 'Champlain College Lennoxville reçoit Cégep François-Xavier-Garneau';
   const ready = await page.evaluate((title) => {
-    const chip = document.querySelector('.sports-chip--cta');
+    const chip = document.querySelector('.sports-chip--match');
     const tag = chip?.querySelector('.sports-chip__cta-tag');
-    const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
-      || chip?.querySelector('.sports-chip__cta-label');
-    const text = layer?.querySelector('.sports-chip__cta-text');
-    if (!chip || !tag || !text) return { ok: false, reason: 'no-cta' };
+    const text = chip?.querySelector('.sports-chip__line-inner');
+    if (!chip || !tag || !text) return { ok: false, reason: 'no-match' };
+    chip.style.flex = '0 0 220px';
+    chip.style.maxWidth = '220px';
+    chip.style.width = '220px';
     chip.dataset.ctaState = 'next';
     tag.dataset.ctaLamp = 'next';
     tag.dataset.ctaTag = 'Prochains match';
@@ -628,9 +627,9 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
   expect(ready.animation).toMatch(/sports-cta-scroll|sports-chip-scroll/);
   expect(ready.textOverflow).toBe('clip');
 
-  const titleEl = cta.locator('.sports-chip__cta-text');
+  const titleEl = cta.locator('.sports-chip__line-inner');
   const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
-  await page.waitForTimeout(2200);
+  await page.waitForTimeout(5200);
   const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
   expect(left1, 'défilement L→R à 1920').toBeLessThan(left0 - 1);
 });
@@ -640,12 +639,13 @@ test('wide E ≥3440 : 4 CTA sports distinctes', async ({ page }) => {
   await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  await expect.poll(async () => strip.locator('.sports-chip--cta').count(), { timeout: 8000 })
-    .toBe(4);
-  await expect(strip).toHaveAttribute('data-cta-count', '4');
+  await expect.poll(async () => strip.locator('.sports-chip--match').count(), { timeout: 8000 })
+    .toBeGreaterThanOrEqual(4);
+  const texts = await strip.locator('.sports-chip').allInnerTexts();
+  const uniq = new Set(texts.map((t) => t.replace(/\s+/g, ' ').trim()).filter(Boolean));
+  expect(uniq.size, 'cartes distinctes à 3440').toBeGreaterThanOrEqual(4);
   const weatherN = await page.locator('#masthead-weather .masthead-weather__city.is-active').count();
-  const matchN = await strip.locator('.sports-chip--match').count();
-  expect(weatherN, 'météo suit encore les scores (+ bonus 3440)').toBeGreaterThanOrEqual(2 + matchN);
+  expect(weatherN, 'météo encore présente en wide E').toBeGreaterThanOrEqual(2);
 });
 
 async function assertSportsCascadeAt(page, { width, height = 900, wide = false, minChips = 2 }) {
@@ -731,9 +731,9 @@ test('390 : la CTA change comme les autres formats, sans puce score qui glisse',
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
-  await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
+  await expect(strip.locator('.sports-chip--match')).toBeVisible({ timeout: 8000 });
   const rest = await strip.evaluate((el) => {
-    const badge = el.querySelector('.sports-chip--cta .sports-chip__badge');
+    const badge = el.querySelector('.sports-chip__badge');
     const cs = badge ? getComputedStyle(badge) : null;
     return {
       n: el.querySelectorAll('.sports-chip').length,
@@ -741,13 +741,14 @@ test('390 : la CTA change comme les autres formats, sans puce score qui glisse',
       badgeVisible: !!(cs && cs.display !== 'none' && cs.visibility !== 'hidden'),
     };
   });
-  expect(rest.match, '390 : pas de puce score à côté de la CTA').toBe(0);
-  expect(rest.badgeVisible, '390 : pas de badge V/D/N dans la CTA').toBe(false);
+  expect(rest.n, '390 : une seule carte').toBe(1);
+  expect(rest.match, '390 : la carte est une puce sport').toBe(1);
+  expect(rest.badgeVisible, '390 : pas de badge V/D/N dans la carte').toBe(false);
 
   const swap = await page.evaluate(() => {
     if (typeof rotateSportsSlot !== 'function') return { ok: false };
     rotateSportsSlot(0);
-    const el = document.querySelector('#masthead-sports-strip .sports-chip--cta');
+    const el = document.querySelector('#masthead-sports-strip .sports-chip');
     return {
       ok: true,
       n: document.querySelectorAll('#masthead-sports-strip .sports-chip').length,
@@ -761,8 +762,8 @@ test('390 : la CTA change comme les autres formats, sans puce score qui glisse',
   });
   expect(swap.ok, 'rotateSportsSlot joignable').toBe(true);
   expect(swap.n, 'toujours une seule carte').toBe(1);
-  expect(swap.cta).toBe(1);
-  expect(swap.match, 'la rotation ne fait pas apparaître une puce score').toBe(0);
+  expect(swap.cta).toBe(0);
+  expect(swap.match, 'la rotation garde une puce sport').toBe(1);
   expect(swap.leaving, '390 : sortie carte entière comme les autres formats').toBe(true);
   expect(swap.rolling, 'pas de roulement interne du texte CTA').toBe(false);
   expect(swap.leaveName, 'CSS leave sur la carte CTA mobile').toMatch(/sports-chip-leave/);
@@ -775,7 +776,7 @@ test('CTA sports : renouvellement carte entière comme les scores', async ({ pag
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  const cta = strip.locator('.sports-chip--cta').first();
+  const cta = strip.locator('.sports-chip--match').first();
   await expect(cta).toBeVisible({ timeout: 8000 });
 
   const leaveName = await cta.evaluate((el) => {
@@ -791,7 +792,7 @@ test('CTA sports : renouvellement carte entière comme les scores', async ({ pag
     const chips = document.querySelectorAll('#masthead-sports-strip .sports-chip');
     let slot = -1;
     chips.forEach((el, i) => {
-      if (slot < 0 && el.classList.contains('sports-chip--cta')) slot = i;
+      if (slot < 0 && el.classList.contains('sports-chip')) slot = i;
     });
     if (slot < 0) return { ok: false };
     rotateSportsSlot(slot);
@@ -807,7 +808,7 @@ test('CTA sports : renouvellement carte entière comme les scores', async ({ pag
   expect(swap.rolling, 'plus de roulement interne du texte CTA').toBe(false);
 
   const lamp = await page.evaluate(() => {
-    const tag = document.querySelector('.sports-chip--cta .sports-chip__cta-tag');
+    const tag = document.querySelector('.sports-chip .sports-chip__cta-tag');
     if (!tag) return { ok: false };
     const rest = getComputedStyle(tag, '::before');
     document.documentElement.setAttribute('data-radar-playing', '1');

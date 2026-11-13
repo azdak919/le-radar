@@ -965,10 +965,11 @@ function sportsStripCramped() {
   const minScore = comfort ? 0 : (wide ? 100 : 118);
   const minCta = wide ? 120 : 148;
 
+  // Depuis « une seule famille » (2026-08-31) aucune puce n'a .sports-chip--cta.
+  // L'absence de cette classe n'est pas un bandeau trop étroit.
   const cta = strip.querySelector('.sports-chip--cta');
-  if (!cta) return true;
-  if (!comfort && !wide && cta.clientWidth + 0.5 < minCta) return true;
-  if (!wide) {
+  if (cta && !comfort && !wide && cta.clientWidth + 0.5 < minCta) return true;
+  if (cta && !wide) {
     const tag = cta.querySelector('.sports-chip__cta-tag');
     if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
   }
@@ -4376,14 +4377,32 @@ function nextSportsSlide(usedKeys, opts = {}) {
     const otherTurn = boardN === 1 && outgoingLive && others.length;
     lane = otherTurn ? others : policy.lives;
     priorityCursor = otherTurn ? 'other' : 'live';
+    // Bandeau plein de directs (iPad : 2 cartes, 2 lives). Aucun autre
+    // direct n'est libre, donc ce slot cède au résultat resté hors cadre.
+    // Un bandeau plus large montre déjà ce résultat : on n'efface pas un
+    // direct pour le recopier.
+    const liveFree = policy.lives.some((s) => !sportsSlideIsUsed(s, used));
+    if (!otherTurn && others.length && !liveFree && boardN > 0 && boardN <= policy.lives.length) {
+      lane = others;
+      priorityCursor = 'other';
+    }
   } else if (policy.mode === 'split' && boardN >= 2) {
-    const otherSlots = boardN - Math.min(policy.lives.length, Math.max(1, boardN - 1));
-    if (policy.lives.length && otherSlots === 1) {
-      lane = others; priorityCursor = 'other';
+    const liveFree = policy.lives.some((s) => !sportsSlideIsUsed(s, used));
+    // iPad (~820, 2 cartes) : le reliquat est déjà à gauche. Ce slot cède
+    // au direct resté hors cadre, sinon la première carte ne tourne pas.
+    // Au-delà de 2 cartes le reliquat continue de tourner dans sa moitié.
+    if (!outgoingLive && liveFree && boardN === 2) {
+      lane = policy.lives;
+      priorityCursor = 'live';
     } else {
-      const fromLeft = policy.left.some(s => s.key === opts.outgoing?.key);
-      lane = fromLeft ? policy.left : policy.right;
-      priorityCursor = fromLeft ? 'left' : 'right';
+      const otherSlots = boardN - Math.min(policy.lives.length, Math.max(1, boardN - 1));
+      if (policy.lives.length && otherSlots === 1) {
+        lane = others; priorityCursor = 'other';
+      } else {
+        const fromLeft = policy.left.some(s => s.key === opts.outgoing?.key);
+        lane = fromLeft ? policy.left : policy.right;
+        priorityCursor = fromLeft ? 'left' : 'right';
+      }
     }
   }
   const ranked = sportsInterleaveByDiversity(lane.length ? lane : pool, now);
@@ -5270,17 +5289,38 @@ async function initMastheadSports() {
         // Ignore les RO purement internes (reflow des chips) : seule une vraie
         // variation de largeur du bandeau doit resetter le fit.
         initMastheadSports._rz = setTimeout(() => {
-          const w = MASTHEAD_SPORTS_STRIP?.clientWidth || 0;
+          const strip = MASTHEAD_SPORTS_STRIP;
+          if (!strip) return;
+          const w = strip.clientWidth || 0;
           if (
             source === 'ro'
             && Math.abs(w - (initMastheadSports._lastWidth || 0)) < 8
           ) {
             return;
           }
+          // Une sortie est déjà lancée. Reconstruire ici jette la carte
+          // entrante : au téléphone le seul slot reste sur le même direct.
+          if (strip.querySelector('.sports-chip.is-leaving')) {
+            if (!initMastheadSports._layoutAfterLeave) {
+              initMastheadSports._layoutAfterLeave = true;
+              initMastheadSports._rz = setTimeout(() => {
+                initMastheadSports._layoutAfterLeave = false;
+                onSportsLayout(source);
+              }, SPORTS_CHIP_LEAVE_MS + 40);
+            }
+            return;
+          }
           initMastheadSports._lastWidth = w;
           const prev = sportsVisible.length;
           sportsFitCount = null;
           sportsFitDepth = 0;
+          const next = sportsBoardCount();
+          if (next === prev) {
+            // Même nombre de slots : garder la carte affichée. Le fit
+            // retire encore une puce si le texte déborde.
+            fitSportsStripAfterPaint();
+            return;
+          }
           renderSportsStrip();
           scheduleSportsRotate();
           // Si le nombre de chips a changé, le scroll texte doit se recalculer.

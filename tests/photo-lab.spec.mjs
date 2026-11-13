@@ -123,10 +123,26 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#status')).not.toContainText('qrSide');
 });
 
+/** Ubuntu 24.04 installe ImageMagick 6 (`convert`). IM7 expose `magick`. */
+function renderPosterFixture(file) {
+  const args = ['-size', '1600x2400', 'xc:#6c2163', file];
+  let lastErr;
+  for (const bin of ['magick', 'convert']) {
+    try {
+      execFileSync(bin, args, { stdio: 'ignore' });
+      return;
+    } catch (err) {
+      lastErr = err;
+      if (err?.code !== 'ENOENT') throw err;
+    }
+  }
+  throw lastErr;
+}
+
 test('labo local : téléverser une image pour l’affiche', async ({ page }) => {
   const dir = mkdtempSync(join(tmpdir(), 'affiche-upload-'));
   const file = join(dir, 'pavillon-test.jpg');
-  execFileSync('magick', ['-size', '1600x2400', 'xc:#6c2163', file]);
+  renderPosterFixture(file);
   await page.goto(`${BASE}/affiches/`, { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#photo-upload-box')).toBeVisible();
   await page.locator('#photo-upload').setInputFiles(file);
@@ -211,7 +227,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(hierGold.locator('.sports-chip__badge--place')).toHaveText('🥇');
   await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Hier"] .sports-chip__cta-tag-meridiem')).toHaveCount(0);
   const liveCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — en direct' }).first();
-  await expect(liveCard.locator('.sports-chip__cta-tag')).toHaveText(/^En\s*direct$/i);
+  await expect(liveCard.locator('.sports-chip__cta-tag')).toHaveText(/^En\s*cours$/i);
   await expect(liveCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
   await expect(liveCard.locator('.sports-chip__score')).toHaveText('2–1');
   await expect(liveCard.locator('.sports-chip__cta-glyph')).toBeVisible();
@@ -333,7 +349,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const liveNoScore = page.locator('#cta-band .case').filter({ hasText: 'en cours (sans score)' });
   await expect(liveNoScore).toBeVisible();
   await expect(liveNoScore.locator('.sports-chip__score')).toHaveText('vs');
-  await expect(liveNoScore.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
+  await expect(liveNoScore.locator('.sports-chip__cta-tag')).toHaveText(/En\s*cours/i);
   await expect(liveNoScore.locator('.sports-chip__cta-glyph')).toBeVisible();
   await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).toContainText(/19 h 00/);
   await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).not.toContainText(/mis à jour à/);
