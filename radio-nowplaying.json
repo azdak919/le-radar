@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-13T17:59:31.269Z",
+  "updatedAt": "2026-11-13T19:36:45.056Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Conduite Antisportive",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:30",
         "end": "15:00",
         "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Conduite Antisportive",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:59:05.969Z"
+      "checkedAt": "2026-11-13T19:36:18.112Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques",
+        "title": "Salsa et Bembê",
         "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Turbo Tannant",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
       },
       "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "Salsa et Bembê",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:59:19.942Z"
+      "checkedAt": "2026-11-13T19:36:32.224Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Butcher T's Noontime Cuts",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
-      "track": "Butcher T",
-      "showTitle": "Butcher T's Noontime Cuts",
+      "next": {
+        "title": "New Shit",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
+      "track": "",
+      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,74 +81,68 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:59:22.364Z"
+      "checkedAt": "2026-11-13T19:36:34.978Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Charts & Crafts",
+        "title": "Spiral Bound",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
       },
       "next": {
-        "title": "the castle",
+        "title": "Dead Beats",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-castle"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
       },
       "track": "",
-      "showTitle": "Charts & Crafts",
+      "showTitle": "Spiral Bound",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:59:24.338Z"
+      "checkedAt": "2026-11-13T19:36:37.775Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Ciné-Histoire",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:59",
-        "url": "https://www.cfak.ca/balados/cine-histoire"
-      },
+      "current": null,
       "next": {
         "title": "Remix ta console",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:30",
         "end": "17:59",
         "url": "https://www.cfak.ca/balados/remix-ta-console"
       },
       "track": "",
-      "showTitle": "Ciné-Histoire",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:59:25.736Z"
+      "checkedAt": "2026-11-13T19:36:38.804Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Histoire de passer le temps",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Genevieve Stokes — Moon Walker",
+      "track": "jardin joue — courant",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T17:59:30.920Z"
+      "checkedAt": "2026-11-13T19:36:44.706Z"
     }
   }
 }
