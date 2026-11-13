@@ -1697,24 +1697,6 @@
       "via": "origin",
       "nameKey": "photo-dejarin-.avif"
     },
-    "f95e150fc854f62b": {
-      "local": "assets/news-images/f95e150fc854f62b.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/CoucheTard-scaled.jpeg",
-      "host": "www.delitfrancais.com",
-      "bytes": 265706,
-      "updatedAt": "2026-11-13T22:08:58.271Z",
-      "via": "disk",
-      "nameKey": "couchetard.jpeg"
-    },
-    "dfe590d051af5947": {
-      "local": "assets/news-images/dfe590d051af5947.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 143688,
-      "updatedAt": "2026-11-13T22:08:58.272Z",
-      "via": "disk",
-      "nameKey": "prix-litteraire-ia-.png"
-    },
     "d62e6e687179b0e5": {
       "local": "assets/news-images/d62e6e687179b0e5.webp",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/IMG_3930.jpeg",
@@ -1724,10 +1706,19 @@
       "updatedAt": "2026-11-13T22:09:04.109Z",
       "via": "photon-resize",
       "nameKey": "img_3930.jpeg"
+    },
+    "9399e5062e1c9deb": {
+      "local": "assets/news-images/9399e5062e1c9deb.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 84631,
+      "updatedAt": "2026-11-13T23:29:56.604Z",
+      "via": "disk",
+      "nameKey": "lacrymobastien-1.png"
     }
   },
-  "updatedAt": "2026-11-13T22:09:04.114Z",
-  "count": 173,
+  "updatedAt": "2026-11-13T23:29:56.620Z",
+  "count": 172,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

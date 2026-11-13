@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-13T22:08:46.651Z",
+  "updated": "2026-11-13T23:29:50.016Z",
   "total": 188,
-  "withPhoto": 175,
-  "withStock": 27,
-  "withCampusBank": 24,
+  "withPhoto": 174,
+  "withStock": 28,
+  "withCampusBank": 25,
   "fullyCovered": 188,
-  "leadReadyPhotos": 163,
-  "pageScraped": 13,
-  "photosRecovered": 13,
+  "leadReadyPhotos": 162,
+  "pageScraped": 14,
+  "photosRecovered": 14,
   "imagesCleared": 1,
-  "stockSearches": 27,
-  "stockFound": 23,
-  "campusBankFound": 19,
+  "stockSearches": 26,
+  "stockFound": 22,
+  "campusBankFound": 18,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -39,27 +39,27 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
       "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
       "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "On Mental Health’s Legalities and Limits: Analysing P-38",
-      "link": "https://theplantnews.com/2026/11/05/on-mental-healths-legalities-and-limits-analysing-p-38/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
+      "image": null
     },
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
-      "image": null
-    },
-    {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
-      "reason": "no-stock-match",
       "image": null
     },
     {
@@ -75,16 +75,16 @@
       "image": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png"
     },
     {
-      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
-      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
-      "reason": "no-stock-match",
-      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
-    },
-    {
       "title": "25 ans de cinéma… et de souvenirs!",
       "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
       "reason": "no-stock-match",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
+    },
+    {
+      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
+      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "reason": "no-stock-match",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
     }
   ]
 }
