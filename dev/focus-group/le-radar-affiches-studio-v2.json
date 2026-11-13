@@ -1,0 +1,78 @@
+{
+  "id": "le-radar-affiches-studio-v2",
+  "project": "le-radar",
+  "question": "Comment configurer une affiche sans barre indigeste, aperçu en direct à côté, aussi grand que possible, inspectable, mobile ?",
+  "options": [
+    {
+      "id": "D",
+      "label": "Atelier compact côte à côte"
+    },
+    {
+      "id": "E",
+      "label": "Bandeau d’étapes + aperçu plein cadre"
+    },
+    {
+      "id": "Bp",
+      "label": "Studio actuel (B′ du matin)"
+    }
+  ],
+  "verdict": {
+    "optionId": "D",
+    "label": "Atelier compact côte à côte",
+    "confidence": "high",
+    "rationale": "Note de session A (moy. 4,9). Rail d’étapes compact, export évident, aperçu qui remplit le reste, zoom/pan, mobile aperçu en haut ou bascule. Ne pas toucher aux gabarits.",
+    "grade": "A",
+    "payload": {
+      "direction": "D",
+      "grade": "A",
+      "layout": "side-by-side",
+      "steps": [
+        "modele",
+        "etablissement",
+        "media",
+        "periode",
+        "fond",
+        "format"
+      ],
+      "preview": {
+        "fillRemaining": true,
+        "zoomPan": [
+          "buttons",
+          "ctrl-wheel",
+          "pinch",
+          "fit",
+          "100%"
+        ]
+      },
+      "mobile": "preview-top-or-toggle",
+      "export": "sticky-obvious",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "doNotChange": [
+        "compose",
+        "composeFrontPage",
+        "campus-a9e8f52",
+        "une-approved"
+      ],
+      "openQuestions": [
+        "La charte du studio reste-t-elle un outil toujours sombre, ou doit-elle suivre pleinement le thème clair du site ?",
+        "Au téléphone, la bascule doit-elle s’ouvrir sur l’aperçu (défaut proposé) ou sur les réglages ?"
+      ],
+      "application": {
+        "target": "le-radar /affiches/",
+        "mode": "apply-in-unmerged-pr"
+      }
+    }
+  },
+  "session": "sessions/2026-11-13-le-radar-affiches-studio-v2.md",
+  "createdAt": "2026-11-13",
+  "status": "active",
+  "synthetic": true,
+  "supersedes": "le-radar-affiches-studio"
+}

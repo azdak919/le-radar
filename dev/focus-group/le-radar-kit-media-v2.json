@@ -1,0 +1,59 @@
+{
+  "id": "le-radar-kit-media-v2",
+  "project": "le-radar",
+  "question": "Quelle architecture de /kit-media/ sert une direction de média étudiant ?",
+  "options": [
+    {
+      "id": "D",
+      "label": "Kit directeur"
+    },
+    {
+      "id": "E",
+      "label": "Catalogue éditorial"
+    },
+    {
+      "id": "Bp",
+      "label": "Page actuelle (B′ du matin)"
+    }
+  ],
+  "verdict": {
+    "optionId": "D",
+    "label": "Kit directeur",
+    "confidence": "high",
+    "rationale": "Note de session A (moy. 4,8). Deux produits visibles, exemple daté de La une, affiches groupées par établissement, charte secondaire, vignettes = PDF.",
+    "grade": "A",
+    "payload": {
+      "direction": "D",
+      "grade": "A",
+      "audience": "student-media-directors",
+      "sections": [
+        "produits",
+        "une",
+        "affiches",
+        "identite",
+        "logos",
+        "bannieres",
+        "regles"
+      ],
+      "uneExample": "dated-caption",
+      "groupBy": [
+        "establishment",
+        "format"
+      ],
+      "thumbsMatchPdfs": true,
+      "openQuestions": [
+        "Faut-il régénérer automatiquement l’exemple de La une à chaque déploiement (il daté, il vieillit), ou un exemple figé et légendé suffit ?",
+        "La charte (logos, bannières, règles) doit-elle rester dépliée ou repliée par défaut ?"
+      ],
+      "application": {
+        "target": "le-radar /kit-media/ et /en/media-kit/",
+        "mode": "apply-in-unmerged-pr"
+      }
+    }
+  },
+  "session": "sessions/2026-11-13-le-radar-kit-media-v2.md",
+  "createdAt": "2026-11-13",
+  "status": "active",
+  "synthetic": true,
+  "supersedes": "le-radar-kit-media"
+}
