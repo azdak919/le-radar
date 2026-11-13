@@ -8,7 +8,7 @@
   const compose = grid.getAttribute('data-compose') || '../affiches/';
   const filterBox = document.getElementById('kit-poster-filter');
   const countEl = document.getElementById('kit-poster-count');
-  let PREVIEW_V = 'mix-2';
+  let PREVIEW_V = 'mix-3';
   const PREVIEW_WH = {
     tabloid: [660, 1020],
     letter: [660, 854],
@@ -90,28 +90,51 @@
     return INST_LABEL[key]?.[lang] || (lang === 'en' ? ex.labelEn : ex.labelFr);
   }
 
+  const PERIOD_TAG = {
+    semaine: { fr: 'Semaine', en: 'Week' },
+    mois: { fr: 'Mois', en: 'Month' },
+  };
+
+  function shortLabel(ex) {
+    const raw = lang === 'en' ? ex.labelEn : ex.labelFr;
+    return String(raw || '').replace(/^(La une — |Front page — |The Radar front page — )/i, '').trim() || raw;
+  }
+
+  function tags(ex) {
+    const out = [];
+    out.push(ex.kind === 'une' ? (lang === 'en' ? 'Front page' : 'La une') : (lang === 'en' ? 'Campus' : 'Campus'));
+    const inst = instLabel(ex);
+    if (inst) out.push(inst);
+    out.push(FORMAT_LABEL[ex.format] || ex.format);
+    if (ex.periode && PERIOD_TAG[ex.periode]) out.push(PERIOD_TAG[ex.periode][lang]);
+    if (ex.lang === 'bilingue') out.push(lang === 'en' ? 'Bilingual' : 'Bilingue');
+    if (ex.photo || (ex.layout && String(ex.layout).includes('verre'))) out.push(lang === 'en' ? 'Photo' : 'Photo');
+    return out.filter(Boolean);
+  }
+
   function card(ex) {
     const art = document.createElement('article');
     art.className = 'kit-card kit-card--poster kit-card--example';
     art.dataset.campus = instKey(ex);
     art.dataset.kind = ex.kind || 'campus';
     art.dataset.format = ex.format || 'tabloid';
-    const label = lang === 'en' ? ex.labelEn : ex.labelFr;
+    const label = shortLabel(ex);
     const meta = lang === 'en' ? ex.metaEn : ex.metaFr;
     const [w, h] = PREVIEW_WH[ex.format] || PREVIEW_WH.tabloid;
     const src = `${base}affiche-ex-${encodeURIComponent(ex.id)}-preview.jpg?v=${PREVIEW_V}`;
     const dlWord = lang === 'en' ? 'Download' : 'Télécharger';
     const fmtLabel = FORMAT_LABEL[ex.format] || ex.format;
     const type = isScreen(ex) ? 'image/png' : 'application/pdf';
-    const customize = lang === 'en' ? 'Customize in the studio' : 'Personnaliser dans le studio';
+    const customize = lang === 'en' ? 'Studio' : 'Studio';
+    const chips = tags(ex).map((t) => `<span>${esc(t)}</span>`).join('');
     art.innerHTML = `<a class="kit-card__preview kit-card__preview--photo" href="${esc(fileUrl(ex))}" style="aspect-ratio: ${w} / ${h};" aria-label="${esc(`${dlWord} ${fmtLabel} — ${label}`)}">
         <img src="${esc(src)}" width="${w}" height="${h}" alt="${esc(`${label} — ${meta}`)}" loading="lazy" decoding="async">
       </a>
       <div class="kit-card__body">
         <h3 class="kit-card__label">${esc(label)}</h3>
-        <p class="kit-card__meta">${esc(meta)}</p>
+        <p class="kit-tags">${chips}</p>
         <p class="kit-dl" aria-label="${esc(dlWord)}">
-          <a href="${esc(fileUrl(ex))}" download="${esc(downloadName(ex))}" type="${type}">${esc(fmtLabel)}</a>
+          <a href="${esc(fileUrl(ex))}" download="${esc(downloadName(ex))}" type="${type}">${esc(dlWord)}</a>
           <a href="${esc(composeUrl(ex))}">${esc(customize)}</a>
         </p>
       </div>`;
@@ -124,13 +147,10 @@
       const show = value === 'all'
         || (value === 'une' && el.dataset.kind === 'une')
         || (value === 'campus' && (el.dataset.kind === 'campus' || el.dataset.campus === 'generique'))
+        || (FORMAT_LABEL[value] && el.dataset.format === value)
         || el.dataset.campus === value;
       el.hidden = !show;
       if (show) n += 1;
-    });
-    grid.querySelectorAll('.kit-gallery-group').forEach((g) => {
-      const visible = [...g.querySelectorAll('.kit-card--poster')].some((c) => !c.hidden);
-      g.hidden = !visible;
     });
     filterBox?.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === value)));
     if (countEl) countEl.textContent = lang === 'en' ? `${n} posters` : `${n} affiches`;
@@ -143,10 +163,17 @@
       const key = instKey(ex);
       if (!seen.has(key)) seen.set(key, instLabel(ex));
     });
+    const formats = [];
+    FORMAT_ORDER.forEach((fmt) => {
+      if (examples.some((ex) => ex.format === fmt) || (fmt === 'tabloid' && grid.querySelector('[data-campus="generique"]'))) {
+        formats.push([fmt, FORMAT_LABEL[fmt]]);
+      }
+    });
     const entries = [
       ['all', lang === 'en' ? 'All' : 'Toutes'],
       ['une', lang === 'en' ? 'Front page' : 'La une'],
-      ['campus', lang === 'en' ? 'Campus posters' : 'Affiches campus'],
+      ['campus', lang === 'en' ? 'Campus' : 'Campus'],
+      ...formats,
       ...seen.entries(),
     ];
     filterBox.innerHTML = entries.map(([slug, label]) => `<button type="button" data-filter="${esc(slug)}" data-campus="${esc(slug)}" aria-pressed="false">${esc(label)}</button>`).join('');
@@ -159,61 +186,32 @@
 
   const FORMAT_ORDER = ['letter', 'legal', 'tabloid', 'ecran-paysage', 'ecran-portrait'];
 
-  function groupLabel(kind) {
-    if (kind === 'une') return lang === 'en' ? 'The Radar front page' : 'La une du Radar';
-    return lang === 'en' ? 'Campus posters' : 'Affiches campus';
-  }
-
   function mount(examples) {
     const generic = grid.querySelector('.kit-card--feature, .kit-card[data-campus="generique"]');
-    grid.classList.remove('kit-grid', 'kit-grid--poster');
-    grid.classList.add('kit-gallery');
+    grid.classList.remove('kit-grid');
+    grid.classList.add('kit-gallery', 'kit-grid--poster');
+    const keepGeneric = generic ? generic.cloneNode(true) : null;
     grid.innerHTML = '';
-    const byKind = { une: [], campus: [] };
-    examples.forEach((ex) => byKind[(ex.kind || 'campus') === 'une' ? 'une' : 'campus'].push(ex));
-    ['une', 'campus'].forEach((kind) => {
-      const list = byKind[kind];
-      if (!list.length && !(kind === 'campus' && generic)) return;
-      const group = document.createElement('section');
-      group.className = 'kit-gallery-group';
-      group.dataset.kind = kind;
-      const h = document.createElement('h3');
-      h.className = 'kit-gallery-group__title';
-      h.textContent = groupLabel(kind);
-      group.appendChild(h);
-      const buckets = new Map();
-      const order = kind === 'une' ? FORMAT_ORDER.slice() : ['campus'];
-      if (kind === 'campus' && generic) {
-        generic.dataset.kind = 'campus';
-        generic.dataset.format = generic.dataset.format || 'tabloid';
-        buckets.set('campus', { label: lang === 'en' ? 'Original campus posters' : 'Affiches campus originales', cards: [generic] });
+    if (keepGeneric) {
+      keepGeneric.classList.add('kit-card--poster');
+      keepGeneric.dataset.kind = 'campus';
+      keepGeneric.dataset.format = keepGeneric.dataset.format || 'tabloid';
+      if (!keepGeneric.querySelector('.kit-tags')) {
+        const meta = keepGeneric.querySelector('.kit-card__meta');
+        const body = keepGeneric.querySelector('.kit-card__body');
+        if (meta && body) {
+          const tagsP = document.createElement('p');
+          tagsP.className = 'kit-tags';
+          const bits = lang === 'en'
+            ? ['Campus', '11 × 17', 'Letter', 'Legal']
+            : ['Campus', '11 × 17', 'Lettre', 'Légal'];
+          tagsP.innerHTML = bits.map((t) => `<span>${esc(t)}</span>`).join('');
+          meta.replaceWith(tagsP);
+        }
       }
-      list.forEach((ex) => {
-        const key = kind === 'une' ? (ex.format || 'tabloid') : 'campus';
-        const label = kind === 'une'
-          ? (FORMAT_LABEL[ex.format] || ex.format)
-          : (lang === 'en' ? 'Original campus posters' : 'Affiches campus originales');
-        if (!buckets.has(key)) buckets.set(key, { label, cards: [] });
-        buckets.get(key).cards.push(card(ex));
-      });
-      (order.length ? order : [...buckets.keys()]).forEach((key) => {
-        const bucket = buckets.get(key);
-        if (!bucket) return;
-        const sub = document.createElement('div');
-        sub.className = 'kit-gallery-sub';
-        sub.dataset.format = key;
-        const h4 = document.createElement('h4');
-        h4.className = 'kit-gallery-sub__title';
-        h4.textContent = bucket.label;
-        const inner = document.createElement('div');
-        inner.className = 'kit-grid kit-grid--poster';
-        bucket.cards.forEach((c) => inner.appendChild(c));
-        sub.appendChild(h4);
-        sub.appendChild(inner);
-        group.appendChild(sub);
-      });
-      grid.appendChild(group);
-    });
+      grid.appendChild(keepGeneric);
+    }
+    examples.forEach((ex) => grid.appendChild(card(ex)));
   }
 
   async function saveKitFile(a) {
@@ -271,16 +269,14 @@
     const label = lang === 'en' ? (ex && ex.labelEn) : (ex && ex.labelFr);
     const when = period ? (lang === 'en' ? period.en : period.fr) : '';
     if (lang === 'en') {
-      const head = 'Example — <strong>Quartier Libre</strong> front page (Université de Montréal), letter, last week, light paper background.';
       cap.innerHTML = when
-        ? `${head} ${when}. The thumbnail is the downloadable file, scaled down.`
-        : `${head} The thumbnail is the downloadable file, scaled down. The date shown matches the generated content.`;
+        ? `<strong>Quartier Libre</strong> · UdeM · Letter · ${when}`
+        : '<strong>Quartier Libre</strong> · UdeM · Letter';
       if (img && when) img.alt = `Quartier Libre front page, Université de Montréal, letter, ${when}`;
     } else {
-      const head = 'Exemple — La une de <strong>Quartier Libre</strong> (Université de Montréal), format lettre, dernière semaine, fond clair.';
       cap.innerHTML = when
-        ? `${head} ${when}. L’aperçu est le fichier téléchargeable, réduit.`
-        : `${head} L’aperçu est le fichier téléchargeable, réduit. La date affichée suit le contenu généré.`;
+        ? `<strong>Quartier Libre</strong> · UdeM · Lettre · ${when}`
+        : '<strong>Quartier Libre</strong> · UdeM · Lettre';
       if (img && when) img.alt = `La une Quartier Libre, Université de Montréal, format lettre, ${when}`;
     }
   }

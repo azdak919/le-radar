@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('kit média — affiches', () => {
-  test('iPad : l’affiche générique occupe la rangée', async ({ page }) => {
+  test('iPad : l’affiche générique est une cellule de la grille, pas une rangée vide à droite', async ({ page }) => {
     await page.setViewportSize({ width: 834, height: 1194 });
     await page.goto('/kit-media/', { waitUntil: 'domcontentloaded' });
     const card = page.locator('#kit-poster-grid .kit-card--feature');
@@ -10,7 +10,7 @@ test.describe('kit média — affiches', () => {
     const c = await card.boundingBox();
     const g = await page.locator('#kit-poster-grid').boundingBox();
     const i = await img.boundingBox();
-    expect(c.width / g.width).toBeGreaterThan(0.85);
+    expect(c.width / g.width, 'ne monopolise plus toute la largeur').toBeLessThan(0.6);
     expect(i.width / c.width).toBeGreaterThan(0.9);
     expect(i.height).toBeGreaterThan(i.width);
   });
