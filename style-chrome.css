@@ -2478,6 +2478,9 @@ html.has-tuner-safe-cap .tuner {
   white-space: nowrap; border: 0;
 }
 
+/* Bloc d’accompagnement imprimé (QR + mot-symbole) : invisible à l’écran. */
+.print-promo { display: none !important; }
+
 /* ══════════ IMPRESSION — page de journal figée ══════════
  * Une seule feuille d'impression pour tout le site (style-chrome.css est la
  * dernière feuille chargée partout). Objectifs : rien de coupé, rien de
@@ -2485,12 +2488,18 @@ html.has-tuner-safe-cap .tuner {
  * imprimé en clair. Contrat vérifié par tests/print-layout.spec.mjs.
  */
 @page {
-  margin: 14mm 13mm 16mm;
-  @bottom-left { content: "le-radar.ca"; font: 7.5pt "Inter", system-ui, sans-serif; color: #555; }
+  margin: 12mm 12mm 14mm;
+  @bottom-left {
+    content: "LE\2011RADAR.ca";
+    font: 700 7.5pt "Source Serif 4", "Source Serif Pro", Georgia, serif;
+    color: #555;
+  }
   @bottom-right { content: "Page " counter(page) " / " counter(pages); font: 7.5pt "Inter", system-ui, sans-serif; color: #555; }
 }
 @media print {
-  :root, html[data-theme], html[data-theme="dark"], [data-theme="dark"] {
+  :root, html[data-theme], html[data-theme="light"], html[data-theme="dark"], [data-theme="dark"] {
+    --serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    --sans: "Inter", system-ui, -apple-system, sans-serif;
     --bg: #fff; --bg-soft: #fff; --ink: #000; --ink-soft: #222; --muted: #444;
     --rule: #9a9a9a; --rule-strong: #000;
     --accent: #6c2163; --accent-dark: #4f1749; --lamp-past: #6c2163; --lamp-past-ink: #fff;
@@ -2512,27 +2521,30 @@ html.has-tuner-safe-cap .tuner {
     backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
     filter: none !important;
   }
-  body *, body *::before, body *::after {
+  body *:not(img):not(svg):not(canvas):not(.print-promo__qr),
+  body *:not(img):not(svg)::before,
+  body *:not(img):not(svg)::after {
     max-height: none !important; overflow: visible !important;
     -webkit-line-clamp: unset !important; line-clamp: none !important;
   }
   body * { position: static !important; transform: none !important; }
-  /* Les pseudo-éléments décoratifs absolus (pastilles, filets) restent en flux sans déborder */
   body *::before, body *::after { position: static !important; }
-  .sr-only { position: absolute !important; }
+  .sr-only, .visually-hidden { position: absolute !important; }
   img, svg, video, canvas, picture, figure { max-width: 100% !important; height: auto; }
-  img { break-inside: avoid; }
+  img { break-inside: avoid; page-break-inside: avoid; }
 
   /* — Contrôles et chrome interactif masqués — */
   .tuner, #tuner, #radar-player, audio, video, iframe, #external-listen, .external-listen,
   .masthead-actions, .masthead-shuffle-slot, .masthead-icon, .install-menu, .install-chrome,
-  #bg-photo-layer, .bg-photo-scrim, .bg-photo-credit,
+  #bg-photo-layer, #bg-photo-layer *, .bg-photo-scrim, .bg-photo-credit, .masthead-photo,
   .masthead-weather, .masthead-weather-dock, .masthead-sports-strip, .masthead-date, .masthead-time,
   #translate-control, .translate-control, .translate-menu, #translate-menu, .translate-overlay,
   #news-filters-panel, .news-filters, .filters-compact, .filters-toggle, #media-follow-bar, .media-follow-bar,
   #page-tools, .page-tools, .sports-page-tools, .sports-filters, #toast, .toast,
   .site-sections, .site-foot__links, .site-foot__link-btn, .site-foot__kao, .site-foot__kao-hint, .site-foot__bot,
+  .site-foot__cols, .site-foot__top .site-foot__cols, .site-foot__social, .site-foot__contact,
   .read-more, .article-more, .load-more, .news-more, .feed-more, .engage-prompt, .soft-prompt,
+  .news-hero-spacer, .brief-rail-spacer,
   [class*="prompt"], [class*="fab"], [class*="__fab"], [class*="toast"],
   [class*="local-lab"], #local-lab-format-bar, .midwidth-preview-bar,
   button, input, select, textarea, form, dialog, [role="dialog"], [role="toolbar"],
@@ -2540,16 +2552,40 @@ html.has-tuner-safe-cap .tuner {
     display: none !important;
   }
 
-  /* — En-tête sobre : logo + nom, encre noire sur papier — */
+  /* Calques photo / givrage du mât : hors flux (évite la bande grise floue en haut). */
+  #bg-photo-layer, #bg-photo-layer img, .bg-photo-scrim, .bg-photo-credit,
+  .masthead::before, .masthead::after,
+  .wordmark::before, .wordmark::after,
+  .wordmark-mark::before, .wordmark-mark::after,
+  .masthead-brand::before, .masthead-inner::before {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    background-image: none !important;
+    width: 0 !important; height: 0 !important; max-height: 0 !important;
+    margin: 0 !important; padding: 0 !important; border: 0 !important;
+  }
   .masthead, .masthead-inner, .masthead-brand, .masthead-top {
-    background: none !important; color: #000 !important; min-height: 0 !important;
+    background: none !important; background-image: none !important;
+    color: #000 !important; min-height: 0 !important;
     height: auto !important; padding: 0 !important; margin: 0 !important; border: 0 !important;
   }
-  .masthead { border-bottom: 2pt solid #000 !important; padding-bottom: 4pt !important; margin-bottom: 10pt !important; text-align: center; }
-  .masthead .wordmark, .masthead .wordmark * { color: #000 !important; text-decoration: none !important; }
-  .wordmark-mark { font-size: 24pt !important; line-height: 1.1 !important; }
+
+  /* — En-tête sobre : logo + mot-symbole officiel, encre noire sur papier — */
+  .masthead { border-bottom: 2pt solid var(--accent) !important; padding-bottom: 4pt !important; margin-bottom: 10pt !important; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .masthead .wordmark, .masthead .wordmark * { color: #000 !important; text-decoration: none !important; background: none !important; }
+  .wordmark-mark {
+    font-family: var(--serif) !important;
+    font-weight: 700 !important;
+    font-size: 24pt !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+    font-optical-sizing: none;
+    font-variation-settings: "opsz" 48;
+  }
   .wordmark-logo { width: 22pt !important; height: 22pt !important; }
   .wordmark-full { display: block !important; font-size: 8.5pt !important; letter-spacing: .08em; text-transform: uppercase; }
+  .wordmark-full, .wordmark-full * { background: none !important; color: #000 !important; }
   .masthead-brand { padding-top: 0 !important; }
 
   /* — Mise en page : pleine largeur, pas de grilles qui débordent — */
@@ -2561,13 +2597,16 @@ html.has-tuner-safe-cap .tuner {
   table { width: 100% !important; border-collapse: collapse; font-size: 8.5pt; }
   th, td { border-bottom: .5pt solid #888 !important; padding: 2pt 4pt !important; background: none !important; color: #000 !important; white-space: normal !important; }
   thead { display: table-header-group; }
-  tr, td, th { break-inside: avoid; }
+  tr, td, th { break-inside: avoid; page-break-inside: avoid; }
   pre, code { white-space: pre-wrap !important; word-break: break-word; }
   * { min-width: 0; }
   p, li, dd, blockquote, .article-brief, .seo-lead { orphans: 3; widows: 3; }
-  h1, h2, h3, h4, h5, h6, .article-title, .seo-title, .wire-title, .sports-panel__head {
+  h1, h2, h3, h4, h5, h6, .article-title, .seo-title, .wire-title, .sports-panel__head,
+  .brief-rail-title, .news-tail-title, .print-promo__mark, .print-promo__brand, .site-foot__wordmark {
+    font-family: var(--serif) !important;
     break-after: avoid; page-break-after: avoid; break-inside: avoid; color: #000 !important;
   }
+  .article-title { font-weight: 600 !important; letter-spacing: -0.012em !important; }
 
   /* — Cartes : jamais coupées entre deux pages — */
   .article, .card, figure, .sports-panel, .seo-section > ul > li, .seo-fact, .seo-day, .media-channels,
@@ -2579,61 +2618,167 @@ html.has-tuner-safe-cap .tuner {
     background: none !important; padding: 6pt 0 !important; color: #000 !important;
   }
   .article-title { font-size: 12.5pt !important; line-height: 1.2 !important; }
-  .article-brief, .article-brief-text { font-size: 9.5pt !important; color: #111 !important; }
+  .article-brief, .article-brief-text { font-size: 9.5pt !important; color: #111 !important; font-family: var(--sans) !important; }
   .article-meta, .article-byline, .article-time, .article-inst, .seo-eyebrow, .seo-foot-meta { color: #333 !important; font-size: 8pt !important; }
-  /* Pastille de couleur du campus : forme + nom en texte (lisible en N&B) */
+  .article-byline__label { color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: 600; }
+  .article-author { color: #000 !important; }
+
+  /* Pastille de couleur du campus : carré typographique, plus de disque 8 px. */
   .article-source { color: #000 !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: .03em; }
-  .article-source::before { content: "■ " !important; display: inline !important; background: none !important; width: auto !important; height: auto !important; color: var(--c, var(--accent)) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .article-source::before {
+    content: "■ " !important; display: inline !important; background: none !important;
+    width: auto !important; height: auto !important; min-width: 0 !important; min-height: 0 !important;
+    border: 0 !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important;
+    color: var(--c, var(--accent)) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* Point « frais » : plus de pastille rouge sur « hier » — un point médian suffit. */
+  .article-time::before,
+  .article-time.is-fresh::before,
+  .news-hero .article--feature.article--thumb.has-image > .article-meta .article-time::before,
+  .news-hero .article--feature.article--thumb.has-image > .article-meta .article-time:not(.is-fresh)::before,
+  .article-meta--time-only .article-time:not(.is-fresh)::before {
+    content: " · " !important;
+    display: inline !important;
+    width: auto !important; height: auto !important; min-width: 0 !important; min-height: 0 !important;
+    background: none !important; border: 0 !important; border-radius: 0 !important;
+    animation: none !important; color: #333 !important; font-size: inherit !important;
+    vertical-align: baseline !important; margin: 0 !important; padding: 0 !important;
+    float: none !important; position: static !important;
+  }
 
   /* Pastilles, badges, puces : contour + texte plutôt qu'aplats */
-  [class*="badge"], [class*="pill"], [class*="chip"], [class*="tag"]:not(.wordmark-full__tag), .seo-slot--live, .sports-panel__code {
+  [class*="badge"], [class*="pill"], [class*="chip"], [class*="tag"]:not(.wordmark-full__tag):not(.print-promo__tag), .seo-slot--live, .sports-panel__code {
     background: none !important; color: #000 !important; border: .6pt solid #000 !important; border-radius: 2pt !important;
   }
   [class*="dot"], [class*="lamp"] { border: .6pt solid #000 !important; }
 
-  /* Couleur : on garde l'accent de marque, sans aplat sombre */
   a { color: #000 !important; text-decoration: none !important; }
   .seo-title, .wire-title, h1, h2 { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .masthead { border-bottom-color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   [class*="sports-panel"], .seo-section, .seo-day, .seo-facts, .seo-fact, .wire, .news-list, .card {
     background: none !important; color: #000 !important;
   }
   .sports-panel { border: .6pt solid #999 !important; border-radius: 0 !important; }
-  /* Fond sombre éventuel restant : neutralisé */
   [class*="dark"], [class*="hero"], [class*="banner"], [class*="strip"] { background: none !important; color: #000 !important; }
 
-  /* — Fil d'accueil : deux colonnes de journal, cartes linéaires — */
-  .news-list { display: block !important; columns: 2; column-gap: 16pt; column-rule: .5pt solid #bbb; }
-  .news-list > *, .news-hero, .brief-rail, .news-tail, .wide-rail-stack { display: block !important; width: auto !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
-  .news-list [class*="__label"], .news-list .rail-head, .brief-rail > h2, .brief-rail > h3 { break-after: avoid; }
-  .news-list .article { display: block !important; width: auto !important; }
-  .news-list .article::after { clear: both; }
+  /* — Fil d'accueil : une (une ou deux) en grille pleine largeur, puis deux colonnes — */
+  .news-list { display: block !important; columns: 2; column-gap: 16pt; column-rule: .5pt solid #bbb; column-fill: auto; }
+  .news-list > .wide-rail-stack {
+    display: block !important; width: auto !important; margin: 0 !important; padding: 0 !important; border: 0 !important;
+  }
+  .news-hero {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    column-span: all;
+    column-gap: 16pt;
+    row-gap: 8pt;
+    width: auto !important;
+    margin: 0 0 10pt !important;
+    padding: 0 0 10pt !important;
+    border: 0 !important;
+    border-bottom: .5pt solid #bbb !important;
+    break-inside: auto;
+    page-break-inside: auto;
+    background: none !important;
+  }
+  .news-hero:not([data-leads]) .article--lead,
+  .news-hero[data-leads="1"] .article--lead { grid-column: 1 / -1; }
+  .news-list [class*="__label"], .news-list .rail-head, .brief-rail > h2, .brief-rail > h3, .brief-rail-title { break-after: avoid; }
+  .news-list > .brief-rail, .brief-rail {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    column-span: all;
+    column-gap: 16pt;
+    row-gap: 6pt;
+    margin-top: 8pt !important;
+    padding-top: 6pt !important;
+    border-top: 1pt solid #000 !important;
+  }
+  .brief-rail-title {
+    grid-column: 1 / -1;
+    font-family: var(--serif) !important;
+    font-size: 11pt !important;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin: 0 0 4pt !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+  .news-list .article { display: flow-root !important; width: auto !important; break-inside: avoid; page-break-inside: avoid; }
+  .news-list .article::after { clear: both; content: ""; display: block; }
+  .news-list .article > :not(.article-media) { width: auto !important; max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; grid-column: auto !important; float: none !important; }
+
+  /* Méta : une ligne qui se coupe aux mots, nom complet seulement, jamais rognée. */
   .article-meta { display: block !important; }
-  .article-meta__lead, .article-time { display: inline !important; }
-  .article-time::before { content: " · "; }
-  .article-media { float: right !important; width: 34% !important; margin: 0 0 4pt 8pt !important; }
-  .article--lead .article-media { float: none !important; width: 100% !important; margin: 4pt 0 !important; }
+  .article-meta__lead, .article-source, .article-inst, .article-time { display: inline !important; white-space: normal !important; }
+  .article-inst__full { display: inline !important; }
+  .article-inst__short { display: none !important; }
+  .article-inst { text-transform: none !important; font-weight: 400; }
+  .article-time { white-space: nowrap !important; }
+
+  .article-media { float: right !important; width: 34% !important; margin: 0 0 4pt 8pt !important; break-inside: avoid; page-break-inside: avoid; }
+  .article--lead .article-media { float: none !important; width: 100% !important; max-width: none !important; margin: 4pt 0 2pt !important; }
+  .news-hero .article--lead .article-media img {
+    width: 100% !important; height: auto !important; max-height: 2.35in !important;
+    object-fit: cover !important; aspect-ratio: auto !important;
+  }
+  .news-list .article:not(.article--lead) .article-media { width: 28% !important; max-width: 1.35in !important; }
   .article-media img { width: 100% !important; height: auto !important; object-fit: contain !important; aspect-ratio: auto !important; }
-  .article-media-credit { display: block !important; font-size: 6pt !important; color: #555 !important; }
+  /* Crédits : largeur de la vignette, coupure aux mots (pas trois lignes hachées). */
+  .article-media-credit,
+  .article-media-credit *,
+  .news-hero .article--feature.article--thumb.has-image .article-media-credit,
+  .news-hero .article--feature.article--thumb.has-image .article-media-credit * {
+    font-size: 6.5pt !important;
+    color: #555 !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .article-media-credit {
+    display: block !important;
+    width: 100% !important;
+    max-height: none !important;
+    margin-top: 1pt !important;
+  }
   .article-brief-text { display: inline !important; }
-  .article-eyebrow { display: block !important; font-size: 7.5pt !important; font-weight: 700; letter-spacing: .08em; color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .article-brief, .article-brief.is-truncated, .article-brief-text,
+  .article-brief.is-truncated .article-brief-text {
+    text-align: start !important;
+    text-justify: none !important;
+    hyphens: manual !important;
+    -webkit-hyphens: manual !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+  }
+  /* Extrait coupé : points de suspension si le texte n’en a pas déjà. */
+  .article-brief.is-truncated .article-brief-text.is-cut::after { content: "…"; }
+
+  .article-eyebrow { display: block !important; font-size: 7.5pt !important; font-weight: 700; letter-spacing: .08em; color: var(--accent) !important; font-family: var(--sans) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .wire-head { display: flex !important; justify-content: space-between; align-items: baseline; border-bottom: 1pt solid #000; margin-bottom: 6pt !important; }
   .wire-title { font-size: 15pt !important; }
-  .wordmark-full, .wordmark-full * { background: none !important; color: #000 !important; }
 
   /* — Sports : on n'imprime que les équipes qui ont des résultats — */
-  .sports-board, .sports-board.is-masonry { display: block !important; columns: 2; column-gap: 12pt; }
+  .sports-board, .sports-board.is-masonry { display: block !important; columns: 3 !important; column-gap: 8pt !important; }
   .sports-board > * { grid-row: auto !important; margin: 0 0 8pt !important; display: block !important; }
   .sports-panel:has(> .sports-panel__empty) { display: none !important; }
   .sports-panel__list { display: block !important; margin: 0 !important; padding: 0 !important; }
-  .sports-result { display: grid !important; grid-template-columns: 6.4em 3.4em minmax(0, 1fr) auto !important; column-gap: 4pt; margin-inline: 0 !important; padding: 3pt 4pt !important; background: none !important; font-size: 8.5pt !important; break-inside: avoid; }
+  .sports-result { display: grid !important; grid-template-columns: 5.4em 2.4em minmax(0, 1fr) auto !important; column-gap: 4pt; margin-inline: 0 !important; padding: 2pt 0 !important; background: none !important; font-size: 7.5pt !important; line-height: 1.25 !important; break-inside: avoid; page-break-inside: avoid; }
   .sports-result > * { grid-column: auto !important; grid-row: auto !important; }
-  .sports-result__time { white-space: normal !important; overflow-wrap: anywhere; }
+  .sports-result__time { white-space: normal !important; overflow-wrap: break-word; }
   .sports-result__badge { border: .6pt solid #000; padding: 0 2pt; color: #000 !important; }
-  .sports-panel { padding: 6pt !important; }
+  .sports-panel { padding: 3pt 4pt !important; margin: 0 0 5pt !important; }
   .sports-sport-block__title { display: flex !important; list-style: none; font-size: 13pt !important; border-bottom: 1pt solid #000; margin: 8pt 0 6pt !important; break-after: avoid; }
   .sports-sport-block__title::-webkit-details-marker { display: none; }
   .sports-sport-block__chevron, .sports-board-status:empty { display: none !important; }
+  .sports-panel__school, .sports-panel__meta, .sports-panel__glyph, .sports-result__opp-full, .sports-panel__program .sports-panel__code { display: none !important; }
+  .sports-panel__name { font-size: 9pt !important; margin: 0 !important; }
+  .sports-panel__program { font-size: 8pt !important; margin: 0 !important; }
+  .sports-panel__head { display: block !important; margin: 0 0 2pt !important; padding: 0 !important; }
 
   /* Grands conteneurs : peuvent se répartir sur deux pages (leurs lignes, elles, restent entières) */
   .feeds-card, .feeds-card__body, .seo-section, .sports-sport-block, .news-list, main { break-inside: auto !important; page-break-inside: auto !important; }
@@ -2643,39 +2788,135 @@ html.has-tuner-safe-cap .tuner {
   .feeds-panel li, .feeds-panel__title { break-inside: avoid; }
   .seo-headline__more, .seo-cta { display: none !important; }
   body * { hyphens: manual !important; -webkit-hyphens: manual !important; }
-  p, li, dd, dt, td, th, h1, h2, h3, h4, a, span, strong, em, time, figcaption { overflow-wrap: anywhere; word-break: normal; }
-
-  /* Sports résumés : fiches compactes sur trois colonnes */
-  .sports-board, .sports-board.is-masonry { columns: 3 !important; column-gap: 8pt !important; }
-  .sports-panel { padding: 3pt 4pt !important; margin: 0 0 5pt !important; }
-  .sports-panel__school, .sports-panel__meta, .sports-panel__glyph, .sports-result__opp-full, .sports-panel__program .sports-panel__code { display: none !important; }
-  .sports-panel__name { font-size: 9pt !important; margin: 0 !important; }
-  .sports-panel__program { font-size: 8pt !important; margin: 0 !important; }
-  .sports-panel__head { display: block !important; margin: 0 0 2pt !important; padding: 0 !important; }
-  .sports-result { grid-template-columns: 5.4em 2.4em minmax(0, 1fr) auto !important; font-size: 7.5pt !important; padding: 2pt 0 !important; line-height: 1.25 !important; }
-  /* — Impressions résumées (accueil et sports) — */
-  .news-list .article { display: flow-root !important; }
-  .news-list .article > :not(.article-media) { width: auto !important; max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; grid-column: auto !important; float: none !important; }
-  .news-list .article:not(.article--lead) .article-media { width: 26% !important; max-width: 1.25in !important; }
-  .news-tail { display: none !important; }
-  .news-list::after, .sports-board-root::after {
-    content: "Suite sur le-radar.ca"; display: block; column-span: all;
-    margin-top: 10pt; padding-top: 4pt; border-top: 1pt solid #000;
-    font: 700 9pt "Inter", system-ui, sans-serif; text-align: center; letter-spacing: .04em;
+  p, li, dd, dt, td, th, h1, h2, h3, h4, a, span, strong, em, time, figcaption {
+    overflow-wrap: break-word; word-break: normal;
   }
-  .sports-board-root::after { content: "Résultats et matchs de la semaine en cours seulement — suite sur le-radar.ca/sports"; }
+
+  .news-tail, .news-list > .news-tail, .news-search-results { display: none !important; }
+  /* L’appel « Suite sur LE-RADAR.ca » vit dans .print-promo (mot-symbole officiel). */
+  .news-list::after { content: none !important; display: none !important; }
+  .sports-board-root::after {
+    content: "Résultats et matchs de la semaine en cours seulement — suite sur LE\2011RADAR.ca/sports";
+    display: block; column-span: all;
+    margin-top: 8pt; padding-top: 4pt; border-top: 1pt solid #000;
+    font: 700 8.5pt var(--serif); text-align: center; letter-spacing: 0;
+  }
   .sports-board-root:has(.sports-panel[data-print-week]) .sports-panel:not([data-print-week]),
   .sports-board-root:has(.sports-panel[data-print-week]) .sports-sport-block:not([data-print-week]),
   .sports-result[data-print-off-week] { display: none !important; }
 
-  /* Liens d'articles : URL imprimée après le texte (pas pour la navigation) */
-  a.article[href^="http"]::after, .seo-section a[href^="http"]:not(.media-channels__item)::after, main p a[href^="http"]::after {
-    content: " ‹" attr(href) "›";
-    display: block !important; font: 7pt/1.25 "Inter", system-ui, sans-serif; color: #444 !important;
-    word-break: break-all; margin-top: 2pt;
+  /* Plus d’URL brutes (ni paramètres utm) après les articles ou dans le pied. */
+  a.article::after,
+  a.article[href]::after,
+  a.article[href^="http"]::after,
+  .seo-section a[href^="http"]::after,
+  main p a[href]::after,
+  main p a[href^="http"]::after,
+  .site-foot a::after,
+  a[href^="http"]::after {
+    content: none !important;
+    display: none !important;
   }
 
-  /* Pied : sobre, une ligne */
-  .site-foot { border-top: .6pt solid #000 !important; margin-top: 12pt !important; padding-top: 4pt !important; font-size: 8pt !important; background: none !important; color: #000 !important; break-inside: avoid; }
+  /* Pied compact, collé au contenu, sans lien parasite. */
+  .site-foot {
+    display: flex !important;
+    flex-direction: column;
+    border-top: 0 !important;
+    margin-top: 4pt !important;
+    padding-top: 0 !important;
+    font-size: 7.5pt !important;
+    line-height: 1.35 !important;
+    background: none !important;
+    color: #000 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-before: avoid-page;
+    page-break-before: avoid;
+  }
   .site-foot * { color: #000 !important; background: none !important; }
+  .site-foot__wordmark {
+    font-family: var(--serif) !important;
+    font-weight: 700 !important;
+    font-optical-sizing: none;
+    font-variation-settings: "opsz" 48;
+    font-size: 11pt !important;
+    letter-spacing: 0.01em;
+  }
+  /* Pied ramassé : le mot-symbole vit dans le QR ; on garde la ligne Azdak. */
+  .site-foot__brand, .site-foot__wordmark, .site-foot__signature,
+  .site-foot__about, .site-foot__licence, .site-foot__legal,
+  .site-foot > p, .site-foot__bottom > p:not(.site-foot__author) {
+    display: none !important;
+  }
+  .print-promo { order: 1; }
+  .site-foot__author, .site-foot__credit {
+    display: block !important;
+    order: 2;
+    font-size: 7.5pt !important;
+    margin: 3pt 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+  .site-foot__heart { color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; text-decoration: none !important; }
+
+  /* QR + mot-symbole officiel, visible à l’impression seulement. */
+  .print-promo {
+    display: flex !important;
+    align-items: center;
+    gap: 10pt;
+    column-span: all;
+    margin: 6pt 0 0;
+    padding: 6pt 0 0;
+    border-top: 1.25pt solid #000;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-before: avoid-page;
+    color: #000 !important;
+    background: none !important;
+  }
+  .print-promo__qr {
+    width: 52pt !important;
+    height: 52pt !important;
+    max-width: 52pt !important;
+    max-height: 52pt !important;
+    flex: 0 0 52pt;
+    object-fit: contain !important;
+    background: #fff !important;
+  }
+  .print-promo__copy { min-width: 0; }
+  .print-promo__scan {
+    margin: 0 0 1pt !important;
+    font: 700 11pt var(--sans) !important;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #000 !important;
+  }
+  .print-promo__tag {
+    margin: 0 0 4pt !important;
+    font: 400 9pt var(--sans) !important;
+    color: #222 !important;
+    border: 0 !important;
+    background: none !important;
+  }
+  .print-promo__suite {
+    margin: 0 !important;
+    font: 400 9.5pt var(--serif) !important;
+    color: #000 !important;
+  }
+  .print-promo__mark, .print-promo__brand {
+    font-family: var(--serif) !important;
+    font-weight: 700 !important;
+    font-optical-sizing: none;
+    font-variation-settings: "opsz" 48;
+    letter-spacing: -0.02em;
+    color: #000 !important;
+    white-space: nowrap;
+  }
+  .print-promo__logo {
+    width: 11pt !important;
+    height: 11pt !important;
+    margin: 0 0.12em 0 0.08em;
+    vertical-align: -0.08em;
+  }
 }

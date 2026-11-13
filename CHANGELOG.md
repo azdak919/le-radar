@@ -18,6 +18,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Impression de l’accueil (et des pages qui partagent la même feuille) : mise en page de journal sans colonne vide ni pied orphelin, typographie unifiée, plus d’URL brutes ni de paramètres utm, pastille « hier » corrigée, extraits alignés à gauche avec points de suspension, crédits photo sur une ligne, et un QR « Scanne-moi » vers LE-RADAR.ca (mot-symbole officiel).
+
 - Buffer (X, Facebook, LinkedIn) : une image n’est jointe que si l’URL publique répond 200, `image/*` et pèse au plus 5 Mo ; sinon l’article est sauté plutôt que de faire échouer la publication. Les images encore citées par une fiche récente restent dans la Release `mirror-images` pendant 10 jours, pour que Buffer ne retravaille pas une URL déjà 404 sur le-radar.ca.
 
 ## [1.1.0] — 2026-10-07
