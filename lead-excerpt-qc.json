@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-13T21:08:55.449Z",
+  "updated": "2026-11-13T21:37:46.017Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 34,
-  "withLeadExcerpt": 143,
-  "candidates": 34,
-  "enriched": 3,
+  "incomplete": 31,
+  "withLeadExcerpt": 139,
+  "candidates": 31,
+  "enriched": 1,
   "failed": 4,
   "ok": true,
   "samples": [
-    {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -37,21 +28,12 @@
       "changed": false
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "title": "Saguenay vers des infrastructures durables",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
       "ok": true,
       "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
-      "changed": true
-    },
-    {
-      "title": "Le Cégep de Jonquière au cœur de la COP31",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/le-cegep-de-jonquiere-au-coeur-de-la-cop31/?utm_source=rss&utm_medium=rss&utm_campaign=le-cegep-de-jonquiere-au-coeur-de-la-cop31",
-      "ok": true,
-      "score": 100,
-      "chars": 528,
-      "sample": "La COP 31 s’est amorcée ce lundi à Antalya, en Turquie, où plusieurs discussions autour des enjeux e",
+      "chars": 719,
+      "sample": "La saison de la branche Bâtiment durable Québec pour le Saguenay–Lac-Saint-Jean a donné son coup d’e",
       "changed": true
     },
     {
@@ -79,6 +61,24 @@
       "score": 100,
       "chars": 281,
       "sample": "Reliant trois histoires par le thème de la mort, la nouvelle pièce de théâtre de Klervi Thienpont, R",
+      "changed": false
+    },
+    {
+      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtrale",
+      "link": "https://impactcampus.ca/arts-et-culture/la-version-qui-ninteresse-personne-ou-comment-reussir-une-adaptation-theatral/",
+      "ok": true,
+      "score": 100,
+      "chars": 342,
+      "sample": "Durant tout le mois de novembre, le Trident présente la pièce La version qui n’intéresse personne, b",
+      "changed": false
+    },
+    {
+      "title": "Listening to The Echo of Grenada",
+      "link": "https://thelinknewspaper.ca/article/16563",
+      "ok": true,
+      "score": 100,
+      "chars": 388,
+      "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
       "changed": false
     }
   ]
