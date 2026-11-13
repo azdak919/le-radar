@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { extractFn as extractComposeFn, fixtureCompose, normalizeCompose } from './lib/campus-compose-a9.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
@@ -27,6 +28,13 @@ function extractFn(source, name) {
 
 const compose = extractFn(src, 'compose');
 const une = extractFn(src, 'composeFrontPage');
+
+assert.equal(
+  normalizeCompose(compose),
+  normalizeCompose(fixtureCompose()),
+  'compose() campus a divergé d’a9e8f52 (après retrait des commentaires et du contrat __campusLayout). Ne pas modifier le gabarit campus.',
+);
+assert.equal(normalizeCompose(extractComposeFn(src, 'compose')), normalizeCompose(compose));
 
 assert.match(compose, /const qrIn = fmt\.id === 'tabloid' \? 2\.25 : 1\.65;/);
 assert.match(compose, /const qrTop = playTop \+ Math\.round\(3680 \* fit\);/);
