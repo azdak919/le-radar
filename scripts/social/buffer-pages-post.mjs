@@ -9,12 +9,12 @@ import path from 'node:path';
 import { parseFeed, markImages, QUEUE_MAX, refreshPhotoLine, stripUtm } from './lib.mjs';
 import { createRequire } from 'node:module';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
-import { resolveImage, publicMedia, isMediaRefusal } from './image-resolve.mjs';
+import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
-const { jpegNeedsFacebookSanitize, facebookRelayUrl } = createRequire(import.meta.url)('../jpeg-facebook-safe.js');
+const { jpegNeedsFacebookSanitize, facebookRelayUrl, wikimediaThumbUrl } = createRequire(import.meta.url)('../jpeg-facebook-safe.js');
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-pages-sent.json');
@@ -28,25 +28,15 @@ const networks = (process.env.PAGES || 'facebook,linkedin').split(',').map(s => 
 const issueFile = process.env.PAGES_ISSUE_FILE || '';
 const fixedIds = { facebook: process.env.BUFFER_FACEBOOK_CHANNEL_ID, linkedin: process.env.BUFFER_LINKEDIN_CHANNEL_ID };
 
-/** Facebook refuse les JPEG Canva (ICC + XMP). On lui donne un JPEG ré-encodé. */
+/** Image vérifiée pour ce réseau au moment de l'ajout (publique, poids/pixels admis ; Facebook : JPEG sans ICC/XMP).
+ * Facebook refuse les JPEG Canva (ICC + XMP) ; le relais wsrv.nl répond 404 pour Wikimedia (429 en amont) :
+ * on essaie d'abord la vignette Wikimedia, puis le relais, et l'on vérifie chaque URL avant de la confier à Buffer. */
 async function imageUrlForNetwork(service, url) {
-  if (service !== 'facebook' || !url) return url;
-  try {
-    const res = await fetch(url, {
-      redirect: 'follow',
-      headers: { 'user-agent': 'Mozilla/5.0 (compatible; LeRadarBot/1.0; +https://le-radar.ca)' },
-      signal: AbortSignal.timeout(20000),
-    });
-    if (!res.ok) return url;
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (!jpegNeedsFacebookSanitize(buf)) return url;
-    const relay = facebookRelayUrl(url);
-    console.log(`Image JPEG refusée par Facebook (métadonnées), relais : ${relay}`);
-    return relay;
-  } catch (e) {
-    console.log(`::warning::lecture image Facebook ${url} : ${e.message}`);
-    return url;
-  }
+  const isFb = service === 'facebook';
+  const r = await mediaForNetwork(url, service, { thumb: wikimediaThumbUrl, relay: isFb ? facebookRelayUrl : () => '',
+    check: isFb ? (buf) => !(buf[0] === 0xff && buf[1] === 0xd8 && jpegNeedsFacebookSanitize(buf)) : null });
+  if (r && r.url !== url) console.log(`Image remplacée pour ${service} : ${r.url} (${Math.round(r.bytes / 1024)} Ko, ${r.width}×${r.height})`);
+  return r ? r.url : null;
 }
 
 const xml = feedArg ? fs.readFileSync(feedArg, 'utf8')
@@ -101,8 +91,8 @@ for (const net of networks) {
     const it = sel[i], dueAt = dues[i];
     const im = await resolveImage(it, { used, repeated });
     if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
-    if (!await publicMedia(im.url)) { console.log(`::warning::Image inaccessible ou trop lourde, non ajoutée à Buffer : ${im.url} (${it.id})`); continue; }
     const imageUrl = await imageUrlForNetwork(cfg.service, im.url);
+    if (!imageUrl) { console.log(`::warning::${net} : image inaccessible, trop lourde ou refusée par la plateforme, article sauté : ${im.url} (${it.id})`); continue; }
     await withHook(it);
     const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
     if (/tison/i.test(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
@@ -110,7 +100,7 @@ for (const net of networks) {
     if (dry) continue;
     try {
       const post = await ch.add({ text, image: imageUrl, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service) });
-      sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt, ...(shareUrl ? { shareNow: true, link: post.externalLink || null } : {}) };
+      sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt, image: imageUrl, ...(shareUrl ? { shareNow: true, link: post.externalLink || null } : {}) };
       save();
       console.log(`→ Buffer ${net} : ${post.id} (${post.dueAt || dueAt})`);
     } catch (e) {

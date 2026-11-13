@@ -29,9 +29,9 @@ assert.ok(isMediaRefusal(new Error('Please update the media URL to be publicly a
 assert.ok(!isMediaRefusal(new Error('Buffer API 500')));
 const bufPost = readFileSync(new URL('../scripts/social/buffer-post.mjs', import.meta.url), 'utf8');
 const bufPages = readFileSync(new URL('../scripts/social/buffer-pages-post.mjs', import.meta.url), 'utf8');
-assert.match(bufPost, /publicMedia\(im\.url\)/);
+assert.match(bufPost, /mediaForNetwork\(im\.url, 'x'/); // vérifie l'URL publique, le poids et les pixels avant Buffer
 assert.match(bufPost, /isMediaRefusal/);
-assert.match(bufPages, /publicMedia\(im\.url\)/);
+assert.match(bufPages, /imageUrlForNetwork\(cfg\.service, im\.url\)/); assert.match(bufPages, /mediaForNetwork\(url, service/);
 assert.match(bufPages, /isMediaRefusal/);
 assert.equal(typeof publicMedia, 'function');
 console.log('social-site-image OK');

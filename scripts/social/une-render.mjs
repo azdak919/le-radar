@@ -20,8 +20,8 @@ function startServer(port) {
 export function pageModel(model) {
   return {
     slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()) },
-    sports: model.sports || [], radio: model.radio || [],
-    items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, place: x.place || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
+    sports: model.sports || { results: [], next: [] }, radio: model.radio || [],
+    items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, place: x.place || '', placeColor: x.placeColor || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
   };
 }
 

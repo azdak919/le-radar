@@ -3,6 +3,7 @@
  */
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
 
 const require = createRequire(import.meta.url);
 const {
@@ -69,4 +70,20 @@ const relay = facebookRelayUrl('https://le-radar.ca/assets/news-images/86d6a5813
 assert.match(relay, /^https:\/\/wsrv\.nl\/\?url=/);
 assert.match(relay, /output=jpg/);
 
+// Wikimedia limite wsrv.nl (429 → relais 404, échec Facebook du 9 nov. 2026) : vignette standard de Wikimedia.
+{
+  const { wikimediaThumbUrl } = require('../scripts/jpeg-facebook-safe.js');
+  assert.equal(wikimediaThumbUrl('https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG'), 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Henry_F._Hall_Building_07.JPG/1280px-Henry_F._Hall_Building_07.JPG');
+  assert.equal(wikimediaThumbUrl('https://le-radar.ca/assets/news-images/a.jpg'), '');
+  assert.equal(wikimediaThumbUrl('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/X.jpg/1280px-X.jpg'), '');
+}
+{
+  const { withinLimits, MEDIA_LIMITS } = await import('../scripts/social/image-resolve.mjs');
+  assert.equal(withinLimits({ bytes: 2067649, w: 5152, h: 3864 }, 'linkedin'), true, '19,9 Mpx : admis');
+  assert.equal(withinLimits({ bytes: 3e6, w: 6000, h: 4000 }, 'linkedin'), false, '24 Mpx : vignette ou saut');
+  assert.equal(withinLimits({ bytes: MEDIA_LIMITS.facebook.bytes + 1, w: 1000, h: 1000 }, 'facebook'), false);
+  const bp = readFileSync('scripts/social/buffer-pages-post.mjs', 'utf8');
+  assert.match(bp, /mediaForNetwork/); assert.match(bp, /image: imageUrl/, 'image mémorisée pour la conservation miroir');
+  assert.match(readFileSync('scripts/social/buffer-post.mjs', 'utf8'), /image: im\?\.url/);
+}
 console.log('OK jpeg-facebook-safe');

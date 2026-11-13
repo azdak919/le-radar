@@ -50,10 +50,12 @@ body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-syn
 .lead > :not(.photo) { flex: none; }
 .kick { display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-size: 19px; line-height: 1.2; margin-bottom: 8px; }
 .kick .emo { font-size: 1.3em; letter-spacing: 0; line-height: 1; }
-.title { font-weight: 700; font-size: 50px; line-height: 1.1; letter-spacing: -0.01em; overflow: hidden; max-height: calc(50px * 1.12 * 3 + 6px); text-wrap: pretty; }
+.title { font-weight: 700; font-size: 50px; line-height: 1.1; letter-spacing: -0.01em; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; text-wrap: pretty; }
 .by { margin-top: 10px; font-size: 24px; line-height: 1.3; }
-.by .who { font-weight: 700; color: var(--accent); }
-.by .src { color: var(--muted); }
+.by { color: var(--muted); font-weight: 500; }
+.by .lbl { color: var(--muted); font-weight: 500; }
+.by .who { color: var(--ink); font-weight: 600; margin-inline-start: .35em; } .by .who.solo { margin: 0; }
+.by .src { color: var(--muted); font-weight: 500; }
 .hook { margin-top: 10px; font-size: 22px; line-height: 1.38; color: var(--ink-soft); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; text-wrap: pretty; }
 
 h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
@@ -68,23 +70,28 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .item .t { font-weight: 700; font-size: 26px; line-height: 1.14; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-wrap: pretty; }
 .item .by { font-size: 18px; margin-top: 4px; }
 
-/* Résultats sportifs étudiants (sports-masthead.json) : tableau de score compact. */
-.sports { flex: none; padding: 12px 24px 14px; }
-.sports h2 { padding-bottom: 10px; }
-.grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0; }
-.score { padding: 0 18px; border-left: 1px solid var(--rule); min-width: 0; }
-.score:first-child { border-left: 0; padding-left: 0; } .score:last-child { padding-right: 0; }
-.lg { display: flex; align-items: flex-start; gap: 8px; font-size: 15px; line-height: 1.25; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
-.lg .emo { font-size: 22px; line-height: 1; }
-.tm { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 22px; line-height: 1.35; color: var(--ink-soft); }
-.tm .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-.lg .lgt { font-weight: 700; color: var(--ink-soft); }
-.tm small { font-size: 16px; color: var(--muted); font-weight: 400; }
-.tm .pt { font-weight: 700; font-size: 28px; font-variant-numeric: tabular-nums lining-nums; color: var(--ink-soft); }
-.tm.win { color: var(--ink); font-weight: 700; } .tm.win .pt { color: var(--ink); }
-.when { margin-top: 4px; font-size: 14px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
-.score.next .tm { font-size: 20px; }
-
+/* Sport étudiant : « Résultats » | « Prochains matchs », rencontres compactes sur deux lignes. */
+.sports { flex: none; padding: 12px 24px 12px; }
+.sports h2 { padding-bottom: 6px; }
+.grid { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 0 22px; }
+.grid[data-cols="1"] { --cols: 1; }
+/* Une seule colonne : ses rencontres se répartissent sur toute la largeur (deux par rangée), sans vide. */
+.card:not(.paysage) .grid[data-cols="1"] .scol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 22px; align-content: start; }
+.card:not(.paysage) .grid[data-cols="1"] .scol h3 { grid-column: 1 / -1; }
+.card:not(.paysage) .grid[data-cols="1"] .scol h3 + .mt + .mt { border-top: 0; padding-top: 2px; }
+.scol { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 6px; }
+.scol + .scol { border-left: 1px solid var(--rule); padding-left: 22px; }
+.scol h3 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.mt { min-width: 0; padding-top: 6px; border-top: 1px solid var(--rule); }
+.scol h3 + .mt { border-top: 0; padding-top: 2px; }
+.mh { font-size: 14px; line-height: 1.25; color: var(--muted); font-weight: 600; white-space: nowrap; overflow: hidden; }
+.mh .emo { font-size: 15px; margin-right: 6px; } .mh .sp { color: var(--ink-soft); font-weight: 700; }
+.ml { font-size: 19px; line-height: 1.3; white-space: nowrap; overflow: hidden; color: var(--ink-soft); }
+.ml b { font-weight: 500; } .mt.next .ml b { font-weight: 600; color: var(--ink); } .ml .in { font-size: .8em; color: var(--muted); }
+.ml .tn.win b { font-weight: 700; color: var(--ink); } .ml .sc { font-variant-numeric: tabular-nums lining-nums; font-weight: 600; }
+.ml .sc.win { font-weight: 800; color: var(--ink); } .ml .dash { margin: 0 3px; color: var(--muted); }
+.ml .vb { color: var(--muted); font-weight: 400; }
+.ml.wrap, .ml.wrap .tn { white-space: normal; text-wrap: balance; }
 /* Pied (règles des affiches) : icône + « LE‑RADAR.ca » en Source Serif 4, nom complet en serif centré juste au-dessus de la ligne d'indépendance centrée. */
 .foot { position: relative; z-index: 2; flex: none; padding: 14px 40px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px; background: var(--foot); color: var(--on-foot); }
 .sombre .foot { border-top: 1px solid var(--rule); }
@@ -94,12 +101,12 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .foot .full { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; font-size: 20px; line-height: 1.25; }
 .foot .ind { font-size: 15px; line-height: 1.3; opacity: .88; }
 /* Solo (une seule nouvelle) : la carte respire. */
-.solo .title { max-height: calc(50px * 1.12 * 5 + 6px); }
+
 
 /* Story Instagram 9:16 : zones réservées à l'interface (haut ≈ 250 px, bas ≈ 250 px) couvertes par le bandeau et le pied pleins. */
 .story .mast { height: 270px; padding-top: 150px; align-items: center; }
 .story .foot { padding-bottom: 210px; }
-.story .title { font-size: 56px; max-height: calc(56px * 1.12 * 4 + 6px); }
+.story .title { font-size: 56px; }
 
 /* Paysage 16:9 (repli) : photo + une à gauche, liste et sport à droite. */
 .paysage .mast { height: 76px; padding: 0 28px; }
@@ -112,7 +119,7 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .paysage .lead { padding: 14px 20px; border-radius: 18px; }
 .paysage .photo { margin: -14px -20px 10px; border-radius: 18px 18px 0 0; }
 .paysage .kick { font-size: 14px; margin-bottom: 5px; }
-.paysage .title { font-size: 34px; max-height: calc(34px * 1.12 * 3 + 6px); }
+.paysage .title { font-size: 34px; }
 .paysage .by { font-size: 17px; margin-top: 6px; }
 .paysage .hook { font-size: 16px; margin-top: 6px; }
 .paysage h2 { font-size: 13px; }
@@ -141,12 +148,12 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 /* Radio étudiante : colonne à droite de « Aussi à la une » (comble le vide), sous la liste en paysage. */
 .sbody { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; min-height: 0; }
 .sbody:not(:has(.radio)) { grid-template-columns: minmax(0, 1fr); }
-.radio { border-left: 1px solid var(--rule); padding: 4px 0 8px 20px; display: flex; flex-direction: column; justify-content: center; gap: 12px; min-height: 0; overflow: hidden; }
+.radio { border-left: 1px solid var(--rule); padding: 0 0 4px 20px; display: flex; flex-direction: column; justify-content: flex-start; gap: 7px; min-height: 0; overflow: hidden; }
 .radio h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
-.show .st { display: flex; gap: 8px; align-items: baseline; font-weight: 700; font-size: 19px; line-height: 1.2; }
+.show .st { display: flex; gap: 8px; align-items: baseline; font-weight: 700; font-size: 18px; line-height: 1.18; }
 .show .st .emo { font-size: 18px; } .show .stt { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .show .sta { font-weight: 700; color: var(--accent); }
-.show .when { margin-top: 2px; font-size: 14px; }
+.show .when { margin-top: 1px; font-size: 14px; }
 .paysage .sbody { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 6px; flex: 1 1 auto; }
 .paysage .radio { border-left: 0; border-top: 1px solid var(--rule); padding: 6px 0 8px; gap: 5px; justify-content: flex-start; }
 .paysage .show { display: flex; align-items: baseline; gap: 8px; } .paysage .show .when { margin: 0; }
@@ -154,3 +161,10 @@ h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .paysage .show .st { font-size: 14px; } .paysage .show .st .emo { font-size: 13px; } .paysage .show .when { font-size: 11px; }
 .paysage .show .stt { -webkit-line-clamp: 1; }
 .paysage .show .when { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Paysage : trop étroit pour deux colonnes de noms complets → résultats d'abord, prochains matchs dessous (une colonne). */
+.paysage .grid { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+.paysage .scol + .scol { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 4px; }
+.paysage .scol { gap: 3px; } .paysage .scol h3 { font-size: 10px; }
+.paysage .mt { padding-top: 3px; } .paysage .mh { font-size: 11px; } .paysage .mh .emo { font-size: 11px; } .paysage .ml { font-size: 14px; line-height: 1.25; }
+.paysage .sports { padding: 8px 16px 8px; }

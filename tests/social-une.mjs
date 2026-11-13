@@ -132,11 +132,27 @@ const mh = { teams: {
   c: team({ id: 'c', sport: 'hockey', sportLabel: 'Hockey', sex: 'M', nickname: 'Carabins', institutionLabel: 'Université de Montréal', nextGames: [{ gameId: 'n1', date: '2026-11-12', time: '19:00', home: true, opponentNickname: 'Patriotes', opponentFullName: 'Université du Québec à Trois-Rivières' }] }),
 } };
 const sp = U.pickSports(mh, '2026-11-12');
-assert.equal(sp.length, 1, 'une rencontre par gameId ; ancienne et saison précédente exclues');
-assert.equal(U.sportsLine(sp[0]), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · mer. 11 nov.', 'date absolue, (F)/(H), établissement entre parenthèses');
+assert.equal(sp.results.length, 1, 'une rencontre par gameId ; ancienne et saison précédente exclues');
+assert.equal(U.sportsLine(sp.results[0]), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · mer. 11 nov.', 'date absolue, (F)/(H), établissement entre parenthèses');
 assert.doesNotMatch(JSON.stringify(sp), /aujourd|hier/);
-const nx = U.pickSports({ teams: { c: mh.teams.c } }, '2026-11-12');
-assert.equal(nx[0].kind, 'avenir', 'repli : rencontres du jour'); assert.equal(U.sportsLine(nx[0]), '🏒 Hockey (H) · Patriotes (UQTR) chez Carabins (Montréal) · jeu. 12 nov. · 19 h');
+assert.equal(sp.next.length, 1, 'colonne « Prochains matchs »');
+assert.equal(U.sportsLine(sp.next[0]), '🏒 Hockey (H) · Carabins (Montréal) reçoit Patriotes (UQTR) · jeu. 12 nov. · 19 h', '« reçoit » / « visite » comme sur le site');
+assert.equal(sp.results[0].teams[0].color, '#912338', 'couleur de l’établissement (brand-colors.json)');
+// Cas limites : sans résultats, sans prochains matchs, couleur inconnue, noms anglais.
+const onlyNext = U.pickSports({ teams: { c: mh.teams.c } }, '2026-11-12');
+assert.deepEqual([onlyNext.results.length, onlyNext.next.length], [0, 1], 'sans résultats : seule la colonne à venir');
+const away = U.pickSports({ teams: { c: { ...mh.teams.c, nextGames: [{ ...mh.teams.c.nextGames[0], home: false }] } } }, '2026-11-12');
+assert.equal(away.next[0].verb, 'visite');
+const onlyRes = U.pickSports({ teams: { a: mh.teams.a } }, '2026-11-12');
+assert.deepEqual([onlyRes.results.length, onlyRes.next.length], [1, 0], 'sans prochains matchs : seule la colonne résultats');
+assert.equal(U.pickSports({ teams: { c: mh.teams.c } }, '2026-11-12', { afterToday: true }).next.length, 0, 'soir : rien du jour même');
+assert.equal(U.institutionColor('Cégep imaginaire'), '', 'couleur inconnue : repli sur l’accent');
+assert.equal(U.institutionColor('Concordia'), '#912338'); assert.equal(U.institutionColor('UQTR'), '#00CB88'); assert.equal(U.institutionColor('Bishop’s'), U.institutionColor("Bishop's University"));
+assert.equal(U.teamLabelFor('REDS', 'University of New Brunswick — campus Fredericton').inst, 'UNB, Fredericton', 'plus de « of New Brunswick »');
+assert.doesNotMatch(U.teamLabelFor('Blues', 'Dawson College').inst, /College/, 'pas de « College » anglais');
+assert.doesNotMatch(JSON.stringify(U.teamLabelFor('Gaiters', "Bishop's University")), /'/, 'apostrophe typographique');
+const many = { teams: Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`t${i}`, team({ id: `t${i}`, nickname: `Équipe${i}`, institutionLabel: 'Université Laval', results: [{ gameId: `r${i}`, date: '2026-11-11', scoreFor: i + 1, scoreAgainst: 0, opponentNickname: 'Autre', opponentFullName: 'Université McGill' }] })])) };
+assert.ok(U.pickSports(many, '2026-11-12').results.length <= 6, 'plafond de 6 résultats');
 assert.equal(U.teamLabelFor('Couguars', 'Cégep de Chicoutimi — équipe Blanc').inst, 'Chicoutimi, équipe Blanc', 'deux équipes du même cégep distinguées');
 // ── Radio étudiante : à venir, tirage reproductible, une par station ──
 const rs = { stations: { a: { name: 'CHYZ 94,3', grid: [{ day: 5, start: '11:00', title: 'Punk-o-rama' }, { day: 5, start: '02:00', title: 'Nuit' }, { day: 4, start: '20:00', title: 'Jeudi soir' }] }, b: { name: 'CISM 89,3', grid: [{ day: 5, start: '15:00', title: 'Le Séismix' }, { day: 5, start: '16:00', title: 'Club classique (reprise)' }] } } };
@@ -146,8 +162,10 @@ assert.deepEqual(rr.map(U.radioLine), ['📻 Punk-o-rama · CHYZ 94,3 · ven. 13
 assert.deepEqual(U.pickRadio(rs, soirSlot), rr, 'reproductible');
 assert.deepEqual(U.pickRadio(rs, matinSlot).map(x => x.title), ['Jeudi soir'], 'matin : émissions du jour à venir');
 assert.deepEqual(U.pickRadio(null, soirSlot), [], 'sans grille : rien');
-assert.deepEqual(U.pickSports({ teams: {} }, '2026-11-12'), [], 'sans donnée récente : rien');
-assert.deepEqual(U.pickSports(null, '2026-11-12'), []);
+assert.deepEqual(U.pickSports({ teams: {} }, '2026-11-12'), { results: [], next: [] }, 'sans donnée récente : rien');
+assert.deepEqual(U.pickSports(null, '2026-11-12'), { results: [], next: [] });
+const txt0 = U.buildUneText({ slot: sSlot, items: m.items, sports: { results: [], next: [] }, radio: [] }, 'mastodon');
+assert.doesNotMatch(txt0, /Sport étudiant|radio/i, 'sans sport ni radio : aucune rubrique vide');
 // ── Typographie française de l'image ──
 assert.equal(U.frTypo("Les jeunes cyniques ? Plutôt idéalistes ! L'écho"), 'Les jeunes cyniques\u202F? Plutôt idéalistes\u202F! L’écho');
 assert.equal(U.frTypo('Il a dit "oui"'), 'Il a dit «\u202Foui\u202F»');
