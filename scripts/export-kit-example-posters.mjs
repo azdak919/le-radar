@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * Exporte des aperçus d’affiches (campus + sa photo) pour la galerie du kit.
- * Les photos viennent du cache labo local — pas de Wikimedia au runtime du kit.
+ * Exporte chaque exemple du kit (campus et La une) : fichier téléchargeable
+ * (PDF 600 dpi ou PNG écran) et aperçu JPEG issu du même rendu.
+ * Les photos campus viennent du cache labo local quand il est présent.
  */
 import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import { writeStamp } from './kit-poster-stamp.mjs';
@@ -20,6 +22,15 @@ const catalog = JSON.parse(readFileSync(join(outDir, 'examples.json'), 'utf8'));
 const PORT = Number(process.env.PW_PORT || 4189);
 const BASE = `http://127.0.0.1:${PORT}`;
 const force = process.argv.includes('--force');
+const only = process.argv.find((a) => a.startsWith('--only='))?.slice(7);
+
+const PREVIEW = {
+  tabloid: [660, 1020],
+  letter: [660, 854],
+  legal: [660, 1087],
+  'ecran-paysage': [960, 540],
+  'ecran-portrait': [540, 960],
+};
 
 function startServer() {
   return new Promise((resolve, reject) => {
@@ -90,7 +101,6 @@ async function attachLocalPhotos(page) {
     const file = cachedPath(route.request().url(), map);
     if (!file) {
       const url = route.request().url();
-      // Vignettes de la grille du studio : inutiles pour l’aperçu, et très lentes hors cache.
       if (/[?&]width=\d+/.test(url) && !/[?&]width=(1400|2048|2560)\b/.test(url)) {
         await route.abort();
         return;
@@ -108,92 +118,109 @@ async function attachLocalPhotos(page) {
   });
 }
 
-async function pickPhoto(page, hint) {
-  await page.locator('#photo-grid label').first().waitFor({ timeout: 15000 });
-  if (!hint) {
-    await page.locator('#photo-grid label').first().click();
-    return;
+function composeQuery(ex) {
+  const q = new URLSearchParams();
+  if ((ex.kind || 'campus') === 'une') {
+    q.set('modele', 'une');
+    if (ex.uni) q.set('uni', ex.uni);
+    if (ex.media && ex.media !== 'tous') q.set('media', ex.media);
+    if (ex.periode) q.set('periode', ex.periode);
+    if (ex.layout) q.set('layout', ex.layout);
+  } else {
+    q.set('modele', 'campus');
+    q.set('campus', ex.campus);
+    if (ex.photo) q.set('photo', ex.photo);
+    q.set('greeting', ex.greeting || 'none');
   }
-  const more = page.locator('#photo-more');
-  if (await more.isVisible()) {
-    const t = (await more.textContent()) || '';
-    if (/plus/i.test(t)) await more.click();
-  }
-  await page.waitForTimeout(400);
-  const labels = page.locator('#photo-grid label');
-  const n = await labels.count();
-  const needle = hint.toLowerCase();
-  for (let i = 0; i < n; i += 1) {
-    const title = ((await labels.nth(i).getAttribute('title')) || '').toLowerCase();
-    if (title.includes('fond radar')) continue;
-    if (title.includes(needle)) {
-      await labels.nth(i).click();
-      console.log('  photo', title.slice(0, 80));
-      return;
-    }
-  }
-  for (let i = 0; i < n; i += 1) {
-    const title = ((await labels.nth(i).getAttribute('title')) || '').toLowerCase();
-    if (!title.includes('fond radar')) {
-      await labels.nth(i).click();
-      console.warn('  repli photo (hint manquant):', hint, '→', title);
-      return;
-    }
-  }
+  q.set('format', ex.format || 'tabloid');
+  q.set('lang', ex.lang || 'standard');
+  q.set('qr', ex.qr === false ? 'non' : 'oui');
+  q.set('dpi', '600');
+  return q;
 }
 
-async function capture(page, dest) {
-  await page.waitForFunction(() => document.body?.dataset?.campusLayout === 'a9e8f52', { timeout: 20000 });
-  await page.waitForFunction(() => document.getElementById('preview')?.dataset.state === 'pret', { timeout: 20000 }).catch(() => {});
-  // Attendre la photo : sinon l’aperçu sort sans fond (course observée sur Laval).
-  await page.waitForLoadState('networkidle').catch(() => {});
-  await page.waitForTimeout(400);
-  const data = await page.locator('#preview canvas').evaluate((c) => {
-    // Aperçu net (2×) pour la galerie du kit : 660 × 1020 px.
-    const o = document.createElement('canvas');
-    o.width = 660;
-    o.height = 1020;
-    const g = o.getContext('2d');
-    g.imageSmoothingQuality = 'high';
-    g.drawImage(c, 0, 0, o.width, o.height);
-    return o.toDataURL('image/jpeg', 0.84);
+function isScreen(ex) {
+  return ex.format === 'ecran-paysage' || ex.format === 'ecran-portrait';
+}
+
+function dests(ex) {
+  return {
+    preview: join(outDir, `affiche-ex-${ex.id}-preview.jpg`),
+    file: isScreen(ex)
+      ? join(outDir, `affiche-ex-${ex.id}.png`)
+      : join(outDir, `affiche-ex-${ex.id}-600dpi.pdf`),
+  };
+}
+
+function deriveFiles(srcPath, ex) {
+  const [pw, ph] = PREVIEW[ex.format] || PREVIEW.tabloid;
+  const { preview, file } = dests(ex);
+  const screen = isScreen(ex);
+  const code = `
+from PIL import Image
+from pathlib import Path
+src = Path(${JSON.stringify(srcPath)})
+im = Image.open(src).convert('RGB')
+pw, ph = ${pw}, ${ph}
+if ${screen ? 'True' : 'False'}:
+    Path(${JSON.stringify(file)}).write_bytes(src.read_bytes())
+else:
+    im.save(${JSON.stringify(file)}, 'PDF', resolution=600)
+prev = im.copy()
+prev.thumbnail((pw, ph), Image.LANCZOS)
+out = Image.new('RGB', (pw, ph), (14, 15, 18) if sum(prev.getpixel((0, 0))[:3]) < 80 else (255, 255, 255))
+out.paste(prev, ((pw - prev.width) // 2, (ph - prev.height) // 2))
+out.save(${JSON.stringify(preview)}, quality=86)
+print('wrote', ${JSON.stringify(preview)})
+`;
+  return new Promise((resolve, reject) => {
+    const child = spawn('python3', ['-c', code], { stdio: ['ignore', 'pipe', 'pipe'] });
+    let err = '';
+    child.stderr.on('data', (b) => { err += b; });
+    child.on('exit', (code) => {
+      if (code === 0) resolve({ preview, file });
+      else reject(new Error(err || `python exit ${code}`));
+    });
   });
-  const buf = Buffer.from(data.split(',')[1], 'base64');
-  writeFileSync(dest, buf);
 }
 
 async function main() {
+  mkdirSync(outDir, { recursive: true });
   const server = await startServer();
-  const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
+  const launch = process.env.CHROME_PATH
+    ? { executablePath: process.env.CHROME_PATH, args: ['--no-sandbox', '--disable-dev-shm-usage'] }
+    : {};
+  const browser = await chromium.launch(launch);
+  const tmp = join(tmpdir(), 'kit-gallery-export');
+  mkdirSync(tmp, { recursive: true });
   try {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, acceptDownloads: true });
     await attachLocalPhotos(page);
-    for (const ex of catalog.examples) {
-      const dest = join(outDir, `affiche-ex-${ex.id}-preview.jpg`);
-      if (existsSync(dest) && !force) {
+    const examples = catalog.examples.filter((ex) => !only || ex.id === only || ex.kind === only);
+    for (const ex of examples) {
+      const out = dests(ex);
+      if (!force && existsSync(out.preview) && existsSync(out.file)) {
         console.log('skip', ex.id);
         continue;
       }
-      const q = new URLSearchParams({
-        campus: ex.campus,
-        qr: ex.qr ? 'oui' : 'non',
-        greeting: ex.greeting || 'none',
-        lang: ex.lang || 'standard',
-        format: 'tabloid',
-      });
-      if (ex.photo) q.set('photo', ex.photo);
-      await page.goto(`${BASE}/affiches/?${q}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
-      await page.locator('#preview canvas').waitFor({ timeout: 20000 });
-      await page.evaluate(() => document.fonts.ready);
-      const layout = await page.evaluate(() => document.body?.dataset?.campusLayout || '');
-      if (layout !== 'a9e8f52') {
-        throw new Error(`${ex.id} : gabarit campus inattendu (${layout || 'vide'}), pas a9e8f52`);
+      const url = `${BASE}/affiches/?${composeQuery(ex)}`;
+      console.log('→', ex.id, url);
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      await page.locator('#preview').waitFor({ timeout: 30000 });
+      if ((ex.kind || 'campus') !== 'une') {
+        await page.waitForFunction(() => document.body?.dataset?.campusLayout === 'a9e8f52', { timeout: 20000 });
       }
-      // L’URL règle déjà campus / photo / langue / salutation / QR ; la grille reste un repli.
-      const hasPhoto = await page.evaluate(() => Boolean(document.querySelector('#preview canvas')?.width));
-      if (!hasPhoto) await pickPhoto(page, ex.photo);
-      await capture(page, dest);
-      console.log('OK', ex.id);
+      await page.waitForFunction(() => document.getElementById('preview')?.dataset.state === 'pret', { timeout: 90000 });
+      await page.evaluate(() => document.fonts.ready);
+      const [download] = await Promise.all([
+        page.waitForEvent('download', { timeout: 180000 }),
+        page.locator('#dl-jpg').click(),
+      ]);
+      const suggested = download.suggestedFilename() || `${ex.id}.bin`;
+      const srcPath = join(tmp, `${ex.id}-${suggested}`);
+      await download.saveAs(srcPath);
+      const written = await deriveFiles(srcPath, ex);
+      console.log('OK', ex.id, '→', written.file);
     }
   } finally {
     await browser.close();
@@ -201,7 +228,10 @@ async function main() {
   }
 }
 
-main().then(() => writeStamp(root)).catch((err) => {
+main().then(() => {
+  const stamp = writeStamp(root);
+  console.log('stamp', stamp.fingerprint);
+}).catch((err) => {
   console.error(err);
   process.exit(1);
 });

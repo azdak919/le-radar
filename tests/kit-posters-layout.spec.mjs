@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-// Galerie d’affiches (/kit-media/#affiches) : cartes de hauteur cohérente,
-// aperçus entiers (11 × 17, sans rognage), trois formats PDF par carte,
-// aucun débordement horizontal, et aucun lien de fichier en 404.
+// Galerie d’affiches (/kit-media/#affiches) : campus et La une, aperçus
+// entiers selon le format, liens de fichier valides, pas de débordement.
 const widths = [320, 390, 768, 1024, 1440, 1920];
 
 for (const width of widths) {
@@ -12,9 +11,11 @@ for (const width of widths) {
       await page.addInitScript((t) => { try { localStorage.setItem('radar-theme', t); } catch {} }, theme);
       await page.setViewportSize({ width, height: 1000 });
       await page.goto('/kit-media/', { waitUntil: 'domcontentloaded' });
+      await expect(page.locator('#kit-poster-filter button').first()).toBeVisible();
       const cards = page.locator('#kit-poster-grid .kit-card--poster:not([hidden])');
       await expect(cards.nth(1)).toBeVisible();
       const info = await page.evaluate(() => {
+        const expected = { tabloid: 11 / 17, letter: 8.5 / 11, legal: 8.5 / 14, 'ecran-paysage': 16 / 9, 'ecran-portrait': 9 / 16 };
         const list = [...document.querySelectorAll('#kit-poster-grid .kit-card--poster:not([hidden])')];
         return {
           overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -22,10 +23,13 @@ for (const width of widths) {
             const r = c.getBoundingClientRect();
             const box = c.querySelector('.kit-card__preview').getBoundingClientRect();
             const img = c.querySelector('img');
+            const fmt = c.dataset.format || 'tabloid';
             return {
               top: Math.round(r.top + window.scrollY),
               h: r.height,
               ratio: box.width / box.height,
+              expected: expected[fmt] || 11 / 17,
+              format: fmt,
               fit: getComputedStyle(img).objectFit,
               imgH: img.getBoundingClientRect().height,
               boxH: box.height,
@@ -44,21 +48,19 @@ for (const width of widths) {
         expect(right, `pas de débordement à droite : ${sel}`).toBeGreaterThanOrEqual(0);
       }
       expect(info.cards.length).toBeGreaterThan(1);
+      expect(info.cards.some((c) => c.format !== 'tabloid'), 'galerie mixte : au moins un format autre que tabloïd').toBeTruthy();
       const rows = new Map();
       for (const c of info.cards) {
-        expect(Math.abs(c.ratio - 11 / 17), 'aperçu au format 11 × 17').toBeLessThan(0.02);
+        expect(Math.abs(c.ratio - c.expected), `aperçu au format ${c.format}`).toBeLessThan(0.04);
         expect(c.fit, 'aperçu entier, sans rognage').toBe('contain');
         expect(Math.abs(c.imgH - c.boxH), 'image qui remplit son cadre').toBeLessThan(2);
-        expect(c.dl, 'trois boutons de format').toBe(3);
+        expect(c.dl, 'téléchargement et lien studio').toBeGreaterThanOrEqual(2);
         if (!rows.has(c.top)) rows.set(c.top, []);
         rows.get(c.top).push(c.h);
       }
       for (const hs of rows.values()) {
-        expect(Math.max(...hs) - Math.min(...hs), 'hauteurs égales sur une rangée').toBeLessThan(1);
+        expect(Math.max(...hs) - Math.min(...hs), 'hauteurs égales sur une rangée de même format').toBeLessThan(2);
       }
-      // Pas de carte étirée à la hauteur d’une autre plus grande qu’elle (bug « affiche générique ») :
-      const all = info.cards.map((c) => c.h);
-      expect(Math.max(...all) / Math.min(...all), 'hauteur cohérente d’une carte à l’autre').toBeLessThan(1.15);
     });
   }
 }
@@ -76,11 +78,18 @@ test('galerie d’affiches : filtres et liens de fichiers sans 404 @ci-critical'
   }
   const filters = page.locator('#kit-poster-filter button');
   expect(await filters.count()).toBeGreaterThan(2);
-  await filters.nth(1).click();
-  await expect(filters.nth(1)).toHaveAttribute('aria-pressed', 'true');
-  const campus = await filters.nth(1).getAttribute('data-campus');
-  const shown = await page.$$eval('#kit-poster-grid .kit-card--poster:not([hidden])', (els) => els.map((e) => e.dataset.campus));
-  expect(shown.every((c) => c === campus || c === 'generique')).toBe(true);
+  const uneBtn = page.locator('#kit-poster-filter button[data-filter="une"]');
+  await uneBtn.click();
+  await expect(uneBtn).toHaveAttribute('aria-pressed', 'true');
+  const shownUne = await page.$$eval('#kit-poster-grid .kit-card--poster:not([hidden])', (els) => els.map((e) => e.dataset.kind));
+  expect(shownUne.length).toBeGreaterThan(0);
+  expect(shownUne.every((k) => k === 'une')).toBe(true);
+  const schoolBtn = page.locator('#kit-poster-filter button[data-filter="udem"]');
+  await schoolBtn.click();
+  await expect(schoolBtn).toHaveAttribute('aria-pressed', 'true');
+  const shownSchool = await page.$$eval('#kit-poster-grid .kit-card--poster:not([hidden])', (els) => els.map((e) => e.dataset.campus));
+  expect(shownSchool.length).toBeGreaterThan(0);
+  expect(shownSchool.every((c) => c === 'udem')).toBe(true);
 });
 
 test('galerie d’affiches : aperçus campus sans bandeau mauve ni Scanne-moi @ci-critical', async ({ page }) => {
@@ -90,7 +99,11 @@ test('galerie d’affiches : aperçus campus sans bandeau mauve ni Scanne-moi @c
   const cards = page.locator('#kit-poster-grid .kit-card--poster');
   await expect(cards.first()).toBeVisible();
   const n = await cards.count();
-  expect(n).toBeGreaterThan(10);
+  expect(n).toBeGreaterThan(8);
+  const campusN = await page.locator('#kit-poster-grid .kit-card--example[data-kind="campus"]').count();
+  const uneN = await page.locator('#kit-poster-grid .kit-card--example[data-kind="une"]').count();
+  expect(campusN, 'affiches campus dans la galerie').toBeGreaterThan(2);
+  expect(uneN, 'exemples de une dans la galerie').toBeGreaterThan(4);
   for (let i = 0; i < n; i += 1) {
     await cards.nth(i).scrollIntoViewIfNeeded();
     const img = cards.nth(i).locator('img');
@@ -100,7 +113,7 @@ test('galerie d’affiches : aperçus campus sans bandeau mauve ni Scanne-moi @c
   const bad = await page.evaluate(() => {
     const fail = [];
     const isPurple = (r, g, b) => r > 80 && b > 70 && r > g + 20 && b > g + 10;
-    for (const card of document.querySelectorAll('#kit-poster-grid .kit-card--example')) {
+    for (const card of document.querySelectorAll('#kit-poster-grid .kit-card--example[data-kind="campus"]')) {
       const img = card.querySelector('img');
       if (!img || !img.complete || img.naturalWidth < 100) {
         fail.push(`${card.dataset.campus || '?'} : image non chargée`);

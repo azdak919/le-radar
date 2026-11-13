@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../style-feed.css" />
     <link rel="stylesheet" href="../../style-chrome.css" />
     <link rel="stylesheet" href="../../seo-pages.css" />
-    <link rel="stylesheet" href="../../kit-media.css?v=une-2" />
+    <link rel="stylesheet" href="../../kit-media.css?v=kit-2" />
     <script src="../../seo-page-theme.js"></script>
     <script src="../../native-tuner.js" defer></script>
   </head>
@@ -32,16 +32,25 @@
         <span aria-current="page">Posters &amp; visual identity</span>
       </nav>
       <header class="kit-head">
-        <p class="kit-eyebrow">Ready to share</p>
+        <p class="kit-eyebrow">Kit for student media</p>
         <h1 class="kit-title">Posters &amp; visual identity</h1>
-        <p class="kit-lead">Download a ready-to-publish visual to talk about us.</p>
+        <p class="kit-lead">For student media directors (newspapers, radio, web) and campus communications teams: a Radar front page built with your articles, ready-to-post campus posters, and a downloadable brand kit.</p>
       </header>
       <p><a href="../../kit-media/">Version française</a></p>
       <section class="kit-section" id="poster">
         <h2>Posters</h2>
-        <p>For campus bulletin boards. Make your own, or download the default poster.</p>
+        <p>A newspaper front page composed live from real student-media stories, campus sports results and upcoming radio shows — or a campus poster ready for the boards. Nothing is invented: if a paper ran few stories that week, the poster uses what exists.</p>
+        <figure class="kit-example">
+          <a href="../../assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-600dpi.pdf?v=mix-1" aria-label="Download the Quartier Libre front-page example as a PDF">
+            <img src="../../assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-preview.jpg?v=mix-1" width="660" height="854" alt="Quartier Libre front page, Université de Montréal, letter size, last week of November 2026">
+          </a>
+          <figcaption>Example — <strong>Quartier Libre</strong> front page (Université de Montréal), letter, last week, light paper background. November 2026. The thumbnail is the downloadable PDF, scaled down.</figcaption>
+        </figure>
         <p class="kit-cta"><a class="kit-cta__btn" href="../../affiches/">Compose a poster</a></p>
-        <p class="kit-campus-lead">Pick a campus:</p>
+        <p class="kit-campus-lead" id="kit-filter-lead">Filter by type or by institution:</p>
+        <div class="kit-filter" id="kit-poster-filter" role="group" aria-labelledby="kit-filter-lead" hidden></div>
+        <p class="kit-filter__count" id="kit-poster-count" aria-live="polite"></p>
+        <p class="kit-campus-lead">Or open the studio for a campus:</p>
         <nav class="kit-campus" aria-label="Campuses">
           <a href="../../affiches/?campus=laval">Université Laval</a>
           <a href="../../affiches/?campus=mcgill">Université McGill</a>
@@ -63,7 +72,7 @@
           <a href="../../affiches/?campus=hec">HEC Montréal</a>
         </nav>
         <div class="kit-grid kit-grid--poster" id="kit-poster-grid" data-asset-base="../../assets/kit/affiches/" data-compose="../../affiches/">
-          <article class="kit-card kit-card--feature">
+          <article class="kit-card kit-card--feature" data-campus="generique">
             <div class="kit-card__preview kit-card__preview--photo">
               <img src="../../assets/kit/affiches/affiche-generique-preview.jpg?v=a9e8f52-2" width="330" height="510" alt="Default LE-RADAR.ca poster">
             </div>
@@ -235,6 +244,6 @@
         </div>
       </footer>
       <!-- RADAR:FOOTER:END -->
-    <script src="../../kit-media/kit-poster-examples.js?v=galerie-4" defer></script>
+    <script src="../../kit-media/kit-poster-examples.js?v=mix-1" defer></script>
   </body>
 </html>
