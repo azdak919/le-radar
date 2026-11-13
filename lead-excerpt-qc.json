@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-13T16:27:23.211Z",
+  "updated": "2026-11-13T17:07:36.129Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 32,
+  "incomplete": 33,
   "withLeadExcerpt": 143,
-  "candidates": 32,
-  "enriched": 0,
+  "candidates": 33,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -26,6 +26,15 @@
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": true
     },
     {
       "title": "Les jeunes cyniques ? Plutôt idéalistes !",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 418,
       "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
-      "changed": false
-    },
-    {
-      "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
-      "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
-      "ok": true,
-      "score": 100,
-      "chars": 950,
-      "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
       "changed": false
     }
   ]
