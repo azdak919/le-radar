@@ -14,16 +14,15 @@ permissions:
   contents: write
 
 concurrency:
-  group: kit-media-examples
+  # Un seul écrivain à la fois par famille de fichiers (file FIFO) ; carte dans scripts/data-writer-groups.json.
+  group: data-writers-site
   cancel-in-progress: false
+  queue: max
 
 jobs:
   export:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
-    concurrency:
-      group: data-writers-site
-      cancel-in-progress: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
