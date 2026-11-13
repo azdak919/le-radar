@@ -1679,15 +1679,6 @@
       "via": "origin",
       "nameKey": "respirer_dsf7286web_stephanebourgeois.jpg"
     },
-    "9399e5062e1c9deb": {
-      "local": "assets/news-images/9399e5062e1c9deb.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 84631,
-      "updatedAt": "2026-11-13T00:08:21.672Z",
-      "via": "disk",
-      "nameKey": "lacrymobastien-1.png"
-    },
     "a15228aadfa9426a": {
       "local": "assets/news-images/a15228aadfa9426a.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/P1055409.jpeg",
@@ -1697,9 +1688,18 @@
       "updatedAt": "2026-11-13T00:08:23.703Z",
       "via": "resize-proxy",
       "nameKey": "p1055409.jpeg"
+    },
+    "9399e5062e1c9deb": {
+      "local": "assets/news-images/9399e5062e1c9deb.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 84631,
+      "updatedAt": "2026-11-13T02:09:15.596Z",
+      "via": "disk",
+      "nameKey": "lacrymobastien-1.png"
     }
   },
-  "updatedAt": "2026-11-13T00:08:23.707Z",
+  "updatedAt": "2026-11-13T04:08:17.082Z",
   "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
