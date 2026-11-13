@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-13T02:46:00.449Z",
+  "updatedAt": "2026-11-13T03:36:28.240Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Crooch Control",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/crooch-control/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Crooch Control",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T02:45:44.658Z"
+      "checkedAt": "2026-11-13T03:36:13.588Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T02:45:46.760Z"
+      "checkedAt": "2026-11-13T03:36:15.823Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T02:45:49.855Z"
+      "checkedAt": "2026-11-13T03:36:18.704Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The 514",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-514"
-      },
-      "next": {
         "title": "How Did We Get Here?",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/how-did-we-get-here"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "The 514",
+      "showTitle": "How Did We Get Here?",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T02:45:52.180Z"
+      "checkedAt": "2026-11-13T03:36:20.961Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,18 +122,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T02:45:53.865Z"
+      "checkedAt": "2026-11-13T03:36:22.150Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le grand maître des jeux",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "schedule",
@@ -148,16 +135,16 @@
         "end": "12:30",
         "url": "https://www.choq.ca/balados/box-sophisme"
       },
-      "track": "sequence — 482",
-      "showTitle": "Le grand maître des jeux",
+      "track": "Dawn Richard — only fans",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T02:46:00.099Z"
+      "checkedAt": "2026-11-13T03:36:27.889Z"
     }
   }
 }
