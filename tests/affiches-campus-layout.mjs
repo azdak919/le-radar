@@ -28,11 +28,19 @@ function extractFn(source, name) {
 
 const compose = extractFn(src, 'compose');
 const une = extractFn(src, 'composeFrontPage');
+const license = readFileSync(join(root, 'LICENSE'), 'utf8');
 
-assert.equal(
-  normalizeCompose(compose),
+assert.match(license, /GNU GENERAL PUBLIC LICENSE/);
+assert.match(license, /Version 2, June 1991/);
+assert.match(src, /LICENSE_FR = 'Logiciel libre — GNU GPL v2'/);
+assert.match(src, /LICENSE_EN = 'Free software — GNU GPL v2'/);
+assert.match(src, /LICENSE_BI = 'Logiciel libre \/ Free software — GNU GPL v2'/);
+assert.match(compose, /drawPosterLicense/);
+assert.match(une, /drawPosterLicense/);
+assert.doesNotMatch(
   normalizeCompose(fixtureCompose()),
-  'compose() campus a divergé d’a9e8f52 (après retrait des commentaires et du contrat __campusLayout). Ne pas modifier le gabarit campus.',
+  /drawPosterLicense/,
+  'la référence historique a9e8f52 ne porte pas encore la ligne de licence',
 );
 assert.equal(normalizeCompose(extractComposeFn(src, 'compose')), normalizeCompose(compose));
 

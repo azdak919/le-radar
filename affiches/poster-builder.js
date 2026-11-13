@@ -25,6 +25,34 @@ const SLOGAN_EN = 'Student newspapers, radio and sports from Quebec, all in one 
 const INDEP_1 = 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.';
 const INDEP_2 = 'Les contenus appartiennent à leurs publications d’origine.';
 const INDEP_EN = 'Independent, unofficial and not affiliated. Content belongs to the original publications.';
+/* Licence du dépôt (LICENSE : GNU GPL v2). Le contenu des médias reste à leurs auteurs (INDEP_2). */
+const LICENSE_FR = 'Logiciel libre — GNU GPL v2';
+const LICENSE_EN = 'Free software — GNU GPL v2';
+const LICENSE_BI = 'Logiciel libre / Free software — GNU GPL v2';
+
+function posterLicenseText(kind) {
+  if (kind === 'en') return LICENSE_EN;
+  if (kind === 'bilingue') return LICENSE_BI;
+  return LICENSE_FR;
+}
+
+function licenseFont(size) {
+  return `400 ${size}px "LR Serif", "Source Serif 4", serif`;
+}
+
+function drawPosterLicense(ctx, { text, x, y, maxW, size, color }) {
+  ctx.font = licenseFont(size);
+  ctx.fillStyle = color;
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'center';
+  const line = typeof fitOne === 'function'
+    ? fitOne(text, (z) => licenseFont(z), size, maxW)
+    : text;
+  ctx.fillText(line, x, y);
+  ctx.textAlign = 'left';
+  const m = ctx.measureText(line);
+  return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
+}
 
 const INK = '#F1F2F4';
 const SOFT = '#C2C6CD';
@@ -1439,8 +1467,10 @@ function composeFrontPage(ctx, w, h, opts) {
     ? measureLangsFooter(ctx, { maxW: contentW, size: fLang, iconS, lineGap: 4, iconGap: 6 })
     : { height: 0, lines: [] };
   const creditS = credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
+  const licSize = Math.max(8, px(0.8));
+  const licLineH = Math.round(licSize * 1.25);
   const footPad = px(0.9);
-  const footH = footPad + nameLineH + legalLines.length * legalLineH + (langsMetrics.height ? px(0.6) + langsMetrics.height : 0) + creditS + footPad;
+  const footH = footPad + nameLineH + legalLines.length * legalLineH + (langsMetrics.height ? px(0.6) + langsMetrics.height : 0) + creditS + licLineH + px(0.15) + footPad;
   /* Marge sûre d’impression : le pied reste à au moins 0,25 po du bord bas (zone non imprimable). */
   const safeIn = plan.screen ? px(1.2) : Math.max(px(1.2), Math.round((w / fmtSpec.wIn) * 0.25));
   const footY = h - safeIn - footH;
@@ -2131,7 +2161,17 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.textAlign = 'center';
     ctx.fillText(fitOne(String(credit).replace(/\s+/g, ' ').trim(), (z) => `400 ${z}px "LR Sans"`, cs, contentW), w / 2, ly + px(0.2));
     ctx.textAlign = 'left';
+    ly += px(0.2) + cs + px(0.25);
   }
+  const uneLicKind = (opts.lang === 'en' || opts.locale === 'en') ? 'en' : (bilingual ? 'bilingue' : 'fr');
+  drawPosterLicense(ctx, {
+    text: posterLicenseText(uneLicKind),
+    x: w / 2,
+    y: ly,
+    maxW: contentW,
+    size: licSize,
+    color: mute,
+  });
 }
 function drawRadar(ctx, w, h, cx, cy) {
   const reach = Math.hypot(Math.max(cx, w - cx), Math.max(h - cy, cy));
@@ -2490,6 +2530,45 @@ function compose(opts) {
     ctx.font = `400 ${fCredit}px "LR Sans"`;
     fillCentered(ctx, credit, creditY, SOFT);
   }
+  /* Ligne de licence : uniquement dans l’espace libre sous le crédit / la mention
+   * d’indépendance. Rien d’autre du gabarit a9e8f52 n’est déplacé. */
+  let licenseY = 0;
+  {
+    const licKind = kind === 'bilingue' ? 'bilingue' : 'fr';
+    const licText = posterLicenseText(licKind);
+    let fLic = Math.max(10, Math.round((credit ? fCredit : fLegal) * 0.92));
+    ctx.font = licenseFont(fLic);
+    const lm = ctx.measureText(licText);
+    let licH = (lm.actualBoundingBoxAscent || 0) + (lm.actualBoundingBoxDescent || 0) || fLic;
+    const creditBottom = credit
+      ? (cy + (h - cy - creditH) / 2) + creditH
+      : cy;
+    const minGap = Math.round(2 * fit);
+    const wantGap = Math.round(6 * fit);
+    let licYMax = h - safe - licH;
+    if (creditBottom + wantGap > licYMax) {
+      const room = (h - safe) - (creditBottom + minGap);
+      if (room < licH && room >= 8) {
+        fLic = Math.max(8, Math.floor(room));
+        ctx.font = licenseFont(fLic);
+        const sm = ctx.measureText(licText);
+        licH = (sm.actualBoundingBoxAscent || 0) + (sm.actualBoundingBoxDescent || 0) || fLic;
+        licYMax = h - safe - licH;
+      }
+    }
+    const licY = Math.min(creditBottom + wantGap, licYMax);
+    licenseY = licY;
+    if (licY + licH <= h && licY >= 0) {
+      drawPosterLicense(ctx, {
+        text: licText,
+        x: w / 2,
+        y: licY,
+        maxW: legalMax,
+        size: fLic,
+        color: SOFT,
+      });
+    }
+  }
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(226 * fit);
@@ -2554,6 +2633,7 @@ function compose(opts) {
       titleY,
       titleBand: false,
       scanneMoi: false,
+      licenseY,
     };
     if (typeof document !== 'undefined' && document.body) {
       document.body.dataset.campusLayout = 'a9e8f52';

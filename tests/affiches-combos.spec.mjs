@@ -225,15 +225,16 @@ test('affiche campus : gabarit a9e8f52 (pas de bandeau mauve, Scanne-moi pas sou
 });
 
 
-async function canvasHash(page) {
-  return page.locator('#preview canvas').evaluate(async (c) => {
-    const data = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+async function canvasHash(page, keepH) {
+  return page.locator('#preview canvas').evaluate(async (c, keepH) => {
+    const h = keepH == null ? c.height : Math.max(1, Math.min(c.height, keepH));
+    const data = c.getContext('2d').getImageData(0, 0, c.width, h).data;
     const buf = await crypto.subtle.digest('SHA-256', data);
     return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
-  });
+  }, keepH);
 }
 
-test('affiche campus : chaque établissement, rendu pixel-identique à a9e8f52 @ci-critical', async ({ page }) => {
+test('affiche campus : identique à a9e8f52 sauf la ligne de licence en pied @ci-critical', async ({ page }) => {
   test.setTimeout(180000);
   const errors = [];
   await offline(page, errors);
@@ -256,15 +257,21 @@ test('affiche campus : chaque établissement, rendu pixel-identique à a9e8f52 @
     await expect(page.locator('body')).toHaveAttribute('data-campus-layout', 'a9e8f52');
     const layout = await page.evaluate(() => window.__campusLayout);
     expect(layout, slug).toMatchObject({ titleBand: false, scanneMoi: false, qrIn: 2.25 });
-    const current = await canvasHash(page);
+    expect(layout.licenseY, slug).toBeGreaterThan(layout.titleY);
+    const keepH = Math.floor(layout.licenseY - 2);
+    expect(keepH, slug).toBeGreaterThan(100);
+    const currentTop = await canvasHash(page, keepH);
+    const currentFull = await canvasHash(page);
 
     slot.body = A9_BUILDER;
     await page.goto(url, { waitUntil: 'domcontentloaded' });
     await ready(page);
-    const reference = await canvasHash(page);
-    if (current !== reference) diffs.push(slug);
+    const referenceTop = await canvasHash(page, keepH);
+    const referenceFull = await canvasHash(page);
+    if (currentTop !== referenceTop) diffs.push(`${slug}:zone-haute`);
+    if (currentFull === referenceFull) diffs.push(`${slug}:licence-absente`);
   }
-  expect(diffs, `écart de pixels vs compose() a9e8f52 : ${diffs.join(', ')}`).toEqual([]);
+  expect(diffs, `écart hors ligne de licence vs a9e8f52, ou licence manquante : ${diffs.join(', ')}`).toEqual([]);
   expect(errors).toEqual([]);
 });
 
