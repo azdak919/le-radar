@@ -1150,21 +1150,31 @@ function composeFrontPage(ctx, w, h, opts) {
     ? Front.bylineOf(art.authors || [], art.source || '', { maxNames })
     : (art.source || ''));
   const metaPick = (art, maxW, fontFn, size, lines = 1, withDate = true) => {
-    const names = (art.authors || []).length;
-    const tries = [];
-    [Infinity, 2, 1].forEach((mx) => {
-      if (mx !== Infinity && names <= mx) return;
-      const b = bylineFor(art, mx);
-      if (withDate && art.dateLabel) tries.push(`${b} · ${art.dateLabel}`);
-      tries.push(b);
-    });
-    tries.push(art.source || '');
+    const tries = (Front && Front.bylineDateTries)
+      ? Front.bylineDateTries(art, withDate)
+      : (() => {
+        const names = (art.authors || []).length;
+        const bylines = [];
+        [Infinity, 2, 1].forEach((mx) => {
+          if (mx !== Infinity && names <= mx) return;
+          const b = bylineFor(art, mx);
+          if (b) bylines.push(b);
+        });
+        if (art.source) bylines.push(art.source);
+        const out = [];
+        if (withDate && art.dateLabel) {
+          bylines.forEach((b) => out.push(`${b} · ${art.dateLabel}`));
+          out.push(art.dateLabel);
+        }
+        bylines.forEach((b) => out.push(b));
+        return out;
+      })();
     ctx.font = fontFn(size);
     for (const t of tries) {
       const wl = wrapWords(ctx, t, maxW);
       if (wl.length <= lines) return wl;
     }
-    return [fitOne(tries[tries.length - 1], fontFn, size, maxW)];
+    return [fitOne(tries[tries.length - 1] || '', fontFn, size, maxW)];
   };
 
   const x0 = margin;
@@ -1980,8 +1990,18 @@ function composeFrontPage(ctx, w, h, opts) {
         const tag = [item.kicker, item.meta].filter(Boolean).join('  ·  ');
         if (tag) {
           ctx.font = `600 ${px(1.4)}px "LR Sans Semi", "LR Sans"`;
-          ctx.fillStyle = LILAC;
-          ctx.fillText(fitOne(tag, sans(600), px(1.4), colW), ix, iy);
+          /* Un seul média : le kicker reprend le nom du journal, dans sa couleur d’établissement
+           * (la même que les noms de médias sur le site et les affiches). Plusieurs médias : lilas. */
+          const kickerCol = item.kickerKind === 'media'
+            ? instColor(item.kickerInstitution || item.kicker, BG_BAND, LILAC)
+            : LILAC;
+          const shown = fitOne(tag, sans(600), px(1.4), colW);
+          if (kickerCol !== LILAC && item.kicker && shown.includes(item.kicker.split(' ')[0])) {
+            fillWithSpan(shown, ix, iy, LILAC, item.kicker, kickerCol);
+          } else {
+            ctx.fillStyle = kickerCol;
+            ctx.fillText(shown, ix, iy);
+          }
           iy += px(2);
         }
         /* Emoji de sport (police couleur LR Emoji) devant le match ou le résultat. */
@@ -3066,7 +3086,19 @@ function unePeriodRecap(campus) {
   const pool = state.uneCandidates || [];
   const medias = new Set(pool.map((a) => a.source).filter(Boolean)).size;
   const stats = [];
-  if (pool.length) stats.push({ kicker: 'Journaux étudiants', line: Front.numbersLine ? Front.numbersLine(pool) : `${pool.length} article${pool.length > 1 ? 's' : ''} · ${medias} média${medias > 1 ? 's' : ''}` });
+  const bilingual = state.lang === 'bilingue' && uneBilingualAllowed(campus || state.uneCampus);
+  if (pool.length) {
+    const kick = Front.pressKicker ? Front.pressKicker(pool) : { kicker: 'Journaux étudiants', institution: '' };
+    const line = Front.numbersLine
+      ? Front.numbersLine(pool, { bilingual })
+      : `${pool.length} article${pool.length > 1 ? 's' : ''} · ${medias} média${medias > 1 ? 's' : ''}`;
+    stats.push({
+      kicker: kick.kicker,
+      kickerInstitution: kick.institution || '',
+      kickerKind: kick.kicker !== 'Journaux étudiants' ? 'media' : '',
+      line,
+    });
+  }
   stats.push({ kicker: 'Matchs', line: campus ? `${res.played} joué${res.played > 1 ? 's' : ''} · ${res.wins} victoire${res.wins > 1 ? 's' : ''}` : `${res.played} match${res.played > 1 ? 's' : ''} joué${res.played > 1 ? 's' : ''}` });
   return { items: res.items, stats };
 }
@@ -3107,7 +3139,8 @@ function uneMastExtras(mode, bars, campus, info, sportsLines) {
   const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
   const week = pool.filter((a) => a.date && Front && Front.mtlYmd && Front.mtlYmd(a.date) >= fromYmd);
   const medias = new Set(week.map((a) => a.source).filter(Boolean)).size;
-  const stat = week.length ? (Front && Front.numbersLine ? Front.numbersLine(week, { suffix: 'en 7 jours' }) : `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}`) : '';
+  const bilingual = state.lang === 'bilingue' && uneBilingualAllowed(campus || state.uneCampus);
+  const stat = week.length ? (Front && Front.numbersLine ? Front.numbersLine(week, { suffix: 'en 7 jours', bilingual }) : `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}`) : '';
   const pick = {
     radio: radio ? { title: `À l’antenne de ${radio.name}`, lines: radio.shows, colorText: radio.name, colorInst: radio.institution } : null,
     match: next ? { title: 'Prochain match', strict: true, lines: [`${next.emoji ? `${next.emoji} ` : ''}${next.line}`, next.meta.charAt(0).toUpperCase() + next.meta.slice(1)] } : null,

@@ -380,12 +380,41 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.match(src, /img\.decode\(\)\.then\(done, done\)/);
   assert.match(src, /document\.body\.dataset\.posterImages = missing\.length/);
   assert.match(src, /const tall = isw \/ ish < \(lw \/ phH\) \* 0\.62;/);
-  // t987u : « En chiffres » avec un seul média (verdict focus-group : signatures, repli nom du média).
+  // t987u / t1002u : « En chiffres » un média → auteurs (repli nom du média) ; bilingue : authors.
   assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['A'] }, { source: 'Impact Campus', authors: ['B'] }]), '2 articles · 2 médias');
-  assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['Ana Roy'] }, { source: 'Quartier Libre', authors: ['Léo Côté', 'Ana Roy'] }]), '2 articles · 2 signatures');
+  assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['Ana Roy'] }, { source: 'Quartier Libre', authors: ['Léo Côté', 'Ana Roy'] }]), '2 articles · 2 auteurs');
+  assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: ['Ana Roy'] }, { source: 'Quartier Libre', authors: ['Léo Côté'] }], { bilingual: true }), '2 articles · 2 auteurs / authors');
   assert.equal(F.numbersLine([{ source: 'Quartier Libre', authors: [] }]), '1 article de Quartier Libre');
   assert.equal(F.numbersLine([{ source: 'Le Polyscope', authors: [] }], { suffix: 'en 7 jours' }), '1 article en 7 jours du Polyscope');
   assert.equal(F.numbersLine([{ source: 'Impact Campus', authors: [] }]), '1 article d’Impact Campus');
   assert.equal(F.numbersLine([{ source: 'Les Inspirés', authors: [] }]), '1 article des Inspirés');
   assert.doesNotMatch(F.numbersLine(Array(9).fill({ source: 'Quartier Libre', authors: ['X'] })), /1 média/);
+  assert.match(F.numbersLine(Array.from({ length: 9 }, (_, i) => ({ source: 'Quartier Libre', authors: [`A${i}`] }))), /9 auteurs/);
+  // Un seul média choisi : le kicker reprend le nom du journal (et l’établissement pour la couleur).
+  assert.deepEqual(F.pressKicker([
+    { source: 'Quartier Libre', institution: 'Université de Montréal' },
+    { source: 'Quartier Libre', institution: 'Université de Montréal' },
+  ]), { kicker: 'Quartier Libre', institution: 'Université de Montréal' });
+  assert.deepEqual(F.pressKicker([
+    { source: 'Quartier Libre', institution: 'Université de Montréal' },
+    { source: 'Impact Campus', institution: 'Université Laval' },
+  ]), { kicker: 'Journaux étudiants', institution: '' });
+  assert.deepEqual(F.pressKicker([]), { kicker: 'Journaux étudiants', institution: '' });
+  const pb = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert.match(pb, /Front\.pressKicker \? Front\.pressKicker\(pool\)/);
+  assert.match(pb, /kickerInstitution/);
+  assert.match(pb, /kickerKind === 'media'/);
+  assert.match(pb, /instColor\(item\.kickerInstitution \|\| item\.kicker, BG_BAND, LILAC\)/);
+  // Date d’abord : une longue signature ne fait pas disparaître la date absolue (True Crime, t1002u).
+  const trueCrime = {
+    authors: ['Josephine Dao Devenyns'],
+    source: 'Quartier Libre',
+    dateLabel: '9\u00A0novembre\u00A02026',
+  };
+  const dateTries = F.bylineDateTries(trueCrime, true);
+  const firstWithout = dateTries.findIndex((x) => !x.includes('novembre'));
+  assert.ok(firstWithout > 0, 'au moins une variante avec la date');
+  assert.ok(dateTries.slice(0, firstWithout).every((x) => x.includes('novembre')));
+  assert.ok(dateTries.some((x) => x.includes('Quartier Libre') && x.includes('novembre')));
+  assert.match(pb, /Front\.bylineDateTries/);
 }

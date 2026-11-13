@@ -753,9 +753,9 @@
     return out.sort((a, b) => (a.ymd + a.start).localeCompare(b.ymd + b.start));
   }
 
-  /* Ligne « En chiffres » (t987u). Plusieurs médias : « 9 articles · 3 médias » (inchangé).
-   * Un seul média : verdict du focus-group (option A, decisions/le-radar-une-en-chiffres-un-media.json) —
-   * le nombre de signatures distinctes ; repli B (nom du média) si moins de 2 signatures connues. */
+  /* Ligne « En chiffres » (t987u, libellé mis à jour t1002u). Plusieurs médias : « 9 articles · 3 médias »
+   * (inchangé). Un seul média : nombre d’auteurs distincts si au moins 2 ; sinon repli B (nom du média).
+   * En mode bilingue, « auteurs » est suivi de l’équivalent anglais « authors » / « author ». */
   function numbersLine(pool, opts = {}) {
     const list = (pool || []).filter(Boolean);
     if (!list.length) return '';
@@ -766,8 +766,43 @@
     if (medias.length !== 1) return `${arts}${suffix} · ${medias.length} média${medias.length > 1 ? 's' : ''}`;
     const people = new Set();
     list.forEach((a) => (a.authors || []).forEach((x) => { const k = foldName(String(x || '')); if (k) people.add(k); }));
-    if (people.size >= 2) return `${arts}${suffix} · ${people.size} signatures`;
+    if (people.size >= 2) {
+      const fr = people.size > 1 ? 'auteurs' : 'auteur';
+      const en = people.size > 1 ? 'authors' : 'author';
+      const peopleWord = opts.bilingual ? `${fr} / ${en}` : fr;
+      return `${arts}${suffix} · ${people.size} ${peopleWord}`;
+    }
     return `${arts}${suffix} ${deMedia(medias[0])}`;
+  }
+  /* Kicker du bloc « En chiffres » : nom du média (et son établissement, pour la couleur) s’il n’y en
+   * a qu’un dans le bassin ; « Journaux étudiants » dès que plusieurs médias sont inclus. */
+  function pressKicker(pool) {
+    const list = (pool || []).filter((a) => a && a.source);
+    const sources = [...new Set(list.map((a) => a.source))];
+    if (sources.length === 1) {
+      const inst = (list.find((a) => a.institution) || {}).institution || '';
+      return { kicker: sources[0], institution: inst };
+    }
+    return { kicker: 'Journaux étudiants', institution: '' };
+  }
+  /* Variantes de ligne méta (signature + date) : d’abord toutes les formes avec la date, ensuite
+   * les mêmes sans date, pour que la date absolute ne soit pas abandonnée trop tôt. */
+  function bylineDateTries(art, withDate = true) {
+    const names = (art && art.authors || []).length;
+    const bylines = [];
+    [Infinity, 2, 1].forEach((mx) => {
+      if (mx !== Infinity && names <= mx) return;
+      const b = bylineOf((art && art.authors) || [], (art && art.source) || '', { maxNames: mx });
+      if (b) bylines.push(b);
+    });
+    if (art && art.source && !bylines.includes(art.source)) bylines.push(art.source);
+    const out = [];
+    if (withDate && art && art.dateLabel) {
+      bylines.forEach((b) => out.push(`${b} · ${art.dateLabel}`));
+      out.push(art.dateLabel);
+    }
+    bylines.forEach((b) => out.push(b));
+    return out;
   }
   /* « de Le Polyscope » → « du Polyscope », « de Les… » → « des… », élision devant voyelle. */
   function deMedia(name) {
@@ -798,6 +833,8 @@
     isProSportItem,
     radioShowOk,
     numbersLine,
+    pressKicker,
+    bylineDateTries,
     pickRadioShows,
     periodWindow,
     LIVE_PERIODS,
