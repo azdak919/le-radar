@@ -64,7 +64,10 @@ assert(archiveMonthMax <= 2 * MB, `un mois du catalogue dépasse 2 Mo (${archive
 // (déplié, il dépasserait 8 Mio vers la fin de la saison d’hiver).
 assert(sports <= 8 * MB, `sports.json ${sports} > 8 Mio`);
 assert(images <= 50 * MB, `assets/news-images ${images} > 50 Mo`);
-assert(kit <= 100 * MB, `assets/kit ${kit} > 100 Mo (impressions 600 dpi, 7 campus)`);
+// Galerie mixte du kit : 5 affiches campus + 9 unes (PDF 600 dpi ou PNG écran)
+// et leurs aperçus, identiques aux fichiers téléchargeables. ~122 Mo aujourd’hui ;
+// 160 Mio laisse de la marge quand le flux quotidien régénère les unes.
+assert(kit <= 160 * MB, `assets/kit ${kit} > 160 Mo (galerie mixte campus + unes, 600 dpi)`);
 
 console.log(
   `OK artifact-budget (archive ${(archive / MB).toFixed(1)} Mo, sports ${(sports / MB).toFixed(1)} Mo, images ${(images / MB).toFixed(1)} Mo, kit ${(kit / MB).toFixed(1)} Mo)`,

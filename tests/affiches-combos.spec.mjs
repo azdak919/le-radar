@@ -275,14 +275,31 @@ for (const [name, vp] of [['mobile', { width: 390, height: 844 }], ['ordinateur'
     await page.setViewportSize(vp);
     for (const url of ['/affiches/?modele=une&uni=concordia', '/affiches/?modele=campus&campus=laval']) {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
+      if (name === 'mobile') {
+        await expect(page.locator('.dash')).toHaveAttribute('data-mobile-pane', 'controls');
+        await expect(page.locator('#dl')).toBeVisible();
+        await expect(page.locator('.dash-flow legend').first()).toBeVisible();
+        await expect(page.locator('#preview canvas')).toBeAttached({ timeout: 20000 });
+        await expect(page.locator('#preview')).toHaveAttribute('data-state', /pret|erreur/, { timeout: 25000 });
+        let ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(ov, `débordement réglages ${url}`).toBeLessThanOrEqual(0);
+        for (const sel of ['#dl', 'legend']) {
+          const box = await page.locator(sel).first().boundingBox();
+          expect(box.x, `marge ${sel}`).toBeGreaterThanOrEqual(8);
+          expect(box.x + box.width, `droite ${sel}`).toBeLessThanOrEqual(vp.width);
+        }
+        await page.locator('.dash-mobile-switch__btn[data-pane="preview"]').click();
+      }
       await expect(page.locator('#preview canvas')).toBeVisible({ timeout: 20000 });
       await expect(page.locator('#preview')).toHaveAttribute('data-state', /pret|erreur/, { timeout: 25000 });
       const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       expect(ov, `débordement ${url}`).toBeLessThanOrEqual(0);
-      for (const sel of ['#dl', 'legend']) {
-        const box = await page.locator(sel).first().boundingBox();
-        expect(box.x, `marge ${sel}`).toBeGreaterThanOrEqual(8);
-        expect(box.x + box.width, `droite ${sel}`).toBeLessThanOrEqual(vp.width);
+      if (name !== 'mobile') {
+        for (const sel of ['#dl', 'legend']) {
+          const box = await page.locator(sel).first().boundingBox();
+          expect(box.x, `marge ${sel}`).toBeGreaterThanOrEqual(8);
+          expect(box.x + box.width, `droite ${sel}`).toBeLessThanOrEqual(vp.width);
+        }
       }
       await noDimText(page);
     }
