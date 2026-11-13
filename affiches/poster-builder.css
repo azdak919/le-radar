@@ -513,3 +513,15 @@ body:has(#local-lab-format-bar) .dash-controls {
 }
 .une-list .une-lead input { accent-color: var(--purple); margin: 0; }
 .une-list { max-height: 520px; overflow: auto; }
+.une-list .une-role-pick {
+  grid-column: 1 / -1;
+  justify-self: start;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+}
+#une-sports-list li { grid-template-columns: minmax(0, 1fr); }

@@ -520,6 +520,50 @@
     };
   }
 
+  /* Identifiant court et stable d’un match ou d’un résultat (paramètres d’URL de la sélection manuelle). */
+  function sportItemId(item) {
+    const key = [item && item.date, item && item.kicker, item && item.line].map((x) => String(x || '')).join('|');
+    let h = 0x811c9dc5;
+    for (let i = 0; i < key.length; i += 1) {
+      h ^= key.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return h.toString(16).padStart(8, '0');
+  }
+  /* Résultat au classement (voile, cross-country…) : « 7e sur 11 », jamais un faux score. */
+  function placeLabel(place, of) {
+    const n = Number(place);
+    if (!Number.isFinite(n) || n < 1) return '';
+    const ord = n === 1 ? '1er' : `${n}e`;
+    return Number.isFinite(Number(of)) && Number(of) > 0 ? `${ord} sur ${Number(of)}` : ord;
+  }
+  /* Sélection manuelle des sports : ids choisis (dans l’ordre, en tête), ids masqués ; le reste vient de l’auto. */
+  function applySportSelection(candidates = [], auto = [], chosenIds = [], hiddenIds = []) {
+    const byId = new Map(candidates.map((c) => [c.id || sportItemId(c), c]));
+    const hidden = new Set(hiddenIds || []);
+    const pinned = (chosenIds || []).map((id) => byId.get(id)).filter(Boolean).filter((c) => !hidden.has(c.id));
+    const used = new Set(pinned.map((c) => c.id));
+    /* Choix épinglés en tête, places restantes complétées par l’auto : jamais de trou. */
+    return pinned.concat((auto || []).filter((c) => { const k = c.id || sportItemId(c); return !hidden.has(k) && !used.has(k); }));
+  }
+  /* Rôles manuels des articles : une, aussi à lire, vedettes, en bref ; les places libres gardent l’auto. */
+  function assignRoles(pool = [], roles = {}, slots = {}) {
+    const byId = new Map(pool.map((a) => [a.id, a]));
+    const used = new Set();
+    const take = (ids, n) => (ids || []).map((id) => byId.get(id)).filter((a) => a && !used.has(a.id) && used.add(a.id)).slice(0, n);
+    const lead = take(roles.une ? [roles.une] : [], 1)[0] || null;
+    const side = take(roles.aussi, slots.side ?? Infinity);
+    const grid = take(roles.vedettes, slots.grid ?? Infinity);
+    const briefs = take(roles.bref, slots.briefs ?? Infinity);
+    const rest = pool.filter((a) => !used.has(a.id) && !(roles.masquer || []).includes(a.id));
+    const fill = (arr, n) => { while (arr.length < n && rest.length) { const a = rest.shift(); used.add(a.id); arr.push(a); } return arr; };
+    const out = { lead: lead || (rest.length ? (used.add(rest[0].id), rest.shift()) : null) };
+    out.side = fill(side, slots.side ?? 0);
+    out.grid = fill(grid, slots.grid ?? 0);
+    out.briefs = fill(briefs, slots.briefs ?? 0);
+    return out;
+  }
+
   function periodResults(teams = [], win = null, campus = null, limit = 4) {
     if (!win || !win.from) return { items: [], played: 0, wins: 0 };
     const seen = new Set();
@@ -565,12 +609,15 @@
         kicker: sport,
         gender: genderMark(team.sex),
         emoji: sportEmoji(team.sportLabel || team.sport),
-        line: `${who} ${g.scoreFor}–${g.scoreAgainst} ${vs}`.trim(),
+        line: g.scoreKind === 'place'
+          ? `${who}\u00A0: ${placeLabel(g.scoreFor, g.scoreAgainst)} · ${frTypo(g.opponent || g.opponentFullName || '')}`.trim()
+          : `${who} ${g.scoreFor}–${g.scoreAgainst} ${vs}`.trim(),
         meta: frDate(`${g.date}T12:00:00`).replace(/\s\d{4}$/, ''),
         date: g.date,
         result: g.result || (g.scoreFor > g.scoreAgainst ? 'W' : g.scoreFor < g.scoreAgainst ? 'L' : 'T'),
       };
     });
+    items.forEach((it) => { it.id = sportItemId(it); });
     const played = games.length;
     const wins = campus ? games.filter(({ g }) => (g.result || (g.scoreFor > g.scoreAgainst ? 'W' : '')) === 'W').length : 0;
     return { items, played, wins };
@@ -631,6 +678,10 @@
     bylineOf,
     manualSelection,
     periodResults,
+    sportItemId,
+    placeLabel,
+    applySportSelection,
+    assignRoles,
     teamLabel,
     gameSides,
     genderMark,

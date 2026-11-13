@@ -265,3 +265,50 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.equal(front.gameSides({ ...team, nickname: '' }, { opponent: "Bishop's", opponentFullName: "Bishop's University" }, laval).vs, 'Bishop’s', 'sans surnom : établissement seul');
   assert.equal(front.teamLabel('Gaiters', "Bishop's", false), 'Gaiters (Bishop’s)');
 }
+
+// Sélection manuelle : rôles d’articles (places libres complétées par l’auto) et sports choisis par id.
+{
+  const pool = ['a', 'b', 'c', 'd', 'e', 'f', 'g'].map((id) => ({ id: id.repeat(16) }));
+  const id = (c) => c.repeat(16);
+  const r = front.assignRoles(pool, { une: id('d'), aussi: [id('f')], vedettes: [id('a')], bref: [id('g')], masquer: [id('b')] }, { side: 2, grid: 2, briefs: 2 });
+  assert.equal(r.lead.id, id('d'), 'une choisie');
+  assert.deepEqual(r.side.map((a) => a.id), [id('f'), id('c')], 'aussi à lire : choix puis auto');
+  assert.deepEqual(r.grid.map((a) => a.id), [id('a'), id('e')]);
+  assert.deepEqual(r.briefs.map((a) => a.id), [id('g')], 'masqué jamais repris');
+  const auto = front.assignRoles(pool, {}, { side: 2, grid: 1, briefs: 0 });
+  assert.deepEqual([auto.lead, ...auto.side, ...auto.grid].map((a) => a.id), [id('a'), id('b'), id('c'), id('d')], 'sans choix : ordre auto');
+
+  const s1 = { date: '2026-10-25', kicker: 'Voile', line: 'ULaVoile\u00A0: 7e sur 11 · Championnat canadien par équipes' };
+  const s2 = { date: '2026-11-13', kicker: 'Volleyball (F)', line: 'Rouge et Or reçoit Stingers (Concordia)' };
+  s1.id = front.sportItemId(s1);
+  s2.id = front.sportItemId(s2);
+  assert.match(s1.id, /^[0-9a-f]{8}$/);
+  assert.equal(front.sportItemId({ ...s1 }), s1.id, 'id stable');
+  assert.notEqual(s1.id, s2.id);
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [], []), [s2], 'auto par défaut');
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [s1.id], []), [s1, s2], 'choix épinglé en tête, auto ensuite');
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [s1.id], [s2.id]), [s1], 'choix seul si le reste est masqué');
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [], [s2.id]), [], 'masqué');
+  assert.equal(front.placeLabel(7, 11), '7e sur 11');
+  assert.equal(front.placeLabel(1, 5), '1er sur 5');
+  assert.equal(front.placeLabel(0, 5), '');
+
+  // Résultat au classement (voile) : « 7e sur 11 », sans genre inventé, jamais un faux score.
+  const team = { id: 'sailing:universitaire:ulaval', name: 'ULaVoile', sport: 'sailing', sportLabel: 'Voile', institutionName: 'Université Laval', sector: 'universitaire', sex: null,
+    results: [{ date: '2026-10-25', scoreKind: 'place', scoreFor: 7, scoreAgainst: 11, result: 'L', opponent: 'Championnat canadien par équipes' }] };
+  const res = front.periodResults([team], { from: '2026-10-14', to: '2026-11-12' }, { slug: 'laval', line: 'Université Laval', label: 'Université Laval' }, 5);
+  const v = res.items.find((x) => /7e sur 11/.test(x.line));
+  assert.ok(v, 'résultat de voile présent');
+  assert.ok(!/7–11/.test(v.line));
+  assert.equal(v.gender, '');
+  assert.match(v.id, /^[0-9a-f]{8}$/);
+}
+
+// Phrase par défaut sous « Scanne-moi » : exactement « Le fil étudiant, en direct ».
+{
+  const src = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert.match(src, /uneTagline: 'direct'/);
+  assert.match(src, /direct: \{ label: 'Le fil étudiant, en direct', fr: 'Le fil étudiant, en direct'/);
+  const html = readFileSync(join(root, 'affiches/index.html'), 'utf8');
+  assert.match(html, /<option value="direct" selected>Le fil étudiant, en direct<\/option>/);
+}

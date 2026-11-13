@@ -92,7 +92,7 @@ const GREETINGS_EN = {
 
 /* Phrase sous « Scanne-moi » : FR, puis EN (mode bilingue des établissements autorisés). */
 const UNE_TAGLINES = {
-  direct: { label: 'Le fil étudiant en direct', fr: 'Le fil étudiant en direct', en: 'Live student news' },
+  direct: { label: 'Le fil étudiant, en direct', fr: 'Le fil étudiant, en direct', en: 'Student news, live' },
   auto: { label: 'Automatique (campus ou tout le Radar)' },
   fil: { label: 'Le fil étudiant', fr: 'Le fil étudiant', en: 'The student news feed' },
   tout: { label: 'Tout le Radar étudiant', fr: 'Tout le Radar étudiant', en: 'All student news' },
@@ -246,6 +246,10 @@ const state = {
   uneCampus: 'toutes',
   unePeriod: 'jour',
   uneTagline: 'direct',
+  uneRoles: { aussi: [], vedettes: [], bref: [], masquer: [] },
+  uneSportBand: [],
+  uneSportSlogan: [],
+  uneSportHide: [],
   unePeriodInfo: null,
   uneCandidates: [],
   uneAutoArticles: [],
@@ -1038,10 +1042,12 @@ function composeFrontPage(ctx, w, h, opts) {
   const gameS = Math.max(10, Math.round(tagS * 0.8));
   const gameLineH = Math.round(gameS * 1.3);
   /* 2 à 4 matchs selon le format : l’en-tête grandit un peu, l’encart radio s’aligne dessus. */
-  const gameTarget = { letter: 2, legal: 3, tabloid: 3, 'ecran-paysage': 2, 'ecran-portrait': 3 }[fmtSpec.id] || 2;
+  const gameTarget = { letter: 3, legal: 3, tabloid: 4, 'ecran-paysage': 2, 'ecran-portrait': 3 }[fmtSpec.id] || 2;
+  /* Émissions de l’encart radio : autant que la hauteur en tient (3 en Lettre, 4 en Tabloïd). */
+  const extraTarget = { letter: 3, legal: 3, tabloid: 4, 'ecran-paysage': 2, 'ecran-portrait': 3 }[fmtSpec.id] || 2;
   const mastGames = [];
   {
-    const up = (opts.mastGames || []).filter((g) => g && g.upcoming);
+    const up = (opts.mastGames || []).filter((g) => g && (g.upcoming || opts.mastGamesManual));
     const bandKeys = new Set(sportsLines.filter((x) => !x.upcoming).map((x) => `${x.line}|${x.meta}`));
     const pool = up.length ? up : (opts.mastGames || []).filter((g) => g && !g.upcoming && !bandKeys.has(`${g.line}|${g.meta}`));
     pool.slice(0, gameTarget).forEach((g) => mastGames.push(g));
@@ -1051,7 +1057,8 @@ function composeFrontPage(ctx, w, h, opts) {
   if (extra) {
     const per = Math.round(exLineS * 1.3);
     const head = Math.round(exHeadS * 1.35);
-    while (extra.lines.length > 1 && head + extra.lines.length * per > Math.max(leftH, head + per) + px(0.5)) extra.lines = extra.lines.slice(0, -1);
+    extra.lines = extra.lines.slice(0, extraTarget);
+    while (extra.lines.length > 1 && head + extra.lines.length * per > Math.max(leftH, head + per) + Math.round(per * 0.6)) extra.lines = extra.lines.slice(0, -1);
   }
   let extrasW = 0;
   if (extra) {
@@ -1524,6 +1531,20 @@ function composeFrontPage(ctx, w, h, opts) {
       const items = part.items.slice(0, fitRows * cols);
       const perCol = Math.ceil(items.length / cols);
       const rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
+      /* Même corps pour toutes les lignes de la bande : le plus petit qui tient (pas de tailles disparates). */
+      const fitItem = (item, cap) => {
+        const room = rowsH - (item.kicker || item.meta ? px(2) : 0);
+        const minS = Math.max(10, px(1.3));
+        const one = Math.min(cap, px(2.4), Math.floor(room / 1.2));
+        const indent1 = item.emoji ? Math.round(one * 1.35) : 0;
+        const f1 = wrapFit(item.line || '', sans(700), colW - indent1, one, minS, 1);
+        if (!/…$/.test(f1.lines[0] || '') || room < Math.round(minS * 1.15) * 2) return f1;
+        /* Deux lignes dès que la hauteur les tient : corps limité à la hauteur, jamais de points de suspension. */
+        const two = Math.max(minS, Math.min(cap, px(2.4), Math.floor(room / 2.3)));
+        const indent2 = item.emoji ? Math.round(two * 1.35) : 0;
+        return wrapFit(item.line || '', sans(700), colW - indent2, two, minS, 2);
+      };
+      const bandCap = items.length ? Math.min(...items.map((it) => fitItem(it, Infinity).size)) : px(2.4);
       items.forEach((item, ii) => {
         const col = Math.floor(ii / perCol);
         const r = ii % perCol;
@@ -1536,12 +1557,8 @@ function composeFrontPage(ctx, w, h, opts) {
           ctx.fillText(fitOne(tag, sans(600), px(1.4), colW), ix, iy);
           iy += px(2);
         }
-        const room = by + (r + 1) * rowsH - iy;
-        const maxL = room >= Math.round(px(2.2) * 1.15) * 2 ? 2 : 1;
-        const lineMax = Math.min(px(2.4), Math.floor(room / 1.2));
         /* Emoji de sport (police couleur LR Emoji) devant le match ou le résultat. */
-        const indent = item.emoji ? Math.round(lineMax * 1.35) : 0;
-        const f = wrapFit(item.line || '', sans(700), colW - indent, lineMax, Math.max(10, px(1.3)), maxL);
+        const f = fitItem(item, bandCap);
         if (item.emoji && iy + f.size <= by + (r + 1) * rowsH) {
           ctx.font = `${f.size}px "LR Emoji"`;
           ctx.textBaseline = 'top';
@@ -2195,6 +2212,28 @@ function uneSelectedBriefs() {
   return uneManualMode() ? [] : (state.uneAutoBriefs || []);
 }
 
+const UNE_ROLE_KEYS = ['aussi', 'vedettes', 'bref', 'masquer'];
+function uneRolesActive() {
+  const r = state.uneRoles || {};
+  return UNE_ROLE_KEYS.some((k) => (r[k] || []).length);
+}
+/* Rôles manuels (une, aussi à lire, vedettes, en bref, masqué) : places libres complétées par l’auto. */
+function uneArticlesWithRoles() {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const base = selectedUneArticles();
+  const briefsBase = uneSelectedBriefs();
+  if (!Front || !Front.assignRoles || (!uneRolesActive() && !state.uneLeadId)) return { articles: base, briefs: briefsBase };
+  const plan = UNE_FORMAT_PLAN[state.format] || UNE_FORMAT_PLAN.tabloid;
+  const seen = new Set();
+  const pool = [...base, ...briefsBase, ...(state.uneCandidates || [])].filter((a) => a && !seen.has(a.id) && seen.add(a.id));
+  const r = state.uneRoles || {};
+  const out = Front.assignRoles(pool, { une: state.uneLeadId, ...r }, { side: plan.side, grid: plan.grid, briefs: plan.screen ? 0 : 6 });
+  return { articles: [out.lead, ...out.side, ...out.grid].filter(Boolean), briefs: out.briefs };
+}
+function uneSportsManualActive() {
+  return (state.uneSportBand || []).length + (state.uneSportSlogan || []).length + (state.uneSportHide || []).length > 0;
+}
+
 /* Réglage partageable : ids d’articles et une dans l’URL, comme les autres paramètres. */
 function syncUneSelectionUrl() {
   try {
@@ -2205,8 +2244,15 @@ function syncUneSelectionUrl() {
       else url.searchParams.delete('une');
     } else {
       url.searchParams.delete('articles');
-      url.searchParams.delete('une');
+      if (state.uneLeadId) url.searchParams.set('une', state.uneLeadId);
+      else url.searchParams.delete('une');
     }
+    const r = state.uneRoles || {};
+    UNE_ROLE_KEYS.forEach((k) => { if ((r[k] || []).length) url.searchParams.set(k, r[k].join(',')); else url.searchParams.delete(k); });
+    [['slogan', state.uneSportSlogan], ['bande', state.uneSportBand], ['sportsmasques', state.uneSportHide]].forEach(([k, v]) => {
+      if ((v || []).length) url.searchParams.set(k, v.join(','));
+      else url.searchParams.delete(k);
+    });
     window.history.replaceState(null, '', url.toString());
   } catch { /* ignore */ }
 }
@@ -2217,7 +2263,7 @@ function syncModelUi() {
     dash.dataset.model = state.model;
     dash.dataset.layout = isUneModel() ? (state.layout || 'classique') : '';
   }
-  ['une-box', 'une-layout-box', 'une-uni-box', 'une-period-box', 'une-tagline-box'].forEach((id) => {
+  ['une-box', 'une-sports-box', 'une-layout-box', 'une-uni-box', 'une-period-box', 'une-tagline-box'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.hidden = !isUneModel();
   });
@@ -2245,7 +2291,7 @@ function renderUneList() {
   const reset = document.getElementById('une-auto');
   if (!list) return;
   if (status) status.textContent = state.uneStatus || '';
-  if (reset) reset.hidden = !uneManualMode();
+  if (reset) reset.hidden = !(uneManualMode() || uneRolesActive() || state.uneLeadId || uneSportsManualActive());
   list.replaceChildren();
   const manual = uneManualMode();
   const autoIds = new Set((state.uneAutoArticles || []).concat(state.uneAutoBriefs || []).map((a) => a.id));
@@ -2300,7 +2346,75 @@ function renderUneList() {
       preview();
     });
     leadLab.append(lead, document.createTextNode(' Une'));
-    li.append(check, meta, leadLab);
+    /* Rôle manuel : auto par défaut ; le choix est gardé dans l’URL (aussi=, vedettes=, bref=, masquer=). */
+    const roleSel = document.createElement('select');
+    roleSel.className = 'une-role-pick';
+    roleSel.setAttribute('aria-label', `Rôle : ${art.title}`);
+    [['', 'Auto'], ['vedettes', 'Vedette'], ['aussi', 'Aussi à lire'], ['bref', 'En bref'], ['masquer', 'Masquer']].forEach(([v, t]) => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = t;
+      roleSel.append(opt);
+    });
+    const roles = state.uneRoles || {};
+    roleSel.value = UNE_ROLE_KEYS.find((k) => (roles[k] || []).includes(art.id)) || '';
+    roleSel.addEventListener('change', () => {
+      const next = {};
+      UNE_ROLE_KEYS.forEach((k) => { next[k] = (roles[k] || []).filter((id) => id !== art.id); });
+      if (roleSel.value) next[roleSel.value].push(art.id);
+      state.uneRoles = next;
+      syncUneSelectionUrl();
+      renderUneList();
+      preview();
+    });
+    li.append(check, meta, leadLab, roleSel);
+    list.append(li);
+  });
+}
+
+/* Sports du studio : chaque match ou résultat réel peut aller sous le slogan, dans la bande (ou le bilan) ou être masqué. */
+async function renderUneSportsList() {
+  const list = document.getElementById('une-sports-list');
+  if (!list || !isUneModel()) return;
+  await loadUneSportsHistory();
+  const campus = (state.uneCampus && state.uneCampus !== 'toutes') ? campusOf(state.uneCampus) : null;
+  const cands = uneSportsCandidates(campus, state.unePeriodInfo);
+  list.replaceChildren();
+  cands.slice(0, 60).forEach((item) => {
+    const li = document.createElement('li');
+    const meta = document.createElement('div');
+    meta.className = 'une-meta';
+    const title = document.createElement('span');
+    title.className = 'une-title';
+    title.textContent = [item.emoji, item.kicker, '—', item.line].filter(Boolean).join(' ');
+    const src = document.createElement('span');
+    src.className = 'une-source';
+    src.textContent = [item.meta, item.upcoming ? 'à venir' : 'résultat'].filter(Boolean).join(' · ');
+    meta.append(title, src);
+    const sel = document.createElement('select');
+    sel.className = 'une-role-pick';
+    sel.setAttribute('aria-label', `Place : ${item.line}`);
+    [['', 'Auto'], ['slogan', 'Sous le slogan'], ['bande', 'Bande / bilan'], ['masquer', 'Masquer']].forEach(([v, t]) => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = t;
+      sel.append(opt);
+    });
+    sel.value = (state.uneSportSlogan || []).includes(item.id) ? 'slogan'
+      : (state.uneSportBand || []).includes(item.id) ? 'bande'
+        : (state.uneSportHide || []).includes(item.id) ? 'masquer' : '';
+    sel.addEventListener('change', () => {
+      const drop = (arr) => (arr || []).filter((id) => id !== item.id);
+      state.uneSportSlogan = drop(state.uneSportSlogan);
+      state.uneSportBand = drop(state.uneSportBand);
+      state.uneSportHide = drop(state.uneSportHide);
+      if (sel.value === 'slogan') state.uneSportSlogan.push(item.id);
+      if (sel.value === 'bande') state.uneSportBand.push(item.id);
+      if (sel.value === 'masquer') state.uneSportHide.push(item.id);
+      syncUneSelectionUrl();
+      preview();
+    });
+    li.append(meta, sel);
     list.append(li);
   });
 }
@@ -2352,6 +2466,7 @@ async function loadUneFeed() {
     state.uneStatus = `Impossible de lire le fil : ${err.message}`;
   }
   renderUneList();
+  renderUneSportsList();
 }
 
 async function loadUneImages(articles) {
@@ -2453,7 +2568,7 @@ function uneRadioShows(bars, campus, info, limit = 2) {
 }
 function uneMastExtras(mode, bars, campus, info, sportsLines) {
   if (!info || mode === 'aucun') return null;
-  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 3 : 1);
+  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 4 : 1);
   const next = (sportsLines || []).find((x) => x.upcoming);
   const pool = state.uneCandidates || [];
   const ref = (info.to || posterTodayYmd());
@@ -2473,6 +2588,31 @@ function uneMastExtras(mode, bars, campus, info, sportsLines) {
   return pick[mode] || pick.match || pick.chiffre || null;
 }
 
+/* Candidats sports du studio : matchs à venir (bandeau sports) et résultats réels (sports.json). */
+function uneSportsCandidates(campus, info) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const bars = state.uneSidebars || {};
+  const live = !info || info.live;
+  const up = pickPosterSports(bars.sports, campus, 40, live && info ? info.target : posterNextYmd()).filter((x) => x.upcoming);
+  let res = [];
+  if (Front && Front.periodResults && state.uneSports) {
+    let win = info;
+    if (live) {
+      const to = posterTodayYmd();
+      const d = new Date(`${to}T12:00:00Z`);
+      d.setUTCDate(d.getUTCDate() - 30);
+      win = { from: d.toISOString().slice(0, 10), to };
+    }
+    res = Front.periodResults(state.uneSports, win, campus, Infinity).items;
+    /* En direct, la bande garde le format court des matchs (« Dim. 25 oct. ») ; le bilan garde le sien. */
+    if (live) res = res.map((x) => ({ ...x, meta: posterShortDate(x.date) || x.meta }));
+  }
+  const all = [...up, ...res];
+  all.forEach((x) => { if (!x.id && Front && Front.sportItemId) x.id = Front.sportItemId(x); });
+  const seen = new Set();
+  return all.filter((x) => !seen.has(x.id) && seen.add(x.id));
+}
+
 function uneComposeOpts(dpi, images, photoImg, photo) {
   const campusSlug = (state.uneCampus && state.uneCampus !== 'toutes') ? state.uneCampus : null;
   const campus = campusSlug ? campusOf(campusSlug) : null;
@@ -2481,7 +2621,20 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
   const past = Boolean(info && !info.live);
   const recap = past ? unePeriodRecap(campus) : null;
   const ahead = Boolean(info && info.id === 'demain');
-  const sportsLines = recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 8, info && info.target));
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const autoBand = recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 8, info && info.target));
+  autoBand.forEach((x) => { if (!x.id && Front && Front.sportItemId) x.id = Front.sportItemId(x); });
+  const sportCands = uneSportsManualActive() ? uneSportsCandidates(campus, info) : [];
+  /* Sélection manuelle des sports (bande ou bilan) : ids choisis dans l’ordre, sinon l’auto moins les masqués. */
+  const sportsLines = Front && Front.applySportSelection
+    ? Front.applySportSelection(sportCands, autoBand, state.uneSportBand, state.uneSportHide)
+    : autoBand;
+  const autoSlogan = pickPosterSports(bars.sports, campus, 6, info && info.live ? info.target : posterNextYmd());
+  autoSlogan.forEach((x) => { if (!x.id && Front && Front.sportItemId) x.id = Front.sportItemId(x); });
+  const sloganManual = (state.uneSportSlogan || []).length > 0;
+  const mastGames = Front && Front.applySportSelection
+    ? Front.applySportSelection(sportCands, autoSlogan, state.uneSportSlogan, state.uneSportHide)
+    : autoSlogan;
   /* Note du bandeau (périodes en direct) : ce que l’affiche contient vraiment. */
   const games = sportsLines.some((x) => x.upcoming);
   const mastNote = past ? '' : (games ? `Nouvelles récentes et matchs ${ahead ? 'à venir' : 'du jour'}` : 'Les nouvelles les plus récentes');
@@ -2495,13 +2648,14 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     layout: state.layout,
     campus: campusSlug,
     dpi,
-    articles: selectedUneArticles(),
-    briefs: uneSelectedBriefs(),
+    articles: uneArticlesWithRoles().articles,
+    briefs: uneArticlesWithRoles().briefs,
     /* « En ondes » = émission en cours : sans objet pour le lendemain (grille inconnue). */
     radioLines: (recap || past || ahead) ? [] : pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
     sportsLines,
     /* Période passée : matchs à partir du lendemain (ceux du jour peuvent être joués à l’impression). */
-    mastGames: pickPosterSports(bars.sports, campus, 6, info && info.live ? info.target : posterNextYmd()),
+    mastGames,
+    mastGamesManual: sloganManual,
     mastExtras: uneMastExtras(state.uneMastExtra || 'radio', bars, campus, info, sportsLines),
     mastNote,
     mastNoteEn,
@@ -2582,8 +2736,8 @@ async function preview() {
     if (isUneModel()) {
       paintPreview(null, photo, { articleImages: new Map() });
       await loadUneSidebars();
-      if (state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) await loadUneSportsHistory();
-      const images = await loadUneImages(selectedUneArticles());
+      if ((state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) || uneSportsManualActive()) await loadUneSportsHistory();
+      const images = await loadUneImages(uneArticlesWithRoles().articles);
       if (gen !== previewGen) return;
       let bg = null;
       if (photo) {
@@ -2776,8 +2930,8 @@ async function downloadPrint(kind = 'pdf') {
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
     if (isUneModel()) await loadUneSidebars();
-    if (isUneModel() && state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) await loadUneSportsHistory();
-    const uneImages = isUneModel() ? await loadUneImages(selectedUneArticles()) : null;
+    if (isUneModel() && ((state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) || uneSportsManualActive())) await loadUneSportsHistory();
+    const uneImages = isUneModel() ? await loadUneImages(uneArticlesWithRoles().articles) : null;
     const { w, h } = px(fmt, dpi);
     const composeOpts = isUneModel()
       ? uneComposeOpts(dpi, uneImages, img, photo)
@@ -3039,8 +3193,14 @@ function applyQuery() {
   const leadPick = q.get('une');
   if (leadPick && /^[0-9a-f]{16}$/.test(leadPick)) {
     state.uneLeadId = leadPick;
-    if (!state.uneManualIds.includes(leadPick)) state.uneManualIds.push(leadPick);
+    if (state.uneManualIds.length && !state.uneManualIds.includes(leadPick)) state.uneManualIds.push(leadPick);
   }
+  const ids16 = (k) => (q.get(k) || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{16}$/.test(x));
+  const ids8 = (k) => (q.get(k) || '').split(',').map((x) => x.trim()).filter((x) => /^[0-9a-f]{8}$/.test(x));
+  state.uneRoles = { aussi: ids16('aussi'), vedettes: ids16('vedettes'), bref: ids16('bref'), masquer: ids16('masquer') };
+  state.uneSportSlogan = ids8('slogan');
+  state.uneSportBand = ids8('bande');
+  state.uneSportHide = ids8('sportsmasques');
   const phrase = q.get('phrase') || q.get('tagline');
   if (phrase && Object.prototype.hasOwnProperty.call(UNE_TAGLINES, phrase)) {
     state.uneTagline = phrase;
@@ -3232,8 +3392,13 @@ function bind() {
     autoBtn.addEventListener('click', () => {
       state.uneManualIds = [];
       state.uneLeadId = '';
+      state.uneRoles = { aussi: [], vedettes: [], bref: [], masquer: [] };
+      state.uneSportBand = [];
+      state.uneSportSlogan = [];
+      state.uneSportHide = [];
       syncUneSelectionUrl();
       renderUneList();
+      renderUneSportsList();
       preview();
     });
   }

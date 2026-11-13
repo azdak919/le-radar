@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=une-9">
+  <link rel="stylesheet" href="./poster-builder.css?v=une-10">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -244,7 +244,7 @@
         <fieldset class="js-une-only" id="une-tagline-box" hidden>
           <legend>Phrase sous « Scanne-moi »</legend>
           <select class="greeting" name="uneTagline" id="une-tagline">
-            <option value="direct" selected>Le fil étudiant en direct</option>
+            <option value="direct" selected>Le fil étudiant, en direct</option>
             <option value="auto">Automatique (campus ou tout le Radar)</option>
             <option value="fil">Le fil étudiant</option>
             <option value="tout">Tout le Radar étudiant</option>
@@ -257,6 +257,12 @@
           <p class="field-hint" id="une-status">Chargement des articles du site…</p>
           <button type="button" class="photo-more" id="une-auto" hidden>Revenir à la sélection automatique</button>
           <ol class="une-list" id="une-list"></ol>
+        </fieldset>
+
+        <fieldset class="js-une-only" id="une-sports-box" hidden>
+          <legend>Sports</legend>
+          <p class="field-hint">Auto par défaut. Placez un match ou un résultat sous le slogan, dans la bande (ou le bilan), ou masquez-le.</p>
+          <ol class="une-list" id="une-sports-list"></ol>
         </fieldset>
 
         <fieldset id="photo-box" class="js-campus-only">
@@ -355,6 +361,6 @@
   <script src="../scripts/magazine-front-page-lib.js"></script>
   <script src="../scripts/sports-payload-lib.js"></script>
   <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
-  <script src="./poster-builder.js?v=une-9"></script>
+  <script src="./poster-builder.js?v=une-10"></script>
 </body>
 </html>
