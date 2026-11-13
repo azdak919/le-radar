@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-13T13:15:10.253Z",
+  "updated": "2026-11-13T14:09:43.954Z",
   "total": 188,
   "withPhoto": 172,
-  "withStock": 29,
+  "withStock": 30,
   "withCampusBank": 27,
   "fullyCovered": 188,
-  "leadReadyPhotos": 162,
+  "leadReadyPhotos": 152,
   "pageScraped": 13,
   "photosRecovered": 13,
   "imagesCleared": 1,
-  "stockSearches": 28,
-  "stockFound": 24,
+  "stockSearches": 36,
+  "stockFound": 25,
   "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
@@ -27,22 +27,16 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/La-Ferme-ou-comment-nourrir-un-futur-intelligent.png"
     },
     {
+      "title": "Prouve que tu existes",
+      "link": "https://www.delitfrancais.com/2026/11/11/prouve-que-tu-existes/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "When Neutrality Becomes Silence: McGill’s Responsibility to Protect Political Dissent",
       "link": "https://www.mcgilldaily.com/2026/11/when-neutrality-becomes-silence-mcgills-responsibility-to-protect-political-dissent/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
-    },
-    {
-      "title": "Les Redbirds à nouveau Rois du Québec",
-      "link": "https://www.delitfrancais.com/2026/11/11/les-redbirds-a-nouveau-rois-du-quebec/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
-      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "Laisser couler l’eau",
@@ -51,10 +45,16 @@
       "image": null
     },
     {
-      "title": "Creative Writing October 2026",
-      "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
+      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "On Mental Health’s Legalities and Limits: Analysing P-38",
+      "link": "https://theplantnews.com/2026/11/05/on-mental-healths-legalities-and-limits-analysing-p-38/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Dawson_College_04.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -81,10 +81,10 @@
       "image": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png"
     },
     {
-      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
-      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "title": "Neuf Félix plus tard, Angine de Poitrine fait rayonner le Saguenay–Lac Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/11/09/neuf-felix-plus-tard-angine-de-poitrine-fait-rayonner-le-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=neuf-felix-plus-tard-angine-de-poitrine-fait-rayonner-le-saguenay-lac-saint-jean",
       "reason": "no-stock-match",
-      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Angine_de_Poitrine_in_May_2026_at_the_Great_Escape_50.jpg"
     }
   ]
 }
