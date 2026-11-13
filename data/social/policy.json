@@ -138,7 +138,8 @@
     }
    },
    "maxItems": 4,
-   "maxNewsAgeH": 6
+   "maxNewsAgeH": 6,
+  "prepared": { "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que le compte et l’accès ne sont pas configurés et que ce bloc n’est pas activé dans une PR. Instagram : publication 4:5 1080×1350 (plage API 4:5 à 1,91:1, JPEG ≤ 8 Mo) et story 9:16 1080×1920 ; légende sans lien cliquable (lien en bio).", "instagram": { "enabled": false, "feed": "portrait", "story": "story" } }
   }
  }
 }

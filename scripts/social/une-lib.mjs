@@ -21,9 +21,20 @@ export const SLOTS = {
   matin: { id: 'matin', label: 'La une du matin', emoji: '☀️', target: '07:45', from: '07:30', to: '10:30' },
   soir: { id: 'soir', label: 'La une du soir', emoji: '🌙', target: '19:30', from: '19:15', to: '22:30' },
 };
-/** Format d'image par réseau : portrait 4:5 (Facebook, Tumblr), paysage 16:9 (X, Bluesky, Mastodon, LinkedIn). */
-export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'paysage', bluesky: 'paysage', mastodon: 'paysage', linkedin: 'paysage' };
-export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 } };
+/** Réseaux préparés mais désactivés tant que le compte et l'accès ne sont pas configurés (policy.json formats.une.prepared). */
+export const PREPARED_NETS = ['instagram'];
+/**
+ * Format d'image par réseau (revue du 12 nov. 2026, docs/social-engagement.md) : le portrait 4:5 s'affiche sans recadrage
+ * pour une image seule dans les fils mobiles de X, Bluesky (recadre seulement au-delà de 1:2), Mastodon (4.x, ratio natif),
+ * LinkedIn, Facebook, Tumblr et Instagram (plage API 4:5 à 1,91:1). Story Instagram : 9:16. Le paysage 16:9 reste rendu en
+ * aperçu (repli), sans réseau attitré.
+ */
+export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'portrait' };
+export const STORY_FOR = { instagram: 'story' };
+export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
+/** Formats à rendre pour une liste de réseaux (aperçu : tous). */
+export const formatsFor = (nets, all = false) => all ? ['portrait', 'story', 'paysage']
+  : [...new Set(nets.flatMap(n => [IMAGE_FOR[n], STORY_FOR[n]]).filter(Boolean))];
 /** Poids maximal d'une image (Bluesky : 976 Ko ; X : 5 Mo ; Mastodon : 8 Mo ; Facebook, LinkedIn, Tumblr : plus). */
 export const MAX_IMAGE_BYTES = 950 * 1024;
 
@@ -104,6 +115,65 @@ export function institutionLabel(it) {
 }
 /** Émoji du sport étudiant (titre ou extrait) ; '' si l'article n'est pas sportif. */
 const SPORT_EMOJI = { '#Football': '🏈', '#Hockey': '🏒', '#Basketball': '🏀', '#Volleyball': '🏐', '#Soccer': '⚽', '#Rugby': '🏉', '#Natation': '🏊', '#Athlétisme': '🏃' };
+const CODE_EMOJI = { football: '🏈', 'flag-football': '🏈', hockey: '🏒', basketball: '🏀', volleyball: '🏐', 'volleyball-plage': '🏐', soccer: '⚽', 'soccer-interieur': '⚽', futsal: '⚽', rugby: '🏉', natation: '🏊', athletisme: '🏃', 'cross-country': '🏃', badminton: '🏸', voile: '⛵', golf: '⛳', tennis: '🎾', ultimate: '🥏', curling: '🥌', ski: '⛷️', baseball: '⚾' };
+export const sportCodeEmoji = code => CODE_EMOJI[String(code || '').toLowerCase()] || '🏅';
+const SHORT_INST = { 'Université Laval': 'Laval', 'Université de Montréal': 'Montréal', 'Université de Sherbrooke': 'Sherbrooke', 'Université McGill': 'McGill', 'Université Concordia': 'Concordia', "Université Bishop's": "Bishop's", 'Université du Québec à Montréal': 'UQAM', 'Université du Québec à Trois-Rivières': 'UQTR', 'Université du Québec à Chicoutimi': 'UQAC', 'Université du Québec à Rimouski': 'UQAR', 'Université du Québec en Outaouais': 'UQO', 'École de technologie supérieure': 'ÉTS' };
+const teamLabel = (nick, inst) => {
+  const i = String(inst || '').replace(/\s+—\s+.*$/, '').trim();
+  const fr = FR_INSTITUTIONS[i.toLowerCase()] || i;
+  const short = SHORT_INST[fr] || fr.replace(/^(Cégep|Collège) (de |du |d’|d')?/, '').trim();
+  return { name: String(nick || short || '').trim(), inst: nick ? short : '' };
+};
+/**
+ * Résultats sportifs étudiants récents (sports-masthead.json du site, RSEQ) : une rencontre par gameId, score connu,
+ * saison en cours, jouée dans les `days` jours civils précédant `day` (Montréal). Universitaire d'abord, puis le plus récent.
+ * Repli : rencontres prévues aujourd'hui (sans score). Rien d'inventé : sans donnée récente, liste vide.
+ */
+export function pickSports(masthead, day, { max = 3, days = 2 } = {}) {
+  const teams = Object.values(masthead?.teams || {}), seen = new Set(), res = [], next = [];
+  const from = new Date(Date.parse(day + 'T12:00:00Z') - days * 864e5).toISOString().slice(0, 10);
+  const when = d => d === day ? 'aujourd’hui' : d === new Date(Date.parse(day + 'T12:00:00Z') - 864e5).toISOString().slice(0, 10) ? 'hier' : frDay(d);
+  for (const t of teams) {
+    if (!t || !t.sport) continue;
+    const me = teamLabel(t.nickname, t.institutionLabel || t.fullName || t.name);
+    for (const g of t.results || []) {
+      const id = g.gameId || `${t.id}:${g.date}`;
+      if (seen.has(id) || g.priorSeason || g.scoreFor == null || g.scoreAgainst == null || !g.date || g.date < from || g.date > day) continue;
+      seen.add(id);
+      const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
+      if (!me.name || !op.name) continue;
+      const a = { ...me, score: Number(g.scoreFor) }, b = { ...op, score: Number(g.scoreAgainst) };
+      res.push({ kind: 'resultat', emoji: sportCodeEmoji(t.sport), league: t.leagueLabel || t.sportLabel || '', date: g.date, when: when(g.date),
+        teams: a.score >= b.score ? [a, b] : [b, a], tie: a.score === b.score, uni: t.sector === 'universitaire' });
+    }
+    for (const g of t.nextGames || []) {
+      const id = g.gameId || `${t.id}:${g.date}:n`;
+      if (seen.has('n' + id) || g.date !== day) continue;
+      seen.add('n' + id);
+      const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
+      if (!me.name || !op.name) continue;
+      const host = g.home ? me : op, guest = g.home ? op : me;
+      next.push({ kind: 'avenir', emoji: sportCodeEmoji(t.sport), league: t.leagueLabel || t.sportLabel || '', date: g.date, when: 'aujourd’hui' + (g.time ? ' · ' + String(g.time).replace(':', ' h ') : ''),
+        teams: [guest, host], uni: t.sector === 'universitaire', time: g.time || '' });
+    }
+  }
+  const order = (x, y) => (y.uni - x.uni) || String(y.date).localeCompare(String(x.date));
+  // Variété : une rencontre par ligue d'abord (ex. basketball masculin puis féminin), puis le reste.
+  const vary = list => { const seenL = new Set(), first = [], more = []; for (const r of list) (seenL.has(r.league) ? more : first).push(r), seenL.add(r.league); return [...first, ...more]; };
+  if (res.length) return vary(res.sort(order)).slice(0, max);
+  return next.sort((x, y) => (y.uni - x.uni) || String(x.time).localeCompare(String(y.time))).slice(0, max);
+}
+/** Ligne texte d'un résultat (réseaux) : « 🏀 Stingers (Concordia) 68-44 Redbirds (McGill) ». */
+export const sportsLine = r => r.kind === 'resultat'
+  ? `${r.emoji} ${r.teams[0].name}${r.teams[0].inst ? ` (${r.teams[0].inst})` : ''} ${r.teams[0].score}-${r.teams[1].score} ${r.teams[1].name}${r.teams[1].inst ? ` (${r.teams[1].inst})` : ''}`
+  : `${r.emoji} ${r.teams[0].name} chez ${r.teams[1].name}, ${r.when}`;
+
+/** Typographie française pour l'affichage : apostrophe courbe, guillemets « », espaces fines insécables avant ; : ! ? et dans les guillemets. */
+export function frTypo(s) {
+  return String(s || '').replace(/'/g, '’').replace(/"([^"]+)"/g, '« $1 »')
+    .replace(/\s+([;!?»])/g, '\u202F$1').replace(/(\S)([;!?])(?=\s|$)/g, '$1\u202F$2').replace(/\s+:(\s|$)/g, '\u00A0:$1')
+    .replace(/«\s*/g, '«\u202F').replace(/\u202F»/g, '\u202F»').replace(/\s+…/g, '…').replace(/ {2,}/g, ' ').trim();
+}
 export const sportEmoji = it => SPORT_EMOJI[sportTagOf([it?.title, it?.excerpt].filter(Boolean).join(' '))] || '';
 
 /**
@@ -178,24 +248,32 @@ const clip = (s, n) => { const a = [...s]; return a.length <= n ? s : a.slice(0,
  * Réseaux courts (X, Bluesky) : titres + signatures, un seul lien (l'article si un seul titre, sinon l'accueil).
  * Si le texte dépasse la limite : on retire des articles (jamais la une), puis des hashtags, puis on raccourcit les titres.
  */
-export function buildUneText(model, net, spec = NET_SPEC[net], { tags = [] } = {}) {
+/** Instagram (préparé, désactivé) : légende ≤ 2200, aucun lien cliquable, « lien en bio ». */
+export const IG_SPEC = { limit: 2200, len: s => [...String(s)].length, subheaders: true, nolink: true };
+const SPORTS_NETS = new Set(['facebook', 'linkedin', 'tumblr', 'instagram']);
+export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : NET_SPEC[net], { tags = [] } = {}) {
   const len = spec.len || xlen, long = !!spec.subheaders;
   const head = `${model.slot.emoji} ${model.slot.label} du Radar · ${frDay(model.slot.day)}`;
-  const compose = (items, hash, cut) => {
+  const compose = (items, hash, cut, sports) => {
     const T = x => cut ? clip(x.title, cut) : x.title;
     let body;
-    if (long) {
+    if (spec.nolink) {
+      body = items.map((x, i) => `${i + 1}. ${x.sport ? x.sport + ' ' : ''}${T(x)}\n✍️ ${x.byline}`).join('\n\n');
+    } else if (long) {
       body = items.map((x, i) => `${i + 1}. ${x.sport ? x.sport + ' ' : ''}${T(x)}\n✍️ ${x.byline}\n${x.pageUrl}`).join('\n\n');
-      body += `\n\nToute la une : ${HOME}`;
     } else {
       body = items.map(x => `${x.sport || '▪️'} ${T(x)} — ${x.byline}`).join('\n') + '\n\n' + (items.length === 1 ? items[0].pageUrl : HOME);
     }
+    if (sports.length) body += `\n\n🏟️ Sport étudiant (${sports[0].kind === 'resultat' ? 'résultats' : 'à l’affiche'}) :\n` + sports.map(sportsLine).join('\n');
+    if (spec.nolink) body += '\n\nToute la une : lien en bio (le-radar.ca)';
+    else if (long) body += `\n\nToute la une : ${HOME}`;
     return [head, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
-  let items = [...model.items], hash = [...tags], cut = 0;
+  let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports || [])] : [];
   for (;;) {
-    const t = compose(items, hash, cut);
+    const t = compose(items, hash, cut, sports);
     if (len(t) <= spec.limit) return t;
+    if (sports.length) { sports = sports.slice(0, -1); continue; }
     if (items.length > 1) { items = items.slice(0, -1); continue; }
     if (hash.length > 1) { hash = hash.slice(0, -1); continue; }
     cut = cut ? cut - 10 : 120; if (cut < 30) return null;
@@ -209,14 +287,15 @@ export function altText(model) {
   return clip(s + ' Lire sur le-radar.ca.', 1000);
 }
 /** Contrôles avant envoi : limite, aucune mention @, aucun « week-end », lien le-radar.ca, titre de la une présent. */
-export function checkUneText(text, net, model, spec = NET_SPEC[net]) {
+export function checkUneText(text, net, model, spec = net === 'instagram' ? IG_SPEC : NET_SPEC[net]) {
   const p = [], len = spec.len || xlen;
   if (!text) return ['texte vide'];
   if (len(text) > spec.limit) p.push(`trop long (${len(text)}/${spec.limit})`);
   if (/(^|[\s(])@[\w.]+/.test(text)) p.push('mention @ interdite');
   const own = model.items.reduce((t, x) => t.split(x.title).join(' '), text).replace(/https?:\/\/\S+/g, ' ');
   if (/week-?end/i.test(own)) p.push('« week-end » interdit (écrire « fin de semaine »)');
-  if (!/https:\/\/le-radar\.ca\//.test(text)) p.push('lien le-radar.ca manquant');
+  if (spec.nolink) { if (/https?:\/\//.test(text)) p.push('lien cliquable interdit (Instagram)'); if (!/lien en bio/.test(text)) p.push('« lien en bio » manquant'); }
+  else if (!/https:\/\/le-radar\.ca\//.test(text)) p.push('lien le-radar.ca manquant');
   if (/undefined|NaN|\[object|null/.test(text)) p.push('valeur invalide');
   const leadStart = [...model.items[0].title].slice(0, 20).join('');
   if (!text.includes(leadStart)) p.push('titre de la une absent');
@@ -225,10 +304,10 @@ export function checkUneText(text, net, model, spec = NET_SPEC[net]) {
 /** Tous les textes d'un créneau. `maxByNetwork` : plafonds de hashtags. */
 export function buildUneAll(model, maxByNetwork = {}) {
   const out = {};
-  for (const n of NETS) {
-    const spec = NET_SPEC[n], tags = n === 'tumblr' ? [] : uneTags(model.items, maxByNetwork[n] ?? 2);
+  for (const n of [...NETS, ...PREPARED_NETS]) {
+    const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n], tags = n === 'tumblr' ? [] : uneTags(model.items, maxByNetwork[n] ?? (n === 'instagram' ? 5 : 2));
     const text = buildUneText(model, n, spec, { tags });
-    out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n], problems: checkUneText(text, n, model, spec) };
+    out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] + (STORY_FOR[n] ? ' + ' + STORY_FOR[n] : ''), problems: checkUneText(text, n, model, spec) };
   }
   return out;
 }

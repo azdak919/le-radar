@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // « La une du matin » (≈ 7 h 45) et « La une du soir » (≈ 19 h 30), heure de Montréal, sur six réseaux.
 //  - Sélection : la une réelle du jour (scripts/social/une-lib.mjs), sans doublon entre créneaux ; le soir saute s'il n'y a rien de nouveau.
-//  - Images : affiches/social-une.html rendu sans tête (portrait 1080×1350, paysage 1200×675), sans code QR.
+//  - Images : affiches/social-une.html rendu sans tête, portrait 4:5 1080×1350 sur tous les réseaux (story 9:16 pour Instagram,
+//    préparé mais désactivé ; paysage 16:9 en aperçu seulement), matin clair, soir sombre, sans code QR.
 //  - État idempotent : data/social/une-state.json (clé AAAA-MM-JJ:matin|soir, puis réseau). Une seule publication par réseau et par créneau ;
 //    chaque réseau a sa propre file (un échec n'arrête pas les autres ; 3 essais au plus).
 //  - DRY_RUN (défaut) : aperçus seulement, rien n'est hébergé ni publié, l'état n'est pas modifié.
@@ -11,7 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, pickSports, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -114,7 +115,7 @@ export function previewMarkdown(slot, sel, texts, images, { dry, reason }) {
   const L = [`## ${slot.label} (${slot.key}) — ${dry ? 'essai DRY_RUN, rien n\'est publié' : 'passage réel'}`, '', `Décision : ${reason}`, ''];
   if (sel.doubts?.length) L.push(`Doutes : ${sel.doubts.join(' ; ')}.`, '');
   for (const t of sel.translated || []) L.push(`Traduit : « ${t.from} » → « ${t.to} »`);
-  if (images) for (const [f, v] of Object.entries(images)) L.push(`Image ${f} : ${path.basename(v.file)} (${v.width}×${v.height}, ${Math.round(v.bytes / 1024)} Ko, ${v.shown} article(s), photo ${v.photo ? 'oui' : 'non'})`);
+  if (images) for (const [f, v] of Object.entries(images)) L.push(`Image ${f} : ${path.basename(v.file)} (${v.width}×${v.height}, ${Math.round(v.bytes / 1024)} Ko, ${v.shown} article(s), ${v.sports} résultat(s) sportif(s), photo ${v.photo ? 'oui' : 'non'})`);
   L.push('');
   for (const [n, v] of Object.entries(texts || {})) L.push(`### ${n} (${v.len}/${v.limit}, image ${v.image})`, '', '```text', v.text || '(aucun texte)', '```', v.problems.length ? `Problèmes : ${v.problems.join(' ; ')}` : 'Contrôles : OK', n === 'tumblr' ? `Étiquettes Tumblr : ${v.tags.join(', ')}` : '', '');
   return L.join('\n');
@@ -156,10 +157,14 @@ async function main() {
     if (!sel.items.length && !sel.skip) { sel.skip = true; sel.why = 'aucun article publiable en français : publication sautée'; }
     console.log(`Sélection ${slot.key} : ${sel.items.length} article(s)${sel.doubts.length ? ' ; doutes : ' + sel.doubts.join(' ; ') : ''}`);
     if (sel.skip) { reason = sel.why; fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), previewMarkdown(slot, sel, null, null, { dry, reason })); console.log(reason); if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${slot.label} : ${reason}\n`); return; }
-    const model = { slot, items: sel.items };
+    // Sport étudiant : résultats récents du site (sports-masthead.json) pour l'image et les textes longs ; rien si aucune donnée récente.
+    let sports = [];
+    try { sports = pickSports(rd(arg('sports', 'sports-masthead.json')), slot.day, { max: 3, days: 2 }); } catch (e) { console.log(`::warning::résultats sportifs illisibles (${String(e.message).slice(0, 120)}) : image sans bloc sport.`); }
+    console.log(`Sport étudiant : ${sports.length} ${sports[0]?.kind === 'avenir' ? 'rencontre(s) à l’affiche' : 'résultat(s)'}`);
+    const model = { slot, items: sel.items, sports };
     texts = buildUneAll(model, POLICY.hashtags?.maxByNetwork || {});
     const { renderImages } = await import('./une-render.mjs');
-    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}` });
+    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats: formatsFor(nets, dry) });
     const bad = Object.entries(texts).filter(([n, v]) => nets.includes(n) && v.problems.length);
     if (dry) reason = 'essai (DRY_RUN) : aucun envoi.';
     else if (!CFG.publish) reason = 'publication désactivée dans data/social/policy.json (formats.une.publish = false).';
@@ -179,7 +184,7 @@ async function main() {
     try { urls = await hostImages(images, slot.key); }
     catch (e) {
       console.log(`::warning::hébergement des images impossible (${String(e.message).slice(0, 200)}) : repli sur la photo de la une.`);
-      const lead = sel.items[0].siteImage || 'https://le-radar.ca/assets/og-cover.png'; urls = { portrait: lead, paysage: lead };
+      const lead = sel.items[0].siteImage || 'https://le-radar.ca/assets/og-cover.png'; urls = { portrait: lead };
     }
     entry = state[slot.key] = { key: slot.key, at: new Date().toISOString(), ids: sel.ids, texts: Object.fromEntries(Object.entries(texts).map(([n, v]) => [n, v.text])),
       tumblrTags: texts.tumblr.tags, alt: altText(model), images: urls, nets: {} };

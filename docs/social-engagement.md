@@ -26,6 +26,19 @@ Deux rendez-vous par jour, en plus des publications existantes : « La une du ma
 
 - Contenu : la une réelle du jour (même sélection que l’accueil et l’affiche « Aujourd’hui », sport professionnel exclu), titres, tous les auteurs (sinon le média), émoji du sport étudiant s’il y a lieu, liens le-radar.ca et hashtags, sans mention @. Le soir ne reprend aucun article du matin et saute la publication s’il n’y a rien de nouveau.
 - Français seulement (visuels et textes de tous les réseaux) : titres et résumés anglais traduits par le module du site, `translate.js` (`RadarTranslate.translateText`, chargé dans le navigateur sans tête). Noms d’auteurs et de médias inchangés ; établissements nommés en français (Université Concordia, Université McGill, Université Bishop’s). Si la traduction échoue, renvoie l’original ou reste en anglais, l’article est exclu ; « week-end » devient « fin de semaine ».
-- Image : `affiches/social-une.html` rendu sans tête (gabarit « Verre » retenu par un panel focus-group synthétique le 12 nov. 2026 : photo pleine page, cartes en verre dépoli, auteurs en violet sous chaque titre, aucun logo d’université), portrait 1080 × 1350 (Facebook, Tumblr) ou paysage 1200 × 675 (X, Bluesky, Mastodon, LinkedIn), sans code QR, avec texte alternatif. Les images sont hébergées sur la branche `social-une-media` (jamais fusionnée dans main).
+- Image : `affiches/social-une.html` rendu sans tête. Gabarit « Verre » avec photo de la une dégagée en haut (retour de Charles du 12 nov. 2026 : mélange des pistes A et B), une en carte de verre dépoli, « Aussi à la une » avec vignettes, auteurs « Par … · média » sous chaque titre, puis un bloc « Sport étudiant · résultats » : vrais résultats récents (≤ 2 jours, `sports-masthead.json`, une rencontre par ligue d'abord, émoji du sport). Sans résultat récent : rencontres du jour, sinon aucun bloc (la photo s'agrandit, aucun vide). Matin en thème clair, soir en thème sombre (couleurs de `style.css`), polices officielles du site (Source Serif 4, Inter), marque « LE‑RADAR.ca », pied avec le nom complet du Radar au-dessus de « Projet indépendant ». Typographie française (apostrophes courbes, espaces fines avant ; ! ?), aucun logo d'université, aucun code QR.
+- Formats (revue du 12 nov. 2026) :
+
+  | Réseau | Format | Raison | Source |
+  |---|---|---|---|
+  | X | 4:5 1080×1350 | image seule affichée sans recadrage dans l'appli mobile, deux fois plus haute qu'un 16:9 | annonce de l'affichage non recadré (mai 2021) |
+  | Bluesky | 4:5 1080×1350 (≤ 976 Ko, aspectRatio envoyé) | le fil ne recadre qu'au-delà de 1:2 | bluesky-social/social-app, `AutoSizedImage.tsx` |
+  | Mastodon (piaille.fr 4.7) | 4:5 1080×1350 | image seule au ratio natif, hauteur plafonnée sans recadrage | mastodon/mastodon PR 26132 ; `--max-media-height-*` |
+  | LinkedIn (Buffer) | 4:5 1080×1350 | portrait plein écran sur mobile | guides de formats 2026 |
+  | Facebook (Buffer) | 4:5 1080×1350 | format portrait du fil mobile | guides de formats 2026 |
+  | Tumblr | 4:5 1080×1350 | ratio natif dans le tableau de bord | API NPF |
+  | Instagram (préparé, désactivé) | publication 4:5 1080×1350, story 9:16 1080×1920 | l'API refuse le 3:4 (plage 4:5 à 1,91:1, JPEG ≤ 8 Mo) ; story avec bandeau et pied sous l'interface | Meta, IG User Media et Content Publishing |
+
+  Le paysage 16:9 1200×675 reste rendu en aperçu (repli), sans réseau attitré. Instagram : légende sans lien cliquable (« lien en bio »), jusqu'à 5 hashtags ; `formats.une.prepared.instagram.enabled = false` dans `data/social/policy.json`, rien n'est envoyé tant que le compte et l'accès ne sont pas configurés.
 - Fenêtres d’envoi : matin 7 h 30 à 10 h 30, soir 19 h 15 à 22 h 30 (`data/social/policy.json`, `formats.une`). Crons pour l’heure d’été et l’heure d’hiver, plus un passage après chaque « Social — Mastodon ». `data/social/une-state.json` garantit une seule publication par réseau et par créneau ; un réseau en échec est réessayé seul (3 essais au plus).
 - Essai sans envoi : déclenchement manuel avec `dry_run` coché (défaut), ou le workflow d’aperçu des PR (`social-une-preview.yml`).

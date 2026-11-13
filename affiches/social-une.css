@@ -1,85 +1,134 @@
-@font-face { font-family: 'LR Serif'; src: url(../scripts/og-fonts/SourceSerif4Display-Bold.ttf); font-weight: 700; }
-@font-face { font-family: 'LR Sans'; src: url(../scripts/og-fonts/Inter-Regular.ttf); font-weight: 400; }
-@font-face { font-family: 'LR Sans'; src: url(../scripts/og-fonts/Inter-SemiBold.ttf); font-weight: 600 700; }
-:root { --purple: #6C2163; --deep: #3E1139; --paper: #F7F2EB; --ink: #1E1A17; --mute: #5E5A54; --rule: #D9CFC4; --accent: #F28C28; }
+/* Polices officielles du site (mobile/app/fonts) : Source Serif 4 (marque, titres) et Inter (texte). */
+@font-face { font-family: 'Source Serif 4'; src: url(../mobile/app/fonts/source-serif-4-700.woff2) format('woff2'); font-weight: 700; }
+@font-face { font-family: 'Source Serif 4'; src: url(../mobile/app/fonts/source-serif-4-600.woff2) format('woff2'); font-weight: 600; }
+@font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-400.woff2) format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-600.woff2) format('woff2'); font-weight: 600; }
+@font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-700.woff2) format('woff2'); font-weight: 700; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--paper); }
-body { font-family: 'LR Sans', system-ui, sans-serif; color: var(--ink); font-synthesis: none; -webkit-font-smoothing: antialiased; }
-.card { position: relative; overflow: hidden; background: var(--paper); display: flex; flex-direction: column; }
-.card.matin { --accent: #F28C28; } .card.soir { --accent: #8FA8FF; }
-.portrait { width: 1080px; height: 1350px; } .paysage { width: 1200px; height: 675px; }
+body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-synthesis: none; -webkit-font-smoothing: antialiased; font-kerning: normal; }
+.serif, .wm, .title, .item .t, .tm .pt, .num { font-family: 'Source Serif 4', 'Noto Color Emoji', Georgia, serif; }
 
-/* Bandeau commun (v3 : violet plein, marque en serif) */
-.mast { position: relative; z-index: 2; background: var(--purple); color: #fff; display: flex; align-items: center; gap: 20px; padding: 0 40px; flex: none; height: 132px; }
-.paysage .mast { height: 88px; padding: 0 30px; gap: 14px; }
-.mast .logo { background: #fff; border-radius: 18px; display: grid; place-items: center; flex: none; width: 88px; height: 88px; }
-.paysage .mast .logo { width: 60px; height: 60px; border-radius: 13px; }
-.mast .logo img { width: 78%; height: 78%; }
-.mast .brand { font: 700 60px/1 'LR Serif'; letter-spacing: -0.5px; }
-.paysage .mast .brand { font-size: 42px; }
-.mast .slot { margin-left: auto; text-align: right; }
-.mast .slot b { display: inline-block; font-weight: 700; font-size: 30px; background: var(--accent); color: var(--deep); padding: 6px 16px; border-radius: 999px; }
-.mast .slot span { display: block; font-size: 22px; opacity: .9; margin-top: 6px; }
-.paysage .mast .slot b { font-size: 22px; padding: 4px 12px; } .paysage .mast .slot span { font-size: 17px; margin-top: 4px; }
+/* Thèmes du site (style.css : :root et [data-theme="dark"]). Matin = clair, soir = sombre. */
+.card.clair { --bg: #ffffff; --bg-soft: #f6f6f4; --ink: #16181c; --ink-soft: #44474d; --muted: #5f646c; --rule: #e7e7e3; --accent: #6c2163; --on-accent: #ffffff;
+  --veil: rgba(255,255,255,.80); --glass: rgba(255,255,255,.80); --glass-line: rgba(22,24,28,.10); --shadow: 0 14px 40px rgba(22,24,28,.16); --pill: #F28C28; --on-pill: #16181c; --foot: #6c2163; --on-foot: #ffffff; }
+.card.sombre { --bg: #0e0f12; --bg-soft: #181a1e; --ink: #f1f2f4; --ink-soft: #c2c6cd; --muted: #a3a8b0; --rule: #2e3036; --accent: #cf7ec1; --on-accent: #0e0f12;
+  --veil: rgba(14,15,18,.82); --glass: rgba(24,26,30,.80); --glass-line: rgba(255,255,255,.12); --shadow: 0 14px 40px rgba(0,0,0,.5); --pill: #8FA8FF; --on-pill: #0e0f12; --foot: #181a1e; --on-foot: #f1f2f4; }
+.card { position: relative; overflow: hidden; background: var(--bg); color: var(--ink); display: flex; flex-direction: column; }
+.portrait { width: 1080px; height: 1350px; } .paysage { width: 1200px; height: 675px; } .story { width: 1080px; height: 1920px; }
 
-.main { position: relative; flex: 1; min-height: 0; display: grid; }
-.photo, .thumb { position: relative; overflow: hidden; background: linear-gradient(135deg, var(--purple), var(--deep)); }
+/* Fond : la photo de la une floutée sous un voile au thème (verre dépoli des cartes). */
+.bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--bg-soft); }
+.bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(46px) saturate(1.25); transform: scale(1.2); }
+.bg::after { content: ''; position: absolute; inset: 0; background: var(--veil); }
+
+/* Bandeau : marque officielle (icône + « LE‑RADAR.ca » en Source Serif 4 gras, −0,02 em). */
+.mast { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex: none; height: 116px; padding: 0 40px; background: var(--bg); border-bottom: 1px solid var(--rule); }
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand .logo { width: 68px; height: 68px; display: block; }
+.wm { font-weight: 700; font-size: 56px; letter-spacing: -0.02em; line-height: 1; color: var(--ink); white-space: nowrap; }
+.slot { text-align: right; }
+.slot b { display: inline-block; font-weight: 700; font-size: 28px; line-height: 1; background: var(--pill); color: var(--on-pill); padding: 10px 18px; border-radius: 999px; }
+.slot span { display: block; font-size: 22px; color: var(--ink-soft); margin-top: 8px; font-weight: 600; }
+
+.main { position: relative; z-index: 1; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; padding: 0 0 20px; }
+.col { min-height: 0; display: flex; flex-direction: column; gap: 14px; }
+.col.a { flex: 1 1 auto; }
+.col.b { flex: none; padding: 0 32px; }
+
+/* Photo de la une : pleine largeur, dégagée (seul le bas est effleuré par la carte). */
+.photo, .thumb { position: relative; overflow: hidden; background: linear-gradient(135deg, #6c2163, #3e1139); }
+.photo { flex: 1 1 0; min-height: 0; }
 .photo img, .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo.empty::after { content: 'LE-RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.3); font: 700 60px 'LR Serif'; }
-.thumb.empty::after { content: ''; }
-.badge { position: absolute; left: 0; top: 0; background: var(--purple); color: #fff; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 20px; padding: 9px 16px; }
-.paysage .badge { font-size: 15px; padding: 6px 12px; }
-.credit { position: absolute; right: 0; bottom: 0; background: rgba(0,0,0,.55); color: #fff; padding: 4px 10px; font-size: 15px; max-width: 70%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.paysage .credit { font-size: 12px; }
-.lead { min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.photo.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
+.badge { position: absolute; left: 32px; top: 22px; background: #6c2163; color: #fff; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 20px; line-height: 1; padding: 10px 16px; border-radius: 999px; }
+.credit { position: absolute; right: 32px; top: 22px; background: rgba(0,0,0,.6); color: #fff; padding: 6px 12px; font-size: 16px; line-height: 1.2; border-radius: 999px; max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.glass { position: relative; z-index: 2; background: var(--glass); -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3); border: 1px solid var(--glass-line); border-radius: 24px; box-shadow: var(--shadow); }
+.lead { flex: none; margin: -56px 32px 0; padding: 18px 26px 18px; display: flex; flex-direction: column; overflow: hidden; }
 .lead > * { flex: none; }
-.kick { display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--purple); font-size: 20px; margin-bottom: 8px; }
-.kick .emo { font-size: 1.35em; letter-spacing: 0; }
-.title { font: 700 58px/1.1 'LR Serif'; letter-spacing: -0.4px; overflow: hidden; max-height: calc(58px * 1.1 * 3 + 6px); }
-.by { margin-top: 10px; font-size: 25px; }
-.by .who { font-weight: 700; color: var(--purple); }
-.by .src { color: var(--mute); }
-.hook { margin-top: 10px; font-size: 23px; line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; }
-.side { min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
-.side h2 { font-size: 18px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--purple); font-weight: 700; padding: 0 0 8px; }
+.kick { display: flex; align-items: center; gap: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-size: 19px; line-height: 1.2; margin-bottom: 8px; }
+.kick .emo { font-size: 1.3em; letter-spacing: 0; line-height: 1; }
+.title { font-weight: 700; font-size: 50px; line-height: 1.1; letter-spacing: -0.01em; overflow: hidden; max-height: calc(50px * 1.12 * 3 + 6px); text-wrap: pretty; }
+.by { margin-top: 10px; font-size: 24px; line-height: 1.3; }
+.by .who { font-weight: 700; color: var(--accent); }
+.by .src { color: var(--muted); }
+.hook { margin-top: 10px; font-size: 22px; line-height: 1.38; color: var(--ink-soft); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; text-wrap: pretty; }
+
+h2 { font-size: 17px; line-height: 1.2; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.side { padding: 14px 24px 2px; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.side h2 { padding-bottom: 6px; }
 .list { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
-.item { display: grid; grid-template-columns: 150px 1fr; gap: 18px; align-items: start; padding: 14px 0; border-top: 2px solid var(--rule); }
-.item .thumb { width: 150px; height: 104px; border-radius: 10px; }
-.item .num { position: absolute; left: 0; top: 0; background: var(--purple); color: #fff; font: 700 24px/1 'LR Serif'; padding: 7px 11px; border-bottom-right-radius: 10px; }
-.item .kick { font-size: 15px; margin-bottom: 4px; }
-.item .t { font: 700 30px/1.13 'LR Serif'; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.item .by { font-size: 19px; margin-top: 5px; }
-.paysage .title { font-size: 38px; max-height: calc(38px * 1.1 * 3 + 6px); }
-.paysage .kick { font-size: 15px; margin-bottom: 5px; }
-.paysage .by { font-size: 18px; margin-top: 8px; }
-.paysage .hook { font-size: 17px; margin-top: 7px; }
-.paysage .item { grid-template-columns: 96px 1fr; gap: 12px; padding: 10px 0; }
-.paysage .item .thumb { width: 96px; height: 72px; border-radius: 8px; }
-.paysage .item .num { font-size: 17px; padding: 5px 8px; }
-.paysage .item .kick { font-size: 12px; margin-bottom: 2px; }
+.item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: center; padding: 10px 0; border-top: 1px solid var(--rule); }
+.item:first-child { border-top: 0; }
+.item .thumb { width: 120px; height: 84px; border-radius: 10px; }
+.num { position: absolute; left: 0; top: 0; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 22px; line-height: 1; padding: 6px 10px; border-bottom-right-radius: 10px; }
+.item .kick { font-size: 14px; margin-bottom: 3px; }
+.item .t { font-weight: 700; font-size: 26px; line-height: 1.14; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; text-wrap: pretty; }
+.item .by { font-size: 18px; margin-top: 4px; }
+
+/* Résultats sportifs étudiants (sports-masthead.json) : tableau de score compact. */
+.sports { flex: none; padding: 12px 24px 14px; }
+.sports h2 { padding-bottom: 10px; }
+.grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0; }
+.score { padding: 0 18px; border-left: 1px solid var(--rule); min-width: 0; }
+.score:first-child { border-left: 0; padding-left: 0; } .score:last-child { padding-right: 0; }
+.lg { display: flex; align-items: flex-start; gap: 8px; font-size: 15px; line-height: 1.25; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+.lg .emo { font-size: 22px; line-height: 1; }
+.tm { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 22px; line-height: 1.35; color: var(--ink-soft); }
+.tm .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.tm small { font-size: 16px; color: var(--muted); font-weight: 400; }
+.tm .pt { font-weight: 700; font-size: 28px; font-variant-numeric: tabular-nums lining-nums; color: var(--ink-soft); }
+.tm.win { color: var(--ink); font-weight: 700; } .tm.win .pt { color: var(--ink); }
+.when { margin-top: 4px; font-size: 14px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+.score.next .tm { font-size: 20px; }
+
+/* Pied : nom complet du Radar au-dessus de « Projet indépendant ». */
+.foot { position: relative; z-index: 2; flex: none; height: 84px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--foot); color: var(--on-foot); }
+.sombre .foot { border-top: 1px solid var(--rule); }
+.foot .url { font-weight: 700; font-size: 30px; letter-spacing: -0.01em; }
+.legal { display: flex; flex-direction: column; align-items: flex-end; text-align: right; line-height: 1.25; }
+.legal .full { font-size: 17px; font-weight: 600; }
+.legal .ind { font-size: 15px; opacity: .85; }
+
+/* Solo (une seule nouvelle) : la carte respire. */
+.solo .title { max-height: calc(50px * 1.12 * 5 + 6px); }
+
+/* Story Instagram 9:16 : zones réservées à l'interface (haut ≈ 250 px, bas ≈ 250 px) couvertes par le bandeau et le pied pleins. */
+.story .mast { height: 270px; padding-top: 150px; align-items: center; }
+.story .foot { height: 290px; padding-bottom: 200px; }
+.story .title { font-size: 56px; max-height: calc(56px * 1.12 * 4 + 6px); }
+
+/* Paysage 16:9 (repli) : photo + une à gauche, liste et sport à droite. */
+.paysage .mast { height: 76px; padding: 0 28px; }
+.paysage .brand { gap: 12px; } .paysage .brand .logo { width: 48px; height: 48px; } .paysage .wm { font-size: 38px; }
+.paysage .slot b { font-size: 20px; padding: 7px 13px; } .paysage .slot span { font-size: 15px; margin-top: 5px; }
+.paysage .main { flex-direction: row; gap: 18px; padding: 0 22px 16px 0; }
+.paysage .col.a { flex: 0 0 620px; }
+.paysage .col.b { flex: 1 1 0; padding: 16px 0 0; gap: 12px; }
+.paysage .badge { left: 22px; top: 14px; font-size: 14px; padding: 7px 11px; } .paysage .credit { right: 14px; top: 14px; font-size: 12px; }
+.paysage .lead { margin: -54px 0 0 22px; padding: 14px 20px; border-radius: 18px; }
+.paysage .kick { font-size: 14px; margin-bottom: 5px; }
+.paysage .title { font-size: 34px; max-height: calc(34px * 1.12 * 3 + 6px); }
+.paysage .by { font-size: 17px; margin-top: 6px; }
+.paysage .hook { font-size: 16px; margin-top: 6px; }
+.paysage h2 { font-size: 13px; }
+.paysage .side { padding: 10px 16px 2px; border-radius: 18px; flex: 1 1 auto; }
+.paysage .item { grid-template-columns: 104px 1fr; gap: 14px; padding: 9px 0; }
+.paysage .item .thumb { width: 104px; height: 76px; border-radius: 8px; }
+.paysage .num { font-size: 15px; padding: 4px 7px; }
+.paysage .item .kick { font-size: 11px; margin-bottom: 2px; }
 .paysage .item .t { font-size: 22px; }
 .paysage .item .by { font-size: 14px; margin-top: 3px; }
-.paysage .side h2 { font-size: 14px; }
-.foot { position: relative; z-index: 2; background: var(--deep); color: #fff; display: flex; align-items: center; justify-content: space-between; flex: none; height: 76px; padding: 0 40px; }
-.foot .url { font-weight: 700; font-size: 32px; }
-.foot .legal { opacity: .8; font-size: 17px; }
-.paysage .foot { height: 52px; padding: 0 30px; } .paysage .foot .url { font-size: 24px; } .paysage .foot .legal { font-size: 13px; }
-
-/* Gabarit retenu (panel du 12 nov. 2026, piste B « Verre ») : photo pleine page, cartes verre dépoli (v5 verre). Les pistes A « Journal » et C « Bloc violet » ont été écartées. */
-.piste-b .main { display: flex; flex-direction: column; justify-content: flex-end; gap: 18px; padding: 0 36px 26px; }
-.piste-b .photo { position: absolute; inset: 0; }
-.piste-b .photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,10,28,0) 25%, rgba(30,10,28,.55) 70%, rgba(30,10,28,.8)); z-index: 1; }
-.piste-b .photo .badge, .piste-b .photo .credit { z-index: 2; }
-.piste-b .photo .badge { top: 22px; left: 36px; border-radius: 999px; }
-.piste-b .photo .credit { top: 22px; bottom: auto; right: 36px; border-radius: 999px; }
-.piste-b .lead, .piste-b .side { position: relative; z-index: 2; background: rgba(255,255,255,.84); backdrop-filter: blur(18px) saturate(1.2); border: 1px solid rgba(255,255,255,.6); border-radius: 26px; box-shadow: 0 18px 50px rgba(20,0,20,.35); }
-.piste-b .lead { padding: 24px 30px 22px; }
-.piste-b .side { padding: 18px 26px 6px; flex: none; }
-.piste-b .item:first-child { border-top: 0; }
-.piste-b.paysage .main { display: grid; grid-template-columns: 1fr 430px; align-items: end; gap: 18px; padding: 0 26px 18px; }
-.piste-b.paysage .photo .badge { top: 16px; left: 26px; } .piste-b.paysage .photo .credit { top: 16px; right: 26px; }
-.piste-b.paysage .lead { padding: 16px 22px 14px; border-radius: 20px; }
-.piste-b.paysage .side { padding: 12px 18px 2px; border-radius: 20px; align-self: stretch; margin-top: 48px; }
-.piste-b.paysage .item .t { -webkit-line-clamp: 3; }
-.piste-b.paysage.solo .main { grid-template-columns: 720px; }
-
+.paysage .item .kick { font-size: 12px; }
+.paysage .sports { padding: 10px 16px 12px; border-radius: 18px; }
+.paysage .sports h2 { padding-bottom: 6px; }
+.paysage .lg { font-size: 11px; min-height: 0; margin-bottom: 3px; } .paysage .lg .emo { font-size: 15px; }
+.paysage .score { padding: 0 12px; }
+.paysage .tm { font-size: 15px; } .paysage .tm small { font-size: 12px; } .paysage .tm .pt { font-size: 18px; }
+.paysage .when { font-size: 11px; margin-top: 2px; }
+.paysage .foot { height: 48px; padding: 0 28px; } .paysage .foot .url { font-size: 21px; }
+.paysage .legal .full { font-size: 12px; } .paysage .legal .ind { font-size: 11px; }
+.paysage .side .list { flex: 1 1 auto; justify-content: space-between; }
+.paysage .side .item:last-child { padding-bottom: 12px; }
+.paysage.nosport .side { flex: 1 1 auto; }
+.paysage .col.b .side:only-child { flex: 1 1 auto; }

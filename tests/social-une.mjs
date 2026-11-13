@@ -78,7 +78,7 @@ for (const model of [{ slot: sSlot, items: m.items }, { slot: sSlot, items }, { 
     assert.match(v.text, /^(☀️|🌙) La une du (matin|soir) du Radar · /);
     if (n !== 'tumblr') assert.ok(v.tags.length <= POLICY.hashtags.maxByNetwork[n]);
   }
-  assert.equal(all.facebook.image, 'portrait'); assert.equal(all.x.image, 'paysage');
+  assert.equal(all.facebook.image, 'portrait'); assert.equal(all.x.image, 'portrait'); assert.equal(all.instagram.image, 'portrait + story');
   assert.match(all.mastodon.text, /https:\/\/le-radar\.ca\/article\/[0-9a-f]{16}\//, 'Mastodon : lien de la fiche');
   assert.ok(U.altText(model).length <= 1000);
 }
@@ -123,6 +123,33 @@ assert.equal(U.sportEmoji({ title: 'Victoire des Carabins au hockey' }), '🏒')
 assert.equal(U.sportEmoji({ title: 'Une pièce de théâtre' }), '');
 const sportText = U.buildUneText({ slot: sSlot, items: [{ ...m.items[0], sport: '🏒' }] }, 'x');
 assert.match(sportText, /🏒 /, 'émoji de sport dans le texte');
+
+// ── Résultats sportifs étudiants (sports-masthead.json) : récents, dédoublonnés, rien d'inventé ──
+const team = (o) => ({ sport: 'basketball', sector: 'universitaire', leagueLabel: 'Basketball universitaire féminin', results: [], nextGames: [], ...o });
+const mh = { teams: {
+  a: team({ id: 'a', nickname: 'Stingers', institutionLabel: 'Université Concordia', results: [{ gameId: 'g1', date: '2026-11-11', scoreFor: 55, scoreAgainst: 54, opponentNickname: 'Martlets', opponentFullName: 'Université McGill' }, { gameId: 'old', date: '2026-11-01', scoreFor: 1, scoreAgainst: 0, opponentNickname: 'X', opponentFullName: 'Université Laval' }] }),
+  b: team({ id: 'b', nickname: 'Martlets', institutionLabel: 'Université McGill', results: [{ gameId: 'g1', date: '2026-11-11', scoreFor: 54, scoreAgainst: 55, opponentNickname: 'Stingers', opponentFullName: 'Université Concordia' }, { gameId: 'p', date: '2026-11-11', scoreFor: 3, scoreAgainst: 2, priorSeason: true, opponentNickname: 'Y', opponentFullName: 'UQAM' }] }),
+  c: team({ id: 'c', sport: 'hockey', nickname: 'Carabins', institutionLabel: 'Université de Montréal', nextGames: [{ gameId: 'n1', date: '2026-11-12', time: '19:00', home: true, opponentNickname: 'Patriotes', opponentFullName: 'Université du Québec à Trois-Rivières' }] }),
+} };
+const sp = U.pickSports(mh, '2026-11-12');
+assert.equal(sp.length, 1, 'une rencontre par gameId ; ancienne et saison précédente exclues');
+assert.equal(U.sportsLine(sp[0]), '🏀 Stingers (Concordia) 55-54 Martlets (McGill)');
+assert.equal(sp[0].when, 'hier');
+const nx = U.pickSports({ teams: { c: mh.teams.c } }, '2026-11-12');
+assert.equal(nx[0].kind, 'avenir', 'repli : rencontres du jour'); assert.match(U.sportsLine(nx[0]), /^🏒 Patriotes chez Carabins, aujourd’hui · 19 h 00$/);
+assert.deepEqual(U.pickSports({ teams: {} }, '2026-11-12'), [], 'sans donnée récente : rien');
+assert.deepEqual(U.pickSports(null, '2026-11-12'), []);
+// ── Typographie française de l'image ──
+assert.equal(U.frTypo("Les jeunes cyniques ? Plutôt idéalistes ! L'écho"), 'Les jeunes cyniques\u202F? Plutôt idéalistes\u202F! L’écho');
+assert.equal(U.frTypo('Il a dit "oui"'), 'Il a dit «\u202Foui\u202F»');
+// ── Formats par réseau : portrait 4:5 partout ; Instagram préparé (story 9:16), sans lien cliquable, désactivé ──
+for (const n of [...U.NETS, 'instagram']) assert.equal(U.IMAGE_FOR[n], 'portrait', n);
+assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formatsFor(['instagram']), ['portrait', 'story']);
+assert.ok(!U.NETS.includes('instagram'), 'Instagram hors des réseaux publiés');
+const igModel = { slot: sSlot, items: m.items, sports: sp };
+const ig = U.buildUneAll(igModel).instagram;
+assert.deepEqual(ig.problems, []); assert.doesNotMatch(ig.text, /https?:\/\//); assert.match(ig.text, /lien en bio/); assert.match(ig.text, /🏀 Stingers/);
+assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
 
 // ── Workflow : planifié, déclenchement manuel, DRY_RUN, fenêtres été/hiver, verrou partagé ──
 const wf = fs.readFileSync(new URL('../.github/workflows/social-une.yml', import.meta.url), 'utf8');
