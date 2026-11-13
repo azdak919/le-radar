@@ -1677,15 +1677,6 @@
       "via": "resize-proxy",
       "nameKey": "0e8a1017.jpg"
     },
-    "9399e5062e1c9deb": {
-      "local": "assets/news-images/9399e5062e1c9deb.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 84631,
-      "updatedAt": "2026-11-13T21:09:56.666Z",
-      "via": "disk",
-      "nameKey": "lacrymobastien-1.png"
-    },
     "1b9277d2d4e58681": {
       "local": "assets/news-images/1b9277d2d4e58681.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Capture-decran-le-2026-11-13-a-14.02.34.png",
@@ -1705,10 +1696,38 @@
       "updatedAt": "2026-11-13T21:39:38.343Z",
       "via": "origin",
       "nameKey": "photo-dejarin-.avif"
+    },
+    "f95e150fc854f62b": {
+      "local": "assets/news-images/f95e150fc854f62b.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/CoucheTard-scaled.jpeg",
+      "host": "www.delitfrancais.com",
+      "bytes": 265706,
+      "updatedAt": "2026-11-13T22:08:58.271Z",
+      "via": "disk",
+      "nameKey": "couchetard.jpeg"
+    },
+    "dfe590d051af5947": {
+      "local": "assets/news-images/dfe590d051af5947.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 143688,
+      "updatedAt": "2026-11-13T22:08:58.272Z",
+      "via": "disk",
+      "nameKey": "prix-litteraire-ia-.png"
+    },
+    "d62e6e687179b0e5": {
+      "local": "assets/news-images/d62e6e687179b0e5.webp",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/IMG_3930.jpeg",
+      "host": "quartierlibre.ca",
+      "bytes": 78300,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-13T22:09:04.109Z",
+      "via": "photon-resize",
+      "nameKey": "img_3930.jpeg"
     }
   },
-  "updatedAt": "2026-11-13T21:39:38.347Z",
-  "count": 171,
+  "updatedAt": "2026-11-13T22:09:04.114Z",
+  "count": 173,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

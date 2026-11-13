@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-13T21:37:46.017Z",
+  "updated": "2026-11-13T22:07:54.314Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 31,
-  "withLeadExcerpt": 139,
-  "candidates": 31,
-  "enriched": 1,
-  "failed": 4,
+  "incomplete": 32,
+  "withLeadExcerpt": 140,
+  "candidates": 32,
+  "enriched": 4,
+  "failed": 3,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,48 @@
       "changed": false
     },
     {
-      "title": "Saguenay vers des infrastructures durables",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": true
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
       "score": 100,
-      "chars": 719,
-      "sample": "La saison de la branche Bâtiment durable Québec pour le Saguenay–Lac-Saint-Jean a donné son coup d’e",
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": true
+    },
+    {
+      "title": "Quebec expects direct consultation on Erasmus+",
+      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "ok": true,
+      "score": 95,
+      "chars": 293,
+      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
+      "changed": true
+    },
+    {
+      "title": "Après le sport, apprendre à se redéfinir",
+      "link": "https://quartierlibre.ca/apres-le-sport-apprendre-a-se-redefinir/",
+      "ok": true,
+      "score": 100,
+      "chars": 693,
+      "sample": "Après douze ans de carrière et trois participations aux Jeux olympiques, la judokate québécoise Cath",
       "changed": true
     },
     {
@@ -52,33 +79,6 @@
       "score": 100,
       "chars": 996,
       "sample": "Face à la crise climatique, au coût de la vie et à l’accès difficile à la propriété, certain·e·s jeu",
-      "changed": false
-    },
-    {
-      "title": "Respirer sous l’eau, quand la forme noie le fond",
-      "link": "https://montrealcampus.ca/2026/11/12/respirer-sous-leau-quand-la-forme-noie-le-fond/",
-      "ok": true,
-      "score": 100,
-      "chars": 281,
-      "sample": "Reliant trois histoires par le thème de la mort, la nouvelle pièce de théâtre de Klervi Thienpont, R",
-      "changed": false
-    },
-    {
-      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtrale",
-      "link": "https://impactcampus.ca/arts-et-culture/la-version-qui-ninteresse-personne-ou-comment-reussir-une-adaptation-theatral/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Durant tout le mois de novembre, le Trident présente la pièce La version qui n’intéresse personne, b",
-      "changed": false
-    },
-    {
-      "title": "Listening to The Echo of Grenada",
-      "link": "https://thelinknewspaper.ca/article/16563",
-      "ok": true,
-      "score": 100,
-      "chars": 388,
-      "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
       "changed": false
     }
   ]
