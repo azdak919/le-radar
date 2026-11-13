@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-13T17:19:17.260Z",
+  "updated": "2026-11-13T18:09:40.021Z",
   "total": 188,
-  "withImage": 171,
-  "withCredit": 171,
-  "cited": 117,
+  "withImage": 172,
+  "withCredit": 172,
+  "cited": 118,
   "pending": 29,
   "missingHero": 0,
   "ok": false,
-  "checked": 43,
-  "updatedCount": 4,
-  "citedNew": 8,
+  "checked": 44,
+  "updatedCount": 5,
+  "citedNew": 9,
   "fallbackNew": 35,
   "samples": [
+    {
+      "title": "Joey Saputo announces sale of CF Montreal",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
@@ -20,9 +27,9 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "title": "Souriez, vous êtes filmés !",
       "source": "Le Délit",
-      "credit": "Photo : Bastien Fournier",
+      "credit": "Photo : Félix Fournier l Le Délit",
       "cited": true,
       "method": "media-credit-featured"
     },

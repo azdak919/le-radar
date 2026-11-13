@@ -1421,16 +1421,6 @@
       "via": "resize-proxy",
       "nameKey": "cop31.png"
     },
-    "ab13cfb9856e9c7d": {
-      "local": "assets/news-images/ab13cfb9856e9c7d.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Bioblitz_Anne_Zhao_690_1034_90.jpg",
-      "host": "thelinknewspaper.ca",
-      "bytes": 89333,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:08:42.643Z",
-      "via": "origin",
-      "nameKey": "05_ops_bioblitz_anne_zhao.jpg"
-    },
     "066bb1d53c9bf73e": {
       "local": "assets/news-images/066bb1d53c9bf73e.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_FRINGE_Archives_Gaies_Halle_Keays_690_1213.png",
@@ -1695,10 +1685,29 @@
       "updatedAt": "2026-11-13T17:18:17.419Z",
       "via": "disk",
       "nameKey": "lacrymobastien-1.png"
+    },
+    "f95e150fc854f62b": {
+      "local": "assets/news-images/f95e150fc854f62b.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/CoucheTard-scaled.jpeg",
+      "host": "www.delitfrancais.com",
+      "bytes": 265706,
+      "updatedAt": "2026-11-13T18:08:40.226Z",
+      "via": "disk",
+      "nameKey": "couchetard.jpeg"
+    },
+    "8de8955b46d69bfa": {
+      "local": "assets/news-images/8de8955b46d69bfa.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/NST26_Can_Champ_CF_MTL_9962_900_600_90.jpg",
+      "host": "thelinknewspaper.ca",
+      "bytes": 122827,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-13T18:08:41.219Z",
+      "via": "origin",
+      "nameKey": "nst26_can_champ_cf_mtl_9962.jpg"
     }
   },
-  "updatedAt": "2026-11-13T17:18:17.430Z",
-  "count": 170,
+  "updatedAt": "2026-11-13T18:08:41.223Z",
+  "count": 171,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
