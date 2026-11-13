@@ -65,13 +65,15 @@ async function main() {
   const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
   try {
     const page = await browser.newPage();
-    await page.goto(`${BASE}/affiches/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await page.goto(`${BASE}/affiches/?campus=generique&greeting=none&qr=oui&lang=standard`, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.locator('#preview canvas').waitFor({ timeout: 20000 });
     await page.evaluate(() => document.fonts.ready);
-    await page.selectOption('#greeting', 'none');
+    await page.waitForFunction(() => document.body?.dataset?.campusLayout === 'a9e8f52', { timeout: 20000 });
     for (const fmt of FORMATS) {
-      await page.locator(`label:has(input[name="format"][value="${fmt.value}"])`).click();
-      await page.waitForTimeout(400);
+      await page.goto(`${BASE}/affiches/?campus=generique&greeting=none&qr=oui&lang=standard&format=${fmt.value}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      await page.locator('#preview canvas').waitFor({ timeout: 20000 });
+      await page.waitForFunction(() => document.body?.dataset?.campusLayout === 'a9e8f52', { timeout: 20000 });
+      await page.waitForTimeout(300);
       const [download] = await Promise.all([
         page.waitForEvent('download', { timeout: 60000 }),
         page.locator('#dl-jpg').click(),
