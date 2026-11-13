@@ -38,6 +38,26 @@ function keepNamesFromPages(pages, { now = Date.now(), keepDays = SOCIAL_KEEP_DA
   return [...names].sort();
 }
 
+/**
+ * Noms miroir cités par des publications sociales récentes ou à venir (data/buffer-sent.json,
+ * data/buffer-pages-sent.json : champ `image`). Buffer ne télécharge l'image qu'à l'heure prévue,
+ * parfois 36 h après l'ajout ; si l'article change de photo ou sort du fil entre-temps, son ancienne
+ * image ne doit pas disparaître (cause des échecs X du 10 nov. 2026 : « media URL … publicly accessible »).
+ */
+function keepNamesFromSocial(states, { now = Date.now(), keepDays = SOCIAL_KEEP_DAYS } = {}) {
+  const cutoff = now - keepDays * 86400000; const names = new Set();
+  const walk = (o) => {
+    if (!o || typeof o !== 'object') return;
+    if (typeof o.image === 'string') {
+      const m = o.image.match(NEWS_IMAGE_RE); const ts = Math.max(Date.parse(o.dueAt || 0) || 0, Date.parse(o.at || 0) || 0);
+      if (m && ts >= cutoff) names.add(m[1]);
+    }
+    for (const v of Object.values(o)) if (v && typeof v === 'object') walk(v);
+  };
+  for (const st of [].concat(states || [])) walk(st);
+  return [...names].sort();
+}
+
 function plan({ local = [], tracked = [], remote = [], sizes = {}, now = Date.now(), graceDays = SOCIAL_KEEP_DAYS, keep = [] }) {
   const loc = new Set(local.filter((n) => IMG.test(n)));
   const held = new Set([...keep, ...loc]);
@@ -63,4 +83,4 @@ function plan({ local = [], tracked = [], remote = [], sizes = {}, now = Date.no
 const TRANSIENT = /HTTP 5\d\d|HTTP 429|timed? ?out|ECONNRESET|ETIMEDOUT|EAI_AGAIN|connection reset|unexpected EOF|stream error/i;
 function isTransient(text) { return TRANSIENT.test(String(text || '')); }
 
-module.exports = { TAG, IMG, SOCIAL_KEEP_DAYS, keepNamesFromPages, plan, isTransient };
+module.exports = { TAG, IMG, SOCIAL_KEEP_DAYS, keepNamesFromPages, keepNamesFromSocial, plan, isTransient };

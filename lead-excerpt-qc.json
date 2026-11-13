@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-13T00:07:31.427Z",
+  "updated": "2026-11-13T05:46:16.293Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 34,
-  "withLeadExcerpt": 140,
-  "candidates": 34,
-  "enriched": 2,
-  "failed": 4,
+  "incomplete": 32,
+  "withLeadExcerpt": 143,
+  "candidates": 32,
+  "enriched": 0,
+  "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,22 +19,13 @@
       "changed": false
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
-      "changed": true
-    },
-    {
-      "title": "Albertans may have voted to stay in Canada, but they still have grievances",
-      "link": "https://theconcordian.com/2026/11/alberta-referendum-mixed-results/",
-      "ok": true,
-      "score": 100,
-      "chars": 608,
-      "sample": "But whether to remain part of Canada was only one of 10 questions asked of Albertans on Oct. 19. It ",
-      "changed": true
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
     },
     {
       "title": "Les jeunes cyniques ? Plutôt idéalistes !",
@@ -64,7 +46,7 @@
       "changed": false
     },
     {
-      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtral",
+      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtrale",
       "link": "https://impactcampus.ca/arts-et-culture/la-version-qui-ninteresse-personne-ou-comment-reussir-une-adaptation-theatral/",
       "ok": true,
       "score": 100,
@@ -79,6 +61,24 @@
       "score": 100,
       "chars": 388,
       "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
+      "changed": false
+    },
+    {
+      "title": "Refugee advocates renew calls for Canada to withdraw from U.S. border agreement",
+      "link": "https://thelinknewspaper.ca/article/16561",
+      "ok": true,
+      "score": 100,
+      "chars": 418,
+      "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
+      "changed": false
+    },
+    {
+      "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
+      "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
+      "ok": true,
+      "score": 100,
+      "chars": 950,
+      "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
       "changed": false
     }
   ]
