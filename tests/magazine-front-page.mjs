@@ -73,4 +73,35 @@ for (let i = 0; i < cards.items.length; i += 1) {
   assert.equal(cards.items[i].id, articleId(picked.items[i].link));
 }
 
-console.log(`magazine-front-page : OK (${cards.items.length} articles, une = ${cards.lead?.title})`);
+assert.equal(front.enDate('2026-11-01T15:00:00Z', { weekday: true }).includes('November'), true);
+
+const laval = { slug: 'laval', line: 'Université Laval', label: 'Université Laval' };
+const mcgill = { slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', label: 'Université McGill' };
+const udem = { slug: 'udem', line: 'Université de Montréal', label: 'Université de Montréal' };
+assert.equal(front.itemMatchesCampus({ institution: 'Université Laval' }, laval), true);
+assert.equal(front.itemMatchesCampus({ institution: 'Université de Montréal' }, laval), false);
+assert.equal(front.itemMatchesCampus({ institution: 'McGill University' }, mcgill), true);
+assert.equal(front.itemMatchesCampus({ institution: 'Université McGill' }, mcgill), true);
+assert.equal(front.itemMatchesCampus({ institution: 'Université de Montréal' }, mcgill), false);
+
+const lavalPick = front.selectFrontPage(news.items, now, laval);
+assert.ok(lavalPick.items.length > 0, 'Laval a des articles frais');
+assert.ok(lavalPick.items.length <= front.FRONT_PAGE_COUNT);
+assert.ok(lavalPick.items.every((i) => i.institution === 'Université Laval'));
+const lavalAll = (housekeeping.housekeepingNormalItems(fresh, now))
+  .filter((i) => i.institution === 'Université Laval');
+assert.ok(lavalPick.items.length <= lavalAll.length, 'pas d’articles inventés');
+if (lavalAll.length >= 5) assert.equal(lavalPick.items.length, 5);
+else assert.equal(lavalPick.items.length, lavalAll.length);
+
+const mcgillPick = front.selectFrontPage(news.items, now, mcgill);
+assert.ok(mcgillPick.items.length > 0);
+assert.ok(mcgillPick.items.every((i) => i.institution === 'McGill University' || i.institution === 'Université McGill'));
+assert.ok(!mcgillPick.items.some((i) => i.institution === 'Université de Montréal'));
+
+const teluq = { slug: 'teluq', line: 'TÉLUQ', label: 'TÉLUQ' };
+const teluqPick = front.selectFrontPage(news.items, now, teluq);
+assert.equal(teluqPick.items.length, (housekeeping.housekeepingNormalItems(fresh, now)).filter((i) => front.itemMatchesCampus(i, teluq)).length);
+
+console.log(`magazine-front-page : OK (${cards.items.length} articles, une = ${cards.lead?.title} ; Laval ${lavalPick.items.length})`);
+

@@ -491,3 +491,12 @@ body:has(#local-lab-format-bar) .dash-controls {
   outline-offset: 2px;
 }
 #une-status { margin: 0 0 8px; }
+
+.dash[data-model="une"][data-layout="verre"] #photo-box {
+  display: block;
+}
+.dash[data-model="une"][data-layout="classique"] #photo-box,
+.dash[data-model="une"]:not([data-layout]) #photo-box {
+  display: none;
+}
+#une-uni-box select.greeting { margin-top: 0; }

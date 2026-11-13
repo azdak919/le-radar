@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=une-1">
+  <link rel="stylesheet" href="./poster-builder.css?v=une-2">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -143,7 +143,7 @@
           </div>
         </fieldset>
 
-        <fieldset class="js-campus-only">
+        <fieldset id="lang-box">
           <legend>Texte</legend>
           <div class="choices">
             <label><input type="radio" name="lang" value="standard" checked> Français</label>
@@ -190,7 +190,7 @@
           <p class="field-hint" id="greeting-hint">Signature à la main. En bilingue, une ligne anglaise s’ajoute.</p>
         </fieldset>
 
-        <fieldset class="js-campus-only">
+        <fieldset id="langs-box">
           <legend>Langues</legend>
           <div class="choices">
             <label><input type="radio" name="langs" value="non"> Sans</label>
@@ -209,13 +209,30 @@
           <p class="field-hint js-une-only" hidden>Un code par article, vers sa fiche sur le-radar.ca, et un code vers l’accueil.</p>
         </fieldset>
 
+        <fieldset class="js-une-only" id="une-layout-box" hidden>
+          <legend>Mise en page</legend>
+          <div class="choices">
+            <label><input type="radio" name="layout" value="classique" checked> Classique</label>
+            <label><input type="radio" name="layout" value="verre"> Verre dépoli</label>
+          </div>
+          <p class="field-hint">Le verre dépoli pose les articles en cartes sur une photo de campus, comme les autres affiches.</p>
+        </fieldset>
+
+        <fieldset class="js-une-only" id="une-uni-box" hidden>
+          <legend>Université</legend>
+          <select class="greeting" name="uneCampus" id="une-campus" aria-describedby="une-campus-hint">
+            <option value="toutes" selected>Toutes les universités</option>
+          </select>
+          <p class="field-hint" id="une-campus-hint">Ne garder que les articles de cet établissement. S’il y en a moins de cinq, l’affiche prend ceux qui existent.</p>
+        </fieldset>
+
         <fieldset class="js-une-only" id="une-box" hidden>
           <legend>Articles</legend>
           <p class="field-hint" id="une-status">Chargement des articles du site…</p>
           <ol class="une-list" id="une-list"></ol>
         </fieldset>
 
-        <fieldset class="js-campus-only">
+        <fieldset id="photo-box" class="js-campus-only">
           <legend>Photo</legend>
           <div class="photo-grid" id="photo-grid"></div>
           <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
@@ -310,6 +327,6 @@
   <script src="../scripts/news-housekeeping-lib.js"></script>
   <script src="../scripts/magazine-front-page-lib.js"></script>
   <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
-  <script src="./poster-builder.js?v=une-1"></script>
+  <script src="./poster-builder.js?v=une-2"></script>
 </body>
 </html>

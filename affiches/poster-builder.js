@@ -203,6 +203,8 @@ const state = {
   photoOpen: false,
   uploads: [],
   model: 'campus',
+  layout: 'classique',
+  uneCampus: 'toutes',
   uneArticles: [],
   uneStatus: '',
 };
@@ -466,6 +468,62 @@ function coverPhoto(ctx, img, x, y, tw, th, fx = 0.5, fy = 0.5) {
   ctx.restore();
 }
 
+function roundedRectPath(ctx, x, y, w, h, r) {
+  const rad = Math.max(0, Math.min(r, w / 2, h / 2));
+  ctx.beginPath();
+  ctx.moveTo(x + rad, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rad);
+  ctx.arcTo(x + w, y + h, x, y + h, rad);
+  ctx.arcTo(x, y + h, x, y, rad);
+  ctx.arcTo(x, y, x + w, y, rad);
+  ctx.closePath();
+}
+
+function frostedRect(ctx, x, y, w, h, r, {
+  fill = 'rgba(255, 252, 247, 0.78)',
+  stroke = 'rgba(255, 255, 255, 0.62)',
+  blur = 16,
+} = {}) {
+  if (w < 2 || h < 2) return;
+  const sx = Math.max(0, Math.floor(x));
+  const sy = Math.max(0, Math.floor(y));
+  const sw = Math.min(ctx.canvas.width - sx, Math.ceil(w + (x - sx)));
+  const sh = Math.min(ctx.canvas.height - sy, Math.ceil(h + (y - sy)));
+  if (sw > 2 && sh > 2) {
+    try {
+      const snap = ctx.getImageData(sx, sy, sw, sh);
+      const tmp = document.createElement('canvas');
+      tmp.width = sw;
+      tmp.height = sh;
+      tmp.getContext('2d').putImageData(snap, 0, 0);
+      const scale = 0.25;
+      const off = document.createElement('canvas');
+      off.width = Math.max(1, Math.round(sw * scale));
+      off.height = Math.max(1, Math.round(sh * scale));
+      const octx = off.getContext('2d');
+      octx.imageSmoothingEnabled = true;
+      octx.drawImage(tmp, 0, 0, off.width, off.height);
+      ctx.save();
+      roundedRectPath(ctx, x, y, w, h, r);
+      ctx.clip();
+      ctx.filter = `blur(${blur}px)`;
+      ctx.drawImage(off, sx, sy, sw, sh);
+      ctx.filter = 'none';
+      ctx.restore();
+    } catch {
+      /* canevas souillé ou cliché impossible : le voile opaque suffit */
+    }
+  }
+  ctx.save();
+  roundedRectPath(ctx, x, y, w, h, r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = Math.max(1, Math.min(w, h) * 0.004);
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawQrCode(ctx, x, y, size, text) {
   const api = (typeof qrcodegen !== 'undefined' && qrcodegen.QrCode) ? qrcodegen.QrCode : null;
   if (!api || !text || size < 8) return;
@@ -506,19 +564,43 @@ function composeFrontPage(ctx, w, h, opts) {
   const articles = (opts.articles || []).filter(Boolean);
   const images = opts.articleImages || new Map();
   const withQr = Boolean(opts.qr);
+  const glass = opts.layout === 'verre';
+  const bilingual = opts.lang === 'bilingue';
+  const showLangs = opts.langs !== false;
   const margin = Math.round(Math.min(w, h) * 0.048);
   const barH = Math.max(10, Math.round(h * 0.011));
   const site = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.SITE)
     ? RadarMagazineFrontPage.SITE
     : 'https://le-radar.ca';
-  const todayIso = new Date().toISOString();
-  const dateLabel = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate)
-    ? RadarMagazineFrontPage.frDate(todayIso, { weekday: true })
-    : '';
+  const todayIso = opts.date || new Date().toISOString();
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const dateLabel = Front && Front.frDate ? Front.frDate(todayIso, { weekday: true }) : '';
   const capDate = dateLabel ? dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1) : '';
+  const dateEn = (bilingual && Front && Front.enDate) ? Front.enDate(todayIso, { weekday: true }) : '';
+  const campus = opts.campus && opts.campus !== 'toutes' && opts.campus !== 'generique'
+    ? campusOf(opts.campus)
+    : null;
+  const uniLabel = campus
+    ? (bilingual && campus.lineEn && campus.lineEn !== campus.line
+      ? `${campus.line}  ·  ${campus.lineEn}`
+      : campus.line)
+    : '';
+  const photo = opts.photoImg || null;
+  const credit = (glass && photo && opts.credit)
+    ? posterCredit(opts.credit, opts.license, opts.photoUrl || '')
+    : '';
 
-  ctx.fillStyle = c.paper;
-  ctx.fillRect(0, 0, w, h);
+  if (glass && photo) {
+    coverPhoto(ctx, photo, 0, 0, w, h, opts.focalX ?? 0.5, opts.focalY ?? 0.42);
+    ctx.fillStyle = 'rgba(18, 16, 14, 0.30)';
+    ctx.fillRect(0, 0, w, h);
+  } else if (glass) {
+    ctx.fillStyle = '#2A2420';
+    ctx.fillRect(0, 0, w, h);
+  } else {
+    ctx.fillStyle = c.paper;
+    ctx.fillRect(0, 0, w, h);
+  }
   ctx.fillStyle = PURPLE;
   ctx.fillRect(0, 0, w, barH);
 
@@ -547,82 +629,166 @@ function composeFrontPage(ctx, w, h, opts) {
 
   const markSize = Math.round(Math.min(w, h) * 0.032);
   const logoS = Math.round(markSize * 1.15);
-  let y = barH + Math.round(margin * 0.55);
   const x0 = margin;
   const x1 = w - margin;
+  const sloganSize = Math.round(markSize * 0.36);
+  const dSize = Math.round(markSize * 0.42);
+  const ink = glass ? c.ink : c.ink;
+  const mute = glass ? '#3F3A35' : c.mute;
+
+  const fit = Math.min(w / (11 * REF_DPI), h / (17 * REF_DPI));
+  const footCap = Math.round(62 * fit);
+  const fLang = Math.min(28 * fit, footCap * 0.5);
+  const iconS = Math.min(40 * fit, footCap * 0.7);
+  const siteQr = Math.round(Math.min(w, h) * 0.072);
+  const footPad = Math.round(margin * 0.2);
+  const legalSize = Math.max(11, Math.round(Math.min(w, h) * 0.011));
+  const qrCol = withQr ? siteQr + margin * 0.35 : 0;
+  const legalMax = Math.max(80, x1 - x0 - qrCol);
+  const langsMax = x1 - x0;
+  ctx.font = `400 ${legalSize}px "LR Sans"`;
+  const legalLines = [
+    ...wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax),
+    ...(bilingual ? wrapWords(ctx, INDEP_EN, legalMax) : []),
+  ];
+  const legalLineH = measure(`400 ${legalSize}px "LR Sans"`, legalLines[0] || INDEP_1);
+  const legalH = legalLines.length * (legalLineH + 3);
+  const langsMetrics = showLangs
+    ? measureLangsFooter(ctx, { maxW: langsMax, size: fLang, iconS, lineGap: 5, iconGap: 8 })
+    : { height: 0, lines: [] };
+  const creditSize = credit ? Math.max(9, Math.round(Math.min(w, h) * 0.0085)) : 0;
+  const creditH = credit ? creditSize + 6 : 0;
+  const qrBlock = withQr ? siteQr + Math.round(legalSize * 1.3) : 0;
+  const footTopH = Math.max(qrBlock, legalH) + footPad;
+  const footH = footTopH + langsMetrics.height + creditH + footPad;
+  const contentBottom = h - margin * 0.7 - footH;
+
+  /* Mesure du bandeau de tête (verre) avant le texte. */
+  let headY = barH + Math.round(margin * 0.55);
+  headY += logoS + Math.round(margin * 0.22);
+  ctx.font = `400 ${sloganSize}px "LR Sans"`;
+  const sloganLines = wrapWords(ctx, SLOGAN, x1 - x0 - (capDate ? Math.round(w * 0.28) : 0));
+  sloganLines.forEach((line) => {
+    headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 4;
+  });
+  if (bilingual) {
+    ctx.font = `400 ${sloganSize}px "LR Sans"`;
+    const enLines = wrapWords(ctx, SLOGAN_EN, x1 - x0 - (capDate ? Math.round(w * 0.28) : 0));
+    enLines.forEach((line) => {
+      headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 3;
+    });
+  }
+  if (uniLabel) {
+    const uniSize = Math.round(markSize * 0.38);
+    ctx.font = `600 ${uniSize}px "LR Sans Semi", "LR Sans"`;
+    headY += measure(ctx.font, uniLabel) + 4;
+  }
+  headY += Math.round(margin * 0.18) + Math.round(margin * 0.28);
+  if (glass) {
+    frostedRect(ctx, margin * 0.45, barH + 4, w - margin * 0.9, headY - barH - 2, Math.round(margin * 0.22), {
+      fill: 'rgba(255, 252, 247, 0.82)',
+    });
+  }
+
+  let y = barH + Math.round(margin * 0.55);
   if (assets.logo) ctx.drawImage(assets.logo, x0, y, logoS, logoS);
   fillTracked(ctx, TITLE, y + Math.round((logoS - markSize) / 2), markSize, PURPLE, x0 + logoS + Math.round(logoS * 0.18));
   if (capDate) {
-    const dSize = Math.round(markSize * 0.42);
     ctx.font = `400 ${dSize}px "LR Sans"`;
-    ctx.fillStyle = c.mute;
+    ctx.fillStyle = mute;
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
-    ctx.fillText(capDate, x1, y + logoS / 2);
+    ctx.fillText(capDate, x1, y + logoS / 2 - (dateEn ? dSize * 0.35 : 0));
+    if (dateEn) {
+      ctx.font = `400 ${Math.round(dSize * 0.86)}px "LR Sans"`;
+      ctx.fillText(dateEn, x1, y + logoS / 2 + dSize * 0.55);
+    }
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
   }
   y += logoS + Math.round(margin * 0.22);
-  const sloganSize = Math.round(markSize * 0.36);
+  const sloganMax = x1 - x0;
   ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  const sloganLines = wrapWords(ctx, SLOGAN, x1 - x0);
-  sloganLines.forEach((line) => {
+  wrapWords(ctx, SLOGAN, sloganMax).forEach((line) => {
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    ctx.fillStyle = c.mute;
+    ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
     ctx.fillText(line, x0, y);
     y += measure(`400 ${sloganSize}px "LR Sans"`, line) + 4;
   });
+  if (bilingual) {
+    ctx.font = `400 ${sloganSize}px "LR Sans"`;
+    wrapWords(ctx, SLOGAN_EN, sloganMax).forEach((line) => {
+      ctx.font = `400 ${sloganSize}px "LR Sans"`;
+      ctx.fillStyle = mute;
+      ctx.textBaseline = 'top';
+      ctx.fillText(line, x0, y);
+      y += measure(`400 ${sloganSize}px "LR Sans"`, line) + 3;
+    });
+  }
+  if (uniLabel) {
+    const uniSize = Math.round(markSize * 0.38);
+    ctx.font = `600 ${uniSize}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = PURPLE;
+    ctx.textBaseline = 'top';
+    ctx.fillText(uniLabel, x0, y);
+    y += measure(ctx.font, uniLabel) + 4;
+  }
   y += Math.round(margin * 0.18);
-  ctx.strokeStyle = c.rule;
-  ctx.lineWidth = Math.max(1, Math.round(h / 1400));
-  ctx.beginPath();
-  ctx.moveTo(x0, y);
-  ctx.lineTo(x1, y);
-  ctx.stroke();
+  if (!glass) {
+    ctx.strokeStyle = c.rule;
+    ctx.lineWidth = Math.max(1, Math.round(h / 1400));
+    ctx.beginPath();
+    ctx.moveTo(x0, y);
+    ctx.lineTo(x1, y);
+    ctx.stroke();
+  }
   y += Math.round(margin * 0.28);
 
-  const siteQr = Math.round(Math.min(w, h) * 0.072);
-  const footPad = Math.round(margin * 0.2);
-  const legalSize = Math.max(11, Math.round(Math.min(w, h) * 0.011));
-  ctx.font = `400 ${legalSize}px "LR Sans"`;
-  const legalMax = x1 - x0 - (withQr ? siteQr + margin * 0.35 : 0);
-  const legalLines = wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax);
-  const legalLineH = measure(`400 ${legalSize}px "LR Sans"`, legalLines[0] || INDEP_1);
-  const footH = Math.max(siteQr, legalLines.length * (legalLineH + 3) + legalSize) + footPad;
-  const contentBottom = h - margin * 0.7 - footH;
-  const drawCredit = (text, cx, cy, maxW) => {
+  const drawCredit = (text, cx, cy, maxW, color) => {
     if (!text) return;
     const size = Math.max(9, Math.round(Math.min(w, h) * 0.0085));
     ctx.font = `400 ${size}px "LR Sans"`;
     let line = String(text).replace(/\s+/g, ' ').trim();
     while (line.length > 4 && textW(ctx, line) > maxW) line = line.slice(0, -1).trimEnd();
     if (textW(ctx, line) > maxW) return;
-    ctx.fillStyle = c.mute;
+    ctx.fillStyle = color || mute;
     ctx.textBaseline = 'top';
     ctx.fillText(line, cx, cy);
   };
-  const drawKicker = (label, yy) => {
+  const drawKicker = (label, yy, left, frosted) => {
     const size = Math.max(10, Math.round(Math.min(w, h) * 0.012));
     const font = `700 ${size}px "LR Sans Semi", "LR Sans"`;
+    const start = left ?? x0;
     ctx.font = font;
-    const hgt = measure(font, label);
+    const hgt = measure(font, label.toUpperCase());
+    if (frosted) {
+      const padX = Math.round(size * 0.55);
+      const padY = Math.round(size * 0.3);
+      ctx.font = font;
+      const tw = textW(ctx, label.toUpperCase());
+      frostedRect(ctx, start - padX, yy - padY, tw + padX * 2, hgt + padY * 2, Math.round(size * 0.45), {
+        fill: 'rgba(255, 252, 247, 0.88)',
+      });
+    }
     ctx.font = font;
     ctx.fillStyle = PURPLE;
     ctx.textBaseline = 'top';
-    ctx.fillText(label.toUpperCase(), x0, yy);
+    ctx.fillText(label.toUpperCase(), start, yy);
     return yy + hgt + Math.round(size * 0.55);
   };
+  const kickerLead = bilingual ? 'À la une  ·  Front page' : 'À la une';
+  const kickerFeat = bilingual ? 'Vedettes  ·  Features' : 'Vedettes';
 
   const lead = articles[0] || null;
   const features = articles.slice(1);
   const fillPlaceholder = (x, yy, tw, th, label) => {
-    ctx.fillStyle = c.photoBg;
+    ctx.fillStyle = glass ? 'rgba(90, 84, 76, 0.28)' : c.photoBg;
     ctx.fillRect(x, yy, tw, th);
     if (!label) return;
     const size = Math.max(12, Math.round(th * 0.08));
     ctx.font = `600 ${size}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = c.mute;
+    ctx.fillStyle = mute;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(label, x + tw / 2, yy + th / 2);
@@ -631,76 +797,95 @@ function composeFrontPage(ctx, w, h, opts) {
   };
 
   if (!lead) {
+    if (glass) {
+      frostedRect(ctx, x0, y, x1 - x0, Math.round(margin * 1.6), Math.round(margin * 0.18));
+    }
     ctx.font = `400 ${Math.round(markSize * 0.45)}px "LR Sans"`;
-    ctx.fillStyle = c.mute;
-    ctx.fillText('Aucun article à afficher. Cochez au moins un titre.', x0, y);
+    ctx.fillStyle = mute;
+    ctx.fillText('Aucun article à afficher. Cochez au moins un titre.', x0 + (glass ? 12 : 0), y + (glass ? 14 : 0));
   } else {
     const gap = Math.round(margin * 0.22);
     const hasFeatures = features.length > 0;
+    const pad = glass ? Math.round(margin * 0.16) : 0;
+    const radius = glass ? Math.round(margin * 0.2) : 0;
     const blockH = contentBottom - y;
     const leadShare = hasFeatures ? (features.length >= 3 ? 0.50 : 0.56) : 0.92;
     const leadBottom = y + Math.round(blockH * leadShare);
-    y = drawKicker('À la une', y);
+
+    if (glass) {
+      frostedRect(ctx, x0, y, x1 - x0, leadBottom - y - Math.round(gap * 0.4), radius);
+    }
+    const lx = x0 + pad;
+    const lw = (x1 - x0) - pad * 2;
+    let ly = y + pad;
+    ly = drawKicker(kickerLead, ly, lx);
 
     const qrLead = withQr ? Math.round(Math.min(w, h) * 0.108) : 0;
-    const textWmax = x1 - x0;
-    const imgW = textWmax;
-    const imgMaxH = Math.round((leadBottom - y) * (hasFeatures ? 0.52 : 0.58));
+    const imgW = lw;
+    const imgMaxH = Math.round((leadBottom - ly - pad) * (hasFeatures ? 0.52 : 0.58));
     const imgH = Math.max(Math.round(imgW / 2.35), Math.min(imgMaxH, Math.round(imgW / 1.85)));
     const img = lead.key ? images.get(lead.key) : null;
-    if (img) coverPhoto(ctx, img, x0, y, imgW, imgH, 0.5, lead.focalY ?? 0.5);
-    else fillPlaceholder(x0, y, imgW, imgH, lead.source || '');
-    if (lead.credit) drawCredit(lead.credit, x0, y + imgH + 3, imgW);
-    y += imgH + (lead.credit ? Math.round(legalSize * 1.4) : Math.round(gap * 0.6));
+    if (img) {
+      ctx.save();
+      roundedRectPath(ctx, lx, ly, imgW, imgH, glass ? Math.round(radius * 0.5) : 0);
+      ctx.clip();
+      coverPhoto(ctx, img, lx, ly, imgW, imgH, 0.5, lead.focalY ?? 0.5);
+      ctx.restore();
+    } else fillPlaceholder(lx, ly, imgW, imgH, lead.source || '');
+    if (lead.credit) drawCredit(lead.credit, lx, ly + imgH + 3, imgW, mute);
+    ly += imgH + (lead.credit ? Math.round(legalSize * 1.4) : Math.round(gap * 0.6));
 
-    const titleMaxW = textWmax - (withQr ? qrLead + gap : 0);
+    const titleMaxW = lw - (withQr ? qrLead + gap : 0);
     const titleMax = Math.round(Math.min(w, h) * (hasFeatures ? 0.038 : 0.048));
     const titleMin = Math.round(Math.min(w, h) * 0.022);
     const fitted = wrapFit(lead.title, (s) => `700 ${s}px "LR Serif"`, titleMaxW, titleMax, titleMin, 3);
     fitted.lines.forEach((line) => {
       ctx.font = `700 ${fitted.size}px "LR Serif"`;
-      ctx.fillStyle = c.ink;
+      ctx.fillStyle = ink;
       ctx.textBaseline = 'top';
       const hh = measure(ctx.font, line);
-      ctx.fillText(line, x0, y);
-      y += hh + Math.round(fitted.size * 0.08);
+      ctx.fillText(line, lx, ly);
+      ly += hh + Math.round(fitted.size * 0.08);
     });
     const metaSize = Math.max(11, Math.round(fitted.size * 0.32));
     const meta = [lead.source, lead.dateLabel].filter(Boolean).join('  ·  ');
     ctx.font = `600 ${metaSize}px "LR Sans Semi", "LR Sans"`;
     ctx.fillStyle = PURPLE;
-    ctx.fillText(meta, x0, y);
-    y += measure(ctx.font, meta) + Math.round(gap * 0.45);
+    ctx.fillText(meta, lx, ly);
+    ly += measure(ctx.font, meta) + Math.round(gap * 0.45);
 
     const hook = lead.hook || lead.hookShort || '';
     const hookSize0 = Math.max(12, Math.round(Math.min(w, h) * 0.016));
-    const hookMaxW = titleMaxW;
-    const hookFit = hook ? wrapFit(hook, (s) => `400 ${s}px "LR Sans"`, hookMaxW, hookSize0, 11, 4) : { size: 0, lines: [] };
-    const hookStart = y;
+    const hookFit = hook ? wrapFit(hook, (s) => `400 ${s}px "LR Sans"`, titleMaxW, hookSize0, 11, 4) : { size: 0, lines: [] };
+    const hookStart = ly;
     hookFit.lines.forEach((line) => {
       ctx.font = `400 ${hookFit.size}px "LR Sans"`;
-      ctx.fillStyle = c.ink;
+      ctx.fillStyle = ink;
       ctx.textBaseline = 'top';
       const hh = measure(ctx.font, line);
-      ctx.fillText(line, x0, y);
-      y += hh + Math.round(hookFit.size * 0.22);
+      ctx.fillText(line, lx, ly);
+      ly += hh + Math.round(hookFit.size * 0.22);
     });
     if (withQr && lead.pageUrl) {
-      const qrY = Math.min(Math.max(hookStart, leadBottom - qrLead - margin * 0.1), leadBottom - qrLead);
-      drawQrCode(ctx, x1 - qrLead, qrY, qrLead, lead.pageUrl);
+      const qrY = Math.min(Math.max(hookStart, leadBottom - pad - qrLead - margin * 0.1), leadBottom - pad - qrLead);
+      drawQrCode(ctx, x0 + (x1 - x0) - pad - qrLead, qrY, qrLead, lead.pageUrl);
     }
-    y = Math.max(y, withQr ? hookStart + qrLead : y) + gap;
-    y = Math.max(y, Math.min(leadBottom, y));
+    ly = Math.max(ly, withQr ? hookStart + qrLead : ly) + gap;
+    y = Math.max(ly, Math.min(leadBottom, ly));
 
     if (hasFeatures) {
       y = Math.max(y + Math.round(gap * 0.4), leadBottom - Math.round(blockH * 0.02));
-      ctx.strokeStyle = c.rule;
-      ctx.beginPath();
-      ctx.moveTo(x0, y);
-      ctx.lineTo(x1, y);
-      ctx.stroke();
-      y += Math.round(margin * 0.22);
-      y = drawKicker('Vedettes', y);
+      if (!glass) {
+        ctx.strokeStyle = c.rule;
+        ctx.beginPath();
+        ctx.moveTo(x0, y);
+        ctx.lineTo(x1, y);
+        ctx.stroke();
+        y += Math.round(margin * 0.22);
+        y = drawKicker(kickerFeat, y, x0);
+      } else {
+        y = drawKicker(kickerFeat, y, x0, true);
+      }
       const cols = features.length === 3 ? 3 : Math.min(2, features.length);
       const rows = Math.ceil(features.length / cols);
       const gridW = x1 - x0;
@@ -714,23 +899,32 @@ function composeFrontPage(ctx, w, h, opts) {
         const row = Math.floor(i / cols);
         const cx = x0 + col * (cellW + colGap);
         const cy = y + row * (cellH + rowGap);
-        const thumbH = Math.round(Math.min(cellH * 0.46, cellW / 1.7));
+        if (glass) frostedRect(ctx, cx, cy, cellW, cellH, radius);
+        const ip = glass ? Math.round(pad * 0.85) : 0;
+        const ix = cx + ip;
+        const iw = cellW - ip * 2;
+        const thumbH = Math.round(Math.min((cellH - ip * 2) * 0.46, iw / 1.7));
         const pic = art.key ? images.get(art.key) : null;
-        if (pic) coverPhoto(ctx, pic, cx, cy, cellW, thumbH, 0.5, art.focalY ?? 0.5);
-        else fillPlaceholder(cx, cy, cellW, thumbH, art.source || '');
-        let ty = cy + thumbH;
+        if (pic) {
+          ctx.save();
+          roundedRectPath(ctx, ix, cy + ip, iw, thumbH, glass ? Math.round(radius * 0.45) : 0);
+          ctx.clip();
+          coverPhoto(ctx, pic, ix, cy + ip, iw, thumbH, 0.5, art.focalY ?? 0.5);
+          ctx.restore();
+        } else fillPlaceholder(ix, cy + ip, iw, thumbH, art.source || '');
+        let ty = cy + ip + thumbH;
         if (art.credit) {
-          drawCredit(art.credit, cx, ty + 2, cellW);
+          drawCredit(art.credit, ix, ty + 2, iw, mute);
           ty += Math.round(legalSize * 1.3);
         } else ty += Math.round(gap * 0.35);
-        const tMax = Math.round(Math.min(cellW, cellH) * 0.09);
-        const tFit = wrapFit(art.title, (s) => `700 ${s}px "LR Serif"`, cellW, tMax, 11, 3);
+        const tMax = Math.round(Math.min(iw, cellH) * 0.09);
+        const tFit = wrapFit(art.title, (s) => `700 ${s}px "LR Serif"`, iw, tMax, 11, 3);
         tFit.lines.forEach((line) => {
           ctx.font = `700 ${tFit.size}px "LR Serif"`;
-          ctx.fillStyle = c.ink;
+          ctx.fillStyle = ink;
           ctx.textBaseline = 'top';
           const hh = measure(ctx.font, line);
-          ctx.fillText(line, cx, ty);
+          ctx.fillText(line, ix, ty);
           ty += hh + Math.round(tFit.size * 0.06);
         });
         const fMeta = [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
@@ -738,61 +932,84 @@ function composeFrontPage(ctx, w, h, opts) {
           const ms = Math.max(10, Math.round(tFit.size * 0.38));
           ctx.font = `600 ${ms}px "LR Sans Semi", "LR Sans"`;
           ctx.fillStyle = PURPLE;
-          ctx.fillText(fMeta, cx, ty);
+          ctx.fillText(fMeta, ix, ty);
           ty += measure(ctx.font, fMeta) + Math.round(ms * 0.35);
         }
         const hookText = art.hookShort || art.hook || '';
-        const textRight = withQr ? cellW - qrFeat - 8 : cellW;
+        const textRight = withQr ? iw - qrFeat - 8 : iw;
+        const textFloor = cy + cellH - ip - 4;
         if (hookText) {
           const hs = Math.max(10, Math.round(tFit.size * 0.42));
-          const room = cy + cellH - ty - 4;
+          const room = textFloor - ty;
           const maxLines = Math.max(2, Math.floor(room / (hs * 1.25)));
           const hFit = wrapFit(hookText, (s) => `400 ${s}px "LR Sans"`, textRight, hs, 9, maxLines);
           hFit.lines.forEach((line) => {
             ctx.font = `400 ${hFit.size}px "LR Sans"`;
-            ctx.fillStyle = c.ink;
+            ctx.fillStyle = ink;
             ctx.textBaseline = 'top';
             const hh = measure(ctx.font, line);
-            ctx.fillText(line, cx, ty);
+            if (ty + hh > textFloor) return;
+            ctx.fillText(line, ix, ty);
             ty += hh + Math.round(hFit.size * 0.18);
           });
         }
         if (withQr && art.pageUrl) {
-          drawQrCode(ctx, cx + cellW - qrFeat, cy + cellH - qrFeat, qrFeat, art.pageUrl);
+          drawQrCode(ctx, cx + cellW - ip - qrFeat, cy + cellH - ip - qrFeat, qrFeat, art.pageUrl);
         }
       });
     }
   }
 
   const footY = h - margin * 0.7 - footH;
-  ctx.strokeStyle = c.rule;
-  ctx.beginPath();
-  ctx.moveTo(x0, footY);
-  ctx.lineTo(x1, footY);
-  ctx.stroke();
-  let ly = footY + footPad;
+  if (glass) {
+    frostedRect(ctx, margin * 0.45, footY - 4, w - margin * 0.9, h - (footY - 4) - margin * 0.25, Math.round(margin * 0.18), {
+      fill: 'rgba(255, 252, 247, 0.84)',
+    });
+  } else {
+    ctx.strokeStyle = c.rule;
+    ctx.lineWidth = Math.max(1, Math.round(h / 1400));
+    ctx.beginPath();
+    ctx.moveTo(x0, footY);
+    ctx.lineTo(x1, footY);
+    ctx.stroke();
+  }
+  let fy = footY + footPad;
   legalLines.forEach((line) => {
     ctx.font = `400 ${legalSize}px "LR Sans"`;
-    ctx.fillStyle = c.mute;
+    ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
-    ctx.fillText(line, x0, ly);
-    ly += legalLineH + 3;
+    ctx.fillText(line, x0, fy);
+    fy += legalLineH + 3;
   });
+  let langsY = footY + footPad + Math.max(qrBlock, legalH) + 2;
+  if (showLangs && langsMetrics.height) {
+    drawLangsFooter(ctx, {
+      y: langsY,
+      maxW: langsMax,
+      size: fLang,
+      iconS,
+      color: mute,
+      lineGap: 5,
+      iconGap: 8,
+    });
+    langsY += langsMetrics.height;
+  }
+  if (credit) {
+    drawCredit(credit, x0, Math.min(langsY + 2, h - margin * 0.45 - creditSize), langsMax, mute);
+  }
   if (withQr) {
     const qx = x1 - siteQr;
     const qy = footY + footPad;
     drawQrCode(ctx, qx, qy, siteQr, `${site}/`);
     const capS = Math.max(9, Math.round(legalSize * 0.9));
     ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = c.ink;
+    ctx.fillStyle = ink;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    const cap = 'le-radar.ca';
-    ctx.fillText(cap, qx + siteQr / 2, qy + siteQr + 3);
+    ctx.fillText('le-radar.ca', qx + siteQr / 2, qy + siteQr + 3);
     ctx.textAlign = 'left';
   }
 }
-
 function drawRadar(ctx, w, h, cx, cy) {
   const reach = Math.hypot(Math.max(cx, w - cx), Math.max(h - cy, cy));
   ctx.strokeStyle = 'rgba(241, 242, 244, 0.07)';
@@ -899,6 +1116,57 @@ function wrapJoin(ctx, parts, maxW) {
   }
   if (cur) lines.push(cur);
   return lines;
+}
+
+function measureLangsFooter(ctx, { maxW, size, iconS = 0, lineGap = 5, iconGap = 8 }) {
+  const font = langTypeface(size);
+  ctx.font = font;
+  const lines = wrapJoin(ctx, TRANSLATE_LANGS, maxW);
+  let lineH = 0;
+  if (lines.length) {
+    ctx.font = font;
+    const m = ctx.measureText(lines[0] || 'Français');
+    lineH = (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
+  }
+  const height = lines.length
+    ? (iconS ? iconS + iconGap : 0) + lines.length * (lineH + lineGap)
+    : 0;
+  return { lines, lineH, height, font, size, iconS, lineGap, iconGap };
+}
+
+function drawTranslateMark(ctx, x, y, size, color) {
+  if (!assets.translate || size < 2) return;
+  if (!color || color === SOFT) {
+    ctx.drawImage(assets.translate, x, y, size, size);
+    return;
+  }
+  const off = document.createElement('canvas');
+  off.width = Math.max(1, Math.round(size));
+  off.height = Math.max(1, Math.round(size));
+  const octx = off.getContext('2d');
+  octx.drawImage(assets.translate, 0, 0, off.width, off.height);
+  octx.globalCompositeOperation = 'source-in';
+  octx.fillStyle = color;
+  octx.fillRect(0, 0, off.width, off.height);
+  ctx.drawImage(off, x, y);
+}
+
+function drawLangsFooter(ctx, {
+  y, maxW, size, iconS = 0, color, lineGap = 5, iconGap = 8,
+}) {
+  const measured = measureLangsFooter(ctx, { maxW, size, iconS, lineGap, iconGap });
+  if (!measured.lines.length) return measured;
+  let cy = y;
+  if (iconS && assets.translate) {
+    drawTranslateMark(ctx, (pageWidth(ctx) - iconS) / 2, cy, iconS, color);
+  }
+  let ly = cy + (iconS ? iconS + iconGap : 0);
+  ctx.font = measured.font;
+  measured.lines.forEach((line) => {
+    fillCentered(ctx, line, ly, color);
+    ly += measured.lineH + lineGap;
+  });
+  return measured;
 }
 
 function fillCentered(ctx, text, y, color) {
@@ -1018,18 +1286,11 @@ function compose(opts) {
   const creditH = credit ? measure(credit, fCredit) : 0;
   const fLang = Math.min(28 * fit, footCap * 0.5);
   const iconS = Math.min(40 * fit, footCap * 0.7);
-  const langFont = langTypeface(fLang);
-  ctx.font = langFont;
   const langMax = w - 2 * safe - 80 * fit;
-  const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
-  const langLineH = langLines.length ? (() => {
-    ctx.font = langFont;
-    const m = ctx.measureText(langLines[0] || 'Français');
-    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || fLang;
-  })() : 0;
-  const langsH = opts.langs
-    ? iconS + 8 + langLines.length * (langLineH + 5)
-    : 0;
+  const langsMetrics = opts.langs
+    ? measureLangsFooter(ctx, { maxW: langMax, size: fLang, iconS, lineGap: 5, iconGap: 8 })
+    : { height: 0, lines: [] };
+  const langsH = langsMetrics.height;
   const markH = Math.max(footLogo, fMark);
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
   const qrPx = Math.round(qrIn * REF_DPI * fit);
@@ -1090,16 +1351,8 @@ function compose(opts) {
   });
   cy = legalStart + legalH + (langsH ? gLegal : 0);
   if (opts.langs && langsH) {
-    if (assets.translate) {
-      ctx.drawImage(assets.translate, (w - iconS) / 2, cy, iconS, iconS);
-    }
-    let ly = cy + iconS + 8;
-    ctx.font = langFont;
-    langLines.forEach((line) => {
-      fillCentered(ctx, line, ly, SOFT);
-      ly += langLineH + 5;
-    });
-    cy = ly;
+    drawLangsFooter(ctx, { y: cy, maxW: langMax, size: fLang, iconS, color: SOFT, lineGap: 5, iconGap: 8 });
+    cy += langsH;
   }
   if (credit) {
     const creditY = cy + (h - cy - creditH) / 2;
@@ -1169,8 +1422,46 @@ function isCampusPhoto(p) {
   return p.campus === true || (Array.isArray(p.tags) && p.tags.includes('campus'));
 }
 
+function photoBankCampus() {
+  if (isUneModel()) {
+    const slug = (state.uneCampus && state.uneCampus !== 'toutes')
+      ? state.uneCampus
+      : (state.campus && state.campus !== 'generique' ? state.campus : 'laval');
+    return campusOf(slug);
+  }
+  return campusOf(state.campus);
+}
+
+function uneUsesPhoto() {
+  return isUneModel() && state.layout === 'verre';
+}
+
+function ensureUnePhoto() {
+  if (!uneUsesPhoto()) return;
+  const photos = filteredPhotos();
+  if (state.photoId && photos.some((p) => photoKeyId(p) === state.photoId)) return;
+  const first = photos[0];
+  if (first) {
+    state.photoId = photoKeyId(first);
+    resetCrop(first);
+  }
+}
+
+function fillUneCampusSelect() {
+  const sel = document.getElementById('une-campus');
+  if (!sel || sel.dataset.filled === '1') return;
+  CAMPUSES.filter((c) => c.slug !== 'generique').forEach((c) => {
+    const opt = document.createElement('option');
+    opt.value = c.slug;
+    opt.textContent = c.line;
+    sel.appendChild(opt);
+  });
+  sel.dataset.filled = '1';
+  if (state.uneCampus && state.uneCampus !== 'toutes') sel.value = state.uneCampus;
+}
+
 function filteredPhotos() {
-  const campus = campusOf(state.campus);
+  const campus = photoBankCampus();
   const bank = campus.places
     ? state.photos.filter((p) => isCampusPhoto(p) && photoMatches(p, campus))
     : state.photos;
@@ -1220,9 +1511,10 @@ function renderChoices() {
   }
   const n = photos.length;
   const nLocal = photos.filter(isLocalPhoto).length;
-  const base = state.campus === 'generique'
+  const bankCampus = photoBankCampus();
+  const base = (!isUneModel() && state.campus === 'generique')
     ? `${n} photos de toute la banque`
-    : `${n} photos pour ${campusOf(state.campus).label}`;
+    : `${n} photos pour ${bankCampus.label}`;
   document.getElementById('photo-meta').textContent = nLocal
     ? `${base} · ${nLocal} téléversée${nLocal > 1 ? 's' : ''}`
     : base;
@@ -1244,6 +1536,10 @@ function recipeLine() {
     const bits = [FORMATS[state.format].label, 'Une du Radar'];
     const n = selectedUneArticles().length;
     bits.push(n ? `${n} article${n > 1 ? 's' : ''}` : 'Aucun article');
+    bits.push(state.layout === 'verre' ? 'Verre dépoli' : 'Classique');
+    if (state.uneCampus && state.uneCampus !== 'toutes') bits.push(campusOf(state.uneCampus).label);
+    bits.push(state.lang === 'bilingue' ? 'Bilingue' : 'Français');
+    if (state.langs) bits.push('Langues');
     if (state.qr) bits.push('QR');
     return bits.join(' · ');
   }
@@ -1269,12 +1565,19 @@ function selectedUneArticles() {
 
 function syncModelUi() {
   const dash = document.querySelector('.dash');
-  if (dash) dash.dataset.model = state.model;
-  const uneBox = document.getElementById('une-box');
-  if (uneBox) uneBox.hidden = !isUneModel();
+  if (dash) {
+    dash.dataset.model = state.model;
+    dash.dataset.layout = isUneModel() ? (state.layout || 'classique') : '';
+  }
+  ['une-box', 'une-layout-box', 'une-uni-box'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.hidden = !isUneModel();
+  });
+  fillUneCampusSelect();
+  syncLangChoice();
   const crop = document.getElementById('crop-tools');
   const pane = document.getElementById('preview-pane');
-  if (isUneModel()) {
+  if (isUneModel() && !uneUsesPhoto()) {
     if (crop) crop.hidden = true;
     if (pane) pane.classList.remove('has-crop');
   } else {
@@ -1283,7 +1586,7 @@ function syncModelUi() {
   const lead = document.querySelector('.dash-lead');
   if (lead) {
     lead.textContent = isUneModel()
-      ? 'La une et les vedettes viennent du site. Décochez un titre ou changez l’ordre, puis exportez.'
+      ? 'La une et les vedettes viennent du site. Choisissez la mise en page, une université ou la langue, puis exportez.'
       : 'Paramètres d’abord, photo ensuite. L’affiche reste à droite.';
   }
 }
@@ -1364,12 +1667,18 @@ async function loadUneFeed() {
     if (!res.ok) throw new Error(`news.json (${res.status})`);
     const data = await res.json();
     const now = data.updated ? new Date(data.updated) : new Date();
-    const cards = Front.frontPageCards(data.items || [], now, '..');
+    const campus = (state.uneCampus && state.uneCampus !== 'toutes')
+      ? campusOf(state.uneCampus)
+      : null;
+    const cards = Front.frontPageCards(data.items || [], now, '..', campus);
     state.uneArticles = cards.items.map((card) => ({ ...card, included: true }));
     const n = state.uneArticles.length;
+    const where = campus ? ` pour ${campus.line}` : ' du fil actuel';
     state.uneStatus = n
-      ? `${n} article${n > 1 ? 's' : ''} du fil actuel (1 à la une, ${Math.max(0, n - 1)} vedette${n - 1 > 1 ? 's' : ''}).`
-      : 'Aucun article frais dans le fil.';
+      ? `${n} article${n > 1 ? 's' : ''}${where} (1 à la une, ${Math.max(0, n - 1)} vedette${n - 1 > 1 ? 's' : ''}).`
+      : (campus
+        ? `Aucun article frais pour ${campus.line}. L’affiche n’invente pas de titres.`
+        : 'Aucun article frais dans le fil.');
   } catch (err) {
     state.uneArticles = [];
     state.uneStatus = `Impossible de lire le fil : ${err.message}`;
@@ -1396,14 +1705,27 @@ async function loadUneImages(articles) {
   return map;
 }
 
-function uneComposeOpts(dpi, images) {
+function uneComposeOpts(dpi, images, photoImg, photo) {
+  const campus = (state.uneCampus && state.uneCampus !== 'toutes') ? state.uneCampus : null;
   return {
     model: 'une',
     format: state.format,
     qr: state.qr,
+    langs: state.langs,
+    lang: state.lang,
+    layout: state.layout,
+    campus,
     dpi,
     articles: selectedUneArticles(),
     articleImages: images || new Map(),
+    photoImg: photoImg || null,
+    credit: photo?.credit,
+    license: photo?.license,
+    photoUrl: photo?.url,
+    focalX: state.focalX,
+    focalY: state.focalY,
+    cropScale: state.zoom,
+    angle: state.angle,
   };
 }
 
@@ -1420,7 +1742,7 @@ function previewFit() {
 function paintPreview(img, photo, uneOpts) {
   const out = document.getElementById('preview');
   const canvas = compose(isUneModel()
-    ? uneComposeOpts(PREVIEW_DPI, uneOpts?.articleImages)
+    ? uneComposeOpts(PREVIEW_DPI, uneOpts?.articleImages, img, photo)
     : {
     format: state.format,
     campus: state.campus,
@@ -1462,16 +1784,21 @@ async function preview() {
   const recipe = document.getElementById('recipe');
   const frame = document.getElementById('preview');
   const gen = ++previewGen;
-  const photo = isUneModel() ? null : currentPhoto();
+  const photo = (!isUneModel() || uneUsesPhoto()) ? currentPhoto() : null;
   if (recipe) recipe.textContent = recipeLine();
   frame.classList.add('is-busy');
   try {
     if (isUneModel()) {
-      paintPreview(null, null, { articleImages: new Map() });
+      paintPreview(null, photo, { articleImages: new Map() });
       const images = await loadUneImages(selectedUneArticles());
       if (gen !== previewGen) return;
-      lastPhotoImg = null;
-      paintPreview(null, null, { articleImages: images });
+      let bg = null;
+      if (photo) {
+        try { bg = await loadImage(printUrl(photo), !isLocalPhoto(photo)); } catch { bg = null; }
+      }
+      if (gen !== previewGen) return;
+      lastPhotoImg = bg;
+      paintPreview(bg, photo, { articleImages: images });
     } else {
       paintPreview(null, photo);
       if (photo) {
@@ -1627,8 +1954,12 @@ async function rasterTiles(opts, w, h) {
 
 function printFileStem(fmt, dpi) {
   if (isUneModel()) {
+    const layout = state.layout === 'verre' ? 'verre' : 'classique';
+    const uni = (state.uneCampus && state.uneCampus !== 'toutes') ? `-${state.uneCampus}` : '';
+    const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
+    const langs = state.langs ? '-langues' : '';
     const qr = state.qr ? '-qr' : '';
-    return `le-radar-affiche-une-${fmt.file}${qr}-${dpi}dpi`;
+    return `le-radar-affiche-une-${layout}${uni}-${fmt.file}-${lang}${langs}${qr}-${dpi}dpi`;
   }
   const campus = campusOf(state.campus);
   const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
@@ -1647,13 +1978,13 @@ async function downloadPrint(kind = 'pdf') {
   try {
     const fmt = FORMATS[state.format];
     const dpi = outputDpi();
-    const photo = isUneModel() ? null : currentPhoto();
+    const photo = (!isUneModel() || uneUsesPhoto()) ? currentPhoto() : null;
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
     const uneImages = isUneModel() ? await loadUneImages(selectedUneArticles()) : null;
     const { w, h } = px(fmt, dpi);
     const composeOpts = isUneModel()
-      ? uneComposeOpts(dpi, uneImages)
+      ? uneComposeOpts(dpi, uneImages, img, photo)
       : {
       format: state.format,
       campus: state.campus,
@@ -1820,7 +2151,7 @@ function syncDpiLabels() {
 
 function syncLangChoice() {
   const campus = campusOf(state.campus);
-  const allowed = campus.bilingual;
+  const allowed = isUneModel() || campus.bilingual;
   const bi = document.querySelector('label:has(input[name="lang"][value="bilingue"])');
   if (bi) bi.hidden = !allowed;
   if (!allowed && state.lang === 'bilingue') {
@@ -1829,7 +2160,7 @@ function syncLangChoice() {
     if (fr) fr.checked = true;
   }
   const uniBox = document.getElementById('uni-toggle');
-  if (uniBox) uniBox.hidden = !campus.line;
+  if (uniBox) uniBox.hidden = isUneModel() || !campus.line;
 }
 
 function resetCrop(photo) {
@@ -1876,6 +2207,16 @@ function applyQuery() {
     if (input) input.checked = true;
     const modelCampus = document.querySelector('input[name="model"][value="campus"]');
     if (modelCampus && state.model === 'campus') modelCampus.checked = true;
+  }
+  const layout = q.get('layout') || q.get('mise');
+  if (layout === 'verre' || layout === 'classique') {
+    state.layout = layout;
+    const input = document.querySelector(`input[name="layout"][value="${layout}"]`);
+    if (input) input.checked = true;
+  }
+  const uni = q.get('uni') || q.get('uneCampus') || q.get('universite');
+  if (uni && (uni === 'toutes' || CAMPUSES.some((c) => c.slug === uni))) {
+    state.uneCampus = uni;
   }
   const photo = q.get('photo');
   if (photo) state.photoHint = photo;
@@ -1926,11 +2267,29 @@ function syncGenericLangs() {
 function applyChoice(name, value) {
   if (name === 'model') {
     state.model = value === 'une' ? 'une' : 'campus';
+    if (isUneModel() && state.layout === 'verre') ensureUnePhoto();
     syncModelUi();
-    if (isUneModel() && !state.uneArticles.length) {
+    renderChoices();
+    if (isUneModel()) {
       loadUneFeed().then(() => preview());
       return;
     }
+  }
+  if (name === 'layout') {
+    state.layout = value === 'verre' ? 'verre' : 'classique';
+    if (state.layout === 'verre') ensureUnePhoto();
+    syncModelUi();
+    renderChoices();
+  }
+  if (name === 'uneCampus') {
+    state.uneCampus = value || 'toutes';
+    if (state.layout === 'verre') {
+      state.photoId = null;
+      ensureUnePhoto();
+      renderChoices();
+    }
+    loadUneFeed().then(() => preview());
+    return;
   }
   if (name === 'format') {
     state.format = value;
@@ -2094,6 +2453,7 @@ async function main() {
     return true;
   });
   applyPhotoHint();
+  if (isUneModel() && state.layout === 'verre') ensureUnePhoto();
   renderChoices();
   if (isUneModel()) await loadUneFeed();
   await preview();

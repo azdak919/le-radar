@@ -92,14 +92,70 @@
     return [...items].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
   }
 
-  function selectFrontPage(items = [], referenceDate = new Date()) {
+  function foldName(s) {
+    return String(s || '')
+      .normalize('NFD')
+      .replace(/\p{M}/gu, '')
+      .toLowerCase()
+      .replace(/['’]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
+  /**
+   * Noms d’établissement acceptés pour un campus du studio (line, lineEn, label
+   * et formes jumelles déjà utilisées dans news.json / institution-labels-lib).
+   * On ne se sert pas des « places » (pavillons) : ce ne sont pas des institutions.
+   */
+  const CAMPUS_INSTITUTION_ALIASES = {
+    laval: ['Université Laval', 'ULaval'],
+    mcgill: ['Université McGill', 'McGill University', 'McGill'],
+    udem: ['Université de Montréal', 'UdeM'],
+    uqam: ['UQAM', 'Université du Québec à Montréal'],
+    concordia: ['Université Concordia', 'Concordia University', 'Concordia'],
+    sherbrooke: ['Université de Sherbrooke', 'UdeS'],
+    bishops: ["Université Bishop's", "Université Bishop’s", "Bishop's University", "Bishop’s University", "Bishop's"],
+    uqtr: ['UQTR', 'Université du Québec à Trois-Rivières'],
+    uqac: ['UQAC', 'Université du Québec à Chicoutimi'],
+    uqar: ['UQAR', 'Université du Québec à Rimouski'],
+    uqo: ['UQO', 'Université du Québec en Outaouais'],
+    uqat: ['UQAT', 'Université du Québec en Abitibi-Témiscamingue'],
+    teluq: ['TÉLUQ', 'TELUQ', 'Université TÉLUQ'],
+    ets: ['ÉTS', 'ETS', 'École de technologie supérieure', 'École de technologie supérieure (ÉTS)'],
+    enap: ['ENAP', 'École nationale d’administration publique'],
+    inrs: ['INRS'],
+    poly: ['Polytechnique Montréal', 'Polytechnique', 'École Polytechnique de Montréal'],
+    hec: ['HEC', 'HEC Montréal'],
+  };
+
+  function campusInstitutionNames(campus) {
+    if (!campus || typeof campus === 'string') return [];
+    const names = [
+      campus.line,
+      campus.lineEn,
+      campus.label,
+      ...(CAMPUS_INSTITUTION_ALIASES[campus.slug] || []),
+    ];
+    return [...new Set(names.filter(Boolean).map(foldName).filter(Boolean))];
+  }
+
+  function itemMatchesCampus(item, campus) {
+    if (!campus || !campus.slug || campus.slug === 'generique' || campus.slug === 'toutes') return true;
+    const accepted = new Set(campusInstitutionNames(campus));
+    if (!accepted.size) return false;
+    const inst = foldName(item.institution || '');
+    return !!(inst && accepted.has(inst));
+  }
+
+  function selectFrontPage(items = [], referenceDate = new Date(), campus = null) {
     const fresh = freshness && typeof freshness.filterFreshItems === 'function'
       ? freshness.filterFreshItems(items, referenceDate)
       : items.slice();
     const normal = housekeeping && typeof housekeeping.housekeepingNormalItems === 'function'
       ? housekeeping.housekeepingNormalItems(fresh, referenceDate)
       : fresh;
-    const sorted = sortByDateDesc(normal);
+    const pool = campus ? normal.filter((item) => itemMatchesCampus(item, campus)) : normal;
+    const sorted = sortByDateDesc(pool);
     const picked = sorted.slice(0, Math.min(FRONT_PAGE_COUNT, sorted.length));
     return {
       lead: picked[0] || null,
@@ -195,6 +251,19 @@
     return wd ? `${wd} ${date}` : date;
   }
 
+  function enDate(iso, { weekday = false } = {}) {
+    const t = Date.parse(iso);
+    if (!Number.isFinite(t)) return '';
+    const opts = {
+      timeZone: 'America/Toronto',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    if (weekday) opts.weekday = 'long';
+    return new Intl.DateTimeFormat('en-CA', opts).format(t);
+  }
+
   function normalize(item, base = '..') {
     if (!item || !item.title) return null;
     const id = articleId(item.link);
@@ -218,8 +287,8 @@
     };
   }
 
-  function frontPageCards(items = [], referenceDate = new Date(), base = '..') {
-    const picked = selectFrontPage(items, referenceDate);
+  function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null) {
+    const picked = selectFrontPage(items, referenceDate, campus);
     const cards = picked.items.map((item) => normalize(item, base)).filter(Boolean);
     return {
       lead: cards[0] || null,
@@ -235,6 +304,9 @@
     canonicalArticleUrl,
     articleId,
     articlePageUrl,
+    foldName,
+    campusInstitutionNames,
+    itemMatchesCampus,
     selectFrontPage,
     shortExcerpt,
     hookOf,
@@ -243,6 +315,7 @@
     cropFocalY,
     photoCredit,
     frDate,
+    enDate,
     normalize,
     frontPageCards,
   };
