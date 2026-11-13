@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T22:35:50.735Z",
+  "updatedAt": "2026-11-13T23:27:06.338Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,142 +28,134 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T22:35:21.191Z"
+      "checkedAt": "2026-11-13T23:26:40.762Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "OK Doomer",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/ok-doomer"
-      },
-      "next": {
         "title": "Mix électro",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/mix-electro"
       },
+      "next": {
+        "title": "Rave de nuit",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/rave-de-nuit"
+      },
       "track": "",
-      "showTitle": "OK Doomer",
+      "showTitle": "Mix électro",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T22:35:34.927Z"
+      "checkedAt": "2026-11-13T23:26:54.458Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Café",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Listening to Latin America: Blanca-Victoria",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T22:35:37.063Z"
+      "checkedAt": "2026-11-13T23:26:57.571Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Groove Master's Hour",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
-      },
-      "next": {
         "title": "The Go-Go Radio Magic Show",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
+      "next": {
+        "title": "El Encuentro Latino",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+      },
       "track": "",
-      "showTitle": "The Groove Master's Hour",
+      "showTitle": "The Go-Go Radio Magic Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T22:35:38.519Z"
+      "checkedAt": "2026-11-13T23:26:59.001Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Remix ta console",
-        "source": "schedule-live",
-        "start": "16:30",
-        "end": "17:59",
-        "url": "https://www.cfak.ca/balados/remix-ta-console"
-      },
-      "next": {
         "title": "La Récréation",
         "source": "schedule-live",
         "start": "18:00",
         "end": "18:59",
         "url": "https://www.cfak.ca/balados/la-recreation"
       },
+      "next": {
+        "title": "Enfin vendredi",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:59",
+        "url": "https://www.cfak.ca/balados/enfin-vendredi"
+      },
       "track": "",
-      "showTitle": "Remix ta console",
+      "showTitle": "La Récréation",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T22:35:39.480Z"
+      "checkedAt": "2026-11-13T23:27:00.058Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "La Niche",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "la-niche"
-      },
+      "current": null,
       "next": {
-        "title": "Podcast Nomade: L'art de se rencontrer",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
+        "title": "OPUS",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "opus"
       },
-      "track": "la — Niche-ep.-14",
-      "showTitle": "La Niche",
+      "track": "Marika Hackman — 33",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T22:35:50.384Z"
+      "checkedAt": "2026-11-13T23:27:05.988Z"
     }
   }
 }
