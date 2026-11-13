@@ -258,3 +258,33 @@ test('export PDF réel : la une Lettre (300 dpi) et l’affiche campus @ci-criti
   }
   expect(errors).toEqual([]);
 });
+
+/* Chaque bloc article de chaque format Une doit montrer tous les auteurs, le média et la date. */
+test('chaque bloc article de chaque format Une montre tous les auteurs @ci-critical', async ({ page }) => {
+  test.setTimeout(180000);
+  const errors = [];
+  await offline(page, errors);
+  const formats = ['letter', 'legal', 'tabloid', 'ecran-paysage', 'ecran-portrait'];
+  const cases = [
+    ...formats.map((format) => ({ name: `udem mois ${format}`, url: `/affiches/?modele=une&layout=classique&uni=udem&lang=standard&qr=oui&format=${format}&periode=mois` })),
+    { name: 'udem QL lettre semaine', url: '/affiches/?modele=une&layout=classique&uni=udem&media=quartier-libre&lang=standard&qr=oui&format=letter&periode=semaine' },
+    { name: 'udem QL tabloid semaine', url: '/affiches/?modele=une&layout=classique&uni=udem&media=quartier-libre&lang=standard&qr=oui&format=tabloid&periode=semaine' },
+  ];
+  const norm = (s) => String(s || '').replace(/\u00A0/g, ' ');
+  for (const c of cases) {
+    await page.goto(c.url, { waitUntil: 'domcontentloaded' });
+    await ready(page);
+    const sigs = await page.evaluate(() => (window.__uneSignatures || []).map((s) => ({ ...s })));
+    expect(sigs.length, `aucun bloc article (${c.name})`).toBeGreaterThan(0);
+    for (const s of sigs) {
+      const text = norm(s.text);
+      for (const name of s.authors || []) {
+        expect(text, `${c.name} · ${s.role} « ${s.title} » : auteur manquant (${name})`).toContain(norm(name));
+      }
+      if (s.source) expect(text, `${c.name} · ${s.role} « ${s.title} » : média manquant`).toContain(s.source);
+      if (s.dateLabel) expect(text, `${c.name} · ${s.role} « ${s.title} » : date manquante`).toContain(norm(s.dateLabel));
+      expect(text, `${c.name} · ${s.role} : pas de et al.`).not.toMatch(/et al\.?/i);
+    }
+  }
+  expect(errors).toEqual([]);
+});

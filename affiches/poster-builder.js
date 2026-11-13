@@ -845,8 +845,10 @@ const CAMPUS_PAGE_PATHS = {
 function composeFrontPage(ctx, w, h, opts) {
   /* Toute coupure (« … ») réellement dessinée est notée : les tests et les exports la refusent. */
   const cuts = [];
+  const signatures = [];
   if (typeof window !== 'undefined') {
     window.__uneCuts = cuts;
+    window.__uneSignatures = signatures;
     if (new URLSearchParams(location.search).has('debugcuts')) {
       const where = new Map();
       window.__uneCutWhere = where;
@@ -1145,36 +1147,55 @@ function composeFrontPage(ctx, w, h, opts) {
     return lines.length * Math.round(s * 1.15) - Math.round(s * 0.15) + px(0.4);
   };
   const metaOf = (art) => [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
-  /* Signature « Par Nom · Média » : tous les noms si la place le permet, sinon « et al. », sinon le média seul. */
+  /* Signature « Par tous les auteurs · Média · date » : on passe à la ligne ou on réduit
+   * le corps ; on ne coupe jamais un nom et on n’omet jamais un auteur pour caser la date. */
   const bylineFor = (art, maxNames = Infinity) => (Front && Front.bylineOf
     ? Front.bylineOf(art.authors || [], art.source || '', { maxNames })
     : (art.source || ''));
-  const metaPick = (art, maxW, fontFn, size, lines = 1, withDate = true) => {
-    const tries = (Front && Front.bylineDateTries)
-      ? Front.bylineDateTries(art, withDate)
-      : (() => {
-        const names = (art.authors || []).length;
-        const bylines = [];
-        [Infinity, 2, 1].forEach((mx) => {
-          if (mx !== Infinity && names <= mx) return;
-          const b = bylineFor(art, mx);
-          if (b) bylines.push(b);
-        });
-        if (art.source) bylines.push(art.source);
-        const out = [];
-        if (withDate && art.dateLabel) {
-          bylines.forEach((b) => out.push(`${b} · ${art.dateLabel}`));
-          out.push(art.dateLabel);
-        }
-        bylines.forEach((b) => out.push(b));
-        return out;
-      })();
-    ctx.font = fontFn(size);
-    for (const t of tries) {
-      const wl = wrapWords(ctx, t, maxW);
-      if (wl.length <= lines) return wl;
+  const signatureText = (art, withDate = true) => (Front && Front.signatureOf
+    ? Front.signatureOf(art, { withDate })
+    : [bylineFor(art, Infinity), withDate ? art.dateLabel : ''].filter(Boolean).join(' · '));
+  const metaPick = (art, maxW, fontFn, size, opts = {}) => {
+    const withDate = opts.withDate !== false;
+    const leadR = opts.lead || 1.25;
+    const text = signatureText(art, withDate);
+    if (!text) return { lines: [], size, text: '' };
+    const minS = opts.minSize != null ? opts.minSize : Math.max(7, Math.round(size * 0.68));
+    const trySize = (s) => {
+      ctx.font = fontFn(s);
+      const lines = wrapWords(ctx, text, maxW);
+      const overflow = text.split(/[^\S\u00A0\u202F]+/).some((tok) => ctx.measureText(tok).width > maxW);
+      return { lines, overflow, h: lines.length * Math.round(s * leadR) };
+    };
+    for (let s = size; s >= minS; s -= 1) {
+      const t = trySize(s);
+      const linesOk = !opts.maxLines || t.lines.length <= opts.maxLines;
+      const hOk = opts.maxH == null || t.h <= opts.maxH;
+      if (linesOk && hOk && !t.overflow) return { lines: t.lines, size: s, text };
     }
-    return [fitOne(tries[tries.length - 1] || '', fontFn, size, maxW)];
+    const t = trySize(minS);
+    return { lines: t.lines, size: minS, text };
+  };
+  const noteSignature = (art, role, fit) => {
+    signatures.push({
+      role,
+      title: art.title || '',
+      authors: [...(art.authors || [])],
+      source: art.source || '',
+      dateLabel: art.dateLabel || '',
+      text: (fit.lines || []).join(' '),
+      size: fit.size,
+    });
+  };
+  const paintSignature = (art, role, x, y, maxW, preferSize, color, bgs, opts = {}) => {
+    const leadR = opts.lead || 1.25;
+    const fit = metaPick(art, maxW, sans(600), preferSize, opts);
+    const lh = Math.round(fit.size * leadR);
+    ctx.font = sans(600)(fit.size);
+    ctx.textBaseline = 'top';
+    fit.lines.forEach((line, i) => fillWithSpan(line, x, y + i * lh, color, art.source, metaColor(art, bgs, color)));
+    noteSignature(art, role, fit);
+    return { ...fit, height: fit.lines.length * lh, lead: leadR };
   };
 
   const x0 = margin;
@@ -1552,8 +1573,9 @@ function composeFrontPage(ctx, w, h, opts) {
       const tw = colW - pad * 2;
       const textWq = tw - (qrS && !tall ? qrS + px(1.6) + px(1.8) : 0);
       /* Pile de texte calée en bas : chapeau, signature, titre (de bas en haut). */
-      const metaS = px(1.8);
-      const metaLines = metaPick(lead, textWq, sans(600), metaS, 2, true);
+      const metaLead = metaPick(lead, textWq, sans(600), px(1.8), { withDate: true, maxLines: 4, minSize: Math.max(8, px(1.25)), lead: 1.3 });
+      const metaS = metaLead.size;
+      const metaLines = metaLead.lines;
       const metaH = metaLines.length * Math.round(metaS * 1.3);
       const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
       const hS = px(1.95);
@@ -1605,6 +1627,7 @@ function composeFrontPage(ctx, w, h, opts) {
       ty += px(0.8);
       ctx.font = `600 ${metaS}px "LR Sans Semi", "LR Sans"`;
       metaLines.forEach((line, i) => fillWithSpan(line, lx + pad, ty + i * Math.round(metaS * 1.3), '#F1D9EE', lead.source, metaColor(lead, BG_OVERLAY, '#F1D9EE')));
+      noteSignature(lead, 'lead', metaLead);
       ty += metaH;
       if (hFit) drawLines(hFit, sans(400), lx + pad, ty + px(0.6), '#ffffff', 1.25, floor);
       ctx.restore();
@@ -1655,11 +1678,14 @@ function composeFrontPage(ctx, w, h, opts) {
     ly = drawLines(tProbe, serif, lx, ly, ink, 1.08, floor);
     ly += px(0.8);
     const textW2 = lw - (leadQr ? leadQr + px(2.4) : 0);
-    const metaLines = metaPick(lead, textW2, sans(600), px(1.9), 2, true);
-    ctx.font = `600 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
-    metaLines.forEach((line, i) => fillWithSpan(line, lx, ly + i * px(2.4), PURPLE, lead.source, metaColor(lead, BG_LIGHT, PURPLE)));
+    const metaLead = metaPick(lead, textW2, sans(600), px(1.9), { withDate: true, maxLines: 4, minSize: Math.max(8, px(1.3)), lead: 1.26 });
+    const metaLines = metaLead.lines;
+    const metaLh = Math.round(metaLead.size * 1.26);
+    ctx.font = `600 ${metaLead.size}px "LR Sans Semi", "LR Sans"`;
+    metaLines.forEach((line, i) => fillWithSpan(line, lx, ly + i * metaLh, PURPLE, lead.source, metaColor(lead, BG_LIGHT, PURPLE)));
+    noteSignature(lead, 'lead', metaLead);
     const meta = metaLines.length > 0;
-    const hookY = ly + (meta ? px(0.6) + metaLines.length * px(2.4) : 0);
+    const hookY = ly + (meta ? px(0.6) + metaLines.length * metaLh : 0);
     const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
     if (hook && floor - hookY > px(2.4)) {
       const lines = Math.max(1, Math.min(5, Math.floor((floor - hookY) / Math.round(px(2.1) * 1.25))));
@@ -1794,8 +1820,13 @@ function composeFrontPage(ctx, w, h, opts) {
           }
           /* Titre entier ou article déplacé en bref : jamais de « … » ni de ligne perdue (règle sans troncature).
            * sideFit rend la mise en forme qui tient en entier dans la hauteur, ou null. */
+          const sideMetaH = (art, per) => {
+            const cap = Math.min(px(5.4), Math.max(px(2.2), Math.round(per * 0.45)));
+            const fit = metaPick(art, rightW - sp * 2, sans(600), px(1.45), { withDate: true, maxH: cap, minSize: Math.max(8, px(1.0)), lead: 1.25 });
+            return fit.lines.length * Math.round(fit.size * 1.25);
+          };
           const sideFit = (art, per, minS = Math.max(10, px(1.45))) => {
-            const room = per - px(2.1) - px(0.7) - px(0.4);
+            const room = per - sideMetaH(art, per) - px(0.7) - px(0.4);
             const cap = Math.min(plan.screen ? px(2.4) : px(2.5), Math.floor(room / 1.1));
             for (let sz = cap; sz >= minS; sz -= 1) {
               const lh = Math.round(sz * 1.1);
@@ -1835,9 +1866,8 @@ function composeFrontPage(ctx, w, h, opts) {
             const by = sy + i * per;
             if (i > 0) rule(rx, rx + rightW, by - px(0.6));
             let yy = by + (i > 0 ? px(0.4) : 0);
-            ctx.font = `600 ${px(1.45)}px "LR Sans Semi", "LR Sans"`;
-            fillWithSpan(metaPick(art, rightW - sp * 2, sans(600), px(1.45), 1, true)[0] || '', rx + sp, yy, PURPLE, art.source, metaColor(art, BG_LIGHT, PURPLE));
-            yy += px(2.1);
+            const sidePaint = paintSignature(art, 'aussi', rx + sp, yy, rightW - sp * 2, px(1.45), PURPLE, BG_LIGHT, { withDate: true, maxH: Math.min(px(5.4), Math.max(px(2.2), Math.round(per * 0.45))), minSize: Math.max(8, px(1.0)), lead: 1.25 });
+            yy += sidePaint.height + px(0.25);
             const room = by + per - yy - px(0.3);
             const tMax = plan.screen
               ? Math.max(px(1.7), Math.min(px(2.4), Math.floor(room / (room >= px(5) ? 2.2 : 1.15))))
@@ -1903,20 +1933,15 @@ function composeFrontPage(ctx, w, h, opts) {
       iy += px(0.5);
       const qr = articleQr && art.pageUrl ? Math.min(px(8), Math.round(iw * 0.34)) : 0;
       const qrTop = floor - qr;
-      const metaH = px(5.2);
-      let f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      const mw = iw - (qr ? qr + px(1) : 0);
+      const mS = Math.max(8, px(1.3));
+      const gridMeta = metaPick(art, mw, sans(600), mS, { withDate: true, maxH: px(8), minSize: Math.max(7, px(0.95)), lead: 1.25 });
+      const metaH = Math.max(px(4.2), gridMeta.lines.length * Math.round(gridMeta.size * 1.25));
+      let f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, mw, qrTop - px(0.6), floor - metaH, 1.1);
       /* Titre entier : on descend le corps plutôt que de couper. */
-      if (f.cut) f = fitFlow(art.title, serif, px(2.9), Math.max(9, px(1.35)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      if (f.cut) f = fitFlow(art.title, serif, px(2.9), Math.max(9, px(1.35)), iy, iw, mw, qrTop - px(0.6), floor - metaH, 1.1);
       drawFlow(f, serif, ix, ink);
-      {
-        const mS = Math.max(8, px(1.3));
-        const mw = iw - (qr ? qr + px(1) : 0);
-        const ml = metaPick(art, mw, sans(600), mS, 3, true);
-        const mh = ml.length * Math.round(mS * 1.25);
-        ctx.font = sans(600)(mS);
-        ctx.textBaseline = 'top';
-        ml.forEach((line, li) => fillWithSpan(line, ix, floor - mh + li * Math.round(mS * 1.25), PURPLE, art.source, metaColor(art, BG_LIGHT, PURPLE)));
-      }
+      paintSignature(art, 'vedette', ix, floor - metaH, mw, mS, PURPLE, BG_LIGHT, { withDate: true, maxH: metaH, minSize: Math.max(7, px(0.95)), lead: 1.25 });
       if (qr) drawQrCode(ctx, ix + iw - qr, floor - qr, qr, art.pageUrl);
     });
     cy += rowH + px(2.4);
@@ -2040,7 +2065,15 @@ function composeFrontPage(ctx, w, h, opts) {
       }
       return null;
     };
-    const usable = briefs.filter((b) => briefFit(b.title, colW - px(3.4), px(5.9) - px(1.9)));
+    const briefMetaH = (b, tW, capH) => {
+      const fit = metaPick(b, tW, sans(600), px(1.3), { withDate: true, maxH: capH, minSize: Math.max(7, px(0.95)), lead: 1.25 });
+      return fit.lines.length * Math.round(fit.size * 1.25);
+    };
+    const usable = briefs.filter((b) => {
+      const tW = colW - px(3.4);
+      const mh = briefMetaH(b, tW, px(3.8));
+      return briefFit(b.title, tW, px(5.9) - mh - px(0.2));
+    });
     const rowsFit = Math.max(1, Math.floor(availB / px(5.9)));
     const count = Math.min(usable.length, rowsFit * cols);
     const perCol = Math.ceil(count / cols);
@@ -2058,10 +2091,9 @@ function composeFrontPage(ctx, w, h, opts) {
       ctx.fillText(String(i + 1), bx, iy);
       const tx = bx + px(3.4);
       const tW = colW - px(3.4);
-      ctx.font = `600 ${px(1.3)}px "LR Sans Semi", "LR Sans"`;
-      fillWithSpan(metaPick(b, tW, sans(600), px(1.3), 1, true)[0] || '', tx, iy, PURPLE, b.source, metaColor(b, BG_LIGHT, PURPLE));
-      const f = briefFit(b.title, tW, itemH - px(1.9)) || wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
-      drawLines(f, serif, tx, iy + px(1.9), ink, 1.12, iy + itemH);
+      const briefPaint = paintSignature(b, 'bref', tx, iy, tW, px(1.3), PURPLE, BG_LIGHT, { withDate: true, maxH: Math.min(px(3.8), Math.round(itemH * 0.48)), minSize: Math.max(7, px(0.95)), lead: 1.25 });
+      const f = briefFit(b.title, tW, itemH - briefPaint.height - px(0.2)) || wrapFit(b.title || '', serif, tW, px(1.95), Math.max(9, px(1.5)), 2);
+      drawLines(f, serif, tx, iy + briefPaint.height + px(0.2), ink, 1.12, iy + itemH);
     });
   }
 

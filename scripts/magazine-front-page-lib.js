@@ -785,24 +785,12 @@
     }
     return { kicker: 'Journaux étudiants', institution: '' };
   }
-  /* Variantes de ligne méta (signature + date) : d’abord toutes les formes avec la date, ensuite
-   * les mêmes sans date, pour que la date absolute ne soit pas abandonnée trop tôt. */
-  function bylineDateTries(art, withDate = true) {
-    const names = (art && art.authors || []).length;
-    const bylines = [];
-    [Infinity, 2, 1].forEach((mx) => {
-      if (mx !== Infinity && names <= mx) return;
-      const b = bylineOf((art && art.authors) || [], (art && art.source) || '', { maxNames: mx });
-      if (b) bylines.push(b);
-    });
-    if (art && art.source && !bylines.includes(art.source)) bylines.push(art.source);
-    const out = [];
-    if (withDate && art && art.dateLabel) {
-      bylines.forEach((b) => out.push(`${b} · ${art.dateLabel}`));
-      out.push(art.dateLabel);
-    }
-    bylines.forEach((b) => out.push(b));
-    return out;
+  /* Signature d’un article sur l’affiche Une : tous les auteurs, le média, et la date
+   * absolue s’il y en a une. Jamais de « et al. », jamais de repli qui omet un auteur. */
+  function signatureOf(art, { withDate = true, en = false } = {}) {
+    const by = bylineOf((art && art.authors) || [], (art && art.source) || '', { en });
+    if (withDate && art && art.dateLabel) return [by, art.dateLabel].filter(Boolean).join(' · ');
+    return by || '';
   }
   /* « de Le Polyscope » → « du Polyscope », « de Les… » → « des… », élision devant voyelle. */
   function deMedia(name) {
@@ -834,7 +822,7 @@
     radioShowOk,
     numbersLine,
     pressKicker,
-    bylineDateTries,
+    signatureOf,
     pickRadioShows,
     periodWindow,
     LIVE_PERIODS,
