@@ -1241,16 +1241,6 @@
       "via": "resize-proxy",
       "nameKey": "p1177191.jpeg"
     },
-    "c38d12e5f3f21e89": {
-      "local": "assets/news-images/c38d12e5f3f21e89.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/DSCF5500.png",
-      "host": "theconcordian.com",
-      "bytes": 291068,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:08:37.610Z",
-      "via": "resize-proxy",
-      "nameKey": "dscf5500.png"
-    },
     "480db2ee60a8b320": {
       "local": "assets/news-images/480db2ee60a8b320.webp",
       "remote": "https://journallagriffe.ca/wp-content/uploads/2026/10/Thomas1.jpg",
@@ -1689,17 +1679,27 @@
       "via": "origin",
       "nameKey": "respirer_dsf7286web_stephanebourgeois.jpg"
     },
-    "c57a8c4869c18c73": {
-      "local": "assets/news-images/c57a8c4869c18c73.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/della-harris.png",
+    "9399e5062e1c9deb": {
+      "local": "assets/news-images/9399e5062e1c9deb.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
       "host": "www.delitfrancais.com",
-      "bytes": 283041,
-      "updatedAt": "2026-11-12T23:47:56.086Z",
+      "bytes": 84631,
+      "updatedAt": "2026-11-13T00:08:21.672Z",
       "via": "disk",
-      "nameKey": "della-harris.png"
+      "nameKey": "lacrymobastien-1.png"
+    },
+    "a15228aadfa9426a": {
+      "local": "assets/news-images/a15228aadfa9426a.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/P1055409.jpeg",
+      "host": "theconcordian.com",
+      "bytes": 228839,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-13T00:08:23.703Z",
+      "via": "resize-proxy",
+      "nameKey": "p1055409.jpeg"
     }
   },
-  "updatedAt": "2026-11-12T23:47:56.102Z",
+  "updatedAt": "2026-11-13T00:08:23.707Z",
   "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
