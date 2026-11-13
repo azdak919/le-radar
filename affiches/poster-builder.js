@@ -206,6 +206,8 @@ const state = {
   layout: 'classique',
   uneCampus: 'toutes',
   uneArticles: [],
+  uneBriefs: [],
+  uneSidebars: null,
   uneStatus: '',
 };
 
@@ -559,16 +561,118 @@ function frontInk() {
   };
 }
 
+function posterTodayYmd() {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
+}
+
+function posterClock(time) {
+  const raw = String(time || '').trim();
+  const m = raw.match(/^(\d{1,2})(?::(\d{2}))?/);
+  if (!m) return raw.replace(':', ' h ');
+  const h = String(Number(m[1]));
+  const min = m[2] && m[2] !== '00' ? ` h ${m[2]}` : ' h';
+  return `${h}${min}`;
+}
+
+function pickPosterRadio(nowplaying, radios, campus, limit = 3) {
+  const stations = nowplaying && nowplaying.stations;
+  if (!stations) return [];
+  const list = Array.isArray(stations)
+    ? stations
+    : Object.keys(stations).map((id) => ({ id, ...stations[id] }));
+  const radioMeta = new Map((radios || []).map((r) => [r.id, r]));
+  const rows = [];
+  for (const st of list) {
+    const meta = radioMeta.get(st.id) || {};
+    const inst = meta.institution || '';
+    if (campus && !itemMatchesCampusPoster({ institution: inst }, campus)) continue;
+    const current = st.current || null;
+    if (!current || !current.title) continue;
+    const when = [posterClock(current.start), posterClock(current.end)].filter(Boolean).join('–');
+    rows.push({
+      kicker: st.name || meta.name || st.id,
+      line: current.title,
+      meta: when,
+    });
+    if (rows.length >= limit) break;
+  }
+  return rows;
+}
+
+function itemMatchesCampusPoster(item, campus) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  if (Front && typeof Front.itemMatchesCampus === 'function') return Front.itemMatchesCampus(item, campus);
+  return !campus;
+}
+
+function pickPosterSports(masthead, campus, limit = 3) {
+  const teams = masthead && masthead.teams;
+  if (!teams || typeof teams !== 'object') return [];
+  const today = posterTodayYmd();
+  const upcoming = [];
+  const results = [];
+  const seen = new Set();
+  Object.values(teams).forEach((team) => {
+    if (!team) return;
+    const inst = team.institutionName || team.institutionLabel || team.fullName || team.name || '';
+    if (campus && !itemMatchesCampusPoster({ institution: inst }, campus)) return;
+    const sport = team.sportLabel || team.sport || '';
+    const name = team.name || team.fullName || '';
+    const uniBoost = team.sector === 'universitaire' ? 0 : 1;
+    (team.nextGames || []).forEach((game) => {
+      const id = game.gameId || `${name}-${game.date}-${game.opponent}`;
+      if (seen.has(id) || !game.date) return;
+      seen.add(id);
+      const vs = game.opponentNickname || game.opponent || game.opponentFullName || '';
+      const verb = game.home ? 'reçoit' : 'visite';
+      upcoming.push({
+        sort: `${uniBoost}-${game.date}-${game.time || ''}`,
+        today: game.date === today,
+        kicker: sport,
+        line: `${name} ${verb} ${vs}`,
+        meta: [game.date === today ? 'aujourd’hui' : (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`) : ''), posterClock(game.time)].filter(Boolean).join(' · '),
+      });
+    });
+    (team.results || []).forEach((game) => {
+      const id = `r-${game.gameId || `${name}-${game.date}`}`;
+      if (seen.has(id) || game.scoreFor == null || game.scoreAgainst == null) return;
+      seen.add(id);
+      results.push({
+        sort: `${uniBoost}-${game.date}`,
+        kicker: sport,
+        line: `${name} ${game.scoreFor}–${game.scoreAgainst} ${game.opponentNickname || game.opponent || ''}`,
+        meta: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate
+          ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`)
+          : game.date,
+      });
+    });
+  });
+  upcoming.sort((a, b) => {
+    if (a.today !== b.today) return a.today ? -1 : 1;
+    return String(a.sort).localeCompare(String(b.sort));
+  });
+  results.sort((a, b) => String(b.sort).localeCompare(String(a.sort)));
+  const out = [...upcoming.slice(0, limit)];
+  if (out.length < limit) out.push(...results.slice(0, limit - out.length));
+  return out.slice(0, limit);
+}
+
 function composeFrontPage(ctx, w, h, opts) {
   const c = frontInk();
   const articles = (opts.articles || []).filter(Boolean);
+  const briefs = (opts.briefs || []).filter(Boolean);
   const images = opts.articleImages || new Map();
   const withQr = Boolean(opts.qr);
   const glass = opts.layout === 'verre';
   const bilingual = opts.lang === 'bilingue';
   const showLangs = opts.langs !== false;
-  const margin = Math.round(Math.min(w, h) * 0.048);
-  const barH = Math.max(10, Math.round(h * 0.011));
+  const margin = Math.round(Math.min(w, h) * 0.036);
+  const barH = Math.max(8, Math.round(h * 0.009));
   const site = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.SITE)
     ? RadarMagazineFrontPage.SITE
     : 'https://le-radar.ca';
@@ -589,10 +693,12 @@ function composeFrontPage(ctx, w, h, opts) {
   const credit = (glass && photo && opts.credit)
     ? posterCredit(opts.credit, opts.license, opts.photoUrl || '')
     : '';
+  const radioLines = opts.radioLines || [];
+  const sportsLines = opts.sportsLines || [];
 
   if (glass && photo) {
     coverPhoto(ctx, photo, 0, 0, w, h, opts.focalX ?? 0.5, opts.focalY ?? 0.42);
-    ctx.fillStyle = 'rgba(18, 16, 14, 0.30)';
+    ctx.fillStyle = 'rgba(18, 16, 14, 0.32)';
     ctx.fillRect(0, 0, w, h);
   } else if (glass) {
     ctx.fillStyle = '#2A2420';
@@ -611,41 +717,41 @@ function composeFrontPage(ctx, w, h, opts) {
   };
   const wrapFit = (text, fontFn, maxW, maxSize, minSize, maxLines) => {
     let size = maxSize;
-    let lines = [text];
+    let lines = [text || ''];
     while (size > minSize) {
       ctx.font = fontFn(size);
-      lines = wrapWords(ctx, text, maxW);
+      lines = wrapWords(ctx, text || '', maxW);
       if (lines.length <= maxLines) break;
       size -= 1;
     }
     if (lines.length > maxLines) {
       lines = lines.slice(0, maxLines);
-      let last = lines[maxLines - 1];
+      let last = lines[maxLines - 1] || '';
       while (last.length > 4 && textW(ctx, `${last}…`) > maxW) last = last.slice(0, -1).trimEnd();
       lines[maxLines - 1] = /[….]$/.test(last) ? last : `${last}…`;
     }
     return { size, lines };
   };
 
-  const markSize = Math.round(Math.min(w, h) * 0.032);
-  const logoS = Math.round(markSize * 1.15);
+  const ink = c.ink;
+  const mute = glass ? '#3F3A35' : c.mute;
+  const markSize = Math.round(Math.min(w, h) * 0.028);
+  const logoS = Math.round(markSize * 1.12);
   const x0 = margin;
   const x1 = w - margin;
-  const sloganSize = Math.round(markSize * 0.36);
-  const dSize = Math.round(markSize * 0.42);
-  const ink = glass ? c.ink : c.ink;
-  const mute = glass ? '#3F3A35' : c.mute;
-
+  const contentW = x1 - x0;
+  const sloganSize = Math.round(markSize * 0.34);
+  const dSize = Math.round(markSize * 0.4);
   const fit = Math.min(w / (11 * REF_DPI), h / (17 * REF_DPI));
   const footCap = Math.round(62 * fit);
-  const fLang = Math.min(28 * fit, footCap * 0.5);
-  const iconS = Math.min(40 * fit, footCap * 0.7);
-  const siteQr = Math.round(Math.min(w, h) * 0.072);
-  const footPad = Math.round(margin * 0.2);
-  const legalSize = Math.max(11, Math.round(Math.min(w, h) * 0.011));
-  const qrCol = withQr ? siteQr + margin * 0.35 : 0;
-  const legalMax = Math.max(80, x1 - x0 - qrCol);
-  const langsMax = x1 - x0;
+  const fLang = Math.min(26 * fit, footCap * 0.48);
+  const iconS = Math.min(36 * fit, footCap * 0.64);
+  const siteQr = Math.round(Math.min(w, h) * 0.062);
+  const footPad = Math.round(margin * 0.16);
+  const legalSize = Math.max(10, Math.round(Math.min(w, h) * 0.01));
+  const qrCol = withQr ? siteQr + margin * 0.3 : 0;
+  const legalMax = Math.max(80, contentW - qrCol);
+  const langsMax = contentW;
   ctx.font = `400 ${legalSize}px "LR Sans"`;
   const legalLines = [
     ...wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax),
@@ -654,45 +760,49 @@ function composeFrontPage(ctx, w, h, opts) {
   const legalLineH = measure(`400 ${legalSize}px "LR Sans"`, legalLines[0] || INDEP_1);
   const legalH = legalLines.length * (legalLineH + 3);
   const langsMetrics = showLangs
-    ? measureLangsFooter(ctx, { maxW: langsMax, size: fLang, iconS, lineGap: 5, iconGap: 8 })
+    ? measureLangsFooter(ctx, { maxW: langsMax, size: fLang, iconS, lineGap: 4, iconGap: 6 })
     : { height: 0, lines: [] };
-  const creditSize = credit ? Math.max(9, Math.round(Math.min(w, h) * 0.0085)) : 0;
-  const creditH = credit ? creditSize + 6 : 0;
-  const qrBlock = withQr ? siteQr + Math.round(legalSize * 1.3) : 0;
+  const creditSize = credit ? Math.max(8, Math.round(Math.min(w, h) * 0.008)) : 0;
+  const creditH = credit ? creditSize + 5 : 0;
+  const qrBlock = withQr ? siteQr + Math.round(legalSize * 1.25) : 0;
   const footTopH = Math.max(qrBlock, legalH) + footPad;
   const footH = footTopH + langsMetrics.height + creditH + footPad;
-  const contentBottom = h - margin * 0.7 - footH;
+  const footY = h - margin * 0.55 - footH;
 
-  /* Mesure du bandeau de tête (verre) avant le texte. */
-  let headY = barH + Math.round(margin * 0.55);
-  headY += logoS + Math.round(margin * 0.22);
+  const hasFold = briefs.length > 0 || radioLines.length > 0 || sportsLines.length > 0;
+  const foldH = hasFold ? Math.round(Math.min(w, h) * 0.15) : 0;
+  const foldGap = hasFold ? Math.round(margin * 0.22) : 0;
+  const contentBottom = footY - (hasFold ? foldH + foldGap + Math.round(margin * 0.12) : Math.round(margin * 0.1));
+
+  /* Bandeau de tête */
+  let headY = barH + Math.round(margin * 0.4);
+  headY += logoS + Math.round(margin * 0.14);
+  const sloganMax = contentW;
   ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  const sloganLines = wrapWords(ctx, SLOGAN, x1 - x0 - (capDate ? Math.round(w * 0.28) : 0));
-  sloganLines.forEach((line) => {
-    headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 4;
+  wrapWords(ctx, SLOGAN, sloganMax).forEach((line) => {
+    headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 3;
   });
   if (bilingual) {
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    const enLines = wrapWords(ctx, SLOGAN_EN, x1 - x0 - (capDate ? Math.round(w * 0.28) : 0));
-    enLines.forEach((line) => {
-      headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 3;
+    wrapWords(ctx, SLOGAN_EN, sloganMax).forEach((line) => {
+      headY += measure(`400 ${sloganSize}px "LR Sans"`, line) + 2;
     });
   }
   if (uniLabel) {
-    const uniSize = Math.round(markSize * 0.38);
+    const uniSize = Math.round(markSize * 0.36);
     ctx.font = `600 ${uniSize}px "LR Sans Semi", "LR Sans"`;
-    headY += measure(ctx.font, uniLabel) + 4;
+    headY += measure(ctx.font, uniLabel) + 3;
   }
-  headY += Math.round(margin * 0.18) + Math.round(margin * 0.28);
+  headY += Math.round(margin * 0.22);
   if (glass) {
-    frostedRect(ctx, margin * 0.45, barH + 4, w - margin * 0.9, headY - barH - 2, Math.round(margin * 0.22), {
-      fill: 'rgba(255, 252, 247, 0.82)',
+    frostedRect(ctx, margin * 0.4, barH + 3, w - margin * 0.8, headY - barH - 2, Math.round(margin * 0.18), {
+      fill: 'rgba(255, 252, 247, 0.84)',
     });
   }
 
-  let y = barH + Math.round(margin * 0.55);
+  let y = barH + Math.round(margin * 0.4);
   if (assets.logo) ctx.drawImage(assets.logo, x0, y, logoS, logoS);
-  fillTracked(ctx, TITLE, y + Math.round((logoS - markSize) / 2), markSize, PURPLE, x0 + logoS + Math.round(logoS * 0.18));
+  fillTracked(ctx, TITLE, y + Math.round((logoS - markSize) / 2), markSize, PURPLE, x0 + logoS + Math.round(logoS * 0.16));
   if (capDate) {
     ctx.font = `400 ${dSize}px "LR Sans"`;
     ctx.fillStyle = mute;
@@ -706,87 +816,91 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
   }
-  y += logoS + Math.round(margin * 0.22);
-  const sloganMax = x1 - x0;
-  ctx.font = `400 ${sloganSize}px "LR Sans"`;
+  y += logoS + Math.round(margin * 0.14);
   wrapWords(ctx, SLOGAN, sloganMax).forEach((line) => {
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
     ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
     ctx.fillText(line, x0, y);
-    y += measure(`400 ${sloganSize}px "LR Sans"`, line) + 4;
+    y += measure(ctx.font, line) + 3;
   });
   if (bilingual) {
-    ctx.font = `400 ${sloganSize}px "LR Sans"`;
     wrapWords(ctx, SLOGAN_EN, sloganMax).forEach((line) => {
       ctx.font = `400 ${sloganSize}px "LR Sans"`;
       ctx.fillStyle = mute;
       ctx.textBaseline = 'top';
       ctx.fillText(line, x0, y);
-      y += measure(`400 ${sloganSize}px "LR Sans"`, line) + 3;
+      y += measure(ctx.font, line) + 2;
     });
   }
   if (uniLabel) {
-    const uniSize = Math.round(markSize * 0.38);
+    const uniSize = Math.round(markSize * 0.36);
     ctx.font = `600 ${uniSize}px "LR Sans Semi", "LR Sans"`;
     ctx.fillStyle = PURPLE;
     ctx.textBaseline = 'top';
     ctx.fillText(uniLabel, x0, y);
-    y += measure(ctx.font, uniLabel) + 4;
+    y += measure(ctx.font, uniLabel) + 3;
   }
-  y += Math.round(margin * 0.18);
+  y += Math.round(margin * 0.08);
   if (!glass) {
     ctx.strokeStyle = c.rule;
-    ctx.lineWidth = Math.max(1, Math.round(h / 1400));
+    ctx.lineWidth = Math.max(1, Math.round(h / 900));
     ctx.beginPath();
     ctx.moveTo(x0, y);
     ctx.lineTo(x1, y);
     ctx.stroke();
+    ctx.lineWidth = Math.max(1, Math.round(h / 1800));
+    ctx.beginPath();
+    ctx.moveTo(x0, y + Math.max(2, Math.round(h / 700)));
+    ctx.lineTo(x1, y + Math.max(2, Math.round(h / 700)));
+    ctx.stroke();
+    y += Math.max(2, Math.round(h / 700)) + Math.round(margin * 0.18);
+  } else {
+    y += Math.round(margin * 0.2);
   }
-  y += Math.round(margin * 0.28);
 
-  const drawCredit = (text, cx, cy, maxW, color) => {
-    if (!text) return;
-    const size = Math.max(9, Math.round(Math.min(w, h) * 0.0085));
+  const radius = glass ? Math.round(margin * 0.16) : 0;
+  const pad = glass ? Math.round(margin * 0.12) : 0;
+  const filet = Math.max(1, Math.round(h / 1400));
+
+  const drawCreditLine = (text, cx, cy, maxW) => {
+    if (!text) return 0;
+    const size = Math.max(8, Math.round(Math.min(w, h) * 0.008));
     ctx.font = `400 ${size}px "LR Sans"`;
     let line = String(text).replace(/\s+/g, ' ').trim();
     while (line.length > 4 && textW(ctx, line) > maxW) line = line.slice(0, -1).trimEnd();
-    if (textW(ctx, line) > maxW) return;
-    ctx.fillStyle = color || mute;
+    if (textW(ctx, line) > maxW) return 0;
+    ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
     ctx.fillText(line, cx, cy);
+    return size + 3;
   };
   const drawKicker = (label, yy, left, frosted) => {
-    const size = Math.max(10, Math.round(Math.min(w, h) * 0.012));
+    const size = Math.max(9, Math.round(Math.min(w, h) * 0.011));
     const font = `700 ${size}px "LR Sans Semi", "LR Sans"`;
     const start = left ?? x0;
     ctx.font = font;
     const hgt = measure(font, label.toUpperCase());
     if (frosted) {
-      const padX = Math.round(size * 0.55);
-      const padY = Math.round(size * 0.3);
+      const padX = Math.round(size * 0.5);
+      const padY = Math.round(size * 0.28);
       ctx.font = font;
       const tw = textW(ctx, label.toUpperCase());
-      frostedRect(ctx, start - padX, yy - padY, tw + padX * 2, hgt + padY * 2, Math.round(size * 0.45), {
-        fill: 'rgba(255, 252, 247, 0.88)',
+      frostedRect(ctx, start - padX, yy - padY, tw + padX * 2, hgt + padY * 2, Math.round(size * 0.4), {
+        fill: 'rgba(255, 252, 247, 0.9)',
       });
     }
     ctx.font = font;
     ctx.fillStyle = PURPLE;
     ctx.textBaseline = 'top';
     ctx.fillText(label.toUpperCase(), start, yy);
-    return yy + hgt + Math.round(size * 0.55);
+    return yy + hgt + Math.round(size * 0.4);
   };
-  const kickerLead = bilingual ? 'À la une  ·  Front page' : 'À la une';
-  const kickerFeat = bilingual ? 'Vedettes  ·  Features' : 'Vedettes';
-
-  const lead = articles[0] || null;
-  const features = articles.slice(1);
   const fillPlaceholder = (x, yy, tw, th, label) => {
     ctx.fillStyle = glass ? 'rgba(90, 84, 76, 0.28)' : c.photoBg;
     ctx.fillRect(x, yy, tw, th);
     if (!label) return;
-    const size = Math.max(12, Math.round(th * 0.08));
+    const size = Math.max(11, Math.round(th * 0.08));
     ctx.font = `600 ${size}px "LR Sans Semi", "LR Sans"`;
     ctx.fillStyle = mute;
     ctx.textAlign = 'center';
@@ -795,191 +909,243 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
   };
+  const paintImage = (img, x, yy, tw, th, fy, source) => {
+    if (img) {
+      ctx.save();
+      roundedRectPath(ctx, x, yy, tw, th, glass ? Math.round(radius * 0.45) : 0);
+      ctx.clip();
+      coverPhoto(ctx, img, x, yy, tw, th, 0.5, fy ?? 0.5);
+      ctx.restore();
+    } else fillPlaceholder(x, yy, tw, th, source || '');
+  };
+  const vRule = (x, y1, y2) => {
+    if (glass) return;
+    ctx.strokeStyle = c.rule;
+    ctx.lineWidth = filet;
+    ctx.beginPath();
+    ctx.moveTo(x, y1);
+    ctx.lineTo(x, y2);
+    ctx.stroke();
+  };
+  const hRule = (xA, xB, yy) => {
+    if (glass) return;
+    ctx.strokeStyle = c.rule;
+    ctx.lineWidth = filet;
+    ctx.beginPath();
+    ctx.moveTo(xA, yy);
+    ctx.lineTo(xB, yy);
+    ctx.stroke();
+  };
+
+  const drawStory = (art, box, kind) => {
+    if (!art || box.w < 8 || box.h < 8) return;
+    const { x, y: by, w: bw, h: bh } = box;
+    if (glass) frostedRect(ctx, x, by, bw, bh, radius);
+    const ip = pad;
+    const ix = x + ip;
+    const iy = by + ip;
+    const iw = bw - ip * 2;
+    const ih = bh - ip * 2;
+    const floor = by + bh - ip;
+    const isLead = kind === 'lead';
+    const isSec = kind === 'secondary';
+    const qr = withQr && art.pageUrl
+      ? Math.round(Math.min(iw, ih) * (isLead ? 0.18 : isSec ? 0.22 : 0.24))
+      : 0;
+    const img = art.key ? images.get(art.key) : null;
+    const imgRatio = isLead ? 0.40 : isSec ? 0.38 : 0.36;
+    let ty = iy;
+    const kicker = isLead
+      ? (bilingual ? 'À la une  ·  Front page' : 'À la une')
+      : '';
+    if (kicker) ty = drawKicker(kicker, ty, ix);
+    const imgH = Math.max(24, Math.min(Math.round(ih * imgRatio), Math.round(iw / (isLead ? 1.75 : 1.55))));
+    paintImage(img, ix, ty, iw, imgH, art.focalY, art.source);
+    ty += imgH + 3;
+    if (art.credit) ty += drawCreditLine(art.credit, ix, ty, iw);
+    const titleMax = Math.round(Math.min(iw, ih) * (isLead ? 0.1 : isSec ? 0.1 : 0.095));
+    const titleMin = isLead ? 14 : 11;
+    const titleW = iw;
+    const tFit = wrapFit(art.title, (s) => `700 ${s}px "LR Serif"`, titleW, titleMax, titleMin, isLead ? 3 : 3);
+    tFit.lines.forEach((line) => {
+      ctx.font = `700 ${tFit.size}px "LR Serif"`;
+      ctx.fillStyle = ink;
+      ctx.textBaseline = 'top';
+      const hh = measure(ctx.font, line);
+      if (ty + hh > floor) return;
+      ctx.fillText(line, ix, ty);
+      ty += hh + Math.round(tFit.size * 0.06);
+    });
+    const meta = [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
+    if (meta) {
+      const ms = Math.max(9, Math.round(tFit.size * (isLead ? 0.3 : 0.36)));
+      ctx.font = `600 ${ms}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = PURPLE;
+      const mh = measure(ctx.font, meta);
+      if (ty + mh < floor) {
+        ctx.fillText(meta, ix, ty);
+        ty += mh + Math.round(ms * 0.35);
+      }
+    }
+    const hook = isLead ? (art.hookLong || art.hook || '') : (art.hook || art.hookShort || '');
+    const hookW = iw - (qr ? qr + 8 : 0);
+    if (hook) {
+      const hs = Math.max(10, Math.round(Math.min(w, h) * (isLead ? 0.0155 : isSec ? 0.013 : 0.012)));
+      const room = floor - ty - 2;
+      const maxLines = Math.max(2, Math.min(isLead ? 7 : isSec ? 5 : 4, Math.floor(room / (hs * 1.2))));
+      const hFit = wrapFit(hook, (s) => `400 ${s}px "LR Sans"`, hookW, hs, 9, maxLines);
+      hFit.lines.forEach((line) => {
+        ctx.font = `400 ${hFit.size}px "LR Sans"`;
+        ctx.fillStyle = ink;
+        ctx.textBaseline = 'top';
+        const hh = measure(ctx.font, line);
+        if (ty + hh > floor) return;
+        ctx.fillText(line, ix, ty);
+        ty += hh + Math.round(hFit.size * 0.18);
+      });
+    }
+    if (qr) {
+      const qx = ix + iw - qr;
+      const qy = Math.min(Math.max(iy + imgH + 6, floor - qr), floor - qr);
+      drawQrCode(ctx, qx, qy, qr, art.pageUrl);
+    }
+  };
+
+  const n = articles.length;
+  const lead = articles[0] || null;
+  const rest = articles.slice(1);
+  const colGap = Math.round(margin * 0.22);
+  const rowGap = Math.round(margin * 0.2);
+  const top = y;
 
   if (!lead) {
-    if (glass) {
-      frostedRect(ctx, x0, y, x1 - x0, Math.round(margin * 1.6), Math.round(margin * 0.18));
-    }
-    ctx.font = `400 ${Math.round(markSize * 0.45)}px "LR Sans"`;
+    if (glass) frostedRect(ctx, x0, y, contentW, Math.round(margin * 1.5), radius);
+    ctx.font = `400 ${Math.round(markSize * 0.42)}px "LR Sans"`;
     ctx.fillStyle = mute;
     ctx.fillText('Aucun article à afficher. Cochez au moins un titre.', x0 + (glass ? 12 : 0), y + (glass ? 14 : 0));
   } else {
-    const gap = Math.round(margin * 0.22);
-    const hasFeatures = features.length > 0;
-    const pad = glass ? Math.round(margin * 0.16) : 0;
-    const radius = glass ? Math.round(margin * 0.2) : 0;
-    const blockH = contentBottom - y;
-    const leadShare = hasFeatures ? (features.length >= 3 ? 0.50 : 0.56) : 0.92;
-    const leadBottom = y + Math.round(blockH * leadShare);
-
-    if (glass) {
-      frostedRect(ctx, x0, y, x1 - x0, leadBottom - y - Math.round(gap * 0.4), radius);
-    }
-    const lx = x0 + pad;
-    const lw = (x1 - x0) - pad * 2;
-    let ly = y + pad;
-    ly = drawKicker(kickerLead, ly, lx);
-
-    const qrLead = withQr ? Math.round(Math.min(w, h) * 0.108) : 0;
-    const imgW = lw;
-    const imgMaxH = Math.round((leadBottom - ly - pad) * (hasFeatures ? 0.52 : 0.58));
-    const imgH = Math.max(Math.round(imgW / 2.35), Math.min(imgMaxH, Math.round(imgW / 1.85)));
-    const img = lead.key ? images.get(lead.key) : null;
-    if (img) {
-      ctx.save();
-      roundedRectPath(ctx, lx, ly, imgW, imgH, glass ? Math.round(radius * 0.5) : 0);
-      ctx.clip();
-      coverPhoto(ctx, img, lx, ly, imgW, imgH, 0.5, lead.focalY ?? 0.5);
-      ctx.restore();
-    } else fillPlaceholder(lx, ly, imgW, imgH, lead.source || '');
-    if (lead.credit) drawCredit(lead.credit, lx, ly + imgH + 3, imgW, mute);
-    ly += imgH + (lead.credit ? Math.round(legalSize * 1.4) : Math.round(gap * 0.6));
-
-    const titleMaxW = lw - (withQr ? qrLead + gap : 0);
-    const titleMax = Math.round(Math.min(w, h) * (hasFeatures ? 0.038 : 0.048));
-    const titleMin = Math.round(Math.min(w, h) * 0.022);
-    const fitted = wrapFit(lead.title, (s) => `700 ${s}px "LR Serif"`, titleMaxW, titleMax, titleMin, 3);
-    fitted.lines.forEach((line) => {
-      ctx.font = `700 ${fitted.size}px "LR Serif"`;
-      ctx.fillStyle = ink;
-      ctx.textBaseline = 'top';
-      const hh = measure(ctx.font, line);
-      ctx.fillText(line, lx, ly);
-      ly += hh + Math.round(fitted.size * 0.08);
-    });
-    const metaSize = Math.max(11, Math.round(fitted.size * 0.32));
-    const meta = [lead.source, lead.dateLabel].filter(Boolean).join('  ·  ');
-    ctx.font = `600 ${metaSize}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = PURPLE;
-    ctx.fillText(meta, lx, ly);
-    ly += measure(ctx.font, meta) + Math.round(gap * 0.45);
-
-    const hook = lead.hook || lead.hookShort || '';
-    const hookSize0 = Math.max(12, Math.round(Math.min(w, h) * 0.016));
-    const hookFit = hook ? wrapFit(hook, (s) => `400 ${s}px "LR Sans"`, titleMaxW, hookSize0, 11, 4) : { size: 0, lines: [] };
-    const hookStart = ly;
-    hookFit.lines.forEach((line) => {
-      ctx.font = `400 ${hookFit.size}px "LR Sans"`;
-      ctx.fillStyle = ink;
-      ctx.textBaseline = 'top';
-      const hh = measure(ctx.font, line);
-      ctx.fillText(line, lx, ly);
-      ly += hh + Math.round(hookFit.size * 0.22);
-    });
-    if (withQr && lead.pageUrl) {
-      const qrY = Math.min(Math.max(hookStart, leadBottom - pad - qrLead - margin * 0.1), leadBottom - pad - qrLead);
-      drawQrCode(ctx, x0 + (x1 - x0) - pad - qrLead, qrY, qrLead, lead.pageUrl);
-    }
-    ly = Math.max(ly, withQr ? hookStart + qrLead : ly) + gap;
-    y = Math.max(ly, Math.min(leadBottom, ly));
-
-    if (hasFeatures) {
-      y = Math.max(y + Math.round(gap * 0.4), leadBottom - Math.round(blockH * 0.02));
-      if (!glass) {
-        ctx.strokeStyle = c.rule;
-        ctx.beginPath();
-        ctx.moveTo(x0, y);
-        ctx.lineTo(x1, y);
-        ctx.stroke();
-        y += Math.round(margin * 0.22);
-        y = drawKicker(kickerFeat, y, x0);
-      } else {
-        y = drawKicker(kickerFeat, y, x0, true);
-      }
-      const cols = features.length === 3 ? 3 : Math.min(2, features.length);
-      const rows = Math.ceil(features.length / cols);
-      const gridW = x1 - x0;
-      const colGap = Math.round(margin * 0.28);
-      const rowGap = Math.round(margin * 0.28);
-      const cellW = Math.floor((gridW - colGap * (cols - 1)) / cols);
-      const cellH = Math.floor((contentBottom - y - rowGap * (rows - 1)) / rows);
-      const qrFeat = withQr ? Math.round(Math.min(cellW, cellH) * 0.28) : 0;
-      features.forEach((art, i) => {
-        const col = i % cols;
-        const row = Math.floor(i / cols);
-        const cx = x0 + col * (cellW + colGap);
-        const cy = y + row * (cellH + rowGap);
-        if (glass) frostedRect(ctx, cx, cy, cellW, cellH, radius);
-        const ip = glass ? Math.round(pad * 0.85) : 0;
-        const ix = cx + ip;
-        const iw = cellW - ip * 2;
-        const thumbH = Math.round(Math.min((cellH - ip * 2) * 0.46, iw / 1.7));
-        const pic = art.key ? images.get(art.key) : null;
-        if (pic) {
-          ctx.save();
-          roundedRectPath(ctx, ix, cy + ip, iw, thumbH, glass ? Math.round(radius * 0.45) : 0);
-          ctx.clip();
-          coverPhoto(ctx, pic, ix, cy + ip, iw, thumbH, 0.5, art.focalY ?? 0.5);
-          ctx.restore();
-        } else fillPlaceholder(ix, cy + ip, iw, thumbH, art.source || '');
-        let ty = cy + ip + thumbH;
-        if (art.credit) {
-          drawCredit(art.credit, ix, ty + 2, iw, mute);
-          ty += Math.round(legalSize * 1.3);
-        } else ty += Math.round(gap * 0.35);
-        const tMax = Math.round(Math.min(iw, cellH) * 0.09);
-        const tFit = wrapFit(art.title, (s) => `700 ${s}px "LR Serif"`, iw, tMax, 11, 3);
-        tFit.lines.forEach((line) => {
-          ctx.font = `700 ${tFit.size}px "LR Serif"`;
-          ctx.fillStyle = ink;
-          ctx.textBaseline = 'top';
-          const hh = measure(ctx.font, line);
-          ctx.fillText(line, ix, ty);
-          ty += hh + Math.round(tFit.size * 0.06);
-        });
-        const fMeta = [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
-        if (fMeta) {
-          const ms = Math.max(10, Math.round(tFit.size * 0.38));
-          ctx.font = `600 ${ms}px "LR Sans Semi", "LR Sans"`;
-          ctx.fillStyle = PURPLE;
-          ctx.fillText(fMeta, ix, ty);
-          ty += measure(ctx.font, fMeta) + Math.round(ms * 0.35);
-        }
-        const hookText = art.hookShort || art.hook || '';
-        const textRight = withQr ? iw - qrFeat - 8 : iw;
-        const textFloor = cy + cellH - ip - 4;
-        if (hookText) {
-          const hs = Math.max(10, Math.round(tFit.size * 0.42));
-          const room = textFloor - ty;
-          const maxLines = Math.max(2, Math.floor(room / (hs * 1.25)));
-          const hFit = wrapFit(hookText, (s) => `400 ${s}px "LR Sans"`, textRight, hs, 9, maxLines);
-          hFit.lines.forEach((line) => {
-            ctx.font = `400 ${hFit.size}px "LR Sans"`;
-            ctx.fillStyle = ink;
-            ctx.textBaseline = 'top';
-            const hh = measure(ctx.font, line);
-            if (ty + hh > textFloor) return;
-            ctx.fillText(line, ix, ty);
-            ty += hh + Math.round(hFit.size * 0.18);
-          });
-        }
-        if (withQr && art.pageUrl) {
-          drawQrCode(ctx, cx + cellW - ip - qrFeat, cy + cellH - ip - qrFeat, qrFeat, art.pageUrl);
-        }
+    const areaH = contentBottom - top;
+    const sideN = n === 2 ? 1 : n === 4 ? 3 : Math.min(2, rest.length);
+    const hasSide = sideN > 0;
+    const hasGrid = rest.length > sideN;
+    const leadShare = hasGrid ? (rest.length - sideN >= 5 ? 0.46 : 0.5) : 0.96;
+    const leadBottom = top + Math.round(areaH * leadShare);
+    const leadW = hasSide ? Math.round(contentW * 0.62) : contentW;
+    const sideX = x0 + leadW + colGap;
+    const sideW = x1 - sideX;
+    drawStory(lead, { x: x0, y: top, w: leadW, h: leadBottom - top }, 'lead');
+    if (hasSide) {
+      vRule(x0 + leadW + Math.round(colGap / 2), top, leadBottom);
+      const sideArts = rest.slice(0, sideN);
+      const cellH = Math.floor((leadBottom - top - rowGap * (sideArts.length - 1)) / sideArts.length);
+      sideArts.forEach((art, i) => {
+        const cy = top + i * (cellH + rowGap);
+        if (i > 0) hRule(sideX, x1, cy - Math.round(rowGap / 2));
+        drawStory(art, { x: sideX, y: cy, w: sideW, h: cellH }, 'secondary');
       });
+    }
+    const gridArts = rest.slice(sideN);
+    if (gridArts.length) {
+      const gy = leadBottom + rowGap;
+      const kicker = bilingual ? 'Vedettes  ·  Features' : 'Vedettes';
+      const gyText = drawKicker(kicker, gy, x0, glass);
+      const gridH = contentBottom - gyText;
+      const count = gridArts.length;
+      const firstCols = count <= 2 ? count : 3;
+      const firstN = Math.min(firstCols, count);
+      const secondN = count - firstN;
+      const rows = secondN ? 2 : 1;
+      const rowH = Math.floor((gridH - (rows > 1 ? rowGap : 0)) / rows);
+
+      const placeRow = (arts, rowY, rowHeight) => {
+        const cols = arts.length;
+        const cellW = Math.floor((contentW - colGap * (cols - 1)) / cols);
+        arts.forEach((art, i) => {
+          const cx = x0 + i * (cellW + colGap);
+          if (i > 0) vRule(cx - Math.round(colGap / 2), rowY, rowY + rowHeight);
+          drawStory(art, { x: cx, y: rowY, w: cellW, h: rowHeight }, 'grid');
+        });
+      };
+      placeRow(gridArts.slice(0, firstN), gyText, rowH);
+      if (secondN) {
+        const y2 = gyText + rowH + rowGap;
+        hRule(x0, x1, y2 - Math.round(rowGap / 2));
+        placeRow(gridArts.slice(firstN), y2, rowH);
+      }
     }
   }
 
-  const footY = h - margin * 0.7 - footH;
+  /* Pli du bas : En bref / radio / sports, colonnes seulement si elles ont du contenu. */
+  if (hasFold) {
+    const fy = footY - foldH - foldGap;
+    const foldCols = [
+      briefs.length ? { title: bilingual ? 'En bref  ·  In brief' : 'En bref', items: briefs.map((b) => ({ kicker: b.source, line: b.title, meta: b.dateLabel })) } : null,
+      radioLines.length ? { title: bilingual ? 'Radio  ·  On air' : 'Radio en direct', items: radioLines } : null,
+      sportsLines.length ? { title: bilingual ? 'Sports  ·  Scoreboard' : 'Sports étudiants', items: sportsLines } : null,
+    ].filter(Boolean);
+    if (glass) frostedRect(ctx, margin * 0.4, fy - 2, w - margin * 0.8, foldH + 4, radius, { fill: 'rgba(255, 252, 247, 0.86)' });
+    else {
+      ctx.strokeStyle = c.rule;
+      ctx.lineWidth = Math.max(1, Math.round(h / 900));
+      ctx.beginPath();
+      ctx.moveTo(x0, fy);
+      ctx.lineTo(x1, fy);
+      ctx.stroke();
+    }
+    const fCols = foldCols.length;
+    const fGap = colGap;
+    const fW = Math.floor((contentW - fGap * (fCols - 1)) / fCols);
+    const fPad = Math.round(margin * 0.06);
+    foldCols.forEach((col, i) => {
+      const cx = x0 + i * (fW + fGap);
+      if (i > 0) vRule(cx - Math.round(fGap / 2), fy + 6, fy + foldH - 4);
+      let ty = drawKicker(col.title, fy + fPad + 4, cx, false);
+      const size = Math.max(10, Math.round(Math.min(w, h) * 0.011));
+      const metaS = Math.max(8, Math.round(size * 0.78));
+      col.items.forEach((item) => {
+        if (ty > fy + foldH - 8) return;
+        const line = item.line || '';
+        const fitted = wrapFit(line, (s) => `700 ${s}px "LR Serif"`, fW - 4, size, 9, 2);
+        ctx.font = `600 ${metaS}px "LR Sans Semi", "LR Sans"`;
+        ctx.fillStyle = PURPLE;
+        const tag = [item.kicker, item.meta].filter(Boolean).join('  ·  ');
+        if (tag) {
+          ctx.fillText(tag, cx, ty);
+          ty += measure(ctx.font, tag) + 1;
+        }
+        fitted.lines.forEach((ln) => {
+          ctx.font = `700 ${fitted.size}px "LR Serif"`;
+          ctx.fillStyle = ink;
+          ctx.textBaseline = 'top';
+          const hh = measure(ctx.font, ln);
+          if (ty + hh > fy + foldH - 4) return;
+          ctx.fillText(ln, cx, ty);
+          ty += hh + 1;
+        });
+        ty += 4;
+      });
+    });
+  }
+
   if (glass) {
-    frostedRect(ctx, margin * 0.45, footY - 4, w - margin * 0.9, h - (footY - 4) - margin * 0.25, Math.round(margin * 0.18), {
-      fill: 'rgba(255, 252, 247, 0.84)',
+    frostedRect(ctx, margin * 0.4, footY - 3, w - margin * 0.8, h - (footY - 3) - margin * 0.2, Math.round(margin * 0.16), {
+      fill: 'rgba(255, 252, 247, 0.86)',
     });
   } else {
     ctx.strokeStyle = c.rule;
-    ctx.lineWidth = Math.max(1, Math.round(h / 1400));
+    ctx.lineWidth = Math.max(1, Math.round(h / 900));
     ctx.beginPath();
     ctx.moveTo(x0, footY);
     ctx.lineTo(x1, footY);
     ctx.stroke();
   }
-  let fy = footY + footPad;
+  let ly = footY + footPad;
   legalLines.forEach((line) => {
     ctx.font = `400 ${legalSize}px "LR Sans"`;
     ctx.fillStyle = mute;
     ctx.textBaseline = 'top';
-    ctx.fillText(line, x0, fy);
-    fy += legalLineH + 3;
+    ctx.fillText(line, x0, ly);
+    ly += legalLineH + 3;
   });
   let langsY = footY + footPad + Math.max(qrBlock, legalH) + 2;
   if (showLangs && langsMetrics.height) {
@@ -989,19 +1155,17 @@ function composeFrontPage(ctx, w, h, opts) {
       size: fLang,
       iconS,
       color: mute,
-      lineGap: 5,
-      iconGap: 8,
+      lineGap: 4,
+      iconGap: 6,
     });
     langsY += langsMetrics.height;
   }
-  if (credit) {
-    drawCredit(credit, x0, Math.min(langsY + 2, h - margin * 0.45 - creditSize), langsMax, mute);
-  }
+  if (credit) drawCreditLine(credit, x0, Math.min(langsY + 2, h - margin * 0.4 - creditSize), langsMax);
   if (withQr) {
     const qx = x1 - siteQr;
     const qy = footY + footPad;
     drawQrCode(ctx, qx, qy, siteQr, `${site}/`);
-    const capS = Math.max(9, Math.round(legalSize * 0.9));
+    const capS = Math.max(8, Math.round(legalSize * 0.9));
     ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
     ctx.fillStyle = ink;
     ctx.textAlign = 'center';
@@ -1536,6 +1700,7 @@ function recipeLine() {
     const bits = [FORMATS[state.format].label, 'Une du Radar'];
     const n = selectedUneArticles().length;
     bits.push(n ? `${n} article${n > 1 ? 's' : ''}` : 'Aucun article');
+    if ((state.uneBriefs || []).length) bits.push(`${state.uneBriefs.length} en bref`);
     bits.push(state.layout === 'verre' ? 'Verre dépoli' : 'Classique');
     if (state.uneCampus && state.uneCampus !== 'toutes') bits.push(campusOf(state.uneCampus).label);
     bits.push(state.lang === 'bilingue' ? 'Bilingue' : 'Français');
@@ -1670,17 +1835,23 @@ async function loadUneFeed() {
     const campus = (state.uneCampus && state.uneCampus !== 'toutes')
       ? campusOf(state.uneCampus)
       : null;
-    const cards = Front.frontPageCards(data.items || [], now, '..', campus);
-    state.uneArticles = cards.items.map((card) => ({ ...card, included: true }));
+    const featureN = Front.POSTER_PAGE_COUNT || 9;
+    const briefN = Front.POSTER_BRIEF_COUNT || 6;
+    const cards = Front.frontPageCards(data.items || [], now, '..', campus, featureN + briefN);
+    state.uneArticles = cards.items.slice(0, featureN).map((card) => ({ ...card, included: true }));
+    state.uneBriefs = cards.items.slice(featureN);
     const n = state.uneArticles.length;
+    const b = state.uneBriefs.length;
     const where = campus ? ` pour ${campus.line}` : ' du fil actuel';
+    const briefBit = b ? ` et ${b} en bref` : '';
     state.uneStatus = n
-      ? `${n} article${n > 1 ? 's' : ''}${where} (1 à la une, ${Math.max(0, n - 1)} vedette${n - 1 > 1 ? 's' : ''}).`
+      ? `${n} article${n > 1 ? 's' : ''}${where} (1 à la une, ${Math.max(0, n - 1)} vedette${n - 1 > 1 ? 's' : ''})${briefBit}.`
       : (campus
         ? `Aucun article frais pour ${campus.line}. L’affiche n’invente pas de titres.`
         : 'Aucun article frais dans le fil.');
   } catch (err) {
     state.uneArticles = [];
+    state.uneBriefs = [];
     state.uneStatus = `Impossible de lire le fil : ${err.message}`;
   }
   renderUneList();
@@ -1705,8 +1876,22 @@ async function loadUneImages(articles) {
   return map;
 }
 
+async function loadUneSidebars() {
+  if (state.uneSidebars) return state.uneSidebars;
+  const grab = (url) => fetch(url, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const [nowplaying, radios, sports] = await Promise.all([
+    grab('../radio-nowplaying.json'),
+    grab('../radios.json'),
+    grab('../sports-masthead.json'),
+  ]);
+  state.uneSidebars = { nowplaying, radios, sports };
+  return state.uneSidebars;
+}
+
 function uneComposeOpts(dpi, images, photoImg, photo) {
-  const campus = (state.uneCampus && state.uneCampus !== 'toutes') ? state.uneCampus : null;
+  const campusSlug = (state.uneCampus && state.uneCampus !== 'toutes') ? state.uneCampus : null;
+  const campus = campusSlug ? campusOf(campusSlug) : null;
+  const bars = state.uneSidebars || {};
   return {
     model: 'une',
     format: state.format,
@@ -1714,9 +1899,12 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     langs: state.langs,
     lang: state.lang,
     layout: state.layout,
-    campus,
+    campus: campusSlug,
     dpi,
     articles: selectedUneArticles(),
+    briefs: state.uneBriefs || [],
+    radioLines: pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
+    sportsLines: pickPosterSports(bars.sports, campus, 3),
     articleImages: images || new Map(),
     photoImg: photoImg || null,
     credit: photo?.credit,
@@ -1790,6 +1978,7 @@ async function preview() {
   try {
     if (isUneModel()) {
       paintPreview(null, photo, { articleImages: new Map() });
+      await loadUneSidebars();
       const images = await loadUneImages(selectedUneArticles());
       if (gen !== previewGen) return;
       let bg = null;
@@ -1981,6 +2170,7 @@ async function downloadPrint(kind = 'pdf') {
     const photo = (!isUneModel() || uneUsesPhoto()) ? currentPhoto() : null;
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
+    if (isUneModel()) await loadUneSidebars();
     const uneImages = isUneModel() ? await loadUneImages(selectedUneArticles()) : null;
     const { w, h } = px(fmt, dpi);
     const composeOpts = isUneModel()

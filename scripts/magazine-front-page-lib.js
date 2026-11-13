@@ -29,6 +29,9 @@
 
   /* Aligné sur radar-news.js : HERO_SPOTLIGHT_MAX (1 une + 4 vedettes, vue standard). */
   const FRONT_PAGE_COUNT = 5;
+  /* Affiche « Une du Radar » : 1 une + jusqu’à 8 vedettes, plus des brèves en pied. */
+  const POSTER_PAGE_COUNT = 9;
+  const POSTER_BRIEF_COUNT = 6;
   const SITE = 'https://le-radar.ca';
   const PORTRAIT_CROP_FOCAL_Y = 0.3; /* = style-feed.css .is-portrait-crop */
   const MONTHS = [
@@ -147,7 +150,7 @@
     return !!(inst && accepted.has(inst));
   }
 
-  function selectFrontPage(items = [], referenceDate = new Date(), campus = null) {
+  function selectFrontPage(items = [], referenceDate = new Date(), campus = null, limit = FRONT_PAGE_COUNT) {
     const fresh = freshness && typeof freshness.filterFreshItems === 'function'
       ? freshness.filterFreshItems(items, referenceDate)
       : items.slice();
@@ -156,7 +159,8 @@
       : fresh;
     const pool = campus ? normal.filter((item) => itemMatchesCampus(item, campus)) : normal;
     const sorted = sortByDateDesc(pool);
-    const picked = sorted.slice(0, Math.min(FRONT_PAGE_COUNT, sorted.length));
+    const cap = Math.max(0, Number(limit) || FRONT_PAGE_COUNT);
+    const picked = sorted.slice(0, Math.min(cap, sorted.length));
     return {
       lead: picked[0] || null,
       features: picked.slice(1),
@@ -170,7 +174,8 @@
     if (!s) return '';
     const parts = s.split(/(?<=[.!?…])\s+(?=[«"“A-ZÀ-ÝŒ0-9])/);
     let out = '';
-    for (const part of parts.slice(0, 2)) {
+    const maxSentences = max >= 360 ? 5 : 2;
+    for (const part of parts.slice(0, maxSentences)) {
       const next = `${out} ${part}`.trim();
       if (next.length > max) break;
       out = next;
@@ -278,6 +283,8 @@
       dateLabel: frDate(item.date || ''),
       hook: hookOf(item, 220),
       hookShort: hookOf(item, 140),
+      hookLong: hookOf(item, 420),
+      institution: String(item.institution || '').trim(),
       image: imageSrc(item, base),
       images: imageCandidates(item, base),
       focalY: cropFocalY(item),
@@ -287,8 +294,8 @@
     };
   }
 
-  function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null) {
-    const picked = selectFrontPage(items, referenceDate, campus);
+  function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null, limit = FRONT_PAGE_COUNT) {
+    const picked = selectFrontPage(items, referenceDate, campus, limit);
     const cards = picked.items.map((item) => normalize(item, base)).filter(Boolean);
     return {
       lead: cards[0] || null,
@@ -299,6 +306,8 @@
 
   return {
     FRONT_PAGE_COUNT,
+    POSTER_PAGE_COUNT,
+    POSTER_BRIEF_COUNT,
     SITE,
     PORTRAIT_CROP_FOCAL_Y,
     canonicalArticleUrl,

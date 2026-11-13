@@ -63,8 +63,9 @@ test.describe('Embed sports IAB @ci-critical', () => {
     if (target.searchParams.get('game')) {
       await expect(page.locator('.sports-result.is-spotlight')).toBeVisible({ timeout: 10_000 });
     }
-    // Initial navigation may scroll; passive data refreshes must not do so.
-    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    // La navigation initiale peut encore recentrer (scrollIntoViewSettled, jusqu’à ~1,2 s).
+    // On attend la fin de ces corrections avant de compter les rafraîchissements passifs.
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 1500)));
     await page.evaluate(() => {
       window.refreshScrolls = 0;
       Element.prototype.scrollIntoView = function () { window.refreshScrolls++; };

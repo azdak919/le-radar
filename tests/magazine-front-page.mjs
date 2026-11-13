@@ -103,5 +103,22 @@ const teluq = { slug: 'teluq', line: 'TÉLUQ', label: 'TÉLUQ' };
 const teluqPick = front.selectFrontPage(news.items, now, teluq);
 assert.equal(teluqPick.items.length, (housekeeping.housekeepingNormalItems(fresh, now)).filter((i) => front.itemMatchesCampus(i, teluq)).length);
 
+
+const posterPick = front.selectFrontPage(news.items, now, null, front.POSTER_PAGE_COUNT);
+assert.equal(posterPick.items.length, front.POSTER_PAGE_COUNT);
+assert.equal(posterPick.features.length, front.POSTER_PAGE_COUNT - 1);
+assert.equal(front.selectFrontPage(news.items, now).items.length, front.FRONT_PAGE_COUNT);
+
+const lavalPoster = front.selectFrontPage(news.items, now, laval, front.POSTER_PAGE_COUNT + front.POSTER_BRIEF_COUNT);
+assert.ok(lavalPoster.items.length <= front.POSTER_PAGE_COUNT + front.POSTER_BRIEF_COUNT);
+assert.ok(lavalPoster.items.every((i) => i.institution === 'Université Laval'));
+assert.ok(lavalPoster.items.length <= lavalAll.length, 'affiche : pas d’articles inventés');
+if (lavalAll.length >= front.POSTER_PAGE_COUNT + front.POSTER_BRIEF_COUNT) {
+  assert.equal(lavalPoster.items.length, front.POSTER_PAGE_COUNT + front.POSTER_BRIEF_COUNT);
+}
+
+const cardsLong = front.normalize(news.items[0], '..');
+assert.ok(cardsLong.hookLong.length >= cardsLong.hook.length);
+
 console.log(`magazine-front-page : OK (${cards.items.length} articles, une = ${cards.lead?.title} ; Laval ${lavalPick.items.length})`);
 
