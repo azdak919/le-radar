@@ -129,14 +129,22 @@ console.log(`magazine-front-page : OK (${cards.items.length} articles, une = ${c
   const w = front.periodWindow('semaine', ref);
   assert.equal(w.from, '2026-11-06');
   assert.equal(w.to, '2026-11-12');
-  assert.match(w.fr, /^Dernière semaine, du 6 au 12 novembre$/);
+  assert.match(w.fr, /^Dernière semaine, du 6 au 12 novembre 2026$/);
   const f = front.periodWindow('fds', ref);
   assert.equal(f.from, '2026-11-06');
   assert.equal(f.to, '2026-11-08');
-  assert.match(f.fr, /^Fin de semaine du 6 au 8 novembre$/);
+  assert.match(f.fr, /^Fin de semaine du 6 au 8 novembre 2026$/);
   assert.ok(!/week-end/i.test(f.fr));
   assert.equal(front.periodWindow('mois', ref).from, '2026-10-14');
   assert.equal(front.periodWindow('inconnu', ref).id, 'jour');
+  /* Libellé du haut selon la période : année sur les plages, date du lendemain pour « Demain ». */
+  assert.match(front.periodWindow('mois', ref).fr, /^Dernier mois, du 14 octobre au 12 novembre 2026$/);
+  const d = front.periodWindow('demain', ref);
+  assert.equal(d.id, 'demain');
+  assert.ok(d.live && front.periodWindow('jour', ref).live && !w.live, 'demain et jour : périodes en direct');
+  assert.equal(d.target, '2026-11-13');
+  assert.equal(d.fr, 'Vendredi 13 novembre 2026');
+  assert.equal(front.periodWindow('demain', new Date('2026-12-31T17:00:00Z')).target, '2027-01-01', 'lendemain du 31 décembre');
   const mk = (d, i) => ({ title: `T${i}`, link: `https://ex.org/${i}`, source: 'S', institution: 'Université Laval', date: d, image: 'https://ex.org/i.jpg' });
   const items = [
     ...Array.from({ length: 20 }, (_, i) => mk(`2026-11-${String(12 - (i % 7)).padStart(2, '0')}T15:00:00Z`, i)),
@@ -222,4 +230,22 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.equal(front.sportEmoji(undefined), '🏅');
   const cov = JSON.parse(readFileSync(new URL('../assets/kit/fonts/emoji/coverage.json', import.meta.url), 'utf8'));
   for (const e of front.SPORT_EMOJI_ALL) assert.ok(cov.emojis.includes(e), `glyphe ${e} absent de la police emoji`);
+}
+
+// Bandeau : dates insécables, coupure seulement après une virgule ; typographie française.
+{
+  const segs = front.mastheadSegments('Dernier mois, du 14 octobre au 12 novembre 2026');
+  assert.deepEqual(segs, ['Dernier\u00A0mois,', 'du\u00A014\u00A0octobre\u00A0au\u00A012\u00A0novembre\u00A02026']);
+  assert.ok(front.mastheadSegments('Vendredi 13 novembre 2026').every((x) => !/ /.test(x)), 'date du haut : aucune espace sécable');
+  assert.equal(front.mastheadSegments('Vendredi 13 novembre 2026').length, 1);
+  assert.equal(front.frTypo('NOUVELLE GARDE: Le temps'), 'NOUVELLE GARDE\u00A0: Le temps');
+  assert.equal(front.frTypo('Pourquoi pas?'), 'Pourquoi pas\u202F?');
+  assert.equal(front.frTypo('«Génère-moi»'), '«\u00A0Génère-moi\u00A0»');
+  assert.equal(front.frTypo("L'autre"), 'L’autre');
+  assert.equal(front.frTypo('Il est 18:00'), 'Il est 18:00', 'heures intactes');
+  const card = front.normalize({ title: 'Titre: test', lang: 'fr', link: 'https://ex.org/a', source: 'S', date: '2026-11-12T15:00:00Z' });
+  assert.equal(card.title, 'Titre\u00A0: test');
+  assert.ok(!/ /.test(card.dateLabel), 'date de signature insécable');
+  const en = front.normalize({ title: 'Title: test', lang: 'en', link: 'https://ex.org/b', source: 'S', date: '2026-11-12T15:00:00Z' });
+  assert.equal(en.title, 'Title: test', 'titres anglais inchangés');
 }

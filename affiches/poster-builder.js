@@ -99,6 +99,7 @@ const UNE_TAGLINES = {
 };
 const UNE_PERIOD_LABELS = {
   jour: 'Aujourd’hui (les plus récents)',
+  demain: 'Demain (affiche du lendemain)',
   fds: 'Fin de semaine',
   semaine: 'Dernière semaine',
   mois: 'Dernier mois',
@@ -656,10 +657,14 @@ function itemMatchesCampusPoster(item, campus) {
   return !campus;
 }
 
-function pickPosterSports(masthead, campus, limit = 3) {
+function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
   const teams = masthead && masthead.teams;
   if (!teams || typeof teams !== 'object') return [];
-  const today = posterTodayYmd();
+  const realToday = posterTodayYmd();
+  /* Jour visé : aujourd’hui ou, pour l’affiche du lendemain, demain (matchs à venir seulement). */
+  const today = targetYmd || realToday;
+  const ahead = today > realToday;
+  const dayWord = ahead ? 'demain' : 'aujourd’hui';
   const upcoming = [];
   const results = [];
   const seen = new Set();
@@ -673,8 +678,10 @@ function pickPosterSports(masthead, campus, limit = 3) {
     const uniBoost = team.sector === 'universitaire' ? 0 : 1;
     (team.nextGames || []).forEach((game) => {
       const id = game.gameId || `${name}-${game.date}-${game.opponent}`;
-      if (seen.has(id) || !game.date) return;
+      const key = `${game.date}|${game.time || ''}|${sportTag}|${game.opponentNickname || game.opponent || ''}`;
+      if (seen.has(id) || seen.has(key) || !game.date || game.date < today) return;
       seen.add(id);
+      seen.add(key);
       const vs = game.opponentNickname || game.opponent || game.opponentFullName || '';
       const verb = game.home ? 'reçoit' : 'visite';
       upcoming.push({
@@ -683,7 +690,8 @@ function pickPosterSports(masthead, campus, limit = 3) {
         kicker: sportTag,
         emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
         line: `${name} ${verb} ${vs}`,
-        meta: [game.date === today ? 'aujourd’hui' : (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`) : ''), posterClock(game.time)].filter(Boolean).join(' · '),
+        upcoming: true,
+        meta: [game.date === today ? dayWord : (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`).replace(/\s\d{4}$/, '') : ''), posterClock(game.time)].filter(Boolean).join(' · '),
       });
     });
     (team.results || []).forEach((game) => {
@@ -707,7 +715,8 @@ function pickPosterSports(masthead, campus, limit = 3) {
   });
   results.sort((a, b) => String(b.sort).localeCompare(String(a.sort)));
   const out = [...upcoming.slice(0, limit)];
-  if (out.length < limit) out.push(...results.slice(0, limit - out.length));
+  /* Affiche du lendemain : des matchs à venir seulement, jamais d’anciens résultats. */
+  if (out.length < limit && !ahead) out.push(...results.slice(0, limit - out.length));
   return out.slice(0, limit);
 }
 
@@ -822,7 +831,7 @@ function composeFrontPage(ctx, w, h, opts) {
   };
   /* Titre qui coule sur toute la largeur puis se resserre à côté d’un QR. */
   const fitFlow = (text, fontFn, maxSize, minSize, y, fullW, narrowW, narrowFromY, floor, lead = 1.1) => {
-    const words = String(text || '').split(/\s+/).filter(Boolean);
+    const words = String(text || '').split(/[^\S\u00A0\u202F]+/).filter(Boolean);
     let size = Math.max(minSize, Math.round(maxSize));
     let out = null;
     while (true) {
@@ -958,27 +967,51 @@ function composeFrontPage(ctx, w, h, opts) {
   const titleRight = x0 + logoS + px(2) + trackedWidth(ctx, TITLE, titleS);
   const maxRight = Math.max(px(20), x1 - titleRight - px(3));
   const rightLines = [];
-  const pushWrapped = (text, wt, size, color, maxLines) => {
+  /* Jamais de coupure dans une date : lignes seulement après une virgule, taille ajustée pour tenir. */
+  const pushNoBreak = (text, wt, size, color) => {
     if (!text) return;
-    const f = wrapFit(text, sans(wt), maxRight, size, Math.max(9, Math.round(size * 0.75)), maxLines);
-    f.lines.forEach((line) => rightLines.push({ text: line, wt, size: f.size, color }));
+    const segs = Front && Front.mastheadSegments ? Front.mastheadSegments(text) : [String(text).replace(/ /g, '\u00A0')];
+    const minS = Math.max(9, Math.round(size * 0.62));
+    const fits = (t, sz) => { ctx.font = sans(wt)(sz); return ctx.measureText(t).width <= maxRight; };
+    const lines = [];
+    segs.forEach((seg) => {
+      const cand = lines.length ? `${lines[lines.length - 1]}\u00A0${seg}` : '';
+      if (cand && fits(cand, Math.round(size * 0.9))) lines[lines.length - 1] = cand;
+      else lines.push(seg);
+    });
+    let sz = Math.round(size);
+    while (sz > minS && !lines.every((l) => fits(l, sz))) sz -= 1;
+    lines.forEach((line) => rightLines.push({ text: line, wt, size: sz, color }));
   };
   if (campus) {
-    pushWrapped(campus.line, 700, px(2.5), '#ffffff', 1);
-    if (bilingual && campus.lineEn && campus.lineEn !== campus.line) pushWrapped(campus.lineEn, 400, px(1.9), LILAC, 1);
+    pushNoBreak(campus.line, 700, px(2.5), '#ffffff');
+    if (bilingual && campus.lineEn && campus.lineEn !== campus.line) pushNoBreak(campus.lineEn, 400, px(1.9), LILAC);
   }
-  if (period && period.id && period.id !== 'jour') {
-    pushWrapped(period.fr, 700, px(2.1), '#ffffff', 2);
-    if (bilingual && period.en) pushWrapped(period.en, 400, px(1.75), LILAC, 2);
-    if (capDate) pushWrapped(capDate, 400, px(1.5), LILAC, 1);
-  } else if (capDate) {
-    pushWrapped(capDate, 400, px(1.9), LILAC, 1);
-    if (dateEn) pushWrapped(dateEn, 400, px(1.7), LILAC, 1);
+  if (period && period.id && !period.live) {
+    /* Période passée : la plage (avec l’année) remplace la date du jour, qui sonnerait faux. */
+    pushNoBreak(period.fr, 700, px(2.1), '#ffffff');
+    if (bilingual && period.en) pushNoBreak(period.en, 400, px(1.75), LILAC);
+  } else {
+    const frDay = period && period.id === 'demain' ? period.fr : capDate;
+    const enDay = period && period.id === 'demain' ? (bilingual ? period.en : '') : dateEn;
+    pushNoBreak(frDay, 700, px(2.1), '#ffffff');
+    if (enDay) pushNoBreak(enDay, 400, px(1.7), LILAC);
+    if (opts.mastNote) pushNoBreak(opts.mastNote, 400, px(1.6), LILAC);
+    if (bilingual && opts.mastNoteEn) pushNoBreak(opts.mastNoteEn, 400, px(1.45), LILAC);
   }
   const rightH = rightLines.reduce((sum, l) => sum + Math.round(l.size * 1.3), 0);
   const rowTop = px(2.6);
   const logoRowH = Math.max(logoS, rightH + px(0.4));
-  const mastH = rowTop + logoRowH + px(1.2) + Math.round(tagS * 1.35) * (bilingual ? 2 : 1) + px(2);
+  /* Encart du haut à droite (à côté de l’accroche) : grille radio, match, chiffre clé — données réelles seulement. */
+  const tagRowsH = Math.round(tagS * 1.35) * (bilingual ? 2 : 1);
+  ctx.font = `400 ${tagS}px "LR Sans"`;
+  const tagW = Math.max(ctx.measureText(SLOGAN).width, bilingual ? ctx.measureText(SLOGAN_EN).width : 0);
+  const extraW = x1 - (x0 + tagW + px(3));
+  const extra = opts.mastExtras && opts.mastExtras.lines && opts.mastExtras.lines.length && extraW >= px(16) ? opts.mastExtras : null;
+  const exHeadS = px(1.35);
+  const exLineS = px(1.65);
+  const extraH = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
+  const mastH = rowTop + logoRowH + px(1.2) + Math.max(tagRowsH, extraH) + px(2);
   ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
   ctx.fillRect(0, mastTop, w, mastH);
   ctx.fillStyle = DEEP;
@@ -996,7 +1029,8 @@ function composeFrontPage(ctx, w, h, opts) {
   fillTracked(ctx, TITLE, my + Math.round((logoS - titleS) / 2), titleS, '#ffffff', x0 + logoS + px(2));
   ctx.textAlign = 'right';
   ctx.textBaseline = 'top';
-  let ry = my + px(0.4);
+  /* Bloc de droite centré sur la rangée du logo : pas de vide sous la date. */
+  let ry = my + Math.max(px(0.4), Math.round((logoRowH - rightH) / 2));
   rightLines.forEach((l) => {
     ctx.font = sans(l.wt)(l.size);
     ctx.fillStyle = l.color;
@@ -1005,6 +1039,23 @@ function composeFrontPage(ctx, w, h, opts) {
   });
   ctx.textAlign = 'left';
   my += logoRowH + px(1.2);
+  if (extra) {
+    let ey = my;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.font = `600 ${exHeadS}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = LILAC;
+    ctx.fillText(fitOne(String(extra.title || '').toUpperCase(), sans(600), exHeadS, extraW), x1, ey);
+    ey += Math.round(exHeadS * 1.35);
+    extra.lines.forEach((line) => {
+      const emojiFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+      ctx.font = emojiFont(exLineS);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(fitOne(line, emojiFont, exLineS, extraW), x1, ey);
+      ey += Math.round(exLineS * 1.3);
+    });
+    ctx.textAlign = 'left';
+  }
   ctx.font = `400 ${tagS}px "LR Sans"`;
   ctx.fillStyle = '#ffffff';
   ctx.textBaseline = 'top';
@@ -1026,12 +1077,15 @@ function composeFrontPage(ctx, w, h, opts) {
     ...(bilingual ? wrapWords(ctx, INDEP_EN, contentW) : []),
   ];
   const legalLineH = Math.round(legalSize * 1.3);
+  /* Nom complet du Radar (signature du pied du site), centré au-dessus de la mention d’indépendance. */
+  const nameSize = Math.max(10, px(1.45));
+  const nameLineH = Math.round(nameSize * 1.35);
   const langsMetrics = showLangs
     ? measureLangsFooter(ctx, { maxW: contentW, size: fLang, iconS, lineGap: 4, iconGap: 6 })
     : { height: 0, lines: [] };
   const creditS = credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
   const footPad = px(0.9);
-  const footH = footPad + legalLines.length * legalLineH + (langsMetrics.height ? px(0.6) + langsMetrics.height : 0) + creditS + footPad;
+  const footH = footPad + nameLineH + legalLines.length * legalLineH + (langsMetrics.height ? px(0.6) + langsMetrics.height : 0) + creditS + footPad;
   const footY = h - px(1.2) - footH;
 
   /* 3. Répartition verticale */
@@ -1059,7 +1113,7 @@ function composeFrontPage(ctx, w, h, opts) {
   blocks.forEach((k) => { bh[k] = Math.round(want[k] * u * (k === 'band' ? Math.min(scale, 1.15) : scale)); });
   const spare = (avail - gapsH) - blocks.reduce((s, k) => s + bh[k], 0);
   if (spare > 0 && bh.lead) bh.lead += spare;
-  else if (spare > 0 && blocks.length) bh[blocks[0]] += spare;
+  else if (spare > 0 && blocks.length && lead) bh[blocks[0]] += spare;
   /* La bande garde au moins une rangée lisible ; la une cède la différence. */
   if (bh.band && bh.band < px(11) && bh.lead) {
     const d = px(11) - bh.band;
@@ -1073,7 +1127,9 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.font = `400 ${px(2.2)}px "LR Sans"`;
     ctx.fillStyle = glass ? ink : mute;
     ctx.textBaseline = 'top';
-    ctx.fillText('Aucun article à afficher. Cochez au moins un titre.', x0 + px(1.5), cy + px(2.5));
+    ctx.fillText(fitOne('Aucun article sur cette période. Choisissez une période plus longue.', sans(400), px(2.2), contentW - px(3)), x0 + px(1.5), cy + px(2.5));
+    /* Sans article : la bande garde sa hauteur normale sous le message, sans s’étirer. */
+    cy += px(8) + px(2.4);
   }
 
   /* 4. La une + colonne d’appel (grand QR) */
@@ -1223,11 +1279,13 @@ function composeFrontPage(ctx, w, h, opts) {
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(qx - px(0.6), qy - px(0.6), qrS + px(1.2), qrS + px(1.2));
         drawQrCode(ctx, qx, qy, qrS, ctaUrl);
-        ctx.font = `700 ${px(1.9)}px "LR Sans Semi", "LR Sans"`;
-        ctx.fillStyle = '#ffffff';
+        /* Marque officielle : LE-RADAR.ca en Source Serif Display, comme le bandeau du site. */
+        let brandS = px(2.1);
+        while (brandS > px(1.2) && trackedWidth(ctx, TITLE, brandS) > textWd) brandS -= 1;
+        fillTracked(ctx, TITLE, cyy - px(0.2), brandS, '#ffffff', Math.round(midX - trackedWidth(ctx, TITLE, brandS) / 2));
         ctx.textAlign = 'center';
-        ctx.fillText(fitOne(ctaLabel, sans(700), px(1.9), textWd), midX, cyy);
-        cyy += px(2.6);
+        ctx.textBaseline = 'top';
+        cyy += Math.round(brandS * 1.1) + px(0.2);
         ctx.font = `400 ${px(1.5)}px "LR Sans"`;
         ctx.fillStyle = LILAC;
         ctx.fillText(fitOne(sub2, sans(400), px(1.5), textWd), midX, cyy);
@@ -1242,7 +1300,7 @@ function composeFrontPage(ctx, w, h, opts) {
           let sy = ry2 + sp;
           sy = label(bilingual ? 'Aussi · Also' : 'Aussi à lire', rx + sp, sy);
           /* Pas de titre tronqué à une ligne : s’il manque de place, le second passe en bref. */
-          const needPer = px(plan.screen ? 5.4 : 7.4);
+          const needPer = px(plan.screen ? 5.4 : 6.6);
           let shown = sideArts;
           const fitN = Math.max(1, Math.floor((ry2 + sideH - sp - sy) / needPer));
           if (sideArts.length > fitN) {
@@ -1264,7 +1322,25 @@ function composeFrontPage(ctx, w, h, opts) {
               : Math.max(px(1.7), Math.min(px(2.5), Math.floor(room / 2.2)));
             const maxL = Math.max(plan.screen ? 1 : 2, Math.min(4, Math.floor(room / (tMax * 1.1))));
             const f = wrapFit(art.title, serif, rightW - sp * 2, tMax, Math.max(10, px(1.7)), maxL);
-            drawLines(f, serif, rx + sp, yy, ink, 1.1, by + per + px(0.2));
+            const endY = drawLines(f, serif, rx + sp, yy, ink, 1.1, by + per + px(0.2));
+            /* Un seul article dans l’encart : son chapeau comble la place plutôt qu’un vide. */
+            const hookRoom = by + per - endY - px(0.8);
+            const hook = art.hookShort || art.hook || '';
+            if (shown.length === 1 && hook && hookRoom >= px(2.2)) {
+              const hs = px(1.5);
+              const hl = Math.max(1, Math.floor(hookRoom / Math.round(hs * 1.3)));
+              ctx.font = sans(400)(hs);
+              const all = wrapWords(ctx, hook.replace(/…$/, ''), rightW - sp * 2);
+              let lines = all.slice(0, hl);
+              if (all.length > hl) {
+                /* Coupure à un mot entier, jamais au milieu d’un mot. */
+                const words = lines[hl - 1].split(' ');
+                while (words.length > 1 && textW(ctx, `${words.join(' ')}…`) > rightW - sp * 2) words.pop();
+                if (words.length > 1 && words[words.length - 1].length <= 3) words.pop();
+                lines[hl - 1] = `${words.join(' ').replace(/[,;:]$/, '')}…`;
+              }
+              drawLines({ size: hs, lines }, sans(400), rx + sp, endY + px(0.5), mute, 1.3, by + per);
+            }
           });
         }
       }
@@ -1307,7 +1383,7 @@ function composeFrontPage(ctx, w, h, opts) {
       const qr = articleQr && art.pageUrl ? Math.min(px(8), Math.round(iw * 0.34)) : 0;
       const qrTop = floor - qr;
       const metaH = px(5.2);
-      const f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(2.1)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
+      const f = fitFlow(art.title, serif, px(2.9), Math.max(10, px(1.8)), iy, iw, iw - (qr ? qr + px(1) : 0), qrTop - px(0.6), floor - metaH, 1.1);
       drawFlow(f, serif, ix, ink);
       {
         const mS = Math.max(8, px(1.3));
@@ -1348,8 +1424,10 @@ function composeFrontPage(ctx, w, h, opts) {
         ctx.fillRect(bx - Math.round(gap / 2), cy + bp, Math.max(1, px(0.12)), rowH - bp * 2);
       }
       let by = label(part.title, bx, cy + bp, LILAC, px(1.7));
-      const wantCols = part.weight === 2 || (parts.length === 1 && part.items.length > 2) ? 2 : 1;
-      const cols = wantCols === 2 && (pw - gap) / 2 >= px(26) ? 2 : 1;
+      /* Colonnes : autant que la largeur le permet (au moins 24 u chacune), sans case vide. */
+      const maxCols = part.weight === 2 ? 2 : (parts.length === 1 ? 3 : 1);
+      const roomCols = Math.max(1, Math.floor((pw + gap) / (px(24) + gap)));
+      const cols = Math.max(1, Math.min(maxCols, roomCols, part.items.length));
       const colW = Math.floor((pw - (cols - 1) * gap) / cols);
       const itemMinH = px(2) + Math.round(px(2.1) * 1.15) + px(0.4);
       const fitRows = Math.max(1, Math.floor((cy + rowH - bp - by) / itemMinH));
@@ -1425,6 +1503,13 @@ function composeFrontPage(ctx, w, h, opts) {
     frostedRect(ctx, margin * 0.5, footY - px(0.4), w - margin, h - footY - px(0.6), px(1.2), { fill: 'rgba(255, 252, 247, 0.88)' });
   } else rule(x0, x1, footY, 1.5);
   let ly = footY + footPad;
+  ctx.font = `400 ${nameSize}px "LR Sans"`;
+  ctx.fillStyle = glass ? '#2A2622' : '#3A3732';
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'center';
+  ctx.fillText(fitOne(NAME_FULL, sans(400), nameSize, contentW), w / 2, ly);
+  ctx.textAlign = 'left';
+  ly += nameLineH;
   legalLines.forEach((line) => {
     ctx.font = `400 ${legalSize}px "LR Sans"`;
     ctx.fillStyle = mute;
@@ -1476,7 +1561,8 @@ function textW(ctx, text) {
 }
 
 function wrapWords(ctx, text, maxW) {
-  const words = String(text).split(/\s+/);
+  /* Espaces insécables (U+00A0, U+202F) jamais coupées : dates, « : ; ! ? ». */
+  const words = String(text).split(/[^\S\u00A0\u202F]+/);
   const lines = [];
   let cur = '';
   for (const word of words) {
@@ -2198,12 +2284,13 @@ async function loadUneImages(articles) {
 async function loadUneSidebars() {
   if (state.uneSidebars) return state.uneSidebars;
   const grab = (url) => fetch(url, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  const [nowplaying, radios, sports] = await Promise.all([
+  const [nowplaying, radios, sports, schedules] = await Promise.all([
     grab('../radio-nowplaying.json'),
     grab('../radios.json'),
     grab('../sports-masthead.json'),
+    grab('../radio-schedules.json'),
   ]);
-  state.uneSidebars = { nowplaying, radios, sports };
+  state.uneSidebars = { nowplaying, radios, sports, schedules };
   return state.uneSidebars;
 }
 
@@ -2226,7 +2313,7 @@ async function loadUneSportsHistory() {
 function unePeriodRecap(campus) {
   const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
   const win = state.unePeriodInfo;
-  if (!Front || !win || win.id === 'jour' || !state.uneSports) return null;
+  if (!Front || !win || win.live || !state.uneSports) return null;
   const res = Front.periodResults(state.uneSports, win, campus, 4);
   if (!res.items.length) return null;
   const pool = state.uneCandidates || [];
@@ -2237,12 +2324,76 @@ function unePeriodRecap(campus) {
   return { items: res.items, stats };
 }
 
+/* Encart du haut à droite. Verdict du focus-group (A) : 2 émissions à venir de la station campus
+ * (grille radio-schedules.json) ; repli générique : prochain match, sinon chiffre clé, sinon rien. */
+const UNE_MAST_EXTRAS = ['radio', 'match', 'chiffre', 'combo', 'aucun'];
+const FR_WEEKDAY_SHORT = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
+function uneRadioShows(bars, campus, info, limit = 2) {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const radios = Array.isArray(bars.radios) ? bars.radios : ((bars.radios && (bars.radios.radios || bars.radios.stations)) || []);
+  const list = Array.isArray(radios) ? radios : Object.values(radios);
+  const stations = (bars.schedules && bars.schedules.stations) || {};
+  const station = list.find((r) => r && stations[r.id] && (stations[r.id].grid || []).length
+    && (!campus || itemMatchesCampusPoster({ institution: r.institution || '' }, campus)));
+  if (!station) return null;
+  const grid = stations[station.id].grid || [];
+  const realToday = posterTodayYmd();
+  const startYmd = (info && info.live && info.target) || realToday;
+  const nowHm = startYmd === realToday
+    ? new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date())
+    : '07:00';
+  const out = [];
+  const seen = new Set();
+  for (let d = 0; d < 7 && out.length < limit; d += 1) {
+    const day = new Date(`${startYmd}T12:00:00Z`);
+    day.setUTCDate(day.getUTCDate() + d);
+    const wd = day.getUTCDay();
+    grid.filter((g) => g.day === wd && g.title && (d > 0 || String(g.start) >= nowHm))
+      .sort((a, b) => String(a.start).localeCompare(String(b.start)))
+      .forEach((g) => {
+        if (out.length >= limit || seen.has(g.title)) return;
+        if (Front && Front.isProSportItem && Front.isProSportItem({ title: g.title })) return;
+        seen.add(g.title);
+        out.push(`${FR_WEEKDAY_SHORT[wd]} ${posterClock(g.start)} · ${g.title}`);
+      });
+  }
+  return out.length ? { name: station.name || station.id, shows: out } : null;
+}
+function uneMastExtras(mode, bars, campus, info, sportsLines) {
+  if (!info || mode === 'aucun') return null;
+  const radio = uneRadioShows(bars, campus, info, mode === 'radio' ? 2 : 1);
+  const next = (sportsLines || []).find((x) => x.upcoming);
+  const pool = state.uneCandidates || [];
+  const ref = (info.to || posterTodayYmd());
+  const from = new Date(`${ref}T12:00:00Z`);
+  from.setUTCDate(from.getUTCDate() - 6);
+  const fromYmd = from.toISOString().slice(0, 10);
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  const week = pool.filter((a) => a.date && Front && Front.mtlYmd && Front.mtlYmd(a.date) >= fromYmd);
+  const medias = new Set(week.map((a) => a.source).filter(Boolean)).size;
+  const stat = week.length ? `${week.length} article${week.length > 1 ? 's' : ''} en 7 jours · ${medias} média${medias > 1 ? 's' : ''}` : '';
+  const pick = {
+    radio: radio ? { title: `À l’antenne de ${radio.name}`, lines: radio.shows } : null,
+    match: next ? { title: 'Prochain match', lines: [`${next.emoji ? `${next.emoji} ` : ''}${next.line}`, next.meta.charAt(0).toUpperCase() + next.meta.slice(1)] } : null,
+    chiffre: stat ? { title: 'À surveiller', lines: [stat] } : null,
+    combo: radio ? { title: 'À surveiller', lines: [`${radio.name} · ${radio.shows[0]}`, stat].filter(Boolean) } : null,
+  };
+  return pick[mode] || pick.match || pick.chiffre || null;
+}
+
 function uneComposeOpts(dpi, images, photoImg, photo) {
   const campusSlug = (state.uneCampus && state.uneCampus !== 'toutes') ? state.uneCampus : null;
   const campus = campusSlug ? campusOf(campusSlug) : null;
   const bars = state.uneSidebars || {};
-  const past = Boolean(state.unePeriodInfo && state.unePeriodInfo.id !== 'jour');
+  const info = state.unePeriodInfo;
+  const past = Boolean(info && !info.live);
   const recap = past ? unePeriodRecap(campus) : null;
+  const ahead = Boolean(info && info.id === 'demain');
+  const sportsLines = recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 4, info && info.target));
+  /* Note du bandeau (périodes en direct) : ce que l’affiche contient vraiment. */
+  const games = sportsLines.some((x) => x.upcoming);
+  const mastNote = past ? '' : (games ? `Nouvelles récentes et matchs ${ahead ? 'à venir' : 'du jour'}` : 'Les nouvelles les plus récentes');
+  const mastNoteEn = past ? '' : (games ? `Latest news and ${ahead ? 'upcoming' : 'today’s'} games` : 'The latest news');
   return {
     model: 'une',
     format: state.format,
@@ -2254,8 +2405,12 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     dpi,
     articles: selectedUneArticles(),
     briefs: uneSelectedBriefs(),
-    radioLines: recap ? [] : (past ? [] : pickPosterRadio(bars.nowplaying, bars.radios, campus, 3)),
-    sportsLines: recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 4)),
+    /* « En ondes » = émission en cours : sans objet pour le lendemain (grille inconnue). */
+    radioLines: (recap || past || ahead) ? [] : pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
+    sportsLines,
+    mastExtras: uneMastExtras(state.uneMastExtra || 'radio', bars, campus, info, sportsLines),
+    mastNote,
+    mastNoteEn,
     recap: recap ? { stats: recap.stats } : null,
     period: state.unePeriodInfo,
     tagline: state.uneTagline,
@@ -2333,7 +2488,7 @@ async function preview() {
     if (isUneModel()) {
       paintPreview(null, photo, { articleImages: new Map() });
       await loadUneSidebars();
-      if (state.unePeriod && state.unePeriod !== 'jour') await loadUneSportsHistory();
+      if (state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) await loadUneSportsHistory();
       const images = await loadUneImages(selectedUneArticles());
       if (gen !== previewGen) return;
       let bg = null;
@@ -2527,7 +2682,7 @@ async function downloadPrint(kind = 'pdf') {
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
     if (isUneModel()) await loadUneSidebars();
-    if (isUneModel() && state.unePeriod && state.unePeriod !== 'jour') await loadUneSportsHistory();
+    if (isUneModel() && state.unePeriod && !['jour', 'demain'].includes(state.unePeriod)) await loadUneSportsHistory();
     const uneImages = isUneModel() ? await loadUneImages(selectedUneArticles()) : null;
     const { w, h } = px(fmt, dpi);
     const composeOpts = isUneModel()
@@ -2777,6 +2932,8 @@ function applyQuery() {
   if (uni && (uni === 'toutes' || CAMPUSES.some((c) => c.slug === uni))) {
     state.uneCampus = uni;
   }
+  const entete = q.get('entete');
+  if (entete && UNE_MAST_EXTRAS.includes(entete)) state.uneMastExtra = entete;
   const periode = q.get('periode') || q.get('period');
   if (periode && Object.prototype.hasOwnProperty.call(UNE_PERIOD_LABELS, periode)) {
     state.unePeriod = periode;

@@ -151,7 +151,9 @@
   }
 
   /* Périodes de l’affiche « une » (jours civils, heure de Montréal). */
-  const POSTER_PERIODS = ['jour', 'fds', 'semaine', 'mois', 'session'];
+  const POSTER_PERIODS = ['jour', 'demain', 'fds', 'semaine', 'mois', 'session'];
+  /* Périodes « en direct » : articles les plus frais, matchs à venir, date du jour visé. */
+  const LIVE_PERIODS = ['jour', 'demain'];
   const SESSION_LABELS = { hiver: ['Session d’hiver', 'Winter term'], ete: ['Session d’été', 'Summer term'], automne: ['Session d’automne', 'Fall term'] };
 
   function mtlYmd(dateLike) {
@@ -181,11 +183,13 @@
   function frRange(a, b) {
     const [, ma] = a.split('-').map(Number);
     const [, mb, db] = b.split('-').map(Number);
+    /* L’année ferme la plage : le bandeau n’affiche plus la date du jour sur une période passée. */
+    const year = b.slice(0, 4);
     if (ma === mb) {
       const da = Number(a.slice(8));
-      return `du ${da === 1 ? '1er' : da} au ${db === 1 ? '1er' : db} ${MONTHS[mb - 1]}`;
+      return `du ${da === 1 ? '1er' : da} au ${db === 1 ? '1er' : db} ${MONTHS[mb - 1]} ${year}`;
     }
-    return `du ${frShort(a)} au ${frShort(b)}`;
+    return `du ${frShort(a)}${a.slice(0, 4) !== year ? ` ${a.slice(0, 4)}` : ''} au ${frShort(b)} ${year}`;
   }
 
   /**
@@ -197,18 +201,18 @@
     const id = POSTER_PERIODS.includes(period) ? period : 'jour';
     if (id === 'semaine') {
       const from = ymdShift(today, -6);
-      return { id, from, to: today, fr: `Dernière semaine, ${frRange(from, today)}`, en: `Past week, ${enShort(from)} to ${enShort(today)}` };
+      return { id, from, to: today, fr: `Dernière semaine, ${frRange(from, today)}`, en: `Past week, ${enShort(from)} to ${enShort(today)}, ${today.slice(0, 4)}` };
     }
     if (id === 'mois') {
       const from = ymdShift(today, -29);
-      return { id, from, to: today, fr: `Dernier mois, ${frRange(from, today)}`, en: `Past month, ${enShort(from)} to ${enShort(today)}` };
+      return { id, from, to: today, fr: `Dernier mois, ${frRange(from, today)}`, en: `Past month, ${enShort(from)} to ${enShort(today)}, ${today.slice(0, 4)}` };
     }
     if (id === 'fds') {
       const wd = new Date(`${today}T12:00:00Z`).getUTCDay(); /* 0 = dimanche */
       const back = wd === 5 ? 0 : wd === 6 ? 1 : wd === 0 ? 2 : wd + 2;
       const from = ymdShift(today, -back);
       const to = ymdShift(from, 2) > today ? today : ymdShift(from, 2);
-      return { id, from, to, fr: `Fin de semaine ${frRange(from, ymdShift(from, 2))}`, en: `Weekend, ${enShort(from)} to ${enShort(ymdShift(from, 2))}` };
+      return { id, from, to, fr: `Fin de semaine ${frRange(from, ymdShift(from, 2))}`, en: `Weekend, ${enShort(from)} to ${enShort(ymdShift(from, 2))}, ${from.slice(0, 4)}` };
     }
     if (id === 'session') {
       const start = freshness && typeof freshness.getCurrentUniversitySessionStart === 'function'
@@ -220,7 +224,13 @@
       const [fr, en] = SESSION_LABELS[sid] || ['Cette session', 'This term'];
       return { id, from: start, to: today, fr: `${fr} ${year}`, en: `${en} ${year}` };
     }
-    return { id: 'jour', from: null, to: today, fr: 'Aujourd’hui', en: 'Today' };
+    if (id === 'demain') {
+      const target = ymdShift(today, 1);
+      const fr = frDate(`${target}T12:00:00`, { weekday: true });
+      const en = enDate(`${target}T12:00:00`, { weekday: true });
+      return { id, live: true, from: null, to: today, target, fr: fr.charAt(0).toUpperCase() + fr.slice(1), en };
+    }
+    return { id: 'jour', live: true, from: null, to: today, target: today, fr: 'Aujourd’hui', en: 'Today' };
   }
 
   /* Le Radar couvre le sport étudiant : titres sur le sport professionnel exclus de l’affiche. */
@@ -292,14 +302,14 @@
 
   function selectFrontPage(items = [], referenceDate = new Date(), campus = null, limit = FRONT_PAGE_COUNT, period = 'jour') {
     const win = periodWindow(period, referenceDate);
-    const fresh = win.id === 'jour' && freshness && typeof freshness.filterFreshItems === 'function'
+    const fresh = win.live && freshness && typeof freshness.filterFreshItems === 'function'
       ? freshness.filterFreshItems(items, referenceDate)
       : items.slice();
     const normal = housekeeping && typeof housekeeping.housekeepingNormalItems === 'function'
       ? housekeeping.housekeepingNormalItems(fresh, referenceDate)
       : fresh;
     const refT = new Date(referenceDate).getTime();
-    const inWindow = win.id === 'jour'
+    const inWindow = win.live
       ? normal
       : normal.filter((item) => {
         const t = new Date(item.date || 0).getTime();
@@ -312,8 +322,8 @@
     const sorted = sortByDateDesc(pool);
     if (limit === Infinity) return { lead: sorted[0] || null, features: sorted.slice(1), items: sorted, period: win, available: sorted.length };
     const cap = Math.max(0, Number(limit) || FRONT_PAGE_COUNT);
-    let picked = win.id === 'jour' ? sorted.slice(0, Math.min(cap, sorted.length)) : spreadPick(sorted, cap);
-    if (win.id !== 'jour') {
+    let picked = win.live ? sorted.slice(0, Math.min(cap, sorted.length)) : spreadPick(sorted, cap);
+    if (!win.live) {
       const li = picked.findIndex(hasImage);
       if (li > 0) picked = [picked[li], ...picked.slice(0, li), ...picked.slice(li + 1)];
     }
@@ -427,6 +437,17 @@
     return new Intl.DateTimeFormat('en-CA', opts).format(t);
   }
 
+  /* Typographie française (titres et chapeaux en français seulement) : apostrophe courbe,
+   * fine insécable avant ; ! ?, insécable avant : et à l’intérieur des guillemets. */
+  function frTypo(text) {
+    return String(text || '')
+      .replace(/(\p{L})'(?=\p{L})/gu, '$1’')
+      .replace(/(\S)[ \u00A0]?([;!?])(?=\s|$|[»)"’])/gu, (m, a, p) => (a === '\u202F' ? m : `${a}\u202F${p}`))
+      .replace(/(\S)[ \u00A0]?:(?=\s|$)/gu, (m, a) => (/[\u00A0\u202F]/.test(a) ? m : `${a}\u00A0:`))
+      .replace(/«[ \u00A0\u202F]*/g, '«\u00A0')
+      .replace(/[ \u00A0\u202F]*»/g, '\u00A0»');
+  }
+
   function normalize(item, base = '..') {
     if (!item || !item.title) return null;
     const id = articleId(item.link);
@@ -434,16 +455,17 @@
     return {
       key: item.link || `${item.source}::${item.date}::${item.title}`,
       id,
-      title: String(item.title || '').replace(/\s+/g, ' ').trim(),
+      title: (item.lang === 'fr' ? frTypo : String)(String(item.title || '').replace(/\s+/g, ' ').trim()),
       source: String(item.source || '').trim(),
       author: String(item.author || '').trim(),
       authors: authorNames(item),
       byline: bylineOf(authorNames(item), String(item.source || '').trim()),
       date: item.date || '',
-      dateLabel: frDate(item.date || ''),
-      hook: hookOf(item, 220),
-      hookShort: hookOf(item, 140),
-      hookLong: hookOf(item, 420),
+      /* Date insécable : « 12 novembre 2026 » ne se coupe jamais. */
+      dateLabel: frDate(item.date || '').replace(/ /g, '\u00A0'),
+      hook: (item.lang === 'fr' ? frTypo : String)(hookOf(item, 220)),
+      hookShort: (item.lang === 'fr' ? frTypo : String)(hookOf(item, 140)),
+      hookLong: (item.lang === 'fr' ? frTypo : String)(hookOf(item, 420)),
       institution: String(item.institution || '').trim(),
       image: imageSrc(item, base),
       images: imageCandidates(item, base),
@@ -528,6 +550,13 @@
     return { items, played, wins };
   }
 
+  /* Bandeau : un libellé de période ou une date se coupe seulement après une virgule ;
+   * à l’intérieur d’un segment, espaces insécables (le jour reste avec son mois). */
+  function mastheadSegments(label) {
+    return String(label || '').split(/,\s+/).map((seg, i, all) => `${seg.trim()}${i < all.length - 1 ? ',' : ''}`
+      .replace(/[ \u202F]+/g, '\u00A0')).filter((seg) => seg.replace(/[,\u00A0]/g, ''));
+  }
+
   /* Emoji de sport devant un match ou un résultat. Toute clé ajoutée ici doit avoir son glyphe
    * dans la police auto-hébergée (assets/kit/fonts/emoji/, scripts/subset-poster-emoji-font.py). */
   const SPORT_EMOJI_FALLBACK = '🏅';
@@ -576,10 +605,13 @@
     bylineOf,
     manualSelection,
     periodResults,
+    frTypo,
+    mastheadSegments,
     sportEmoji,
     SPORT_EMOJI_ALL,
     isProSportItem,
     periodWindow,
+    LIVE_PERIODS,
     FRONT_PAGE_COUNT,
     POSTER_PAGE_COUNT,
     POSTER_BRIEF_COUNT,
