@@ -135,8 +135,9 @@ try {
  * Feedback prod 2026-08-29 : 9–14 s de pause après la vague = trop long.
  * Feedback prod 2026-09-01 : 7,5 s = trop nerveux ; ~9 s au repos.
  * Sans défilement : ~9–12 s selon le nombre de cartes.
- * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
- *   (même esprit que MARQUEE_REST_MS du dial radio). Jamais de « … ».
+ * Avec marquee : le titre fait 1 aller-retour + pause au repos.
+ *   La ligne du bas, si elle déborde, boucle en continu (copie par la droite).
+ *   Jamais de « … ».
  */
 const SPORTS_READ_MIN_MS = 6500;
 const SPORTS_READ_PER_CHAR_MS = 32;
@@ -145,9 +146,13 @@ const SPORTS_READ_MAX_MS = 10000;
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
  */
-/** Synchro style.css `--sports-scroll-duration` (marquee L→R). */
+/** Synchro style.css `--sports-scroll-duration` (marquee L→R du titre). */
 const SPORTS_SCROLL_ONE_WAY_MS = 5500;
 const SPORTS_SCROLL_ROUND_TRIP_MS = SPORTS_SCROLL_ONE_WAY_MS * 2;
+/** Ligne du bas seulement : trou entre les copies, vitesse, plafond. */
+const SPORTS_LOOP_GAP_PX = 48;
+const SPORTS_LOOP_SUB_PX_PER_S = 22;
+const SPORTS_LOOP_MAX_MS = 18000;
 /** Délai lecture avant scroll — aligné MARQUEE_READ_DELAY_MS / CSS --sports-scroll-delay. */
 const SPORTS_SCROLL_READ_DELAY_MS = MARQUEE_READ_DELAY_MS;
 /** Pause au repos après le retour (re-ack du début de ligne). */
@@ -1006,6 +1011,9 @@ function sportsMatchNaturalWidth(chip) {
     flex: chip.style.flex,
   };
   const inners = [...chip.querySelectorAll('.sports-chip__line-inner, .sports-chip__sub-text')];
+  const loops = [...chip.querySelectorAll('.sports-chip__loop')];
+  const loopDisplay = loops.map((el) => el.style.display);
+  loops.forEach((el) => { el.style.display = 'none'; });
   const saved = inners.map((el) => ({
     el,
     maxWidth: el.style.maxWidth,
@@ -1025,6 +1033,7 @@ function sportsMatchNaturalWidth(chip) {
     el.style.maxWidth = maxWidth;
     el.style.overflow = overflow;
   });
+  loops.forEach((el, i) => { el.style.display = loopDisplay[i]; });
   chip.style.width = prev.width;
   chip.style.minWidth = prev.minWidth;
   chip.style.maxWidth = prev.maxWidth;
@@ -3824,20 +3833,77 @@ function sportsMeasureOverflow(viewport, inner, _hadOverflow) {
   // texte et overflow ≈ 0, donc pas de marquee et troncature « … ».
   const viewW = viewport.clientWidth;
   if (viewW < 2) return 0;
+  const loop = inner.querySelector(':scope > .sports-chip__loop');
+  const prevLoop = loop ? loop.style.display : '';
+  if (loop) loop.style.display = 'none';
   const prevMax = inner.style.maxWidth;
   const prevOverflow = inner.style.overflow;
   const prevTextOverflow = inner.style.textOverflow;
   const prevWidth = inner.style.width;
+  const prevPad = inner.style.paddingRight;
   inner.style.maxWidth = 'none';
   inner.style.width = 'max-content';
   inner.style.overflow = 'visible';
   inner.style.textOverflow = 'clip';
-  const overflow = Math.max(0, inner.scrollWidth - viewW);
+  inner.style.paddingRight = '0';
+  const textWidth = inner.scrollWidth;
+  const overflow = Math.max(0, textWidth - viewW);
   inner.style.maxWidth = prevMax;
   inner.style.overflow = prevOverflow;
   inner.style.textOverflow = prevTextOverflow;
   inner.style.width = prevWidth;
+  inner.style.paddingRight = prevPad;
+  if (loop) loop.style.display = prevLoop;
+  sportsMeasuredTextWidth.set(inner, textWidth);
   return overflow;
+}
+
+const sportsMeasuredTextWidth = new WeakMap();
+
+function sportsPlainMarqueeText(el) {
+  if (!el) return '';
+  let text = '';
+  el.childNodes.forEach((node) => {
+    if (node.nodeType === 1 && node.classList.contains('sports-chip__loop')) return;
+    text += node.textContent || '';
+  });
+  return text;
+}
+
+/** Une boucle de la ligne du bas. Plancher = une voie du titre, plafond 18 s. */
+function sportsSubLoopDurationMs(textWidth, floorMs = SPORTS_SCROLL_ONE_WAY_MS) {
+  const distance = Math.max(0, Number(textWidth) || 0) + SPORTS_LOOP_GAP_PX;
+  const ms = (distance / SPORTS_LOOP_SUB_PX_PER_S) * 1000;
+  const floor = Number(floorMs) > 0 ? Number(floorMs) : SPORTS_SCROLL_ONE_WAY_MS;
+  return Math.round(Math.min(SPORTS_LOOP_MAX_MS, Math.max(floor, ms)));
+}
+
+function sportsSyncSubLoop(el, overflow, floorMs) {
+  if (!el) return;
+  const existing = el.querySelector(':scope > .sports-chip__loop');
+  if (!(overflow > 2) || sportsReducedMotion) {
+    existing?.remove();
+    el.style.removeProperty('--sports-scroll-duration-sub');
+    return;
+  }
+  const source = sportsPlainMarqueeText(el);
+  if (!existing || existing.dataset.loopSrc !== source) {
+    existing?.remove();
+    const copy = el.cloneNode(true);
+    copy.querySelectorAll('.sports-chip__loop').forEach((node) => node.remove());
+    copy.className = 'sports-chip__loop';
+    copy.setAttribute('aria-hidden', 'true');
+    copy.setAttribute('translate', 'no');
+    copy.removeAttribute('id');
+    copy.removeAttribute('style');
+    copy.dataset.loopSrc = source;
+    el.append(copy);
+  }
+  const textW = sportsMeasuredTextWidth.get(el) || 0;
+  const duration = `${(sportsSubLoopDurationMs(textW, floorMs) / 1000).toFixed(1)}s`;
+  if ((el.style.getPropertyValue('--sports-scroll-duration-sub') || '').trim() !== duration) {
+    el.style.setProperty('--sports-scroll-duration-sub', duration);
+  }
 }
 
 /**
@@ -3866,10 +3932,10 @@ function sportsApplyScrollState(chip, {
   if (!had) chip.classList.add(flag);
 }
 
-/** 1 aller-retour CSS (trips) + durée d’une voie — synchro dwell / keyframes. */
-function sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label) {
+/** Aller-retour du titre seulement. La ligne du bas a sa propre boucle. */
+function sportsSyncMarqueeCycle(chip, titleOverflow, _subOverflow, label) {
   if (!chip) return;
-  if (titleOverflow > 2 || subOverflow > 2) {
+  if (titleOverflow > 2) {
     const isMatch = chip.classList.contains('sports-chip--match');
     const oneWay = isMatch ? SPORTS_MATCH_SCROLL_ONE_WAY_MS : SPORTS_SCROLL_ONE_WAY_MS;
     const floor = chip.classList.contains('sports-chip--cta')
@@ -3942,7 +4008,8 @@ function refreshSportsChipScroll(chipOrRoot = null) {
         prop: '--sports-scroll-sub',
         overflow: subOverflow,
       });
-      const label = [titleInner?.textContent || '', subInner?.textContent || '']
+      sportsSyncSubLoop(subInner, subOverflow, SPORTS_MATCH_SCROLL_ONE_WAY_MS);
+      const label = [sportsPlainMarqueeText(titleInner), sportsPlainMarqueeText(subInner)]
         .filter(Boolean)
         .join(' · ');
       sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label);
@@ -3980,7 +4047,8 @@ function refreshSportsChipScroll(chipOrRoot = null) {
       prop: '--sports-scroll-sub',
       overflow: subOverflow,
     });
-    const label = [titleInner?.textContent || '', subInner?.textContent || '']
+    sportsSyncSubLoop(subInner, subOverflow, SPORTS_SCROLL_ONE_WAY_MS);
+    const label = [sportsPlainMarqueeText(titleInner), sportsPlainMarqueeText(subInner)]
       .filter(Boolean)
       .join(' · ');
     sportsSyncMarqueeCycle(chip, titleOverflow, subOverflow, label);
@@ -4550,8 +4618,9 @@ function sportsChipNeedsMarquee(chip) {
  * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
  * la carte et enregistrer l’info.
  * · Texte entier visible : dwell = lecture estimée (puces ~6,5–10 s ; CTA ~8 s).
- * · Texte qui défile : **toujours** 1 aller-retour marquee + pause repos
- *   (ne jamais changer la carte au milieu du scroll).
+ * · Titre qui défile : 1 aller-retour + pause repos.
+ * · Ligne du bas qui défile : au moins une boucle continue.
+ *   La carte attend le plus long des deux.
  */
 function sportsSlotDwellMs(slot) {
   const chip = MASTHEAD_SPORTS_STRIP?.querySelectorAll('.sports-chip')?.[slot];
@@ -4562,7 +4631,7 @@ function sportsSlotDwellMs(slot) {
   const subEl = isCta
     ? sportsCtaActiveLabel(chip)?.querySelector('.sports-chip__cta-sub-text')
     : chip?.querySelector('.sports-chip__sub-text');
-  const label = [labelEl?.textContent || '', subEl?.textContent || '']
+  const label = [sportsPlainMarqueeText(labelEl), sportsPlainMarqueeText(subEl)]
     .filter(Boolean)
     .join(' · ');
   const readMs = sportsLabelReadingMs(label);
@@ -4571,14 +4640,23 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    const oneWay = chip.classList.contains('sports-chip--match')
-      ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
-      : SPORTS_SCROLL_ONE_WAY_MS;
-    const trips = parseFloat(chip.style.getPropertyValue('--sports-scroll-trips')) || marqueeAlternateCount(oneWay, floor);
-    const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
+    let motion = 0;
+    if (chip.classList.contains('is-overflowing')) {
+      const oneWay = chip.classList.contains('sports-chip--match')
+        ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
+        : SPORTS_SCROLL_ONE_WAY_MS;
+      const trips = parseFloat(chip.style.getPropertyValue('--sports-scroll-trips')) || marqueeAlternateCount(oneWay, floor);
+      const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
+      motion = Math.max(motion, oneWay * n);
+    }
+    if (chip.classList.contains('is-sub-overflowing')) {
+      const raw = subEl?.style?.getPropertyValue?.('--sports-scroll-duration-sub') || '';
+      const loopMs = parseFloat(raw) * 1000;
+      motion = Math.max(motion, Number.isFinite(loopMs) && loopMs > 0 ? loopMs : SPORTS_SCROLL_ONE_WAY_MS);
+    }
     return Math.max(
       floor,
-      SPORTS_SCROLL_READ_DELAY_MS + oneWay * n + SPORTS_SCROLL_POST_PAUSE_MS,
+      SPORTS_SCROLL_READ_DELAY_MS + motion + SPORTS_SCROLL_POST_PAUSE_MS,
     );
   }
   return floor;

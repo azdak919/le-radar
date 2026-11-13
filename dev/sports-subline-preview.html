@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Ligne du bas — exemples locaux</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style-masthead.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style-sports-strip.css">
+  <style>
+    body { margin: 0; background: #0c0d10; color: #f1f2f4; font: 15px/1.45 Inter, system-ui, sans-serif; }
+    .ex { max-width: 760px; margin: 0 auto; padding: 28px 16px 64px; }
+    h1 { margin: 0; font-size: 26px; }
+    .lede { color: #a9acb5; margin: 8px 0 0; }
+    .case { margin: 26px 0; }
+    .case h2 { margin: 0 0 4px; font-size: 15px; }
+    .case p { margin: 0 0 10px; color: #8d929c; font-size: 13px; }
+    .case .masthead-sports-strip { width: var(--w, 360px); max-width: 100%; }
+  </style>
+</head>
+<body>
+  <main class="ex">
+    <h1>Ligne du bas en continu</h1>
+    <p class="lede">Le titre fait l’aller-retour. La date, en dessous, part vers la gauche et une copie rentre par la droite. Rien n’est en ligne.</p>
+
+    <section class="case">
+      <h2>1. Titre long, ligne du bas courte</h2>
+      <p>Le score va et revient. La date tient, elle ne bouge pas.</p>
+      <div class="masthead-sports-strip" data-count="1" data-ready="1" style="--w:360px">
+        <a class="sports-chip sports-chip--match" href="#ex" style="--sports-tone:#6c2163">
+          <span class="sports-chip__glyph" aria-hidden="true">🏀</span>
+          <span class="sports-chip__body">
+            <span class="sports-chip__line"><span class="sports-chip__line-inner">Cougars (Édouard-Montpetit) 7–0 Cheetahs (André-Laurendeau)</span></span>
+            <span class="sports-chip__sub"><span class="sports-chip__sub-text">jeu. 12 nov. · 19 h</span></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="case">
+      <h2>2. Titre court, ligne du bas longue</h2>
+      <p>Le score reste en place. La compétition défile sans revenir.</p>
+      <div class="masthead-sports-strip" data-count="1" data-ready="1" style="--w:360px">
+        <a class="sports-chip sports-chip--match" href="#ex" style="--sports-tone:#1d4e89">
+          <span class="sports-chip__glyph" aria-hidden="true">🏒</span>
+          <span class="sports-chip__body">
+            <span class="sports-chip__line"><span class="sports-chip__line-inner">Carabins 3–1 Rouge et Or</span></span>
+            <span class="sports-chip__sub"><span class="sports-chip__sub-text">vendredi 13 novembre · 19 h 00 · Hockey universitaire masculin · RSEQ · CEPSUM</span></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="case">
+      <h2>3. Les deux lignes longues</h2>
+      <p>Le titre fait l’aller-retour. La ligne du bas continue pendant ce temps.</p>
+      <div class="masthead-sports-strip" data-count="1" data-ready="1" style="--w:360px">
+        <a class="sports-chip sports-chip--match" href="#ex" style="--sports-tone:#8a5a12">
+          <span class="sports-chip__glyph" aria-hidden="true">🏐</span>
+          <span class="sports-chip__body">
+            <span class="sports-chip__line"><span class="sports-chip__line-inner">Cougars (Édouard-Montpetit) 3–1 Cheetahs (André-Laurendeau)</span></span>
+            <span class="sports-chip__sub"><span class="sports-chip__sub-text">Championnat provincial · volleyball féminin collégial · Cégep André-Laurendeau reçoit Édouard-Montpetit</span></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="case">
+      <h2>4. Carte étroite</h2>
+      <p>Même idée, largeur de téléphone.</p>
+      <div class="masthead-sports-strip" data-count="1" data-ready="1" style="--w:260px">
+        <a class="sports-chip sports-chip--match" href="#ex" style="--sports-tone:#2e7d4f">
+          <span class="sports-chip__glyph" aria-hidden="true">⚽</span>
+          <span class="sports-chip__body">
+            <span class="sports-chip__line"><span class="sports-chip__line-inner">Stingers 2–0 Martlets</span></span>
+            <span class="sports-chip__sub"><span class="sports-chip__sub-text">samedi 14 novembre · soccer universitaire · terrain intérieur</span></span>
+          </span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <script>
+    const GAP = 48;
+    const PX_PER_S = 22;
+    function textWidth(el) {
+      const prev = [el.style.maxWidth, el.style.width, el.style.overflow, el.style.paddingRight];
+      el.style.maxWidth = 'none';
+      el.style.width = 'max-content';
+      el.style.overflow = 'visible';
+      el.style.paddingRight = '0';
+      const w = el.scrollWidth;
+      el.style.maxWidth = prev[0];
+      el.style.width = prev[1];
+      el.style.overflow = prev[2];
+      el.style.paddingRight = prev[3];
+      return w;
+    }
+    function arm() {
+      document.querySelectorAll('.sports-chip').forEach((chip) => {
+        const title = chip.querySelector('.sports-chip__line-inner');
+        const titleView = chip.querySelector('.sports-chip__line');
+        const sub = chip.querySelector('.sports-chip__sub-text');
+        const subView = chip.querySelector('.sports-chip__sub');
+        if (title && titleView) {
+          const overflow = textWidth(title) - titleView.clientWidth;
+          if (overflow > 2) {
+            chip.classList.add('is-overflowing');
+            chip.style.setProperty('--sports-scroll', overflow + 'px');
+            chip.style.setProperty('--sports-scroll-duration', '8s');
+            chip.style.setProperty('--sports-scroll-trips', '2');
+          }
+        }
+        if (sub && subView) {
+          const width = textWidth(sub);
+          const overflow = width - subView.clientWidth;
+          if (overflow > 2) {
+            chip.classList.add('is-sub-overflowing');
+            const copy = sub.cloneNode(true);
+            copy.className = 'sports-chip__loop';
+            copy.setAttribute('aria-hidden', 'true');
+            sub.append(copy);
+            const seconds = Math.min(18, Math.max(8, (width + GAP) / PX_PER_S));
+            sub.style.setProperty('--sports-scroll-duration-sub', seconds.toFixed(1) + 's');
+          }
+        }
+      });
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(arm);
+    else arm();
+  </script>
+</body>
+</html>
