@@ -31,6 +31,8 @@ const SOFT = '#C2C6CD';
 const MUTED = '#888D96';
 const BG = '#0E0F12';
 const PURPLE = '#6C2163';
+/* Verbe atténué des matchs dans l’en-tête : blanc 0,65 sur le violet, opaque (4,9:1). */
+const mastDimColor = 'rgb(197, 171, 196)';
 const TRACK = -0.02;
 
 /* Endonymes — mêmes libellés que le module de traduction du site. */
@@ -246,6 +248,8 @@ const state = {
   uneCampus: 'toutes',
   unePeriod: 'jour',
   uneTagline: 'direct',
+  uneLeadPhoto: 'surimpression',
+  uneMastGlass: 'givre',
   uneRoles: { aussi: [], vedettes: [], bref: [], masquer: [] },
   uneSportBand: [],
   uneSportSlogan: [],
@@ -493,6 +497,77 @@ function coverDraw(ctx, img, tw, th, fx = 0.5, fy = 0.42, scale = 0.9, angleDeg 
   ctx.restore();
   ctx.fillStyle = 'rgba(14, 15, 18, 0.58)';
   ctx.fillRect(0, 0, tw, th);
+}
+
+/* Point focal vertical automatique : centre de l’énergie des contours (visages, sujets, scène),
+ * calculé une fois sur une vignette 64 px. Repli 0,42 si l’image est illisible (CORS). */
+function photoFocalY(img) {
+  if (!img) return 0.42;
+  if (typeof img.__lrFocalY === 'number') return img.__lrFocalY;
+  let fy = 0.42;
+  try {
+    const sw = img.naturalWidth || img.width || 0;
+    const sh = img.naturalHeight || img.height || 0;
+    if (sw && sh && typeof document !== 'undefined') {
+      const W = 64;
+      const H = Math.max(8, Math.round(W * sh / sw));
+      const c = document.createElement('canvas');
+      c.width = W;
+      c.height = H;
+      const g = c.getContext('2d', { willReadFrequently: true });
+      g.drawImage(img, 0, 0, W, H);
+      const d = g.getImageData(0, 0, W, H).data;
+      const lum = (i) => d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
+      let sum = 0;
+      let acc = 0;
+      for (let y = 1; y < H - 1; y += 1) {
+        let row = 0;
+        for (let x = 1; x < W - 1; x += 1) {
+          const i = (y * W + x) * 4;
+          row += Math.abs(lum(i + 4) - lum(i - 4)) + Math.abs(lum(i + W * 4) - lum(i - W * 4));
+        }
+        sum += row;
+        acc += row * (y + 0.5);
+      }
+      if (sum > 0) fy = Math.max(0.25, Math.min(0.7, acc / sum / H));
+    }
+  } catch { fy = 0.42; }
+  try { img.__lrFocalY = fy; } catch { /* objet figé */ }
+  return fy;
+}
+
+/* Opacité minimale du voile violet pour que le texte (couleur `txt`) garde le contraste visé
+ * sur 99 % des pixels réels de la zone (échantillon réduit). Plafond 0,94 (en-tête opaque d’origine). */
+function contrastRatio(a, b) {
+  const lin = (c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const L = (rgb) => 0.2126 * lin(rgb[0]) + 0.7152 * lin(rgb[1]) + 0.0722 * lin(rgb[2]);
+  const la = L(a);
+  const lb = L(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+function mastVeilAlpha(ctx, x, y, w, h, veil, txt, target = 4.5) {
+  let px = null;
+  try {
+    const W = 96;
+    const H = Math.max(4, Math.round(W * h / w));
+    const c = document.createElement('canvas');
+    c.width = W;
+    c.height = H;
+    const g = c.getContext('2d', { willReadFrequently: true });
+    g.drawImage(ctx.canvas, x, y, w, h, 0, 0, W, H);
+    px = g.getImageData(0, 0, W, H).data;
+  } catch { return 0.94; }
+  const pass = (a) => {
+    let bad = 0;
+    const n = px.length / 4;
+    for (let i = 0; i < px.length; i += 4) {
+      const bl = [0, 1, 2].map((k) => a * veil[k] + (1 - a) * px[i + k]);
+      if (contrastRatio(txt, bl) < target) bad += 1;
+    }
+    return bad / n <= 0.01;
+  };
+  for (let a = 0.5; a < 0.94; a += 0.02) if (pass(a)) return Math.round(a * 100) / 100;
+  return 0.94;
 }
 
 function coverPhoto(ctx, img, x, y, tw, th, fx = 0.5, fy = 0.5) {
@@ -849,6 +924,34 @@ function composeFrontPage(ctx, w, h, opts) {
   };
   const sans = (wt) => (s) => `${wt} ${s}px ${wt >= 600 ? '"LR Sans Semi", "LR Sans"' : '"LR Sans"'}`;
   const serif = (s) => `700 ${s}px "LR Serif"`;
+  /* Verbe de rencontre (« reçoit », « visite », « chez », « vs », « à ») plus pâle que les noms,
+   * comme la bande sports du site (.sports-chip__vs : poids 500, 0,88 em, blanc atténué). */
+  const drawRich = (text, fontFn, size, x, y, color, dim, emojiFont = false) => {
+    const m = /( (?:reçoit|visite|chez|vs|à|hosts|visits|at) )/.exec(text);
+    const parts = m ? [[text.slice(0, m.index), false], [m[1], true], [text.slice(m.index + m[1].length), false]] : [[text, false]];
+    const tail = emojiFont ? ', "LR Emoji"' : '';
+    ctx.textBaseline = 'alphabetic';
+    const base = y + Math.round(size * 0.93);
+    let xx = x;
+    parts.forEach(([t, isDim]) => {
+      if (!t) return;
+      const z = isDim ? Math.round(size * 0.88) : size;
+      ctx.font = isDim ? `500 ${z}px "LR Sans"${tail}` : `${fontFn(z)}${tail}`;
+      ctx.fillStyle = isDim ? dim : color;
+      ctx.fillText(t, xx, base);
+      xx += ctx.measureText(t).width;
+    });
+    ctx.textBaseline = 'top';
+  };
+  const drawRichLines = (fit, fontFn, x, y, color, dim, lead = 1.16, floor = Infinity) => {
+    let yy = y;
+    fit.lines.forEach((line) => {
+      if (yy + fit.size > floor) return;
+      drawRich(line, fontFn, fit.size, x, yy, color, dim);
+      yy += Math.round(fit.size * lead);
+    });
+    return yy;
+  };
   const fitOne = (text, fontFn, size, maxW) => {
     ctx.font = fontFn(size);
     let t = String(text || '');
@@ -1073,8 +1176,28 @@ function composeFrontPage(ctx, w, h, opts) {
   }
   sportsLines = sportsLines.slice(0, plan.sports);
   const mastH = rowTop + logoRowH + px(1.2) + Math.max(leftH, extraHFit) + px(2);
-  ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
-  ctx.fillRect(0, mastTop, w, mastH);
+  const mastMode = glass && photo ? (opts.mastGlass || 'givre') : 'opaque';
+  if (mastMode === 'opaque') {
+    ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
+    ctx.fillRect(0, mastTop, w, mastH);
+  } else {
+    /* La photo de fond transparaît dans l’en-tête : verre givré (flou) ou voile violet simple.
+     * L’opacité est calculée sur la photo réelle pour que le plus petit texte lilas reste AA (≥ 4,5:1). */
+    if (mastMode === 'givre') {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, mastTop, w, mastH);
+      ctx.clip();
+      ctx.filter = `blur(${Math.max(2, px(1.2))}px)`;
+      ctx.drawImage(ctx.canvas, 0, mastTop, w, mastH, 0, mastTop, w, mastH);
+      ctx.filter = 'none';
+      ctx.restore();
+    }
+    /* Le texte le plus pâle de l’en-tête (verbe atténué des matchs) fixe l’opacité minimale. */
+    const a = mastVeilAlpha(ctx, 0, mastTop, w, mastH, [108, 33, 99], [197, 171, 196], 4.5);
+    ctx.fillStyle = `rgba(108, 33, 99, ${a.toFixed(3)})`;
+    ctx.fillRect(0, mastTop, w, mastH);
+  }
   ctx.fillStyle = DEEP;
   ctx.fillRect(0, mastTop + mastH - px(0.6), w, px(0.6));
   let my = rowTop;
@@ -1138,9 +1261,8 @@ function composeFrontPage(ctx, w, h, opts) {
       let z = gameS;
       ctx.font = gameFont(z);
       while (z > Math.round(gameS * 0.72) && ctx.measureText(text).width > gameW) { z -= 1; ctx.font = gameFont(z); }
-      ctx.fillStyle = '#ffffff';
-      ctx.textBaseline = 'top';
-      ctx.fillText(fitOne(text, gameFont, z, gameW), x0, gy);
+      /* Sur le violet de l’en-tête, 0,55 tomberait à 3,9:1 : 0,65 (4,9:1, AA). */
+      drawRich(fitOne(text, gameFont, z, gameW), (q) => `600 ${q}px "LR Sans Semi", "LR Sans"`, z, x0, gy, '#ffffff', mastDimColor, true);
       gy += gameLineH;
     });
   }
@@ -1240,14 +1362,123 @@ function composeFrontPage(ctx, w, h, opts) {
       if (rest >= minImg) break;
     }
     const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
+    const leadMode = opts.leadPhoto || 'surimpression';
+    const autoFy = img ? (lead.focalY ?? photoFocalY(img)) : (lead.focalY ?? 0.5);
+    if (leadMode === 'surimpression' && img) {
+      /* Option C (focus-group) : la photo occupe tout le bloc de la une, à son ratio presque natif ;
+       * titre, signature et chapeau posés sur un dégradé sombre en bas (contraste AA), QR sur tuile blanche. */
+      const phH = floor - ly;
+      ctx.save();
+      roundedRectPath(ctx, lx, ly, lw, phH, glass ? px(0.6) : 0);
+      ctx.clip();
+      /* Le sujet est gardé dans les 55 % du haut, au-dessus du texte. */
+      coverPhoto(ctx, img, lx, ly, lw, phH, 0.5, Math.max(0.2, autoFy - 0.08));
+      ctx.restore();
+      /* Le texte reste sous la moitié haute : visages et scène dégagés (verdict focus-group). */
+      const textTopEst = 0.42;
+      const kick = bilingual ? 'À la une  ·  Front page' : 'À la une';
+      const kS = px(1.7);
+      ctx.font = `700 ${kS}px "LR Sans Semi", "LR Sans"`;
+      const kW = textW(ctx, kick.toUpperCase()) + px(2.2);
+      ctx.fillStyle = PURPLE;
+      ctx.fillRect(lx, ly, kW, Math.round(kS * 2));
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(kick.toUpperCase(), lx + px(1.1), ly + Math.round(kS));
+      ctx.textBaseline = 'top';
+      /* Crédit photo en haut à droite, sur pastille sombre. */
+      if (lead.credit) {
+        const cs = Math.max(8, px(0.85));
+        ctx.font = `400 ${cs}px "LR Sans"`;
+        const ct = fitOne(lead.credit, sans(400), cs, lw * 0.6);
+        const cw = textW(ctx, ct) + px(1.2);
+        ctx.fillStyle = 'rgba(20, 8, 20, 0.7)';
+        ctx.fillRect(lx + lw - cw, ly, cw, cs + px(0.6));
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(ct, lx + lw - cw + px(0.6), ly + px(0.3));
+      }
+      const pad = px(1.6);
+      const qrS = leadQr ? Math.min(leadQr, px(11)) : 0;
+      const tw = lw - pad * 2;
+      const textWq = tw - (qrS ? qrS + px(1.6) + px(1.8) : 0);
+      /* Pile de texte calée en bas : chapeau, signature, titre (de bas en haut). */
+      let tfit = null;
+      let tH = 0;
+      for (let ts = 5.2; ts >= 2.8; ts -= 0.4) {
+        tfit = wrapFit(lead.title, serif, textWq, px(ts), px(2.8), 3);
+        tH = tfit.lines.length * Math.round(tfit.size * 1.08);
+        if (tH <= phH * 0.3) break;
+      }
+      const metaS = px(1.8);
+      const metaLines = metaPick(lead, textWq, sans(600), metaS, 2, true);
+      const metaH = metaLines.length * Math.round(metaS * 1.3);
+      const hook = plan.screen ? '' : (lead.hook || lead.hookShort || '');
+      const hS = px(1.95);
+      const hLineH = Math.round(hS * 1.25);
+      const textTop = ly + phH * (textTopEst + 0.08);
+      const roomHook = floor - pad - (textTop + tH + px(0.8) + metaH + px(0.6));
+      const hookLines = hook ? Math.max(0, Math.min(4, Math.floor(roomHook / hLineH))) : 0;
+      /* Chapeau entier ou rien : jamais de points de suspension sur la une. */
+      let hFit = hookLines ? wrapFit(hook, sans(400), textWq, hS, Math.max(9, px(1.6)), hookLines) : null;
+      if (hFit && /…$/.test(hFit.lines[hFit.lines.length - 1] || '')) hFit = null;
+      const hookH = hFit ? hFit.lines.length * hLineH : 0;
+      const stackH = tH + px(0.8) + metaH + (hookH ? px(0.6) + hookH : 0);
+      let ty = Math.max(textTop, floor - pad - stackH);
+      /* Dégradé sombre calé sur le texte : déjà 0,78 au haut du titre (blanc AA sur tout pixel). */
+      {
+        const g0 = Math.max(ly, ty - px(7));
+        const grad = ctx.createLinearGradient(0, g0, 0, floor);
+        const kTop = Math.min(0.95, (ty - g0) / Math.max(1, floor - g0));
+        grad.addColorStop(0, 'rgba(20, 8, 20, 0)');
+        grad.addColorStop(kTop, 'rgba(20, 8, 20, 0.78)');
+        grad.addColorStop(1, 'rgba(20, 8, 20, 0.9)');
+        ctx.save();
+        roundedRectPath(ctx, lx, ly, lw, phH, glass ? px(0.6) : 0);
+        ctx.clip();
+        ctx.fillStyle = grad;
+        ctx.fillRect(lx, g0, lw, floor - g0);
+        ctx.restore();
+      }
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.55)';
+      ctx.shadowBlur = px(0.6);
+      ty = drawLines(tfit, serif, lx + pad, ty, '#ffffff', 1.08, floor);
+      ty += px(0.8);
+      ctx.font = `600 ${metaS}px "LR Sans Semi", "LR Sans"`;
+      ctx.fillStyle = '#F1D9EE';
+      metaLines.forEach((line, i) => ctx.fillText(line, lx + pad, ty + i * Math.round(metaS * 1.3)));
+      ty += metaH;
+      if (hFit) drawLines(hFit, sans(400), lx + pad, ty + px(0.6), '#ffffff', 1.25, floor);
+      ctx.restore();
+      if (qrS) {
+        /* Tuile blanche (zone calme) pour que le QR se lise sur la photo. */
+        const tile = qrS + px(1.6);
+        const qx = lx + lw - pad - tile;
+        const qy = floor - pad - tile - px(1.8);
+        ctx.fillStyle = '#ffffff';
+        roundedRectPath(ctx, qx, qy, tile, tile + px(1.8), px(0.5));
+        ctx.fill();
+        drawQrCode(ctx, qx + px(0.8), qy + px(0.8), qrS, lead.pageUrl);
+        ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
+        ctx.fillStyle = mute;
+        ctx.textAlign = 'center';
+        ctx.fillText(bilingual ? 'Lire · Read' : 'Lire l’article', qx + tile / 2, qy + qrS + px(1.1));
+        ctx.textAlign = 'left';
+      }
+    } else {
+    const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
     let imgH = Math.min(Math.round(lw / 1.55), floor - ly - px(1.2) - creditH - titleH - px(1) - qrRowH);
+    if (leadMode === 'ratio') {
+      /* Option A (focus-group) : ratio plancher 2:1 ; le titre et le chapeau cèdent d’abord. */
+      imgH = Math.max(imgH, Math.min(Math.round(lw / 2), floor - ly - px(1.2) - creditH - Math.round(px(3) * 1.08) * 2 - px(1) - qrRowH));
+    }
     if (imgH < minImg && leadQr) {
       const give = Math.min(leadQr - px(9), minImg - imgH);
       leadQr -= Math.max(0, give);
       imgH += Math.max(0, give);
     }
     imgH = Math.max(px(10), imgH);
-    paintImage(img, lx, ly, lw, imgH, lead.focalY, lead.source);
+    paintImage(img, lx, ly, lw, imgH, autoFy, lead.source);
     /* Étiquette À la une posée sur la photo */
     const kick = bilingual ? 'À la une  ·  Front page' : 'À la une';
     const kS = px(1.7);
@@ -1286,6 +1517,7 @@ function composeFrontPage(ctx, w, h, opts) {
       ctx.textAlign = 'center';
       ctx.fillText(bilingual ? 'Lire · Read' : 'Lire l’article', qx + leadQr / 2, qy + leadQr + px(0.4));
       ctx.textAlign = 'left';
+    }
     }
     if (showCta) {
       const rx = x0 + leadW + gap;
@@ -1564,7 +1796,8 @@ function composeFrontPage(ctx, w, h, opts) {
           ctx.textBaseline = 'top';
           ctx.fillText(item.emoji, ix, iy);
         }
-        drawLines(f, sans(700), ix + (item.emoji ? Math.round(f.size * 1.35) : 0), iy, '#ffffff', 1.15, by + (r + 1) * rowsH);
+        /* Sur le violet foncé de la bande : 0,55 comme le site (5,2:1) ; 0,6 en verre (photo dessous). */
+        drawRichLines(f, sans(700), ix + (item.emoji ? Math.round(f.size * 1.35) : 0), iy, '#ffffff', glass ? 'rgba(245, 246, 248, 0.6)' : 'rgba(245, 246, 248, 0.55)', 1.15, by + (r + 1) * rowsH);
       });
       bx += pw + gap;
     });
@@ -2662,6 +2895,8 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     recap: recap ? { stats: recap.stats } : null,
     period: state.unePeriodInfo,
     tagline: state.uneTagline,
+    leadPhoto: state.uneLeadPhoto,
+    mastGlass: state.uneMastGlass,
     articleImages: images || new Map(),
     photoImg: photoImg || null,
     credit: photo?.credit,
@@ -3201,6 +3436,10 @@ function applyQuery() {
   state.uneSportSlogan = ids8('slogan');
   state.uneSportBand = ids8('bande');
   state.uneSportHide = ids8('sportsmasques');
+  const photoUne = q.get('photoune');
+  if (['bande', 'ratio', 'surimpression'].includes(photoUne)) state.uneLeadPhoto = photoUne;
+  const enteteFond = q.get('entetefond');
+  if (['opaque', 'voile', 'givre'].includes(enteteFond)) state.uneMastGlass = enteteFond;
   const phrase = q.get('phrase') || q.get('tagline');
   if (phrase && Object.prototype.hasOwnProperty.call(UNE_TAGLINES, phrase)) {
     state.uneTagline = phrase;

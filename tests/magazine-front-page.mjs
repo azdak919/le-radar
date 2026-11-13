@@ -312,3 +312,19 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   const html = readFileSync(join(root, 'affiches/index.html'), 'utf8');
   assert.match(html, /<option value="direct" selected>Le fil étudiant, en direct<\/option>/);
 }
+
+// Une en surimpression, en-tête givré adaptatif, verbes de rencontre atténués (focus-group 12 nov.).
+{
+  const src = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert.match(src, /uneLeadPhoto: 'surimpression'/, 'photo de une pleine hauteur par défaut');
+  assert.match(src, /uneMastGlass: 'givre'/, 'en-tête givré par défaut sur fond photo');
+  assert.match(src, /\['bande', 'ratio', 'surimpression'\]\.includes\(photoUne\)/);
+  assert.match(src, /reçoit\|visite\|chez\|vs\|à/, 'verbes atténués comme sur le site');
+  const lin = (c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const L = (r) => 0.2126 * lin(r[0]) + 0.7152 * lin(r[1]) + 0.0722 * lin(r[2]);
+  const cr = (a, b) => (Math.max(L(a), L(b)) + 0.05) / (Math.min(L(a), L(b)) + 0.05);
+  const mix = (a, fg, bg) => fg.map((v, i) => a * v + (1 - a) * bg[i]);
+  assert.ok(cr([197, 171, 196], [0x6c, 0x21, 0x63]) >= 4.5, 'verbe atténué de l’en-tête : AA');
+  assert.ok(cr(mix(0.55, [245, 246, 248], [0x3b, 0x12, 0x36]), [0x3b, 0x12, 0x36]) >= 4.5, 'verbe atténué de la bande : AA');
+  assert.ok(cr([255, 255, 255], mix(0.78, [20, 8, 20], [255, 255, 255])) >= 4.5, 'titre blanc sur dégradé, même sur pixel blanc : AA');
+}
