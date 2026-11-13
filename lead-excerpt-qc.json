@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-13T00:07:31.427Z",
+  "updated": "2026-11-13T00:39:03.198Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 34,
-  "withLeadExcerpt": 140,
-  "candidates": 34,
-  "enriched": 2,
+  "incomplete": 33,
+  "withLeadExcerpt": 139,
+  "candidates": 33,
+  "enriched": 1,
   "failed": 4,
   "ok": true,
   "samples": [
@@ -28,21 +28,12 @@
       "changed": false
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
-      "changed": true
-    },
-    {
-      "title": "Albertans may have voted to stay in Canada, but they still have grievances",
-      "link": "https://theconcordian.com/2026/11/alberta-referendum-mixed-results/",
-      "ok": true,
-      "score": 100,
-      "chars": 608,
-      "sample": "But whether to remain part of Canada was only one of 10 questions asked of Albertans on Oct. 19. It ",
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": true
     },
     {
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 388,
       "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
+      "changed": false
+    },
+    {
+      "title": "Refugee advocates renew calls for Canada to withdraw from U.S. border agreement",
+      "link": "https://thelinknewspaper.ca/article/16561",
+      "ok": true,
+      "score": 100,
+      "chars": 418,
+      "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
       "changed": false
     }
   ]
