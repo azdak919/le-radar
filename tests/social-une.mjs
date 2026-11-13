@@ -147,6 +147,8 @@ const onlyRes = U.pickSports({ teams: { a: mh.teams.a } }, '2026-11-12');
 assert.deepEqual([onlyRes.results.length, onlyRes.next.length], [1, 0], 'sans prochains matchs : seule la colonne résultats');
 assert.equal(U.pickSports({ teams: { c: mh.teams.c } }, '2026-11-12', { afterToday: true }).next.length, 0, 'soir : rien du jour même');
 assert.equal(U.institutionColor('Cégep imaginaire'), '', 'couleur inconnue : repli sur l’accent');
+assert.equal(U.institutionColor('ÉTS'), '#E40032', 'ÉTS (alias de brand-colors.json)'); assert.equal(U.institutionColor('ETS'), '#E40032');
+assert.doesNotMatch(fs.readFileSync(new URL('../scripts/social/une-lib.mjs', import.meta.url), 'utf8'), /BRAND_ALIAS/, 'alias lus dans brand-colors.json, pas en dur');
 assert.equal(U.institutionColor('Concordia'), '#912338'); assert.equal(U.institutionColor('UQTR'), '#00CB88'); assert.equal(U.institutionColor('Bishop’s'), U.institutionColor("Bishop's University"));
 assert.equal(U.teamLabelFor('REDS', 'University of New Brunswick — campus Fredericton').inst, 'UNB, Fredericton', 'plus de « of New Brunswick »');
 assert.doesNotMatch(U.teamLabelFor('Blues', 'Dawson College').inst, /College/, 'pas de « College » anglais');

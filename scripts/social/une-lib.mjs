@@ -15,14 +15,12 @@ import { detectLang } from './lib.mjs';
 const require = createRequire(import.meta.url);
 const front = require('../magazine-front-page-lib.js');
 let BRAND = {}; try { BRAND = require('../../brand-colors.json').institutions || {}; } catch {}
-/** Couleur officielle de l'établissement (brand-colors.json du site, mêmes clés que les pastilles d'articles) ; '' si inconnue. */
-const BRAND_ALIAS = { concordia: 'Concordia University', mcgill: 'Université McGill', 'montréal': 'Université de Montréal', udem: 'Université de Montréal', laval: 'Université Laval', sherbrooke: 'Université de Sherbrooke', uqtr: 'Université du Québec à Trois-Rivières', uqac: 'Université du Québec à Chicoutimi (UQAC)', uqar: 'Université du Québec à Rimouski (UQAR)', uqam: 'UQAM', "bishop's": "Bishop's University", 'bishop’s': "Bishop's University", polytechnique: 'Polytechnique Montréal', dawson: 'Dawson College', 'john abbott': 'John Abbott College', maisonneuve: 'Collège de Maisonneuve', montmorency: 'Collège Montmorency', 'lionel-groulx': 'Collège Lionel-Groulx', 'vieux montréal': 'Cégep du Vieux Montréal' };
+/* Couleur d'établissement : même module que l'outil d'affiches, source unique brand-colors.json (couleurs + alias). */
+const IC = require('../institution-color-lib.js');
+/** Couleur officielle de l'établissement (brand-colors.json du site) ; '' si inconnue. */
 export function institutionColor(name) {
-  const raw = String(name || '').replace(/\s+—\s+.*$/, '').replace(/’/g, "'").trim(); if (!raw) return '';
-  const head = raw.split(',')[0].trim();
-  const keys = [raw, head, raw.replace(/\s*\([^)]*\)\s*$/, ''), FR_INSTITUTIONS[raw.toLowerCase()] || '', BRAND_ALIAS[head.toLowerCase()] || '', BRAND_ALIAS[head.replace(/^(Université|Cégep|Collège)\s+(de\s+|du\s+|d')?/i, '').toLowerCase()] || ''];
-  for (const k of keys) if (k && BRAND[k]?.color) return BRAND[k].color;
-  const low = raw.toLowerCase(); const hit = Object.keys(BRAND).find(k => k.toLowerCase() === low); return hit ? BRAND[hit].color : '';
+  const raw = String(name || '').trim(); if (!raw) return '';
+  return IC.institutionColor(raw, BRAND) || IC.institutionColor(FR_INSTITUTIONS[raw.toLowerCase()] || '', BRAND);
 }
 const authors = require('../author-lib.js');
 
