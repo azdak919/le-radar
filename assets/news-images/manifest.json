@@ -741,16 +741,6 @@
       "via": "origin",
       "nameKey": "lennon.jpg"
     },
-    "2bf3bfaf723c2921": {
-      "local": "assets/news-images/2bf3bfaf723c2921.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-1-1.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 123598,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:04.447Z",
-      "via": "resize-proxy",
-      "nameKey": "image-1-1.jpg"
-    },
     "fdc9e1923de14731": {
       "local": "assets/news-images/fdc9e1923de14731.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/image2.jpg",
@@ -1667,15 +1657,6 @@
       "via": "disk",
       "nameKey": "05_ops_fanfic_illiteracy_harrison_campbell.jpeg"
     },
-    "9399e5062e1c9deb": {
-      "local": "assets/news-images/9399e5062e1c9deb.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 84631,
-      "updatedAt": "2026-11-13T17:18:17.419Z",
-      "via": "disk",
-      "nameKey": "lacrymobastien-1.png"
-    },
     "8de8955b46d69bfa": {
       "local": "assets/news-images/8de8955b46d69bfa.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/NST26_Can_Champ_CF_MTL_9962_900_600_90.jpg",
@@ -1695,10 +1676,38 @@
       "updatedAt": "2026-11-13T18:38:34.218Z",
       "via": "origin",
       "nameKey": "illustration_sst_sans_personne.png"
+    },
+    "f95e150fc854f62b": {
+      "local": "assets/news-images/f95e150fc854f62b.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/CoucheTard-scaled.jpeg",
+      "host": "www.delitfrancais.com",
+      "bytes": 265706,
+      "updatedAt": "2026-11-13T20:39:17.579Z",
+      "via": "disk",
+      "nameKey": "couchetard.jpeg"
+    },
+    "dfe590d051af5947": {
+      "local": "assets/news-images/dfe590d051af5947.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 143688,
+      "updatedAt": "2026-11-13T20:39:17.579Z",
+      "via": "disk",
+      "nameKey": "prix-litteraire-ia-.png"
+    },
+    "71769c73348198f6": {
+      "local": "assets/news-images/71769c73348198f6.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/0E8A1017.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 118308,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-13T20:39:24.539Z",
+      "via": "resize-proxy",
+      "nameKey": "0e8a1017.jpg"
     }
   },
-  "updatedAt": "2026-11-13T20:05:20.517Z",
-  "count": 170,
+  "updatedAt": "2026-11-13T20:39:24.542Z",
+  "count": 171,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-13T20:04:39.793Z",
+  "updated": "2026-11-13T20:38:15.295Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 31,
+  "incomplete": 34,
   "withLeadExcerpt": 143,
-  "candidates": 31,
-  "enriched": 0,
+  "candidates": 34,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -26,6 +26,33 @@
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": true
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": true
+    },
+    {
+      "title": "La guitare s’invite dans les résidences pour ainés de la région.",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/la-guitare-sinvite-dans-les-residences-pour-aines-de-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=la-guitare-sinvite-dans-les-residences-pour-aines-de-la-region",
+      "ok": true,
+      "score": 100,
+      "chars": 531,
+      "sample": "Le duo Les Doubles Croches et l’artiste Julie Desgagné ont partagé la magie de la guitare aux ainés ",
+      "changed": true
     },
     {
       "title": "Joey Saputo announces sale of CF Montreal",
@@ -52,33 +79,6 @@
       "score": 100,
       "chars": 281,
       "sample": "Reliant trois histoires par le thème de la mort, la nouvelle pièce de théâtre de Klervi Thienpont, R",
-      "changed": false
-    },
-    {
-      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtrale",
-      "link": "https://impactcampus.ca/arts-et-culture/la-version-qui-ninteresse-personne-ou-comment-reussir-une-adaptation-theatral/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Durant tout le mois de novembre, le Trident présente la pièce La version qui n’intéresse personne, b",
-      "changed": false
-    },
-    {
-      "title": "Listening to The Echo of Grenada",
-      "link": "https://thelinknewspaper.ca/article/16563",
-      "ok": true,
-      "score": 100,
-      "chars": 388,
-      "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
-      "changed": false
-    },
-    {
-      "title": "Refugee advocates renew calls for Canada to withdraw from U.S. border agreement",
-      "link": "https://thelinknewspaper.ca/article/16561",
-      "ok": true,
-      "score": 100,
-      "chars": 418,
-      "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
       "changed": false
     }
   ]

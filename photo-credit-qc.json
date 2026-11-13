@@ -1,23 +1,44 @@
 {
-  "updated": "2026-11-13T20:06:36.907Z",
+  "updated": "2026-11-13T20:40:50.141Z",
   "total": 188,
-  "withImage": 171,
-  "withCredit": 171,
-  "cited": 117,
+  "withImage": 172,
+  "withCredit": 172,
+  "cited": 118,
   "pending": 29,
   "missingHero": 0,
   "ok": false,
-  "checked": 42,
-  "updatedCount": 3,
-  "citedNew": 7,
+  "checked": 45,
+  "updatedCount": 6,
+  "citedNew": 10,
   "fallbackNew": 35,
   "samples": [
+    {
+      "title": "La guitare s’invite dans les résidences pour ainés de la région.",
+      "source": "La Pige",
+      "credit": "Photo : Vittoria Caputo",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Why We Dream: A Search for the Elusive",
