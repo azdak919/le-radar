@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-13T21:37:03.612Z",
+  "updatedAt": "2026-11-13T22:35:50.735Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T21:36:25.864Z"
+      "checkedAt": "2026-11-13T22:35:21.191Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T21:36:40.011Z"
+      "checkedAt": "2026-11-13T22:35:34.927Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Café",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T21:36:43.118Z"
+      "checkedAt": "2026-11-13T22:35:37.063Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Tapeworms",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
-      },
-      "next": {
         "title": "The Groove Master's Hour",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
+      "next": {
+        "title": "The Go-Go Radio Magic Show",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+      },
       "track": "",
-      "showTitle": "Tapeworms",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T21:36:55.392Z"
+      "checkedAt": "2026-11-13T22:35:38.519Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,34 +135,35 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T21:36:56.732Z"
+      "checkedAt": "2026-11-13T22:35:39.480Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Histoire de passer le temps",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
-      },
-      "next": {
         "title": "La Niche",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "la-niche"
       },
-      "track": "Thierry Larose — Adele ecoute",
-      "showTitle": "Histoire de passer le temps",
+      "next": {
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
+      },
+      "track": "la — Niche-ep.-14",
+      "showTitle": "La Niche",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T21:37:03.262Z"
+      "checkedAt": "2026-11-13T22:35:50.384Z"
     }
   }
 }
