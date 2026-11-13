@@ -416,3 +416,78 @@ select.greeting:focus {
 body:has(#local-lab-format-bar) .dash-controls {
   padding-bottom: 120px;
 }
+
+/* Modèle « Une du Radar » : cacher les réglages campus, liste d’articles. */
+.dash[data-model="une"] .js-campus-only,
+.dash:not([data-model="une"]) .js-une-only { display: none; }
+.dash[data-model="une"] .js-une-only[hidden],
+.dash[data-model="une"] #une-box[hidden] { display: block; }
+.dash[data-model="une"] .js-une-only.field-hint[hidden] { display: block; }
+
+.une-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.une-list li {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 8px;
+  align-items: start;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.une-list li.is-lead { border-color: color-mix(in srgb, var(--purple) 55%, var(--line)); }
+.une-list .une-check {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--purple);
+}
+.une-list .une-meta { min-width: 0; }
+.une-list .une-role {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.une-list .une-title {
+  display: block;
+  font: 600 12.5px/1.3 var(--sans);
+  color: var(--ink);
+}
+.une-list .une-source {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.une-list button {
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--soft);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+.une-list button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.une-list button:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+#une-status { margin: 0 0 8px; }

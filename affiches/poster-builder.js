@@ -202,6 +202,9 @@ const state = {
   zoom: 0.9,
   photoOpen: false,
   uploads: [],
+  model: 'campus',
+  uneArticles: [],
+  uneStatus: '',
 };
 
 let lastPhotoImg = null;
@@ -436,6 +439,360 @@ function coverDraw(ctx, img, tw, th, fx = 0.5, fy = 0.42, scale = 0.9, angleDeg 
   ctx.fillRect(0, 0, tw, th);
 }
 
+function coverPhoto(ctx, img, x, y, tw, th, fx = 0.5, fy = 0.5) {
+  if (!img || tw <= 0 || th <= 0) return;
+  const sw = img.naturalWidth || img.width || 0;
+  const sh = img.naturalHeight || img.height || 0;
+  if (!sw || !sh) return;
+  const ratio = tw / th;
+  let cw;
+  let ch;
+  if (sw / sh > ratio) {
+    ch = sh;
+    cw = ch * ratio;
+  } else {
+    cw = sw;
+    ch = cw / ratio;
+  }
+  cw = Math.max(1, Math.min(cw, sw));
+  ch = Math.max(1, Math.min(ch, sh));
+  const left = Math.max(0, Math.min(fx * sw - cw / 2, sw - cw));
+  const top = Math.max(0, Math.min(fy * sh - ch / 2, sh - ch));
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x, y, tw, th);
+  ctx.clip();
+  ctx.drawImage(img, left, top, cw, ch, x, y, tw, th);
+  ctx.restore();
+}
+
+function drawQrCode(ctx, x, y, size, text) {
+  const api = (typeof qrcodegen !== 'undefined' && qrcodegen.QrCode) ? qrcodegen.QrCode : null;
+  if (!api || !text || size < 8) return;
+  const qr = api.encodeText(String(text), api.Ecc.MEDIUM);
+  const n = qr.size;
+  const quiet = 2;
+  const dim = n + quiet * 2;
+  const off = document.createElement('canvas');
+  off.width = dim;
+  off.height = dim;
+  const octx = off.getContext('2d', { alpha: false });
+  octx.fillStyle = '#ffffff';
+  octx.fillRect(0, 0, dim, dim);
+  octx.fillStyle = '#111111';
+  for (let row = 0; row < n; row += 1) {
+    for (let col = 0; col < n; col += 1) {
+      if (qr.getModule(col, row)) octx.fillRect(col + quiet, row + quiet, 1, 1);
+    }
+  }
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(off, x, y, size, size);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+}
+
+function frontInk() {
+  return {
+    paper: '#F4F0E6',
+    ink: '#1A1917',
+    mute: '#5E5A54',
+    rule: '#C9C2B4',
+    photoBg: '#E4DED1',
+  };
+}
+
+function composeFrontPage(ctx, w, h, opts) {
+  const c = frontInk();
+  const articles = (opts.articles || []).filter(Boolean);
+  const images = opts.articleImages || new Map();
+  const withQr = Boolean(opts.qr);
+  const margin = Math.round(Math.min(w, h) * 0.048);
+  const barH = Math.max(10, Math.round(h * 0.011));
+  const site = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.SITE)
+    ? RadarMagazineFrontPage.SITE
+    : 'https://le-radar.ca';
+  const todayIso = new Date().toISOString();
+  const dateLabel = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate)
+    ? RadarMagazineFrontPage.frDate(todayIso, { weekday: true })
+    : '';
+  const capDate = dateLabel ? dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1) : '';
+
+  ctx.fillStyle = c.paper;
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = PURPLE;
+  ctx.fillRect(0, 0, w, barH);
+
+  const measure = (font, text) => {
+    ctx.font = font;
+    const m = ctx.measureText(text);
+    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || parseFloat(font) || 12;
+  };
+  const wrapFit = (text, fontFn, maxW, maxSize, minSize, maxLines) => {
+    let size = maxSize;
+    let lines = [text];
+    while (size > minSize) {
+      ctx.font = fontFn(size);
+      lines = wrapWords(ctx, text, maxW);
+      if (lines.length <= maxLines) break;
+      size -= 1;
+    }
+    if (lines.length > maxLines) {
+      lines = lines.slice(0, maxLines);
+      let last = lines[maxLines - 1];
+      while (last.length > 4 && textW(ctx, `${last}…`) > maxW) last = last.slice(0, -1).trimEnd();
+      lines[maxLines - 1] = /[….]$/.test(last) ? last : `${last}…`;
+    }
+    return { size, lines };
+  };
+
+  const markSize = Math.round(Math.min(w, h) * 0.032);
+  const logoS = Math.round(markSize * 1.15);
+  let y = barH + Math.round(margin * 0.55);
+  const x0 = margin;
+  const x1 = w - margin;
+  if (assets.logo) ctx.drawImage(assets.logo, x0, y, logoS, logoS);
+  fillTracked(ctx, TITLE, y + Math.round((logoS - markSize) / 2), markSize, PURPLE, x0 + logoS + Math.round(logoS * 0.18));
+  if (capDate) {
+    const dSize = Math.round(markSize * 0.42);
+    ctx.font = `400 ${dSize}px "LR Sans"`;
+    ctx.fillStyle = c.mute;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(capDate, x1, y + logoS / 2);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+  }
+  y += logoS + Math.round(margin * 0.22);
+  const sloganSize = Math.round(markSize * 0.36);
+  ctx.font = `400 ${sloganSize}px "LR Sans"`;
+  const sloganLines = wrapWords(ctx, SLOGAN, x1 - x0);
+  sloganLines.forEach((line) => {
+    ctx.font = `400 ${sloganSize}px "LR Sans"`;
+    ctx.fillStyle = c.mute;
+    ctx.textBaseline = 'top';
+    ctx.fillText(line, x0, y);
+    y += measure(`400 ${sloganSize}px "LR Sans"`, line) + 4;
+  });
+  y += Math.round(margin * 0.18);
+  ctx.strokeStyle = c.rule;
+  ctx.lineWidth = Math.max(1, Math.round(h / 1400));
+  ctx.beginPath();
+  ctx.moveTo(x0, y);
+  ctx.lineTo(x1, y);
+  ctx.stroke();
+  y += Math.round(margin * 0.28);
+
+  const siteQr = Math.round(Math.min(w, h) * 0.072);
+  const footPad = Math.round(margin * 0.2);
+  const legalSize = Math.max(11, Math.round(Math.min(w, h) * 0.011));
+  ctx.font = `400 ${legalSize}px "LR Sans"`;
+  const legalMax = x1 - x0 - (withQr ? siteQr + margin * 0.35 : 0);
+  const legalLines = wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax);
+  const legalLineH = measure(`400 ${legalSize}px "LR Sans"`, legalLines[0] || INDEP_1);
+  const footH = Math.max(siteQr, legalLines.length * (legalLineH + 3) + legalSize) + footPad;
+  const contentBottom = h - margin * 0.7 - footH;
+  const drawCredit = (text, cx, cy, maxW) => {
+    if (!text) return;
+    const size = Math.max(9, Math.round(Math.min(w, h) * 0.0085));
+    ctx.font = `400 ${size}px "LR Sans"`;
+    let line = String(text).replace(/\s+/g, ' ').trim();
+    while (line.length > 4 && textW(ctx, line) > maxW) line = line.slice(0, -1).trimEnd();
+    if (textW(ctx, line) > maxW) return;
+    ctx.fillStyle = c.mute;
+    ctx.textBaseline = 'top';
+    ctx.fillText(line, cx, cy);
+  };
+  const drawKicker = (label, yy) => {
+    const size = Math.max(10, Math.round(Math.min(w, h) * 0.012));
+    const font = `700 ${size}px "LR Sans Semi", "LR Sans"`;
+    ctx.font = font;
+    const hgt = measure(font, label);
+    ctx.font = font;
+    ctx.fillStyle = PURPLE;
+    ctx.textBaseline = 'top';
+    ctx.fillText(label.toUpperCase(), x0, yy);
+    return yy + hgt + Math.round(size * 0.55);
+  };
+
+  const lead = articles[0] || null;
+  const features = articles.slice(1);
+  const fillPlaceholder = (x, yy, tw, th, label) => {
+    ctx.fillStyle = c.photoBg;
+    ctx.fillRect(x, yy, tw, th);
+    if (!label) return;
+    const size = Math.max(12, Math.round(th * 0.08));
+    ctx.font = `600 ${size}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = c.mute;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, x + tw / 2, yy + th / 2);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+  };
+
+  if (!lead) {
+    ctx.font = `400 ${Math.round(markSize * 0.45)}px "LR Sans"`;
+    ctx.fillStyle = c.mute;
+    ctx.fillText('Aucun article à afficher. Cochez au moins un titre.', x0, y);
+  } else {
+    const gap = Math.round(margin * 0.22);
+    const hasFeatures = features.length > 0;
+    const blockH = contentBottom - y;
+    const leadShare = hasFeatures ? (features.length >= 3 ? 0.50 : 0.56) : 0.92;
+    const leadBottom = y + Math.round(blockH * leadShare);
+    y = drawKicker('À la une', y);
+
+    const qrLead = withQr ? Math.round(Math.min(w, h) * 0.108) : 0;
+    const textWmax = x1 - x0;
+    const imgW = textWmax;
+    const imgMaxH = Math.round((leadBottom - y) * (hasFeatures ? 0.52 : 0.58));
+    const imgH = Math.max(Math.round(imgW / 2.35), Math.min(imgMaxH, Math.round(imgW / 1.85)));
+    const img = lead.key ? images.get(lead.key) : null;
+    if (img) coverPhoto(ctx, img, x0, y, imgW, imgH, 0.5, lead.focalY ?? 0.5);
+    else fillPlaceholder(x0, y, imgW, imgH, lead.source || '');
+    if (lead.credit) drawCredit(lead.credit, x0, y + imgH + 3, imgW);
+    y += imgH + (lead.credit ? Math.round(legalSize * 1.4) : Math.round(gap * 0.6));
+
+    const titleMaxW = textWmax - (withQr ? qrLead + gap : 0);
+    const titleMax = Math.round(Math.min(w, h) * (hasFeatures ? 0.038 : 0.048));
+    const titleMin = Math.round(Math.min(w, h) * 0.022);
+    const fitted = wrapFit(lead.title, (s) => `700 ${s}px "LR Serif"`, titleMaxW, titleMax, titleMin, 3);
+    fitted.lines.forEach((line) => {
+      ctx.font = `700 ${fitted.size}px "LR Serif"`;
+      ctx.fillStyle = c.ink;
+      ctx.textBaseline = 'top';
+      const hh = measure(ctx.font, line);
+      ctx.fillText(line, x0, y);
+      y += hh + Math.round(fitted.size * 0.08);
+    });
+    const metaSize = Math.max(11, Math.round(fitted.size * 0.32));
+    const meta = [lead.source, lead.dateLabel].filter(Boolean).join('  ·  ');
+    ctx.font = `600 ${metaSize}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = PURPLE;
+    ctx.fillText(meta, x0, y);
+    y += measure(ctx.font, meta) + Math.round(gap * 0.45);
+
+    const hook = lead.hook || lead.hookShort || '';
+    const hookSize0 = Math.max(12, Math.round(Math.min(w, h) * 0.016));
+    const hookMaxW = titleMaxW;
+    const hookFit = hook ? wrapFit(hook, (s) => `400 ${s}px "LR Sans"`, hookMaxW, hookSize0, 11, 4) : { size: 0, lines: [] };
+    const hookStart = y;
+    hookFit.lines.forEach((line) => {
+      ctx.font = `400 ${hookFit.size}px "LR Sans"`;
+      ctx.fillStyle = c.ink;
+      ctx.textBaseline = 'top';
+      const hh = measure(ctx.font, line);
+      ctx.fillText(line, x0, y);
+      y += hh + Math.round(hookFit.size * 0.22);
+    });
+    if (withQr && lead.pageUrl) {
+      const qrY = Math.min(Math.max(hookStart, leadBottom - qrLead - margin * 0.1), leadBottom - qrLead);
+      drawQrCode(ctx, x1 - qrLead, qrY, qrLead, lead.pageUrl);
+    }
+    y = Math.max(y, withQr ? hookStart + qrLead : y) + gap;
+    y = Math.max(y, Math.min(leadBottom, y));
+
+    if (hasFeatures) {
+      y = Math.max(y + Math.round(gap * 0.4), leadBottom - Math.round(blockH * 0.02));
+      ctx.strokeStyle = c.rule;
+      ctx.beginPath();
+      ctx.moveTo(x0, y);
+      ctx.lineTo(x1, y);
+      ctx.stroke();
+      y += Math.round(margin * 0.22);
+      y = drawKicker('Vedettes', y);
+      const cols = features.length === 3 ? 3 : Math.min(2, features.length);
+      const rows = Math.ceil(features.length / cols);
+      const gridW = x1 - x0;
+      const colGap = Math.round(margin * 0.28);
+      const rowGap = Math.round(margin * 0.28);
+      const cellW = Math.floor((gridW - colGap * (cols - 1)) / cols);
+      const cellH = Math.floor((contentBottom - y - rowGap * (rows - 1)) / rows);
+      const qrFeat = withQr ? Math.round(Math.min(cellW, cellH) * 0.28) : 0;
+      features.forEach((art, i) => {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        const cx = x0 + col * (cellW + colGap);
+        const cy = y + row * (cellH + rowGap);
+        const thumbH = Math.round(Math.min(cellH * 0.46, cellW / 1.7));
+        const pic = art.key ? images.get(art.key) : null;
+        if (pic) coverPhoto(ctx, pic, cx, cy, cellW, thumbH, 0.5, art.focalY ?? 0.5);
+        else fillPlaceholder(cx, cy, cellW, thumbH, art.source || '');
+        let ty = cy + thumbH;
+        if (art.credit) {
+          drawCredit(art.credit, cx, ty + 2, cellW);
+          ty += Math.round(legalSize * 1.3);
+        } else ty += Math.round(gap * 0.35);
+        const tMax = Math.round(Math.min(cellW, cellH) * 0.09);
+        const tFit = wrapFit(art.title, (s) => `700 ${s}px "LR Serif"`, cellW, tMax, 11, 3);
+        tFit.lines.forEach((line) => {
+          ctx.font = `700 ${tFit.size}px "LR Serif"`;
+          ctx.fillStyle = c.ink;
+          ctx.textBaseline = 'top';
+          const hh = measure(ctx.font, line);
+          ctx.fillText(line, cx, ty);
+          ty += hh + Math.round(tFit.size * 0.06);
+        });
+        const fMeta = [art.source, art.dateLabel].filter(Boolean).join('  ·  ');
+        if (fMeta) {
+          const ms = Math.max(10, Math.round(tFit.size * 0.38));
+          ctx.font = `600 ${ms}px "LR Sans Semi", "LR Sans"`;
+          ctx.fillStyle = PURPLE;
+          ctx.fillText(fMeta, cx, ty);
+          ty += measure(ctx.font, fMeta) + Math.round(ms * 0.35);
+        }
+        const hookText = art.hookShort || art.hook || '';
+        const textRight = withQr ? cellW - qrFeat - 8 : cellW;
+        if (hookText) {
+          const hs = Math.max(10, Math.round(tFit.size * 0.42));
+          const room = cy + cellH - ty - 4;
+          const maxLines = Math.max(2, Math.floor(room / (hs * 1.25)));
+          const hFit = wrapFit(hookText, (s) => `400 ${s}px "LR Sans"`, textRight, hs, 9, maxLines);
+          hFit.lines.forEach((line) => {
+            ctx.font = `400 ${hFit.size}px "LR Sans"`;
+            ctx.fillStyle = c.ink;
+            ctx.textBaseline = 'top';
+            const hh = measure(ctx.font, line);
+            ctx.fillText(line, cx, ty);
+            ty += hh + Math.round(hFit.size * 0.18);
+          });
+        }
+        if (withQr && art.pageUrl) {
+          drawQrCode(ctx, cx + cellW - qrFeat, cy + cellH - qrFeat, qrFeat, art.pageUrl);
+        }
+      });
+    }
+  }
+
+  const footY = h - margin * 0.7 - footH;
+  ctx.strokeStyle = c.rule;
+  ctx.beginPath();
+  ctx.moveTo(x0, footY);
+  ctx.lineTo(x1, footY);
+  ctx.stroke();
+  let ly = footY + footPad;
+  legalLines.forEach((line) => {
+    ctx.font = `400 ${legalSize}px "LR Sans"`;
+    ctx.fillStyle = c.mute;
+    ctx.textBaseline = 'top';
+    ctx.fillText(line, x0, ly);
+    ly += legalLineH + 3;
+  });
+  if (withQr) {
+    const qx = x1 - siteQr;
+    const qy = footY + footPad;
+    drawQrCode(ctx, qx, qy, siteQr, `${site}/`);
+    const capS = Math.max(9, Math.round(legalSize * 0.9));
+    ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
+    ctx.fillStyle = c.ink;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    const cap = 'le-radar.ca';
+    ctx.fillText(cap, qx + siteQr / 2, qy + siteQr + 3);
+    ctx.textAlign = 'left';
+  }
+}
+
 function drawRadar(ctx, w, h, cx, cy) {
   const reach = Math.hypot(Math.max(cx, w - cx), Math.max(h - cy, cy));
   ctx.strokeStyle = 'rgba(241, 242, 244, 0.07)';
@@ -602,6 +959,12 @@ function compose(opts) {
   ctx._pageW = w;
   ctx.save();
   ctx.translate(-clipX, -clipY);
+
+  if (opts.model === 'une') {
+    composeFrontPage(ctx, w, h, opts);
+    ctx.restore();
+    return canvas;
+  }
 
   const refW = 11 * REF_DPI;
   const refH = 17 * REF_DPI;
@@ -877,6 +1240,13 @@ function specLine() {
 }
 
 function recipeLine() {
+  if (isUneModel()) {
+    const bits = [FORMATS[state.format].label, 'Une du Radar'];
+    const n = selectedUneArticles().length;
+    bits.push(n ? `${n} article${n > 1 ? 's' : ''}` : 'Aucun article');
+    if (state.qr) bits.push('QR');
+    return bits.join(' · ');
+  }
   const bits = [
     FORMATS[state.format].label,
     campusOf(state.campus).label,
@@ -889,6 +1259,154 @@ function recipeLine() {
   return bits.join(' · ');
 }
 
+function isUneModel() {
+  return state.model === 'une';
+}
+
+function selectedUneArticles() {
+  return (state.uneArticles || []).filter((a) => a.included !== false);
+}
+
+function syncModelUi() {
+  const dash = document.querySelector('.dash');
+  if (dash) dash.dataset.model = state.model;
+  const uneBox = document.getElementById('une-box');
+  if (uneBox) uneBox.hidden = !isUneModel();
+  const crop = document.getElementById('crop-tools');
+  const pane = document.getElementById('preview-pane');
+  if (isUneModel()) {
+    if (crop) crop.hidden = true;
+    if (pane) pane.classList.remove('has-crop');
+  } else {
+    syncCropUi();
+  }
+  const lead = document.querySelector('.dash-lead');
+  if (lead) {
+    lead.textContent = isUneModel()
+      ? 'La une et les vedettes viennent du site. Décochez un titre ou changez l’ordre, puis exportez.'
+      : 'Paramètres d’abord, photo ensuite. L’affiche reste à droite.';
+  }
+}
+
+function renderUneList() {
+  const list = document.getElementById('une-list');
+  const status = document.getElementById('une-status');
+  if (!list) return;
+  if (status) status.textContent = state.uneStatus || '';
+  list.replaceChildren();
+  state.uneArticles.forEach((art, index) => {
+    const li = document.createElement('li');
+    if (art.included !== false && selectedUneArticles()[0]?.key === art.key) li.classList.add('is-lead');
+    const check = document.createElement('input');
+    check.type = 'checkbox';
+    check.className = 'une-check';
+    check.checked = art.included !== false;
+    check.addEventListener('change', () => {
+      art.included = check.checked;
+      renderUneList();
+      preview();
+    });
+    const meta = document.createElement('div');
+    meta.className = 'une-meta';
+    const role = document.createElement('span');
+    role.className = 'une-role';
+    const selected = selectedUneArticles();
+    const place = selected.findIndex((a) => a.key === art.key);
+    role.textContent = art.included === false
+      ? 'Retiré'
+      : (place === 0 ? 'À la une' : 'Vedette');
+    const title = document.createElement('span');
+    title.className = 'une-title';
+    title.textContent = art.title;
+    const source = document.createElement('span');
+    source.className = 'une-source';
+    source.textContent = [art.source, art.dateLabel].filter(Boolean).join(' · ');
+    meta.append(role, title, source);
+    const up = document.createElement('button');
+    up.type = 'button';
+    up.textContent = '↑';
+    up.setAttribute('aria-label', 'Monter');
+    up.disabled = index === 0;
+    up.addEventListener('click', () => moveUneArticle(index, -1));
+    const down = document.createElement('button');
+    down.type = 'button';
+    down.textContent = '↓';
+    down.setAttribute('aria-label', 'Descendre');
+    down.disabled = index === state.uneArticles.length - 1;
+    down.addEventListener('click', () => moveUneArticle(index, 1));
+    li.append(check, meta, up, down);
+    list.append(li);
+  });
+}
+
+function moveUneArticle(index, delta) {
+  const next = index + delta;
+  if (next < 0 || next >= state.uneArticles.length) return;
+  const arr = state.uneArticles;
+  const tmp = arr[index];
+  arr[index] = arr[next];
+  arr[next] = tmp;
+  renderUneList();
+  preview();
+}
+
+async function loadUneFeed() {
+  const Front = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+  if (!Front) {
+    state.uneStatus = 'Module de une introuvable.';
+    renderUneList();
+    return;
+  }
+  state.uneStatus = 'Chargement des articles du site…';
+  renderUneList();
+  try {
+    const res = await fetch('../news.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`news.json (${res.status})`);
+    const data = await res.json();
+    const now = data.updated ? new Date(data.updated) : new Date();
+    const cards = Front.frontPageCards(data.items || [], now, '..');
+    state.uneArticles = cards.items.map((card) => ({ ...card, included: true }));
+    const n = state.uneArticles.length;
+    state.uneStatus = n
+      ? `${n} article${n > 1 ? 's' : ''} du fil actuel (1 à la une, ${Math.max(0, n - 1)} vedette${n - 1 > 1 ? 's' : ''}).`
+      : 'Aucun article frais dans le fil.';
+  } catch (err) {
+    state.uneArticles = [];
+    state.uneStatus = `Impossible de lire le fil : ${err.message}`;
+  }
+  renderUneList();
+}
+
+async function loadUneImages(articles) {
+  const map = new Map();
+  await Promise.all((articles || []).map(async (art) => {
+    if (!art?.key) return;
+    const candidates = (art.images && art.images.length)
+      ? art.images
+      : (art.image ? [art.image] : []);
+    for (const src of candidates) {
+      try {
+        map.set(art.key, await loadImage(src, true));
+        return;
+      } catch {
+        /* essayer le miroir public, puis l’URL d’origine */
+      }
+    }
+  }));
+  return map;
+}
+
+function uneComposeOpts(dpi, images) {
+  return {
+    model: 'une',
+    format: state.format,
+    qr: state.qr,
+    dpi,
+    articles: selectedUneArticles(),
+    articleImages: images || new Map(),
+  };
+}
+
 function previewFit() {
   const pane = document.getElementById('preview-pane');
   const crop = document.getElementById('crop-tools');
@@ -899,9 +1417,11 @@ function previewFit() {
   return { maxW, maxH };
 }
 
-function paintPreview(img, photo) {
+function paintPreview(img, photo, uneOpts) {
   const out = document.getElementById('preview');
-  const canvas = compose({
+  const canvas = compose(isUneModel()
+    ? uneComposeOpts(PREVIEW_DPI, uneOpts?.articleImages)
+    : {
     format: state.format,
     campus: state.campus,
     lang: state.lang,
@@ -942,23 +1462,33 @@ async function preview() {
   const recipe = document.getElementById('recipe');
   const frame = document.getElementById('preview');
   const gen = ++previewGen;
-  const photo = currentPhoto();
+  const photo = isUneModel() ? null : currentPhoto();
   if (recipe) recipe.textContent = recipeLine();
   frame.classList.add('is-busy');
   try {
-    paintPreview(null, photo);
-    if (photo) {
-      const img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
+    if (isUneModel()) {
+      paintPreview(null, null, { articleImages: new Map() });
+      const images = await loadUneImages(selectedUneArticles());
       if (gen !== previewGen) return;
-      lastPhotoImg = img;
-      paintPreview(img, photo);
+      lastPhotoImg = null;
+      paintPreview(null, null, { articleImages: images });
+    } else {
+      paintPreview(null, photo);
+      if (photo) {
+        const img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
+        if (gen !== previewGen) return;
+        lastPhotoImg = img;
+        paintPreview(img, photo);
+      }
     }
     if (gen !== previewGen) return;
     status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>`;
   } catch (err) {
     if (gen !== previewGen) return;
     paintPreview(null, null);
-    status.textContent = `Photo indisponible — fond radar. ${err.message}`;
+    status.textContent = isUneModel()
+      ? `Aperçu indisponible. ${err.message}`
+      : `Photo indisponible — fond radar. ${err.message}`;
   } finally {
     if (gen === previewGen) frame.classList.remove('is-busy');
   }
@@ -1095,6 +1625,20 @@ async function rasterTiles(opts, w, h) {
   return tiles;
 }
 
+function printFileStem(fmt, dpi) {
+  if (isUneModel()) {
+    const qr = state.qr ? '-qr' : '';
+    return `le-radar-affiche-une-${fmt.file}${qr}-${dpi}dpi`;
+  }
+  const campus = campusOf(state.campus);
+  const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
+  const uni = state.showUni ? '' : '-sans-etab';
+  const qr = state.qr ? '-qr' : '';
+  const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
+  const langs = state.langs ? '-langues' : '';
+  return `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${dpi}dpi`;
+}
+
 async function downloadPrint(kind = 'pdf') {
   const buttons = [document.getElementById('dl'), document.getElementById('dl-jpg'), document.getElementById('dl-bottom'), document.getElementById('dl-jpg-bottom')];
   const status = document.getElementById('status');
@@ -1103,11 +1647,14 @@ async function downloadPrint(kind = 'pdf') {
   try {
     const fmt = FORMATS[state.format];
     const dpi = outputDpi();
-    const photo = currentPhoto();
+    const photo = isUneModel() ? null : currentPhoto();
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
+    const uneImages = isUneModel() ? await loadUneImages(selectedUneArticles()) : null;
     const { w, h } = px(fmt, dpi);
-    const composeOpts = {
+    const composeOpts = isUneModel()
+      ? uneComposeOpts(dpi, uneImages)
+      : {
       format: state.format,
       campus: state.campus,
       lang: state.lang,
@@ -1119,7 +1666,6 @@ async function downloadPrint(kind = 'pdf') {
       photoImg: img,
       credit: photo?.credit,
       license: photo?.license,
-    photoUrl: photo?.url,
       photoUrl: photo?.url,
       focalX: state.focalX,
       focalY: state.focalY,
@@ -1141,13 +1687,7 @@ async function downloadPrint(kind = 'pdf') {
       const { w: sw, h: sh } = px(fmt, safe);
       const canvas = compose({ ...composeOpts, dpi: safe });
       jpegBlob = await jpegOfCanvas(canvas);
-      const campus = campusOf(state.campus);
-      const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
-      const uni = state.showUni ? '' : '-sans-etab';
-      const qr = state.qr ? '-qr' : '';
-      const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
-      const langs = state.langs ? '-langues' : '';
-      const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${safe}dpi`;
+      const stem = printFileStem(fmt, safe);
       const how = await saveBlob(jpegBlob, `${stem}.jpg`);
       if (how === 'abort') {
         status.textContent = 'Téléchargement annulé.';
@@ -1158,13 +1698,7 @@ async function downloadPrint(kind = 'pdf') {
       status.innerHTML = `JPEG <strong>${escapeAttr(stem)}.jpg</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(safe)} dpi · ${escapeAttr(mb)} Mo (Safari ne tient pas un JPEG ${escapeAttr(dpi)} dpi). Le PDF reste à ${escapeAttr(dpi)} dpi.${escapeAttr(shareHint)}`;
       return;
     }
-    const campus = campusOf(state.campus);
-    const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
-    const uni = state.showUni ? '' : '-sans-etab';
-    const qr = state.qr ? '-qr' : '';
-    const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
-    const langs = state.langs ? '-langues' : '';
-    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${dpi}dpi`;
+    const stem = printFileStem(fmt, dpi);
     let blob;
     let name;
     if (kind === 'pdf') {
@@ -1328,11 +1862,20 @@ function syncCropUi() {
 function applyQuery() {
   let q;
   try { q = new URLSearchParams(location.search); } catch { return; }
+  const model = q.get('modele') || q.get('model');
+  if (model === 'une' || model === 'campus') {
+    state.model = model;
+    const input = document.querySelector(`input[name="model"][value="${model}"]`);
+    if (input) input.checked = true;
+  }
   const campus = q.get('campus');
   if (campus && CAMPUSES.some((c) => c.slug === campus)) {
     state.campus = campus;
+    if (state.model !== 'une') state.model = 'campus';
     const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
     if (input) input.checked = true;
+    const modelCampus = document.querySelector('input[name="model"][value="campus"]');
+    if (modelCampus && state.model === 'campus') modelCampus.checked = true;
   }
   const photo = q.get('photo');
   if (photo) state.photoHint = photo;
@@ -1381,6 +1924,14 @@ function syncGenericLangs() {
 }
 
 function applyChoice(name, value) {
+  if (name === 'model') {
+    state.model = value === 'une' ? 'une' : 'campus';
+    syncModelUi();
+    if (isUneModel() && !state.uneArticles.length) {
+      loadUneFeed().then(() => preview());
+      return;
+    }
+  }
   if (name === 'format') {
     state.format = value;
     syncDpiLab();
@@ -1520,6 +2071,7 @@ async function main() {
   syncUploadLab();
   syncDpiLabels();
   syncLangChoice();
+  syncModelUi();
   await loadFonts();
   await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
@@ -1543,6 +2095,7 @@ async function main() {
   });
   applyPhotoHint();
   renderChoices();
+  if (isUneModel()) await loadUneFeed();
   await preview();
 }
 

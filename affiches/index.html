@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=local-upload">
+  <link rel="stylesheet" href="./poster-builder.css?v=une-1">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -77,7 +77,7 @@
       <span>Imprimer une affiche</span>
     </nav>
     <h1 class="seo-title">Imprimer une affiche</h1>
-    <p class="seo-lead">Composez une affiche campus à imprimer.</p>
+    <p class="seo-lead">Composez une affiche campus, ou la une du Radar, à imprimer.</p>
 
     <div class="dash">
       <form class="dash-controls" id="form" onsubmit="return false;">
@@ -89,6 +89,15 @@
           </div>
           <p class="status" id="status">Chargement…</p>
         </div>
+
+        <fieldset>
+          <legend>Modèle</legend>
+          <div class="choices">
+            <label><input type="radio" name="model" value="campus" checked> Campus</label>
+            <label><input type="radio" name="model" value="une"> Une du Radar</label>
+          </div>
+          <p class="field-hint">La une reprend l’article à la une et les vedettes du site, comme sur le-radar.ca.</p>
+        </fieldset>
 
         <fieldset>
           <legend>Format</legend>
@@ -109,7 +118,7 @@
           <p class="field-hint" id="dpi-hint">600 dpi par défaut. 300 pour un babillard.</p>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="js-campus-only">
           <legend>Établissement</legend>
           <div class="choices">
             <label><input type="radio" name="campus" value="generique" checked> Générique</label>
@@ -134,7 +143,7 @@
           </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="js-campus-only">
           <legend>Texte</legend>
           <div class="choices">
             <label><input type="radio" name="lang" value="standard" checked> Français</label>
@@ -142,7 +151,7 @@
           </div>
         </fieldset>
 
-        <fieldset id="uni-toggle" hidden>
+        <fieldset id="uni-toggle" class="js-campus-only" hidden>
           <legend>Nom de l’établissement</legend>
           <div class="choices">
             <label><input type="radio" name="showUni" value="oui" checked> Afficher</label>
@@ -150,7 +159,7 @@
           </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="js-campus-only">
           <legend>Message manuscrit</legend>
           <select class="greeting" name="greeting" id="greeting" aria-describedby="greeting-hint">
             <option value="none" selected>Aucun</option>
@@ -181,7 +190,7 @@
           <p class="field-hint" id="greeting-hint">Signature à la main. En bilingue, une ligne anglaise s’ajoute.</p>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="js-campus-only">
           <legend>Langues</legend>
           <div class="choices">
             <label><input type="radio" name="langs" value="non"> Sans</label>
@@ -194,11 +203,19 @@
           <legend>Code QR</legend>
           <div class="choices">
             <label><input type="radio" name="qr" value="non"> Sans</label>
-            <label><input type="radio" name="qr" value="oui" checked> Avec (le-radar.ca)</label>
+            <label><input type="radio" name="qr" value="oui" checked> Avec</label>
           </div>
+          <p class="field-hint js-campus-only">Un code vers le-radar.ca, en bas de l’affiche.</p>
+          <p class="field-hint js-une-only" hidden>Un code par article, vers sa fiche sur le-radar.ca, et un code vers l’accueil.</p>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="js-une-only" id="une-box" hidden>
+          <legend>Articles</legend>
+          <p class="field-hint" id="une-status">Chargement des articles du site…</p>
+          <ol class="une-list" id="une-list"></ol>
+        </fieldset>
+
+        <fieldset class="js-campus-only">
           <legend>Photo</legend>
           <div class="photo-grid" id="photo-grid"></div>
           <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
@@ -289,6 +306,10 @@
   <script src="../engage-prompt.js" defer></script>
   <script src="../dev/midwidth-preview.js?v=wide-auto-e92"></script>
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e92"></script>
-  <script src="./poster-builder.js?v=local-upload-2"></script>
+  <script src="../scripts/session-freshness-lib.js"></script>
+  <script src="../scripts/news-housekeeping-lib.js"></script>
+  <script src="../scripts/magazine-front-page-lib.js"></script>
+  <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
+  <script src="./poster-builder.js?v=une-1"></script>
 </body>
 </html>
