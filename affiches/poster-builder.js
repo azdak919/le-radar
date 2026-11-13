@@ -9,10 +9,14 @@ const FORMATS = {
   tabloid: { id: 'tabloid', label: '11 × 17 po', file: '11x17', wIn: 11, hIn: 17 },
   letter: { id: 'letter', label: 'Lettre 8,5 × 11 po', file: 'lettre', wIn: 8.5, hIn: 11 },
   legal: { id: 'legal', label: 'Légal 8,5 × 14 po', file: 'legal', wIn: 8.5, hIn: 14 },
-  /* Écrans d’affichage dynamique : taille exacte en pixels, PNG (1 « po » virtuel = 100 px). */
+};
+/* Écrans d’affichage dynamique (Une seulement) : taille exacte en pixels, PNG.
+ * Hors du bloc FORMATS : les affiches imprimées du kit ne changent pas. 1 « po » virtuel = 100 px. */
+const SCREEN_FORMATS = {
   'ecran-paysage': { id: 'ecran-paysage', label: 'Écran 16:9 · 1920 × 1080 px', file: 'ecran-1920x1080', wIn: 19.2, hIn: 10.8, pxW: 1920, pxH: 1080, screen: true },
   'ecran-portrait': { id: 'ecran-portrait', label: 'Écran 9:16 · 1080 × 1920 px', file: 'ecran-1080x1920', wIn: 10.8, hIn: 19.2, pxW: 1080, pxH: 1920, screen: true },
 };
+Object.assign(FORMATS, SCREEN_FORMATS);
 
 const TITLE = 'LE-RADAR.ca';
 const SLOGAN = 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
