@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-13T16:06:43.436Z",
+  "updatedAt": "2026-11-13T17:37:04.356Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Punk-o-rama",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/punk-o-rama/"
-      },
+      "current": null,
       "next": {
         "title": "Conduite Antisportive",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:30",
         "end": "15:00",
         "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
       "track": "",
-      "showTitle": "Punk-o-rama",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T16:06:07.023Z"
+      "checkedAt": "2026-11-13T17:36:29.762Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T16:06:21.075Z"
+      "checkedAt": "2026-11-13T17:36:43.605Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "",
-      "showTitle": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+      "next": {
+        "title": "NNB/SQUAT FM/QPIRG/knots",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "Butcher T",
+      "showTitle": "Butcher T's Noontime Cuts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,74 +74,74 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T16:06:24.048Z"
+      "checkedAt": "2026-11-13T17:36:45.785Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Alley",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/the-alley"
-      },
-      "next": {
         "title": "Charts & Crafts",
         "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/charts-and-crafts"
       },
+      "next": {
+        "title": "the castle",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-castle"
+      },
       "track": "",
-      "showTitle": "The Alley",
+      "showTitle": "Charts & Crafts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T16:06:36.119Z"
+      "checkedAt": "2026-11-13T17:36:57.755Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième service",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "11:59",
-        "url": "https://www.cfak.ca/balados/le-re-show-deuxieme-service"
-      },
-      "next": {
         "title": "Ciné-Histoire",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:59",
         "url": "https://www.cfak.ca/balados/cine-histoire"
       },
+      "next": {
+        "title": "Remix ta console",
+        "source": "schedule-live",
+        "start": "16:30",
+        "end": "17:59",
+        "url": "https://www.cfak.ca/balados/remix-ta-console"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième service",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T16:06:37.092Z"
+      "checkedAt": "2026-11-13T17:36:58.970Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Montréal au courant",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "12:45",
+        "end": "12:55",
+        "slug": "montreal-au-courant"
       },
-      "track": "Laura Krieg — 00-Fin du travail, vie magique",
+      "track": "Arca — Syncope",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T16:06:43.086Z"
+      "checkedAt": "2026-11-13T17:37:04.006Z"
     }
   }
 }
