@@ -118,8 +118,9 @@ const UNE_FORMAT_PLAN = {
   'ecran-portrait': { k: 1.4, side: 0, grid: 3, sports: 4, radio: 2, briefCols: 0, screen: true, want: { lead: 62, grid: 38, band: 20, briefs: 0 } },
 };
 
+/* Bilingue seulement pour Concordia, McGill et Bishop’s ; « tous les établissements » reste en français (règle de Charles). */
 function uneBilingualAllowed(slug) {
-  if (!slug || slug === 'toutes' || slug === 'generique') return true;
+  if (!slug || slug === 'toutes' || slug === 'generique') return false;
   const campus = CAMPUSES.find((c) => c.slug === slug);
   return Boolean(campus && campus.bilingual);
 }
@@ -246,6 +247,8 @@ const state = {
   model: 'campus',
   layout: 'classique',
   uneCampus: 'toutes',
+  uneMedia: 'tous', /* « tous les médias de l’établissement » ou le slug d’un média */
+  uneMediaList: [],
   unePeriod: 'jour',
   uneTagline: 'direct',
   uneLeadPhoto: 'surimpression',
@@ -2476,6 +2479,52 @@ function fillUneCampusSelect() {
   if (state.uneCampus && state.uneCampus !== 'toutes') sel.value = state.uneCampus;
 }
 
+function mediaSlug(name) {
+  return String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+function fillUneMediaSelect() {
+  const sel = document.getElementById('une-media');
+  if (!sel) return;
+  const keep = state.uneMedia || 'tous';
+  sel.replaceChildren();
+  const all = document.createElement('option');
+  all.value = 'tous';
+  all.textContent = state.uneCampus && state.uneCampus !== 'toutes' ? 'Tous les médias de l’établissement' : 'Tous les médias';
+  sel.append(all);
+  (state.uneMediaList || []).forEach((m) => {
+    const opt = document.createElement('option');
+    opt.value = m.slug;
+    opt.textContent = m.name;
+    sel.append(opt);
+  });
+  sel.value = (state.uneMediaList || []).some((m) => m.slug === keep) ? keep : 'tous';
+}
+/* Réglages partageables : l’URL reflète le modèle, le format et toutes les options visibles. */
+function syncSettingsUrl() {
+  try {
+    const url = new URL(window.location.href);
+    const set = (k, v, def) => { if (v && v !== def) url.searchParams.set(k, v); else url.searchParams.delete(k); };
+    url.searchParams.set('modele', state.model);
+    set('format', state.format, 'tabloid');
+    set('qr', state.qr ? 'oui' : 'non', 'oui');
+    set('lang', state.lang, 'standard');
+    if (isUneModel()) {
+      ['campus', 'greeting', 'photo'].forEach((k) => url.searchParams.delete(k));
+      set('uni', state.uneCampus, 'toutes');
+      set('media', state.uneMedia, 'tous');
+      set('periode', state.unePeriod, 'jour');
+      set('layout', state.layout, 'classique');
+      set('entete', state.uneMastExtra, 'radio');
+      set('phrase', state.uneTagline, 'direct');
+    } else {
+      ['uni', 'media', 'periode', 'layout', 'entete', 'phrase', 'articles', 'une', 'aussi', 'vedettes', 'bref', 'masquer', 'slogan', 'bande', 'sportsmasques'].forEach((k) => url.searchParams.delete(k));
+      set('campus', state.campus, 'generique');
+      set('greeting', state.greeting, 'none');
+    }
+    window.history.replaceState(null, '', url.toString());
+  } catch { /* ignore */ }
+}
+
 function filteredPhotos() {
   const campus = photoBankCampus();
   const bank = campus.places
@@ -2645,7 +2694,7 @@ function syncModelUi() {
     dash.dataset.model = state.model;
     dash.dataset.layout = isUneModel() ? (state.layout || 'classique') : '';
   }
-  ['une-box', 'une-sports-box', 'une-layout-box', 'une-uni-box', 'une-period-box', 'une-tagline-box'].forEach((id) => {
+  ['une-box', 'une-sports-box', 'une-layout-box', 'une-uni-box', 'une-media-box', 'une-period-box', 'une-tagline-box', 'une-entete-box'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.hidden = !isUneModel();
   });
@@ -2662,7 +2711,7 @@ function syncModelUi() {
   const lead = document.querySelector('.dash-lead');
   if (lead) {
     lead.textContent = isUneModel()
-      ? 'La une et les vedettes viennent du site. Choisissez la mise en page, une université ou la langue, puis exportez.'
+      ? 'Articles, sports et radio viennent du site, en temps réel. Choisissez l’établissement, le média, la période et le fond, puis exportez.'
       : 'Paramètres d’abord, photo ensuite. L’affiche reste à droite.';
   }
 }
@@ -2809,6 +2858,7 @@ async function loadUneFeed() {
     return;
   }
   state.uneStatus = 'Chargement des articles du site…';
+  { const fr = document.getElementById('preview'); if (fr) fr.dataset.state = 'occupe'; }
   renderUneList();
   try {
     const res = await fetch('../news.json', { cache: 'no-cache' });
@@ -2821,8 +2871,23 @@ async function loadUneFeed() {
     const featureN = Front.POSTER_PAGE_COUNT || 9;
     const briefN = Front.POSTER_BRIEF_COUNT || 6;
     const period = state.unePeriod || 'jour';
-    const all = Front.frontPageCards(data.items || [], now, '..', campus, Infinity, period);
-    const cards = Front.frontPageCards(data.items || [], now, '..', campus, featureN + briefN, period);
+    /* Médias de l’établissement (ou de tout le fil) : choix « tous » ou un seul média. */
+    const inScope = Front.frontPageCards(data.items || [], now, '..', campus, Infinity, 'session').items || [];
+    const mediaMap = new Map();
+    (data.items || []).forEach((it) => {
+      if (!it || !it.source) return;
+      if (campus && !inScope.some((c) => c.source === it.source)) return;
+      const slug = it.sourceSlug || mediaSlug(it.source);
+      if (!mediaMap.has(slug)) mediaMap.set(slug, it.source);
+    });
+    state.uneMediaList = [...mediaMap.entries()].map(([slug, name]) => ({ slug, name })).sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    if (state.uneMedia !== 'tous' && !mediaMap.has(state.uneMedia)) state.uneMedia = 'tous';
+    fillUneMediaSelect();
+    const items = state.uneMedia === 'tous'
+      ? (data.items || [])
+      : (data.items || []).filter((it) => it && (it.sourceSlug || mediaSlug(it.source || '')) === state.uneMedia);
+    const all = Front.frontPageCards(items, now, '..', campus, Infinity, period);
+    const cards = Front.frontPageCards(items, now, '..', campus, featureN + briefN, period);
     state.unePeriodInfo = cards.period || null;
     state.uneCandidates = all.items;
     state.uneAutoArticles = cards.items.slice(0, featureN);
@@ -2834,7 +2899,8 @@ async function loadUneFeed() {
     const n = selectedUneArticles().length;
     const b = uneSelectedBriefs().length;
     const per = state.unePeriodInfo && state.unePeriodInfo.id !== 'jour' ? ` (${state.unePeriodInfo.fr.charAt(0).toLowerCase()}${state.unePeriodInfo.fr.slice(1)})` : '';
-    const where = (campus ? ` pour ${campus.line}` : ' du fil actuel') + per;
+    const mediaName = state.uneMedia !== 'tous' ? (state.uneMediaList.find((m) => m.slug === state.uneMedia) || {}).name : '';
+    const where = (mediaName ? ` de ${mediaName}` : '') + (campus ? ` pour ${campus.line}` : (mediaName ? '' : ' du fil actuel')) + per;
     const how = uneManualMode() ? 'sélection manuelle' : 'sélection automatique';
     state.uneStatus = all.items.length
       ? `${all.items.length} article${all.items.length > 1 ? 's' : ''}${where}. Sur l’affiche : ${n}${b ? ` + ${b} en bref` : ''} (${how}). Cochez pour choisir vous-même.`
@@ -3124,6 +3190,7 @@ async function preview() {
   const photo = (!isUneModel() || uneUsesPhoto()) ? currentPhoto() : null;
   if (recipe) recipe.textContent = recipeLine();
   frame.classList.add('is-busy');
+  frame.dataset.state = 'occupe'; /* repère des tests et exports : « pret » quand l’aperçu final est peint */
   try {
     if (isUneModel()) {
       paintPreview(null, photo, { articleImages: new Map() });
@@ -3149,8 +3216,10 @@ async function preview() {
     }
     if (gen !== previewGen) return;
     status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
+    frame.dataset.state = 'pret';
   } catch (err) {
     if (gen !== previewGen) return;
+    frame.dataset.state = 'erreur';
     paintPreview(null, null);
     status.textContent = isUneModel()
       ? `Aperçu indisponible. ${err.message}`
@@ -3575,6 +3644,9 @@ function applyQuery() {
   }
   const entete = q.get('entete');
   if (entete && UNE_MAST_EXTRAS.includes(entete)) state.uneMastExtra = entete;
+  { const sel = document.getElementById('une-entete'); if (sel) sel.value = state.uneMastExtra || 'radio'; }
+  const media = q.get('media');
+  if (media && /^[a-z0-9-]{2,60}$/.test(media)) state.uneMedia = media;
   const periode = q.get('periode') || q.get('period');
   if (periode && Object.prototype.hasOwnProperty.call(UNE_PERIOD_LABELS, periode)) {
     state.unePeriod = periode;
@@ -3657,6 +3729,7 @@ function applyChoice(name, value) {
     if (isUneModel() && state.layout === 'verre') ensureUnePhoto();
     syncModelUi();
     renderChoices();
+    syncSettingsUrl();
     if (isUneModel()) {
       loadUneFeed().then(() => preview());
       return;
@@ -3670,14 +3743,26 @@ function applyChoice(name, value) {
   }
   if (name === 'unePeriod') {
     state.unePeriod = Object.prototype.hasOwnProperty.call(UNE_PERIOD_LABELS, value) ? value : 'jour';
+    syncSettingsUrl();
     loadUneFeed().then(() => preview());
     return;
   }
   if (name === 'uneTagline') {
     state.uneTagline = Object.prototype.hasOwnProperty.call(UNE_TAGLINES, value) ? value : 'direct';
   }
+  if (name === 'uneMedia') {
+    state.uneMedia = value || 'tous';
+    syncSettingsUrl();
+    loadUneFeed().then(() => preview());
+    return;
+  }
+  if (name === 'uneEntete') {
+    state.uneMastExtra = UNE_MAST_EXTRAS.includes(value) ? value : 'radio';
+  }
   if (name === 'uneCampus') {
     state.uneCampus = value || 'toutes';
+    state.uneMedia = 'tous';
+    syncSettingsUrl();
     syncLangChoice();
     if (state.layout === 'verre') {
       state.photoId = null;
@@ -3712,6 +3797,7 @@ function applyChoice(name, value) {
     state.photoId = value || null;
     resetCrop(currentPhoto());
   }
+  syncSettingsUrl();
   preview();
 }
 

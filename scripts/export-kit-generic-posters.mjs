@@ -41,9 +41,28 @@ function startServer() {
   });
 }
 
+/* ImageMagick si présent, sinon Pillow (même résultat : PDF 600 dpi, aperçu 660 × 1020). */
+function run(cmd, args) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(cmd, args, { stdio: 'inherit' });
+    child.on('error', reject);
+    child.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`${cmd} ${args.join(' ')}`))));
+  });
+}
+async function convert(magickArgs, src, dest) {
+  try {
+    await run('magick', [src, ...magickArgs]);
+  } catch {
+    const py = dest.endsWith('.pdf')
+      ? `from PIL import Image; Image.open(${JSON.stringify(src)}).convert('RGB').save(${JSON.stringify(dest)}, 'PDF', resolution=600)`
+      : `from PIL import Image; im=Image.open(${JSON.stringify(src)}).convert('RGB'); im.thumbnail((660, 1020), Image.LANCZOS); im.save(${JSON.stringify(dest)}, quality=84)`;
+    await run('python3', ['-c', py]);
+  }
+}
+
 async function main() {
   const server = await startServer();
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
   try {
     const page = await browser.newPage();
     await page.goto(`${BASE}/affiches/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -60,16 +79,10 @@ async function main() {
       const dest = join(outDir, `affiche-generique-${fmt.file}-600dpi.jpg`);
       await download.saveAs(dest);
       const pdf = dest.replace(/\.jpg$/, '.pdf');
-      const magick = spawn('magick', [dest, '-units', 'PixelsPerInch', '-density', '600', pdf], { stdio: 'inherit' });
-      await new Promise((resolve, reject) => {
-        magick.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`magick ${pdf}`))));
-      });
+      await convert(['-units', 'PixelsPerInch', '-density', '600', pdf], dest, pdf);
       if (fmt.value === 'tabloid') {
         const preview = join(outDir, 'affiche-generique-preview.jpg');
-        const thumb = spawn('magick', [dest, '-resize', '660x1020', '-quality', '84', preview], { stdio: 'inherit' });
-        await new Promise((resolve, reject) => {
-          thumb.on('exit', (code) => (code === 0 ? resolve() : reject(new Error('preview'))));
-        });
+        await convert(['-resize', '660x1020', '-quality', '84', preview], dest, preview);
       }
       console.log('OK', dest, '→', pdf);
     }
