@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T13:06:30.582Z",
+  "updatedAt": "2026-11-13T14:06:37.751Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T13:06:04.152Z"
+      "checkedAt": "2026-11-13T14:06:10.346Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "En-quêtes artistiques",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "https://cism893.ca/emissions/en-quetes-artistiques"
       },
+      "next": {
+        "title": "Accents ouverts",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/accents-ouverts"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "En-quêtes artistiques",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T13:06:18.032Z"
+      "checkedAt": "2026-11-13T14:06:24.358Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Morning Detour",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Jazz Amuck",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Morning Detour",
+      "showTitle": "Jazz Amuck",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,61 +81,55 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T13:06:20.623Z"
+      "checkedAt": "2026-11-13T14:06:27.200Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Wake up Folks!",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/wake-up-folks"
-      },
-      "next": {
         "title": "CJLO News Hour",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/cjlo-news-hour"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Wake up Folks!",
+      "showTitle": "CJLO News Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T13:06:22.831Z"
+      "checkedAt": "2026-11-13T14:06:29.993Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
-      },
+      "current": null,
       "next": {
         "title": "Le Ré-Show : Deuxième service",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "11:59",
         "url": "https://www.cfak.ca/balados/le-re-show-deuxieme-service"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T13:06:23.825Z"
+      "checkedAt": "2026-11-13T14:06:31.366Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +142,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Charlotte Adigéry & Bolis Pupul — Googoo Gaga",
+      "track": "L'Amalgame — Cordalinge",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-13T13:06:30.232Z"
+      "checkedAt": "2026-11-13T14:06:37.400Z"
     }
   }
 }
