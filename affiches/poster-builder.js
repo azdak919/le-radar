@@ -83,6 +83,33 @@ const GREETINGS_EN = {
   ncompte: 'No account needed',
 };
 
+/* Phrase sous « Scanne-moi » : FR, puis EN (mode bilingue des établissements autorisés). */
+const UNE_TAGLINES = {
+  auto: { label: 'Automatique (campus ou tout le Radar)' },
+  fil: { label: 'Le fil étudiant', fr: 'Le fil étudiant', en: 'The student news feed' },
+  tout: { label: 'Tout le Radar étudiant', fr: 'Tout le Radar étudiant', en: 'All student news' },
+  campus: { label: 'Ton campus en direct', fr: 'Ton campus en direct', en: 'Your campus, live' },
+};
+const UNE_PERIOD_LABELS = {
+  jour: 'Aujourd’hui (les plus récents)',
+  fds: 'Fin de semaine',
+  semaine: 'Dernière semaine',
+  mois: 'Dernier mois',
+  session: 'Cette session',
+};
+/* Format → densité de la une : en Lettre, moins d’articles plutôt que tout rétrécir. */
+const UNE_FORMAT_PLAN = {
+  tabloid: { k: 1, side: 2, grid: 4, sports: 4, radio: 3, briefCols: 3, want: { lead: 62, grid: 36, band: 21, briefs: 20 } },
+  legal: { k: 0.9, side: 2, grid: 3, sports: 4, radio: 3, briefCols: 2, want: { lead: 56, grid: 36, band: 20, briefs: 22 } },
+  letter: { k: 0.84, side: 1, grid: 3, sports: 2, radio: 2, briefCols: 2, want: { lead: 50, grid: 33, band: 15, briefs: 14 } },
+};
+
+function uneBilingualAllowed(slug) {
+  if (!slug || slug === 'toutes' || slug === 'generique') return true;
+  const campus = CAMPUSES.find((c) => c.slug === slug);
+  return Boolean(campus && campus.bilingual);
+}
+
 const CAMPUSES = [
   { slug: 'generique', line: null, lineEn: null, bilingual: false, places: null, hints: null, label: 'Générique' },
   {
@@ -205,6 +232,9 @@ const state = {
   model: 'campus',
   layout: 'classique',
   uneCampus: 'toutes',
+  unePeriod: 'jour',
+  uneTagline: 'auto',
+  unePeriodInfo: null,
   uneArticles: [],
   uneBriefs: [],
   uneSidebars: null,
@@ -680,9 +710,11 @@ function composeFrontPage(ctx, w, h, opts) {
   const images = opts.articleImages || new Map();
   const withQr = Boolean(opts.qr);
   const glass = opts.layout === 'verre';
-  const bilingual = opts.lang === 'bilingue';
   const showLangs = opts.langs !== false;
-  const u = Math.min(w / 110, h / 170);
+  const fmtSpec = FORMATS[opts.format] || FORMATS.tabloid;
+  const plan = UNE_FORMAT_PLAN[fmtSpec.id] || UNE_FORMAT_PLAN.tabloid;
+  /* 1 u ≈ 0,1 po sur le Tabloid ; un peu plus serré en Légal et en Lettre. */
+  const u = (w / fmtSpec.wIn) * 0.1 * plan.k;
   const px = (n) => Math.max(1, Math.round(n * u));
   const margin = px(4);
   const site = (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.SITE)
@@ -692,9 +724,12 @@ function composeFrontPage(ctx, w, h, opts) {
   const todayIso = opts.date || new Date().toISOString();
   const dateLabel = Front && Front.frDate ? Front.frDate(todayIso, { weekday: true }) : '';
   const capDate = dateLabel ? dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1) : '';
-  const dateEn = (bilingual && Front && Front.enDate) ? Front.enDate(todayIso, { weekday: true }) : '';
   const campusSlug = opts.campus && opts.campus !== 'toutes' && opts.campus !== 'generique' ? opts.campus : null;
   const campus = campusSlug ? campusOf(campusSlug) : null;
+  /* Loi 96 : établissement francophone → français seulement. */
+  const bilingual = opts.lang === 'bilingue' && uneBilingualAllowed(campusSlug);
+  const period = opts.period || null;
+  const dateEn = (bilingual && Front && Front.enDate) ? Front.enDate(todayIso, { weekday: true }) : '';
   const uniLabel = campus
     ? (bilingual && campus.lineEn && campus.lineEn !== campus.line ? `${campus.line}  ·  ${campus.lineEn}` : campus.line)
     : '';
@@ -702,8 +737,8 @@ function composeFrontPage(ctx, w, h, opts) {
   const ctaLabel = site.replace(/^https?:\/\//, '').replace(/\/$/, '');
   const photo = opts.photoImg || null;
   const credit = (glass && photo && opts.credit) ? posterCredit(opts.credit, opts.license, opts.photoUrl || '') : '';
-  const radioLines = opts.radioLines || [];
-  const sportsLines = opts.sportsLines || [];
+  const radioLines = (opts.radioLines || []).slice(0, plan.radio);
+  const sportsLines = (opts.sportsLines || []).slice(0, plan.sports);
 
   const ink = c.ink;
   const mute = glass ? '#3F3A35' : c.mute;
@@ -874,12 +909,37 @@ function composeFrontPage(ctx, w, h, opts) {
   const titleS = px(7.4);
   const tagS = px(1.9);
   const mastTop = 0;
-  let mastH = px(2.6) + logoS + px(1.2) + Math.round(tagS * 1.35) * (bilingual ? 2 : 1) + px(2);
+  /* Bloc de droite (université, période, date) : coupé en lignes, jamais tronqué. */
+  ctx.font = `700 ${titleS}px "LR Serif"`;
+  const titleRight = x0 + logoS + px(2) + trackedWidth(ctx, TITLE, titleS);
+  const maxRight = Math.max(px(20), x1 - titleRight - px(3));
+  const rightLines = [];
+  const pushWrapped = (text, wt, size, color, maxLines) => {
+    if (!text) return;
+    const f = wrapFit(text, sans(wt), maxRight, size, Math.max(9, Math.round(size * 0.75)), maxLines);
+    f.lines.forEach((line) => rightLines.push({ text: line, wt, size: f.size, color }));
+  };
+  if (campus) {
+    pushWrapped(campus.line, 700, px(2.5), '#ffffff', 1);
+    if (bilingual && campus.lineEn && campus.lineEn !== campus.line) pushWrapped(campus.lineEn, 400, px(1.9), LILAC, 1);
+  }
+  if (period && period.id && period.id !== 'jour') {
+    pushWrapped(period.fr, 700, px(2.1), '#ffffff', 2);
+    if (bilingual && period.en) pushWrapped(period.en, 400, px(1.75), LILAC, 2);
+    if (capDate) pushWrapped(capDate, 400, px(1.5), LILAC, 1);
+  } else if (capDate) {
+    pushWrapped(capDate, 400, px(1.9), LILAC, 1);
+    if (dateEn) pushWrapped(dateEn, 400, px(1.7), LILAC, 1);
+  }
+  const rightH = rightLines.reduce((sum, l) => sum + Math.round(l.size * 1.3), 0);
+  const rowTop = px(2.6);
+  const logoRowH = Math.max(logoS, rightH + px(0.4));
+  const mastH = rowTop + logoRowH + px(1.2) + Math.round(tagS * 1.35) * (bilingual ? 2 : 1) + px(2);
   ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
   ctx.fillRect(0, mastTop, w, mastH);
   ctx.fillStyle = DEEP;
   ctx.fillRect(0, mastTop + mastH - px(0.6), w, px(0.6));
-  let my = px(2.6);
+  let my = rowTop;
   if (assets.logo) {
     ctx.save();
     roundedRectPath(ctx, x0, my, logoS, logoS, px(1.4));
@@ -890,30 +950,17 @@ function composeFrontPage(ctx, w, h, opts) {
     ctx.drawImage(assets.logo, x0 + inset, my + inset, logoS - inset * 2, logoS - inset * 2);
   }
   fillTracked(ctx, TITLE, my + Math.round((logoS - titleS) / 2), titleS, '#ffffff', x0 + logoS + px(2));
-  const rightBlockX = x1;
   ctx.textAlign = 'right';
   ctx.textBaseline = 'top';
   let ry = my + px(0.4);
-  if (uniLabel) {
-    const uS = px(2.6);
-    ctx.font = `700 ${uS}px "LR Sans Semi", "LR Sans"`;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(fitOne(uniLabel, (z) => `700 ${z}px "LR Sans Semi", "LR Sans"`, uS, contentW * 0.36), rightBlockX, ry);
-    ry += Math.round(uS * 1.35);
-  }
-  if (capDate) {
-    const dS = px(1.9);
-    ctx.font = `400 ${dS}px "LR Sans"`;
-    ctx.fillStyle = LILAC;
-    ctx.fillText(capDate, rightBlockX, ry);
-    ry += Math.round(dS * 1.3);
-    if (dateEn) {
-      ctx.font = `400 ${Math.round(dS * 0.9)}px "LR Sans"`;
-      ctx.fillText(dateEn, rightBlockX, ry);
-    }
-  }
+  rightLines.forEach((l) => {
+    ctx.font = sans(l.wt)(l.size);
+    ctx.fillStyle = l.color;
+    ctx.fillText(l.text, x1, ry);
+    ry += Math.round(l.size * 1.3);
+  });
   ctx.textAlign = 'left';
-  my += logoS + px(1.2);
+  my += logoRowH + px(1.2);
   ctx.font = `400 ${tagS}px "LR Sans"`;
   ctx.fillStyle = '#ffffff';
   ctx.textBaseline = 'top';
@@ -946,18 +993,18 @@ function composeFrontPage(ctx, w, h, opts) {
   /* 3. Répartition verticale */
   const lead = articles[0] || null;
   const rest = articles.slice(1);
-  const sideArts = rest.slice(0, 2);
-  const gridArts = rest.slice(2, 6);
-  const briefs = [...rest.slice(6), ...(opts.briefs || [])].filter(Boolean);
+  const sideArts = rest.slice(0, plan.side);
+  const gridArts = rest.slice(plan.side, plan.side + plan.grid);
+  const briefs = [...rest.slice(plan.side + plan.grid), ...(opts.briefs || [])].filter(Boolean);
   const hasBand = sportsLines.length > 0 || radioLines.length > 0;
   const top = mastTop + mastH + px(2.4);
   const bottom = footY - px(1.4);
   const avail = bottom - top;
   const want = {
-    lead: lead ? 62 : 0,
-    grid: gridArts.length ? 36 : 0,
-    band: hasBand ? 21 : 0,
-    briefs: briefs.length ? 20 : 0,
+    lead: lead ? plan.want.lead : 0,
+    grid: gridArts.length ? plan.want.grid : 0,
+    band: hasBand ? plan.want.band : 0,
+    briefs: briefs.length ? plan.want.briefs : 0,
   };
   const blocks = Object.keys(want).filter((k) => want[k]);
   const gapsH = Math.max(0, blocks.length - 1) * px(2.4);
@@ -992,14 +1039,27 @@ function composeFrontPage(ctx, w, h, opts) {
     let ly = cy + p;
     const floor = cy + rowH - p;
     const img = lead.key ? images.get(lead.key) : null;
-    const leadQr = withQr && lead.pageUrl ? px(12) : 0;
     const capS = px(1.3);
-    const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
-    ctx.font = serif(px(5.6));
-    const tProbe = wrapFit(lead.title, serif, lw, px(5.6), px(3), 3);
-    const titleH = tProbe.lines.length * Math.round(tProbe.size * 1.08);
     const creditH = lead.credit ? Math.max(8, px(0.85)) + px(0.4) : 0;
-    const imgH = Math.max(px(12), Math.min(Math.round(lw / 1.55), floor - ly - px(1.2) - creditH - titleH - px(1) - qrRowH));
+    /* Le titre cède d’abord (taille, lignes), puis le QR, pour garder une vraie photo. */
+    const minImg = Math.round((floor - ly) * 0.3);
+    let leadQr = withQr && lead.pageUrl ? px(12) : 0;
+    let tProbe = null;
+    let titleH = 0;
+    for (let ts = 5.6; ts >= 3; ts -= 0.4) {
+      tProbe = wrapFit(lead.title, serif, lw, px(ts), px(3), 3);
+      titleH = tProbe.lines.length * Math.round(tProbe.size * 1.08);
+      const rest = floor - ly - px(1.2) - creditH - titleH - px(1) - (leadQr ? leadQr + px(2.2) : px(6));
+      if (rest >= minImg) break;
+    }
+    const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
+    let imgH = Math.min(Math.round(lw / 1.55), floor - ly - px(1.2) - creditH - titleH - px(1) - qrRowH);
+    if (imgH < minImg && leadQr) {
+      const give = Math.min(leadQr - px(9), minImg - imgH);
+      leadQr -= Math.max(0, give);
+      imgH += Math.max(0, give);
+    }
+    imgH = Math.max(px(10), imgH);
     paintImage(img, lx, ly, lw, imgH, lead.focalY, lead.source);
     /* Étiquette À la une posée sur la photo */
     const kick = bilingual ? 'À la une  ·  Front page' : 'À la une';
@@ -1033,7 +1093,7 @@ function composeFrontPage(ctx, w, h, opts) {
     }
     if (leadQr) {
       const qx = lx + lw - leadQr;
-      const qy = Math.min(ly, floor - leadQr - px(2));
+      const qy = ly; /* sous le titre, jamais par-dessus */
       drawQrCode(ctx, qx, qy, leadQr, lead.pageUrl);
       ctx.font = `600 ${capS}px "LR Sans Semi", "LR Sans"`;
       ctx.fillStyle = mute;
@@ -1048,25 +1108,38 @@ function composeFrontPage(ctx, w, h, opts) {
       if (withQr) {
         /* Carte d’appel : un seul gros QR, en haut (le bas d’un babillard est souvent masqué). */
         const cardP = px(1.6);
-        const qrS = Math.min(rightW - cardP * 2, px(glass ? 21 : 22));
         const head = bilingual ? 'Scanne · Scan' : 'Scanne-moi';
-        const sub = campus
-          ? (bilingual ? 'Ton campus en direct · Your campus, live' : 'Ton campus en direct')
-          : (bilingual ? 'Tout le Radar · All student news' : 'Tout le Radar étudiant');
+        const tagKey = UNE_TAGLINES[opts.tagline] && opts.tagline !== 'auto' ? opts.tagline : (campus ? 'campus' : 'tout');
+        const tag = UNE_TAGLINES[tagKey];
         const sub2 = 'Journaux · radios · sports';
         const headS = px(3.4);
-        const subFit = wrapFit(sub, sans(600), rightW - cardP * 2, px(1.9), Math.max(9, px(1.4)), 2);
-        const cardH = cardP + Math.round(headS * 1.25) + subFit.lines.length * Math.round(subFit.size * 1.25) + px(0.6) + qrS + px(3.2) + px(2.4) + cardP;
+        const innerW = rightW - cardP * 2;
+        const subFr = wrapFit(tag.fr, sans(600), innerW, px(2), Math.max(9, px(1.4)), 2);
+        const subEn = bilingual && tag.en ? wrapFit(tag.en, sans(400), innerW, px(1.7), Math.max(9, px(1.3)), 2) : null;
+        const subH = subFr.lines.length * Math.round(subFr.size * 1.25) + (subEn ? subEn.lines.length * Math.round(subEn.size * 1.25) : 0);
+        const fixedH = cardP + Math.round(headS * 1.25) + subH + px(0.6) + px(3.2) + px(2.4) + cardP;
+        /* Le QR ne déborde jamais de la rangée : il rétrécit d’abord (plancher 1,6 po). */
+        const qrS = Math.max(px(14), Math.min(innerW, px(glass ? 21 : 22), rowH - fixedH));
+        const cardH = fixedH + qrS;
         ctx.fillStyle = glass ? 'rgba(59, 18, 54, 0.92)' : DEEP;
         roundedRectPath(ctx, rx, ry2, rightW, cardH, px(1.2));
         ctx.fill();
+        const midX = rx + rightW / 2;
         let cyy = ry2 + cardP;
         ctx.font = `700 ${headS}px "LR Sans Semi", "LR Sans"`;
         ctx.fillStyle = '#ffffff';
         ctx.textBaseline = 'top';
-        ctx.fillText(head, rx + cardP, cyy);
+        ctx.textAlign = 'center';
+        ctx.fillText(head, midX, cyy);
         cyy += Math.round(headS * 1.25);
-        cyy = drawLines(subFit, sans(600), rx + cardP, cyy, LILAC, 1.25);
+        const centerLines = (f, fontFn, color) => {
+          ctx.font = fontFn(f.size);
+          ctx.fillStyle = color;
+          f.lines.forEach((line) => { ctx.fillText(line, midX, cyy); cyy += Math.round(f.size * 1.25); });
+        };
+        centerLines(subFr, sans(600), LILAC);
+        if (subEn) centerLines(subEn, sans(400), '#F3E3F0');
+        ctx.textAlign = 'left';
         cyy += px(0.6);
         const qx = rx + Math.round((rightW - qrS) / 2);
         ctx.fillStyle = '#ffffff';
@@ -1191,9 +1264,12 @@ function composeFrontPage(ctx, w, h, opts) {
       let by = label(part.title, bx, cy + bp, LILAC, px(1.7));
       const cols = part.weight === 2 || (parts.length === 1 && part.items.length > 2) ? 2 : 1;
       const colW = Math.floor((pw - (cols - 1) * gap) / cols);
-      const perCol = Math.ceil(part.items.length / cols);
+      const itemMinH = px(2) + Math.round(px(2.1) * 1.15) + px(0.4);
+      const fitRows = Math.max(1, Math.floor((cy + rowH - bp - by) / itemMinH));
+      const items = part.items.slice(0, fitRows * cols);
+      const perCol = Math.ceil(items.length / cols);
       const rowsH = Math.floor((cy + rowH - bp - by) / Math.max(1, perCol));
-      part.items.forEach((item, ii) => {
+      items.forEach((item, ii) => {
         const col = Math.floor(ii / perCol);
         const r = ii % perCol;
         const ix = bx + col * (colW + gap);
@@ -1205,8 +1281,9 @@ function composeFrontPage(ctx, w, h, opts) {
           ctx.fillText(fitOne(tag, sans(600), px(1.4), colW), ix, iy);
           iy += px(2);
         }
-        const maxL = rowsH > px(6.5) ? 2 : 1;
-        const f = wrapFit(item.line || '', sans(700), colW, px(2.4), Math.max(10, px(1.6)), maxL);
+        const room = by + (r + 1) * rowsH - iy;
+        const maxL = room >= Math.round(px(2.2) * 1.15) * 2 ? 2 : 1;
+        const f = wrapFit(item.line || '', sans(700), colW, Math.min(px(2.4), Math.floor(room / 1.2)), Math.max(10, px(1.6)), maxL);
         drawLines(f, sans(700), ix, iy, '#ffffff', 1.15, by + (r + 1) * rowsH);
       });
       bx += pw + gap;
@@ -1222,7 +1299,7 @@ function composeFrontPage(ctx, w, h, opts) {
     if (!glass) rule(x0, x1, cy - px(1.2), 2);
     let by = label(bilingual ? 'En bref · In brief' : 'En bref', x0 + p, cy + p);
     const itemH = px(6.6);
-    const cols = contentW > px(80) ? 3 : 2;
+    const cols = plan.briefCols;
     const rowsFit = Math.max(1, Math.floor((cy + rowH - p - by) / itemH));
     const count = Math.min(briefs.length, rowsFit * cols);
     const perCol = Math.ceil(count / cols);
@@ -1796,6 +1873,7 @@ function recipeLine() {
     if ((state.uneBriefs || []).length) bits.push(`${state.uneBriefs.length} en bref`);
     bits.push(state.layout === 'verre' ? 'Verre dépoli' : 'Classique');
     if (state.uneCampus && state.uneCampus !== 'toutes') bits.push(campusOf(state.uneCampus).label);
+    if (state.unePeriod && state.unePeriod !== 'jour') bits.push(UNE_PERIOD_LABELS[state.unePeriod]);
     bits.push(state.lang === 'bilingue' ? 'Bilingue' : 'Français');
     if (state.langs) bits.push('Langues');
     if (state.qr) bits.push('QR');
@@ -1827,7 +1905,7 @@ function syncModelUi() {
     dash.dataset.model = state.model;
     dash.dataset.layout = isUneModel() ? (state.layout || 'classique') : '';
   }
-  ['une-box', 'une-layout-box', 'une-uni-box'].forEach((id) => {
+  ['une-box', 'une-layout-box', 'une-uni-box', 'une-period-box', 'une-tagline-box'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.hidden = !isUneModel();
   });
@@ -1930,17 +2008,19 @@ async function loadUneFeed() {
       : null;
     const featureN = Front.POSTER_PAGE_COUNT || 9;
     const briefN = Front.POSTER_BRIEF_COUNT || 6;
-    const cards = Front.frontPageCards(data.items || [], now, '..', campus, featureN + briefN);
+    const cards = Front.frontPageCards(data.items || [], now, '..', campus, featureN + briefN, state.unePeriod || 'jour');
+    state.unePeriodInfo = cards.period || null;
     state.uneArticles = cards.items.slice(0, featureN).map((card) => ({ ...card, included: true }));
     state.uneBriefs = cards.items.slice(featureN);
     const n = state.uneArticles.length;
     const b = state.uneBriefs.length;
-    const where = campus ? ` pour ${campus.line}` : ' du fil actuel';
+    const per = state.unePeriodInfo && state.unePeriodInfo.id !== 'jour' ? ` (${state.unePeriodInfo.fr.charAt(0).toLowerCase()}${state.unePeriodInfo.fr.slice(1)})` : '';
+    const where = (campus ? ` pour ${campus.line}` : ' du fil actuel') + per;
     const briefBit = b ? ` et ${b} en bref` : '';
     state.uneStatus = n
-      ? `${n} article${n > 1 ? 's' : ''}${where} (1 à la une, ${Math.max(0, n - 1)} vedette${n - 1 > 1 ? 's' : ''})${briefBit}.`
+      ? `${n} article${n > 1 ? 's' : ''}${where} (1 à la une, ${Math.max(0, n - 1)} autre${n - 1 > 1 ? 's' : ''} en vedette ou en bref selon le format)${briefBit}.`
       : (campus
-        ? `Aucun article frais pour ${campus.line}. L’affiche n’invente pas de titres.`
+        ? `Aucun article pour ${campus.line} sur cette période. L’affiche n’invente pas de titres.`
         : 'Aucun article frais dans le fil.');
   } catch (err) {
     state.uneArticles = [];
@@ -1998,6 +2078,8 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     briefs: state.uneBriefs || [],
     radioLines: pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
     sportsLines: pickPosterSports(bars.sports, campus, 4),
+    period: state.unePeriodInfo,
+    tagline: state.uneTagline,
     articleImages: images || new Map(),
     photoImg: photoImg || null,
     credit: photo?.credit,
@@ -2238,10 +2320,11 @@ function printFileStem(fmt, dpi) {
   if (isUneModel()) {
     const layout = state.layout === 'verre' ? 'verre' : 'classique';
     const uni = (state.uneCampus && state.uneCampus !== 'toutes') ? `-${state.uneCampus}` : '';
+    const per = state.unePeriod && state.unePeriod !== 'jour' ? `-${state.unePeriod}` : '';
     const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
     const langs = state.langs ? '-langues' : '';
     const qr = state.qr ? '-qr' : '';
-    return `le-radar-affiche-une-${layout}${uni}-${fmt.file}-${lang}${langs}${qr}-${dpi}dpi`;
+    return `le-radar-affiche-une-${layout}${uni}${per}-${fmt.file}-${lang}${langs}${qr}-${dpi}dpi`;
   }
   const campus = campusOf(state.campus);
   const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
@@ -2434,7 +2517,8 @@ function syncDpiLabels() {
 
 function syncLangChoice() {
   const campus = campusOf(state.campus);
-  const allowed = isUneModel() || campus.bilingual;
+  /* Loi 96 : la Une d’un établissement francophone reste en français. */
+  const allowed = isUneModel() ? uneBilingualAllowed(state.uneCampus) : campus.bilingual;
   const bi = document.querySelector('label:has(input[name="lang"][value="bilingue"])');
   if (bi) bi.hidden = !allowed;
   if (!allowed && state.lang === 'bilingue') {
@@ -2501,6 +2585,18 @@ function applyQuery() {
   if (uni && (uni === 'toutes' || CAMPUSES.some((c) => c.slug === uni))) {
     state.uneCampus = uni;
   }
+  const periode = q.get('periode') || q.get('period');
+  if (periode && Object.prototype.hasOwnProperty.call(UNE_PERIOD_LABELS, periode)) {
+    state.unePeriod = periode;
+    const sel = document.getElementById('une-period');
+    if (sel) sel.value = periode;
+  }
+  const phrase = q.get('phrase') || q.get('tagline');
+  if (phrase && Object.prototype.hasOwnProperty.call(UNE_TAGLINES, phrase)) {
+    state.uneTagline = phrase;
+    const sel = document.getElementById('une-tagline');
+    if (sel) sel.value = phrase;
+  }
   const photo = q.get('photo');
   if (photo) state.photoHint = photo;
   const greeting = q.get('greeting');
@@ -2564,8 +2660,17 @@ function applyChoice(name, value) {
     syncModelUi();
     renderChoices();
   }
+  if (name === 'unePeriod') {
+    state.unePeriod = Object.prototype.hasOwnProperty.call(UNE_PERIOD_LABELS, value) ? value : 'jour';
+    loadUneFeed().then(() => preview());
+    return;
+  }
+  if (name === 'uneTagline') {
+    state.uneTagline = Object.prototype.hasOwnProperty.call(UNE_TAGLINES, value) ? value : 'auto';
+  }
   if (name === 'uneCampus') {
     state.uneCampus = value || 'toutes';
+    syncLangChoice();
     if (state.layout === 'verre') {
       state.photoId = null;
       ensureUnePhoto();

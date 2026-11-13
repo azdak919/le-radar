@@ -226,6 +226,28 @@
           <p class="field-hint" id="une-campus-hint">Ne garder que les articles de cet établissement. S’il y en a moins de cinq, l’affiche prend ceux qui existent.</p>
         </fieldset>
 
+        <fieldset class="js-une-only" id="une-period-box" hidden>
+          <legend>Période</legend>
+          <select class="greeting" name="unePeriod" id="une-period" aria-describedby="une-period-hint">
+            <option value="jour" selected>Aujourd’hui (les plus récents)</option>
+            <option value="fds">Fin de semaine</option>
+            <option value="semaine">Dernière semaine</option>
+            <option value="mois">Dernier mois</option>
+            <option value="session">Cette session</option>
+          </select>
+          <p class="field-hint" id="une-period-hint">Articles choisis par date de publication et répartis sur la période. Le libellé s’affiche dans le bandeau.</p>
+        </fieldset>
+
+        <fieldset class="js-une-only" id="une-tagline-box" hidden>
+          <legend>Phrase sous « Scanne-moi »</legend>
+          <select class="greeting" name="uneTagline" id="une-tagline">
+            <option value="auto" selected>Automatique (campus ou tout le Radar)</option>
+            <option value="fil">Le fil étudiant</option>
+            <option value="tout">Tout le Radar étudiant</option>
+            <option value="campus">Ton campus en direct</option>
+          </select>
+        </fieldset>
+
         <fieldset class="js-une-only" id="une-box" hidden>
           <legend>Articles</legend>
           <p class="field-hint" id="une-status">Chargement des articles du site…</p>
@@ -327,6 +349,6 @@
   <script src="../scripts/news-housekeeping-lib.js"></script>
   <script src="../scripts/magazine-front-page-lib.js"></script>
   <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
-  <script src="./poster-builder.js?v=une-4"></script>
+  <script src="./poster-builder.js?v=une-5"></script>
 </body>
 </html>

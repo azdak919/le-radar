@@ -150,21 +150,146 @@
     return !!(inst && accepted.has(inst));
   }
 
-  function selectFrontPage(items = [], referenceDate = new Date(), campus = null, limit = FRONT_PAGE_COUNT) {
-    const fresh = freshness && typeof freshness.filterFreshItems === 'function'
+  /* Périodes de l’affiche « une » (jours civils, heure de Montréal). */
+  const POSTER_PERIODS = ['jour', 'fds', 'semaine', 'mois', 'session'];
+  const SESSION_LABELS = { hiver: ['Session d’hiver', 'Winter term'], ete: ['Session d’été', 'Summer term'], automne: ['Session d’automne', 'Fall term'] };
+
+  function mtlYmd(dateLike) {
+    const t = new Date(dateLike).getTime();
+    if (!Number.isFinite(t)) return '';
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+    }).format(t);
+  }
+
+  function ymdShift(ymd, days) {
+    const d = new Date(`${ymd}T12:00:00Z`);
+    d.setUTCDate(d.getUTCDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function frShort(ymd) {
+    const [, m, d] = ymd.split('-').map(Number);
+    return `${d === 1 ? '1er' : d} ${MONTHS[m - 1]}`;
+  }
+
+  function enShort(ymd) {
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'UTC', month: 'short', day: 'numeric' })
+      .format(new Date(`${ymd}T12:00:00Z`));
+  }
+
+  function frRange(a, b) {
+    const [, ma] = a.split('-').map(Number);
+    const [, mb, db] = b.split('-').map(Number);
+    if (ma === mb) {
+      const da = Number(a.slice(8));
+      return `du ${da === 1 ? '1er' : da} au ${db === 1 ? '1er' : db} ${MONTHS[mb - 1]}`;
+    }
+    return `du ${frShort(a)} au ${frShort(b)}`;
+  }
+
+  /**
+   * Fenêtre d’une période : { from, to } en AAAA-MM-JJ (inclusifs), libellés FR/EN.
+   * « jour » garde le comportement d’origine (les plus frais de la session).
+   */
+  function periodWindow(period = 'jour', referenceDate = new Date()) {
+    const today = mtlYmd(referenceDate) || new Date().toISOString().slice(0, 10);
+    const id = POSTER_PERIODS.includes(period) ? period : 'jour';
+    if (id === 'semaine') {
+      const from = ymdShift(today, -6);
+      return { id, from, to: today, fr: `Dernière semaine, ${frRange(from, today)}`, en: `Past week, ${enShort(from)} to ${enShort(today)}` };
+    }
+    if (id === 'mois') {
+      const from = ymdShift(today, -29);
+      return { id, from, to: today, fr: `Dernier mois, ${frRange(from, today)}`, en: `Past month, ${enShort(from)} to ${enShort(today)}` };
+    }
+    if (id === 'fds') {
+      const wd = new Date(`${today}T12:00:00Z`).getUTCDay(); /* 0 = dimanche */
+      const back = wd === 5 ? 0 : wd === 6 ? 1 : wd === 0 ? 2 : wd + 2;
+      const from = ymdShift(today, -back);
+      const to = ymdShift(from, 2) > today ? today : ymdShift(from, 2);
+      return { id, from, to, fr: `Fin de semaine ${frRange(from, ymdShift(from, 2))}`, en: `Weekend, ${enShort(from)} to ${enShort(ymdShift(from, 2))}` };
+    }
+    if (id === 'session') {
+      const start = freshness && typeof freshness.getCurrentUniversitySessionStart === 'function'
+        ? mtlYmd(freshness.getCurrentUniversitySessionStart(referenceDate))
+        : ymdShift(today, -120);
+      const sid = freshness && typeof freshness.getCurrentUniversitySessionId === 'function'
+        ? freshness.getCurrentUniversitySessionId(referenceDate) : '';
+      const year = today.slice(0, 4);
+      const [fr, en] = SESSION_LABELS[sid] || ['Cette session', 'This term'];
+      return { id, from: start, to: today, fr: `${fr} ${year}`, en: `${en} ${year}` };
+    }
+    return { id: 'jour', from: null, to: today, fr: 'Aujourd’hui', en: 'Today' };
+  }
+
+  /* Le Radar couvre le sport étudiant : titres sur le sport professionnel exclus de l’affiche. */
+  const PRO_SPORT_RE = new RegExp([
+    'alouettes', 'canadiens? de montr[ée]al', '\\bhabs\\b', 'cf montr[ée]al', 'impact de montr[ée]al',
+    'rocket de laval', 'victoire de montr[ée]al', 'alliance de montr[ée]al', 'roquettes? de montr[ée]al', '\\bexpos\\b',
+    'coupe grey', 'grey cup', 'coupe stanley', 'stanley cup', 'super bowl', 's[ée]rie mondiale', 'world series',
+    '\\b(lnh|nhl|lcf|cfl|mls|nfl|nba|wnba|mlb|lpbf|pwhl)\\b', 'maple leafs', 'raptors', 'blue jays',
+    'grand prix du canada', 'formule 1', 'formula 1',
+  ].join('|'), 'i');
+
+  function isProSportItem(item) {
+    return PRO_SPORT_RE.test(String((item && item.title) || ''));
+  }
+
+  function hasImage(item) {
+    return Boolean(item && !item._feedNoImage && (item.imageLocal || item.image || item.stockImage));
+  }
+
+  /**
+   * Choix réparti sur la période : on garde des articles de toute la fenêtre
+   * (échantillon régulier dans l’ordre chronologique), la une étant le plus
+   * récent qui a une image. Peu d’articles : on prend tout, sans inventer.
+   */
+  function spreadPick(sorted, cap) {
+    if (sorted.length <= cap) return sorted.slice();
+    const picked = [];
+    const used = new Set();
+    for (let k = 0; k < cap; k += 1) {
+      let idx = Math.round((k * (sorted.length - 1)) / Math.max(1, cap - 1));
+      while (used.has(idx) && idx < sorted.length - 1) idx += 1;
+      used.add(idx);
+      picked.push(sorted[idx]);
+    }
+    return sortByDateDesc(picked);
+  }
+
+  function selectFrontPage(items = [], referenceDate = new Date(), campus = null, limit = FRONT_PAGE_COUNT, period = 'jour') {
+    const win = periodWindow(period, referenceDate);
+    const fresh = win.id === 'jour' && freshness && typeof freshness.filterFreshItems === 'function'
       ? freshness.filterFreshItems(items, referenceDate)
       : items.slice();
     const normal = housekeeping && typeof housekeeping.housekeepingNormalItems === 'function'
       ? housekeeping.housekeepingNormalItems(fresh, referenceDate)
       : fresh;
-    const pool = campus ? normal.filter((item) => itemMatchesCampus(item, campus)) : normal;
+    const refT = new Date(referenceDate).getTime();
+    const inWindow = win.id === 'jour'
+      ? normal
+      : normal.filter((item) => {
+        const t = new Date(item.date || 0).getTime();
+        if (!Number.isFinite(t) || t > refT) return false;
+        const ymd = mtlYmd(item.date);
+        return ymd >= win.from && ymd <= win.to;
+      });
+    const scoped = inWindow.filter((item) => !isProSportItem(item));
+    const pool = campus ? scoped.filter((item) => itemMatchesCampus(item, campus)) : scoped;
     const sorted = sortByDateDesc(pool);
     const cap = Math.max(0, Number(limit) || FRONT_PAGE_COUNT);
-    const picked = sorted.slice(0, Math.min(cap, sorted.length));
+    let picked = win.id === 'jour' ? sorted.slice(0, Math.min(cap, sorted.length)) : spreadPick(sorted, cap);
+    if (win.id !== 'jour') {
+      const li = picked.findIndex(hasImage);
+      if (li > 0) picked = [picked[li], ...picked.slice(0, li), ...picked.slice(li + 1)];
+    }
     return {
       lead: picked[0] || null,
       features: picked.slice(1),
       items: picked,
+      period: win,
+      available: sorted.length,
     };
   }
 
@@ -294,17 +419,22 @@
     };
   }
 
-  function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null, limit = FRONT_PAGE_COUNT) {
-    const picked = selectFrontPage(items, referenceDate, campus, limit);
+  function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null, limit = FRONT_PAGE_COUNT, period = 'jour') {
+    const picked = selectFrontPage(items, referenceDate, campus, limit, period);
     const cards = picked.items.map((item) => normalize(item, base)).filter(Boolean);
     return {
       lead: cards[0] || null,
       features: cards.slice(1),
       items: cards,
+      period: picked.period,
+      available: picked.available,
     };
   }
 
   return {
+    POSTER_PERIODS,
+    isProSportItem,
+    periodWindow,
     FRONT_PAGE_COUNT,
     POSTER_PAGE_COUNT,
     POSTER_BRIEF_COUNT,
@@ -317,6 +447,7 @@
     campusInstitutionNames,
     itemMatchesCampus,
     selectFrontPage,
+    mtlYmd,
     shortExcerpt,
     hookOf,
     imageSrc,

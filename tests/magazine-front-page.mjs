@@ -122,3 +122,37 @@ assert.ok(cardsLong.hookLong.length >= cardsLong.hook.length);
 
 console.log(`magazine-front-page : OK (${cards.items.length} articles, une = ${cards.lead?.title} ; Laval ${lavalPick.items.length})`);
 
+
+/* Périodes de l’affiche « une » */
+{
+  const ref = new Date('2026-11-13T00:06:40Z'); /* jeudi 12 nov., heure de Montréal */
+  const w = front.periodWindow('semaine', ref);
+  assert.equal(w.from, '2026-11-06');
+  assert.equal(w.to, '2026-11-12');
+  assert.match(w.fr, /^Dernière semaine, du 6 au 12 novembre$/);
+  const f = front.periodWindow('fds', ref);
+  assert.equal(f.from, '2026-11-06');
+  assert.equal(f.to, '2026-11-08');
+  assert.match(f.fr, /^Fin de semaine du 6 au 8 novembre$/);
+  assert.ok(!/week-end/i.test(f.fr));
+  assert.equal(front.periodWindow('mois', ref).from, '2026-10-14');
+  assert.equal(front.periodWindow('inconnu', ref).id, 'jour');
+  const mk = (d, i) => ({ title: `T${i}`, link: `https://ex.org/${i}`, source: 'S', institution: 'Université Laval', date: d, image: 'https://ex.org/i.jpg' });
+  const items = [
+    ...Array.from({ length: 20 }, (_, i) => mk(`2026-11-${String(12 - (i % 7)).padStart(2, '0')}T15:00:00Z`, i)),
+    ...Array.from({ length: 10 }, (_, i) => mk(`2026-10-${String(15 + i).padStart(2, '0')}T15:00:00Z`, 100 + i)),
+    mk('2026-09-01T15:00:00Z', 999),
+  ];
+  const week = front.selectFrontPage(items, ref, null, 8, 'semaine');
+  assert.equal(week.items.length, 8);
+  assert.ok(week.items.every((it) => front.mtlYmd(it.date) >= '2026-11-06'));
+  const month = front.selectFrontPage(items, ref, null, 8, 'mois');
+  assert.ok(month.items.some((it) => it.date.startsWith('2026-10')), 'le mois doit couvrir toute la fenêtre');
+  assert.ok(month.items.every((it) => front.mtlYmd(it.date) >= '2026-10-14'));
+  const few = front.selectFrontPage(items.slice(0, 3), ref, null, 8, 'semaine');
+  assert.equal(few.items.length, 3, 'peu d’articles : on prend ce qui existe, sans inventer');
+}
+assert.ok(front.isProSportItem({ title: 'Les Alouettes s’envolent vers la Coupe Grey' }));
+assert.ok(front.isProSportItem({ title: 'CF Montréal et COP 31 : reportages radio' }));
+assert.ok(!front.isProSportItem({ title: 'Stingers 7, Gee-Gees 0: Pure Stingers domination' }));
+assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsmore' }));
