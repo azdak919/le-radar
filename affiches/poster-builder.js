@@ -657,14 +657,28 @@ function itemMatchesCampusPoster(item, campus) {
   return !campus;
 }
 
+/* Date absolute courte pour l’imprimé (« Ven. 13 nov. ») : jamais « demain » ni « aujourd’hui ». */
+const FR_MONTH_SHORT = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+function posterShortDate(ymd) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(ymd || ''));
+  if (!m) return '';
+  const wd = new Date(`${ymd}T12:00:00Z`).getUTCDay();
+  const d = Number(m[3]);
+  return `${['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'][wd]}\u00A0${d === 1 ? '1er' : d}\u00A0${FR_MONTH_SHORT[Number(m[2]) - 1]}`;
+}
+
+function posterNextYmd() {
+  const d = new Date(`${posterTodayYmd()}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
 function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
   const teams = masthead && masthead.teams;
   if (!teams || typeof teams !== 'object') return [];
   const realToday = posterTodayYmd();
   /* Jour visé : aujourd’hui ou, pour l’affiche du lendemain, demain (matchs à venir seulement). */
   const today = targetYmd || realToday;
-  const ahead = today > realToday;
-  const dayWord = ahead ? 'demain' : 'aujourd’hui';
   const upcoming = [];
   const results = [];
   const seen = new Set();
@@ -691,7 +705,7 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
         emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
         line: `${name} ${verb} ${vs}`,
         upcoming: true,
-        meta: [game.date === today ? dayWord : (typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`).replace(/\s\d{4}$/, '') : ''), posterClock(game.time)].filter(Boolean).join(' · '),
+        meta: [posterShortDate(game.date), posterClock(game.time)].filter(Boolean).join(' · '),
       });
     });
     (team.results || []).forEach((game) => {
@@ -703,9 +717,7 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
         kicker: sportTag,
         emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
         line: `${name} ${game.scoreFor}–${game.scoreAgainst} ${game.opponentNickname || game.opponent || ''}`,
-        meta: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.frDate
-          ? RadarMagazineFrontPage.frDate(`${game.date}T12:00:00`)
-          : game.date,
+        meta: posterShortDate(game.date) || game.date,
       });
     });
   });
@@ -716,7 +728,7 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
   results.sort((a, b) => String(b.sort).localeCompare(String(a.sort)));
   const out = [...upcoming.slice(0, limit)];
   /* Affiche du lendemain : des matchs à venir seulement, jamais d’anciens résultats. */
-  if (out.length < limit && !ahead) out.push(...results.slice(0, limit - out.length));
+  if (out.length < limit) out.push(...results.slice(0, limit - out.length));
   return out.slice(0, limit);
 }
 
@@ -767,7 +779,7 @@ function composeFrontPage(ctx, w, h, opts) {
   const photo = opts.photoImg || null;
   const credit = (glass && photo && opts.credit) ? posterCredit(opts.credit, opts.license, opts.photoUrl || '') : '';
   const radioLines = (opts.radioLines || []).slice(0, plan.radio);
-  const sportsLines = (opts.sportsLines || []).slice(0, plan.sports);
+  let sportsLines = (opts.sportsLines || []).slice();
 
   const ink = c.ink;
   const mute = glass ? '#3F3A35' : c.mute;
@@ -1011,6 +1023,25 @@ function composeFrontPage(ctx, w, h, opts) {
   const exHeadS = px(1.35);
   const exLineS = px(1.65);
   const extraH = extra ? Math.round(exHeadS * 1.35) + extra.lines.length * Math.round(exLineS * 1.3) : 0;
+  /* Sous l’accroche, à côté de l’encart : matchs à venir de l’établissement (dates absolues),
+   * retirés de la bande sports pour éviter tout doublon. */
+  const gameS = Math.max(10, Math.round(tagS * 0.82));
+  const gameLineH = Math.round(gameS * 1.32);
+  const gameRows = extra ? Math.max(0, Math.floor((extraH - tagRowsH - px(0.3)) / gameLineH)) : 0;
+  const mastGames = [];
+  if (gameRows) {
+    const pool = (opts.mastGames || []).filter((g) => g && g.upcoming);
+    pool.slice(0, gameRows).forEach((g) => mastGames.push(g));
+    if (!mastGames.length) {
+      const bandKeys = new Set(sportsLines.map((x) => `${x.line}|${x.meta}`));
+      (opts.mastGames || []).filter((g) => g && !g.upcoming && !bandKeys.has(`${g.line}|${g.meta}`)).slice(0, gameRows).forEach((g) => mastGames.push(g));
+    }
+  }
+  if (mastGames.length) {
+    const used = new Set(mastGames.map((g) => `${g.line}|${g.meta}`));
+    sportsLines = sportsLines.filter((x) => !used.has(`${x.line}|${x.meta}`));
+  }
+  sportsLines = sportsLines.slice(0, plan.sports);
   const mastH = rowTop + logoRowH + px(1.2) + Math.max(tagRowsH, extraH) + px(2);
   ctx.fillStyle = glass ? 'rgba(108, 33, 99, 0.94)' : PURPLE;
   ctx.fillRect(0, mastTop, w, mastH);
@@ -1049,9 +1080,12 @@ function composeFrontPage(ctx, w, h, opts) {
     ey += Math.round(exHeadS * 1.35);
     extra.lines.forEach((line) => {
       const emojiFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
-      ctx.font = emojiFont(exLineS);
+      /* Rétrécir avant de tronquer : la ligne d’émission reste entière. */
+      let z = exLineS;
+      ctx.font = emojiFont(z);
+      while (z > Math.round(exLineS * 0.7) && ctx.measureText(line).width > extraW) { z -= 1; ctx.font = emojiFont(z); }
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(fitOne(line, emojiFont, exLineS, extraW), x1, ey);
+      ctx.fillText(fitOne(line, emojiFont, z, extraW), x1, ey);
       ey += Math.round(exLineS * 1.3);
     });
     ctx.textAlign = 'left';
@@ -1064,6 +1098,21 @@ function composeFrontPage(ctx, w, h, opts) {
   if (bilingual) {
     ctx.fillStyle = LILAC;
     ctx.fillText(fitOne(SLOGAN_EN, sans(400), tagS, contentW), x0, my);
+    my += Math.round(tagS * 1.35);
+  }
+  if (mastGames.length) {
+    let gy = my + px(0.3);
+    const gameFont = (z) => `600 ${z}px "LR Sans Semi", "LR Sans", "LR Emoji"`;
+    mastGames.forEach((g) => {
+      const text = `${g.emoji ? `${g.emoji} ` : ''}${g.meta} · ${g.line}`;
+      let z = gameS;
+      ctx.font = gameFont(z);
+      while (z > Math.round(gameS * 0.75) && ctx.measureText(text).width > tagW) { z -= 1; ctx.font = gameFont(z); }
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'top';
+      ctx.fillText(fitOne(text, gameFont, z, tagW), x0, gy);
+      gy += gameLineH;
+    });
   }
 
   /* 2. Pied : mention d’indépendance + ligne des langues */
@@ -1280,9 +1329,25 @@ function composeFrontPage(ctx, w, h, opts) {
         ctx.fillRect(qx - px(0.6), qy - px(0.6), qrS + px(1.2), qrS + px(1.2));
         drawQrCode(ctx, qx, qy, qrS, ctaUrl);
         /* Marque officielle : LE-RADAR.ca en Source Serif Display, comme le bandeau du site. */
+        /* Icône officielle (assets/icon.svg, comme le bandeau) à gauche du mot-marque, centrée sur sa hauteur. */
         let brandS = px(2.1);
-        while (brandS > px(1.2) && trackedWidth(ctx, TITLE, brandS) > textWd) brandS -= 1;
-        fillTracked(ctx, TITLE, cyy - px(0.2), brandS, '#ffffff', Math.round(midX - trackedWidth(ctx, TITLE, brandS) / 2));
+        const iconFor = (z) => (assets.logo ? Math.round(z * 1.25) : 0);
+        const iconGap = (z) => (assets.logo ? Math.round(z * 0.35) : 0);
+        while (brandS > px(1.2) && iconFor(brandS) + iconGap(brandS) + trackedWidth(ctx, TITLE, brandS) > textWd) brandS -= 1;
+        const bIcon = iconFor(brandS);
+        const bRowW = bIcon + iconGap(brandS) + trackedWidth(ctx, TITLE, brandS);
+        const bx0 = Math.round(midX - bRowW / 2);
+        if (assets.logo) {
+          const iy = cyy - px(0.2) + Math.round((brandS * 1.05 - bIcon) / 2);
+          ctx.save();
+          roundedRectPath(ctx, bx0, iy, bIcon, bIcon, Math.round(bIcon * 0.18));
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+          ctx.restore();
+          const ins = Math.max(1, Math.round(bIcon * 0.08));
+          ctx.drawImage(assets.logo, bx0 + ins, iy + ins, bIcon - ins * 2, bIcon - ins * 2);
+        }
+        fillTracked(ctx, TITLE, cyy - px(0.2), brandS, '#ffffff', bx0 + bIcon + iconGap(brandS));
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         cyy += Math.round(brandS * 1.1) + px(0.2);
@@ -2354,7 +2419,7 @@ function uneRadioShows(bars, campus, info, limit = 2) {
         if (out.length >= limit || seen.has(g.title)) return;
         if (Front && Front.isProSportItem && Front.isProSportItem({ title: g.title })) return;
         seen.add(g.title);
-        out.push(`${FR_WEEKDAY_SHORT[wd]} ${posterClock(g.start)} · ${g.title}`);
+        out.push(`${posterShortDate(day.toISOString().slice(0, 10))} · ${posterClock(g.start)} · ${g.title}`);
       });
   }
   return out.length ? { name: station.name || station.id, shows: out } : null;
@@ -2389,7 +2454,7 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
   const past = Boolean(info && !info.live);
   const recap = past ? unePeriodRecap(campus) : null;
   const ahead = Boolean(info && info.id === 'demain');
-  const sportsLines = recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 4, info && info.target));
+  const sportsLines = recap ? recap.items : (past ? [] : pickPosterSports(bars.sports, campus, 8, info && info.target));
   /* Note du bandeau (périodes en direct) : ce que l’affiche contient vraiment. */
   const games = sportsLines.some((x) => x.upcoming);
   const mastNote = past ? '' : (games ? `Nouvelles récentes et matchs ${ahead ? 'à venir' : 'du jour'}` : 'Les nouvelles les plus récentes');
@@ -2408,6 +2473,8 @@ function uneComposeOpts(dpi, images, photoImg, photo) {
     /* « En ondes » = émission en cours : sans objet pour le lendemain (grille inconnue). */
     radioLines: (recap || past || ahead) ? [] : pickPosterRadio(bars.nowplaying, bars.radios, campus, 3),
     sportsLines,
+    /* Période passée : matchs à partir du lendemain (ceux du jour peuvent être joués à l’impression). */
+    mastGames: pickPosterSports(bars.sports, campus, 6, info && info.live ? info.target : posterNextYmd()),
     mastExtras: uneMastExtras(state.uneMastExtra || 'radio', bars, campus, info, sportsLines),
     mastNote,
     mastNoteEn,
