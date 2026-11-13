@@ -360,3 +360,6 @@
 @media (min-width: 360px) and (max-width: 599px) {
   .kit-grid--poster { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 10px; }
 }
+.kit-more { margin: 0 0 18px; }
+.kit-more > summary { cursor: pointer; font-weight: 600; color: var(--ink); list-style-position: inside; padding: 6px 0; }
+.kit-more[open] > summary { margin-bottom: 10px; }
