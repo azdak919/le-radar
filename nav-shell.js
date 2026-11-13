@@ -112,6 +112,69 @@
     top.after(bottom);
     foot.classList.add('site-foot--v2');
   }
+  const WORDMARK = 'LE\u2011RADAR.ca';
+  function assetBeside(el, filename) {
+    const src = el && (el.getAttribute('src') || el.src);
+    if (!src) return '';
+    return src.replace(/[^/?#]+(?=[?#]|$)/, filename);
+  }
+  function printAsset(foot, filename, fallback) {
+    const fromFoot = assetBeside(foot.querySelector('.site-foot__logo'), filename);
+    if (fromFoot) return fromFoot;
+    const fromMark = assetBeside(document.querySelector('.wordmark-logo'), filename);
+    if (fromMark) return fromMark;
+    return fallback;
+  }
+  function injectPrintPromo(foot) {
+    if (!foot || foot.querySelector('.print-promo')) return;
+    const lang = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr';
+    const aside = document.createElement('aside');
+    aside.className = 'print-promo';
+    aside.setAttribute('aria-hidden', 'true');
+    const qr = document.createElement('img');
+    qr.className = 'print-promo__qr';
+    qr.src = printAsset(foot, 'kit/qr-le-radar.svg', 'assets/kit/qr-le-radar.svg');
+    qr.alt = '';
+    qr.width = 120;
+    qr.height = 120;
+    const copy = document.createElement('div');
+    copy.className = 'print-promo__copy';
+    const scan = document.createElement('p');
+    scan.className = 'print-promo__scan';
+    scan.textContent = lang === 'en' ? 'Scan me' : 'Scanne-moi';
+    const tag = document.createElement('p');
+    tag.className = 'print-promo__tag';
+    tag.textContent = lang === 'en' ? 'The student wire, live' : 'Le fil étudiant, en direct';
+    const suite = document.createElement('p');
+    suite.className = 'print-promo__suite';
+    suite.appendChild(document.createTextNode(lang === 'en' ? 'Continued on ' : 'Suite sur '));
+    const mark = document.createElement('span');
+    mark.className = 'print-promo__mark notranslate';
+    mark.setAttribute('translate', 'no');
+    const logo = document.createElement('img');
+    logo.className = 'print-promo__logo';
+    logo.src = printAsset(foot, 'icon.svg', 'assets/icon.svg');
+    logo.alt = '';
+    logo.width = 20;
+    logo.height = 20;
+    const brand = document.createElement('span');
+    brand.className = 'print-promo__brand';
+    brand.textContent = WORDMARK;
+    mark.append(logo, brand);
+    suite.appendChild(mark);
+    copy.append(scan, tag, suite);
+    aside.append(qr, copy);
+    const anchor = foot.querySelector('.site-foot__bottom, .site-foot__credit, .site-foot__author');
+    if (anchor) anchor.before(aside);
+    else foot.append(aside);
+  }
+  function markTruncatedBriefs() {
+    document.querySelectorAll('.article-brief.is-truncated .article-brief-text').forEach((el) => {
+      const text = (el.textContent || '').replace(/\s+$/g, '');
+      if (text && !/[.…⋯]{1,3}$/.test(text)) el.classList.add('is-cut');
+      else el.classList.remove('is-cut');
+    });
+  }
   function mount() {
     document.querySelectorAll('footer.site-foot').forEach((foot) => {
       if (!foot.querySelector('.site-foot__social')) {
@@ -120,7 +183,47 @@
         if (brand) brand.after(nav); else foot.prepend(nav);
       }
       restructure(foot);
+      injectPrintPromo(foot);
     });
+    markTruncatedBriefs();
+  }
+  const FR_INST_PRINT = {
+    'Concordia University': 'Université Concordia',
+    'McGill University': 'Université McGill',
+    "Bishop's University": "Université Bishop's",
+    'Bishop\u2019s University': 'Université Bishop\u2019s',
+  };
+  function applyFrenchInstitutionNames(on) {
+    const fr = !(document.documentElement.lang || 'fr').toLowerCase().startsWith('en');
+    if (!fr) return;
+    document.querySelectorAll('.article-inst__full, .article-inst').forEach((el) => {
+      if (el.querySelector('.article-inst__full, .article-inst__short')) return;
+      if (on) {
+        if (!el.dataset.orig) el.dataset.orig = el.textContent;
+        const orig = el.dataset.orig;
+        if (FR_INST_PRINT[orig]) el.textContent = FR_INST_PRINT[orig];
+      } else if (el.dataset.orig) {
+        el.textContent = el.dataset.orig;
+      }
+    });
+    // Dual full/short spans
+    document.querySelectorAll('.article-inst__full').forEach((el) => {
+      if (on) {
+        if (!el.dataset.orig) el.dataset.orig = el.textContent;
+        if (FR_INST_PRINT[el.dataset.orig]) el.textContent = FR_INST_PRINT[el.dataset.orig];
+      } else if (el.dataset.orig) {
+        el.textContent = el.dataset.orig;
+      }
+    });
+  }
+  window.addEventListener('beforeprint', () => {
+    markTruncatedBriefs();
+    applyFrenchInstitutionNames(true);
+  });
+  window.addEventListener('afterprint', () => applyFrenchInstitutionNames(false));
+  const newsList = document.getElementById('news-list');
+  if (newsList) {
+    new MutationObserver(() => markTruncatedBriefs()).observe(newsList, { childList: true, subtree: true });
   }
   window.RadarSocialLinks = SOCIAL_LINKS;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
