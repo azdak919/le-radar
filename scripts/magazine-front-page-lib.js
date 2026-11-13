@@ -151,7 +151,9 @@
   }
 
   /* Périodes de l’affiche « une » (jours civils, heure de Montréal). */
-  const POSTER_PERIODS = ['jour', 'fds', 'semaine', 'mois', 'session'];
+  const POSTER_PERIODS = ['jour', 'demain', 'fds', 'semaine', 'mois', 'session'];
+  /* Périodes « en direct » : articles les plus frais, matchs à venir, date du jour visé. */
+  const LIVE_PERIODS = ['jour', 'demain'];
   const SESSION_LABELS = { hiver: ['Session d’hiver', 'Winter term'], ete: ['Session d’été', 'Summer term'], automne: ['Session d’automne', 'Fall term'] };
 
   function mtlYmd(dateLike) {
@@ -181,11 +183,13 @@
   function frRange(a, b) {
     const [, ma] = a.split('-').map(Number);
     const [, mb, db] = b.split('-').map(Number);
+    /* L’année ferme la plage : le bandeau n’affiche plus la date du jour sur une période passée. */
+    const year = b.slice(0, 4);
     if (ma === mb) {
       const da = Number(a.slice(8));
-      return `du ${da === 1 ? '1er' : da} au ${db === 1 ? '1er' : db} ${MONTHS[mb - 1]}`;
+      return `du ${da === 1 ? '1er' : da} au ${db === 1 ? '1er' : db} ${MONTHS[mb - 1]} ${year}`;
     }
-    return `du ${frShort(a)} au ${frShort(b)}`;
+    return `du ${frShort(a)}${a.slice(0, 4) !== year ? ` ${a.slice(0, 4)}` : ''} au ${frShort(b)} ${year}`;
   }
 
   /**
@@ -197,18 +201,18 @@
     const id = POSTER_PERIODS.includes(period) ? period : 'jour';
     if (id === 'semaine') {
       const from = ymdShift(today, -6);
-      return { id, from, to: today, fr: `Dernière semaine, ${frRange(from, today)}`, en: `Past week, ${enShort(from)} to ${enShort(today)}` };
+      return { id, from, to: today, fr: `Dernière semaine, ${frRange(from, today)}`, en: `Past week, ${enShort(from)} to ${enShort(today)}, ${today.slice(0, 4)}` };
     }
     if (id === 'mois') {
       const from = ymdShift(today, -29);
-      return { id, from, to: today, fr: `Dernier mois, ${frRange(from, today)}`, en: `Past month, ${enShort(from)} to ${enShort(today)}` };
+      return { id, from, to: today, fr: `Dernier mois, ${frRange(from, today)}`, en: `Past month, ${enShort(from)} to ${enShort(today)}, ${today.slice(0, 4)}` };
     }
     if (id === 'fds') {
       const wd = new Date(`${today}T12:00:00Z`).getUTCDay(); /* 0 = dimanche */
       const back = wd === 5 ? 0 : wd === 6 ? 1 : wd === 0 ? 2 : wd + 2;
       const from = ymdShift(today, -back);
       const to = ymdShift(from, 2) > today ? today : ymdShift(from, 2);
-      return { id, from, to, fr: `Fin de semaine ${frRange(from, ymdShift(from, 2))}`, en: `Weekend, ${enShort(from)} to ${enShort(ymdShift(from, 2))}` };
+      return { id, from, to, fr: `Fin de semaine ${frRange(from, ymdShift(from, 2))}`, en: `Weekend, ${enShort(from)} to ${enShort(ymdShift(from, 2))}, ${from.slice(0, 4)}` };
     }
     if (id === 'session') {
       const start = freshness && typeof freshness.getCurrentUniversitySessionStart === 'function'
@@ -220,7 +224,13 @@
       const [fr, en] = SESSION_LABELS[sid] || ['Cette session', 'This term'];
       return { id, from: start, to: today, fr: `${fr} ${year}`, en: `${en} ${year}` };
     }
-    return { id: 'jour', from: null, to: today, fr: 'Aujourd’hui', en: 'Today' };
+    if (id === 'demain') {
+      const target = ymdShift(today, 1);
+      const fr = frDate(`${target}T12:00:00`, { weekday: true });
+      const en = enDate(`${target}T12:00:00`, { weekday: true });
+      return { id, live: true, from: null, to: today, target, fr: fr.charAt(0).toUpperCase() + fr.slice(1), en };
+    }
+    return { id: 'jour', live: true, from: null, to: today, target: today, fr: 'Aujourd’hui', en: 'Today' };
   }
 
   /* Le Radar couvre le sport étudiant : titres sur le sport professionnel exclus de l’affiche. */
@@ -234,6 +244,38 @@
 
   function isProSportItem(item) {
     return PRO_SPORT_RE.test(String((item && item.title) || ''));
+  }
+
+  /* Signatures : même source que les fiches (item.author, vide si = média),
+   * même correctif Impact Campus (compte « Archives Impact Campus » écarté, PR363). */
+  const AUTHOR_ROLE_RE = /^(?:journaliste|collaborat|rédact|redact|chef|managing|editor|éditeur|staff|contributor|writer|reporter|photographe|photographer|columnist|chroniqueu)/i;
+  function authorKey(s) {
+    return foldName(s);
+  }
+  function authorNames(item) {
+    const raw = String((item && item.author) || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+      .replace(/^(?:Par|By)\s+/i, '');
+    if (!raw || authorKey(raw) === authorKey(item.source || '')) return [];
+    if (/^(?:the\s+)?editorial\s+(?:team|staff|board)$|^(?:la\s+|l['’])?\s*rédaction$/i.test(raw)) return ['la rédaction'];
+    const parts = raw.split(/\s*,\s*|\s+et\s+|\s+and\s+|\s+&\s+/i)
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .filter((p) => !AUTHOR_ROLE_RE.test(p))
+      .filter((p) => !(authorKey(item.source) === authorKey('Impact Campus') && authorKey(p) === authorKey('Archives Impact Campus')))
+      .filter((p) => authorKey(p) !== authorKey(item.source || ''));
+    const seen = new Set();
+    return parts.filter((p) => { const k = authorKey(p); if (seen.has(k)) return false; seen.add(k); return true; });
+  }
+  /** « Par A, B et C · Média » ; maxNames → « Par A et al. · Média » ; sans auteur → « Média ». */
+  function bylineOf(names = [], source = '', { maxNames = Infinity, en = false } = {}) {
+    const list = (names || []).filter(Boolean);
+    const src = String(source || '').trim();
+    if (!list.length) return src;
+    let who;
+    if (list.length > maxNames) who = `${list[0]} et al.`;
+    else if (list.length === 1) who = list[0];
+    else who = `${list.slice(0, -1).join(', ')} ${en ? 'and' : 'et'} ${list[list.length - 1]}`;
+    return [`Par ${who}`, src].filter(Boolean).join(' · ');
   }
 
   function hasImage(item) {
@@ -260,14 +302,14 @@
 
   function selectFrontPage(items = [], referenceDate = new Date(), campus = null, limit = FRONT_PAGE_COUNT, period = 'jour') {
     const win = periodWindow(period, referenceDate);
-    const fresh = win.id === 'jour' && freshness && typeof freshness.filterFreshItems === 'function'
+    const fresh = win.live && freshness && typeof freshness.filterFreshItems === 'function'
       ? freshness.filterFreshItems(items, referenceDate)
       : items.slice();
     const normal = housekeeping && typeof housekeeping.housekeepingNormalItems === 'function'
       ? housekeeping.housekeepingNormalItems(fresh, referenceDate)
       : fresh;
     const refT = new Date(referenceDate).getTime();
-    const inWindow = win.id === 'jour'
+    const inWindow = win.live
       ? normal
       : normal.filter((item) => {
         const t = new Date(item.date || 0).getTime();
@@ -278,9 +320,10 @@
     const scoped = inWindow.filter((item) => !isProSportItem(item));
     const pool = campus ? scoped.filter((item) => itemMatchesCampus(item, campus)) : scoped;
     const sorted = sortByDateDesc(pool);
+    if (limit === Infinity) return { lead: sorted[0] || null, features: sorted.slice(1), items: sorted, period: win, available: sorted.length };
     const cap = Math.max(0, Number(limit) || FRONT_PAGE_COUNT);
-    let picked = win.id === 'jour' ? sorted.slice(0, Math.min(cap, sorted.length)) : spreadPick(sorted, cap);
-    if (win.id !== 'jour') {
+    let picked = win.live ? sorted.slice(0, Math.min(cap, sorted.length)) : spreadPick(sorted, cap);
+    if (!win.live) {
       const li = picked.findIndex(hasImage);
       if (li > 0) picked = [picked[li], ...picked.slice(0, li), ...picked.slice(li + 1)];
     }
@@ -394,6 +437,17 @@
     return new Intl.DateTimeFormat('en-CA', opts).format(t);
   }
 
+  /* Typographie française (titres et chapeaux en français seulement) : apostrophe courbe,
+   * fine insécable avant ; ! ?, insécable avant : et à l’intérieur des guillemets. */
+  function frTypo(text) {
+    return String(text || '')
+      .replace(/(\p{L})'(?=\p{L})/gu, '$1’')
+      .replace(/(\S)[ \u00A0]?([;!?])(?=\s|$|[»)"’])/gu, (m, a, p) => (a === '\u202F' ? m : `${a}\u202F${p}`))
+      .replace(/(\S)[ \u00A0]?:(?=\s|$)/gu, (m, a) => (/[\u00A0\u202F]/.test(a) ? m : `${a}\u00A0:`))
+      .replace(/«[ \u00A0\u202F]*/g, '«\u00A0')
+      .replace(/[ \u00A0\u202F]*»/g, '\u00A0»');
+  }
+
   function normalize(item, base = '..') {
     if (!item || !item.title) return null;
     const id = articleId(item.link);
@@ -401,14 +455,17 @@
     return {
       key: item.link || `${item.source}::${item.date}::${item.title}`,
       id,
-      title: String(item.title || '').replace(/\s+/g, ' ').trim(),
+      title: (item.lang === 'fr' ? frTypo : String)(String(item.title || '').replace(/\s+/g, ' ').trim()),
       source: String(item.source || '').trim(),
       author: String(item.author || '').trim(),
+      authors: authorNames(item),
+      byline: bylineOf(authorNames(item), String(item.source || '').trim()),
       date: item.date || '',
-      dateLabel: frDate(item.date || ''),
-      hook: hookOf(item, 220),
-      hookShort: hookOf(item, 140),
-      hookLong: hookOf(item, 420),
+      /* Date insécable : « 12 novembre 2026 » ne se coupe jamais. */
+      dateLabel: frDate(item.date || '').replace(/ /g, '\u00A0'),
+      hook: (item.lang === 'fr' ? frTypo : String)(hookOf(item, 220)),
+      hookShort: (item.lang === 'fr' ? frTypo : String)(hookOf(item, 140)),
+      hookLong: (item.lang === 'fr' ? frTypo : String)(hookOf(item, 420)),
       institution: String(item.institution || '').trim(),
       image: imageSrc(item, base),
       images: imageCandidates(item, base),
@@ -418,6 +475,190 @@
       originUrl: safeHttpUrl(item.link) || String(item.link || '').trim(),
     };
   }
+
+  /**
+   * Sélection manuelle : seulement les cartes cochées (ids d’articles), la une
+   * choisie en tête, le reste du plus récent au plus ancien. Ids inconnus ignorés.
+   */
+  function manualSelection(cards = [], ids = [], leadId = '') {
+    const want = new Set((ids || []).filter(Boolean));
+    if (leadId) want.add(leadId);
+    const picked = sortByDateDesc(cards.filter((c) => c && want.has(c.id)));
+    const li = leadId ? picked.findIndex((c) => c.id === leadId) : -1;
+    return li > 0 ? [picked[li], ...picked.slice(0, li), ...picked.slice(li + 1)] : picked;
+  }
+
+  const SEX_LABEL = { F: 'féminin', M: 'masculin', X: 'mixte' };
+  /* « (F) » ou « (H) » d’après la donnée (F/M, W, women/men…) ; inconnu ou mixte : rien. */
+  function genderMark(sex) {
+    const k = String(sex || '').trim().toLowerCase();
+    if (['f', 'w', 'women', 'woman', 'femmes', 'féminin', 'feminin', 'female'].includes(k)) return '(F)';
+    if (['m', 'h', 'men', 'man', 'hommes', 'masculin', 'male'].includes(k)) return '(H)';
+    return '';
+  }
+  /**
+   * Bilan d’une période passée : résultats réels (sports.json dépaqueté),
+   * filtrés par établissement, variés (un par sport et sexe à tour de rôle,
+   * universitaire d’abord), plus récents en premier. Rien n’est inventé.
+   */
+  /* Nom d’équipe (registre des formations) + établissement entre parenthèses ;
+   * l’équipe de l’établissement de l’affiche s’affiche seule. Sans surnom : l’établissement seul. */
+  function teamLabel(nickname, shortName, own = false) {
+    const nick = frTypo(String(nickname || '').trim());
+    const inst = frTypo(String(shortName || '').trim());
+    if (!nick) return inst;
+    if (own || !inst || inst === nick) return nick;
+    return `${nick} (${inst})`;
+  }
+  function gameSides(team, g, campus) {
+    const ownInst = team.institutionName || team.institutionLabel || team.fullName || '';
+    const own = Boolean(campus) && itemMatchesCampus({ institution: ownInst }, campus);
+    const oppOwn = Boolean(campus) && itemMatchesCampus({ institution: g.opponentFullName || g.opponent || '' }, campus);
+    return {
+      who: teamLabel(team.nickname, team.shortName || team.name || team.fullName, own),
+      vs: teamLabel(g.opponentNickname, g.opponent || g.opponentFullName, oppOwn),
+    };
+  }
+
+  /* Identifiant court et stable d’un match ou d’un résultat (paramètres d’URL de la sélection manuelle). */
+  function sportItemId(item) {
+    const key = [item && item.date, item && item.kicker, item && item.line].map((x) => String(x || '')).join('|');
+    let h = 0x811c9dc5;
+    for (let i = 0; i < key.length; i += 1) {
+      h ^= key.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return h.toString(16).padStart(8, '0');
+  }
+  /* Résultat au classement (voile, cross-country…) : « 7e sur 11 », jamais un faux score. */
+  function placeLabel(place, of) {
+    const n = Number(place);
+    if (!Number.isFinite(n) || n < 1) return '';
+    const ord = n === 1 ? '1er' : `${n}e`;
+    return Number.isFinite(Number(of)) && Number(of) > 0 ? `${ord} sur ${Number(of)}` : ord;
+  }
+  /* Sélection manuelle des sports : ids choisis (dans l’ordre, en tête), ids masqués ; le reste vient de l’auto. */
+  function applySportSelection(candidates = [], auto = [], chosenIds = [], hiddenIds = []) {
+    const byId = new Map(candidates.map((c) => [c.id || sportItemId(c), c]));
+    const hidden = new Set(hiddenIds || []);
+    const pinned = (chosenIds || []).map((id) => byId.get(id)).filter(Boolean).filter((c) => !hidden.has(c.id));
+    const used = new Set(pinned.map((c) => c.id));
+    /* Choix épinglés en tête, places restantes complétées par l’auto : jamais de trou. */
+    return pinned.concat((auto || []).filter((c) => { const k = c.id || sportItemId(c); return !hidden.has(k) && !used.has(k); }));
+  }
+  /* Rôles manuels des articles : une, aussi à lire, vedettes, en bref ; les places libres gardent l’auto. */
+  function assignRoles(pool = [], roles = {}, slots = {}) {
+    const byId = new Map(pool.map((a) => [a.id, a]));
+    const used = new Set();
+    const take = (ids, n) => (ids || []).map((id) => byId.get(id)).filter((a) => a && !used.has(a.id) && used.add(a.id)).slice(0, n);
+    const lead = take(roles.une ? [roles.une] : [], 1)[0] || null;
+    const side = take(roles.aussi, slots.side ?? Infinity);
+    const grid = take(roles.vedettes, slots.grid ?? Infinity);
+    const briefs = take(roles.bref, slots.briefs ?? Infinity);
+    const rest = pool.filter((a) => !used.has(a.id) && !(roles.masquer || []).includes(a.id));
+    const fill = (arr, n) => { while (arr.length < n && rest.length) { const a = rest.shift(); used.add(a.id); arr.push(a); } return arr; };
+    const out = { lead: lead || (rest.length ? (used.add(rest[0].id), rest.shift()) : null) };
+    out.side = fill(side, slots.side ?? 0);
+    out.grid = fill(grid, slots.grid ?? 0);
+    out.briefs = fill(briefs, slots.briefs ?? 0);
+    return out;
+  }
+
+  function periodResults(teams = [], win = null, campus = null, limit = 4) {
+    if (!win || !win.from) return { items: [], played: 0, wins: 0 };
+    const seen = new Set();
+    const games = [];
+    (Array.isArray(teams) ? teams : Object.values(teams || {})).forEach((team) => {
+      if (!team) return;
+      const inst = team.institutionName || team.institutionLabel || '';
+      if (campus && !itemMatchesCampus({ institution: inst }, campus)) return;
+      (team.results || []).forEach((g) => {
+        if (!g || g.priorSeason || g.scoreFor == null || g.scoreAgainst == null || !g.date) return;
+        if (g.date < win.from || g.date > win.to) return;
+        const pair = [team.registryId || team.name, g.opponentRegistryId || g.opponent].sort().join('~');
+        const id = g.gameId || `${g.date}|${g.time || ''}|${pair}|${team.sport}|${team.sex || ''}`;
+        if (seen.has(id)) return;
+        seen.add(id);
+        games.push({ team, g });
+      });
+    });
+    const groups = new Map();
+    games.sort((a, b) => {
+      const ua = a.team.sector === 'universitaire' ? 0 : 1;
+      const ub = b.team.sector === 'universitaire' ? 0 : 1;
+      if (ua !== ub) return ua - ub;
+      return String(b.g.date + (b.g.time || '')).localeCompare(String(a.g.date + (a.g.time || '')));
+    });
+    games.forEach((x) => {
+      const k = `${x.team.sector}|${x.team.sport}|${x.team.sex || ''}`;
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(x);
+    });
+    const lanes = [...groups.values()];
+    const out = [];
+    for (let r = 0; out.length < limit && lanes.some((l) => l.length > r); r += 1) {
+      for (const lane of lanes) {
+        if (out.length >= limit) break;
+        if (lane[r]) out.push(lane[r]);
+      }
+    }
+    const items = out.map(({ team, g }) => {
+      const { who, vs } = gameSides(team, g, campus);
+      const sport = [team.sportLabel || team.sport || '', genderMark(team.sex)].filter(Boolean).join(' ');
+      return {
+        kicker: sport,
+        gender: genderMark(team.sex),
+        emoji: sportEmoji(team.sportLabel || team.sport),
+        line: g.scoreKind === 'place'
+          ? `${who}\u00A0: ${placeLabel(g.scoreFor, g.scoreAgainst)} · ${frTypo(g.opponent || g.opponentFullName || '')}`.trim()
+          : `${who} ${g.scoreFor}–${g.scoreAgainst} ${vs}`.trim(),
+        meta: frDate(`${g.date}T12:00:00`).replace(/\s\d{4}$/, ''),
+        date: g.date,
+        result: g.result || (g.scoreFor > g.scoreAgainst ? 'W' : g.scoreFor < g.scoreAgainst ? 'L' : 'T'),
+      };
+    });
+    items.forEach((it) => { it.id = sportItemId(it); });
+    const played = games.length;
+    const wins = campus ? games.filter(({ g }) => (g.result || (g.scoreFor > g.scoreAgainst ? 'W' : '')) === 'W').length : 0;
+    return { items, played, wins };
+  }
+
+  /* Bandeau : un libellé de période ou une date se coupe seulement après une virgule ;
+   * à l’intérieur d’un segment, espaces insécables (le jour reste avec son mois). */
+  function mastheadSegments(label) {
+    return String(label || '').split(/,\s+/).map((seg, i, all) => `${seg.trim()}${i < all.length - 1 ? ',' : ''}`
+      .replace(/[ \u202F]+/g, '\u00A0')).filter((seg) => seg.replace(/[,\u00A0]/g, ''));
+  }
+
+  /* Emoji de sport devant un match ou un résultat. Toute clé ajoutée ici doit avoir son glyphe
+   * dans la police auto-hébergée (assets/kit/fonts/emoji/, scripts/subset-poster-emoji-font.py). */
+  const SPORT_EMOJI_FALLBACK = '🏅';
+  const SPORT_EMOJI = [
+    [/flag[- ]?football|football/, '🏈'],
+    [/hockey/, '🏒'],
+    [/basket/, '🏀'],
+    [/volley/, '🏐'],
+    [/futsal|soccer/, '⚽'],
+    [/rugby/, '🏉'],
+    [/baseball|softball/, '⚾'],
+    [/badminton/, '🏸'],
+    [/tennis/, '🎾'],
+    [/golf/, '⛳'],
+    [/natation|swim/, '🏊'],
+    [/cross[- ]?country|athletisme|athletics|track/, '🏃'],
+    [/ultimate|frisbee/, '🥏'],
+    [/voile|sailing/, '⛵'],
+    [/cheer/, '📣'],
+    [/curling/, '🥌'],
+    [/\bski|snowboard/, '⛷️'],
+  ];
+  function sportEmoji(sport) {
+    const k = String(sport || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    if (!k) return SPORT_EMOJI_FALLBACK;
+    const hit = SPORT_EMOJI.find(([re]) => re.test(k));
+    return hit ? hit[1] : SPORT_EMOJI_FALLBACK;
+  }
+  const SPORT_EMOJI_ALL = [...new Set(SPORT_EMOJI.map(([, e]) => e).concat(SPORT_EMOJI_FALLBACK))];
 
   function frontPageCards(items = [], referenceDate = new Date(), base = '..', campus = null, limit = FRONT_PAGE_COUNT, period = 'jour') {
     const picked = selectFrontPage(items, referenceDate, campus, limit, period);
@@ -433,8 +674,24 @@
 
   return {
     POSTER_PERIODS,
+    authorNames,
+    bylineOf,
+    manualSelection,
+    periodResults,
+    sportItemId,
+    placeLabel,
+    applySportSelection,
+    assignRoles,
+    teamLabel,
+    gameSides,
+    genderMark,
+    frTypo,
+    mastheadSegments,
+    sportEmoji,
+    SPORT_EMOJI_ALL,
     isProSportItem,
     periodWindow,
+    LIVE_PERIODS,
     FRONT_PAGE_COUNT,
     POSTER_PAGE_COUNT,
     POSTER_BRIEF_COUNT,

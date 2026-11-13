@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=une-3">
+  <link rel="stylesheet" href="./poster-builder.css?v=une-11">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -105,6 +105,8 @@
             <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
             <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
             <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
+            <label class="js-une-only"><input type="radio" name="format" value="ecran-paysage"> Écran 16:9 (1920 × 1080, PNG)</label>
+            <label class="js-une-only"><input type="radio" name="format" value="ecran-portrait"> Écran 9:16 (1080 × 1920, PNG)</label>
           </div>
         </fieldset>
 
@@ -230,6 +232,7 @@
           <legend>Période</legend>
           <select class="greeting" name="unePeriod" id="une-period" aria-describedby="une-period-hint">
             <option value="jour" selected>Aujourd’hui (les plus récents)</option>
+            <option value="demain">Demain (affiche du lendemain)</option>
             <option value="fds">Fin de semaine</option>
             <option value="semaine">Dernière semaine</option>
             <option value="mois">Dernier mois</option>
@@ -241,7 +244,8 @@
         <fieldset class="js-une-only" id="une-tagline-box" hidden>
           <legend>Phrase sous « Scanne-moi »</legend>
           <select class="greeting" name="uneTagline" id="une-tagline">
-            <option value="auto" selected>Automatique (campus ou tout le Radar)</option>
+            <option value="direct" selected>Le fil étudiant, en direct</option>
+            <option value="auto">Automatique (campus ou tout le Radar)</option>
             <option value="fil">Le fil étudiant</option>
             <option value="tout">Tout le Radar étudiant</option>
             <option value="campus">Ton campus en direct</option>
@@ -251,7 +255,14 @@
         <fieldset class="js-une-only" id="une-box" hidden>
           <legend>Articles</legend>
           <p class="field-hint" id="une-status">Chargement des articles du site…</p>
+          <button type="button" class="photo-more" id="une-auto" hidden>Revenir à la sélection automatique</button>
           <ol class="une-list" id="une-list"></ol>
+        </fieldset>
+
+        <fieldset class="js-une-only" id="une-sports-box" hidden>
+          <legend>Sports</legend>
+          <p class="field-hint">Auto par défaut. Placez un match ou un résultat sous le slogan, dans la bande (ou le bilan), ou masquez-le.</p>
+          <ol class="une-list" id="une-sports-list"></ol>
         </fieldset>
 
         <fieldset id="photo-box" class="js-campus-only">
@@ -348,7 +359,9 @@
   <script src="../scripts/session-freshness-lib.js"></script>
   <script src="../scripts/news-housekeeping-lib.js"></script>
   <script src="../scripts/magazine-front-page-lib.js"></script>
+  <script src="../scripts/sports-payload-lib.js"></script>
+  <script src="../scripts/institution-color-lib.js"></script>
   <script src="../scripts/vendor/qrcodegen-v1.8.0.js"></script>
-  <script src="./poster-builder.js?v=une-5"></script>
+  <script src="./poster-builder.js?v=une-11"></script>
 </body>
 </html>

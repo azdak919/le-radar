@@ -129,14 +129,22 @@ console.log(`magazine-front-page : OK (${cards.items.length} articles, une = ${c
   const w = front.periodWindow('semaine', ref);
   assert.equal(w.from, '2026-11-06');
   assert.equal(w.to, '2026-11-12');
-  assert.match(w.fr, /^Dernière semaine, du 6 au 12 novembre$/);
+  assert.match(w.fr, /^Dernière semaine, du 6 au 12 novembre 2026$/);
   const f = front.periodWindow('fds', ref);
   assert.equal(f.from, '2026-11-06');
   assert.equal(f.to, '2026-11-08');
-  assert.match(f.fr, /^Fin de semaine du 6 au 8 novembre$/);
+  assert.match(f.fr, /^Fin de semaine du 6 au 8 novembre 2026$/);
   assert.ok(!/week-end/i.test(f.fr));
   assert.equal(front.periodWindow('mois', ref).from, '2026-10-14');
   assert.equal(front.periodWindow('inconnu', ref).id, 'jour');
+  /* Libellé du haut selon la période : année sur les plages, date du lendemain pour « Demain ». */
+  assert.match(front.periodWindow('mois', ref).fr, /^Dernier mois, du 14 octobre au 12 novembre 2026$/);
+  const d = front.periodWindow('demain', ref);
+  assert.equal(d.id, 'demain');
+  assert.ok(d.live && front.periodWindow('jour', ref).live && !w.live, 'demain et jour : périodes en direct');
+  assert.equal(d.target, '2026-11-13');
+  assert.equal(d.fr, 'Vendredi 13 novembre 2026');
+  assert.equal(front.periodWindow('demain', new Date('2026-12-31T17:00:00Z')).target, '2027-01-01', 'lendemain du 31 décembre');
   const mk = (d, i) => ({ title: `T${i}`, link: `https://ex.org/${i}`, source: 'S', institution: 'Université Laval', date: d, image: 'https://ex.org/i.jpg' });
   const items = [
     ...Array.from({ length: 20 }, (_, i) => mk(`2026-11-${String(12 - (i % 7)).padStart(2, '0')}T15:00:00Z`, i)),
@@ -156,3 +164,167 @@ assert.ok(front.isProSportItem({ title: 'Les Alouettes s’envolent vers la Coup
 assert.ok(front.isProSportItem({ title: 'CF Montréal et COP 31 : reportages radio' }));
 assert.ok(!front.isProSportItem({ title: 'Stingers 7, Gee-Gees 0: Pure Stingers domination' }));
 assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsmore' }));
+
+/* Signatures (plusieurs auteurs, Impact Campus, rédaction, rôles) */
+{
+  const names = front.authorNames({ author: 'Arianne Dion, Étienne Dumas et Élise Paré', source: 'L’Exemplaire' });
+  assert.deepEqual(names, ['Arianne Dion', 'Étienne Dumas', 'Élise Paré']);
+  assert.equal(front.bylineOf(names, 'L’Exemplaire'), 'Par Arianne Dion, Étienne Dumas et Élise Paré · L’Exemplaire');
+  assert.equal(front.bylineOf(names, 'L’Exemplaire', { maxNames: 2 }), 'Par Arianne Dion et al. · L’Exemplaire');
+  assert.equal(front.bylineOf(front.authorNames({ author: 'Juliette Fournier et Félicitée Audet', source: 'Montréal Campus' }), 'Montréal Campus'),
+    'Par Juliette Fournier et Félicitée Audet · Montréal Campus');
+  assert.deepEqual(front.authorNames({ author: 'Archives Impact Campus & Léann Bonin', source: 'Impact Campus' }), ['Léann Bonin']);
+  assert.deepEqual(front.authorNames({ author: 'Rosalie Fauchon, journaliste collaboratrice', source: 'Impact Campus' }), ['Rosalie Fauchon']);
+  assert.deepEqual(front.authorNames({ author: 'The Link', source: 'The Link' }), []);
+  assert.equal(front.bylineOf([], 'The Link'), 'The Link', 'auteur inconnu : le média seul');
+  const card = front.normalize({ title: 'T', link: 'https://ex.org/a', source: 'Montréal Campus', author: 'Émile Brochu et Agathe Nogues', date: '2026-11-10T12:00:00Z' });
+  assert.equal(card.byline, 'Par Émile Brochu et Agathe Nogues · Montréal Campus');
+}
+
+/* Sélection manuelle */
+{
+  const cards = [
+    { id: 'a', date: '2026-11-12T10:00:00Z' }, { id: 'b', date: '2026-11-10T10:00:00Z' },
+    { id: 'c', date: '2026-11-11T10:00:00Z' }, { id: 'd', date: '2026-11-09T10:00:00Z' },
+  ];
+  assert.deepEqual(front.manualSelection(cards, ['b', 'd', 'c']).map((c) => c.id), ['c', 'b', 'd']);
+  assert.deepEqual(front.manualSelection(cards, ['b', 'd', 'c'], 'd').map((c) => c.id), ['d', 'c', 'b']);
+  assert.deepEqual(front.manualSelection(cards, ['zz', 'a']).map((c) => c.id), ['a'], 'ids inconnus ignorés');
+  assert.deepEqual(front.manualSelection(cards, []), []);
+}
+
+/* Bilan d’une période passée (résultats réels, filtrés, variés, dédoublonnés) */
+{
+  const win = front.periodWindow('semaine', new Date('2026-11-13T00:06:40Z'));
+  const g = (date, sf, sa, opp, extra = {}) => ({ date, time: '19:00', scoreFor: sf, scoreAgainst: sa, opponent: opp, opponentNickname: opp, opponentRegistryId: opp.toLowerCase(), ...extra });
+  const teams = [
+    { name: 'ULaval', registryId: 'laval', institutionName: 'Université Laval', sector: 'universitaire', sport: 'hockey', sportLabel: 'Hockey', sex: 'F',
+      results: [g('2026-11-08', 1, 5, 'Gaiters'), g('2026-11-01', 3, 2, 'Martlets'), g('2026-11-07', 2, 2, 'Stingers', { priorSeason: true })] },
+    { name: 'ULaval', registryId: 'laval', institutionName: 'Université Laval', sector: 'universitaire', sport: 'volleyball', sportLabel: 'Volleyball', sex: 'F',
+      results: [g('2026-11-08', 3, 1, 'Martlets'), g('2026-11-07', 3, 0, 'Carabins')] },
+    { name: 'Concordia', registryId: 'concordia', institutionName: 'Université Concordia', sector: 'universitaire', sport: 'basketball', sportLabel: 'Basketball', sex: 'M',
+      results: [g('2026-11-07', 89, 88, 'Gaiters')], nextGames: [{ date: '2026-11-20' }] },
+  ];
+  const laval = { slug: 'laval', line: 'Université Laval', label: 'Université Laval' };
+  const r = front.periodResults(teams, win, laval, 4);
+  assert.equal(r.played, 3, 'hors période et saison passée exclus');
+  assert.equal(r.wins, 2);
+  assert.equal(r.items.length, 3);
+  assert.notEqual(r.items[0].kicker, r.items[1].kicker, 'sports variés en tête');
+  assert.match(r.items[0].line, /^ULaval \d+–\d+ /);
+  assert.ok(r.items.every((it) => it.date >= win.from && it.date <= win.to));
+  assert.equal(front.periodResults(teams, win, { slug: 'udem', line: 'Université de Montréal', label: 'x' }, 4).items.length, 0, 'aucune donnée : bande retirée');
+  assert.equal(front.periodResults(teams, front.periodWindow('jour'), laval, 4).items.length, 0);
+  assert.ok(r.items.every((it) => front.SPORT_EMOJI_ALL.includes(it.emoji)), 'emoji de sport sur chaque résultat');
+  assert.ok(r.items.some((it) => it.emoji === '🏐') && r.items.some((it) => it.emoji === '🏒'), 'emoji selon le sport de la donnée');
+}
+
+// Emojis de sport : selon le sport de la donnée, repli neutre, tous couverts par la police auto-hébergée.
+{
+  const cases = { Football: '🏈', 'Flag football': '🏈', Hockey: '🏒', Basketball: '🏀', Volleyball: '🏐', Soccer: '⚽',
+    'Soccer intérieur': '⚽', Futsal: '⚽', Rugby: '🏉', Baseball: '⚾', Badminton: '🏸', Natation: '🏊', Athlétisme: '🏃',
+    'Cross-country': '🏃', Golf: '⛳', Ultimate: '🥏', Voile: '⛵', Cheerleading: '📣', 'hockey-feminin': '🏒' };
+  for (const [sport, emoji] of Object.entries(cases)) assert.equal(front.sportEmoji(sport), emoji, sport);
+  assert.equal(front.sportEmoji('Escrime'), '🏅', 'sport inconnu : repli neutre');
+  assert.equal(front.sportEmoji(''), '🏅');
+  assert.equal(front.sportEmoji(undefined), '🏅');
+  const cov = JSON.parse(readFileSync(new URL('../assets/kit/fonts/emoji/coverage.json', import.meta.url), 'utf8'));
+  for (const e of front.SPORT_EMOJI_ALL) assert.ok(cov.emojis.includes(e), `glyphe ${e} absent de la police emoji`);
+}
+
+// Bandeau : dates insécables, coupure seulement après une virgule ; typographie française.
+{
+  const segs = front.mastheadSegments('Dernier mois, du 14 octobre au 12 novembre 2026');
+  assert.deepEqual(segs, ['Dernier\u00A0mois,', 'du\u00A014\u00A0octobre\u00A0au\u00A012\u00A0novembre\u00A02026']);
+  assert.ok(front.mastheadSegments('Vendredi 13 novembre 2026').every((x) => !/ /.test(x)), 'date du haut : aucune espace sécable');
+  assert.equal(front.mastheadSegments('Vendredi 13 novembre 2026').length, 1);
+  assert.equal(front.frTypo('NOUVELLE GARDE: Le temps'), 'NOUVELLE GARDE\u00A0: Le temps');
+  assert.equal(front.frTypo('Pourquoi pas?'), 'Pourquoi pas\u202F?');
+  assert.equal(front.frTypo('«Génère-moi»'), '«\u00A0Génère-moi\u00A0»');
+  assert.equal(front.frTypo("L'autre"), 'L’autre');
+  assert.equal(front.frTypo('Il est 18:00'), 'Il est 18:00', 'heures intactes');
+  const card = front.normalize({ title: 'Titre: test', lang: 'fr', link: 'https://ex.org/a', source: 'S', date: '2026-11-12T15:00:00Z' });
+  assert.equal(card.title, 'Titre\u00A0: test');
+  assert.ok(!/ /.test(card.dateLabel), 'date de signature insécable');
+  const en = front.normalize({ title: 'Title: test', lang: 'en', link: 'https://ex.org/b', source: 'S', date: '2026-11-12T15:00:00Z' });
+  assert.equal(en.title, 'Title: test', 'titres anglais inchangés');
+}
+
+// Genre « (F) » / « (H) » d’après la donnée seulement ; noms d’équipes + établissement.
+{
+  assert.equal(front.genderMark('F'), '(F)');
+  assert.equal(front.genderMark('M'), '(H)');
+  assert.equal(front.genderMark(''), '', 'genre inconnu : rien');
+  assert.equal(front.genderMark('X'), '', 'mixte : rien, pas de devinette');
+  const laval = { slug: 'laval', line: 'Université Laval', label: 'Université Laval' };
+  const team = { name: 'ULaval', nickname: 'Rouge et Or', institutionName: 'Université Laval', sex: 'F' };
+  const g = { opponent: 'Concordia', opponentNickname: 'Stingers', opponentFullName: 'Université Concordia' };
+  assert.deepEqual(front.gameSides(team, g, laval), { who: 'Rouge et Or', vs: 'Stingers (Concordia)' });
+  const general = front.gameSides(team, g, null);
+  assert.equal(general.who, 'Rouge et Or (ULaval)', 'affiche générale : établissement entre parenthèses');
+  assert.equal(front.gameSides({ ...team, nickname: '' }, { opponent: "Bishop's", opponentFullName: "Bishop's University" }, laval).vs, 'Bishop’s', 'sans surnom : établissement seul');
+  assert.equal(front.teamLabel('Gaiters', "Bishop's", false), 'Gaiters (Bishop’s)');
+}
+
+// Sélection manuelle : rôles d’articles (places libres complétées par l’auto) et sports choisis par id.
+{
+  const pool = ['a', 'b', 'c', 'd', 'e', 'f', 'g'].map((id) => ({ id: id.repeat(16) }));
+  const id = (c) => c.repeat(16);
+  const r = front.assignRoles(pool, { une: id('d'), aussi: [id('f')], vedettes: [id('a')], bref: [id('g')], masquer: [id('b')] }, { side: 2, grid: 2, briefs: 2 });
+  assert.equal(r.lead.id, id('d'), 'une choisie');
+  assert.deepEqual(r.side.map((a) => a.id), [id('f'), id('c')], 'aussi à lire : choix puis auto');
+  assert.deepEqual(r.grid.map((a) => a.id), [id('a'), id('e')]);
+  assert.deepEqual(r.briefs.map((a) => a.id), [id('g')], 'masqué jamais repris');
+  const auto = front.assignRoles(pool, {}, { side: 2, grid: 1, briefs: 0 });
+  assert.deepEqual([auto.lead, ...auto.side, ...auto.grid].map((a) => a.id), [id('a'), id('b'), id('c'), id('d')], 'sans choix : ordre auto');
+
+  const s1 = { date: '2026-10-25', kicker: 'Voile', line: 'ULaVoile\u00A0: 7e sur 11 · Championnat canadien par équipes' };
+  const s2 = { date: '2026-11-13', kicker: 'Volleyball (F)', line: 'Rouge et Or reçoit Stingers (Concordia)' };
+  s1.id = front.sportItemId(s1);
+  s2.id = front.sportItemId(s2);
+  assert.match(s1.id, /^[0-9a-f]{8}$/);
+  assert.equal(front.sportItemId({ ...s1 }), s1.id, 'id stable');
+  assert.notEqual(s1.id, s2.id);
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [], []), [s2], 'auto par défaut');
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [s1.id], []), [s1, s2], 'choix épinglé en tête, auto ensuite');
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [s1.id], [s2.id]), [s1], 'choix seul si le reste est masqué');
+  assert.deepEqual(front.applySportSelection([s1, s2], [s2], [], [s2.id]), [], 'masqué');
+  assert.equal(front.placeLabel(7, 11), '7e sur 11');
+  assert.equal(front.placeLabel(1, 5), '1er sur 5');
+  assert.equal(front.placeLabel(0, 5), '');
+
+  // Résultat au classement (voile) : « 7e sur 11 », sans genre inventé, jamais un faux score.
+  const team = { id: 'sailing:universitaire:ulaval', name: 'ULaVoile', sport: 'sailing', sportLabel: 'Voile', institutionName: 'Université Laval', sector: 'universitaire', sex: null,
+    results: [{ date: '2026-10-25', scoreKind: 'place', scoreFor: 7, scoreAgainst: 11, result: 'L', opponent: 'Championnat canadien par équipes' }] };
+  const res = front.periodResults([team], { from: '2026-10-14', to: '2026-11-12' }, { slug: 'laval', line: 'Université Laval', label: 'Université Laval' }, 5);
+  const v = res.items.find((x) => /7e sur 11/.test(x.line));
+  assert.ok(v, 'résultat de voile présent');
+  assert.ok(!/7–11/.test(v.line));
+  assert.equal(v.gender, '');
+  assert.match(v.id, /^[0-9a-f]{8}$/);
+}
+
+// Phrase par défaut sous « Scanne-moi » : exactement « Le fil étudiant, en direct ».
+{
+  const src = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert.match(src, /uneTagline: 'direct'/);
+  assert.match(src, /direct: \{ label: 'Le fil étudiant, en direct', fr: 'Le fil étudiant, en direct'/);
+  const html = readFileSync(join(root, 'affiches/index.html'), 'utf8');
+  assert.match(html, /<option value="direct" selected>Le fil étudiant, en direct<\/option>/);
+}
+
+// Une en surimpression, en-tête givré adaptatif, verbes de rencontre atténués (focus-group 12 nov.).
+{
+  const src = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert.match(src, /uneLeadPhoto: 'surimpression'/, 'photo de une pleine hauteur par défaut');
+  assert.match(src, /uneMastGlass: 'givre'/, 'en-tête givré par défaut sur fond photo');
+  assert.match(src, /\['bande', 'ratio', 'surimpression'\]\.includes\(photoUne\)/);
+  assert.match(src, /reçoit\|visite\|chez\|vs\|à/, 'verbes atténués comme sur le site');
+  const lin = (c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const L = (r) => 0.2126 * lin(r[0]) + 0.7152 * lin(r[1]) + 0.0722 * lin(r[2]);
+  const cr = (a, b) => (Math.max(L(a), L(b)) + 0.05) / (Math.min(L(a), L(b)) + 0.05);
+  const mix = (a, fg, bg) => fg.map((v, i) => a * v + (1 - a) * bg[i]);
+  assert.ok(cr([197, 171, 196], [0x6c, 0x21, 0x63]) >= 4.5, 'verbe atténué de l’en-tête : AA');
+  assert.ok(cr(mix(0.55, [245, 246, 248], [0x3b, 0x12, 0x36]), [0x3b, 0x12, 0x36]) >= 4.5, 'verbe atténué de la bande : AA');
+  assert.ok(cr([255, 255, 255], mix(0.78, [20, 8, 20], [255, 255, 255])) >= 4.5, 'titre blanc sur dégradé, même sur pixel blanc : AA');
+}
