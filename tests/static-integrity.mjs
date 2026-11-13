@@ -684,7 +684,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('DPI_LAB'), 'générateur public : 1200 dpi réservé au labo local');
   assert(builderJs.includes('DEFAULT_DPI = 600'), 'générateur public : 600 dpi par défaut');
   assert(builder.includes('name="dpi"'), 'générateur public : choix de résolution');
-  assert(builder.includes('name="langs" value="oui" checked'), 'affiche générique : langues du site par défaut');
+  assert(!builder.includes('name="langs"'), 'aucune option de rangée de langues (t984u)');
   assert(builderJs.includes('syncGenericLangs'), 'affiche générique : langues rétablies sur Générique');
   assert(builder.includes('id="dpi-1200-choice" hidden'), '1200 dpi masqué hors labo local');
   assert(builder.includes('id="photo-upload-box" hidden'), 'affiches : téléversement masqué hors labo local');

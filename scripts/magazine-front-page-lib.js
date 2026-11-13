@@ -672,6 +672,62 @@
     };
   }
 
+  /* Émissions de radio pour une affiche (t984u) : originales, de jour ou de soir (7 h à 22 h, heure de Montréal),
+   * jamais de reprise ni de rotation musicale automatique (« Mix … »), étalées dans la journée (≥ 3 h d'écart au
+   * premier passage), puis complétées dans l'ordre. Données réelles de radio-schedules.json seulement. */
+  const RADIO_SHOW_MIN = '07:00';
+  const RADIO_SHOW_MAX = '22:00';
+  const RADIO_NOT_ORIGINAL = /\b(reprise|rediffusion|rediff|rattrapage|replay|best of|encore)\b|\(r\)|^\s*mix\b|\bmix (franco|anglo|électro|electro|nuit)\b|\bplaylist\b|\bautomat/i;
+  function radioShowOk(g) {
+    const t = String((g && g.title) || '').trim();
+    const st = String((g && g.start) || '');
+    return !!t && st >= RADIO_SHOW_MIN && st <= RADIO_SHOW_MAX && !RADIO_NOT_ORIGINAL.test(t) && !isProSportItem({ title: t });
+  }
+  function pickRadioShows(grid, startYmd, nowHm, limit = 3, days = 7) {
+    const toMin = (hm) => { const m = /^(\d{1,2}):(\d{2})/.exec(String(hm || '')); return m ? (+m[1]) * 60 + (+m[2]) : 0; };
+    const slots = [];
+    for (let d = 0; d < days; d += 1) {
+      const day = new Date(`${startYmd}T12:00:00Z`);
+      day.setUTCDate(day.getUTCDate() + d);
+      const ymd = day.toISOString().slice(0, 10);
+      (grid || []).filter((g) => g && g.day === day.getUTCDay() && radioShowOk(g) && (d > 0 || String(g.start) >= String(nowHm || '00:00')))
+        .sort((a, b) => String(a.start).localeCompare(String(b.start)))
+        .forEach((g) => slots.push({ ymd, start: String(g.start), title: String(g.title).trim(), d }));
+    }
+    const out = [];
+    const seen = new Set();
+    const take = (x) => { out.push(x); seen.add(x.title.toLowerCase()); };
+    for (const x of slots) {
+      if (out.length >= limit) break;
+      if (seen.has(x.title.toLowerCase())) continue;
+      const prev = out[out.length - 1];
+      if (prev && prev.ymd === x.ymd && toMin(x.start) - toMin(prev.start) < 180) continue;
+      take(x);
+    }
+    for (const x of slots) {
+      if (out.length >= limit) break;
+      if (!seen.has(x.title.toLowerCase())) take(x);
+    }
+    return out.sort((a, b) => (a.ymd + a.start).localeCompare(b.ymd + b.start));
+  }
+
+  /* Ligne « En chiffres » (t987u). Plusieurs médias : « 9 articles · 3 médias » (inchangé).
+   * Un seul média : verdict du focus-group (option A, decisions/le-radar-une-en-chiffres-un-media.json) —
+   * le nombre de signatures distinctes ; repli B (nom du média) si moins de 2 signatures connues. */
+  function numbersLine(pool, opts = {}) {
+    const list = (pool || []).filter(Boolean);
+    if (!list.length) return '';
+    const n = list.length;
+    const arts = `${n} article${n > 1 ? 's' : ''}`;
+    const suffix = opts.suffix ? ` ${opts.suffix}` : '';
+    const medias = [...new Set(list.map((a) => a.source).filter(Boolean))];
+    if (medias.length !== 1) return `${arts}${suffix} · ${medias.length} média${medias.length > 1 ? 's' : ''}`;
+    const people = new Set();
+    list.forEach((a) => (a.authors || []).forEach((x) => { const k = foldName(String(x || '')); if (k) people.add(k); }));
+    if (people.size >= 2) return `${arts}${suffix} · ${people.size} signatures`;
+    return `${arts}${suffix} de ${medias[0]}`;
+  }
+
   return {
     POSTER_PERIODS,
     authorNames,
@@ -690,6 +746,9 @@
     sportEmoji,
     SPORT_EMOJI_ALL,
     isProSportItem,
+    radioShowOk,
+    numbersLine,
+    pickRadioShows,
     periodWindow,
     LIVE_PERIODS,
     FRONT_PAGE_COUNT,
