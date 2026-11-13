@@ -155,12 +155,24 @@ const many = { teams: Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`t
 assert.ok(U.pickSports(many, '2026-11-12').results.length <= 6, 'plafond de 6 résultats');
 assert.equal(U.teamLabelFor('Couguars', 'Cégep de Chicoutimi — équipe Blanc').inst, 'Chicoutimi, équipe Blanc', 'deux équipes du même cégep distinguées');
 // ── Radio étudiante : à venir, tirage reproductible, une par station ──
-const rs = { stations: { a: { name: 'CHYZ 94,3', grid: [{ day: 5, start: '11:00', title: 'Punk-o-rama' }, { day: 5, start: '02:00', title: 'Nuit' }, { day: 4, start: '20:00', title: 'Jeudi soir' }] }, b: { name: 'CISM 89,3', grid: [{ day: 5, start: '15:00', title: 'Le Séismix' }, { day: 5, start: '16:00', title: 'Club classique (reprise)' }] } } };
+const rs = { stations: {
+  a: { name: 'CHYZ 94,3', grid: [{ day: 4, start: '08:00', title: 'Café campus' }, { day: 4, start: '20:00', title: 'Jeudi soir' }, { day: 4, start: '02:00', title: 'Nuit' }, { day: 5, start: '11:00', title: 'Punk-o-rama' }] },
+  b: { name: 'CISM 89,3', grid: [{ day: 4, start: '13:00', title: 'Le Midi' }, { day: 4, start: '21:00', title: 'Le Séismix' }, { day: 4, start: '22:00', title: 'Club classique (reprise)' }] },
+  c: { name: 'CKUT 90,3', grid: [{ day: 4, start: '06:00', end: '09:00', title: 'Morning Detour' }, { day: 4, start: '18:00', end: '20:00', title: 'Soirée en ondes' }] },
+  d: { name: 'CFAK 88,3', grid: [{ day: 4, start: '07:00', end: '07:30', title: 'Déjà fini' }, { day: 5, start: '09:00', title: 'Vendredi matin' }] },
+} };
 const soirSlot = { id: 'soir', day: '2026-11-12', target: '19:30' }, matinSlot = { id: 'matin', day: '2026-11-12', target: '07:45' };
-const rr = U.pickRadio(rs, soirSlot);
-assert.deepEqual(rr.map(U.radioLine), ['📻 Punk-o-rama · CHYZ 94,3 · ven. 13 nov. · 11 h', '📻 Le Séismix · CISM 89,3 · ven. 13 nov. · 15 h'], 'soir : lendemain, sans nuit ni reprise');
-assert.deepEqual(U.pickRadio(rs, soirSlot), rr, 'reproductible');
-assert.deepEqual(U.pickRadio(rs, matinSlot).map(x => x.title), ['Jeudi soir'], 'matin : émissions du jour à venir');
+const rr = U.pickRadio(rs, soirSlot, { max: 3 });
+assert.deepEqual(rr.map(U.radioLine), ['📻 Soirée en ondes · CKUT 90,3 · jeu. 12 nov. · 18 h', '📻 Jeudi soir · CHYZ 94,3 · jeu. 12 nov. · 20 h', '📻 Le Séismix · CISM 89,3 · jeu. 12 nov. · 21 h'], 'soir : soirée du jour même (17 h – minuit), en ondes ou à venir, sans reprise ni nuit');
+assert.deepEqual(U.pickRadio(rs, soirSlot, { max: 3 }), rr, 'reproductible');
+assert.equal(new Set(rr.map(x => x.station)).size, rr.length, 'une station par émission');
+const rm = U.pickRadio(rs, matinSlot, { max: 3 });
+assert.deepEqual(rm.map(x => x.title), ['Morning Detour', 'Café campus', 'Le Midi'], 'matin : matin et journée du jour même, dès 7 h 45 (en ondes compris), jamais le soir');
+assert.ok(rm.every(x => !x.fallback && x.date === '2026-11-12'));
+const rf = U.pickRadio(rs, matinSlot, { max: 4 });
+assert.deepEqual(rf.map(x => [x.title, !!x.fallback]), [['Morning Detour', false], ['Café campus', false], ['Le Midi', false], ['Vendredi matin', true]], 'repli : la plus proche hors fenêtre (CFAK : « Déjà fini » est passée)');
+const rs2 = { stations: { a: { name: 'CHYZ 94,3', grid: [{ day: 4, start: '10:00', title: 'Matinale' }] } } };
+assert.deepEqual(U.pickRadio(rs2, soirSlot, { max: 2 }), [], 'soir : une émission du matin déjà passée ne revient jamais');
 assert.deepEqual(U.pickRadio(null, soirSlot), [], 'sans grille : rien');
 assert.deepEqual(U.pickSports({ teams: {} }, '2026-11-12'), { results: [], next: [] }, 'sans donnée récente : rien');
 assert.deepEqual(U.pickSports(null, '2026-11-12'), { results: [], next: [] });

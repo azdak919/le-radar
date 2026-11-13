@@ -189,23 +189,37 @@ export const sportsLine = r => r.kind === 'resultat'
 
 // ── Radio étudiante : émissions à venir (radio-schedules.json, grille hebdo, day = 0 dimanche … 6 samedi, heure de Montréal) ──
 const seeded = str => { let h = 1779033703 ^ str.length; for (const c of str) { h = Math.imul(h ^ c.charCodeAt(0), 3432918353); h = (h << 13) | (h >>> 19); } return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; };
+/** Fenêtres d'écoute par édition (heure de Montréal, minutes) : matin = matin et journée ; soir = soirée. */
+export const RADIO_WINDOWS = { matin: [5 * 60, 17 * 60], soir: [17 * 60, 24 * 60] };
+const NOT_A_SHOW = g => /\breprise\b|\brediffusion\b|^(les nuits|late night|.*\blate night\b|musique|programmation musicale)/i.test(g.title) || /^(CJLO|CKUT|CISM|CHYZ|CFAK|CHOQ)\b.*(late|nuit)/i.test(g.title);
 /**
- * Émissions de radio étudiante à venir, tirées au hasard (graine = date) : matin → émissions du jour après l'heure du créneau,
- * soir → émissions du lendemain. Une par station d'abord, de 7 h à 23 h, sans reprise ni bouche-trou. Rien si aucune grille.
+ * Émissions de radio étudiante selon l'édition, tirées au hasard (graine = date et édition), une par station :
+ * matin → émissions du matin et de la journée du jour même (5 h – 17 h) à partir de l'heure de publication (ou en ondes) ;
+ * soir → émissions de la soirée du jour même (17 h – minuit) encore à venir ou en ondes à l'heure de publication.
+ * Repli documenté (`fallback: true`) si l'édition compte moins de `max` stations : pour les stations restantes, l'émission
+ * à venir la plus proche de la fenêtre (même jour, puis lendemain avant midi). Sans reprise ni bouche-trou ; rien sans grille.
  */
 export function pickRadio(schedules, slot, { max = 3 } = {}) {
-  const day = slot.id === 'soir' ? addDays(slot.day, 1) : slot.day;
-  const [y, m, d] = day.split('-').map(Number), dow = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
-  const after = slot.id === 'soir' ? 7 * 60 : Math.max(7 * 60, hm(slot.target || '07:45'));
-  const rnd = seeded(`radio:${day}`), byStation = [];
+  const day = slot.day, ed = slot.id === 'soir' ? 'soir' : 'matin', [w0, w1] = RADIO_WINDOWS[ed];
+  const now = hm(slot.target || (ed === 'soir' ? '19:30' : '07:45'));
+  const dowOf = dd => { const [y, m, d] = dd.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay(); };
+  const dow = dowOf(day), next = addDays(day, 1), dowN = dowOf(next);
+  const live = g => hm(g.start) >= now || (g.end && hm(g.end) > now && hm(g.start) < now);
+  const rnd = seeded(`radio:${day}:${ed}`), main = [], spare = [];
   for (const st of Object.values(schedules?.stations || {})) {
-    const shows = (st.grid || []).filter(g => g.day === dow && g.title && hm(g.start) >= after && hm(g.start) <= 23 * 60
-      && !/\breprise\b|\brediffusion\b|^(les nuits|late night|.*\blate night\b|musique|programmation musicale)/i.test(g.title) && !/^(CJLO|CKUT|CISM|CHYZ|CFAK|CHOQ)\b.*(late|nuit)/i.test(g.title));
-    if (!shows.length || !st.name) continue;
-    const pick = shows[Math.floor(rnd() * shows.length)];
-    byStation.push({ emoji: '📻', title: pick.title.trim(), station: st.name, date: day, start: pick.start, when: `${frShort(day)} · ${frHour(pick.start)}`, r: rnd() });
+    if (!st.name) continue;
+    const ok = (st.grid || []).filter(g => g.title && !NOT_A_SHOW(g));
+    const inWin = ok.filter(g => g.day === dow && hm(g.start) >= w0 && hm(g.start) < w1 && live(g));
+    if (inWin.length) { const pick = inWin[Math.floor(rnd() * inWin.length)]; main.push({ pick, d: day, r: rnd() }); continue; }
+    // Repli : la plus proche de la fenêtre, à venir (même jour hors fenêtre, puis lendemain 7 h – midi).
+    const later = [...ok.filter(g => g.day === dow && hm(g.start) >= now).map(g => ({ g, d: day, dist: Math.abs(hm(g.start) - (hm(g.start) < w0 ? w0 : w1)) })),
+      ...ok.filter(g => g.day === dowN && hm(g.start) >= 7 * 60 && hm(g.start) < 12 * 60).map(g => ({ g, d: next, dist: 24 * 60 - w1 + hm(g.start) }))].sort((a, b) => a.dist - b.dist);
+    if (later.length) spare.push({ pick: later[0].g, d: later[0].d, dist: later[0].dist, fallback: true });
   }
-  return byStation.sort((a, b) => a.r - b.r).slice(0, max).sort((a, b) => hm(a.start) - hm(b.start)).map(({ r, ...x }) => x);
+  const chosen = main.sort((a, b) => a.r - b.r).slice(0, max);
+  chosen.push(...spare.sort((a, b) => a.dist - b.dist).slice(0, Math.max(0, max - chosen.length)));
+  const key = x => (x.d === day ? 0 : 1440) + hm(x.pick.start);
+  return chosen.sort((a, b) => key(a) - key(b)).map(x => ({ emoji: '📻', title: x.pick.title.trim(), station: schedules.stations && Object.values(schedules.stations).find(st => (st.grid || []).includes(x.pick)).name, date: x.d, start: x.pick.start, when: `${frShort(x.d)} · ${frHour(x.pick.start)}`, ...(x.fallback ? { fallback: true } : {}) }));
 }
 /** « 📻 Punk-o-rama · CHYZ 94,3 · ven. 13 nov. · 11 h ». */
 export const radioLine = x => `${x.emoji} ${x.title} · ${x.station} · ${x.when}`;

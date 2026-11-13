@@ -159,12 +159,12 @@ async function main() {
     if (sel.skip) { reason = sel.why; fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), previewMarkdown(slot, sel, null, null, { dry, reason })); console.log(reason); if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${slot.label} : ${reason}\n`); return; }
     // Sport étudiant : résultats récents du site (sports-masthead.json) pour l'image et les textes longs ; rien si aucune donnée récente.
     let sports = { results: [], next: [] };
-    try { sports = pickSports(rd(arg('sports', 'sports-masthead.json')), slot.day, { max: 6, days: 2, afterToday: slot.id === 'soir' }); } catch (e) { console.log(`::warning::résultats sportifs illisibles (${String(e.message).slice(0, 120)}) : image sans bloc sport.`); }
+    try { sports = pickSports(rd(arg('sports', 'sports-masthead.json')), slot.day, { max: 8, days: 2, afterToday: slot.id === 'soir' }); } catch (e) { console.log(`::warning::résultats sportifs illisibles (${String(e.message).slice(0, 120)}) : image sans bloc sport.`); }
     console.log(`Sport étudiant : ${sports.results.length} résultat(s), ${sports.next.length} prochain(s) match(s)`);
     // Radio étudiante : émissions à venir (matin : du jour ; soir : du lendemain), tirage reproductible par date ; rien si aucune grille.
     let radio = [];
-    try { radio = pickRadio(rd(arg('radio', 'radio-schedules.json')), slot, { max: 4 }); } catch (e) { console.log(`::warning::grilles radio illisibles (${String(e.message).slice(0, 120)}) : image sans bloc radio.`); }
-    console.log(`Radio étudiante : ${radio.length} émission(s)`);
+    try { radio = pickRadio(rd(arg('radio', 'radio-schedules.json')), slot, { max: 5 }); } catch (e) { console.log(`::warning::grilles radio illisibles (${String(e.message).slice(0, 120)}) : image sans bloc radio.`); }
+    console.log(`Radio étudiante (${slot.id}) : ${radio.length} émission(s)${radio.some(x => x.fallback) ? `, dont ${radio.filter(x => x.fallback).length} en repli (fenêtre trop peu fournie)` : ""}`);
     const model = { slot, items: sel.items, sports, radio };
     texts = buildUneAll(model, POLICY.hashtags?.maxByNetwork || {});
     const { renderImages } = await import('./une-render.mjs');

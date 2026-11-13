@@ -85,9 +85,9 @@
   window.renderUne = async function renderUne({ model, format }) {
     const card = document.getElementById('card'); card.textContent = '';
     THEME = model.slot.kind === 'soir' ? 'sombre' : 'clair';
-    const [lead, ...rest] = model.items; const others = rest.slice(0, 3);
+    const [lead, ...rest] = model.items; const others = rest.slice(0, format === 'story' ? 5 : format === 'paysage' ? 3 : 4);
     const S = Array.isArray(model.sports) ? { results: model.sports, next: [] } : (model.sports || { results: [], next: [] });
-    const T = format === 'paysage' ? 4 : 6, R0 = S.results || [], N0 = S.next || [];
+    const T = format === 'paysage' ? 4 : format === 'story' ? 8 : 6, R0 = S.results || [], N0 = S.next || [];
     const nr = Math.min(R0.length, Math.max(Math.ceil(T / 2), T - N0.length)); const res = R0.slice(0, nr), nxt = N0.slice(0, T - nr); const sports = [...res, ...nxt];
     const theme = model.slot.kind === 'soir' ? 'sombre' : 'clair';
     card.className = `card ${format} ${theme} ${model.slot.kind || ''} ${others.length ? '' : 'solo'} ${sports.length ? '' : 'nosport'} ${res.length && nxt.length ? 'two' : 'one'}`;
@@ -124,6 +124,8 @@
     const full = el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources');
     foot.append(fm, full);
     foot.append(el('p', 'ind', 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.'));
+    // Story : la bande du bas (sous l'interface d'Instagram et de Facebook) annonce la prochaine édition ; rien d'essentiel n'y est.
+    if (format === 'story') { const nx = el('p', 'nextEd'); nx.append(el('span', 'lbl', model.slot.next ? 'Prochaine édition' : 'Toute l’actualité étudiante'), el('b', '', model.slot.next || 'Deux unes par jour, matin et soir'), el('span', 'url', 'le\u2011radar.ca')); foot.append(nx); }
     const main = el('div', 'main'); const colA = el('div', 'col a'); const colB = el('div', 'col b');
     colA.append(leadBox);
     if (radio.length) sbody.append(rb);
@@ -140,16 +142,24 @@
     fit(lt, format === 'paysage' ? 28 : 40, solo ? 5 : format === 'story' ? 4 : 3);
     const boxes = [card, main, colA, colB, leadBox, side, list, sp, grid, rb, colR, colN];
     const over = () => boxes.some((b) => b.isConnected && b.scrollHeight > b.clientHeight + 2) || ph.clientHeight < (format === 'paysage' ? 180 : format === 'story' ? 420 : 340);
-    if (hook) hook.style.webkitLineClamp = String(solo ? 5 : format === 'paysage' ? 2 : 3);
+    if (hook) hook.style.webkitLineClamp = String(solo ? 6 : format === 'paysage' ? 2 : format === 'story' ? 4 : 3);
     const removed = []; const rm = (parent) => { removed.push([parent, parent.lastChild]); parent.lastChild.remove(); };
     const cols = () => [colR, colN].filter((c) => c.isConnected && c.querySelector('.mt'));
     const dropMatch = (min) => { const cs = cols(); if (!cs.length) return false; const big = cs.sort((x, y) => y.querySelectorAll('.mt').length - x.querySelectorAll('.mt').length)[0]; const n = big.querySelectorAll('.mt').length; if (n <= min) return false; rm(big); return true; };
+    // Ordre de rognage : le résumé de la une reste (2 lignes au moins) tant que possible ; « Aussi à la une » et le sport
+    // gardent un socle (3 articles, 3 rencontres) avant de toucher au résumé ; tout ce qui a été retiré revient si la place le permet.
+    const clampHook = (floor) => { if (!hook || !hook.isConnected) return false; const n = Number(hook.style.webkitLineClamp) - 1; if (n < floor) return false; hook.style.webkitLineClamp = String(n); return true; };
     const steps = [
-      () => { if (!hook || !hook.isConnected) return false; const n = Number(hook.style.webkitLineClamp) - 1; if (n < 1) hook.remove(); else hook.style.webkitLineClamp = String(n); return true; },
+      () => clampHook(2),
+      () => { if (rb.children.length > 4 && rb.scrollHeight > rb.clientHeight + 2) { rm(rb); return true; } return false; },
+      () => { if (list.children.length > 3) { rm(list); return true; } return false; },
+      () => dropMatch(4),
       () => { if (rb.children.length > 3 && rb.scrollHeight > rb.clientHeight + 2) { rm(rb); return true; } return false; },
       () => dropMatch(3),
       () => { if (list.children.length > 2) { rm(list); return true; } return false; },
       () => dropMatch(2),
+      () => clampHook(1),
+      () => { if (hook && hook.isConnected) { hook.remove(); return true; } return false; },
       () => { if (list.children.length > 1) { rm(list); return true; } return false; },
       () => dropMatch(1),
       () => { if (rb.isConnected && rb.scrollHeight > rb.clientHeight + 2) { rb.remove(); card.classList.add('noradio'); return true; } return false; },
@@ -165,6 +175,9 @@
       if (over()) { node.remove(); stuck.add(parent); }
     }
     if (rb.isConnected && rb.children.length < 2) rb.remove(); // titre seul : pas de bloc vide
+    // Place restante : le résumé de la une reprend des lignes (jusqu'à 6).
+    const hookMax = solo ? 6 : format === 'paysage' ? 2 : format === 'story' ? 4 : 3;
+    if (hook && hook.isConnected) for (let n = Number(hook.style.webkitLineClamp) + 1; n <= hookMax; n++) { hook.style.webkitLineClamp = String(n); if (over()) { hook.style.webkitLineClamp = String(n - 1); break; } }
     [colR, colN].forEach((c) => { if (c.isConnected && !c.querySelector('.mt')) c.remove(); });
     grid.dataset.cols = String(grid.children.length);
     return { shown: 1 + list.children.length, photo: Boolean(src), sports: sp.isConnected ? sp.querySelectorAll('.mt').length : 0, sportsDetail: sp.isConnected ? `${colR.querySelectorAll('.mt').length} résultat(s) + ${colN.querySelectorAll('.mt').length} prochain(s)` : 'aucun', radio: rb.isConnected ? rb.querySelectorAll('.show').length : 0, overflow: over() };

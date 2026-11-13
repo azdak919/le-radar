@@ -4,7 +4,8 @@
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { IMAGE_SIZES, MAX_IMAGE_BYTES, frDay, frTypo } from './une-lib.mjs';
+import { IMAGE_SIZES, MAX_IMAGE_BYTES, frDay, frTypo, frShort } from './une-lib.mjs';
+const frShortDay = (ymd, n) => frShort(new Date(Date.parse(ymd + 'T12:00:00Z') + n * 864e5).toISOString().slice(0, 10));
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 
@@ -19,7 +20,9 @@ function startServer(port) {
 /** Modèle passé à la page : seulement ce qu'elle affiche. Images : miroir le-radar.ca d'abord (le dépôt n'a pas les fichiers miroir). */
 export function pageModel(model) {
   return {
-    slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()) },
+    slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()),
+      // Prochaine édition (date absolue) : bandeau bas de la story, dans la zone recouverte par l'interface d'Instagram et de Facebook.
+      next: model.slot.id === 'soir' ? `La une du matin · ${frShortDay(model.slot.day, 1)} · 7 h 45` : `La une du soir · ${frShortDay(model.slot.day, 0)} · 19 h 30` },
     sports: model.sports || { results: [], next: [] }, radio: model.radio || [],
     items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, place: x.place || '', placeColor: x.placeColor || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
   };
