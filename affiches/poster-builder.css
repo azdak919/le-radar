@@ -416,6 +416,10 @@ select.greeting:focus {
 body:has(#local-lab-format-bar) .dash-controls {
   padding-bottom: 120px;
 }
+body:has(#local-lab-format-bar) .affiche-wire--studio .dash-controls {
+  padding-bottom: 0;
+}
+
 
 /* Modèle « Une du Radar » : cacher les réglages campus, liste d’articles. */
 .dash[data-model="une"] .js-campus-only,
@@ -789,7 +793,15 @@ html[data-theme="light"] .preview-frame {
   .dash[data-mobile-pane="preview"] .dash-flow,
   .dash[data-mobile-pane="preview"] .dash-actions--end { display: none; }
   .dash[data-mobile-pane="preview"] .dash-railhead { border-bottom: 0; }
+  .dash[data-mobile-pane="preview"] .dash-preview {
+    flex: 1 1 0%;
+    min-height: 0;
+  }
+  .dash[data-mobile-pane="preview"] .dash-controls {
+    flex: 0 0 auto;
+  }
   .dash[data-mobile-pane="controls"] .dash-preview { display: none; }
+  .dash[data-mobile-pane="controls"] .dash-controls { flex: 1 1 auto; overflow: auto; }
   .dash[data-mobile-pane="controls"] .dash-flow { overflow: visible; }
   .preview-frame,
   .preview-frame canvas { max-height: none; }

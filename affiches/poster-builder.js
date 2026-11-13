@@ -3311,7 +3311,7 @@ function sizeStudioDash() {
   if (!dash) return;
   const top = dash.getBoundingClientRect().top;
   const gap = 16;
-  const h = Math.max(360, Math.round(window.innerHeight - top - gap));
+  const h = Math.max(280, Math.round(window.innerHeight - top - gap));
   dash.style.height = `${h}px`;
   dash.style.maxHeight = `${h}px`;
 }
@@ -4217,7 +4217,9 @@ function bind() {
     new ResizeObserver(refit).observe(pane);
   }
   window.addEventListener('resize', refit);
+  window.addEventListener('scroll', refit, { passive: true });
   window.visualViewport?.addEventListener('resize', refit);
+  window.visualViewport?.addEventListener('scroll', refit, { passive: true });
 }
 
 /* posterCredit:start — même règle que bankAttribution (scripts/social/image-resolve.mjs, feedCredit) :
