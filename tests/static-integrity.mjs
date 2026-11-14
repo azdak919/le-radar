@@ -719,6 +719,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('TRANSLATE_LANGS'), 'générateur public : langues du module de traduction');
   assert(existsSync(join(root, 'assets/kit/translate-mark.svg')), 'icône de traduction pour le pied d’affiche');
   assert(builderJs.includes('LANG_FONT_FILES'), 'générateur public : fontes d’endonymes auto-hébergées');
+  assert(builderJs.includes('Promise.allSettled'), 'générateur public : une police manquante ne bloque pas le studio');
+  assert(builderJs.includes('function studioErrorText'), 'générateur public : erreurs réseau du studio traduites');
+  assert(builderJs.includes('Erreur réseau. Vérifiez la connexion et rechargez la page.'), 'générateur public : message réseau en français');
+  assert(!/getElementById\('status'\)\.textContent = err\.message/.test(builderJs), 'générateur public : ne plus afficher err.message brut sous les boutons');
   assert(builderJs.includes('langTypeface'), 'générateur public : pile typographique des langues à graisse 400');
   assert(builderJs.includes("weight: '400'"), 'générateur public : Noto des langues en Regular 400');
   assert(!builder.includes('Noto+Sans+JP:wght@500'), 'générateur public : plus de Noto CJK 500 via Google Fonts');
