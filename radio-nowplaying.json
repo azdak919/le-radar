@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-11-14T21:05:24.083Z",
+  "updatedAt": "2026-11-14T22:06:47.928Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Football du Rouge et Or",
-        "source": "schedule",
-        "start": "12:30",
-        "end": "16:30",
-        "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
-      },
+      "current": null,
       "next": {
         "title": "Remparts de Québec",
         "source": "schedule",
@@ -20,41 +14,41 @@
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "Football du Rouge et Or",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T21:04:55.718Z"
+      "checkedAt": "2026-11-14T22:06:22.829Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le radar",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "16:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
-      },
-      "next": {
         "title": "Disconomique",
         "source": "schedule",
         "start": "16:30",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/disconomique"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
       "track": "",
-      "showTitle": "Le radar",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T21:05:09.597Z"
+      "checkedAt": "2026-11-14T22:06:36.542Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T21:05:11.900Z"
+      "checkedAt": "2026-11-14T22:06:38.964Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mi Dun Talk",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "The Limelight",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
+      },
       "track": "",
-      "showTitle": "Mi Dun Talk",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T21:05:13.980Z"
+      "checkedAt": "2026-11-14T22:06:40.145Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T21:05:15.136Z"
+      "checkedAt": "2026-11-14T22:06:41.316Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T21:05:23.733Z"
+      "checkedAt": "2026-11-14T22:06:47.577Z"
     }
   }
 }
