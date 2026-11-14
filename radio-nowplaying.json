@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T13:36:32.242Z",
+  "updatedAt": "2026-11-14T14:36:34.958Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T13:36:09.491Z"
+      "checkedAt": "2026-11-14T14:36:09.361Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T13:36:11.350Z"
+      "checkedAt": "2026-11-14T14:36:11.550Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T13:36:13.438Z"
+      "checkedAt": "2026-11-14T14:36:14.400Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World-Up'",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
-      },
-      "next": {
         "title": "The Live Wire Show",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/the-live-wire-show"
       },
+      "next": {
+        "title": "Gospel Unlimited",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/gospel-unlimited"
+      },
       "track": "",
-      "showTitle": "World-Up'",
+      "showTitle": "The Live Wire Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T13:36:25.243Z"
+      "checkedAt": "2026-11-14T14:36:26.760Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T13:36:26.236Z"
+      "checkedAt": "2026-11-14T14:36:27.761Z"
     },
     "choq": {
       "id": "choq",
@@ -135,7 +135,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "La dame Ovale — Marguerite",
+      "track": "Thea May — Lip Service",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -143,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T13:36:31.891Z"
+      "checkedAt": "2026-11-14T14:36:34.607Z"
     }
   }
 }
