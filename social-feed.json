@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-14T17:11:29.238Z",
-  "count": 23,
+  "updated": "2026-11-14T18:12:08.459Z",
+  "count": 24,
   "items": [
     {
       "name": "Quartier Libre",
@@ -385,6 +385,28 @@
           "handle": "WordPresscom",
           "stats": "",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "The Concordian",
+      "institution": "Concordia University",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/theconcordian",
+          "handle": "theconcordian",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/theconcordian",
+          "handle": "@theconcordian",
+          "stats": "",
+          "label": "X"
         }
       ]
     },
