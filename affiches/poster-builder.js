@@ -4427,7 +4427,7 @@ async function main() {
   await loadFonts();
   await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
-  assets.logoMark = await loadImage('../assets/icon-mark.svg', false);
+  try { assets.logoMark = await loadImage('../assets/icon-mark.svg', false); } catch { assets.logoMark = null; }
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
   assets.translate = await loadImage('../assets/kit/translate-mark.svg?v=regular', false);
   const [bank, rejected] = await Promise.all([
