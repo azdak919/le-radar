@@ -1,3 +1,74 @@
 {
- "_doc": "État de « La une du matin » et « La une du soir » (écrit par scripts/social/une-run.mjs, commité par le workflow « Social — La une du matin et du soir »). Clé AAAA-MM-JJ:matin|soir (heure de Montréal) : articles retenus (anti-doublon), textes et images figés, puis réseau : { at, url|id } ou { failed, attempts, error }. Jamais plus d’une publication par réseau et par créneau. Purge après 21 jours."
+ "_doc": "État de « La une du matin » et « La une du soir » (écrit par scripts/social/une-run.mjs, commité par le workflow « Social — La une du matin et du soir »). Clé AAAA-MM-JJ:matin|soir (heure de Montréal) : articles retenus (anti-doublon), textes et images figés, puis réseau : { at, url|id } ou { failed, attempts, error }. Jamais plus d’une publication par réseau et par créneau. Purge après 21 jours.",
+ "2026-11-13:soir": {
+  "key": "2026-11-13:soir",
+  "at": "2026-11-14T00:37:41.900Z",
+  "ids": [
+   "26fe570dbb517450",
+   "46dc41b85e115cf0",
+   "2aca1f68c24d8e27",
+   "d15a2729b3900240"
+  ],
+  "texts": {
+   "bluesky": "🌙 La une du soir du Radar · vendredi 13 novembre\n\n▪️ Après le sport, apprendre à se redéfinir — Josephine Dao Devenyns · Quartier Libre\n▪️ Saguenay vers des infrastructures durables — Elena Simet · La Pige\n\nhttps://le-radar.ca/\n\n#MédiasÉtudiants #Québec",
+   "mastodon": "🌙 La une du soir du Radar · vendredi 13 novembre\n\n1. Après le sport, apprendre à se redéfinir\n✍️ Josephine Dao Devenyns · Quartier Libre\nhttps://le-radar.ca/article/26fe570dbb517450/\n\n2. Saguenay vers des infrastructures durables\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/46dc41b85e115cf0/\n\n3. Le Cégep de Jonquière au cœur de la COP31\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/2aca1f68c24d8e27/\n\nToute la une : https://le-radar.ca/\n\n#MédiasÉtudiants #UdeM #CégepDeJonquière #Québec",
+   "x": "🌙 La une du soir du Radar · vendredi 13 novembre\n\n▪️ Après le sport, apprendre à se redéfinir — Josephine Dao Devenyns · Quartier Libre\n▪️ Saguenay vers des infrastructures durables — Elena Simet · La Pige\n\nhttps://le-radar.ca/\n\n#MédiasÉtudiants #Québec",
+   "tumblr": "🌙 La une du soir du Radar · vendredi 13 novembre\n\n1. Après le sport, apprendre à se redéfinir\n✍️ Josephine Dao Devenyns · Quartier Libre\nhttps://le-radar.ca/article/26fe570dbb517450/\n\n2. Saguenay vers des infrastructures durables\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/46dc41b85e115cf0/\n\n3. Le Cégep de Jonquière au cœur de la COP31\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/2aca1f68c24d8e27/\n\n4. La guitare s’invite dans les résidences pour ainés de la région.\n✍️ Vittoria Caputo · La Pige\nhttps://le-radar.ca/article/d15a2729b3900240/\n\n🏟️ Sport étudiant :\n🏐 Volleyball (F) · Vert & Or (Sherbrooke) 3-0 Rouge et Or (Laval) · Final · ven. 13 nov.\n🏐 Volleyball (H) · REDS (UNB, Fredericton) 3-1 Carabins (Montréal) · Final · ven. 13 nov.\n🏀 Basketball (H) · Stingers (Concordia) 68-44 Redbirds (McGill) · Final · jeu. 12 nov.\n🏅 Voile · Concordia visite Fleet Race Nationals · WVYC · sam. 14 nov. · 0 h\n\nToute la une : https://le-radar.ca/",
+   "facebook": "🌙 La une du soir du Radar · vendredi 13 novembre\n\n1. Après le sport, apprendre à se redéfinir\n✍️ Josephine Dao Devenyns · Quartier Libre\nhttps://le-radar.ca/article/26fe570dbb517450/\n\n2. Saguenay vers des infrastructures durables\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/46dc41b85e115cf0/\n\n3. Le Cégep de Jonquière au cœur de la COP31\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/2aca1f68c24d8e27/\n\n4. La guitare s’invite dans les résidences pour ainés de la région.\n✍️ Vittoria Caputo · La Pige\nhttps://le-radar.ca/article/d15a2729b3900240/\n\n🏟️ Sport étudiant :\n🏐 Volleyball (F) · Vert & Or (Sherbrooke) 3-0 Rouge et Or (Laval) · Final · ven. 13 nov.\n🏐 Volleyball (H) · REDS (UNB, Fredericton) 3-1 Carabins (Montréal) · Final · ven. 13 nov.\n🏀 Basketball (H) · Stingers (Concordia) 68-44 Redbirds (McGill) · Final · jeu. 12 nov.\n🏅 Voile · Concordia visite Fleet Race Nationals · WVYC · sam. 14 nov. · 0 h\n🏅 Voile · McGill visite Fleet Race Nationals · WVYC · sam. 14 nov. · 0 h\n\n📻 À l’écoute (radio étudiante) :\nRave de nuit · CISM 89,3 · ven. 13 nov. · 19 h\nListening to Latin America: Blanca-Victoria · CKUT 90,3 · ven. 13 nov. · 19 h\nMangue, Goyave et Reggae · CFAK 88,3 · ven. 13 nov. · 21 h\nCJLO's Alternative Mega Mix · CJLO 1690AM · ven. 13 nov. · 21 h\nPalmarès CHYZ · CHYZ 94,3 · sam. 14 nov. · 10 h\n\nToute la une : https://le-radar.ca/\n\n#MédiasÉtudiants",
+   "linkedin": "🌙 La une du soir du Radar · vendredi 13 novembre\n\n1. Après le sport, apprendre à se redéfinir\n✍️ Josephine Dao Devenyns · Quartier Libre\nhttps://le-radar.ca/article/26fe570dbb517450/\n\n2. Saguenay vers des infrastructures durables\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/46dc41b85e115cf0/\n\n3. Le Cégep de Jonquière au cœur de la COP31\n✍️ Elena Simet · La Pige\nhttps://le-radar.ca/article/2aca1f68c24d8e27/\n\n4. La guitare s’invite dans les résidences pour ainés de la région.\n✍️ Vittoria Caputo · La Pige\nhttps://le-radar.ca/article/d15a2729b3900240/\n\n🏟️ Sport étudiant :\n🏐 Volleyball (F) · Vert & Or (Sherbrooke) 3-0 Rouge et Or (Laval) · Final · ven. 13 nov.\n🏐 Volleyball (H) · REDS (UNB, Fredericton) 3-1 Carabins (Montréal) · Final · ven. 13 nov.\n🏀 Basketball (H) · Stingers (Concordia) 68-44 Redbirds (McGill) · Final · jeu. 12 nov.\n🏅 Voile · Concordia visite Fleet Race Nationals · WVYC · sam. 14 nov. · 0 h\n🏅 Voile · McGill visite Fleet Race Nationals · WVYC · sam. 14 nov. · 0 h\n\n📻 À l’écoute (radio étudiante) :\nRave de nuit · CISM 89,3 · ven. 13 nov. · 19 h\nListening to Latin America: Blanca-Victoria · CKUT 90,3 · ven. 13 nov. · 19 h\nMangue, Goyave et Reggae · CFAK 88,3 · ven. 13 nov. · 21 h\nCJLO's Alternative Mega Mix · CJLO 1690AM · ven. 13 nov. · 21 h\nPalmarès CHYZ · CHYZ 94,3 · sam. 14 nov. · 10 h\n\nToute la une : https://le-radar.ca/\n\n#MédiasÉtudiants #UdeM #Québec",
+   "instagram": "🌙 La une du soir du Radar · vendredi 13 novembre\n\n1. Après le sport, apprendre à se redéfinir\n✍️ Josephine Dao Devenyns · Quartier Libre\n\n2. Saguenay vers des infrastructures durables\n✍️ Elena Simet · La Pige\n\n3. Le Cégep de Jonquière au cœur de la COP31\n✍️ Elena Simet · La Pige\n\n4. La guitare s’invite dans les résidences pour ainés de la région.\n✍️ Vittoria Caputo · La Pige\n\n🏟️ Sport étudiant :\n🏐 Volleyball (F) · Vert & Or (Sherbrooke) 3-0 Rouge et Or (Laval) · Final · ven. 13 nov.\n🏐 Volleyball (H) · REDS (UNB, Fredericton) 3-1 Carabins (Montréal) · Final · ven. 13 nov.\n🏀 Basketball (H) · Stingers (Concordia) 68-44 Redbirds (McGill) · Final · jeu. 12 nov.\n🏅 Voile · Concordia visite Fleet Race Nationals · WVYC · sam. 14 nov. · 0 h\n🏅 Voile · McGill visite Fleet Race Nationals · WVYC · sam. 14 nov. · 0 h\n\n📻 À l’écoute (radio étudiante) :\nRave de nuit · CISM 89,3 · ven. 13 nov. · 19 h\nListening to Latin America: Blanca-Victoria · CKUT 90,3 · ven. 13 nov. · 19 h\nMangue, Goyave et Reggae · CFAK 88,3 · ven. 13 nov. · 21 h\nCJLO's Alternative Mega Mix · CJLO 1690AM · ven. 13 nov. · 21 h\nPalmarès CHYZ · CHYZ 94,3 · sam. 14 nov. · 10 h\n\nToute la une : lien en bio (le-radar.ca)\n\n#MédiasÉtudiants #UdeM #CégepDeJonquière #Québec"
+  },
+  "tumblrTags": [
+   "le radar",
+   "la une",
+   "médias étudiants",
+   "presse étudiante",
+   "journalisme étudiant",
+   "québec",
+   "quebec",
+   "université",
+   "vie étudiante",
+   "actualités",
+   "quartier libre",
+   "udem",
+   "la pige",
+   "cégepdejonquière"
+  ],
+  "alt": "Affiche « La une du soir » du Radar, vendredi 13 novembre. À la une : Après le sport, apprendre à se redéfinir, par Josephine Dao Devenyns, Quartier Libre. Aussi : Saguenay vers des infrastructures durables (Elena Simet, La Pige) ; Le Cégep de Jonquière au cœur de la COP31 (Elena Simet, La Pige) ; La guitare s’invite dans les résidences pour ainés de la région. (Vittoria Caputo, La Pige). Lire sur le-radar.ca.",
+  "images": {
+   "portrait": "https://raw.githubusercontent.com/azdak919/le-radar/f61134fe14cc0306344a530cd0e5fdfe2a23b863/une/2026-11-13/soir-portrait.jpg"
+  },
+  "nets": {
+   "bluesky": {
+    "at": "2026-11-14T00:37:44.191Z",
+    "url": "https://bsky.app/profile/did:plc:uxuxieev7fbkiji3xyyhzgae/post/3n2ab2fpnpb2e",
+    "uri": "at://did:plc:uxuxieev7fbkiji3xyyhzgae/app.bsky.feed.post/3n2ab2fpnpb2e"
+   },
+   "mastodon": {
+    "at": "2026-11-14T00:37:46.527Z",
+    "url": "https://piaille.fr/@leradar/117611997847155546",
+    "id": "117611997847155546"
+   },
+   "x": {
+    "at": "2026-11-14T00:37:49.464Z",
+    "id": "6af7ad5b78196a0a972f1de7",
+    "status": ""
+   },
+   "tumblr": {
+    "at": "2026-11-14T00:37:50.315Z",
+    "url": "https://le-radar-ca.tumblr.com/post/833215969382006784",
+    "id": "833215969382006784"
+   },
+   "facebook": {
+    "at": "2026-11-14T00:37:55.973Z",
+    "id": "6af7ad5e9257ce33981f05eb",
+    "status": ""
+   },
+   "linkedin": {
+    "at": "2026-11-14T00:38:06.787Z",
+    "id": "6af7ad644b28296eb125ab2d",
+    "status": ""
+   }
+  }
+ }
 }
