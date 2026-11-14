@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T03:27:12.508Z",
+  "updatedAt": "2026-11-14T05:06:24.971Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,127 +21,120 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T03:26:59.014Z"
+      "checkedAt": "2026-11-14T05:06:02.401Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rebelles soniques (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Rebelles soniques (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T03:27:00.982Z"
+      "checkedAt": "2026-11-14T05:06:04.296Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Weekend Groove",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "WEFUNK",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Weekend Groove",
+      "next": {
+        "title": "Soca Sessions",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
+      "track": "",
+      "showTitle": "WEFUNK",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T03:27:03.418Z"
+      "checkedAt": "2026-11-14T05:06:06.630Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Come Up",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
+        "title": "Jazz Boulevard",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "title": "World-Up'",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "The Come Up",
+      "showTitle": "Jazz Boulevard",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T03:27:05.072Z"
+      "checkedAt": "2026-11-14T05:06:18.431Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Entre ciel et terre",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:59",
-        "url": "https://www.cfak.ca/balados/entre-ciel-et-terre"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "04:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": null,
       "track": "",
-      "showTitle": "Entre ciel et terre",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T03:27:06.431Z"
+      "checkedAt": "2026-11-14T05:06:19.516Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "OPUS",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "opus"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Ok Cowgirl — Rhinestone Cowgirl",
+      "track": "Guhn Twei — Coquerelles",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T03:27:12.157Z"
+      "checkedAt": "2026-11-14T05:06:24.620Z"
     }
   }
 }
