@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-14T19:37:02.262Z",
+  "updated": "2026-11-14T20:07:09.997Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 9,
+  "mismatches": 10,
   "ok": true,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-16/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Samuel Girard",
+      "reason": "page-byline"
+    },
     {
       "title": "SEO-Optimized Article Guide: Tips for Better Rankings",
       "link": "https://theplantnews.com/2026/11/14/letters-from-the-editors-november-2026/",
@@ -78,5 +86,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 9
+  "fixed": 10
 }

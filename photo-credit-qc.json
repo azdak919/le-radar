@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-14T19:39:48.032Z",
+  "updated": "2026-11-14T20:10:38.554Z",
   "total": 188,
-  "withImage": 173,
-  "withCredit": 173,
-  "cited": 120,
+  "withImage": 172,
+  "withCredit": 172,
+  "cited": 119,
   "pending": 28,
   "missingHero": 0,
   "ok": false,
-  "checked": 42,
-  "updatedCount": 4,
-  "citedNew": 8,
+  "checked": 43,
+  "updatedCount": 5,
+  "citedNew": 9,
   "fallbackNew": 34,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
@@ -20,9 +27,9 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "title": "Francisée, mais pas la bienvenue ?",
       "source": "Le Délit",
-      "credit": "Photo : Bastien Fournier",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
