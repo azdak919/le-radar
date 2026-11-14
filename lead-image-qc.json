@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-14T11:28:23.291Z",
+  "updated": "2026-11-14T12:38:01.706Z",
   "total": 188,
   "withPhoto": 174,
   "withStock": 28,
   "withCampusBank": 25,
   "fullyCovered": 188,
   "leadReadyPhotos": 162,
-  "pageScraped": 13,
-  "photosRecovered": 13,
+  "pageScraped": 15,
+  "photosRecovered": 15,
   "imagesCleared": 1,
-  "stockSearches": 26,
-  "stockFound": 23,
+  "stockSearches": 27,
+  "stockFound": 25,
   "campusBankFound": 20,
   "mainPageLeadReady": true,
   "gaps": [
@@ -33,16 +33,22 @@
       "image": null
     },
     {
-      "title": "When Neutrality Becomes Silence: McGill’s Responsibility to Protect Political Dissent",
-      "link": "https://www.mcgilldaily.com/2026/11/when-neutrality-becomes-silence-mcgills-responsibility-to-protect-political-dissent/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
-    },
-    {
       "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
       "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "On Mental Health’s Legalities and Limits: Analysing P-38",
+      "link": "https://theplantnews.com/2026/11/05/on-mental-healths-legalities-and-limits-analysing-p-38/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
+    },
+    {
+      "title": "Creative Writing October 2026",
+      "link": "https://theplantnews.com/2026/11/05/creative-writing-october-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Dawson_College_05.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -79,12 +85,6 @@
       "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
       "reason": "no-stock-match",
       "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
-    },
-    {
-      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
-      "link": "https://journallagriffe.ca/2026/10/un-changement-daile-qui-pourrait-faire-senvoler-les-griffons-du-cegep-de-loutaouais/",
-      "reason": "no-stock-match",
-      "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1-1.png"
     }
   ]
 }
