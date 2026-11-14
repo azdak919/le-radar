@@ -166,6 +166,20 @@
     return items.filter((item) => isWithinFreshnessWindow(item, referenceDate));
   }
 
+  /**
+   * Pool d’affichage : fenêtre de fraîcheur, avec filet si elle écarterait
+   * tout le fil (lib absente côté UI, horloge décalée, etc.). On préfère
+   * montrer les articles déjà chargés plutôt qu’un compteur plein et une
+   * liste vide.
+   */
+  function filterFreshItemsLenient(items = [], referenceDate = new Date()) {
+    const fresh = filterFreshItems(items, referenceDate);
+    if (fresh.length) return fresh;
+    const published = items.filter((item) => isPublishedOnOrBefore(item, referenceDate));
+    if (published.length) return published;
+    return items.slice();
+  }
+
   function pruneToFreshWindow(items = [], referenceDate = new Date()) {
     return filterFreshItems(items, referenceDate);
   }
@@ -190,6 +204,7 @@
     isWithinUniversitySessionBand,
     isWithinFreshnessWindow,
     filterFreshItems,
+    filterFreshItemsLenient,
     pruneToFreshWindow,
     freshnessWindowStart,
   };
