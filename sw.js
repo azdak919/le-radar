@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v1028";
+const CACHE_NAME = "radar-shell-v1029";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
@@ -134,7 +134,7 @@ self.addEventListener("message", (event) => {
 });
 
 const CACHEABLE_TYPES = /^(text\/html|text\/css|application\/javascript|text\/javascript|application\/json|image\/|font\/|application\/manifest\+json)/i;
-const CACHEABLE_EXT = /\.(html?|css|js|json|png|svg|ico|webmanifest|xml|woff2?)$/i;
+const CACHEABLE_EXT = /\.(html?|css|js|json|png|svg|ico|webmanifest|xml|woff2?|ttf|otf)$/i;
 
 function isCacheableResponse(response, request) {
   if (!response || !response.ok) return false;
@@ -210,6 +210,21 @@ self.addEventListener("fetch", (event) => {
 
   // Network-first for app code so bugfixes reach users without stale cache.
   if (url.pathname.endsWith(".js") || url.pathname.endsWith(".css")) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cacheIfOk(cache, request, clone));
+          return networkResponse;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // Network-first for fonts so a stale post-deploy cache heals itself
+  // without the user reloading, clearing the cache, or reinstalling the PWA.
+  if (/\.(woff2?|ttf|otf)$/i.test(url.pathname)) {
     event.respondWith(
       fetch(request)
         .then((networkResponse) => {

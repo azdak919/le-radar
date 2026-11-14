@@ -4,7 +4,7 @@
    ═══════════════════════════════════════════════════════ */
 
 const SHELL_CACHE  = 'solitaire-shell-v109';
-const FONT_CACHE   = 'solitaire-fonts-v27';
+const FONT_CACHE   = 'solitaire-fonts-v28';
 const CACHE_PREFIX = 'solitaire-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
 
@@ -85,7 +85,7 @@ self.addEventListener('fetch', (event) => {
     url.hostname === 'fonts.googleapis.com' ||
     url.hostname === 'fonts.gstatic.com'
   ) {
-    event.respondWith(cacheFirst(FONT_CACHE, request));
+    event.respondWith(networkFirst(FONT_CACHE, request));
     return;
   }
 
@@ -110,6 +110,20 @@ function isCacheableResponse(response, request) {
     return CACHEABLE_EXT.test(new URL(request.url).pathname);
   } catch {
     return false;
+  }
+}
+
+async function networkFirst(cacheName, request) {
+  try {
+    const response = await fetch(request);
+    if (isCacheableResponse(response, request)) {
+      const cache = await caches.open(cacheName);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    return cached || new Response('Service unavailable', { status: 503 });
   }
 }
 

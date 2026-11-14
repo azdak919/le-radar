@@ -4,6 +4,17 @@
 ═══════════════════════════════════════════════════════════ */
 
 /* D2 — feuilles chargées via <link> avant/après celle-ci (pas @import) */
+
+/* Inter et Source Serif 4 auto-hébergées : le site reste typographié si
+   fonts.googleapis.com / fonts.gstatic.com sont bloqués, lents ou hors ligne.
+   font-display: swap évite un texte invisible (FOIT) pendant le chargement. */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("mobile/app/fonts/inter-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("mobile/app/fonts/inter-600.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap; src: url("mobile/app/fonts/inter-700.woff2") format("woff2"); }
+@font-face { font-family: "Source Serif 4"; font-style: normal; font-weight: 400; font-display: swap; src: url("mobile/app/fonts/source-serif-4-400.woff2") format("woff2"); }
+@font-face { font-family: "Source Serif 4"; font-style: normal; font-weight: 600; font-display: swap; src: url("mobile/app/fonts/source-serif-4-600.woff2") format("woff2"); }
+@font-face { font-family: "Source Serif 4"; font-style: normal; font-weight: 700; font-display: swap; src: url("mobile/app/fonts/source-serif-4-700.woff2") format("woff2"); }
+
 /* Overlay traduction articles : style-translate-overlay.css via <link>, pas @import. */
 
 :root {

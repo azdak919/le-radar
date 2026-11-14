@@ -254,6 +254,16 @@ assert(rootSw.includes('const CACHE_PREFIX = "radar-"'), 'préfixe cache racine 
 assert(pomoSw.includes("const CACHE_PREFIX = 'pomo-'"), 'préfixe cache Pomodoro isolé requis');
 assert(solitaireSw.includes("const CACHE_PREFIX = 'solitaire-'"), 'préfixe cache Solitaire isolé requis');
 
+assert(rootSw.includes('Network-first for fonts'), 'sw racine : polices en réseau d’abord pour s’auto-réparer sans rechargement');
+assert(rootSw.includes('woff2?|ttf|otf'), 'sw racine : reconnaît woff, woff2, ttf et otf');
+assert(rootSw.includes('self.skipWaiting()') && rootSw.includes('self.clients.claim()'), 'sw racine : prise de contrôle automatique');
+assert(styleCss.includes('mobile/app/fonts/inter-400.woff2'), 'style.css : Inter auto-hébergée (repli si Google Fonts échoue)');
+assert(styleCss.includes('font-display: swap'), 'style.css : font-display swap (pas de texte invisible)');
+const sportsSw = readFileSync(join(root, 'sports/sw.js'), 'utf8');
+assert(sportsSw.includes('networkFirst(FONT_CACHE, request)'), 'sw sports : Google Fonts en réseau d’abord');
+assert(pomoSw.includes('networkFirst(FONT_CACHE, request)'), 'sw pomo : Google Fonts en réseau d’abord');
+assert(solitaireSw.includes('networkFirst(FONT_CACHE, request)'), 'sw solitaire : Google Fonts en réseau d’abord');
+
 const backgroundsData = readFileSync(join(root, 'pomo/js/backgrounds-data.js'), 'utf8');
 for (const title of ['Palm Sunset', 'Tropical Beach', 'Tropical Waterfall', 'Tropical Paradise', 'Seaside Cliffs', 'Snowy Branch']) {
   assert(!backgroundsData.includes(`title: "${title}"`), `fond hors ligne éditoriale interdit: ${title}`);
@@ -719,6 +729,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('TRANSLATE_LANGS'), 'générateur public : langues du module de traduction');
   assert(existsSync(join(root, 'assets/kit/translate-mark.svg')), 'icône de traduction pour le pied d’affiche');
   assert(builderJs.includes('LANG_FONT_FILES'), 'générateur public : fontes d’endonymes auto-hébergées');
+  assert(builderJs.includes('Promise.allSettled'), 'générateur public : une police manquante ne bloque pas le studio');
+  assert(builderJs.includes('function studioErrorText'), 'générateur public : erreurs réseau du studio traduites');
+  assert(builderJs.includes('Erreur réseau. Vérifiez la connexion et rechargez la page.'), 'générateur public : message réseau en français');
+  assert(!/getElementById\('status'\)\.textContent = err\.message/.test(builderJs), 'générateur public : ne plus afficher err.message brut sous les boutons');
   assert(builderJs.includes('langTypeface'), 'générateur public : pile typographique des langues à graisse 400');
   assert(builderJs.includes("weight: '400'"), 'générateur public : Noto des langues en Regular 400');
   assert(!builder.includes('Noto+Sans+JP:wght@500'), 'générateur public : plus de Noto CJK 500 via Google Fonts');

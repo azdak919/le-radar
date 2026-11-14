@@ -3,13 +3,13 @@
    Scope: /pomo/ only — isolated from root radar SW and solitaire.
    Strategy:
      • App shell (HTML, icons, manifest)  → stale-while-revalidate
-     • Google Fonts CSS + WOFF2 files     → cache-first
+     • Google Fonts CSS + WOFF2 files     → network-first (repli cache hors ligne)
      • External background images         → network-only
      • Anything else same-origin under scope → stale-while-revalidate
    ═══════════════════════════════════════════════════════ */
 
 const SHELL_CACHE  = 'pomo-shell-v178';
-const FONT_CACHE   = 'pomo-fonts-v26';
+const FONT_CACHE   = 'pomo-fonts-v27';
 const CACHE_PREFIX = 'pomo-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
 
@@ -118,7 +118,7 @@ self.addEventListener('fetch', (event) => {
     url.hostname === 'fonts.googleapis.com' ||
     url.hostname === 'fonts.gstatic.com'
   ) {
-    event.respondWith(cacheFirst(FONT_CACHE, request));
+    event.respondWith(networkFirst(FONT_CACHE, request));
     return;
   }
 
@@ -142,6 +142,20 @@ function isCacheableResponse(response, request) {
     return CACHEABLE_EXT.test(new URL(request.url).pathname);
   } catch {
     return false;
+  }
+}
+
+async function networkFirst(cacheName, request) {
+  try {
+    const response = await fetch(request);
+    if (isCacheableResponse(response, request)) {
+      const cache = await caches.open(cacheName);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    return cached || new Response('Service unavailable', { status: 503 });
   }
 }
 

@@ -496,6 +496,20 @@ function langTypeface(size) {
   return `400 ${size}px ${LANG_FONT_FAMILIES.map((family) => `"${family}"`).join(', ')}`;
 }
 
+/* Message anglais brut du navigateur (« A network error occurred. ») traduit pour le statut du studio. */
+function studioErrorText(err) {
+  const raw = String((err && (err.message || err.name)) || err || '').trim();
+  const name = err && err.name ? String(err.name) : '';
+  if (
+    name === 'NetworkError'
+    || /network error|failed to fetch|load failed|networkerror|err_failed|err_internet|err_connection|err_name_not_resolved|err_timed_out/i.test(raw)
+  ) {
+    return 'Erreur réseau. Vérifiez la connexion et rechargez la page.';
+  }
+  if (/^timeout$/i.test(raw)) return 'Délai dépassé. Réessayez.';
+  return raw || 'erreur inattendue';
+}
+
 async function loadFonts() {
   const faces = [
     new FontFace('LR Serif', 'url(../scripts/og-fonts/SourceSerif4Display-Bold.ttf)'),
@@ -510,9 +524,13 @@ async function loadFonts() {
       { weight: '400', style: 'normal' },
     )),
   ];
-  await Promise.all(faces.map(async (f) => {
-    await f.load();
-    document.fonts.add(f);
+  /* Une police manquante (réseau, cache après déploiement, CORS) ne doit pas bloquer le studio. */
+  await Promise.allSettled(faces.map(async (f) => {
+    const loaded = await Promise.race([
+      f.load(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000)),
+    ]);
+    document.fonts.add(loaded);
   }));
 }
 
@@ -3180,7 +3198,7 @@ async function loadUneFeed() {
     state.uneCandidates = [];
     state.uneAutoArticles = [];
     state.uneAutoBriefs = [];
-    state.uneStatus = `Impossible de lire le fil : ${err.message}`;
+    state.uneStatus = `Impossible de lire le fil : ${studioErrorText(err)}`;
   }
   renderUneList();
   renderUneSportsList();
@@ -3611,8 +3629,8 @@ async function preview() {
     frame.dataset.state = 'erreur';
     paintPreview(null, null);
     status.textContent = isUneModel()
-      ? `Aperçu indisponible. ${err.message}`
-      : `Photo indisponible — fond radar. ${err.message}`;
+      ? `Aperçu indisponible. ${studioErrorText(err)}`
+      : `Photo indisponible — fond radar. ${studioErrorText(err)}`;
   } finally {
     if (gen === previewGen) frame.classList.remove('is-busy');
   }
@@ -3866,7 +3884,7 @@ async function downloadPrint(kind = 'pdf') {
     const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
     status.innerHTML = `Fichier <strong>${escapeAttr(name)}</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(dpi)} dpi · ${escapeAttr(mb)} Mo.${escapeAttr(tiled)}${escapeAttr(shareHint)} Imprimez à 100 %, sans « ajuster à la page ».${escapeAttr(isUneModel() ? uneMissingImagesNote() : '')}`;
   } catch (err) {
-    status.textContent = `Téléchargement impossible : ${err.message}`;
+    status.textContent = `Téléchargement impossible : ${studioErrorText(err)}`;
   } finally {
     buttons.forEach((b) => { if (b) b.disabled = false; });
   }
@@ -4409,7 +4427,7 @@ async function main() {
   await loadFonts();
   await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
-  assets.logoMark = await loadImage('../assets/icon-mark.svg', false);
+  try { assets.logoMark = await loadImage('../assets/icon-mark.svg', false); } catch { assets.logoMark = null; }
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
   assets.translate = await loadImage('../assets/kit/translate-mark.svg?v=regular', false);
   const [bank, rejected] = await Promise.all([
@@ -4436,5 +4454,5 @@ async function main() {
 }
 
 main().catch((err) => {
-  document.getElementById('status').textContent = err.message;
+  document.getElementById('status').textContent = `Chargement impossible. ${studioErrorText(err)}`;
 });
