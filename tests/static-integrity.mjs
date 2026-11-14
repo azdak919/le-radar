@@ -254,6 +254,17 @@ assert(rootSw.includes('const CACHE_PREFIX = "radar-"'), 'préfixe cache racine 
 assert(pomoSw.includes("const CACHE_PREFIX = 'pomo-'"), 'préfixe cache Pomodoro isolé requis');
 assert(solitaireSw.includes("const CACHE_PREFIX = 'solitaire-'"), 'préfixe cache Solitaire isolé requis');
 
+assert(rootSw.includes('Network-first for fonts'), 'sw racine : polices en réseau d’abord pour s’auto-réparer sans rechargement');
+assert(rootSw.includes('woff2?|ttf|otf'), 'sw racine : reconnaît woff, woff2, ttf et otf');
+assert(rootSw.includes('self.skipWaiting()') && rootSw.includes('self.clients.claim()'), 'sw racine : prise de contrôle automatique');
+const styleCss = readFileSync(join(root, 'style.css'), 'utf8');
+assert(styleCss.includes('mobile/app/fonts/inter-400.woff2'), 'style.css : Inter auto-hébergée (repli si Google Fonts échoue)');
+assert(styleCss.includes('font-display: swap'), 'style.css : font-display swap (pas de texte invisible)');
+const sportsSw = readFileSync(join(root, 'sports/sw.js'), 'utf8');
+assert(sportsSw.includes('networkFirst(FONT_CACHE, request)'), 'sw sports : Google Fonts en réseau d’abord');
+assert(pomoSw.includes('networkFirst(FONT_CACHE, request)'), 'sw pomo : Google Fonts en réseau d’abord');
+assert(solitaireSw.includes('networkFirst(FONT_CACHE, request)'), 'sw solitaire : Google Fonts en réseau d’abord');
+
 const backgroundsData = readFileSync(join(root, 'pomo/js/backgrounds-data.js'), 'utf8');
 for (const title of ['Palm Sunset', 'Tropical Beach', 'Tropical Waterfall', 'Tropical Paradise', 'Seaside Cliffs', 'Snowy Branch']) {
   assert(!backgroundsData.includes(`title: "${title}"`), `fond hors ligne éditoriale interdit: ${title}`);

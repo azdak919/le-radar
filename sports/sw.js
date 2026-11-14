@@ -5,7 +5,7 @@
    Strategy:
      • App shell (HTML, icons, manifest)  → stale-while-revalidate
      • Shared root assets (CSS, JS)       → stale-while-revalidate
-     • Google Fonts CSS + WOFF2 files     → cache-first
+     • Google Fonts CSS + WOFF2 files     → network-first (repli cache hors ligne)
      • Anything else                      → network (untouched)
 
    POURQUOI CE WORKER EXISTE
@@ -22,8 +22,8 @@
 
 importScripts('../scripts/sports-document-refresh.js');
 
-const SHELL_CACHE  = 'sports-shell-v406';
-const FONT_CACHE   = 'sports-fonts-v1';
+const SHELL_CACHE  = 'sports-shell-v407';
+const FONT_CACHE   = 'sports-fonts-v2';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
 
@@ -152,7 +152,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
-    event.respondWith(cacheFirst(FONT_CACHE, request));
+    event.respondWith(networkFirst(FONT_CACHE, request));
     return;
   }
 
@@ -174,6 +174,20 @@ function isCacheableResponse(response, request) {
     return CACHEABLE_EXT.test(new URL(request.url).pathname);
   } catch {
     return false;
+  }
+}
+
+async function networkFirst(cacheName, request) {
+  try {
+    const response = await fetch(request);
+    if (isCacheableResponse(response, request)) {
+      const cache = await caches.open(cacheName);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    return cached || new Response('Service unavailable', { status: 503 });
   }
 }
 

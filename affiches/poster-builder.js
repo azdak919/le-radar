@@ -526,7 +526,10 @@ async function loadFonts() {
   ];
   /* Une police manquante (réseau, cache après déploiement, CORS) ne doit pas bloquer le studio. */
   await Promise.allSettled(faces.map(async (f) => {
-    const loaded = await f.load();
+    const loaded = await Promise.race([
+      f.load(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000)),
+    ]);
     document.fonts.add(loaded);
   }));
 }
