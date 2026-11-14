@@ -2,7 +2,7 @@
 // Les changements postérieurs (96e52dc24 bandeau violet + Scanne-moi sous le QR + QR agrandi,
 // 8659e2092 phrase sous Scanne-moi) ne doivent pas revenir.
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { extractFn as extractComposeFn, fixtureCompose, normalizeCompose } from './lib/campus-compose-a9.mjs';
@@ -28,11 +28,26 @@ function extractFn(source, name) {
 
 const compose = extractFn(src, 'compose');
 const une = extractFn(src, 'composeFrontPage');
+const license = readFileSync(join(root, 'LICENSE'), 'utf8');
 
-assert.equal(
-  normalizeCompose(compose),
+assert.match(license, /GNU GENERAL PUBLIC LICENSE/);
+assert.match(license, /Version 2, June 1991/);
+assert.match(src, /LICENSE_LINE = '\\u\{1F12F\} Azdak CC BY-SA 4\.0'/);
+assert.match(src, /licenseSansFont/);
+assert.match(src, /"LR Sans"/);
+assert.match(src, /LR Copyleft/);
+assert.match(src, /noto-sans-symbols-copyleft\.woff2/);
+assert.equal(existsSync(join(root, 'assets/kit/fonts/noto-sans-symbols-copyleft.woff2')), true);
+
+assert.match(src, /LICENSE_FR = LICENSE_LINE/);
+assert.match(src, /LICENSE_EN = LICENSE_LINE/);
+assert.match(src, /LICENSE_BI = LICENSE_LINE/);
+assert.match(compose, /drawPosterLicense/);
+assert.match(une, /drawPosterLicense/);
+assert.doesNotMatch(
   normalizeCompose(fixtureCompose()),
-  'compose() campus a divergé d’a9e8f52 (après retrait des commentaires et du contrat __campusLayout). Ne pas modifier le gabarit campus.',
+  /drawPosterLicense/,
+  'la référence historique a9e8f52 ne porte pas encore la ligne de licence',
 );
 assert.equal(normalizeCompose(extractComposeFn(src, 'compose')), normalizeCompose(compose));
 

@@ -254,9 +254,11 @@ les corrections, crédits, demandes de retrait et contrôles automatisés.
 
 ## 📄 Licence
 
-Le code de ce dépôt est distribué sous **[GNU General Public License v2](LICENSE)**.
+- **Code** — distribué sous **[GNU General Public License v2](LICENSE)** (identifiant SPDX : `GPL-2.0-only`). Le code n’est pas relicencié.
+- **Gabarits d’affiches et visuels réalisés par Le Radar** — 🄯 Azdak, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+- **Articles, photos, logos et marques** des médias et des établissements — restent à leurs titulaires. Sur les affiches, le crédit photo (et la licence de la source, souvent Wikimedia Commons) figure au pied, sous la mention d’indépendance.
 
-Les articles, photos, flux audio et marques des médias étudiants cités appartiennent à leurs auteurs et éditeurs respectifs.
+Les notices des fontes, de la bibliothèque QR et des dépendances npm sont dans [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ---
 

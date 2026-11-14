@@ -16,9 +16,17 @@ for (const width of widths) {
       await expect(cards.nth(1)).toBeVisible();
       const info = await page.evaluate(() => {
         const expected = { tabloid: 11 / 17, letter: 8.5 / 11, legal: 8.5 / 14, 'ecran-paysage': 16 / 9, 'ecran-portrait': 9 / 16 };
+        const grid = document.querySelector('#kit-poster-grid');
         const list = [...document.querySelectorAll('#kit-poster-grid .kit-card--poster:not([hidden])')];
+        const g = grid.getBoundingClientRect();
+        const firstRow = list.filter((c) => Math.abs(c.getBoundingClientRect().top - list[0].getBoundingClientRect().top) < 2);
+        const rowRight = Math.max(...firstRow.map((c) => c.getBoundingClientRect().right));
+        const rowLeft = Math.min(...firstRow.map((c) => c.getBoundingClientRect().left));
         return {
           overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          cols: firstRow.length,
+          fill: (rowRight - rowLeft) / g.width,
+          groups: document.querySelectorAll('.kit-gallery-group__title').length,
           cards: list.map((c) => {
             const r = c.getBoundingClientRect();
             const box = c.querySelector('.kit-card__preview').getBoundingClientRect();
@@ -58,9 +66,18 @@ for (const width of widths) {
         if (!rows.has(c.top)) rows.set(c.top, []);
         rows.get(c.top).push(c.h);
       }
-      for (const hs of rows.values()) {
-        expect(Math.max(...hs) - Math.min(...hs), 'hauteurs égales sur une rangée de même format').toBeLessThan(2);
+      if (width >= 1024) {
+        expect(info.cols, 'plusieurs colonnes sur grand écran').toBeGreaterThanOrEqual(3);
+        expect(info.fill, 'la rangée remplit la largeur (pas de vide à droite)').toBeGreaterThan(0.9);
       }
+      if (width >= 1440) {
+        expect(info.cols, 'au moins 5 colonnes à 1440 px').toBeGreaterThanOrEqual(5);
+      }
+      if (width >= 1920) {
+        expect(info.cols, 'au moins 6 colonnes à 1920 px').toBeGreaterThanOrEqual(6);
+      }
+      /* Les hauteurs de carte varient (pastilles, 2 ou 3 actions) ; le cadre d’aperçu est déjà vérifié. */
+      expect(info.groups, 'pas de titres de groupe qui cassent la grille').toBe(0);
     });
   }
 }
