@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-14T14:07:59.567Z",
+  "updated": "2026-11-14T15:37:37.999Z",
   "total": 188,
   "pool": 52,
   "incomplete": 29,
   "withLeadExcerpt": 143,
   "candidates": 29,
   "enriched": 0,
-  "failed": 0,
+  "failed": 10,
   "ok": true,
   "samples": [
     {
@@ -25,15 +25,6 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
-    {
-      "title": "Joey Saputo announces sale of CF Montreal",
-      "link": "https://thelinknewspaper.ca/article/16564",
-      "ok": true,
-      "score": 100,
-      "chars": 181,
-      "sample": "The Saputo family founded the team in 1992, which was then called Montreal Impact. The team entered ",
       "changed": false
     },
     {
@@ -64,21 +55,30 @@
       "changed": false
     },
     {
-      "title": "Listening to The Echo of Grenada",
-      "link": "https://thelinknewspaper.ca/article/16563",
+      "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
+      "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
       "ok": true,
       "score": 100,
-      "chars": 388,
-      "sample": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance sh",
+      "chars": 950,
+      "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
       "changed": false
     },
     {
-      "title": "Refugee advocates renew calls for Canada to withdraw from U.S. border agreement",
-      "link": "https://thelinknewspaper.ca/article/16561",
+      "title": "48e édition du Gala de l’ADISQ : Le duo d’extraterrestres au sommet",
+      "link": "https://montrealcampus.ca/2026/11/11/le-duo-dextraterrestres-au-sommet/",
       "ok": true,
       "score": 100,
-      "chars": 418,
-      "sample": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to w",
+      "chars": 282,
+      "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
+      "changed": false
+    },
+    {
+      "title": "Trois facultés de l’UdeS en grève",
+      "link": "https://lecollectif.ca/a-la-une/trois-facultes-de-ludes-en-greve/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi po",
       "changed": false
     }
   ]
