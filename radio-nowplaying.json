@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T12:36:28.417Z",
+  "updatedAt": "2026-11-14T13:36:32.242Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T12:36:12.421Z"
+      "checkedAt": "2026-11-14T13:36:09.491Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Voix tropicale",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/voix-tropicale"
-      },
-      "next": {
         "title": "Elkin Polo El Show",
         "source": "schedule",
         "start": "08:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/elkin-polo-el-show"
       },
+      "next": {
+        "title": "Change le beat",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/change-le-beat"
+      },
       "track": "",
-      "showTitle": "Voix tropicale",
+      "showTitle": "Elkin Polo El Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T12:36:14.531Z"
+      "checkedAt": "2026-11-14T13:36:11.350Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T12:36:17.542Z"
+      "checkedAt": "2026-11-14T13:36:13.438Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "World-Up'",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "next": {
         "title": "The Live Wire Show",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/the-live-wire-show"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "World-Up'",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T12:36:20.603Z"
+      "checkedAt": "2026-11-14T13:36:25.243Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T12:36:22.152Z"
+      "checkedAt": "2026-11-14T13:36:26.236Z"
     },
     "choq": {
       "id": "choq",
@@ -135,7 +135,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "cherry pick — asleep with the fishes",
+      "track": "La dame Ovale — Marguerite",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -143,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T12:36:28.066Z"
+      "checkedAt": "2026-11-14T13:36:31.891Z"
     }
   }
 }
