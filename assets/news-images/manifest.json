@@ -601,16 +601,6 @@
       "via": "resize-proxy",
       "nameKey": "empathie-sante-mentale-_-maud-amoretti.jpg"
     },
-    "43c2a4dfedda98f9": {
-      "local": "assets/news-images/43c2a4dfedda98f9.jpg",
-      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/img_4167_snapseedcopy_snapseedcopy-1.jpg",
-      "host": "theplantnews.com",
-      "bytes": 82294,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:03.600Z",
-      "via": "resize-proxy",
-      "nameKey": "img_4167_snapseedcopy_snapseedcopy-1.jpg"
-    },
     "5fa57c2fce5bd593": {
       "local": "assets/news-images/5fa57c2fce5bd593.jpg",
       "remote": "https://www.thetribune.ca/wp-content/uploads/2026/09/Lilly-Guilbeault-Scitech-1-.png",
@@ -1687,16 +1677,6 @@
       "via": "disk",
       "nameKey": "05_ops_fanfic_illiteracy_harrison_campbell.jpeg"
     },
-    "9399e5062e1c9deb": {
-      "local": "assets/news-images/9399e5062e1c9deb.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 84631,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-14T18:09:37.364Z",
-      "via": "resize-proxy",
-      "nameKey": "lacrymobastien-1.png"
-    },
     "61416550eb75ecff": {
       "local": "assets/news-images/61416550eb75ecff.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/tent-school.jpeg",
@@ -1716,9 +1696,28 @@
       "updatedAt": "2026-11-14T18:39:42.116Z",
       "via": "resize-proxy",
       "nameKey": "the-strange-case-of-dr.-jekyll-and-mr.-high.jpg"
+    },
+    "c57a8c4869c18c73": {
+      "local": "assets/news-images/c57a8c4869c18c73.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/della-harris.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 283041,
+      "updatedAt": "2026-11-14T19:09:29.835Z",
+      "via": "disk",
+      "nameKey": "della-harris.png"
+    },
+    "c9e075d3c646791a": {
+      "local": "assets/news-images/c9e075d3c646791a.jpg",
+      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/fanfic-article-1-1.jpg",
+      "host": "theplantnews.com",
+      "bytes": 150873,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-14T19:09:31.067Z",
+      "via": "resize-proxy",
+      "nameKey": "fanfic-article-1-1.jpg"
     }
   },
-  "updatedAt": "2026-11-14T18:39:42.121Z",
+  "updatedAt": "2026-11-14T19:09:31.074Z",
   "count": 172,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
