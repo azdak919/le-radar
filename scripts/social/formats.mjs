@@ -6,7 +6,7 @@ import { torontoDay, torontoHour, torontoWeekday } from './policy.mjs';
 import { xlen, personCredit } from './lib.mjs';
 void personCredit;
 
-export const SPORT_EMOJI = { football: '🏈', 'flag-football': '🏈', hockey: '🏒', basketball: '🏀', volleyball: '🏐', soccer: '⚽', rugby: '🏉', badminton: '🏸' };
+export const SPORT_EMOJI = { football: '🏈', 'flag-football': '🏈', hockey: '🏒', basketball: '🏀', volleyball: '🏐', soccer: '⚽', rugby: '🏉', badminton: '🏸', sailing: '⛵', voile: '⛵', cheerleading: '📣' };
 export const SPORT_WEIGHT = { football: 100, hockey: 95, basketball: 80, volleyball: 70, soccer: 65, rugby: 55, 'flag-football': 20, badminton: 10 };
 export const SPORT_HASH = { football: '#FootballU', 'flag-football': '#FootballU', hockey: '#HockeyU', basketball: '#BasketU', volleyball: '#VolleyU', soccer: '#SoccerU', rugby: '#RugbyU', badminton: '#BadmintonU' };
 const MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
