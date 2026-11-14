@@ -543,11 +543,46 @@
    * filtrés par établissement, variés (un par sport et sexe à tour de rôle,
    * universitaire d’abord), plus récents en premier. Rien n’est inventé.
    */
+  /* Table des sigles : en navigateur, institution-acronyms-data.js (déjà chargé) ;
+   * en Node, la même SoT via institution-labels-lib.js. */
+  function acronymMap() {
+    if (typeof window !== 'undefined' && window.RadarInstitutionAcronyms) return window.RadarInstitutionAcronyms;
+    try { return require('./institution-labels-lib.js').buildAcronymMap(); } catch { return {}; }
+  }
+  let _acr = null;
+  let _acrFold = null;
+  function acronyms() {
+    if (_acr) return { map: _acr, fold: _acrFold };
+    _acr = acronymMap();
+    _acrFold = Object.fromEntries(Object.entries(_acr).map(([k, v]) => [foldName(k), v]));
+    return { map: _acr, fold: _acrFold };
+  }
+  /** Sigle officiel (UdeM, ULaval, UNB…) issu de la table partagée. */
+  function institutionSigle(name) {
+    const raw = String(name || '').trim();
+    if (!raw) return '';
+    const { map, fold } = acronyms();
+    return map[raw] || fold[foldName(raw)] || '';
+  }
+  /**
+   * Forme courte pour les parenthèses : le sigle, sans le campus ni la ville
+   * (« UNB — Fredericton », « University of New Brunswick — campus Fredericton » → « UNB »).
+   * On ne conserve un suffixe après le tiret que s’il qualifie l’équipe (« équipe Blanc »).
+   */
+  function shortInstLabel(name) {
+    const raw = String(name || '').trim();
+    if (!raw) return '';
+    const rawSub = ((raw.match(/\s+[—–-]\s+(.*)$/) || [])[1] || '').trim();
+    const sub = /équipe|team/i.test(rawSub) ? rawSub.replace(/^campus\s+/i, '') : '';
+    const base = raw.replace(/\s+[—–-]\s+.*$/, '').trim();
+    const short = institutionSigle(base) || institutionSigle(raw) || base;
+    return sub ? `${short}, ${sub}` : short;
+  }
   /* Nom d’équipe (registre des formations) + établissement entre parenthèses ;
    * l’équipe de l’établissement de l’affiche s’affiche seule. Sans surnom : l’établissement seul. */
   function teamLabel(nickname, shortName, own = false) {
     const nick = frTypo(String(nickname || '').trim());
-    const inst = frTypo(String(shortName || '').trim());
+    const inst = frTypo(shortInstLabel(shortName));
     if (!nick) return inst;
     if (own || !inst || inst === nick) return nick;
     return `${nick} (${inst})`;
@@ -560,6 +595,47 @@
       who: teamLabel(team.nickname, team.shortName || team.name || team.fullName, own),
       vs: teamLabel(g.opponentNickname, g.opponent || g.opponentFullName, oppOwn),
     };
+  }
+  /** Épreuve (régate, championnat) plutôt qu’un match à domicile ou à l’extérieur. */
+  function isEventGame(team, g) {
+    const sport = String((team && (team.sport || team.sportLabel)) || (g && g.sport) || '').toLowerCase();
+    const folded = sport.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return (g && g.scoreKind === 'place') || folded === 'sailing' || folded === 'voile';
+  }
+  /** Nom d’épreuve en français (déjà traduit dans le payload CICSA) ; jamais le sigle de lieu anglais. */
+  function eventLabel(g) {
+    const looksEn = /nationals|championships?|regatta|invitational|\binvite\b|fleet race|team race|match race|\bWVYC\b/i;
+    const opp = String((g && g.opponent) || '').trim();
+    const full = String((g && g.opponentFullName) || '').trim();
+    const first = (s) => String(s || '').split(/\s*·\s*/)[0].trim();
+    if (opp && !looksEn.test(opp)) return frTypo(opp);
+    if (full && !looksEn.test(first(full))) return frTypo(first(full));
+    try {
+      const { sailingNameFr } = require('./cicsa-sailing-lib.js');
+      const src = first((g && (g.opponentEn || g.opponent || g.opponentFullName)) || '');
+      const tr = sailingNameFr(src);
+      if (tr) return frTypo(tr);
+    } catch { /* navigateur : pas de module CICSA ; on s’appuie sur le nom déjà français */ }
+    return frTypo(opp && !looksEn.test(opp) ? opp : first(opp) || first(full));
+  }
+  /** Sigle de l’établissement pour une épreuve : « ULaval », jamais « ULaVoile » ni « McGill Sailing ». */
+  function eventInstLabel(team) {
+    const inst = (team && (team.institutionName || team.institutionLabel || team.fullName)) || '';
+    return frTypo(shortInstLabel(inst) || shortInstLabel((team && team.name) || ''));
+  }
+  /**
+   * Ligne d’un match ou d’une régate pour l’affiche (en-tête et slogan).
+   * Régate : « ULaval · Championnat canadien de course en flotte », sans « visite ».
+   */
+  function posterUpcomingLine(team, g, campus) {
+    if (isEventGame(team, g)) {
+      const inst = eventInstLabel(team);
+      const event = eventLabel(g);
+      return { event: true, who: inst, vs: event, verb: '', line: [inst, event].filter(Boolean).join(' · ') };
+    }
+    const sides = gameSides(team, g, campus);
+    const verb = g && g.home ? 'reçoit' : 'visite';
+    return { event: false, who: sides.who, vs: sides.vs, verb, line: `${sides.who} ${verb} ${sides.vs}` };
   }
 
   /* Identifiant court et stable d’un match ou d’un résultat (paramètres d’URL de la sélection manuelle). */
@@ -651,8 +727,8 @@
         kicker: sport,
         gender: genderMark(team.sex),
         emoji: sportEmoji(team.sportLabel || team.sport),
-        line: g.scoreKind === 'place'
-          ? `${who}\u00A0: ${placeLabel(g.scoreFor, g.scoreAgainst)} · ${frTypo(g.opponent || g.opponentFullName || '')}`.trim()
+        line: (g.scoreKind === 'place' || isEventGame(team, g))
+          ? `${eventInstLabel(team)}\u00A0: ${placeLabel(g.scoreFor, g.scoreAgainst)} · ${eventLabel(g)}`.trim()
           : `${who} ${g.scoreFor}–${g.scoreAgainst} ${vs}`.trim(),
         meta: frDate(`${g.date}T12:00:00`).replace(/\s\d{4}$/, ''),
         date: g.date,
@@ -813,6 +889,12 @@
     assignRoles,
     teamLabel,
     gameSides,
+    institutionSigle,
+    shortInstLabel,
+    isEventGame,
+    eventLabel,
+    eventInstLabel,
+    posterUpcomingLine,
     genderMark,
     frTypo,
     mastheadSegments,

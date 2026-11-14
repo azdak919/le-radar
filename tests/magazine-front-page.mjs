@@ -290,6 +290,33 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.equal(general.who, 'Rouge et Or (ULaval)', 'affiche générale : établissement entre parenthèses');
   assert.equal(front.gameSides({ ...team, nickname: '' }, { opponent: "Bishop's", opponentFullName: "Bishop's University" }, laval).vs, 'Bishop’s', 'sans surnom : établissement seul');
   assert.equal(front.teamLabel('Gaiters', "Bishop's", false), 'Gaiters (Bishop’s)');
+  assert.equal(front.shortInstLabel('UNB — Fredericton'), 'UNB');
+  assert.equal(front.shortInstLabel('University of New Brunswick — campus Fredericton'), 'UNB');
+  assert.equal(front.institutionSigle('Université Laval'), 'ULaval');
+  assert.equal(front.teamLabel('REDS', 'UNB — Fredericton', false), 'REDS (UNB)', 'sigle UNB, sans la ville');
+  assert.equal(front.teamLabel('REDS', 'University of New Brunswick — campus Fredericton', false), 'REDS (UNB)');
+  const udem = { slug: 'udem', line: 'Université de Montréal', label: 'Université de Montréal' };
+  const carabins = { name: 'UdeM', nickname: 'Carabins', institutionName: 'Université de Montréal', sport: 'volleyball' };
+  const unbGame = { home: false, opponent: 'UNB — Fredericton', opponentNickname: 'REDS', opponentFullName: 'University of New Brunswick — campus Fredericton' };
+  assert.equal(front.posterUpcomingLine(carabins, unbGame, udem).line, 'Carabins visite REDS (UNB)');
+  assert.equal(front.gameSides(carabins, unbGame, udem).vs, 'REDS (UNB)');
+
+  const sail = { name: 'ULaVoile', sport: 'sailing', sportLabel: 'Voile', institutionName: 'Université Laval', institutionLabel: 'Université Laval' };
+  const ev = { date: '2026-11-14', opponent: 'Championnat canadien de course en flotte', opponentFullName: 'Fleet Race Nationals · WVYC', opponentEn: 'Fleet Race Nationals', scoreKind: 'place' };
+  assert.equal(front.isEventGame(sail, ev), true);
+  assert.equal(front.eventLabel(ev), 'Championnat canadien de course en flotte');
+  assert.equal(front.eventInstLabel(sail), 'ULaval');
+  const up = front.posterUpcomingLine(sail, ev, { slug: 'laval', line: 'Université Laval', label: 'Université Laval' });
+  assert.equal(up.line, 'ULaval · Championnat canadien de course en flotte');
+  assert.equal(up.verb, '');
+  assert.ok(!/visite/.test(up.line));
+  assert.ok(!/ULaVoile/.test(up.line));
+  assert.equal(front.posterUpcomingLine({ name: 'McGill Sailing', sport: 'sailing', institutionName: 'Université McGill' }, ev, null).line, 'McGill · Championnat canadien de course en flotte');
+  assert.equal(front.posterUpcomingLine({ name: 'Voile UdeS', sport: 'sailing', institutionName: 'Université de Sherbrooke' }, ev, null).line, 'UdeS · Championnat canadien de course en flotte');
+  assert.equal(front.posterUpcomingLine({ name: 'Concordia Sailing', sport: 'sailing', institutionName: 'Université Concordia' }, ev, null).line, 'Concordia · Championnat canadien de course en flotte');
+  const fromEn = front.eventLabel({ opponent: 'Fleet Race Nationals · WVYC', opponentEn: 'Fleet Race Nationals', scoreKind: 'place' });
+  assert.match(fromEn, /Championnat canadien de course en flotte|Championnat national Fleet Race/, 'nom anglais retraduit, pas WVYC');
+  assert.doesNotMatch(fromEn, /WVYC/);
 }
 
 // Sélection manuelle : rôles d’articles (places libres complétées par l’auto) et sports choisis par id.
@@ -326,6 +353,8 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   const v = res.items.find((x) => /7e sur 11/.test(x.line));
   assert.ok(v, 'résultat de voile présent');
   assert.ok(!/7–11/.test(v.line));
+  assert.match(v.line, /^ULaval/);
+  assert.ok(!/ULaVoile/.test(v.line), 'régate : sigle de l’établissement, pas le nom du club');
   assert.equal(v.gender, '');
   assert.match(v.id, /^[0-9a-f]{8}$/);
 }
@@ -346,6 +375,7 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.match(src, /uneMastGlass: 'givre'/, 'en-tête givré par défaut sur fond photo');
   assert.match(src, /\['bande', 'ratio', 'surimpression'\]\.includes\(photoUne\)/);
   assert.match(src, /reçoit\|visite\|chez\|vs\|à/, 'verbes atténués comme sur le site');
+  assert.match(src, /F\.posterUpcomingLine/, 'en-tête : mêmes règles de sigle et de régate que la bibliothèque');
   const lin = (c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
   const L = (r) => 0.2126 * lin(r[0]) + 0.7152 * lin(r[1]) + 0.0722 * lin(r[2]);
   const cr = (a, b) => (Math.max(L(a), L(b)) + 0.05) / (Math.min(L(a), L(b)) + 0.05);
