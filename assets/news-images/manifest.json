@@ -1697,15 +1697,6 @@
       "via": "resize-proxy",
       "nameKey": "the-strange-case-of-dr.-jekyll-and-mr.-high.jpg"
     },
-    "c57a8c4869c18c73": {
-      "local": "assets/news-images/c57a8c4869c18c73.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/della-harris.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 283041,
-      "updatedAt": "2026-11-14T19:09:29.835Z",
-      "via": "disk",
-      "nameKey": "della-harris.png"
-    },
     "c9e075d3c646791a": {
       "local": "assets/news-images/c9e075d3c646791a.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/fanfic-article-1-1.jpg",
@@ -1715,9 +1706,18 @@
       "updatedAt": "2026-11-14T19:09:31.067Z",
       "via": "resize-proxy",
       "nameKey": "fanfic-article-1-1.jpg"
+    },
+    "9399e5062e1c9deb": {
+      "local": "assets/news-images/9399e5062e1c9deb.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 84631,
+      "updatedAt": "2026-11-14T19:38:41.536Z",
+      "via": "disk",
+      "nameKey": "lacrymobastien-1.png"
     }
   },
-  "updatedAt": "2026-11-14T19:09:31.074Z",
+  "updatedAt": "2026-11-14T19:38:41.547Z",
   "count": 172,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
