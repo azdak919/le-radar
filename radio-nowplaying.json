@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T17:58:54.443Z",
+  "updatedAt": "2026-11-14T19:06:50.310Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -25,56 +25,55 @@
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T17:58:25.806Z"
+      "checkedAt": "2026-11-14T19:06:23.907Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Change le beat",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/change-le-beat"
-      },
-      "next": {
         "title": "Basses fréquences",
         "source": "schedule",
         "start": "13:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/basses-frequences"
       },
+      "next": {
+        "title": "Contenu explicite",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/contenu-explicite"
+      },
       "track": "",
-      "showTitle": "Change le beat",
+      "showTitle": "Basses fréquences",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T17:58:40.048Z"
+      "checkedAt": "2026-11-14T19:06:37.872Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Samedi Midi",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Funky Revolutions",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "West Indian Rhythms",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Samedi Midi",
+      "showTitle": "Funky Revolutions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T17:58:43.042Z"
+      "checkedAt": "2026-11-14T19:06:41.034Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Anatomy of Caribbean Music",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
-      },
-      "next": {
         "title": "Caribbean Callaloo",
         "source": "schedule-live",
         "start": "14:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
+      "next": {
+        "title": "Mi Dun Talk",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+      },
       "track": "",
-      "showTitle": "Anatomy of Caribbean Music",
+      "showTitle": "Caribbean Callaloo",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T17:58:45.543Z"
+      "checkedAt": "2026-11-14T19:06:42.830Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T17:58:46.697Z"
+      "checkedAt": "2026-11-14T19:06:43.823Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +142,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Moindre Mal — Tour d'ivoire",
+      "track": "Les Shirley — Korben Dallas",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T17:58:54.092Z"
+      "checkedAt": "2026-11-14T19:06:49.961Z"
     }
   }
 }
