@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T09:06:38.209Z",
+  "updatedAt": "2026-11-14T10:06:31.339Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T09:06:02.789Z"
+      "checkedAt": "2026-11-14T10:06:05.746Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T09:06:04.811Z"
+      "checkedAt": "2026-11-14T10:06:07.920Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T09:06:07.745Z"
+      "checkedAt": "2026-11-14T10:06:11.055Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
@@ -96,46 +96,25 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T09:06:10.106Z"
+      "checkedAt": "2026-11-14T10:06:23.510Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "04:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-14T09:06:11.129Z"
-    },
-    "choq": {
-      "id": "choq",
-      "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://www.choq.ca/balados/palmareschoq"
-      },
-      "track": "Jump Source — Fold ft. CFCF & Helena Deland",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -143,7 +122,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T09:06:37.859Z"
+      "checkedAt": "2026-11-14T10:06:24.514Z"
+    },
+    "choq": {
+      "id": "choq",
+      "name": "CHOQ.ca",
+      "current": null,
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "Fyore — BASSAR",
+      "showTitle": "",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-14T10:06:30.989Z"
     }
   }
 }
