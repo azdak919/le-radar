@@ -772,11 +772,11 @@ function posterTodayYmd() {
 
 function posterClock(time) {
   const raw = String(time || '').trim();
-  const m = raw.match(/^(\d{1,2})(?::(\d{2}))?/);
-  if (!m) return raw.replace(':', ' h ');
-  const h = String(Number(m[1]));
-  const min = m[2] && m[2] !== '00' ? ` h ${m[2]}` : ' h';
-  return `${h}${min}`;
+  if (!raw) return '';
+  const m = raw.match(/^(\d{1,2})(?::(\d{2}))?$/);
+  if (!m) return raw.includes(':') ? raw.replace(':', ' h ') : raw;
+  const min = Number(m[2] || 0);
+  return `${Number(m[1])} h${min ? ' ' + String(min).padStart(2, '0') : ''}`;
 }
 
 function pickPosterRadio(nowplaying, radios, campus, limit = 3) {
@@ -852,15 +852,20 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
       seen.add(id);
       seen.add(key);
       const F = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
-      const sides = F && F.gameSides ? F.gameSides(team, game, campus) : { who: name, vs: game.opponentNickname || game.opponent || '' };
-      const verb = game.home ? 'reçoit' : 'visite';
+      const row = F && F.posterUpcomingLine
+        ? F.posterUpcomingLine(team, game, campus)
+        : (() => {
+          const sides = F && F.gameSides ? F.gameSides(team, game, campus) : { who: name, vs: game.opponentNickname || game.opponent || '' };
+          const verb = game.home ? 'reçoit' : 'visite';
+          return { who: sides.who, vs: sides.vs, verb, line: `${sides.who} ${verb} ${sides.vs}` };
+        })();
       upcoming.push({
         sort: `${uniBoost}-${game.date}-${game.time || ''}`,
         today: game.date === today,
         kicker: sportTag,
         gender,
         emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
-        line: `${sides.who} ${verb} ${sides.vs}`,
+        line: row.line,
         upcoming: true,
         meta: [posterShortDate(game.date), posterClock(game.time)].filter(Boolean).join(' · '),
       });
@@ -876,6 +881,12 @@ function pickPosterSports(masthead, campus, limit = 3, targetYmd = '') {
         emoji: typeof RadarMagazineFrontPage !== 'undefined' && RadarMagazineFrontPage.sportEmoji ? RadarMagazineFrontPage.sportEmoji(sport) : '',
         line: (() => {
           const F = typeof RadarMagazineFrontPage !== 'undefined' ? RadarMagazineFrontPage : null;
+          if (F && F.isEventGame && F.isEventGame(team, game)) {
+            const inst = F.eventInstLabel ? F.eventInstLabel(team) : (team.institutionName || name);
+            const ev = F.eventLabel ? F.eventLabel(game) : (game.opponent || '');
+            const place = F.placeLabel ? F.placeLabel(game.scoreFor, game.scoreAgainst) : '';
+            return [inst, place, ev].filter(Boolean).join(' · ');
+          }
           const sd = F && F.gameSides ? F.gameSides(team, game, campus) : { who: name, vs: game.opponentNickname || game.opponent || '' };
           return `${sd.who} ${game.scoreFor}–${game.scoreAgainst} ${sd.vs}`;
         })(),
