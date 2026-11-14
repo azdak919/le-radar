@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T00:36:24.928Z",
+  "updatedAt": "2026-11-14T01:36:32.100Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,87 +21,86 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T00:36:08.847Z"
+      "checkedAt": "2026-11-14T01:36:20.161Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rave de nuit",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/rave-de-nuit"
-      },
-      "next": {
         "title": "Le 120e parallèle (reprise)",
         "source": "schedule",
         "start": "20:00",
         "end": "21:00",
         "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Rave de nuit",
+      "showTitle": "Le 120e parallèle (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T00:36:10.961Z"
+      "checkedAt": "2026-11-14T01:36:21.965Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listening to Latin America: Blanca-Victoria",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Macondo",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Weekend Groove",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Listening to Latin America: Blanca-Victoria",
+      "showTitle": "Macondo",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T00:36:14.054Z"
+      "checkedAt": "2026-11-14T01:36:24.390Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Go-Go Radio Magic Show",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
-      },
-      "next": {
         "title": "El Encuentro Latino",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/el-encuentro-latino"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "The Go-Go Radio Magic Show",
+      "showTitle": "El Encuentro Latino",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T00:36:16.666Z"
+      "checkedAt": "2026-11-14T01:36:25.862Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +127,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T00:36:17.976Z"
+      "checkedAt": "2026-11-14T01:36:26.783Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +140,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "achiko! — Expire",
+      "track": "Kèthe Magané — Renos",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +148,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T00:36:24.577Z"
+      "checkedAt": "2026-11-14T01:36:31.749Z"
     }
   }
 }
