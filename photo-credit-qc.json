@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-14T06:45:41.883Z",
+  "updated": "2026-11-14T08:09:59.124Z",
   "total": 188,
-  "withImage": 173,
-  "withCredit": 173,
-  "cited": 119,
+  "withImage": 174,
+  "withCredit": 174,
+  "cited": 120,
   "pending": 29,
   "missingHero": 0,
   "ok": false,
-  "checked": 43,
-  "updatedCount": 4,
-  "citedNew": 8,
+  "checked": 44,
+  "updatedCount": 5,
+  "citedNew": 9,
   "fallbackNew": 35,
   "samples": [
     {
@@ -20,9 +20,16 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
       "cited": true,
       "method": "media-credit-featured"
     },
