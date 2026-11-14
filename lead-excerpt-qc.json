@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-14T20:49:16.211Z",
+  "updated": "2026-11-14T22:07:33.415Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 28,
-  "withLeadExcerpt": 141,
-  "candidates": 28,
-  "enriched": 2,
-  "failed": 3,
+  "incomplete": 29,
+  "withLeadExcerpt": 143,
+  "candidates": 29,
+  "enriched": 6,
+  "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,21 +19,39 @@
       "changed": false
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": true
     },
     {
-      "title": "Quebec expects direct consultation on Erasmus+",
-      "link": "https://theconcordian.com/2026/11/quebec-expects-consultation-on-erasmus/",
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
-      "score": 95,
-      "chars": 293,
-      "sample": "“Our government is open to learning from other post-secondary systems and exploring opportunities th",
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": true
+    },
+    {
+      "title": "Do we ever outgrow the stories of our childhood? A look at how The Little Prince, Howl’s Moving Castle, and Fantastic Mr. Fox change as we do.",
+      "link": "https://theplantnews.com/2026/11/14/the-stories-that-grow-with-us/",
+      "ok": true,
+      "score": 96,
+      "chars": 969,
+      "sample": "Once upon a time, a child drew a boa constrictor swallowing an elephant whole. A grown-up, peering o",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 460,
       "sample": "This is how Merriam-Webster defines fan fiction. But anyone familiar with the genre will tell you th",
-      "changed": false
-    },
-    {
-      "title": "Joey Saputo announces sale of CF Montreal",
-      "link": "https://thelinknewspaper.ca/article/16564",
-      "ok": true,
-      "score": 100,
-      "chars": 181,
-      "sample": "The Saputo family founded the team in 1992, which was then called Montreal Impact. The team entered ",
       "changed": false
     }
   ]

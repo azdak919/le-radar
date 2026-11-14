@@ -611,16 +611,6 @@
       "via": "origin",
       "nameKey": "alaa-1.jpg"
     },
-    "2a05e4157723ff42": {
-      "local": "assets/news-images/2a05e4157723ff42.jpg",
-      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/contributor.png",
-      "host": "theplantnews.com",
-      "bytes": 93683,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:02.159Z",
-      "via": "resize-proxy",
-      "nameKey": "contributor.png"
-    },
     "1a0ee66cc728febb": {
       "local": "assets/news-images/1a0ee66cc728febb.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/marissa-sports-article-2.jpg",
@@ -1697,18 +1687,37 @@
       "via": "origin",
       "nameKey": "33cb2ba4-2ced-4d78-9da2-4e10cf761db4-e1794686681805.jpg"
     },
-    "9399e5062e1c9deb": {
-      "local": "assets/news-images/9399e5062e1c9deb.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
+    "f95e150fc854f62b": {
+      "local": "assets/news-images/f95e150fc854f62b.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/CoucheTard-scaled.jpeg",
       "host": "www.delitfrancais.com",
-      "bytes": 84631,
-      "updatedAt": "2026-11-14T20:50:09.461Z",
+      "bytes": 265706,
+      "updatedAt": "2026-11-14T22:08:20.246Z",
       "via": "disk",
-      "nameKey": "lacrymobastien-1.png"
+      "nameKey": "couchetard.jpeg"
+    },
+    "dfe590d051af5947": {
+      "local": "assets/news-images/dfe590d051af5947.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 143688,
+      "updatedAt": "2026-11-14T22:08:20.246Z",
+      "via": "disk",
+      "nameKey": "prix-litteraire-ia-.png"
+    },
+    "8644b9e9427428b1": {
+      "local": "assets/news-images/8644b9e9427428b1.png",
+      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/image4.png",
+      "host": "theplantnews.com",
+      "bytes": 111000,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-14T22:08:20.386Z",
+      "via": "origin",
+      "nameKey": "image4.png"
     }
   },
-  "updatedAt": "2026-11-14T20:50:09.473Z",
-  "count": 171,
+  "updatedAt": "2026-11-14T22:08:20.390Z",
+  "count": 172,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
