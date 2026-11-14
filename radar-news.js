@@ -49,6 +49,9 @@ async function loadNews({ silent = false } = {}) {
     }
   } catch (e) {
     console.error('Failed to load news.json', e);
+    // Un rafraîchissement raté ne doit pas effacer un fil déjà affiché
+    // (sinon la PWA tombe sur une liste vide après un soucis réseau).
+    if (news.length) return;
     news = [];
   }
   renderNewsFilters();
@@ -1360,25 +1363,6 @@ function renderNews() {
     items = items.filter((n) => articleMatchesSearch(n, tokens));
   }
 
-  NEWS_EMPTY.classList.toggle('hidden', items.length > 0);
-  if (NEWS_EMPTY) {
-    const emptyP = NEWS_EMPTY.querySelector('p');
-    if (emptyP) {
-      if (isSearchView && !items.length) {
-        emptyP.textContent = `Aucun résultat pour « ${newsSearchQuery} ».`;
-      } else if (isFollowedView && !items.length) {
-        emptyP.textContent = 'Aucun article des médias suivis pour le moment.';
-      } else {
-        emptyP.textContent = 'Aucun article pour le moment.';
-      }
-    }
-  }
-
-  const countLabel = isSearchView
-    ? `${items.length} résultat${items.length !== 1 ? 's' : ''}`
-    : `${items.length} article${items.length !== 1 ? 's' : ''}`;
-  NEWS_COUNT.textContent = countLabel;
-
   if (MEDIA_FOLLOW_BAR && window.MediaFollowUI) {
     if (isSourceView) {
       MediaFollowUI.renderSourceFollowBar(MEDIA_FOLLOW_BAR, { name: newsSourceFilter });
@@ -1388,7 +1372,6 @@ function renderNews() {
     }
   }
 
-  NEWS_LIST.innerHTML = '';
   if (isSearchView) {
     NEWS_LIST.dataset.mode = 'search';
   } else if (isSourceView) {
@@ -1399,103 +1382,141 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-mode');
   }
 
-  // Mode recherche (loupe) : liste plate, tous les résultats visibles.
-  // Pas de suite du fil ni de « Plus d'articles » — le repli ne s'applique pas.
-  if (isSearchView) {
-    NEWS_LIST.removeAttribute('data-contingency');
-    NEWS_LIST.removeAttribute('data-autumn-grace');
-    NEWS_LIST.removeAttribute('data-brief-count');
-    NEWS_LIST.removeAttribute('data-hero');
-    newsTailExpanded = false;
+  const frag = document.createDocumentFragment();
+  let displayed = 0;
 
-    if (items.length) {
-      const section = document.createElement('div');
-      section.className = 'news-search-results';
-      const qEsc = escapeHtml(newsSearchQuery);
-      section.innerHTML = `<h3 class="news-search-results__title">Résultats pour « ${qEsc} »</h3>`;
-      sortSearchResults(items, tokens).forEach((item) => {
-        const article = safeCreateArticle(item, 'standard');
-        if (article) section.appendChild(article);
+  try {
+    if (isSearchView) {
+      NEWS_LIST.removeAttribute('data-contingency');
+      NEWS_LIST.removeAttribute('data-autumn-grace');
+      NEWS_LIST.removeAttribute('data-brief-count');
+      NEWS_LIST.removeAttribute('data-hero');
+      newsTailExpanded = false;
+
+      if (items.length) {
+        const section = document.createElement('div');
+        section.className = 'news-search-results';
+        const qEsc = escapeHtml(newsSearchQuery);
+        section.innerHTML = `<h3 class="news-search-results__title">Résultats pour « ${qEsc} »</h3>`;
+        sortSearchResults(items, tokens).forEach((item) => {
+          const article = safeCreateArticle(item, 'standard');
+          if (article) {
+            section.appendChild(article);
+            displayed += 1;
+          }
+        });
+        frag.appendChild(section);
+      }
+    } else {
+      const hero = document.createElement('div');
+      hero.className = 'news-hero';
+      const compacts = [];
+      const tail = [];
+
+      const partition = isSourceView
+        ? partitionSourceFeed(items)
+        : partitionNewsFeed(items);
+      const { heroItems, briefItems, tailItems, contingencyBand } = partition;
+
+      if (contingencyBand > 0) {
+        NEWS_LIST.dataset.contingency = String(contingencyBand);
+      } else {
+        NEWS_LIST.removeAttribute('data-contingency');
+      }
+      if (!isSourceView && isAutumnGracePeriod()) {
+        NEWS_LIST.dataset.autumnGrace = '1';
+      } else {
+        NEWS_LIST.removeAttribute('data-autumn-grace');
+      }
+
+      // Wide E : 2 unes dès Full HD (1880, voir RADAR_HD_MIN_PX), 3 à 3840.
+      const wideDualLead = isWideDualLeadViewport();
+      const leadCount = wideDualLead ? Math.min(wideHeroLeadCount(), heroItems.length) : 1;
+      if (wideDualLead) hero.dataset.leads = String(leadCount);
+      else hero.removeAttribute('data-leads');
+      heroItems.forEach((item, i) => {
+        const role = i < leadCount ? 'lead' : 'feature';
+        const article = safeCreateArticle(item, role);
+        if (article) hero.appendChild(article);
       });
-      NEWS_LIST.appendChild(section);
+
+      briefItems.forEach((item) => {
+        const article = safeCreateArticle(item, 'compact');
+        if (article) compacts.push(article);
+      });
+
+      tailItems.forEach((item) => {
+        const article = safeCreateArticle(item, 'standard');
+        if (article) tail.push(article);
+      });
+
+      displayed = hero.childElementCount + compacts.length + tail.length;
+
+      if (hero.childElementCount) {
+        frag.appendChild(hero);
+      }
+      if (compacts.length) {
+        const briefRail = document.createElement('div');
+        briefRail.className = 'brief-rail';
+        briefRail.innerHTML = '<h3 class="brief-rail-title">En bref</h3>';
+        compacts.forEach((article) => briefRail.appendChild(article));
+        frag.appendChild(briefRail);
+      }
+
+      if (tail.length) {
+        const section = document.createElement('div');
+        section.className = 'news-tail';
+        section.innerHTML = '<h3 class="news-tail-title">Suite du fil</h3><div class="news-tail-body"></div>';
+        const body = section.querySelector('.news-tail-body');
+        tail.forEach((article) => body.appendChild(article));
+        frag.appendChild(section);
+      }
+
+      const briefCount = compacts.length;
+      if (briefCount) NEWS_LIST.dataset.briefCount = String(briefCount);
+      else NEWS_LIST.removeAttribute('data-brief-count');
     }
-    NEWS_LIST.dataset.ready = '1';
-    return;
+  } catch (err) {
+    console.error('Le Radar: échec du rendu du fil', err);
+    if (!displayed && items.length) {
+      items.forEach((item) => {
+        const article = safeCreateArticle(item, 'standard');
+        if (article) {
+          frag.appendChild(article);
+          displayed += 1;
+        }
+      });
+    }
   }
 
-  const hero = document.createElement('div');
-  hero.className = 'news-hero';
-  const compacts = [];
-  const tail = [];
-
-  const partition = isSourceView
-    ? partitionSourceFeed(items)
-    : partitionNewsFeed(items);
-  const { heroItems, briefItems, tailItems, contingencyBand } = partition;
-
-  if (contingencyBand > 0) {
-    NEWS_LIST.dataset.contingency = String(contingencyBand);
-  } else {
-    NEWS_LIST.removeAttribute('data-contingency');
-  }
-  if (!isSourceView && isAutumnGracePeriod()) {
-    NEWS_LIST.dataset.autumnGrace = '1';
-  } else {
-    NEWS_LIST.removeAttribute('data-autumn-grace');
+  if (NEWS_EMPTY) {
+    NEWS_EMPTY.classList.toggle('hidden', displayed > 0);
+    const emptyP = NEWS_EMPTY.querySelector('p');
+    if (emptyP) {
+      if (isSearchView && !displayed) {
+        emptyP.textContent = `Aucun résultat pour « ${newsSearchQuery} ».`;
+      } else if (isFollowedView && !displayed) {
+        emptyP.textContent = 'Aucun article des médias suivis pour le moment.';
+      } else {
+        emptyP.textContent = 'Aucun article pour le moment.';
+      }
+    }
   }
 
-  // Wide E : 2 unes dès Full HD (1880, voir RADAR_HD_MIN_PX), 3 à 3840.
-  const wideDualLead = isWideDualLeadViewport();
-  const leadCount = wideDualLead ? Math.min(wideHeroLeadCount(), heroItems.length) : 1;
-  if (wideDualLead) hero.dataset.leads = String(leadCount);
-  else hero.removeAttribute('data-leads');
-  heroItems.forEach((item, i) => {
-    const role = i < leadCount ? 'lead' : 'feature';
-    const article = safeCreateArticle(item, role);
-    if (article) hero.appendChild(article);
-  });
+  const countLabel = isSearchView
+    ? `${displayed} résultat${displayed !== 1 ? 's' : ''}`
+    : `${displayed} article${displayed !== 1 ? 's' : ''}`;
+  if (NEWS_COUNT) NEWS_COUNT.textContent = countLabel;
 
-  briefItems.forEach((item) => {
-    const article = safeCreateArticle(item, 'compact');
-    if (article) compacts.push(article);
-  });
+  // Remplacer le contenu seulement une fois le nouveau fil assemblé, pour
+  // ne pas laisser une liste vide si le partitionnement échoue.
+  NEWS_LIST.replaceChildren(frag);
 
-  tailItems.forEach((item) => {
-    const article = safeCreateArticle(item, 'standard');
-    if (article) tail.push(article);
-  });
-
-  if (hero.childElementCount) {
-    NEWS_LIST.appendChild(hero);
+  if (!isSearchView) {
+    syncNewsTailCollapse({ preserveExpanded: false });
+    updateNewsLayout();
+    scheduleMagazineColumnBalance();
   }
-  if (compacts.length) {
-    const briefRail = document.createElement('div');
-    briefRail.className = 'brief-rail';
-    briefRail.innerHTML = '<h3 class="brief-rail-title">En bref</h3>';
-    compacts.forEach((article) => briefRail.appendChild(article));
-    NEWS_LIST.appendChild(briefRail);
-  }
-
-  if (tail.length) {
-    const section = document.createElement('div');
-    section.className = 'news-tail';
-    section.innerHTML = '<h3 class="news-tail-title">Suite du fil</h3><div class="news-tail-body"></div>';
-    const body = section.querySelector('.news-tail-body');
-    tail.forEach((article) => body.appendChild(article));
-    NEWS_LIST.appendChild(section);
-  }
-
-  const briefCount = compacts.length;
-  if (briefCount) NEWS_LIST.dataset.briefCount = String(briefCount);
-  else NEWS_LIST.removeAttribute('data-brief-count');
-
-  // Nouveau rendu : replier la suite sauf si l'utilisateur l'avait déjà ouverte
-  // (conservé via newsTailExpanded entre rebalances, reset sur filtre/recherche).
-  syncNewsTailCollapse({ preserveExpanded: false });
-
-  updateNewsLayout();
-  // Équilibre magazine : combler le vide sous vedettes et/ou sous En bref.
-  scheduleMagazineColumnBalance();
   NEWS_LIST.dataset.ready = '1';
   lastMagazineViewportKey = magazineViewportKey();
 }
@@ -1836,11 +1857,28 @@ const magazineMeta = {
  * Fraîcheur universelle : scripts/session-freshness-lib.js
  * (même règle bots + UI — automne/hiver/été + grâce septembre).
  */
-const _SF = (typeof RadarSessionFreshness !== 'undefined') ? RadarSessionFreshness : null;
-const _HK = (typeof RadarNewsHousekeeping !== 'undefined') ? RadarNewsHousekeeping : null;
-const FRESHNESS_SESSION_COUNT = _SF?.FRESHNESS_SESSION_COUNT ?? 3;
-const CONTINGENCY_MAX_SESSIONS_BACK = _SF?.CONTINGENCY_MAX_SESSIONS_BACK
+// Lookup à l’appel, pas à l’évaluation du script : un SW qui sert un HTML
+// frais et un script de fraîcheur en retard (ou l’inverse) ne doit plus
+// figer _SF à null pour toute la session.
+function sessionFreshnessApi() {
+  if (typeof RadarSessionFreshness !== 'undefined' && RadarSessionFreshness) {
+    return RadarSessionFreshness;
+  }
+  if (typeof globalThis !== 'undefined') return globalThis.RadarSessionFreshness || null;
+  return null;
+}
+function newsHousekeepingApi() {
+  if (typeof RadarNewsHousekeeping !== 'undefined' && RadarNewsHousekeeping) {
+    return RadarNewsHousekeeping;
+  }
+  if (typeof globalThis !== 'undefined') return globalThis.RadarNewsHousekeeping || null;
+  return null;
+}
+const FRESHNESS_SESSION_COUNT = sessionFreshnessApi()?.FRESHNESS_SESSION_COUNT ?? 3;
+const CONTINGENCY_MAX_SESSIONS_BACK = sessionFreshnessApi()?.CONTINGENCY_MAX_SESSIONS_BACK
   ?? (FRESHNESS_SESSION_COUNT - 1);
+const NEWS_MAX_AGE_DAYS = sessionFreshnessApi()?.NEWS_MAX_AGE_DAYS ?? 45;
+const DAY_MS = 86400000;
 /* Stack 1 col / hors magazine : budgets larges (parité Kiosque). */
 const BRIEF_LIMITS = { lead: 960, feature: 960, compact: 420, standard: 300 };
 /**
@@ -1923,8 +1961,8 @@ function sortByDateDesc(items) {
 
 /* --- Calendrier / fraîcheur : délégué à session-freshness-lib (universel) --- */
 function getCurrentUniversitySessionStart(referenceDate = new Date()) {
-  return _SF
-    ? _SF.getCurrentUniversitySessionStart(referenceDate)
+  return sessionFreshnessApi()
+    ? sessionFreshnessApi().getCurrentUniversitySessionStart(referenceDate)
     : (() => {
       const y = referenceDate.getFullYear();
       const m = referenceDate.getMonth();
@@ -1935,20 +1973,20 @@ function getCurrentUniversitySessionStart(referenceDate = new Date()) {
 }
 
 function getUniversitySessionStart(referenceDate = new Date(), sessionsBack = 0) {
-  return _SF
-    ? _SF.getUniversitySessionStart(referenceDate, sessionsBack)
+  return sessionFreshnessApi()
+    ? sessionFreshnessApi().getUniversitySessionStart(referenceDate, sessionsBack)
     : getCurrentUniversitySessionStart(referenceDate);
 }
 
 function getUniversitySessionBand(referenceDate = new Date(), sessionsBack = 0) {
-  return _SF
-    ? _SF.getUniversitySessionBand(referenceDate, sessionsBack)
+  return sessionFreshnessApi()
+    ? sessionFreshnessApi().getUniversitySessionBand(referenceDate, sessionsBack)
     : { start: getCurrentUniversitySessionStart(referenceDate), end: referenceDate };
 }
 
 function isWithinUniversitySessionBand(item, referenceDate = new Date(), sessionsBack = 0) {
-  return _SF
-    ? _SF.isWithinUniversitySessionBand(item, referenceDate, sessionsBack)
+  return sessionFreshnessApi()
+    ? sessionFreshnessApi().isWithinUniversitySessionBand(item, referenceDate, sessionsBack)
     : false;
 }
 
@@ -1959,60 +1997,80 @@ function sessionBandPool(items, referenceDate = new Date(), sessionsBack = 0) {
 }
 
 function isAutumnGracePeriod(referenceDate = new Date()) {
-  return _SF
-    ? _SF.isAutumnGracePeriod(referenceDate)
+  return sessionFreshnessApi()
+    ? sessionFreshnessApi().isAutumnGracePeriod(referenceDate)
     : referenceDate.getMonth() === 8;
 }
 
 function freshnessMaxSessionsBack(referenceDate = new Date()) {
-  return _SF
-    ? _SF.freshnessMaxSessionsBack(referenceDate)
+  return sessionFreshnessApi()
+    ? sessionFreshnessApi().freshnessMaxSessionsBack(referenceDate)
     : CONTINGENCY_MAX_SESSIONS_BACK + (isAutumnGracePeriod(referenceDate) ? 1 : 0);
 }
 
 function isWithinFreshnessWindow(item, referenceDate = new Date()) {
-  return _SF
-    ? _SF.isWithinFreshnessWindow(item, referenceDate)
-    : false;
+  const api = sessionFreshnessApi();
+  if (api?.isWithinFreshnessWindow) {
+    return api.isWithinFreshnessWindow(item, referenceDate);
+  }
+  // Repli local (même règle que session-freshness-lib.js) : ne plus renvoyer
+  // false pour tout le fil quand le script de fraîcheur n’est pas encore là.
+  if (!isPublishedOnOrBefore(item, referenceDate)) return false;
+  const t = new Date(item?.date || 0).getTime();
+  if (!Number.isFinite(t)) return false;
+  const sessionStart = getCurrentUniversitySessionStart(referenceDate).getTime();
+  const ageStart = referenceDate.getTime() - NEWS_MAX_AGE_DAYS * DAY_MS;
+  return t >= Math.min(sessionStart, ageStart);
 }
 
 function isPublishedOnOrBefore(item, referenceDate = new Date()) {
-  return _SF
-    ? _SF.isPublishedOnOrBefore(item, referenceDate)
-    : (() => {
-      const published = new Date(item.date || 0);
-      return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
-    })();
+  const api = sessionFreshnessApi();
+  if (api?.isPublishedOnOrBefore) {
+    return api.isPublishedOnOrBefore(item, referenceDate);
+  }
+  const published = new Date(item.date || 0);
+  return Number.isFinite(published.getTime()) && published.getTime() <= referenceDate.getTime();
 }
 
 function filterFreshItems(items, referenceDate = new Date()) {
-  return _SF
-    ? _SF.filterFreshItems(items, referenceDate)
-    : items.filter(
-      (item) => isPublishedOnOrBefore(item, referenceDate) && isWithinFreshnessWindow(item, referenceDate),
-    );
+  const api = sessionFreshnessApi();
+  if (api?.filterFreshItems) {
+    return api.filterFreshItems(items, referenceDate);
+  }
+  return (items || []).filter((item) => isWithinFreshnessWindow(item, referenceDate));
+}
+
+function filterFreshItemsLenient(items, referenceDate = new Date()) {
+  const api = sessionFreshnessApi();
+  if (api?.filterFreshItemsLenient) {
+    return api.filterFreshItemsLenient(items, referenceDate);
+  }
+  const fresh = filterFreshItems(items, referenceDate);
+  if (fresh.length) return fresh;
+  const published = (items || []).filter((item) => isPublishedOnOrBefore(item, referenceDate));
+  if (published.length) return published;
+  return (items || []).slice();
 }
 
 /* --- Avis de ménage (fermeture estivale) : scripts/news-housekeeping-lib.js --- */
 function housekeepingDisposition(item, referenceDate = new Date()) {
-  return _HK
-    ? _HK.housekeepingDisposition(item, referenceDate)
-    : 'pass';
+  const api = newsHousekeepingApi();
+  return api ? api.housekeepingDisposition(item, referenceDate) : 'pass';
 }
 
 function filterHousekeepingForDisplay(items, referenceDate = new Date()) {
-  return _HK
-    ? _HK.filterHousekeepingForDisplay(items, referenceDate)
-    : items;
+  const api = newsHousekeepingApi();
+  return api ? api.filterHousekeepingForDisplay(items, referenceDate) : items;
 }
 
 function splitHousekeepingPools(items, referenceDate = new Date()) {
   const kept = filterHousekeepingForDisplay(items, referenceDate);
-  if (!_HK) return { kept, forcedBrief: [], normal: kept };
+  const api = newsHousekeepingApi();
+  if (!api) return { kept, forcedBrief: [], normal: kept };
   const forcedBrief = [];
   const normal = [];
   for (const item of kept) {
-    if (_HK.housekeepingDisposition(item, referenceDate) === 'brief') forcedBrief.push(item);
+    if (api.housekeepingDisposition(item, referenceDate) === 'brief') forcedBrief.push(item);
     else normal.push(item);
   }
   return { kept, forcedBrief, normal };
@@ -2193,7 +2251,7 @@ function resetMagazineMeta(heroItems = [], briefItems = []) {
 function partitionNewsFeed(items, referenceDate = new Date()) {
   // Pool unique, date desc — seule source de vérité pour l'ordre de fraîcheur.
   // Avis de fermeture/pause : exclus hors été ; en été → En bref seulement.
-  const fresh = filterFreshItems(items, referenceDate);
+  const fresh = filterFreshItemsLenient(items, referenceDate);
   const { forcedBrief, normal } = splitHousekeepingPools(fresh, referenceDate);
   const sortedNormal = sortByDateDesc(normal);
   const sortedAll = sortByDateDesc([...normal, ...forcedBrief]);

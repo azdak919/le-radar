@@ -23,8 +23,14 @@ assert.equal(SF.isWithinFreshnessWindow(item(d(2026, 7, 1)), sep5), true, 'août
 assert.equal(SF.isWithinFreshnessWindow(item(d(2026, 6, 1)), sep5), false, 'juillet caché début sept.');
 // Session longue : décembre garde tout l'automne (> 45 j).
 assert.equal(SF.isWithinFreshnessWindow(item(d(2026, 8, 3)), d(2026, 11, 15)), true);
-// Source muette : aucun article de repli.
+// Source muette : aucun article de repli (filtre strict).
 assert.deepEqual(SF.filterFreshItems([item(d(2026, 3, 18))], oct23), []);
+// Filet d'affichage : ne pas vider tout le fil si la fenêtre écarte tout.
+const staleOnly = [item(d(2026, 3, 18)), item(d(2026, 6, 10))];
+assert.deepEqual(SF.filterFreshItems(staleOnly, oct23), []);
+assert.equal(SF.filterFreshItemsLenient(staleOnly, oct23).length, 2, 'filet : garder le pool publié');
+const inWindow = [item(d(2026, 8, 2)), item(d(2026, 9, 1))];
+assert.equal(SF.filterFreshItemsLenient(inWindow, oct23).length, 2, 'filet inerte si le pool est déjà frais');
 // Cycle de vie des sources : toujours 3 sessions (pas de retrait prématuré).
 assert.equal(SF.isWithinSessionCycleWindow(item(d(2026, 3, 18)), oct23), true);
 assert.equal(RL.shouldDropSource({ priorItems: [], registryEntry: { _lastItemDate: d(2026, 3, 18).toISOString() }, referenceDate: oct23 }), false);
