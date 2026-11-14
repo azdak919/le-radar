@@ -257,7 +257,6 @@ assert(solitaireSw.includes("const CACHE_PREFIX = 'solitaire-'"), 'préfixe cach
 assert(rootSw.includes('Network-first for fonts'), 'sw racine : polices en réseau d’abord pour s’auto-réparer sans rechargement');
 assert(rootSw.includes('woff2?|ttf|otf'), 'sw racine : reconnaît woff, woff2, ttf et otf');
 assert(rootSw.includes('self.skipWaiting()') && rootSw.includes('self.clients.claim()'), 'sw racine : prise de contrôle automatique');
-const styleCss = readFileSync(join(root, 'style.css'), 'utf8');
 assert(styleCss.includes('mobile/app/fonts/inter-400.woff2'), 'style.css : Inter auto-hébergée (repli si Google Fonts échoue)');
 assert(styleCss.includes('font-display: swap'), 'style.css : font-display swap (pas de texte invisible)');
 const sportsSw = readFileSync(join(root, 'sports/sw.js'), 'utf8');
