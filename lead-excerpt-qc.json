@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-14T15:37:37.999Z",
+  "updated": "2026-11-14T15:44:54.181Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 29,
+  "incomplete": 31,
   "withLeadExcerpt": 143,
-  "candidates": 29,
-  "enriched": 0,
-  "failed": 10,
+  "candidates": 31,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -25,6 +25,33 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": true
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": true
+    },
+    {
+      "title": "Joey Saputo announces sale of CF Montreal",
+      "link": "https://thelinknewspaper.ca/article/16564",
+      "ok": true,
+      "score": 100,
+      "chars": 181,
+      "sample": "The Saputo family founded the team in 1992, which was then called Montreal Impact. The team entered ",
       "changed": false
     },
     {
@@ -52,33 +79,6 @@
       "score": 100,
       "chars": 342,
       "sample": "Durant tout le mois de novembre, le Trident présente la pièce La version qui n’intéresse personne, b",
-      "changed": false
-    },
-    {
-      "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
-      "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
-      "ok": true,
-      "score": 100,
-      "chars": 950,
-      "sample": "Lors du Sommet Canada-UE, qui s’est tenu les 29 et 30 octobre derniers à Montréal, la présidente de ",
-      "changed": false
-    },
-    {
-      "title": "48e édition du Gala de l’ADISQ : Le duo d’extraterrestres au sommet",
-      "link": "https://montrealcampus.ca/2026/11/11/le-duo-dextraterrestres-au-sommet/",
-      "ok": true,
-      "score": 100,
-      "chars": 282,
-      "sample": "Le duo Angine de Poitrine a été sacré roi de l’ADISQ, cumulant neuf Félix, dont cinq remportés diman",
-      "changed": false
-    },
-    {
-      "title": "Trois facultés de l’UdeS en grève",
-      "link": "https://lecollectif.ca/a-la-une/trois-facultes-de-ludes-en-greve/",
-      "ok": true,
-      "score": 100,
-      "chars": 474,
-      "sample": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi po",
       "changed": false
     }
   ]
