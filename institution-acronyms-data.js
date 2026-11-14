@@ -25,6 +25,8 @@ window.RadarInstitutionAcronyms = {
   "École de technologie supérieure (ÉTS)": "ÉTS",
   "École de technologie supérieure": "ÉTS",
   "HEC Montréal": "HEC",
+  "University of New Brunswick": "UNB",
+  "Université du Nouveau-Brunswick": "UNB",
   "ÉTS": "ÉTS",
   "École nationale d'administration publique (ENAP)": "ENAP",
   "ENAP": "ENAP",
@@ -47,7 +49,8 @@ window.RadarInstitutionAcronyms = {
   "UdeS": "UdeS",
   "McGill": "McGill",
   "Concordia": "Concordia",
-  "HEC": "HEC"
+  "HEC": "HEC",
+  "UNB": "UNB"
 };
 window.RadarInstitutionFullByAcronym = {
   "UdeM": "Université de Montréal",
@@ -67,6 +70,7 @@ window.RadarInstitutionFullByAcronym = {
   "Cégep Vieux-Montréal": "Cégep du Vieux Montréal",
   "ÉTS": "École de technologie supérieure",
   "HEC": "HEC Montréal",
+  "UNB": "Université du Nouveau-Brunswick",
   "ENAP": "École nationale d'administration publique",
   "INRS": "Institut national de la recherche scientifique",
   "Université McGill": "McGill University",

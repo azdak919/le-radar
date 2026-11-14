@@ -136,7 +136,7 @@ assert.equal(sp.results.length, 1, 'une rencontre par gameId ; ancienne et saiso
 assert.equal(U.sportsLine(sp.results[0]), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · mer. 11 nov.', 'date absolue, (F)/(H), établissement entre parenthèses');
 assert.doesNotMatch(JSON.stringify(sp), /aujourd|hier/);
 assert.equal(sp.next.length, 1, 'colonne « Prochains matchs »');
-assert.equal(U.sportsLine(sp.next[0]), '🏒 Hockey (H) · Carabins (Montréal) reçoit Patriotes (UQTR) · jeu. 12 nov. · 19 h', '« reçoit » / « visite » comme sur le site');
+assert.equal(U.sportsLine(sp.next[0]), '🏒 Hockey (H) · Carabins (UdeM) reçoit Patriotes (UQTR) · jeu. 12 nov. · 19 h', 'sigle officiel entre parenthèses ; « reçoit » / « visite » comme sur le site');
 assert.equal(sp.results[0].teams[0].color, '#912338', 'couleur de l’établissement (brand-colors.json)');
 // Cas limites : sans résultats, sans prochains matchs, couleur inconnue, noms anglais.
 const onlyNext = U.pickSports({ teams: { c: mh.teams.c } }, '2026-11-12');
@@ -150,12 +150,25 @@ assert.equal(U.institutionColor('Cégep imaginaire'), '', 'couleur inconnue : re
 assert.equal(U.institutionColor('ÉTS'), '#E40032', 'ÉTS (alias de brand-colors.json)'); assert.equal(U.institutionColor('ETS'), '#E40032');
 assert.doesNotMatch(fs.readFileSync(new URL('../scripts/social/une-lib.mjs', import.meta.url), 'utf8'), /BRAND_ALIAS/, 'alias lus dans brand-colors.json, pas en dur');
 assert.equal(U.institutionColor('Concordia'), '#912338'); assert.equal(U.institutionColor('UQTR'), JSON.parse(fs.readFileSync(new URL('../brand-colors.json', import.meta.url), 'utf8')).institutions['Université du Québec à Trois-Rivières'].color, 'UQTR : couleur lue dans brand-colors.json'); assert.equal(U.institutionColor('Bishop’s'), U.institutionColor("Bishop's University"));
-assert.equal(U.teamLabelFor('REDS', 'University of New Brunswick — campus Fredericton').inst, 'UNB, Fredericton', 'plus de « of New Brunswick »');
+assert.equal(U.teamLabelFor('REDS', 'University of New Brunswick — campus Fredericton').inst, 'UNB', 'sigle UNB, sans le campus en ville');
 assert.doesNotMatch(U.teamLabelFor('Blues', 'Dawson College').inst, /College/, 'pas de « College » anglais');
 assert.doesNotMatch(JSON.stringify(U.teamLabelFor('Gaiters', "Bishop's University")), /'/, 'apostrophe typographique');
 const many = { teams: Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`t${i}`, team({ id: `t${i}`, nickname: `Équipe${i}`, institutionLabel: 'Université Laval', results: [{ gameId: `r${i}`, date: '2026-11-11', scoreFor: i + 1, scoreAgainst: 0, opponentNickname: 'Autre', opponentFullName: 'Université McGill' }] })])) };
 assert.ok(U.pickSports(many, '2026-11-12').results.length <= 6, 'plafond de 6 résultats');
 assert.equal(U.teamLabelFor('Couguars', 'Cégep de Chicoutimi — équipe Blanc').inst, 'Chicoutimi, équipe Blanc', 'deux équipes du même cégep distinguées');
+assert.equal(U.teamLabelFor('Vert & Or', 'Université de Sherbrooke').inst, 'UdeS');
+assert.equal(U.teamLabelFor('Rouge et Or', 'Université Laval').inst, 'ULaval');
+assert.equal(U.sportCodeEmoji('sailing'), '⛵', 'voile : bateau, pas une médaille');
+assert.equal(U.sportCodeEmoji('voile'), '⛵');
+assert.equal(U.sportCodeEmoji('cheerleading'), '📣');
+assert.notEqual(U.sportCodeEmoji('sailing'), '🏅');
+const sailMh = { teams: { s: { id: 's', sport: 'sailing', sportLabel: 'Voile', sector: 'universitaire', leagueLabel: 'CICSA', name: 'Concordia Sailing', institutionLabel: 'Université Concordia', results: [], nextGames: [{ gameId: 'fn', date: '2026-11-14', time: '', home: null, scoreKind: 'place', opponent: 'Championnat canadien de course en flotte', opponentEn: 'Fleet Race Nationals', opponentFullName: 'Fleet Race Nationals · WVYC' }] } } };
+const sail = U.pickSports(sailMh, '2026-11-13');
+assert.equal(sail.next[0].emoji, '⛵');
+assert.equal(sail.next[0].event, 'Championnat canadien de course en flotte');
+assert.equal(sail.next[0].verb, '');
+assert.equal(U.sportsLine(sail.next[0]), '⛵ Voile · Concordia · Championnat canadien de course en flotte · sam. 14 nov.');
+assert.doesNotMatch(U.sportsLine(sail.next[0]), /visite|WVYC|Fleet Race|0 h/);
 // ── Radio étudiante : à venir, tirage reproductible, une par station ──
 const rs = { stations: {
   a: { name: 'CHYZ 94,3', grid: [{ day: 4, start: '08:00', title: 'Café campus' }, { day: 4, start: '20:00', title: 'Jeudi soir' }, { day: 4, start: '02:00', title: 'Nuit' }, { day: 5, start: '11:00', title: 'Punk-o-rama' }] },
@@ -194,7 +207,7 @@ const igModel = { slot: sSlot, items: m.items, sports: sp };
 const ig = U.buildUneAll(igModel).instagram;
 assert.deepEqual(ig.problems, []); assert.doesNotMatch(ig.text, /https?:\/\//); assert.match(ig.text, /lien en bio/); assert.match(ig.text, /🏀 Basketball \(F\) · Stingers/);
 assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
-assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30');
+assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30'); assert.equal(U.frHour(''), ''); assert.equal(U.frHour('00:00'), '0 h');
 
 // ── Workflow : planifié, déclenchement manuel, DRY_RUN, fenêtres été/hiver, verrou partagé ──
 const wf = fs.readFileSync(new URL('../.github/workflows/social-une.yml', import.meta.url), 'utf8');

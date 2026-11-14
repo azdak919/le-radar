@@ -17,6 +17,8 @@ const front = require('../magazine-front-page-lib.js');
 let BRAND = {}; try { BRAND = require('../../brand-colors.json').institutions || {}; } catch {}
 /* Couleur d'établissement : même module que l'outil d'affiches, source unique brand-colors.json (couleurs + alias). */
 const IC = require('../institution-color-lib.js');
+const INST_LABELS = require('../institution-labels-lib.js');
+const ACRONYM_MAP = INST_LABELS.buildAcronymMap();
 /** Couleur officielle de l'établissement (brand-colors.json du site) ; '' si inconnue. */
 export function institutionColor(name) {
   const raw = String(name || '').trim(); if (!raw) return '';
@@ -130,20 +132,48 @@ const D3 = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'], M3 = ['janv
 /** « jeu. 12 nov. » (date absolue, jamais « aujourd'hui » ni « hier »). */
 export function frShort(ymd) { const [y, m, d] = ymd.split('-').map(Number); return `${D3[new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay()]} ${d === 1 ? '1er' : d} ${M3[m - 1]}`; }
 /** « 19 h », « 19 h 30 ». */
-export const frHour = t => { const [h, m] = String(t || '').split(':').map(Number); return Number.isFinite(h) ? `${h} h${m ? ' ' + String(m).padStart(2, '0') : ''}` : ''; };
+export const frHour = t => { const m = String(t || '').trim().match(/^(\d{1,2})(?::(\d{2}))?$/); if (!m) return ''; const min = Number(m[2] || 0); return `${Number(m[1])} h${min ? ' ' + String(min).padStart(2, '0') : ''}`; };
 const SEX = { M: 'H', F: 'F', X: 'mixte' };
-const CODE_EMOJI = { football: '🏈', 'flag-football': '🏈', hockey: '🏒', basketball: '🏀', volleyball: '🏐', 'volleyball-plage': '🏐', soccer: '⚽', 'soccer-interieur': '⚽', futsal: '⚽', rugby: '🏉', natation: '🏊', athletisme: '🏃', 'cross-country': '🏃', badminton: '🏸', voile: '⛵', golf: '⛳', tennis: '🎾', ultimate: '🥏', curling: '🥌', ski: '⛷️', baseball: '⚾' };
+const CODE_EMOJI = { football: '🏈', 'flag-football': '🏈', hockey: '🏒', basketball: '🏀', volleyball: '🏐', 'volleyball-plage': '🏐', soccer: '⚽', 'soccer-interieur': '⚽', futsal: '⚽', rugby: '🏉', natation: '🏊', athletisme: '🏃', 'cross-country': '🏃', badminton: '🏸', voile: '⛵', sailing: '⛵', golf: '⛳', tennis: '🎾', ultimate: '🥏', curling: '🥌', ski: '⛷️', baseball: '⚾', cheerleading: '📣' };
 export const sportCodeEmoji = code => CODE_EMOJI[String(code || '').toLowerCase()] || '🏅';
-const SHORT_INST = { 'Université Laval': 'Laval', 'Université de Montréal': 'Montréal', 'Université de Sherbrooke': 'Sherbrooke', 'Université McGill': 'McGill', 'Université Concordia': 'Concordia', "Université Bishop's": "Bishop's", 'Université du Québec à Montréal': 'UQAM', 'Université du Québec à Trois-Rivières': 'UQTR', 'Université du Québec à Chicoutimi': 'UQAC', 'Université du Québec à Rimouski': 'UQAR', 'Université du Québec en Outaouais': 'UQO', 'École de technologie supérieure': 'ÉTS', 'Université du Nouveau-Brunswick': 'UNB' };
+const foldInst = (s) => String(s || '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/['’]/g, "'").replace(/\s+/g, ' ').trim();
+const ACRONYM_FOLD = Object.fromEntries(Object.entries(ACRONYM_MAP).map(([k, v]) => [foldInst(k), v]));
+/** Sigle officiel (UdeM, ULaval, UdeS, UNB…) ; table partagée institution-labels-lib.js. */
+export function institutionSigle(name) {
+  const raw = String(name || '').trim();
+  if (!raw) return '';
+  return ACRONYM_MAP[raw] || ACRONYM_FOLD[foldInst(raw)] || ACRONYM_FOLD[foldInst(FR_INSTITUTIONS[raw.toLowerCase()] || '')] || '';
+}
 export const teamLabelFor = (nick, inst) => teamLabel(nick, inst);
 function teamLabel(nick, inst) {
-  const sub = ((String(inst || '').match(/\s+—\s+(.*)$/) || [])[1] || '').replace(/^campus\s+/i, ''); // ex. « équipe Blanc » : deux équipes du même cégep
+  // Qualificatif d’équipe (« équipe Blanc ») à conserver ; le campus (ex. « campus Fredericton ») ne remplace pas le sigle.
+  const rawSub = ((String(inst || '').match(/\s+—\s+(.*)$/) || [])[1] || '').trim();
+  const sub = /équipe|team/i.test(rawSub) ? rawSub.replace(/^campus\s+/i, '') : '';
   const i = String(inst || '').replace(/\s+—\s+.*$/, '').trim();
   const fr = FR_INSTITUTIONS[i.toLowerCase()] || i;
-  const short = SHORT_INST[fr] || fr.replace(/^(Cégep|Collège) (de |du |d’|d')?/, '').replace(/\s*\b(College|University|Cégep|Collège)\b\s*/gi, ' ').replace(/\s+/g, ' ').trim(); // aucun « College » anglais
+  const short = institutionSigle(fr) || institutionSigle(i) || fr.replace(/^(Cégep|Collège) (de |du |d’|d')?/, '').replace(/\s*\b(College|University|Cégep|Collège)\b\s*/gi, ' ').replace(/\s+/g, ' ').trim(); // aucun « College » anglais
   const ap = x => String(x || '').replace(/'/g, '’').trim();
   return { name: ap(nick || short), inst: nick ? ap(short + (sub ? `, ${sub}` : '')) : '', color: institutionColor(inst) || institutionColor(fr) || institutionColor(short) };
 }
+/** Épreuve (régate, championnat) plutôt qu’un match à domicile ou à l’extérieur. */
+function isEventGame(t, g) {
+  const sport = String(t?.sport || g?.sport || '').toLowerCase();
+  return g?.scoreKind === 'place' || sport === 'sailing' || sport === 'voile';
+}
+/** Nom d’épreuve en français (déjà traduit dans le payload CICSA) ; jamais le sigle de lieu anglais. */
+function eventLabel(g) {
+  const fr = String(g?.opponent || '').trim();
+  const looksEn = /nationals|championships?|regatta|invitational|\binvite\b|fleet race|team race|match race|\bWVYC\b/i;
+  if (fr && !looksEn.test(fr)) return fr;
+  try {
+    const { sailingNameFr } = require('../cicsa-sailing-lib.js');
+    const src = String(g?.opponentEn || g?.opponent || g?.opponentFullName || '').split(/\s*·\s*/)[0];
+    return sailingNameFr(src) || fr;
+  } catch {
+    return fr;
+  }
+}
+
 /**
  * Résultats sportifs étudiants récents (sports-masthead.json du site, RSEQ) : une rencontre par gameId, score connu,
  * saison en cours, jouée dans les `days` jours civils précédant `day` (Montréal). Universitaire d'abord, puis le plus récent.
@@ -160,6 +190,7 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
     for (const g of t.results || []) {
       const id = g.gameId || `${t.id}:${g.date}`;
       if (seen.has(id) || g.priorSeason || g.scoreFor == null || g.scoreAgainst == null || !g.date || g.date < from || g.date > day) continue;
+      if (isEventGame(t, g)) continue; // une régate n’a pas de score de match à deux équipes
       seen.add(id);
       const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
       if (!me.name || !op.name) continue;
@@ -170,10 +201,18 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
       const id = g.gameId || `${t.id}:${g.date}:${g.time}`;
       if (seen.has('n' + id) || !g.date || g.date < day || g.date > until || (afterToday && g.date === day)) continue;
       seen.add('n' + id);
+      const when = [frShort(g.date), frHour(g.time)].filter(Boolean).join(' · ');
+      // Régate ou épreuve (voile, classement par place) : pas un match aller-retour, donc pas de « visite ».
+      if (isEventGame(t, g)) {
+        const event = eventLabel(g);
+        if (!me.name || !event) continue;
+        next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [me], verb: '', event, time: g.time || '' });
+        continue;
+      }
       const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
       if (!me.name || !op.name) continue;
       // Comme sur le site : « Équipe reçoit Adversaire » à domicile, « Équipe visite Adversaire » à l'étranger.
-      next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when: [frShort(g.date), frHour(g.time)].filter(Boolean).join(' · '), teams: [me, op], verb: g.home ? 'reçoit' : 'visite', time: g.time || '' });
+      next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [me, op], verb: g.home ? 'reçoit' : 'visite', time: g.time || '' });
     }
   }
   const vary = list => { const seenL = new Set(), first = [], more = []; for (const r of list) (seenL.has(r.league) ? more : first).push(r), seenL.add(r.league); return [...first, ...more]; };
@@ -186,7 +225,9 @@ const team = t => `${t.name}${t.inst ? ` (${t.inst})` : ''}`;
 /** Ligne texte : « 🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · jeu. 12 nov. ». */
 export const sportsLine = r => r.kind === 'resultat'
   ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${team(r.teams[1])} · ${r.when}`
-  : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${r.when}`;
+  : r.event || !r.verb
+    ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event || team(r.teams[1] || {})} · ${r.when}`
+    : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${r.when}`;
 
 // ── Radio étudiante : émissions à venir (radio-schedules.json, grille hebdo, day = 0 dimanche … 6 samedi, heure de Montréal) ──
 const seeded = str => { let h = 1779033703 ^ str.length; for (const c of str) { h = Math.imul(h ^ c.charCodeAt(0), 3432918353); h = (h << 13) | (h >>> 19); } return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; };

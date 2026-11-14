@@ -35,6 +35,8 @@ const WELL_KNOWN_SHORT = {
   'École de technologie supérieure (ÉTS)': 'ÉTS',
   'École de technologie supérieure': 'ÉTS',
   'HEC Montréal': 'HEC',
+  'University of New Brunswick': 'UNB',
+  'Université du Nouveau-Brunswick': 'UNB',
 };
 
 /** Alias → nom canonique (forme longue privilégiée pour les inverses). */
@@ -56,6 +58,7 @@ const WELL_KNOWN_ALIASES = {
   'Collège Dawson': 'Dawson College',
   ÉTS: 'École de technologie supérieure (ÉTS)',
   HEC: 'HEC Montréal',
+  UNB: 'University of New Brunswick',
 };
 
 function loadInstitutions() {

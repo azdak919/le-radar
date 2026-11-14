@@ -50,6 +50,7 @@
     return box;
   }
   // Une rencontre = deux lignes : « 🏀 Basketball (H) · Final · jeu. 12 nov. » puis les équipes (gagnant d'abord, en gras ; « visite » / « reçoit » pâles).
+  // Régate : « Concordia · Championnat canadien de course en flotte », sans verbe « visite ».
   function teamNode(t, cls) {
     const n = el('span', 'tn' + (cls ? ' ' + cls : '')); n.append(el('b', '', t.name));
     if (t.inst) { const i = el('span', 'in', NB + '(' + t.inst + ')'); const c = aaColor(t.color, THEME); if (c) i.style.color = c; n.append(i); }
@@ -61,6 +62,8 @@
     const line = el('p', 'ml');
     if (r.kind === 'resultat') {
       line.append(teamNode(r.teams[0], r.tie ? '' : 'win'), el('span', 'sc' + (r.tie ? '' : ' win'), NB + r.teams[0].score), el('span', 'dash', '–'), el('span', 'sc', r.teams[1].score + NB), teamNode(r.teams[1]));
+    } else if (r.event || !r.verb) {
+      line.append(teamNode(r.teams[0]), el('span', 'vb', ' · '), el('span', 'ev', r.event || (r.teams[1] && r.teams[1].name) || ''));
     } else {
       line.append(teamNode(r.teams[0]), el('span', 'vb', ' ' + r.verb + ' '), teamNode(r.teams[1]));
     }
