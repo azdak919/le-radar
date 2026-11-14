@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T06:06:14.220Z",
+  "updatedAt": "2026-11-14T07:06:22.779Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T06:06:00.967Z"
+      "checkedAt": "2026-11-14T07:06:10.184Z"
     },
     "cism": {
       "id": "cism",
@@ -48,42 +48,43 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T06:06:03.021Z"
+      "checkedAt": "2026-11-14T07:06:11.987Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Soca Sessions",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "The Mash Time Show",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "WEFUNK",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T06:06:05.182Z"
+      "checkedAt": "2026-11-14T07:06:14.304Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
@@ -93,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T06:06:07.020Z"
+      "checkedAt": "2026-11-14T07:06:15.704Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +122,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T06:06:08.353Z"
+      "checkedAt": "2026-11-14T07:06:16.570Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +135,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Screwjob — Retarded",
+      "track": "ZØRZA — The Devil Wears Well",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -142,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T06:06:13.870Z"
+      "checkedAt": "2026-11-14T07:06:22.429Z"
     }
   }
 }
