@@ -67,4 +67,7 @@ assert.match(compose, /dataset\.campusLayout = 'a9e8f52'/);
 assert.match(une, /Scanne-moi/);
 assert.match(une, /mastMode/);
 
+assert.match(une, /logoMark/, 'la une charge le pictogramme sans fond pour l’en-tête');
+assert.doesNotMatch(une, /roundedRectPath\(ctx, x0, my, logoS, logoS/, 'pas de carré blanc derrière le logo de l’en-tête');
+
 console.log('affiches-campus-layout: OK (gabarit a9e8f52, une intacte)');

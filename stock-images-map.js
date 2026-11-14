@@ -1,8 +1,7 @@
 /* LE RADAR — miroir local des photos de repli Wikimedia (généré).
  * Régénéré par : node scripts/mirror-stock-images.js --update
  * Clé : URL de l'original Commons (sans requête) → vignette 500 px servie par le site. */
-var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/0/0c/Mark_carney_davos_2010.jpg":"assets/stock-images/3fdf80ff519f3c93.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg":"assets/stock-images/3b4417fae26393d1.jpg",
+var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg":"assets/stock-images/3b4417fae26393d1.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg":"assets/stock-images/7b8ed6bf1f742c2e.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg":"assets/stock-images/d75a894c65c0f22f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg":"assets/stock-images/5372d010500f87e7.jpg",

@@ -1439,14 +1439,11 @@ function composeFrontPage(ctx, w, h, opts) {
   ctx.fillStyle = DEEP;
   ctx.fillRect(0, mastTop + mastH - px(0.6), w, px(0.6));
   let my = rowTop;
-  if (assets.logo) {
-    ctx.save();
-    roundedRectPath(ctx, x0, my, logoS, logoS, px(1.4));
-    ctx.fillStyle = '#ffffff';
-    ctx.fill();
-    ctx.restore();
+  /* Pictogramme directement sur le violet, sans le carré blanc derrière l’icône. */
+  const mark = assets.logoMark || assets.logo;
+  if (mark) {
     const inset = px(0.7);
-    ctx.drawImage(assets.logo, x0 + inset, my + inset, logoS - inset * 2, logoS - inset * 2);
+    ctx.drawImage(mark, x0 + inset, my + inset, logoS - inset * 2, logoS - inset * 2);
   }
   fillTracked(ctx, TITLE, my + Math.round((logoS - titleS) / 2), titleS, '#ffffff', x0 + logoS + px(2));
   ctx.textAlign = 'right';
@@ -4430,6 +4427,7 @@ async function main() {
   await loadFonts();
   await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
+  assets.logoMark = await loadImage('../assets/icon-mark.svg', false);
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
   assets.translate = await loadImage('../assets/kit/translate-mark.svg?v=regular', false);
   const [bank, rejected] = await Promise.all([
