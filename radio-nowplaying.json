@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-11-15T14:06:33.173Z",
+  "updatedAt": "2026-11-15T15:06:48.462Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHYZ",
-        "source": "schedule",
+        "source": "api-live",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T14:06:08.053Z"
+      "checkedAt": "2026-11-15T15:06:21.595Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
-      },
-      "next": {
         "title": "Effets sonores",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/effets-sonores"
       },
+      "next": {
+        "title": "Les sirènes",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/les-sirenes"
+      },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Effets sonores",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T14:06:09.853Z"
+      "checkedAt": "2026-11-15T15:06:23.479Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,35 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T14:06:12.262Z"
+      "checkedAt": "2026-11-15T15:06:28.320Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "REVC",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/revc"
-      },
-      "next": {
         "title": "Rigged Sessions",
         "source": "schedule-live",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/rigged-sessions"
       },
+      "next": {
+        "title": "Brave Little Emo Girl",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+      },
       "track": "",
-      "showTitle": "REVC",
+      "showTitle": "Rigged Sessions",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T14:06:14.397Z"
+      "checkedAt": "2026-11-15T15:06:29.774Z"
     },
     "cfak": {
       "id": "cfak",
@@ -123,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T14:06:15.404Z"
+      "checkedAt": "2026-11-15T15:06:30.818Z"
     },
     "choq": {
       "id": "choq",
@@ -144,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T14:06:32.822Z"
+      "checkedAt": "2026-11-15T15:06:48.113Z"
     }
   }
 }
