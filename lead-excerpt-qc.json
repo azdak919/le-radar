@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-15T15:38:29.024Z",
+  "updated": "2026-11-15T16:27:40.973Z",
   "total": 188,
   "pool": 54,
-  "incomplete": 28,
+  "incomplete": 27,
   "withLeadExcerpt": 142,
-  "candidates": 28,
-  "enriched": 1,
-  "failed": 3,
+  "candidates": 27,
+  "enriched": 3,
+  "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,30 @@
       "changed": false
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Stingers 7, Gee-Gees 0: Pure Stingers domination",
+      "link": "https://thelinknewspaper.ca/article/16560",
+      "ok": true,
+      "score": 96,
+      "chars": 158,
+      "sample": "The Concordia University men’s hockey team obliterated the Ottawa Gee-Gees 7-0 on Nov. 7, with goalt",
+      "changed": true
+    },
+    {
+      "title": "L’ADISQ 2026 : les artistes d’ici à l’honneur",
+      "link": "https://lecollectif.ca/a-la-une/ladisq-2026-les-artistes-dici-a-lhonneur/",
       "ok": true,
       "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
+      "chars": 318,
+      "sample": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e éditi",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 969,
       "sample": "Do you remember your high school teacher telling you that the angles in a triangle always sum to 180",
-      "changed": false
-    },
-    {
-      "title": "Mouvement lycéen 2026 : la violence du maintien de l’ordre",
-      "link": "https://theplantnews.com/2026/11/14/ode-a-la-jeunesse-revoltee/",
-      "ok": true,
-      "score": 100,
-      "chars": 1039,
-      "sample": "Depuis le 18 septembre 2026, un sujet d’actualité prime sur nos médias et nos réseaux sociaux. Le mo",
       "changed": false
     }
   ]
