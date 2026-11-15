@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-15T14:12:01.097Z",
+  "updated": "2026-11-15T15:37:05.691Z",
   "updatedSlot": null,
   "count": 188,
   "freshnessSessions": 3,
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-14T20:00:00.000Z",
-      "lastFetchOk": "2026-11-15T14:11:23.647Z"
+      "lastFetchOk": "2026-11-15T15:35:56.957Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-14T20:21:01.000Z",
-      "lastFetchOk": "2026-11-15T14:11:24.279Z"
+      "lastFetchOk": "2026-11-15T15:35:57.448Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-11T12:00:00.000Z",
-      "lastFetchOk": "2026-11-15T14:11:27.104Z"
+      "lastFetchOk": "2026-11-15T15:35:59.564Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-11-10T00:04:17.000Z",
-      "lastFetchOk": "2026-11-15T14:11:27.696Z"
+      "lastFetchOk": "2026-11-15T15:36:00.073Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-15T04:42:00.000Z",
-      "lastFetchOk": "2026-11-15T14:11:29.144Z"
+      "lastFetchOk": "2026-11-15T15:36:01.756Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-11-15T14:11:30.708Z"
+      "lastFetchOk": "2026-11-15T15:36:02.760Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-03T20:33:01.000Z",
-      "lastFetchOk": "2026-11-15T14:11:32.208Z"
+      "lastFetchOk": "2026-11-15T15:36:04.269Z"
     },
     "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-11T15:42:26.000Z",
-      "lastFetchOk": "2026-11-15T14:11:33.122Z"
+      "lastFetchOk": null
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-11-15T14:11:33.425Z"
+      "lastFetchOk": "2026-11-15T15:36:16.779Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-14T23:43:02.000Z",
-      "lastFetchOk": "2026-11-15T14:11:34.365Z"
+      "lastFetchOk": "2026-11-15T15:36:17.519Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,15 +90,15 @@
       "articleCount": 20,
       "freshArticleCount": 9,
       "lastArticle": "2026-11-06T21:21:04.110Z",
-      "lastFetchOk": "2026-11-15T14:11:35.627Z"
+      "lastFetchOk": "2026-11-15T15:36:18.106Z"
     },
     "The Tribune": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-03T11:05:31.000Z",
-      "lastFetchOk": "2026-11-15T14:11:37.428Z"
+      "lastFetchOk": null
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-10T02:01:53.000Z",
-      "lastFetchOk": "2026-11-15T14:11:37.692Z"
+      "lastFetchOk": "2026-11-15T15:36:30.682Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-14T23:42:59.000Z",
-      "lastFetchOk": "2026-11-15T14:11:37.865Z"
+      "lastFetchOk": "2026-11-15T15:36:30.961Z"
     },
     "L'Oisif": {
       "fetchOk": false,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-11-15T14:11:38.363Z"
+      "lastFetchOk": "2026-11-15T15:36:31.446Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-11-15T14:11:39.369Z"
+      "lastFetchOk": "2026-11-15T15:36:34.159Z"
     },
     "The Concordian": {
       "fetchOk": true,
@@ -146,7 +146,7 @@
       "articleCount": 6,
       "freshArticleCount": 6,
       "lastArticle": "2026-11-15T02:12:46.000Z",
-      "lastFetchOk": "2026-11-15T14:11:39.939Z"
+      "lastFetchOk": "2026-11-15T15:36:34.515Z"
     },
     "Impact Campus": {
       "fetchOk": true,
@@ -154,7 +154,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-12T18:42:42.000Z",
-      "lastFetchOk": "2026-11-15T14:11:41.800Z"
+      "lastFetchOk": "2026-11-15T15:36:40.546Z"
     },
     "La Griffe": {
       "fetchOk": true,
@@ -162,7 +162,7 @@
       "articleCount": 10,
       "freshArticleCount": 8,
       "lastArticle": "2026-10-27T15:51:37.000Z",
-      "lastFetchOk": "2026-11-15T14:11:42.466Z"
+      "lastFetchOk": "2026-11-15T15:36:41.256Z"
     }
   },
   "items": [
@@ -612,7 +612,6 @@
       "sourceImageCreditImageKey": "photo-dejarin-.avif",
       "sourceImageCreditRev": 17,
       "leadImageReady": false,
-      "leadExcerpt": "La saison de la branche Bâtiment durable Québec pour le Saguenay–Lac-Saint-Jean a donné son coup d’envoi ce mardi à l’Université du Québec à Chicoutimi. Le maire de Saguenay, Luc Boivin, mis de l’avant avant l’importance « de construire de manière réfléchie » lors de son discours. Alors que la question climatique est davantage au cœur des discussions, elle se pose également en matière d’infrastructures. La conférence « Les structures hybrides : 1000 possibilités » a permis de présenter aux professionnels et aux étudiants du milieu de la construction différentes approches pour se tourner vers des bâtiments plus durables. Plusieurs experts sont venus présenter les opportunités dans le domaine de la construction.",
       "stockImage": "https://live.staticflickr.com/472/19873557183_dabab21fd3_b.jpg",
       "imageTitle": "El Niño intensifying",
       "imageCredit": "Photo : tonynetone / CC BY · Openverse",
@@ -620,6 +619,7 @@
       "imageLicense": "by",
       "imageProvider": "openverse",
       "imageSourceUrl": "https://www.flickr.com/photos/26208889@N05/19873557183",
+      "leadExcerpt": "La saison de la branche Bâtiment durable Québec pour le Saguenay–Lac-Saint-Jean a donné son coup d’envoi ce mardi à l’Université du Québec à Chicoutimi. Le maire de Saguenay, Luc Boivin, mis de l’avant avant l’importance « de construire de manière réfléchie » lors de son discours. Alors que la question climatique est davantage au cœur des discussions, elle se pose également en matière d’infrastructures. La conférence « Les structures hybrides : 1000 possibilités » a permis de présenter aux professionnels et aux étudiants du milieu de la construction différentes approches pour se tourner vers des bâtiments plus durables. Plusieurs experts sont venus présenter les opportunités dans le domaine de la construction.",
       "imageLocal": "assets/news-images/ebfd0e0cb64e1419.jpg",
       "imageLocalKey": "ebfd0e0cb64e1419",
       "imageLocalVia": "origin"
@@ -820,7 +820,6 @@
       "date": "2026-11-12T18:42:42.000Z",
       "excerpt": "Durant tout le mois de novembre, le Trident présente la pièce La version qui n’intéresse personne, basée sur le roman homonyme d’Emmanuelle Pierrot paru en 2023. Cette adaptation théâtrale de Marie-Claude St-Laurent, mise en scène par Marie-Ève Milot et portée par la comédienne",
       "image": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/12133919/Photo-A.jpg",
-      "_pageAuthor": "Marie Tremblay, cheffe de pupitre actualité",
       "sourceImageCredit": "Photo : Stéphane Bourgeois",
       "sourceImageCreator": "Stéphane Bourgeois",
       "sourceImageCreditUrl": "https://impactcampus.ca/arts-et-culture/la-version-qui-ninteresse-personne-ou-comment-reussir-une-adaptation-theatral/",
@@ -969,7 +968,6 @@
       "sourceImageCreditImageKey": "bs26_1107_stingers_hockey_gee_gees_2294_2.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "leadExcerpt": "The Concordia University men’s hockey team obliterated the Ottawa Gee-Gees 7-0 on Nov. 7, with goaltender Brady James earning his first shutout of the season.",
       "imageLocal": "assets/news-images/adb62591e108fe00.jpg",
       "imageLocalKey": "adb62591e108fe00",
       "imageLocalVia": "origin"
@@ -1017,11 +1015,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image1-nicolas-hamel.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
-      "leadExcerpt": "Les Facultés des sciences, d’éducation et des lettres et sciences humaines étaient en grève mardi pour la salarisation des stages. Cette grève survient alors que le 10 novembre est la journée internationale des stagiaires. Ils étaient une centaine à s’être regroupés devant la bibliothèque Roger-Maltais pour manifester. Selon des chiffres de 2023 de l’Institut de recherche et d’information socionumérique (IRIS), au Québec, c’est 84 % des stages qui ne sont pas rémunérés.",
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/5485d6c423b2ac5e.jpg",
       "imageLocalKey": "5485d6c423b2ac5e",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Impact Campus",
@@ -1070,7 +1068,8 @@
       "leadExcerpt": "Transport durable, matériaux de construction écologiques et intelligence artificielle : trois projets de recherche novateurs de l’Université de Sherbrooke (UdeS) bénéficieront du Programme des chaires de recherche du Canada. La Faculté de génie souligne ainsi l’arrivée de deux nouvelles chaires ainsi que le renouvellement du mandat d’une troisième chercheuse. L’Université de Sherbrooke poursuit son engagement en recherche et en innovation avec la reconnaissance de trois membres de son corps professoral dans le cadre du Programme des chaires de recherche du Canada. Les travaux de Yili Tang, de Fabien Georget et d’Audrey Corbeil Therrien s’attaquent à des enjeux contemporains qui touchent autant la transition écologique que le développement de technologies intelligentes.",
       "imageLocal": "assets/news-images/5a9c935dd128fa2c.jpg",
       "imageLocalKey": "5a9c935dd128fa2c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1095,7 +1094,8 @@
       "leadExcerpt": "Ils ont eu chaud, mais ils ont tenu le coup. Le 7 novembre dernier, les Alouettes de Montréal ont triomphé à la maison sur les Blue Bombers de Winnipeg par la marque de 32-23, victoire leur permettant d’accéder à la 113e finale de la Coupe Grey. Pour une troisième fois en quatre ans, les Alouettes accèdent au match ultime de la saison de la Ligue canadienne de football (LCF). Les Oiseaux avaient raflé les grands honneurs en 2023 grâce à un touché dramatique en fin de rencontre face à ces mêmes Blue Bombers, ramenant la Coupe Grey à Montréal pour la première fois depuis 2010. Cependant, en 2025, le scénario ne s’était pas répété, les Alouettes subissant un revers de 25-17 aux mains des Roughriders de la Saskatchewan. Montréal a maintenant à sa portée de main la chance d’aller chercher une neuvième coupe dans son histoire.",
       "imageLocal": "assets/news-images/7fd0729accdde717.jpg",
       "imageLocalKey": "7fd0729accdde717",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1117,10 +1117,10 @@
       "sourceImageCreditImageKey": "culture_adisq_angine_de_poitrine_credit-paul-hudson-wikimedia-commons.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "leadExcerpt": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e édition du Gala de l’ADISQ. Animée par l’humoriste Pierre-Yves Roy-Desmarais à la salle Wilfrid-Pelletier à Montréal, la cérémonie a récompensé les artistes qui ont marqué l’industrie musicale au cours de la dernière année.",
       "imageLocal": "assets/news-images/27e9d51a4b666e1a.jpg",
       "imageLocalKey": "27e9d51a4b666e1a",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Délit",
@@ -1376,83 +1376,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "« Génère-moi un cours »",
-      "link": "https://www.delitfrancais.com/2026/11/11/genere-moi-un-cours/",
-      "author": "Naomi Degueldre",
-      "date": "2026-11-11T07:00:00.000Z",
-      "excerpt": "L’IA : symptôme du néolibéralisme grandissant au sein des universités.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/naomi-catvy.png",
-      "featured": true,
-      "sourceImageCredit": "Photo : Catvy Tran",
-      "sourceImageCreator": "Catvy Tran",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/11/genere-moi-un-cours/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "naomi-catvy.png",
-      "sourceImageCreditRev": 17,
-      "leadImageReady": true,
-      "leadExcerpt": "Évidemment, peu de choses laissent penser que l’utilisation de l’IA atteindra une telle ubiquité. Même si cette technologie est sporadiquement utilisée comme soutien, l’enseignement de contenus originaux est aujourd’hui la norme et le demeurera sûrement. Cependant, lorsque des professeur·e·s de McGill nous déclarent ouvertement avoir utilisé l’IA pour agrémenter leurs diapositives, ou bien pour générer leurs exemples pédagogiques, la question persiste : quelle devrait être la place de l’IA au sein de l’Université McGill ?",
-      "imageLocal": "assets/news-images/86357e7a01d4e116.jpg",
-      "imageLocalKey": "86357e7a01d4e116",
-      "imageLocalVia": "resize-proxy"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "author": "Jiayuan Cao",
-      "date": "2026-11-11T07:00:00.000Z",
-      "excerpt": "Décoder la narration sexiste dans les contes de fées classiques.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/jiayuan-sans-background-transparent.png",
-      "featured": true,
-      "authorCheckedAt": "2026-11-11T12:07:07.015Z",
-      "sourceImageCredit": "Photo : Catvy Tran",
-      "sourceImageCreator": "Catvy Tran",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "jiayuan-sans-background-transparent.png",
-      "sourceImageCreditRev": 17,
-      "leadImageReady": true,
-      "leadExcerpt": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre héroïne de conte : Pandore et Ève. L’une a ouvert une jarre, l’autre a mangé un fruit, et tout le malheur du monde leur a été mis sur le dos. Certes, c’est un portrait bien réducteur de leurs histoires. Mais n’est-ce pas justement ce dont on se souvient ?",
-      "imageLocal": "assets/news-images/7db834a9a50bff1f.jpg",
-      "imageLocalKey": "7db834a9a50bff1f",
-      "imageLocalVia": "resize-proxy"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Prouve que tu existes",
-      "link": "https://www.delitfrancais.com/2026/11/11/prouve-que-tu-existes/",
-      "author": "Timotée Allouch-Chantepie",
-      "date": "2026-11-11T07:00:00.000Z",
-      "excerpt": "Depuis que l’équipe éditoriale a choisi la résistance comme thème de cette édition, mon cerveau vit dans la plus grande agonie. Matin, midi et soir, sous la douche, à la vaisselle, du premier café à la dernière tisane, ma bouche ne peut s’empêcher de chantonner (et de hurler parfois)",
-      "image": "",
-      "featured": true,
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "McGill University downtown campus 13",
-      "imageCredit": "Photo : Jean Gagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jean Gagnon",
-      "imageLicense": "CC BY-SA 3.0",
-      "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2013.JPG",
-      "leadExcerpt": "Depuis que l’équipe éditoriale a choisi la résistance comme thème de cette édition, mon cerveau vit dans la plus grande agonie. Matin, midi et soir, sous la douche, à la vaisselle, du premier café à la dernière tisane, ma bouche ne peut s’empêcher de chantonner (et de hurler parfois) les mots de France Gall : « Résiste ! » Ce ne sont ni la Seconde Guerre mondiale ni aucun autre célèbre conte de résistance qui me sont venus à l’esprit. Ni l’Ukraine, la Palestine, le Soudan, le Congo, les manifestations contre la vie chère, la déforestation, le braconnage, les Rohingyas, l’Iran, la banalisation de l’extrême droite, le recul des droits à l’avortement et de la justice reproductive, les femmes en Afghanistan, la corporatisation de notre société, l’IA Non. C’est France Gall.",
-      "stockImageLocal": "assets/stock-images/bdfe9b689240959e.jpg"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Êtes-vous Queer ?",
       "link": "https://www.delitfrancais.com/2026/11/11/etes-vous-queer/",
       "author": "Sixtine Nicolaÿ",
@@ -1524,6 +1447,83 @@
       "imageLocal": "assets/news-images/3bdeb14517d16223.jpg",
       "imageLocalKey": "3bdeb14517d16223",
       "imageLocalVia": "resize-proxy"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "« Génère-moi un cours »",
+      "link": "https://www.delitfrancais.com/2026/11/11/genere-moi-un-cours/",
+      "author": "Naomi Degueldre",
+      "date": "2026-11-11T07:00:00.000Z",
+      "excerpt": "L’IA : symptôme du néolibéralisme grandissant au sein des universités.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/naomi-catvy.png",
+      "featured": true,
+      "sourceImageCredit": "Photo : Catvy Tran",
+      "sourceImageCreator": "Catvy Tran",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/11/genere-moi-un-cours/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "naomi-catvy.png",
+      "sourceImageCreditRev": 17,
+      "leadImageReady": true,
+      "leadExcerpt": "Évidemment, peu de choses laissent penser que l’utilisation de l’IA atteindra une telle ubiquité. Même si cette technologie est sporadiquement utilisée comme soutien, l’enseignement de contenus originaux est aujourd’hui la norme et le demeurera sûrement. Cependant, lorsque des professeur·e·s de McGill nous déclarent ouvertement avoir utilisé l’IA pour agrémenter leurs diapositives, ou bien pour générer leurs exemples pédagogiques, la question persiste : quelle devrait être la place de l’IA au sein de l’Université McGill ?",
+      "imageLocal": "assets/news-images/86357e7a01d4e116.jpg",
+      "imageLocalKey": "86357e7a01d4e116",
+      "imageLocalVia": "resize-proxy"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "author": "Jiayuan Cao",
+      "date": "2026-11-11T07:00:00.000Z",
+      "excerpt": "Décoder la narration sexiste dans les contes de fées classiques.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/jiayuan-sans-background-transparent.png",
+      "featured": true,
+      "authorCheckedAt": "2026-11-11T12:07:07.015Z",
+      "sourceImageCredit": "Photo : Catvy Tran",
+      "sourceImageCreator": "Catvy Tran",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "jiayuan-sans-background-transparent.png",
+      "sourceImageCreditRev": 17,
+      "leadImageReady": true,
+      "leadExcerpt": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre héroïne de conte : Pandore et Ève. L’une a ouvert une jarre, l’autre a mangé un fruit, et tout le malheur du monde leur a été mis sur le dos. Certes, c’est un portrait bien réducteur de leurs histoires. Mais n’est-ce pas justement ce dont on se souvient ?",
+      "imageLocal": "assets/news-images/7db834a9a50bff1f.jpg",
+      "imageLocalKey": "7db834a9a50bff1f",
+      "imageLocalVia": "resize-proxy"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Prouve que tu existes",
+      "link": "https://www.delitfrancais.com/2026/11/11/prouve-que-tu-existes/",
+      "author": "Timotée Allouch-Chantepie",
+      "date": "2026-11-11T07:00:00.000Z",
+      "excerpt": "Depuis que l’équipe éditoriale a choisi la résistance comme thème de cette édition, mon cerveau vit dans la plus grande agonie. Matin, midi et soir, sous la douche, à la vaisselle, du premier café à la dernière tisane, ma bouche ne peut s’empêcher de chantonner (et de hurler parfois)",
+      "image": "",
+      "featured": true,
+      "leadImageReady": false,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "McGill University downtown campus 13",
+      "imageCredit": "Photo : Jean Gagnon / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Jean Gagnon",
+      "imageLicense": "CC BY-SA 3.0",
+      "imageProvider": "campus-bank",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2013.JPG",
+      "leadExcerpt": "Depuis que l’équipe éditoriale a choisi la résistance comme thème de cette édition, mon cerveau vit dans la plus grande agonie. Matin, midi et soir, sous la douche, à la vaisselle, du premier café à la dernière tisane, ma bouche ne peut s’empêcher de chantonner (et de hurler parfois) les mots de France Gall : « Résiste ! » Ce ne sont ni la Seconde Guerre mondiale ni aucun autre célèbre conte de résistance qui me sont venus à l’esprit. Ni l’Ukraine, la Palestine, le Soudan, le Congo, les manifestations contre la vie chère, la déforestation, le braconnage, les Rohingyas, l’Iran, la banalisation de l’extrême droite, le recul des droits à l’avortement et de la justice reproductive, les femmes en Afghanistan, la corporatisation de notre société, l’IA Non. C’est France Gall.",
+      "stockImageLocal": "assets/stock-images/bdfe9b689240959e.jpg"
     },
     {
       "source": "Quartier Libre",
@@ -1766,7 +1766,7 @@
       "date": "2026-11-10T14:00:00.000Z",
       "excerpt": "Two protesters surrounded by tourists in front of the White House on June 7, 2026 in Washington D.C. Photo Nicolas Tremblay This article originally appeared in The Link Volume 47, Issue 5, published November 10, 2026.",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/INST26_0607_US_White_House_3626_900_600_90.jpg",
-      "authorCheckedAt": "2026-11-14T15:36:54.278Z",
+      "authorCheckedAt": "2026-11-15T15:37:16.147Z",
       "sourceImageCredit": "Photo: Nicolas Tremblay",
       "sourceImageCreator": "Nicolas Tremblay",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16559",
@@ -1792,7 +1792,7 @@
       "date": "2026-11-10T14:00:00.000Z",
       "excerpt": "Montreal showed its thorns in the semi-final, winning 5-2 across both legs against the Vancouver Rise Montreal Roses and Vancouver Rise FC both played a physically and technically tied matchup on Nov. 8, 2026 at Stade Boréale. Photo Yann Rifflard",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Yann_Rfd-27_900_600_90.jpg",
-      "authorCheckedAt": "2026-11-14T15:36:56.855Z",
+      "authorCheckedAt": "2026-11-15T15:37:18.134Z",
       "sourceImageCredit": "Photo: Yann Rifflard",
       "sourceImageCreator": "Yann Rifflard",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16555",
@@ -1818,7 +1818,7 @@
       "date": "2026-11-10T14:00:00.000Z",
       "excerpt": "The NBA’s best players are resorting to acting instead of simply playing the game. Diving in the NBA needs to come to an end. Graphic by Dia Diekmann @diadrws",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_SPORTS_NBA_Flopping_Dia_Diekmann_690_976_90.jpg",
-      "authorCheckedAt": "2026-11-14T15:36:58.118Z",
+      "authorCheckedAt": "2026-11-15T15:37:19.399Z",
       "sourceImageCredit": "Graphic: Dia Diekmann",
       "sourceImageCreator": "Dia Diekmann",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16553",
@@ -1844,7 +1844,7 @@
       "date": "2026-11-10T14:00:00.000Z",
       "excerpt": "New funds targeting anti-doping and safety hope to turn this financial investment into lasting trust The Canadian government seeks to improve sports funding. Graphic by Ruohan Wallis",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_SPORTS_Canadian_sports_funding_Ruohan_Wallis_690_892_90.jpeg",
-      "authorCheckedAt": "2026-11-14T15:36:59.510Z",
+      "authorCheckedAt": "2026-11-15T15:37:20.501Z",
       "sourceImageCredit": "Graphic: Ruohan Wallis",
       "sourceImageCreator": "Ruohan Wallis",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16550",
@@ -1869,8 +1869,8 @@
       "author": "Cléo Clamen",
       "date": "2026-11-10T14:00:00.000Z",
       "excerpt": "A look at over 57 years of student organizing at Concordia Students briefly occupy the Hall Building mezzanine in February 2025 to demand institutional divestment from Israel and weapons companies. Photo Asa Kohn This article originally appeared in The Link Volume 47, Issue 5,",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/BSP_4223_900_601_90.jpg",
-      "authorCheckedAt": "2026-11-14T15:37:00.871Z",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/BSP_4223_690_461_90.jpg",
+      "authorCheckedAt": "2026-11-15T15:37:21.918Z",
       "sourceImageCredit": "Photo: Asa Kohn",
       "sourceImageCreator": "Asa Kohn",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16546",
@@ -1878,11 +1878,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "bsp_4223.jpg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "“Coming to Concordia comes with a legacy of taking up the voice of the voiceless,” Bilal Harper said, the director of research at Students for Palestine’s Honour and Resistance's [SPHR] Concordia chapter. The Link has granted Harper a pseudonym to protect his anonymity.",
-      "imageLocal": "assets/news-images/de7b012b3d233f8c.jpg",
-      "imageLocalKey": "de7b012b3d233f8c",
-      "imageLocalVia": "disk"
+      "imageLocal": "assets/news-images/540e7e795524bfbc.jpg",
+      "imageLocalKey": "540e7e795524bfbc"
     },
     {
       "source": "The Link",
@@ -1896,7 +1895,7 @@
       "date": "2026-11-10T14:00:00.000Z",
       "excerpt": "Was the change from CD/ DVDs worth it? CDs and DVDs represent a time when we actually owned the media we paid for. Graphic Lola McCarthy This article originally appeared in The Link Volume 47, Issue 5, published November 10, 2026.",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Nostalgia__dvd_Lola_McCarthy_690_493_90.jpeg",
-      "authorCheckedAt": "2026-11-14T15:37:02.446Z",
+      "authorCheckedAt": "2026-11-15T15:37:23.150Z",
       "sourceImageCredit": "Illustration: Lola McCarthy",
       "sourceImageCreator": "Lola McCarthy",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16545",
@@ -1921,7 +1920,7 @@
       "author": "Safa Hachi",
       "date": "2026-11-10T14:00:00.000Z",
       "excerpt": "Y/N deserves better than AI-generated slop Our TikTok feeds have become a fever dream of poorly fabricated AI versions of low-tier fanfic tropes. Graphic Harrison Campbell This article originally appeared in The Link Volume 47, Issue 5, published November 10, 2026.",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Fanfic_illiteracy_Harrison_Campbell_900_545_90.jpeg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_Fanfic_illiteracy_Harrison_Campbell_690_418_90.jpeg",
       "authorCheckedAt": "2026-11-14T17:07:03.942Z",
       "sourceImageCredit": "Photo: Harrison Campbell",
       "sourceImageCreator": "Harrison Campbell",
@@ -1930,11 +1929,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "05_ops_fanfic_illiteracy_harrison_campbell.jpeg",
       "sourceImageCreditRev": 17,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "I was just 10 when I first dove into the world of fanfiction. The Wattpad orange reflected on my baby face from the clunky family computer as I read about mafia boss Zayn Malik until 1 a.m. I couldn't tell you the plot of most of the fanfiction I read. A lot of it was smut, admittedly. But I could tell you I had a pretty elevated reading level for someone in elementary school. Not to toot my own horn, but some of the smartest people I know were reading fanfiction from a young age. We were learning new words, developing our imaginations and engaging with the media we loved long before we knew we were building literacy skills. Who knew this would all be possible from being in a secret relationship with Spencer Reid from Criminal Minds?",
-      "imageLocal": "assets/news-images/a2bac0396f1e3153.jpg",
-      "imageLocalKey": "a2bac0396f1e3153",
-      "imageLocalVia": "disk"
+      "imageLocal": "assets/news-images/d43f1c792831adfd.jpg",
+      "imageLocalKey": "d43f1c792831adfd"
     },
     {
       "source": "The Link",
@@ -2229,15 +2227,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-15T04:06:49.850Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg",
-      "imageTitle": "Bishop's University McGreer Hall",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg",
+      "imageTitle": "Bishop's University campus 2011",
       "imageCredit": "Photo : JasonParis / CC BY 2.0 · Wikimedia Commons",
       "imageCreator": "JasonParis",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_campus_2011.jpg",
       "leadExcerpt": "25 years in the making! Sunday, Oct. 25, 2026 saw the Gaiters Women’s Soccer team break a long-lasting streak of missing the playoffs. The 25-year curse, if you may, has been broken in a new era under the reign of Head Coach Fawn Mulholland. In only her second year as the manager of the team, Mulholland, alongside her staff, led the Gaiters to a 6-6-2 regular season record, seeing them finish fourth in the RSEQ. It was not an easy pathway to clinching a playoff spot. The Gaiters were in a race to the finish line as they dropped valuable points around the midseason mark, leaving their fate in their own hands with three games to go. Bishops went on to win their final three games of the year, permitting them to gain a playoff spot.",
-      "stockImageLocal": "assets/stock-images/b4e0a6a40eefa8a6.jpg"
+      "stockImageLocal": "assets/stock-images/362586ceb2bf6e08.jpg"
     },
     {
       "source": "The Campus",
@@ -2278,15 +2276,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-15T04:06:50.600Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Arts Building, McGill University, Aug 31 2022",
-      "imageCredit": "Photo : D. Benjamin Miller / CC0 · Wikimedia Commons",
-      "imageCreator": "D. Benjamin Miller",
-      "imageLicense": "CC0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg",
+      "imageTitle": "Roddick Gates, McGill University",
+      "imageCredit": "Photo : Gene.arboit / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Gene.arboit",
+      "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Arts%20Building%2C%20McGill%20University%2C%20Aug%2031%202022.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Roddick_Gates_(McGill_University)_2005-09-02.jpg",
       "leadExcerpt": "In the United States, 38 per cent of women report wearing makeup at least a few times a week, if not daily. These women cite boosting confidence, special occasions, enhancing certain features, covering blemishes, and self-expression as their primary reasons for doing so.",
-      "stockImageLocal": "assets/stock-images/7b8ed6bf1f742c2e.jpg"
+      "stockImageLocal": "assets/stock-images/5372d010500f87e7.jpg"
     },
     {
       "source": "La Pige",
@@ -2480,15 +2478,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-14T19:07:10.407Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG",
-      "imageTitle": "McGill University downtown campus 31",
-      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jeangagnon",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "McGill University downtown campus 36",
+      "imageCredit": "Photo : Jean Gagnon / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Jean Gagnon",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill_University_downtown_campus_31.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2036.JPG",
       "leadExcerpt": "McGill University encourages its students to think critically, question authority, and engage with the political issues that shape the world around them. Its own teaching guidelines emphasize questioning assumptions and examining competing perspectives, while its Statement of Academic Freedom recognizes the right to criticize university policies and administration. However, when students turn that same critical attention toward McGill’s own decisions, the university’s commitment to open debate becomes more complicated.",
-      "stockImageLocal": "assets/stock-images/d83f724160b348eb.jpg"
+      "stockImageLocal": "assets/stock-images/b8015ca1350480ef.jpg"
     },
     {
       "source": "The McGill Daily",
@@ -2578,7 +2576,7 @@
       "date": "2026-11-09T13:00:50.000Z",
       "excerpt": "At the Peel-Sainte Catherine intersection, tourists observe the sights of Montreal’s downtown core, peering through the carefully curated displays of designer stores. From the metro station nearby, commuters spill onto the sidewalk, rushing off to their jobs in the office",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Google-Keep-Google-Chrome-08-Nov-26-11_19_04-PM.png",
-      "authorCheckedAt": "2026-11-14T15:37:03.144Z",
+      "authorCheckedAt": "2026-11-15T15:37:23.747Z",
       "sourceImageCredit": "Photo: Courtesy of Shai Geballe",
       "sourceImageCreator": "Shai Geballe",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/11/five-minutes-from-campus-a-new-jazz-club-hits-the-scene/",
@@ -2604,17 +2602,17 @@
       "date": "2026-11-09T13:00:45.000Z",
       "excerpt": "In October 1995, M.J. Milloy — then-Coordinating Editor of The McGill Daily — reached out to former editors asking for a statement on what the Daily meant to them. Joan Mandell (BA 1979), co- founder of Al Fajr, the first Palestinian-produced English-language newspaper in the",
       "image": "",
-      "authorCheckedAt": "2026-11-14T15:37:03.612Z",
+      "authorCheckedAt": "2026-11-15T15:37:24.206Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "McGill University downtown campus 37",
-      "imageCredit": "Photo : Jean Gagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jean Gagnon",
-      "imageLicense": "CC BY-SA 3.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg",
+      "imageTitle": "McGill University, Montreal, Quebec 2009",
+      "imageCredit": "Photo : XeresNelro / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "XeresNelro",
+      "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2037.JPG",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:4_McGill_University,_Montreal,Quebec_2009.jpg",
       "leadExcerpt": "The Daily has often described itself as just that: an opportunity that enables students to partake in the processes of independent reporting and collaborative editing. Part of the Daily’s mission has always been to encourage students to develop a critical journalistic eye. Today, the art of refining those “philosophical, political, aesthetic, literary and social values” has been interrupted by the Artificial Intelligence (AI) models that have infiltrated our academic spaces. AI has significantly shaped the way McGill students across various faculties approach learning; whether in drafting, editing, researching, or coding. Hence, McGill, which only has loose guidelines for professors and no enforeceable university-wide policy, faces an epidemic of unconstrained AI usage.",
-      "stockImageLocal": "assets/stock-images/4cea2e251d8ecdca.jpg"
+      "stockImageLocal": "assets/stock-images/aefcb1ff0c0aec6b.jpg"
     },
     {
       "source": "The McGill Daily",
@@ -2655,7 +2653,7 @@
       "date": "2026-11-09T13:00:29.000Z",
       "excerpt": "Good People is a bi-weekly article series highlighting McGill students doing community-oriented work on and around campus. Because it’ s important to celebrate good people doing good things.",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/image.png",
-      "authorCheckedAt": "2026-11-14T15:37:04.446Z",
+      "authorCheckedAt": "2026-11-15T15:37:25.097Z",
       "sourceImageCredit": "Photo : Aidan Licoppe",
       "sourceImageCreator": "Aidan Licoppe",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/11/turning-connections-into-community-with-aidan-licoppe/",
@@ -2681,7 +2679,7 @@
       "date": "2026-11-09T13:00:10.000Z",
       "excerpt": "For Eli MacLaren, October 8 was just another Thursday, until it wasn’t. “I woke up, I walked my dog, I got a bit of work done.” But “at 10:30,” he reports, “emails just started going completely berserk.”",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/IMG_4858-scaled.jpg",
-      "authorCheckedAt": "2026-11-14T15:37:04.906Z",
+      "authorCheckedAt": "2026-11-15T15:37:25.540Z",
       "sourceImageCredit": "Photo : Image Courtesy of Kate Hansen",
       "sourceImageCreator": "Image Courtesy of Kate Hansen",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/11/montreals-poetic-autumn/",
@@ -2867,7 +2865,8 @@
       "leadExcerpt": "La chanson L’avenir et moi de l’auteur-compositeur-interprète Alphonse Bisaillon a été couronnée chanson collégiale de l’année lors de la 5e édition du Prix collégial de la chanson de l’année. Le dévoilement a eu lieu le 5 novembre, dans le cadre du Gala de l’Industrie de l’Adisq, à Montréal. C’est au terme de plusieurs semaines d’écoute et de délibérations que la communauté étudiante collégiale a arrêté son choix. Plus de 600 étudiantes et étudiants provenant d’une vingtaine de cégeps à travers le Québec ont participé à cette édition, en analysant les 17 chansons présélectionnées par l’Adisq.",
       "imageLocal": "assets/news-images/86d6a581397ae00f.jpg",
       "imageLocalKey": "86d6a581397ae00f",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -2892,7 +2891,8 @@
       "leadExcerpt": "À l’occasion du 100e anniversaire du monument aux Braves-de-Sherbrooke, le Musée d’histoire de Sherbrooke (MHIST) propose un nouveau circuit audio permettant de découvrir les traces de l’histoire militaire dans différents quartiers de la ville. Grâce à 11 points d’intérêt, cette visite autoguidée invite la population à redécouvrir un patrimoine parfois méconnu, mais toujours présent dans le paysage sherbrookois. Lancé en pleine Campagne nationale du coquelicot, le circuit propose un parcours historique de plus de 200 ans, dont le point de départ est le monument aux Braves-de-Sherbrooke, situé sur la rue King Ouest. Le projet s’inscrit dans les célébrations entourant le centenaire de ce monument commémoratif, tout en élargissant le regard sur l’histoire militaire de la région.",
       "imageLocal": "assets/news-images/d485becdac01f72e.jpg",
       "imageLocalKey": "d485becdac01f72e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -2916,7 +2916,8 @@
       "leadExcerpt": "Sans grande surprise, le Parti démocrate s’empare de la Chambre des représentants, et même du Sénat grâce à James Talarico. Les deux prochaines années s’annoncent plus compliquées pour le président américain, alors que les enquêtes et blocages législatifs risquent d’être lancés dès l’arrivée en poste des nouvelles personnes élues démocrates. Le président américain avait, la journée du 3 novembre, fortement encouragé la population américaine à sortir voter, en particulier les jeunes. « À la belle et jeune génération, je me trouve face au bureau ovale et je veux vous rappeler l’importance de sortir et voter dans cet âge d’or des États-Unis On doit continuer et on doit rester forts ». Cet appel à voter n’a pourtant pas suffi à conserver les majorités dans les deux chambres.",
       "imageLocal": "assets/news-images/14a85e2d6cf843fb.jpg",
       "imageLocalKey": "14a85e2d6cf843fb",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3071,31 +3072,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "author": "Della Harris",
-      "date": "2026-11-04T07:00:00.000Z",
-      "excerpt": "Témoignage sur un Québec qui a financé mon français, mais pas mon avenir.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/della-harris.png",
-      "featured": true,
-      "leadExcerpt": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour pour financer mes cours de français langue seconde.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/c57a8c4869c18c73.jpg",
-      "imageLocalKey": "c57a8c4869c18c73",
-      "sourceImageCredit": "Photo : Catvy Tran",
-      "sourceImageCreator": "Catvy Tran",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "della-harris.png",
-      "sourceImageCreditRev": 17
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Laisser couler l’eau",
       "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
       "author": "Timotée Allouch-Chantepie",
@@ -3104,15 +3080,40 @@
       "image": "",
       "featured": true,
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg",
-      "imageTitle": "McGill University, Winter",
-      "imageCredit": "Photo : Guilhermeduartegarcia / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Guilhermeduartegarcia",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg",
+      "imageTitle": "Wilson Hall, McGill University",
+      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Jeangagnon",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill_University,_Winter.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Wilson_Hall,_McGill_University.jpg",
       "leadExcerpt": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces vastes systèmes de tuyaux, de pompes, de calculs méticuleux des courants d’eau se voient confier deux des plus nobles missions. La première, et certainement la plus intuitive, est d’évacuer les eaux usées, afin qu’elles retrouvent leur état naturel dans nos rivières, nos lacs, nos mers et nos océans. La seconde, bien plus piégeuse, mais tout autant nécessaire, s’assure que toute eau contaminée par l’industrie humaine ne s’invite pas dans nos fragiles écosystèmes.",
-      "stockImageLocal": "assets/stock-images/ce37a73d5c9f7bf4.jpg"
+      "stockImageLocal": "assets/stock-images/2cde5ac76e6846c6.jpg"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "author": "Minola Grent",
+      "date": "2026-11-04T07:00:00.000Z",
+      "excerpt": "Des possibles effets sur les cycles menstruels.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
+      "featured": true,
+      "leadExcerpt": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Féministe des Violences Médicales (OBSMed), lance un appel aux témoignages. La description de la première publication du compte indique : « Tu as fait l’expérience de symptômes inquiétants par rapport à ton cycle menstruel après avoir été exposé·e à des lacrymos ces dernières semaines ? Partage ton témoignage anonymement au lien en bio ! ». En date du 30 octobre, le collectif Lacrymos de Sang avait reçu plus de 10 000 témoignages.",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/9399e5062e1c9deb.jpg",
+      "imageLocalKey": "9399e5062e1c9deb",
+      "sourceImageCredit": "Photo : Bastien Fournier",
+      "sourceImageCreator": "Bastien Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "lacrymobastien-1.png",
+      "sourceImageCreditRev": 17
     },
     {
       "source": "Impact Campus",
@@ -3160,17 +3161,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Les Québécois ont voté à 66,9 % lors de la dernière élection. Ce n’est cependant pas dans toutes les circonscriptions de la province où le taux de vote a été aussi haut. Certaines circonscriptions ont vu des baisses et d’autres des hausses marquées dans la participation de leurs citoyens. Que s'est-il passé plus précisément ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Pavillon_DKN%2C_Universit%C3%A9_Laval_06.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 06",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 04",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2006.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2004.jpg",
       "imageLocal": "assets/news-images/356092f6aaafb8d8.jpg",
       "imageLocalKey": "356092f6aaafb8d8",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/394d452d38b98964.jpg",
+      "stockImageLocal": "assets/stock-images/64ad689738cd231c.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3217,17 +3218,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Le virus du Nil occidental dit VNO est transmis à l’homme par le moustique, lui-même infecté par les oiseaux. L’homme est un « hôte terminal » dans cette transmission, c’est-à-dire qu’il ne peut pas transmettre le virus.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon Adrien-Pouliot 01",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg",
+      "imageTitle": "Park in Université Laval",
+      "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Wilfredor",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Adrien-Pouliot%2001.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg",
       "imageLocal": "assets/news-images/7a15d9019b06c31f.jpg",
       "imageLocalKey": "7a15d9019b06c31f",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/f0b7ee2de14eab1a.jpg",
+      "stockImageLocal": "assets/stock-images/b8f07607bcc60c0f.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3250,17 +3251,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Les projections du taux d’incidence par province de 2026 proviennent de l’ Appendice 2 de la Projection du fardeau du cancer au Canada en 2026 . Cette projection n’incluait pas de données pour le Nunavut, les Territoires du Nord-Ouest ou le Yukon.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Pavillon_Envirotron_UL_01.jpg",
-      "imageTitle": "Pavillon Envirotron",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Pavillon_Gene-H.-Kruger_02.jpg",
+      "imageTitle": "Pavillon Gene-H.-Kruger",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Envirotron_UL_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Gene-H.-Kruger_02.jpg",
       "imageLocal": "assets/news-images/157e1b0794b4afbb.jpg",
       "imageLocalKey": "157e1b0794b4afbb",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/801a58f945524a6f.jpg",
+      "stockImageLocal": "assets/stock-images/04f676d202beae5a.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3284,17 +3285,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Pendant la campagne électorale, Éric Duhaime a concentré ses efforts dans la région de Québec, où il estimait avoir de meilleures chances de remporter des sièges . Ancien animateur de Radio X et du FM 93, le chef conservateur était déjà une figure connue du paysage médiatique de la Capitale-Nationale.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 10",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Pavillon_DKN%2C_Universit%C3%A9_Laval_12.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 12",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2010.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2012.jpg",
       "imageLocal": "assets/news-images/af3f79ee87a691ca.jpg",
       "imageLocalKey": "af3f79ee87a691ca",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/61ad1fc61b4f15f1.jpg",
+      "stockImageLocal": "assets/stock-images/7bea08ba58d91237.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3317,17 +3318,17 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadExcerpt": "Initialement, le projet pilote àVélo comptait dix stations et cent vélos. Cinq ans plus tard, le projet est toujours en expansion et compte désormais 225 stations et 2300 vélos. Cette augmentation peut notamment s’expliquer par l’accessibilité de ce moyen de transport ainsi que par sa popularité auprès des usagers.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Tree-lined_path_on_the_Universite_Laval_campus.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Tree-lined path on the Universite Laval campus",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/73/Snowy_park_at_Universite_Laval_at_night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Snowy park at Universite Laval at night",
       "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Wilfredor",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Tree-lined%20path%20on%20the%20Universite%20Laval%20campus.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Snowy%20park%20at%20Universite%20Laval%20at%20night.jpg",
       "imageLocal": "assets/news-images/1e1c34fb613861aa.jpg",
       "imageLocalKey": "1e1c34fb613861aa",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/1b4347f4a98f0ab7.jpg",
+      "stockImageLocal": "assets/stock-images/7ac333d0f43fcd4c.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -3353,7 +3354,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/ef9295a14d308237.jpg",
       "imageLocalKey": "ef9295a14d308237",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -3378,7 +3380,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/79163db289510fb7.jpg",
       "imageLocalKey": "79163db289510fb7",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -3403,7 +3406,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/efec8f774b8120c7.jpg",
       "imageLocalKey": "efec8f774b8120c7",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -3428,7 +3432,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/108ee859316cad14.jpg",
       "imageLocalKey": "108ee859316cad14",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -3453,7 +3458,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/1b096fd682af1769.jpg",
       "imageLocalKey": "1b096fd682af1769",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -3478,7 +3484,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/13e2e174944f4387.png",
       "imageLocalKey": "13e2e174944f4387",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -3503,7 +3510,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/1b5719b65e926795.png",
       "imageLocalKey": "1b5719b65e926795",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -3528,7 +3536,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/818e399b5ef69360.jpg",
       "imageLocalKey": "818e399b5ef69360",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The McGill Daily",
@@ -3681,7 +3690,8 @@
       "leadExcerpt": "Pour une 3 e saison consécutive, les joueurs du Vert & Or agiront à titre de spectateurs à l’occasion des séries éliminatoires du RSEQ. Sherbrooke est mathématiquement éliminé après cette défaite du 24 octobre dernier face aux Stingers de Concordia, où l’équipe s’est inclinée par la marque de 34-13 devant ses fidèles.",
       "imageLocal": "assets/news-images/34c1eb7418442c13.jpg",
       "imageLocalKey": "34c1eb7418442c13",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -3705,7 +3715,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/255bf88e227cbb17.png",
       "imageLocalKey": "255bf88e227cbb17",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -3729,7 +3740,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/346636fcf8ab11cc.jpg",
       "imageLocalKey": "346636fcf8ab11cc",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3922,15 +3934,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-15T14:12:10.348Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/46/Bishopsu_lac1.jpg",
-      "imageTitle": "Bishop's University campus by the river",
-      "imageCredit": "Photo : Picken, T / Public domain · Wikimedia Commons",
-      "imageCreator": "Picken, T",
-      "imageLicense": "Public domain",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/6a/John_Bassett_Memorial_Library.jpg",
+      "imageTitle": "Bishop's University John Bassett Memorial Library",
+      "imageCredit": "Photo : Tpoirier05 / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Tpoirier05",
+      "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishopsu_lac1.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:John_Bassett_Memorial_Library.jpg",
       "leadExcerpt": "Through our shared experiences, starting with challenges during O-Week and continuing through nights at the Gait, cheering at Gaiters games no matter the outcome, wings at the Lion, and the proud singing of our school song at graduation and throughout our time here, there is a common sense of community among BU students.",
-      "stockImageLocal": "assets/stock-images/0b4a5b86c9c899fd.jpg"
+      "stockImageLocal": "assets/stock-images/e61047bee5a9fe27.jpg"
     },
     {
       "source": "The Campus",
@@ -3946,15 +3958,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-15T14:12:10.565Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Bishop's University campus 2011 03",
-      "imageCredit": "Photo : Jason Paris / CC BY 2.0 · Wikimedia Commons",
-      "imageCreator": "Jason Paris",
-      "imageLicense": "CC BY 2.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Bishop%27s_University%2C_McGreer_Hall%2C_2600%2C_rue_Coll%C3%A8ge%2C_Sherbrooke_une_partie_des_b%C3%A2timents_avec_la_fa%C3%A7ade_de_la_chapelle_11-d.na.civile-78-3599.jpg",
+      "imageTitle": "Bishop's University, McGreer Hall et façade de la chapelle",
+      "imageCredit": "Photo : Groupe de recherche en art du Québec / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Groupe de recherche en art du Québec",
+      "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2003.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University,_McGreer_Hall,_2600,_rue_Coll%C3%A8ge,_Sherbrooke_une_partie_des_b%C3%A2timents_avec_la_fa%C3%A7ade_de_la_chapelle_11-d.na.civile-78-3599.jpg",
       "leadExcerpt": "Thanksgiving is one of the more controversial holidays in North America. It’s true; traditionally, it’s been a celebration built on the foundation of something not worth celebrating. The complicated and devastating nature of colonialism isn’t something that should be celebrated without acknowledging the harm that has been done.",
-      "stockImageLocal": "assets/stock-images/63fe9495a34b6ccf.jpg"
+      "stockImageLocal": "assets/stock-images/9b9c7bd6f3fae1fd.jpg"
     },
     {
       "source": "The Campus",
@@ -4331,17 +4343,17 @@
       "sourceImageCreditImageKey": "c1cd7a14-e81e-4399-a55f-d0f111666dac-e1790799322671.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
-      "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg",
+      "imageTitle": "Pavillon Louis-Jacques-Casault, Université Laval",
+      "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Wilfredor",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Louis-Jacques-Casault_3.jpg",
       "imageLocal": "assets/news-images/b3c705d98e3955f0.jpg",
       "imageLocalKey": "b3c705d98e3955f0",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/f1a23eb08d38a755.jpg",
+      "stockImageLocal": "assets/stock-images/06fbe98e6eda7396.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4363,17 +4375,17 @@
       "sourceImageCreditImageKey": "dsc_2009-2.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pavillon_DKN%2C_Universit%C3%A9_Laval_11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 11",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Pavillon_DKN%2C_Universit%C3%A9_Laval_05.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 05",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2011.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2005.jpg",
       "imageLocal": "assets/news-images/ea46ef6162ef9475.jpg",
       "imageLocalKey": "ea46ef6162ef9475",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/364c184501fed794.jpg",
+      "stockImageLocal": "assets/stock-images/b5ddec82ff714881.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4395,17 +4407,17 @@
       "sourceImageCreditImageKey": "20260930_130623-2.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/60/Pavillon_Palasis-Prince_10.jpg",
-      "imageTitle": "Pavillon Palasis-Prince 10",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Grand_Axe_ULaval.jpg",
+      "imageTitle": "Grand Axe ULaval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Palasis-Prince_10.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Grand_Axe_ULaval.jpg",
       "imageLocal": "assets/news-images/294ffdc14f33c43b.jpg",
       "imageLocalKey": "294ffdc14f33c43b",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/afa99a753be46bd2.jpg",
+      "stockImageLocal": "assets/stock-images/638f8d74ce92f23a.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4428,17 +4440,17 @@
       "sourceImageCreditImageKey": "tro_stade-telus-ul.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_F%C3%A9lix-Antoine-Savard_02.jpg",
-      "imageTitle": "Pavillon Félix-Antoine-Savard",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
+      "imageTitle": "Pavillon J.-A.-DeSève",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_F%C3%A9lix-Antoine-Savard_02.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
       "imageLocal": "assets/news-images/e4a25ec6e0bc7969.jpg",
       "imageLocalKey": "e4a25ec6e0bc7969",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/b967cbb339969cfd.jpg",
+      "stockImageLocal": "assets/stock-images/fb0d3ac3bc0ca610.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4460,17 +4472,17 @@
       "sourceImageCreditImageKey": "img_2001-scaled-e1791856442129.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/57/Pavillon_DKN%2C_Universit%C3%A9_Laval_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 07",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
-      "imageLicense": "CC BY-SA 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/16/Telus_Stadium%2C_Laval_University.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Telus Stadium, Laval University",
+      "imageCredit": "Photo : Rubisco4 / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Rubisco4",
+      "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2007.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Telus%20Stadium%2C%20Laval%20University.jpg",
       "imageLocal": "assets/news-images/a677e6cc600c71d7.jpg",
       "imageLocalKey": "a677e6cc600c71d7",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/22ed30c1ffd17db0.jpg",
+      "stockImageLocal": "assets/stock-images/d370becfa12a7952.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -4681,7 +4693,7 @@
       "lang": "en",
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "author": "Ellen Lurie and Managing Editor",
+      "author": "Ellen Lurie et Managing Editor",
       "date": "2026-09-08T15:35:43.000Z",
       "excerpt": "From 1906 to 1946, McGill student newspaper archives record definitive evidence of blackface on and around campus. Although the majority of clippings publicize nearby local theatre productions of minstrel shows, several excerpts explicitly describe blackface performances as",
       "image": "",
@@ -4694,7 +4706,8 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2014.JPG",
-      "stockImageLocal": "assets/stock-images/3256aca6fed2d075.jpg"
+      "stockImageLocal": "assets/stock-images/3256aca6fed2d075.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4718,7 +4731,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/59c339c3de7bc16f.jpg",
       "imageLocalKey": "59c339c3de7bc16f",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4734,14 +4748,15 @@
       "image": "",
       "authorCheckedAt": "2026-11-14T22:13:11.064Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/da/McGill_University_downtown_campus_16.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "McGill University downtown campus 16",
-      "imageCredit": "Photo : Jean Gagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jean Gagnon",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg",
+      "imageTitle": "Arts Building, McGill University",
+      "imageCredit": "Photo : Guilhermeduartegarcia / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "Guilhermeduartegarcia",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2016.JPG",
-      "stockImageLocal": "assets/stock-images/c3672e57ab9b123b.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Arts_Building,_McGill_University.jpg",
+      "stockImageLocal": "assets/stock-images/b1c40d3d6e5097d9.jpg",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4766,7 +4781,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/5fa57c2fce5bd593.jpg",
       "imageLocalKey": "5fa57c2fce5bd593",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4790,7 +4806,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/15504a096ec4570e.jpg",
       "imageLocalKey": "15504a096ec4570e",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4815,7 +4832,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/34ecd821609b6280.png",
       "imageLocalKey": "34ecd821609b6280",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4839,7 +4857,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/f4c76630a1cac1b6.jpg",
       "imageLocalKey": "f4c76630a1cac1b6",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4863,7 +4882,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/edb7700e4ff4fb1c.jpg",
       "imageLocalKey": "edb7700e4ff4fb1c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4888,7 +4908,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2430478fcc1fdf75.jpg",
       "imageLocalKey": "2430478fcc1fdf75",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4913,7 +4934,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/75bc16a385dfdedb.jpg",
       "imageLocalKey": "75bc16a385dfdedb",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4938,7 +4960,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/d20e9f77b2f85d5b.jpg",
       "imageLocalKey": "d20e9f77b2f85d5b",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Tribune",
@@ -4963,7 +4986,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/581ab3d9884a6f7c.jpg",
       "imageLocalKey": "581ab3d9884a6f7c",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Polyscope",
