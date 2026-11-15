@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T23:36:36.043Z",
+  "updatedAt": "2026-11-15T01:11:00.547Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T23:36:08.024Z"
+      "checkedAt": "2026-11-15T01:10:33.474Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/solenoide"
-      },
-      "next": {
         "title": "InfiniBIT!",
         "source": "schedule",
         "start": "19:00",
         "end": "20:30",
         "url": "https://cism893.ca/emissions/infinibit"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "InfiniBIT!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T23:36:22.176Z"
+      "checkedAt": "2026-11-15T01:10:47.542Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "West Indian Rhythms",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Masters At Work",
         "source": "api-live",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Howls From Hell/Too Loud For The Crowd",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "West Indian Rhythms",
+      "showTitle": "Masters At Work",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T23:36:24.878Z"
+      "checkedAt": "2026-11-15T01:10:50.235Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Limelight",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-limelight"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Screamers",
+        "title": "The Spacious Astrology Playlist",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/screamers"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
       },
       "track": "",
-      "showTitle": "The Limelight",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T23:36:27.400Z"
+      "checkedAt": "2026-11-15T01:10:52.638Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T23:36:28.393Z"
+      "checkedAt": "2026-11-15T01:10:53.650Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-14T23:36:35.693Z"
+      "checkedAt": "2026-11-15T01:11:00.198Z"
     }
   }
 }
