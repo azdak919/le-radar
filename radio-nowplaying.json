@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-15T15:06:48.462Z",
+  "updatedAt": "2026-11-15T15:46:23.259Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Palmarès CHYZ",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
+      "current": null,
       "next": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:06:21.595Z"
+      "checkedAt": "2026-11-15T15:45:57.629Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:06:23.479Z"
+      "checkedAt": "2026-11-15T15:45:59.527Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Time",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
-      },
-      "next": {
         "title": "International Radio Report",
         "source": "api-live",
         "start": "10:30",
         "end": "11:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Latin Time",
+      "next": {
+        "title": "Free Kick",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "13:00"
+      },
+      "track": "",
+      "showTitle": "International Radio Report",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:06:28.320Z"
+      "checkedAt": "2026-11-15T15:46:01.838Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:06:29.774Z"
+      "checkedAt": "2026-11-15T15:46:03.982Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:06:30.818Z"
+      "checkedAt": "2026-11-15T15:46:05.048Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:06:48.113Z"
+      "checkedAt": "2026-11-15T15:46:22.908Z"
     }
   }
 }
