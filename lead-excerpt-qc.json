@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-14T23:07:26.072Z",
+  "updated": "2026-11-15T00:07:35.091Z",
   "total": 188,
   "pool": 52,
-  "incomplete": 29,
+  "incomplete": 27,
   "withLeadExcerpt": 143,
-  "candidates": 29,
-  "enriched": 10,
-  "failed": 0,
+  "candidates": 27,
+  "enriched": 3,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -28,21 +28,30 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
+      "chars": 528,
+      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
+      "changed": true
     },
     {
-      "title": "Why Montreal Fans Should Give the CFL and Alouettes a Shot",
-      "link": "https://theplantnews.com/2026/11/14/giving-the-cfl-a-chance-in-an-nfl-world/",
+      "title": "Noise, Silence, and Your Health: Finding a Healthy Balance",
+      "link": "https://theplantnews.com/2026/11/14/on-our-relationship-with-sound/",
       "ok": true,
       "score": 96,
-      "chars": 583,
-      "sample": "When people talk about football, the NFL is often the first league that comes to mind. From the Supe",
+      "chars": 470,
+      "sample": "Take a second to listen to your surroundings. What can you hear? Perhaps it is the loud hum of the m",
+      "changed": true
+    },
+    {
+      "title": "Crochet Hooks and Hyperbolic Geometry: Breaking Euclid’s Rules",
+      "link": "https://theplantnews.com/2026/11/14/math-now-prof-taiminas-crochet-lesson/",
+      "ok": true,
+      "score": 96,
+      "chars": 969,
+      "sample": "Do you remember your high school teacher telling you that the angles in a triangle always sum to 180",
       "changed": true
     },
     {
@@ -52,34 +61,25 @@
       "score": 100,
       "chars": 1039,
       "sample": "Depuis le 18 septembre 2026, un sujet d’actualité prime sur nos médias et nos réseaux sociaux. Le mo",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Vacancy and the Rooftop Farming Culture of Montreal",
-      "link": "https://theplantnews.com/2026/11/14/vacancy-and-the-rooftop-farming-culture-of-montreal/",
+      "title": "Is Fandom the New Religion? How Fans Found Community",
+      "link": "https://theplantnews.com/2026/11/14/at-the-altar-of-ao3/",
       "ok": true,
       "score": 96,
-      "chars": 513,
-      "sample": "The machine asks about aménagement but it answers with phrases that are about développement. Aménage",
-      "changed": true
+      "chars": 1044,
+      "sample": "Once a week, I sit on a wooden bench to feel a little less lonely. No matter if the sun is setting o",
+      "changed": false
     },
     {
-      "title": "Who Has Health? Reading Vita: Life in a Zone of Social Abandonment",
-      "link": "https://theplantnews.com/2026/11/14/who-has-health-reading-vita-life-in-a-zone-of-social-abandonment/",
+      "title": "Do we ever outgrow the stories of our childhood? A look at how The Little Prince, Howl’s Moving Castle, and Fantastic Mr. Fox change as we do.",
+      "link": "https://theplantnews.com/2026/11/14/the-stories-that-grow-with-us/",
       "ok": true,
       "score": 96,
-      "chars": 719,
-      "sample": "These words are José Duarte’s, taken from anthropologist João Biehl’s Vita: Life in a Zone of Social",
-      "changed": true
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-16/",
-      "ok": true,
-      "score": 100,
-      "chars": 308,
-      "sample": "Le Comité judiciaire du Conseil privé, l’instance judiciaire la plus haute de Trinité-et-Tobago, a m",
-      "changed": true
+      "chars": 969,
+      "sample": "Once upon a time, a child drew a boa constrictor swallowing an elephant whole. A grown-up, peering o",
+      "changed": false
     }
   ]
 }
