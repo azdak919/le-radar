@@ -1,30 +1,37 @@
 {
-  "updated": "2026-11-15T05:08:56.037Z",
+  "updated": "2026-11-15T06:09:24.295Z",
   "total": 188,
-  "withImage": 172,
-  "withCredit": 172,
-  "cited": 118,
+  "withImage": 173,
+  "withCredit": 173,
+  "cited": 119,
   "pending": 30,
   "missingHero": 0,
   "ok": false,
-  "checked": 42,
-  "updatedCount": 2,
-  "citedNew": 5,
+  "checked": 43,
+  "updatedCount": 3,
+  "citedNew": 6,
   "fallbackNew": 37,
   "samples": [
+    {
+      "title": "Police remove student protesters and bystanders from Hall Building sit-in",
+      "source": "The Link",
+      "credit": "Photo: Cléo Clamen",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
     {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "source": "La Griffe",
       "credit": "Photo : La Griffe",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Editorial: Sweeping away the dead Republican leaves",
-      "source": "The Link",
-      "credit": "Photo: Nicolas Tremblay",
-      "cited": true,
-      "method": "figcaption-trailing"
     }
   ]
 }

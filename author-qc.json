@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-15T05:06:45.161Z",
+  "updated": "2026-11-15T06:06:48.170Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 10,
+  "mismatches": 11,
   "ok": true,
   "samples": [
+    {
+      "title": "Police remove student protesters and bystanders from Hall Building sit-in",
+      "link": "https://thelinknewspaper.ca/article/16565",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Cléo Clamen",
+      "reason": "page-byline"
+    },
     {
       "title": "“You do not have to be Good”: On the Nature of Being",
       "link": "https://theplantnews.com/2026/11/14/you-do-not-have-to-be-good-on-the-nature-of-being/",
@@ -86,5 +94,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 10
+  "fixed": 11
 }
