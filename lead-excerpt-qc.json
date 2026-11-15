@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-15T07:14:03.512Z",
+  "updated": "2026-11-15T09:07:00.064Z",
   "total": 188,
   "pool": 54,
-  "incomplete": 27,
+  "incomplete": 28,
   "withLeadExcerpt": 142,
-  "candidates": 27,
-  "enriched": 0,
-  "failed": 0,
+  "candidates": 28,
+  "enriched": 1,
+  "failed": 6,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,21 +19,30 @@
       "changed": false
     },
     {
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": true
+    },
+    {
       "title": "Mike Morrice elected Green Party of Canada leader",
       "link": "https://theconcordian.com/2026/11/mike-morrice-elected-green-leader/",
       "ok": true,
       "score": 100,
       "chars": 158,
       "sample": "Mike Morrice has been elected as the new leader of the Green Party of Canada. This should be no surp",
-      "changed": false
-    },
-    {
-      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
-      "ok": true,
-      "score": 96,
-      "chars": 337,
-      "sample": "À la suite de différentes difficultés, notamment la pandémie de Covid-19, le tournoi, qui avait init",
       "changed": false
     },
     {
