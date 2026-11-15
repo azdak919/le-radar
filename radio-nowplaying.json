@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T15:46:23.259Z",
+  "updatedAt": "2026-11-15T17:06:48.632Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Le Ré-Show : Deuxième Service",
+        "title": "Radio Futura",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+        "start": "13:00",
+        "end": "14:30",
+        "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:45:57.629Z"
+      "checkedAt": "2026-11-15T17:06:24.187Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Effets sonores",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
-      },
-      "next": {
         "title": "Les sirènes",
         "source": "schedule",
         "start": "11:00",
         "end": "13:00",
         "url": "https://cism893.ca/emissions/les-sirenes"
       },
+      "next": {
+        "title": "Le char de marge",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
+      },
       "track": "",
-      "showTitle": "Effets sonores",
+      "showTitle": "Les sirènes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:45:59.527Z"
+      "checkedAt": "2026-11-15T17:06:26.051Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "International Radio Report",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free Kick",
         "source": "api-live",
         "start": "11:00",
         "end": "13:00"
       },
+      "next": {
+        "title": "Modular Systems/Future Classics",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "International Radio Report",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:46:01.838Z"
+      "checkedAt": "2026-11-15T17:06:28.640Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
-      },
-      "next": {
         "title": "Brave Little Emo Girl",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
+      "next": {
+        "title": "Northern Stagelights",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:46:03.982Z"
+      "checkedAt": "2026-11-15T17:06:30.185Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,28 +122,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:46:05.048Z"
+      "checkedAt": "2026-11-15T17:06:31.026Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "OPUS",
         "source": "api-live",
         "start": "12:00",
         "end": "13:00",
         "slug": "opus"
       },
+      "next": {
+        "title": "Pôle hip-hop",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00",
+        "slug": "pole-hip-hop"
+      },
       "track": "Perfume Genius — On The Floor",
-      "showTitle": "",
+      "showTitle": "OPUS",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T15:46:22.908Z"
+      "checkedAt": "2026-11-15T17:06:48.281Z"
     }
   }
 }
