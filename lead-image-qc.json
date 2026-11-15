@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-15T02:01:12.858Z",
+  "updated": "2026-11-15T02:37:44.499Z",
   "total": 188,
-  "withPhoto": 175,
-  "withStock": 27,
+  "withPhoto": 174,
+  "withStock": 31,
   "withCampusBank": 24,
   "fullyCovered": 188,
-  "leadReadyPhotos": 161,
-  "pageScraped": 16,
-  "photosRecovered": 15,
-  "imagesCleared": 2,
-  "stockSearches": 27,
-  "stockFound": 25,
-  "campusBankFound": 21,
+  "leadReadyPhotos": 116,
+  "pageScraped": 12,
+  "photosRecovered": 11,
+  "imagesCleared": 1,
+  "stockSearches": 72,
+  "stockFound": 30,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
+      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-18.jpeg"
+    },
     {
       "title": "Do we ever outgrow the stories of our childhood? A look at how The Little Prince, Howl’s Moving Castle, and Fantastic Mr. Fox change as we do.",
       "link": "https://theplantnews.com/2026/11/14/the-stories-that-grow-with-us/",
@@ -21,28 +27,40 @@
       "image": "https://theplantnews.com/wp-content/uploads/2026/11/image4.png"
     },
     {
-      "title": "Comment rester humain dans un monde artificiel?",
-      "link": "https://www.delitfrancais.com/2026/11/11/comment-rester-humain-dans-un-monde-artificiel/",
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-16/",
       "reason": "no-stock-match",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/La-Ferme-ou-comment-nourrir-un-futur-intelligent.png"
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png"
     },
     {
-      "title": "Is Wearing Makeup Really a Choice?",
-      "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
+      "title": "Mal à l’épaule, mal au dos : et si c’était votre travail ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/mal-a-lepaule-mal-au-dos-et-si-cetait-votre-travail/?utm_source=rss&utm_medium=rss&utm_campaign=mal-a-lepaule-mal-au-dos-et-si-cetait-votre-travail",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/illustration_sst_sans_personne.png"
     },
     {
-      "title": "Prouve que tu existes",
-      "link": "https://www.delitfrancais.com/2026/11/11/prouve-que-tu-existes/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Après le sport, apprendre à se redéfinir",
+      "link": "https://quartierlibre.ca/apres-le-sport-apprendre-a-se-redefinir/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/IMG_3930.jpeg"
     },
     {
       "title": "« Redevenir Européens » : quand les Québécois transforment la géopolitique en mème",
       "link": "https://quartierlibre.ca/redevenir-europeens-quebecois/",
-      "reason": "stock-too-small",
+      "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/image3-1.jpg"
+    },
+    {
+      "title": "La peur de vieillir de plus en plus répandue",
+      "link": "https://quartierlibre.ca/peur-de-vieillir/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/8_peur-de-vieillir.png"
+    },
+    {
+      "title": "Le Cégep de Jonquière au cœur de la COP31",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/le-cegep-de-jonquiere-au-coeur-de-la-cop31/?utm_source=rss&utm_medium=rss&utm_campaign=le-cegep-de-jonquiere-au-coeur-de-la-cop31",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Capture-decran-le-2026-11-13-a-14.02.34.png"
     },
     {
       "title": "Saguenay vers des infrastructures durables",
@@ -51,40 +69,22 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
     },
     {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Bishop’s Culture is Community",
-      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Bandeen_Hall.jpg"
-    },
-    {
-      "title": "CF Montréal et COP 31 : reportages radio du 9 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/10/cf-montreal-et-cop-31-reportages-radio-du-9-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=cf-montreal-et-cop-31-reportages-radio-du-9-novembre",
+      "title": "Trois chaires de recherche pour répondre aux défis de demain",
+      "link": "https://lecollectif.ca/a-la-une/trois-chaires-de-recherche-pour-repondre-aux-defis-de-demain/",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/CAMPUS_3-chaires-de-recherche-a-ludes_Source-UdeS-1.jpg"
     },
     {
-      "title": "Goodbye October, Hello Movember!",
-      "link": "https://thebucampus.ca/2026/11/09/goodbye-october-hello-movember/",
+      "title": "Trois facultés de l’UdeS en grève",
+      "link": "https://lecollectif.ca/a-la-une/trois-facultes-de-ludes-en-greve/",
       "reason": "no-stock-match",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/Image1-Nicolas-Hamel.jpg"
     },
     {
-      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
-      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "title": "L’ADISQ 2026 : les artistes d’ici à l’honneur",
+      "link": "https://lecollectif.ca/a-la-une/ladisq-2026-les-artistes-dici-a-lhonneur/",
       "reason": "no-stock-match",
-      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
-    },
-    {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
-      "reason": "no-stock-match",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/CULTURE_Adisq_Angine_de_Poitrine_Credit-Paul-Hudson-Wikimedia-Commons.jpg"
     }
   ]
 }

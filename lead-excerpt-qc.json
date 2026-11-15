@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-15T02:00:39.292Z",
+  "updated": "2026-11-15T02:37:14.155Z",
   "total": 188,
-  "pool": 52,
+  "pool": 53,
   "incomplete": 27,
   "withLeadExcerpt": 142,
   "candidates": 27,
   "enriched": 1,
-  "failed": 0,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -28,22 +28,13 @@
       "changed": false
     },
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
+      "title": "Mike Morrice elected Green Party of Canada leader",
+      "link": "https://theconcordian.com/2026/11/mike-morrice-elected-green-leader/",
       "ok": true,
       "score": 100,
-      "chars": 528,
-      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
+      "chars": 158,
+      "sample": "Mike Morrice has been elected as the new leader of the Green Party of Canada. This should be no surp",
       "changed": true
-    },
-    {
-      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
-      "ok": true,
-      "score": 96,
-      "chars": 337,
-      "sample": "À la suite de différentes difficultés, notamment la pandémie de Covid-19, le tournoi, qui avait init",
-      "changed": false
     },
     {
       "title": "Noise, Silence, and Your Health: Finding a Healthy Balance",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 1044,
       "sample": "Once a week, I sit on a wooden bench to feel a little less lonely. No matter if the sun is setting o",
+      "changed": false
+    },
+    {
+      "title": "Do we ever outgrow the stories of our childhood? A look at how The Little Prince, Howl’s Moving Castle, and Fantastic Mr. Fox change as we do.",
+      "link": "https://theplantnews.com/2026/11/14/the-stories-that-grow-with-us/",
+      "ok": true,
+      "score": 96,
+      "chars": 969,
+      "sample": "Once upon a time, a child drew a boa constrictor swallowing an elephant whole. A grown-up, peering o",
       "changed": false
     }
   ]
