@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-15T01:07:34.787Z",
+  "updated": "2026-11-15T02:00:39.292Z",
   "total": 188,
   "pool": 52,
   "incomplete": 27,
   "withLeadExcerpt": 142,
   "candidates": 27,
-  "enriched": 7,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -28,12 +19,21 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "chars": 528,
+      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
       "changed": true
     },
     {
@@ -43,34 +43,7 @@
       "score": 96,
       "chars": 337,
       "sample": "À la suite de différentes difficultés, notamment la pandémie de Covid-19, le tournoi, qui avait init",
-      "changed": true
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-16/",
-      "ok": true,
-      "score": 100,
-      "chars": 308,
-      "sample": "Le Comité judiciaire du Conseil privé, l’instance judiciaire la plus haute de Trinité-et-Tobago, a m",
-      "changed": true
-    },
-    {
-      "title": "Les jeunes cyniques ? Plutôt idéalistes !",
-      "link": "https://quartierlibre.ca/les-jeunes-cyniques/",
-      "ok": true,
-      "score": 100,
-      "chars": 996,
-      "sample": "Face à la crise climatique, au coût de la vie et à l’accès difficile à la propriété, certain·e·s jeu",
-      "changed": true
-    },
-    {
-      "title": "L’ADISQ 2026 : les artistes d’ici à l’honneur",
-      "link": "https://lecollectif.ca/a-la-une/ladisq-2026-les-artistes-dici-a-lhonneur/",
-      "ok": true,
-      "score": 100,
-      "chars": 318,
-      "sample": "La musique québécoise était à l’honneur le dimanche 8 novembre dernier, à l’occasion de la 48e éditi",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Noise, Silence, and Your Health: Finding a Healthy Balance",
@@ -79,6 +52,33 @@
       "score": 96,
       "chars": 470,
       "sample": "Take a second to listen to your surroundings. What can you hear? Perhaps it is the loud hum of the m",
+      "changed": false
+    },
+    {
+      "title": "Crochet Hooks and Hyperbolic Geometry: Breaking Euclid’s Rules",
+      "link": "https://theplantnews.com/2026/11/14/math-now-prof-taiminas-crochet-lesson/",
+      "ok": true,
+      "score": 96,
+      "chars": 969,
+      "sample": "Do you remember your high school teacher telling you that the angles in a triangle always sum to 180",
+      "changed": false
+    },
+    {
+      "title": "Mouvement lycéen 2026 : la violence du maintien de l’ordre",
+      "link": "https://theplantnews.com/2026/11/14/ode-a-la-jeunesse-revoltee/",
+      "ok": true,
+      "score": 100,
+      "chars": 1039,
+      "sample": "Depuis le 18 septembre 2026, un sujet d’actualité prime sur nos médias et nos réseaux sociaux. Le mo",
+      "changed": false
+    },
+    {
+      "title": "Is Fandom the New Religion? How Fans Found Community",
+      "link": "https://theplantnews.com/2026/11/14/at-the-altar-of-ao3/",
+      "ok": true,
+      "score": 96,
+      "chars": 1044,
+      "sample": "Once a week, I sit on a wooden bench to feel a little less lonely. No matter if the sun is setting o",
       "changed": false
     }
   ]
