@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T02:36:32.472Z",
+  "updatedAt": "2026-11-15T05:06:52.964Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T02:36:06.388Z"
+      "checkedAt": "2026-11-15T05:06:20.403Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "20:30",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rythmologie (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/rythmologie"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Rythmologie (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T02:36:20.320Z"
+      "checkedAt": "2026-11-15T05:06:34.460Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Howls From Hell/Too Loud For The Crowd",
+        "title": "stereOphobic",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "SKEwInGTheWaBeS$$",
+        "title": "Utopia's Paradise",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "06:00"
       },
       "track": "",
-      "showTitle": "Howls From Hell/Too Loud For The Crowd",
+      "showTitle": "stereOphobic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,66 +74,66 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T02:36:22.989Z"
+      "checkedAt": "2026-11-15T05:06:41.742Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Go Go Radio Magic Show",
+        "title": "Floydian Slip",
         "source": "schedule-live",
-        "start": "21:30",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/floydian-slip"
       },
       "next": {
-        "title": "Brave New Jams",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/brave-new-jams"
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "The Go Go Radio Magic Show",
+      "showTitle": "Floydian Slip",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T02:36:24.925Z"
+      "checkedAt": "2026-11-15T05:06:43.865Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "04:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": null,
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T02:36:26.215Z"
+      "checkedAt": "2026-11-15T05:06:45.341Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "D'amour et de sexe",
+        "title": "OPUS",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00",
-        "slug": "damour-et-de-sexe"
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "opus"
       },
       "track": "Perfume Genius — On The Floor",
       "showTitle": "",
@@ -143,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T02:36:32.120Z"
+      "checkedAt": "2026-11-15T05:06:52.613Z"
     }
   }
 }
