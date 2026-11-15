@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T08:08:41.954Z",
+  "updatedAt": "2026-11-15T09:06:45.487Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T08:08:29.409Z"
+      "checkedAt": "2026-11-15T09:06:11.882Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T08:08:31.291Z"
+      "checkedAt": "2026-11-15T09:06:13.790Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,7 +73,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T08:08:33.903Z"
+      "checkedAt": "2026-11-15T09:06:16.381Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T08:08:35.406Z"
+      "checkedAt": "2026-11-15T09:06:17.848Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T08:08:36.299Z"
+      "checkedAt": "2026-11-15T09:06:18.822Z"
     },
     "choq": {
       "id": "choq",
@@ -129,20 +129,20 @@
       "current": null,
       "next": {
         "title": "OPUS",
-        "source": "api-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
-        "slug": "opus"
+        "url": "https://www.choq.ca/balados/opus"
       },
       "track": "Perfume Genius — On The Floor",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T08:08:41.603Z"
+      "checkedAt": "2026-11-15T09:06:45.137Z"
     }
   }
 }
