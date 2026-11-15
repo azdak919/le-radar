@@ -1,14 +1,23 @@
 {
-  "updated": "2026-11-15T17:37:19.090Z",
+  "updated": "2026-11-15T19:07:41.505Z",
   "total": 188,
   "pool": 54,
-  "incomplete": 27,
+  "incomplete": 28,
   "withLeadExcerpt": 142,
-  "candidates": 27,
-  "enriched": 0,
+  "candidates": 28,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -19,13 +28,13 @@
       "changed": false
     },
     {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
       "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": true
     },
     {
       "title": "Mike Morrice elected Green Party of Canada leader",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 1039,
       "sample": "Depuis le 18 septembre 2026, un sujet d’actualité prime sur nos médias et nos réseaux sociaux. Le mo",
-      "changed": false
-    },
-    {
-      "title": "Is Fandom the New Religion? How Fans Found Community",
-      "link": "https://theplantnews.com/2026/11/14/at-the-altar-of-ao3/",
-      "ok": true,
-      "score": 96,
-      "chars": 1044,
-      "sample": "Once a week, I sit on a wooden bench to feel a little less lonely. No matter if the sun is setting o",
       "changed": false
     }
   ]
