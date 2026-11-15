@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-15T19:07:00.525Z",
+  "updated": "2026-11-15T19:14:07.995Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 9,
+  "mismatches": 10,
   "ok": true,
   "samples": [
     {
@@ -32,6 +32,14 @@
     {
       "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
       "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Keeping our unhoused community warm this winter",
+      "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
       "source": "The McGill Daily",
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
@@ -78,5 +86,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 9
+  "fixed": 10
 }
