@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-15T22:07:02.780Z",
+  "updatedAt": "2026-11-16T00:06:56.932Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule",
+        "source": "api-live",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
+      "next": {
+        "title": "Kurdistan, Ici et là-bas",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/kurdistan-ici-et-la-bas/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T22:06:21.816Z"
+      "checkedAt": "2026-11-16T00:06:06.765Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "next": {
         "title": "London café (reprise)",
         "source": "schedule",
         "start": "19:00",
         "end": "20:30",
         "url": "https://cism893.ca/emissions/london-cafe"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "London café (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T22:06:35.827Z"
+      "checkedAt": "2026-11-16T00:06:20.685Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
+        "title": "Bluegrass Rambling",
         "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Desi Beats",
+        "title": "Country Classics",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "Bhum Bhum Time",
+      "showTitle": "Bluegrass Rambling",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T22:06:40.801Z"
+      "checkedAt": "2026-11-16T00:06:25.407Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+        "title": "No Boundaries",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
       },
       "next": {
-        "title": "Bills Country and Western Favourites",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        "title": "Eastern Promises",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
       },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "No Boundaries",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T22:06:42.958Z"
+      "checkedAt": "2026-11-16T00:06:37.355Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +129,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T22:06:43.886Z"
+      "checkedAt": "2026-11-16T00:06:38.428Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Mutations",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "api-live",
@@ -142,14 +143,14 @@
         "slug": "les-rois-de-larene"
       },
       "track": "Perfume Genius — On The Floor",
-      "showTitle": "Mutations",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-15T22:07:02.430Z"
+      "checkedAt": "2026-11-16T00:06:56.581Z"
     }
   }
 }
