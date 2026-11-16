@@ -15,13 +15,21 @@
  *   node scripts/check-news-images.js --update   # répare news.json
  *   node scripts/check-news-images.js --strict   # code 1 s'il reste des images cassées
  *
- * Réparation (--update) : URL d'origine morte → image vidée (le client passe
- * au miroir / à la photo de repli) ; stockImage morte → retirée (le client
- * choisit une autre photo du campus). Jamais d'image inventée.
+ * Réparation (--update) : URL d'origine morte (404/410, ou réponse qui n'est
+ * pas une image) → image vidée (le client passe au miroir / à la photo de
+ * repli) ; stockImage morte → retirée (le client choisit une autre photo du
+ * campus). Jamais d'image inventée.
+ *
+ * Exceptions (Karmina, 16 nov. 2026) : un HTTP 415 est un refus de la requête
+ * (souvent le Range de la sonde), pas un fichier disparu — on retente sans
+ * Range, puis on ne vide pas. Une photo épinglée `keepSourceImage` n'est
+ * jamais vidée ici : ce passage tourne après l'épinglage, et la vider laisse
+ * le point focal sans URL. imageRemoteOnly / la licence ne sont pas touchés.
  * Rapport : data/image-health.json (lu par source-health).
  */
 const fs = require('fs');
 const path = require('path');
+const { loadPins, normUrl } = require('./lead-image-pins-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -42,24 +50,60 @@ function commonsThumb(url, width = 500) {
   } catch { return ''; }
 }
 
-async function probe(url, attempt = 0) {
+async function probe(url, attempt = 0, { range = true } = {}) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'image/avif,image/webp,image/*,*/*;q=0.5', Range: 'bytes=0-2047' }, redirect: 'follow', signal: ctrl.signal });
+    const headers = { 'User-Agent': UA, Accept: 'image/avif,image/webp,image/*,*/*;q=0.5' };
+    if (range) headers.Range = 'bytes=0-2047';
+    const res = await fetch(url, { headers, redirect: 'follow', signal: ctrl.signal });
     const type = (res.headers.get('content-type') || '').toLowerCase();
     try { await res.body?.cancel(); } catch {}
+    // 415 + Range : le serveur refuse la requête (LiteSpeed / WordPress), pas
+    // le fichier. Sans nouvel essai, la sonde déclarait l'image morte.
+    if (res.status === 415 && range) return probe(url, attempt, { range: false });
     // 429 / 5xx : passager, on retente avant de déclarer l'image morte.
     if ((res.status === 429 || res.status >= 500) && attempt < 2) {
       await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
-      return probe(url, attempt + 1);
+      return probe(url, attempt + 1, { range });
     }
     const ok = (res.status === 200 || res.status === 206) && type.startsWith('image/');
-    return { ok, status: res.status, type, transient: res.status === 429 || res.status >= 500 };
+    // 415 persistant : refus de sonde, pas une disparition (404/410).
+    const transient = res.status === 429 || res.status >= 500 || res.status === 415;
+    return { ok, status: res.status, type, transient };
   } catch (err) {
-    if (attempt < 1) return probe(url, attempt + 1);
+    if (attempt < 1) return probe(url, attempt + 1, { range });
     return { ok: false, status: 0, type: '', error: String(err?.name || err), transient: true };
   } finally { clearTimeout(t); }
+}
+
+/** Photo imposée par le registre (keepSourceImage), URL courante = URL du pin. */
+function isKeptSourcePin(item = {}, pins = loadPins()) {
+  if (!item.image || !item.link) return false;
+  const pin = pins.pins.get(normUrl(item.link));
+  return !!(pin && pin.keepSourceImage && pin.image && normUrl(pin.image) === normUrl(item.image));
+}
+
+/**
+ * Faut-il vider `item.image` après une sonde ratée ?
+ * Non si un miroir local existe, si la sonde est passagère, si le statut est
+ * 415, ou si l'URL est celle d'un pin keepSourceImage.
+ */
+function shouldClearOriginImage(item = {}, probeResult = {}, pins = loadPins()) {
+  if (!item.image || item.imageLocal) return false;
+  if (!probeResult || probeResult.ok || probeResult.transient) return false;
+  if (Number(probeResult.status) === 415) return false;
+  if (isKeptSourcePin(item, pins)) return false;
+  return true;
+}
+
+/** Applique la décision ; ne touche pas au point focal ni à imageRemoteOnly. */
+function clearOriginImageIfNeeded(item, probeResult, pins = loadPins()) {
+  if (!shouldClearOriginImage(item, probeResult, pins)) return false;
+  item.imageDead = item.image;
+  item.image = '';
+  item.leadImageReady = false;
+  return true;
 }
 
 async function pool(tasks, n) {
@@ -85,6 +129,7 @@ const stockMirror = loadStockMirror();
 async function main() {
   const news = JSON.parse(fs.readFileSync(NEWS_PATH, 'utf8'));
   const items = news.items || [];
+  const pins = loadPins();
   const cache = new Map();
   const check = (url) => {
     if (!cache.has(url)) cache.set(url, null);
@@ -125,12 +170,15 @@ async function main() {
       const row = { source: item.source, title: item.title, link: item.link, field: c.field, variant: c.variant || '', url: c.url, status: r.status, type: r.type, transient: !!r.transient };
       broken.push(row);
       if (!args.has('--update') || r.transient) continue;
+      // Photo épinglée ou 415 : on signale, on ne vide pas, on ne marque pas
+      // « réparé » (un 404 réel sur un pin reste visible dans l'issue santé).
+      if (c.field === 'image' && !item.imageLocal && !shouldClearOriginImage(item, r, pins)) continue;
       if (/^(404|410)$/.test(String(r.status)) && /^(stockImage|image)$/.test(c.field)) deadUrls.push(c.url);
       row.repaired = true;
       // Image locale absente : le client retombe sur l'origine.
       if (c.field === 'imageLocal') { delete item.imageLocal; delete item.imageLocalVia; repaired += 1; }
       // Origine morte sans miroir : vider, le repli normal prend le relais.
-      else if (c.field === 'image' && !item.imageLocal) { item.imageDead = item.image; item.image = ''; item.leadImageReady = false; repaired += 1; }
+      else if (c.field === 'image' && clearOriginImageIfNeeded(item, r, pins)) repaired += 1;
       // Photo de repli morte (original ou vignette) : la retirer.
       else if (c.field === 'stockImage' && c.variant !== 'mirror' && item.stockImage) {
         for (const k of ['stockImage', 'imageTitle', 'imageCredit', 'imageCreator', 'imageLicense', 'imageProvider', 'imageSourceUrl', '_campusBank']) delete item[k];
@@ -148,4 +196,14 @@ async function main() {
   const persistent = broken.filter((b) => !b.transient && !(args.has('--update')));
   if (args.has('--strict') && persistent.length) process.exit(1);
 }
-main().catch((e) => { console.error(e); process.exit(1); });
+
+module.exports = {
+  probe,
+  isKeptSourcePin,
+  shouldClearOriginImage,
+  clearOriginImageIfNeeded,
+};
+
+if (require.main === module) {
+  main().catch((e) => { console.error(e); process.exit(1); });
+}
