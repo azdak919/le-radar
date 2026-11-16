@@ -1,41 +1,14 @@
 {
-  "updated": "2026-11-16T15:37:20.124Z",
+  "updated": "2026-11-16T16:50:46.505Z",
   "total": 188,
-  "pool": 58,
-  "incomplete": 29,
-  "withLeadExcerpt": 144,
-  "candidates": 29,
-  "enriched": 1,
-  "failed": 0,
+  "pool": 50,
+  "incomplete": 26,
+  "withLeadExcerpt": 142,
+  "candidates": 26,
+  "enriched": 0,
+  "failed": 6,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
-    {
-      "title": "La version qui n’intéresse personne ou comment réussir une adaptation théâtrale",
-      "link": "https://impactcampus.ca/arts-et-culture/la-version-qui-ninteresse-personne-ou-comment-reussir-une-adaptation-theatral/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Durant tout le mois de novembre, le Trident présente la pièce La version qui n’intéresse personne, b",
-      "changed": true
-    },
     {
       "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
       "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
@@ -79,6 +52,33 @@
       "score": 100,
       "chars": 259,
       "sample": "Le Tribunal unifié de la famille (TUF) est entré en fonction le 30 juin 2025. Il vise à simplifier l",
+      "changed": false
+    },
+    {
+      "title": "Mike Morrice elected Green Party of Canada leader",
+      "link": "https://theconcordian.com/2026/11/mike-morrice-elected-green-leader/",
+      "ok": true,
+      "score": 100,
+      "chars": 158,
+      "sample": "Mike Morrice has been elected as the new leader of the Green Party of Canada. This should be no surp",
+      "changed": false
+    },
+    {
+      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
+      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
+      "ok": true,
+      "score": 96,
+      "chars": 337,
+      "sample": "À la suite de différentes difficultés, notamment la pandémie de Covid-19, le tournoi, qui avait init",
+      "changed": false
+    },
+    {
+      "title": "Noise, Silence, and Your Health: Finding a Healthy Balance",
+      "link": "https://theplantnews.com/2026/11/14/on-our-relationship-with-sound/",
+      "ok": true,
+      "score": 96,
+      "chars": 470,
+      "sample": "Take a second to listen to your surroundings. What can you hear? Perhaps it is the loud hum of the m",
       "changed": false
     }
   ]
