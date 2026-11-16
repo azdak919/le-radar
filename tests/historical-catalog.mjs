@@ -6,7 +6,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
-const { mergeHistoricalCatalog, serializeHistoricalCatalog, partialPublicSample, ageBand, stableId } = require('../scripts/historical-catalog-lib.js');
+const { mergeHistoricalCatalog, serializeHistoricalCatalog, partialPublicSample, ageBand, stableId, newsItemFromRecord, recordFromItem } = require('../scripts/historical-catalog-lib.js');
 
 const item = {
   source: 'Journal témoin', institution: 'Université témoin', region: 'Montréal', type: 'universite', lang: 'fr',
@@ -108,3 +108,12 @@ assert.equal(JSON.parse(serialized.text).records.length, 2);
 }
 
 console.log('✓ Catalogue historique : identité, rétention et sélection publique vérifiées.');
+
+const roundTrip = newsItemFromRecord(initial.catalog.records[0]);
+assert.equal(roundTrip.link, 'https://example.test/article');
+assert.equal(roundTrip.date, item.date);
+assert.equal(roundTrip.source, item.source);
+assert.equal(roundTrip.lang, 'fr');
+assert.equal(roundTrip.image, 'https://example.test/image.jpg');
+assert.equal(newsItemFromRecord({ ...initial.catalog.records[0], publishedAt: null, date: null }), null, 'sans date : pas d’item de fil');
+

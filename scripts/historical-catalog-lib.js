@@ -203,12 +203,62 @@ function serializeHistoricalCatalog(catalog, config = {}) {
   return { text, catalog: payload };
 }
 
+/**
+ * Reconstitue un item de fil à partir d’une fiche du catalogue historique.
+ * Le champ `link` du catalogue est un état de contrôle (objet), pas l’URL :
+ * on reprend originalUrl / canonicalOriginalUrl. L’image n’est pas hébergée
+ * par le catalogue (statut not-retained-*) : on en reprend seulement l’URL
+ * d’origine, comme le fil le fait déjà pour les articles encore dans le flux.
+ */
+function imageUrlFromRecord(record = {}) {
+  const image = record.image;
+  if (typeof image === 'string' && image) return image;
+  if (image && typeof image === 'object' && typeof image.originalUrl === 'string') {
+    return image.originalUrl || '';
+  }
+  return '';
+}
+
+function recordHref(record = {}) {
+  if (typeof record.canonicalOriginalUrl === 'string' && record.canonicalOriginalUrl) {
+    return record.canonicalOriginalUrl;
+  }
+  if (typeof record.originalUrl === 'string' && record.originalUrl) return record.originalUrl;
+  if (typeof record.link === 'string' && record.link) return record.link;
+  if (record.link && typeof record.link === 'object' && typeof record.link.resolvedUrl === 'string') {
+    return record.link.resolvedUrl;
+  }
+  return '';
+}
+
+function newsItemFromRecord(record = {}) {
+  const link = normalizeOriginalUrl(recordHref(record));
+  const rawDate = record.publishedAt || record.date;
+  const date = rawDate ? dateOrNull(rawDate) : null;
+  const title = cleanText(record.title);
+  if (!record?.source || !title || !link || !date) return null;
+  return {
+    source: cleanText(record.source),
+    institution: cleanText(record.institution),
+    region: cleanText(record.region),
+    type: cleanText(record.type),
+    lang: cleanText(record.language || record.lang),
+    title,
+    link,
+    author: cleanText(record.author),
+    date,
+    excerpt: cleanText(record.excerpt).slice(0, 520),
+    image: imageUrlFromRecord(record),
+  };
+}
+
 module.exports = {
   cleanText,
   slugify,
   normalizeOriginalUrl,
   stableId,
   recordFromItem,
+  newsItemFromRecord,
   mergeHistoricalCatalog,
   serializeHistoricalCatalog,
   ageBand,
