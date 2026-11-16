@@ -1,6 +1,6 @@
 # Découverte des médias étudiants — journal du bot
 
-Dernière passe : **2026-11-09 17:03 UTC** · sources actives : **20**.
+Dernière passe : **2026-11-16 16:42 UTC** · sources actives : **20**.
 
 Les médias qui respectent les règles sont **ajoutés automatiquement** au fil. Pour retirer une source hors sujet sans qu'elle revienne : ajouter une entrée dans `data/source-blocklist.json` (nom ou site + raison).
 
