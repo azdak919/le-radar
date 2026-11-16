@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T06:06:45.830Z",
+  "updatedAt": "2026-11-16T07:06:43.204Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T06:06:03.511Z"
+      "checkedAt": "2026-11-16T07:06:05.872Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Le char de marge (reprise)",
         "source": "schedule",
         "start": "02:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "05:30",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Le char de marge (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T06:06:17.722Z"
+      "checkedAt": "2026-11-16T07:06:19.770Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T06:06:22.647Z"
+      "checkedAt": "2026-11-16T07:06:22.361Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T06:06:25.106Z"
+      "checkedAt": "2026-11-16T07:06:24.196Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T06:06:26.196Z"
+      "checkedAt": "2026-11-16T07:06:25.147Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T06:06:45.480Z"
+      "checkedAt": "2026-11-16T07:06:42.853Z"
     }
   }
 }
