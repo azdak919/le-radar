@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16T21:37:37.040Z",
+  "updated": "2026-11-16T22:08:18.702Z",
   "total": 188,
   "pool": 58,
   "incomplete": 32,
@@ -9,6 +9,15 @@
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "ok": true,
+      "score": 100,
+      "chars": 566,
+      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
+      "changed": true
+    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,15 +37,6 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": true
-    },
-    {
       "title": "Francisée, mais pas la bienvenue ?",
       "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
@@ -46,12 +46,21 @@
       "changed": false
     },
     {
-      "title": "L’autre, un film intime qui frappe fort",
-      "link": "https://impactcampus.ca/arts-et-culture/lautre-un-film-intime-qui-frappe-fort/",
+      "title": "Une chercheuse du Saguenay récompensée pour son excellence en médecine familiale",
+      "link": "https://lapige.atmjonquiere.com/2026/11/16/une-chercheuse-du-saguenay-recompensee-pour-son-excellence-en-medecine-familiale/?utm_source=rss&utm_medium=rss&utm_campaign=une-chercheuse-du-saguenay-recompensee-pour-son-excellence-en-medecine-familiale",
       "ok": true,
       "score": 100,
-      "chars": 253,
-      "sample": "Après huit ans, Alexandre Franchi est de retour avec L’autre, un film aussi personnel que son précéd",
+      "chars": 878,
+      "sample": "Marie-Eve Poitras, infirmière, professeure agrégée à l’Université de Sherbrooke et chercheuse au Cen",
+      "changed": true
+    },
+    {
+      "title": "La génération Z et le retour des médias physiques",
+      "link": "https://quartierlibre.ca/la-generation-z-le-retour-des-medias-physiques/",
+      "ok": true,
+      "score": 100,
+      "chars": 747,
+      "sample": "La génération Z semble s’intéresser de plus en plus aux technologies des dernières décennies. Les ph",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 343,
       "sample": "Everyone should be respected and valued, regardless of the generation they belong to. Someone’s valu",
-      "changed": false
-    },
-    {
-      "title": "Stingers 55, Martlets 54: Concordia takes it at the final buzzer",
-      "link": "https://thelinknewspaper.ca/article/16567",
-      "ok": true,
-      "score": 96,
-      "chars": 207,
-      "sample": "After suffering a 17-point loss to Bishop’s University on Nov. 7, the Concordia University Stingers ",
       "changed": false
     }
   ]

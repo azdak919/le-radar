@@ -1,6 +1,8 @@
 {
-  "at": "2026-11-16T21:38:49.585Z",
+  "at": "2026-11-16T22:10:09.526Z",
   "targets": 170,
-  "failed": 0,
-  "failReasons": {}
+  "failed": 1,
+  "failReasons": {
+    "too large": 1
+  }
 }

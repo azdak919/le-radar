@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-16T21:36:54.710Z",
+  "updated": "2026-11-16T22:07:24.017Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 13,
+  "mismatches": 14,
   "ok": true,
   "samples": [
+    {
+      "title": "La génération Z et le retour des médias physiques",
+      "link": "https://quartierlibre.ca/la-generation-z-le-retour-des-medias-physiques/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Simone Gingras",
+      "reason": "page-byline"
+    },
     {
       "title": "Quand une banque fait tomber un président",
       "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
@@ -110,5 +118,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 13
+  "fixed": 14
 }
