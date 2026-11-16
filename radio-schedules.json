@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T22:21:25.407Z",
+  "updatedAt": "2026-11-16T12:39:07.235Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -358,9 +358,9 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-15T22:21:25.407Z",
-      "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-15T22:21:25.407Z",
+      "checkedAt": "2026-11-16T12:39:07.235Z",
+      "verifiedWeekOf": "2026-11-16",
+      "attemptedAt": "2026-11-16T12:39:07.235Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
       "coveragePercent": 37
@@ -1141,9 +1141,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-15T22:21:25.407Z",
-      "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-15T22:21:25.407Z",
+      "checkedAt": "2026-11-16T12:39:07.235Z",
+      "verifiedWeekOf": "2026-11-16",
+      "attemptedAt": "2026-11-16T12:39:07.235Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1310,7 +1310,7 @@
           "day": 1,
           "start": "19:00",
           "end": "20:00",
-          "title": "Dykes on Mykes"
+          "title": "Lesbo-sons"
         },
         {
           "day": 1,
@@ -1406,7 +1406,7 @@
           "day": 2,
           "start": "18:00",
           "end": "19:00",
-          "title": "Rez Rock Radio"
+          "title": "Prison Radio"
         },
         {
           "day": 2,
@@ -1513,14 +1513,8 @@
         {
           "day": 3,
           "start": "22:00",
-          "end": "23:00",
-          "title": "Rhizomatic Hour 1"
-        },
-        {
-          "day": 3,
-          "start": "23:00",
           "end": "00:00",
-          "title": "Rhizomatic Hour 2"
+          "title": "Lo Signal - 3rd Wed Of The Week"
         },
         {
           "day": 4,
@@ -1586,7 +1580,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off The Hour: La Voix des Immigrants"
+          "title": "Off the Hour: Labour Radio"
         },
         {
           "day": 4,
@@ -1616,7 +1610,7 @@
           "day": 4,
           "start": "23:00",
           "end": "01:00",
-          "title": "You Need A Heart To Live 2"
+          "title": "L'aire du Diable"
         },
         {
           "day": 5,
@@ -1681,14 +1675,8 @@
         {
           "day": 5,
           "start": "19:00",
-          "end": "20:00",
-          "title": "Listening to Latin America: Blanca-Victoria"
-        },
-        {
-          "day": 5,
-          "start": "20:00",
           "end": "22:00",
-          "title": "Macondo"
+          "title": "LLA/Macondo"
         },
         {
           "day": 5,
@@ -1766,9 +1754,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-15T22:21:25.407Z",
-      "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-15T22:21:25.407Z",
+      "checkedAt": "2026-11-16T12:39:07.235Z",
+      "verifiedWeekOf": "2026-11-16",
+      "attemptedAt": "2026-11-16T12:39:07.235Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2640,9 +2628,9 @@
       "sources": [
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-11-15T22:21:25.407Z",
-      "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-15T22:21:25.407Z",
+      "checkedAt": "2026-11-16T12:39:07.235Z",
+      "verifiedWeekOf": "2026-11-16",
+      "attemptedAt": "2026-11-16T12:39:07.235Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "coveragePercent": 100
@@ -2950,9 +2938,9 @@
         "cfak:https://www.cfak.ca/programmation/",
         "published-page-data:https://www.cfak.ca/_nuxt/static/1794505537/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-15T22:21:25.407Z",
-      "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-15T22:21:25.407Z",
+      "checkedAt": "2026-11-16T12:39:07.235Z",
+      "verifiedWeekOf": "2026-11-16",
+      "attemptedAt": "2026-11-16T12:39:07.235Z",
       "id": "cfak",
       "name": "CFAK 88,3",
       "coveragePercent": 50
@@ -2968,17 +2956,24 @@
         },
         {
           "day": 0,
-          "start": "14:00",
-          "end": "16:00",
-          "title": "Pôle hip-hop",
-          "url": "https://www.choq.ca/balados/pole-hip-hop"
-        },
-        {
-          "day": 0,
           "start": "17:00",
           "end": "18:00",
           "title": "Mutations",
           "url": "https://www.choq.ca/balados/mutations"
+        },
+        {
+          "day": 0,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "CUCH CAST",
+          "url": "https://www.choq.ca/balados/cuch-cast"
+        },
+        {
+          "day": 1,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Kongossa na UQAM",
+          "url": "https://www.choq.ca/balados/kongossa-na-uqam"
         },
         {
           "day": 1,
@@ -2993,6 +2988,20 @@
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
           "url": "https://www.choq.ca/balados/palmareschoq"
+        },
+        {
+          "day": 1,
+          "start": "17:30",
+          "end": "18:30",
+          "title": "Faire avec",
+          "url": "https://www.choq.ca/balados/faire-avec"
+        },
+        {
+          "day": 1,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Bitume",
+          "url": "https://www.choq.ca/balados/bitume"
         },
         {
           "day": 2,
@@ -3017,8 +3026,8 @@
         },
         {
           "day": 2,
-          "start": "14:30",
-          "end": "15:15",
+          "start": "14:00",
+          "end": "14:45",
           "title": "Onde de CHOQ",
           "url": "https://www.choq.ca/balados/onde-de-choq"
         },
@@ -3028,6 +3037,13 @@
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
           "url": "https://www.choq.ca/balados/palmareschoq"
+        },
+        {
+          "day": 2,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Passion Psy",
+          "url": "https://www.choq.ca/balados/passion-psy"
         },
         {
           "day": 2,
@@ -3037,6 +3053,13 @@
           "url": "https://www.choq.ca/balados/live"
         },
         {
+          "day": 2,
+          "start": "20:30",
+          "end": "22:30",
+          "title": "10 sur 10 : un podcast 100% rap",
+          "url": "https://www.choq.ca/balados/10-sur-10-un-podcast-100-rap"
+        },
+        {
           "day": 3,
           "start": "13:00",
           "end": "13:45",
@@ -3052,10 +3075,10 @@
         },
         {
           "day": 3,
-          "start": "18:00",
-          "end": "19:00",
-          "title": "Les chroniques atmosphériques",
-          "url": "https://www.choq.ca/balados/les-chroniques-atmospheriques"
+          "start": "19:00",
+          "end": "20:00",
+          "title": "Les Amazones",
+          "url": "https://www.choq.ca/balados/les-amazones"
         },
         {
           "day": 4,
@@ -3063,6 +3086,13 @@
           "end": "13:45",
           "title": "Onde de CHOQ",
           "url": "https://www.choq.ca/balados/onde-de-choq"
+        },
+        {
+          "day": 4,
+          "start": "14:00",
+          "end": "15:00",
+          "title": "Dans les airs",
+          "url": "https://www.choq.ca/balados/dans-les-airs"
         },
         {
           "day": 4,
@@ -3084,13 +3114,6 @@
           "end": "19:45",
           "title": "Les Apatrides Anonymes",
           "url": "https://www.choq.ca/balados/apatrides-anonymes"
-        },
-        {
-          "day": 4,
-          "start": "20:00",
-          "end": "21:00",
-          "title": "La nouvelle école des surdoués",
-          "url": "https://www.choq.ca/balados/la-nouvelle-ecole-des-surdoues"
         },
         {
           "day": 4,
@@ -3128,11 +3151,11 @@
           "url": "https://www.choq.ca/balados/histoire-de-passer-le-temps"
         },
         {
-          "day": 5,
-          "start": "17:00",
-          "end": "18:00",
-          "title": "La Niche",
-          "url": "https://www.choq.ca/balados/la-niche"
+          "day": 6,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Podcast Nomade: L'art de se rencontrer",
+          "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
         },
         {
           "day": 6,
@@ -3152,12 +3175,12 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-15T22:21:25.407Z",
-      "verifiedWeekOf": "2026-11-09",
-      "attemptedAt": "2026-11-15T22:21:25.407Z",
+      "checkedAt": "2026-11-16T12:39:07.235Z",
+      "verifiedWeekOf": "2026-11-16",
+      "attemptedAt": "2026-11-16T12:39:07.235Z",
       "id": "choq",
       "name": "CHOQ.ca",
-      "coveragePercent": 17
+      "coveragePercent": 20
     }
   }
 }
