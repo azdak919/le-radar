@@ -1,14 +1,59 @@
 {
-  "updated": "2026-11-16T18:38:28.727Z",
+  "updated": "2026-11-16T19:43:46.594Z",
   "total": 188,
-  "pool": 50,
-  "incomplete": 27,
-  "withLeadExcerpt": 143,
-  "candidates": 27,
-  "enriched": 0,
-  "failed": 2,
+  "pool": 58,
+  "incomplete": 33,
+  "withLeadExcerpt": 145,
+  "candidates": 33,
+  "enriched": 3,
+  "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "ok": true,
+      "score": 100,
+      "chars": 566,
+      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
+      "changed": true
+    },
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": true
+    },
+    {
+      "title": "Bulletins La Pige radio 16 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
+      "ok": true,
+      "score": 100,
+      "chars": 192,
+      "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
+      "changed": true
+    },
     {
       "title": "I’m just saying: Have some faith in younger generations",
       "link": "https://thelinknewspaper.ca/article/16569",
@@ -34,51 +79,6 @@
       "score": 96,
       "chars": 193,
       "sample": "Coming off a nail-biting victory against Bishop’s University on Nov. 7, the Concordia University Sti",
-      "changed": false
-    },
-    {
-      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
-      "ok": true,
-      "score": 96,
-      "chars": 1016,
-      "sample": "À l’issue du Grand Prix du Mexique, Kimi Antonelli a été couronné champion du monde de Formule 1 (F1",
-      "changed": false
-    },
-    {
-      "title": "Les Valkyries de Golden State, reines de la WNBA",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/les-valkyries-de-golden-state-reines-de-la-wnba/",
-      "ok": true,
-      "score": 100,
-      "chars": 942,
-      "sample": "Le propriétaire des Valkyries de Golden State, Joe Lacob, se donnait l’objectif de rafler au moins u",
-      "changed": false
-    },
-    {
-      "title": "« Soutenons le journalisme » : Sherbrooke accueille le Congrès annuel de la FPJQ",
-      "link": "https://lecollectif.ca/societe/soutenons-le-journalisme-sherbrooke-accueille-le-congres-annuel-de-la-fpjq/",
-      "ok": true,
-      "score": 100,
-      "chars": 997,
-      "sample": "Du 6 au 8 novembre, des journalistes venus de partout dans la province se réunissaient à Sherbrooke ",
-      "changed": false
-    },
-    {
-      "title": "Mark Carney dévoile ses ambitions économiques",
-      "link": "https://lecollectif.ca/societe/politique-canadienne/mark-carney-devoile-ses-ambitions-economiques/",
-      "ok": true,
-      "score": 100,
-      "chars": 314,
-      "sample": "Le 5 novembre dernier, François-Philippe Champagne, ministre des Finances du Canada, a déposé le plu",
-      "changed": false
-    },
-    {
-      "title": "Tribunal unifié de la famille : une réforme qui soulève des questions",
-      "link": "https://lecollectif.ca/societe/tribunal-unifie-de-la-famille-une-reforme-qui-souleve-des-questions/",
-      "ok": true,
-      "score": 100,
-      "chars": 259,
-      "sample": "Le Tribunal unifié de la famille (TUF) est entré en fonction le 30 juin 2025. Il vise à simplifier l",
       "changed": false
     }
   ]
