@@ -10,6 +10,8 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
+import https from 'node:https';
+import http from 'node:http';
 import { chromium } from '@playwright/test';
 import { writeStamp } from './kit-poster-stamp.mjs';
 
@@ -85,6 +87,101 @@ function mimeFor(file) {
   return 'image/jpeg';
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/* Une seule photo Commons à la fois. La rafale des affiches précédentes prend
+ * un 429 (HTML, souvent sans CORS) : l’<img crossorigin> échoue, downloadPrint
+ * n’émet aucun fichier, et le job attendait 180 s (Concordia, 14 et 15 nov. 2026). */
+const COMMONS_UA = 'LE-RADAR-kit/1.0 (+https://le-radar.ca; export affiches)';
+let commonsGate = Promise.resolve();
+let commonsNotBefore = 0;
+
+function serializeCommons(task) {
+  const run = commonsGate.then(task, task);
+  commonsGate = run.then(() => {}, () => {});
+  return run;
+}
+
+function retryAfterMs(header, attempt) {
+  const n = Number(header);
+  if (Number.isFinite(n) && n > 0) return Math.min(n * 1000, 20000);
+  const when = Date.parse(String(header || ''));
+  if (Number.isFinite(when)) return Math.min(Math.max(0, when - Date.now()), 20000);
+  return Math.min(20000, 2500 * (attempt + 1));
+}
+
+function commonsGet(url, redirects = 0) {
+  return new Promise((resolve, reject) => {
+    let target;
+    try { target = new URL(url); } catch (err) { reject(err); return; }
+    const lib = target.protocol === 'http:' ? http : https;
+    const req = lib.get(target, {
+      headers: { 'User-Agent': COMMONS_UA, Accept: 'image/avif,image/webp,image/*,*/*;q=0.8' },
+      timeout: 20000,
+    }, (res) => {
+      const code = res.statusCode || 0;
+      if ([301, 302, 303, 307, 308].includes(code) && res.headers.location && redirects < 4) {
+        res.resume();
+        const next = new URL(res.headers.location, target).href;
+        resolve(commonsGet(next, redirects + 1));
+        return;
+      }
+      const chunks = [];
+      res.on('data', (c) => chunks.push(c));
+      res.on('end', () => resolve({
+        status: code,
+        type: String(res.headers['content-type'] || ''),
+        retryAfter: res.headers['retry-after'],
+        body: Buffer.concat(chunks),
+      }));
+    });
+    req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
+    req.on('error', reject);
+  });
+}
+
+async function fulfillCommons(route) {
+  const url = route.request().url();
+  await serializeCommons(async () => {
+    let last = null;
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      const wait = commonsNotBefore - Date.now();
+      if (wait > 0) await sleep(wait);
+      try {
+        last = await commonsGet(url);
+      } catch (err) {
+        console.warn(`  photo coupure, nouvel essai ${attempt + 1} :`, url.slice(0, 90));
+        commonsNotBefore = Date.now() + 1500 * (attempt + 1);
+        continue;
+      }
+      const image = /^image\//i.test(last.type);
+      const ok = (last.status === 200 || last.status === 206) && image;
+      if (ok) {
+        await route.fulfill({
+          status: last.status,
+          contentType: last.type,
+          body: last.body,
+          headers: { 'access-control-allow-origin': '*', 'cache-control': 'public, max-age=86400' },
+        });
+        commonsNotBefore = Date.now() + 120;
+        return;
+      }
+      if (last.status === 404 || last.status === 410) break;
+      const pause = retryAfterMs(last.retryAfter, attempt);
+      console.warn(`  photo HTTP ${last.status} ${last.type.split(';')[0]}, pause ${pause} ms :`, url.slice(0, 90));
+      commonsNotBefore = Date.now() + pause;
+    }
+    await route.fulfill({
+      status: last ? last.status : 502,
+      contentType: last ? last.type : 'text/plain',
+      body: last ? last.body : Buffer.from('commons'),
+      headers: { 'access-control-allow-origin': '*' },
+    });
+  });
+}
+
 async function attachLocalPhotos(page) {
   const map = localPhotoMap();
   await page.route(/wikimedia\.org/, async (route) => {
@@ -106,7 +203,7 @@ async function attachLocalPhotos(page) {
         return;
       }
       console.warn('  photo hors cache, téléchargée :', url.slice(0, 100));
-      await route.continue();
+      await fulfillCommons(route);
       return;
     }
     await route.fulfill({
@@ -230,10 +327,20 @@ async function main() {
       }
       await page.waitForFunction(() => document.getElementById('preview')?.dataset.state === 'pret', { timeout: 90000 });
       await page.evaluate(() => document.fonts.ready);
-      const [download] = await Promise.all([
-        page.waitForEvent('download', { timeout: 180000 }),
-        page.locator('#dl-jpg').click(),
-      ]);
+      const downloadPromise = page.waitForEvent('download', { timeout: 180000 });
+      await page.locator('#dl-jpg').click();
+      const started = Date.now();
+      let download = null;
+      let downloadError = null;
+      downloadPromise.then((d) => { download = d; }).catch((err) => { downloadError = err; });
+      while (!download && !downloadError && Date.now() - started < 180000) {
+        const status = await page.locator('#status').innerText().catch(() => '');
+        if (status.startsWith('Téléchargement impossible')) {
+          throw new Error(status);
+        }
+        await page.waitForTimeout(400);
+      }
+      if (!download) throw downloadError || new Error('timeout waiting for download');
       const suggested = download.suggestedFilename() || `${ex.id}.bin`;
       const srcPath = join(tmp, `${ex.id}-${suggested}`);
       await download.saveAs(srcPath);
