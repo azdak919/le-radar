@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T00:06:56.932Z",
+  "updatedAt": "2026-11-16T00:43:45.740Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T00:06:06.765Z"
+      "checkedAt": "2026-11-16T00:43:09.186Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T00:06:20.685Z"
+      "checkedAt": "2026-11-16T00:43:23.003Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T00:06:25.407Z"
+      "checkedAt": "2026-11-16T00:43:25.470Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "No Boundaries",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/no-boundaries"
       },
       "next": {
         "title": "Eastern Promises",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "20:00",
         "end": "20:30",
         "url": "http://www.cjlo.com/shows/eastern-promises"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "No Boundaries",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T00:06:37.355Z"
+      "checkedAt": "2026-11-16T00:43:26.994Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T00:06:38.428Z"
+      "checkedAt": "2026-11-16T00:43:28.007Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T00:06:56.581Z"
+      "checkedAt": "2026-11-16T00:43:45.389Z"
     }
   }
 }
