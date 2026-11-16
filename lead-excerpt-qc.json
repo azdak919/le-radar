@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-16T13:38:12.660Z",
+  "updated": "2026-11-16T15:10:04.238Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 33,
+  "incomplete": 32,
   "withLeadExcerpt": 144,
-  "candidates": 33,
-  "enriched": 6,
-  "failed": 1,
+  "candidates": 32,
+  "enriched": 4,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -28,31 +28,40 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": true
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": true
+    },
+    {
+      "title": "Le revenu viable, un défi au Saguenay-Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/11/16/le-revenu-viable-un-defi-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=le-revenu-viable-un-defi-au-saguenay-lac-saint-jean",
+      "ok": true,
+      "score": 100,
+      "chars": 683,
+      "sample": "Dans plusieurs municipalités du Saguenay-Lac-Saint-Jean, plus de la moitié des personnes seules n’at",
+      "changed": true
+    },
+    {
+      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
+      "ok": true,
+      "score": 96,
+      "chars": 1016,
+      "sample": "À l’issue du Grand Prix du Mexique, Kimi Antonelli a été couronné champion du monde de Formule 1 (F1",
       "changed": false
-    },
-    {
-      "title": "Processus de vente enclenché pour le CF Montréal",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/processus-de-vente-enclenche-pour-le-cf-montreal/",
-      "ok": true,
-      "score": 100,
-      "chars": 678,
-      "sample": "Il y a de cela quelques jours, le CF Montréal fermait officiellement le rideau sur la pire saison de",
-      "changed": true
-    },
-    {
-      "title": "La Russie réintégrée aux compétitions internationales au hockey",
-      "link": "https://lecollectif.ca/edition-papier/la-russie-reintegree-aux-competitions-internationales-au-hockey/",
-      "ok": true,
-      "score": 100,
-      "chars": 762,
-      "sample": "Le possible retour de la Russie au championnat mondial de hockey junior, qui est prévu du 26 décembr",
-      "changed": true
     },
     {
       "title": "Les Valkyries de Golden State, reines de la WNBA",
@@ -61,16 +70,7 @@
       "score": 100,
       "chars": 942,
       "sample": "Le propriétaire des Valkyries de Golden State, Joe Lacob, se donnait l’objectif de rafler au moins u",
-      "changed": true
-    },
-    {
-      "title": "Le Vert & Or triomphe sous les yeux des anciens",
-      "link": "https://lecollectif.ca/edition-papier/le-vert-or-triomphe-sous-les-yeux-des-anciens/",
-      "ok": true,
-      "score": 100,
-      "chars": 613,
-      "sample": "C’était soirée de célébration au Complexe Sportif Thibault GM le samedi 7 novembre. Les anciens étud",
-      "changed": true
+      "changed": false
     },
     {
       "title": "« Soutenons le journalisme » : Sherbrooke accueille le Congrès annuel de la FPJQ",
@@ -79,7 +79,7 @@
       "score": 100,
       "chars": 997,
       "sample": "Du 6 au 8 novembre, des journalistes venus de partout dans la province se réunissaient à Sherbrooke ",
-      "changed": true
+      "changed": false
     }
   ]
 }
