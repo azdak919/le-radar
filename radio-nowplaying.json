@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-16T19:07:29.683Z",
+  "updatedAt": "2026-11-16T20:06:48.870Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Little Songs On The Prairie",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, Jme Mobilise!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
       },
       "track": "",
-      "showTitle": "Little Songs On The Prairie",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T19:07:00.193Z"
+      "checkedAt": "2026-11-16T20:06:21.997Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T19:07:02.428Z"
+      "checkedAt": "2026-11-16T20:06:25.171Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radio Is Dead",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Whose Vibe Is It Anyway",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "En Profondeur",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Radio Is Dead",
+      "showTitle": "Whose Vibe Is It Anyway",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T19:07:07.802Z"
+      "checkedAt": "2026-11-16T20:06:28.969Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "L'Organe à la radio",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
-      },
-      "next": {
         "title": "Whip Appeal",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/whip-appeal"
       },
+      "next": {
+        "title": "Dreamscapes",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/dreamscapes"
+      },
       "track": "",
-      "showTitle": "L'Organe à la radio",
+      "showTitle": "Whip Appeal",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T19:07:09.929Z"
+      "checkedAt": "2026-11-16T20:06:30.393Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +122,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T19:07:10.913Z"
+      "checkedAt": "2026-11-16T20:06:31.435Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
+      "next": {
+        "title": "Faire avec",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "slug": "faire-avec"
+      },
       "track": "Bloc Pub 21 juillet.mp3",
-      "showTitle": "",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T19:07:29.332Z"
+      "checkedAt": "2026-11-16T20:06:48.519Z"
     }
   }
 }
