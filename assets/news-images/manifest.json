@@ -231,16 +231,6 @@
       "via": "resize-proxy",
       "nameKey": "p1,s3,ss2,d4,p02 3ieme avenue val d'or,entre 6e et 7e rue.jpg"
     },
-    "075ac16a5f568f42": {
-      "local": "assets/news-images/075ac16a5f568f42.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-21.38.03.png",
-      "host": "thebucampus.ca",
-      "bytes": 150246,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:33.735Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-10-27-a-21.38.03.png"
-    },
     "650def6f696f8957": {
       "local": "assets/news-images/650def6f696f8957.jpg",
       "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-21.50.19.png",
@@ -380,16 +370,6 @@
       "updatedAt": "2026-11-12T16:09:29.415Z",
       "via": "resize-proxy",
       "nameKey": "capture-decran-le-2026-10-27-a-22.02.18.png"
-    },
-    "c0d547e923889732": {
-      "local": "assets/news-images/c0d547e923889732.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-21.41.31.png",
-      "host": "thebucampus.ca",
-      "bytes": 134791,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:32.235Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-10-27-a-21.41.31.png"
     },
     "daa8790952d545b8": {
       "local": "assets/news-images/daa8790952d545b8.jpg",
@@ -770,16 +750,6 @@
       "updatedAt": "2026-11-12T16:08:50.537Z",
       "via": "photon-resize",
       "nameKey": "9_true-crime.jpg"
-    },
-    "bf270e8b0f1ca0dc": {
-      "local": "assets/news-images/bf270e8b0f1ca0dc.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-20.22.08.png",
-      "host": "thebucampus.ca",
-      "bytes": 112598,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:08:44.793Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-11-09-a-20.22.08.png"
     },
     "a3eda5d80c1a96ab": {
       "local": "assets/news-images/a3eda5d80c1a96ab.png",
@@ -1567,15 +1537,6 @@
       "via": "resize-proxy",
       "nameKey": "caricature-passation-caq-vers-pc.png.png"
     },
-    "c57a8c4869c18c73": {
-      "local": "assets/news-images/c57a8c4869c18c73.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/della-harris.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 283041,
-      "updatedAt": "2026-11-16T21:09:12.546Z",
-      "via": "disk",
-      "nameKey": "della-harris.png"
-    },
     "b0cc58224dd7dfb8": {
       "local": "assets/news-images/b0cc58224dd7dfb8.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Snapchat-2048883568.jpg",
@@ -1684,10 +1645,38 @@
       "updatedAt": "2026-11-16T22:39:53.737Z",
       "via": "resize-proxy",
       "nameKey": "17_analogique_simone.png"
+    },
+    "9399e5062e1c9deb": {
+      "local": "assets/news-images/9399e5062e1c9deb.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 84631,
+      "updatedAt": "2026-11-16T23:09:42.530Z",
+      "via": "disk",
+      "nameKey": "lacrymobastien-1.png"
+    },
+    "f95e150fc854f62b": {
+      "local": "assets/news-images/f95e150fc854f62b.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/CoucheTard-scaled.jpeg",
+      "host": "www.delitfrancais.com",
+      "bytes": 265706,
+      "updatedAt": "2026-11-16T23:09:42.531Z",
+      "via": "disk",
+      "nameKey": "couchetard.jpeg"
+    },
+    "b3e46a5a9568ebf2": {
+      "local": "assets/news-images/b3e46a5a9568ebf2.jpg",
+      "remote": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-17.58.34.png",
+      "host": "thebucampus.ca",
+      "bytes": 211346,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-16T23:09:43.097Z",
+      "via": "resize-proxy",
+      "nameKey": "capture-decran-le-2026-11-16-a-17.58.34.png"
     }
   },
-  "updatedAt": "2026-11-16T22:39:53.742Z",
-  "count": 169,
+  "updatedAt": "2026-11-16T23:09:43.105Z",
+  "count": 168,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"

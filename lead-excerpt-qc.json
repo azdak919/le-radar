@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-16T22:38:37.068Z",
+  "updated": "2026-11-16T23:07:43.045Z",
   "total": 188,
   "pool": 58,
   "incomplete": 31,
   "withLeadExcerpt": 145,
   "candidates": 31,
-  "enriched": 4,
-  "failed": 1,
+  "enriched": 6,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -28,13 +28,49 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
+      "chars": 528,
+      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
+      "changed": true
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": true
+    },
+    {
+      "title": "BU Football: A Reflection on the Season",
+      "link": "https://thebucampus.ca/2026/11/16/bu-football-a-reflection-on-the-season/",
+      "ok": true,
+      "score": 100,
+      "chars": 608,
+      "sample": "Every football team’s season sees its share of ups and downs. For some, the ups outnumber the downs.",
+      "changed": true
+    },
+    {
+      "title": "SPOSO is BACK!",
+      "link": "https://thebucampus.ca/2026/11/16/sposo-is-back/",
+      "ok": true,
+      "score": 96,
+      "chars": 549,
+      "sample": "Over the past week, the Bishop’s Sports Studies Society (SPOSO) announced its team on Instagram, fol",
+      "changed": true
+    },
+    {
+      "title": "Beyond Competition: The Importance of Intramural Sports at Bishop’s",
+      "link": "https://thebucampus.ca/2026/11/16/beyond-competition-the-importance-of-intramural-sports-at-bishops/",
+      "ok": true,
+      "score": 96,
+      "chars": 404,
+      "sample": "At Bishop’s, the Gaiters varsity teams often receive most of the spotlight; however, many students p",
+      "changed": true
     },
     {
       "title": "Bring Back The Gait",
@@ -43,42 +79,6 @@
       "score": 96,
       "chars": 985,
       "sample": "When I started at Bishop’s, there was only one weekly occurrence that never changed: spending our ni",
-      "changed": true
-    },
-    {
-      "title": "Halloweekend: The Perfect End to Spooky Season at BU",
-      "link": "https://thebucampus.ca/2026/11/16/halloweekend-the-perfect-end-to-spooky-season-at-bu/",
-      "ok": true,
-      "score": 96,
-      "chars": 628,
-      "sample": "Now that everyone has had the opportunity to gather themselves and get back into the groove after Ha",
-      "changed": true
-    },
-    {
-      "title": "Grammys 2027 : vent de folie québécois et triomphe féminin",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin/?utm_source=rss&utm_medium=rss&utm_campaign=grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin",
-      "ok": true,
-      "score": 100,
-      "chars": 212,
-      "sample": "Taylor Swift obtient sa 5e nomination consécutive dans la catégorie Album de l’année avec The Life o",
-      "changed": true
-    },
-    {
-      "title": "Montrealers protest Bill C-39",
-      "link": "https://thelinknewspaper.ca/article/16570",
-      "ok": true,
-      "score": 100,
-      "chars": 161,
-      "sample": "Montreal residents gathered outside Industry Minister Mélanie Joly’s constituency office on Nov. 12 ",
-      "changed": true
-    },
-    {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
-      "ok": true,
-      "score": 100,
-      "chars": 192,
-      "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
       "changed": false
     }
   ]
