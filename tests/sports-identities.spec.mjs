@@ -22,7 +22,11 @@ async function contrast(locator){
 }
 async function fixture(page){
  await page.clock.install({time:new Date('2026-11-07T20:24:00Z')});
- const game={date:'2026-11-07',time:'15:00',gameId:'64003e15-91d7-4714-ba63-be18b75f27e6',opponent:'Université Concordia',opponentFullName:'Université Concordia',live:true};
+ // The published /sports/ page is SSR from sports.json. hydrateSportsBoard
+ // will not turn a row that already has data-result back into a live game, so
+ // this id must never be a collected gameId. 64003e15… (Laval–Concordia,
+ // 2026-11-07) is now a final result; reusing it left .sports-panel__live absent.
+ const game={date:'2026-11-07',time:'15:00',gameId:'fixture-ulaval-football-live',opponent:'Université Concordia',opponentFullName:'Université Concordia',live:true};
  const payload={fetchedAt:'2026-11-07T20:24:00Z',teams:{[laval.id]:{...laval,results:[],lastGame:null,nextGame:game,nextGames:[game]}}};
  await page.route('**/sports-masthead.json*',route=>route.fulfill({json:payload}));
  await page.route('https://s1.rseq.ca/**',route=>route.abort());
