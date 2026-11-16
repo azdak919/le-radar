@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-16T16:49:08.721Z",
+  "updated": "2026-11-16T17:07:14.010Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 12,
+  "mismatches": 13,
   "ok": true,
   "samples": [
     {
@@ -49,6 +49,14 @@
       "title": "Editorial: Sweeping away the dead Republican leaves",
       "link": "https://thelinknewspaper.ca/article/16559",
       "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "source": "The McGill Daily",
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
@@ -102,5 +110,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 12
+  "fixed": 13
 }
