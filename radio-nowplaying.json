@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T09:07:21.368Z",
+  "updatedAt": "2026-11-16T10:06:38.135Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T09:06:22.004Z"
+      "checkedAt": "2026-11-16T10:06:00.562Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T09:06:36.080Z"
+      "checkedAt": "2026-11-16T10:06:14.534Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T09:06:39.586Z"
+      "checkedAt": "2026-11-16T10:06:16.936Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T09:06:41.610Z"
+      "checkedAt": "2026-11-16T10:06:18.512Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,28 +128,28 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T09:06:42.677Z"
+      "checkedAt": "2026-11-16T10:06:19.971Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "13:45",
-        "url": "https://www.choq.ca/balados/onde-de-choq"
+        "title": "Kongossa na UQAM",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "11:00",
+        "slug": "kongossa-na-uqam"
       },
       "track": "Perfume Genius — On The Floor",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T09:07:21.018Z"
+      "checkedAt": "2026-11-16T10:06:37.784Z"
     }
   }
 }
