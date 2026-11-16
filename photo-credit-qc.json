@@ -1,72 +1,51 @@
 {
-  "updated": "2026-11-16T13:11:16.653Z",
+  "updated": "2026-11-16T13:40:20.838Z",
   "total": 188,
-  "withImage": 172,
-  "withCredit": 172,
-  "cited": 120,
+  "withImage": 171,
+  "withCredit": 171,
+  "cited": 119,
   "pending": 30,
   "missingHero": 0,
   "ok": false,
-  "checked": 50,
-  "updatedCount": 10,
-  "citedNew": 13,
+  "checked": 47,
+  "updatedCount": 7,
+  "citedNew": 10,
   "fallbackNew": 37,
   "samples": [
     {
-      "title": "Quand une banque fait tomber un président",
+      "title": "Processus de vente enclenché pour le CF Montréal",
       "source": "Le Collectif",
-      "credit": "Photo : DANIEL DUARTE / AFP via Getty Images",
-      "cited": true,
-      "method": "json-ld"
-    },
-    {
-      "title": "Retour sur le conseil municipal de Sherbrooke",
-      "source": "Le Collectif",
-      "credit": "Photo : page Facebook de la mairesse Marie-Claude Bibeau",
+      "credit": "Photo : CF Montréal",
       "cited": true,
       "method": "body-tail"
     },
     {
-      "title": "Tribunal unifié de la famille : une réforme qui soulève des questions",
-      "source": "Le Collectif",
-      "credit": "Photo : Unsplash",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Quand l’intelligence artificielle fait une erreur, qui est responsable?",
-      "source": "Le Collectif",
-      "credit": "Photo : Canva",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Bilan des élections et des votes des dernières semaines au Canada",
+      "title": "La Russie réintégrée aux compétitions internationales au hockey",
       "source": "Le Collectif",
       "credit": "Photo : Pixabay",
       "cited": true,
       "method": "body-tail"
     },
     {
-      "title": "D’importantes pertes d’emplois au Québec",
+      "title": "Les Valkyries de Golden State, reines de la WNBA",
       "source": "Le Collectif",
-      "credit": "Photo : Wladyslaw Sojka",
+      "credit": "Photo : Page Instagram Des Valkyries",
       "cited": true,
-      "method": "filename-credit"
+      "method": "body-tail"
     },
     {
-      "title": "Vos bonnes nouvelles environnementales #43",
+      "title": "Le Vert & Or triomphe sous les yeux des anciens",
       "source": "Le Collectif",
-      "credit": "Photo : Martyn Unsworth",
+      "credit": "Photo : Maxime Picard",
       "cited": true,
-      "method": "filename-credit"
+      "method": "body-tail"
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "« Soutenons le journalisme » : Sherbrooke accueille le Congrès annuel de la FPJQ",
+      "source": "Le Collectif",
+      "credit": "Photo : Pixabay",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-tail"
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",

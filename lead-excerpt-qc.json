@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-16T13:08:21.418Z",
+  "updated": "2026-11-16T13:38:12.660Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 35,
+  "incomplete": 33,
   "withLeadExcerpt": 144,
-  "candidates": 35,
-  "enriched": 10,
-  "failed": 0,
+  "candidates": 33,
+  "enriched": 6,
+  "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -43,42 +34,51 @@
       "score": 100,
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Quand une banque fait tomber un président",
-      "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
-      "ok": true,
-      "score": 96,
-      "chars": 494,
-      "sample": "Cette dernière semaine, le Paraguay a été secoué par une importante crise financière et politique. L",
-      "changed": true
-    },
-    {
-      "title": "Retour sur le conseil municipal de Sherbrooke",
-      "link": "https://lecollectif.ca/edition-papier/retour-sur-le-conseil-municipal-de-sherbrooke/",
+      "title": "Processus de vente enclenché pour le CF Montréal",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/processus-de-vente-enclenche-pour-le-cf-montreal/",
       "ok": true,
       "score": 100,
-      "chars": 776,
-      "sample": "Le 3 novembre dernier, le conseil municipal de Sherbrooke s’est réuni pour la première séance ordina",
+      "chars": 678,
+      "sample": "Il y a de cela quelques jours, le CF Montréal fermait officiellement le rideau sur la pire saison de",
       "changed": true
     },
     {
-      "title": "Mark Carney dévoile ses ambitions économiques",
-      "link": "https://lecollectif.ca/societe/politique-canadienne/mark-carney-devoile-ses-ambitions-economiques/",
+      "title": "La Russie réintégrée aux compétitions internationales au hockey",
+      "link": "https://lecollectif.ca/edition-papier/la-russie-reintegree-aux-competitions-internationales-au-hockey/",
       "ok": true,
       "score": 100,
-      "chars": 314,
-      "sample": "Le 5 novembre dernier, François-Philippe Champagne, ministre des Finances du Canada, a déposé le plu",
+      "chars": 762,
+      "sample": "Le possible retour de la Russie au championnat mondial de hockey junior, qui est prévu du 26 décembr",
       "changed": true
     },
     {
-      "title": "Bilan des élections et des votes des dernières semaines au Canada",
-      "link": "https://lecollectif.ca/edition-papier/bilan-des-elections-et-des-votes-des-dernieres-semaines-au-canada/",
+      "title": "Les Valkyries de Golden State, reines de la WNBA",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/les-valkyries-de-golden-state-reines-de-la-wnba/",
       "ok": true,
       "score": 100,
-      "chars": 914,
-      "sample": "Ce fut une longue campagne électorale de 39 jours au Québec cet automne. Avec cinq partis en lice, l",
+      "chars": 942,
+      "sample": "Le propriétaire des Valkyries de Golden State, Joe Lacob, se donnait l’objectif de rafler au moins u",
+      "changed": true
+    },
+    {
+      "title": "Le Vert & Or triomphe sous les yeux des anciens",
+      "link": "https://lecollectif.ca/edition-papier/le-vert-or-triomphe-sous-les-yeux-des-anciens/",
+      "ok": true,
+      "score": 100,
+      "chars": 613,
+      "sample": "C’était soirée de célébration au Complexe Sportif Thibault GM le samedi 7 novembre. Les anciens étud",
+      "changed": true
+    },
+    {
+      "title": "« Soutenons le journalisme » : Sherbrooke accueille le Congrès annuel de la FPJQ",
+      "link": "https://lecollectif.ca/societe/soutenons-le-journalisme-sherbrooke-accueille-le-congres-annuel-de-la-fpjq/",
+      "ok": true,
+      "score": 100,
+      "chars": 997,
+      "sample": "Du 6 au 8 novembre, des journalistes venus de partout dans la province se réunissaient à Sherbrooke ",
       "changed": true
     }
   ]
