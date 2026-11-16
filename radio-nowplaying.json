@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-16T14:06:35.755Z",
+  "updatedAt": "2026-11-16T15:07:01.655Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Lundi Indie",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
-      },
-      "next": {
         "title": "K-C'EST ÇA ?",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "11:00",
         "url": "https://chyz.ca/emission/k-cest-ca/"
       },
+      "next": {
+        "title": "APRIORI",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/apriori/"
+      },
       "track": "",
-      "showTitle": "Lundi Indie",
+      "showTitle": "K-C'EST ÇA ?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T14:06:22.795Z"
+      "checkedAt": "2026-11-16T15:06:33.001Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Faits de société!",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/faits-de-societe"
-      },
-      "next": {
         "title": "o'keb",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/okeb"
       },
+      "next": {
+        "title": "L'alter ego",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
+      },
       "track": "",
-      "showTitle": "Faits de société!",
+      "showTitle": "o'keb",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T14:06:24.647Z"
+      "checkedAt": "2026-11-16T15:06:35.140Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T14:06:27.177Z"
+      "checkedAt": "2026-11-16T15:06:39.053Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Death of the Midrange",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "I Think You Might Like This",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+      },
       "track": "",
-      "showTitle": "Death of the Midrange",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T14:06:29.383Z"
+      "checkedAt": "2026-11-16T15:06:41.356Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,28 +135,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T14:06:30.313Z"
+      "checkedAt": "2026-11-16T15:06:42.798Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Kongossa na UQAM",
         "source": "api-live",
         "start": "10:00",
         "end": "11:00",
         "slug": "kongossa-na-uqam"
       },
+      "next": {
+        "title": "Onde de CHOQ",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
+      },
       "track": "Bloc Pub 21 juillet.mp3",
-      "showTitle": "",
+      "showTitle": "Kongossa na UQAM",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T14:06:35.404Z"
+      "checkedAt": "2026-11-16T15:07:01.304Z"
     }
   }
 }
