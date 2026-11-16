@@ -941,16 +941,6 @@
       "via": "resize-proxy",
       "nameKey": "p1055703.jpeg"
     },
-    "c84d225eacf01e81": {
-      "local": "assets/news-images/c84d225eacf01e81.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2024/06/campus_votersurlecampus-1.jpg",
-      "host": "quartierlibre.ca",
-      "bytes": 89853,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:08:37.100Z",
-      "via": "origin",
-      "nameKey": "campus_votersurlecampus-1.jpg"
-    },
     "5ebdd3c017ef86b4": {
       "local": "assets/news-images/5ebdd3c017ef86b4.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/P1177191.jpeg",
@@ -1684,10 +1674,29 @@
       "updatedAt": "2026-11-16T21:09:17.888Z",
       "via": "resize-proxy",
       "nameKey": "projet-emm4-deuxieme-image.jpg"
+    },
+    "dfe590d051af5947": {
+      "local": "assets/news-images/dfe590d051af5947.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/Prix-litteraire-ia-.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 143688,
+      "updatedAt": "2026-11-16T21:38:47.282Z",
+      "via": "disk",
+      "nameKey": "prix-litteraire-ia-.png"
+    },
+    "2acf9f6f8c9c4cb9": {
+      "local": "assets/news-images/2acf9f6f8c9c4cb9.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/20_Simon_Boily-1.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 115927,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-16T21:38:49.575Z",
+      "via": "resize-proxy",
+      "nameKey": "20_simon_boily-1.jpg"
     }
   },
-  "updatedAt": "2026-11-16T21:09:17.894Z",
-  "count": 169,
+  "updatedAt": "2026-11-16T21:38:49.582Z",
+  "count": 170,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
