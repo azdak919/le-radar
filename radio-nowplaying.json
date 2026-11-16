@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-16T17:54:26.488Z",
+  "updatedAt": "2026-11-16T19:07:29.683Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Little Songs On The Prairie",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
+      },
       "next": {
-        "title": "Spillthepsy",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://chyz.ca/emission/spillthepsy/"
+        "title": "Chéri.e, Jme Mobilise!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Little Songs On The Prairie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T17:53:54.891Z"
+      "checkedAt": "2026-11-16T19:07:00.193Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'alter ego",
+        "title": "Les garçons pleurent aussi",
         "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/lalter-ego"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Les criquets crinqués",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
       "track": "",
-      "showTitle": "L'alter ego",
+      "showTitle": "Les garçons pleurent aussi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T17:53:57.121Z"
+      "checkedAt": "2026-11-16T19:07:02.428Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "World Skip The Beat",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Radio Is Dead",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Whose Vibe Is It Anyway",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "World Skip The Beat",
+      "showTitle": "Radio Is Dead",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,45 +81,45 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T17:54:00.698Z"
+      "checkedAt": "2026-11-16T19:07:07.802Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Twang City",
+        "title": "L'Organe à la radio",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/twang-city"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
       },
       "next": {
-        "title": "The Tommy John Show",
+        "title": "Whip Appeal",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/whip-appeal"
       },
       "track": "",
-      "showTitle": "Twang City",
+      "showTitle": "L'Organe à la radio",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T17:54:02.839Z"
+      "checkedAt": "2026-11-16T19:07:09.929Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": null,
       "next": {
-        "title": "Solénoïde",
+        "title": "Ma radio Académia",
         "source": "schedule",
-        "start": "13:00",
-        "end": "13:59",
-        "url": "https://www.cfak.ca/balados/solenoide"
+        "start": "18:00",
+        "end": "18:59",
+        "url": "https://www.cfak.ca/balados/ma-radio-academia"
       },
       "track": "",
       "showTitle": "",
@@ -122,18 +129,18 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T17:54:04.140Z"
+      "checkedAt": "2026-11-16T19:07:10.913Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
       "track": "Bloc Pub 21 juillet.mp3",
       "showTitle": "",
@@ -143,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T17:54:26.138Z"
+      "checkedAt": "2026-11-16T19:07:29.332Z"
     }
   }
 }

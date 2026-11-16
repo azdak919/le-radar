@@ -1,7 +1,7 @@
 {
   "description": "Registre des formations sportives RSEQ (collégial + universitaire QC) pour LE-RADAR. shortName = libellé puce/tableau ; fullName = établissement ; nickname = surnom d'équipe si connu. aliases + rseqTeamIds servent à rattacher le flux S1.",
   "source": "Institutions and official RSEQ / CICSA sources; data/sports-identities.sources.json",
-  "updated": "2026-11-07",
+  "updated": "2026-11-16T19:06:27.862Z",
   "teamCount": 93,
   "teams": [
     {
@@ -122,6 +122,7 @@
       ],
       "priority": 2,
       "sports": [
+        "athletisme",
         "basketball",
         "cheerleading",
         "cross-country",
@@ -3119,137 +3120,39 @@
       }
     },
     {
-      "id": "abitibi-temisc",
-      "code": "CAT",
+      "id": "notre-dame-bleu",
+      "code": "NDFB",
       "sector": "collegial",
-      "shortName": "Cégep de l'Abitibi-Témiscamingue",
-      "fullName": "Cégep de l'Abitibi-Témiscamingue",
-      "nickname": "Astrelles et Gaillards",
+      "shortName": "Campus Notre-Dame-de-Foy — équipe Bleu",
+      "fullName": "Campus Notre-Dame-de-Foy — équipe Bleu",
+      "nickname": "Le Notre-Dame",
       "aliases": [
-        "Abitibi-Témiscamingue",
-        "Abitibi-Témisc.",
-        "CAT",
-        "Abitibi",
-        "Cégep de l'Abitibi-Témiscamingue",
-        "Astrelles et Gaillards"
+        "Notre-Dame Bleu",
+        "NDFB",
+        "CNDF Bleu",
+        "Campus Notre-Dame-de-Foy Bleu",
+        "Campus Notre-Dame-de-Foy",
+        "Le Notre-Dame"
       ],
       "priority": 80,
       "sports": [
-        "badminton",
-        "basketball",
-        "cross-country",
-        "hockey",
-        "natation",
-        "soccer",
-        "soccer-interieur",
-        "volleyball"
+        "rugby"
       ],
       "rseqTeamIds": [
-        "39c4e62e-c5d5-44d5-afcc-3553aa07aaa3",
-        "f46280e1-cf49-4e5a-abeb-9509da162db2",
-        "4c16001a-c1e5-4124-8575-54b9fb31d0d1",
-        "53e0ff8e-bce3-4c1c-a7d6-2604bbd609c7",
-        "940f1dad-c15a-4d75-8907-4a6237554934",
-        "10dc9a71-0524-4820-9c53-649a4e5feb34",
-        "2c022f86-04be-4e29-906a-b58a742223c4",
-        "e533ce93-b10f-4690-b1ff-a648a2b91538",
-        "ce37611a-5f49-4359-be79-06e420470d8a",
-        "53ea6a90-6977-4450-999c-fc8b9d36244d",
-        "d3272a87-4c21-4926-9ffa-caf0b5f2ca0f"
+        "ba51f1e5-39cc-4335-8616-a62ed6793387"
       ],
-      "institutionName": "Cégep de l'Abitibi-Témiscamingue",
-      "institutionId": "abitibi-temisc",
-      "nicknameBySex": {
-        "M": "Gaillards",
-        "F": "Astrelles"
-      },
-      "nicknameSexScope": {
-        "M": [
-          "Basketball",
-          "Hockey",
-          "Soccer",
-          "Soccer intérieur",
-          "Volleyball"
-        ],
-        "F": [
-          "Basketball",
-          "Soccer intérieur",
-          "Volleyball"
-        ]
-      },
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://www.cegepat.qc.ca/etudiants/astrelles-et-gaillards/",
-          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
-          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=511ebd90-0670-47d7-bf8a-603e5ecd2c99",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=724883dd-1d7c-4002-89f6-0c28fd199a71",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a21361ab-0928-4796-a8e5-7a97d6d8bd5f",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
-        ],
-        "institutionIds": [
-          "b76b2736-571a-402b-be36-c2df541e0dcc"
-        ]
-      }
-    },
-    {
-      "id": "alma",
-      "code": "ALM",
-      "sector": "collegial",
-      "shortName": "Collège d'Alma",
-      "fullName": "Collège d'Alma",
-      "nickname": "Jeannois",
-      "aliases": [
-        "Alma",
-        "ALM",
-        "Collège d'Alma",
-        "Jeannois",
-        "Cégep d'Alma"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "cheerleading",
-        "cross-country",
-        "hockey",
-        "natation",
-        "soccer",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "1c816156-ab1c-4aa3-9d35-34b9e9971478",
-        "7ad33e01-ef9b-4d01-9d35-ba387bb09e2e",
-        "38874ddd-7aea-46b7-a24a-e5d3ab5b4a14",
-        "b43fc17a-7622-44f1-bb58-805a58404017",
-        "ead40133-6e36-4f46-8e22-0e2939fcb7ce",
-        "be25934f-cff3-40f8-8161-4b6fb4a6f4a1",
-        "84f7a832-eb0f-4ce0-a475-4efe42ba066b",
-        "3ca40f35-c42d-4f46-ae34-99f1842a073e",
-        "3747289e-8b0d-412d-84e1-7ccf77309c1c",
-        "2006ab31-133f-499a-8d01-98ecf044071a",
-        "5512ae57-9b60-4dc0-b549-ddc2ab2a264b"
-      ],
-      "institutionName": "Collège d'Alma",
-      "institutionId": "alma",
+      "note": "Deuxième formation rugby F du CNDF (Saint-Augustin) — Bleu ≠ établissement séparé",
+      "institutionName": "Campus Notre-Dame-de-Foy",
+      "institutionId": "notre-dame-foy",
       "nicknameBySex": {},
+      "squad": "Bleu",
       "nicknameSexScope": {},
       "sourceTeamVariants": {
-        "5512ae57-9b60-4dc0-b549-ddc2ab2a264b": {
-          "sourceName": "Alma Bleu",
-          "sourceCode": "ALM",
+        "ba51f1e5-39cc-4335-8616-a62ed6793387": {
+          "sourceName": "Notre-Dame Bleu",
+          "sourceCode": "NDFB",
           "qualifier": "équipe Bleu",
-          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
+          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2",
           "verifiedOn": "2026-11-07"
         }
       },
@@ -3257,60 +3160,50 @@
         "verifiedOn": "2026-11-07",
         "status": "primary-source-identity-and-competition-name",
         "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/rugby/collegial/nord-est/feminin/",
           "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
-          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=09897279-c580-4cad-a924-1831c67ce2c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0eb377a9-a360-45a3-be85-795cf9cc1821",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=21c736b9-df07-4c83-a58e-c444ad22252c",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=53c229f4-e28a-4ab1-b760-1d21fd7f9a40",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=65e8e886-3739-4ae5-b7f1-7790b80d5f1f",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e8391cd3-1e36-473b-b1c3-9a4b63236121"
+          "https://rseq.ca/sports/football/collegial/division-1/spartiates/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2"
         ],
         "institutionIds": [
-          "a68f5b47-4eee-4806-9366-8e36931a92fc"
+          "db18d59a-c6de-4e76-901e-c19388d3f4b6"
         ]
       }
     },
     {
-      "id": "alma-2",
-      "code": "ALM2",
+      "id": "notre-dame-jaune",
+      "code": "NDFJ",
       "sector": "collegial",
-      "shortName": "Collège d'Alma — équipe Blanc",
-      "fullName": "Collège d'Alma — équipe Blanc",
-      "nickname": "Jeannois",
+      "shortName": "Campus Notre-Dame-de-Foy — équipe Jaune",
+      "fullName": "Campus Notre-Dame-de-Foy — équipe Jaune",
+      "nickname": "Le Notre-Dame",
       "aliases": [
-        "Alma 2",
-        "ALM2",
-        "Collège d'Alma",
-        "Jeannois",
-        "Cégep de Alma 2"
+        "Notre-Dame Jaune",
+        "NDFJ",
+        "CNDF Jaune",
+        "Campus Notre-Dame-de-Foy Jaune",
+        "Campus Notre-Dame-de-Foy",
+        "Le Notre-Dame"
       ],
       "priority": 80,
       "sports": [
-        "volleyball"
+        "rugby"
       ],
       "rseqTeamIds": [
-        "f5b6d654-bdee-4194-a904-14b14c841af7"
+        "46e24feb-0394-4ecc-8ceb-cccf513cad17"
       ],
-      "institutionName": "Collège d'Alma",
-      "institutionId": "alma",
+      "note": "Deuxième formation rugby F du CNDF — Jaune différencie de Notre-Dame Bleu",
+      "institutionName": "Campus Notre-Dame-de-Foy",
+      "institutionId": "notre-dame-foy",
       "nicknameBySex": {},
-      "squad": "Blanc",
+      "squad": "Jaune",
       "nicknameSexScope": {},
       "sourceTeamVariants": {
-        "f5b6d654-bdee-4194-a904-14b14c841af7": {
-          "sourceName": "Alma Blanc",
-          "sourceCode": "ALM2",
-          "qualifier": "équipe Blanc",
-          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
+        "46e24feb-0394-4ecc-8ceb-cccf513cad17": {
+          "sourceName": "Notre-Dame Jaune",
+          "sourceCode": "NDFJ",
+          "qualifier": "équipe Jaune",
+          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d033d605-4c74-43cb-8031-c7a6bab625ed",
           "verifiedOn": "2026-11-07"
         }
       },
@@ -3318,68 +3211,62 @@
         "verifiedOn": "2026-11-07",
         "status": "primary-source-identity-and-competition-name",
         "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/rugby/collegial/nord-est/feminin/",
           "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
-          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe"
+          "https://rseq.ca/sports/football/collegial/division-1/spartiates/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d033d605-4c74-43cb-8031-c7a6bab625ed"
         ],
         "institutionIds": [
-          "a68f5b47-4eee-4806-9366-8e36931a92fc"
+          "db18d59a-c6de-4e76-901e-c19388d3f4b6"
         ]
       }
     },
     {
-      "id": "baie-comeau",
-      "code": "BCO",
-      "sector": "collegial",
-      "shortName": "Cégep de Baie-Comeau",
-      "fullName": "Cégep de Baie-Comeau",
-      "nickname": "Trappeurs",
+      "id": "carleton",
+      "code": "CAR",
+      "sector": "universitaire",
+      "shortName": "Carleton",
+      "fullName": "Carleton University",
+      "nickname": "Ravens",
       "aliases": [
-        "Baie-Comeau",
-        "BCO",
-        "Cégep de Baie-Comeau",
-        "Trappeurs"
+        "Carleton",
+        "CAR",
+        "Carleton University",
+        "Ravens"
       ],
       "priority": 80,
       "sports": [
-        "basketball",
+        "athletisme",
         "cross-country",
-        "natation",
-        "rugby",
-        "volleyball"
+        "rugby"
       ],
       "rseqTeamIds": [
-        "46427217-e1a3-418d-bda2-ea000a25e647",
-        "95ff29ee-5766-4a32-813c-08da3e0ab29e",
-        "e1b1b2a1-5cca-41c3-bc3f-d9426ee4c67b",
-        "3c8467fd-93a3-4fa1-8028-f6d36b6e97bc",
-        "3bfc3c88-442b-490c-ad4d-2f210d0e3418",
-        "40b4ae81-74a9-4330-b792-f86dcce4541c",
-        "4c8defb1-b745-4cce-b597-a1a60456b4f7"
+        "f608bc62-d943-45e9-bf55-b0c7786b4e25",
+        "2bdde087-bca8-41ee-b58a-cbb7b0b02338",
+        "fc4cd5eb-9659-4c83-aadd-b422b00ff78f",
+        "7cecfaaf-8b37-423a-8233-2787b570ad3e",
+        "1a5ddfd4-c119-4f66-b996-6aa3c4257657",
+        "e3a776b9-561f-47ff-ad80-8c415d6402dd"
       ],
-      "institutionName": "Cégep de Baie-Comeau",
-      "institutionId": "baie-comeau",
+      "institutionName": "Carleton University",
+      "institutionId": "carleton",
       "nicknameBySex": {},
       "nicknameSexScope": {},
       "identityVerification": {
         "verifiedOn": "2026-11-07",
         "status": "primary-source-identity-and-competition-name",
         "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42769eb7-e97f-4587-9e08-c291c2b5a775",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=53c229f4-e28a-4ab1-b760-1d21fd7f9a40",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b54a8411-0eed-4ec4-853d-68f7451e6691",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e8391cd3-1e36-473b-b1c3-9a4b63236121"
+          "https://rseq.ca/sports/athletisme/universitaire/",
+          "https://rseq.ca/sports/rugby/universitaire/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0a7e0d5f-8aa1-4d4e-b372-277c9cca2975",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=78bfcec5-326b-4f30-b1a1-eb7c7dccebb1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
         ],
         "institutionIds": [
-          "93378c11-4521-49f0-be38-cf16598f3e0d"
+          "befd42e7-b946-4336-a781-47b87e85f77d"
         ]
       }
     },
@@ -3523,51 +3410,55 @@
       }
     },
     {
-      "id": "carleton",
-      "code": "CAR",
-      "sector": "universitaire",
-      "shortName": "Carleton",
-      "fullName": "Carleton University",
-      "nickname": "Ravens",
+      "id": "baie-comeau",
+      "code": "BCO",
+      "sector": "collegial",
+      "shortName": "Cégep de Baie-Comeau",
+      "fullName": "Cégep de Baie-Comeau",
+      "nickname": "Trappeurs",
       "aliases": [
-        "Carleton",
-        "CAR",
-        "Carleton University",
-        "Ravens"
+        "Baie-Comeau",
+        "BCO",
+        "Cégep de Baie-Comeau",
+        "Trappeurs"
       ],
       "priority": 80,
       "sports": [
-        "athletisme",
+        "basketball",
         "cross-country",
-        "rugby"
+        "natation",
+        "rugby",
+        "volleyball"
       ],
       "rseqTeamIds": [
-        "f608bc62-d943-45e9-bf55-b0c7786b4e25",
-        "2bdde087-bca8-41ee-b58a-cbb7b0b02338",
-        "fc4cd5eb-9659-4c83-aadd-b422b00ff78f",
-        "7cecfaaf-8b37-423a-8233-2787b570ad3e",
-        "1a5ddfd4-c119-4f66-b996-6aa3c4257657",
-        "e3a776b9-561f-47ff-ad80-8c415d6402dd"
+        "46427217-e1a3-418d-bda2-ea000a25e647",
+        "95ff29ee-5766-4a32-813c-08da3e0ab29e",
+        "e1b1b2a1-5cca-41c3-bc3f-d9426ee4c67b",
+        "3c8467fd-93a3-4fa1-8028-f6d36b6e97bc",
+        "3bfc3c88-442b-490c-ad4d-2f210d0e3418",
+        "40b4ae81-74a9-4330-b792-f86dcce4541c",
+        "4c8defb1-b745-4cce-b597-a1a60456b4f7"
       ],
-      "institutionName": "Carleton University",
-      "institutionId": "carleton",
+      "institutionName": "Cégep de Baie-Comeau",
+      "institutionId": "baie-comeau",
       "nicknameBySex": {},
       "nicknameSexScope": {},
       "identityVerification": {
         "verifiedOn": "2026-11-07",
         "status": "primary-source-identity-and-competition-name",
         "sources": [
-          "https://rseq.ca/sports/athletisme/universitaire/",
-          "https://rseq.ca/sports/rugby/universitaire/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0a7e0d5f-8aa1-4d4e-b372-277c9cca2975",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=78bfcec5-326b-4f30-b1a1-eb7c7dccebb1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42769eb7-e97f-4587-9e08-c291c2b5a775",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=53c229f4-e28a-4ab1-b760-1d21fd7f9a40",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b54a8411-0eed-4ec4-853d-68f7451e6691",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e8391cd3-1e36-473b-b1c3-9a4b63236121"
         ],
         "institutionIds": [
-          "befd42e7-b946-4336-a781-47b87e85f77d"
+          "93378c11-4521-49f0-be38-cf16598f3e0d"
         ]
       }
     },
@@ -3641,236 +3532,6 @@
       }
     },
     {
-      "id": "rimouski",
-      "code": "RIM",
-      "sector": "collegial",
-      "shortName": "Cégep de Rimouski",
-      "fullName": "Cégep de Rimouski",
-      "nickname": "Pionniers et Pionnières",
-      "aliases": [
-        "Rimouski",
-        "RIM",
-        "Cégep de Rimouski",
-        "Pionniers et Pionnières"
-      ],
-      "priority": 80,
-      "sports": [
-        "badminton",
-        "basketball",
-        "cross-country",
-        "football",
-        "hockey",
-        "natation",
-        "soccer",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "3db6b273-09ae-4f73-a010-79afe1397cdb",
-        "15bff569-b580-4b7a-b941-ab4ebd3d4867",
-        "09583df5-92fc-4acc-89a1-63c1e45265b4",
-        "222f7996-13bd-4a80-9091-ceea8344c417",
-        "ab13aa51-05dc-4924-b284-dde60def23b2",
-        "f2ddee0f-7f61-4c75-900b-f2b54628e768",
-        "311f654d-298d-4ed4-bcba-87db544ec53d",
-        "8bbf8276-c8f3-4ace-b954-16036ecbc8c8",
-        "f3b2da3b-fb71-4318-a09a-d23121321370",
-        "a4f21ee5-48d5-4200-bad8-eef1237970a1",
-        "fa7bbaba-f813-45c0-b211-c6323b8ca66e"
-      ],
-      "institutionName": "Cégep de Rimouski",
-      "institutionId": "rimouski",
-      "nicknameBySex": {
-        "M": "Pionniers",
-        "F": "Pionnières"
-      },
-      "nicknameSexScope": {
-        "M": [
-          "Basketball",
-          "Football",
-          "Hockey",
-          "Soccer",
-          "Volleyball"
-        ],
-        "F": [
-          "Hockey",
-          "Soccer",
-          "Volleyball"
-        ]
-      },
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://www.sportsrimouski.com/sports",
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/masculin/condors/",
-          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=53c229f4-e28a-4ab1-b760-1d21fd7f9a40",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=65e8e886-3739-4ae5-b7f1-7790b80d5f1f",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=717b5738-88ea-4949-a696-839be500ea98",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9111db6c-1311-475e-8c71-1cefd7cd9082",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=93e5bddb-f244-40e4-8fd7-e271ae5c4210",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c6aecd01-6f5c-4eec-82d3-6efada2630d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fda0f61c-4599-4e59-82e2-b1966fbe382e"
-        ],
-        "institutionIds": [
-          "657bd035-d5e8-49c8-98e0-576e9e461e9d"
-        ]
-      }
-    },
-    {
-      "id": "ch-st-lawrence",
-      "code": "SLC",
-      "sector": "collegial",
-      "shortName": "Champlain College St. Lawrence",
-      "fullName": "Champlain College St. Lawrence",
-      "nickname": "Lions",
-      "aliases": [
-        "Champlain St-Lawrence",
-        "Ch.-St-Lawrence",
-        "SLC",
-        "St. Lawrence",
-        "Saint-Lawrence",
-        "Champlain St. Lawrence",
-        "Champlain College St. Lawrence",
-        "Lions"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "cross-country",
-        "golf",
-        "hockey",
-        "soccer",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
-        "be8463de-e00e-4c62-a64c-153ba9720ba7",
-        "05cf481a-7441-444d-98b1-17a13d59c1a0",
-        "ed70b88e-aef4-48ba-a97d-7fc454312bae",
-        "04a285f6-2cf0-4724-a1af-23ebb3595127",
-        "a0467cbb-70d3-46cc-8faf-fdaded90c77c",
-        "3a5c51cc-d0cd-4759-83cc-53587729a3bd",
-        "4055809d-7cea-4f87-9bb7-63350b1cb670"
-      ],
-      "institutionName": "Champlain College St. Lawrence",
-      "institutionId": "ch-st-lawrence",
-      "nicknameBySex": {},
-      "campus": "St. Lawrence",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
-          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
-          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=09897279-c580-4cad-a924-1831c67ce2c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0eb377a9-a360-45a3-be85-795cf9cc1821",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b54a8411-0eed-4ec4-853d-68f7451e6691",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fda0f61c-4599-4e59-82e2-b1966fbe382e"
-        ],
-        "institutionIds": [
-          "30b7b1d1-bf5a-4704-9654-8c2c42d52b8c"
-        ]
-      }
-    },
-    {
-      "id": "charlevoix",
-      "code": "CHX",
-      "sector": "collegial",
-      "shortName": "Centre d'études collégiales en Charlevoix",
-      "fullName": "Centre d'études collégiales en Charlevoix",
-      "nickname": "Sismiques",
-      "aliases": [
-        "Charlevoix",
-        "CHX",
-        "Centre d'études collégiales en Charlevoix",
-        "Sismiques",
-        "Cégep de Charlevoix"
-      ],
-      "priority": 80,
-      "sports": [
-        "cross-country",
-        "flag-football",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "0a9c9922-e0fb-4561-a4a7-e1d8f2603798",
-        "f687d3ca-5d4f-4e11-915a-0ba069134055",
-        "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
-        "e310b227-3aa5-46ed-873a-5d8901f8a9bb"
-      ],
-      "institutionName": "Centre d'études collégiales en Charlevoix",
-      "institutionId": "charlevoix",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://ceccharlevoix.ca/sports-les-sismiques.html",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/masculin/championnat/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d861da39-450c-4724-96e0-6011f0c37d9f"
-        ],
-        "institutionIds": [
-          "bbd25ba4-b78f-4946-8310-8348591c0ea9"
-        ]
-      }
-    },
-    {
-      "id": "chibougamau",
-      "code": "BOU",
-      "sector": "collegial",
-      "shortName": "Centre d'études collégiales à Chibougamau",
-      "fullName": "Centre d'études collégiales à Chibougamau",
-      "nickname": "Vert et Noir",
-      "aliases": [
-        "Chibougamau",
-        "BOU",
-        "Centre d'études collégiales à Chibougamau",
-        "Vert et Noir",
-        "Cégep de Chibougamau"
-      ],
-      "priority": 80,
-      "sports": [
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "d79a19c0-7670-4eda-9fa2-9e12c5691173"
-      ],
-      "institutionName": "Centre d'études collégiales à Chibougamau",
-      "institutionId": "chibougamau",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://cec-chibougamau.qc.ca/un-vent-de-fraicheur-souffle-sur-les-equipes-sportives-du-centre-detudes-collegiales-a-chibougamau/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe"
-        ],
-        "institutionIds": [
-          "37bf3df1-85fe-4fc1-ae38-9b4424b3f4d0"
-        ]
-      }
-    },
-    {
       "id": "chicoutimi-vert",
       "code": "CHI2",
       "sector": "collegial",
@@ -3916,85 +3577,6 @@
         ],
         "institutionIds": [
           "869aed10-2ddb-4e77-b41b-b9a7c64500e9"
-        ]
-      }
-    },
-    {
-      "id": "college-militaire-royal",
-      "code": "CMR",
-      "sector": "universitaire",
-      "shortName": "CMR Saint-Jean",
-      "fullName": "Collège militaire royal de Saint-Jean — campus Saint-Jean-sur-Richelieu",
-      "nickname": "Remparts",
-      "aliases": [
-        "Collège Militaire Royal",
-        "CMR",
-        "Collège militaire royal de Saint-Jean",
-        "Remparts"
-      ],
-      "priority": 80,
-      "sports": [
-        "athletisme"
-      ],
-      "rseqTeamIds": [
-        "a21ca3d9-3528-42d7-8483-fe2986af8999",
-        "90a3ff4f-29b4-40ed-a855-f7dcc67f0ecc"
-      ],
-      "institutionName": "Collège militaire royal de Saint-Jean",
-      "institutionId": "college-militaire-royal",
-      "nicknameBySex": {},
-      "campus": "Saint-Jean-sur-Richelieu",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://www.cmrsj-rmcsj.forces.gc.ca/vie-lif/spo/sc-cs/sc-cs-fra.asp",
-          "https://rseq.ca/sports/athletisme/universitaire/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
-        ],
-        "institutionIds": [
-          "6863c610-5e0e-434e-82dc-3f722badfe03"
-        ]
-      }
-    },
-    {
-      "id": "dalhousie",
-      "code": "DAL",
-      "sector": "universitaire",
-      "shortName": "Dalhousie University — Halifax",
-      "fullName": "Dalhousie University — campus Halifax",
-      "nickname": "Tigers",
-      "aliases": [
-        "Dalhousie",
-        "DAL",
-        "Dalhousie University",
-        "Tigers",
-        "Université Dalhousie"
-      ],
-      "priority": 80,
-      "sports": [
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "a767b28c-0966-40ef-b942-56e2ac1fac58"
-      ],
-      "institutionName": "Dalhousie University",
-      "institutionId": "dalhousie",
-      "nicknameBySex": {},
-      "campus": "Halifax",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/volleyball/universitaire/division-1/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=f4fb2dca-6430-474a-b04a-659273456e79",
-          "https://athletics.dal.ca/"
-        ],
-        "institutionIds": [
-          "28067282-fa49-4c1a-82c9-5ae5f692a295"
         ]
       }
     },
@@ -4067,222 +3649,6 @@
       }
     },
     {
-      "id": "ellis",
-      "code": "ELI",
-      "sector": "collegial",
-      "shortName": "Collège Ellis",
-      "fullName": "Collège Ellis",
-      "nickname": "Trident",
-      "aliases": [
-        "Ellis",
-        "ELI",
-        "Collège Ellis",
-        "Trident"
-      ],
-      "priority": 80,
-      "sports": [
-        "cross-country",
-        "soccer"
-      ],
-      "rseqTeamIds": [
-        "97532839-7cf8-41a5-b91d-fbbbe81422a8",
-        "101ca532-2b93-4785-ab87-0d329c40a552"
-      ],
-      "institutionName": "Collège Ellis",
-      "institutionId": "ellis",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
-        ],
-        "institutionIds": [
-          "48e4e2c2-3906-41b7-9078-ecfc0b507ebd"
-        ]
-      }
-    },
-    {
-      "id": "gaspesie-et-iles",
-      "code": "GAS",
-      "sector": "collegial",
-      "shortName": "Cégep de la Gaspésie et des Îles",
-      "fullName": "Cégep de la Gaspésie et des Îles",
-      "nickname": "Bleu Marin",
-      "aliases": [
-        "Gaspésie et Îles",
-        "GAS",
-        "Cégep de la Gaspésie et des Îles",
-        "Bleu Marin"
-      ],
-      "priority": 80,
-      "sports": [
-        "cross-country",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "26f8bc61-daa7-453a-a49f-51d2d60b29f4",
-        "17273c69-9a31-4258-a1b7-caa780f41b5f"
-      ],
-      "institutionName": "Cégep de la Gaspésie et des Îles",
-      "institutionId": "gaspesie-et-iles",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://cegepgim.ca/actualites/des-equipes-sportives-integrent-le-rseq/",
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fda0f61c-4599-4e59-82e2-b1966fbe382e"
-        ],
-        "institutionIds": [
-          "dedb7b7e-8001-4247-8495-147ab9edef3a"
-        ]
-      }
-    },
-    {
-      "id": "gaspesie-et-iles-idlm",
-      "code": "GAS2",
-      "sector": "collegial",
-      "shortName": "Cégep de la Gaspésie et des Îles — campus Îles-de-la-Madeleine",
-      "fullName": "Cégep de la Gaspésie et des Îles — campus Îles-de-la-Madeleine",
-      "nickname": "Bleu Marin",
-      "aliases": [
-        "Gaspésie et Îles (ÎdlM)",
-        "GAS2",
-        "Cégep de la Gaspésie et des Îles",
-        "Bleu Marin",
-        "Cégep de Gaspésie et Îles (ÎdlM)"
-      ],
-      "priority": 80,
-      "sports": [
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "23818296-1aaa-4e60-be74-6097c62481a4"
-      ],
-      "institutionName": "Cégep de la Gaspésie et des Îles",
-      "institutionId": "gaspesie-et-iles-idlm",
-      "nicknameBySex": {},
-      "campus": "Îles-de-la-Madeleine",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://cegepgim.ca/actualites/des-equipes-sportives-integrent-le-rseq/",
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=51caab24-24ed-4115-ae38-1121b560d797"
-        ],
-        "institutionIds": [
-          "dedb7b7e-8001-4247-8495-147ab9edef3a"
-        ]
-      }
-    },
-    {
-      "id": "gaspesie-et-iles-carleton",
-      "code": "GASC",
-      "sector": "collegial",
-      "shortName": "Cégep de la Gaspésie et des Îles — campus Carleton-sur-Mer",
-      "fullName": "Cégep de la Gaspésie et des Îles — campus Carleton-sur-Mer",
-      "nickname": "Bleu Marin",
-      "aliases": [
-        "Gaspésie et Îles-Carleton",
-        "GASC",
-        "Cégep de la Gaspésie et des Îles",
-        "Bleu Marin",
-        "Cégep de Gaspésie et Îles-Carleton"
-      ],
-      "priority": 80,
-      "sports": [
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "ea2f15af-c66e-4d9c-8df3-94f38cd1894d"
-      ],
-      "institutionName": "Cégep de la Gaspésie et des Îles",
-      "institutionId": "gaspesie-et-iles-carleton",
-      "nicknameBySex": {},
-      "campus": "Carleton-sur-Mer",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://cegepgim.ca/actualites/des-equipes-sportives-integrent-le-rseq/",
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=51caab24-24ed-4115-ae38-1121b560d797"
-        ],
-        "institutionIds": [
-          "dedb7b7e-8001-4247-8495-147ab9edef3a"
-        ]
-      }
-    },
-    {
-      "id": "gerald-godin",
-      "code": "CGG",
-      "sector": "collegial",
-      "shortName": "Cégep Gérald-Godin",
-      "fullName": "Cégep Gérald-Godin",
-      "nickname": "Gladiateurs",
-      "aliases": [
-        "Gérald-Godin",
-        "CGG",
-        "Cégep Gérald-Godin",
-        "Gladiateurs"
-      ],
-      "priority": 80,
-      "sports": [
-        "badminton",
-        "cross-country",
-        "flag-football",
-        "futsal",
-        "soccer",
-        "soccer-interieur",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "2aa07ff1-7d3d-4a84-ba1d-cc5a1dc608f8",
-        "1b563b7b-46b6-4122-a896-17f69bfd6d90",
-        "d4ade005-332e-46c0-85b2-b1f313c8d646",
-        "530fe75e-0b85-4280-a021-67605257939e",
-        "dd8e2b8f-1d1a-49e2-a53d-c003a9657d22",
-        "e6c5c7dc-a5e3-4626-8e18-cf124d8e2d5f",
-        "77fc7e03-a5ec-4fc4-ab1f-b17cf79d05c8",
-        "de1e886c-f35f-4a4a-8be3-9dbc97efbce6"
-      ],
-      "institutionName": "Cégep Gérald-Godin",
-      "institutionId": "gerald-godin",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=48369892-577a-4679-9308-5f7cf91168b7",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7545bc51-3808-4c5f-9f53-bbca3bef19be",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
-        ],
-        "institutionIds": [
-          "380b3090-421d-4a68-aa2a-6e678d60b542"
-        ]
-      }
-    },
-    {
       "id": "granby",
       "code": "GBY",
       "sector": "collegial",
@@ -4344,115 +3710,6 @@
       }
     },
     {
-      "id": "heritage",
-      "code": "HER",
-      "sector": "collegial",
-      "shortName": "Cégep Heritage College",
-      "fullName": "Cégep Heritage College",
-      "nickname": "Hurricanes",
-      "aliases": [
-        "Héritage",
-        "HER",
-        "Cégep Heritage College",
-        "Hurricanes",
-        "Collège Heritage"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "flag-football",
-        "hockey",
-        "ultimate",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "d84bcc7c-f14c-406c-b796-316b82c06471",
-        "bb946bed-ddd8-46db-894f-651816f5d37a",
-        "2f2b6a0b-aacd-4d81-b6aa-7ab77f17fb0f",
-        "f1d44e8c-0786-4ef5-bf46-f3a3b46afb60",
-        "7f634f47-f77b-4084-912c-8ac282960202",
-        "3fdef215-033c-47d9-811e-09dd2831b992",
-        "592e3059-a4f9-4524-885a-d0bf6cd29c96"
-      ],
-      "institutionName": "Cégep Heritage College",
-      "institutionId": "heritage",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://www.cegep-heritage.qc.ca/current-students/campus-life/athletics/hurricanes-teams-schedules",
-          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
-          "https://rseq.ca/sports/volleyball/collegial/division-2/sud-ouest/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2fb66060-04f8-44be-9f90-b0ac2395f329",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c6aecd01-6f5c-4eec-82d3-6efada2630d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
-        ],
-        "institutionIds": [
-          "20feefb7-9e6e-4afe-953b-09dd08697223"
-        ]
-      }
-    },
-    {
-      "id": "joliette",
-      "code": "JOL",
-      "sector": "collegial",
-      "shortName": "Cégep de Lanaudière à Joliette",
-      "fullName": "Cégep de Lanaudière à Joliette",
-      "nickname": "Trad",
-      "aliases": [
-        "Joliette",
-        "JOL",
-        "Cégep de Lanaudière à Joliette",
-        "Trad",
-        "Cégep régional de Lanaudière à Joliette"
-      ],
-      "priority": 80,
-      "sports": [
-        "cross-country",
-        "flag-football",
-        "soccer-interieur",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "5a7b9a1b-9073-4885-8cd3-d09d06e26fcc",
-        "6175d30c-eaa2-4ebb-ac87-cd85e44e4e01",
-        "b7c0e77d-76f5-401e-a3ea-beacbf8d27a8",
-        "65adc764-74a5-417e-8e73-5830e9cd9934",
-        "23a657c1-7232-4758-9ecf-c030f3a907fc",
-        "91725f85-5790-4d8f-a3f1-19264b07791c",
-        "656a9dff-3510-45ce-a32e-5c80d1933548"
-      ],
-      "institutionName": "Cégep de Lanaudière à Joliette",
-      "institutionId": "joliette",
-      "nicknameBySex": {},
-      "campus": "Joliette",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-2/sud-ouest/feminin/",
-          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42502722-0306-48e4-a178-00ed129c282d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=beb8b2c0-e453-4553-a003-62e120e6e9db"
-        ],
-        "institutionIds": [
-          "04024dd6-4580-46d2-ace7-891f12e9098b"
-        ]
-      }
-    },
-    {
       "id": "jonquiere-2",
       "code": "JON2",
       "sector": "collegial",
@@ -4503,60 +3760,208 @@
       }
     },
     {
-      "id": "lassomption",
-      "code": "LAS",
+      "id": "abitibi-temisc",
+      "code": "CAT",
       "sector": "collegial",
-      "shortName": "Cégep de Lanaudière à L'Assomption",
-      "fullName": "Cégep de Lanaudière à L'Assomption",
-      "nickname": "Cyclones",
+      "shortName": "Cégep de l'Abitibi-Témiscamingue",
+      "fullName": "Cégep de l'Abitibi-Témiscamingue",
+      "nickname": "Astrelles et Gaillards",
       "aliases": [
-        "L'Assomption",
-        "LAS",
-        "Cégep de Lanaudière à L'Assomption",
-        "Cyclones",
-        "Cégep régional de Lanaudière à L'Assomption"
+        "Abitibi-Témiscamingue",
+        "Abitibi-Témisc.",
+        "CAT",
+        "Abitibi",
+        "Cégep de l'Abitibi-Témiscamingue",
+        "Astrelles et Gaillards"
       ],
       "priority": 80,
       "sports": [
+        "badminton",
         "basketball",
         "cross-country",
-        "flag-football",
+        "hockey",
+        "natation",
         "soccer",
+        "soccer-interieur",
         "volleyball"
       ],
       "rseqTeamIds": [
-        "16378795-955a-4ae2-a5f8-d763a564ffed",
-        "79582975-2ed8-419c-8ae8-097299e4ffe9",
-        "87083e57-4a0d-4b85-85c6-253067a9da14",
-        "ca78f7f9-fefe-44d4-9906-84b7e842a4bd",
-        "386fd2fc-f667-4fd7-8305-690008ab8d67",
-        "e90db245-0ac4-4ea7-94e0-dea5d642b44b",
-        "e5ef6ca0-38ea-4cff-8cc3-d9c2413c678f",
-        "3dbcc66e-d73a-470a-af8a-65499a20f47f",
-        "ca92f83c-1348-48c2-950a-739354f40deb"
+        "39c4e62e-c5d5-44d5-afcc-3553aa07aaa3",
+        "f46280e1-cf49-4e5a-abeb-9509da162db2",
+        "4c16001a-c1e5-4124-8575-54b9fb31d0d1",
+        "53e0ff8e-bce3-4c1c-a7d6-2604bbd609c7",
+        "940f1dad-c15a-4d75-8907-4a6237554934",
+        "10dc9a71-0524-4820-9c53-649a4e5feb34",
+        "2c022f86-04be-4e29-906a-b58a742223c4",
+        "e533ce93-b10f-4690-b1ff-a648a2b91538",
+        "ce37611a-5f49-4359-be79-06e420470d8a",
+        "53ea6a90-6977-4450-999c-fc8b9d36244d",
+        "d3272a87-4c21-4926-9ffa-caf0b5f2ca0f"
       ],
-      "institutionName": "Cégep de Lanaudière à L'Assomption",
-      "institutionId": "lassomption",
+      "institutionName": "Cégep de l'Abitibi-Témiscamingue",
+      "institutionId": "abitibi-temisc",
+      "nicknameBySex": {
+        "M": "Gaillards",
+        "F": "Astrelles"
+      },
+      "nicknameSexScope": {
+        "M": [
+          "Basketball",
+          "Hockey",
+          "Soccer",
+          "Soccer intérieur",
+          "Volleyball"
+        ],
+        "F": [
+          "Basketball",
+          "Soccer intérieur",
+          "Volleyball"
+        ]
+      },
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://www.cegepat.qc.ca/etudiants/astrelles-et-gaillards/",
+          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
+          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=511ebd90-0670-47d7-bf8a-603e5ecd2c99",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=724883dd-1d7c-4002-89f6-0c28fd199a71",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a21361ab-0928-4796-a8e5-7a97d6d8bd5f",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+        ],
+        "institutionIds": [
+          "b76b2736-571a-402b-be36-c2df541e0dcc"
+        ]
+      }
+    },
+    {
+      "id": "gaspesie-et-iles",
+      "code": "GAS",
+      "sector": "collegial",
+      "shortName": "Cégep de la Gaspésie et des Îles",
+      "fullName": "Cégep de la Gaspésie et des Îles",
+      "nickname": "Bleu Marin",
+      "aliases": [
+        "Gaspésie et Îles",
+        "GAS",
+        "Cégep de la Gaspésie et des Îles",
+        "Bleu Marin"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "26f8bc61-daa7-453a-a49f-51d2d60b29f4",
+        "17273c69-9a31-4258-a1b7-caa780f41b5f"
+      ],
+      "institutionName": "Cégep de la Gaspésie et des Îles",
+      "institutionId": "gaspesie-et-iles",
       "nicknameBySex": {},
-      "campus": "L'Assomption",
       "nicknameSexScope": {},
       "identityVerification": {
         "verifiedOn": "2026-11-07",
         "status": "primary-source-identity-and-competition-name",
         "sources": [
-          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=415ca649-0fd3-4bda-8163-c8c0013c37a9",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=511ebd90-0670-47d7-bf8a-603e5ecd2c99",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+          "https://cegepgim.ca/actualites/des-equipes-sportives-integrent-le-rseq/",
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fda0f61c-4599-4e59-82e2-b1966fbe382e"
         ],
         "institutionIds": [
-          "15a7435d-4df1-49b1-9cb1-a8b42efbe3d0"
+          "dedb7b7e-8001-4247-8495-147ab9edef3a"
+        ]
+      }
+    },
+    {
+      "id": "gaspesie-et-iles-carleton",
+      "code": "GASC",
+      "sector": "collegial",
+      "shortName": "Cégep de la Gaspésie et des Îles — campus Carleton-sur-Mer",
+      "fullName": "Cégep de la Gaspésie et des Îles — campus Carleton-sur-Mer",
+      "nickname": "Bleu Marin",
+      "aliases": [
+        "Gaspésie et Îles-Carleton",
+        "GASC",
+        "Cégep de la Gaspésie et des Îles",
+        "Bleu Marin",
+        "Cégep de Gaspésie et Îles-Carleton"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "ea2f15af-c66e-4d9c-8df3-94f38cd1894d"
+      ],
+      "institutionName": "Cégep de la Gaspésie et des Îles",
+      "institutionId": "gaspesie-et-iles-carleton",
+      "nicknameBySex": {},
+      "campus": "Carleton-sur-Mer",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://cegepgim.ca/actualites/des-equipes-sportives-integrent-le-rseq/",
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=51caab24-24ed-4115-ae38-1121b560d797"
+        ],
+        "institutionIds": [
+          "dedb7b7e-8001-4247-8495-147ab9edef3a"
+        ]
+      }
+    },
+    {
+      "id": "gaspesie-et-iles-idlm",
+      "code": "GAS2",
+      "sector": "collegial",
+      "shortName": "Cégep de la Gaspésie et des Îles — campus Îles-de-la-Madeleine",
+      "fullName": "Cégep de la Gaspésie et des Îles — campus Îles-de-la-Madeleine",
+      "nickname": "Bleu Marin",
+      "aliases": [
+        "Gaspésie et Îles (ÎdlM)",
+        "GAS2",
+        "Cégep de la Gaspésie et des Îles",
+        "Bleu Marin",
+        "Cégep de Gaspésie et Îles (ÎdlM)"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "23818296-1aaa-4e60-be74-6097c62481a4"
+      ],
+      "institutionName": "Cégep de la Gaspésie et des Îles",
+      "institutionId": "gaspesie-et-iles-idlm",
+      "nicknameBySex": {},
+      "campus": "Îles-de-la-Madeleine",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://cegepgim.ca/actualites/des-equipes-sportives-integrent-le-rseq/",
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=51caab24-24ed-4115-ae38-1121b560d797"
+        ],
+        "institutionIds": [
+          "dedb7b7e-8001-4247-8495-147ab9edef3a"
         ]
       }
     },
@@ -4677,183 +4082,169 @@
       }
     },
     {
-      "id": "maisonneuve",
-      "code": "MAI",
+      "id": "joliette",
+      "code": "JOL",
       "sector": "collegial",
-      "shortName": "Collège de Maisonneuve",
-      "fullName": "Collège de Maisonneuve",
-      "nickname": "Vikings",
+      "shortName": "Cégep de Lanaudière à Joliette",
+      "fullName": "Cégep de Lanaudière à Joliette",
+      "nickname": "Trad",
       "aliases": [
-        "Maisonneuve",
-        "MAI",
-        "Collège de Maisonneuve",
-        "Vikings"
+        "Joliette",
+        "JOL",
+        "Cégep de Lanaudière à Joliette",
+        "Trad",
+        "Cégep régional de Lanaudière à Joliette"
       ],
       "priority": 80,
       "sports": [
-        "basketball",
-        "flag-football",
-        "futsal",
-        "natation",
-        "soccer",
-        "ultimate",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "a3947d15-2c2d-489d-b01d-2cf7c0afb26d",
-        "1041bdd3-d39e-49fa-ae1d-242f50df950f",
-        "d7c71683-d3c1-4e57-ab50-9eba999ff2d6",
-        "e70bc364-ff21-4255-aba6-fa4279b74a52",
-        "746c9221-c07a-475f-9feb-c2ae9bf34be2",
-        "f4d42239-c706-457e-8b14-82b89d227661",
-        "b2d480f8-1a23-4ff4-8463-f00bee1bb5aa",
-        "01350d67-f342-446c-8d3f-0274762df198",
-        "794d2cf2-718b-4a75-a06e-ace3be0e1ff5",
-        "57e41db0-e4f2-4bb2-8cbf-84c6f6d9f9e8"
-      ],
-      "institutionName": "Collège de Maisonneuve",
-      "institutionId": "maisonneuve",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
-          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=48369892-577a-4679-9308-5f7cf91168b7",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=724883dd-1d7c-4002-89f6-0c28fd199a71",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7545bc51-3808-4c5f-9f53-bbca3bef19be",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235"
-        ],
-        "institutionIds": [
-          "38962c87-b991-4e60-b632-7da3a1b28a65"
-        ]
-      }
-    },
-    {
-      "id": "marianopolis",
-      "code": "MAR",
-      "sector": "collegial",
-      "shortName": "Marianopolis College",
-      "fullName": "Marianopolis College",
-      "nickname": "Demons",
-      "aliases": [
-        "Marianopolis",
-        "MAR",
-        "Marianopolis College",
-        "Demons"
-      ],
-      "priority": 80,
-      "sports": [
-        "badminton",
-        "basketball",
-        "flag-football",
-        "ultimate",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "7a335aea-b32b-4f69-b484-388ad888c6ad",
-        "bfe9daa9-6493-48bc-be79-38ad987eaeee",
-        "80c76d27-c8dc-46d0-a1cf-2d96fc51f190",
-        "6761a16b-b596-48af-845c-824e36ec84e6",
-        "afb2fb6d-041f-4fcd-987d-e4f33626d11f",
-        "336628d2-df21-4399-8ca3-3e8f56cc4e64",
-        "e502ca9f-73d9-4382-a0b3-4dfc7df4f74a"
-      ],
-      "institutionName": "Marianopolis College",
-      "institutionId": "marianopolis",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
-          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795"
-        ],
-        "institutionIds": [
-          "a3814a1c-a572-4c88-9f21-89ed376e3288"
-        ]
-      }
-    },
-    {
-      "id": "marie-victorin",
-      "code": "CMV",
-      "sector": "collegial",
-      "shortName": "Cégep Marie-Victorin",
-      "fullName": "Cégep Marie-Victorin",
-      "nickname": "Atlas",
-      "aliases": [
-        "Marie-Victorin",
-        "CMV",
-        "Cégep Marie-Victorin",
-        "Atlas",
-        "Cégep de Marie-Victorin"
-      ],
-      "priority": 80,
-      "sports": [
-        "badminton",
-        "basketball",
         "cross-country",
         "flag-football",
-        "natation",
-        "soccer",
         "soccer-interieur",
         "volleyball"
       ],
       "rseqTeamIds": [
-        "bd55ed19-4682-4347-954a-5771a2b239f1",
-        "744f5cae-f4f6-45ff-a951-1669b5bf71fa",
-        "39a61fee-635e-4d50-b924-03b3291498ef",
-        "001c5ac2-d381-4f17-976a-05ecb2e079e7",
-        "688a5b04-1a18-4e62-a0d3-60f6244089bc",
-        "7a963f15-659c-42a9-b890-cbcb0e9760f4",
-        "54e53960-4430-4180-a21d-7c2542620c47",
-        "e74e265e-c4ef-4833-a9a3-16bbfb449c52",
-        "974e5d04-571a-4996-a6e5-6f4d5faf005a",
-        "48fc5d96-475d-40d1-ba81-9794be273517",
-        "3edcb54c-9d40-4349-9a1f-e9dcc04f7664",
-        "b6ab0647-1f19-45c5-8e8b-71a214ee33de"
+        "5a7b9a1b-9073-4885-8cd3-d09d06e26fcc",
+        "6175d30c-eaa2-4ebb-ac87-cd85e44e4e01",
+        "b7c0e77d-76f5-401e-a3ea-beacbf8d27a8",
+        "65adc764-74a5-417e-8e73-5830e9cd9934",
+        "23a657c1-7232-4758-9ecf-c030f3a907fc",
+        "91725f85-5790-4d8f-a3f1-19264b07791c",
+        "656a9dff-3510-45ce-a32e-5c80d1933548"
       ],
-      "institutionName": "Cégep Marie-Victorin",
-      "institutionId": "marie-victorin",
+      "institutionName": "Cégep de Lanaudière à Joliette",
+      "institutionId": "joliette",
       "nicknameBySex": {},
+      "campus": "Joliette",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/collegial/division-2/sud-ouest/feminin/",
+          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42502722-0306-48e4-a178-00ed129c282d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=beb8b2c0-e453-4553-a003-62e120e6e9db"
+        ],
+        "institutionIds": [
+          "04024dd6-4580-46d2-ace7-891f12e9098b"
+        ]
+      }
+    },
+    {
+      "id": "lassomption",
+      "code": "LAS",
+      "sector": "collegial",
+      "shortName": "Cégep de Lanaudière à L'Assomption",
+      "fullName": "Cégep de Lanaudière à L'Assomption",
+      "nickname": "Cyclones",
+      "aliases": [
+        "L'Assomption",
+        "LAS",
+        "Cégep de Lanaudière à L'Assomption",
+        "Cyclones",
+        "Cégep régional de Lanaudière à L'Assomption"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "16378795-955a-4ae2-a5f8-d763a564ffed",
+        "79582975-2ed8-419c-8ae8-097299e4ffe9",
+        "87083e57-4a0d-4b85-85c6-253067a9da14",
+        "ca78f7f9-fefe-44d4-9906-84b7e842a4bd",
+        "386fd2fc-f667-4fd7-8305-690008ab8d67",
+        "e90db245-0ac4-4ea7-94e0-dea5d642b44b",
+        "e5ef6ca0-38ea-4cff-8cc3-d9c2413c678f",
+        "3dbcc66e-d73a-470a-af8a-65499a20f47f",
+        "ca92f83c-1348-48c2-950a-739354f40deb"
+      ],
+      "institutionName": "Cégep de Lanaudière à L'Assomption",
+      "institutionId": "lassomption",
+      "nicknameBySex": {},
+      "campus": "L'Assomption",
       "nicknameSexScope": {},
       "identityVerification": {
         "verifiedOn": "2026-11-07",
         "status": "primary-source-identity-and-competition-name",
         "sources": [
           "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
-          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
           "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
           "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42502722-0306-48e4-a178-00ed129c282d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=415ca649-0fd3-4bda-8163-c8c0013c37a9",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=511ebd90-0670-47d7-bf8a-603e5ecd2c99",
           "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=724883dd-1d7c-4002-89f6-0c28fd199a71",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
           "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68",
           "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
         ],
         "institutionIds": [
-          "344a9be1-03c0-458f-a374-36c57a3e3d90"
+          "15a7435d-4df1-49b1-9cb1-a8b42efbe3d0"
+        ]
+      }
+    },
+    {
+      "id": "terrebonne",
+      "code": "TER",
+      "sector": "collegial",
+      "shortName": "Cégep de Lanaudière à Terrebonne",
+      "fullName": "Cégep de Lanaudière à Terrebonne",
+      "nickname": "Rafales",
+      "aliases": [
+        "Terrebonne",
+        "TER",
+        "Cégep de Lanaudière à Terrebonne",
+        "Rafales",
+        "Cégep régional de Lanaudière à Terrebonne"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "718ba640-664c-40d5-993b-acc2fc1cfa1e",
+        "612311f9-0c31-462e-99b9-b69abc8d8c43",
+        "da2d7246-5536-4ed7-b749-1200974a1f88",
+        "9dee648b-dc8f-417f-859e-6daf168e1064",
+        "b73e9855-57d6-4e56-a83b-7194439907e5",
+        "1c5a3e98-a1b3-4171-bf39-e9c3b8ef249d",
+        "1fc17c27-c24c-405c-9f2b-145d76b2720f"
+      ],
+      "institutionName": "Cégep de Lanaudière à Terrebonne",
+      "institutionId": "terrebonne",
+      "nicknameBySex": {},
+      "campus": "Terrebonne",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/collegial/division-2/sud-ouest/masculin/",
+          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2fb66060-04f8-44be-9f90-b0ac2395f329",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42502722-0306-48e4-a178-00ed129c282d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235"
+        ],
+        "institutionIds": [
+          "dc7ca5c8-4be5-4cc8-9d13-7154e10bcd69"
         ]
       }
     },
@@ -4903,242 +4294,84 @@
       }
     },
     {
-      "id": "matapedien",
-      "code": "MPN",
+      "id": "rimouski",
+      "code": "RIM",
       "sector": "collegial",
-      "shortName": "Centre matapédien d'études collégiales",
-      "fullName": "Centre matapédien d'études collégiales",
-      "nickname": "Alizé",
+      "shortName": "Cégep de Rimouski",
+      "fullName": "Cégep de Rimouski",
+      "nickname": "Pionniers et Pionnières",
       "aliases": [
-        "Matapédien",
-        "MPN",
-        "Centre matapédien d'études collégiales",
-        "Alizé",
-        "Cégep de Matapédien"
+        "Rimouski",
+        "RIM",
+        "Cégep de Rimouski",
+        "Pionniers et Pionnières"
       ],
       "priority": 80,
       "sports": [
-        "golf",
+        "badminton",
+        "basketball",
+        "cross-country",
+        "football",
+        "hockey",
+        "natation",
+        "soccer",
         "volleyball"
       ],
       "rseqTeamIds": [
-        "ff76dab0-bffc-4874-a023-c3dc9aee9254",
-        "b0dd43d1-0a77-4503-ab65-4085ffcf0e96"
+        "3db6b273-09ae-4f73-a010-79afe1397cdb",
+        "15bff569-b580-4b7a-b941-ab4ebd3d4867",
+        "09583df5-92fc-4acc-89a1-63c1e45265b4",
+        "222f7996-13bd-4a80-9091-ceea8344c417",
+        "ab13aa51-05dc-4924-b284-dde60def23b2",
+        "f2ddee0f-7f61-4c75-900b-f2b54628e768",
+        "311f654d-298d-4ed4-bcba-87db544ec53d",
+        "8bbf8276-c8f3-4ace-b954-16036ecbc8c8",
+        "f3b2da3b-fb71-4318-a09a-d23121321370",
+        "a4f21ee5-48d5-4200-bad8-eef1237970a1",
+        "fa7bbaba-f813-45c0-b211-c6323b8ca66e"
       ],
-      "institutionName": "Centre matapédien d'études collégiales",
-      "institutionId": "matapedien",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
+      "institutionName": "Cégep de Rimouski",
+      "institutionId": "rimouski",
+      "nicknameBySex": {
+        "M": "Pionniers",
+        "F": "Pionnières"
+      },
+      "nicknameSexScope": {
+        "M": [
+          "Basketball",
+          "Football",
+          "Hockey",
+          "Soccer",
+          "Volleyball"
+        ],
+        "F": [
+          "Hockey",
+          "Soccer",
+          "Volleyball"
+        ]
+      },
       "identityVerification": {
         "verifiedOn": "2026-11-07",
         "status": "primary-source-identity-and-competition-name",
         "sources": [
-          "https://www.centre-matapedien.qc.ca/le-cmec-devoile-le-nouveau-logo-de-ses-equipes-sportives/",
+          "https://www.sportsrimouski.com/sports",
           "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/masculin/condors/",
+          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=53c229f4-e28a-4ab1-b760-1d21fd7f9a40",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=65e8e886-3739-4ae5-b7f1-7790b80d5f1f",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=717b5738-88ea-4949-a696-839be500ea98",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9111db6c-1311-475e-8c71-1cefd7cd9082",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=93e5bddb-f244-40e4-8fd7-e271ae5c4210",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c6aecd01-6f5c-4eec-82d3-6efada2630d0",
           "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fda0f61c-4599-4e59-82e2-b1966fbe382e"
         ],
         "institutionIds": [
-          "2c58754f-957f-4f03-8ac2-67e8c45a38ca"
-        ]
-      }
-    },
-    {
-      "id": "merici",
-      "code": "MER",
-      "sector": "collegial",
-      "shortName": "Mérici collégial privé",
-      "fullName": "Mérici collégial privé",
-      "nickname": "Panthères",
-      "aliases": [
-        "Mérici",
-        "MER",
-        "Mérici collégial privé",
-        "Panthères",
-        "Cégep de Mérici"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "cross-country",
-        "flag-football",
-        "football",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "86b1f879-7a25-4e14-b744-5df3fbba61bc",
-        "0f1a06e4-391b-46c3-adb3-90928824bc00",
-        "abbb8d0e-36b2-49fd-8a1d-9bb359e473b8",
-        "d00882ff-e70e-40a4-a4c1-3f55b4cb1d89",
-        "4f03810c-2e7d-4079-99e0-92979bbfff34",
-        "94670618-7830-4756-a411-69801454df57",
-        "2e1e1f27-8db3-484c-beee-790cf8a027d8"
-      ],
-      "institutionName": "Mérici collégial privé",
-      "institutionId": "merici",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=51caab24-24ed-4115-ae38-1121b560d797",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=717b5738-88ea-4949-a696-839be500ea98",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b54a8411-0eed-4ec4-853d-68f7451e6691",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b789a3e0-33ed-400b-87cc-287ab9819540",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d861da39-450c-4724-96e0-6011f0c37d9f"
-        ],
-        "institutionIds": [
-          "92fde0a3-4e71-4a91-b8bb-6fab51b2d72f"
-        ]
-      }
-    },
-    {
-      "id": "notre-dame-bleu",
-      "code": "NDFB",
-      "sector": "collegial",
-      "shortName": "Campus Notre-Dame-de-Foy — équipe Bleu",
-      "fullName": "Campus Notre-Dame-de-Foy — équipe Bleu",
-      "nickname": "Le Notre-Dame",
-      "aliases": [
-        "Notre-Dame Bleu",
-        "NDFB",
-        "CNDF Bleu",
-        "Campus Notre-Dame-de-Foy Bleu",
-        "Campus Notre-Dame-de-Foy",
-        "Le Notre-Dame"
-      ],
-      "priority": 80,
-      "sports": [
-        "rugby"
-      ],
-      "rseqTeamIds": [
-        "ba51f1e5-39cc-4335-8616-a62ed6793387"
-      ],
-      "note": "Deuxième formation rugby F du CNDF (Saint-Augustin) — Bleu ≠ établissement séparé",
-      "institutionName": "Campus Notre-Dame-de-Foy",
-      "institutionId": "notre-dame-foy",
-      "nicknameBySex": {},
-      "squad": "Bleu",
-      "nicknameSexScope": {},
-      "sourceTeamVariants": {
-        "ba51f1e5-39cc-4335-8616-a62ed6793387": {
-          "sourceName": "Notre-Dame Bleu",
-          "sourceCode": "NDFB",
-          "qualifier": "équipe Bleu",
-          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2",
-          "verifiedOn": "2026-11-07"
-        }
-      },
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/rugby/collegial/nord-est/feminin/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://rseq.ca/sports/football/collegial/division-1/spartiates/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2"
-        ],
-        "institutionIds": [
-          "db18d59a-c6de-4e76-901e-c19388d3f4b6"
-        ]
-      }
-    },
-    {
-      "id": "notre-dame-jaune",
-      "code": "NDFJ",
-      "sector": "collegial",
-      "shortName": "Campus Notre-Dame-de-Foy — équipe Jaune",
-      "fullName": "Campus Notre-Dame-de-Foy — équipe Jaune",
-      "nickname": "Le Notre-Dame",
-      "aliases": [
-        "Notre-Dame Jaune",
-        "NDFJ",
-        "CNDF Jaune",
-        "Campus Notre-Dame-de-Foy Jaune",
-        "Campus Notre-Dame-de-Foy",
-        "Le Notre-Dame"
-      ],
-      "priority": 80,
-      "sports": [
-        "rugby"
-      ],
-      "rseqTeamIds": [
-        "46e24feb-0394-4ecc-8ceb-cccf513cad17"
-      ],
-      "note": "Deuxième formation rugby F du CNDF — Jaune différencie de Notre-Dame Bleu",
-      "institutionName": "Campus Notre-Dame-de-Foy",
-      "institutionId": "notre-dame-foy",
-      "nicknameBySex": {},
-      "squad": "Jaune",
-      "nicknameSexScope": {},
-      "sourceTeamVariants": {
-        "46e24feb-0394-4ecc-8ceb-cccf513cad17": {
-          "sourceName": "Notre-Dame Jaune",
-          "sourceCode": "NDFJ",
-          "qualifier": "équipe Jaune",
-          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d033d605-4c74-43cb-8031-c7a6bab625ed",
-          "verifiedOn": "2026-11-07"
-        }
-      },
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/rugby/collegial/nord-est/feminin/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://rseq.ca/sports/football/collegial/division-1/spartiates/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d033d605-4c74-43cb-8031-c7a6bab625ed"
-        ],
-        "institutionIds": [
-          "db18d59a-c6de-4e76-901e-c19388d3f4b6"
-        ]
-      }
-    },
-    {
-      "id": "ottawa",
-      "code": "OTT",
-      "sector": "universitaire",
-      "shortName": "uOttawa",
-      "fullName": "University of Ottawa",
-      "nickname": "Gee-Gees",
-      "aliases": [
-        "Ottawa",
-        "OTT",
-        "University of Ottawa",
-        "Gee-Gees"
-      ],
-      "priority": 80,
-      "sports": [
-        "natation",
-        "rugby"
-      ],
-      "rseqTeamIds": [
-        "d61ef4b5-8ddc-48f1-897d-22c6553820b8",
-        "4b02cfe9-3166-4d05-93a8-01a313bce3c9",
-        "8c722fb0-1a6c-4a55-944a-95e9fe3cccfd",
-        "c93abc73-9ba2-4b9f-b1a0-37ad40d81bef"
-      ],
-      "institutionName": "University of Ottawa",
-      "institutionId": "ottawa",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://geegees.ca/",
-          "https://rseq.ca/sports/rugby/universitaire/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03320c93-fabd-4321-873a-0f99425b3715",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0a7e0d5f-8aa1-4d4e-b372-277c9cca2975",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=20ea298e-21bc-472d-9fcc-8ef8144e06d9",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=78bfcec5-326b-4f30-b1a1-eb7c7dccebb1"
-        ],
-        "institutionIds": [
-          "fba724ff-a3a0-4e37-9bea-d6da25b2c42a"
+          "657bd035-d5e8-49c8-98e0-576e9e461e9d"
         ]
       }
     },
@@ -5336,116 +4569,6 @@
       }
     },
     {
-      "id": "sainte-anne",
-      "code": "CSA",
-      "sector": "collegial",
-      "shortName": "Collégial international Sainte-Anne",
-      "fullName": "Collégial international Sainte-Anne",
-      "nickname": "Dragons",
-      "aliases": [
-        "Sainte-Anne",
-        "CSA",
-        "Collégial international Sainte-Anne",
-        "Dragons",
-        "Cégep de Sainte-Anne"
-      ],
-      "priority": 80,
-      "sports": [
-        "badminton",
-        "cross-country",
-        "flag-football",
-        "golf",
-        "ultimate",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "f72018be-2052-4c2e-8778-bd3e4d8255bd",
-        "14f4fa3a-37ad-4751-89cb-d2d7ca8989ea",
-        "cfc4b2fc-a29a-4c23-a58b-b6b51837c84b",
-        "94b16796-ba2e-4d9b-9e72-1780d377c32e",
-        "597f97db-61f4-46f0-afdf-d72b94fca5dd",
-        "8a51d7e7-944a-495f-a728-e21f1c313910",
-        "c0b974c8-3c62-4174-836d-79214509067c",
-        "a027cd25-1059-4772-b4e0-1e6ccc0166f7"
-      ],
-      "institutionName": "Collégial international Sainte-Anne",
-      "institutionId": "sainte-anne",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
-          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
-        ],
-        "institutionIds": [
-          "06b92bc5-391b-4eaf-99d5-96c2a51bb17b"
-        ]
-      }
-    },
-    {
-      "id": "seminaire-de-sherbrooke",
-      "code": "SSH",
-      "sector": "collegial",
-      "shortName": "Séminaire de Sherbrooke",
-      "fullName": "Séminaire de Sherbrooke",
-      "nickname": "Barons",
-      "aliases": [
-        "Séminaire de Sherbrooke",
-        "SSH",
-        "Barons"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "flag-football",
-        "golf",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "965299e0-f613-49eb-a01b-3ba6824a3202",
-        "028950e6-34ca-4f08-b8b5-7337529be45c",
-        "f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
-        "dafcd2b2-a145-4ca9-997d-9c5070bd6fed",
-        "e2fbc9c8-663d-4f20-947e-f8e20df3e3c6",
-        "0e4d7a10-f890-4636-a874-f6c07f62d09e",
-        "65cbfd38-2ba8-46ad-bdeb-e7f407562e6a"
-      ],
-      "institutionName": "Séminaire de Sherbrooke",
-      "institutionId": "seminaire-de-sherbrooke",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
-          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/masculin/championnat/",
-          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=136322b9-e510-49c5-ae4a-cc01c5fa21de",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d861da39-450c-4724-96e0-6011f0c37d9f",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e259fb75-dbc2-4f8c-987a-d13ea29babaa",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
-        ],
-        "institutionIds": [
-          "2ed4d84e-0523-435e-ba6a-cada1bea2929"
-        ]
-      }
-    },
-    {
       "id": "sept-iles",
       "code": "CSI",
       "sector": "collegial",
@@ -5616,188 +4739,6 @@
       }
     },
     {
-      "id": "terrebonne",
-      "code": "TER",
-      "sector": "collegial",
-      "shortName": "Cégep de Lanaudière à Terrebonne",
-      "fullName": "Cégep de Lanaudière à Terrebonne",
-      "nickname": "Rafales",
-      "aliases": [
-        "Terrebonne",
-        "TER",
-        "Cégep de Lanaudière à Terrebonne",
-        "Rafales",
-        "Cégep régional de Lanaudière à Terrebonne"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "cross-country",
-        "flag-football",
-        "soccer-interieur",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "718ba640-664c-40d5-993b-acc2fc1cfa1e",
-        "612311f9-0c31-462e-99b9-b69abc8d8c43",
-        "da2d7246-5536-4ed7-b749-1200974a1f88",
-        "9dee648b-dc8f-417f-859e-6daf168e1064",
-        "b73e9855-57d6-4e56-a83b-7194439907e5",
-        "1c5a3e98-a1b3-4171-bf39-e9c3b8ef249d",
-        "1fc17c27-c24c-405c-9f2b-145d76b2720f"
-      ],
-      "institutionName": "Cégep de Lanaudière à Terrebonne",
-      "institutionId": "terrebonne",
-      "nicknameBySex": {},
-      "campus": "Terrebonne",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/volleyball/collegial/division-2/sud-ouest/masculin/",
-          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2fb66060-04f8-44be-9f90-b0ac2395f329",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42502722-0306-48e4-a178-00ed129c282d",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235"
-        ],
-        "institutionIds": [
-          "dc7ca5c8-4be5-4cc8-9d13-7154e10bcd69"
-        ]
-      }
-    },
-    {
-      "id": "unb",
-      "code": "UNB",
-      "sector": "universitaire",
-      "shortName": "UNB — Fredericton",
-      "fullName": "University of New Brunswick — campus Fredericton",
-      "nickname": "REDS",
-      "aliases": [
-        "UNB",
-        "University of New Brunswick",
-        "REDS",
-        "Université UNB"
-      ],
-      "priority": 80,
-      "sports": [
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "d2b40b1f-8e56-451e-88b7-942ac0ce8ed6"
-      ],
-      "institutionName": "University of New Brunswick",
-      "institutionId": "unb",
-      "nicknameBySex": {},
-      "campus": "Fredericton",
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://rseq.ca/sports/volleyball/universitaire/division-1/masculin/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=f4fb2dca-6430-474a-b04a-659273456e79",
-          "https://www.unb.ca/athletics/"
-        ],
-        "institutionIds": [
-          "78dd5994-3387-40b6-a99f-6e57ee7f8c7d"
-        ]
-      }
-    },
-    {
-      "id": "universel",
-      "code": "UNI",
-      "sector": "collegial",
-      "shortName": "Collège Universel",
-      "fullName": "Collège Universel",
-      "nickname": "L'Universel",
-      "aliases": [
-        "Universel",
-        "UNI",
-        "Collège Universel",
-        "L'Universel",
-        "Cégep de Universel"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "flag-football",
-        "soccer-interieur",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "8163037f-3ae5-45f5-bbc6-f9a6909cf617",
-        "0f334a4e-c3e0-4f54-99cb-e58c2b2905a2",
-        "195d3cb2-487d-44ea-9281-2a59d4577376",
-        "163aa084-e90e-46fb-8a03-29a16fd0858f"
-      ],
-      "institutionName": "Collège Universel",
-      "institutionId": "universel",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "competition-label-verified-campus-partial",
-        "sources": [
-          "https://collegeuniversel.ca/sport-etude/basket-ball-masculin/",
-          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795"
-        ],
-        "institutionIds": [
-          "5fef61ce-4d19-4f1e-9928-2f33a15d48b8"
-        ]
-      }
-    },
-    {
-      "id": "uqar",
-      "code": "UQAR",
-      "sector": "universitaire",
-      "shortName": "UQAR",
-      "fullName": "Université du Québec à Rimouski",
-      "nickname": "Nordet",
-      "aliases": [
-        "UQAR",
-        "Université du Québec à Rimouski",
-        "Nordet"
-      ],
-      "priority": 80,
-      "sports": [
-        "cross-country",
-        "natation"
-      ],
-      "rseqTeamIds": [
-        "c0ce3dc9-b80d-41bc-92be-75e922d14f79",
-        "3c7859e7-8051-42a9-8f7f-8a322ced92db",
-        "b4add6fc-e2b9-467a-8302-0d9e0e182ec3",
-        "baca51a1-496a-4979-8e90-6c2bb631f46d"
-      ],
-      "institutionName": "Université du Québec à Rimouski",
-      "institutionId": "uqar",
-      "nicknameBySex": {},
-      "nicknameSexScope": {},
-      "identityVerification": {
-        "verifiedOn": "2026-11-07",
-        "status": "primary-source-identity-and-competition-name",
-        "sources": [
-          "https://www.uqar.ca/services/services-a-la-communaute-universitaire/le-nordet/",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03320c93-fabd-4321-873a-0f99425b3715",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=20ea298e-21bc-472d-9fcc-8ef8144e06d9",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80",
-          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
-        ],
-        "institutionIds": [
-          "cb477817-eef4-4fdf-83e0-d71316b5bf44"
-        ]
-      }
-    },
-    {
       "id": "valleyfield",
       "code": "VAL",
       "sector": "collegial",
@@ -5940,6 +4881,1066 @@
         ],
         "institutionIds": [
           "71e5d78b-c696-4a81-8191-9fab2dede1a2"
+        ]
+      }
+    },
+    {
+      "id": "gerald-godin",
+      "code": "CGG",
+      "sector": "collegial",
+      "shortName": "Cégep Gérald-Godin",
+      "fullName": "Cégep Gérald-Godin",
+      "nickname": "Gladiateurs",
+      "aliases": [
+        "Gérald-Godin",
+        "CGG",
+        "Cégep Gérald-Godin",
+        "Gladiateurs"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "cross-country",
+        "flag-football",
+        "futsal",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "2aa07ff1-7d3d-4a84-ba1d-cc5a1dc608f8",
+        "1b563b7b-46b6-4122-a896-17f69bfd6d90",
+        "d4ade005-332e-46c0-85b2-b1f313c8d646",
+        "530fe75e-0b85-4280-a021-67605257939e",
+        "dd8e2b8f-1d1a-49e2-a53d-c003a9657d22",
+        "e6c5c7dc-a5e3-4626-8e18-cf124d8e2d5f",
+        "77fc7e03-a5ec-4fc4-ab1f-b17cf79d05c8",
+        "de1e886c-f35f-4a4a-8be3-9dbc97efbce6"
+      ],
+      "institutionName": "Cégep Gérald-Godin",
+      "institutionId": "gerald-godin",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=48369892-577a-4679-9308-5f7cf91168b7",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7545bc51-3808-4c5f-9f53-bbca3bef19be",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+        ],
+        "institutionIds": [
+          "380b3090-421d-4a68-aa2a-6e678d60b542"
+        ]
+      }
+    },
+    {
+      "id": "heritage",
+      "code": "HER",
+      "sector": "collegial",
+      "shortName": "Cégep Heritage College",
+      "fullName": "Cégep Heritage College",
+      "nickname": "Hurricanes",
+      "aliases": [
+        "Héritage",
+        "HER",
+        "Cégep Heritage College",
+        "Hurricanes",
+        "Collège Heritage"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "hockey",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "d84bcc7c-f14c-406c-b796-316b82c06471",
+        "bb946bed-ddd8-46db-894f-651816f5d37a",
+        "2f2b6a0b-aacd-4d81-b6aa-7ab77f17fb0f",
+        "f1d44e8c-0786-4ef5-bf46-f3a3b46afb60",
+        "7f634f47-f77b-4084-912c-8ac282960202",
+        "3fdef215-033c-47d9-811e-09dd2831b992",
+        "592e3059-a4f9-4524-885a-d0bf6cd29c96"
+      ],
+      "institutionName": "Cégep Heritage College",
+      "institutionId": "heritage",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://www.cegep-heritage.qc.ca/current-students/campus-life/athletics/hurricanes-teams-schedules",
+          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
+          "https://rseq.ca/sports/volleyball/collegial/division-2/sud-ouest/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2fb66060-04f8-44be-9f90-b0ac2395f329",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c6aecd01-6f5c-4eec-82d3-6efada2630d0",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+        ],
+        "institutionIds": [
+          "20feefb7-9e6e-4afe-953b-09dd08697223"
+        ]
+      }
+    },
+    {
+      "id": "marie-victorin",
+      "code": "CMV",
+      "sector": "collegial",
+      "shortName": "Cégep Marie-Victorin",
+      "fullName": "Cégep Marie-Victorin",
+      "nickname": "Atlas",
+      "aliases": [
+        "Marie-Victorin",
+        "CMV",
+        "Cégep Marie-Victorin",
+        "Atlas",
+        "Cégep de Marie-Victorin"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "natation",
+        "soccer",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "bd55ed19-4682-4347-954a-5771a2b239f1",
+        "744f5cae-f4f6-45ff-a951-1669b5bf71fa",
+        "39a61fee-635e-4d50-b924-03b3291498ef",
+        "001c5ac2-d381-4f17-976a-05ecb2e079e7",
+        "688a5b04-1a18-4e62-a0d3-60f6244089bc",
+        "7a963f15-659c-42a9-b890-cbcb0e9760f4",
+        "54e53960-4430-4180-a21d-7c2542620c47",
+        "e74e265e-c4ef-4833-a9a3-16bbfb449c52",
+        "974e5d04-571a-4996-a6e5-6f4d5faf005a",
+        "48fc5d96-475d-40d1-ba81-9794be273517",
+        "3edcb54c-9d40-4349-9a1f-e9dcc04f7664",
+        "b6ab0647-1f19-45c5-8e8b-71a214ee33de"
+      ],
+      "institutionName": "Cégep Marie-Victorin",
+      "institutionId": "marie-victorin",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
+          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1160bdb7-7fe8-442c-a06e-ad8078ef66c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=42502722-0306-48e4-a178-00ed129c282d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=724883dd-1d7c-4002-89f6-0c28fd199a71",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+        ],
+        "institutionIds": [
+          "344a9be1-03c0-458f-a374-36c57a3e3d90"
+        ]
+      }
+    },
+    {
+      "id": "chibougamau",
+      "code": "BOU",
+      "sector": "collegial",
+      "shortName": "Centre d'études collégiales à Chibougamau",
+      "fullName": "Centre d'études collégiales à Chibougamau",
+      "nickname": "Vert et Noir",
+      "aliases": [
+        "Chibougamau",
+        "BOU",
+        "Centre d'études collégiales à Chibougamau",
+        "Vert et Noir",
+        "Cégep de Chibougamau"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "d79a19c0-7670-4eda-9fa2-9e12c5691173"
+      ],
+      "institutionName": "Centre d'études collégiales à Chibougamau",
+      "institutionId": "chibougamau",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://cec-chibougamau.qc.ca/un-vent-de-fraicheur-souffle-sur-les-equipes-sportives-du-centre-detudes-collegiales-a-chibougamau/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe"
+        ],
+        "institutionIds": [
+          "37bf3df1-85fe-4fc1-ae38-9b4424b3f4d0"
+        ]
+      }
+    },
+    {
+      "id": "charlevoix",
+      "code": "CHX",
+      "sector": "collegial",
+      "shortName": "Centre d'études collégiales en Charlevoix",
+      "fullName": "Centre d'études collégiales en Charlevoix",
+      "nickname": "Sismiques",
+      "aliases": [
+        "Charlevoix",
+        "CHX",
+        "Centre d'études collégiales en Charlevoix",
+        "Sismiques",
+        "Cégep de Charlevoix"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "flag-football",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "0a9c9922-e0fb-4561-a4a7-e1d8f2603798",
+        "f687d3ca-5d4f-4e11-915a-0ba069134055",
+        "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+        "e310b227-3aa5-46ed-873a-5d8901f8a9bb"
+      ],
+      "institutionName": "Centre d'études collégiales en Charlevoix",
+      "institutionId": "charlevoix",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://ceccharlevoix.ca/sports-les-sismiques.html",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/masculin/championnat/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d861da39-450c-4724-96e0-6011f0c37d9f"
+        ],
+        "institutionIds": [
+          "bbd25ba4-b78f-4946-8310-8348591c0ea9"
+        ]
+      }
+    },
+    {
+      "id": "matapedien",
+      "code": "MPN",
+      "sector": "collegial",
+      "shortName": "Centre matapédien d'études collégiales",
+      "fullName": "Centre matapédien d'études collégiales",
+      "nickname": "Alizé",
+      "aliases": [
+        "Matapédien",
+        "MPN",
+        "Centre matapédien d'études collégiales",
+        "Alizé",
+        "Cégep de Matapédien"
+      ],
+      "priority": 80,
+      "sports": [
+        "golf",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "ff76dab0-bffc-4874-a023-c3dc9aee9254",
+        "b0dd43d1-0a77-4503-ab65-4085ffcf0e96"
+      ],
+      "institutionName": "Centre matapédien d'études collégiales",
+      "institutionId": "matapedien",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://www.centre-matapedien.qc.ca/le-cmec-devoile-le-nouveau-logo-de-ses-equipes-sportives/",
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fda0f61c-4599-4e59-82e2-b1966fbe382e"
+        ],
+        "institutionIds": [
+          "2c58754f-957f-4f03-8ac2-67e8c45a38ca"
+        ]
+      }
+    },
+    {
+      "id": "ch-st-lawrence",
+      "code": "SLC",
+      "sector": "collegial",
+      "shortName": "Champlain College St. Lawrence",
+      "fullName": "Champlain College St. Lawrence",
+      "nickname": "Lions",
+      "aliases": [
+        "Champlain St-Lawrence",
+        "Ch.-St-Lawrence",
+        "SLC",
+        "St. Lawrence",
+        "Saint-Lawrence",
+        "Champlain St. Lawrence",
+        "Champlain College St. Lawrence",
+        "Lions"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "golf",
+        "hockey",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
+        "be8463de-e00e-4c62-a64c-153ba9720ba7",
+        "05cf481a-7441-444d-98b1-17a13d59c1a0",
+        "ed70b88e-aef4-48ba-a97d-7fc454312bae",
+        "04a285f6-2cf0-4724-a1af-23ebb3595127",
+        "a0467cbb-70d3-46cc-8faf-fdaded90c77c",
+        "3a5c51cc-d0cd-4759-83cc-53587729a3bd",
+        "4055809d-7cea-4f87-9bb7-63350b1cb670"
+      ],
+      "institutionName": "Champlain College St. Lawrence",
+      "institutionId": "ch-st-lawrence",
+      "nicknameBySex": {},
+      "campus": "St. Lawrence",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
+          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=09897279-c580-4cad-a924-1831c67ce2c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0eb377a9-a360-45a3-be85-795cf9cc1821",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b54a8411-0eed-4ec4-853d-68f7451e6691",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fda0f61c-4599-4e59-82e2-b1966fbe382e"
+        ],
+        "institutionIds": [
+          "30b7b1d1-bf5a-4704-9654-8c2c42d52b8c"
+        ]
+      }
+    },
+    {
+      "id": "college-militaire-royal",
+      "code": "CMR",
+      "sector": "universitaire",
+      "shortName": "CMR Saint-Jean",
+      "fullName": "Collège militaire royal de Saint-Jean — campus Saint-Jean-sur-Richelieu",
+      "nickname": "Remparts",
+      "aliases": [
+        "Collège Militaire Royal",
+        "CMR",
+        "Collège militaire royal de Saint-Jean",
+        "Remparts"
+      ],
+      "priority": 80,
+      "sports": [
+        "athletisme"
+      ],
+      "rseqTeamIds": [
+        "a21ca3d9-3528-42d7-8483-fe2986af8999",
+        "90a3ff4f-29b4-40ed-a855-f7dcc67f0ecc"
+      ],
+      "institutionName": "Collège militaire royal de Saint-Jean",
+      "institutionId": "college-militaire-royal",
+      "nicknameBySex": {},
+      "campus": "Saint-Jean-sur-Richelieu",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://www.cmrsj-rmcsj.forces.gc.ca/vie-lif/spo/sc-cs/sc-cs-fra.asp",
+          "https://rseq.ca/sports/athletisme/universitaire/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+        ],
+        "institutionIds": [
+          "6863c610-5e0e-434e-82dc-3f722badfe03"
+        ]
+      }
+    },
+    {
+      "id": "alma",
+      "code": "ALM",
+      "sector": "collegial",
+      "shortName": "Collège d'Alma",
+      "fullName": "Collège d'Alma",
+      "nickname": "Jeannois",
+      "aliases": [
+        "Alma",
+        "ALM",
+        "Collège d'Alma",
+        "Jeannois",
+        "Cégep d'Alma"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cheerleading",
+        "cross-country",
+        "hockey",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "1c816156-ab1c-4aa3-9d35-34b9e9971478",
+        "7ad33e01-ef9b-4d01-9d35-ba387bb09e2e",
+        "38874ddd-7aea-46b7-a24a-e5d3ab5b4a14",
+        "b43fc17a-7622-44f1-bb58-805a58404017",
+        "ead40133-6e36-4f46-8e22-0e2939fcb7ce",
+        "be25934f-cff3-40f8-8161-4b6fb4a6f4a1",
+        "84f7a832-eb0f-4ce0-a475-4efe42ba066b",
+        "3ca40f35-c42d-4f46-ae34-99f1842a073e",
+        "3747289e-8b0d-412d-84e1-7ccf77309c1c",
+        "2006ab31-133f-499a-8d01-98ecf044071a",
+        "5512ae57-9b60-4dc0-b549-ddc2ab2a264b"
+      ],
+      "institutionName": "Collège d'Alma",
+      "institutionId": "alma",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "sourceTeamVariants": {
+        "5512ae57-9b60-4dc0-b549-ddc2ab2a264b": {
+          "sourceName": "Alma Bleu",
+          "sourceCode": "ALM",
+          "qualifier": "équipe Bleu",
+          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
+          "verifiedOn": "2026-11-07"
+        }
+      },
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
+          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=09897279-c580-4cad-a924-1831c67ce2c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0eb377a9-a360-45a3-be85-795cf9cc1821",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=21c736b9-df07-4c83-a58e-c444ad22252c",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=53c229f4-e28a-4ab1-b760-1d21fd7f9a40",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=65e8e886-3739-4ae5-b7f1-7790b80d5f1f",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e8391cd3-1e36-473b-b1c3-9a4b63236121"
+        ],
+        "institutionIds": [
+          "a68f5b47-4eee-4806-9366-8e36931a92fc"
+        ]
+      }
+    },
+    {
+      "id": "alma-2",
+      "code": "ALM2",
+      "sector": "collegial",
+      "shortName": "Collège d'Alma — équipe Blanc",
+      "fullName": "Collège d'Alma — équipe Blanc",
+      "nickname": "Jeannois",
+      "aliases": [
+        "Alma 2",
+        "ALM2",
+        "Collège d'Alma",
+        "Jeannois",
+        "Cégep de Alma 2"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "f5b6d654-bdee-4194-a904-14b14c841af7"
+      ],
+      "institutionName": "Collège d'Alma",
+      "institutionId": "alma",
+      "nicknameBySex": {},
+      "squad": "Blanc",
+      "nicknameSexScope": {},
+      "sourceTeamVariants": {
+        "f5b6d654-bdee-4194-a904-14b14c841af7": {
+          "sourceName": "Alma Blanc",
+          "sourceCode": "ALM2",
+          "qualifier": "équipe Blanc",
+          "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe",
+          "verifiedOn": "2026-11-07"
+        }
+      },
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/infogenerale/",
+          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
+          "https://rseq.ca/sports/hockey/collegial/division-1/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e3685a9f-3213-4e86-9463-a3813b164ebe"
+        ],
+        "institutionIds": [
+          "a68f5b47-4eee-4806-9366-8e36931a92fc"
+        ]
+      }
+    },
+    {
+      "id": "maisonneuve",
+      "code": "MAI",
+      "sector": "collegial",
+      "shortName": "Collège de Maisonneuve",
+      "fullName": "Collège de Maisonneuve",
+      "nickname": "Vikings",
+      "aliases": [
+        "Maisonneuve",
+        "MAI",
+        "Collège de Maisonneuve",
+        "Vikings"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "futsal",
+        "natation",
+        "soccer",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "a3947d15-2c2d-489d-b01d-2cf7c0afb26d",
+        "1041bdd3-d39e-49fa-ae1d-242f50df950f",
+        "d7c71683-d3c1-4e57-ab50-9eba999ff2d6",
+        "e70bc364-ff21-4255-aba6-fa4279b74a52",
+        "746c9221-c07a-475f-9feb-c2ae9bf34be2",
+        "f4d42239-c706-457e-8b14-82b89d227661",
+        "b2d480f8-1a23-4ff4-8463-f00bee1bb5aa",
+        "01350d67-f342-446c-8d3f-0274762df198",
+        "794d2cf2-718b-4a75-a06e-ace3be0e1ff5",
+        "57e41db0-e4f2-4bb2-8cbf-84c6f6d9f9e8"
+      ],
+      "institutionName": "Collège de Maisonneuve",
+      "institutionId": "maisonneuve",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
+          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=48369892-577a-4679-9308-5f7cf91168b7",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=724883dd-1d7c-4002-89f6-0c28fd199a71",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7545bc51-3808-4c5f-9f53-bbca3bef19be",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d004d42a-8c7d-4c4e-8188-a598adfd0235"
+        ],
+        "institutionIds": [
+          "38962c87-b991-4e60-b632-7da3a1b28a65"
+        ]
+      }
+    },
+    {
+      "id": "ellis",
+      "code": "ELI",
+      "sector": "collegial",
+      "shortName": "Collège Ellis",
+      "fullName": "Collège Ellis",
+      "nickname": "Trident",
+      "aliases": [
+        "Ellis",
+        "ELI",
+        "Collège Ellis",
+        "Trident"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "soccer"
+      ],
+      "rseqTeamIds": [
+        "97532839-7cf8-41a5-b91d-fbbbe81422a8",
+        "101ca532-2b93-4785-ab87-0d329c40a552"
+      ],
+      "institutionName": "Collège Ellis",
+      "institutionId": "ellis",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=05798bd7-130d-4b88-ae8d-8f934e7963ed",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+        ],
+        "institutionIds": [
+          "48e4e2c2-3906-41b7-9078-ecfc0b507ebd"
+        ]
+      }
+    },
+    {
+      "id": "universel",
+      "code": "UNI",
+      "sector": "collegial",
+      "shortName": "Collège Universel",
+      "fullName": "Collège Universel",
+      "nickname": "L'Universel",
+      "aliases": [
+        "Universel",
+        "UNI",
+        "Collège Universel",
+        "L'Universel",
+        "Cégep de Universel"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "soccer-interieur",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "8163037f-3ae5-45f5-bbc6-f9a6909cf617",
+        "0f334a4e-c3e0-4f54-99cb-e58c2b2905a2",
+        "195d3cb2-487d-44ea-9281-2a59d4577376",
+        "163aa084-e90e-46fb-8a03-29a16fd0858f"
+      ],
+      "institutionName": "Collège Universel",
+      "institutionId": "universel",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "competition-label-verified-campus-partial",
+        "sources": [
+          "https://collegeuniversel.ca/sport-etude/basket-ball-masculin/",
+          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1545a853-8f2b-483c-a3f3-785a014d5228",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795"
+        ],
+        "institutionIds": [
+          "5fef61ce-4d19-4f1e-9928-2f33a15d48b8"
+        ]
+      }
+    },
+    {
+      "id": "sainte-anne",
+      "code": "CSA",
+      "sector": "collegial",
+      "shortName": "Collégial international Sainte-Anne",
+      "fullName": "Collégial international Sainte-Anne",
+      "nickname": "Dragons",
+      "aliases": [
+        "Sainte-Anne",
+        "CSA",
+        "Collégial international Sainte-Anne",
+        "Dragons",
+        "Cégep de Sainte-Anne"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "cross-country",
+        "flag-football",
+        "golf",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "f72018be-2052-4c2e-8778-bd3e4d8255bd",
+        "14f4fa3a-37ad-4751-89cb-d2d7ca8989ea",
+        "cfc4b2fc-a29a-4c23-a58b-b6b51837c84b",
+        "94b16796-ba2e-4d9b-9e72-1780d377c32e",
+        "597f97db-61f4-46f0-afdf-d72b94fca5dd",
+        "8a51d7e7-944a-495f-a728-e21f1c313910",
+        "c0b974c8-3c62-4174-836d-79214509067c",
+        "a027cd25-1059-4772-b4e0-1e6ccc0166f7"
+      ],
+      "institutionName": "Collégial international Sainte-Anne",
+      "institutionId": "sainte-anne",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
+          "https://rseq.ca/sports/cross-country/collegial/sud-ouest/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+        ],
+        "institutionIds": [
+          "06b92bc5-391b-4eaf-99d5-96c2a51bb17b"
+        ]
+      }
+    },
+    {
+      "id": "dalhousie",
+      "code": "DAL",
+      "sector": "universitaire",
+      "shortName": "Dalhousie University — Halifax",
+      "fullName": "Dalhousie University — campus Halifax",
+      "nickname": "Tigers",
+      "aliases": [
+        "Dalhousie",
+        "DAL",
+        "Dalhousie University",
+        "Tigers",
+        "Université Dalhousie"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "a767b28c-0966-40ef-b942-56e2ac1fac58"
+      ],
+      "institutionName": "Dalhousie University",
+      "institutionId": "dalhousie",
+      "nicknameBySex": {},
+      "campus": "Halifax",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/universitaire/division-1/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=f4fb2dca-6430-474a-b04a-659273456e79",
+          "https://athletics.dal.ca/"
+        ],
+        "institutionIds": [
+          "28067282-fa49-4c1a-82c9-5ae5f692a295"
+        ]
+      }
+    },
+    {
+      "id": "marianopolis",
+      "code": "MAR",
+      "sector": "collegial",
+      "shortName": "Marianopolis College",
+      "fullName": "Marianopolis College",
+      "nickname": "Demons",
+      "aliases": [
+        "Marianopolis",
+        "MAR",
+        "Marianopolis College",
+        "Demons"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "flag-football",
+        "ultimate",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "7a335aea-b32b-4f69-b484-388ad888c6ad",
+        "bfe9daa9-6493-48bc-be79-38ad987eaeee",
+        "80c76d27-c8dc-46d0-a1cf-2d96fc51f190",
+        "6761a16b-b596-48af-845c-824e36ec84e6",
+        "afb2fb6d-041f-4fcd-987d-e4f33626d11f",
+        "336628d2-df21-4399-8ca3-3e8f56cc4e64",
+        "e502ca9f-73d9-4382-a0b3-4dfc7df4f74a"
+      ],
+      "institutionName": "Marianopolis College",
+      "institutionId": "marianopolis",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/ultimate/collegial/sud-ouest/",
+          "https://rseq.ca/sports/basketball/collegial/division-3/sud-ouest/masculin/phenix/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=045ac13a-79e2-4505-8c90-bf29697756c1",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3cbc7b32-c76c-442e-a26c-bdebef055218",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=90c38605-00c0-4854-b5e3-7ae47fdcecd7",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d883756d-6bf5-47f4-b4af-2089d5541795"
+        ],
+        "institutionIds": [
+          "a3814a1c-a572-4c88-9f21-89ed376e3288"
+        ]
+      }
+    },
+    {
+      "id": "merici",
+      "code": "MER",
+      "sector": "collegial",
+      "shortName": "Mérici collégial privé",
+      "fullName": "Mérici collégial privé",
+      "nickname": "Panthères",
+      "aliases": [
+        "Mérici",
+        "MER",
+        "Mérici collégial privé",
+        "Panthères",
+        "Cégep de Mérici"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "flag-football",
+        "football",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "86b1f879-7a25-4e14-b744-5df3fbba61bc",
+        "0f1a06e4-391b-46c3-adb3-90928824bc00",
+        "abbb8d0e-36b2-49fd-8a1d-9bb359e473b8",
+        "d00882ff-e70e-40a4-a4c1-3f55b4cb1d89",
+        "4f03810c-2e7d-4079-99e0-92979bbfff34",
+        "94670618-7830-4756-a411-69801454df57",
+        "2e1e1f27-8db3-484c-beee-790cf8a027d8"
+      ],
+      "institutionName": "Mérici collégial privé",
+      "institutionId": "merici",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=51caab24-24ed-4115-ae38-1121b560d797",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=717b5738-88ea-4949-a696-839be500ea98",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b54a8411-0eed-4ec4-853d-68f7451e6691",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b789a3e0-33ed-400b-87cc-287ab9819540",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d861da39-450c-4724-96e0-6011f0c37d9f"
+        ],
+        "institutionIds": [
+          "92fde0a3-4e71-4a91-b8bb-6fab51b2d72f"
+        ]
+      }
+    },
+    {
+      "id": "seminaire-de-sherbrooke",
+      "code": "SSH",
+      "sector": "collegial",
+      "shortName": "Séminaire de Sherbrooke",
+      "fullName": "Séminaire de Sherbrooke",
+      "nickname": "Barons",
+      "aliases": [
+        "Séminaire de Sherbrooke",
+        "SSH",
+        "Barons"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "flag-football",
+        "golf",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "965299e0-f613-49eb-a01b-3ba6824a3202",
+        "028950e6-34ca-4f08-b8b5-7337529be45c",
+        "f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
+        "dafcd2b2-a145-4ca9-997d-9c5070bd6fed",
+        "e2fbc9c8-663d-4f20-947e-f8e20df3e3c6",
+        "0e4d7a10-f890-4636-a874-f6c07f62d09e",
+        "65cbfd38-2ba8-46ad-bdeb-e7f407562e6a"
+      ],
+      "institutionName": "Séminaire de Sherbrooke",
+      "institutionId": "seminaire-de-sherbrooke",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/collegial/division-2/nord-est/feminin/jeannois/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/feminin/infogenerale/",
+          "https://rseq.ca/sports/volleyball/collegial/division-3/nord-est/masculin/championnat/",
+          "https://rseq.ca/sports/basketball/collegial/division-2/nord-est/masculin/formulairesreglements/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=136322b9-e510-49c5-ae4a-cc01c5fa21de",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d861da39-450c-4724-96e0-6011f0c37d9f",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e259fb75-dbc2-4f8c-987a-d13ea29babaa",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
+        ],
+        "institutionIds": [
+          "2ed4d84e-0523-435e-ba6a-cada1bea2929"
+        ]
+      }
+    },
+    {
+      "id": "unb",
+      "code": "UNB",
+      "sector": "universitaire",
+      "shortName": "UNB — Fredericton",
+      "fullName": "University of New Brunswick — campus Fredericton",
+      "nickname": "REDS",
+      "aliases": [
+        "UNB",
+        "University of New Brunswick",
+        "REDS",
+        "Université UNB"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "d2b40b1f-8e56-451e-88b7-942ac0ce8ed6"
+      ],
+      "institutionName": "University of New Brunswick",
+      "institutionId": "unb",
+      "nicknameBySex": {},
+      "campus": "Fredericton",
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://rseq.ca/sports/volleyball/universitaire/division-1/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=f4fb2dca-6430-474a-b04a-659273456e79",
+          "https://www.unb.ca/athletics/"
+        ],
+        "institutionIds": [
+          "78dd5994-3387-40b6-a99f-6e57ee7f8c7d"
+        ]
+      }
+    },
+    {
+      "id": "ottawa",
+      "code": "OTT",
+      "sector": "universitaire",
+      "shortName": "uOttawa",
+      "fullName": "University of Ottawa",
+      "nickname": "Gee-Gees",
+      "aliases": [
+        "Ottawa",
+        "OTT",
+        "University of Ottawa",
+        "Gee-Gees"
+      ],
+      "priority": 80,
+      "sports": [
+        "natation",
+        "rugby"
+      ],
+      "rseqTeamIds": [
+        "d61ef4b5-8ddc-48f1-897d-22c6553820b8",
+        "4b02cfe9-3166-4d05-93a8-01a313bce3c9",
+        "8c722fb0-1a6c-4a55-944a-95e9fe3cccfd",
+        "c93abc73-9ba2-4b9f-b1a0-37ad40d81bef"
+      ],
+      "institutionName": "University of Ottawa",
+      "institutionId": "ottawa",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://geegees.ca/",
+          "https://rseq.ca/sports/rugby/universitaire/masculin/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03320c93-fabd-4321-873a-0f99425b3715",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0a7e0d5f-8aa1-4d4e-b372-277c9cca2975",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=20ea298e-21bc-472d-9fcc-8ef8144e06d9",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=78bfcec5-326b-4f30-b1a1-eb7c7dccebb1"
+        ],
+        "institutionIds": [
+          "fba724ff-a3a0-4e37-9bea-d6da25b2c42a"
+        ]
+      }
+    },
+    {
+      "id": "uqar",
+      "code": "UQAR",
+      "sector": "universitaire",
+      "shortName": "UQAR",
+      "fullName": "Université du Québec à Rimouski",
+      "nickname": "Nordet",
+      "aliases": [
+        "UQAR",
+        "Université du Québec à Rimouski",
+        "Nordet"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "natation"
+      ],
+      "rseqTeamIds": [
+        "c0ce3dc9-b80d-41bc-92be-75e922d14f79",
+        "3c7859e7-8051-42a9-8f7f-8a322ced92db",
+        "b4add6fc-e2b9-467a-8302-0d9e0e182ec3",
+        "baca51a1-496a-4979-8e90-6c2bb631f46d"
+      ],
+      "institutionName": "Université du Québec à Rimouski",
+      "institutionId": "uqar",
+      "nicknameBySex": {},
+      "nicknameSexScope": {},
+      "identityVerification": {
+        "verifiedOn": "2026-11-07",
+        "status": "primary-source-identity-and-competition-name",
+        "sources": [
+          "https://www.uqar.ca/services/services-a-la-communaute-universitaire/le-nordet/",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03320c93-fabd-4321-873a-0f99425b3715",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=20ea298e-21bc-472d-9fcc-8ef8144e06d9",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80",
+          "https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+        ],
+        "institutionIds": [
+          "cb477817-eef4-4fdf-83e0-d71316b5bf44"
         ]
       }
     }
