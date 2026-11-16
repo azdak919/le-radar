@@ -1,22 +1,22 @@
 {
-  "updated": "2026-11-16T18:09:14.254Z",
+  "updated": "2026-11-16T18:38:28.727Z",
   "total": 188,
   "pool": 50,
-  "incomplete": 28,
+  "incomplete": 27,
   "withLeadExcerpt": 143,
-  "candidates": 28,
-  "enriched": 12,
-  "failed": 0,
+  "candidates": 27,
+  "enriched": 0,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
-      "title": "AFC Toronto are Diana B. Matheson Cup champions",
-      "link": "https://thelinknewspaper.ca/article/16568",
+      "title": "I’m just saying: Have some faith in younger generations",
+      "link": "https://thelinknewspaper.ca/article/16569",
       "ok": true,
       "score": 96,
-      "chars": 677,
-      "sample": "AFC Toronto defeated the Montreal Roses in the Northern Super League (NSL) final, winning the Diana ",
-      "changed": true
+      "chars": 343,
+      "sample": "Everyone should be respected and valued, regardless of the generation they belong to. Someone’s valu",
+      "changed": false
     },
     {
       "title": "Stingers 55, Martlets 54: Concordia takes it at the final buzzer",
@@ -25,7 +25,25 @@
       "score": 96,
       "chars": 207,
       "sample": "After suffering a 17-point loss to Bishop’s University on Nov. 7, the Concordia University Stingers ",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Concordia 68, McGill 44: the Stingers dominate in home opener",
+      "link": "https://thelinknewspaper.ca/article/16566",
+      "ok": true,
+      "score": 96,
+      "chars": 193,
+      "sample": "Coming off a nail-biting victory against Bishop’s University on Nov. 7, the Concordia University Sti",
+      "changed": false
+    },
+    {
+      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
+      "ok": true,
+      "score": 96,
+      "chars": 1016,
+      "sample": "À l’issue du Grand Prix du Mexique, Kimi Antonelli a été couronné champion du monde de Formule 1 (F1",
+      "changed": false
     },
     {
       "title": "Les Valkyries de Golden State, reines de la WNBA",
@@ -34,7 +52,7 @@
       "score": 100,
       "chars": 942,
       "sample": "Le propriétaire des Valkyries de Golden State, Joe Lacob, se donnait l’objectif de rafler au moins u",
-      "changed": true
+      "changed": false
     },
     {
       "title": "« Soutenons le journalisme » : Sherbrooke accueille le Congrès annuel de la FPJQ",
@@ -43,7 +61,7 @@
       "score": 100,
       "chars": 997,
       "sample": "Du 6 au 8 novembre, des journalistes venus de partout dans la province se réunissaient à Sherbrooke ",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Mark Carney dévoile ses ambitions économiques",
@@ -52,34 +70,16 @@
       "score": 100,
       "chars": 314,
       "sample": "Le 5 novembre dernier, François-Philippe Champagne, ministre des Finances du Canada, a déposé le plu",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
-      "ok": true,
-      "score": 96,
-      "chars": 337,
-      "sample": "À la suite de différentes difficultés, notamment la pandémie de Covid-19, le tournoi, qui avait init",
-      "changed": true
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-16/",
+      "title": "Tribunal unifié de la famille : une réforme qui soulève des questions",
+      "link": "https://lecollectif.ca/societe/tribunal-unifie-de-la-famille-une-reforme-qui-souleve-des-questions/",
       "ok": true,
       "score": 100,
-      "chars": 308,
-      "sample": "Le Comité judiciaire du Conseil privé, l’instance judiciaire la plus haute de Trinité-et-Tobago, a m",
-      "changed": true
-    },
-    {
-      "title": "Les jeunes cyniques ? Plutôt idéalistes !",
-      "link": "https://quartierlibre.ca/les-jeunes-cyniques/",
-      "ok": true,
-      "score": 100,
-      "chars": 996,
-      "sample": "Face à la crise climatique, au coût de la vie et à l’accès difficile à la propriété, certain·e·s jeu",
-      "changed": true
+      "chars": 259,
+      "sample": "Le Tribunal unifié de la famille (TUF) est entré en fonction le 30 juin 2025. Il vise à simplifier l",
+      "changed": false
     }
   ]
 }
