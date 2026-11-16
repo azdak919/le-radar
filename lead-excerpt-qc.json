@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-16T22:08:18.702Z",
+  "updated": "2026-11-16T22:38:37.068Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 32,
+  "incomplete": 31,
   "withLeadExcerpt": 145,
-  "candidates": 32,
-  "enriched": 3,
-  "failed": 0,
+  "candidates": 31,
+  "enriched": 4,
+  "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -46,21 +37,39 @@
       "changed": false
     },
     {
-      "title": "Une chercheuse du Saguenay récompensée pour son excellence en médecine familiale",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/une-chercheuse-du-saguenay-recompensee-pour-son-excellence-en-medecine-familiale/?utm_source=rss&utm_medium=rss&utm_campaign=une-chercheuse-du-saguenay-recompensee-pour-son-excellence-en-medecine-familiale",
+      "title": "Bring Back The Gait",
+      "link": "https://thebucampus.ca/2026/11/16/bring-back-the-gait/",
       "ok": true,
-      "score": 100,
-      "chars": 878,
-      "sample": "Marie-Eve Poitras, infirmière, professeure agrégée à l’Université de Sherbrooke et chercheuse au Cen",
+      "score": 96,
+      "chars": 985,
+      "sample": "When I started at Bishop’s, there was only one weekly occurrence that never changed: spending our ni",
       "changed": true
     },
     {
-      "title": "La génération Z et le retour des médias physiques",
-      "link": "https://quartierlibre.ca/la-generation-z-le-retour-des-medias-physiques/",
+      "title": "Halloweekend: The Perfect End to Spooky Season at BU",
+      "link": "https://thebucampus.ca/2026/11/16/halloweekend-the-perfect-end-to-spooky-season-at-bu/",
+      "ok": true,
+      "score": 96,
+      "chars": 628,
+      "sample": "Now that everyone has had the opportunity to gather themselves and get back into the groove after Ha",
+      "changed": true
+    },
+    {
+      "title": "Grammys 2027 : vent de folie québécois et triomphe féminin",
+      "link": "https://lapige.atmjonquiere.com/2026/11/16/grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin/?utm_source=rss&utm_medium=rss&utm_campaign=grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin",
       "ok": true,
       "score": 100,
-      "chars": 747,
-      "sample": "La génération Z semble s’intéresser de plus en plus aux technologies des dernières décennies. Les ph",
+      "chars": 212,
+      "sample": "Taylor Swift obtient sa 5e nomination consécutive dans la catégorie Album de l’année avec The Life o",
+      "changed": true
+    },
+    {
+      "title": "Montrealers protest Bill C-39",
+      "link": "https://thelinknewspaper.ca/article/16570",
+      "ok": true,
+      "score": 100,
+      "chars": 161,
+      "sample": "Montreal residents gathered outside Industry Minister Mélanie Joly’s constituency office on Nov. 12 ",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 192,
       "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
-      "changed": false
-    },
-    {
-      "title": "I’m just saying: Have some faith in younger generations",
-      "link": "https://thelinknewspaper.ca/article/16569",
-      "ok": true,
-      "score": 96,
-      "chars": 343,
-      "sample": "Everyone should be respected and valued, regardless of the generation they belong to. Someone’s valu",
       "changed": false
     }
   ]

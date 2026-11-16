@@ -1,16 +1,32 @@
 {
-  "updated": "2026-11-16T22:07:24.017Z",
+  "updated": "2026-11-16T22:37:39.326Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 14,
+  "mismatches": 16,
   "ok": true,
   "samples": [
     {
-      "title": "La génération Z et le retour des médias physiques",
-      "link": "https://quartierlibre.ca/la-generation-z-le-retour-des-medias-physiques/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Simone Gingras",
+      "title": "Bring Back The Gait",
+      "link": "https://thebucampus.ca/2026/11/16/bring-back-the-gait/",
+      "source": "The Campus",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Arianna Koutrias",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Halloweekend: The Perfect End to Spooky Season at BU",
+      "link": "https://thebucampus.ca/2026/11/16/halloweekend-the-perfect-end-to-spooky-season-at-bu/",
+      "source": "The Campus",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Saskia Yacoubi-Sluis",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Montrealers protest Bill C-39",
+      "link": "https://thelinknewspaper.ca/article/16570",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Rahul Balasundaram",
       "reason": "page-byline"
     },
     {
@@ -118,5 +134,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 14
+  "fixed": 16
 }
