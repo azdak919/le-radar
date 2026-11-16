@@ -1,23 +1,30 @@
 {
-  "updated": "2026-11-16T17:10:51.165Z",
+  "updated": "2026-11-16T17:40:01.486Z",
   "total": 188,
-  "withImage": 171,
-  "withCredit": 171,
+  "withImage": 170,
+  "withCredit": 170,
   "cited": 118,
-  "pending": 31,
+  "pending": 30,
   "missingHero": 0,
   "ok": false,
   "checked": 43,
-  "updatedCount": 2,
-  "citedNew": 5,
-  "fallbackNew": 38,
+  "updatedCount": 3,
+  "citedNew": 6,
+  "fallbackNew": 37,
   "samples": [
     {
-      "title": "Élections : qu’en pense la communauté universitaire ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Guillaume Villeneuve",
+      "title": "Concordia 68, McGill 44: the Stingers dominate in home opener",
+      "source": "The Link",
+      "credit": "Photo: Santiago Sánchez Arbouin",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "source": "Le Délit",
+      "credit": "Photo : Bastien Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
