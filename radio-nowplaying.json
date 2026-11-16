@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T10:06:38.135Z",
+  "updatedAt": "2026-11-16T11:31:59.695Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T10:06:00.562Z"
+      "checkedAt": "2026-11-16T11:31:09.760Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "05:30",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Le terrain sportif",
         "source": "schedule",
         "start": "05:30",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-terrain-sportif"
       },
+      "next": {
+        "title": "Yallah! Lâcher prise avec Rhabibiii",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T10:06:14.534Z"
+      "checkedAt": "2026-11-16T11:31:23.863Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T10:06:16.936Z"
+      "checkedAt": "2026-11-16T11:31:26.795Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Experiments",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
+      "next": {
+        "title": "Trawling the Megahertz",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Experiments",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T10:06:18.512Z"
+      "checkedAt": "2026-11-16T11:31:39.102Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T10:06:19.971Z"
+      "checkedAt": "2026-11-16T11:31:40.108Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-16T10:06:37.784Z"
+      "checkedAt": "2026-11-16T11:31:59.345Z"
     }
   }
 }
