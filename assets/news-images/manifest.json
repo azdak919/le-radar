@@ -1666,15 +1666,6 @@
       "via": "origin",
       "nameKey": "05_ops_i_m_just_saying__generations_lola_mccarthy.jpeg"
     },
-    "c57a8c4869c18c73": {
-      "local": "assets/news-images/c57a8c4869c18c73.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/della-harris.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 283041,
-      "updatedAt": "2026-11-16T19:45:06.175Z",
-      "via": "disk",
-      "nameKey": "della-harris.png"
-    },
     "b7e1a314fc0f47c4": {
       "local": "assets/news-images/b7e1a314fc0f47c4.jpg",
       "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/Caricature-Passation-CAQ-vers-PC.png.png",
@@ -1684,9 +1675,18 @@
       "updatedAt": "2026-11-16T19:45:08.062Z",
       "via": "resize-proxy",
       "nameKey": "caricature-passation-caq-vers-pc.png.png"
+    },
+    "9399e5062e1c9deb": {
+      "local": "assets/news-images/9399e5062e1c9deb.jpg",
+      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png",
+      "host": "www.delitfrancais.com",
+      "bytes": 84631,
+      "updatedAt": "2026-11-16T20:02:50.720Z",
+      "via": "disk",
+      "nameKey": "lacrymobastien-1.png"
     }
   },
-  "updatedAt": "2026-11-16T19:45:08.066Z",
+  "updatedAt": "2026-11-16T20:02:50.733Z",
   "count": 169,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",

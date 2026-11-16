@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-16T19:43:46.594Z",
+  "updated": "2026-11-16T20:01:03.433Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 33,
+  "incomplete": 32,
   "withLeadExcerpt": 145,
-  "candidates": 33,
-  "enriched": 3,
-  "failed": 0,
+  "candidates": 32,
+  "enriched": 1,
+  "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -37,12 +28,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/les-lacrymogenes-causeraient-plus-que-des-larmes/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "chars": 528,
+      "sample": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Fémini",
       "changed": true
     },
     {
@@ -52,7 +43,7 @@
       "score": 100,
       "chars": 192,
       "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
-      "changed": true
+      "changed": false
     },
     {
       "title": "I’m just saying: Have some faith in younger generations",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 193,
       "sample": "Coming off a nail-biting victory against Bishop’s University on Nov. 7, the Concordia University Sti",
+      "changed": false
+    },
+    {
+      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
+      "ok": true,
+      "score": 96,
+      "chars": 1016,
+      "sample": "À l’issue du Grand Prix du Mexique, Kimi Antonelli a été couronné champion du monde de Formule 1 (F1",
       "changed": false
     }
   ]
