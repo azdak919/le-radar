@@ -3,17 +3,17 @@
 Ce fichier suit l'état des trois canaux de diffusion du Radar. À mettre à jour à chaque
 déploiement notable, changement de cache du service worker ou étiquette Android.
 
-_Dernière mise à jour : 9 novembre 2026._
+_Dernière mise à jour : 16 novembre 2026._
 
 ## 1. Web (GitHub Pages, le-radar.ca)
 
 | Élément | Valeur |
 |---|---|
-| Dernier commit `main` déployé | `199cf6cbd` — mise à jour automatique des grilles radio et des sources, 9 nov. 2026, 9 h 15 (HNE) |
-| Dernier changement de code déployé | `13ee37671` — point focal conservé quand l'image d'une fiche est un miroir local, #368, 9 nov. 2026, 0 h 01 (HNE) |
-| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, sur `199cf6cbd`) |
-| Date du déploiement | 9 novembre 2026, 9 h 19 (HNE) |
-| le-radar.ca | ✅ HTTP 200 (vérifié le 9 nov. 2026, 9 h 46 HNE) |
+| Dernier commit `main` déployé | `d30006994` — mise à jour automatique du fil, des extraits, des images, des crédits photo, du RSS et des réseaux, 16 nov. 2026, 8 h 42 (HNE) |
+| Dernier changement de code déployé | `ba76890c5` — ne plus vider le fil quand la lib de fraîcheur manque, #423, 14 nov. 2026, 1 h 16 (HNE) |
+| Déploiement GitHub Pages | ✅ réussi (`pages-deploy.yml`, déploiement par artefact, sur `d30006994`) |
+| Date du déploiement | 16 novembre 2026, 8 h 45 (HNE) |
+| le-radar.ca | ✅ HTTP 200 (vérifié le 16 nov. 2026, 9 h 27 HNE) |
 
 Le site se déploie automatiquement à chaque poussée sur `main`, par artefact depuis le 26 oct.
 (21 h 43 HAE, `41dc6e9bf`; retour arrière : `build_type=legacy`). Vérifier avec
@@ -23,13 +23,29 @@ Le site se déploie automatiquement à chaque poussée sur `main`, par artefact 
 
 | Service worker | Cache actuel en ligne |
 |---|---|
-| `sw.js` (site) | `radar-shell-v1013` (+ `radar-offline-v22`) — introduit par `4d0c95dd2` (8 nov., 19 h 56 HNE) |
-| `sports/sw.js` (Sports) | `sports-shell-v387` — introduit par `4d0c95dd2` |
+| `sw.js` (site) | `radar-shell-v1030` (+ `radar-offline-v22`) — introduit par `ba76890c5` (14 nov., 1 h 16 HNE) |
+| `sports/sw.js` (Sports) | `sports-shell-v408` — introduit par `ba76890c5` |
 
 Le `sw.js` et le `sports/sw.js` servis en ligne correspondent à ceux de `main` (pas de version périmée).
 
 ### Historique récent des correctifs PWA
 
+- 2026-11-14 — `ba76890c5`, `1206abf34` : le fil reste visible si la lib de
+  fraîcheur est absente du cache (#423) (v1030 / v408).
+- 2026-11-13 — `8b806d161`, `7ab59b7d3` : polices en réseau d'abord
+  (auto-réparation), Inter et Source Serif 4 auto-hébergées ; une police du
+  studio qui ne répond pas n'empêche plus l'aperçu (#421) (v1029 / v407).
+- 2026-11-13 — `247270482`, `88f476c96` : sigles officiels, régates en
+  français et émoji de voile ⛵ sur La une (#419) (sports-shell-v406).
+- 2026-11-13 — `aacfbd42f` : bump du shell après le chrome d'impression
+  (v1028 / v405).
+- 2026-11-13 — `9f761c81d`, `58f3af6e4` : défilement des cartes sport,
+  aller-retour sur le titre et boucle sur la ligne du bas (#404, #408)
+  (v1027 / v404).
+- 2026-11-11 — `ee4ebf066` : ne plus afficher le tableau Sports depuis un
+  cache périmé (#400).
+- 2026-11-11 — `60d47b2b7`, `2b776b8d8` : tableau fermé au chargement ; dans
+  la PWA et l'APK, le lien Sports reste dans l'app (#395).
 - 2026-11-08 — `4d0c95dd2`, `0fb0c7847` : bandeau sportif, autres cartes
   conservées et directs prioritaires (#366) (v1013 / v387).
 - 2026-11-07 — `6d4984312` : historique sportif complet et liens vers les
@@ -70,17 +86,29 @@ Le `sw.js` et le `sports/sw.js` servis en ligne correspondent à ceux de `main` 
 | `android-v1.2.4` | 2026-10-25 | ✅ publiée (recette MR 54228 du 2026-10-26, saveur `fdroid` ; vue sur f-droid.org le 2026-11-02, après le 29 oct.) |
 | `android-v1.2.5` | 2026-11-01 (9 h 54 HNE, `82c39961e`) | ✅ publiée (recette `ef7a9107` du 2026-11-02, 1 h 33 HNE ; APK sur f-droid.org le 2026-11-04) |
 
-Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-11-09) :
+Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-11-16) :
 **1.2.5 (versionCode 10)** (suggérée ; 1.2.4 / 9 et 1.2.3 / 8 encore listées). Recette fdroiddata : CurrentVersion **1.2.5 (10)**. `main` est à **1.2.5 (versionCode 10)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
 
-### Changements web pas encore dans l'APK (après `android-v1.2.5`)
+### Changements pas encore dans l'APK (après `android-v1.2.5`)
 
-Aucun changement dans `mobile/` ni `android/` depuis l'étiquette. Côté site seulement :
+Déjà dans `mobile/` depuis l'étiquette (entreront dans la prochaine version Android) :
 
+- `60d47b2b7` — dans l'APK, le trophée, la section et les puces ouvrent l'onglet `#/sports` plutôt que le site (#395).
+- `934e31d19` — déballage complet du CDATA dans les extraits, filet partout (#372).
+
+Côté site seulement :
+
+- `ba76890c5` — le fil reste visible si la lib de fraîcheur est absente (#423).
+- `8b806d161` — polices en réseau d'abord, Inter et Source Serif 4 auto-hébergées (#421).
+- `247270482` — sigles officiels, régates en français et émoji de voile ⛵ (#419).
+- `58f3af6e4`, `9f761c81d` — défilement des cartes sport (#408, #404).
+- `ee4ebf066` — ne plus afficher le tableau Sports depuis un cache périmé (#400).
+- `2b776b8d8`, `7bd822e1e` — tableau fermé au chargement ; un filtre n'ouvre que les sections peuplées (#395).
+- `fa277eeb4` — portraits de The Link conservés, barre des sources dégagée (#397).
 - `13ee37671` — point focal conservé quand l'image d'une fiche est un miroir local (#368).
 - `c0e7f0deb` — couvertures portrait déclarées par la source, recadrables, point focal haut (#367).
 - `0fb0c7847`, `4d0c95dd2` — bandeau sportif : autres cartes conservées, directs
@@ -100,7 +128,7 @@ Aucun changement dans `mobile/` ni `android/` depuis l'étiquette. Côté site s
 - `50620a653`, `300ee47e0` — pied de page v2 et icônes des réseaux.
 - `94e27f3ef` — fiches article statiques `/article/`.
 - `ba6dd537d` — l'extrait ne reprend plus le titre d'une carte voisine (#279).
-- Kit média, affiches et publications sociales (Bluesky, Tumblr, Buffer) : hors application.
+- Kit média, studio `/affiches/` et publications sociales (Bluesky, Tumblr, Buffer, Mastodon) : hors application.
 
 ### Contenu de `android-v1.2.5` (versionCode 10)
 
