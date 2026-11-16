@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-16T03:07:20.566Z",
+  "updated": "2026-11-16T05:07:11.860Z",
   "total": 188,
   "pool": 54,
   "incomplete": 27,
   "withLeadExcerpt": 142,
   "candidates": 27,
   "enriched": 0,
-  "failed": 0,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -34,15 +34,6 @@
       "score": 100,
       "chars": 158,
       "sample": "Mike Morrice has been elected as the new leader of the Green Party of Canada. This should be no surp",
-      "changed": false
-    },
-    {
-      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
-      "ok": true,
-      "score": 96,
-      "chars": 337,
-      "sample": "À la suite de différentes difficultés, notamment la pandémie de Covid-19, le tournoi, qui avait init",
       "changed": false
     },
     {
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 1044,
       "sample": "Once a week, I sit on a wooden bench to feel a little less lonely. No matter if the sun is setting o",
+      "changed": false
+    },
+    {
+      "title": "Do we ever outgrow the stories of our childhood? A look at how The Little Prince, Howl’s Moving Castle, and Fantastic Mr. Fox change as we do.",
+      "link": "https://theplantnews.com/2026/11/14/the-stories-that-grow-with-us/",
+      "ok": true,
+      "score": 96,
+      "chars": 969,
+      "sample": "Once upon a time, a child drew a boa constrictor swallowing an elephant whole. A grown-up, peering o",
       "changed": false
     }
   ]
