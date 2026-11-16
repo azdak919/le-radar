@@ -1,22 +1,22 @@
 {
-  "updated": "2026-11-16T01:37:47.540Z",
+  "updated": "2026-11-16T03:07:20.566Z",
   "total": 188,
   "pool": 54,
-  "incomplete": 28,
+  "incomplete": 27,
   "withLeadExcerpt": 142,
-  "candidates": 28,
-  "enriched": 2,
+  "candidates": 27,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
     },
     {
       "title": "Il était une fois elles n’ont pas obéi",
@@ -28,22 +28,13 @@
       "changed": false
     },
     {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
-    {
       "title": "Mike Morrice elected Green Party of Canada leader",
       "link": "https://theconcordian.com/2026/11/mike-morrice-elected-green-leader/",
       "ok": true,
       "score": 100,
       "chars": 158,
       "sample": "Mike Morrice has been elected as the new leader of the Green Party of Canada. This should be no surp",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 1039,
       "sample": "Depuis le 18 septembre 2026, un sujet d’actualité prime sur nos médias et nos réseaux sociaux. Le mo",
+      "changed": false
+    },
+    {
+      "title": "Is Fandom the New Religion? How Fans Found Community",
+      "link": "https://theplantnews.com/2026/11/14/at-the-altar-of-ao3/",
+      "ok": true,
+      "score": 96,
+      "chars": 1044,
+      "sample": "Once a week, I sit on a wooden bench to feel a little less lonely. No matter if the sun is setting o",
       "changed": false
     }
   ]
