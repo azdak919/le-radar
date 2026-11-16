@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-16T07:18:52.597Z",
+  "updated": "2026-11-16T08:07:21.622Z",
   "total": 188,
-  "pool": 54,
-  "incomplete": 29,
-  "withLeadExcerpt": 142,
-  "candidates": 29,
-  "enriched": 2,
+  "pool": 58,
+  "incomplete": 35,
+  "withLeadExcerpt": 144,
+  "candidates": 35,
+  "enriched": 10,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Laisser couler l’eau",
-      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
-      "ok": true,
-      "score": 100,
-      "chars": 566,
-      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
-      "changed": true
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -43,43 +34,52 @@
       "score": 100,
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Bruno Pelletier et l’OSS réunis pour un grand concert de Noël",
+      "link": "https://lecollectif.ca/culture/bruno-pelletier-et-loss-reunis-pour-un-grand-concert-de-noel/",
+      "ok": true,
+      "score": 100,
+      "chars": 814,
+      "sample": "L’Orchestre symphonique de Sherbrooke (OSS) invite la population estrienne à célébrer le début du te",
       "changed": true
     },
     {
-      "title": "Mike Morrice elected Green Party of Canada leader",
-      "link": "https://theconcordian.com/2026/11/mike-morrice-elected-green-leader/",
+      "title": "La musique à l’ère des réseaux sociaux",
+      "link": "https://lecollectif.ca/culture/la-musique-a-lere-des-reseaux-sociaux/",
       "ok": true,
       "score": 100,
-      "chars": 158,
-      "sample": "Mike Morrice has been elected as the new leader of the Green Party of Canada. This should be no surp",
-      "changed": false
+      "chars": 381,
+      "sample": "Une chanson entendue dans une vidéo TikTok, un artiste découvert dans une publication Instagram ou u",
+      "changed": true
     },
     {
-      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
+      "title": "L’IA au cœur d’une entreprise de création montréalaise",
+      "link": "https://lecollectif.ca/edition-papier/lia-au-coeur-dune-entreprise-de-creation-montrealaise/",
       "ok": true,
-      "score": 96,
-      "chars": 337,
-      "sample": "À la suite de différentes difficultés, notamment la pandémie de Covid-19, le tournoi, qui avait init",
-      "changed": false
+      "score": 100,
+      "chars": 576,
+      "sample": "L’intelligence artificielle (IA) s’impose dans de nombreux domaines, qu’ils soient universitaires, c",
+      "changed": true
     },
     {
-      "title": "Noise, Silence, and Your Health: Finding a Healthy Balance",
-      "link": "https://theplantnews.com/2026/11/14/on-our-relationship-with-sound/",
+      "title": "Les dessous de la grève du 10 novembre",
+      "link": "https://lecollectif.ca/campus/les-dessous-de-la-greve-du-10-novembre/",
       "ok": true,
-      "score": 96,
-      "chars": 470,
-      "sample": "Take a second to listen to your surroundings. What can you hear? Perhaps it is the loud hum of the m",
-      "changed": false
+      "score": 100,
+      "chars": 691,
+      "sample": "Derrière le rassemblement étudiant pour la rémunération des stages qui a animé le Campus principal d",
+      "changed": true
     },
     {
-      "title": "Crochet Hooks and Hyperbolic Geometry: Breaking Euclid’s Rules",
-      "link": "https://theplantnews.com/2026/11/14/math-now-prof-taiminas-crochet-lesson/",
+      "title": "Une enquête sur la santé mentale étudiante en cours à l’UdeS",
+      "link": "https://lecollectif.ca/campus/une-enquete-sur-la-sante-mentale-etudiante-en-cours-a-ludes/",
       "ok": true,
-      "score": 96,
-      "chars": 969,
-      "sample": "Do you remember your high school teacher telling you that the angles in a triangle always sum to 180",
-      "changed": false
+      "score": 100,
+      "chars": 801,
+      "sample": "La communauté étudiante de l’Université de Sherbrooke (UdeS) est invitée à répondre à l’Enquête nati",
+      "changed": true
     }
   ]
 }
