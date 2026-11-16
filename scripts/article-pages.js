@@ -132,6 +132,15 @@ function merge(store, items, now = new Date().toISOString()) {
       if (k === 'credit' && imageChanged) continue;
       if (!r[k] && old[k]) keep[k] = old[k];
     }
+    // Le point focal appartient à l'image conservée. Un flux du jour sans
+    // photo (sonde qui a vidé l'URL) ne doit pas l'effacer de la fiche
+    // pendant qu'on garde l'ancienne image. Karmina, 16 nov. 2026.
+    if (old && keep.image && keep.image === old.image && !r.image) {
+      if (!Number.isFinite(r.imageCropFocalY) && Number.isFinite(old.imageCropFocalY)) {
+        keep.imageCropFocalY = old.imageCropFocalY;
+      }
+      if (r.imagePortraitCrop == null && old.imagePortraitCrop) keep.imagePortraitCrop = old.imagePortraitCrop;
+    }
     store.articles[r.id] = { ...r, ...keep, firstSeen: (old && old.firstSeen) || now };
   }
   return added;

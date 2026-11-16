@@ -120,6 +120,7 @@ assert.doesNotMatch(store.articles[sid].credit || '', /Bélanger/, 'pas de créd
 assert.equal(store.articles[sid].imageCropFocalY, 0.2);
 F.merge(store, [{ ...item, image: '', imageCropSafe: undefined, date: '2026-11-07T12:00:00Z' }]);
 assert.equal(store.articles[sid].image, cover, 'image vide du jour : on garde la précédente');
+assert.equal(store.articles[sid].imageCropFocalY, 0.2, 'image conservée : le point focal reste');
 
 // 7) Garde navigateur : couverture approuvée acceptée en une, pas un portrait quelconque.
 const client = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
