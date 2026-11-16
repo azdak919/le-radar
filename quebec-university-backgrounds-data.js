@@ -1819,5 +1819,18 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     campus: true,
     season: "hiver",
     tags: ["mat", "campus"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Concordia_2003-07-09_campus_shuttle_Hall_bldg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "One of Many Tims",
+    link: "https://commons.wikimedia.org/wiki/File:Concordia%202003-07-09%20campus%20shuttle%20Hall%20bldg.jpg",
+    license: "CC BY 4.0",
+    title: "Concordia 2003-07-09 campus shuttle Hall bldg",
+    width: 1200,
+    height: 1600,
+    place: "Concordia",
+    campus: true,
+    season: "ete",
+    tags: ["mat", "campus"],
   }
 ];

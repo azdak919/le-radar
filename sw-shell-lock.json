@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v1030",
+    "cache": "radar-shell-v1031",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -16,13 +16,13 @@
       "feeds-page.js": "cae8c6369d6adc07",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "f5a2475f683ef51a",
-      "photo-bank-data.js": "40b6d0a8f49e6184",
+      "photo-bank-data.js": "5aef11c95de4c388",
       "player-sync.js": "36e84f1afaff7fcb",
-      "quebec-backgrounds-data.js": "a6eed9074de278b3",
+      "quebec-backgrounds-data.js": "2b1dc83aa013ed78",
       "quebec-backgrounds.js": "07c1b733f2318ec2",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "88571ba7993b82c0",
-      "quebec-university-backgrounds-data.js": "535ca07c6f53e62e",
+      "quebec-university-backgrounds-data.js": "2b9d0e9085902ac0",
       "radar-lifecycle.js": "434cb5cea8616dfa",
       "radar-news.js": "36a06a8807fa5faa",
       "radar-sports-cta.js": "e8fa086333b0329f",
@@ -56,12 +56,12 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v178",
+    "cache": "pomo-shell-v179",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "9653f55cb28d8936",
-      "photo-bank-data.js": "40b6d0a8f49e6184",
+      "photo-bank-data.js": "5aef11c95de4c388",
       "pomo/js/app.js": "aee4d88f8d5943d8",
       "pomo/js/backgrounds-data.js": "2d0226d859a86c4a",
       "pomo/js/backgrounds.js": "583851988a59e754",
@@ -90,11 +90,11 @@
     }
   },
   "solitaire/sw.js": {
-    "cache": "solitaire-shell-v109",
+    "cache": "solitaire-shell-v110",
     "assets": {
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "9653f55cb28d8936",
-      "photo-bank-data.js": "40b6d0a8f49e6184",
+      "photo-bank-data.js": "5aef11c95de4c388",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "solitaire/js/backgrounds-data.js": "df914f462e7db906",
       "solitaire/js/solitaire-rules.js": "c19bd4f9a851fda6",

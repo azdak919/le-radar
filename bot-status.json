@@ -1,27 +1,27 @@
 {
-  "updated": "2026-11-09T17:00:25.307Z",
+  "updated": "2026-11-16T16:24:45.476Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 645930
+      "ms": 181992
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 51543
+      "ms": 53144
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 153416
+      "ms": 118468
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 93201
+      "ms": 107038
     }
   ],
   "summary": {
@@ -36,33 +36,33 @@
       "withExcerpt": 188,
       "authorQc": {
         "ok": true,
-        "mismatches": 17
+        "mismatches": 13
       },
       "leadImageQc": {
         "fullyCovered": 188,
-        "withPhoto": 172,
-        "withStock": 28,
-        "leadReadyPhotos": 155,
-        "pageScraped": 31,
+        "withPhoto": 173,
+        "withStock": 29,
+        "leadReadyPhotos": 162,
+        "pageScraped": 16,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": false,
-        "withCredit": 170,
-        "cited": 109,
-        "pending": 37,
+        "withCredit": 171,
+        "cited": 118,
+        "pending": 31,
         "missingHero": 0
       }
     },
     "backgrounds": {
       "masthead": {
-        "count": 119,
+        "count": 120,
         "maxBank": 200,
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
       },
       "universities": {
-        "count": 135,
+        "count": 136,
         "maxBank": 200,
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
@@ -79,7 +79,7 @@
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
       },
-      "count": 119,
+      "count": 120,
       "maxBank": 200,
       "lastSessionCleanup": "2026-09-01",
       "lastSessionId": "automne"
@@ -145,11 +145,6 @@
       "level": "info",
       "code": "lead_stock_gap",
       "message": "12+ articles sans photo vedette (banques libres consultées)"
-    },
-    {
-      "level": "info",
-      "code": "schedule_drift",
-      "message": "Hors programmation : chyz (+6 −2)"
     }
   ]
 }

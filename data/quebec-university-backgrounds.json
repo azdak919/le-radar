@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "universities",
-  "lastFaceDetect": "2026-11-09T17:09:36.686Z",
+  "lastFaceDetect": "2026-11-16T16:31:24.995Z",
   "maxBank": 200,
   "seasonInventory": {
     "floors": {
@@ -12,17 +12,17 @@
     },
     "counts": {
       "printemps": 10,
-      "ete": 23,
+      "ete": 24,
       "automne": 20,
       "hiver": 22,
       "untagged": 64
     },
     "gaps": [],
-    "updated": "2026-11-09T16:56:18.637Z"
+    "updated": "2026-11-16T16:20:59.926Z"
   },
   "lastSessionCleanup": "2026-09-01",
   "lastSessionId": "automne",
-  "updated": "2026-11-09T17:18:08.720Z",
+  "updated": "2026-11-16T16:37:50.105Z",
   "photos": [
     {
       "id": "186769a5aeb5",
@@ -3566,6 +3566,29 @@
       "sessionId": "automne",
       "bank": "universities",
       "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "ad12bf20e90b",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Concordia_2003-07-09_campus_shuttle_Hall_bldg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Concordia%202003-07-09%20campus%20shuttle%20Hall%20bldg.jpg",
+      "title": "Concordia 2003-07-09 campus shuttle Hall bldg",
+      "credit": "One of Many Tims",
+      "license": "CC BY 4.0",
+      "description": "Concordia bus 2 as inter-campus shuttle on De Maisonneuve Boulevard in front of the Hall Building.",
+      "categories": "Concordia University, Montreal|De Maisonneuve Boulevard, Montreal|Thomas Saf-T-Liner buses|Self-published work|Creative Commons Attribution 4.0 missing SDC copyright license|Creative Commons Attribution missing SDC copyright status|Pages with local camera coordinates and missing SDC coordinates|Self-published work missing SDC copyright license|2003 in Montreal|Files with coordinates missing SDC lo",
+      "width": 1200,
+      "height": 1600,
+      "aspect": 0.75,
+      "mime": "image/jpeg",
+      "addedAt": "2026-11-16T16:20:06.881Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "ete",
       "tags": [
         "mat",
         "campus"

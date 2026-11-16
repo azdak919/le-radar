@@ -1604,5 +1604,17 @@ const QUEBEC_BACKGROUNDS = [
     height: 6144,
     place: "Montréal",
     tags: ["mat"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/f/f0/Sciurus_carolinensis_%28gray_morph%29_on_a_rock%2C_Jardin_universitaire_Roger-Van_den_Hende%2C_Quebec_City.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Wilfredor",
+    link: "https://commons.wikimedia.org/wiki/File:Sciurus%20carolinensis%20(gray%20morph)%20on%20a%20rock%2C%20Jardin%20universitaire%20Roger-Van%20den%20Hende%2C%20Quebec%20City.jpg",
+    license: "CC0",
+    title: "Sciurus carolinensis (gray morph) on a rock, Jardin universitaire Roger-Van den Hende, Que",
+    width: 6294,
+    height: 4339,
+    place: "Université Laval",
+    season: "automne",
+    tags: ["mat"],
   }
 ];
