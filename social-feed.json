@@ -1,7 +1,36 @@
 {
-  "updated": "2026-11-16T12:39:59.625Z",
-  "count": 19,
+  "updated": "2026-11-16T13:12:38.014Z",
+  "count": 23,
   "items": [
+    {
+      "name": "Quartier Libre",
+      "institution": "Université de Montréal",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/quartierlibre.ca/",
+          "handle": "@quartierlibre.ca",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/QuartierLibre.ca",
+          "handle": "QuartierLibre.ca",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/quartierlibre",
+          "handle": "@quartierlibre",
+          "stats": "",
+          "label": "X"
+        }
+      ]
+    },
     {
       "name": "Montréal Campus",
       "institution": "UQAM",
@@ -90,38 +119,24 @@
       ]
     },
     {
-      "name": "The Link",
-      "institution": "Concordia University",
+      "name": "Zone Campus",
+      "institution": "Université du Québec à Trois-Rivières",
       "type": "universite",
       "kind": "journal",
       "networks": [
         {
           "type": "instagram",
-          "url": "https://www.instagram.com/linknewspaper/",
-          "handle": "@linknewspaper",
+          "url": "https://www.instagram.com/zonecampus/",
+          "handle": "@zonecampus",
           "stats": "",
           "label": "Instagram"
         },
         {
           "type": "facebook",
-          "url": "https://facebook.com/thelinknewspaper",
-          "handle": "thelinknewspaper",
+          "url": "https://www.facebook.com/zonecampus",
+          "handle": "zonecampus",
           "stats": "",
           "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/linknewspaper",
-          "handle": "@linknewspaper",
-          "stats": "",
-          "label": "X"
-        },
-        {
-          "type": "tiktok",
-          "url": "https://www.tiktok.com/@thelinknewspaper",
-          "handle": "@thelinknewspaper",
-          "stats": "",
-          "label": "TikTok"
         }
       ]
     },
@@ -148,6 +163,28 @@
       ]
     },
     {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "Exil",
       "institution": "Cégep du Vieux Montréal",
       "type": "cegep",
@@ -166,6 +203,28 @@
           "handle": "WordPresscom",
           "stats": "",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "La Pige",
+      "institution": "Cégep de Jonquière (ATM – journalisme)",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/2008",
+          "handle": "2008",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/@atmlapige",
+          "handle": "@atmlapige",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
@@ -290,6 +349,28 @@
           "handle": "WordPresscom",
           "stats": "",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "The Concordian",
+      "institution": "Concordia University",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/theconcordian",
+          "handle": "theconcordian",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/theconcordian",
+          "handle": "@theconcordian",
+          "stats": "Concordia University’s independent student-run newspaper since 1973.",
+          "label": "X"
         }
       ]
     },

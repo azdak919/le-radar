@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16T12:38:55.286Z",
+  "updated": "2026-11-16T13:11:16.653Z",
   "total": 188,
   "withImage": 172,
   "withCredit": 172,
@@ -7,11 +7,74 @@
   "pending": 30,
   "missingHero": 0,
   "ok": false,
-  "checked": 41,
-  "updatedCount": 1,
-  "citedNew": 4,
+  "checked": 50,
+  "updatedCount": 10,
+  "citedNew": 13,
   "fallbackNew": 37,
   "samples": [
+    {
+      "title": "Quand une banque fait tomber un président",
+      "source": "Le Collectif",
+      "credit": "Photo : DANIEL DUARTE / AFP via Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Retour sur le conseil municipal de Sherbrooke",
+      "source": "Le Collectif",
+      "credit": "Photo : page Facebook de la mairesse Marie-Claude Bibeau",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Tribunal unifié de la famille : une réforme qui soulève des questions",
+      "source": "Le Collectif",
+      "credit": "Photo : Unsplash",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Quand l’intelligence artificielle fait une erreur, qui est responsable?",
+      "source": "Le Collectif",
+      "credit": "Photo : Canva",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Bilan des élections et des votes des dernières semaines au Canada",
+      "source": "Le Collectif",
+      "credit": "Photo : Pixabay",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "D’importantes pertes d’emplois au Québec",
+      "source": "Le Collectif",
+      "credit": "Photo : Wladyslaw Sojka",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Vos bonnes nouvelles environnementales #43",
+      "source": "Le Collectif",
+      "credit": "Photo : Martyn Unsworth",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
     {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "source": "La Griffe",

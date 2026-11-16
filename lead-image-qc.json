@@ -1,54 +1,24 @@
 {
-  "updated": "2026-11-16T12:37:44.951Z",
+  "updated": "2026-11-16T13:09:17.661Z",
   "total": 188,
   "withPhoto": 174,
-  "withStock": 33,
+  "withStock": 28,
   "withCampusBank": 24,
   "fullyCovered": 188,
-  "leadReadyPhotos": 123,
-  "pageScraped": 13,
-  "photosRecovered": 12,
-  "imagesCleared": 1,
-  "stockSearches": 67,
-  "stockFound": 28,
-  "campusBankFound": 20,
+  "leadReadyPhotos": 160,
+  "pageScraped": 16,
+  "photosRecovered": 15,
+  "imagesCleared": 3,
+  "stockSearches": 28,
+  "stockFound": 27,
+  "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Apprendre à vivre en colocation",
-      "link": "https://lecollectif.ca/campus/apprendre-a-vivre-en-colocation/",
+      "title": "Quand une banque fait tomber un président",
+      "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/CAMPUS_Colocataires_SourceLocataire.png"
-    },
-    {
-      "title": "Les femmes en sciences : où en est-on?",
-      "link": "https://lecollectif.ca/edition-papier/les-femmes-en-sciences-ou-en-est-on/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/CAMPUS_femme-en-science-udes_Source-UdeS.jpg"
-    },
-    {
-      "title": "Des nouveautés au parc solaire de l’UdeS",
-      "link": "https://lecollectif.ca/campus/des-nouveautes-au-parc-solaire-de-ludes/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/CAMPUS_ParcSolaireUdeS_SourceUniversiteDeSherbrooke-1.png"
-    },
-    {
-      "title": "Une enquête sur la santé mentale étudiante en cours à l’UdeS",
-      "link": "https://lecollectif.ca/campus/une-enquete-sur-la-sante-mentale-etudiante-en-cours-a-ludes/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/CAMPUS_SanteMentaleEtudiante_SourceOSMEES.jpg"
-    },
-    {
-      "title": "La rage, faut-il s’en inquiéter ?",
-      "link": "https://lecollectif.ca/editorial/la-rage-faut-il-sen-inquieter/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/EDITO_RatonLaveurRage_CreditNabilomar.jpg"
-    },
-    {
-      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-18.jpeg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Quand-une-banque-fait-tomber-un-president_Getty-Images.jpg"
     },
     {
       "title": "Do we ever outgrow the stories of our childhood? A look at how The Little Prince, Howl’s Moving Castle, and Fantastic Mr. Fox change as we do.",
@@ -57,34 +27,64 @@
       "image": "https://theplantnews.com/wp-content/uploads/2026/11/image4.png"
     },
     {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-16/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png"
+      "title": "Prouve que tu existes",
+      "link": "https://www.delitfrancais.com/2026/11/11/prouve-que-tu-existes/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
-      "title": "Après le sport, apprendre à se redéfinir",
-      "link": "https://quartierlibre.ca/apres-le-sport-apprendre-a-se-redefinir/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/IMG_3930.jpeg"
+      "title": "Is Wearing Makeup Really a Choice?",
+      "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
-      "title": "Mal à l’épaule, mal au dos : et si c’était votre travail ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/mal-a-lepaule-mal-au-dos-et-si-cetait-votre-travail/?utm_source=rss&utm_medium=rss&utm_campaign=mal-a-lepaule-mal-au-dos-et-si-cetait-votre-travail",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/illustration_sst_sans_personne.png"
+      "title": "When Neutrality Becomes Silence: McGill’s Responsibility to Protect Political Dissent",
+      "link": "https://www.mcgilldaily.com/2026/11/when-neutrality-becomes-silence-mcgills-responsibility-to-protect-political-dissent/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "La peur de vieillir de plus en plus répandue",
-      "link": "https://quartierlibre.ca/peur-de-vieillir/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/8_peur-de-vieillir.png"
+      "title": "Bishop’s Culture is Community",
+      "link": "https://thebucampus.ca/2026/10/27/bishops-culture-is-community/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/46/Bishopsu_lac1.jpg"
     },
     {
-      "title": "La guitare s’invite dans les résidences pour ainés de la région.",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/la-guitare-sinvite-dans-les-residences-pour-aines-de-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=la-guitare-sinvite-dans-les-residences-pour-aines-de-la-region",
-      "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/0E8A1017.jpg"
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Comment rester humain dans un monde artificiel?",
+      "link": "https://www.delitfrancais.com/2026/11/11/comment-rester-humain-dans-un-monde-artificiel/",
+      "reason": "no-stock-match",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/11/La-Ferme-ou-comment-nourrir-un-futur-intelligent.png"
+    },
+    {
+      "title": "CF Montréal et COP 31 : reportages radio du 9 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/10/cf-montreal-et-cop-31-reportages-radio-du-9-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=cf-montreal-et-cop-31-reportages-radio-du-9-novembre",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+    },
+    {
+      "title": "Goodbye October, Hello Movember!",
+      "link": "https://thebucampus.ca/2026/11/09/goodbye-october-hello-movember/",
+      "reason": "no-stock-match",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png"
+    },
+    {
+      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
+      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "reason": "no-stock-match",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
     }
   ]
 }

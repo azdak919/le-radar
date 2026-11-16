@@ -1,14 +1,23 @@
 {
-  "updated": "2026-11-16T12:37:05.004Z",
+  "updated": "2026-11-16T13:08:21.418Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 27,
+  "incomplete": 35,
   "withLeadExcerpt": 144,
-  "candidates": 27,
-  "enriched": 0,
-  "failed": 7,
+  "candidates": 35,
+  "enriched": 10,
+  "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Laisser couler l’eau",
+      "link": "https://www.delitfrancais.com/2026/11/04/laisser-couler-leau/",
+      "ok": true,
+      "score": 100,
+      "chars": 566,
+      "sample": "Comme débutent toutes les belles histoires, rendons-nous dans le merveilleux monde des égouts. Ces v",
+      "changed": true
+    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,58 +37,49 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": false
-    },
-    {
-      "title": "Noise, Silence, and Your Health: Finding a Healthy Balance",
-      "link": "https://theplantnews.com/2026/11/14/on-our-relationship-with-sound/",
-      "ok": true,
-      "score": 96,
-      "chars": 470,
-      "sample": "Take a second to listen to your surroundings. What can you hear? Perhaps it is the loud hum of the m",
-      "changed": false
-    },
-    {
-      "title": "Crochet Hooks and Hyperbolic Geometry: Breaking Euclid’s Rules",
-      "link": "https://theplantnews.com/2026/11/14/math-now-prof-taiminas-crochet-lesson/",
-      "ok": true,
-      "score": 96,
-      "chars": 969,
-      "sample": "Do you remember your high school teacher telling you that the angles in a triangle always sum to 180",
-      "changed": false
-    },
-    {
-      "title": "Mouvement lycéen 2026 : la violence du maintien de l’ordre",
-      "link": "https://theplantnews.com/2026/11/14/ode-a-la-jeunesse-revoltee/",
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
-      "chars": 1039,
-      "sample": "Depuis le 18 septembre 2026, un sujet d’actualité prime sur nos médias et nos réseaux sociaux. Le mo",
-      "changed": false
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": true
     },
     {
-      "title": "Is Fandom the New Religion? How Fans Found Community",
-      "link": "https://theplantnews.com/2026/11/14/at-the-altar-of-ao3/",
+      "title": "Quand une banque fait tomber un président",
+      "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
       "ok": true,
       "score": 96,
-      "chars": 1044,
-      "sample": "Once a week, I sit on a wooden bench to feel a little less lonely. No matter if the sun is setting o",
-      "changed": false
+      "chars": 494,
+      "sample": "Cette dernière semaine, le Paraguay a été secoué par une importante crise financière et politique. L",
+      "changed": true
     },
     {
-      "title": "Do we ever outgrow the stories of our childhood? A look at how The Little Prince, Howl’s Moving Castle, and Fantastic Mr. Fox change as we do.",
-      "link": "https://theplantnews.com/2026/11/14/the-stories-that-grow-with-us/",
+      "title": "Retour sur le conseil municipal de Sherbrooke",
+      "link": "https://lecollectif.ca/edition-papier/retour-sur-le-conseil-municipal-de-sherbrooke/",
       "ok": true,
-      "score": 96,
-      "chars": 969,
-      "sample": "Once upon a time, a child drew a boa constrictor swallowing an elephant whole. A grown-up, peering o",
-      "changed": false
+      "score": 100,
+      "chars": 776,
+      "sample": "Le 3 novembre dernier, le conseil municipal de Sherbrooke s’est réuni pour la première séance ordina",
+      "changed": true
+    },
+    {
+      "title": "Mark Carney dévoile ses ambitions économiques",
+      "link": "https://lecollectif.ca/societe/politique-canadienne/mark-carney-devoile-ses-ambitions-economiques/",
+      "ok": true,
+      "score": 100,
+      "chars": 314,
+      "sample": "Le 5 novembre dernier, François-Philippe Champagne, ministre des Finances du Canada, a déposé le plu",
+      "changed": true
+    },
+    {
+      "title": "Bilan des élections et des votes des dernières semaines au Canada",
+      "link": "https://lecollectif.ca/edition-papier/bilan-des-elections-et-des-votes-des-dernieres-semaines-au-canada/",
+      "ok": true,
+      "score": 100,
+      "chars": 914,
+      "sample": "Ce fut une longue campagne électorale de 39 jours au Québec cet automne. Avec cinq partis en lice, l",
+      "changed": true
     }
   ]
 }
