@@ -11,6 +11,16 @@ export function isAuthFailure(status, body) {
   return errs.some(e => /^(UNAUTHORIZED|UNAUTHENTICATED)$/i.test(e?.extensions?.code || ''));
 }
 
+/** Un post Buffer avec un id peut déjà être en échec (canal déconnecté, autorisation perdue). */
+export function assertBufferPostOk(post, action = 'createPost') {
+  if (!post?.id) throw new Error(`Buffer ${action} refusé : ${JSON.stringify(post)}`);
+  if (post.status === 'error') {
+    const msg = post.error?.message || 'statut error';
+    throw new Error(`Buffer ${action} en erreur : ${msg}`);
+  }
+  return post;
+}
+
 /** Canal Buffer d'un service (x, facebook, linkedin…) nommé `channelName` (sans @, insensible à la casse). */
 export const matchChannel = (x, service, channelName) => {
   const re = service === 'x' ? /twitter|^x$/i : new RegExp(`^${service}`, 'i');
@@ -90,10 +100,10 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       if (image) input.assets = [{ image: { url: image } }];
       if (metadata) input.metadata = metadata;
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
-        ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`, { i: input });
+        ... on PostActionSuccess { post { id dueAt status error { message } } } ... on MutationError { message } } }`, { i: input });
       const r = d?.createPost;
       if (!r?.post?.id) throw new Error(`Buffer createPost refusé : ${r?.message || JSON.stringify(r)}`);
-      return r.post;
+      return assertBufferPostOk(r.post);
     },
   };
 }
