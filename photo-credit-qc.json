@@ -1,21 +1,35 @@
 {
-  "updated": "2026-11-16T20:04:00.749Z",
+  "updated": "2026-11-16T21:10:30.185Z",
   "total": 188,
   "withImage": 170,
   "withCredit": 170,
-  "cited": 118,
-  "pending": 29,
+  "cited": 117,
+  "pending": 30,
   "missingHero": 0,
   "ok": false,
-  "checked": 42,
-  "updatedCount": 3,
-  "citedNew": 5,
-  "fallbackNew": 37,
+  "checked": 44,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 38,
   "samples": [
     {
-      "title": "Les lacrymogènes causeraient plus que des larmes ?",
+      "title": "Campagne de sensibilisation : Aiguise tes réflexes en soirée.",
+      "source": "La Pige",
+      "credit": "Photo : Gabriel Barrette",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le Québec s’unit afin de prévenir les violences conjugales",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
       "source": "Le Délit",
-      "credit": "Photo : Bastien Fournier",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -27,9 +41,23 @@
       "method": "figcaption-trailing-fr"
     },
     {
+      "title": "Le réseau à Vélo en roue libre auprès de la population",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "source": "La Griffe",
       "credit": "Photo : La Griffe",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La bière locale cherche sa place dans un marché saturé",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
       "cited": false,
       "method": null
     }
