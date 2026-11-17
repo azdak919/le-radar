@@ -25,7 +25,30 @@
     for (let i = 0; i < 40 && bgs.some((b) => ratio(c, b) < 4.6); i++) c = c.map((x) => Math.round(x + (to - x) * 0.08));
     return `rgb(${c.join(',')})`;
   }
-  // Kicker : média (couleur d’établissement) · sigle (UdeM, ULaval, Bishop’s). Texte du post inchangé (auteur · média).
+  // Même contraste AA, mais on garde la teinte (éviter un gris délavé sur le thème sombre).
+  const rgbToHsl = (r, g, b) => {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min, l = (max + min) / 2;
+    if (!d) return [0, 0, l];
+    const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    const h = max === r ? ((g - b) / d + (g < b ? 6 : 0)) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return [h / 6, s, l];
+  };
+  const hslToRgb = (h, s, l) => {
+    const f = (n) => { const k = (n + h * 12) % 12, a = s * Math.min(l, 1 - l); return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); };
+    return [f(0), f(8), f(4)];
+  };
+  function aaBrandColor(h, theme) {
+    let c = hex(h); if (!c) return '';
+    const bgs = CARD_BG[theme] || CARD_BG.clair, dir = theme === 'sombre' ? 1 : -1;
+    let [H, S, L] = rgbToHsl(...c);
+    for (let i = 0; i < 80 && bgs.some((b) => ratio(c, b) < 4.6); i++) {
+      L = Math.max(0, Math.min(1, L + dir * 0.02));
+      c = hslToRgb(H, S, L);
+    }
+    return `rgb(${c.join(',')})`;
+  }
+  // Kicker : média dans la couleur d’établissement · sigle dans la couleur normale du kicker.
   function kicker(it) {
     const k = el('p', 'kick');
     if (it.sport) k.append(el('span', 'emo', it.sport));
@@ -35,7 +58,7 @@
       const line = el('span', 'labs');
       if (src) {
         const media = el('span', 'media', src);
-        const c = aaColor(it.placeColor, THEME);
+        const c = aaBrandColor(it.placeColor, THEME);
         if (c) media.style.color = c;
         line.append(media);
       }

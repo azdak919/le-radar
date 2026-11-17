@@ -50,6 +50,16 @@ for (const kind of ['matin', 'soir']) {
             empty: [...document.querySelectorAll('.sports .scol')].filter((c) => !c.querySelector('.mt')).length,
             place: [...document.querySelectorAll('.kick .media, .kick .place, .ml .in')].map((e) => R(getComputedStyle(e).color, B)),
             by: by && by.querySelector('.lbl') ? [getComputedStyle(by.querySelector('.lbl')).color, getComputedStyle(by.querySelector('.who')).color, R(getComputedStyle(by.querySelector('.lbl')).color, B)] : null,
+            kickers: [...document.querySelectorAll('.lead .kick, .item .kick')].map((k) => {
+              const media = k.querySelector('.media'), place = k.querySelector('.place'), labs = k.querySelector('.labs');
+              return {
+                where: k.closest('.lead') ? 'lead' : 'item',
+                kick: getComputedStyle(k).color,
+                media: media && getComputedStyle(media).color,
+                place: place && getComputedStyle(place).color,
+                text: labs ? labs.textContent.replace(/\s+/g, ' ').trim() : '',
+              };
+            }),
           };
         });
         expect(out.cut, 'aucun nom coupé').toEqual([]);
@@ -67,6 +77,19 @@ for (const kind of ['matin', 'soir']) {
         if (name === 'complet' && format === 'portrait') expect(info.radio).toBe(4);
         if (name === 'complet' && format === 'story') expect(info.radio).toBeGreaterThanOrEqual(3);
         if (name === 'complet') expect(await page.locator('.lead .hook').count(), 'résumé de la une présent').toBe(1);
+        if (name === 'complet') {
+          const branded = out.kickers.filter((k) => k.text.includes('Concordia'));
+          const fallback = out.kickers.filter((k) => k.text.includes('Cégep inconnu'));
+          expect(branded.length, 'kicker de la une et des cartes Aussi à la une').toBeGreaterThanOrEqual(1);
+          for (const k of branded) {
+            expect(k.place, `${k.where}: sigle en couleur normale du kicker`).toBe(k.kick);
+            expect(k.media, `${k.where}: média dans la couleur d’établissement, pas celle du sigle`).not.toBe(k.place);
+          }
+          for (const k of fallback) {
+            expect(k.place, `${k.where}: sigle en couleur normale`).toBe(k.kick);
+            expect(k.media, `${k.where}: sans couleur d’établissement, le média reprend l’accent`).toBe(k.kick);
+          }
+        }
         if (name === 'complet' && format === 'portrait') {
           const kicks = await page.locator('.kick .labs').allTextContents();
           expect(kicks.map((t) => t.replace(/\s+/g, ' ').trim()), 'média · sigle, pas le nom complet').toEqual([
