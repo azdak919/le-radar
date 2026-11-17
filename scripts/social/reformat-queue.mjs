@@ -5,7 +5,7 @@
 // (même id, même image, même heure). L'article est retrouvé dans le flux par l'état buffer-sent.json.
 // Ignore toute publication due dans moins de 10 min ou absente du flux. DRY_RUN=true : lecture seule.
 import fs from 'node:fs';
-import { buildXText, formatOk, parseFeed, stripUtm, xlen, LIMITS, hasCdata } from './lib.mjs';
+import { buildXText, parseFeed, stripUtm, xlen, LIMITS, hasCdata } from './lib.mjs';
 import { bankCredit } from './image-resolve.mjs';
 import { buildPageText, postMetadata } from './buffer-pages.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
@@ -13,8 +13,10 @@ import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 /** Texte attendu pour un post en file (pur, testable). */
 export function reformatText(it, accounts, { credit = '', img = '', old = null } = {}) {
   // Budget de mentions X : reformater ne doit jamais AJOUTER un @ de média (≤ 1/média/jour décidé à la création).
-  const acc = old == null ? accounts : accounts.filter(a => !(a.cle_flux && (a.cle_flux === it.source || a.cle_flux === it.author)) || old.includes(a.handle));
-  return buildXText(it, acc, { credit, photo: !!img });
+  const acc = old == null ? accounts : accounts.filter(a => !(a.cle_flux && (a.cle_flux === it.source || a.cle_flux === it.author)) || String(old).includes(a.handle));
+  // Un post déjà en file qui contient encore son lien le garde : editPost ne sait pas ajouter la réponse.
+  const keepLink = old == null || /https?:\/\//.test(String(old));
+  return buildXText(it, acc, { credit, photo: !!img, organic: !keepLink });
 }
 
 /** Crédit à jour : banque campus (attribution complète) d'abord, sinon crédit du flux / de l'état. */
@@ -36,7 +38,7 @@ async function main() {
     const state = isX ? rd('data/buffer-sent.json').sent || {} : pagesState[net] || {};
     const ch = isX ? createXBuffer({ key, fallbackId: process.env.BUFFER_CHANNEL_ID || undefined })
       : createXBuffer({ key, service: CFG[net].service, channelName: CFG[net].name, fallbackId: null });
-    const build = (it, credit, img, old) => isX ? reformatText(it, ACCOUNTS, { credit, img, old }) : buildPageText(it, CFG[net], { credit, photo: !!img });
+    const build = (it, credit, img, old) => isX ? reformatText(it, ACCOUNTS, { credit, img, old }) : buildPageText(it, CFG[net], { credit, photo: !!img, linkInPost: /https?:\/\//.test(String(old || '')) || CFG[net].service !== 'facebook' });
     await runChannel({ ch, state, build, dry, isX, metadata: isX ? undefined : postMetadata(CFG[net].service) });
   }
 }
@@ -66,7 +68,12 @@ async function runChannel({ ch, state, build, dry, isX, metadata }) {
       console.log(`✓ ${r.id} ${fmt(r.dueAt)} corrigé`);
     }
     const after = await ch.queued();
-    const stale = after.filter(p => { const it = find(byPost.get(p.id)); return it && !formatOk(p.text, it, currentCredit(it, byPost.get(p.id), p.assets?.[0]?.source || '')); }).length;
+    const stale = after.filter(p => {
+      const s = byPost.get(p.id), it = find(s); if (!it) return false;
+      const credit = currentCredit(it, s, p.assets?.[0]?.source || '');
+      const want = build(it, credit, p.assets?.[0]?.source || '', p.text);
+      return want && want !== p.text;
+    }).length;
     console.log(`${dry ? 'ESSAI' : 'RÉEL'} : ${n} corrigée(s) · file après : ${after.length} · hors format : ${stale}`);
   } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }
 }

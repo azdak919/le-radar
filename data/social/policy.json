@@ -20,11 +20,11 @@
   },
   "perSourcePerDay": 1,
   "xSlots": [
-   "08:30",
-   "11:30",
-   "14:30",
-   "17:30",
-   "21:00"
+   "10:15",
+   "12:30",
+   "15:45",
+   "17:45",
+   "21:15"
   ],
   "fillAfterHour": 17
  },
@@ -74,13 +74,13 @@
    "hourFrom": 8,
    "hourTo": 21,
    "link": "https://le-radar.ca/sports/",
-   "hashtags": {
-    "_doc": "Hashtags propres à ce format (ligues, sports U, équipes, #SportÉtudiant #Québec), au plus 8. Tumblr : étiquettes natives, pas de # dans le texte. Aucune mention @.",
-    "bluesky": 8,
-    "mastodon": 8,
-    "x": 8,
-    "linkedin": 8,
-    "facebook": 8,
+    "hashtags": {
+    "_doc": "X et Bluesky : 2 (ligue, #RSEQ), pas une liste. Mastodon : 4, utiles pour la découverte. Facebook : 1. LinkedIn : 3. Tumblr : étiquettes natives, pas de # dans le texte. Aucune mention @.",
+    "bluesky": 2,
+    "mastodon": 4,
+    "x": 2,
+    "linkedin": 3,
+    "facebook": 1,
     "tumblr": 15
    },
    "maxGames": {

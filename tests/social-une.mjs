@@ -73,7 +73,9 @@ for (const model of [{ slot: sSlot, items: m.items }, { slot: sSlot, items }, { 
     const v = all[n];
     assert.ok(v.text, `${n} : texte`); assert.deepEqual(v.problems, [], `${n} : ${v.problems}`);
     assert.ok(NET_SPEC[n].len(v.text) <= NET_SPEC[n].limit, `${n} : limite`);
-    assert.match(v.text, /https:\/\/le-radar\.ca\//); assert.doesNotMatch(v.text, /(^|\s)@\w/); assert.doesNotMatch(v.text, /week-?end/i);
+    if (NET_SPEC[n].replyLink) { assert.doesNotMatch(v.text, /https?:\/\//); assert.match(v.reply, /https:\/\/le-radar\.ca\//); }
+    else assert.match(v.text, /https:\/\/le-radar\.ca\//);
+    assert.doesNotMatch(v.text, /(^|\s)@\w/); assert.doesNotMatch(v.text, /week-?end/i);
     assert.match(v.text, /Tremblay/, `${n} : auteur`);
     assert.match(v.text, /^(☀️|🌙) La une du (matin|soir) du Radar · /);
     if (n !== 'tumblr') assert.ok(v.tags.length <= POLICY.hashtags.maxByNetwork[n]);

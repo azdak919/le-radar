@@ -1,6 +1,6 @@
 name: Social — Mastodon (@leradar@piaille.fr)
 
-# Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
+# Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 2/h et 6/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
 # Publication réelle seulement si la variable de dépôt MASTODON_LIVE vaut « true »
 # Idempotent : data/mastodon-sent.json + derniers posts du blogue.
@@ -54,9 +54,9 @@ jobs:
       - name: Commit de l'état (data/mastodon-sent.json seulement)
         if: always()
         run: |
-          git diff --quiet -- data/mastodon-sent.json && { echo "État inchangé."; exit 0; }
+          git diff --quiet -- data/mastodon-sent.json data/social/reach-log.json && { echo "État inchangé."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git add data/mastodon-sent.json
+          git add data/mastodon-sent.json data/social/reach-log.json
           git commit -s -m "bot(social): état des publications Mastodon"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/mastodon-sent.json\"))'"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of [\"data/mastodon-sent.json\",\"data/social/reach-log.json\"]) JSON.parse(require(\"fs\").readFileSync(f))'"

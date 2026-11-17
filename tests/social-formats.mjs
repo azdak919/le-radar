@@ -65,10 +65,12 @@ const pub = publishedModel(model, ['uni']); assert.equal(pub.coll.length, 0); as
 // ── textes par réseau : aucune mention @, hashtags dynamiques
 for (const n of Object.keys(NET_SPEC)) {
   const spec = NET_SPEC[n], tags = n === 'tumblr' ? [] : resultsTags(pub, POLICY.formats.weekend_results.hashtags[n], teamAcc); // Tumblr : étiquettes natives, pas de # dans le texte
-  const text = buildResultsText(pub, spec, { link: 'https://le-radar.ca/sports/', teamAcc, tags });
+  const text = buildResultsText(pub, spec, { link: 'https://le-radar.ca/sports/', teamAcc, tags, linkInPost: !spec.replyLink });
   assert.ok(text && spec.len(text) <= spec.limit, `${n} : tient dans la limite`);
   assert.deepEqual(checkText(text, spec, { model: pub, teamAcc }), [], `${n} : contrôles`);
-  assert.ok(text.startsWith('🏆 Résultats de la fin de semaine (6-8 nov.)') && text.includes('https://le-radar.ca/sports/'));
+  assert.ok(text.startsWith('🏆 Résultats de la fin de semaine (6-8 nov.)'));
+  if (spec.replyLink) assert.ok(!/https?:\/\//.test(text), `${n} : lien hors du post`);
+  else assert.ok(text.includes('https://le-radar.ca/sports/'));
   assert.ok(text.includes('Rouge et Or') && /42/.test(text) && !/undefined|NaN/.test(text));
   assert.equal(/@\w/.test(text), false, `${n} : aucune mention @`);
   assert.equal(/(^|\s)#\p{L}/u.test(text), tags.length > 0, `${n} : hashtags selon policy`);
@@ -103,9 +105,11 @@ const approved = {
   coll: [],
 };
 approved.shown = [...approved.uni];
-const approvedTags = resultsTags(approved, 8, teamAcc);
-assert.deepEqual(approvedTags, ['#USports', '#RSEQ', '#FootballU', '#HockeyU', '#Carabins', '#RougeEtOr', '#SportÉtudiant', '#Québec']);
-const approvedText = buildResultsText(approved, NET_SPEC.x, { link: 'https://le-radar.ca/sports/', teamAcc, tags: approvedTags });
+const fullTags = resultsTags(approved, 8, teamAcc);
+assert.deepEqual(fullTags, ['#USports', '#RSEQ', '#FootballU', '#HockeyU', '#Carabins', '#RougeEtOr', '#SportÉtudiant', '#Québec']);
+const approvedTags = resultsTags(approved, 2, teamAcc);
+assert.deepEqual(approvedTags, ['#USports', '#RSEQ']);
+const approvedText = buildResultsText(approved, NET_SPEC.x, { link: 'https://le-radar.ca/sports/', teamAcc, tags: approvedTags, linkInPost: false });
 assert.equal(approvedText, [
   '🏆 Résultats de la fin de semaine (6-8 nov.)',
   '',
@@ -113,17 +117,15 @@ assert.equal(approvedText, [
   '🏈 Rouge et Or 42, Stingers 4',
   '🏒 Carabins 4, Martlets 0 (F)',
   '🏒 Gaiters 5, Rouge et Or 1 (F)',
-  '',
-  'https://le-radar.ca/sports/',
-  '#USports #RSEQ #FootballU #HockeyU #Carabins #RougeEtOr #SportÉtudiant #Québec',
+  '#USports #RSEQ',
 ].join('\n'));
 assert.deepEqual(checkText(approvedText, NET_SPEC.x, { model: approved, teamAcc }), []);
 assert.ok(NET_SPEC.x.len(approvedText) <= 280, 'exemple approuvé dans la limite X');
 // trop long : on retire d'abord les hashtags d'équipes, les lignes de matchs restent
-const tight = { ...NET_SPEC.x, limit: NET_SPEC.x.len(approvedText) - 16 };
-const trimmed = buildResultsText(approved, tight, { link: 'https://le-radar.ca/sports/', teamAcc, tags: approvedTags });
+const tight = { ...NET_SPEC.x, limit: NET_SPEC.x.len(buildResultsText(approved, NET_SPEC.x, { link: 'https://le-radar.ca/sports/', teamAcc, tags: fullTags })) - 16 };
+const trimmed = buildResultsText(approved, tight, { link: 'https://le-radar.ca/sports/', teamAcc, tags: fullTags });
 assert.ok(trimmed && !/#Carabins|#RougeEtOr/.test(trimmed) && /#USports #RSEQ #FootballU #HockeyU/.test(trimmed) && trimmed.includes('Carabins 28, Redbirds 21') && !/@/.test(trimmed), trimmed);
-const mastodonApproved = buildResultsText(approved, NET_SPEC.mastodon, { link: 'https://le-radar.ca/sports/', teamAcc, tags: approvedTags });
+const mastodonApproved = buildResultsText(approved, NET_SPEC.mastodon, { link: 'https://le-radar.ca/sports/', teamAcc, tags: fullTags });
 assert.ok(mastodonApproved.includes('Tous les résultats : https://le-radar.ca/sports/') && !/@/.test(mastodonApproved) && mastodonApproved.includes('#Carabins #RougeEtOr #SportÉtudiant #Québec'));
 
 // ── buildAll + garde de publication
@@ -133,7 +135,7 @@ assert.ok(built.model.previewOnly.length === 1 && /RSEQ collégial/.test(built.p
 assert.ok(previewMarkdown(built, { dry: true, willPublish: false, reason: 'essai' }).includes('Aperçu RSEQ collégial'));
 const W = POLICY.formats.weekend_results;
 assert.equal(W.publish, true); assert.equal(W.maxPerWeekendPerNetwork, 1); assert.deepEqual(W.sections, ['uni']);
-assert.equal(W.maxMentionsX, 0); assert.equal(W.hashtags.x, 8); assert.equal(W.hashtags.mastodon, 8);
+assert.equal(W.maxMentionsX, 0); assert.equal(W.hashtags.x, 2); assert.equal(W.hashtags.bluesky, 2); assert.equal(W.hashtags.mastodon, 4); assert.equal(W.hashtags.facebook, 1); assert.equal(W.hashtags.linkedin, 3);
 assert.equal(POLICY.formats.listen_tonight.publish, false, 'À écouter ce soir : jamais publié');
 assert.equal(inWindow(W, T('2026-11-10T14:00:00Z')), true, 'mardi 9 h');
 assert.equal(inWindow(W, T('2026-11-10T11:00:00Z')), false, 'mardi 6 h : trop tôt');

@@ -1,6 +1,6 @@
 name: Social — Buffer (X @le_radar_ca, Pages Facebook et LinkedIn)
 
-# Feed.xml → file Buffer (forfait gratuit, 10 posts) → X. Coût : 0 $.
+# Feed.xml → file Buffer (forfait gratuit, 10 posts en file) → X. Cinq créneaux par jour, lien en réponse. Coût : 0 $.
 # Canaux : X, Page Facebook et page LinkedIn « LE-RADAR.ca » (scripts/social/buffer-pages-post.mjs :
 # places libres seulement, heures de pointe de data/social/posting-windows.json, rodage, aucun @).
 on:
@@ -146,13 +146,12 @@ jobs:
       - name: Commit de l'état (data/buffer-sent.json, data/buffer-pages-sent.json)
         if: always()
         run: |
-          git diff --quiet -- data/buffer-sent.json data/buffer-pages-sent.json && { echo "État inchangé."; exit 0; }
+          git diff --quiet -- data/buffer-sent.json data/buffer-pages-sent.json data/social/reach-log.json && { echo "État inchangé."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git add data/buffer-sent.json
-          git add data/buffer-pages-sent.json
+          git add data/buffer-sent.json data/buffer-pages-sent.json data/social/reach-log.json
           git commit -s -m "bot(social): état des publications Buffer"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of [\"data/buffer-sent.json\",\"data/buffer-pages-sent.json\"]) JSON.parse(require(\"fs\").readFileSync(f))'"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of [\"data/buffer-sent.json\",\"data/buffer-pages-sent.json\",\"data/social/reach-log.json\"]) JSON.parse(require(\"fs\").readFileSync(f))'"
 
   accounts-report:
     if: github.event.schedule == '41 13 * * 1' || inputs.report

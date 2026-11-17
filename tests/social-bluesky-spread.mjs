@@ -9,7 +9,7 @@ const live = '2026-10-01T00:00:00Z'; // rodage terminé
 
 for (const network of ['bluesky', 'tumblr']) {
   assert.ok(NETWORKS[network].spread, `${network} : étalement`);
-  assert.ok(NETWORKS[network].perDay >= 50, `${network} : plafond ≥ volume réel du flux`);
+  assert.ok(NETWORKS[network].perDay <= 6 && NETWORKS[network].perRun === 1, `${network} : pas de rafale`);
   if (network === 'tumblr') assert.ok(NETWORKS.tumblr.perDay < 250, 'Tumblr : sous 250/jour');
 
   // Simulation sur 24 h, passages toutes les 30 min : 10 articles de A + 2 de B, moissonnés à 7 h HNE.
@@ -22,7 +22,7 @@ for (const network of ['bluesky', 'tumblr']) {
     if (weightAt(network, t) === 0) assert.equal(p.now.length, 0, 'heures calmes : rien');
     for (const x of p.now) { assert.ok(!sent[x.id], 'jamais deux fois'); sent[x.id] = { at: new Date(t).toISOString(), source: x.source, uri: 'at://' + x.id }; order.push(x.source); when.push(t); }
   }
-  assert.equal(order.length, 12, `${network} : tout est parti avant 24 h`);
+  assert.equal(order.length, NETWORKS[network].perDay, `${network} : plafond du jour, le reste attend`);
   assert.ok(order.slice(0, 4).includes('B'), `${network} : B intercalé tôt (tourniquet)`);
   const first = plan(items, {}, { network, liveSince: live, now: t0 + 60e3 });
   assert.ok(first.now.length < 12 && first.hold.length > 0, `${network} : pas tout dès la moisson`);

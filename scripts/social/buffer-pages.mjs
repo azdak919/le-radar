@@ -3,7 +3,7 @@
 // fenêtres de pointe du réseau (data/social/posting-windows.json), jamais en rafale, sans dépasser
 // les places libres (10 par canal, forfait gratuit) ni le plafond quotidien (rodage compris).
 import { createRequire } from 'node:module';
-import { buildTagged, selectItems, siteLink, photoRank } from './lib.mjs';
+import { buildTagged, frenchPost, selectItems, siteLink, photoRank } from './lib.mjs';
 import { volumeFor } from './policy.mjs';
 import { tagLine } from './hashtags.mjs';
 import { weightAt, rampAt, TZ } from './schedule.mjs';
@@ -20,10 +20,18 @@ export function pageLink(it, mode = 'le-radar') {
   return mode === 'source' ? it.link : siteLink(it);
 }
 
-/** Titre, extrait, « 📰 Média · Auteur », lien, « 📸 crédit », hashtags (LinkedIn seulement : policy.json). Jamais de @ (noms en clair). */
-export function buildPageText(it, cfg = {}, { credit = '', photo = true, ai = true } = {}) {
-  const text = buildTagged(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link), ai }, cfg.service ? tagLine(it, cfg.service) : '');
+/** Titre, extrait, « 📰 Média · Auteur », lien, « 📸 crédit », hashtags. Facebook : pas d'URL dans le post (premier commentaire). Jamais de @. */
+export function buildPageText(it, cfg = {}, { credit = '', photo = true, ai = true, linkInPost } = {}) {
+  const { it: fr, lang } = frenchPost(it);
+  const inPost = linkInPost != null ? linkInPost : cfg.service !== 'facebook';
+  const text = buildTagged(fr, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: inPost, url: pageLink(it, cfg.link), ai: ai && lang === 'fr', essenceFirst: true }, cfg.service ? tagLine(it, cfg.service) : '');
   return text.replace(/(^|[\s(])@(?=\w)/g, '$1');
+}
+/** Premier commentaire Facebook : le lien, pour que le post lui-même reste une image. */
+export function pageComment(it, cfg = {}) {
+  if (cfg.service !== 'facebook') return '';
+  const url = pageLink(it, cfg.link);
+  return url ? `Lire sur le Radar : ${url}` : '';
 }
 
 /** Poids maximal de la journée locale contenant t. */
@@ -84,4 +92,9 @@ export function selectForPage(items, { sent = {}, queuedSources = [], queuedText
 export const isRejection = msg => /news|blocked|block|restrict|not allowed|policy|reject|refus|spam|invalid (link|url)|unavailable in your country|canada/i.test(msg || '');
 
 /** Métadonnées Buffer par réseau (Facebook exige un type : post, story ou reel). */
-export const postMetadata = service => service === 'facebook' ? { facebook: { type: 'post' } } : undefined;
+export const postMetadata = (service, { comment } = {}) => {
+  if (service !== 'facebook') return undefined;
+  const facebook = { type: 'post' };
+  if (comment) facebook.firstComment = comment;
+  return { facebook };
+};

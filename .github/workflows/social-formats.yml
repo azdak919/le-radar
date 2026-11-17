@@ -76,9 +76,9 @@ jobs:
       - name: Commit de l'état (data/social/formats-state.json)
         if: always()
         run: |
-          git diff --quiet -- data/social/formats-state.json && { echo "État inchangé."; exit 0; }
+          git diff --quiet -- data/social/formats-state.json data/social/reach-log.json && { echo "État inchangé."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git add data/social/formats-state.json
+          git add data/social/formats-state.json data/social/reach-log.json
           git commit -s -m "bot(social): état des formats natifs"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/social/formats-state.json\"))'"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of [\"data/social/formats-state.json\",\"data/social/reach-log.json\"]) JSON.parse(require(\"fs\").readFileSync(f))'"

@@ -24,7 +24,8 @@ for (const s of Object.keys(PLACES)) for (const n of ['bluesky', 'mastodon', 'x'
   assert.ok(l && !/PresseÉtudiante|Actualités/.test(l) && /#(Québec|Montréal|Ottawa|Saguenay|Sherbrooke|TroisRivières|McGill|Concordia|UdeM|UQAM|ULaval|UQTR|CégepDeJonquière|DawsonCollege|UdeS|BishopsU|uOttawa)/.test(l), `${s} ${n} : ${l}`);
 }
 const t = buildBskyText(it, [], { credit: 'Jeanne Tremblay' });
-assert.ok(t.startsWith('Vote obligatoire, idée réalisable ?'), 'accroche (titre) en tête');
+assert.ok(t.startsWith('Aux dernières élections provinciales'), 'essentiel (extrait) en tête');
+assert.ok(t.includes('Vote obligatoire, idée réalisable ?'), 'le titre reste');
 assert.ok(t.endsWith('#CégepDeJonquière #Saguenay') && graphemes(t) <= BSKY_LIMIT, t);
 const tags = facets(t).filter(f => f.features[0].$type.endsWith('#tag')).map(f => f.features[0].tag);
 assert.deepEqual(tags, ['CégepDeJonquière', 'Saguenay']);

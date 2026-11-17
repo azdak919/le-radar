@@ -1,6 +1,6 @@
 name: Social — Tumblr (le-radar-ca.tumblr.com)
 
-# Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
+# Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 2/h et 6/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
 # Publication réelle seulement si la variable de dépôt TUMBLR_LIVE vaut « true »
 # (les règles de Tumblr encadrent la publication automatisée : activation sur accord).
@@ -58,9 +58,9 @@ jobs:
       - name: Commit de l'état (data/tumblr-sent.json seulement)
         if: always()
         run: |
-          git diff --quiet -- data/tumblr-sent.json && { echo "État inchangé."; exit 0; }
+          git diff --quiet -- data/tumblr-sent.json data/social/reach-log.json && { echo "État inchangé."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git add data/tumblr-sent.json
+          git add data/tumblr-sent.json data/social/reach-log.json
           git commit -s -m "bot(social): état des publications Tumblr"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/tumblr-sent.json\"))'"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'for (const f of [\"data/tumblr-sent.json\",\"data/social/reach-log.json\"]) JSON.parse(require(\"fs\").readFileSync(f))'"

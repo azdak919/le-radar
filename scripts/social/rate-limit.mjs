@@ -5,21 +5,19 @@ import { quality, photoRank, PER_SOURCE_MAX, norm } from './lib.mjs';
 import { volumeFor, allowedByNow, postedToday, torontoDay, torontoHour } from './policy.mjs';
 import { effectiveLimits, weightAt } from './schedule.mjs';
 
-// mastodon : règles de piaille.fr (robots de liens de presse : 5/h, 50/jour).
-// bluesky : plafond anti-pourriel interne, très en deçà de l'API (5 000 points/h, 35 000/jour,
-// une création = 3 points) — voir docs.bsky.app/docs/advanced-guides/rate-limits.
-// tumblr : API officielle = 250 publications/jour/utilisateur, 1 000 appels/h et 5 000/jour par
-// clé (tumblr.com/docs/en/api/v2#rate-limits) ; la file native de Tumblr plafonne à 50/jour
-// (help.tumblr.com/knowledge-base/queued-posts). Plafond interne 5/h, 50/24 h, comme une file
-// humaine ; les règles (tumblr.com/policy/en/community) proscrivent le pourriel et l'automatisation.
-// Plafonds de base : l'ordonnanceur (schedule.mjs) les module par heure et pendant le rodage.
+// Plafonds internes de portée (pas les quotas techniques) : 6 articles du fil par jour, 1 par passage.
+// Piaille autorise 5/h et 50/j, Tumblr 250/j, Bluesky bien davantage. On reste très en dessous.
+// L'ordonnanceur (schedule.mjs) module encore par heure. La une est un autre workflow.
 export const NETWORKS = {
   // spread : aucune exclusion « variété » ; une même source est étalée (tourniquet), l'excédent attend
   // (hold) au lieu d'être sauté, et le volume suit les poids horaires (pointes) avant l'échéance de 24 h.
   // Volume réel du flux ≈ 40-50/jour.
-  mastodon: { perHour: 5, perDay: 50, perRun: 2, gapSec: 90, spread: true, ramp: false }, // piaille.fr : robots ≤ 5/h, 50/jour ; API 300 req/5 min, 30 médias/30 min
-  tumblr: { perHour: 8, perDay: 120, perRun: 3, gapSec: 120, spread: true, ramp: false }, // < 250/jour (limite officielle)
-  bluesky: { perHour: 12, perDay: 150, perRun: 4, gapSec: 90, spread: true },
+  // Cadence organique : au plus 6 articles du fil par jour, 1 par passage, 2 par heure.
+  // La une du matin et du soir est un autre workflow. Les plafonds officiels (piaille 5/h 50/j,
+  // Tumblr 250/j, Bluesky bien plus) restent un plafond technique, pas un objectif.
+  mastodon: { perHour: 2, perDay: 6, perRun: 1, gapSec: 90, spread: true, ramp: false },
+  tumblr: { perHour: 2, perDay: 6, perRun: 1, gapSec: 120, spread: true, ramp: false },
+  bluesky: { perHour: 2, perDay: 6, perRun: 1, gapSec: 90, spread: true },
 };
 export const MAX_FRESH_H = 24; // jamais d'article plus vieux que 24 h
 

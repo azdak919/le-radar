@@ -17,6 +17,17 @@ export const matchChannel = (x, service, channelName) => {
   return re.test(x?.service || '') && (x.name || '').replace(/^@/, '').trim().toLowerCase() === channelName.toLowerCase();
 };
 
+/** Fil X de 2 posts : le texte principal (avec l'image) puis la réponse qui porte le lien. L'API Buffer publie chaque entrée en réponse à la précédente. */
+export function threadMetadata({ text, reply, image, metadata } = {}) {
+  const meta = { ...(metadata || {}) };
+  if (reply) {
+    const root = { text };
+    if (image) root.assets = [{ image: { url: image } }];
+    meta.twitter = { ...(meta.twitter || {}), thread: [root, { text: reply }] };
+  }
+  return Object.keys(meta).length ? meta : undefined;
+}
+
 export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x' }) {
   async function gql(query, variables = {}) {
     const res = await fetchImpl(API, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(30000) });
@@ -83,12 +94,13 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
       return r.post;
     },
-    async add({ text, image, dueAt, now = false, metadata }) {
+    async add({ text, image, dueAt, now = false, metadata, reply }) {
       const { channelId } = await context();
       const input = { text, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
       if (dueAt) input.dueAt = dueAt;
       if (image) input.assets = [{ image: { url: image } }];
-      if (metadata) input.metadata = metadata;
+      const meta = threadMetadata({ text, reply, image, metadata });
+      if (meta) input.metadata = meta;
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
         ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`, { i: input });
       const r = d?.createPost;

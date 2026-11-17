@@ -176,7 +176,7 @@ export function gameLine(g, mention = () => '') {
  * Aucune mention @. Si le texte dépasse la limite, on retire d'abord les hashtags d'équipes, puis des lignes de matchs.
  * Renvoie null si même le minimum (2 résultats, sans hashtags d'équipes) ne tient pas.
  */
-export function buildResultsText(model, net, { link, teamAcc = {}, tags = [], maxMentions = 0 } = {}) {
+export function buildResultsText(model, net, { link, teamAcc = {}, tags = [], maxMentions = 0, linkInPost = true } = {}) {
   void maxMentions;
   const len = net.len || xlen, nl = s => len(s);
   const teamSet = new Set(resultsTagGroups(model, teamAcc).teams);
@@ -190,7 +190,8 @@ export function buildResultsText(model, net, { link, teamAcc = {}, tags = [], ma
       lines.push(...uni.map(g => gameLine(g)), ...coll.map(g => gameLine(g)));
     }
     const body = [hdr, lines.join('\n')].join('\n\n');
-    return [body, net.subheaders ? `Tous les résultats : ${link}` : link, hash.length ? hash.join(' ') : ''].filter(Boolean).join('\n\n').replace(/\n\n(#\S)/, '\n$1');
+    const linkLine = linkInPost ? (net.subheaders ? `Tous les résultats : ${link}` : link) : '';
+    return [body, linkLine, hash.length ? hash.join(' ') : ''].filter(Boolean).join('\n\n').replace(/\n\n(#\S)/, '\n$1');
   };
   const dropTeamTag = hash => {
     const idx = hash.reduce((last, t, i) => teamSet.has(t) ? i : last, -1);
@@ -232,7 +233,7 @@ export function listenModel(radio, now = Date.now(), cfg = {}) {
   const doubts = shows.length < 2 ? ['moins de deux émissions vérifiées'] : [];
   return { day, shows: shows.slice(0, cfg.maxShows ?? 4), skipped, doubts };
 }
-export function buildListenText(model, net, { link, teamAcc = {}, tags = [] } = {}) {
+export function buildListenText(model, net, { link, teamAcc = {}, tags = [], linkInPost = true } = {}) {
   const len = net.len || xlen;
   const stName = s => teamAcc.stations?.[s.station]?.nom || s.name;
   const tryBuild = (shows, withMentions) => {
@@ -240,7 +241,8 @@ export function buildListenText(model, net, { link, teamAcc = {}, tags = [] } = 
       const a = teamAcc.stations?.[s.station], h = withMentions ? (net.x ? a?.x : net.bluesky ? a?.bluesky : '') : '';
       return `${frenchTime(s.start)} · ${stName(s)}${h ? ` (${h})` : ''} : ${s.title}`;
     });
-    return ['🎧 À écouter ce soir', lines.join('\n'), net.subheaders ? `Horaires complets : ${link}` : link, tags.join(' ')].filter(Boolean).join('\n\n').replace(/\n\n(#\S)/, '\n$1');
+    const linkLine = linkInPost ? (net.subheaders ? `Horaires complets : ${link}` : link) : '';
+    return ['🎧 À écouter ce soir', lines.join('\n'), linkLine, tags.join(' ')].filter(Boolean).join('\n\n').replace(/\n\n(#\S)/, '\n$1');
   };
   for (const withMentions of [true, false]) {
     let shows = [...model.shows];
@@ -256,11 +258,11 @@ export function listenTags(model, max, teamAcc = {}) {
 
 /** Réseaux : limite, longueur, mentions natives. Facebook/LinkedIn/Tumblr : texte en clair, sans @. */
 export const NET_SPEC = {
-  x: { limit: 280, len: xlen, x: true, subheaders: false },
+  x: { limit: 280, len: xlen, x: true, subheaders: false, replyLink: true },
   bluesky: { limit: 300, len: s => [...new Intl.Segmenter('fr', { granularity: 'grapheme' }).segment(s)].length, bluesky: true, subheaders: false },
   mastodon: { limit: 500, len: s => [...String(s).replace(/https?:\/\/\S+/g, 'x'.repeat(23))].length, subheaders: true },
   tumblr: { limit: 1000, len: s => [...s].length, subheaders: true },
-  facebook: { limit: 1500, len: s => [...s].length, subheaders: true },
+  facebook: { limit: 1500, len: s => [...s].length, subheaders: true, replyLink: true },
   linkedin: { limit: 2000, len: s => [...s].length, subheaders: true },
 };
 

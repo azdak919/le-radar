@@ -1,7 +1,7 @@
 // Logique pure Bluesky (testée dans tests/social-bluesky.mjs) : longueur en graphèmes,
 // facettes (octets UTF-8), langue, articles dus. Les @ viennent de data/social/bluesky-accounts.json
 // (jamais de la liste X).
-import { buildTagged, LIMITS, detectLang, siteLink } from './lib.mjs';
+import { buildTagged, LIMITS, detectLang, frenchPost, siteLink } from './lib.mjs';
 import { bskyTags } from './hashtags.mjs';
 export { siteLink };
 export { detectLang };
@@ -13,9 +13,10 @@ export const GRACE_H = 2;
 const enc = new TextEncoder();
 const bytes = s => enc.encode(s).length;
 
-/** Texte Bluesky : format commun (lib.mjs), 300 graphèmes, lien vers la fiche le-radar.ca. */
+/** Texte Bluesky : essentiel d'abord, français, lien gardé dans le post (la carte de lien n'est pas pénalisée). 300 graphèmes, 1 ou 2 hashtags. */
 export function buildBskyText(it, accounts = [], { credit = '', photo = true, tags = true, ai = true } = {}) {
-  return buildTagged(it, accounts, BSKY_LIMIT, { credit, photo, len: graphemes, link: true, ai }, tags ? bskyTags(it).join(' ') : '');
+  const { it: fr, lang } = frenchPost(it);
+  return buildTagged(fr, accounts, BSKY_LIMIT, { credit, photo, len: graphemes, link: true, essenceFirst: true, ai: ai && lang === 'fr' }, tags ? bskyTags(it).join(' ') : '');
 }
 
 /** Facettes : liens (http…) et @ confirmés Bluesky (dids : Map handle→did). Offsets en octets UTF-8. */

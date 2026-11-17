@@ -363,6 +363,8 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     let body;
     if (spec.nolink) {
       body = items.map((x, i) => `${i + 1}. ${x.sport ? x.sport + ' ' : ''}${T(x)}\n✍️ ${x.byline}`).join('\n\n');
+    } else if (spec.replyLink) {
+      body = items.map(x => `${x.sport || '▪️'} ${T(x)} — ${x.byline}`).join('\n');
     } else if (long) {
       body = items.map((x, i) => `${i + 1}. ${x.sport ? x.sport + ' ' : ''}${T(x)}\n✍️ ${x.byline}\n${x.pageUrl}`).join('\n\n');
     } else {
@@ -371,7 +373,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     if (sports.length) body += '\n\n🏟️ Sport étudiant :\n' + sports.map(sportsLine).join('\n');
     if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
     if (spec.nolink) body += '\n\nToute la une : lien en bio (le-radar.ca)';
-    else if (long) body += `\n\nToute la une : ${HOME}`;
+    else if (long && !spec.replyLink) body += `\n\nToute la une : ${HOME}`;
     return [head, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
   let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = SPORTS_NETS.has(net) ? [...(model.radio || [])] : [];
@@ -401,11 +403,18 @@ export function checkUneText(text, net, model, spec = net === 'instagram' ? IG_S
   const own = model.items.reduce((t, x) => t.split(x.title).join(' '), text).replace(/https?:\/\/\S+/g, ' ');
   if (/week-?end/i.test(own)) p.push('« week-end » interdit (écrire « fin de semaine »)');
   if (spec.nolink) { if (/https?:\/\//.test(text)) p.push('lien cliquable interdit (Instagram)'); if (!/lien en bio/.test(text)) p.push('« lien en bio » manquant'); }
+  else if (spec.replyLink) { if (/https?:\/\//.test(text)) p.push('lien dans le post (il va en réponse ou en premier commentaire)'); }
   else if (!/https:\/\/le-radar\.ca\//.test(text)) p.push('lien le-radar.ca manquant');
   if (/undefined|NaN|\[object|null/.test(text)) p.push('valeur invalide');
   const leadStart = [...model.items[0].title].slice(0, 20).join('');
   if (!text.includes(leadStart)) p.push('titre de la une absent');
   return p;
+}
+/** Lien de La une, publié en réponse (X) ou en premier commentaire (Facebook). */
+export function uneReply(model) {
+  const items = model?.items || [];
+  const url = items.length === 1 && items[0].pageUrl ? items[0].pageUrl : HOME;
+  return `Toute la une : ${url}`;
 }
 /** Tous les textes d'un créneau. `maxByNetwork` : plafonds de hashtags. */
 export function buildUneAll(model, maxByNetwork = {}) {
@@ -413,7 +422,8 @@ export function buildUneAll(model, maxByNetwork = {}) {
   for (const n of [...NETS, ...PREPARED_NETS]) {
     const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n], tags = n === 'tumblr' ? [] : uneTags(model.items, maxByNetwork[n] ?? (n === 'instagram' ? 5 : 2));
     const text = buildUneText(model, n, spec, { tags });
-    out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] + (STORY_FOR[n] ? ' + ' + STORY_FOR[n] : ''), problems: checkUneText(text, n, model, spec) };
+    const reply = spec.replyLink ? uneReply(model) : '';
+    out[n] = { text, reply, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] + (STORY_FOR[n] ? ' + ' + STORY_FOR[n] : ''), problems: checkUneText(text, n, model, spec) };
   }
   return out;
 }
