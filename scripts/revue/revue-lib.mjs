@@ -114,12 +114,12 @@ export function shortExcerpt(text, max = 200) {
   if (m && m.index + m[0].length > max * 0.45) return cut.slice(0, m.index + m[0].length).trim();
   return cut.slice(0, Math.max(cut.lastIndexOf(' '), 40)).replace(/[\s,;:–—-]+$/u, '') + '…';
 }
-/** « Université de Sherbrooke (UdeS) » ; établissement anglais connu traduit ; inconnu anglais : sigle seul ou rien. */
+/** Sigle seul, comme dans La une (« UdeS », « ULaval », « Concordia ») ; sans sigle connu : nom français (« Cégep de Jonquière ») ;
+ * établissement anglais inconnu : rien. Jamais « Nom complet (SIGLE) ». */
 export function institutionDisplay(raw) {
   const fr = institutionLabel({ institution: raw });
   const sig = institutionSigle(raw) || institutionSigle(fr);
-  if (fr && sig && sig !== fr) return `${fr} (${sig})`;
-  return fr || sig || '';
+  return String(sig || fr || '').replace(/'/g, '’').trim();
 }
 export const THEMES = ['Vie de campus', 'Politique', 'Éducation', 'Société', 'Culture', 'Sport', 'Environnement', 'Santé', 'Science', 'Économie', 'International'];
 export const THEME_EMOJI = { 'Vie de campus': '🏫', Politique: '🏛️', Éducation: '🎓', Société: '👥', Culture: '🎭', Sport: '🏟️', Environnement: '🌱', Santé: '🩺', Science: '🔬', Économie: '💼', International: '🌍' };

@@ -46,12 +46,14 @@ const PAGES = {
 };
 
 const hasPdftotext = (() => { try { execFileSync('pdftotext', ['-v'], { stdio: 'ignore' }); return true; } catch { return false; } })();
-const pdfPages = (pdf) => {
-  const f = path.join(os.tmpdir(), `radar-print-${process.pid}-${Date.now()}.pdf`);
+// -layout : lignes telles qu'imprimées (pied de page, dernière ligne de chaque feuille) ; -raw : ordre de lecture, colonne
+// par colonne (la revue s'imprime sur 2 à 4 colonnes : un titre sur deux lignes y est entrecoupé par la colonne voisine en -layout).
+const pdfPages = (pdf, mode = '-layout') => {
+  const f = path.join(os.tmpdir(), `radar-print-${process.pid}-${Date.now()}-${mode.slice(1)}.pdf`);
   fs.writeFileSync(f, pdf);
-  try { return execFileSync('pdftotext', ['-layout', f, '-'], { encoding: 'utf8' }).split('\f').slice(0, -1); } finally { fs.unlinkSync(f); }
+  try { return execFileSync('pdftotext', [mode, f, '-'], { encoding: 'utf8' }).split('\f').slice(0, -1); } finally { fs.unlinkSync(f); }
 };
-const squeeze = (s) => String(s).normalize('NFC').replace(/[\s\u00a0\u202f\u2011-]+/g, '').replace(/[’']/g, "'");
+const squeeze = (s) => String(s).normalize('NFC').replace(/[\s\u00a0\u202f\u2010\u2011\u00ad-]+/g, '').replace(/[’']/g, "'");
 
 for (const [name, pg] of Object.entries(PAGES)) {
   for (const [format, [pw, ph]] of Object.entries(FORMATS)) {
@@ -129,7 +131,7 @@ for (const [name, pg] of Object.entries(PAGES)) {
         expect([...heads].some((h) => h && (h === last || (last.length > 6 && h.startsWith(last)))), `page ${i + 1} se termine par un intertitre orphelin : ${lines.at(-1).trim()}`).toBe(false);
       });
       expect(pages.every((t) => t.split('\n').some((l) => footer.test(l))), 'pied de page (logo + LE-RADAR.ca, page x / y) sur chaque feuille').toBe(true);
-      const all = squeeze(pages.join('\n'));
+      const all = squeeze(pdfPages(pdf, '-raw').join('\n'));
       for (const t of pg.titles || []) expect(all.includes(squeeze(t)), `titre perdu à l’impression : ${t}`).toBe(true);
       if (pg.onePageFrom) expect(pages.length, 'fiche d’article sur une seule feuille').toBe(1);
     });

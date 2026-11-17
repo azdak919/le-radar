@@ -77,10 +77,21 @@ réseaux, flux de travail).
   déterministe rédigé.
 - La mention « Revue préparée automatiquement par Le Radar à partir des sources citées… » est une phrase discrète en
   pied d’article.
-- Impression (revue, accueil, fiches d’article) : logo + LE‑RADAR.ca en en-tête et au pied de chaque feuille,
-  intertitres jamais seuls en bas de page, cartes et lignes jamais coupées, images bornées dans la page ; tableaux de
-  sport sur deux colonnes en Tabloid et A3. `tests/print-formats.spec.mjs` produit un PDF par format et le vérifie
-  (débordement, pages presque vides, intertitres orphelins, pied de page, titres présents).
+- Établissement : **sigle seul**, comme dans La une (« UdeS », « ULaval », « Concordia », « Bishop’s ») ; nom français
+  seulement s’il n’a pas de sigle (« Cégep de Jonquière »). Jamais « Nom complet (SIGLE) » (`institutionDisplay`, et
+  au rendu pour les revues déjà générées).
+- Impression de la revue : **un vrai journal**. Manchette (logo du Radar à gauche de LE‑RADAR.ca, devise, filet
+  double, ligne de folio : édition, date, heure de publication), article **à la une** (surtitre, grand titre, tous les
+  auteurs, photo, résumé) avec l’amorce « Dans cette édition », puis les rubriques en **colonnes séparées par des
+  filets** : 2 colonnes en Lettre et A4 (photo à gauche, texte à droite), 3 en Légal, 4 en Tabloïd et A3, où la une
+  gagne un **encadré « En bref »** (résultats ou prochains matchs, une régate si l’édition en a une, émissions de
+  radio). Texte à empattements justifié avec césure française, grilles de radio en agate, aucun émoji, aucun lien
+  « Lire… », aucun élément d’interface ; page nommée `@page revue`, mises en page choisies par `@media print` selon la
+  largeur et la hauteur de la page (`revue.css`). La mention automatique reste une phrase discrète en pied.
+- Impression (revue, accueil, fiches d’article) : LE‑RADAR.ca et son logo au pied de chaque feuille, intertitres jamais
+  seuls en bas de page ou de colonne, cartes et lignes jamais coupées, images bornées dans la page.
+  `tests/print-formats.spec.mjs` produit un PDF par format et le vérifie (débordement, pages presque vides, intertitres
+  orphelins, pied de page, titres présents, lus colonne par colonne).
 
 ## Garde-fous (jamais de revue vide ni inventée)
 

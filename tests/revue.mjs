@@ -95,8 +95,8 @@ const items = L.selectArticles(news, period, { max: 40 });
 assert.deepEqual(items.map(x => x.source), ['Quartier Libre', 'The Link', 'Le Collectif'], 'période, plus récent d’abord, sport pro exclu (LNH, AFC Toronto), article hors période exclu');
 const coll = items.find(x => x.source === 'Le Collectif');
 assert.deepEqual(coll.authors, ['Aurélie Souka', 'Caroline Lizin'], 'tous les auteurs');
-assert.equal(coll.institution, 'Université de Sherbrooke (UdeS)', 'établissement en français, sigle entre parenthèses');
-assert.equal(items.find(x => x.source === 'The Link').institution, 'Université Concordia (Concordia)');
+assert.equal(coll.institution, 'UdeS', 'sigle seul, comme dans La une (jamais « Nom complet (SIGLE) »)');
+assert.equal(items.find(x => x.source === 'The Link').institution, 'Concordia');
 assert.equal(coll.theme, 'Politique');
 assert.equal(L.selectArticles(news, period, { coveredIds: new Set([coll.id]) }).some(x => x.id === coll.id), false, 'anti-doublon entre éditions');
 assert.equal(L.authorsLine(['A', 'B', 'C']), 'Par A, B et C');
@@ -260,6 +260,9 @@ for (const x of m.items) {
 }
 assert.ok(html.includes('Par <span class="notranslate" translate="no">Aurélie Souka et Caroline Lizin</span>'));
 assert.ok(html.includes('Stingers (Concordia) 55-54 Martlets (McGill)'));
+assert.ok(html.includes('<span class="revue-item__inst">UdeS</span>') && !/Université de Sherbrooke \(UdeS\)/.test(html), 'établissement : sigle seul');
+assert.ok(R.articleBody({ ...m, items: m.items.map(x => ({ ...x, institution: 'Université de Sherbrooke (UdeS)' })) }).includes('<span class="revue-item__inst">UdeS</span>'), 'revue déjà générée « Nom (SIGLE) » : sigle seul au rendu');
+assert.match(html, /<header class="revue-flag" aria-hidden="true">[\s\S]*assets\/icon\.svg[\s\S]*LE-RADAR\.ca[\s\S]*La revue du matin[\s\S]*<\/header>/, 'manchette imprimée : logo à gauche du mot-symbole, édition');
 assert.ok(html.includes('La collation'));
 assert.ok(html.includes('lang="en"'), 'titre anglais balisé lang="en"');
 assert.deepEqual(L.foreignLinks(R.articleBody(m), m), [], 'aucun lien hors données');

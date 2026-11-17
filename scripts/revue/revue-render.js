@@ -63,9 +63,13 @@ function groupByTheme(items) {
 }
 const slug = (s) => String(s).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 function authorsLine(a = []) { return a.length ? (a.length === 1 ? a[0] : `${a.slice(0, -1).join(', ')} et ${a.at(-1)}`) : ''; }
+/** « Université de Sherbrooke (UdeS) » (revues générées avant le sigle seul) → « UdeS » ; sinon inchangé. */
+const instShort = (s) => { const m = String(s || '').match(/^.+\(([^()]+)\)\s*$/); return (m ? m[1] : String(s || '')).trim(); };
+/** Émoji décoratif : visible à l'écran, retiré à l'impression (un journal imprimé n'en met pas). */
+const emo = (e) => (e ? `<span class="revue-emoji" aria-hidden="true">${e}</span> ` : '');
 const plural = (n, one, many = `${one}s`) => `${n} ${n > 1 ? many : one}`;
 
-function itemHtml(x) {
+function itemHtml(x, leadId = '') {
   const lang = x.lang === 'en' ? ' lang="en"' : '';
   const when = `${frShort(mtlParts(x.date).ymd)} · ${frClock(x.date)}`;
   const authors = authorsLine(x.authors || []);
@@ -73,9 +77,9 @@ function itemHtml(x) {
     ? `<p class="revue-item__resume" data-texte="ia">${esc(x.resume)}</p>`
     : (x.excerpt ? `<blockquote class="revue-item__excerpt" data-texte="extrait"${lang} cite="${esc(x.link)}"><p>« ${esc(x.excerpt)} »</p></blockquote>` : '');
   return [
-    `          <li class="revue-item" id="a-${esc(x.id)}">`,
-    `            <p class="revue-item__media"><span class="notranslate" translate="no">${esc(x.source)}</span>${x.institution ? ` · ${esc(x.institution)}` : ''}</p>`,
-    `            <h4 class="revue-item__title"><a href="${esc(x.link)}"${EXT}${lang}>${x.sport ? `${esc(x.sport)} ` : ''}${esc(x.title)}</a></h4>`,
+    `          <li class="revue-item" id="a-${esc(x.id)}"${x.id === leadId ? ' data-une="1"' : ''}>`,
+    `            <p class="revue-item__media"><span class="notranslate" translate="no">${esc(x.source)}</span>${x.institution ? ` · <span class="revue-item__inst">${esc(instShort(x.institution))}</span>` : ''}</p>`,
+    `            <h4 class="revue-item__title"><a href="${esc(x.link)}"${EXT}${lang}>${x.sport ? emo(esc(x.sport)) : ''}${esc(x.title)}</a></h4>`,
     `            <p class="revue-item__byline">${authors ? `Par <span class="notranslate" translate="no">${esc(authors)}</span> · ` : ''}<time datetime="${esc(isoMtl(x.date))}">${esc(when)}</time></p>`,
     text ? `            ${text}` : '',
     `            <p class="revue-item__more"><a href="${esc(x.link)}"${EXT}>Lire l’article sur <span class="notranslate" translate="no">${esc(x.source)}</span> <span aria-hidden="true">↗</span></a></p>`,
@@ -84,13 +88,15 @@ function itemHtml(x) {
 }
 function presseHtml(model) {
   const groups = groupByTheme(model.items);
+  const leadId = leadOf(model)?.id || '';
   return [
     '      <section class="seo-section revue-section" id="presse" aria-labelledby="presse-titre">',
-    `        <h2 id="presse-titre">📰 Revue de presse</h2>`,
+    `        <h2 id="presse-titre">${emo('📰')}Revue de presse</h2>`,
     ...groups.map((g) => [
-      `        <h3 class="revue-theme" id="theme-${slug(g.theme)}">${g.emoji} ${esc(g.theme)}</h3>`,
+      // Thème qui ne contient que l'article à la une : à l'impression, l'article est déjà en tête de page.
+      `        <h3 class="revue-theme" id="theme-${slug(g.theme)}"${g.items.every((x) => x.id === leadId) ? ' data-une="1"' : ''}>${emo(g.emoji)}${esc(g.theme)}</h3>`,
       '        <ol class="revue-items">',
-      ...g.items.map(itemHtml),
+      ...g.items.map((x) => itemHtml(x, leadId)),
       '        </ol>',
     ].join('\n')),
     '      </section>',
@@ -101,7 +107,7 @@ function radioHtml(model) {
   const window = model.edition.id === 'soir' ? 'en soirée' : 'pendant la journée';
   return [
     '      <section class="seo-section revue-section" id="radio" aria-labelledby="radio-titre">',
-    '        <h2 id="radio-titre">📻 À l’écoute sur les radios étudiantes</h2>',
+    `        <h2 id="radio-titre">${emo('📻')}À l’écoute sur les radios étudiantes</h2>`,
     rows.length
       ? `        <p class="seo-section__lead">Émissions originales prévues ${window} le ${esc(frDayYear(model.edition.day))}, selon les grilles publiées par les stations (heure de Montréal).</p>`
       : `        <p class="seo-section__lead">Aucune émission originale n’est inscrite aux grilles des radios étudiantes pour cette période. <a href="${SITE}/horaires/">Voir toutes les grilles</a>.</p>`,
@@ -117,20 +123,20 @@ function radioHtml(model) {
 function sportHtml(model) {
   const { results = [], next = [] } = model.sports || {};
   const groups = new Map();
-  for (const r of results) { const k = `${r.uni ? 'u' : 'c'}|${r.emoji} ${r.sport}`; if (!groups.has(k)) groups.set(k, { label: `${r.emoji} ${r.sport}`, uni: r.uni, items: [] }); groups.get(k).items.push(r); }
+  for (const r of results) { const k = `${r.uni ? 'u' : 'c'}|${r.emoji} ${r.sport}`; if (!groups.has(k)) groups.set(k, { emoji: r.emoji, label: r.sport, uni: r.uni, items: [] }); groups.get(k).items.push(r); }
   const days = new Map();
   for (const r of next) { if (!days.has(r.date)) days.set(r.date, []); days.get(r.date).push(r); }
   const refreshed = model.refreshedAt ? ` Résultats mis à jour le ${esc(frDayYear(mtlParts(model.refreshedAt).ymd))} à ${esc(frClock(model.refreshedAt))}.` : '';
   const out = [
     '      <section class="seo-section revue-section" id="sport" aria-labelledby="sport-titre">',
-    '        <h2 id="sport-titre">🏟️ Sport étudiant</h2>',
+    `        <h2 id="sport-titre">${emo('🏟️')}Sport étudiant</h2>`,
     '        <h3 class="revue-sub">Résultats</h3>',
   ];
   if (!results.length) out.push(`        <p class="revue-empty">Aucun nouveau résultat sportif étudiant pour cette période.${refreshed}</p>`);
   else {
     out.push(`        <p class="seo-section__lead">Tous les résultats connus du sport étudiant (RSEQ, U SPORTS et ligues étudiantes), universitaire d’abord.${refreshed}</p>`);
     for (const g of groups.values()) {
-      out.push(`        <h4 class="revue-sport">${esc(g.label)} <span class="revue-level">${g.uni ? 'universitaire' : 'collégial'}</span></h4>`, '        <ul class="revue-results">');
+      out.push(`        <h4 class="revue-sport">${emo(esc(g.emoji))}${esc(g.label)} <span class="revue-level">${g.uni ? 'universitaire' : 'collégial'}</span></h4>`, '        <ul class="revue-results">');
       for (const r of g.items) out.push(`          <li><span class="revue-score notranslate" translate="no">${esc(r.text)}</span> <span class="revue-league">${esc([r.league, r.when].filter(Boolean).join(' · '))}</span></li>`);
       out.push('        </ul>');
     }
@@ -139,7 +145,7 @@ function sportHtml(model) {
   if (!next.length) out.push('        <p class="revue-empty">Aucun match étudiant inscrit au calendrier pour les prochains jours.</p>');
   for (const [d, list] of days) {
     out.push(`        <h4 class="revue-day">${esc(cap(frDayYear(d)))}</h4>`, '        <ul class="revue-next">');
-    for (const r of list) out.push(`          <li>${r.time ? `<time>${esc(r.time.replace(/^0/, '').replace(':00', ' h').replace(':', ' h '))}</time> ` : ''}<span class="revue-sportname">${esc(`${r.emoji} ${r.sport}`)}</span> · <span class="notranslate" translate="no">${esc(r.text)}</span>${r.league ? ` <span class="revue-league">${esc(r.league)}</span>` : ''}</li>`);
+    for (const r of list) out.push(`          <li>${r.time ? `<time>${esc(r.time.replace(/^0/, '').replace(':00', ' h').replace(':', ' h '))}</time> ` : ''}<span class="revue-sportname">${emo(esc(r.emoji))}${esc(r.sport)}</span> · <span class="notranslate" translate="no">${esc(r.text)}</span>${r.league ? ` <span class="revue-league">${esc(r.league)}</span>` : ''}</li>`);
     out.push('        </ul>');
   }
   out.push(`        <p class="revue-more"><a href="${SITE}/sports/">Tableau complet du sport étudiant</a></p>`, '      </section>');
@@ -166,17 +172,92 @@ function coverCaption(img) {
 /** Corps de l'article (aussi repris tel quel, sans la chrome, dans le flux RSS). */
 /** Mention de transparence, discrète, en pied d'article (une seule phrase). */
 const DISCLOSURE = 'Revue préparée automatiquement par Le Radar à partir des sources citées ; chaque texte, titre et photo appartient à son média et à ses auteurs.';
+/** Article à la une : le premier de la sélection (celui de l'amorce et de la photo). */
+function leadOf(model) { return (model.items || [])[0] || null; }
+const hhmm = (t) => String(t || '').replace(/^0/, '').replace(':00', ' h').replace(':', ' h ');
+/**
+ * Manchette imprimée (cachée à l'écran, où le mât du site et le titre h1 font ce travail) : logo du Radar à gauche du
+ * mot-symbole, puis la ligne de folio (édition, date, heure de publication). Vide de tout lien et de tout contrôle.
+ */
+function flagHtml(model) {
+  const pub = model.datePublished;
+  const ed = model.edition.id === 'soir' ? 'La revue du soir' : 'La revue du matin';
+  return [
+    '      <header class="revue-flag" aria-hidden="true">',
+    '        <p class="revue-flag__ears"><span>Revue de presse étudiante</span><span>Gratuit · le-radar.ca/revue</span></p>',
+    '        <p class="revue-flag__brand"><img class="revue-flag__logo" src="../../assets/icon.svg" width="44" height="44" alt="" /><span class="revue-flag__name notranslate" translate="no">LE-RADAR.ca</span></p>',
+    '        <p class="revue-flag__devise">Médias, radios et sport étudiants du Québec</p>',
+    `        <p class="revue-flag__folio"><span class="revue-flag__ed">${ed}</span><span class="revue-flag__date">${esc(cap(frDayYear(model.edition.day)))}</span><span class="revue-flag__time">Publiée à ${esc(frClock(pub))}, heure de Montréal</span></p>`,
+    '      </header>',
+  ].join('\n');
+}
+/** Bloc « À la une » imprimé : surtitre, grand titre, signature (tous les auteurs) ; le texte suit la photo. */
+function uneHead(x) {
+  if (!x) return '';
+  const lang = x.lang === 'en' ? ' lang="en"' : '';
+  const authors = authorsLine(x.authors || []);
+  return [
+    '        <div class="revue-une" aria-hidden="true">',
+    `          <p class="revue-une__kicker">À la une · <span class="notranslate" translate="no">${esc(x.source)}</span>${x.institution ? ` · ${esc(instShort(x.institution))}` : ''}</p>`,
+    `          <p class="revue-une__title"${lang}>${x.sport ? `${emo(esc(x.sport))}` : ''}${esc(x.title)}</p>`,
+    `          <p class="revue-une__byline">${authors ? `Par <span class="notranslate" translate="no">${esc(authors)}</span> · ` : ''}${esc(frShort(mtlParts(x.date).ymd))}, ${esc(frClock(x.date))}</p>`,
+    '        </div>',
+  ].join('\n');
+}
+function uneText(x) {
+  if (!x) return '';
+  const lang = x.lang === 'en' && !x.resume ? ' lang="en"' : '';
+  const t = x.resume || (x.excerpt ? `« ${x.excerpt} »` : '');
+  return t ? `        <p class="revue-une__text" aria-hidden="true"${lang}>${esc(t)}</p>` : '';
+}
+/** Encadré des grands formats (Legal, Tabloïd, A3) : sport (une régate si l'édition en a une) et radio en bref. */
+function encadreHtml(model) {
+  const { results = [], next = [] } = model.sports || {};
+  const sailing = (r) => r.kind === 'classement' || /^(sailing|voile)$/i.test(String(r.sportKey || ''));
+  const res = results.slice(0, 4);
+  const sail = results.find(sailing);
+  if (sail && !res.includes(sail)) res.splice(res.length - 1, 1, sail);
+  const sport = res.length
+    ? res.map((r) => `            <li><b>${esc(r.sport)}</b> <span class="notranslate" translate="no">${esc(r.text)}</span></li>`)
+    : next.slice(0, 4).map((r) => `            <li><b>${esc(frShort(r.date))}${r.time ? `, ${esc(hhmm(r.time))}` : ''}</b> ${esc(r.sport)} · <span class="notranslate" translate="no">${esc(r.text)}</span></li>`);
+  const shows = (model.radio || []).flatMap((st) => st.shows.map((s) => ({ ...s, station: st.station })))
+    .sort((a, b) => String(a.start).localeCompare(String(b.start))).slice(0, 4);
+  if (!sport.length && !shows.length) return '';
+  return [
+    '        <aside class="revue-encadre" aria-hidden="true">',
+    '          <p class="revue-encadre__head">En bref</p>',
+    sport.length ? `          <p class="revue-encadre__sub">${res.length ? 'Sport étudiant : résultats' : 'Sport étudiant : prochains matchs'}</p>\n          <ul>\n${sport.join('\n')}\n          </ul>` : '',
+    shows.length ? `          <p class="revue-encadre__sub">À l’antenne, ${esc(frShort(model.edition.day))}</p>\n          <ul>\n${shows.map((s) => `            <li><b>${esc(hhmm(s.start))}</b> <span class="notranslate" translate="no">${esc(s.station)}</span> · ${esc(s.title)}</li>`).join('\n')}\n          </ul>` : '',
+    '          <p class="revue-encadre__more">Tous les résultats et les grilles, plus loin dans cette édition.</p>',
+    '        </aside>',
+  ].filter(Boolean).join('\n');
+}
 function articleBody(model) {
   const pub = model.datePublished, mod = model.dateModified;
   const modified = mod && Date.parse(mod) - Date.parse(pub) > 60e3;
   const img = model.image;
+  const lead = leadOf(model);
+  // Les enveloppes .revue-top, .revue-top__main, .revue-top__side et .revue-cols sont transparentes à l'écran
+  // (display: contents) : elles ne servent qu'à la mise en page du journal imprimé (revue.css, @media print).
   return [
     `      <article class="revue revue--${esc(model.edition.id)}" data-revue="${esc(model.id)}">`,
+    flagHtml(model),
     `      <p class="revue-meta">Par <strong>${PUBLISHER}</strong> · Publiée le <time datetime="${esc(isoMtl(pub))}">${esc(frDayYear(mtlParts(pub).ymd))} à ${esc(frClock(pub))}</time>${modified ? ` · Mise à jour à <time datetime="${esc(isoMtl(mod))}">${esc(frClock(mod))}</time>` : ''} (heure de Montréal)</p>`,
+    '      <div class="revue-top">',
+    '      <div class="revue-top__main">',
+    uneHead(lead),
     img ? `      <figure class="revue-cover"><img src="${esc(img.url)}" alt="${esc(img.title)}" loading="eager" decoding="async" /><figcaption>${esc(coverCaption(img))}</figcaption></figure>` : '',
+    uneText(lead),
+    '      </div>',
+    '      <div class="revue-top__side">',
     `      <p class="seo-lead revue-lede">${esc(model.intro)}</p>`,
+    encadreHtml(model),
+    '      </div>',
+    '      </div>',
     '      <nav class="revue-toc" aria-label="Sommaire"><a href="#presse">📰 Revue de presse</a><a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a><a href="#sources">Sources</a></nav>',
+    '      <div class="revue-cols">',
     presseHtml(model), radioHtml(model), sportHtml(model), sourcesHtml(model),
+    '      </div>',
     `      <p class="revue-disclosure">${DISCLOSURE}</p>`,
     '      </article>',
   ].filter(Boolean).join('\n');
