@@ -8,7 +8,8 @@ import { buildPageText, pageComment } from '../scripts/social/buffer-pages.mjs';
 import { threadMetadata } from '../scripts/social/channels/x-buffer.mjs';
 import { createInstagram, imageRequests, instagramEnabled } from '../scripts/social/channels/instagram.mjs';
 import { makeEntry, appendEntry, summarize, pullEntry } from '../scripts/social/reach-log.mjs';
-import { POLICY } from '../scripts/social/policy.mjs';
+import { POLICY, networkEnabled } from '../scripts/social/policy.mjs';
+import { frenchUneItems, byline } from '../scripts/social/une-lib.mjs';
 
 const fr = { id: 'fr1', source: 'Le Délit', author: 'Jeanne Roy', title: 'Grève au campus', bare: 'Grève au campus', link: 'https://www.delitfrancais.com/2026/11/01/greve/', desc: 'Les associations étudiantes votent une grève de deux jours pour le climat.', lang: 'fr' };
 const en = { id: 'en1', source: 'The Link', author: 'Colin', title: 'Clear bags: a remedy for composting?', bare: 'Clear bags: a remedy for composting?', link: 'https://thelinknewspaper.ca/article/1', desc: 'The city is far behind its composting target and students want a fix.', lang: 'en' };
@@ -61,8 +62,12 @@ for (let i = 1; i < mins.length; i++) assert.ok(mins[i] - mins[i - 1] >= 120);
 for (const une of [7 * 60 + 45, 19 * 60 + 30]) for (const m of mins) assert.ok(Math.abs(m - une) >= 90);
 
 const pool = [fr, { ...fr, id: 'fr2', source: 'Impact Campus' }, en];
-const seated = withEnglishSeat([fr, pool[1]], pool, 2);
-assert.ok(seated.some(isEnglishItem) && seated.length === 2);
+const seated = withEnglishSeat([fr], pool, 2);
+assert.ok(seated.some(isEnglishItem) && seated.length === 2, 'place libre : un article anglais entre');
+const full = withEnglishSeat([fr, pool[1]], pool, 2);
+assert.equal(full.length, 2); assert.ok(!full.some(isEnglishItem), 'sélection pleine : on ne retire personne');
+const two = withEnglishSeat([en, { ...en, id: 'en2', link: 'https://thelinknewspaper.ca/article/2' }], [{ ...en, id: 'en3', link: 'https://thelinknewspaper.ca/article/3' }], 3, 2);
+assert.equal(two.length, 2, 'X : jamais un 3e article de la même source');
 assert.deepEqual(withEnglishSeat([fr], [fr], 2), [fr]);
 
 const log = appendEntry({ posts: [] }, makeEntry({ id: 'p1', network: 'x', type: 'une', lang: 'fr', image: true, at: '2026-11-17T15:00:00Z' }));
@@ -75,7 +80,15 @@ assert.equal(pulled.metrics.likes, 3); assert.equal(pulled.metrics.views, null);
 const xPull = await pullEntry({ network: 'x', id: '1', postId: '1' }, { fetchImpl: async () => { throw new Error('ne pas appeler'); } });
 assert.equal(xPull.metrics, null); assert.match(xPull.metricsNote, /aucun accès payant/);
 
+assert.equal(networkEnabled('facebook'), false, 'Facebook en pause');
+assert.equal(networkEnabled('instagram', POLICY), false);
 assert.equal(instagramEnabled(POLICY), false);
+assert.deepEqual(frenchUneItems([
+  { id: 'a', lang: 'fr', title: 'Grève au campus' },
+  { id: 'b', lang: 'en', title: 'Stingers win the opener' },
+  { id: 'c', lang: 'fr', title: 'À lire en anglais : « Clear bags »' },
+]).map(x => x.id), ['a'], 'La une : ni anglais, ni annonce d’un article anglais');
+assert.match(byline({ author: 'Jeanne Roy et Paul Martin', source: 'Le Délit' }), /Jeanne Roy et Paul Martin · Le Délit/);
 assert.throws(() => createInstagram({}), /désactivé/);
 assert.throws(() => createInstagram({ token: 't', userId: '1', policy: POLICY }), /désactivé/);
 const reqs = imageRequests('123', { imageUrl: 'https://le-radar.ca/a.jpg', caption: 'La une' });

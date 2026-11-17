@@ -11,8 +11,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
-import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
+import { POLICY, activeNetworks, FACEBOOK_PAUSE } from './policy.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, frenchUneItems, finalizeItems } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -41,7 +41,7 @@ export function gate({ now = Date.now(), state = {}, forced = '', cfg = CFG, dry
   if (forced && forced !== 'auto') return { due: true, slot: forced, why: 'créneau forcé (déclenchement manuel)' };
   const s = slotAt(now, cfg.slots || SLOTS);
   if (!s) return { due: false, slot: '', why: `hors des fenêtres d'envoi : ${tz(now)}` };
-  const nets = (cfg.networks || []).filter(n => NETS.includes(n));
+  const nets = activeNetworks((cfg.networks || []).filter(n => NETS.includes(n)));
   if (slotDone(state[s.key], nets)) return { due: false, slot: s.id, why: `${s.key} déjà traité` };
   return { due: true, slot: s.id, why: `${s.key} dû` };
 }
@@ -141,7 +141,8 @@ async function main() {
   const out = path.resolve(arg('out', 'une-preview')); fs.mkdirSync(out, { recursive: true });
   const slot = forced && forced !== 'auto' ? slotFor(forced, now, CFG.slots) : slotAt(now, CFG.slots);
   if (!slot) { console.log(`Hors des fenêtres d'envoi (${tz(now)}) : rien à faire.`); return; }
-  const nets = (CFG.networks || []).filter(n => NETS.includes(n));
+  const nets = activeNetworks((CFG.networks || []).filter(n => NETS.includes(n)));
+  if ((CFG.networks || []).includes('facebook') && !nets.includes('facebook')) console.log(FACEBOOK_PAUSE);
   let entry = state[slot.key];
   if (!dry && slotDone(entry, nets)) { console.log(`${slot.key} : déjà traité.`); return; }
   let sel, texts, images, reason;
@@ -160,6 +161,7 @@ async function main() {
       sel.translated = fr.kept.filter(x => x.translated).map(x => ({ from: x.originalTitle, to: x.title }));
       sel.items = fr.kept;
     }
+    sel.items = frenchUneItems(sel.items);
     sel.items = finalizeItems(sel.items, CFG.maxItems || 4); sel.ids = sel.items.map(x => x.id); sel.lead = sel.items[0] || null;
     if (!sel.items.length && !sel.skip) { sel.skip = true; sel.why = 'aucun article publiable en français : publication sautée'; }
     console.log(`Sélection ${slot.key} : ${sel.items.length} article(s)${sel.doubts.length ? ' ; doutes : ' + sel.doubts.join(' ; ') : ''}`);

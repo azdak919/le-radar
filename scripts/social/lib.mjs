@@ -180,14 +180,16 @@ export function frenchPost(it) {
   return { it: { ...it, bare: lead, title: lead, desc: '', aiHook: '' }, lang: 'en' };
 }
 /**
- * Garde au moins un article anglais dans la sélection quand il en existe, sans le laisser
- * prendre la place des articles français (au plus le dernier siège).
+ * Complète avec un article anglais seulement s'il reste une place et que sa source
+ * n'a pas déjà son maximum (2 sur X). Ne retire jamais un article déjà choisi.
  */
-export function withEnglishSeat(sel, pool, slots) {
-  if (!sel.length || sel.some(isEnglishItem)) return sel;
-  const extra = pool.find(it => isEnglishItem(it) && !sel.includes(it));
+export function withEnglishSeat(sel, pool, slots, perSource = PER_SOURCE_MAX) {
+  if (!sel.length || sel.length >= slots || sel.some(isEnglishItem)) return sel;
+  const count = new Map();
+  for (const it of sel) count.set(it.source, (count.get(it.source) || 0) + 1);
+  const extra = pool.find(it => isEnglishItem(it) && !sel.includes(it) && (count.get(it.source) || 0) < perSource);
   if (!extra) return sel;
-  return sel.length < slots ? [...sel, extra] : [...sel.slice(0, -1), extra];
+  return [...sel, extra];
 }
 export function joinHead(head, ex, en = isEnglish(head)) {
   if (!ex) return head;
@@ -290,7 +292,7 @@ export function selectItems(items, { sentIds = new Set(), queuedSources = [], sl
   }
   // variété d'abord, puis récence (jour civil), et à jour égal la vraie photo créditée à une personne.
   // Les articles sans photo propre (repli banque campus) restent publiés, simplement après à égalité.
-  const cmpP = (a, b) => (dayOf(a.date) !== dayOf(b.date) ? b.date - a.date : photoRank(b) - photoRank(a) || b.date - a.date);
+  const cmpP = (a, b) => (dayOf(a.date) !== dayOf(b.date) ? b.date - a.date : photoRank(b) - photoRank(a) || (isEnglishItem(a) ? 1 : 0) - (isEnglishItem(b) ? 1 : 0) || b.date - a.date);
   const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmpP) }))
     .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmpP(a.q[0], b.q[0]));
   const sel = [];
@@ -300,7 +302,7 @@ export function selectItems(items, { sentIds = new Set(), queuedSources = [], sl
       if ((count.get(s) || 0) >= perSource || !q.length) continue;
       sel.push(q.shift()); count.set(s, (count.get(s) || 0) + 1);
     }
-  return withEnglishSeat(sel, eligible, slots);
+  return withEnglishSeat(sel, eligible, slots, perSource);
 }
 
 /** Sources / auteurs du flux sans compte connu (rapport hebdo). */
@@ -364,7 +366,7 @@ export function selectDaily(items, { sentIds = new Set(), queuedSources = [], sl
   const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
   const by = new Map();
   for (const it of pool) { it._q = quality(it, accounts); if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it); }
-  const cmp = (a, b) => b._q - a._q || b.date - a.date;
+  const cmp = (a, b) => b._q - a._q || (isEnglishItem(a) ? 1 : 0) - (isEnglishItem(b) ? 1 : 0) || b.date - a.date;
   const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmp) }))
     .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmp(a.q[0], b.q[0]));
   const sel = [];
@@ -376,7 +378,7 @@ export function selectDaily(items, { sentIds = new Set(), queuedSources = [], sl
       sel.push(it); count.set(it.source, (count.get(it.source) || 0) + 1);
     }
   }
-  return withEnglishSeat(sel, pool, slots);
+  return withEnglishSeat(sel, pool, slots, perSource);
 }
 
 /** Retire les créneaux déjà pris (dueAt en file, à ±5 min). */

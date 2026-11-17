@@ -306,6 +306,10 @@ export async function frenchOnly(items, translate) {
   }
   return { kept, excluded };
 }
+/** La une ne garde ni un article encore en anglais, ni une annonce du type « en anglais : titre original ». */
+export function frenchUneItems(items) {
+  return (items || []).filter(x => x.lang !== 'en' && !/\b(à lire en anglais|en anglais\s*:)/i.test(`${x.title || ''} ${x.hook || ''}`));
+}
 /** Au plus `max` articles, la une étant le premier qui a une photo. */
 export function finalizeItems(items, max = 4) {
   let out = items.slice(0, max);

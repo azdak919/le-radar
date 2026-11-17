@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { POLICY, torontoDay, torontoHour, torontoWeekday, mentionLedger } from './policy.mjs';
+import { POLICY, activeNetworks, FACEBOOK_PAUSE, torontoDay, torontoHour, torontoWeekday, mentionLedger } from './policy.mjs';
 import { weekendModel, publishedModel, buildResultsText, resultsTags, resultsTumblrTags, listenModel, buildListenText, listenTags, checkText, NET_SPEC } from './formats.mjs';
 import { postRecord, facets, graphemes } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -131,7 +131,8 @@ async function main() {
   for (const format of formats) {
     const cfg = POLICY.formats[format]; if (!cfg) throw new Error(`format inconnu : ${format}`);
     const built = buildAll(format, { sports, radio, teamAcc, now, buffer });
-    const nets = (cfg.networks || []).filter(n => NETS.includes(n));
+    const nets = activeNetworks((cfg.networks || []).filter(n => NETS.includes(n)));
+    if ((cfg.networks || []).includes('facebook') && !nets.includes('facebook')) console.log(FACEBOOK_PAUSE);
     const key = format === 'weekend_results' ? built.window.key : torontoDay(now);
     const done = (state[format] ||= {})[key] ||= {};
     const bad = Object.entries(built.networks).filter(([n, v]) => nets.includes(n) && v.problems.length);

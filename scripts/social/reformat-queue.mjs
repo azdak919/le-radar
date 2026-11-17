@@ -9,6 +9,7 @@ import { buildXText, parseFeed, stripUtm, xlen, LIMITS, hasCdata } from './lib.m
 import { bankCredit } from './image-resolve.mjs';
 import { buildPageText, postMetadata } from './buffer-pages.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
+import { networkEnabled, FACEBOOK_PAUSE } from './policy.mjs';
 
 /** Texte attendu pour un post en file (pur, testable). */
 export function reformatText(it, accounts, { credit = '', img = '', old = null } = {}) {
@@ -33,6 +34,7 @@ async function main() {
   const CFG = rd('data/social/buffer-pages.json'), pagesState = rd('data/buffer-pages-sent.json');
   for (const net of (process.env.CHANNELS || 'x').split(',').map(s => s.trim()).filter(Boolean)) {
     const isX = net === 'x';
+    if (!networkEnabled(net)) { console.log(FACEBOOK_PAUSE); continue; }
     if (!isX && !CFG[net]) { console.log(`Canal inconnu : ${net}`); continue; }
     console.log(`\n===== ${net} =====`);
     const state = isX ? rd('data/buffer-sent.json').sent || {} : pagesState[net] || {};

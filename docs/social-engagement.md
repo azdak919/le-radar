@@ -12,15 +12,15 @@ Tout vit dans le dépôt (aucune routine externe). La source de vérité est `da
 
 ## Portée organique
 
-Le fil d’articles (pas La une, qui reste à 7 h 45 et 19 h 30) est espacé : au plus 6 publications par jour sur Bluesky, Mastodon et Tumblr, 5 créneaux X (10 h 15, 12 h 30, 15 h 45, 17 h 45, 21 h 15, heure de Montréal), 4 sur Facebook. Le texte donne l’essentiel en français ; un article anglais est annoncé en français, titre original entre guillemets. Les médias anglophones restent publiés, au plus un siège quand la sélection serait autrement toute française.
+Le fil d’articles (pas La une, qui reste à 7 h 45 et 19 h 30) est espacé : au plus 6 publications par jour sur Bluesky, Mastodon et Tumblr, 5 créneaux X (10 h 15, 12 h 30, 15 h 45, 17 h 45, 21 h 15, heure de Montréal). Facebook est en pause. Le texte donne l’essentiel en français ; un article anglais du fil est annoncé en français, titre original entre guillemets. La une, elle, ne publie pas d’article anglais, même annoncé ainsi. Les médias anglophones restent dans le fil, au plus un siège quand la sélection serait autrement toute française, sans dépasser deux articles par source.
 
 - **X** : pas d’URL dans le post. L’image est jointe, le lien part dans la réponse immédiate (`metadata.twitter.thread`, API Buffer). Un ou deux hashtags.
-- **Facebook** : image native, lien dans le premier commentaire Buffer. Un hashtag.
+- **Facebook** : code prêt (image native, lien dans le premier commentaire, un hashtag) mais **publication en pause**. L’interrupteur est `formats.une.prepared.facebook.enabled` dans `data/social/policy.json` (faux par défaut). Tant qu’il est faux, les bots n’ajoutent rien et ne réécrivent pas la file Buffer.
+- **Instagram** : adaptateur prêt dans `scripts/social/channels/instagram.mjs`, même pause (`formats.une.prepared.instagram.enabled`). Facebook et Instagram se réactivent **ensemble** : passer les deux `enabled` à `true` dans la même modification, quand le compte Instagram professionnel existe (`INSTAGRAM_ACCESS_TOKEN` et `INSTAGRAM_USER_ID`). Aucun identifiant dans le dépôt.
 - **Bluesky** : le lien reste dans le post, avec la carte (les liens n’y sont pas pénalisés comme sur X). Un ou deux hashtags.
 - **Mastodon** : le lien reste dans le post. Deux à quatre hashtags, utiles pour la découverte. Les résultats de fin de semaine n’en empilent plus huit.
 - **LinkedIn** : le lien reste dans le post. Deux ou trois hashtags.
 - **Tumblr** : le lien reste dans le post. Les étiquettes (10 à 15) sont le moyen de découverte, elles ne sont pas coupées.
-- **Instagram** : adaptateur prêt dans `scripts/social/channels/instagram.mjs`, désactivé (`formats.une.prepared.instagram.enabled` est faux). À activer quand le compte professionnel existera. Aucun identifiant dans le dépôt.
 - **Threads** : pas un canal du pipeline.
 
 Journal commun : `data/social/reach-log.json` (id, heure, réseau, type, langue de l’article, image). `node scripts/social/reach-log.mjs --pull` relit les j’aime via les API publiques Bluesky et Mastodon. X, Facebook et LinkedIn ne donnent pas les vues par l’API Buffer gratuite : aucun accès payant n’est ajouté. Les essais (`DRY_RUN`, absence de clé) n’écrivent pas le journal et ne publient rien.
