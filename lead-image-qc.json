@@ -1,42 +1,24 @@
 {
-  "updated": "2026-11-17T20:08:13.244Z",
-  "total": 1024,
-  "withPhoto": 920,
-  "withStock": 139,
-  "withCampusBank": 103,
-  "fullyCovered": 1015,
-  "leadReadyPhotos": 799,
-  "pageScraped": 17,
-  "photosRecovered": 15,
-  "imagesCleared": 3,
-  "stockSearches": 4,
-  "stockFound": 25,
-  "campusBankFound": 22,
+  "updated": "2026-11-17T20:37:48.595Z",
+  "total": 1025,
+  "withPhoto": 909,
+  "withStock": 143,
+  "withCampusBank": 107,
+  "fullyCovered": 1008,
+  "leadReadyPhotos": 796,
+  "pageScraped": 3,
+  "photosRecovered": 2,
+  "imagesCleared": 0,
+  "stockSearches": 1,
+  "stockFound": 24,
+  "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
-      "image": null
-    },
     {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "link": "https://journallagriffe.ca/2026/10/gatineau-est-represente-dans-les-nominations-du-gala-de-ladisq/",
       "reason": "no-stock-match",
       "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1.png"
-    },
-    {
-      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8f/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }

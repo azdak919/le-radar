@@ -1,44 +1,23 @@
 {
-  "updated": "2026-11-17T20:10:00.757Z",
-  "total": 1024,
-  "withImage": 915,
-  "withCredit": 859,
-  "cited": 482,
-  "pending": 324,
+  "updated": "2026-11-17T20:39:23.552Z",
+  "total": 1025,
+  "withImage": 909,
+  "withCredit": 909,
+  "cited": 492,
+  "pending": 299,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 60,
-  "citedNew": 47,
-  "fallbackNew": 13,
+  "updatedCount": 59,
+  "citedNew": 17,
+  "fallbackNew": 43,
   "samples": [
     {
-      "title": "Peut-on encore posséder de la culture ?",
-      "source": "La Pige",
-      "credit": "Photo : Maxence Gibault-Renault",
+      "title": "Les cuisines fantômes hantent-elles les restaurants?",
+      "source": "Montréal Campus",
+      "credit": "Photo : Chloé Sylvestre",
       "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Élections : qu’en pense la communauté universitaire ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Guillaume Villeneuve",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
-      "source": "La Pige",
-      "credit": "Photo : Rosalie Lepage",
-      "cited": true,
-      "method": "body-line"
+      "method": "figcaption-mention"
     },
     {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
@@ -48,13 +27,6 @@
       "method": null
     },
     {
-      "title": "Le bijou, accessoire de mode pour hommes",
-      "source": "La Pige",
-      "credit": "Photo : Émile Barthe",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
       "title": "Cornell : Les fraternités au centre du débat",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
@@ -62,39 +34,67 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Colin Boucher",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Journée mondiale du droit à l’avortement : toujours besoin de protection",
+      "title": "Jeunes et politique : un désintérêt ou un manque de représentation ?",
       "source": "La Pige",
       "credit": "Photo : La Pige",
       "cited": false,
       "method": null
     },
     {
-      "title": "Saguenay acquiert officiellement l’église Saint-Édouard",
+      "title": "L’inquiétante banalisation de la cocaïne chez les jeunes",
       "source": "La Pige",
-      "credit": "Photo : Arthur Bakhache",
-      "cited": true,
-      "method": "body-line"
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Antisémitisme : McGill, mauvaise élève?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Formation en RCR dans les écoles : une obligation peu respectée",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "La fabrique de la boîte de nuit",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "Le golf a la cote chez les jeunes du Saguenay-Lac-Saint-Jean",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Pression des pairs : l’élément déclencheur du vandalisme chez les jeunes",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le STEP se mobilise en prévision de la négociation d’une nouvelle convention collective",
+      "source": "Impact Campus",
+      "credit": "Photo : Marie Tremblay",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "json-ld"
+    },
+    {
+      "title": "Présences troubles : le corps en métamorphose",
+      "source": "Le Collectif",
+      "credit": "Photo : SarahCloutier",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Third space recommendations near campus",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Webster Library exhibitions bring some light onto the Concordia campus",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }

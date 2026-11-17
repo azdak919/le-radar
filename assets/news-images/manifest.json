@@ -2969,25 +2969,6 @@
       "via": "disk",
       "nameKey": "img_4055.jpg"
     },
-    "fbb26b13392022db": {
-      "local": "assets/news-images/fbb26b13392022db.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-22.35.07.png",
-      "host": "thebucampus.ca",
-      "bytes": 114424,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:41:00.790Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-10-27-a-22.35.07.png"
-    },
-    "1139464b07bd2eb7": {
-      "local": "assets/news-images/1139464b07bd2eb7.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-22.30.26.png",
-      "host": "thebucampus.ca",
-      "bytes": 93428,
-      "updatedAt": "2026-11-17T11:41:00.790Z",
-      "via": "disk",
-      "nameKey": "capture-decran-le-2026-10-27-a-22.30.26.png"
-    },
     "cd96f23e0f579813": {
       "local": "assets/news-images/cd96f23e0f579813.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/cynisme.elena_-scaled.png",
@@ -3075,15 +3056,6 @@
       "via": "origin",
       "nameKey": "5infos_ql-e1769792962990.png"
     },
-    "467697863f7bc97d": {
-      "local": "assets/news-images/467697863f7bc97d.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 47525,
-      "updatedAt": "2026-11-17T18:47:03.987Z",
-      "via": "disk",
-      "nameKey": "image.png"
-    },
     "be611451563af4ef": {
       "local": "assets/news-images/be611451563af4ef.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
@@ -3093,10 +3065,20 @@
       "updatedAt": "2026-11-17T20:08:45.473Z",
       "via": "resize-proxy",
       "nameKey": "media.png"
+    },
+    "426e8bffe1cefa87": {
+      "local": "assets/news-images/426e8bffe1cefa87.jpg",
+      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/IMG_0876.jpeg",
+      "host": "montrealcampus.ca",
+      "bytes": 229727,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-17T20:38:34.759Z",
+      "via": "resize-proxy",
+      "nameKey": "img_0876.jpeg"
     }
   },
-  "updatedAt": "2026-11-17T20:08:45.482Z",
-  "count": 321,
+  "updatedAt": "2026-11-17T20:38:34.768Z",
+  "count": 319,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5447,33 +5429,17 @@
       "reason": "budget",
       "at": "2026-11-17T18:47:55.456Z"
     },
-    "3a3bc948a7d06499": {
-      "reason": "budget",
-      "at": "2026-11-17T18:47:55.461Z"
-    },
-    "799a0a1ce895d871": {
-      "reason": "budget",
-      "at": "2026-11-17T18:47:55.465Z"
-    },
-    "1c83f88a53f7aafa": {
-      "reason": "budget",
-      "at": "2026-11-17T18:47:55.471Z"
-    },
-    "6a484a2d36fef815": {
-      "reason": "budget",
-      "at": "2026-11-17T18:47:55.475Z"
-    },
-    "20e7f4e8b9cc0d90": {
-      "reason": "budget",
-      "at": "2026-11-17T18:47:55.478Z"
-    },
-    "166c965ceb7dcf6b": {
-      "reason": "budget",
-      "at": "2026-11-17T18:47:55.480Z"
-    },
     "829bf138843dfc8f": {
       "reason": "budget",
       "at": "2026-11-17T20:08:45.480Z"
+    },
+    "1139464b07bd2eb7": {
+      "reason": "budget",
+      "at": "2026-11-17T20:38:34.765Z"
+    },
+    "fbb26b13392022db": {
+      "reason": "budget",
+      "at": "2026-11-17T20:38:34.767Z"
     }
   }
 }
