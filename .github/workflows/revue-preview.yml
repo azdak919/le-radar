@@ -1,0 +1,59 @@
+name: Revue — aperçu (PR, sans publication)
+
+# Exemples réels de « La revue du matin » et « La revue du soir » sur le code d'une PR, à partir des données publiques du site
+# (news.json, sports-masthead.json, radio-schedules.json de le-radar.ca), avec l'IA du projet si les secrets sont disponibles
+# (PR du dépôt même ; jamais pour une PR externe) et le repli déterministe sinon. Pages, flux, sitemaps et captures (mobile et
+# ordinateur, clair et sombre, PDF) en artefact « exemple-revue ». Aucune écriture (contents: read), rien n'est publié.
+on:
+  pull_request:
+    paths:
+      - 'scripts/revue/**'
+      - 'revue.css'
+      - 'data/revue/**'
+      - '.github/workflows/revue*.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: revue-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apercu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Cache Playwright Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Police émoji
+        run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
+      - name: Données réelles du site (lecture seule)
+        run: |
+          for f in news.json sports-masthead.json radio-schedules.json; do
+            curl -fsS --retry 3 "https://le-radar.ca/$f" -o "$f.live" && mv "$f.live" "$f" || echo "::warning::$f : copie du dépôt"
+          done
+      - name: Exemples matin et soir
+        env:
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash scripts/revue/revue-sample.sh revue-sample
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: exemple-revue
+          path: revue-sample/
+          if-no-files-found: ignore

@@ -1,0 +1,383 @@
+// « La revue du matin » et « La revue du soir » : logique pure (testée dans tests/revue.mjs).
+//  - éditions en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées par Intl) ;
+//  - période : matin = la nuit et le matin (depuis 19 h 15 la veille), soir = la journée (depuis 7 h 30), prolongée jusqu'à la
+//    dernière revue publiée si une édition a été sautée (au plus `maxLookbackHours`) ; jamais deux fois le même article ;
+//  - articles : news.json (médias étudiants seulement, sport pro exclu), TOUS les auteurs (front.authorNames), média, établissement
+//    en français avec son sigle, lien vers l'original, extrait court ;
+//  - radio étudiante : émissions originales de la période (radio-schedules.json) ;
+//  - sport étudiant : tous les résultats de la période et les prochains matchs (sports-masthead.json, même module que la une) ;
+//  - garde-fou : validateReview() refuse toute revue vide ou dont un lien, un auteur, un titre, une émission ou un score ne vient
+//    pas des données ; textReject() refuse tout texte d'IA avec un chiffre, un nom ou une date relative absents de la source.
+// Aucune écriture ici.
+import { createRequire } from 'node:module';
+import { pickSports, frDay, frShort, frHour, institutionLabel, institutionSigle, siteImage, sportEmoji } from '../social/une-lib.mjs';
+import { detectLang } from '../social/lib.mjs';
+
+const require = createRequire(import.meta.url);
+const front = require('../magazine-front-page-lib.js');
+
+export const SITE = 'https://le-radar.ca';
+export const PUBLISHER = 'Le Radar';
+export const EDITIONS = {
+  matin: { id: 'matin', label: 'La revue du matin', emoji: '☀️', target: '07:30', from: '07:15', to: '10:30', periodStart: '19:15', periodStartDayOffset: -1 },
+  soir: { id: 'soir', label: 'La revue du soir', emoji: '🌙', target: '19:15', from: '19:00', to: '22:00', periodStart: '07:30', periodStartDayOffset: 0 },
+};
+export const DEFAULT_CONFIG = {
+  publish: false, editions: EDITIONS, refresh: { enabled: true, from: '22:45', to: '23:59' }, skipWithoutArticles: true,
+  maxLookbackHours: 48, maxArticles: 40, radio: { maxPerStation: 4, windows: { matin: ['07:30', '17:00'], soir: ['19:15', '24:00'] } },
+  sports: { upcomingDays: 3, upcomingFallbackDays: 7 }, ai: { enabled: true, maxCallsPerRun: 6, batchSize: 8 }, newsSitemapHours: 48, feedItems: 10,
+};
+/** Réglages : data/revue/config.json par-dessus les valeurs par défaut (publish reste false sauf true explicite). */
+export function mergeConfig(raw = {}) {
+  const c = { ...DEFAULT_CONFIG, ...raw };
+  c.editions = { matin: { ...EDITIONS.matin, ...(raw.editions?.matin || {}) }, soir: { ...EDITIONS.soir, ...(raw.editions?.soir || {}) } };
+  c.radio = { ...DEFAULT_CONFIG.radio, ...(raw.radio || {}), windows: { ...DEFAULT_CONFIG.radio.windows, ...(raw.radio?.windows || {}) } };
+  c.sports = { ...DEFAULT_CONFIG.sports, ...(raw.sports || {}) };
+  c.ai = { ...DEFAULT_CONFIG.ai, ...(raw.ai || {}) };
+  c.refresh = { ...DEFAULT_CONFIG.refresh, ...(raw.refresh || {}) };
+  c.publish = raw.publish === true;
+  return c;
+}
+
+// ── Heure de Montréal ────────────────────────────────────────────────────────
+const hm = s => { const [h, m] = String(s).split(':').map(Number); return h * 60 + (m || 0); };
+const MTL = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+/** { ymd, minutes, hh, mm } à Montréal pour un instant. */
+export function mtl(ts) {
+  const p = Object.fromEntries(MTL.formatToParts(new Date(ts)).map(x => [x.type, x.value]));
+  return { ymd: `${p.year}-${p.month}-${p.day}`, minutes: +p.hour * 60 + +p.minute, hh: +p.hour, mm: +p.minute };
+}
+export const addDays = (ymd, n) => new Date(Date.parse(ymd + 'T12:00:00Z') + n * 864e5).toISOString().slice(0, 10);
+/** Instant (ms) d'une heure locale de Montréal (« 19:15 » le 2026-11-16). « 24:00 » = minuit suivant. */
+export function mtlInstant(ymd, hhmm) {
+  const [h, m] = String(hhmm).split(':').map(Number);
+  const want = Date.UTC(+ymd.slice(0, 4), +ymd.slice(5, 7) - 1, +ymd.slice(8, 10), h, m || 0);
+  let t = want + 5 * 3600e3;
+  for (let i = 0; i < 3; i++) { const p = mtl(t), got = Date.UTC(+p.ymd.slice(0, 4), +p.ymd.slice(5, 7) - 1, +p.ymd.slice(8, 10), p.hh, p.mm); t += want - got; }
+  return t;
+}
+/** « 7 h 30 » (heure de Montréal) pour un instant. */
+export const frTime = ts => { const p = mtl(ts); return frHour(`${p.hh}:${String(p.mm).padStart(2, '0')}`); };
+/** « lundi 16 novembre 2026 ». */
+export const frDayYear = ymd => `${frDay(ymd)} ${ymd.slice(0, 4)}`;
+
+// ── Éditions ─────────────────────────────────────────────────────────────────
+export const reviewId = (day, ed) => `${day}-${ed}`;
+export const reviewPath = (day, ed) => `revue/${reviewId(day, ed)}/`;
+export const reviewUrl = (day, ed) => `${SITE}/${reviewPath(day, ed)}`;
+/** Édition dont la fenêtre de publication contient `now`, sinon null. */
+export function editionAt(now, cfg = DEFAULT_CONFIG) {
+  const { ymd, minutes } = mtl(now);
+  for (const e of Object.values(cfg.editions)) if (minutes >= hm(e.from) && minutes < hm(e.to)) return { ...e, day: ymd, key: reviewId(ymd, e.id) };
+  return null;
+}
+export function editionFor(id, now, cfg = DEFAULT_CONFIG) {
+  const e = cfg.editions[id]; if (!e) throw new Error(`édition inconnue : ${id}`);
+  const day = mtl(now).ymd; return { ...e, day, key: reviewId(day, id) };
+}
+/** Fenêtre de mise à jour tardive de la revue du soir (résultats sportifs du jour). */
+export function refreshAt(now, cfg = DEFAULT_CONFIG) {
+  if (!cfg.refresh?.enabled) return null;
+  const { ymd, minutes } = mtl(now);
+  return minutes >= hm(cfg.refresh.from) && minutes <= hm(cfg.refresh.to) ? { ...cfg.editions.soir, day: ymd, key: reviewId(ymd, 'soir'), refresh: true } : null;
+}
+/**
+ * Période couverte : [début, fin]. Début = heure de départ de l'édition (la veille 19 h 15 pour le matin, 7 h 30 pour le soir),
+ * reculé jusqu'à la fin de la dernière revue publiée si une édition a été sautée, sans dépasser `maxLookbackHours`.
+ */
+export function periodOf(edition, now, index = [], cfg = DEFAULT_CONFIG) {
+  let start = mtlInstant(addDays(edition.day, edition.periodStartDayOffset || 0), edition.periodStart);
+  const floor = now - (cfg.maxLookbackHours || 48) * 3600e3;
+  const prev = (index || []).filter(r => r.id !== edition.key && Date.parse(r.periodEnd) <= now).sort((a, b) => Date.parse(b.periodEnd) - Date.parse(a.periodEnd))[0];
+  if (prev && Date.parse(prev.periodEnd) < start) start = Math.max(Date.parse(prev.periodEnd), floor);
+  return { start: Math.max(start, floor), end: now };
+}
+/** Articles et résultats déjà repris par les revues des 4 derniers jours (anti-doublon). */
+export function covered(index = [], exceptId = '', reviews = {}) {
+  const ids = new Set(), sports = new Set();
+  for (const r of index || []) {
+    if (r.id === exceptId) continue;
+    for (const id of r.articleIds || []) ids.add(id);
+    for (const k of r.sportKeys || reviews[r.id]?.sports?.results?.map(x => x.key) || []) sports.add(k);
+  }
+  return { ids, sports };
+}
+
+// ── Articles ─────────────────────────────────────────────────────────────────
+const clean = s => String(s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+/** Extrait court (≤ max caractères), coupé à la phrase ou au mot. */
+export function shortExcerpt(text, max = 200) {
+  const s = clean(text); if (!s) return '';
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const m = [...cut.matchAll(/[.!?…](?:[»"”)])?(?=\s|$)/gu)].pop();
+  if (m && m.index + m[0].length > max * 0.45) return cut.slice(0, m.index + m[0].length).trim();
+  return cut.slice(0, Math.max(cut.lastIndexOf(' '), 40)).replace(/[\s,;:–—-]+$/u, '') + '…';
+}
+/** « Université de Sherbrooke (UdeS) » ; établissement anglais connu traduit ; inconnu anglais : sigle seul ou rien. */
+export function institutionDisplay(raw) {
+  const fr = institutionLabel({ institution: raw });
+  const sig = institutionSigle(raw) || institutionSigle(fr);
+  if (fr && sig && sig !== fr) return `${fr} (${sig})`;
+  return fr || sig || '';
+}
+export const THEMES = ['Vie de campus', 'Politique', 'Éducation', 'Société', 'Culture', 'Sport', 'Environnement', 'Santé', 'Science', 'Économie', 'International'];
+export const THEME_EMOJI = { 'Vie de campus': '🏫', Politique: '🏛️', Éducation: '🎓', Société: '👥', Culture: '🎭', Sport: '🏟️', Environnement: '🌱', Santé: '🩺', Science: '🔬', Économie: '💼', International: '🌍' };
+const THEME_RE = [
+  ['Sport', /\b(hockey|football|soccer|basketball|basket|volleyball|rugby|natation|athl[ée]tisme|badminton|stingers|martlets|redbirds|gaiters|carabins|rouge et or|vert (et|&) or|citadins|patriotes|match|saison|s[ée]ries|championnat|championship|playoffs?|coach|entra[îi]neur|tournoi|tournament|game|varsity|rseq|u sports)\b/i],
+  ['Politique', /\b(conseil municipal|municipal\w*|mairie|maire|mairesse|city council|protest\w*|manifestation\w*|manifestant\w*|élection|election|gouvernement|government|ministre|minister|premier ministre|caq|pq|plq|qs|liberal|conservat|parlement|parliament|assemblée nationale|politi\w*|vote|budget fédéral|ottawa|legault|carney|poilievre|député|mp|mna|loi \d+|bill \d+|syndicat|union|grève|strike)\b/i],
+  ['Éducation', /\b(midterms?|examens?|exams?|mentorat|mentorship|étudiant\w*|student\w*|cours|course|programme|program|ma[îi]trise|master'?s|doctorat|phd|bac(calauréat)?|frais de scolarité|tuition|universit\w*|cégep|college|professeur\w*|professor\w*|enseignant\w*|faculty|faculté|recherche|research|campus|admission|diplôm\w*|graduat\w*)\b/i],
+  ['Culture', /\b(grammy\w*|oscars?|gala|opéra|opera|film|cinéma|cinema|théâtre|theatre|theater|musique|music|album|concert|spectacle|show|festival|exposition|exhibit\w*|art|artiste|artist|livre|book|roman|novel|poésie|poetry|danse|dance|critique|review|chanson|song|série|series|humour|comedy)\b/i],
+  ['Environnement', /\b(climat|climate|environnement|environment|écolo\w*|ecolog\w*|durable|sustainab\w*|énergie|energy|pollution|biodiversit\w*|carbone|carbon|vert|green|forêt|forest|eau|water)\b/i],
+  ['Santé', /\b(santé|health|mental|médecin\w*|medic\w*|doctor|hôpital|hospital|maladie|disease|bien-être|wellness|wellbeing|psycholog\w*|vaccin\w*|soins|care|nutrition|sommeil|sleep)\b/i],
+  ['Science', /\b(science\w*|scientifi\w*|technolog\w*|tech|ia|ai|intelligence artificielle|artificial intelligence|physique|physics|chimie|chemistry|biolog\w*|espace|space|robot\w*|données|data|laboratoire|lab|recherche|research|chercheu\w*|researcher\w*)\b/i],
+  ['Économie', /\b(revenu\w*|pauvreté|poverty|income|économi\w*|econom\w*|emploi|job|jobs|travail|work|salaire|wage|logement|housing|loyer|rent|inflation|entreprise|business|commerce|marché|market|argent|money|prix|price|coût|cost)\b/i],
+  ['International', /\b(international|monde|world|guerre|war|gaza|palestin\w*|isra[ëe]l\w*|ukrain\w*|russi\w*|chine|china|états-unis|united states|trump|europe|afrique|africa|immigra\w*|réfugié\w*|refugee\w*)\b/i],
+  ['Société', /\b(société|society|communaut\w*|communit\w*|femmes|women|autochtone\w*|indigenous|racisme|racism|inclusion|diversit\w*|droits|rights|justice|police|sécurité|safety|bénévol\w*|volunteer\w*)\b/i],
+];
+// \b ne connaît pas les lettres accentuées : bornes Unicode (« élection », « économie »).
+const uni = re => new RegExp(re.source.replace(/^\\b\(/, '(?<![\\p{L}\\p{N}])(').replace(/\)\\b$/, ')(?![\\p{L}\\p{N}])'), 'iu');
+for (const row of THEME_RE) row[1] = uni(row[1]);
+const STUDENT_RE = /(?<![\p{L}])(étudiant|student|campus|asso|association|vie étudiante|student life)/iu;
+/** Thème déterministe (mots-clés FR/EN du titre et de l'extrait) ; « Vie de campus » par défaut. */
+export function themeOf(it) {
+  if (it.sport) return 'Sport';
+  const t = `${it.title} ${it.excerpt || ''}`;
+  const title = String(it.title || '');
+  for (const [k, re] of THEME_RE) if (re.test(title)) return k;
+  for (const [k, re] of THEME_RE) if (k !== 'Éducation' && re.test(t)) return k;
+  return STUDENT_RE.test(t) ? 'Vie de campus' : (THEME_RE[2][1].test(t) ? 'Éducation' : 'Vie de campus');
+}
+/**
+ * Sport professionnel ou international (jamais dans la revue) : la liste de l'affiche (front.isProSportItem) plus les ligues et
+ * compétitions pro vues dans les médias étudiants (NSL, AFC Toronto, Jeux olympiques, championnats du monde, IIHF…).
+ */
+const REVUE_PRO_RE = /\b(afc toronto|toronto fc|\btfc\b|whitecaps|matheson|northern super league|super ligue du nord|\bnsl\b|iihf|\bfifa\b|\buefa\b|jeux olympiques|olympics?|olympiques?|coupe du monde|world cup|championnats? du monde|world championships?|comp[ée]titions internationales|ligue des champions|champions league|premier league|\bufc\b|\bpga\b|\batp\b|\bwta\b|nascar|tour de france|valkyries|oilers|canucks|senators d['’]ottawa|ottawa senators|bruins|golden knights|lakers|celtics|yankees)\b/i;
+export const isProSport = it => front.isProSportItem(it) || REVUE_PRO_RE.test(String(it?.title || ''));
+/**
+ * Articles de la période (news.json) : date dans ]début, fin], pas encore repris, pas de sport pro, du plus récent au plus ancien.
+ * Chaque article garde ses champs d'origine (titre, lien, média, TOUS les auteurs) : rien n'est réécrit.
+ */
+export function selectArticles(news, period, { coveredIds = new Set(), max = 40 } = {}) {
+  const raw = Array.isArray(news) ? news : news?.items || [];
+  const out = [], seen = new Set();
+  for (const it of [...raw].sort((a, b) => Date.parse(b.date || 0) - Date.parse(a.date || 0))) {
+    const t = Date.parse(it?.date || '');
+    if (!it?.title || !/^https?:\/\//.test(String(it.link || '')) || !Number.isFinite(t) || t <= period.start || t > period.end) continue;
+    if (isProSport(it)) continue;
+    const c = front.normalize(it, '..'); if (!c?.id || seen.has(c.id) || coveredIds.has(c.id)) continue;
+    seen.add(c.id);
+    const lang = it.lang === 'en' || it.lang === 'fr' ? it.lang : detectLang({ title: it.title, desc: it.excerpt });
+    out.push({
+      id: c.id, title: clean(it.title), link: String(it.link).trim(), source: clean(it.source), authors: front.authorNames(it),
+      date: new Date(t).toISOString(), lang, institution: institutionDisplay(it.institution), sport: sportEmoji(it),
+      excerpt: shortExcerpt(it.leadExcerpt || it.excerpt, 200), image: siteImage(it), credit: front.photoCredit(it) || '',
+      pageUrl: c.pageUrl,
+    });
+    if (out.length >= max) break;
+  }
+  for (const x of out) x.theme = themeOf(x);
+  return out;
+}
+/** Thèmes dans l'ordre (le plus fourni d'abord, « Vie de campus » en dernier s'il y en a d'autres). */
+export function groupByTheme(items) {
+  const m = new Map();
+  for (const x of items) { const k = THEMES.includes(x.theme) ? x.theme : 'Vie de campus'; if (!m.has(k)) m.set(k, []); m.get(k).push(x); }
+  return [...m.entries()].map(([theme, list]) => ({ theme, emoji: THEME_EMOJI[theme] || '📰', items: list }))
+    .sort((a, b) => (a.theme === 'Vie de campus') - (b.theme === 'Vie de campus') || b.items.length - a.items.length || THEMES.indexOf(a.theme) - THEMES.indexOf(b.theme));
+}
+/** « Par A, B et C » (tous les auteurs), sinon « Par la rédaction », sinon rien (le média seul). */
+export function authorsLine(authors = []) {
+  const a = (authors || []).filter(Boolean);
+  if (!a.length) return '';
+  return `Par ${a.length === 1 ? a[0] : `${a.slice(0, -1).join(', ')} et ${a.at(-1)}`}`;
+}
+
+// ── Radio étudiante ──────────────────────────────────────────────────────────
+/** Fin d'émission lisible : « 8:59 » → « 9:00 », « 24:00 » → « 0:00 ». */
+const endHm = e => { let t = hm(e); if (t % 60 === 59) t += 1; t %= 1440; return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };
+/** Émissions originales de la période, par station (radio-schedules.json), au plus `maxPerStation` chacune, par heure. */
+export function periodRadio(schedules, edition, cfg = DEFAULT_CONFIG) {
+  const [w0, w1] = (cfg.radio?.windows || DEFAULT_CONFIG.radio.windows)[edition.id];
+  const max = cfg.radio?.maxPerStation || 4;
+  const [y, m, d] = edition.day.split('-').map(Number), dow = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
+  const out = [];
+  for (const [id, st] of Object.entries(schedules?.stations || {})) {
+    if (!st?.name) continue;
+    const seen = new Set();
+    const shows = (st.grid || []).filter(g => g && g.day === dow && g.title && front.radioShowOk(g) && hm(g.start) >= hm(w0) && hm(g.start) < hm(w1))
+      .sort((a, b) => hm(a.start) - hm(b.start))
+      .filter(g => { const k = g.title.trim().toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; })
+      .slice(0, max)
+      .map(g => ({ title: clean(g.title), start: g.start, end: g.end || '', when: frHour(g.start) + (g.end ? ` à ${frHour(endHm(g.end))}` : ''), url: /^https:\/\//.test(g.url || '') ? g.url : '' }));
+    if (shows.length) out.push({ id, station: st.name, page: `${SITE}/radios/${id}/`, shows });
+  }
+  return out.sort((a, b) => hm(a.shows[0].start) - hm(b.shows[0].start) || a.station.localeCompare(b.station));
+}
+
+// ── Sport étudiant ───────────────────────────────────────────────────────────
+const teamTxt = t => `${t.name}${t.inst ? ` (${t.inst})` : ''}`;
+/** Clé stable d'un résultat : date, équipes triées et pointage (une rencontre vue par les deux équipes n'apparaît qu'une fois). */
+export const resultKey = r => `${r.date}|${r.sport}|${r.teams.map(t => `${teamTxt(t)}:${t.score}`).sort().join('|')}`;
+const nextKey = r => `${r.date}|${r.time}|${r.sport}|${r.event || ''}|${r.teams.map(teamTxt).sort().join('|')}`;
+/**
+ * Résultats de la période (matin : la veille et le jour même ; soir : le jour même) pas encore repris, et matchs à venir
+ * (matin : du jour même à J+3 ; soir : de J+1 à J+3 ; à défaut, la prochaine semaine). Tout vient de sports-masthead.json.
+ */
+export function periodSports(masthead, edition, { coveredKeys = new Set(), cfg = DEFAULT_CONFIG } = {}) {
+  const soir = edition.id === 'soir';
+  const base = pickSports(masthead, edition.day, { max: 10000, days: soir ? 0 : 1, nextDays: cfg.sports.upcomingDays, afterToday: soir });
+  const seen = new Set(), results = [];
+  for (const r of base.results) { const key = resultKey(r); if (seen.has(key) || coveredKeys.has(key)) continue; seen.add(key); results.push({ ...r, key }); }
+  let nextList = base.next;
+  if (!nextList.length) nextList = pickSports(masthead, edition.day, { max: 10000, days: 0, nextDays: cfg.sports.upcomingFallbackDays, afterToday: soir }).next;
+  const ns = new Set(), next = [];
+  for (const r of nextList) { const key = nextKey(r); if (ns.has(key)) continue; ns.add(key); next.push({ ...r, key }); }
+  for (const r of results) r.text = resultText(r);
+  for (const r of next) r.text = nextText(r);
+  results.sort((a, b) => (b.uni - a.uni) || a.sport.localeCompare(b.sport, 'fr') || String(a.league).localeCompare(String(b.league), 'fr') || String(b.date).localeCompare(String(a.date)));
+  next.sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.time).localeCompare(String(b.time)) || (b.uni - a.uni) || a.sport.localeCompare(b.sport, 'fr'));
+  return { results, next };
+}
+/** Résultats groupés par sport (« 🏒 Hockey (F) »), universitaire puis collégial. */
+export function groupResults(results) {
+  const m = new Map();
+  for (const r of results) { const k = `${r.uni ? 'u' : 'c'}|${r.emoji} ${r.sport}`; if (!m.has(k)) m.set(k, { label: `${r.emoji} ${r.sport}`, uni: r.uni, items: [] }); m.get(k).items.push(r); }
+  return [...m.values()];
+}
+/** Matchs à venir groupés par date (« jeu. 19 nov. »). */
+export function groupNext(next) {
+  const m = new Map();
+  for (const r of next) { if (!m.has(r.date)) m.set(r.date, { date: r.date, label: frDayYear(r.date).replace(/^./, c => c.toUpperCase()), items: [] }); m.get(r.date).items.push(r); }
+  return [...m.values()];
+}
+export const resultText = r => `${teamTxt(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${teamTxt(r.teams[1])}`;
+export const nextText = r => r.event || !r.verb ? `${teamTxt(r.teams[0])} · ${r.event || teamTxt(r.teams[1] || {})}` : `${teamTxt(r.teams[0])} ${r.verb} ${teamTxt(r.teams[1])}`;
+
+// ── Garde-fou des textes d'IA ────────────────────────────────────────────────
+const words = s => new Set((String(s || '').normalize('NFC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || []));
+/** Mots capitalisés admis sans figurer dans la source : vocabulaire français courant d'une revue étudiante. */
+const ALLOW_CAPS = new Set(['université', 'universités', 'collège', 'cégep', 'cégeps', 'québec', 'montréal', 'canada', 'canadien', 'canadienne', 'québécois', 'québécoise', 'québécoises', 'québécois', 'sherbrooke', 'laval', 'ottawa']);
+const RELATIVE = /\b(demain|hier|aujourd['’]hui|ce soir|ce matin|cette semaine|la semaine prochaine|week-?ends?|tomorrow|yesterday|today|tonight)\b/i;
+/**
+ * Raison du rejet d'un texte d'IA (null si acceptable) : longueur, guillemets, liens, mention, hashtag, date relative, « week-end »,
+ * chiffre ou nom propre absent de la source, langue autre que le français.
+ */
+export function textReject(text, source, { min = 40, max = 220 } = {}) {
+  const h = String(text || '').replace(/\s+/g, ' ').trim();
+  if (h.length < min || h.length > max) return `longueur ${h.length}`;
+  if (/[«»"“”#@<>]|https?:|www\./i.test(h)) return 'guillemet, balise, hashtag ou lien';
+  if (RELATIVE.test(h)) return 'date relative ou « week-end »';
+  const src = words(source);
+  for (const n of h.match(/\d+/g) || []) if (!src.has(n)) return `chiffre absent (${n})`;
+  // Mots capitalisés hors début de phrase : doivent venir de la source (noms propres, sigles).
+  for (const m of h.matchAll(/(?<![.!?:]\s|^)(?<=\s|[(’'-])(\p{Lu}[\p{L}’'-]*)/gu)) {
+    const w = m[1].toLowerCase(), base = w.replace(/[’'].*$/, '').replace(/-.*$/, '');
+    if (!src.has(w) && !src.has(base) && !ALLOW_CAPS.has(w) && !ALLOW_CAPS.has(base) && !w.split(/[’'-]/).every(p => !p || src.has(p) || ALLOW_CAPS.has(p))) return `nom absent (${m[1]})`;
+  }
+  if (detectLang({ title: h }) === 'en') return 'pas en français';
+  return null;
+}
+/** Texte source d'un article pour le garde-fou (titre, extrait, média, établissement, auteurs). */
+export const itemSource = x => `${x.title} ${x.excerpt || ''} ${x.source} ${x.institution || ''} ${(x.authors || []).join(' ')}`;
+
+// ── Textes déterministes (repli sans IA) ─────────────────────────────────────
+const plural = (n, one, many = one + 's') => `${n} ${n > 1 ? many : one}`;
+/** Phrase d'ouverture factuelle, toujours exacte (comptes et heures des données). */
+export function factualIntro(model) {
+  const { edition, items, period, sports, radio } = model;
+  const media = new Set(items.map(x => x.source)).size;
+  const themes = groupByTheme(items).map(g => `${g.theme.toLowerCase()} (${g.items.length})`);
+  const s0 = mtl(period.start), s1 = mtl(period.end);
+  const span = s0.ymd === s1.ymd ? `entre ${frTime(period.start)} et ${frTime(period.end)}` : `entre le ${frDay(s0.ymd)} à ${frTime(period.start)} et le ${frDay(s1.ymd)} à ${frTime(period.end)}`;
+  const parts = [`${edition.label} du ${frDayYear(edition.day)} réunit ${plural(items.length, 'article')} de ${plural(media, 'média étudiant', 'médias étudiants')}, publiés ${span} (heure de Montréal).`];
+  if (themes.length) parts.push(`Au sommaire : ${themes.length > 1 ? `${themes.slice(0, -1).join(', ')} et ${themes.at(-1)}` : themes[0]}.`);
+  const sp = [];
+  if (sports.results.length) sp.push(plural(sports.results.length, 'résultat sportif', 'résultats sportifs'));
+  if (sports.next.length) sp.push(plural(sports.next.length, 'match à venir', 'matchs à venir'));
+  const shows = radio.reduce((n, s) => n + s.shows.length, 0);
+  if (shows) sp.push(`${plural(shows, 'émission', 'émissions')} de radio étudiante`);
+  if (sp.length) parts.push(`L’édition compte aussi ${sp.length > 1 ? `${sp.slice(0, -1).join(', ')} et ${sp.at(-1)}` : sp[0]}.`);
+  return parts.join(' ');
+}
+/** Titre (headline ≤ 110 caractères) et description (≤ 200) : déterministes, à partir des données. */
+export function headlineOf(model) { return `${model.edition.label} du ${frDayYear(model.edition.day)}`; }
+export function descriptionOf(model) {
+  const { items, sports } = model;
+  const media = new Set(items.map(x => x.source)).size;
+  let d = `Revue de presse étudiante du Québec : ${plural(items.length, 'article')} de ${plural(media, 'média', 'médias')}`;
+  if (sports.results.length) d += `, ${plural(sports.results.length, 'résultat sportif', 'résultats sportifs')}`;
+  if (sports.next.length) d += `, ${plural(sports.next.length, 'match', 'matchs')} à venir`;
+  d += ' et la radio étudiante, avec liens vers les articles originaux.';
+  return d.length > 200 ? d.slice(0, 197).replace(/\s+\S*$/, '') + '…' : d;
+}
+
+// ── Modèle complet et validation ─────────────────────────────────────────────
+/**
+ * Modèle d'une revue (sans IA) : la page, le flux RSS et les sitemaps sont rendus depuis cet objet, stocké dans data/revue/.
+ * `ai` (facultatif) : { chapeau, items: { id: { resume, theme } }, model } déjà validé par revue-ai.mjs.
+ */
+export function buildModel({ edition, period, items, sports, radio, now, ai = null, published = null, previous = null }) {
+  const its = items.map(x => {
+    const a = ai?.items?.[x.id];
+    return { ...x, theme: a?.theme && THEMES.includes(a.theme) ? a.theme : x.theme, resume: a?.resume || '', resumeBy: a?.resume ? 'ia' : '' };
+  });
+  const lead = its.find(x => x.image) || null;
+  const m = {
+    version: 1, id: edition.key, edition: { id: edition.id, label: edition.label, emoji: edition.emoji, day: edition.day },
+    path: reviewPath(edition.day, edition.id), url: reviewUrl(edition.day, edition.id),
+    period: { start: period.start, end: period.end },
+    datePublished: published || new Date(now).toISOString(), dateModified: new Date(now).toISOString(),
+    items: its, sports, radio, image: lead ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title } : null,
+    chapeau: ai?.chapeau || '', generator: ai && (ai.chapeau || Object.keys(ai.items || {}).length) ? `ia:${ai.model || 'workers-ai'}` : 'gabarit', previous,
+  };
+  m.headline = headlineOf(m); m.description = descriptionOf(m); m.intro = factualIntro(m);
+  m.articleIds = its.map(x => x.id); m.sportKeys = sports.results.map(r => r.key);
+  m.categories = [...new Set(['Revue de presse', 'Médias étudiants', 'Québec', ...groupByTheme(its).map(g => g.theme), ...(sports.results.length || sports.next.length ? ['Sport étudiant'] : []), ...(radio.length ? ['Radio étudiante'] : [])])];
+  return m;
+}
+/**
+ * Garde-fou final : la revue ne sort que si tout vient des données.
+ * `data` = { news, masthead, schedules } bruts. Retourne la liste des problèmes (vide = publiable).
+ */
+export function validateReview(model, data) {
+  const p = [];
+  if (!model?.items?.length) p.push('revue vide : aucun article');
+  const byLink = new Map((Array.isArray(data.news) ? data.news : data.news?.items || []).map(it => [String(it.link).trim(), it]));
+  for (const x of model.items || []) {
+    const it = byLink.get(x.link);
+    if (!it) { p.push(`lien absent des données : ${x.link}`); continue; }
+    if (clean(it.title) !== x.title) p.push(`titre modifié : ${x.title}`);
+    if (clean(it.source) !== x.source) p.push(`média modifié : ${x.source}`);
+    const want = front.authorNames(it);
+    if (JSON.stringify(want) !== JSON.stringify(x.authors)) p.push(`auteurs différents des données pour « ${x.title} » : ${JSON.stringify(x.authors)} ≠ ${JSON.stringify(want)}`);
+    if (x.resume) { const why = textReject(x.resume, itemSource(x)); if (why) p.push(`résumé refusé (${why}) : ${x.title}`); }
+    if (x.excerpt && !clean(`${it.leadExcerpt || ''} ${it.excerpt || ''}`).includes(x.excerpt.replace(/…$/, '').trim())) p.push(`extrait absent de la source : ${x.title}`);
+  }
+  if (model.chapeau) { const why = textReject(model.chapeau, (model.items || []).map(itemSource).join(' '), { min: 60, max: 420 }); if (why) p.push(`chapeau refusé (${why})`); }
+  // Radio : chaque émission existe telle quelle dans la grille de sa station.
+  for (const st of model.radio || []) {
+    const grid = data.schedules?.stations?.[st.id]?.grid || [];
+    for (const s of st.shows) if (!grid.some(g => clean(g.title) === s.title && g.start === s.start && (!s.url || g.url === s.url))) p.push(`émission absente de la grille : ${st.station} ${s.start} ${s.title}`);
+  }
+  // Sport : chaque résultat et chaque match à venir est recalculé depuis sports-masthead.json.
+  if (model.sports && data.masthead) {
+    const ed = { ...model.edition, ...EDITIONS[model.edition.id] };
+    const again = pickSports(data.masthead, model.edition.day, { max: 10000, days: ed.id === 'soir' ? 0 : 1, nextDays: 7 });
+    const rk = new Set(again.results.map(resultKey)), nk = new Set(again.next.map(nextKey));
+    for (const r of model.sports.results || []) if (!rk.has(resultKey(r))) p.push(`résultat absent des données : ${resultText(r)}`);
+    for (const r of model.sports.next || []) if (!nk.has(nextKey(r))) p.push(`match absent des données : ${nextText(r)}`);
+  }
+  return p;
+}
+/** Liens d'une page rendue qui ne viennent ni des données ni du site (tout href http). */
+export function foreignLinks(html, model) {
+  const ok = new Set([...(model.items || []).map(x => x.link), ...(model.radio || []).flatMap(s => s.shows.map(x => x.url).filter(Boolean))]);
+  const out = [];
+  for (const m of String(html).matchAll(/href="(https?:\/\/[^"]+)"/g)) {
+    const u = m[1].replace(/&amp;/g, '&');
+    if (ok.has(u) || u.startsWith(SITE + '/') || /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com|buymeacoffee\.com|www\.buymeacoffee\.com)\b/.test(u)) continue;
+    out.push(u);
+  }
+  return out;
+}

@@ -7,6 +7,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- « La revue du matin » et « La revue du soir » : revue de presse étudiante quotidienne (extraits courts, liens et crédits de tous les auteurs), émissions des radios étudiantes et sport étudiant, pages `/revue/AAAA-MM-JJ-matin|soir/`, archives, JSON-LD `NewsArticle`, sitemap Google News et RSS. Publication **désactivée** par défaut (`data/revue/config.json`). Voir `docs/revue.md`.
 - Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats de la fin de semaine » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
 
 ### Modifié

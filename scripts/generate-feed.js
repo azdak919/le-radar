@@ -445,13 +445,30 @@ function buildItemXml(item = {}, sourceSites = {}) {
   ].filter(Boolean).join('\n');
 }
 
-function buildFeedXml(items = [], config = {}, sourceSites = {}) {
+/**
+ * « La revue du matin / du soir » (articles originaux du Radar, scripts/revue/) : SEULEMENT si data/revue/config.json
+ * `publish` vaut true. Contenu complet, image en <enclosure>, catégories, guid permanent, pubDate. Vide sinon.
+ */
+function revueFeedEntries(root = ROOT, limit = 3) {
+  try {
+    const { loadPublished, feedItemXml } = require('./revue/revue-render');
+    const pub = loadPublished(root, { limit });
+    return pub.enabled ? pub.models.map((m) => ({ date: m.datePublished, xml: feedItemXml(m) })) : [];
+  } catch { return []; }
+}
+
+function buildFeedXml(items = [], config = {}, sourceSites = {}, extra = []) {
   const feedUrl = `${SITE_BASE}/${config.file}`;
   const updated = items.length
     ? formatRfc822(items[0].date)
     : formatRfc822(new Date());
 
-  const itemXml = dedupeFeedImages(items).map((item) => buildItemXml(item, sourceSites)).filter(Boolean).join('\n');
+  // Les revues s'intercalent par date parmi les articles agrégés (les lecteurs trient sur pubDate).
+  const rows = dedupeFeedImages(items).map((item) => ({ date: item.date, xml: buildItemXml(item, sourceSites) }))
+    .concat(extra || [])
+    .filter((row) => row.xml)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  const itemXml = rows.map((row) => row.xml).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
@@ -517,7 +534,7 @@ function main() {
 
   for (const config of FEEDS) {
     const subset = items.filter(config.filter).slice(0, MAX_ITEMS);
-    const xml = buildFeedXml(subset, config, sourceSites);
+    const xml = buildFeedXml(subset, config, sourceSites, revueFeedEntries());
     const outPath = path.join(ROOT, config.file);
 
     if (doUpdate) {
@@ -541,5 +558,5 @@ if (require.main === module) main();
 module.exports = {
   photoCreditLine,
   isRealPhotoCredit,
-  stripInvalidXml, fixPunctuation, itemDisplayTitle, trimToSentence, cleanBrief, dedupeSentences, buildFeedXml, buildItemXml, isLogoImageUrl, dedupeFeedImages,
+  stripInvalidXml, fixPunctuation, itemDisplayTitle, trimToSentence, cleanBrief, dedupeSentences, buildFeedXml, buildItemXml, isLogoImageUrl, dedupeFeedImages, revueFeedEntries,
 };

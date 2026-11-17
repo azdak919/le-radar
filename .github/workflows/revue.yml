@@ -1,0 +1,121 @@
+name: Revue — matin et soir
+
+# « La revue du matin » (≈ 7 h 30) et « La revue du soir » (≈ 19 h 15), heure de Montréal : articles originaux du Radar
+# (revue de presse étudiante, radio étudiante, sport étudiant), pages /revue/AAAA-MM-JJ-matin|soir/, flux RSS, sitemaps.
+# INTERRUPTEUR : data/revue/config.json `publish`. Tant qu'il vaut false (défaut), la porte ne laisse RIEN passer : aucune page,
+# aucun commit, rien dans sitemap.xml, sitemap-news.xml, robots.txt ni feed.xml. Seul l'exemple manuel (sample) tourne, en artefact.
+# Fenêtres (config.json) : matin 7 h 15-10 h 30, soir 19 h-22 h, mise à jour tardive des résultats du soir 22 h 45-23 h 59.
+# Les crons GitHub sont en UTC et partent souvent en retard : heure d'été (HAE) ET heure d'hiver (HNE), plus des secours ;
+# la porte ne fait rien hors fenêtre ni si l'édition est déjà publiée ou sautée (data/revue/index.json, state.json).
+# Aperçu d'une PR (exemples + captures) : revue-preview.yml.
+on:
+  schedule:
+    - cron: '31 11,12 * * *'    # matin : 7 h 31 HAE / 7 h 31 HNE (l'autre heure tombe hors fenêtre et ne fait rien)
+    - cron: '7,47 13 * * *'     # matin, secours : 9 h 07-9 h 47 HAE / 8 h 07-8 h 47 HNE
+    - cron: '16 23 * * *'       # soir : 19 h 16 HAE
+    - cron: '16,46 0 * * *'     # soir : 19 h 16 HNE (20 h 16 HAE, secours)
+    - cron: '16 1 * * *'        # soir, secours : 20 h 16 HNE / 21 h 16 HAE
+    - cron: '50 3 * * *'        # mise à jour tardive des résultats du soir : 22 h 50 HNE / 23 h 50 HAE
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: 'Édition (auto = selon l’heure de Montréal)'
+        type: choice
+        options: [auto, matin, soir]
+        default: auto
+      sample:
+        description: 'Exemple seulement (artefact, rien n’est publié ni commité, même si publish = true)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      due: ${{ steps.g.outputs.due }}
+      edition: ${{ steps.g.outputs.edition }}
+      mode: ${{ steps.g.outputs.mode }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          sparse-checkout: |
+            scripts
+            data
+            mobile/app/js
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - id: g
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.sample) }}
+        env:
+          REVUE_EDITION: ${{ inputs.edition || 'auto' }}
+        run: node scripts/revue/revue-run.mjs --gate
+
+  sample:
+    if: github.event_name == 'workflow_dispatch' && inputs.sample
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install chromium
+      - name: Police émoji
+        run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
+      - name: Exemples matin et soir (données réelles, hors dépôt)
+        env:
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash scripts/revue/revue-sample.sh revue-sample
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: exemple-revue
+          path: revue-sample/
+          if-no-files-found: ignore
+
+  revue:
+    needs: gate
+    if: needs.gate.outputs.due == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: data-writers-site
+      cancel-in-progress: false
+      queue: max
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Revue (sélection, IA avec repli, garde-fou, pages, flux, sitemaps)
+        env:
+          REVUE_EDITION: ${{ needs.gate.outputs.edition }}
+          REVUE_MODE: ${{ needs.gate.outputs.mode }}
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION"
+          node scripts/generate-feed.js --update
+      - name: Commit et publication
+        run: |
+          git add revue data/revue sitemap-news.xml robots.txt feed.xml
+          git diff --cached --quiet && { echo "Rien à publier."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git commit -s -m "bot(revue): ${{ needs.gate.outputs.edition }} ${{ needs.gate.outputs.mode }}"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild"

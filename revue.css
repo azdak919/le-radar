@@ -1,0 +1,196 @@
+/* LE-RADAR.ca — « La revue du matin » et « La revue du soir » (/revue/…), pages générées par scripts/revue/revue-render.js.
+ * S'appuie sur seo-pages.css (gabarit des pages générées) et sur les variables du site : modes clair et sombre automatiques. */
+
+.revue-wire .revue { display: block; }
+.revue-meta {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: -8px 0 14px;
+}
+.revue-meta strong { color: var(--ink); font-weight: 600; }
+.revue-note {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0 0 20px;
+}
+.revue-note strong { color: var(--ink); }
+.revue-cover { margin: 0 0 22px; }
+.revue-cover img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--bg-soft);
+}
+.revue-cover figcaption {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.revue-chapeau { font-weight: 600; color: var(--ink); }
+.revue-wire p.revue-intro {
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 18px;
+}
+.revue-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+.revue-toc a {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--bg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .revue-toc a:hover { border-color: var(--accent); color: var(--accent); }
+}
+.revue-toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.revue-count { font-family: var(--sans); font-size: 0.72em; font-weight: 500; color: var(--muted); }
+.revue-section { scroll-margin-top: 16px; }
+.revue-section > h3.revue-theme,
+.revue-section > h3.revue-sub,
+.revue-section > h3.revue-station { margin-top: 26px; }
+
+/* Articles */
+.revue-items { list-style: none; margin: 0; padding: 0; }
+.revue-item {
+  padding: 14px 0 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.revue-item:last-child { border-bottom: 0; }
+.revue-wire .revue-item p { margin: 0; }
+.revue-item__media {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.revue-item__title {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 4px 0 4px;
+}
+.revue-item__title a { color: var(--ink); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .revue-item__title a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+}
+.revue-wire .revue-item__byline {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.revue-wire .revue-item__resume {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 6px 0 6px;
+}
+.revue-item__excerpt {
+  margin: 6px 0 6px;
+  padding: 0 0 0 12px;
+  border-left: 2px solid var(--rule);
+}
+.revue-wire .revue-item__excerpt p {
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.revue-wire .revue-item__more { font-family: var(--sans); font-size: 13px; margin-top: 6px; }
+.revue-item__more a { color: var(--accent); font-weight: 600; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .revue-item__more a:hover { text-decoration: underline; }
+}
+
+/* Radio et sport */
+.revue-station a { color: var(--radio); text-decoration: none; }
+:root[data-theme="dark"] .revue-station a { color: var(--radio-bright); }
+.revue-shows, .revue-results, .revue-next {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.revue-shows li, .revue-results li, .revue-next li {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--rule);
+}
+.revue-shows li:last-child, .revue-results li:last-child, .revue-next li:last-child { border-bottom: 0; }
+.revue-shows time, .revue-next time {
+  display: inline-block;
+  min-width: 4.6em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.revue-show a { color: var(--ink); }
+.revue-sport, .revue-day {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 18px 0 4px;
+}
+.revue-level {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-left: 4px;
+}
+.revue-score { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.revue-league { display: block; font-size: 12.5px; color: var(--muted); }
+.revue-sportname { color: var(--ink-soft); }
+.revue-wire .revue-empty { font-family: var(--sans); font-size: 14px; color: var(--muted); }
+.revue-wire .revue-more { font-family: var(--sans); font-size: 14px; margin-top: 14px; }
+.revue-more a, .revue-nav a { color: var(--accent); font-weight: 600; }
+.revue-wire .revue-sources p { font-family: var(--sans); font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); }
+
+/* Index des archives */
+.revue-archive { list-style: none; margin: 0; padding: 0; }
+.revue-archive__day { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.revue-archive__day h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 6px; color: var(--ink); }
+.revue-archive__day ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--sans); font-size: 14.5px; }
+.revue-archive__day a { color: var(--ink); font-weight: 600; }
+.revue-archive__meta { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 520px) {
+  .revue-item__title { font-size: 1.05rem; }
+  .revue-shows, .revue-results, .revue-next { font-size: 14px; }
+}
+@media print {
+  .revue-toc { display: none; }
+}
