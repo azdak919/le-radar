@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T13:06:54.895Z",
+  "updatedAt": "2026-11-17T14:37:03.168Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T13:06:05.683Z"
+      "checkedAt": "2026-11-17T14:36:12.001Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Lentement mais sûrement",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/lentement-mais-surement"
       },
+      "next": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Lentement mais sûrement",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T13:06:19.663Z"
+      "checkedAt": "2026-11-17T14:36:26.678Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt2",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Basa Basa",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
-      "track": "",
-      "showTitle": "Tuesday Morning After Pt2",
+      "next": {
+        "title": "Ecolibrium/Environment in Canada",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,61 +81,55 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T13:06:21.879Z"
+      "checkedAt": "2026-11-17T14:36:30.435Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "At The Movies",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "At The Movies",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T13:06:35.598Z"
+      "checkedAt": "2026-11-17T14:36:44.306Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
-      },
+      "current": null,
       "next": {
         "title": "Le DOUZE",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "12:59",
         "url": "https://www.cfak.ca/balados/le-douze"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T13:06:36.644Z"
+      "checkedAt": "2026-11-17T14:36:45.379Z"
     },
     "choq": {
       "id": "choq",
@@ -156,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T13:06:54.544Z"
+      "checkedAt": "2026-11-17T14:37:02.817Z"
     }
   }
 }
