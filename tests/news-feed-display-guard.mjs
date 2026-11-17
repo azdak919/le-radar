@@ -1,6 +1,7 @@
 /**
- * Fil d’accueil : le compteur doit suivre les cartes vraiment affichées,
- * et l’absence de session-freshness-lib.js ne doit plus vider la liste.
+ * Fil d’accueil : le compteur d’accueil utilise le total du catalogue
+ * (news-latest.json), pas le premier lot chargé ; l’absence de
+ * session-freshness-lib.js ne doit plus vider la liste.
  * Run: node tests/news-feed-display-guard.mjs
  */
 import assert from 'node:assert/strict';
@@ -17,15 +18,14 @@ const radarNews = readFileSync(join(root, 'radar-news.js'), 'utf8');
 
 assert.equal(news.count, news.items.length, 'count de news.json = nombre d’items');
 const now = new Date(news.updated || Date.now());
-assert.equal(
-  SF.filterFreshItems(news.items, now).length,
-  news.items.length,
-  'tous les items publiés sont dans la fenêtre de fraîcheur',
+const freshN = SF.filterFreshItems(news.items, now).length;
+assert.ok(
+  freshN > 0 && freshN <= news.items.length,
+  'la fenêtre de fraîcheur est un sous-ensemble non vide du catalogue (qui peut retenir de plus vieux articles)',
 );
-assert.equal(
-  SF.filterFreshItemsLenient(news.items, now).length,
-  news.items.length,
-  'le filet ne change rien quand le pool est déjà frais',
+assert.ok(
+  SF.filterFreshItemsLenient(news.items, now).length >= freshN,
+  'le filet ne restreint pas davantage un pool déjà filtré',
 );
 
 assert.match(radarNews, /function sessionFreshnessApi\(/);
@@ -48,8 +48,18 @@ assert.match(
 );
 assert.match(
   radarNews,
-  /\$\{displayed\} article/,
-  'le compteur doit suivre les cartes réellement rendues',
+  /function formatNewsCountLabel\(/,
+  'libellé du compteur factorisé (total du catalogue / compte filtré)',
+);
+assert.match(
+  radarNews,
+  /formatNewsCountLabel\(displayed, \{[\s\S]*?total: newsPaging\.total/,
+  'à l’accueil le compteur lit newsPaging.total (news-latest.json), pas le lot affiché',
+);
+assert.match(
+  radarNews,
+  /NEWS_COUNT\.textContent = formatNewsCountLabel\(0, \{ total: newsPaging\.total \}\)/,
+  'après « Charger plus », le compteur reste le total, pas le nombre de cartes chargées',
 );
 
 console.log('OK news-feed-display-guard', news.items.length, 'articles');
