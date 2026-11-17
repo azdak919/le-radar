@@ -3218,8 +3218,11 @@ function sportsCompareOpenOrder(a, b, now = Date.now()) {
     || ba === SPORTS_OPEN_TOMORROW_NEXT
     || ba === SPORTS_OPEN_WEEK_NEXT
     || ba === SPORTS_OPEN_FAR_NEXT;
-  if (soonest) return ma - mb;
-  return mb - ma;
+  const byTime = soonest ? ma - mb : mb - ma;
+  if (byTime !== 0) return byTime;
+  if (typeof sportsAudienceTie !== 'function') return 0;
+  const tie = sportsAudienceTie(sportsSlideDiversityKey(a), sportsSlideDiversityKey(b));
+  return tie === 1 || tie === -1 ? tie : 0;
 }
 
 /** Politique unique pour peinture, resize, refresh et rotation.
