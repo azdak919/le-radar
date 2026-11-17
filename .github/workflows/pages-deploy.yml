@@ -82,7 +82,7 @@ jobs:
       - name: Contrôle du site assemblé
         run: |
           set -e
-          for f in CNAME index.html news.json sports.json manifest.json offline.html .well-known/assetlinks.json; do
+          for f in CNAME index.html news.json news-latest.json sports.json manifest.json offline.html .well-known/assetlinks.json; do
             test -s "_site/$f" || { echo "::error::manquant : $f"; exit 1; }
           done
           node -e 'const fs=require("node:fs");for(const f of ["sports/index.html","en/sports/index.html"]){if(!fs.readFileSync("_site/"+f,"utf8").includes("data-sports-history=\"complete\""))throw new Error("Missing full-history contract: "+f)}'

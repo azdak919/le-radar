@@ -8,6 +8,7 @@ const record=pages.recordOf(item);
 for(const width of [1440,390])test(`Impact Campus auteur fil et fiche ${width} @ci-critical`,async({page},info)=>{
  await page.setViewportSize({width,height:900});
  await page.route('**/*',route=>{const u=new URL(route.request().url());
+  if(u.pathname==='/news-latest.json')return route.fulfill({status:404,body:''});
   if(u.pathname==='/news.json')return route.fulfill({json:{...news,items:[item]}});
   if(u.pathname===`/article/${record.id}/`)return route.fulfill({body:pages.renderPage(pages.loadTemplate(),record),contentType:'text/html'});
   if(u.pathname==='/'+item.imageLocal)return route.fulfill({body:'<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="tan"/></svg>',contentType:'image/svg+xml'});

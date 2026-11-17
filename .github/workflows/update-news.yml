@@ -275,6 +275,16 @@ jobs:
           CI: true
         continue-on-error: true
 
+      # Fil public par pages (scripts/news-pages.js) : news-latest.json pour le
+      # premier rendu du site, news-page-N.json chargés par lots. news.json
+      # reste le fichier complet (scripts, appli, Worker, consommateurs).
+      - name: Public feed pages
+        id: pages
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
+        timeout-minutes: 1
+        run: node scripts/news-pages.js --update
+        continue-on-error: true
+
       # Gate locale avant push HTML : évite un Vérification rouge (mail) si
       # generate-seo / données ont cassé l’intégrité statique.
       # continue-on-error : un test figé (date d’article sortie de la fiche)
@@ -316,6 +326,8 @@ jobs:
             git add -f -- assets/news-images
           fi
           if [ -d data/archives ]; then git add -A -- data/archives; fi
+          # Pages du fil : -A publie aussi le retrait d'une page devenue vide.
+          if [ "${{ steps.pages.outcome }}" = "success" ]; then git add -A -- news-latest.json 'news-page-*.json'; fi
           git rm -q --cached --ignore-unmatch news-archive.json
           # Toujours publier le prérendu / JSON-LD quand generate-seo a réussi.
           # Un échec artifact-budget (image purgée encore listée par git) ne
@@ -421,4 +433,4 @@ jobs:
           git fetch -q news.bundle HEAD:refs/news
           rm -f news.bundle
           git checkout -q refs/news
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs" --regen "node scripts/generate-seo.js --update && node scripts/news-pages.js --update"

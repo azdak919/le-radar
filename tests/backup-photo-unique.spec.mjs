@@ -39,6 +39,8 @@ const FEED = {
 test('backups campus UdeS : photos distinctes sur les cartes sans photo d’article', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(String(error)));
+  // Fil par pages : 1re page absente → repli sur le news.json simulé.
+  await page.route('**/news-latest.json*', (route) => route.fulfill({ status: 404, body: '' }));
   await page.route('**/news.json*', (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',

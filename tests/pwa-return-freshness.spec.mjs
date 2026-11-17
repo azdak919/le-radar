@@ -86,7 +86,7 @@ test('un retour après une absence longue recharge le fil sans recharger la page
     const realFetch = window.fetch;
     window.fetch = (...args) => {
       const url = String(args[0]?.url || args[0] || '');
-      if (url.includes('news.json')) calls.push(url);
+      if (/news(-latest)?\.json/.test(url)) calls.push(url);
       return realFetch.apply(window, args);
     };
 
@@ -135,7 +135,7 @@ test('un aller-retour bref ne redemande rien', async ({ page }) => {
     const realFetch = window.fetch;
     window.fetch = (...args) => {
       const url = String(args[0]?.url || args[0] || '');
-      if (url.includes('news.json')) seen.push(url);
+      if (/news(-latest)?\.json/.test(url)) seen.push(url);
       return realFetch.apply(window, args);
     };
     window.dispatchEvent(new Event('pagehide'));

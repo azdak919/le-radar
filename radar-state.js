@@ -203,6 +203,12 @@ var EXTERNAL_LOGO  = document.getElementById('external-listen-logo');
 // ─── State ───────────────────────────────────────────────────────────────────
 var radios = [];          // ordered list backing the tuner
 var news = [];
+/**
+ * Fil par pages (scripts/news-pages.js) : news-latest.json au premier rendu,
+ * puis news-page-N.json par lots au défilement / « Charger plus ». complete =
+ * tout le fil est en mémoire (repli news.json, recherche, filtre de source).
+ */
+var newsPaging = { pages: [], next: 0, total: 0, updated: '', complete: true, loading: null, sources: [] };
 var newsSourcesByName = {};
 var newsSourceFilter = 'all';
 var MEDIA_FOLLOW_BAR = document.getElementById('media-follow-bar');

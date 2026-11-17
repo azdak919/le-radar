@@ -11,6 +11,128 @@
  *   rafraîchissement de retour d'arrière-plan, où un clignotement de la liste
  *   déjà lisible serait un pur inconvénient.
  */
+/**
+ * Première page du fil (news-latest.json, ~60 articles) ; repli sur le fil
+ * complet news.json si la page manque (ancien déploiement, hors-ligne).
+ */
+async function fetchNewsFirstPage() {
+  try {
+    const res = await fetch(appAsset('news-latest.json'), { cache: 'no-cache' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && Array.isArray(data.items) && Array.isArray(data.pages)) {
+        newsPaging = {
+          pages: data.pages.filter((f) => /^news-page-\d+\.json$/.test(f)),
+          next: 0,
+          total: Number(data.total || data.count) || data.items.length,
+          updated: data.updated || '',
+          complete: !data.pages.length,
+          loading: null,
+          sources: Array.isArray(data.sourceList) ? data.sourceList : [],
+        };
+        return data;
+      }
+    }
+  } catch { /* repli news.json */ }
+  const res = await fetch(appAsset('news.json'), { cache: 'no-cache' });
+  const data = await res.json();
+  const items = Array.isArray(data) ? data : (data.items || []);
+  newsPaging = { pages: [], next: 0, total: items.length, updated: data.updated || '', complete: true, loading: null, sources: [] };
+  return data;
+}
+
+/** Toutes les sources du fil, y compris celles des pages pas encore chargées. */
+function newsSourceNames() {
+  const names = new Set(news.map((n) => n.source).filter(Boolean));
+  for (const s of newsPaging.sources || []) if (s && s.source) names.add(s.source);
+  return [...names];
+}
+
+function newsSourceSummary(src) {
+  return news.find((n) => n.source === src)
+    || (newsPaging.sources || []).find((s) => s && s.source === src)
+    || null;
+}
+
+function newsHasMorePages() {
+  return !newsPaging.complete && newsPaging.next < newsPaging.pages.length;
+}
+
+/** Articles restants côté serveur (pour les libellés « Plus d'articles (N) »). */
+function newsRemainingCount() {
+  return newsPaging.complete ? 0 : Math.max(0, (newsPaging.total || 0) - news.length);
+}
+
+/** Ajoute des articles au fil en mémoire (sans doublon) ; renvoie les ajoutés. */
+function mergeNewsItems(items = []) {
+  const known = new Set(news.map(articleKey));
+  const added = [];
+  for (const it of items) {
+    const k = articleKey(it);
+    if (!k || known.has(k)) continue;
+    known.add(k);
+    added.push(it);
+  }
+  if (added.length) {
+    news = news.concat(added);
+    news.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+    window.RadarTranslate?.rememberNewsCorpus?.(news);
+  }
+  return added;
+}
+
+/**
+ * Tout le fil d'un coup (recherche, filtre de source, médias suivis, ou pages
+ * décalées par une récolte publiée entre-temps) : le fichier canonique.
+ */
+function loadAllNews() {
+  if (newsPaging.complete) return Promise.resolve([]);
+  if (newsPaging.loadingAll) return newsPaging.loadingAll;
+  newsPaging.loadingAll = (async () => {
+    try {
+      const res = await fetch(appAsset('news.json'), { cache: 'no-cache' });
+      if (!res.ok) return [];
+      const data = await res.json();
+      const added = mergeNewsItems(Array.isArray(data) ? data : (data.items || []));
+      newsPaging.complete = true;
+      newsPaging.next = newsPaging.pages.length;
+      return added;
+    } catch {
+      return [];
+    } finally {
+      newsPaging.loadingAll = null;
+    }
+  })();
+  return newsPaging.loadingAll;
+}
+
+/** Lot suivant (news-page-N.json, 30 articles) ; renvoie les articles ajoutés. */
+function loadNextNewsPage() {
+  if (!newsHasMorePages()) return Promise.resolve([]);
+  if (newsPaging.loading) return newsPaging.loading;
+  const file = newsPaging.pages[newsPaging.next];
+  newsPaging.loading = (async () => {
+    try {
+      const res = await fetch(appAsset(file), { cache: 'no-cache' });
+      if (!res.ok) throw new Error(`${file} (${res.status})`);
+      const page = await res.json();
+      // Nouvelle récolte publiée depuis la 1re page : les lots sont décalés.
+      if (page.updated && newsPaging.updated && page.updated !== newsPaging.updated) {
+        return await loadAllNews();
+      }
+      newsPaging.next += 1;
+      if (newsPaging.next >= newsPaging.pages.length) newsPaging.complete = true;
+      return mergeNewsItems(page.items || []);
+    } catch (e) {
+      console.warn('Le Radar: lot suivant du fil indisponible', e);
+      return [];
+    } finally {
+      newsPaging.loading = null;
+    }
+  })();
+  return newsPaging.loading;
+}
+
 async function loadNews({ silent = false } = {}) {
   if (!NEWS_LIST) return;
   const firstPaint = NEWS_LIST.dataset.ready !== '1';
@@ -18,8 +140,7 @@ async function loadNews({ silent = false } = {}) {
     NEWS_LIST.innerHTML = newsSkeleton(6);
   }
   try {
-    const res = await fetch(appAsset('news.json'), { cache: 'no-cache' });
-    const data = await res.json();
+    const data = await fetchNewsFirstPage();
     news = Array.isArray(data) ? data : (data.items || []);
     news.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     window.RadarTranslate?.rememberNewsCorpus?.(news);
@@ -30,7 +151,7 @@ async function loadNews({ silent = false } = {}) {
     const requestedSource = new URLSearchParams(window.location.search).get('source');
     if (requestedSource === NEWS_FOLLOWED_FILTER) {
       newsSourceFilter = NEWS_FOLLOWED_FILTER;
-    } else if (requestedSource && news.some((item) => item.source === requestedSource)) {
+    } else if (requestedSource && newsSourceNames().includes(requestedSource)) {
       newsSourceFilter = requestedSource;
     }
     if (data.updated) {
@@ -149,11 +270,11 @@ function sortSourcesForFilters(sources) {
 
 function assignSourceColors() {
   const palette = brandColors.fallback_palette || ['#003DA5', '#6C2163', '#047857'];
-  const sources = sortSourcesByPopularity([...new Set(news.map(n => n.source))]);
+  const sources = sortSourcesByPopularity(newsSourceNames());
   sourceColors = {};
 
   sources.forEach((src, i) => {
-    const item = news.find(n => n.source === src);
+    const item = newsSourceSummary(src);
     sourceColors[src] = safeCssColor(
       institutionBrandColor(item?.institution || '') || palette[i % palette.length],
     ) || '#003DA5';
@@ -358,7 +479,7 @@ function shortInstitution(name = '', type = '') {
 }
 
 function sourceInfo(src) {
-  const item = news.find(n => n.source === src);
+  const item = newsSourceSummary(src);
   const registry = newsSourcesByName[src];
   return {
     institution: item?.institution || registry?.institution || '',
@@ -1279,7 +1400,7 @@ function renderNewsFilters() {
   if (isFollowedNewsView() && (!followStore || !followStore.list().length)) {
     newsSourceFilter = 'all';
   }
-  const sources = sortSourcesForFilters([...new Set(news.map(n => n.source))]);
+  const sources = sortSourcesForFilters(newsSourceNames());
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
 
   if (followStore && followStore.list().length) {
@@ -1342,6 +1463,12 @@ function renderNews() {
   const isFollowedView = isFollowedNewsView();
   const tokens = searchTokens(newsSearchQuery);
   const isSearchView = tokens.length > 0;
+
+  // Recherche / filtre : il faut tout le fil. On affiche ce qui est chargé,
+  // puis on refait le rendu une fois le fichier complet arrivé.
+  if ((isSearchView || isSourceView || isFollowedView) && !newsPaging.complete && !newsPaging.loadingAll) {
+    loadAllNews().then((added) => { if (added.length) renderNews(); });
+  }
 
   let items = isFollowedView
     ? (followStore ? followStore.filterItemsByFollowed(news) : [])
@@ -1643,7 +1770,7 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
     tail.dataset.tailVisible = String(NEWS_TAIL_VISIBLE);
     tail.dataset.tailPeekTranslate = String(NEWS_TAIL_PEEK_TRANSLATE);
     const label = toggle.querySelector('.news-tail-toggle__label');
-    const hidden = cards.length - NEWS_TAIL_VISIBLE;
+    const hidden = cards.length - NEWS_TAIL_VISIBLE + newsRemainingCount();
     if (label) {
       label.textContent = newsTailExpanded
         ? 'Réduire'
@@ -1669,6 +1796,105 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
     toggle?.remove();
     if (!preserveExpanded) newsTailExpanded = false;
   }
+  syncNewsTailMore(tail);
+}
+
+/**
+ * « Charger plus » : lots de 30 articles (news-page-N.json) au bas de la
+ * Suite du fil dépliée. Chargement automatique quand le bouton approche de
+ * l'écran (IntersectionObserver), bouton accessible en repli (clavier,
+ * lecteurs d'écran, navigateurs sans observateur). Les cartes s'ajoutent
+ * sous le contenu lu : aucun saut de mise en page.
+ */
+let newsTailMoreObserver = null;
+/** Clic / Entrée sur « Charger plus » : focus sur la 1re carte ajoutée, même si
+ * l'observateur avait déjà lancé ce lot (le bouton focalisé défile à l'écran). */
+let newsTailMoreFocusPending = false;
+
+function syncNewsTailMore(tail) {
+  if (!tail) return;
+  let more = tail.querySelector('.news-tail-more');
+  let live = tail.querySelector('.news-tail-live');
+  if (!live) {
+    live = document.createElement('p');
+    live.className = 'news-tail-live visually-hidden';
+    live.setAttribute('role', 'status');
+    live.setAttribute('aria-live', 'polite');
+    tail.appendChild(live);
+  }
+  const overflow = tail.classList.contains('has-overflow');
+  const show = newsHasMorePages() && (newsTailExpanded || !overflow);
+  if (!show) {
+    if (more) more.hidden = true;
+    newsTailMoreObserver?.disconnect();
+    return;
+  }
+  if (!more) {
+    more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'news-tail-toggle news-tail-more';
+    more.addEventListener('click', () => {
+      newsTailMoreFocusPending = true;
+      loadMoreIntoTail();
+    });
+    const toggle = tail.querySelector('.news-tail-toggle:not(.news-tail-more)');
+    tail.insertBefore(more, toggle || live);
+  }
+  more.hidden = false;
+  more.textContent = adaptRadarUiText(`Charger plus d'articles (${newsRemainingCount()})`);
+  if ('IntersectionObserver' in window) {
+    newsTailMoreObserver?.disconnect();
+    newsTailMoreObserver = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) loadMoreIntoTail();
+    }, { rootMargin: '0px 0px 600px 0px' });
+    newsTailMoreObserver.observe(more);
+  }
+}
+
+async function loadMoreIntoTail() {
+  const tail = NEWS_LIST?.querySelector('.news-tail');
+  if (!tail || NEWS_LIST.dataset.mode || !newsHasMorePages() || newsPaging.loading) return;
+  const more = tail.querySelector('.news-tail-more');
+  // Pas de disabled : un bouton désactivé perd le focus clavier.
+  if (more) more.setAttribute('aria-busy', 'true');
+  const added = await loadNextNewsPage();
+  const body = ensureNewsTailBody(tail);
+  // Le fil a pu être re-rendu (filtre, recherche) pendant la requête.
+  if (!body || !tail.isConnected) return;
+  const shown = new Set([...NEWS_LIST.querySelectorAll('a.article, .article')]
+    .map((el) => el.getAttribute?.('href') || '').filter(Boolean));
+  const fresh = filterHousekeepingForDisplay(filterFreshItemsLenient(added));
+  const cards = [];
+  for (const item of sortByDateDesc(fresh)) {
+    const link = safeHttpUrl(item.link) || item.link || '';
+    if (link && shown.has(link)) continue;
+    const el = safeCreateArticle(item, 'standard');
+    if (!el) continue;
+    insertTailArticleByDate(body, el, item);
+    cards.push(el);
+  }
+  if (more) more.removeAttribute('aria-busy');
+  const live = tail.querySelector('.news-tail-live');
+  if (live) {
+    live.textContent = adaptRadarUiText(cards.length
+      ? `${cards.length} article${cards.length > 1 ? 's' : ''} ajouté${cards.length > 1 ? 's' : ''} à la suite du fil.`
+      : 'Fin du fil.');
+  }
+  if (NEWS_COUNT && !NEWS_LIST.dataset.mode) {
+    const n = NEWS_LIST.querySelectorAll('a.article, .article').length;
+    NEWS_COUNT.textContent = `${n} article${n !== 1 ? 's' : ''}`;
+  }
+  // Clavier : le focus passe à la première carte ajoutée (pas en défilement).
+  const wantFocus = newsTailMoreFocusPending;
+  newsTailMoreFocusPending = false;
+  if (wantFocus && cards[0]) {
+    const target = cards[0].matches('a[href], [tabindex]') ? cards[0] : cards[0].querySelector('a[href], button, [tabindex]');
+    target?.focus({ preventScroll: false });
+  }
+  if (cards.length && typeof window.RadarTranslate?.onNewsTailExpand === 'function') {
+    window.setTimeout(() => window.RadarTranslate.onNewsTailExpand(), 0);
+  }
+  syncNewsTailCollapse({ preserveExpanded: true });
 }
 
 function updateNewsLayout() {
