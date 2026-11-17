@@ -581,7 +581,7 @@ function feedContentHtml(model) {
   out.push(p(`<small>${DISCLOSURE}</small>`));
   return out.join('\n');
 }
-function feedItemXml(model) {
+function feedItemXml(model, { attachments = true } = {}) {
   const img = model.image;
   return [
     '    <item>',
@@ -593,8 +593,8 @@ function feedItemXml(model) {
     ...model.categories.map((c) => `      <category>${escXml(c)}</category>`),
     `      <description>${cdata(esc(model.description))}</description>`,
     `      <content:encoded>${cdata(feedContentHtml(model))}</content:encoded>`,
-    img ? `      <enclosure url="${escXml(img.url)}" length="${Number(img.length) > 0 ? Number(img.length) : 0}" type="${/\.png(\?|$)/i.test(img.url) ? 'image/png' : /\.webp(\?|$)/i.test(img.url) ? 'image/webp' : 'image/jpeg'}" />` : '',
-    img ? `      <media:content url="${escXml(img.url)}" medium="image" />` : '',
+    attachments && img ? `      <enclosure url="${escXml(img.url)}" length="${Number(img.length) > 0 ? Number(img.length) : 0}" type="${/\.png(\?|$)/i.test(img.url) ? 'image/png' : /\.webp(\?|$)/i.test(img.url) ? 'image/webp' : 'image/jpeg'}" />` : '',
+    attachments && img ? `      <media:content url="${escXml(img.url)}" medium="image" />` : '',
     '    </item>',
   ].filter(Boolean).join('\n');
 }
