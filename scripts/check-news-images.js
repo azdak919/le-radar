@@ -30,6 +30,7 @@
 const fs = require('fs');
 const path = require('path');
 const { loadPins, normUrl } = require('./lead-image-pins-lib');
+const { buildCheckQueue, logQueue } = require('./article-check-queue-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -37,6 +38,11 @@ const REPORT_PATH = path.join(ROOT, 'data', 'image-health.json');
 const UA = 'LE-RADAR-ImageHealth/1.0 (+https://le-radar.ca/; image health check)';
 const TIMEOUT_MS = 15_000;
 const CONCURRENCY = 4;
+// File de vérification : chaque passe sonde les cartes neuves / dont l'image a
+// changé, puis l'arriéré le plus anciennement sondé, au plus N cartes. Les
+// fichiers locaux (miroirs) restent vérifiés sur toutes les cartes (disque).
+const IMAGE_QUEUE_SIZE = Math.max(1, Number(process.env.LE_RADAR_IMAGE_QUEUE_SIZE) || 150);
+const IMAGE_RECHECK_MS = 24 * 3600 * 1000;
 
 const args = new Set(process.argv.slice(2));
 
@@ -106,6 +112,23 @@ function clearOriginImageIfNeeded(item, probeResult, pins = loadPins()) {
   return true;
 }
 
+/** Signature des URL distantes sondées : la changer remet la carte en tête de file. */
+function imageHealthSig(item = {}) {
+  return [item.image || '', item.stockImage || ''].join('|');
+}
+
+/** File de sonde réseau des cartes (voir article-check-queue-lib). */
+function buildImageQueue(items = [], { now = Date.now(), size = IMAGE_QUEUE_SIZE } = {}) {
+  const remote = items.filter((it) => /^https?:\/\//.test(it.image || '') || /^https?:\/\//.test(it.stockImage || ''));
+  return buildCheckQueue({
+    items: remote,
+    isNew: (it) => it.imageHealthKey !== imageHealthSig(it),
+    isDue: (it) => now - (Date.parse(it.imageHealthAt || '') || 0) >= IMAGE_RECHECK_MS,
+    checkedAt: (it) => it.imageHealthAt || '',
+    size,
+  });
+}
+
 async function pool(tasks, n) {
   const out = []; let i = 0;
   await Promise.all(Array.from({ length: n }, async () => {
@@ -136,14 +159,23 @@ async function main() {
     return url;
   };
   const plan = [];
+  const queue = buildImageQueue(items);
+  logQueue('sonde des vignettes', queue);
+  const probeNow = new Set(queue.batch);
   for (const item of items) {
-    const entry = { item, checks: [] };
+    const entry = { item, checks: [], probed: probeNow.has(item) };
     if (item.imageLocal) {
       const ok = fs.existsSync(path.join(ROOT, String(item.imageLocal)));
       entry.checks.push({ field: 'imageLocal', url: item.imageLocal, local: true, ok });
     }
-    if (/^https?:\/\//.test(item.image || '')) entry.checks.push({ field: 'image', url: check(item.image) });
     const mirrored = stockMirror[stockKey(item.stockImage)];
+    if (!entry.probed) {
+      // Hors lot : seulement le disque ; la sonde réseau attend son tour.
+      if (mirrored) entry.checks.push({ field: 'stockImage', variant: 'mirror', url: mirrored, local: true, ok: fs.existsSync(path.join(ROOT, mirrored)) });
+      plan.push(entry);
+      continue;
+    }
+    if (/^https?:\/\//.test(item.image || '')) entry.checks.push({ field: 'image', url: check(item.image) });
     if (mirrored) {
       // Photo Commons servie par le site : vérifier le fichier local, pas
       // Wikimedia (429 en rafale, c'est justement ce qu'on évite).
@@ -163,7 +195,11 @@ async function main() {
   const broken = [];
   const deadUrls = [];
   let repaired = 0;
-  for (const { item, checks } of plan) {
+  let stampedHealth = 0;
+  const stampAt = new Date().toISOString();
+  for (const { item, checks, probed } of plan) {
+    // Sonde complète sans échec passager : la carte quitte la tête de file.
+    const transientHit = checks.some((c) => !c.local && cache.get(c.url)?.transient);
     for (const c of checks) {
       const r = c.local ? { ok: c.ok, status: c.ok ? 200 : 404, type: 'file' } : cache.get(c.url);
       if (r.ok) continue;
@@ -185,12 +221,17 @@ async function main() {
         repaired += 1;
       }
     }
+    if (probed && !transientHit && args.has('--update')) {
+      item.imageHealthKey = imageHealthSig(item);
+      item.imageHealthAt = stampAt;
+      stampedHealth += 1;
+    }
   }
   if (deadUrls.length) require('./dead-images-lib').remember(deadUrls);
-  const report = { at: new Date().toISOString(), cards: items.length, urls: urls.length, broken: broken.length, repaired, items: broken };
+  const report = { at: new Date().toISOString(), cards: items.length, probedCards: queue.batch.length, queueDeferred: queue.deferred, urls: urls.length, broken: broken.length, repaired, items: broken };
   fs.mkdirSync(path.dirname(REPORT_PATH), { recursive: true });
   fs.writeFileSync(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);
-  if (args.has('--update') && repaired) fs.writeFileSync(NEWS_PATH, `${JSON.stringify(news, null, 2)}\n`);
+  if (args.has('--update') && (repaired || stampedHealth)) fs.writeFileSync(NEWS_PATH, `${JSON.stringify(news, null, 2)}\n`);
   console.log(`images: ${items.length} cartes, ${urls.length} URL, ${broken.length} cassée(s), ${repaired} réparée(s)`);
   for (const b of broken) console.log(` ✗ [${b.status} ${b.type}] ${b.source} — ${b.field}${b.variant ? `/${b.variant}` : ''} — ${b.url}`);
   const persistent = broken.filter((b) => !b.transient && !(args.has('--update')));
@@ -199,6 +240,8 @@ async function main() {
 
 module.exports = {
   probe,
+  imageHealthSig,
+  buildImageQueue,
   isKeptSourcePin,
   shouldClearOriginImage,
   clearOriginImageIfNeeded,

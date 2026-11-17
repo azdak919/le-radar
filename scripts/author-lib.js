@@ -1198,6 +1198,10 @@ function mergePriorAuthor(item = {}, prior = null) {
   if (!item.authorCheckedAt && prior.authorCheckedAt) {
     item.authorCheckedAt = prior.authorCheckedAt;
   }
+  // Tentative (même ratée) : garde la place de l'article dans la file auteurs.
+  if (!item.authorAttemptAt && prior.authorAttemptAt) {
+    item.authorAttemptAt = prior.authorAttemptAt;
+  }
   const current = normalizeAuthor(item.author);
   if (current && !isEditorialPlaceholder(current, lang)) return item;
   const prev = sourceAuthor(prior.author, item.source, lang);
