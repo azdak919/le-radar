@@ -1722,7 +1722,7 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
     else el.removeAttribute('data-translate-skip');
   });
 
-  let toggle = tail.querySelector('.news-tail-toggle');
+  let toggle = tail.querySelector('.news-tail-toggle:not(.news-tail-more)');
   if (overflow) {
     if (!toggle) {
       toggle = document.createElement('button');
@@ -1841,7 +1841,27 @@ function syncNewsTailMore(tail) {
     tail.insertBefore(more, toggle || live);
   }
   more.hidden = false;
-  more.textContent = adaptRadarUiText(`Charger plus d'articles (${newsRemainingCount()})`);
+  // Bague décorative : pas de textContent sur le bouton (ça l’effacerait),
+  // notranslate + aria-hidden pour ne pas l’envoyer au module de traduction.
+  let spin = more.querySelector('.news-tail-more__spin');
+  if (!spin) {
+    spin = document.createElement('span');
+    spin.className = 'news-tail-more__spin notranslate';
+    spin.setAttribute('aria-hidden', 'true');
+    spin.setAttribute('translate', 'no');
+    more.prepend(spin);
+  }
+  let label = more.querySelector('.news-tail-more__label');
+  if (!label) {
+    label = document.createElement('span');
+    label.className = 'news-tail-more__label';
+    const leftovers = [...more.childNodes].filter((n) => n !== spin);
+    const text = leftovers.map((n) => n.textContent).join('').trim();
+    leftovers.forEach((n) => n.remove());
+    more.appendChild(label);
+    if (text) label.textContent = text;
+  }
+  label.textContent = adaptRadarUiText(`Charger plus d'articles (${newsRemainingCount()})`);
   if ('IntersectionObserver' in window) {
     newsTailMoreObserver?.disconnect();
     newsTailMoreObserver = new IntersectionObserver((entries) => {

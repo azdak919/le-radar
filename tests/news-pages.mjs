@@ -47,6 +47,17 @@ assert.match(js, /aria-live', 'polite'/);
 assert.match(js, /more\.type = 'button'/);
 assert.match(js, /IntersectionObserver/);
 assert.match(js, /target\?\.focus\(/);
+assert.match(js, /news-tail-more__spin notranslate/);
+assert.match(js, /spin\.setAttribute\('aria-hidden', 'true'\)/);
+assert.match(js, /spin\.setAttribute\('translate', 'no'\)/);
+assert.match(js, /news-tail-more__label/);
+assert.match(js, /\.news-tail-toggle:not\(\.news-tail-more\)/);
+assert.doesNotMatch(js, /more\.textContent = adaptRadarUiText/, 'libellé sur le span, pas le bouton');
+const chrome = readFileSync(new URL('../style-chrome.css', import.meta.url), 'utf8');
+assert.match(chrome, /\.news-tail-more__spin/);
+assert.match(chrome, /translate-progress-spin 0\.95s linear infinite/);
+assert.match(chrome, /forced-colors:\s*active/);
+assert.match(chrome, /news-tail-more\[aria-busy="true"\] \.news-tail-more__spin[\s\S]{0,400}prefers-reduced-motion:\s*reduce/);
 // Publication : étape du bot, régénération sur conflit, contrôle Pages.
 const wf = readFileSync(new URL('../.github/workflows/update-news.yml', import.meta.url), 'utf8');
 assert.match(wf, /node scripts\/news-pages\.js --update/);
