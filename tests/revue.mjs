@@ -182,6 +182,9 @@ assert.match(L.ledeReject('Les médias étudiants québécois abordent des sujet
 assert.match(L.ledeReject('Le budget du conseil municipal de Sherbrooke et le retour des médias physiques chez les jeunes retiennent l’attention.', items), /aucun média/);
 assert.match(L.ledeReject('Le Collectif rapporte que le maire Gagnon fait adopter le budget de Sherbrooke devant les étudiants.', items), /nom absent/);
 assert.equal(L.ledeReject('Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que The Link raconte la victoire des Stingers sur les Martlets.', items), null);
+assert.match(L.ledeReject('Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que Le Link raconte la victoire des Stingers sur les Martlets.', items), /média altéré/, '« Le Link » pour The Link');
+assert.match(L.ledeReject('Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que Le Collectif raconte la victoire des Stingers sur les Martlets.', items), /média répété/);
+assert.match(L.ledeReject('Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que The Link raconte la partnership des Stingers et des Martlets.', items), /anglais/);
 assert.match(chapeauPrompt(items, 'matin'), /La revue du matin/); assert.match(chapeauPrompt(items), /ne compte pas les articles/);
 
 // ── Génération complète, validation et refus ──

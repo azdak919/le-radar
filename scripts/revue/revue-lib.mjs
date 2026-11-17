@@ -382,6 +382,16 @@ export function ledeReject(text, items = []) {
   if (GENERIC.test(text)) return 'formule générique';
   const low = norm(text);
   if (!items.some(x => low.includes(norm(x.source)))) return 'aucun média cité';
+  const names = [...new Set(items.map(x => x.source).filter(Boolean))].sort((x, y) => y.length - x.length);
+  // Chaque média au plus une fois (« Le Collectif revient…, tandis que Le Collectif raconte… » : lourd).
+  for (const m of names) if (low.split(norm(m)).length > 2) return `média répété : ${m}`;
+  // Nom de média altéré (« Le Campus » pour The Campus, « Le Link ») : seul le nom exact du fil est permis.
+  let rest = String(text);
+  for (const m of names) rest = rest.split(m).join(' ');
+  const cores = new Set(names.map(m => norm(m.replace(/^(the|le|la|les|l['’])\s*/i, ''))).filter(c => c.length > 2));
+  for (const g of rest.matchAll(/\b(?:The|Le|La|Les|L['’])\s*(\p{Lu}[\p{L}’'-]+)/gu)) if (cores.has(norm(g[1]))) return `nom de média altéré : ${g[0]}`;
+  // Mots anglais hors noms de médias (« partnership », « students ») : l'amorce est en français.
+  if (/\b(the|and|of|with|for|from|students?|partnership|campus life|university)\b/i.test(rest)) return 'mot anglais';
   const n = (String(text).match(/[.!?…](\s|$)/g) || []).length;
   if (n < 1 || n > 3) return `${n} phrase(s)`;
   return null;

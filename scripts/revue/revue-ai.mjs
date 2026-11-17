@@ -4,7 +4,7 @@
 // (revue-lib.mjs textReject : chiffre, nom ou date relative absents de la source, autre langue que le français) → repli
 // déterministe, article par article. Les secrets ne sont jamais écrits dans le journal.
 import { MODEL, aiEnabled as socialAiEnabled, parseAi, TOPICS } from '../social/ai-hook.mjs';
-import { itemReject, ledeReject, THEMES } from './revue-lib.mjs';
+import { itemReject, ledeReject, highlights, THEMES } from './revue-lib.mjs';
 
 export { MODEL };
 export const aiEnabled = (env = process.env) => socialAiEnabled(env) && env.REVUE_AI !== 'off';
@@ -31,7 +31,8 @@ export function chapeauPrompt(items, edition = 'soir') {
   const label = edition === 'matin' ? 'La revue du matin' : 'La revue du soir';
   return `Tu écris l’amorce de « ${label} », une publication originale du Radar (revue de presse des médias étudiants du Québec). ` +
     'Écris en FRANÇAIS exactement deux phrases naturelles (140 à 340 caractères au total), au ton d’un journal, qui mettent en avant ' +
-    'deux ou trois articles marquants de la liste en nommant leur média (par exemple : Le Collectif revient sur…, tandis que The Link raconte…). ' +
+    'deux ou trois articles marquants de la liste, de médias différents, en nommant leur média (par exemple : Le Collectif revient sur…, tandis que The Link raconte…). ' +
+    'Écris chaque nom de média une seule fois et exactement comme dans la liste (The Campus reste The Campus, jamais « Le Campus »), et aucun mot anglais hors de ces noms. ' +
     'Reprends fidèlement les noms propres des titres, n’invente aucun fait, aucun chiffre, aucun nombre ni aucune date, n’utilise aucun guillemet, ' +
     'jamais « demain », « hier », « aujourd’hui », « ce soir » ni « week-end », aucune formule générique (« sujets variés », « mettent en lumière », ' +
     '« au cœur de ») et ne compte pas les articles. Ne commence pas par « Les médias étudiants ». ' +
@@ -61,7 +62,8 @@ export async function aiReview(items, { env = process.env, fetchImpl = fetch, ba
   }
   if (items.length && calls < maxCalls) {
     try {
-      const pool = items.slice(0, 12);
+      // Médias variés d'abord (même ordre que l'amorce déterministe), puis le reste : l'IA nomme chaque média une seule fois.
+      const pool = highlights(items, 12);
       const j = await run(chapeauPrompt(pool, edition), { env, fetchImpl, maxTokens: 220 });
       const c = typeof j?.chapeau === 'string' ? j.chapeau.replace(/\s+/g, ' ').trim() : '';
       const why = c ? ledeReject(c, pool) : 'aucune amorce';
