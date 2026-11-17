@@ -1548,15 +1548,6 @@
       "via": "resize-proxy",
       "nameKey": "visuals-concordian-no-one-wants-to-grow-old.png"
     },
-    "5d50c090673b037d": {
-      "local": "assets/news-images/5d50c090673b037d.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Quebec_data_centres_Halle_Keays_1_690_518.png",
-      "host": "thelinknewspaper.ca",
-      "bytes": 67877,
-      "updatedAt": "2026-11-17T10:04:13.224Z",
-      "via": "disk",
-      "nameKey": "05_news_quebec_data_centres_halle_keays_1_690_518.png"
-    },
     "540e7e795524bfbc": {
       "local": "assets/news-images/540e7e795524bfbc.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/BSP_4223_690_461_90.jpg",
@@ -1709,16 +1700,6 @@
       "updatedAt": "2026-11-17T10:04:13.482Z",
       "via": "disk",
       "nameKey": "nst26_concordia_5754.jpg"
-    },
-    "bc6f0f904674d20c": {
-      "local": "assets/news-images/bc6f0f904674d20c.jpg",
-      "remote": "https://thetribune.ca/wp-content/uploads/2026/11/AE2-Evy-Shamber-scaled.jpeg",
-      "host": "thetribune.ca",
-      "bytes": 156526,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T10:04:14.040Z",
-      "via": "resize-proxy",
-      "nameKey": "ae2-evy-shamber.jpeg"
     },
     "69a04023345230f5": {
       "local": "assets/news-images/69a04023345230f5.jpg",
@@ -3075,9 +3056,28 @@
       "updatedAt": "2026-11-17T20:38:34.759Z",
       "via": "resize-proxy",
       "nameKey": "img_0876.jpeg"
+    },
+    "467697863f7bc97d": {
+      "local": "assets/news-images/467697863f7bc97d.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 47525,
+      "updatedAt": "2026-11-17T21:28:43.489Z",
+      "via": "disk",
+      "nameKey": "image.png"
+    },
+    "166c965ceb7dcf6b": {
+      "local": "assets/news-images/166c965ceb7dcf6b.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image.jpeg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 26219,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-17T21:28:43.602Z",
+      "via": "origin",
+      "nameKey": "image.jpeg"
     }
   },
-  "updatedAt": "2026-11-17T20:38:34.768Z",
+  "updatedAt": "2026-11-17T21:28:44.175Z",
   "count": 319,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -3292,10 +3292,6 @@
     "124018bb7b5a4d94": {
       "reason": "budget",
       "at": "2026-11-17T13:10:38.352Z"
-    },
-    "446ab03fa10b6904": {
-      "reason": "budget",
-      "at": "2026-11-17T13:10:38.357Z"
     },
     "d06590bc597b5d0d": {
       "reason": "budget",
@@ -3736,10 +3732,6 @@
     "4c5e44d1de8ab708": {
       "reason": "budget",
       "at": "2026-11-17T13:21:10.297Z"
-    },
-    "292f03d1ca51c309": {
-      "reason": "budget",
-      "at": "2026-11-17T13:21:10.299Z"
     },
     "24a6185287e92457": {
       "reason": "budget",
@@ -4953,10 +4945,6 @@
       "reason": "budget",
       "at": "2026-11-17T17:10:09.052Z"
     },
-    "5172b1abe82ffbc7": {
-      "reason": "budget",
-      "at": "2026-11-17T17:10:09.054Z"
-    },
     "f385e82529ef6099": {
       "reason": "budget",
       "at": "2026-11-17T17:10:09.055Z"
@@ -5440,6 +5428,26 @@
     "fbb26b13392022db": {
       "reason": "budget",
       "at": "2026-11-17T20:38:34.767Z"
+    },
+    "3a3bc948a7d06499": {
+      "reason": "budget",
+      "at": "2026-11-17T21:28:44.166Z"
+    },
+    "799a0a1ce895d871": {
+      "reason": "budget",
+      "at": "2026-11-17T21:28:44.169Z"
+    },
+    "1c83f88a53f7aafa": {
+      "reason": "budget",
+      "at": "2026-11-17T21:28:44.171Z"
+    },
+    "6a484a2d36fef815": {
+      "reason": "budget",
+      "at": "2026-11-17T21:28:44.173Z"
+    },
+    "20e7f4e8b9cc0d90": {
+      "reason": "budget",
+      "at": "2026-11-17T21:28:44.174Z"
     }
   }
 }
