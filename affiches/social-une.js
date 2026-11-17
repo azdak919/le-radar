@@ -1,6 +1,6 @@
 /* Image « La une du matin / du soir » du Radar (réseaux sociaux), en français seulement.
  * window.renderUne({ model, format }) dessine la carte puis attend polices et images.
- * model = { slot: { label, dayLabel, kind }, items: [{ title, byline, place, sport, credit, hook, images[], focalY }], sports: [...] }
+ * model = { slot: { label, dayLabel, kind }, items: [{ title, byline, source, place, sport, credit, hook, images[], focalY }], sports: [...] }
  * (scripts/social/une-lib.mjs). Matin : thème clair du site ; soir : thème sombre. Gabarit « Verre » + photo de la une
  * dégagée (panel du 12 nov. 2026, retour de Charles : mélange A/B, résultats sportifs étudiants pour combler le bas).
  * Pas de code QR (liens dans le texte du post), aucun logo d'université. */
@@ -25,10 +25,24 @@
     for (let i = 0; i < 40 && bgs.some((b) => ratio(c, b) < 4.6); i++) c = c.map((x) => Math.round(x + (to - x) * 0.08));
     return `rgb(${c.join(',')})`;
   }
+  // Kicker : média (couleur d’établissement) · sigle (UdeM, ULaval, Bishop’s). Texte du post inchangé (auteur · média).
   function kicker(it) {
     const k = el('p', 'kick');
     if (it.sport) k.append(el('span', 'emo', it.sport));
-    if (it.place) { const pl = el('span', 'place', it.place); const c = aaColor(it.placeColor, THEME); if (c) pl.style.color = c; k.append(pl); }
+    const src = String(it.source || '').trim();
+    const place = String(it.place || '').trim();
+    if (src || place) {
+      const line = el('span', 'labs');
+      if (src) {
+        const media = el('span', 'media', src);
+        const c = aaColor(it.placeColor, THEME);
+        if (c) media.style.color = c;
+        line.append(media);
+      }
+      if (src && place) line.append(document.createTextNode(NB + '·' + NB));
+      if (place) line.append(el('span', 'place', place));
+      k.append(line);
+    }
     return k.childNodes.length ? k : null;
   }
   function loadFirst(img, urls) {

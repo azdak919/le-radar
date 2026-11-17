@@ -108,7 +108,7 @@ export function selectUne(news, slot, { now = Date.now(), state = {}, max = 4, p
   if (slot.id === 'soir') cand = cand.filter(it => ymdOf(it.date) === slot.day);
   cand = cand.slice(0, max);
   const li = cand.findIndex(hasImg); if (li > 0) cand = [cand[li], ...cand.slice(0, li), ...cand.slice(li + 1)];
-  const items = cand.map(it => ({ ...front.normalize(it, '..'), lang: it.lang || detectLang({ title: it.title }), place: institutionLabel(it), placeColor: institutionColor(it.institution), sport: sportEmoji(it), byline: byline(it), tag: institutionTag({ source: it.source, title: it.title, desc: it.excerpt || '' }), siteImage: siteImage(it) })).filter(x => x.id);
+  const items = cand.map(it => ({ ...front.normalize(it, '..'), lang: it.lang || detectLang({ title: it.title }), place: unePlaceLabel(it), placeColor: institutionColor(it.institution), sport: sportEmoji(it), byline: byline(it), tag: institutionTag({ source: it.source, title: it.title, desc: it.excerpt || '' }), siteImage: siteImage(it) })).filter(x => x.id);
   const skip = !items.length;
   const why = skip ? (slot.id === 'soir' ? 'rien de nouveau depuis le matin : publication sautée' : 'aucun article nouveau à la une : publication sautée') : `${items.length} article(s)`;
   return { items, lead: items[0] || null, ids: items.map(x => x.id), skip, why, doubts, available: picked.length };
@@ -125,6 +125,12 @@ export function institutionLabel(it) {
   const hit = FR_INSTITUTIONS[raw.toLowerCase()];
   if (hit) return hit;
   return /\b(university|college)\b/i.test(raw) ? '' : raw; // nom anglais inconnu : on ne l'affiche pas plutôt que d'afficher de l'anglais
+}
+/** Sigle d’établissement pour l’image de La une (UdeM, ULaval, Bishop’s) ; même table que le sport. */
+export function unePlaceLabel(it) {
+  const full = institutionLabel(it);
+  const short = institutionSigle(it?.institution) || institutionSigle(full) || full;
+  return String(short || '').replace(/'/g, '’').trim();
 }
 /** Émoji du sport étudiant (titre ou extrait) ; '' si l'article n'est pas sportif. */
 const SPORT_EMOJI = { '#Football': '🏈', '#Hockey': '🏒', '#Basketball': '🏀', '#Volleyball': '🏐', '#Soccer': '⚽', '#Rugby': '🏉', '#Natation': '🏊', '#Athlétisme': '🏃' };

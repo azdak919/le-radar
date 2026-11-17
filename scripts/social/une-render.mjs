@@ -24,7 +24,7 @@ export function pageModel(model) {
       // Prochaine édition (date absolue) : bandeau bas de la story, dans la zone recouverte par l'interface d'Instagram et de Facebook.
       next: model.slot.id === 'soir' ? `La une du matin · ${frShortDay(model.slot.day, 1)} · 7 h 45` : `La une du soir · ${frShortDay(model.slot.day, 0)} · 19 h 30` },
     sports: model.sports || { results: [], next: [] }, radio: model.radio || [],
-    items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, place: x.place || '', placeColor: x.placeColor || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
+    items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, source: String(x.source || '').trim(), place: x.place || '', placeColor: x.placeColor || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
   };
 }
 

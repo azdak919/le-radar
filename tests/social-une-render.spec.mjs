@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
 // couleurs d'établissement lisibles (AA) avec repli sur l'accent, « Par » plus pâle que l'auteur.
 const SIZES = { portrait: [1080, 1350], story: [1080, 1920], paysage: [1200, 675] };
 const IMG = '/assets/kit/affiche-11x17.jpg';
-const item = (n, o = {}) => ({ title: `Article numéro ${n} pour la une`, byline: `Autrice ${n} · Le Journal`, place: 'Université Concordia', placeColor: '#912338', hook: 'Une accroche en français.', credit: 'Photo : Équipe', images: [IMG], ...o });
+const item = (n, o = {}) => ({ title: `Article numéro ${n} pour la une`, byline: `Autrice ${n} · Le Journal`, source: 'Le Journal', place: 'Concordia', placeColor: '#912338', hook: 'Une accroche en français.', credit: 'Photo : Équipe', images: [IMG], ...o });
 const res = (n, o = {}) => ({ emoji: '🏀', sport: 'Basketball (H)', kind: 'resultat', when: 'Final · jeu. 12 nov.', teams: [{ name: `Stingers${n}`, inst: 'Concordia', color: '#912338', score: 68 }, { name: 'Redbirds', inst: 'McGill', color: '#ED1B2F', score: 44 }], tie: false, ...o });
 const nxt = (n, o = {}) => ({ emoji: '🏐', sport: 'Volleyball (F)', kind: 'avenir', when: 'ven. 13 nov. · 18 h', verb: n % 2 ? 'reçoit' : 'visite', teams: [{ name: `Rouge et Or${n}`, inst: 'Laval', color: '#E30513' }, { name: 'Vert & Or', inst: 'Sherbrooke', color: '#00A759' }], ...o });
 const radio = (n) => ({ emoji: '📻', title: `Émission ${n}`, station: `Station ${n}`, when: `ven. 13 nov. · ${8 + n} h` });
@@ -48,7 +48,7 @@ for (const kind of ['matin', 'soir']) {
             cols: document.querySelector('.sports .grid')?.dataset.cols || '0',
             colTitles: [...document.querySelectorAll('.sports .scol h3')].map((e) => e.textContent),
             empty: [...document.querySelectorAll('.sports .scol')].filter((c) => !c.querySelector('.mt')).length,
-            place: [...document.querySelectorAll('.kick .place, .ml .in')].map((e) => R(getComputedStyle(e).color, B)),
+            place: [...document.querySelectorAll('.kick .media, .kick .place, .ml .in')].map((e) => R(getComputedStyle(e).color, B)),
             by: by && by.querySelector('.lbl') ? [getComputedStyle(by.querySelector('.lbl')).color, getComputedStyle(by.querySelector('.who')).color, R(getComputedStyle(by.querySelector('.lbl')).color, B)] : null,
           };
         });
@@ -67,6 +67,15 @@ for (const kind of ['matin', 'soir']) {
         if (name === 'complet' && format === 'portrait') expect(info.radio).toBe(4);
         if (name === 'complet' && format === 'story') expect(info.radio).toBeGreaterThanOrEqual(3);
         if (name === 'complet') expect(await page.locator('.lead .hook').count(), 'résumé de la une présent').toBe(1);
+        if (name === 'complet' && format === 'portrait') {
+          const kicks = await page.locator('.kick .labs').allTextContents();
+          expect(kicks.map((t) => t.replace(/\s+/g, ' ').trim()), 'média · sigle, pas le nom complet').toEqual([
+            'Le Journal · Concordia',
+            'Le Journal · Cégep inconnu',
+            'Le Journal · Concordia',
+          ]);
+          expect(await page.locator('.lead .by .src').textContent()).toMatch(/Le Journal/);
+        }
         if (format === 'story') { const nb = await page.evaluate(() => { const c = document.getElementById('card').getBoundingClientRect(); return [...document.querySelectorAll('.slot, .title, .foot .full, .foot .ind')].filter((e) => { const r = e.getBoundingClientRect(); return r.top < c.top + 140 || r.bottom > c.bottom - 250; }).length; }); expect(nb, 'zones sûres Instagram/Facebook').toBe(0); }
         if (name === 'complet' && format === 'paysage') expect(info.sports).toBeGreaterThanOrEqual(3);
         for (const r of out.place) expect(r, 'couleur d’établissement AA').toBeGreaterThanOrEqual(4.5);
