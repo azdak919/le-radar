@@ -1,6 +1,6 @@
 // « La une du matin » et « La une du soir » : logique pure (testée dans tests/social-une.mjs).
 //  - créneaux en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées par Intl) ;
-//  - sélection = la une de l'accueil (scripts/magazine-front-page-lib.js, période « Aujourd'hui », sport pro exclu) ;
+//  - sélection = la une de l'accueil (scripts/magazine-front-page-lib.js, période « Les plus récents », sport pro exclu) ;
 //  - anti-doublon : un article déjà publié dans un créneau récent n'est jamais repris ; le soir ne garde que les
 //    nouveautés de la journée et saute la publication s'il n'y en a aucune ;
 //  - textes par réseau en français, titres + auteurs (tous, sinon le média seul), liens le-radar.ca, hashtags, aucune mention @.

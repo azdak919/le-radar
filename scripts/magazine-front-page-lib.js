@@ -230,7 +230,7 @@
       const en = enDate(`${target}T12:00:00`, { weekday: true });
       return { id, live: true, from: null, to: today, target, fr: fr.charAt(0).toUpperCase() + fr.slice(1), en };
     }
-    return { id: 'jour', live: true, from: null, to: today, target: today, fr: 'Aujourd’hui', en: 'Today' };
+    return { id: 'jour', live: true, from: null, to: today, target: today, fr: 'Les plus récents', en: 'Latest' };
   }
 
   /* Le Radar couvre le sport étudiant : titres sur le sport professionnel exclus de l’affiche. */

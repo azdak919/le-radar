@@ -149,7 +149,7 @@ const UNE_TAGLINES = {
   campus: { label: 'Ton campus en direct', fr: 'Ton campus en direct', en: 'Your campus, live' },
 };
 const UNE_PERIOD_LABELS = {
-  jour: 'Aujourd’hui (les plus récents)',
+  jour: 'Les plus récents',
   demain: 'Demain (affiche du lendemain)',
   fds: 'Fin de semaine',
   semaine: 'Dernière semaine',
