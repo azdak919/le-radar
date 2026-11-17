@@ -184,11 +184,14 @@ critique d'un récital de piano. Passé en `demotePathPatterns`.
 ### Rétention des sources (flux RSS peu fiables)
 
 `fetch-news.js` **ne retire plus une source** lorsqu'un flux échoue une fois.
-Il conserve les articles **encore dans la fenêtre de fraîcheur UI** (3 sessions
-universitaires), marqués `_retainedFromCache: true` dans `news.json`.
+Il conserve les articles **encore dans la fenêtre d'affichage** (session en
+cours, ou les 45 derniers jours en début de session), marqués
+`_retainedFromCache: true` dans `news.json`.
 
-Une source n'est retirée que si, après 3 sessions, **aucun article frais** n'est
-obtenu ni en cache ni via le flux. Voir `scripts/source-retention-lib.js`.
+Une source n'est retirée que si, après 3 sessions (cycle de vie des sources,
+distinct de l'affichage), **aucun article** n'est obtenu ni en cache ni via le
+flux, et que la date de dernier article du registre est elle aussi hors cycle.
+Voir `scripts/source-retention-lib.js`.
 
 ### Candidats (`candidates`)
 
@@ -263,7 +266,7 @@ Raccourci : `node scripts/maintain.js --update`
 | Auteur générique (« The Concordian », nom du journal) | `GENERIC_AUTHORS` dans `scripts/fetch-news.js` |
 | Vedettes WordPress absentes du RSS | `wpFeaturedCategories` (ex. `["slider"]` pour Le Délit uniquement — pas de défaut global) |
 | Auteurs incorrects en masse | `botHints.authors` dans `news-sources.json`, puis `verify-authors.js` |
-| Flux qui disparaît après un run CI | Automatique : cache 3 sessions via `source-retention-lib.js` |
+| Flux qui disparaît après un run CI | Automatique : les articles encore dans la fenêtre d'affichage restent en cache (`source-retention-lib.js`) ; la source n'est retirée qu'après 3 sessions sans article |
 | Images vedette faibles | `scripts/stock-photo-lib.js`, `ensure-lead-images.js` |
 | Nouveau parseur HTML (autre CMS) | Étendre `scripts/html-list-fetcher.js` ou ajouter un `fetchMode` |
 

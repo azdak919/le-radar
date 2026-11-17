@@ -341,7 +341,7 @@ function applyFetchRegistryUpdate(src, {
 const DAY_MS = 86400000;
 const OK_DAYS = 270;
 
-/** Classify a feed by latest item date using the 3-session UI window. */
+/** Classify a feed by latest item date using the 3-session source-lifecycle window. */
 function classifyFeedFreshness(lastItemMs, referenceDate = new Date()) {
   if (lastItemMs == null || !Number.isFinite(lastItemMs)) {
     return { status: 'stale', lastItemDate: null };
