@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-17T23:32:37.862Z",
+  "updated": "2026-11-17T23:40:21.157Z",
   "total": 1019,
   "pool": 61,
-  "incomplete": 29,
+  "incomplete": 28,
   "withLeadExcerpt": 167,
-  "candidates": 29,
-  "enriched": 1,
+  "candidates": 28,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -28,21 +28,21 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
-    {
       "title": "Francisée, mais pas la bienvenue ?",
       "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
       "changed": false
     },
     {
@@ -53,15 +53,6 @@
       "chars": 439,
       "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": false
-    },
-    {
-      "title": "Why young people should watch more films like Persepolis",
-      "link": "https://theconcordian.com/2026/11/why-young-people-should-watch-persepolis/",
-      "ok": true,
-      "score": 100,
-      "chars": 704,
-      "sample": "As a Concordia student minoring in film studies, I am fortunate to have access to a wide range of fi",
-      "changed": true
     },
     {
       "title": "Les cuisines fantômes hantent-elles les restaurants?",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 259,
       "sample": "On Dec. 7, Canadians in six ridings, including two in Montreal, will head to the polls to elect thei",
+      "changed": false
+    },
+    {
+      "title": "I don’t like waiting",
+      "link": "https://theconcordian.com/2026/11/i-dont-like-waiting/",
+      "ok": true,
+      "score": 100,
+      "chars": 190,
+      "sample": "I was getting ready to head to the store to grab some things I needed. It was early in the morning; ",
       "changed": false
     }
   ]

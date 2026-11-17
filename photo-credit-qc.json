@@ -1,14 +1,14 @@
 {
-  "updated": "2026-11-17T23:35:04.052Z",
+  "updated": "2026-11-17T23:42:38.966Z",
   "total": 1019,
-  "withImage": 911,
-  "withCredit": 911,
-  "cited": 506,
+  "withImage": 913,
+  "withCredit": 913,
+  "cited": 508,
   "pending": 282,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 14,
+  "updatedCount": 13,
   "citedNew": 12,
   "fallbackNew": 48,
   "samples": [
@@ -32,6 +32,13 @@
       "credit": "Photo : Lia Chayer",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Pregnant, not sidelined",
+      "source": "The Link",
+      "credit": "Illustration: Annabelle Olumese",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
@@ -69,6 +76,13 @@
       "method": "body-line"
     },
     {
+      "title": "Stingers 1, Patriots 2: The Stingers fall out of playoff contention after another loss",
+      "source": "The Link",
+      "credit": "Photo: Santiago Sanchez",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
       "title": "Journée mondiale du droit à l’avortement : toujours besoin de protection",
       "source": "La Pige",
       "credit": "Photo : La Pige",
@@ -81,20 +95,6 @@
       "credit": "Photo : Arthur Bakhache",
       "cited": true,
       "method": "body-line"
-    },
-    {
-      "title": "Un nouveau souffle pour le centre-ville de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Cinema Politica screens Edward Said documentary",
-      "source": "The Link",
-      "credit": "Photo: Sana Paracha",
-      "cited": true,
-      "method": "figcaption-trailing"
     }
   ]
 }
