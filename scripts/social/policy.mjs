@@ -11,6 +11,16 @@ export const torontoHour = t => +new Intl.DateTimeFormat('en-US', { timeZone: TZ
 /** Jour de la semaine Toronto : 0 = dimanche … 6 = samedi. */
 export const torontoWeekday = t => new Date(torontoDay(t) + 'T12:00:00Z').getUTCDay();
 
+/** Facebook et Instagram sont en pause par défaut (policy.json → formats.une.prepared). Les autres réseaux restent actifs. */
+export function networkEnabled(name, policy = POLICY) {
+  if (name === 'facebook') return policy?.formats?.une?.prepared?.facebook?.enabled === true;
+  if (name === 'instagram') return policy?.formats?.une?.prepared?.instagram?.enabled === true;
+  return true;
+}
+export const FACEBOOK_PAUSE = 'Facebook en pause (formats.une.prepared.facebook.enabled = false). Aucun envoi, aucune modification de la file Buffer. Instagram se réactive en même temps (prepared.instagram.enabled).';
+/** Retire les réseaux en pause. La liste d'origine (workflows, policy.networks) peut encore les nommer. */
+export const activeNetworks = (names, policy = POLICY) => (names || []).filter(n => networkEnabled(n, policy));
+
 /** Volume réduit en vigueur à l'instant `now` ? (active, entre `from` et `until` inclus, jours civils Toronto). */
 export function volumeActive(now = Date.now(), policy = POLICY) {
   const v = policy?.volume; if (!v?.active) return false;

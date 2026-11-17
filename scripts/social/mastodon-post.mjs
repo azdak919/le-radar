@@ -8,13 +8,24 @@
 // Sans MASTODON_TOKEN : essai. SHARE_NOW=true : un article frais, tout de suite.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, stripUtm, siteLink, buildTagged, LIMITS, detectLang } from './lib.mjs';
+import { parseFeed, markImages, stripUtm, siteLink, buildTagged, LIMITS, frenchPost } from './lib.mjs';
+import { noteReach } from './reach-log.mjs';
 import { tagLine } from './hashtags.mjs';
 import { resolveImage } from './image-resolve.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
 
+const len = s => [...String(s).replace(/https?:\/\/\S+/g, 'x'.repeat(23))].length; // Mastodon : lien = 23
+export const camelTag = s => { const w = String(s || '').replace(/[’'`-]/g, ' ').split(/[^\p{L}\p{N}]+/u).filter(Boolean); return w.length ? '#' + w.map(x => x[0].toUpperCase() + x.slice(1)).join('') : ''; };
+/** Hashtags CamelCase : lieu, institution, sujet. 2 à 4 (policy.json) : sur Mastodon ils servent à la découverte. */
+export const mastoTags = it => tagLine(it, 'mastodon');
+export const buildMastoText = (it, accounts = [], { credit = '', photo = true } = {}) => {
+  const { it: fr } = frenchPost(it);
+  return buildTagged(fr, accounts, LIMITS.mastodon, { credit, photo, len, link: true, essenceFirst: true, ai: false /* jamais d'IA : règles de piaille.fr */ }, mastoTags(it), '\n\n');
+};
+
+async function main() {
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/mastodon-sent.json');
 const instance = process.env.MASTODON_INSTANCE || 'https://piaille.fr', token = process.env.MASTODON_TOKEN || '';
@@ -23,12 +34,6 @@ let dry = process.env.DRY_RUN === 'true' || process.argv.includes('--dry-run');
 if (!token) { console.log('MASTODON_TOKEN absent : mode essai.'); dry = true; }
 const shareNow = process.env.SHARE_NOW === 'true';
 const save = () => { if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); };
-const len = s => [...String(s).replace(/https?:\/\/\S+/g, 'x'.repeat(23))].length; // Mastodon : lien = 23
-export const camelTag = s => { const w = String(s || '').replace(/[’'`-]/g, ' ').split(/[^\p{L}\p{N}]+/u).filter(Boolean); return w.length ? '#' + w.map(x => x[0].toUpperCase() + x.slice(1)).join('') : ''; };
-/** Hashtags CamelCase : lieu (#Québec ou #Montréal) + sujet ou institution, 3 au plus (policy.json). */
-export const mastoTags = it => tagLine(it, 'mastodon');
-export const buildMastoText = (it, accounts = [], { credit = '', photo = true } = {}) => buildTagged(it, accounts, LIMITS.mastodon, { credit, photo, len, link: true, ai: false /* jamais d'IA : règles de piaille.fr */ }, mastoTags(it), '\n\n');
-
 // @ Mastodon vérifiés à la main (data/social/mastodon-accounts.json) : vide tant qu'aucun compte n'est confirmé.
 const ACCOUNTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/mastodon-accounts.json'), 'utf8')).accounts;
 const state = JSON.parse(fs.readFileSync(STATE, 'utf8')); state.sent ||= {};
@@ -60,18 +65,21 @@ for (const t of todo) {
   if (!it) { console.log(`::warning::${t.id} absent du flux.`); continue; }
   const im = await resolveImage(it, { used, repeated });
   if (!im) { console.log(`::warning::Aucune image du site pour ${it.id} : pas publié, réessai au passage suivant.`); continue; }
-  const text = buildMastoText(it, ACCOUNTS, { credit: im.credit, photo: true }), lang = detectLang(it);
+  const text = buildMastoText(it, ACCOUNTS, { credit: im.credit, photo: true }), lang = frenchPost(it).lang;
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
-  console.log(`\n--- ${++n}. [${it.source}] ${len(text)}/${LIMITS.mastodon} · ${lang} · image ${im.url}\n${text}`);
-  if (dry) continue;
+  console.log(`\n--- ${++n}. [${it.source}] ${len(text)}/${LIMITS.mastodon} · article ${lang} · image ${im.url}\n${text}`);
+  if (dry) { noteReach({ id: it.id, network: 'mastodon', type: 'article', lang, image: true }, { dry: true }); continue; }
   if (posted.has(it.link) || posted.has(siteLink(it))) { console.log('Déjà sur Mastodon : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
   const mediaId = await md.uploadImage(im.url, [it.bare || it.title, im.credit ? `Photo : ${im.credit}` : ''].filter(Boolean).join('. '));
   if (!mediaId) { console.log(`::warning::Téléversement de l'image refusé pour ${it.id} : pas publié, réessai.`); continue; }
-  const p = await md.post({ status: text, mediaId, lang, key: idemKey(it.id) });
+  const p = await md.post({ status: text, mediaId, lang: 'fr', key: idemKey(it.id) });
   state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), id: p.id, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
+  noteReach({ id: p.id, postId: p.id, url: p.url, network: 'mastodon', type: 'article', lang, image: true, at: state.sent[it.id].at });
   save();
   console.log(`→ Mastodon : ${p.url}`);
 }
 for (const [id, s] of Object.entries(state.sent)) if (Date.now() - new Date(s.at) > 30 * 864e5) delete state.sent[id];
 save();
 console.log(`\n${dry ? 'ESSAI' : 'RÉEL'} terminé.`);
+}
+if (process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname) await main();

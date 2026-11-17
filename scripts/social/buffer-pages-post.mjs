@@ -11,7 +11,10 @@ import { createRequire } from 'node:module';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
-import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
+import { planDues, selectForPage, buildPageText, pageComment, isRejection, postMetadata } from './buffer-pages.mjs';
+import { frenchPost } from './lib.mjs';
+import { activeNetworks, FACEBOOK_PAUSE } from './policy.mjs';
+import { noteReach } from './reach-log.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
 const { jpegNeedsFacebookSanitize, facebookRelayUrl, wikimediaThumbUrl } = createRequire(import.meta.url)('../jpeg-facebook-safe.js');
@@ -24,7 +27,9 @@ const key = process.env.BUFFER_API_KEY || '';
 let dry = args.includes('--dry-run') || process.env.DRY_RUN === 'true';
 if (!key) { console.log('BUFFER_API_KEY absent : mode essai (sans lecture de la file).'); dry = true; }
 const feedArg = args.includes('--feed') ? args[args.indexOf('--feed') + 1] : null;
-const networks = (process.env.PAGES || 'facebook,linkedin').split(',').map(s => s.trim()).filter(n => CFG[n]);
+const requested = (process.env.PAGES || 'facebook,linkedin').split(',').map(s => s.trim()).filter(n => CFG[n]);
+if (requested.includes('facebook') && !activeNetworks(requested).includes('facebook')) console.log(FACEBOOK_PAUSE);
+const networks = activeNetworks(requested);
 const issueFile = process.env.PAGES_ISSUE_FILE || '';
 const fixedIds = { facebook: process.env.BUFFER_FACEBOOK_CHANNEL_ID, linkedin: process.env.BUFFER_LINKEDIN_CHANNEL_ID };
 
@@ -73,7 +78,8 @@ for (const net of networks) {
   }
   // Crédit actuel du site (même source que X/Bluesky/Tumblr) réappliqué aux posts en file avant publication.
   if (ch && process.env.REFRESH_CREDITS !== 'false') for (const p of queued) {
-    const it = items.find(i => p.text?.includes(i.link) || p.text?.includes(articleId(i.link))); if (!it) continue;
+    const known = Object.entries(sent).find(([, s]) => s.postId === p.id)?.[0];
+    const it = items.find(i => i.id === known) || items.find(i => p.text?.includes(i.link) || p.text?.includes(articleId(i.link))); if (!it) continue;
     const r = refreshPhotoLine(p.text, it, p.assets?.[0]?.source || '', 5000);
     if (!r || r === p.text || Date.parse(p.dueAt) - Date.now() < 10 * 60e3) continue;
     console.log(`Crédit rafraîchi ${net} ${p.id} : ${p.text.split('\n').pop()} → ${r.split('\n').pop()}`);
@@ -95,12 +101,14 @@ for (const net of networks) {
     if (!imageUrl) { console.log(`::warning::${net} : image inaccessible, trop lourde ou refusée par la plateforme, article sauté : ${im.url} (${it.id})`); continue; }
     await withHook(it);
     const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
-    if (/tison/i.test(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
-    console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}`);
-    if (dry) continue;
+    const comment = pageComment(it, cfg);
+    if (/tison/i.test(text) || /tison/i.test(comment)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
+    console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}${comment ? `\n— commentaire : ${comment}` : ''}`);
+    if (dry) { noteReach({ id: it.id, network: net, type: 'article', lang: frenchPost(it).lang, image: !!imageUrl, at: dueAt || new Date().toISOString() }, { dry: true }); continue; }
     try {
-      const post = await ch.add({ text, image: imageUrl, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service) });
+      const post = await ch.add({ text, image: imageUrl, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service, { comment }) });
       sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt, image: imageUrl, ...(shareUrl ? { shareNow: true, link: post.externalLink || null } : {}) };
+      noteReach({ id: post.id, postId: post.id, network: net, type: 'article', lang: frenchPost(it).lang, image: !!imageUrl, at: sent[it.id].at });
       save();
       console.log(`→ Buffer ${net} : ${post.id} (${post.dueAt || dueAt})`);
     } catch (e) {

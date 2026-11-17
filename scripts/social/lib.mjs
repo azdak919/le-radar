@@ -158,6 +158,39 @@ export function detectLang(it) {
   return en > fr ? 'en' : fr > en ? 'fr' : colonEn(it.title) ? 'en' : 'fr';
 }
 export const isEnglish = title => detectLang({ title }) === 'en';
+/** Article en anglais (champ explicite, sinon titre + extrait). */
+export function isEnglishItem(it) {
+  const explicit = String(it?.lang || it?.language || '').toLowerCase();
+  if (explicit.startsWith('en')) return true;
+  if (explicit.startsWith('fr')) return false;
+  return detectLang(it) === 'en';
+}
+/**
+ * Accroche en français. Un article anglais devient une phrase française avec le titre original
+ * entre guillemets ; l'extrait anglais n'est pas recopié. Un article français est inchangé.
+ */
+export function frenchPost(it) {
+  if (!isEnglishItem(it)) return { it, lang: 'fr' };
+  const title = String(it.bare || it.title || '').replace(/\s+/g, ' ').trim();
+  const source = String(it.source || 'ce média').trim();
+  const quoted = `« ${title.replace(/[«»]/g, '').trim()} »`;
+  const lead = /[?？]$/.test(title)
+    ? `La question que pose ${source}, en anglais : ${quoted}`
+    : `À lire en anglais, dans ${source} : ${quoted}`;
+  return { it: { ...it, bare: lead, title: lead, desc: '', aiHook: '' }, lang: 'en' };
+}
+/**
+ * Complète avec un article anglais seulement s'il reste une place et que sa source
+ * n'a pas déjà son maximum (2 sur X). Ne retire jamais un article déjà choisi.
+ */
+export function withEnglishSeat(sel, pool, slots, perSource = PER_SOURCE_MAX) {
+  if (!sel.length || sel.length >= slots || sel.some(isEnglishItem)) return sel;
+  const count = new Map();
+  for (const it of sel) count.set(it.source, (count.get(it.source) || 0) + 1);
+  const extra = pool.find(it => isEnglishItem(it) && !sel.includes(it) && (count.get(it.source) || 0) < perSource);
+  if (!extra) return sel;
+  return [...sel, extra];
+}
 export function joinHead(head, ex, en = isEnglish(head)) {
   if (!ex) return head;
   if (/[?!…]$/.test(head.trim())) return `${head.trim()} ${ex}`;
@@ -203,16 +236,30 @@ export function cutExcerpt(ex, fits, max = 2) {
  *   📸 Crédit            (seulement si un crédit réel est connu : jamais de doublon du média)
  * Jamais de séparateur vide ni de doublon. Texte contenant « tison » : '' (refusé).
  */
-export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it), ai = false } = {}) {
+export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it), ai = false, essenceFirst = false } = {}) {
   const pl = photo ? photoLine(credit) : '';
   let title = String(it.bare || it.title || '').replace(/\s+/g, ' ').trim();
   const ml = mediaLine(it, accounts);
   const tail = [ml, link ? url : '', pl].filter(Boolean).join('\n');
   const mk = (t, e) => [t, e, tail].filter(Boolean).join('\n\n');
-  const ex = cutExcerpt(excerpt(it, { ai }), e => len(mk(title, e)) <= limit);
-  let text = mk(title, ex);
-  while (len(text) > limit && title.length > 10) { title = title.slice(0, -2).trimEnd().replace(/[\s,;:.–—-]+$/, '') + '…'; text = mk(title, ''); }
-  text = stripCdata(text); // dernier filet : jamais de marqueur CDATA dans une publication
+  const shorten = s => s.slice(0, -2).trimEnd().replace(/[\s,;:.–—-]+$/, '') + '…';
+  if (!essenceFirst) {
+    const ex = cutExcerpt(excerpt(it, { ai }), e => len(mk(title, e)) <= limit);
+    let text = mk(title, ex);
+    while (len(text) > limit && title.length > 10) { title = shorten(title); text = mk(title, ''); }
+    text = stripCdata(text);
+    return /tison/i.test(text) || hasCdata(text) ? '' : text;
+  }
+  // L'essentiel d'abord (extrait ou accroche), le titre ensuite. Sans extrait : le titre suffit.
+  const raw = excerpt(it, { ai });
+  let lead = raw || title, sub = raw ? title : '';
+  if (raw) {
+    const cut = cutExcerpt(raw, e => len(mk(e, sub)) <= limit);
+    if (cut) lead = cut; else { lead = title; sub = ''; }
+  }
+  let text = mk(lead, sub);
+  while (len(text) > limit && lead.length > 10) { lead = shorten(lead); sub = ''; text = mk(lead, sub); }
+  text = stripCdata(text);
   return /tison/i.test(text) || hasCdata(text) ? '' : text;
 }
 
@@ -222,8 +269,14 @@ export function buildTagged(it, accounts, limit, opts, tags, sep = '\n') {
   const text = buildText(it, accounts, room, opts);
   return text && tags ? `${text}${sep}${tags}` : text;
 }
-/** Texte X : format commun, 280 (xlen), 2 hashtags au plus (policy.json). */
-export const buildXText = (it, accounts = [], opts = {}) => buildTagged(it, accounts, LIMITS.x, opts, tagLine(it, 'x'));
+/** Texte X : français, essentiel d'abord, 1 ou 2 hashtags, aucun URL (le lien part en réponse). `organic: false` garde l'ancien format, pour les posts déjà en file. */
+export function buildXText(it, accounts = [], opts = {}) {
+  if (opts.organic === false) return buildTagged(it, accounts, LIMITS.x, opts, tagLine(it, 'x'));
+  const { it: fr, lang } = frenchPost(it);
+  return buildTagged(fr, accounts, LIMITS.x, { ...opts, link: false, essenceFirst: true, ai: opts.ai !== false && lang === 'fr' }, tagLine(it, 'x'));
+}
+/** Réponse immédiate au post X : le lien, et rien d'autre. */
+export const xReplyText = it => { const url = siteLink(it); return url ? `Lire sur le Radar : ${url}` : ''; };
 
 /**
  * Choix des items : non envoyés, ≤ maxAgeH, round-robin par source (plus récente d'abord),
@@ -231,14 +284,15 @@ export const buildXText = (it, accounts = [], opts = {}) => buildTagged(it, acco
  */
 export function selectItems(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, maxAgeH = MAX_AGE_H, now = Date.now() } = {}) {
   const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
-  const by = new Map();
+  const by = new Map(), eligible = [];
   for (const it of items) {
     if (sentIds.has(it.id) || !(now - it.date <= maxAgeH * 3600e3)) continue;
+    eligible.push(it);
     if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it);
   }
   // variété d'abord, puis récence (jour civil), et à jour égal la vraie photo créditée à une personne.
   // Les articles sans photo propre (repli banque campus) restent publiés, simplement après à égalité.
-  const cmpP = (a, b) => (dayOf(a.date) !== dayOf(b.date) ? b.date - a.date : photoRank(b) - photoRank(a) || b.date - a.date);
+  const cmpP = (a, b) => (dayOf(a.date) !== dayOf(b.date) ? b.date - a.date : photoRank(b) - photoRank(a) || (isEnglishItem(a) ? 1 : 0) - (isEnglishItem(b) ? 1 : 0) || b.date - a.date);
   const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmpP) }))
     .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmpP(a.q[0], b.q[0]));
   const sel = [];
@@ -248,7 +302,7 @@ export function selectItems(items, { sentIds = new Set(), queuedSources = [], sl
       if ((count.get(s) || 0) >= perSource || !q.length) continue;
       sel.push(q.shift()); count.set(s, (count.get(s) || 0) + 1);
     }
-  return sel;
+  return withEnglishSeat(sel, eligible, slots, perSource);
 }
 
 /** Sources / auteurs du flux sans compte connu (rapport hebdo). */
@@ -274,8 +328,9 @@ export function slotsToday(times, { tz = 'America/Toronto', now = Date.now(), da
 }
 
 // ── Sélection nocturne (≈ 3 h, America/Toronto) ──────────────────────────────
-// Créneaux X alignés sur les pointes Sprout Social 2026 (mar.-jeu. 12-18 h, heure locale) : 1 le matin, 7 de 11 h 30 à 17 h 30, 2 en soirée.
-export const DAILY_SLOTS = ['08:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:30', '17:30', '19:00', '21:00'];
+// Créneaux X du fil, heure de Montréal : heures où les étudiants sont là, écartés d'au moins 90 min
+// de La une (7 h 45 et 19 h 30). Cinq posts, jamais une rafale horaire. La une est en plus.
+export const DAILY_SLOTS = ['10:15', '12:30', '15:45', '17:45', '21:15'];
 export const MIN_EXCERPT = 80;
 const dayOf = (t, tz = 'America/Toronto') => new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(t);
 
@@ -311,7 +366,7 @@ export function selectDaily(items, { sentIds = new Set(), queuedSources = [], sl
   const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
   const by = new Map();
   for (const it of pool) { it._q = quality(it, accounts); if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it); }
-  const cmp = (a, b) => b._q - a._q || b.date - a.date;
+  const cmp = (a, b) => b._q - a._q || (isEnglishItem(a) ? 1 : 0) - (isEnglishItem(b) ? 1 : 0) || b.date - a.date;
   const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmp) }))
     .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmp(a.q[0], b.q[0]));
   const sel = [];
@@ -323,7 +378,7 @@ export function selectDaily(items, { sentIds = new Set(), queuedSources = [], sl
       sel.push(it); count.set(it.source, (count.get(it.source) || 0) + 1);
     }
   }
-  return sel;
+  return withEnglishSeat(sel, pool, slots, perSource);
 }
 
 /** Retire les créneaux déjà pris (dueAt en file, à ±5 min). */

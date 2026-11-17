@@ -19,7 +19,7 @@ export function decide({ now, newsUpdated, active, feedDates = [], maxAgeMin = 6
 }
 
 // Créneaux sociaux (America/Toronto) = DAILY_SLOTS de scripts/social/lib.mjs.
-export const SOCIAL_SLOTS = ['08:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:30', '17:30', '19:00', '21:00'];
+export const SOCIAL_SLOTS = ['10:15', '12:30', '15:45', '17:45', '21:15'];
 /** Vrai si un créneau est passé depuis 0 à windowMin minutes (heure de Toronto). */
 export function slotsDue(now, { windowMin = 35, tz = 'America/Toronto', slots = SOCIAL_SLOTS } = {}) {
   const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(x => [x.type, x.value]));

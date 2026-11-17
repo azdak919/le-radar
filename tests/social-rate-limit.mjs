@@ -4,13 +4,13 @@ import assert from 'node:assert/strict';
 import { NETWORKS, remaining, postedTimes, freshCandidates, rankLikeX, plan } from '../scripts/social/rate-limit.mjs';
 const now = Date.parse('2026-11-01T18:00:00Z'), ago = m => new Date(now - m * 60e3);
 const mk = mins => Object.fromEntries(mins.map((m, i) => [`p${i}`, { at: ago(m).toISOString(), uri: 'at://x', source: 'S' + i }]));
-assert.deepEqual([NETWORKS.mastodon.perHour, NETWORKS.mastodon.perDay], [5, 50], 'piaille : 5/h, 50/j');
+assert.deepEqual([NETWORKS.mastodon.perHour, NETWORKS.mastodon.perDay], [2, 6], 'cadence organique, sous le plafond piaille');
 assert(NETWORKS.bluesky.perHour * 3 < 5000 && NETWORKS.bluesky.perDay * 3 < 35000);
 const M = NETWORKS.mastodon;
-assert.equal(remaining({}, M, { now }).left, 5);
-assert.equal(remaining(mk([1, 10, 20, 30, 59]), M, { now }).left, 0, '5 dans l’heure');
-assert.equal(remaining(mk([1, 10, 20, 30, 61]), M, { now }).left, 1, 'heure glissante');
-assert.equal(remaining(mk(Array.from({ length: 50 }, (_, i) => 70 + i * 25)), M, { now }).left, 0, '50 / 24 h');
+assert.equal(remaining({}, M, { now }).left, 2);
+assert.equal(remaining(mk([1, 10]), M, { now }).left, 0, '2 dans l’heure');
+assert.equal(remaining(mk([1, 70]), M, { now }).left, 1, 'heure glissante');
+assert.equal(remaining(mk(Array.from({ length: 6 }, (_, i) => 70 + i * 25)), M, { now }).left, 0, '6 / 24 h');
 assert.equal(postedTimes({ a: { at: ago(1).toISOString(), skipped: 'late' }, b: { at: ago(2).toISOString(), dedup: true, uri: 'u' } }).length, 0);
 // fraîcheur : ni avant la mise en service, ni > 24 h, ni déjà vu
 const it = (id, source, min, img) => ({ id, source, date: ago(min), img, title: id, desc: 'x'.repeat(100) });

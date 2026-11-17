@@ -1,0 +1,4 @@
+{
+ "_doc": "Journal de portée organique. Une ligne par publication réelle (id, heure, réseau, type une/article/sport, langue de l'article, image). Rempli par les bots. Relevé : node scripts/social/reach-log.mjs --pull (API publiques Bluesky et Mastodon seulement ; X, Facebook et LinkedIn n'exposent pas les vues via Buffer). --write enregistre ce relevé. Rien n'est publié par ce script.",
+ "posts": []
+}

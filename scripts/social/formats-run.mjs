@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { POLICY, torontoDay, torontoHour, torontoWeekday, mentionLedger } from './policy.mjs';
+import { POLICY, activeNetworks, FACEBOOK_PAUSE, torontoDay, torontoHour, torontoWeekday, mentionLedger } from './policy.mjs';
 import { weekendModel, publishedModel, buildResultsText, resultsTags, resultsTumblrTags, listenModel, buildListenText, listenTags, checkText, NET_SPEC } from './formats.mjs';
 import { postRecord, facets, graphemes } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -15,6 +15,7 @@ import { createMastodon, idemKey } from './channels/mastodon.mjs';
 import { createTumblr } from './channels/tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
+import { noteReach } from './reach-log.mjs';
 
 const require = createRequire(import.meta.url);
 const { unpackSportsPayload } = require('../sports-payload-lib.js');
@@ -35,9 +36,11 @@ export function buildAll(format, { sports, radio, teamAcc, policy = POLICY, now 
     out.model = { uni: model.uni.map(g => ({ ...g })), coll: model.coll.map(g => ({ ...g })), previewOnly: full.coll.length && !cfg.sections.includes('coll') ? full.coll : [] };
     for (const n of NETS) {
       const spec = NET_SPEC[n], tags = n === 'tumblr' ? [] : resultsTags(model, tagMax(n), teamAcc);
-      const text = buildResultsText(model, spec, { link: cfg.link, teamAcc, tags, maxMentions: 0 });
+      const linkInPost = !spec.replyLink;
+      const text = buildResultsText(model, spec, { link: cfg.link, teamAcc, tags, maxMentions: 0, linkInPost });
       const problems = checkText(text, spec, { model, teamAcc });
-      out.networks[n] = { text, tags: n === 'tumblr' ? resultsTumblrTags(model, teamAcc) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, problems };
+      const reply = spec.replyLink ? `Tous les résultats : ${cfg.link}` : '';
+      out.networks[n] = { text, reply, tags: n === 'tumblr' ? resultsTumblrTags(model, teamAcc) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, problems };
     }
     if (out.model.previewOnly.length) {
       const pm = publishedModel(full, ['uni', 'coll']);
@@ -49,8 +52,9 @@ export function buildAll(format, { sports, radio, teamAcc, policy = POLICY, now 
     const acc = { ...teamAcc, stations: Object.fromEntries(Object.entries(teamAcc.stations || {}).map(([k, v]) => [k, used.has(String(v.x || '').toLowerCase()) ? { ...v, x: undefined } : v])) };
     for (const n of NETS) {
       const spec = NET_SPEC[n], tags = n === 'tumblr' ? [] : listenTags(model, tagMax(n), teamAcc);
-      const text = buildListenText(model, spec, { link: cfg.link, teamAcc: acc, tags });
-      out.networks[n] = { text, tags, len: text ? spec.len(text) : 0, limit: spec.limit, problems: checkText(text, spec, { teamAcc, kind: 'listen_tonight' }) };
+      const text = buildListenText(model, spec, { link: cfg.link, teamAcc: acc, tags, linkInPost: !spec.replyLink });
+      const reply = spec.replyLink ? `Les horaires : ${cfg.link}` : '';
+      out.networks[n] = { text, reply, tags, len: text ? spec.len(text) : 0, limit: spec.limit, problems: checkText(text, spec, { teamAcc, kind: 'listen_tonight' }) };
     }
   }
   return out;
@@ -79,6 +83,7 @@ async function publishOne(net, text, built, cfg, env) {
     const dids = new Map(); for (const a of Object.values(env.teamAcc.stations || {})) if (a.bluesky && a.did) dids.set(a.bluesky.slice(1).toLowerCase(), a.did);
     const thumb = await bs.uploadImage(cfg.image); if (!thumb) throw new Error('image Bluesky refusée');
     const p = await bs.post(postRecord({ text, lang: LANG, dids, card: { uri: link, title, description: desc, thumb } }));
+    noteReach({ id: p.uri, postId: p.uri, url: p.url, network: 'bluesky', type: 'sport', lang: 'fr', image: !!thumb });
     return { url: p.url, uri: p.uri };
   }
   if (net === 'mastodon') {
@@ -86,6 +91,7 @@ async function publishOne(net, text, built, cfg, env) {
     const recent = await md.listStatuses(40); if (recent.some(s => String(s.content || '').includes(header.replace(/^🏆 /, '').slice(0, 30)))) return { dedup: true };
     const mediaId = await md.uploadImage(cfg.image, title); if (!mediaId) throw new Error('image Mastodon refusée');
     const p = await md.post({ status: text, mediaId, lang: LANG, key: idemKey(`${built.format}:${built.window?.key || torontoDay(Date.now())}:mastodon:${text}`) });
+    noteReach({ id: p.id, postId: p.id, url: p.url, network: 'mastodon', type: 'sport', lang: 'fr', image: !!mediaId });
     return { url: p.url, id: p.id };
   }
   if (net === 'tumblr') {
@@ -99,12 +105,15 @@ async function publishOne(net, text, built, cfg, env) {
     content.splice(1, 0, { type: 'image', media: [{ url: cfg.image }], alt_text: title });
     content.push({ type: 'link', url: link, title, description: desc });
     const p = await tb.post({ content, tags: built.networks.tumblr.tags.join(','), state: 'published', source_url: link });
+    noteReach({ id: p.id, postId: p.id, url: p.url, network: 'tumblr', type: 'sport', lang: 'fr', image: true });
     return { url: p.url, id: p.id };
   }
   // X, Facebook, LinkedIn : Buffer (publication immédiate, une seule fois)
   const pages = env.pages || {}, key = env.BUFFER_API_KEY;
   const ch = net === 'x' ? createXBuffer({ key, fallbackId: env.BUFFER_CHANNEL_ID || undefined }) : createXBuffer({ key, service: pages[net].service, channelName: pages[net].name, fallbackId: (net === 'facebook' ? env.BUFFER_FACEBOOK_CHANNEL_ID : env.BUFFER_LINKEDIN_CHANNEL_ID) || null });
-  const post = await ch.add({ text, image: cfg.image, now: true, metadata: net === 'facebook' ? postMetadata('facebook') : undefined });
+  const reply = built.networks[net]?.reply || '';
+  const post = await ch.add({ text, image: cfg.image, now: true, reply: net === 'x' ? reply : '', metadata: net === 'facebook' ? postMetadata('facebook', { comment: reply }) : undefined });
+  noteReach({ id: post.id, postId: post.id, network: net, type: 'sport', lang: 'fr', image: !!cfg.image });
   return { id: post.id, status: post.status || '' };
 }
 
@@ -122,7 +131,8 @@ async function main() {
   for (const format of formats) {
     const cfg = POLICY.formats[format]; if (!cfg) throw new Error(`format inconnu : ${format}`);
     const built = buildAll(format, { sports, radio, teamAcc, now, buffer });
-    const nets = (cfg.networks || []).filter(n => NETS.includes(n));
+    const nets = activeNetworks((cfg.networks || []).filter(n => NETS.includes(n)));
+    if ((cfg.networks || []).includes('facebook') && !nets.includes('facebook')) console.log(FACEBOOK_PAUSE);
     const key = format === 'weekend_results' ? built.window.key : torontoDay(now);
     const done = (state[format] ||= {})[key] ||= {};
     const bad = Object.entries(built.networks).filter(([n, v]) => nets.includes(n) && v.problems.length);

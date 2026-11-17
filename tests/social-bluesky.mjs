@@ -9,7 +9,8 @@ const it = { id: 'a', source: 'Montréal Campus', author: 'Valentin Nucci', titl
 const acc = [{ handle: '@montrealcampus.bsky.social', type: 'source', cle_flux: 'Montréal Campus' }];
 const t = buildBskyText(it, acc, { credit: 'Éloïse 📷' });
 assert(graphemes(t) <= 300, `graphèmes : ${graphemes(t)}`);
-assert(t.startsWith('Quand la neurodiversité s’épanouit au travail\n\nFanny Groleau'), 'titre puis extrait');
+assert(t.startsWith('Fanny Groleau assure un poste'), 'l’essentiel (extrait) en tête');
+assert(t.includes('Quand la neurodiversité s’épanouit au travail'), 'le titre reste');
 assert(t.includes('\n\n📰 Montréal Campus (@montrealcampus.bsky.social) · Valentin Nucci\n' + siteLink(it) + '\n📸 Éloïse 📷'), 'Média (@) · Auteur, fiche, crédit');
 assert.equal(graphemes('👩🏽‍🎓é'), 2, 'graphèmes, pas code points');
 
@@ -42,9 +43,9 @@ r = dueItems(xs, { a: {}, d: {} }, { now });
 assert.deepEqual(r.due, [], 'jamais deux fois');
 
 // Créneaux X : seulement dans les 35 min suivant un créneau (heure de Toronto, HNE/HAE)
-assert.equal(slotsDue(Date.parse('2026-11-01T17:35:00Z')), true);   // 12 h 35 HNE
-assert.equal(slotsDue(Date.parse('2026-11-01T15:35:00Z')), false);  // 10 h 35 HNE
-assert.equal(slotsDue(Date.parse('2026-07-01T12:35:00Z')), true);   // 8 h 35 HAE
+assert.equal(slotsDue(Date.parse('2026-11-01T17:35:00Z')), true);   // 12 h 35 HNE, juste après 12 h 30
+assert.equal(slotsDue(Date.parse('2026-11-01T16:30:00Z')), false);  // 11 h 30 HNE : entre 10 h 15 et 12 h 30
+assert.equal(slotsDue(Date.parse('2026-07-01T14:20:00Z')), true);   // 10 h 20 HAE, juste après 10 h 15
 console.log('social-bluesky : OK');
 
 // Bogue « Québec: » : titre français avec deux-points collé → reste français (espace avant « : »)

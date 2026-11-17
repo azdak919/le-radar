@@ -10,7 +10,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, stripUtm, siteLink } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
-import { buildBskyText, graphemes, detectLang, postRecord, facets, BSKY_LIMIT } from './bluesky.mjs';
+import { buildBskyText, graphemes, postRecord, facets, BSKY_LIMIT } from './bluesky.mjs';
+import { frenchPost } from './lib.mjs';
+import { noteReach } from './reach-log.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
@@ -60,15 +62,16 @@ for (const t of todo) {
   const im = await resolveImage(it, { used, repeated });
   if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
   await withHook(it);
-  const text = buildBskyText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
+  const text = buildBskyText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = frenchPost(it).lang;
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
-  console.log(`\n--- ${++n}. [${it.source}] ${graphemes(text)}/${BSKY_LIMIT} graphèmes · ${lang} · image ${im ? im.url : 'AUCUNE'} · facettes ${facets(text).length}\n${text}`);
-  if (dry) continue;
+  console.log(`\n--- ${++n}. [${it.source}] ${graphemes(text)}/${BSKY_LIMIT} graphèmes · article ${lang} · image ${im ? im.url : 'AUCUNE'} · facettes ${facets(text).length}\n${text}`);
+  if (dry) { noteReach({ id: it.id, network: 'bluesky', type: 'article', lang, image: !!im }, { dry: true }); continue; }
   if (posted.has(it.link) || posted.has(siteLink(it))) { console.log('Déjà sur Bluesky (vérifié dans le compte) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
   const thumb = await bs.uploadImage(im.url); // échec = erreur : jamais de carte sans l'image du Radar
-  const rec = postRecord({ text, lang, dids, card: { uri: siteLink(it), title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } });
+  const rec = postRecord({ text, lang: 'fr', dids, card: { uri: siteLink(it), title: it.bare || it.title, description: it.desc?.slice(0, 300), thumb } });
   const p = await bs.post(rec);
   state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), uri: p.uri, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
+  noteReach({ id: p.uri, postId: p.uri, url: p.url, network: 'bluesky', type: 'article', lang, image: !!thumb, at: state.sent[it.id].at });
   save();
   console.log(`→ Bluesky : ${p.url}`);
 }

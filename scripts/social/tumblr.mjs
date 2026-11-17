@@ -1,14 +1,15 @@
 // Logique pure Tumblr (testée dans tests/social-tumblr.mjs) : texte « Média • Auteur • Titre : extrait »,
 // lien, « 📸 crédit » ; contenu NPF (texte, image réelle, bloc lien), étiquettes pertinentes.
 // Aucun @ : aucun blogue Tumblr de média étudiant confirmé (data/social/tumblr-accounts.json vide).
-import { buildText, detectLang, siteLink } from './lib.mjs';
+import { buildText, detectLang, frenchPost, siteLink } from './lib.mjs';
 import { tumblrTags } from './hashtags.mjs';
 export { detectLang };
 export const TUMBLR_LIMIT = 1000; // texte court et lisible (NPF n'impose pas de limite stricte)
 export const BLOG = 'le-radar-ca.tumblr.com';
 
 export function buildTumblrText(it, accounts = [], { credit = '', photo = true, ai = true } = {}) {
-  return buildText(it, accounts, TUMBLR_LIMIT, { credit, photo, len: s => [...s].length, link: true, ai });
+  const { it: fr, lang } = frenchPost(it);
+  return buildText(fr, accounts, TUMBLR_LIMIT, { credit, photo, len: s => [...s].length, link: true, essenceFirst: true, ai: ai && lang === 'fr' });
 }
 
 const tag = s => (s || '').replace(/[#,]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);

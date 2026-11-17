@@ -12,6 +12,7 @@ import { buildTumblrText, npfBody, detectLang, BLOG } from './tumblr.mjs';
 import { createTumblr } from './channels/tumblr.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
+import { noteReach } from './reach-log.mjs';
 import { withHook } from './ai-hook.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -65,10 +66,11 @@ for (const t of todo) {
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
   const body = npfBody(it, text, { image: im, lang });
   console.log(`\n--- ${++n}. [${it.source}] ${lang} · image ${im ? im.url : 'AUCUNE'} · étiquettes ${body.tags}\n${text}`);
-  if (dry) continue;
+  if (dry) { noteReach({ id: it.id, network: 'tumblr', type: 'article', lang: lang === 'en' ? 'en' : 'fr', image: !!im }, { dry: true }); continue; }
   if (posted.has(it.link) || posted.has(siteLink(it))) { console.log('Déjà sur Tumblr (vérifié dans le blogue) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }
   const p = await tb.post(body);
   state.sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), id: p.id, url: p.url, ...(t.shareNow ? { shareNow: true } : {}) };
+  noteReach({ id: p.id || it.id, postId: p.id || '', url: p.url || '', network: 'tumblr', type: 'article', lang: lang === 'en' ? 'en' : 'fr', image: !!im, at: state.sent[it.id].at });
   save();
   console.log(`→ Tumblr : ${p.url}`);
 }

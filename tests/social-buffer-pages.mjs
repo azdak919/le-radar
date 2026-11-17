@@ -2,7 +2,7 @@
 // Pages Facebook / LinkedIn via Buffer : fenêtres, rodage, places libres, écart, format sans @, lien.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { planDues, dayCap, buildPageText, pageLink, selectForPage, isRejection, postMetadata } from '../scripts/social/buffer-pages.mjs';
+import { planDues, dayCap, buildPageText, pageComment, pageLink, selectForPage, isRejection, postMetadata } from '../scripts/social/buffer-pages.mjs';
 import { weightAt, localParts } from '../scripts/social/schedule.mjs';
 import { matchChannel } from '../scripts/social/channels/x-buffer.mjs';
 const CFG = JSON.parse(fs.readFileSync(new URL('../data/social/buffer-pages.json', import.meta.url)));
@@ -16,12 +16,12 @@ for (const n of ['facebook', 'linkedin']) for (const h of [0, 3, 6.5]) assert.eq
 assert.equal(weightAt('facebook', T('2026-11-07T12:30:00Z')), 0, 'samedi 7 h 30 calme');
 // plafonds : pleine vitesse FB 6 en semaine, LinkedIn 3 en semaine, 1 la fin de semaine ; rodage ×0,4 / ×0,7
 const full = c => ({ ...c, liveSince: '2026-01-01T00:00:00Z' });
-assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-10T16:00:00Z')), 5, 'volume réduit (policy.json, 9-23 nov.) : 5/jour au lieu de 6');
-assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-24T16:00:00Z')), 6, 'après la période : plafond de base');
+assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-10T16:00:00Z')), 4, 'Facebook : 4/jour (sous le volume réduit de 5)');
+assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-24T16:00:00Z')), 4, 'après la période : le plafond de base reste 4');
 assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-10T16:00:00Z')), 3);
 assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-14T16:00:00Z')), 1);
 assert.equal(dayCap(CFG.facebook, 'facebook', T('2026-11-02T16:00:00Z')), 2, 'FB rodage jour 1');
-assert.equal(dayCap(CFG.facebook, 'facebook', T('2026-11-05T16:00:00Z')), 4, 'FB rodage jour 4');
+assert.equal(dayCap(CFG.facebook, 'facebook', T('2026-11-05T16:00:00Z')), 3, 'FB rodage jour 4 (×0,7 de 4)');
 assert.equal(dayCap(CFG.linkedin, 'linkedin', T('2026-11-02T16:00:00Z')), 1, 'LinkedIn rodage jour 1');
 assert(CFG.facebook.perDay <= 6 && CFG.linkedin.perDay <= 3);
 // créneaux : dans les pointes, écart minimal, jamais au-delà des places libres, du plafond ou dans le passé
@@ -47,7 +47,9 @@ assert.equal(li.length, 0, 'plafond LinkedIn atteint par la file');
 // format : pas de @, lien configurable, crédit 📸, jamais de nom personnel
 const it = { id: 'g1', source: 'Le Délit', author: 'Jeanne Roy', title: 'Le Délit – Jeanne Roy : Grève au campus', bare: 'Grève au campus', link: 'https://www.delitfrancais.com/2026/11/01/greve/', desc: 'Les associations étudiantes votent une grève de deux jours pour le climat.', date: new Date(T('2026-11-01T15:00:00Z')) };
 const fb = buildPageText(it, CFG.facebook, { credit: 'Marie Tremblay' });
-assert.equal(fb, 'Grève au campus\n\nLes associations étudiantes votent une grève de deux jours pour le climat.\n\n📰 Le Délit · Jeanne Roy\n' + pageLink(it, 'le-radar') + '\n📸 Marie Tremblay\n#McGill');
+assert.equal(fb, 'Les associations étudiantes votent une grève de deux jours pour le climat.\n\nGrève au campus\n\n📰 Le Délit · Jeanne Roy\n📸 Marie Tremblay\n#McGill');
+assert.equal(pageComment(it, CFG.facebook), 'Lire sur le Radar : ' + pageLink(it, 'le-radar'));
+assert.doesNotMatch(fb, /https?:\/\//);
 assert.match(pageLink(it, 'le-radar'), /^https:\/\/le-radar\.ca\/article\/[0-9a-f]{16}\/$/);
 for (const n of ['facebook', 'linkedin']) assert.equal(CFG[n].link, 'le-radar', `${n} : lien vers la fiche le-radar.ca`);
 const ln = buildPageText(it, CFG.linkedin, {});
