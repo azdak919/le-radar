@@ -329,3 +329,9 @@ const pv = fs.readFileSync('.github/workflows/revue-preview.yml', 'utf8');
 assert.match(pv, /contents: read/); assert.doesNotMatch(pv, /git push|bot-push/);
 assert.equal(loadConfig().publish, false);
 console.log('revue : OK');
+
+// Régates (voile, classement par place, #441) : une seule équipe, sans pointage ; texte et clé stables.
+{ const reg = { kind: 'classement', date: '2026-11-15', sport: 'Voile', event: 'Championnat canadien de course en flotte', place: '3e/11', teams: [{ name: 'Concordia', inst: '' }] };
+  assert.equal(L.resultText(reg), 'Concordia : 3e sur 11, Championnat canadien de course en flotte');
+  assert.equal(L.resultKey(reg), '2026-11-15|Voile|Championnat canadien de course en flotte|Concordia:3e/11');
+  console.log('revue (régates) : OK'); }

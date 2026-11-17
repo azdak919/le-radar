@@ -218,7 +218,8 @@ export function periodRadio(schedules, edition, cfg = DEFAULT_CONFIG) {
 // ── Sport étudiant ───────────────────────────────────────────────────────────
 const teamTxt = t => `${t.name}${t.inst ? ` (${t.inst})` : ''}`;
 /** Clé stable d'un résultat : date, équipes triées et pointage (une rencontre vue par les deux équipes n'apparaît qu'une fois). */
-export const resultKey = r => `${r.date}|${r.sport}|${r.teams.map(t => `${teamTxt(t)}:${t.score}`).sort().join('|')}`;
+export const resultKey = r => r.kind === 'classement' ? `${r.date}|${r.sport}|${r.event}|${teamTxt(r.teams[0])}:${r.place}`
+  : `${r.date}|${r.sport}|${r.teams.map(t => `${teamTxt(t)}:${t.score}`).sort().join('|')}`;
 const nextKey = r => `${r.date}|${r.time}|${r.sport}|${r.event || ''}|${r.teams.map(teamTxt).sort().join('|')}`;
 /**
  * Résultats de la période (matin : la veille et le jour même ; soir : le jour même) pas encore repris, et matchs à venir
@@ -253,7 +254,9 @@ export function groupNext(next) {
   for (const r of next) { if (!m.has(r.date)) m.set(r.date, { date: r.date, label: frDayYear(r.date).replace(/^./, c => c.toUpperCase()), items: [] }); m.get(r.date).items.push(r); }
   return [...m.values()];
 }
-export const resultText = r => `${teamTxt(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${teamTxt(r.teams[1])}`;
+// Régate ou épreuve (voile, #441) : une seule équipe, une place sur un nombre de concurrents (« 3e/12 »), pas de pointage.
+export const resultText = r => r.kind === 'classement' ? `${teamTxt(r.teams[0])} : ${String(r.place).replace('/', ' sur ')}, ${r.event}`
+  : `${teamTxt(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${teamTxt(r.teams[1])}`;
 export const nextText = r => r.event || !r.verb ? `${teamTxt(r.teams[0])} · ${r.event || teamTxt(r.teams[1] || {})}` : `${teamTxt(r.teams[0])} ${r.verb} ${teamTxt(r.teams[1])}`;
 
 // ── Garde-fou des textes d'IA ────────────────────────────────────────────────
