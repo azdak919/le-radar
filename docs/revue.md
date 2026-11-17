@@ -15,27 +15,72 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 | --- | --- |
 | `data/revue/config.json` | Interrupteur `publish`, heures des éditions, fenêtres, limites (articles, radio, sport, IA). |
 | `scripts/revue/revue-lib.mjs` | Fenêtres horaires (heure de Montréal, DST), sélection des articles, thèmes, radio, sport, garde anti-hallucination, validation. |
-| `scripts/revue/revue-ai.mjs` | Résumés d’une phrase et chapeau par Workers AI (même modèle et mêmes secrets que l’accroche IA de La une). |
+| `scripts/revue/revue-ai.mjs` | Résumés d’une phrase et amorce éditoriale par Workers AI (même modèle et mêmes secrets que l’accroche IA de La une). |
 | `scripts/revue/revue-render.js` | Page (chrome du site), index des archives, JSON-LD `NewsArticle`, sitemap Google News, entrées RSS. |
 | `scripts/revue/revue-run.mjs` | CLI : `--gate`, `--edition`, `--sample --out`, `--refresh`, `--rebuild`. |
-| `scripts/revue/revue-sample.sh`, `revue-screenshots.mjs` | Exemples matin + soir et captures (mobile 390 px, ordinateur 1280 px, clair/sombre, PDF). |
+| `scripts/revue/revue-sample.sh`, `revue-screenshots.mjs` | Exemples matin + soir, captures (mobile 390 px, ordinateur 1280 px, clair/sombre) et PDF d’impression Letter, Legal, Tabloid, A4, A3 (`captures/impression/`). |
 | `revue.css` | Styles de la page (variables du site, mode sombre). Hors coquille du service worker. |
-| `.github/workflows/revue.yml` | Cron (≈ 7 h 30 et 19 h 15, rafraîchissement du soir) + lancement manuel. |
+| `.github/workflows/revue.yml` | Cron (7 h et 20 h, heure de Montréal, rafraîchissement à 23 h 35) + lancement manuel. |
 | `.github/workflows/revue-preview.yml` | Sur PR : exemple réel avec les données en ligne et l’IA, artéfact `exemple-revue`. |
-| `tests/revue.mjs`, `tests/revue-render.spec.mjs` | Génération, garde, JSON-LD, sitemaps, RSS, rendu navigateur. |
+| `tests/revue.mjs`, `tests/revue-render.spec.mjs` | Génération, garde, JSON-LD, sitemaps, RSS, crons, rendu navigateur. |
+| `tests/revue-une-isolation.mjs` | La revue n’entre jamais dans La une ni dans les publications sociales par article. |
+| `tests/print-formats.spec.mjs` | Impression Letter, Legal, Tabloid, A4, A3 (portrait) : revue, accueil, fiches d’article. |
 
 ## Éditions
 
-- **Matin** (cible 7 h 30, fenêtre 7 h 15 – 10 h 30) : couvre depuis la revue du soir de la veille (19 h 15) ;
-  résultats de la veille et du jour ; matchs du jour aux trois jours suivants ; émissions de radio 7 h 30 – 17 h.
-- **Soir** (cible 19 h 15, fenêtre 19 h – 22 h) : couvre la journée depuis 7 h 30 ; résultats du jour ; matchs des
-  trois jours suivants ; émissions 19 h 15 – minuit.
-- **Rafraîchissement** (22 h 45 – 23 h 59) : la revue du soir reçoit seulement les nouveaux résultats du jour
-  (`dateModified` mis à jour, rien d’autre ne change).
+- **Matin** (cible 7 h, fenêtre 6 h 45 – 10 h 30) : couvre depuis la revue du soir de la veille (20 h) ;
+  résultats de la veille et du jour ; matchs du jour aux trois jours suivants ; émissions de radio 7 h – 17 h.
+- **Soir** (cible 20 h, fenêtre 19 h 45 – 22 h 30) : couvre la journée depuis 7 h ; résultats du jour ; matchs du
+  soir même qui commencent à 20 h ou plus tard (datés en absolu), puis des trois jours suivants ; émissions 20 h – minuit.
+- **Rafraîchissement** (23 h – 23 h 59, cron 23 h 35) : la revue du soir reçoit seulement les nouveaux résultats du
+  jour (`dateModified` mis à jour, rien d’autre ne change).
 - Les crons GitHub tournent en UTC et peuvent être en retard : plusieurs déclenchements couvrent l’heure normale et
   l’heure avancée ; le `--gate` décide s’il y a une édition due, et une édition déjà publiée n’est jamais refaite.
 - **Rien de neuf, rien de publié** : sans nouvel article dans la période (`skipWithoutArticles`), l’édition est
   sautée et notée dans `data/revue/state.json`. `news.json` vieux de plus de 6 h : refus.
+
+## Heures de publication (7 h et 20 h, heure de Montréal)
+
+Choisies d’après les données du site (novembre 2026) et les habitudes de lecture des 18–25 ans :
+
+- **Articles** (`news.json` et archives depuis sept. 2025, 4 494 articles à l’heure fiable ; les horodatages à minuit
+  ou à l’heure pile sont exclus) : 24 % sont publiés avant 7 h, avec un pic à 6 h (16 %) porté par The Tribune
+  (92 % avant 7 h), Le Collectif (36 %) et Le Délit (23 %). Reculer à 7 h 30 ou 8 h n’ajouterait que 3 à 6 %. Le soir,
+  88,8 % des articles du jour sont en ligne à 18 h, 91,5 % à 19 h et 93,5 % à 20 h ; seuls 6,5 % arrivent après 20 h
+  (The Campus, Impact Campus, The Link), repris le lendemain matin. La collecte tourne chaque heure à :20 : les
+  articles de 6 h sont là à 7 h. Les jours de semaine dominent (lundi 1 116, mardi 1 368 … dimanche 126).
+- **Sport** : 92 des 93 matchs de semaine commencent à 18 h ou plus tard (79 à 19 h ou plus tard, 27 à 20 h ou plus
+  tard). À 20 h, la revue du soir annonce les matchs de la soirée ; les résultats arrivent vers 21 h – 22 h 30, d’où
+  le rafraîchissement à 23 h 35 ; le lendemain, la revue du matin les reprend.
+- **Radio** : 15 % des émissions de semaine (52) commencent entre 20 h et minuit ; la revue du soir les liste.
+- **Lecture** : chez les 16–24 ans, pics au réveil et en soirée (Reuters Digital News Report ; Pew, nouvelles sur
+  téléphone le matin et en fin de journée ; suivi suisse des 18–25 ans, dont 69 % d’étudiants : 18 h – 21 h aussi
+  fort que le midi, baisse après 21 h).
+- **La une** (réseaux sociaux) part à 7 h 45 et 19 h 30 : pas de collision, et la revue n’y figure jamais (ci-dessous).
+
+Crons (UTC, heure normale et heure avancée) : `2 11,12 * * *` (matin 7 h 02), `37 13,14 * * *` (secours),
+`2 0,1 * * *` (soir 20 h 02), `37 1,2 * * *` (secours), `35 3,4 * * *` (rafraîchissement 23 h 35). Le `--gate` choisit
+l’édition due ; `tests/revue.mjs` vérifie que crons, `config.json` et fenêtres concordent en janvier et en juillet.
+
+## La revue n’entre jamais dans La une
+
+Les publications sociales « La une » (images du matin et du soir, `scripts/social/une-run.mjs`) lisent `news.json`,
+`sports-masthead.json` et `radio-schedules.json`, jamais les fichiers de la revue. Par sécurité, `selectUne` écarte
+tout lien `le-radar.ca/revue/…` et `parseFeed` (publications par article : Bluesky, Mastodon, Tumblr, Buffer) retire
+les revues de `feed.xml`. `tests/revue-une-isolation.mjs` le garantit (textes, liens, textes alternatifs de tous les
+réseaux, flux de travail).
+
+## Lecture et impression
+
+- L’article s’ouvre sur une **amorce** de deux ou trois phrases (articles marquants, puis sport ou radio), sans aucun
+  décompte. IA vérifiée (`ledeReject` : médias nommés, aucune formule générique, aucun chiffre ni nom inventé) ou repli
+  déterministe rédigé.
+- La mention « Revue préparée automatiquement par Le Radar à partir des sources citées… » est une phrase discrète en
+  pied d’article.
+- Impression (revue, accueil, fiches d’article) : logo + LE‑RADAR.ca en en-tête et au pied de chaque feuille,
+  intertitres jamais seuls en bas de page, cartes et lignes jamais coupées, images bornées dans la page ; tableaux de
+  sport sur deux colonnes en Tabloid et A3. `tests/print-formats.spec.mjs` produit un PDF par format et le vérifie
+  (débordement, pages presque vides, intertitres orphelins, pied de page, titres présents).
 
 ## Garde-fous (jamais de revue vide ni inventée)
 
@@ -44,7 +89,7 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
    bandeau sportif).
 2. Texte IA (résumé, chapeau) : rejeté s’il contient un lien, des guillemets, une date relative (« demain »,
    « week-end »…), un chiffre ou un nom propre absent de la source, ou s’il n’est pas en français. Repli : extrait
-   court de l’article et introduction factuelle déterministe.
+   court de l’article et amorce déterministe rédigée.
 3. IA indisponible (secrets absents, erreur, `REVUE_AI=off`) : gabarit déterministe complet.
 4. Avant écriture : tout lien de la page qui ne vient pas du modèle fait échouer l’écriture.
 
@@ -61,16 +106,17 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 5. **Google News / Publisher Center** : il n’est plus possible d’ajouter une source manuellement ; l’inclusion
    dans Google News est algorithmique (contenu original, dates claires, auteurs, page de politique éditoriale,
    coordonnées). Publisher Center reste facultatif pour gérer l’apparence de la publication (nom, logo, sections) une
-   fois que Google la reconnaît. Respecter les règles de contenu de Google News : la note « générée
-   automatiquement à partir des sources citées » est affichée sur chaque revue.
+   fois que Google la reconnaît. Respecter les règles de contenu de Google News : la mention « préparée
+   automatiquement par Le Radar à partir des sources citées » figure en pied de chaque revue.
 
 Désactiver : repasser `"publish": false`. Les pages déjà publiées restent ; `sitemap-news.xml` se vide (48 h).
 
 ## Commandes utiles
 
 ```bash
-node scripts/revue/revue-run.mjs --gate --now 2026-11-17T07:31:00-05:00   # édition due ? (« désactivée » tant que publish = false)
+node scripts/revue/revue-run.mjs --gate --now 2026-11-17T07:02:00-05:00   # édition due ? (« désactivée » tant que publish = false)
 bash scripts/revue/revue-sample.sh /tmp/exemple-revue                       # exemples + captures (sans IA en local)
-node scripts/revue/revue-run.mjs --sample --edition soir --day 2026-11-16 --at 19:15 --out /tmp/x
-npm run test:revue && npx playwright test tests/revue-render.spec.mjs   # CI : étape dédiée de verification.yml
+node scripts/revue/revue-run.mjs --sample --edition soir --day 2026-11-16 --at 20:00 --out /tmp/x
+npm run test:revue && npx playwright test tests/revue-render.spec.mjs tests/print-formats.spec.mjs --project=main
+PRINT_OUT=/tmp/impression npx playwright test tests/print-formats.spec.mjs --project=main   # garde les PDF
 ```

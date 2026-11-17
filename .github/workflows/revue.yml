@@ -1,21 +1,21 @@
 name: Revue — matin et soir
 
-# « La revue du matin » (≈ 7 h 30) et « La revue du soir » (≈ 19 h 15), heure de Montréal : articles originaux du Radar
+# « La revue du matin » (≈ 7 h) et « La revue du soir » (≈ 20 h), heure de Montréal : articles originaux du Radar
 # (revue de presse étudiante, radio étudiante, sport étudiant), pages /revue/AAAA-MM-JJ-matin|soir/, flux RSS, sitemaps.
 # INTERRUPTEUR : data/revue/config.json `publish`. Tant qu'il vaut false (défaut), la porte ne laisse RIEN passer : aucune page,
 # aucun commit, rien dans sitemap.xml, sitemap-news.xml, robots.txt ni feed.xml. Seul l'exemple manuel (sample) tourne, en artefact.
-# Fenêtres (config.json) : matin 7 h 15-10 h 30, soir 19 h-22 h, mise à jour tardive des résultats du soir 22 h 45-23 h 59.
+# Fenêtres (config.json) : matin 6 h 45-10 h 30, soir 19 h 45-22 h 30, mise à jour tardive des résultats du soir 23 h-23 h 59.
+# Pourquoi 7 h et 20 h : docs/revue.md, « Heures de publication » (heures de parution des médias, fin des matchs, grilles radio, lecture).
 # Les crons GitHub sont en UTC et partent souvent en retard : heure d'été (HAE) ET heure d'hiver (HNE), plus des secours ;
 # la porte ne fait rien hors fenêtre ni si l'édition est déjà publiée ou sautée (data/revue/index.json, state.json).
 # Aperçu d'une PR (exemples + captures) : revue-preview.yml.
 on:
   schedule:
-    - cron: '31 11,12 * * *'    # matin : 7 h 31 HAE / 7 h 31 HNE (l'autre heure tombe hors fenêtre et ne fait rien)
-    - cron: '7,47 13 * * *'     # matin, secours : 9 h 07-9 h 47 HAE / 8 h 07-8 h 47 HNE
-    - cron: '16 23 * * *'       # soir : 19 h 16 HAE
-    - cron: '16,46 0 * * *'     # soir : 19 h 16 HNE (20 h 16 HAE, secours)
-    - cron: '16 1 * * *'        # soir, secours : 20 h 16 HNE / 21 h 16 HAE
-    - cron: '50 3 * * *'        # mise à jour tardive des résultats du soir : 22 h 50 HNE / 23 h 50 HAE
+    - cron: '2 11,12 * * *'     # matin : 7 h 02 HAE / 7 h 02 HNE (l'autre heure tombe hors fenêtre ou trouve l'édition faite)
+    - cron: '37 13,14 * * *'    # matin, secours : 9 h 37 HAE / 8 h 37-9 h 37 HNE
+    - cron: '2 0,1 * * *'       # soir : 20 h 02 HAE / 20 h 02 HNE (19 h 02 HNE : hors fenêtre, rien)
+    - cron: '37 1,2 * * *'      # soir, secours : 21 h 37 HAE / 20 h 37-21 h 37 HNE
+    - cron: '35 3,4 * * *'      # mise à jour tardive des résultats du soir : 23 h 35 HAE / 23 h 35 HNE
   workflow_dispatch:
     inputs:
       edition:

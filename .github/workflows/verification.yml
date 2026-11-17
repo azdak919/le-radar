@@ -100,6 +100,9 @@ jobs:
       - name: Install Chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
+      - name: Install pdftotext (print checks, tests/print-formats.spec.mjs)
+        if: matrix.project == 'main'
+        run: command -v pdftotext || (sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils)
       - name: Browser checks (critical)
         timeout-minutes: 30
         run: npm run test:browser:ci -- --project=${{ matrix.project }} --workers=1

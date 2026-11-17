@@ -10,19 +10,6 @@
   margin: -8px 0 14px;
 }
 .revue-meta strong { color: var(--ink); font-weight: 600; }
-.revue-note {
-  font-family: var(--sans);
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  background: var(--bg-soft);
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin: 0 0 20px;
-}
-.revue-note strong { color: var(--ink); }
 .revue-cover { margin: 0 0 22px; }
 .revue-cover img {
   display: block;
@@ -39,12 +26,12 @@
   color: var(--muted);
   margin-top: 6px;
 }
-.revue-chapeau { font-weight: 600; color: var(--ink); }
-.revue-wire p.revue-intro {
+/* Amorce : deux ou trois phrases de rédaction, sans décompte. */
+.revue-wire p.revue-lede {
   font-family: var(--serif);
-  font-size: 1.04rem;
+  font-size: 1.1rem;
   line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--ink);
   margin: 0 0 18px;
 }
 .revue-toc {
@@ -68,7 +55,6 @@
   .revue-toc a:hover { border-color: var(--accent); color: var(--accent); }
 }
 .revue-toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.revue-count { font-family: var(--sans); font-size: 0.72em; font-weight: 500; color: var(--muted); }
 .revue-section { scroll-margin-top: 16px; }
 .revue-section > h3.revue-theme,
 .revue-section > h3.revue-sub,
@@ -191,6 +177,46 @@
   .revue-item__title { font-size: 1.05rem; }
   .revue-shows, .revue-results, .revue-next { font-size: 14px; }
 }
+/* Mention de transparence : une phrase discrète en pied d'article. */
+.revue-wire .revue-disclosure {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 22px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+
+/* ══════════ IMPRESSION (Letter, Legal, Tabloid, A4, A3 en portrait) ══════════
+ * La feuille commune (style-chrome.css) retire la chrome et fixe @page ; ici : rien de coupé, titres jamais seuls en bas
+ * de page, photo dans la page, liens utiles seulement. Vérifié par tests/print-formats.spec.mjs. */
 @media print {
-  .revue-toc { display: none; }
+  .revue-toc, .revue-item__more, .revue-more, .revue-nav { display: none !important; }
+  .revue-meta { margin: 0 0 8pt !important; font-size: 8.5pt !important; color: #333 !important; }
+  .revue-wire p.revue-lede { font-size: 11pt !important; line-height: 1.45 !important; color: #000 !important; margin: 0 0 10pt !important; orphans: 3; widows: 3; }
+  .revue-cover { margin: 0 0 10pt !important; break-inside: avoid; page-break-inside: avoid; }
+  .revue-cover img { width: auto !important; max-width: 100% !important; height: auto !important; max-height: min(8.5cm, 30vh) !important; object-fit: contain !important; margin: 0 auto; border-radius: 0 !important; }
+  .revue-cover figcaption { font-size: 7.5pt !important; color: #333 !important; }
+  .revue-section { margin-top: 12pt !important; }
+  .revue-section > h2 { font-size: 14pt !important; margin: 0 0 4pt !important; border-bottom: 1pt solid #000; padding-bottom: 2pt; }
+  .revue-section > h2, .revue-theme, .revue-sub, .revue-station, .revue-sport, .revue-day { break-after: avoid; page-break-after: avoid; break-inside: avoid; }
+  .revue-section > h3.revue-theme, .revue-section > h3.revue-sub, .revue-section > h3.revue-station { margin-top: 10pt !important; font-size: 11.5pt !important; }
+  .revue-item { padding: 5pt 0 6pt !important; border-bottom: .5pt solid #999 !important; break-inside: avoid; page-break-inside: avoid; }
+  .revue-item__media { font-size: 7.5pt !important; color: #000 !important; }
+  .revue-item__title { font-size: 11pt !important; margin: 2pt 0 !important; }
+  .revue-item__title a, .revue-station a, .revue-show a { color: #000 !important; text-decoration: none !important; }
+  .revue-wire .revue-item__byline { font-size: 8pt !important; color: #333 !important; margin-bottom: 2pt !important; }
+  .revue-wire .revue-item__resume, .revue-wire .revue-item__excerpt p { font-size: 9.5pt !important; line-height: 1.4 !important; color: #111 !important; }
+  .revue-item__excerpt { border-left: 1pt solid #999 !important; }
+  .revue-shows, .revue-results, .revue-next { font-size: 9pt !important; line-height: 1.35 !important; }
+  .revue-shows li, .revue-results li, .revue-next li { padding: 2pt 0 !important; border-bottom: .4pt dotted #999 !important; break-inside: avoid; page-break-inside: avoid; }
+  .revue-league { font-size: 7.5pt !important; color: #333 !important; }
+  .revue-wire .revue-sources p, .revue-wire .revue-disclosure { font-size: 8pt !important; color: #333 !important; }
+  .revue-sources { break-inside: avoid; page-break-inside: avoid; }
+  .revue-disclosure { break-before: avoid; page-break-before: avoid; border-top: .5pt solid #999 !important; }
+}
+/* Papier large (Tabloid, A3) : listes de résultats et de matchs sur deux colonnes. */
+@media print and (min-width: 9in) {
+  .revue-results, .revue-next, .revue-shows { columns: 2; column-gap: 18pt; }
 }

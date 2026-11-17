@@ -7,7 +7,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
-- « La revue du matin » et « La revue du soir » : revue de presse étudiante quotidienne (extraits courts, liens et crédits de tous les auteurs), émissions des radios étudiantes et sport étudiant, pages `/revue/AAAA-MM-JJ-matin|soir/`, archives, JSON-LD `NewsArticle`, sitemap Google News et RSS. Publication **désactivée** par défaut (`data/revue/config.json`). Voir `docs/revue.md`.
+- « La revue du matin » et « La revue du soir » : revue de presse étudiante quotidienne (extraits courts, liens et crédits de tous les auteurs), émissions des radios étudiantes et sport étudiant, pages `/revue/AAAA-MM-JJ-matin|soir/`, archives, JSON-LD `NewsArticle`, sitemap Google News et RSS. Publication **désactivée** par défaut (`data/revue/config.json`). Voir `docs/revue.md`. Éditions à 7 h et 20 h (heure de Montréal) d’après les heures de publication des médias, des matchs et des émissions ; amorce éditoriale rédigée (sans décompte), mention automatique discrète en pied d’article ; la revue n’entre jamais dans La une ni dans les publications sociales par article.
 - Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats de la fin de semaine » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
 
 ### Modifié
@@ -18,6 +18,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Hashtags sociaux : plafonds par réseau (Mastodon 2–4, Bluesky 1–2, X 1–2, Facebook 0–1, LinkedIn 2–3), institution et sport avant le lieu, ville réelle (#Saguenay, #Sherbrooke, #TroisRivières), institution citée dans le texte prioritaire, pas de #Actualités, #USports en CamelCase, et un mot déjà présent n’est pas rehashtaggé en lieu ou en sujet.
 
 ### Corrigé
+
+- Impression Letter, Legal, Tabloid, A4 et A3 (portrait) de l’accueil, des fiches d’article et de la revue : logo du Radar à gauche de LE‑RADAR.ca au pied de chaque feuille (fiche `/article/?id=` comprise), photo de la fiche bornée et jamais rognée (la fiche tient sur une feuille), intertitres jamais seuls en bas de page ; test Playwright qui produit et vérifie un PDF par format.
 
 - Impression de l’accueil (et des pages qui partagent la même feuille) : mise en page de journal sans colonne vide ni pied orphelin, typographie unifiée, plus d’URL brutes ni de paramètres utm, pastille « hier » corrigée, extraits alignés à gauche avec points de suspension, crédits photo sur une ligne, et un QR « Scanne-moi » vers LE-RADAR.ca (mot-symbole officiel).
 

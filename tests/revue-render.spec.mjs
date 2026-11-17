@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 
 // « La revue du matin / du soir » : la page générée (scripts/revue/revue-render.js) dans la chrome du site, sur mobile et
 // ordinateur, en mode clair et sombre : revue.css chargé, aucun débordement horizontal, titres lisibles (contraste AA),
-// note « générée automatiquement » visible, sommaire et sections présents.
+// amorce éditoriale sans décompte, mention « préparée automatiquement » discrète en pied d’article, sommaire et sections présents.
 const require = createRequire(import.meta.url);
 const R = require('../scripts/revue/revue-render.js');
 const LONG = 'Patriotes de l’Université du Québec à Trois-Rivières';
@@ -12,7 +12,7 @@ const model = (id) => ({
   id: `2026-11-17-${id}`, edition: { id, label: id === 'soir' ? 'La revue du soir' : 'La revue du matin', emoji: id === 'soir' ? '🌙' : '☀️', day: '2026-11-17' },
   path: `revue/2026-11-17-${id}/`, url: `https://le-radar.ca/revue/2026-11-17-${id}/`, period: { start: 0, end: 0 },
   datePublished: '2026-11-17T12:30:00.000Z', dateModified: '2026-11-17T12:30:00.000Z', headline: `La revue du ${id} du mardi 17 novembre 2026`,
-  description: 'Revue de presse étudiante du Québec.', intro: 'La revue réunit 6 articles de 1 média étudiant.', chapeau: '', generator: 'gabarit', previous: null,
+  description: 'Revue de presse étudiante du Québec.', intro: 'Pour ouvrir la journée, Le Collectif publie « Un titre d’article étudiant numéro 1 ». À lire aussi : « An English title from a student newspaper » dans The Link.', chapeau: '', generator: 'gabarit', previous: null,
   categories: ['Revue de presse', 'Médias étudiants'], image: null,
   items: [1, 2, 3, 4, 5, 6].map((n) => item(n, n === 2 ? { lang: 'en', title: 'An English title from a student newspaper', source: 'The Link' } : {})),
   radio: [{ id: 'cism', station: 'CISM 89,3', page: 'https://le-radar.ca/radios/cism/', shows: [{ title: 'La collation', start: '08:00', when: '8 h à 9 h', url: 'https://cism893.ca/x' }] }],
@@ -25,14 +25,18 @@ const model = (id) => ({
 for (const id of ['matin', 'soir']) {
   for (const [dev, width, height] of [['mobile', 390, 844], ['ordinateur', 1280, 900]]) {
     for (const scheme of ['light', 'dark']) {
-      test(`revue ${id} ${dev} ${scheme}`, async ({ page }) => {
+      test(`revue ${id} ${dev} ${scheme} @ci-critical`, async ({ page }) => {
         await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
         await page.route(`**/revue/2026-11-17-${id}/`, (r) => r.fulfill({ contentType: 'text/html; charset=utf-8', body: R.renderReviewPage(model(id)) }));
         await page.emulateMedia({ colorScheme: scheme });
         await page.setViewportSize({ width, height });
         await page.goto(`/revue/2026-11-17-${id}/`, { waitUntil: 'load' });
         await expect(page.locator('h1.seo-title')).toContainText(`La revue du ${id}`);
-        await expect(page.locator('.revue-note')).toContainText('Revue générée automatiquement');
+        await expect(page.locator('.revue-note')).toHaveCount(0);
+        await expect(page.locator('.revue-lede')).toContainText('Pour ouvrir la journée, Le Collectif publie');
+        await expect(page.locator('article .revue-disclosure')).toContainText('Revue préparée automatiquement par Le Radar');
+        expect(await page.locator('article .revue-disclosure').evaluate((el) => !el.nextElementSibling), 'mention en tout dernier, en pied d’article').toBe(true);
+        expect(await page.locator('main').innerText(), 'aucun décompte entre parenthèses').not.toMatch(/\(\d+\)/);
         for (const s of ['#presse', '#radio', '#sport', '#sources']) await expect(page.locator(s)).toHaveCount(1);
         await expect(page.locator('.revue-item')).toHaveCount(6);
         const out = await page.evaluate(() => {
@@ -42,13 +46,14 @@ for (const id of ['matin', 'soir']) {
           const t = document.querySelector('.revue-item__title a');
           return {
             overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-            noteBorder: getComputedStyle(document.querySelector('.revue-note')).borderLeftWidth,
+            ledeFont: getComputedStyle(document.querySelector('.revue-lede')).fontFamily,
             titleContrast: ratio(getComputedStyle(t).color, bg === 'rgba(0, 0, 0, 0)' ? getComputedStyle(document.documentElement).backgroundColor : bg),
             theme: document.documentElement.getAttribute('data-theme'),
           };
         });
         expect(out.overflow, 'aucun débordement horizontal').toBeLessThanOrEqual(1);
-        expect(out.noteBorder, 'revue.css chargé').toBe('3px');
+        expect(out.ledeFont, 'revue.css chargé (amorce en serif)').toMatch(/serif/i);
+        expect(out.ledeFont).not.toMatch(/^[^,]*sans/i);
         expect(out.titleContrast, 'titre lisible (AA)').toBeGreaterThanOrEqual(4.5);
         expect(out.theme).toBe(scheme === 'dark' ? 'dark' : 'light');
       });

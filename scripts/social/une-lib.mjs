@@ -7,7 +7,7 @@
 // Aucune publication ici.
 import { createRequire } from 'node:module';
 import { torontoDay } from './policy.mjs';
-import { xlen, SITE } from './lib.mjs';
+import { xlen, SITE, isRevueLink } from './lib.mjs';
 import { NET_SPEC } from './formats.mjs';
 import { institutionTag, sportTagOf } from './hashtags.mjs';
 import { detectLang } from './lib.mjs';
@@ -98,7 +98,8 @@ const hasImg = it => Boolean(it && !it._feedNoImage && (it.imageLocal || it.imag
  * Retourne { items (normalisés), lead, ids, skip?, why, doubts }.
  */
 export function selectUne(news, slot, { now = Date.now(), state = {}, max = 4, pool = 9, maxNewsAgeH = 6 } = {}) {
-  const raw = Array.isArray(news) ? news : news?.items || [];
+  // La revue du matin / du soir n'entre jamais dans La une (ni image, ni texte, ni lien).
+  const raw = (Array.isArray(news) ? news : news?.items || []).filter(it => !isRevueLink(it?.link));
   const doubts = [];
   const updated = Date.parse(news?.updated || '');
   if (!Number.isFinite(updated) || (now - updated) / 3600e3 > maxNewsAgeH) doubts.push(`news.json trop ancien ou sans date (${Number.isFinite(updated) ? Math.round((now - updated) / 3600e3) + ' h' : 'inconnu'})`);

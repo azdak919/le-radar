@@ -1,15 +1,15 @@
 {
- "_doc": "« La revue du matin » et « La revue du soir » (scripts/revue/, docs/revue.md). `publish` = false : AUCUNE publication planifiée, aucune page écrite dans le dépôt, rien dans sitemap.xml, sitemap-news.xml, robots.txt ni feed.xml. Passer à true est une décision explicite de Charles, dans une PR, après validation des exemples. Heures en heure de Montréal (America/Toronto).",
+ "_doc": "« La revue du matin » et « La revue du soir » (scripts/revue/, docs/revue.md). `publish` = false : AUCUNE publication planifiée, aucune page écrite dans le dépôt, rien dans sitemap.xml, sitemap-news.xml, robots.txt ni feed.xml. Passer à true est une décision explicite de Charles, dans une PR, après validation des exemples. Heures en heure de Montréal (America/Toronto) ; 7 h et 20 h : voir docs/revue.md, « Heures de publication ».",
  "publish": false,
  "editions": {
-  "matin": { "label": "La revue du matin", "emoji": "☀️", "target": "07:30", "from": "07:15", "to": "10:30", "periodStart": "19:15", "periodStartDayOffset": -1 },
-  "soir": { "label": "La revue du soir", "emoji": "🌙", "target": "19:15", "from": "19:00", "to": "22:00", "periodStart": "07:30", "periodStartDayOffset": 0 }
+  "matin": { "label": "La revue du matin", "emoji": "☀️", "target": "07:00", "from": "06:45", "to": "10:30", "periodStart": "20:00", "periodStartDayOffset": -1 },
+  "soir": { "label": "La revue du soir", "emoji": "🌙", "target": "20:00", "from": "19:45", "to": "22:30", "periodStart": "07:00", "periodStartDayOffset": 0 }
  },
- "refresh": { "_doc": "Mise à jour tardive de la revue du soir : seulement les résultats sportifs du jour même arrivés après la publication (dateModified avancé, aucun nouvel article).", "enabled": true, "from": "22:45", "to": "23:59" },
+ "refresh": { "_doc": "Mise à jour tardive de la revue du soir : seulement les résultats sportifs du jour même arrivés après la publication (dateModified avancé, aucun nouvel article).", "enabled": true, "from": "23:00", "to": "23:59" },
  "skipWithoutArticles": true,
  "maxLookbackHours": 48,
  "maxArticles": 40,
- "radio": { "maxPerStation": 4, "windows": { "matin": ["07:30", "17:00"], "soir": ["19:15", "24:00"] } },
+ "radio": { "maxPerStation": 4, "windows": { "matin": ["07:00", "17:00"], "soir": ["20:00", "24:00"] } },
  "sports": { "upcomingDays": 3, "upcomingFallbackDays": 7 },
  "ai": { "enabled": true, "maxCallsPerRun": 6, "batchSize": 8 },
  "newsSitemapHours": 48,

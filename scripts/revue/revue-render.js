@@ -86,9 +86,9 @@ function presseHtml(model) {
   const groups = groupByTheme(model.items);
   return [
     '      <section class="seo-section revue-section" id="presse" aria-labelledby="presse-titre">',
-    `        <h2 id="presse-titre">📰 Revue de presse <span class="revue-count">(${model.items.length})</span></h2>`,
+    `        <h2 id="presse-titre">📰 Revue de presse</h2>`,
     ...groups.map((g) => [
-      `        <h3 class="revue-theme" id="theme-${slug(g.theme)}">${g.emoji} ${esc(g.theme)} <span class="revue-count">(${g.items.length})</span></h3>`,
+      `        <h3 class="revue-theme" id="theme-${slug(g.theme)}">${g.emoji} ${esc(g.theme)}</h3>`,
       '        <ol class="revue-items">',
       ...g.items.map(itemHtml),
       '        </ol>',
@@ -124,7 +124,7 @@ function sportHtml(model) {
   const out = [
     '      <section class="seo-section revue-section" id="sport" aria-labelledby="sport-titre">',
     '        <h2 id="sport-titre">🏟️ Sport étudiant</h2>',
-    `        <h3 class="revue-sub">Résultats <span class="revue-count">(${results.length})</span></h3>`,
+    '        <h3 class="revue-sub">Résultats</h3>',
   ];
   if (!results.length) out.push(`        <p class="revue-empty">Aucun nouveau résultat sportif étudiant pour cette période.${refreshed}</p>`);
   else {
@@ -135,7 +135,7 @@ function sportHtml(model) {
       out.push('        </ul>');
     }
   }
-  out.push(`        <h3 class="revue-sub">Prochains matchs <span class="revue-count">(${next.length})</span></h3>`);
+  out.push('        <h3 class="revue-sub">Prochains matchs</h3>');
   if (!next.length) out.push('        <p class="revue-empty">Aucun match étudiant inscrit au calendrier pour les prochains jours.</p>');
   for (const [d, list] of days) {
     out.push(`        <h4 class="revue-day">${esc(cap(frDayYear(d)))}</h4>`, '        <ul class="revue-next">');
@@ -164,6 +164,8 @@ function coverCaption(img) {
   return `${credit}${credit && src ? ' · ' : ''}${src}${credit || src ? ', ' : ''}« ${img.title} »`;
 }
 /** Corps de l'article (aussi repris tel quel, sans la chrome, dans le flux RSS). */
+/** Mention de transparence, discrète, en pied d'article (une seule phrase). */
+const DISCLOSURE = 'Revue préparée automatiquement par Le Radar à partir des sources citées ; chaque texte, titre et photo appartient à son média et à ses auteurs.';
 function articleBody(model) {
   const pub = model.datePublished, mod = model.dateModified;
   const modified = mod && Date.parse(mod) - Date.parse(pub) > 60e3;
@@ -171,12 +173,11 @@ function articleBody(model) {
   return [
     `      <article class="revue revue--${esc(model.edition.id)}" data-revue="${esc(model.id)}">`,
     `      <p class="revue-meta">Par <strong>${PUBLISHER}</strong> · Publiée le <time datetime="${esc(isoMtl(pub))}">${esc(frDayYear(mtlParts(pub).ymd))} à ${esc(frClock(pub))}</time>${modified ? ` · Mise à jour à <time datetime="${esc(isoMtl(mod))}">${esc(frClock(mod))}</time>` : ''} (heure de Montréal)</p>`,
-    '      <aside class="revue-note" role="note"><span aria-hidden="true">🤖</span> <strong>Revue générée automatiquement</strong> à partir des sources citées : articles des médias étudiants, grilles des radios étudiantes et résultats du sport étudiant. Chaque article renvoie à sa source originale ; les textes, photos et titres appartiennent à leurs médias et à leurs auteurs.</aside>',
     img ? `      <figure class="revue-cover"><img src="${esc(img.url)}" alt="${esc(img.title)}" loading="eager" decoding="async" /><figcaption>${esc(coverCaption(img))}</figcaption></figure>` : '',
-    model.chapeau ? `      <p class="seo-lead revue-chapeau">${esc(model.chapeau)}</p>` : '',
-    `      <p class="${model.chapeau ? 'revue-intro' : 'seo-lead revue-intro'}">${esc(model.intro)}</p>`,
+    `      <p class="seo-lead revue-lede">${esc(model.intro)}</p>`,
     '      <nav class="revue-toc" aria-label="Sommaire"><a href="#presse">📰 Revue de presse</a><a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a><a href="#sources">Sources</a></nav>',
     presseHtml(model), radioHtml(model), sportHtml(model), sourcesHtml(model),
+    `      <p class="revue-disclosure">${DISCLOSURE}</p>`,
     '      </article>',
   ].filter(Boolean).join('\n');
 }
@@ -236,7 +237,7 @@ function renderIndexPage(index = []) {
   for (const r of index) { if (!byDay.has(r.day)) byDay.set(r.day, []); byDay.get(r.day).push(r); }
   const rows = [...byDay.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([day, list]) => [
     `        <li class="revue-archive__day"><h3>${esc(cap(frDayYear(day)))}</h3><ul>`,
-    ...list.sort((a, b) => (a.edition === 'matin' ? 0 : 1) - (b.edition === 'matin' ? 0 : 1)).map((r) => `          <li><a href="../${esc(r.path.replace(/^revue\//, ''))}">${r.edition === 'soir' ? '🌙' : '☀️'} ${esc(r.edition === 'soir' ? 'La revue du soir' : 'La revue du matin')}</a> <span class="revue-archive__meta">${esc(r.counts ? `${plural(r.counts.articles, 'article')}${r.counts.results ? `, ${plural(r.counts.results, 'résultat')}` : ''}` : '')}</span></li>`),
+    ...list.sort((a, b) => (a.edition === 'matin' ? 0 : 1) - (b.edition === 'matin' ? 0 : 1)).map((r) => `          <li><a href="../${esc(r.path.replace(/^revue\//, ''))}">${r.edition === 'soir' ? '🌙' : '☀️'} ${esc(r.edition === 'soir' ? 'La revue du soir' : 'La revue du matin')}</a> ${r.lead ? `<span class="revue-archive__meta">En tête : « ${esc(String(r.lead).replace(/[.]+$/, ''))} »</span>` : ''}</li>`),
     '        </ul></li>',
   ].join('\n'));
   const path_ = 'revue/';
@@ -249,11 +250,11 @@ function renderIndexPage(index = []) {
     crumbs: [{ label: 'Accueil', href: '../' }, { label: 'Revues' }],
     bodyHtml: [
       '      <p class="seo-lead">Deux fois par jour, La revue du matin et La revue du soir rassemblent les articles des médias étudiants du Québec, les émissions des radios étudiantes et les résultats du sport étudiant.</p>',
-      '      <aside class="revue-note" role="note"><span aria-hidden="true">🤖</span> Revues générées automatiquement à partir des sources citées. Chaque article renvoie à son média d’origine et nomme tous ses auteurs.</aside>',
       `      <p class="revue-more"><a href="${SITE}/revue/feed.xml">Flux RSS des revues</a></p>`,
       '      <section class="seo-section revue-section"><h2>Archives</h2>',
       index.length ? `      <ul class="revue-archive">\n${rows.join('\n')}\n      </ul>` : '      <p class="revue-empty">Aucune revue publiée pour le moment.</p>',
       '      </section>',
+      '      <p class="revue-disclosure">Revues préparées automatiquement par Le Radar à partir des sources citées ; chaque article renvoie à son média d’origine et nomme tous ses auteurs.</p>',
     ].join('\n'),
     jsonLd: jsonForScript(ld), siteBase: SITE, updated: index[0] ? stamp(index[0].dateModified || index[0].datePublished) : null, alternate: false,
     extraHead: `    <link rel="alternate" type="application/rss+xml" title="Les revues du Radar" href="${SITE}/revue/feed.xml" />\n`, extraStyles: ['revue.css'], wireClass: 'revue-wire',
@@ -297,9 +298,7 @@ function feedContentHtml(model) {
   const p = (s) => `<p>${s}</p>`;
   const out = [];
   if (model.image) out.push(`<figure><img src="${esc(model.image.url)}" alt="${esc(model.image.title)}" style="max-width:100%;height:auto" /><figcaption>${esc(coverCaption(model.image))}</figcaption></figure>`);
-  out.push(p('<em>Revue générée automatiquement à partir des sources citées. Chaque article renvoie à sa source originale ; les textes appartiennent à leurs médias et à leurs auteurs.</em>'));
-  if (model.chapeau) out.push(p(`<strong>${esc(model.chapeau)}</strong>`));
-  out.push(p(esc(model.intro)));
+  out.push(p(`<strong>${esc(model.intro)}</strong>`));
   out.push('<h2>📰 Revue de presse</h2>');
   for (const g of groupByTheme(model.items)) {
     out.push(`<h3>${g.emoji} ${esc(g.theme)}</h3><ul>`);
@@ -319,6 +318,7 @@ function feedContentHtml(model) {
   out.push(results.length ? `<h3>Résultats</h3><ul>${results.map((r) => `<li>${esc(`${r.emoji} ${r.sport} · ${r.text}`)} <small>${esc([r.league, r.when].filter(Boolean).join(' · '))}</small></li>`).join('')}</ul>` : p('Aucun nouveau résultat sportif étudiant pour cette période.'));
   if (next.length) out.push(`<h3>Prochains matchs</h3><ul>${next.map((r) => `<li>${esc(`${frShort(r.date)}${r.time ? ` · ${r.time.replace(':', ' h ').replace(' h 00', ' h')}` : ''} · ${r.emoji} ${r.sport} · ${r.text}`)}</li>`).join('')}</ul>`);
   out.push(p(`<a href="${esc(model.url)}">Lire la revue sur le-radar.ca</a>`));
+  out.push(p(`<small>${DISCLOSURE}</small>`));
   return out.join('\n');
 }
 function feedItemXml(model) {

@@ -55,6 +55,9 @@ export function refreshPhotoLine(text, it, assetUrl = '', limit = X_LIMIT) {
   return xlen(out) > limit ? null : out;
 }
 
+/** Pages « La revue du matin / du soir » du Radar (scripts/revue/) : jamais publiées par les bots sociaux (ni La une, ni par article). */
+export const REVUE_LINK = /^https?:\/\/(www\.)?le-radar\.ca\/revue(\/|$)/i;
+export const isRevueLink = (u) => REVUE_LINK.test(String(u || '').trim());
 export function parseFeed(xml) {
   return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(m => {
     const b = m[1]; const desc = tag(b, 'description');
@@ -69,7 +72,7 @@ export function parseFeed(xml) {
       categories: [...b.matchAll(/<category>([\s\S]*?)<\/category>/g)].map(x => dec(x[1])),
       credit: feedCredit(tag(b, 'content:encoded')),
     };
-  }).sort((a, b) => b.date - a.date);
+  }).filter(it => !isRevueLink(it.link)).sort((a, b) => b.date - a.date);
 }
 
 // Visuels récurrents / externes à écarter de l'image du flux.

@@ -4,7 +4,7 @@
 // (revue-lib.mjs textReject : chiffre, nom ou date relative absents de la source, autre langue que le français) → repli
 // déterministe, article par article. Les secrets ne sont jamais écrits dans le journal.
 import { MODEL, aiEnabled as socialAiEnabled, parseAi, TOPICS } from '../social/ai-hook.mjs';
-import { textReject, itemReject, itemSource, THEMES } from './revue-lib.mjs';
+import { itemReject, ledeReject, THEMES } from './revue-lib.mjs';
 
 export { MODEL };
 export const aiEnabled = (env = process.env) => socialAiEnabled(env) && env.REVUE_AI !== 'off';
@@ -27,16 +27,20 @@ export function itemsPrompt(batch) {
     'Réponds seulement en JSON : {"items":[{"n":1,"resume":"…","theme":"…"}]}\n\n' +
     batch.map((x, i) => `${i + 1}. [${x.lang}] Titre : ${x.title}\nExtrait : ${String(x.excerpt || '').slice(0, 400)}`).join('\n\n');
 }
-export function chapeauPrompt(items) {
-  return 'Tu rédiges le chapeau d’une revue de presse des médias étudiants du Québec. À partir SEULEMENT des titres ci-dessous, ' +
-    'écris en FRANÇAIS deux phrases neutres (au plus 380 caractères au total) qui présentent les grands sujets, sans chiffre, ' +
-    'sans nom propre absent des titres, sans guillemet, sans « demain », « hier », « aujourd’hui » ni « week-end ». ' +
-    'Réponds seulement en JSON : {"chapeau":"…"}\n\n' + items.map(x => `- ${x.title} (${x.source})`).join('\n');
+export function chapeauPrompt(items, edition = 'soir') {
+  const label = edition === 'matin' ? 'La revue du matin' : 'La revue du soir';
+  return `Tu écris l’amorce de « ${label} », une publication originale du Radar (revue de presse des médias étudiants du Québec). ` +
+    'Écris en FRANÇAIS exactement deux phrases naturelles (140 à 340 caractères au total), au ton d’un journal, qui mettent en avant ' +
+    'deux ou trois articles marquants de la liste en nommant leur média (par exemple : Le Collectif revient sur…, tandis que The Link raconte…). ' +
+    'Reprends fidèlement les noms propres des titres, n’invente aucun fait, aucun chiffre, aucun nombre ni aucune date, n’utilise aucun guillemet, ' +
+    'jamais « demain », « hier », « aujourd’hui », « ce soir » ni « week-end », aucune formule générique (« sujets variés », « mettent en lumière », ' +
+    '« au cœur de ») et ne compte pas les articles. Ne commence pas par « Les médias étudiants ». ' +
+    'Réponds seulement en JSON : {"chapeau":"…"}\n\n' + items.map(x => `- ${x.title} (média : ${x.source}) — ${String(x.excerpt || '').slice(0, 160)}`).join('\n');
 }
 /**
  * { chapeau, items: { id: { resume, theme } }, model, log: [...] } ; jamais d'exception. `items` = articles de revue-lib.selectArticles.
  */
-export async function aiReview(items, { env = process.env, fetchImpl = fetch, batchSize = 8, maxCalls = 6 } = {}) {
+export async function aiReview(items, { env = process.env, fetchImpl = fetch, batchSize = 8, maxCalls = 6, edition = 'soir' } = {}) {
   const out = { chapeau: '', items: {}, model: MODEL, log: [] };
   if (!aiEnabled(env)) { out.log.push('IA désactivée (secrets absents ou interrupteur) : gabarit déterministe.'); return out; }
   let calls = 0;
@@ -57,13 +61,14 @@ export async function aiReview(items, { env = process.env, fetchImpl = fetch, ba
   }
   if (items.length && calls < maxCalls) {
     try {
-      const j = await run(chapeauPrompt(items.slice(0, 25)), { env, fetchImpl, maxTokens: 200 });
+      const pool = items.slice(0, 12);
+      const j = await run(chapeauPrompt(pool, edition), { env, fetchImpl, maxTokens: 220 });
       const c = typeof j?.chapeau === 'string' ? j.chapeau.replace(/\s+/g, ' ').trim() : '';
-      const why = c ? textReject(c, items.map(itemSource).join(' '), { min: 60, max: 420 }) : 'aucun chapeau';
-      if (why) out.log.push(`chapeau refusé (${why}) : phrase factuelle seulement.`); else out.chapeau = c;
+      const why = c ? ledeReject(c, pool) : 'aucune amorce';
+      if (why) out.log.push(`amorce refusée (${why}) : amorce déterministe.`); else out.chapeau = c;
     } catch (e) { out.log.push(`chapeau en échec (${String(e?.message || 'erreur').slice(0, 80)}).`); }
   }
   const n = Object.values(out.items).filter(x => x.resume).length;
-  out.log.push(`IA ${MODEL} : ${n}/${items.length} résumé(s) retenu(s)${out.chapeau ? ', chapeau retenu' : ''}.`);
+  out.log.push(`IA ${MODEL} : ${n}/${items.length} résumé(s) retenu(s)${out.chapeau ? ', amorce retenue' : ''}.`);
   return out;
 }

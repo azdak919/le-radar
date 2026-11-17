@@ -1,6 +1,6 @@
 // « La revue du matin » et « La revue du soir » : logique pure (testée dans tests/revue.mjs).
 //  - éditions en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées par Intl) ;
-//  - période : matin = la nuit et le matin (depuis 19 h 15 la veille), soir = la journée (depuis 7 h 30), prolongée jusqu'à la
+//  - période : matin = la nuit et le matin (depuis 20 h la veille), soir = la journée (depuis 7 h), prolongée jusqu'à la
 //    dernière revue publiée si une édition a été sautée (au plus `maxLookbackHours`) ; jamais deux fois le même article ;
 //  - articles : news.json (médias étudiants seulement, sport pro exclu), TOUS les auteurs (front.authorNames), média, établissement
 //    en français avec son sigle, lien vers l'original, extrait court ;
@@ -19,12 +19,12 @@ const front = require('../magazine-front-page-lib.js');
 export const SITE = 'https://le-radar.ca';
 export const PUBLISHER = 'Le Radar';
 export const EDITIONS = {
-  matin: { id: 'matin', label: 'La revue du matin', emoji: '☀️', target: '07:30', from: '07:15', to: '10:30', periodStart: '19:15', periodStartDayOffset: -1 },
-  soir: { id: 'soir', label: 'La revue du soir', emoji: '🌙', target: '19:15', from: '19:00', to: '22:00', periodStart: '07:30', periodStartDayOffset: 0 },
+  matin: { id: 'matin', label: 'La revue du matin', emoji: '☀️', target: '07:00', from: '06:45', to: '10:30', periodStart: '20:00', periodStartDayOffset: -1 },
+  soir: { id: 'soir', label: 'La revue du soir', emoji: '🌙', target: '20:00', from: '19:45', to: '22:30', periodStart: '07:00', periodStartDayOffset: 0 },
 };
 export const DEFAULT_CONFIG = {
-  publish: false, editions: EDITIONS, refresh: { enabled: true, from: '22:45', to: '23:59' }, skipWithoutArticles: true,
-  maxLookbackHours: 48, maxArticles: 40, radio: { maxPerStation: 4, windows: { matin: ['07:30', '17:00'], soir: ['19:15', '24:00'] } },
+  publish: false, editions: EDITIONS, refresh: { enabled: true, from: '23:00', to: '23:59' }, skipWithoutArticles: true,
+  maxLookbackHours: 48, maxArticles: 40, radio: { maxPerStation: 4, windows: { matin: ['07:00', '17:00'], soir: ['20:00', '24:00'] } },
   sports: { upcomingDays: 3, upcomingFallbackDays: 7 }, ai: { enabled: true, maxCallsPerRun: 6, batchSize: 8 }, newsSitemapHours: 48, feedItems: 10,
 };
 /** Réglages : data/revue/config.json par-dessus les valeurs par défaut (publish reste false sauf true explicite). */
@@ -82,7 +82,7 @@ export function refreshAt(now, cfg = DEFAULT_CONFIG) {
   return minutes >= hm(cfg.refresh.from) && minutes <= hm(cfg.refresh.to) ? { ...cfg.editions.soir, day: ymd, key: reviewId(ymd, 'soir'), refresh: true } : null;
 }
 /**
- * Période couverte : [début, fin]. Début = heure de départ de l'édition (la veille 19 h 15 pour le matin, 7 h 30 pour le soir),
+ * Période couverte : [début, fin]. Début = heure de départ de l'édition (la veille 20 h pour le matin, 7 h pour le soir),
  * reculé jusqu'à la fin de la dernière revue publiée si une édition a été sautée, sans dépasser `maxLookbackHours`.
  */
 export function periodOf(edition, now, index = [], cfg = DEFAULT_CONFIG) {
@@ -224,13 +224,15 @@ const nextKey = r => `${r.date}|${r.time}|${r.sport}|${r.event || ''}|${r.teams.
  * Résultats de la période (matin : la veille et le jour même ; soir : le jour même) pas encore repris, et matchs à venir
  * (matin : du jour même à J+3 ; soir : de J+1 à J+3 ; à défaut, la prochaine semaine). Tout vient de sports-masthead.json.
  */
-export function periodSports(masthead, edition, { coveredKeys = new Set(), cfg = DEFAULT_CONFIG } = {}) {
+export function periodSports(masthead, edition, { coveredKeys = new Set(), cfg = DEFAULT_CONFIG, at = '' } = {}) {
   const soir = edition.id === 'soir';
-  const base = pickSports(masthead, edition.day, { max: 10000, days: soir ? 0 : 1, nextDays: cfg.sports.upcomingDays, afterToday: soir });
+  // Soir : les matchs du jour même qui commencent à l'heure de publication ou après (« ce soir », daté en absolu) puis les jours suivants.
+  const keepNext = r => !soir || r.date > edition.day || (r.date === edition.day && !!at && !!r.time && r.time >= at);
+  const base = pickSports(masthead, edition.day, { max: 10000, days: soir ? 0 : 1, nextDays: cfg.sports.upcomingDays });
   const seen = new Set(), results = [];
   for (const r of base.results) { const key = resultKey(r); if (seen.has(key) || coveredKeys.has(key)) continue; seen.add(key); results.push({ ...r, key }); }
-  let nextList = base.next;
-  if (!nextList.length) nextList = pickSports(masthead, edition.day, { max: 10000, days: 0, nextDays: cfg.sports.upcomingFallbackDays, afterToday: soir }).next;
+  let nextList = base.next.filter(keepNext);
+  if (!nextList.length) nextList = pickSports(masthead, edition.day, { max: 10000, days: 0, nextDays: cfg.sports.upcomingFallbackDays }).next.filter(keepNext);
   const ns = new Set(), next = [];
   for (const r of nextList) { const key = nextKey(r); if (ns.has(key)) continue; ns.add(key); next.push({ ...r, key }); }
   for (const r of results) r.text = resultText(r);
@@ -320,32 +322,72 @@ export const itemSource = x => `${x.title} ${x.excerpt || ''} ${x.source} ${x.in
 
 // ── Textes déterministes (repli sans IA) ─────────────────────────────────────
 const plural = (n, one, many = one + 's') => `${n} ${n > 1 ? many : one}`;
-/** Phrase d'ouverture factuelle, toujours exacte (comptes et heures des données). */
-export function factualIntro(model) {
-  const { edition, items, period, sports, radio } = model;
-  const media = new Set(items.map(x => x.source)).size;
-  const themes = groupByTheme(items).map(g => `${g.theme.toLowerCase()} (${g.items.length})`);
-  const s0 = mtl(period.start), s1 = mtl(period.end);
-  const span = s0.ymd === s1.ymd ? `entre ${frTime(period.start)} et ${frTime(period.end)}` : `entre le ${frDay(s0.ymd)} à ${frTime(period.start)} et le ${frDay(s1.ymd)} à ${frTime(period.end)}`;
-  const parts = [`${edition.label} du ${frDayYear(edition.day)} réunit ${plural(items.length, 'article')} de ${plural(media, 'média étudiant', 'médias étudiants')}, publiés ${span} (heure de Montréal).`];
-  if (themes.length) parts.push(`Au sommaire : ${themes.length > 1 ? `${themes.slice(0, -1).join(', ')} et ${themes.at(-1)}` : themes[0]}.`);
-  const sp = [];
-  if (sports.results.length) sp.push(plural(sports.results.length, 'résultat sportif', 'résultats sportifs'));
-  if (sports.next.length) sp.push(plural(sports.next.length, 'match à venir', 'matchs à venir'));
-  const shows = radio.reduce((n, s) => n + s.shows.length, 0);
-  if (shows) sp.push(`${plural(shows, 'émission', 'émissions')} de radio étudiante`);
-  if (sp.length) parts.push(`L’édition compte aussi ${sp.length > 1 ? `${sp.slice(0, -1).join(', ')} et ${sp.at(-1)}` : sp[0]}.`);
+/** Titre d'article cité dans l'amorce : guillemets français, sans point final. */
+// Espaces insécables dans les guillemets : « » ne passent jamais seuls à la ligne (écran et papier). Un titre déjà entre
+// guillemets est déballé ; des guillemets internes (« Soutenons le journalisme » : …) deviennent “ ” (guillemets de second niveau).
+const quoteTitle = t => {
+  let s = String(t || '').trim().replace(/[.。]+$/u, '');
+  if (/^«[^«»]*»$/u.test(s)) s = s.replace(/^«\s*|\s*»$/gu, '');
+  s = s.replace(/«[\s\u00a0\u202f]*/gu, '“').replace(/[\s\u00a0\u202f]*»/gu, '”');
+  return `«\u00a0${s}\u00a0»`;
+};
+const realAuthors = x => (x.authors || []).filter(a => a && a !== 'la rédaction');
+const lcFirst = s => String(s || '').replace(/^\p{Lu}(?!\p{Lu}|\))/u, c => c.toLowerCase());
+/** Articles mis en avant dans l'amorce : la une (photo) d'abord, puis d'autres médias, titres français de préférence. */
+export function highlights(items, max = 3) {
+  const out = [], media = new Set();
+  const lead = items.find(x => x.image);
+  const pool = [...(lead ? [lead] : []), ...items.filter(x => x !== lead && x.lang !== 'en'), ...items.filter(x => x !== lead && x.lang === 'en')];
+  for (const x of pool) { if (out.length >= max) break; if (media.has(x.source)) continue; out.push(x); media.add(x.source); }
+  for (const x of pool) { if (out.length >= max) break; if (!out.includes(x)) out.push(x); }
+  return out;
+}
+/** Deux phrases d'amorce sur les articles marquants, sans aucun décompte (repli déterministe de l'IA). */
+export function ledeNews(model) {
+  const [a, b, c] = highlights(model.items || [], 3);
+  if (!a) return '';
+  const au = realAuthors(a), names = au.length > 1 ? `${au.slice(0, -1).join(', ')} et ${au.at(-1)}` : au[0] || '';
+  const by = au.length && au.length <= 3 ? `, sous la plume ${/^[AEIOUYÀÂÉÈÊËÎÏÔÛÜ]/u.test(names) ? 'd’' : 'de '}${names}` : '';
+  const open = model.edition?.id === 'soir' ? 'En tête de cette revue du soir' : 'Pour ouvrir la journée';
+  const parts = [`${open}, ${a.source} publie ${quoteTitle(a.title)}${by}.`];
+  if (b && c && c.source === b.source) parts.push(`À lire aussi : ${quoteTitle(b.title)} et ${quoteTitle(c.title)} dans ${b.source}.`);
+  else if (b) parts.push(`À lire aussi : ${quoteTitle(b.title)} dans ${b.source}${c ? `, et ${quoteTitle(c.title)} dans ${c.source}` : ''}.`);
   return parts.join(' ');
+}
+/** Une phrase sur le sport étudiant (résultat marquant, sinon prochain match) ou, à défaut, la radio étudiante. */
+export function ledeSport(model) {
+  const r = (model.sports?.results || []).find(x => x.teams?.length === 2);
+  if (r) {
+    const [x, y] = r.teams;
+    return r.tie ? `Sur les terrains, match nul en ${lcFirst(r.sport)} entre ${teamTxt(x)} et ${teamTxt(y)}, ${x.score} à ${y.score}.`
+      : `Sur les terrains, en ${lcFirst(r.sport)} : ${teamTxt(x)} ${x.score}, ${teamTxt(y)} ${y.score}.`;
+  }
+  const n = (model.sports?.next || [])[0];
+  if (n) return `Côté sport étudiant, prochain rendez-vous le ${frDay(n.date)}${n.time ? ` à ${frHour(n.time)}` : ''} : ${n.text}.`;
+  const st = (model.radio || []).find(s => s.shows?.length);
+  if (st) return `À l’antenne, ${st.station} propose ${quoteTitle(st.shows[0].title)}, de ${st.shows[0].when}.`;
+  return '';
+}
+/** Amorce complète : deux phrases sur l'actualité (IA vérifiée ou repli), puis une sur le sport ou la radio. */
+export function ledeOf(model) { return [model.chapeau || ledeNews(model), ledeSport(model)].filter(Boolean).join(' '); }
+/** Formules creuses refusées dans une amorce d'IA : on veut des articles précis, pas un survol. */
+const GENERIC = /sujets? vari|divers sujets|vari[ée]t[ée] de sujets|abordent|mettent en lumi|au c(œ|oe)ur de|plusieurs articles|les médias étudiants (québécois )?(abordent|traitent|parlent)|cette revue (réunit|rassemble)/i;
+/** Garde-fou de l'amorce d'IA : textReject + au moins un média cité + pas de formule générique + deux ou trois phrases. */
+export function ledeReject(text, items = []) {
+  const why = textReject(text, items.map(itemSource).join(' '), { min: 80, max: 380 });
+  if (why) return why;
+  if (GENERIC.test(text)) return 'formule générique';
+  const low = norm(text);
+  if (!items.some(x => low.includes(norm(x.source)))) return 'aucun média cité';
+  const n = (String(text).match(/[.!?…](\s|$)/g) || []).length;
+  if (n < 1 || n > 3) return `${n} phrase(s)`;
+  return null;
 }
 /** Titre (headline ≤ 110 caractères) et description (≤ 200) : déterministes, à partir des données. */
 export function headlineOf(model) { return `${model.edition.label} du ${frDayYear(model.edition.day)}`; }
 export function descriptionOf(model) {
-  const { items, sports } = model;
-  const media = new Set(items.map(x => x.source)).size;
-  let d = `Revue de presse étudiante du Québec : ${plural(items.length, 'article')} de ${plural(media, 'média', 'médias')}`;
-  if (sports.results.length) d += `, ${plural(sports.results.length, 'résultat sportif', 'résultats sportifs')}`;
-  if (sports.next.length) d += `, ${plural(sports.next.length, 'match', 'matchs')} à venir`;
-  d += ' et la radio étudiante, avec liens vers les articles originaux.';
+  const first = ledeNews(model).split(/(?<=[.!?»])\s+(?=\p{Lu}|À)/u)[0] || '';
+  const d = `${headlineOf(model)}. ${first}`.trim();
   return d.length > 200 ? d.slice(0, 197).replace(/\s+\S*$/, '') + '…' : d;
 }
 
@@ -368,7 +410,7 @@ export function buildModel({ edition, period, items, sports, radio, now, ai = nu
     items: its, sports, radio, image: lead ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title } : null,
     chapeau: ai?.chapeau || '', generator: ai && (ai.chapeau || Object.keys(ai.items || {}).length) ? `ia:${ai.model || 'workers-ai'}` : 'gabarit', previous,
   };
-  m.headline = headlineOf(m); m.description = descriptionOf(m); m.intro = factualIntro(m);
+  m.headline = headlineOf(m); m.description = descriptionOf(m); m.intro = ledeOf(m);
   m.articleIds = its.map(x => x.id); m.sportKeys = sports.results.map(r => r.key);
   m.categories = [...new Set(['Revue de presse', 'Médias étudiants', 'Québec', ...groupByTheme(its).map(g => g.theme), ...(sports.results.length || sports.next.length ? ['Sport étudiant'] : []), ...(radio.length ? ['Radio étudiante'] : [])])];
   return m;
@@ -391,7 +433,7 @@ export function validateReview(model, data) {
     if (x.resume) { const why = itemReject(x.resume, x); if (why) p.push(`résumé refusé (${why}) : ${x.title}`); }
     if (x.excerpt && !clean(`${it.leadExcerpt || ''} ${it.excerpt || ''}`).includes(x.excerpt.replace(/…$/, '').trim())) p.push(`extrait absent de la source : ${x.title}`);
   }
-  if (model.chapeau) { const why = textReject(model.chapeau, (model.items || []).map(itemSource).join(' '), { min: 60, max: 420 }); if (why) p.push(`chapeau refusé (${why})`); }
+  if (model.chapeau) { const why = ledeReject(model.chapeau, model.items || []); if (why) p.push(`chapeau refusé (${why})`); }
   // Radio : chaque émission existe telle quelle dans la grille de sa station.
   for (const st of model.radio || []) {
     const grid = data.schedules?.stations?.[st.id]?.grid || [];

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// « La revue du matin » (≈ 7 h 30) et « La revue du soir » (≈ 19 h 15), heure de Montréal : articles originaux du Radar.
+// « La revue du matin » (≈ 7 h) et « La revue du soir » (≈ 20 h), heure de Montréal : articles originaux du Radar.
 //  - Sélection, sport, radio et garde-fou : scripts/revue/revue-lib.mjs ; résumés IA : revue-ai.mjs ; rendu : revue-render.js.
 //  - Publication RÉELLE seulement si data/revue/config.json `publish` vaut true (défaut : false). Sinon, rien n'est écrit dans
 //    le dépôt ; `--sample --out dossier` produit un exemple complet (pages, flux, sitemaps) hors du dépôt.
@@ -8,7 +8,7 @@
 // Usage :
 //   node scripts/revue/revue-run.mjs --gate                       # porte du workflow (due=true|false)
 //   node scripts/revue/revue-run.mjs [--edition auto|matin|soir] [--now ISO|news] [--refresh]
-//   node scripts/revue/revue-run.mjs --sample --edition matin --day 2026-11-17 --at 07:30 --out /tmp/revue
+//   node scripts/revue/revue-run.mjs --sample --edition matin --day 2026-11-17 --at 07:00 --out /tmp/revue
 //   node scripts/revue/revue-run.mjs --rebuild                     # re-rend pages, index, flux et sitemaps depuis data/revue
 import fs from 'node:fs';
 import path from 'node:path';
@@ -50,13 +50,15 @@ const indexEntry = m => ({
   id: m.id, edition: m.edition.id, day: m.edition.day, path: m.path, url: m.url, headline: m.headline, description: m.description,
   datePublished: m.datePublished, dateModified: m.dateModified, periodEnd: new Date(m.period.end).toISOString(),
   articleIds: m.articleIds, sportKeys: m.sportKeys, counts: { articles: m.items.length, results: m.sports.results.length, next: m.sports.next.length, radio: m.radio.reduce((n, s) => n + s.shows.length, 0) },
-  image: m.image?.url || '', generator: m.generator,
+  image: m.image?.url || '', generator: m.generator, lead: L.highlights(m.items, 1)[0]?.title || '',
 });
 
 /**
  * Génère une revue. Retourne { status: 'publiée'|'sautée'|'refusée'|'inchangée', model?, problems?, why }.
  * `io` : { news, masthead, schedules, index, reviews, cfg, env, fetchImpl, refresh }.
  */
+/** « 20:00 » (heure de Montréal) d'un instant : heure de publication pour les matchs du soir même. */
+const atOf = t => { const p = L.mtl(typeof t === 'number' ? t : Date.parse(t)); return `${String(p.hh).padStart(2, '0')}:${String(p.mm).padStart(2, '0')}`; };
 export async function generate(editionId, now, io) {
   const { cfg, index = [], reviews = {}, env = process.env } = io;
   const edition = editionId && editionId !== 'auto' ? L.editionFor(editionId, now, cfg) : L.editionAt(now, cfg);
@@ -71,13 +73,13 @@ export async function generate(editionId, now, io) {
     const prev = reviews[edition.key];
     if (!prev) return { status: 'sautée', why: `${edition.key} : aucune revue du soir à mettre à jour` };
     const cov = L.covered(index, edition.key, reviews);
-    const fresh = L.periodSports(io.masthead, edition, { coveredKeys: cov.sports, cfg });
+    const fresh = L.periodSports(io.masthead, edition, { coveredKeys: cov.sports, cfg, at: atOf(prev.datePublished) });
     const known = new Set(prev.sports.results.map(r => r.key));
     const added = fresh.results.filter(r => !known.has(r.key));
     if (!added.length) return { status: 'inchangée', why: `${edition.key} : aucun nouveau résultat` };
     const model = { ...prev, sports: { results: fresh.results, next: fresh.next }, dateModified: new Date(now).toISOString(), refreshedAt: new Date(now).toISOString() };
     model.sportKeys = model.sports.results.map(r => r.key);
-    model.intro = L.factualIntro({ ...model, period: model.period, edition: { ...model.edition, label: prev.edition.label } });
+    model.intro = L.ledeOf(model);
     model.description = L.descriptionOf(model);
     const problems = L.validateReview(model, data);
     if (problems.length) return { status: 'refusée', problems, why: 'garde-fou' };
@@ -88,9 +90,9 @@ export async function generate(editionId, now, io) {
   const cov = L.covered(index, edition.key, reviews);
   const items = L.selectArticles(io.news, period, { coveredIds: cov.ids, max: cfg.maxArticles });
   if (!items.length && cfg.skipWithoutArticles) return { status: 'sautée', why: `aucun nouvel article entre ${tz(period.start)} et ${tz(period.end)} : édition sautée` };
-  const sports = L.periodSports(io.masthead, edition, { coveredKeys: cov.sports, cfg });
+  const sports = L.periodSports(io.masthead, edition, { coveredKeys: cov.sports, cfg, at: atOf(reviews[edition.key]?.datePublished || now) });
   const radio = L.periodRadio(io.schedules, edition, cfg);
-  const ai = cfg.ai?.enabled === false ? null : await aiReview(items, { env, fetchImpl: io.fetchImpl || fetch, batchSize: cfg.ai?.batchSize, maxCalls: cfg.ai?.maxCallsPerRun });
+  const ai = cfg.ai?.enabled === false ? null : await aiReview(items, { env, fetchImpl: io.fetchImpl || fetch, batchSize: cfg.ai?.batchSize, maxCalls: cfg.ai?.maxCallsPerRun, edition: edition.id });
   for (const l of ai?.log || []) console.log(l);
   const prevEntry = index.filter(r => r.id !== edition.key && Date.parse(r.datePublished) < now).sort((a, b) => Date.parse(b.datePublished) - Date.parse(a.datePublished))[0];
   let model = L.buildModel({ edition, period, items, sports, radio, now, ai, published: reviews[edition.key]?.datePublished || null, previous: prevEntry ? { id: prevEntry.id, path: prevEntry.path, headline: prevEntry.headline } : null });
