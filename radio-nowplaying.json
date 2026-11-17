@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T10:10:15.122Z",
+  "updatedAt": "2026-11-17T11:07:08.496Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T10:09:27.363Z"
+      "checkedAt": "2026-11-17T11:06:16.860Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Raconte ton quartier",
         "source": "schedule",
         "start": "06:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/raconte-ton-quartier"
       },
+      "next": {
+        "title": "450DB",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/450db"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Raconte ton quartier",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T10:09:41.231Z"
+      "checkedAt": "2026-11-17T11:06:31.160Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T10:09:43.583Z"
+      "checkedAt": "2026-11-17T11:06:33.880Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T10:09:56.794Z"
+      "checkedAt": "2026-11-17T11:06:48.036Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T10:09:57.734Z"
+      "checkedAt": "2026-11-17T11:06:49.030Z"
     },
     "choq": {
       "id": "choq",
@@ -155,7 +155,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T10:10:14.772Z"
+      "checkedAt": "2026-11-17T11:07:08.145Z"
     }
   }
 }
