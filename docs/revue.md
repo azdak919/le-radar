@@ -5,9 +5,9 @@ Deux articles originaux par jour, générés à partir des données du site : `n
 Une revue n’est **pas** une réécriture : des extraits courts, un lien vers chaque original, le média et **tous** les
 auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de sport professionnel.
 
-> **Publication publique : désactivée par défaut.** Tant que `data/revue/config.json` contient `"publish": false`,
-> le flux de travail ne génère que des exemples (artéfacts) et n’écrit rien sur le site : pas de page `/revue/`,
-> rien dans `sitemap.xml`, `feed.xml`, `robots.txt` ni `llms.txt`.
+> **Publication publique : activée le 17 novembre 2026** (décision de Charles). Les éditions restent à
+> 7 h et 20 h (heure de Montréal). La revue n’entre jamais dans La une des réseaux sociaux ni dans les stories.
+> Pour désactiver : `"publish": false` dans `data/revue/config.json` (les pages déjà publiées restent).
 
 ## Fichiers
 
@@ -138,8 +138,9 @@ réseaux, flux de travail).
 
 ## Activer la publication (décision de Charles)
 
-1. PR qui passe `"publish": true` dans `data/revue/config.json` (CI verte, puis fusion).
-2. Le prochain créneau du flux « Revue — matin et soir » écrit `revue/AAAA-MM-JJ-matin|soir/`, l’index
+1. `"publish": true` est en vigueur depuis le 17 novembre 2026. Le menu du site (Accueil, Revue, Médias, …)
+   pointe vers `/revue/` en français et « Review » en anglais.
+2. Le flux « Revue — matin et soir » écrit `revue/AAAA-MM-JJ-matin|soir/`, l’index
    `revue/`, `sitemap-news.xml`, ajoute la ligne `Sitemap: …/sitemap-news.xml` à `robots.txt`, et les revues entrent
    dans `sitemap.xml`, `feed.xml` (contenu complet, image, catégories) et `llms.txt`. Pages se redéploie seul
    (`pages-deploy.yml` écoute ce flux). Lancement manuel possible : *Actions → Revue — matin et soir → Run workflow*.
@@ -157,7 +158,7 @@ Désactiver : repasser `"publish": false`. Les pages déjà publiées restent ; 
 ## Commandes utiles
 
 ```bash
-node scripts/revue/revue-run.mjs --gate --now 2026-11-17T07:02:00-05:00   # édition due ? (« désactivée » tant que publish = false)
+node scripts/revue/revue-run.mjs --gate --now 2026-11-17T07:02:00-05:00   # édition due ?
 bash scripts/revue/revue-sample.sh /tmp/exemple-revue                       # exemples + captures (sans IA en local)
 node scripts/revue/revue-run.mjs --sample --edition soir --day 2026-11-16 --at 20:00 --out /tmp/x
 npm run test:revue && npx playwright test tests/revue-render.spec.mjs tests/print-formats.spec.mjs --project=main

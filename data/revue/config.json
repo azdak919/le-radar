@@ -1,6 +1,6 @@
 {
- "_doc": "« La revue du matin » et « La revue du soir » (scripts/revue/, docs/revue.md). `publish` = false : AUCUNE publication planifiée, aucune page écrite dans le dépôt, rien dans sitemap.xml, sitemap-news.xml, robots.txt ni feed.xml. Passer à true est une décision explicite de Charles, dans une PR, après validation des exemples. Heures en heure de Montréal (America/Toronto) ; 7 h et 20 h : voir docs/revue.md, « Heures de publication ».",
- "publish": false,
+ "_doc": "« La revue du matin » et « La revue du soir » (scripts/revue/, docs/revue.md). `publish` = true depuis le 17 nov. 2026 (décision de Charles). `publish` = false : aucune publication planifiée, aucune nouvelle page écrite. Heures inchangées : 7 h et 20 h. Heures en heure de Montréal (America/Toronto) ; 7 h et 20 h : voir docs/revue.md, « Heures de publication ».",
+ "publish": true,
  "editions": {
   "matin": { "label": "La revue du matin", "emoji": "☀️", "target": "07:00", "from": "06:45", "to": "10:30", "periodStart": "20:00", "periodStartDayOffset": -1 },
   "soir": { "label": "La revue du soir", "emoji": "🌙", "target": "20:00", "from": "19:45", "to": "22:30", "periodStart": "07:00", "periodStartDayOffset": 0 }

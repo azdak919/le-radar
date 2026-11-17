@@ -13,6 +13,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Publication de la revue activée (`data/revue/config.json`, `"publish": true`, 17 nov. 2026). Lien « Revue » (anglais : « Review ») dans le menu de sections et le pied de page, site et application mobile, sans casser la traduction. Heures inchangées : 7 h et 20 h (heure de Montréal). La revue reste exclue de La une des réseaux sociaux et des stories. Météo : Environnement et Changement climatique Canada.
 - Workflow manuel ponctuel pour retirer les publications « Résultats du week-end » encore en ligne et les republier une fois avec le titre « fin de semaine ».
 - Libellé « fin de semaine » à la place de « week-end » dans les textes français visibles (titre des résultats, gabarits sociaux, documentation). Les identifiants techniques (`weekend_results`, etc.) et les textes anglais restent inchangés.
 - Format « Résultats de la fin de semaine » : plus aucune mention @ (X, Mastodon, Buffer et les autres réseaux du même format). Hashtags dynamiques selon les ligues et sports présents (#USports, #RSEQ, #FootballU, #HockeyU, etc.), quelques équipes en CamelCase, puis #SportÉtudiant et #Québec (au plus 8). Si le texte dépasse la limite X, on retire d’abord les hashtags d’équipes.

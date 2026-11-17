@@ -1,6 +1,6 @@
 // « La revue du matin / du soir » : éditions (heure d'été et d'hiver), période, sélection (tous les auteurs, sport pro exclu),
 // garde-fou anti-hallucination (IA simulée), repli déterministe, validation des liens/auteurs/émissions/scores, JSON-LD,
-// sitemap Google News, RSS, rendu, interrupteur `publish` (désactivé par défaut) et workflows.
+// sitemap Google News, RSS, rendu, interrupteur `publish` (activé le 17 nov. 2026) et workflows.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -15,15 +15,22 @@ const R = require('../scripts/revue/revue-render.js');
 const feedLib = require('../scripts/generate-feed.js');
 const cfg = L.mergeConfig(JSON.parse(fs.readFileSync('data/revue/config.json', 'utf8')));
 
-// ── Interrupteur : désactivé par défaut, rien de public ──
-assert.equal(cfg.publish, false, 'data/revue/config.json : publish doit rester false tant que Charles n’a pas validé');
+// ── Interrupteur : publication activée (décision de Charles, 17 nov. 2026) ──
+assert.equal(cfg.publish, true, 'data/revue/config.json : publish activé (décision de Charles, 17 nov. 2026)');
 assert.equal(L.mergeConfig({ publish: 'true' }).publish, false, 'seul le booléen true active la publication');
-assert.equal(gate({ now: Date.parse('2026-11-17T12:35:00Z'), cfg }).due, false);
-assert.match(gate({ now: Date.parse('2026-11-17T12:35:00Z'), cfg }).why, /désactivée/);
-assert.deepEqual(R.loadPublished(process.cwd()), { enabled: false, index: [], models: [] });
-assert.deepEqual(feedLib.revueFeedEntries(process.cwd()), [], 'feed.xml : aucune revue tant que publish = false');
-assert.ok(!fs.readFileSync('robots.txt', 'utf8').includes('sitemap-news.xml'), 'robots.txt : pas de sitemap Google News tant que publish = false');
-assert.ok(!fs.existsSync('sitemap-news.xml') && !fs.existsSync('revue/index.html'), 'aucune page ni sitemap de revue commités tant que publish = false');
+const unpublished = L.mergeConfig({ publish: false });
+assert.equal(gate({ now: Date.parse('2026-11-17T12:35:00Z'), cfg: unpublished }).due, false);
+assert.match(gate({ now: Date.parse('2026-11-17T12:35:00Z'), cfg: unpublished }).why, /désactivée/);
+assert.equal(cfg.editions.matin.target, '07:00', 'heure idéale du matin inchangée');
+assert.equal(cfg.editions.soir.target, '20:00', 'heure idéale du soir inchangée');
+assert.equal(R.loadPublished(process.cwd()).enabled, true);
+assert.ok(feedLib.revueFeedEntries(process.cwd()).some((e) => /revue\/2026-11-17-matin/.test(e.xml)), 'feed.xml : la revue du matin est présente une fois publiée');
+assert.ok(fs.readFileSync('robots.txt', 'utf8').includes('sitemap-news.xml'), 'robots.txt : sitemap Google News une fois publiée');
+assert.ok(fs.existsSync('sitemap-news.xml') && fs.existsSync('revue/index.html'), 'pages et sitemap de revue commités une fois publiée');
+assert.ok(fs.existsSync('revue/2026-11-17-matin/index.html'), 'édition du matin du 17 nov. 2026 présente');
+assert.ok(!fs.existsSync('revue/2026-11-17-soir/index.html'), 'la revue du soir n’est pas prépubliée (cron 20 h)');
+assert.match(fs.readFileSync('revue/index.html', 'utf8'), /href="\.\/2026-11-17-matin\/"/, 'index des archives : lien relatif vers l’édition, pas vers la racine');
+
 
 // ── Éditions : 7 h et 20 h heure de Montréal, été comme hiver (docs/revue.md, « Heures de publication ») ──
 const on = L.mergeConfig({ publish: true });
@@ -384,7 +391,7 @@ const index = [];
 writeOutputs(tmp, { model: m, index, reviews: {}, publish: false, now: tM, cfg: on });
 for (const f of ['revue/2026-11-17-matin/index.html', 'revue/index.html', 'revue/feed.xml', 'sitemap-news.xml', 'data/revue/index.json', 'data/revue/reviews/2026-11-17-matin.json']) assert.ok(fs.existsSync(path.join(tmp, f)), f);
 assert.equal(fs.readFileSync(path.join(tmp, 'robots.txt'), 'utf8'), 'User-agent: *\nAllow: /\n', 'exemple : robots.txt intact');
-assert.match(fs.readFileSync(path.join(tmp, 'revue/index.html'), 'utf8'), /href="\.\.\/2026-11-17-matin\/"/);
+assert.match(fs.readFileSync(path.join(tmp, 'revue/index.html'), 'utf8'), /href="\.\/2026-11-17-matin\/"/);
 writeOutputs(tmp, { model: m, index, reviews: {}, publish: true, now: tM, cfg: on });
 assert.match(fs.readFileSync(path.join(tmp, 'robots.txt'), 'utf8'), /Sitemap: https:\/\/le-radar\.ca\/sitemap-news\.xml/);
 assert.equal(JSON.parse(fs.readFileSync(path.join(tmp, 'data/revue/index.json'), 'utf8')).length, 1, 'idempotent : une entrée par revue');
@@ -408,7 +415,7 @@ assert.ok(groups.site.includes('revue.yml'));
 assert.match(fs.readFileSync('.github/workflows/pages-deploy.yml', 'utf8'), /- Revue — matin et soir/);
 const pv = fs.readFileSync('.github/workflows/revue-preview.yml', 'utf8');
 assert.match(pv, /contents: read/); assert.doesNotMatch(pv, /git push|bot-push/);
-assert.equal(loadConfig().publish, false);
+assert.equal(loadConfig().publish, true);
 console.log('revue : OK');
 
 // Régates (voile, classement par place, #441) : une seule équipe, sans pointage ; texte et clé stables.

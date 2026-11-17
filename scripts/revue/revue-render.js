@@ -497,7 +497,7 @@ function renderIndexPage(index = []) {
   for (const r of index) { if (!byDay.has(r.day)) byDay.set(r.day, []); byDay.get(r.day).push(r); }
   const rows = [...byDay.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([day, list]) => [
     `        <li class="revue-archive__day"><h3>${esc(cap(frDayYear(day)))}</h3><ul>`,
-    ...list.sort((a, b) => (a.edition === 'matin' ? 0 : 1) - (b.edition === 'matin' ? 0 : 1)).map((r) => `          <li><a href="../${esc(r.path.replace(/^revue\//, ''))}">${r.edition === 'soir' ? '🌙' : '☀️'} ${esc(r.edition === 'soir' ? 'La revue du soir' : 'La revue du matin')}</a> ${r.lead ? `<span class="revue-archive__meta">En tête : « ${esc(String(r.lead).replace(/[.]+$/, ''))} »</span>` : ''}</li>`),
+    ...list.sort((a, b) => (a.edition === 'matin' ? 0 : 1) - (b.edition === 'matin' ? 0 : 1)).map((r) => `          <li><a href="./${esc(r.path.replace(/^revue\//, ''))}">${r.edition === 'soir' ? '🌙' : '☀️'} ${esc(r.edition === 'soir' ? 'La revue du soir' : 'La revue du matin')}</a> ${r.lead ? `<span class="revue-archive__meta">En tête : « ${esc(String(r.lead).replace(/[.]+$/, ''))} »</span>` : ''}</li>`),
     '        </ul></li>',
   ].join('\n'));
   const path_ = 'revue/';

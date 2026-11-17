@@ -413,6 +413,7 @@ const T = {
     footerNav: 'Liens de pied de page',
     footerDetails: 'À propos de LE-RADAR.ca',
     footerDirectory: 'Médias',
+    footerRevue: 'Revue',
     footerNewspapers: 'Journaux',
     footerSchedules: 'Radios',
     archives: 'Archives',
@@ -594,6 +595,7 @@ const T = {
     footerNav: 'Footer links',
     footerDetails: 'About LE-RADAR.ca',
     footerDirectory: 'Media',
+    footerRevue: 'Review',
     footerNewspapers: 'Newspapers',
     footerSchedules: 'Radio',
     archives: 'Archives',
@@ -813,6 +815,7 @@ const SECTIONS = [
   // Accueil en tête : data-home-nav → app.js scroll + refresh soft du fil
   // sans recharger la page (la radio continue si elle joue).
   { id: 'home', key: 'home', path: { fr: '', en: 'en/' }, attrs: ' data-home-nav' },
+  { id: 'revue', key: 'footerRevue', path: { fr: 'revue/', en: 'revue/' } },
   { id: 'medias', key: 'footerDirectory', path: { fr: 'medias/', en: 'en/media/' } },
   // L'annuaire n'a pas de hub « journaux » dédié, mais il porte déjà l'ancre.
   { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },
