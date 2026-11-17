@@ -1,30 +1,23 @@
 {
-  "updated": "2026-11-17T10:29:19.688Z",
+  "updated": "2026-11-17T11:42:42.230Z",
   "total": 1023,
-  "withImage": 877,
-  "withCredit": 280,
-  "cited": 175,
-  "pending": 652,
+  "withImage": 881,
+  "withCredit": 337,
+  "cited": 213,
+  "pending": 616,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 60,
-  "citedNew": 34,
-  "fallbackNew": 26,
+  "citedNew": 41,
+  "fallbackNew": 19,
   "samples": [
     {
-      "title": "Souriez, vous êtes filmés !",
+      "title": "Francisée, mais pas la bienvenue ?",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -34,67 +27,74 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Marquer contre la fibrose kystique : un succès qui se poursuit",
-      "source": "La Pige",
-      "credit": "Photo : Alexis Auclair",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "La série de victoires des Sags s’arrête à trois",
-      "source": "La Pige",
-      "credit": "Photo : Arthur Bakahche",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "FASA opens anti-austerity week with town hall and general assembly",
-      "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "70 years of ‘Giovanni’s Room’",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "What the Cornell case taught me",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Revue de concert : Aya Nakamura",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Vote YES for The Concordian’s fee levy increase",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Étudiant·e·s en cinéma, entre inquiétudes et ambitions",
-      "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Au-delà de la vitesse: Villeneuve immortalisé",
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
       "source": "La Pige",
       "credit": "Photo : Lia Chayer",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Entretien avec le rappeur et historien Webster",
+      "source": "Quartier Libre",
+      "credit": "Photo : Geneviève Robitaille",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Should Quebec pass on first-past-the-post?",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Why is it important to vote?",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Streaming service Fatigue & the Resurrection of Physical Media",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "STM Turns 60: How’s the Service Treating You?",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The Prevalence of AI Content on Social Media",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le réseau à Vélo en roue libre auprès de la population",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Quand notre quotidien change de couleur",
+      "source": "La Pige",
+      "credit": "Photo : Diego Pinto de Queiros",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Luc Boivin fait l’unanimité chez les organismes, pour l’instant.",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     }
   ]
 }

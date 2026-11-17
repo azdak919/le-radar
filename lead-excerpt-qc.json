@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-17T10:26:32.787Z",
+  "updated": "2026-11-17T11:39:27.073Z",
   "total": 1023,
-  "pool": 59,
-  "incomplete": 25,
-  "withLeadExcerpt": 158,
-  "candidates": 25,
+  "pool": 60,
+  "incomplete": 26,
+  "withLeadExcerpt": 159,
+  "candidates": 26,
   "enriched": 1,
   "failed": 4,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -28,13 +19,31 @@
       "changed": false
     },
     {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": true
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
       "score": 96,
       "chars": 439,
       "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 171,
       "sample": "On his 6th studio album Dream Fatigue, Rex Orange County explores unrequited love and insecurity. Th",
-      "changed": false
-    },
-    {
-      "title": "Can Ganesha Help You Pass Your Midterms?",
-      "link": "https://thebucampus.ca/2026/11/16/can-ganesha-help-you-pass-your-midterms/",
-      "ok": true,
-      "score": 100,
-      "chars": 471,
-      "sample": "The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon oran",
       "changed": false
     }
   ]
