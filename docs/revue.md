@@ -72,5 +72,5 @@ Désactiver : repasser `"publish": false`. Les pages déjà publiées restent ; 
 node scripts/revue/revue-run.mjs --gate --now 2026-11-17T07:31:00-05:00   # édition due ? (« désactivée » tant que publish = false)
 bash scripts/revue/revue-sample.sh /tmp/exemple-revue                       # exemples + captures (sans IA en local)
 node scripts/revue/revue-run.mjs --sample --edition soir --day 2026-11-16 --at 19:15 --out /tmp/x
-node tests/revue.mjs && npx playwright test tests/revue-render.spec.mjs
+npm run test:revue && npx playwright test tests/revue-render.spec.mjs   # CI : étape dédiée de verification.yml
 ```

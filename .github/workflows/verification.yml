@@ -69,6 +69,8 @@ jobs:
         run: node scripts/generate-seo.js --update --sports-only
       - name: Static and data checks
         run: npm run check
+      - name: Revue du matin et du soir (unitaires)
+        run: npm run test:revue
 
   critical:
     if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (github.event_name != 'workflow_dispatch' || !inputs.full) }}
