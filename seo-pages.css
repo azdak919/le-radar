@@ -1844,6 +1844,26 @@
 .seo-article__back a { color: var(--accent); text-decoration: none; }
 @media (hover: hover) and (pointer: fine) { .seo-article__back a:hover { text-decoration: underline; } }
 
+/* Impression : la fiche tient sur une feuille (Letter, Legal, A4, Tabloid, A3).
+   Photo bornée en hauteur et jamais rognée (contain), légende collée à la photo. */
+@media print {
+  .seo-article__figure { margin: 0 0 8pt !important; break-inside: avoid; page-break-inside: avoid; }
+  .seo-article__figure img {
+    width: auto !important; max-width: 100% !important; max-height: min(8.5cm, 30vh) !important;
+    aspect-ratio: auto !important; object-fit: contain !important; border-radius: 0 !important;
+    margin: 0 auto; background: none !important;
+  }
+  .seo-wire .seo-article__credit { font-size: 7.5pt !important; margin-top: 3pt !important; }
+  .seo-article .seo-title { font-size: 20pt !important; line-height: 1.15 !important; margin-bottom: 6pt !important; }
+  .seo-article__meta { font-size: 8.5pt !important; margin-bottom: 8pt !important; }
+  .seo-article__excerpt { font-size: 10.5pt !important; line-height: 1.45 !important; max-width: none !important; }
+  .seo-article__back { display: none !important; }
+  .seo-wire.seo-article { padding-top: 0 !important; }
+  .seo-article .seo-crumbs { margin-bottom: 4pt !important; }
+  .seo-article .seo-eyebrow { margin-bottom: 4pt !important; }
+  .seo-article .seo-note { margin-top: 6pt !important; font-size: 8.5pt !important; }
+}
+
 /* Fiche d'article — grands écrans : colonne de lecture centrée (tablette) puis
    photo + texte en deux colonnes (≥ 1024 px). Lignes ~65–70ch, photo bornée. */
 @media (min-width: 700px) and (max-width: 1023.98px) {

@@ -29,6 +29,7 @@ on:
       - Detect Radio Schedule Drift
       - Probe Indigenous MT engines
       - Update kit-media examples
+      - Revue — matin et soir
     types: [completed]
   schedule:
     - cron: '7,37 * * * *'

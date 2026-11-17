@@ -1079,8 +1079,13 @@ function renderPage({
    * ne pourrait jamais déclencher l'invite native et mentirait à la personne.
    */
   standaloneApp = false,
+  /** Type Open Graph (`article` pour la revue de presse) ; défaut inchangé. */
+  ogType = 'website',
+  /** Image Open Graph / Twitter absolue ; défaut : la couverture du site. */
+  ogImage = null,
 }) {
   const t = T[lang];
+  const ogImageUrl = ogImage || `${siteBase}/assets/og-cover.png?v=3`;
   const depth = path.split('/').filter(Boolean).length;
   const up = depth === 0 ? './' : '../'.repeat(depth);
   const canonical = `${siteBase}/${path}`;
@@ -1129,15 +1134,15 @@ ${alternate ? `    <link rel="alternate" hreflang="fr-CA" href="${escapeHtml(lan
     <!-- x-default → français : c'est la langue principale du projet. -->
     <link rel="alternate" hreflang="x-default" href="${escapeHtml(frUrl)}" />` : ''}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="${escapeHtml(ogType)}" />
     <meta property="og:site_name" content="${SITE_NAME}" />
     <meta property="og:locale" content="${lang === 'fr' ? 'fr_CA' : 'en_CA'}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(description)}" />
-    <meta property="og:image" content="${siteBase}/assets/og-cover.png?v=3" />
+    <meta property="og:image" content="${escapeHtml(ogImageUrl)}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="${siteBase}/assets/og-cover.png?v=3" />
+    <meta name="twitter:image" content="${escapeHtml(ogImageUrl)}" />
 
     <link rel="icon" href="${up}assets/icon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="${up}assets/icon.svg" type="image/svg+xml" />
@@ -1561,6 +1566,9 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
 
 module.exports = {
   SITE_NAME,
+  BRAND_NAME,
+  BRAND_SIGNATURE,
+  CONTACT_MAIL,
   T,
   escapeHtml,
   slugify,

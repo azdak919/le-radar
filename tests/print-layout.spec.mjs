@@ -156,7 +156,7 @@ test('impression accueil : typo, pastille, QR, sans URL utm @ci-critical', async
   expect(styles.markText, 'mot-symbole officiel').toMatch(/LE.RADAR\.ca/);
   expect(styles.articleAfter.content, 'pas d’URL d’article en ::after').toMatch(/^(none|"")$/);
   expect(styles.authorAfter.content, 'pas d’URL buymeacoffee').toMatch(/^(none|"")$/);
-  expect(styles.instShortHidden, 'acronyme institution masqué (nom complet seulement)').toBe(true);
+  expect(styles.instShortHidden, 'une seule forme d’établissement (courte) sur la carte').toBe(true);
   expect(styles.heroDisplay, 'bloc une en grille, pas en colonnes orphelines').toBe('grid');
 
   const pdf = await page.pdf({ format: 'Letter', printBackground: true, displayHeaderFooter: false });

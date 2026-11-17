@@ -69,6 +69,8 @@ jobs:
         run: node scripts/generate-seo.js --update --sports-only
       - name: Static and data checks
         run: npm run check
+      - name: Revue du matin et du soir (unitaires)
+        run: npm run test:revue
 
   critical:
     if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (github.event_name != 'workflow_dispatch' || !inputs.full) }}
@@ -98,6 +100,9 @@ jobs:
       - name: Install Chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
+      - name: Install pdftotext (print checks, tests/print-formats.spec.mjs)
+        if: matrix.project == 'main'
+        run: command -v pdftotext || (sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils)
       - name: Browser checks (critical)
         timeout-minutes: 30
         run: npm run test:browser:ci -- --project=${{ matrix.project }} --workers=1

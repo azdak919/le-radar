@@ -1,0 +1,432 @@
+/* LE-RADAR.ca — « La revue du matin » et « La revue du soir » (/revue/…), pages générées par scripts/revue/revue-render.js.
+ * S'appuie sur seo-pages.css (gabarit des pages générées) et sur les variables du site : modes clair et sombre automatiques. */
+
+.revue-wire .revue { display: block; }
+.revue-meta {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: -8px 0 14px;
+}
+.revue-meta strong { color: var(--ink); font-weight: 600; }
+.revue-cover { margin: 0 0 22px; }
+.revue-cover img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--bg-soft);
+}
+.revue-cover figcaption {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+  margin-top: 6px;
+}
+/* Amorce : deux ou trois phrases de rédaction, sans décompte. */
+.revue-wire p.revue-lede {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 0 18px;
+}
+.revue-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+.revue-toc a {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--bg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .revue-toc a:hover { border-color: var(--accent); color: var(--accent); }
+}
+.revue-toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.revue-section { scroll-margin-top: 16px; }
+.revue-section > h3.revue-theme,
+.revue-section > h3.revue-sub,
+.revue-section > h3.revue-station { margin-top: 26px; }
+
+/* Articles */
+.revue-items { list-style: none; margin: 0; padding: 0; }
+.revue-item {
+  padding: 14px 0 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.revue-item:last-child { border-bottom: 0; }
+.revue-wire .revue-item p { margin: 0; }
+.revue-item__media {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.revue-item__title {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 4px 0 4px;
+}
+.revue-item__title a { color: var(--ink); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .revue-item__title a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+}
+.revue-wire .revue-item__byline {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.revue-wire .revue-item__resume {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 6px 0 6px;
+}
+.revue-item__excerpt {
+  margin: 6px 0 6px;
+  padding: 0 0 0 12px;
+  border-left: 2px solid var(--rule);
+}
+.revue-wire .revue-item__excerpt p {
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.revue-wire .revue-item__more { font-family: var(--sans); font-size: 13px; margin-top: 6px; }
+.revue-item__more a { color: var(--accent); font-weight: 600; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .revue-item__more a:hover { text-decoration: underline; }
+}
+
+/* Radio et sport */
+.revue-station a { color: var(--radio); text-decoration: none; }
+:root[data-theme="dark"] .revue-station a { color: var(--radio-bright); }
+/* Nom du média ou de la station en couleur d'établissement (foncée pour 4,6:1 sur blanc ; éclaircie en thème sombre). */
+.revue-wx--flag { display: none; }
+.revue-station__city { font-size: .8em; font-weight: 400; color: var(--muted); letter-spacing: 0; text-transform: none; }
+.revue-wx--meta { white-space: nowrap; }
+.revue-wx__src { color: var(--muted); font-size: .9em; }
+.revue .revue-inst-c, .revue-station a.revue-inst-c { color: var(--inst) !important; }
+:root[data-theme="dark"] .revue .revue-inst-c { color: color-mix(in srgb, var(--inst) 45%, #fff) !important; }
+.revue-shows, .revue-results, .revue-next {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.revue-shows li, .revue-results li, .revue-next li {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--rule);
+}
+.revue-shows li:last-child, .revue-results li:last-child, .revue-next li:last-child { border-bottom: 0; }
+.revue-shows time, .revue-next time {
+  display: inline-block;
+  min-width: 4.6em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.revue-show a { color: var(--ink); }
+.revue-sport, .revue-day {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 18px 0 4px;
+}
+.revue-level {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-left: 4px;
+}
+.revue-score { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.revue-league { display: block; font-size: 12.5px; color: var(--muted); }
+.revue-sportname { color: var(--ink-soft); }
+.revue-wire .revue-empty { font-family: var(--sans); font-size: 14px; color: var(--muted); }
+.revue-wire .revue-more { font-family: var(--sans); font-size: 14px; margin-top: 14px; }
+.revue-more a, .revue-nav a { color: var(--accent); font-weight: 600; }
+.revue-wire .revue-sources p { font-family: var(--sans); font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); }
+
+/* Index des archives */
+.revue-archive { list-style: none; margin: 0; padding: 0; }
+.revue-archive__day { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.revue-archive__day h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 6px; color: var(--ink); }
+.revue-archive__day ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--sans); font-size: 14.5px; }
+.revue-archive__day a { color: var(--ink); font-weight: 600; }
+.revue-archive__meta { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 520px) {
+  .revue-item__title { font-size: 1.05rem; }
+  .revue-shows, .revue-results, .revue-next { font-size: 14px; }
+}
+/* Mention de transparence : une phrase discrète en pied d'article. */
+.revue-wire .revue-disclosure {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 22px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+
+/* Émojis (rubriques, sports, radio) : sous-ensemble de Noto Color Emoji (OFL) servi par le site, pour qu'ils
+ * s'affichent et s'impriment pareil partout (scripts/revue/subset-revue-emoji-font.py). */
+@font-face { font-family: "Radar Emoji"; src: url("assets/revue/noto-color-emoji-revue.woff2") format("woff2"); font-display: swap; }
+.revue-emoji { font-family: "Radar Emoji", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; }
+/* Vignettes des articles (comme sur l'accueil) : photo entière, jamais rognée, crédit discret. */
+.revue-item__fig { float: right; width: 116px; margin: 3px 0 8px 14px; }
+.revue-item__fig img { display: block; width: 100%; height: auto; max-height: 150px; object-fit: contain; object-position: center top; border-radius: 6px; }
+.revue-wire .revue-item__fig figcaption { font-family: var(--sans); font-size: 10.5px; line-height: 1.3; color: var(--muted); margin-top: 3px; overflow-wrap: anywhere; }
+.revue-item--photo::after { content: ""; display: block; clear: both; }
+@media (max-width: 520px) { .revue-item__fig { width: 92px; margin-left: 10px; } }
+
+/* Éléments du journal imprimé : absents à l'écran (le mât du site, le titre h1 et .revue-meta font ce travail) ;
+ * les enveloppes de mise en page sont transparentes à l'écran. */
+.revue-flag, .revue-une, .revue-une__text, .revue-encadre, .revue-colophon { display: none; }
+.revue-top, .revue-top__main, .revue-top__side, .revue-cols { display: contents; }
+
+/* ══════════ IMPRESSION : un vrai journal (Letter, Legal, Tabloïd, A4, A3 en portrait) ══════════
+ * Manchette (logo à gauche de LE-RADAR.ca, édition, date), article à la une, puis colonnes séparées par des filets :
+ * 2 colonnes en Lettre et A4, 3 en Légal, 4 en Tabloïd et A3, où la une gagne un encadré (sport, voile, radio).
+ * Texte à empattements justifié avec césure française, aucun intertitre seul en bas de colonne ou de page, aucun
+ * élément d'interface. La feuille commune (style-chrome.css) fixe le pied de page (logo, LE-RADAR.ca, page x / y).
+ * Vérifié par tests/print-formats.spec.mjs. */
+@page revue { margin: 11mm 12mm 14mm; }
+@media print {
+  body:has(.revue-wire .revue) { page: revue; }
+  /* Rien de l'interface du site : mât, fil d'Ariane, titre h1 (remplacé par la manchette), sommaire, liens « Lire… », pied. */
+  body:has(.revue-wire .revue) .masthead,
+  body:has(.revue-wire .revue) .site-foot,
+  body:has(.revue-wire .revue) .site-sections,
+  .revue-wire:has(.revue) > :not(.revue),
+  .revue-meta, .revue-toc, .revue-item__more, .revue-more, .revue-nav,
+  .revue-item[data-une], .revue-theme[data-une], .revue-theme[data-une] + .revue-items { display: none !important; }
+  .revue-wire:has(.revue) { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+  .revue-wire .revue { display: block !important; color: #000; font-family: var(--serif); }
+  .revue-wire .revue :is(p, li, blockquote, figcaption, h2, h3, h4) { orphans: 2; widows: 2; }
+  .revue-wire .revue :is(.revue-item__resume, .revue-item__excerpt p, .revue-une__text, .revue-lede, .seo-section__lead, .revue-sources p) {
+    hyphens: auto !important; -webkit-hyphens: auto !important; text-align: justify; text-justify: inter-word;
+  }
+  .revue-wire .revue :is(.revue-item__title, .revue-une__title) { hyphens: manual !important; text-wrap: balance; }
+
+  /* ── Manchette ── */
+  .revue-wire .revue-flag { display: block !important; margin: 0 0 9pt; break-inside: avoid; break-after: avoid; }
+  /* Code QR de l'édition dans le vide à gauche du mât (hors flux : logo et LE-RADAR.ca restent centrés). */
+  .revue-wire .revue .revue-flag { position: relative !important; }
+  .revue-wire .revue .revue-flag__qr { position: absolute !important; left: 0; top: 10pt; width: 18mm; display: block; color: #333 !important; text-decoration: none !important; text-align: center; }
+  .revue-wire .revue-flag__qrcode { display: block; width: 18mm; height: 18mm; }
+  .revue-wire .revue-flag__qr span { display: block; font: 600 5pt/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; margin-top: .5pt; }
+  .revue-wire .revue-flag__qr::after { content: none !important; }
+  .revue-wire .revue .revue-flag:has(.revue-flag__qr) .revue-flag__devise { padding-bottom: 7pt !important; }
+  .revue-wire .revue-flag p { margin: 0; border: 0 !important; padding: 0; background: none !important; }
+  .revue-wire .revue-flag__ears { display: flex !important; justify-content: space-between; font: 600 6.5pt/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #333; }
+  .revue-wire .revue-flag__brand { display: flex !important; align-items: center; justify-content: center; gap: 9pt; margin: 3pt 0 1pt !important; }
+  .revue-wire .revue-flag__logo { display: block; width: 34pt !important; height: 34pt !important; max-height: none !important; }
+  .revue-wire .revue-flag__name { font: 700 40pt/1 var(--serif); letter-spacing: -.012em; color: #000; }
+  .revue-wire .revue-flag__devise { text-align: center; font: 400 8.5pt/1.3 var(--serif); letter-spacing: .04em; color: #222; margin-bottom: 5pt !important; }
+  .revue-wire .revue-flag__folio {
+    /* 3 colonnes 1fr auto 1fr : la date reste centrée sur l'axe du logo, quelle que soit la largeur des côtés. */
+    display: grid !important; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: 12pt;
+    border-top: 3pt double #000; border-bottom: .75pt solid #000; padding: 3pt 0 2.5pt;
+    font: 600 7.5pt/1.2 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: #000;
+  }
+  .revue-wire .revue-flag__ed { font: 700 9pt/1.2 var(--serif); letter-spacing: .02em; text-transform: none; }
+  .revue-wire .revue-flag__ed { justify-self: start; }
+  .revue-wire .revue-flag__date { text-align: center; justify-self: center; }
+  .revue-wire .revue-flag__time { font-weight: 400; text-transform: none; letter-spacing: 0; justify-self: end; text-align: right; }
+  .revue-wire .revue-wx--flag { display: block; margin-top: 1.5pt; font-weight: 600; white-space: nowrap; }
+
+  /* ── La une : article vedette, photo, amorce ── */
+  .revue-wire .revue-top { display: block !important; margin: 0 0 8pt; padding-bottom: 7pt; border-bottom: 1.5pt solid #000; }
+  .revue-wire .revue-top__main, .revue-wire .revue-top__side { display: block !important; }
+  /* Lettre et A4 : titre sur toute la largeur, photo à gauche, texte et amorce à droite. */
+  .revue-wire .revue-top:has(.revue-cover) { display: grid !important; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; grid-template-areas: "une une" "fig txt" "fig side"; column-gap: 6.5mm; }
+  .revue-wire .revue-top:has(.revue-cover) .revue-top__main { display: contents !important; }
+  .revue-wire .revue-top .revue-une { grid-area: une; }
+  .revue-wire .revue-top .revue-cover { grid-area: fig; margin: 0 !important; }
+  .revue-wire .revue-top .revue-une__text { grid-area: txt; }
+  .revue-wire .revue-top .revue-top__side { grid-area: side; }
+  .revue-wire .revue-top:has(.revue-cover) :is(.revue-une__text, .revue-top__side) { border-left: .5pt solid #8a8a8a; padding-left: 3.25mm; margin-left: -3.25mm; }
+  .revue-wire .revue-top:has(.revue-cover) .revue-une__text { margin: 0 0 0 -3.25mm !important; padding-bottom: 5pt; }
+  .revue-wire .revue-une { display: block !important; break-inside: avoid; break-after: avoid; }
+  .revue-wire .revue-une p { margin: 0; }
+  .revue-wire .revue-une__kicker { font: 700 7pt/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .revue-wire .revue-une__title { font: 700 25pt/1.06 var(--serif); letter-spacing: -.012em; color: #000; margin: 3pt 0 4pt !important; }
+  .revue-wire .revue-une__byline { font: 400 7.5pt/1.3 var(--sans); color: #333; margin-bottom: 6pt !important; }
+  .revue-wire .revue-cover { margin: 0 0 6pt !important; break-inside: avoid; }
+  .revue-wire .revue-cover img { display: block; width: 100% !important; height: auto !important; max-width: 100% !important; max-height: 7.8cm !important; object-fit: contain !important; object-position: center top; border-radius: 0 !important; margin: 0 auto; }
+  .revue-wire .revue-cover figcaption { font: 400 6.5pt/1.3 var(--sans) !important; color: #444 !important; text-align: right; margin-top: 2pt !important; padding-bottom: 2pt; border-bottom: .4pt solid #999; }
+  .revue-wire .revue-une__text { display: block !important; font: 400 11pt/1.4 var(--serif); color: #000; margin: 0 0 6pt; }
+  .revue-wire .revue p.revue-une__text { text-align: left !important; text-justify: none; max-width: 60ch; hyphens: manual !important; }
+  .revue-wire .revue p.revue-lede { font: 400 10pt/1.42 var(--serif) !important; color: #111 !important; margin: 0 !important; padding-top: 5pt; border-top: .5pt solid #999; }
+  .revue-wire .revue p.revue-lede::before { content: "Dans cette édition — "; font: 700 7pt/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #000; }
+
+  /* Encadré (grands formats seulement) */
+  .revue-wire .revue-encadre { break-inside: avoid; border: 1pt solid #000; padding: 5pt 7pt 6pt; margin-top: 8pt; font-family: var(--sans); }
+  .revue-wire .revue-encadre p, .revue-wire .revue-encadre ul { margin: 0; padding: 0; list-style: none; }
+  .revue-wire .revue-encadre__head { font: 700 9pt/1.1 var(--serif) !important; border-bottom: 1.5pt solid #000; padding-bottom: 2pt; margin-bottom: 3pt !important; }
+  .revue-wire .revue-encadre__sub { font: 700 6.5pt/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 5pt 0 1pt !important; }
+  .revue-wire .revue-encadre li { font: 400 7.5pt/1.3 var(--sans); padding: 2pt 0; border-bottom: .4pt dotted #888; break-inside: avoid; }
+  .revue-wire .revue-encadre li:last-child { border-bottom: 0; }
+  .revue-wire .revue-encadre b { font-weight: 700; }
+  .revue-wire .revue-encadre__more { font: 400 6.5pt/1.3 var(--sans); color: #444; border-top: .4pt solid #000; padding-top: 2pt; margin-top: 3pt !important; }
+
+  /* ── Colonnes ── */
+  .revue-wire .revue-cols { display: block !important; columns: 2; column-gap: 6.5mm; column-rule: .5pt solid #8a8a8a; column-fill: balance; }
+  .revue-wire .revue-cols > .revue-section { margin: 0 !important; padding: 0 !important; border: 0 !important; display: block !important; }
+  .revue-wire .revue-cols > .revue-section + .revue-section { margin-top: 10pt !important; }
+  /* Étiquettes de rubrique : filet épais, petites capitales ; « Revue de presse » coiffe toutes les colonnes. */
+  .revue-wire .revue-section > h2 {
+    font: 700 8.5pt/1.2 var(--sans) !important; letter-spacing: .16em !important; text-transform: uppercase; color: #000 !important;
+    border-top: 2.25pt solid #000 !important; border-bottom: .5pt solid #000 !important; padding: 2.5pt 0 2pt !important; margin: 0 0 4pt !important;
+    break-after: avoid; break-inside: avoid;
+  }
+  .revue-wire #presse > h2 { column-span: all; margin-bottom: 6pt !important; }
+  .revue-wire .revue-section > h3.revue-theme, .revue-wire .revue-section > h3.revue-sub, .revue-wire .revue-section > h3.revue-station {
+    font: 700 7pt/1.2 var(--sans) !important; letter-spacing: .14em; text-transform: uppercase; color: var(--accent) !important;
+    border-top: .75pt solid #000; padding-top: 2pt !important; margin: 8pt 0 0 !important; break-after: avoid; break-inside: avoid;
+  }
+  .revue-wire .revue-section > h2 + h3.revue-theme, .revue-wire .revue-section > h2 + h3.revue-sub,
+  .revue-wire .revue-section > h2 + .seo-section__lead + h3.revue-station, .revue-wire .revue-section > h2 + h3.revue-station { border-top: 0; margin-top: 0 !important; padding-top: 0 !important; }
+  .revue-wire .revue-station a, .revue-wire .revue-show a { color: inherit !important; text-decoration: none !important; }
+  .revue-wire .revue .revue-inst-c { color: var(--inst) !important; }
+  .revue-wire .revue .revue-station__city { font-size: 6pt; font-weight: 400; letter-spacing: .04em; text-transform: none; color: #555 !important; }
+  .revue-wire .revue .seo-section__lead { font: 400 7.5pt/1.35 var(--serif) !important; color: #333 !important; margin: 0 0 3pt !important; }
+
+  /* Articles */
+  .revue-wire .revue-items { margin: 0; padding: 0; }
+  .revue-wire .revue-item { padding: 2.5pt 0 4pt !important; border-bottom: .4pt solid #b5b5b5 !important; break-inside: avoid; }
+  .revue-wire .revue-item:last-child { border-bottom: 0 !important; }
+  .revue-wire .revue-item p { margin: 0; }
+  .revue-wire .revue-item__media { font: 700 6.5pt/1.25 var(--sans) !important; letter-spacing: .1em !important; text-transform: uppercase; color: #000 !important; }
+  .revue-wire .revue-item__inst { font-weight: 400; color: #444; }
+  .revue-wire .revue-item__title { font: 700 11pt/1.14 var(--serif) !important; margin: 1.5pt 0 1.5pt !important; letter-spacing: -.004em; }
+  .revue-wire .revue-item__title a { color: #000 !important; text-decoration: none !important; }
+  .revue-wire .revue .revue-item__byline { font: 400 6.8pt/1.3 var(--sans) !important; color: #444 !important; margin: 0 0 2pt !important; }
+  .revue-wire .revue .revue-item__resume, .revue-wire .revue .revue-item__excerpt p { font: 400 9pt/1.34 var(--serif) !important; color: #111 !important; font-style: normal !important; margin: 0 !important; }
+  .revue-wire .revue-item__excerpt { border: 0 !important; padding: 0 !important; margin: 0 !important; }
+
+  /* Vignettes : à droite du texte en Lettre et A4 (petites), au-dessus de l'article sur les grands formats. */
+  /* Vignettes : largeur ajustée à la photo (min-content), hauteur et largeur plafonnées, jamais rognées : une photo
+   * verticale devient étroite et ne laisse pas de vide à côté d'un résumé court. */
+  .revue-wire .revue .revue-item__fig { float: right; width: min-content; max-width: 40%; margin: 1.5pt 0 2pt 5pt !important; break-inside: avoid; }
+  .revue-wire .revue .revue-item__fig img { width: auto !important; height: auto !important; max-width: 3.3cm !important; max-height: 2.4cm !important; object-fit: contain !important; object-position: center top; border-radius: 0 !important; }
+  .revue-wire .revue .revue-item__fig figcaption { font: 400 5.6pt/1.25 var(--sans) !important; color: #555 !important; margin-top: 1pt !important; text-align: left; }
+  .revue-wire .revue .revue-emoji { font-size: 1.05em; margin-right: .1em; }
+  .revue-wire .revue-section > h2 .revue-emoji, .revue-wire .revue-section > h3 .revue-emoji { font-size: 1.15em; letter-spacing: 0; }
+  /* Radio et sport */
+  .revue-wire .revue :is(.revue-shows, .revue-results, .revue-next) { font: 400 7.6pt/1.3 var(--sans) !important; margin: 0 0 2pt !important; columns: auto !important; }
+  .revue-wire .revue :is(.revue-shows, .revue-results, .revue-next) li { padding: 1.6pt 0 !important; border-bottom: .4pt dotted #999 !important; break-inside: avoid; }
+  .revue-wire .revue :is(.revue-shows, .revue-results, .revue-next) li:last-child { border-bottom: 0 !important; }
+  .revue-wire .revue .revue-next time { min-width: 3.6em; font-weight: 700; }
+  /* Grilles de radio en agate : les émissions d'une station se suivent sur une ligne, séparées par des points médians. */
+  .revue-wire .revue .revue-shows li { display: inline !important; padding: 0 !important; border: 0 !important; }
+  .revue-wire .revue .revue-shows li + li::before { content: " · "; color: #777; font-weight: 700; }
+  .revue-wire .revue .revue-shows time { display: inline !important; min-width: 0 !important; font-weight: 700; }
+  .revue-wire .revue :is(.revue-results, .revue-next) .revue-league { display: inline !important; margin-left: 2pt; }
+  .revue-wire .revue :is(.revue-sport, .revue-day) { font: 700 7.6pt/1.25 var(--serif) !important; margin: 5pt 0 0 !important; break-after: avoid; break-inside: avoid; }
+  .revue-wire .revue-level, .revue-wire .revue-league { font-size: 6.5pt !important; color: #444 !important; }
+  .revue-wire .revue-score { font-weight: 600; }
+  .revue-wire .revue .revue-empty { font: 400 7.5pt/1.35 var(--serif) !important; color: #333 !important; margin: 2pt 0 !important; }
+
+  /* Sources et mention de transparence (une phrase discrète, en pied) */
+  .revue-wire .revue-sources > h2 { font-size: 7pt !important; border-top-width: 1pt !important; }
+  .revue-wire .revue .revue-sources p { font: 400 6.8pt/1.35 var(--sans) !important; color: #333 !important; margin: 0 0 3pt !important; text-align: left; }
+  /* La phrase sur l'IA vit dans le colophon à l'impression. */
+  .revue-wire .revue .revue-disclosure { display: none !important; }
+
+  /* Colophon : fin de l'édition seulement, dans la dernière colonne (il comble la fin de page), jamais coupé. */
+  .revue-wire .revue .revue-colophon { display: block !important; break-inside: avoid; margin: 10pt 0 0; padding: 6pt 0 0; border-top: 2.25pt solid #000; font: 400 6.8pt/1.38 var(--sans) !important; color: #222 !important; text-align: center; }
+  .revue-wire .revue .revue-colophon > * { break-inside: avoid; }
+  .revue-wire .revue .revue-colophon__brand, .revue-wire .revue .revue-colophon__devise { break-after: avoid; }
+  .revue-wire .revue .revue-colophon p { margin: 0 0 3pt; text-align: center; hyphens: manual; font: 400 6.8pt/1.38 var(--sans) !important; color: #222 !important; }
+  .revue-wire .revue p.revue-colophon__brand { display: flex !important; align-items: center; justify-content: center; gap: 4pt; font: 700 13pt/1 var(--serif) !important; color: #000 !important; margin-bottom: 2pt !important; }
+  .revue-wire .revue .revue-colophon__logo { width: 15pt !important; height: 15pt !important; max-height: none !important; }
+  .revue-wire .revue p.revue-colophon__devise { font: 400 7.2pt/1.3 var(--serif) !important; color: #000 !important; padding-bottom: 4pt; border-bottom: .5pt solid #999; margin-bottom: 4pt !important; }
+  .revue-wire .revue p.revue-colophon__text { color: #333 !important; }
+  .revue-wire .revue .revue-colophon b { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 6pt !important; margin-right: 3pt; color: #000 !important; }
+  .revue-wire .revue .revue-colophon__online { display: flex !important; align-items: center; justify-content: center; gap: 6pt; margin: 4pt 0; padding: 4pt 0; border-top: .4pt dotted #999; border-bottom: .4pt dotted #999; }
+  .revue-wire .revue .revue-colophon .revue-colophon__online p { text-align: center; margin: 0; }
+  .revue-wire .revue .revue-colophon__qr { display: block; width: 15mm !important; height: 15mm !important; max-width: none !important; flex: none; }
+  .revue-wire .revue p.revue-colophon__ia { color: #555 !important; font-size: 6.3pt !important; padding-top: 1pt; }
+  .revue-wire .revue p.revue-colophon__credit { font: 400 7pt/1.3 var(--serif) !important; color: #000 !important; margin: 0 !important; }
+
+  /* Index des archives (/revue/) */
+  .revue-wire .revue-archive__day { break-inside: avoid; }
+}
+
+/* Légal (même largeur que Lettre, plus haut) : 3 colonnes ; une avec encadré. */
+@media print and (min-height: 300mm) {
+  .revue-wire .revue-cols { columns: 3; column-gap: 5mm; }
+  .revue-wire .revue-top, .revue-wire .revue-top:has(.revue-cover) { display: grid !important; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; grid-template-areas: "une une" "fig side" "txt side"; column-gap: 5mm; }
+  .revue-wire .revue-top .revue-top__main { display: contents !important; }
+  .revue-wire .revue-top:has(.revue-cover) .revue-une__text { border-left: 0; padding: 5pt 0 0; margin: 0 !important; }
+  .revue-wire .revue-top .revue-top__side, .revue-wire .revue-top:has(.revue-cover) .revue-top__side { border-left: .5pt solid #8a8a8a; padding-left: 2.5mm; margin-left: -2.5mm; }
+  .revue-wire .revue p.revue-lede { border-top: 0; padding-top: 0; }
+  .revue-wire .revue-encadre { display: block !important; }
+  .revue-wire .revue-une__title { font-size: 27pt; }
+  /* Grands formats : première photo de chaque rubrique au-dessus de l'article, sur toute la colonne ; les autres à côté du
+   * texte, plus grandes qu'en Lettre (surtitre, titre et signature sur toute la colonne). */
+  .revue-wire .revue .revue-item__fig img { max-width: 2.7cm !important; max-height: 3.2cm !important; }
+  .revue-wire .revue .revue-item--photo:has(> .revue-item__fig--big) { display: block !important; }
+  .revue-wire .revue .revue-item--photo > .revue-item__fig--big { float: none; width: auto; max-width: none; margin: 1pt 0 3pt !important; }
+  .revue-wire .revue .revue-item__fig--big img { max-width: 100% !important; margin: 0 auto; }
+  .revue-wire .revue .revue-item__fig--big img { max-height: 4cm !important; }
+  /* Une : la photo occupe la hauteur laissée par l'amorce et l'encadré (entière, centrée, jamais rognée). */
+  .revue-wire .revue-top, .revue-wire .revue-top:has(.revue-cover) { grid-template-rows: auto 1fr auto; }
+  .revue-wire .revue-top .revue-cover { display: flex !important; flex-direction: column; justify-content: flex-start; }
+  .revue-wire .revue-cover img { max-height: 9.5cm !important; }
+}
+/* Tabloïd et A3 : 4 colonnes, manchette et une agrandies. */
+@media print and (min-width: 9in) {
+  .revue-wire .revue-cols { columns: 4; column-gap: 5.5mm; }
+  .revue-wire .revue-top, .revue-wire .revue-top:has(.revue-cover) { grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); column-gap: 5.5mm; }
+  .revue-wire .revue-top .revue-top__side, .revue-wire .revue-top:has(.revue-cover) .revue-top__side { padding-left: 2.75mm; margin-left: -2.75mm; }
+  .revue-wire .revue p.revue-lede { border-top: 0; padding-top: 0; font-size: 10.5pt !important; }
+  .revue-wire .revue-encadre { display: block !important; }
+  .revue-wire .revue-flag__logo { width: 50pt !important; height: 50pt !important; }
+  .revue-wire .revue-flag__name { font-size: 62pt; }
+  .revue-wire .revue .revue-flag__qr, .revue-wire .revue-flag__qrcode { width: 22mm; height: auto; }
+  .revue-wire .revue-flag__qrcode { height: 22mm; }
+  .revue-wire .revue-flag__devise { font-size: 10pt; }
+  .revue-wire .revue-flag__folio { font-size: 8.5pt; }
+  .revue-wire .revue-flag__ed { font-size: 11pt; }
+  .revue-wire .revue-une__title { font-size: 38pt; }
+  .revue-wire .revue-une__text { font-size: 13pt; line-height: 1.38; }
+  .revue-wire .revue-cover img { max-height: 13cm !important; object-position: center top; }
+  .revue-wire .revue-item__title { font-size: 11.5pt !important; }
+  .revue-wire .revue .revue-item__fig img { max-width: 2.8cm !important; max-height: 3.4cm !important; }
+  .revue-wire .revue .revue-item__fig--big img { max-width: 100% !important; max-height: 5.2cm !important; }
+}
+
+/* Liens cliquables du PDF (titre de la une, colophon) : texte normal, URL jamais affichée. */
+@media print {
+  .revue-wire .revue-une__title a, .revue-wire .revue-colophon a { color: inherit !important; text-decoration: none !important; }
+  .revue-wire .revue-une__title a::after, .revue-wire .revue-colophon a::after, .revue-wire .revue-item__title a::after { content: none !important; }
+}

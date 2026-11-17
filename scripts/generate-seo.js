@@ -34,6 +34,7 @@ const { decodeHtmlEntities } = require('./html-entities-lib');
 const { buildEntityPages } = require('./seo-pages');
 const { renderSiteFooter, renderMastheadActions, renderSectionNav } = require('./seo-pages-lib');
 const { buildHistoricalArchivePages } = require('./historical-seo-pages');
+const { loadPublished, sitemapEntries: revueSitemapEntries } = require('./revue/revue-render');
 
 const ROOT = path.join(__dirname, '..');
 /** Domaine canonique (Pages + custom domain). Surcharge : RADAR_SITE_URL. */
@@ -275,7 +276,7 @@ function loadRadios() {
 //  sitemap.xml
 // ═══════════════════════════════════════════════════════════════════════════
 
-function buildSitemap(newsUpdated, entityPages = []) {
+function buildSitemap(newsUpdated, entityPages = [], extraPages = []) {
   const generated = entityPages.map((p) => ({
     loc: `/${p.path}`,
     changefreq: p.changefreq,
@@ -287,7 +288,7 @@ function buildSitemap(newsUpdated, entityPages = []) {
     lastmod: p.lastmod || null,
   }));
 
-  const urls = [...PAGES, ...generated].map((page) => {
+  const urls = [...PAGES, ...generated, ...extraPages].map((page) => {
     // L'accueil bouge à chaque passe des bots : sa date vient de news.json.
     const lastmod = page.lastmod !== undefined
       ? page.lastmod
@@ -629,16 +630,20 @@ function main() {
   }
 
   // ── sitemap.xml ──
-  const sitemap = buildSitemap(newsUpdated, entityPages);
+  // « La revue du matin / du soir » : seulement si data/revue/config.json publish = true (sinon aucune URL /revue/).
+  const revue = loadPublished(ROOT);
+  const revuePages = revue.enabled ? revueSitemapEntries(revue.index) : [];
+  const sitemap = buildSitemap(newsUpdated, entityPages, revuePages);
   if (doUpdate) fs.writeFileSync(SITEMAP_PATH, sitemap, 'utf8');
-  written.push({ file: 'sitemap.xml', note: `${PAGES.length + entityPages.length} URL` });
+  written.push({ file: 'sitemap.xml', note: `${PAGES.length + entityPages.length + revuePages.length} URL${revuePages.length ? ` (dont ${revuePages.length} revue(s))` : ''}` });
 
   const archiveSitemap = buildArchiveSitemap(archive.pages);
   if (doUpdate) fs.writeFileSync(ARCHIVE_SITEMAP_PATH, archiveSitemap, 'utf8');
   written.push({ file: 'sitemap-archives.xml', note: `${archivePublicPages.length} URL indexable(s)` });
 
   // ── llms.txt ──
-  const llms = buildLlmsTxt(sources, radios, items, newsUpdated, model, archive.sample.records.length);
+  let llms = buildLlmsTxt(sources, radios, items, newsUpdated, model, archive.sample.records.length);
+  if (revue.enabled && revue.index.length) llms = llms.replace('\n## Pages de référence\n\n', `\n## Pages de référence\n\n- ${SITE_BASE}/revue/ : La revue du matin et La revue du soir, revues de presse étudiante générées automatiquement à partir des sources citées (articles, radio étudiante, sport étudiant)\n`);
   if (doUpdate) fs.writeFileSync(LLMS_PATH, llms, 'utf8');
   written.push({ file: 'llms.txt', note: `${sources.length} journaux, ${radios.length} radios` });
 

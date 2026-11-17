@@ -7,6 +7,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- « La revue du matin » et « La revue du soir » : revue de presse étudiante quotidienne (extraits courts, liens et crédits de tous les auteurs), émissions des radios étudiantes et sport étudiant, pages `/revue/AAAA-MM-JJ-matin|soir/`, archives, JSON-LD `NewsArticle`, sitemap Google News et RSS. Publication **désactivée** par défaut (`data/revue/config.json`). Voir `docs/revue.md`. Éditions à 7 h et 20 h (heure de Montréal) d’après les heures de publication des médias, des matchs et des émissions ; amorce éditoriale rédigée (sans décompte), mention automatique discrète en pied d’article ; la revue n’entre jamais dans La une ni dans les publications sociales par article. Impression façon journal : manchette, article à la une, colonnes à filets (2 en Lettre et A4, 3 en Légal, 4 en Tabloïd et A3 avec encadré sport et radio), texte à empattements justifié avec césure ; établissement au sigle seul (« UdeS »), comme dans La une, nom du média en couleur d’établissement (aussi sur les cartes de l’accueil, établissement en forme courte). Imprimé : émojis en couleur (Noto Color Emoji, OFL), vignettes d’articles avec crédit, titres cliquables, colophon avec code QR (Nayuki, MIT).
 - Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats de la fin de semaine » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
 
 ### Modifié
@@ -18,6 +19,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Impression Letter, Legal, Tabloid, A4 et A3 (portrait) de l’accueil, des fiches d’article et de la revue : logo du Radar à gauche de LE‑RADAR.ca au pied de chaque feuille (fiche `/article/?id=` comprise), photo de la fiche bornée et jamais rognée (la fiche tient sur une feuille), intertitres jamais seuls en bas de page ; test Playwright qui produit et vérifie un PDF par format.
 - Pages radio (grille « En ondes cette semaine ») : les cartes reprennent le fond neutre du site (`--bg-soft`) au lieu d’un mélange de la couleur d’établissement (8 % en clair, 16 % en sombre). Cette couleur reste aux accents — nom du jour, filet du jour en cours, bouton Écouter et petites barres — avec une variante éclaircie en mode sombre pour le bordeaux et le marine (contraste WCAG AA).
 - Pages radio (grille « En ondes cette semaine ») : filet et pastille rouges pour l’émission en ondes, filet jaune en tirets et pastille jaune pour la suivante, les mêmes pour les six stations, indépendamment de la couleur d’établissement. Teintes ajustées par thème pour un contraste WCAG AA (filets ≥ 3:1, texte des pastilles ≥ 4,5:1).
 
