@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-17T13:11:38.928Z",
+  "updated": "2026-11-17T13:22:15.974Z",
   "total": 1023,
   "withImage": 881,
-  "withCredit": 395,
-  "cited": 230,
-  "pending": 585,
+  "withCredit": 452,
+  "cited": 268,
+  "pending": 540,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 60,
-  "citedNew": 19,
-  "fallbackNew": 41,
+  "citedNew": 41,
+  "fallbackNew": 19,
   "samples": [
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
@@ -34,67 +27,74 @@
       "method": "body-line"
     },
     {
-      "title": "Coalition contre la crise du logement",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Olivia Rodrigo au Centre Bell",
-      "source": "Le Délit",
-      "credit": "Photo : Naomi Degueldre",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Le défilé le plus rose de l’année",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "L’aveuglement du cynisme chic",
-      "source": "Le Délit",
-      "credit": "Photo : Jiayuan Cao",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "C’était ça ou mourir tire à sa fin",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Le retour du Rocky Horror Picture Show",
-      "source": "Le Délit",
-      "credit": "Photo : Le Délit",
+      "title": "The Soul Trembles in Montreal",
+      "source": "The Link",
+      "credit": "Photo: The Link",
       "cited": false,
       "method": null
     },
     {
-      "title": "Le 17 octobre – édition québécoise",
-      "source": "Le Délit",
-      "credit": "Photo : Sixtine Nicolaÿ l Le Délit",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Concordia’s department of biology earns Hollywood credit",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Un mouvement qui doit se faire tout petit",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
-      "cited": true,
-      "method": "media-credit-near"
+      "title": "Sex workers deserve protection",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Le retour de Marvel?",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée de VisionQuest",
+      "title": "Transgender love is possible",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Hockey is becoming too American",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Anik Salas présente les champions mondiaux de l’égalité des genres : La méthode scandinave",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Cancer du sein : la sensibilisation au-delà d’Octobre rose",
+      "source": "La Pige",
+      "credit": "Photo : Adobe Stock",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
+    },
+    {
+      "title": "Halloween : une fête seulement pour les petits?",
+      "source": "La Pige",
+      "credit": "Photo : Noah Thomas",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Lydia Képinski accélère sur la piste avec C’est parti !",
+      "source": "Quartier Libre",
+      "credit": "Photo : Charlie Poirier-Bouthillette",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "« Je peux découvrir des talents » : la Convention DJAM fait briller les danseurs du Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Merlin Restoux–Pinglot",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
