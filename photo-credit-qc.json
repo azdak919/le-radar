@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-17T22:09:57.172Z",
-  "total": 1018,
+  "updated": "2026-11-17T23:35:04.052Z",
+  "total": 1019,
   "withImage": 911,
   "withCredit": 911,
-  "cited": 504,
-  "pending": 284,
+  "cited": 506,
+  "pending": 282,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 14,
-  "citedNew": 13,
-  "fallbackNew": 47,
+  "citedNew": 12,
+  "fallbackNew": 48,
   "samples": [
     {
       "title": "Peut-on encore posséder de la culture ?",
@@ -18,13 +18,6 @@
       "credit": "Photo : Maxence Gibault-Renault",
       "cited": true,
       "method": "body-line"
-    },
-    {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -95,6 +88,13 @@
       "credit": "Photo : Lia Chayer",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Cinema Politica screens Edward Said documentary",
+      "source": "The Link",
+      "credit": "Photo: Sana Paracha",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
