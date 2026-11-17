@@ -263,6 +263,7 @@ assert.ok(html.includes('Stingers (Concordia) 55-54 Martlets (McGill)'));
 assert.ok(html.includes('<span class="revue-item__inst">UdeS</span>') && !/Université de Sherbrooke \(UdeS\)/.test(html), 'établissement : sigle seul');
 assert.ok(R.articleBody({ ...m, items: m.items.map(x => ({ ...x, institution: 'Université de Sherbrooke (UdeS)' })) }).includes('<span class="revue-item__inst">UdeS</span>'), 'revue déjà générée « Nom (SIGLE) » : sigle seul au rendu');
 assert.match(html, /<header class="revue-flag" aria-hidden="true">[\s\S]*assets\/icon\.svg[\s\S]*LE-RADAR\.ca[\s\S]*La revue du matin[\s\S]*<\/header>/, 'manchette imprimée : logo à gauche du mot-symbole, édition');
+assert.match(html, /revue-flag__ears">[\s\S]*Revue de presse <em class="revue-flag__etudiante">étudiante<\/em>/, 'manchette : accent typographique sur « étudiante »');
 {
   const colo = (html.match(/<aside class="revue-colophon"[\s\S]*?<\/aside>/) || [''])[0];
   assert.ok(colo, 'colophon imprimé en fin d’édition');
@@ -286,18 +287,39 @@ assert.match(html, /<header class="revue-flag" aria-hidden="true">[\s\S]*assets\
   assert.match(colored, /revue-item__media"><span class="notranslate revue-inst-c" translate="no" style="--inst:rgb\(\d+, \d+, \d+\)">Le Collectif<\/span> · <span class="revue-item__inst">UdeS<\/span>/, 'média en couleur d’établissement, sigle en couleur normale');
 }
 {
-  // Petite météo ECCC de la manchette : Québec et Montréal, codes vérifiés, pas de ligne sans données.
+  // Météo ECCC : ligne de manchette (Québec et Montréal) et grand bloc (campus, Nunavik, Eeyou Istchee).
   const W = await import('../scripts/revue/revue-weather.mjs');
-  assert.deepEqual(W.WEATHER_SITES.map(x => x.name), ['Québec', 'Montréal']);
-  assert.ok(!R.renderReviewPage(m).includes('revue-wx'), 'sans données météo : pas de ligne');
-  const xml = (code) => `<siteData><location><name code="${code}">Québec</name></location><forecastGroup><forecast><period textForecastName="Ce soir et cette nuit">x</period><abbreviatedForecast><iconCode format="gif">31</iconCode><textSummary>Quelques nuages</textSummary></abbreviatedForecast><temperatures><temperature class="low">-2</temperature></temperatures></forecast></forecastGroup></siteData>`;
-  const q = W.parseCitypage(xml('s0000620'), W.WEATHER_SITES[0]);
-  assert.deepEqual(q.periods[0], { name: 'Ce soir et cette nuit', sky: 'Quelques nuages', kind: 'low', temp: -2, icon: 31 }, 'citypage ECCC lu');
+  assert.deepEqual(W.WEATHER_SITES.filter(x => x.group === 'campus').map(x => x.name), ['Québec', 'Montréal', 'Sherbrooke', 'Trois-Rivières', 'Rimouski', 'Saguenay', 'Gatineau', 'Rouyn-Noranda']);
+  assert.equal(W.WEATHER_SITES.filter(x => x.group === 'nunavik').length, 14, '14 villages du Nunavik (citypages ECCC)');
+  assert.deepEqual(W.WEATHER_SITES.filter(x => x.group === 'eeyou').map(x => x.name), ['Waskaganish']);
+  assert.ok(!R.renderReviewPage(m).includes('revue-wx') && !R.articleBody(m).includes('revue-meteo'), 'sans données météo : pas de ligne ni de bloc');
+  const xml = (code, pop = '') => `<siteData><location><name code="${code}">Québec</name></location><forecastGroup><dateTime name="forecastIssue" zone="UTC"><timeStamp>20261116204500</timeStamp></dateTime><forecast><period textForecastName="Ce soir et cette nuit">x</period><abbreviatedForecast><iconCode format="gif">31</iconCode>${pop}<textSummary>Quelques nuages</textSummary></abbreviatedForecast><temperatures><temperature class="low">-2</temperature></temperatures></forecast><forecast><period textForecastName="Mardi">m</period><abbreviatedForecast><pop units="%"></pop><textSummary>Neige</textSummary></abbreviatedForecast><temperatures><temperature class="high">6</temperature></temperatures></forecast></forecastGroup></siteData>`;
+  const q = W.parseCitypage(xml('s0000620', '<pop units="%">30</pop>'), W.WEATHER_SITES[0]);
+  assert.equal(q.group, 'campus');
+  assert.deepEqual(q.periods.map(p => ({ name: p.name, kind: p.kind, temp: p.temp, pop: p.pop, icon: p.icon })), [
+    { name: 'Ce soir et cette nuit', kind: 'low', temp: -2, pop: 30, icon: 31 },
+    { name: 'Mardi', kind: 'high', temp: 6, pop: null, icon: null },
+  ], 'citypage ECCC lu (deux périodes)');
   assert.equal(W.parseCitypage(xml('s0000999'), W.WEATHER_SITES[0]), null, 'code non vérifié : ignoré');
   assert.equal(await W.fetchWeather({ fetchImpl: async () => { throw new Error('hors ligne'); } }), null, 'Datamart injoignable : null');
   const page = R.renderReviewPage({ ...m, weather: { cities: [q] } });
   assert.match(page, /revue-flag__time">Publiée à [^<]*<span class="revue-wx revue-wx--flag"><span class="revue-wx__city"[^>]*><span class="revue-emoji"[^>]*>🌙<\/span>\s?−2°&#8239;Québec<\/span><\/span>/, 'ligne météo sous « Publiée à » dans la manchette');
   assert.match(page, /revue-wx--meta/, 'ligne météo aussi en ligne');
+  const kuuj = W.WEATHER_SITES.find(x => x.code === 's0000719');
+  const k = W.parseCitypage(xml('s0000719'), kuuj);
+  const withW = R.articleBody({ ...m, weather: { source: 'Environnement et Changement climatique Canada', cities: [q, k] } });
+  assert.match(withW, /revue-meteo[\s\S]*Villes universitaires[\s\S]*Québec[\s\S]*min −2°[\s\S]*Nunavik[\s\S]*Kuujjuaq[\s\S]*Environnement et Changement climatique Canada/, 'bloc météo imprimé');
+  assert.doesNotMatch(withW, /revue-wx__city[^>]*>[^<]*Kuujjuaq/, 'Kuujjuaq dans le bloc, pas dans la petite ligne de manchette');
+  // Jeux déterministes : même édition → mêmes grilles ; sudoku à solution unique ; mots tirés des titres.
+  const G = require('../scripts/revue/revue-games.js');
+  const g1 = G.gamesFor(m), g2 = G.gamesFor(m);
+  assert.deepEqual(g1, g2, 'jeux déterministes');
+  assert.equal(G.countSolutions(g1.sudoku.puzzle), 1, 'sudoku à solution unique');
+  assert.ok(g1.sudoku.puzzle.every((v, i) => !v || v === g1.sudoku.solution[i]), 'indices cohérents avec la solution');
+  const titles = m.items.map(x => x.title).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+  if (g1.words) for (const w of g1.words.words) assert.ok(titles.includes(w), `mot caché tiré de l’édition : ${w}`);
+  const body = R.articleBody(m);
+  assert.match(body, /revue-jeux[\s\S]*Sudoku[\s\S]*revue-solutions[\s\S]*revue-colophon/, 'jeux puis solutions à la fin, avant le colophon');
 }
 {
   // Stations : nom en couleur d'établissement, fréquence et ville d'après radios.json ; sans fréquence, le nom seul.
@@ -309,7 +331,7 @@ assert.match(html, /<header class="revue-flag" aria-hidden="true">[\s\S]*assets\
 {
   const cov = JSON.parse(fs.readFileSync(new URL('../assets/revue/emoji-coverage.json', import.meta.url)));
   const have = new Set(cov.emojis || cov);
-  for (const e of ['⛵', '📻', '📰']) assert.ok(have.has(e), `police emoji imprimable : ${e}`);
+  for (const e of ['⛵', '📻', '📰', '🧩']) assert.ok(have.has(e), `police emoji imprimable : ${e}`);
 }
 assert.ok(html.includes('La collation'));
 assert.ok(html.includes('lang="en"'), 'titre anglais balisé lang="en"');
