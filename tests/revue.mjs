@@ -107,6 +107,8 @@ assert.match(L.textReject('Le conseil municipal adopte son budget pendant le wee
 assert.match(L.textReject('The Sherbrooke city council adopted its budget and students want more housing now.', src), /français/);
 assert.match(L.textReject('Le conseil municipal « adopte » son budget, disent les étudiants de Sherbrooke.', src), /guillemet/);
 assert.match(L.textReject('Court.', src), /longueur/);
+assert.match(L.textReject('Le conseil municipal de Sherbrooke adopte trois budgets pour les étudiants du campus.', src), /nombre absent \(trois\)/);
+assert.equal(L.textReject('Bishop’s offre désormais trois nouveaux programmes de maîtrise aux étudiants.', 'Bishop’s they now have three new master’s programs'), null);
 // Fidélité au titre : pas de confusion de personnes, pas d'affirmation d'un titre interrogatif.
 const carney = { title: 'Mark Carney dévoile ses ambitions économiques', lang: 'fr', source: 'Le Collectif', authors: [], excerpt: 'Le 5 novembre dernier, François-Philippe Champagne, ministre des Finances du Canada, a déposé le plus récent budget du gouvernement canadien.' };
 assert.deepEqual(L.titleNames(carney.title), ['Mark Carney']);

@@ -264,6 +264,13 @@ const RELATIVE = /\b(demain|hier|aujourd['’]hui|ce soir|ce matin|cette semaine
  * Raison du rejet d'un texte d'IA (null si acceptable) : longueur, guillemets, liens, mention, hashtag, date relative, « week-end »,
  * chiffre ou nom propre absent de la source, langue autre que le français.
  */
+const NUMBER_WORDS = Object.fromEntries([
+  ['deux', 'two', '2'], ['trois', 'three', '3'], ['quatre', 'four', '4'], ['cinq', 'five', '5'], ['six', 'six', '6'], ['sept', 'seven', '7'],
+  ['huit', 'eight', '8'], ['neuf', 'nine', '9'], ['dix', 'ten', '10'], ['onze', 'eleven', '11'], ['douze', 'twelve', '12'], ['quinze', 'fifteen', '15'],
+  ['vingt', 'twenty', '20'], ['trente', 'thirty', '30'], ['cent', 'hundred', '100'], ['cents', 'hundreds', '100'], ['mille', 'thousand', '1000'],
+  ['million', 'million', 'millions'], ['millions', 'million', 'millions'], ['milliard', 'billion', 'milliards'], ['milliards', 'billion', 'billions'],
+  ['dizaine', 'dozen', 'dizaines'], ['dizaines', 'dozens', 'dizaine'], ['centaine', 'hundreds', 'centaines'], ['centaines', 'hundreds', 'centaine'],
+].map(([fr, ...v]) => [fr, [fr, ...v]]));
 export function textReject(text, source, { min = 40, max = 220 } = {}) {
   const h = String(text || '').replace(/\s+/g, ' ').trim();
   if (h.length < min || h.length > max) return `longueur ${h.length}`;
@@ -271,6 +278,8 @@ export function textReject(text, source, { min = 40, max = 220 } = {}) {
   if (RELATIVE.test(h)) return 'date relative ou « week-end »';
   const src = words(source);
   for (const n of h.match(/\d+/g) || []) if (!src.has(n)) return `chiffre absent (${n})`;
+  // Nombres en lettres : présents dans la source en lettres (français ou anglais) ou en chiffres.
+  for (const w of words(h)) { const n = NUMBER_WORDS[w]; if (n && !n.some(v => src.has(v))) return `nombre absent (${w})`; }
   // Mots capitalisés hors début de phrase : doivent venir de la source (noms propres, sigles).
   for (const m of h.matchAll(/(?<![.!?:]\s|^)(?<=\s|[(’'-])(\p{Lu}[\p{L}’'-]*)/gu)) {
     const w = m[1].toLowerCase(), base = w.replace(/[’'].*$/, '').replace(/-.*$/, '');
