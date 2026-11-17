@@ -185,6 +185,11 @@ assert.equal(L.ledeReject('Le Collectif suit le budget du conseil municipal de S
 assert.match(L.ledeReject('Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que Le Link raconte la victoire des Stingers sur les Martlets.', items), /média altéré/, '« Le Link » pour The Link');
 assert.match(L.ledeReject('Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que Le Collectif raconte la victoire des Stingers sur les Martlets.', items), /média répété/);
 assert.match(L.ledeReject('Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que The Link raconte la partnership des Stingers et des Martlets.', items), /anglais/);
+{ const it = (title, source) => ({ title, source, excerpt: '', lang: 'fr', authors: [] });
+  const pool = [it('Grammys 2027 : vent de folie québécois et triomphe féminin', 'La Pige'), it('La génération Z et le retour des médias physiques', 'Quartier Libre')];
+  assert.match(L.ledeReject('La Pige plonge dans la folie des Grammys 2027, et la génération Z redécouvre les médias physiques selon elle.', pool), /attribution douteuse \(La Pige : (generation|medias|physiques)\)/, 'sujet de Quartier Libre prêté à La Pige');
+  assert.equal(L.ledeReject('La Pige raconte le vent de folie québécois aux Grammys 2027, tandis que Quartier Libre explore le retour des médias physiques chez la génération Z.', pool), null);
+  assert.match(L.ledeReject('La Pige nous plonge dans la folie des Grammys 2027, tandis que Quartier Libre explore le retour des médias physiques.', pool), /générique/, '« nous » : ton de journal'); }
 assert.match(chapeauPrompt(items, 'matin'), /La revue du matin/); assert.match(chapeauPrompt(items), /ne compte pas les articles/);
 
 // ── Génération complète, validation et refus ──

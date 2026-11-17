@@ -374,7 +374,10 @@ export function ledeSport(model) {
 /** Amorce complète : deux phrases sur l'actualité (IA vérifiée ou repli), puis une sur le sport ou la radio. */
 export function ledeOf(model) { return [model.chapeau || ledeNews(model), ledeSport(model)].filter(Boolean).join(' '); }
 /** Formules creuses refusées dans une amorce d'IA : on veut des articles précis, pas un survol. */
-const GENERIC = /sujets? vari|divers sujets|vari[ée]t[ée] de sujets|abordent|mettent en lumi|au c(œ|oe)ur de|plusieurs articles|les médias étudiants (québécois )?(abordent|traitent|parlent)|cette revue (réunit|rassemble)/i;
+const GENERIC = /sujets? vari|divers sujets|vari[ée]t[ée] de sujets|abordent|met(tent)? en lumi|au c(œ|oe)ur de|plusieurs articles|les médias étudiants (québécois )?(abordent|traitent|parlent)|cette revue (réunit|rassemble)|\bnous\b|\bvous\b|vers le succès/i;
+// Mots pleins (5 lettres et plus, sans accents) pour vérifier qu'un sujet est attribué au bon média.
+const fold = s => String(s || '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+const contentWords = s => new Set((fold(s).match(/\p{L}{5,}/gu) || []));
 /** Garde-fou de l'amorce d'IA : textReject + au moins un média cité + pas de formule générique + deux ou trois phrases. */
 export function ledeReject(text, items = []) {
   const why = textReject(text, items.map(itemSource).join(' '), { min: 80, max: 380 });
@@ -390,6 +393,15 @@ export function ledeReject(text, items = []) {
   for (const m of names) rest = rest.split(m).join(' ');
   const cores = new Set(names.map(m => norm(m.replace(/^(the|le|la|les|l['’])\s*/i, ''))).filter(c => c.length > 2));
   for (const g of rest.matchAll(/\b(?:The|Le|La|Les|L['’])\s*(\p{Lu}[\p{L}’'-]+)/gu)) if (cores.has(norm(g[1]))) return `nom de média altéré : ${g[0]}`;
+  // Attribution : après chaque nom de média, un mot plein tiré du titre d'un AUTRE média (et absent des articles du média
+  // nommé) signale un sujet prêté au mauvais journal (« La Pige … la génération Z » alors que c'est Quartier Libre).
+  const hits = names.flatMap(m => { const out = []; let i = -1; while ((i = String(text).indexOf(m, i + 1)) >= 0) out.push([i, m]); return out; }).sort((x, y) => x[0] - y[0]);
+  for (let k = 0; k < hits.length; k++) {
+    const [at, m] = hits[k], seg = String(text).slice(at + m.length, k + 1 < hits.length ? hits[k + 1][0] : undefined);
+    const own = contentWords(items.filter(x => x.source === m).map(x => `${x.title} ${x.excerpt || ''}`).join(' '));
+    const other = contentWords(items.filter(x => x.source !== m).map(x => x.title).join(' '));
+    for (const w of contentWords(seg)) if (other.has(w) && !own.has(w)) return `attribution douteuse (${m} : ${w})`;
+  }
   // Mots anglais hors noms de médias (« partnership », « students ») : l'amorce est en français.
   if (/\b(the|and|of|with|for|from|students?|partnership|campus life|university)\b/i.test(rest)) return 'mot anglais';
   const n = (String(text).match(/[.!?…](\s|$)/g) || []).length;
