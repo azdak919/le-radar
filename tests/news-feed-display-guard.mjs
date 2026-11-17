@@ -46,10 +46,27 @@ assert.match(
   /NEWS_LIST\.replaceChildren\(frag\)/,
   'le DOM n’est remplacé qu’une fois le nouveau fil assemblé',
 );
+assert.match(radarNews, /function countVisibleNewsCards\(/);
+assert.match(radarNews, /function syncNewsCount\(/);
 assert.match(
   radarNews,
-  /\$\{displayed\} article/,
-  'le compteur doit suivre les cartes réellement rendues',
+  /Math\.min\(cards\.length, NEWS_TAIL_VISIBLE\)/,
+  'repliée, la suite ne compte que les cartes vraiment visibles',
+);
+assert.match(
+  radarNews,
+  /syncNewsTailCollapse\([\s\S]{0,200}?syncNewsCount\(\)/,
+  'le compteur est recalculé après le repli de la suite du fil',
+);
+assert.match(
+  radarNews,
+  /isSearchView[\s\S]{0,180}?syncNewsCount\(\)/,
+  'la recherche met à jour le compteur sur les résultats visibles',
+);
+assert.doesNotMatch(
+  radarNews,
+  /NEWS_COUNT\.textContent = countLabel/,
+  'le compteur ne doit plus suivre toutes les cartes rendues, y compris celles repliées',
 );
 
 console.log('OK news-feed-display-guard', news.items.length, 'articles');

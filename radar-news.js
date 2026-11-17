@@ -1503,11 +1503,6 @@ function renderNews() {
     }
   }
 
-  const countLabel = isSearchView
-    ? `${displayed} résultat${displayed !== 1 ? 's' : ''}`
-    : `${displayed} article${displayed !== 1 ? 's' : ''}`;
-  if (NEWS_COUNT) NEWS_COUNT.textContent = countLabel;
-
   // Remplacer le contenu seulement une fois le nouveau fil assemblé, pour
   // ne pas laisser une liste vide si le partitionnement échoue.
   NEWS_LIST.replaceChildren(frag);
@@ -1516,6 +1511,8 @@ function renderNews() {
     syncNewsTailCollapse({ preserveExpanded: false });
     updateNewsLayout();
     scheduleMagazineColumnBalance();
+  } else {
+    syncNewsCount();
   }
   NEWS_LIST.dataset.ready = '1';
   lastMagazineViewportKey = magazineViewportKey();
@@ -1576,6 +1573,36 @@ function applyNewsTailCollapsedHeight(tail) {
   }
 }
 
+/** Nombre de cartes réellement visibles sur la page (pas celles repliées
+ * derrière « Plus d'articles »). Le peek sous le fondu n’est pas compté. */
+function isNewsSearchView() {
+  return NEWS_LIST?.dataset.mode === 'search';
+}
+
+function countVisibleNewsCards() {
+  if (!NEWS_LIST) return 0;
+  if (isNewsSearchView()) {
+    return NEWS_LIST.querySelectorAll('.news-search-results .article').length;
+  }
+  const hero = NEWS_LIST.querySelectorAll('.news-hero > .article').length;
+  const brief = NEWS_LIST.querySelectorAll('.brief-rail .article').length;
+  const tail = NEWS_LIST.querySelector('.news-tail');
+  if (!tail) return hero + brief;
+  const cards = getNewsTailCards(tail);
+  if (newsTailExpanded || !tail.classList.contains('has-overflow')) {
+    return hero + brief + cards.length;
+  }
+  return hero + brief + Math.min(cards.length, NEWS_TAIL_VISIBLE);
+}
+
+function syncNewsCount() {
+  if (!NEWS_COUNT) return;
+  const n = countVisibleNewsCards();
+  NEWS_COUNT.textContent = isNewsSearchView()
+    ? `${n} résultat${n !== 1 ? 's' : ''}`
+    : `${n} article${n !== 1 ? 's' : ''}`;
+}
+
 /**
  * Replie la Suite du fil après NEWS_TAIL_VISIBLE articles (comme « Plus de sources »).
  * Aperçu des titres de la rangée suivante + fondu, puis bouton.
@@ -1583,10 +1610,16 @@ function applyNewsTailCollapsedHeight(tail) {
  */
 function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
   // Recherche loupe : résultats plats, aucun repli.
-  if (NEWS_LIST?.dataset.mode === 'search') return;
+  if (NEWS_LIST?.dataset.mode === 'search') {
+    syncNewsCount();
+    return;
+  }
 
   const tail = NEWS_LIST?.querySelector('.news-tail');
-  if (!tail) return;
+  if (!tail) {
+    syncNewsCount();
+    return;
+  }
 
   const body = ensureNewsTailBody(tail);
   const cards = getNewsTailCards(tail);
@@ -1680,6 +1713,7 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
     toggle?.remove();
     if (!preserveExpanded) newsTailExpanded = false;
   }
+  syncNewsCount();
 }
 
 function updateNewsLayout() {
