@@ -20,10 +20,10 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 18; // rev 18 : « Photo courtesy of X » juste après la figure (The Campus)
+const CREDIT_EXTRACTOR_REV = 18; // rev 18 : crédits The Campus, Tribune, Link, Pige, Plant, Exemplaire, Daily
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
-const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
+const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin|courtoisie|courtesy)$/i;
 
 /**
  * « Journaliste » / « Journalist » = la photo est de l'auteur·e de l'article
@@ -119,14 +119,18 @@ function imageUrlKey(url = '') {
   try {
     // Base factice : accepte aussi les src relatifs (« /images/made/… »).
     const path = decodeURIComponent(new URL(url, 'https://relative.invalid').pathname).toLowerCase();
-    return path
+    let file = path
       .split('/')
       .pop()
       .replace(/-\d+x\d+(?=\.[a-z]+$)/, '')
-      .replace(/-scaled(?=\.[a-z]+$)/, '')
-      // Suffixe de redimensionnement CE Image / ExpressionEngine (The Link) :
-      // photo_900_674_90.jpeg et photo_600_375_90_s_c1.jpeg → même clé.
-      .replace(/_\d{2,4}_\d{2,4}_\d{1,3}(?:_s_c\d+)?(?=\.[a-z]+$)/, '');
+      .replace(/-scaled(?=\.[a-z]+$)/, '');
+    // Suffixe CE Image / ExpressionEngine (The Link) :
+    // photo_900_674_90.jpeg, photo_600_375_90_s_c1.jpeg, et aussi
+    // Aia_Segal_690_850.PNG / Aia_Segal_900_1109.PNG (deux nombres, sans qualité).
+    const ceSize = /\/images\/made\/|_resized\//i.test(path)
+      ? /_\d{2,4}_\d{2,4}(?:_\d{1,3}(?:_s_c\d+)?)?(?=\.[a-z]+$)/
+      : /_\d{2,4}_\d{2,4}_\d{1,3}(?:_s_c\d+)?(?=\.[a-z]+$)/;
+    return file.replace(ceSize, '');
   } catch {
     return '';
   }
@@ -375,17 +379,45 @@ function parseCopyrightCaptionCredit(t = '', lang = 'fr') {
   };
 }
 
+/**
+ * L'Exemplaire : « (caricature réalisée à l'aide de l'intelligence artificielle,
+ * requête : Victor Marchand / L'Exemplaire) ».
+ */
+function parseRequeteCredit(t = '', lang = 'fr') {
+  const m = String(t).match(
+    /\((?:caricature|illustration|dessin|photo|graphique)[^)]{0,180}?(?:requête|cr[ée]dits?|prompt)\s*:\s*([^)]{2,90})\)/iu,
+  );
+  if (!m) return null;
+  const inner = sanitizeCreditText(m[1]).replace(/[.,;:]+$/g, '').trim();
+  const creator = inner.split('/')[0].trim();
+  const parsed = creditFromPhrase(creator);
+  if (!parsed || parsed.isJournalistPlaceholder) return null;
+  const en = lang === 'en';
+  return {
+    ...parsed,
+    creditLine: en ? `Illustration: ${parsed.creator}` : `Illustration : ${parsed.creator}`,
+    source: 'figcaption-requete',
+  };
+}
+
 /** Légendes WordPress « Nom / Média » ou « Illustration by … » (The Tribune, etc.). */
 function parseFigcaptionAttribution(text = '', lang = 'fr') {
-  const t = stripCreditHandles(sanitizeCreditText(text));
+  let t = stripCreditHandles(sanitizeCreditText(text));
   if (!t || t.length < 4) return null;
 
   // Crédit parenthésé typé et « © Nom » : fiables quelle que soit la longueur
   // de la légende (souvent > 120 caractères chez L'Exemplaire).
   const parenKind = parseParenKindCredit(t, lang);
   if (parenKind) return parenKind;
+  const requete = parseRequeteCredit(t, lang);
+  if (requete) return requete;
   const copyright = parseCopyrightCaptionCredit(t, lang);
   if (copyright) return copyright;
+
+  // The Tribune : « (Eliot Loose / The Tribune) » — la barre oblique
+  // ne matche que sans les parenthèses enveloppantes.
+  const unwrapped = t.match(/^\((.*)\)\.?$/s);
+  if (unwrapped) t = stripCreditHandles(sanitizeCreditText(unwrapped[1]));
 
   if (t.length > 120) {
     // Légende descriptive longue : seule la signature en fin de texte compte.
@@ -396,7 +428,14 @@ function parseFigcaptionAttribution(text = '', lang = 'fr') {
   if (slash) {
     const creator = slash[1].trim();
     const parsed = creditFromPhrase(creator);
-    if (parsed) return { ...parsed, source: 'figcaption-attribution' };
+    if (parsed) {
+      const en = lang === 'en';
+      return {
+        ...parsed,
+        creditLine: en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`,
+        source: 'figcaption-attribution',
+      };
+    }
   }
 
   // « Mention photo : X » / « Mention illustration : X » (Montréal Campus).
@@ -657,7 +696,37 @@ function extractViaCredit(html = '', lang = 'fr') {
       // « Via Source » seule, en fin de légende (après ¦ / point), ou unique contenu
       const m = text.match(/(?:^|¦|\.)\s*Via\s+(.+?)\s*$/i)
         || text.match(/^Via\s+(.+)$/i);
-      if (!m) continue;
+      if (!m) {
+        // The Plant : « Matt Black via TIME » (ligne en tout petit sous l'image).
+        const viaInline = text.match(/^(.{2,60}?)\s+via\s+(.+)$/i);
+        if (viaInline && text.length <= 120) {
+          const who = sanitizeCreditText(viaInline[1]);
+          const agency = sanitizeCreditText(viaInline[2]).replace(/[.,;:]+$/g, '').trim();
+          if (looksLikePersonName(who) && agency && !isPlaceholderPhotoCredit(who)) {
+            return {
+              creditLine: lang === 'en' ? `Photo: ${who} via ${agency}` : `Photo : ${who} via ${agency}`,
+              creator: who,
+              agency,
+              source: 'via-attribution',
+            };
+          }
+        }
+        // The Plant : « Mauersegler By Léo-Paul Samuel Robert » (titre d'œuvre + artiste).
+        const byWork = text.match(/^(.{1,60}?)\s+By\s+([\p{Lu}][\p{L}'’.-]+(?:\s+[\p{Lu}][\p{L}'’.-]+){1,4})$/u);
+        if (byWork && text.length <= 120 && !/^(?:written|photos?|article|posted|published)\b/i.test(text)) {
+          const who = sanitizeCreditText(byWork[2]);
+          if (looksLikePersonName(who) && !isPlaceholderPhotoCredit(who)) {
+            const en = lang === 'en';
+            return {
+              creditLine: en ? `Illustration: ${who}` : `Illustration : ${who}`,
+              creator: who,
+              agency: '',
+              source: 'via-byline',
+            };
+          }
+        }
+        continue;
+      }
       let source = sanitizeCreditText(m[1])
         .replace(/^the\s+/i, '')
         .replace(/[.,;:¦]+$/g, '')
@@ -691,6 +760,10 @@ function extractBodyCredit(html = '', imageUrl = '', lang = 'fr') {
   const paragraphs = body.match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
   for (const p of paragraphs.slice(0, 12)) {
     const text = stripHtml(p);
+    // La Pige : « … Kendrick Lamar. (Photo : Émilie Frère-Lefèvre) » en fin
+    // du premier paragraphe, souvent plus long que 160 caractères.
+    const paren = parseParenKindCredit(text, lang) || parseRequeteCredit(text, lang);
+    if (paren) return { ...paren, source: 'body-paren' };
     if (text.length > 160) continue;
     const trailing = parseTrailingCaptionCredit(text, lang);
     if (trailing) return { ...trailing, source: 'body-line' };
@@ -890,6 +963,18 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
     const name = nameFromCreditSlug(photoNameM[1].replace(/_/g, '-'));
     if (isPlausibleCreditName(name)) {
       const credit = makeCredit(name, 'filename-photo-name');
+      if (credit) return credit;
+    }
+  }
+
+  // The McGill Daily : « Greta-Kline-by-Matthew-James-Wilson-2016.png »
+  const byFile = decodedUrl.match(
+    /[-_]by[-_]((?:[\p{Lu}][\p{L}'’.-]+[-_]){1,3}[\p{Lu}][\p{L}'’.-]+)(?:[-_]\d{4})?\.(?:jpe?g|png|webp|gif|avif)(?:$|\?)/u,
+  );
+  if (byFile) {
+    const name = nameFromCreditSlug(byFile[1].replace(/_/g, '-'));
+    if (isPlausibleCreditName(name)) {
+      const credit = makeCredit(name, 'filename-by');
       if (credit) return credit;
     }
   }

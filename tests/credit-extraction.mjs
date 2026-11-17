@@ -194,3 +194,91 @@ console.log('credit-extraction la-rédaction OK');
   }
   console.log('credit-extraction campus courtesy sibling OK');
 }
+
+
+// Autres médias : crédits présents sur la page mais manqués par le repli « Photo: [média] ».
+{
+  const pad = '<html><body>' + 'x'.repeat(300);
+  const C = require('../scripts/article-card-lib.js');
+
+  // The Tribune : « (Nom / The Tribune) » sous l'image vedette (taille différente de l'URL stockée).
+  {
+    const img = 'https://thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose-scaled.jpg';
+    const h = `${pad}<header class="entry-image"><figure class="wp-caption featured"><img src="https://thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose-1000x600.jpg" class="wp-post-image"><figcaption class="wp-caption-text">(Eliot Loose / The Tribune)</figcaption></figure></header></body></html>`;
+    const r = PC.resolveSourcePhotoCredit({ source: 'The Tribune', lang: 'en', link: 'https://thetribune.ca/news/example/', image: img }, h);
+    assert.equal(r.creator, 'Eliot Loose');
+    assert.equal(r.creditLine, 'Photo: Eliot Loose');
+    assert.equal(r.cited, true);
+    assert.equal(C.displayPhotoCredit(r.creditLine, { lang: 'en', source: 'The Tribune', sourceImageCreditFrom: r.from }), 'Photo: Eliot Loose');
+  }
+
+  // The Link : mêmes dimensions CE Image (_690_850 vs _900_1109) + « Graphic Aia Segal ».
+  {
+    const img = 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Canada_in_Erasmus_Plus_Aia_Segal_690_850.PNG';
+    const h = `${pad}<figure><a href="https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Canada_in_Erasmus_Plus_Aia_Segal_900_1109.PNG"><img src="/images/made/images/articles/_resized/05_NEWS_Canada_in_Erasmus_Plus_Aia_Segal_900_1109.PNG" alt=""></a><figcaption>With increasing ties between Europe and Canada, Canadian students might be able to join the Erasmus exchange program. Graphic Aia Segal</figcaption></figure></body></html>`;
+    const r = PC.resolveSourcePhotoCredit({ source: 'The Link', lang: 'en', link: 'https://thelinknewspaper.ca/article/16554', image: img }, h);
+    assert.equal(r.creator, 'Aia Segal');
+    assert.equal(r.creditLine, 'Illustration: Aia Segal');
+    assert.equal(r.cited, true);
+    assert.equal(PC.imageUrlKey(img), PC.imageUrlKey('https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Canada_in_Erasmus_Plus_Aia_Segal_900_1109.PNG'));
+  }
+
+  // La Pige : crédit parenthésé en fin du premier paragraphe, image hors figure.
+  {
+    const img = 'https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Creation-sans-titre.png';
+    const h = `${pad}<div class="s-feat-img"><img src="https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Creation-sans-titre-750x375.png" class="wp-post-image"></div>
+<div class="entry-content"><p><span style="font-size: 10pt">Taylor Swift obtient sa 5e nomination consécutive dans la catégorie Album de l’année avec The Life of a Showgirl. Un exploit de régularité historique partagé par un seul autre artiste : le rappeur Kendrick Lamar.</span> <span style="font-size: 10pt">(Photo : Émilie Frère-Lefèvre)</span></p></div></body></html>`;
+    const r = PC.resolveSourcePhotoCredit({ source: 'La Pige', lang: 'fr', link: 'https://lapige.atmjonquiere.com/2026/11/16/grammys/', image: img }, h);
+    assert.equal(r.creator, 'Émilie Frère-Lefèvre');
+    assert.equal(r.creditLine, 'Photo : Émilie Frère-Lefèvre');
+    assert.equal(r.cited, true);
+    // « (Photo : courtoisie) » n'est pas un photographe : garder le repli média.
+    const h2 = h.replace('(Photo : Émilie Frère-Lefèvre)', '(Photo : courtoisie)');
+    const r2 = PC.resolveSourcePhotoCredit({ source: 'La Pige', lang: 'fr', link: 'https://lapige.atmjonquiere.com/2026/11/16/coalition/', image: img }, h2);
+    assert.equal(r2.cited, false);
+    assert.equal(r2.from, 'media');
+  }
+
+  // The Plant : ligne de crédit en tout petit sous l'image.
+  {
+    const img = 'https://theplantnews.com/wp-content/uploads/2026/11/image12.png';
+    const h = `${pad}<figure><img src="${img}"></figure>
+<div class="entry-content"><p class="wp-block-paragraph" style="font-size:9px">Matt Black via TIME</p>
+<p>Martin Kaloshi</p><p>Co-Managing Editor</p></div></body></html>`;
+    const r = PC.resolveSourcePhotoCredit({ source: 'The Plant', lang: 'en', link: 'https://theplantnews.com/2026/11/14/vita/', image: img }, h);
+    assert.equal(r.creator, 'Matt Black');
+    assert.equal(r.creditLine, 'Photo: Matt Black via TIME');
+    assert.equal(r.cited, true);
+    const img2 = 'https://theplantnews.com/wp-content/uploads/2026/11/chloenovemberarticle.jpg';
+    const h3 = `${pad}<figure><img src="${img2}"></figure>
+<div class="entry-content"><p class="wp-block-paragraph" style="font-size:9px"><em>Mauersegler</em> By Léo-Paul Samuel Robert</p>
+<p>Chloe Bercovitz</p></div></body></html>`;
+    const r3 = PC.resolveSourcePhotoCredit({ source: 'The Plant', lang: 'en', link: 'https://theplantnews.com/2026/11/14/nature/', image: img2 }, h3);
+    assert.equal(r3.creator, 'Léo-Paul Samuel Robert');
+    assert.equal(r3.creditLine, 'Illustration: Léo-Paul Samuel Robert');
+    assert.equal(r3.cited, true);
+  }
+
+  // L'Exemplaire : caricature IA, « requête : Nom / L'Exemplaire » dans une longue légende.
+  {
+    const img = 'https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/Caricature-Passation-CAQ-vers-PC.png.png';
+    const cap = "La CAQ aurait-elle « passé le flambeau » au PCQ ? En effet, la totalité des sièges détenus par les caquistes dans la région de Québec ont été transférés aux conservateurs (caricature réalisée à l’aide de l’intelligence artificielle, requête : Victor Marchand / L’Exemplaire).";
+    const h = `${pad}<figure><img src="${img}"><figcaption class="wp-caption-text">${cap}</figcaption></figure></body></html>`;
+    const r = PC.resolveSourcePhotoCredit({ source: "L'Exemplaire", lang: 'fr', link: 'https://www.exemplaire.com.ulaval.ca/a-la-une/exemple/', image: img }, h);
+    assert.equal(r.creator, 'Victor Marchand');
+    assert.equal(r.creditLine, 'Illustration : Victor Marchand');
+    assert.equal(r.cited, true);
+  }
+
+  // The McGill Daily : photographe dans le nom de fichier, légende média vide.
+  {
+    const img = 'https://www.mcgilldaily.com/wp-content/uploads/2026/11/Greta-Kline-by-Matthew-James-Wilson-2016.png';
+    const h = `${pad}<figure class="wp-caption"><img src="${img}" alt=""><figcaption class="wp-caption-text"><span class="media-credit"><a href=""></a></span></figcaption></figure></body></html>`;
+    const r = PC.resolveSourcePhotoCredit({ source: 'The McGill Daily', lang: 'en', link: 'https://www.mcgilldaily.com/2026/11/can-music-truly-be-personal/', image: img }, h);
+    assert.equal(r.creator, 'Matthew James Wilson');
+    assert.equal(r.creditLine, 'Photo: Matthew James Wilson');
+    assert.equal(r.cited, true);
+  }
+
+  console.log('credit-extraction other-source fallbacks OK');
+}
