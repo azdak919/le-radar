@@ -1,10 +1,23 @@
 {
-  "at": "2026-11-17T11:41:12.820Z",
+  "at": "2026-11-17T13:10:47.332Z",
   "cards": 1023,
   "probedCards": 150,
-  "queueDeferred": 555,
-  "urls": 135,
-  "broken": 0,
-  "repaired": 0,
-  "items": []
+  "queueDeferred": 428,
+  "urls": 132,
+  "broken": 1,
+  "repaired": 1,
+  "items": [
+    {
+      "source": "L'Exemplaire",
+      "title": "La bière locale cherche sa place dans un marché saturé",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/la-biere-locale-cherche-sa-place-dans-un-marche-sature",
+      "field": "image",
+      "variant": "",
+      "url": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/DSC_2009-2-scaled.jpg",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "transient": false,
+      "repaired": true
+    }
+  ]
 }
