@@ -9,6 +9,7 @@
 (function (root, factory) {
   var api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
+  if (root) root.sportsAudienceTie = api.sportsAudienceTie;
   if (typeof document === 'undefined') return;
 
   document.addEventListener('click', function (event) {
@@ -43,9 +44,44 @@
   }
 
   /**
-   * L'ordre du bandeau ne change pas. Le poids n'est pas branché :
-   * ni interrupteur éteint, ni totaux sous le seuil, ni totaux au-dessus.
+   * Porte fermée en production. Le départage ne s'ouvre que si l'appelant
+   * réunit l'interrupteur, quatre à huit semaines, un seuil donné et une
+   * moyenne déjà lissée. Un creux gelé, un sport sous le seuil ou une
+   * moyenne absente ne compte pas comme « impopulaire ».
    */
+  var AUDIENCE_GATE = {
+    enabled: false,
+    weeks: null,
+    frozen: false,
+    minimum: null,
+    averages: null,
+  };
+
+  function weightDelta(sportA, sportB, gate) {
+    var g = gate || AUDIENCE_GATE;
+    if (g.enabled !== true) return 0;
+    if (g.frozen === true) return 0;
+    var weeks = g.weeks;
+    if (typeof weeks !== 'number' || weeks < 4 || weeks > 8) return 0;
+    var minimum = g.minimum;
+    if (typeof minimum !== 'number' || !(minimum > 0)) return 0;
+    var averages = g.averages;
+    if (!averages || typeof averages !== 'object') return 0;
+    var left = sportCode(sportA);
+    var right = sportCode(sportB);
+    if (!left || !right || left === right) return 0;
+    var leftAvg = averages[left];
+    var rightAvg = averages[right];
+    if (typeof leftAvg !== 'number' || typeof rightAvg !== 'number') return 0;
+    if (leftAvg < minimum || rightAvg < minimum) return 0;
+    if (leftAvg === rightAvg) return 0;
+    return leftAvg > rightAvg ? -1 : 1;
+  }
+
+  function sportsAudienceTie(sportA, sportB) {
+    return weightDelta(sportA, sportB, AUDIENCE_GATE);
+  }
+
   function stripOrder(keys, counts, enabled) {
     void counts;
     void enabled;
@@ -65,5 +101,12 @@
     return body;
   }
 
-  return { ENABLED: ENABLED, clickBody: clickBody, stripOrder: stripOrder, send: send };
+  return {
+    ENABLED: ENABLED,
+    clickBody: clickBody,
+    stripOrder: stripOrder,
+    weightDelta: weightDelta,
+    sportsAudienceTie: sportsAudienceTie,
+    send: send,
+  };
 });
