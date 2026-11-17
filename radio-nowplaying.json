@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T09:07:28.564Z",
+  "updatedAt": "2026-11-17T10:07:12.325Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T09:06:05.297Z"
+      "checkedAt": "2026-11-17T10:06:21.036Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T09:06:19.320Z"
+      "checkedAt": "2026-11-17T10:06:35.177Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Attik / Show For Children",
-        "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
-      },
-      "next": {
         "title": "The Beat Power Hour",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt1",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T09:06:22.640Z"
+      "checkedAt": "2026-11-17T10:06:38.780Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Hip's Time to Wake Hop",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T09:06:47.000Z"
+      "checkedAt": "2026-11-17T10:06:52.954Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,28 +128,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T09:06:48.579Z"
+      "checkedAt": "2026-11-17T10:06:53.840Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/balados/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
+      },
+      "next": {
+        "title": "Le Monde Dans Mes Oreilles",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "slug": "le-monde-dans-mes-oreilles"
       },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "",
+      "showTitle": "Les rois de l'arène",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T09:07:28.213Z"
+      "checkedAt": "2026-11-17T10:07:11.974Z"
     }
   }
 }
