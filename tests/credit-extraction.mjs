@@ -146,3 +146,51 @@ console.log('credit-extraction la-rédaction OK');
   assert.equal(PC.resolveSourcePhotoCredit({ source: 'Montréal Campus', lang: 'fr', image: img }, h2).creditLine, 'Photo : Maud Amoretti');
   console.log('credit-extraction mention FR OK');
 }
+
+
+// The Campus (Gutenberg) : crédit en italique juste après la figure, pas dans
+// une figcaption. Sans ça, le repli « Photo: The Campus » s'affiche
+// « Photo: The editorial team ».
+{
+  const pad = '<html><body>' + 'x'.repeat(300);
+  const cases = [
+    {
+      img: 'https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.29.11.png',
+      credit: 'Photo courtesy of Zachary Saint Cyr',
+      creator: 'Zachary Saint Cyr',
+      line: 'Photo: Courtesy of Zachary Saint Cyr',
+    },
+    {
+      img: 'https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.22.52.png',
+      credit: 'Photo courtesy of Music Chez Nous',
+      creator: 'Music Chez Nous',
+      line: 'Photo: Courtesy of Music Chez Nous',
+    },
+    {
+      img: 'https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.32.50.png',
+      credit: 'Graphic courtesy of Gabrielle Lalonde',
+      creator: 'Gabrielle Lalonde',
+      line: 'Illustration: Courtesy of Gabrielle Lalonde',
+    },
+  ];
+  for (const c of cases) {
+    const h = `${pad}<figure class="wp-block-image size-large"><img src="${c.img}" alt="" class="wp-image-123"/></figure>
+<p class="wp-block-paragraph"><em>${c.credit}</em></p>
+<p class="wp-block-paragraph">The rest of the article starts here and should not become the credit.</p></body></html>`;
+    const item = { source: 'The Campus', lang: 'en', link: 'https://thebucampus.ca/2026/11/16/example/', image: c.img };
+    const r = PC.resolveSourcePhotoCredit(item, h);
+    assert.equal(r.creator, c.creator, c.credit);
+    assert.equal(r.creditLine, c.line, c.credit);
+    assert.equal(r.cited, true, c.credit);
+    assert.equal(r.from, 'article', c.credit);
+    const C = require('../scripts/article-card-lib.js');
+    assert.equal(C.displayPhotoCredit(r.creditLine, { ...item, sourceImageCreditFrom: r.from }), c.line, c.credit);
+  }
+  // Repli média inchangé : le nom du journal n'est pas un vrai crédit.
+  {
+    const C = require('../scripts/article-card-lib.js');
+    const item = { source: 'The Campus', lang: 'en', sourceImageCreditFrom: 'media' };
+    assert.equal(C.displayPhotoCredit('Photo: The Campus', item), 'Photo: The editorial team');
+  }
+  console.log('credit-extraction campus courtesy sibling OK');
+}

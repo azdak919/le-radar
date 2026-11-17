@@ -20,7 +20,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 17; // rev 17 : « Photo de / d’X » (FR, The Concordian)
+const CREDIT_EXTRACTOR_REV = 18; // rev 18 : « Photo courtesy of X » juste après la figure (The Campus)
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -479,12 +479,14 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
   }
 
   // Point final optionnel (« Courtesy Sayplus. »).
+  const trailingKind = String.raw`(Photos?\s+(?:courtesy\s+of|by)|(?:Graphics?|Illustrations?)\s+(?:courtesy\s+of|by)|Photos?|Graphics?|Illustrations?|File photo|[Cc]ourtesy(?:\s+of)?)`;
+  const trailingName = String.raw`([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})`;
   const trailing = t.match(
-    /(?:^|[.!?…»"”]\s+)(Photos?\s+(?:courtesy\s+of|by)|Graphics?\s+by|Photos?|Graphics?|Illustrations?|File photo|[Cc]ourtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
+    new RegExp(String.raw`(?:^|[.!?…»"”]\s+)` + trailingKind + String.raw`\s+` + trailingName + String.raw`\s*\.?$`, 'u'),
   )
   // Repli : légende qui se termine juste par « Photo Prénom Nom » (The Link photo essays).
     || t.match(
-      /\b(Photos?\s+(?:courtesy\s+of|by)|Graphics?\s+by|Photos?|Graphics?|Illustrations?|File photo|[Cc]ourtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
+      new RegExp(String.raw`\b` + trailingKind + String.raw`\s+` + trailingName + String.raw`\s*\.?$`, 'u'),
     );
   if (!trailing) return null;
   const kind = trailing[1].toLowerCase();
@@ -500,13 +502,15 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
     return { ...parsed, source: 'figcaption-trailing-journalist' };
   }
   const en = lang === 'en';
+  const courtesy = kind.includes('courtesy');
+  const illustrated = kind.startsWith('graphic') || kind.startsWith('illustration');
   let creditLine = en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`;
-  if (kind.startsWith('graphic') || kind.startsWith('illustration')) {
-    creditLine = en ? `Illustration: ${parsed.creator}` : `Illustration : ${parsed.creator}`;
-  } else if (kind.includes('courtesy')) {
+  if (courtesy) {
     creditLine = en
-      ? `Photo: Courtesy of ${parsed.creator}`
-      : `Photo : avec l'aimable autorisation de ${parsed.creator}`;
+      ? `${illustrated ? 'Illustration' : 'Photo'}: Courtesy of ${parsed.creator}`
+      : `${illustrated ? 'Illustration' : 'Photo'} : avec l'aimable autorisation de ${parsed.creator}`;
+  } else if (illustrated) {
+    creditLine = en ? `Illustration: ${parsed.creator}` : `Illustration : ${parsed.creator}`;
   }
   return { ...parsed, creditLine, source: 'figcaption-trailing' };
 }
@@ -575,6 +579,26 @@ function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
       if (!am) continue;
       const trailing = parseTrailingCaptionCredit(am[1], lang);
       if (trailing) return { ...trailing, source: 'img-alt-credit' };
+    }
+
+    // The Campus (Gutenberg) : crédit en italique juste après la figure,
+    // pas dans une figcaption :
+    //   <p class="wp-block-paragraph"><em>Photo courtesy of Zachary Saint Cyr</em></p>
+    const figAt = html.indexOf(fig);
+    if (figAt >= 0) {
+      const after = html.slice(figAt + fig.length, figAt + fig.length + 800);
+      const sib = after.match(/^\s*<(p|div)(?:\s[^>]*)?>([\s\S]*?)<\/\1>/i);
+      if (sib) {
+        const text = stripHtml(sib[2]).replace(/\s+/g, ' ').trim();
+        if (text && text.length <= 160) {
+          const sibling = parseTrailingCaptionCredit(text, lang);
+          if (sibling) return { ...sibling, source: 'figure-sibling-credit' };
+          if (looksLikePhotoCredit(text)) {
+            const parsed = creditFromPhrase(text);
+            if (parsed) return { ...parsed, source: 'figure-sibling-credit' };
+          }
+        }
+      }
     }
   }
 
@@ -662,13 +686,15 @@ function extractViaCredit(html = '', lang = 'fr') {
   return null;
 }
 
-function extractBodyCredit(html = '', imageUrl = '') {
+function extractBodyCredit(html = '', imageUrl = '', lang = 'fr') {
   const body = articleBodyHtml(html);
   const paragraphs = body.match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
   for (const p of paragraphs.slice(0, 12)) {
     const text = stripHtml(p);
-    if (!looksLikePhotoCredit(text)) continue;
     if (text.length > 160) continue;
+    const trailing = parseTrailingCaptionCredit(text, lang);
+    if (trailing) return { ...trailing, source: 'body-line' };
+    if (!looksLikePhotoCredit(text)) continue;
     const parsed = creditFromPhrase(text);
     if (parsed) return { ...parsed, source: 'body-line' };
   }
@@ -921,7 +947,7 @@ function extractPhotoCreditFromHtml(html = '', imageUrl = '', lang = 'fr') {
       () => extractFigureCredit(html, imageUrl, lang),
       () => extractMediaCreditPlugin(html, imageUrl),
       () => extractJsonLdCredit(html, imageUrl),
-      () => extractBodyCredit(html, imageUrl),
+      () => extractBodyCredit(html, imageUrl, lang),
       () => extractFilenameCredit(html, imageUrl, lang),
     ]
     : [
@@ -929,7 +955,7 @@ function extractPhotoCreditFromHtml(html = '', imageUrl = '', lang = 'fr') {
       () => extractMediaCreditPlugin(html, imageUrl),
       () => extractJsonLdCredit(html, imageUrl),
       () => extractFigureCredit(html, imageUrl, lang),
-      () => extractBodyCredit(html, imageUrl),
+      () => extractBodyCredit(html, imageUrl, lang),
     ];
 
   for (const fn of extractors) {
