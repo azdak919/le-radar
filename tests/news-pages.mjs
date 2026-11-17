@@ -64,4 +64,25 @@ assert.match(wf, /node scripts\/news-pages\.js --update/);
 assert.match(wf, /git add -A -- news-latest\.json 'news-page-\*\.json'/);
 const push = readFileSync(new URL('../scripts/bot-push.sh', import.meta.url), 'utf8');
 assert.match(push, /news-latest\\\.json\|news-page-\[0-9\]\+\\\.json/);
+// Compteur en tête du fil : total du catalogue, pas le premier lot (60).
+assert.match(js, /function formatNewsCountLabel\(/);
+assert.match(js, /formatNewsCountLabel\(displayed,/);
+assert.match(js, /total: newsPaging\.total/);
+assert.doesNotMatch(
+  js,
+  /NEWS_COUNT\.textContent = `\$\{n\} article/,
+  'après « Charger plus », le compteur ne reprend pas le nombre de cartes chargées',
+);
+const fn = js.match(/function formatNewsCountLabel\([\s\S]*?^\}/m);
+assert(fn, 'formatNewsCountLabel extractible pour les cas de test');
+const formatNewsCountLabel = new Function(`${fn[0]}; return formatNewsCountLabel;`)();
+assert.equal(formatNewsCountLabel(60, { total: 1018 }), '1018 articles', 'accueil : total, pas le lot');
+assert.equal(formatNewsCountLabel(90, { total: 1018 }), '1018 articles', 'après un lot de plus : toujours le total');
+assert.equal(formatNewsCountLabel(1, { total: 1 }), '1 article');
+assert.equal(formatNewsCountLabel(0, { total: 0 }), '0 articles');
+assert.equal(formatNewsCountLabel(12, { search: true, total: 1018 }), '12 résultats', 'recherche : compte filtré');
+assert.equal(formatNewsCountLabel(1, { search: true, total: 1018 }), '1 résultat');
+assert.equal(formatNewsCountLabel(7, { filtered: true, total: 1018 }), '7 articles', 'source ou suivis : compte filtré');
+assert.equal(formatNewsCountLabel(60, { total: 0 }), '60 articles', 'repli si le total manque');
+
 console.log('news-pages: OK');

@@ -22,6 +22,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Compteur en tête du fil : affiche le total du catalogue (`news-latest.json`, `total` / `count`, environ un millier d’articles) plutôt que le premier lot chargé (60). Le total reste juste après « Charger plus » (`news-page-N.json`). En recherche, filtre par source ou médias suivis, c’est le compte filtré qui s’affiche. Valable en français et en mode traduit.
 - Impression Letter, Legal, Tabloid, A4 et A3 (portrait) de l’accueil, des fiches d’article et de la revue : logo du Radar à gauche de LE‑RADAR.ca au pied de chaque feuille (fiche `/article/?id=` comprise), photo de la fiche bornée et jamais rognée (la fiche tient sur une feuille), intertitres jamais seuls en bas de page ; test Playwright qui produit et vérifie un PDF par format.
 - Pages radio (grille « En ondes cette semaine ») : les cartes reprennent le fond neutre du site (`--bg-soft`) au lieu d’un mélange de la couleur d’établissement (8 % en clair, 16 % en sombre). Cette couleur reste aux accents — nom du jour, filet du jour en cours, bouton Écouter et petites barres — avec une variante éclaircie en mode sombre pour le bordeaux et le marine (contraste WCAG AA).
 - Pages radio (grille « En ondes cette semaine ») : filet et pastille rouges pour l’émission en ondes, filet jaune en tirets et pastille jaune pour la suivante, les mêmes pour les six stations, indépendamment de la couleur d’établissement. Teintes ajustées par thème pour un contraste WCAG AA (filets ≥ 3:1, texte des pastilles ≥ 4,5:1).

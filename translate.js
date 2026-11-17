@@ -2109,6 +2109,25 @@
       if (lang === 'fr') return `${n} article${n === '1' ? '' : 's'}`;
     }
 
+    // Compteurs dynamiques « 12 résultats » / « 1 résultat »
+    const countResults = core.match(/^(\d+)\s+résultats?\s*$/i);
+    if (countResults) {
+      const n = countResults[1];
+      const lang = institutionLangKey(targetLang);
+      if (lang === 'en') return `${n} result${n === '1' ? '' : 's'}`;
+      if (lang === 'es') return `${n} resultado${n === '1' ? '' : 's'}`;
+      if (lang === 'pt') return `${n} resultado${n === '1' ? '' : 's'}`;
+      if (lang === 'de') return `${n} Ergebnis${n === '1' ? '' : 'se'}`;
+      if (lang === 'it') return `${n} risultat${n === '1' ? 'o' : 'i'}`;
+      if (lang === 'zh' || lang === 'zh-tw') return `${n} 个结果`;
+      if (lang === 'ar') return `${n} نتيجة`;
+      if (lang === 'ru') return `${n} результат${n === '1' ? '' : 'ов'}`;
+      if (lang === 'ko') return `결과 ${n}개`;
+      if (lang === 'ja') return `${n}件の結果`;
+      if (lang === 'fr') return `${n} résultat${n === '1' ? '' : 's'}`;
+    }
+
+
     // Application téléphone : libellés dynamiques (le nom propre reste tel quel).
     if (institutionLangKey(targetLang) === 'en') {
       const suite = core.match(/^Afficher la suite \((\d+)\)$/);

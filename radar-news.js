@@ -58,6 +58,20 @@ function newsHasMorePages() {
   return !newsPaging.complete && newsPaging.next < newsPaging.pages.length;
 }
 
+
+/** Libellé du compteur en tête du fil.
+ *  Accueil : total du catalogue (news-latest.json `total`/`count`), pas le lot chargé.
+ *  Recherche / filtre source / médias suivis : le compte filtré (affiché). */
+function formatNewsCountLabel(displayed, { search = false, filtered = false, total = 0 } = {}) {
+  if (search) {
+    const n = Number(displayed) || 0;
+    return `${n} résultat${n !== 1 ? 's' : ''}`;
+  }
+  const catalog = Number(total) || 0;
+  const n = filtered ? (Number(displayed) || 0) : (catalog > 0 ? catalog : (Number(displayed) || 0));
+  return `${n} article${n !== 1 ? 's' : ''}`;
+}
+
 /** Articles restants côté serveur (pour les libellés « Plus d'articles (N) »). */
 function newsRemainingCount() {
   return newsPaging.complete ? 0 : Math.max(0, (newsPaging.total || 0) - news.length);
@@ -1619,9 +1633,11 @@ function renderNews() {
     }
   }
 
-  const countLabel = isSearchView
-    ? `${displayed} résultat${displayed !== 1 ? 's' : ''}`
-    : `${displayed} article${displayed !== 1 ? 's' : ''}`;
+  const countLabel = formatNewsCountLabel(displayed, {
+    search: isSearchView,
+    filtered: isSourceView || isFollowedView,
+    total: newsPaging.total,
+  });
   if (NEWS_COUNT) NEWS_COUNT.textContent = countLabel;
 
   // Remplacer le contenu seulement une fois le nouveau fil assemblé, pour
@@ -1901,8 +1917,7 @@ async function loadMoreIntoTail() {
       : 'Fin du fil.');
   }
   if (NEWS_COUNT && !NEWS_LIST.dataset.mode) {
-    const n = NEWS_LIST.querySelectorAll('a.article, .article').length;
-    NEWS_COUNT.textContent = `${n} article${n !== 1 ? 's' : ''}`;
+    NEWS_COUNT.textContent = formatNewsCountLabel(0, { total: newsPaging.total });
   }
   // Clavier : le focus passe à la première carte ajoutée (pas en défilement).
   const wantFocus = newsTailMoreFocusPending;
