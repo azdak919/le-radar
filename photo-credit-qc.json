@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-17T18:49:06.687Z",
-  "total": 1023,
-  "withImage": 914,
-  "withCredit": 808,
-  "cited": 442,
-  "pending": 364,
+  "updated": "2026-11-17T20:10:00.757Z",
+  "total": 1024,
+  "withImage": 915,
+  "withCredit": 859,
+  "cited": 482,
+  "pending": 324,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 60,
-  "citedNew": 46,
-  "fallbackNew": 14,
+  "citedNew": 47,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Peut-on encore posséder de la culture ?",
+      "source": "La Pige",
+      "credit": "Photo : Maxence Gibault-Renault",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
@@ -69,32 +76,25 @@
       "method": null
     },
     {
-      "title": "Le DSM-6 ?",
-      "source": "Le Collectif",
-      "credit": "Photo : Jessica Weinkle",
+      "title": "Saguenay acquiert officiellement l’église Saint-Édouard",
+      "source": "La Pige",
+      "credit": "Photo : Arthur Bakhache",
       "cited": true,
-      "method": "body-tail"
+      "method": "body-line"
     },
     {
-      "title": "Lumières et faisceaux | Retour sur le Festival de cinéma",
-      "source": "Impact Campus",
-      "credit": "Photo : Impact Campus",
-      "cited": false,
-      "method": null
+      "title": "Antisémitisme : McGill, mauvaise élève?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Circonscriptions des personnes cheffes de parti",
-      "source": "Le Collectif",
-      "credit": "Photo : Getty images",
+      "title": "La fabrique de la boîte de nuit",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Débat économique de TVA",
-      "source": "Le Collectif",
-      "credit": "Photo : Publication de TVA",
-      "cited": true,
-      "method": "body-tail"
+      "method": "media-credit-featured"
     }
   ]
 }

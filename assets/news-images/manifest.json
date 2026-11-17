@@ -2988,15 +2988,6 @@
       "via": "disk",
       "nameKey": "capture-decran-le-2026-10-27-a-22.30.26.png"
     },
-    "829bf138843dfc8f": {
-      "local": "assets/news-images/829bf138843dfc8f.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-22.16.31.png",
-      "host": "thebucampus.ca",
-      "bytes": 143772,
-      "updatedAt": "2026-11-17T11:41:00.790Z",
-      "via": "disk",
-      "nameKey": "capture-decran-le-2026-10-27-a-22.16.31.png"
-    },
     "cd96f23e0f579813": {
       "local": "assets/news-images/cd96f23e0f579813.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/cynisme.elena_-scaled.png",
@@ -3092,9 +3083,19 @@
       "updatedAt": "2026-11-17T18:47:03.987Z",
       "via": "disk",
       "nameKey": "image.png"
+    },
+    "be611451563af4ef": {
+      "local": "assets/news-images/be611451563af4ef.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 112622,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-17T20:08:45.473Z",
+      "via": "resize-proxy",
+      "nameKey": "media.png"
     }
   },
-  "updatedAt": "2026-11-17T18:47:55.482Z",
+  "updatedAt": "2026-11-17T20:08:45.482Z",
   "count": 321,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5469,6 +5470,10 @@
     "166c965ceb7dcf6b": {
       "reason": "budget",
       "at": "2026-11-17T18:47:55.480Z"
+    },
+    "829bf138843dfc8f": {
+      "reason": "budget",
+      "at": "2026-11-17T20:08:45.480Z"
     }
   }
 }
