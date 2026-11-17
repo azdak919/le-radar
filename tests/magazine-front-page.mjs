@@ -168,6 +168,12 @@ console.log(`magazine-front-page : OK (${cards.items.length} articles, une = ${c
   const d = front.periodWindow('demain', ref);
   assert.equal(d.id, 'demain');
   assert.ok(d.live && front.periodWindow('jour', ref).live && !w.live, 'demain et jour : périodes en direct');
+  const jour = front.periodWindow('jour', ref);
+  assert.equal(jour.fr, 'Les plus récents');
+  assert.equal(jour.en, 'Latest');
+  assert.notEqual(jour.fr, 'Aujourd’hui');
+  assert.notEqual(jour.en, 'Today');
+
   assert.equal(d.target, '2026-11-13');
   assert.equal(d.fr, 'Vendredi 13 novembre 2026');
   assert.equal(front.periodWindow('demain', new Date('2026-12-31T17:00:00Z')).target, '2027-01-01', 'lendemain du 31 décembre');
@@ -459,4 +465,18 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.match(pb, /window\.__uneSignatures/);
   assert.match(pb, /paintSignature\(/);
   assert.doesNotMatch(pb, /metaPick\([^\n]*,\s*[123],\s*true\)/);
+}
+
+// Période « jour » de La une : libellé « Les plus récents » / « Latest ».
+// L’affiche en direct continue d’écrire la date civile, pas ce libellé.
+{
+  const html = readFileSync(join(root, 'affiches/index.html'), 'utf8');
+  assert.match(html, /<option value="jour" selected>Les plus récents<\/option>/);
+  assert.doesNotMatch(html, /Aujourd[’']hui \(les plus récents\)/);
+  const pb = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert.match(pb, /jour: 'Les plus récents'/);
+  assert.match(pb, /period && period\.id === 'demain' \? period\.fr : capDate/, 'affiche live : date civile, pas le libellé de période');
+  const socialUne = readFileSync(join(root, 'scripts/social/une-lib.mjs'), 'utf8');
+  assert.match(socialUne, /période « Les plus récents »/);
+  assert.doesNotMatch(socialUne, /période « Aujourd/);
 }
