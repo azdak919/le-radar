@@ -112,6 +112,8 @@ for(const theme of ['light','dark'])for(const id of ids){
     return {
       liveWidth:liveEl?parseFloat(getComputedStyle(liveEl).borderLeftWidth):0,
       upWidth:upEl?parseFloat(getComputedStyle(upEl).borderLeftWidth):0,
+      upStyle:upEl?getComputedStyle(upEl).borderLeftStyle:null,
+      liveStyle:liveEl?getComputedStyle(liveEl).borderLeftStyle:null,
       liveMatches:liveEl?rgb(livePaint)===rgb(dark?liveSoft:liveTok):null,
       upMatches:upEl?rgb(upPaint)===rgb(dark?upSoft:upTok):null,
       liveIsStation:liveEl?rgb(livePaint)===rgb(station):null,
@@ -122,6 +124,7 @@ for(const theme of ['light','dark'])for(const id of ids){
   });
   if(liveCount){
     expect(air.liveWidth,`${id} ${theme} live bar`).toBeGreaterThanOrEqual(3);
+    expect(air.liveStyle,`${id} ${theme} live bar is solid`).toBe('solid');
     expect(air.liveMatches,`${id} ${theme} live bar is status red`).toBe(true);
     expect(air.liveIsStation,`${id} ${theme} live bar is not institution colour`).toBe(false);
     expect(air.liveBadgeMatches,`${id} ${theme} live badge matches the red bar`).toBe(true);
@@ -130,6 +133,7 @@ for(const theme of ['light','dark'])for(const id of ids){
   }
   if(upCount){
     expect(air.upWidth,`${id} ${theme} upcoming bar`).toBeGreaterThanOrEqual(3);
+    expect(air.upStyle,`${id} ${theme} upcoming bar is dashed`).toBe('dashed');
     expect(air.upMatches,`${id} ${theme} upcoming bar is status yellow`).toBe(true);
     expect(air.upIsStation,`${id} ${theme} upcoming bar is not institution colour`).toBe(false);
     expect(air.upBadgeMatches,`${id} ${theme} upcoming badge matches the yellow bar`).toBe(true);
@@ -168,7 +172,9 @@ for(const theme of ['light','dark']){
     return rgb(getComputedStyle(liveEl).borderLeftColor)===rgb(dark?liveSoft:liveTok)
       && rgb(getComputedStyle(upEl).borderLeftColor)===rgb(dark?upSoft:upTok)
       && parseFloat(getComputedStyle(liveEl).borderLeftWidth)>=3
-      && parseFloat(getComputedStyle(upEl).borderLeftWidth)>=3;
+      && parseFloat(getComputedStyle(upEl).borderLeftWidth)>=3
+      && getComputedStyle(liveEl).borderLeftStyle==='solid'
+      && getComputedStyle(upEl).borderLeftStyle==='dashed';
   });
   expect(ok,`${theme} CJLO bars are status red and yellow`).toBe(true);
  });

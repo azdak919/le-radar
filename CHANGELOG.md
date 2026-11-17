@@ -19,7 +19,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Corrigé
 
 - Pages radio (grille « En ondes cette semaine ») : les cartes reprennent le fond neutre du site (`--bg-soft`) au lieu d’un mélange de la couleur d’établissement (8 % en clair, 16 % en sombre). Cette couleur reste aux accents — nom du jour, filet du jour en cours, bouton Écouter et petites barres — avec une variante éclaircie en mode sombre pour le bordeaux et le marine (contraste WCAG AA).
-- Pages radio (grille « En ondes cette semaine ») : filet et pastille rouges pour l’émission en ondes, jaunes pour la suivante, les mêmes pour les six stations, indépendamment de la couleur d’établissement. Teintes ajustées par thème pour un contraste WCAG AA (filets ≥ 3:1, texte des pastilles ≥ 4,5:1).
+- Pages radio (grille « En ondes cette semaine ») : filet et pastille rouges pour l’émission en ondes, filet jaune en tirets et pastille jaune pour la suivante, les mêmes pour les six stations, indépendamment de la couleur d’établissement. Teintes ajustées par thème pour un contraste WCAG AA (filets ≥ 3:1, texte des pastilles ≥ 4,5:1).
 
 - Impression de l’accueil (et des pages qui partagent la même feuille) : mise en page de journal sans colonne vide ni pied orphelin, typographie unifiée, plus d’URL brutes ni de paramètres utm, pastille « hier » corrigée, extraits alignés à gauche avec points de suspension, crédits photo sur une ligne, et un QR « Scanne-moi » vers LE-RADAR.ca (mot-symbole officiel).
 

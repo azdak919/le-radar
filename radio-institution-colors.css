@@ -92,6 +92,7 @@ html:lang(en) #horaire[data-radio-institution] .seo-day--today h3::after { conte
 }
 #horaire[data-radio-institution] .seo-day li.seo-slot--upcoming {
   border-left-color: var(--air-upcoming);
+  border-left-style: dashed;
 }
 #horaire[data-radio-institution] .seo-day li.seo-slot--playing { border-left-width: 5px; }
 #horaire[data-radio-institution] .seo-slot--live .seo-slot__badge {
