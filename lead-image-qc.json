@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-17T00:09:06.228Z",
+  "updated": "2026-11-17T00:39:13.558Z",
   "total": 188,
   "withPhoto": 172,
   "withStock": 30,
   "withCampusBank": 26,
   "fullyCovered": 188,
-  "leadReadyPhotos": 162,
+  "leadReadyPhotos": 160,
   "pageScraped": 16,
   "photosRecovered": 15,
   "imagesCleared": 4,
-  "stockSearches": 27,
-  "stockFound": 25,
-  "campusBankFound": 22,
+  "stockSearches": 28,
+  "stockFound": 26,
+  "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,16 +33,22 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Quand-une-banque-fait-tomber-un-president_Getty-Images.jpg"
     },
     {
-      "title": "Les Redbirds à nouveau Rois du Québec",
-      "link": "https://www.delitfrancais.com/2026/11/11/les-redbirds-a-nouveau-rois-du-quebec/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
-    },
-    {
       "title": "Is Wearing Makeup Really a Choice?",
       "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
+    },
+    {
+      "title": "Prouve que tu existes",
+      "link": "https://www.delitfrancais.com/2026/11/11/prouve-que-tu-existes/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Gaiters Women’s Soccer: A Season to Remember",
+      "link": "https://thebucampus.ca/2026/11/09/gaiters-womens-soccer-a-season-to-remember/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -79,12 +85,6 @@
       "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
       "reason": "no-stock-match",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
-    },
-    {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
-      "reason": "no-stock-match",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
     }
   ]
 }
