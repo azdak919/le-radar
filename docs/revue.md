@@ -6,7 +6,7 @@ Une revue n’est **pas** une réécriture : des extraits courts, un lien vers c
 auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de sport professionnel.
 
 > **Publication publique : activée le 17 novembre 2026** (décision de Charles). Les éditions restent à
-> 7 h et 20 h (heure de Montréal). La revue n’entre jamais dans La une des réseaux sociaux ni dans les stories.
+> 7 h et 20 h (heure de Montréal). La revue n’est jamais une carte ni une image de La une, ni une story. Le texte de La une (matin et soir) peut porter, en 2e ligne, un lien vers l’édition du jour si la page existe déjà.
 > Pour désactiver : `"publish": false` dans `data/revue/config.json` (les pages déjà publiées restent).
 
 ## Fichiers
@@ -25,7 +25,7 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 | `.github/workflows/revue.yml` | Cron (7 h et 20 h, heure de Montréal, rafraîchissement à 23 h 35) + lancement manuel. |
 | `.github/workflows/revue-preview.yml` | Sur PR : exemple réel avec les données en ligne et l’IA, artéfact `exemple-revue`. |
 | `tests/revue.mjs`, `tests/revue-render.spec.mjs` | Génération, garde, JSON-LD, sitemaps, RSS, crons, rendu navigateur. |
-| `tests/revue-une-isolation.mjs` | La revue n’entre jamais dans La une ni dans les publications sociales par article. |
+| `tests/revue-une-isolation.mjs` | La revue n’est pas un item de La une ni une publication sociale par article ; le lien texte en 2e ligne n’apparaît que si l’édition existe. |
 | `tests/print-formats.spec.mjs` | Impression Letter, Legal, Tabloid, A4, A3 (portrait) : revue, accueil, fiches d’article. |
 
 ## Éditions
@@ -58,19 +58,29 @@ Choisies d’après les données du site (novembre 2026) et les habitudes de lec
 - **Lecture** : chez les 16–24 ans, pics au réveil et en soirée (Reuters Digital News Report ; Pew, nouvelles sur
   téléphone le matin et en fin de journée ; suivi suisse des 18–25 ans, dont 69 % d’étudiants : 18 h – 21 h aussi
   fort que le midi, baisse après 21 h).
-- **La une** (réseaux sociaux) part à 7 h 45 et 19 h 30 : pas de collision, et la revue n’y figure jamais (ci-dessous).
+- **La une** (réseaux sociaux) part à 7 h 45 et 19 h 30. La revue n’y entre pas comme carte ou image (ci-dessous) ; un lien texte peut s’ajouter en 2e ligne si l’édition du jour est déjà en ligne. À noter : La une du soir (19 h 30) précède souvent la revue du soir (20 h 02), donc la ligne n’apparaît que si un passage ultérieur dans la fenêtre (19 h 15–22 h 30) trouve la page déjà publiée.
 
 Crons (UTC, heure normale et heure avancée) : `2 11,12 * * *` (matin 7 h 02), `37 13,14 * * *` (secours),
 `2 0,1 * * *` (soir 20 h 02), `37 1,2 * * *` (secours), `35 3,4 * * *` (rafraîchissement 23 h 35). Le `--gate` choisit
 l’édition due ; `tests/revue.mjs` vérifie que crons, `config.json` et fenêtres concordent en janvier et en juillet.
 
-## La revue n’entre jamais dans La une
+## La revue n’est pas un item de La une
 
 Les publications sociales « La une » (images du matin et du soir, `scripts/social/une-run.mjs`) lisent `news.json`,
-`sports-masthead.json` et `radio-schedules.json`, jamais les fichiers de la revue. Par sécurité, `selectUne` écarte
-tout lien `le-radar.ca/revue/…` et `parseFeed` (publications par article : Bluesky, Mastodon, Tumblr, Buffer) retire
-les revues de `feed.xml`. `tests/revue-une-isolation.mjs` le garantit (textes, liens, textes alternatifs de tous les
-réseaux, flux de travail).
+`sports-masthead.json` et `radio-schedules.json`, jamais les fichiers internes de la revue. `selectUne` écarte tout
+lien `le-radar.ca/revue/…` (la revue n’est jamais une carte, une image ou un item de La une) et `parseFeed`
+(publications par article : Bluesky, Mastodon, Tumblr, Buffer) retire les revues de `feed.xml`.
+
+En revanche, **dans le texte seulement**, si la page publique de l’édition du même créneau existe déjà
+(`revue/AAAA-MM-JJ-matin|soir/index.html`), une 2e ligne s’ajoute sous l’accroche, sans couper celle-ci ni les
+mentions d’auteurs :
+
+> Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/AAAA-MM-JJ-soir/
+
+(« du matin » pour le créneau de 7 h 45). Si la page n’existe pas, rien n’est ajouté. Instagram (légende sans lien
+cliquable, encore désactivé) n’a pas cette ligne. Si le texte dépasse encore la limite du réseau après les autres
+réductions, on retire la ligne plutôt que de couper l’accroche ou les auteurs. Les stories restent désactivées
+(`formats.une.story.publish`). `tests/revue-une-isolation.mjs` et `tests/social-une.mjs` le garantissent.
 
 ## Lecture et impression
 

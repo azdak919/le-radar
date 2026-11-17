@@ -3,8 +3,11 @@
 //  - sélection = la une de l'accueil (scripts/magazine-front-page-lib.js, période « Les plus récents », sport pro exclu) ;
 //  - anti-doublon : un article déjà publié dans un créneau récent n'est jamais repris ; le soir ne garde que les
 //    nouveautés de la journée et saute la publication s'il n'y en a aucune ;
-//  - textes par réseau en français, titres + auteurs (tous, sinon le média seul), liens le-radar.ca, hashtags, aucune mention @.
+//  - textes par réseau en français, titres + auteurs (tous, sinon le média seul), liens le-radar.ca, hashtags, aucune mention @ ;
+//  - 2e ligne optionnelle vers l’édition de la revue du jour, seulement si la page publique existe (jamais une carte ni une image).
 // Aucune publication ici.
+import fs from 'node:fs';
+import path from 'node:path';
 import { createRequire } from 'node:module';
 import { torontoDay } from './policy.mjs';
 import { xlen, SITE, isRevueLink } from './lib.mjs';
@@ -98,7 +101,7 @@ const hasImg = it => Boolean(it && !it._feedNoImage && (it.imageLocal || it.imag
  * Retourne { items (normalisés), lead, ids, skip?, why, doubts }.
  */
 export function selectUne(news, slot, { now = Date.now(), state = {}, max = 4, pool = 9, maxNewsAgeH = 6 } = {}) {
-  // La revue du matin / du soir n'entre jamais dans La une (ni image, ni texte, ni lien).
+  // La revue n'entre jamais dans la sélection de La une (ni carte, ni image). Un lien texte peut figurer en 2e ligne du post, seulement si l'édition du jour existe (revueEditionLine).
   const raw = (Array.isArray(news) ? news : news?.items || []).filter(it => !isRevueLink(it?.link));
   const doubts = [];
   const updated = Date.parse(news?.updated || '');
@@ -372,18 +375,45 @@ export function uneTumblrTags(items) {
 }
 const clip = (s, n) => { const a = [...s]; return a.length <= n ? s : a.slice(0, n - 1).join('').replace(/[\s,;:.–—-]+$/, '') + '…'; };
 
+
+/** Chemin public d'une édition (ex. « revue/2026-11-17-soir/ »), ou '' si le créneau n'est ni matin ni soir. */
+export function revueEditionHref(slot) {
+  const id = slot?.id, day = slot?.day;
+  if ((id !== 'matin' && id !== 'soir') || !/^\d{4}-\d{2}-\d{2}$/.test(String(day || ''))) return '';
+  return `revue/${day}-${id}/`;
+}
+
+/** Vrai seulement si la page publique de l'édition est vraiment là (index.html dans le dépôt). */
+export function revueEditionExists(slot, { root = process.cwd(), exists } = {}) {
+  const rel = revueEditionHref(slot);
+  if (!rel) return false;
+  if (typeof exists === 'function') return !!exists(rel);
+  return fs.existsSync(path.join(root, rel, 'index.html'));
+}
+
+/**
+ * Deuxième ligne du texte de La une, seulement si l'édition du même créneau (matin 7 h / soir 20 h) existe.
+ * Chaîne vide sinon, et jamais pour un réseau sans lien cliquable (Instagram).
+ */
+export function revueEditionLine(slot, opts = {}) {
+  if (opts.nolink || !revueEditionExists(slot, opts)) return '';
+  const which = slot.id === 'matin' ? 'du matin' : 'du soir';
+  return `Consultez notre revue ${which}, à imprimer avec sudoku et mots cachés : ${SITE}/${revueEditionHref(slot)}`;
+}
+
 /**
  * Texte d'un réseau. Réseaux longs (Mastodon, Tumblr, Facebook, LinkedIn) : un lien par article.
  * Réseaux courts (X, Bluesky) : titres + signatures, un seul lien (l'article si un seul titre, sinon l'accueil).
- * Si le texte dépasse la limite : on retire des articles (jamais la une), puis des hashtags, puis on raccourcit les titres.
+ * Si le texte dépasse la limite : on retire radio et sport, puis des articles (jamais la une), puis des hashtags, puis on raccourcit les titres (jamais l’accroche ni les mentions). La 2e ligne vers l’édition de la revue, si elle existe, est retirée en dernier recours.
  */
 /** Instagram (préparé, désactivé) : légende ≤ 2200, aucun lien cliquable, « lien en bio ». */
 export const IG_SPEC = { limit: 2200, len: s => [...String(s)].length, subheaders: true, nolink: true };
 const SPORTS_NETS = new Set(['facebook', 'linkedin', 'tumblr', 'instagram']);
-export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : NET_SPEC[net], { tags = [] } = {}) {
+export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : NET_SPEC[net], { tags = [], revueExists, root } = {}) {
   const len = spec.len || xlen, long = !!spec.subheaders;
   const head = `${model.slot.emoji} ${model.slot.label} du Radar · ${frDay(model.slot.day)}`;
-  const compose = (items, hash, cut, sports, radio) => {
+  const revueOpts = { root, exists: revueExists ?? model.revueExists, nolink: !!spec.nolink };
+  const compose = (items, hash, cut, sports, radio, revueLine) => {
     const T = x => cut ? clip(x.title, cut) : x.title;
     let body;
     if (spec.nolink) {
@@ -397,16 +427,20 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
     if (spec.nolink) body += '\n\nToute la une : lien en bio (le-radar.ca)';
     else if (long) body += `\n\nToute la une : ${HOME}`;
-    return [head, body, hash.join(' ')].filter(Boolean).join('\n\n');
+    const lead = revueLine ? `${head}\n${revueLine}` : head;
+    return [lead, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
   let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = SPORTS_NETS.has(net) ? [...(model.radio || [])] : [];
+  let withRevue = true;
   for (;;) {
-    const t = compose(items, hash, cut, sports, radio);
+    const revueLine = withRevue ? revueEditionLine(model.slot, revueOpts) : '';
+    const t = compose(items, hash, cut, sports, radio, revueLine);
     if (len(t) <= spec.limit) return t;
     if (radio.length) { radio = radio.slice(0, -1); continue; }
     if (sports.length) { sports = sports.slice(0, -1); continue; }
     if (items.length > 1) { items = items.slice(0, -1); continue; }
     if (hash.length > 1) { hash = hash.slice(0, -1); continue; }
+    if (cut && cut <= 30 && withRevue && revueLine) { withRevue = false; cut = 0; continue; }
     cut = cut ? cut - 10 : 120; if (cut < 30) return null;
   }
 }
@@ -433,11 +467,11 @@ export function checkUneText(text, net, model, spec = net === 'instagram' ? IG_S
   return p;
 }
 /** Tous les textes d'un créneau. `maxByNetwork` : plafonds de hashtags. */
-export function buildUneAll(model, maxByNetwork = {}) {
+export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
   const out = {};
   for (const n of [...NETS, ...PREPARED_NETS]) {
     const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n], tags = n === 'tumblr' ? [] : uneTags(model.items, maxByNetwork[n] ?? (n === 'instagram' ? 5 : 2));
-    const text = buildUneText(model, n, spec, { tags });
+    const text = buildUneText(model, n, spec, { tags, revueExists: opts.revueExists ?? model.revueExists, root: opts.root });
     out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] + (STORY_FOR[n] ? ' + ' + STORY_FOR[n] : ''), problems: checkUneText(text, n, model, spec) };
   }
   return out;
