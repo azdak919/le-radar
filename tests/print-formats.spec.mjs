@@ -4,6 +4,20 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { WEATHER_SITES } from '../scripts/revue/revue-weather.mjs';
+
+/** Données météo de contrôle (jamais servies au public) : une entrée par site ECCC, pour vérifier le bloc imprimé. */
+const printWeather = () => ({
+  source: 'Environnement et Changement climatique Canada',
+  cities: WEATHER_SITES.map((site, i) => ({
+    ...site,
+    issued: '20261117120000',
+    periods: [
+      { name: 'Cet après-midi', sky: 'Quelques nuages', kind: 'high', temp: 2 - i, icon: 1, pop: null },
+      { name: 'Cette nuit', sky: 'Dégagé', kind: 'low', temp: -6 - i, icon: 30, pop: 10 },
+    ],
+  })),
+});
 
 // Impression sur les formats de papier courants, en portrait : Letter, Legal, Tabloid, A4 et A3.
 // Pages : accueil (cartes d'article du fil), fiche d'article statique /article/<id>/, fiche /article/?id=, revue du soir.
@@ -28,7 +42,7 @@ const revueModel = () => ({
   datePublished: '2026-11-18T01:00:00.000Z', dateModified: '2026-11-18T01:00:00.000Z', headline: 'La revue du soir du mardi 17 novembre 2026', description: 'd',
   intro: 'En tête de cette revue du soir, Le Collectif publie « Le conseil municipal adopte son budget », sous la plume d’Aurélie Souka et Caroline Lizin. À lire aussi : « La génération Z et le retour des médias physiques » dans Quartier Libre. Sur les terrains, en basketball (F) : Stingers (Concordia) 55, Martlets (McGill) 54.',
   chapeau: '', generator: 'gabarit', previous: null, categories: ['Revue de presse'],
-  image: { url: POSTER, credit: 'Photo : Jane Roy', source: 'Le Collectif', title: 'Titre de la une' },
+  image: { url: POSTER, credit: 'Photo : Jane Roy', source: 'Le Collectif', title: 'Titre de la une' }, weather: printWeather(),
   items: Array.from({ length: 14 }, (_, i) => item(i + 1)),
   radio: [{ id: 'cism', station: 'CISM 89,3', page: 'https://le-radar.ca/radios/cism/', shows: Array.from({ length: 4 }, (_, i) => ({ title: `Émission ${i + 1}`, start: `${20 + i}:00`, when: `${20 + i} h à ${21 + i} h`, url: '' })) }],
   sports: {

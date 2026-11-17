@@ -17,7 +17,9 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 | `scripts/revue/revue-lib.mjs` | Fenêtres horaires (heure de Montréal, DST), sélection des articles, thèmes, radio, sport, garde anti-hallucination, validation. |
 | `scripts/revue/revue-ai.mjs` | Résumés d’une phrase et amorce éditoriale par Workers AI (même modèle et mêmes secrets que l’accroche IA de La une). |
 | `scripts/revue/revue-render.js` | Page (chrome du site), index des archives, JSON-LD `NewsArticle`, sitemap Google News, entrées RSS. |
-| `scripts/revue/revue-run.mjs` | CLI : `--gate`, `--edition`, `--sample --out`, `--refresh`, `--rebuild`. |
+| `scripts/revue/revue-weather.mjs` | Prévisions ECCC (Datamart MSC, fichiers citypage XML) lues à la production de l’édition. |
+| `scripts/revue/revue-games.js` | Sudoku et mots cachés déterministes (graine = date + édition), avec solutions. |
+| `scripts/revue/revue-run.mjs` | CLI : `--gate`, `--edition`, `--sample --out`, `--refresh`, `--rebuild`, `--sans-meteo`. |
 | `scripts/revue/revue-sample.sh`, `revue-screenshots.mjs` | Exemples matin + soir, captures (mobile 390 px, ordinateur 1280 px, clair/sombre) et PDF d’impression Letter, Legal, Tabloid, A4, A3 (`captures/impression/`). |
 | `revue.css` | Styles de la page (variables du site, mode sombre). Hors coquille du service worker. |
 | `.github/workflows/revue.yml` | Cron (7 h et 20 h, heure de Montréal, rafraîchissement à 23 h 35) + lancement manuel. |
@@ -83,7 +85,7 @@ réseaux, flux de travail).
   `institution-color-lib.js`, foncée jusqu’à 4,6:1 sur blanc pour rester lisible imprimée) ; le sigle reste en couleur
   normale. Même règle sur les cartes de l’accueil (forme courte : « Université Bishop’s » → « Bishop’s »).
 - Impression de la revue : **un vrai journal**. Manchette (logo du Radar à gauche de LE‑RADAR.ca, devise, filet
-  double, ligne de folio : édition, date, heure de publication), article **à la une** (surtitre, grand titre, tous les
+  double, ligne de folio : édition, date, heure de publication ; dans l’oreille gauche, accent typographique sur « Étudiante »), article **à la une** (surtitre, grand titre, tous les
   auteurs, photo, résumé) avec l’amorce « Dans cette édition », puis les rubriques en **colonnes séparées par des
   filets** : 2 colonnes en Lettre et A4 (photo à gauche, texte à droite), 3 en Légal, 4 en Tabloïd et A3, où la une
   gagne un **encadré « En bref »** (résultats ou prochains matchs, une régate si l’édition en a une, émissions de
@@ -98,10 +100,26 @@ réseaux, flux de travail).
     Radar seulement ; petites à droite en Lettre et A4, plus grandes en Légal, Tabloïd et A3 (première photo de chaque
     rubrique pleine colonne) ;
   - **titres cliquables** dans le PDF (vrais `<a href>` vers l’article d’origine, URL jamais affichée) ;
+  - **météo** : prévisions publiques d’Environnement et Changement climatique Canada (Datamart MSC, fichiers
+    « citypage » XML), lues **au moment de produire l’édition** (`scripts/revue/revue-weather.mjs`, stockées dans le
+    modèle `weather`). Petite ligne dans la manchette (Québec et Montréal). Grand bloc en fin d’édition : villes
+    universitaires (Québec, Montréal, Sherbrooke, Trois-Rivières, Rimouski, Saguenay, Gatineau, Rouyn-Noranda),
+    les 14 villages du Nunavik (Kangiqsualujjuaq, Kuujjuaq, Tasiujaq, Aupaluk, Kangirsuk, Quaqtaq, Kangiqsujuaq,
+    Salluit, Ivujivik, Akulivik, Puvirnituq, Inukjuak, Umiujaq, Kuujjuarapik) et Waskaganish (Eeyou Istchee), sous
+    leur nom officiel. Codes de site vérifiés dans `site_list_fr.csv` et contrôlés dans chaque fichier. ECCC ne
+    publie rien sous Lennoxville, Wendake, Kahnawake, Mashteuiatsh, Uashat mak Mani-utenam, ni sous les autres
+    communautés d’Eeyou Istchee (Chisasibi, Wemindji, Eastmain, Nemaska, Waswanipi, Mistissini, Oujé-Bougoumou,
+    Whapmagoostui) : absentes plutôt que remplacées par une ville voisine. Aucune donnée → aucun bloc
+    (`--sans-meteo` ou `REVUE_WEATHER=0` pour s’en passer) ;
+  - **jeux** : sudoku (solution unique) et mots cachés tirés des titres de l’édition, générés de façon déterministe à
+    partir de la date et de l’édition (`scripts/revue/revue-games.js`), solutions en petit et à l’envers à la fin ;
   - **colophon** sobre, une seule fois à la fin : logo, « Le Réseau Académique de Découverte et d’Agrégation de
     Ressources », mention d’indépendance, nous joindre (azdak-qc@proton.me), code libre sous GNU GPL v2, lien
     cliquable et **code QR** vers l’édition (Nayuki QR Code generator, MIT, compatible GPL v2, déjà dans
     `scripts/vendor/`), le-radar.ca/revue, phrase sur la préparation automatique, « Conçu avec ♡ par Azdak en 2026 ».
+  - Remplissage : météo, jeux, solutions et colophon ferment le flux des colonnes et occupent la fin de la dernière
+    page. Le format de papier est choisi à l’impression, donc aucune bibliothèque de pagination ne peut garantir une
+    dernière page pleine : elle dépend de la quantité de contenu de l’édition.
 - Impression (revue, accueil, fiches d’article) : LE‑RADAR.ca et son logo au pied de chaque feuille, intertitres jamais
   seuls en bas de page ou de colonne, cartes et lignes jamais coupées, images bornées dans la page.
   `tests/print-formats.spec.mjs` produit un PDF par format et le vérifie (débordement, pages presque vides, intertitres

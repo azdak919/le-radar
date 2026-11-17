@@ -12,6 +12,7 @@ const { renderPage, escapeHtml, T: SITE_T, BRAND_SIGNATURE, CONTACT_MAIL } = req
 // Nayuki QR Code generator (licence MIT, compatible GPL v2), déjà vendu dans le dépôt pour les affiches.
 const qrcodegen = require('../vendor/qrcodegen-v1.8.0.js');
 const IC = require('../institution-color-lib.js');
+const { gamesFor } = require('./revue-games.js');
 
 const ROOT = path.join(__dirname, '..', '..');
 const SITE = (process.env.RADAR_SITE_URL || 'https://le-radar.ca').replace(/\/$/, '');
@@ -240,7 +241,7 @@ function flagHtml(model) {
   const ed = model.edition.id === 'soir' ? 'La revue du soir' : 'La revue du matin';
   return [
     '      <header class="revue-flag" aria-hidden="true">',
-    '        <p class="revue-flag__ears"><span>Revue de presse étudiante</span><span>Gratuit · le-radar.ca/revue</span></p>',
+    '        <p class="revue-flag__ears"><span>Revue de presse <em class="revue-flag__etudiante">étudiante</em></span><span>Gratuit · le-radar.ca/revue</span></p>',
     model.url ? `        <a class="revue-flag__qr" href="${esc(model.url)}" tabindex="-1">${qrSvg(model.url).replace('revue-colophon__qr', 'revue-flag__qrcode')}<span>Lire en ligne</span></a>` : '',
     '        <p class="revue-flag__brand"><img class="revue-flag__logo" src="../../assets/icon.svg" width="44" height="44" alt="" /><span class="revue-flag__name notranslate" translate="no">LE-RADAR.ca</span></p>',
     '        <p class="revue-flag__devise">Médias, radios et sport étudiants du Québec</p>',
@@ -301,7 +302,8 @@ const REPO = 'github.com/azdak919/le-radar';
  * Colophon imprimé (caché à l'écran, où le pied du site fait ce travail) : à la fin de l'édition seulement, dans le
  * flux des colonnes, il comble la fin de la dernière page. Tout est écrit en clair (un lien ne se clique pas sur papier).
  */
-/* Petite météo de la manchette (ECCC, lue à la production de l'édition) : Québec et Montréal. Sans données → rien. */
+/* Petite météo de la manchette (ECCC, lue à la production de l'édition) : Québec et Montréal seulement.
+ * Le grand bloc (villes universitaires, Nunavik, Eeyou Istchee) est rendu par meteoHtml, plus bas. Sans données → rien. */
 function wxEmoji(icon) {
   const n = Number(icon);
   if ([19, 39, 46, 47, 48].includes(n)) return '⛈️';
@@ -315,7 +317,7 @@ function wxEmoji(icon) {
   return '';
 }
 function weatherLine(model, cls) {
-  const cities = (model.weather?.cities || []).filter(c => c && c.name && c.periods?.[0] && Number.isFinite(c.periods[0].temp)).slice(0, 2);
+  const cities = (model.weather?.cities || []).filter(c => c && (c.name === 'Québec' || c.name === 'Montréal') && c.periods?.[0] && Number.isFinite(c.periods[0].temp)).slice(0, 2);
   if (!cities.length) return '';
   const bits = cities.map((c) => {
     const p = c.periods[0];
@@ -323,6 +325,73 @@ function weatherLine(model, cls) {
     return `<span class="revue-wx__city" title="${esc(p.name)} : ${esc(p.sky)}">${e ? emo(e) : ''}${esc(String(p.temp).replace('-', '−'))}°&#8239;${esc(c.name)}</span>`;
   });
   return `<span class="revue-wx ${cls}">${bits.join(' · ')}</span>`;
+}
+
+const minus = (n) => String(n).replace('-', '−');
+function meteoCell(p, head) {
+  if (!p) return '<td></td>';
+  const label = p.name === head ? '' : `<span class="revue-meteo__when">${esc(p.name)}</span> `;
+  return `<td>${label}<b>${p.kind === 'low' ? 'min' : 'max'} ${esc(minus(p.temp))}°</b> ${esc(p.sky)}${p.pop ? ` · ${p.pop} %` : ''}</td>`;
+}
+/** Grand bloc météo ECCC (imprimé seulement). Sans données → rien. Les groupes sans ville sont omis. */
+function meteoHtml(model) {
+  const w = model.weather;
+  const cities = Array.isArray(w?.cities) ? w.cities.filter(c => c && c.name && Array.isArray(c.periods) && c.periods.length) : [];
+  if (!cities.length) return '';
+  const [h1 = '', h2 = ''] = (cities[0].periods || []).map(p => p.name);
+  const rows = (group) => cities.filter(c => c.group === group)
+    .map(c => `              <tr><th scope="row">${esc(c.name)}</th>${meteoCell(c.periods[0], h1)}${meteoCell(c.periods[1], h2)}</tr>`).join('\n');
+  const part = (group, title) => {
+    const r = rows(group);
+    return r ? `            <tbody><tr class="revue-meteo__group"><th colspan="3">${esc(title)}</th></tr>\n${r}\n            </tbody>` : '';
+  };
+  return [
+    '        <section class="seo-section revue-section revue-meteo" aria-hidden="true">',
+    `          <h2>${emo('☀️')}Météo</h2>`,
+    '          <table class="revue-meteo__table">',
+    `            <thead><tr><th></th><th>${esc(h1)}</th><th>${esc(h2)}</th></tr></thead>`,
+    part('campus', 'Villes universitaires'),
+    part('nunavik', 'Nunavik'),
+    part('eeyou', 'Eeyou Istchee'),
+    `            <caption class="revue-meteo__src">Prévisions publiques d’${esc(w.source || 'Environnement et Changement climatique Canada')}, lues à la production de cette édition.</caption>`,
+    '          </table>',
+    '        </section>',
+  ].filter(Boolean).join('\n');
+}
+const sudokuTable = (cells, cls) => `<table class="${cls}">${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(r => `<tr>${cells.slice(r * 9, r * 9 + 9).map(v => `<td>${v || ''}</td>`).join('')}</tr>`).join('')}</table>`;
+const lettersTable = (grid, cls) => `<table class="${cls}">${grid.map(row => `<tr>${row.map(ch => `<td>${ch || ''}</td>`).join('')}</tr>`).join('')}</table>`;
+/** Sudoku et mots cachés de l'édition (déterministes), solutions à la fin, en petit et à l'envers. */
+function jeuxHtml(model) {
+  let g;
+  try { g = gamesFor(model); } catch { return { jeux: '', solutions: '' }; }
+  const parts = [];
+  if (g.words) parts.push([
+    '          <div class="revue-jeu revue-jeu--mots">',
+    '            <h4 class="revue-jeu__title">Mots cachés</h4>',
+    '            <p class="revue-jeu__rule">Tous tirés des titres de cette édition, dans tous les sens.</p>',
+    `            ${lettersTable(g.words.grid, 'revue-mots')}`,
+    `            <p class="revue-mots__list">${g.words.words.map(esc).join(' · ')}</p>`,
+    '          </div>',
+  ].join('\n'));
+  if (g.sudoku) parts.push([
+    '          <div class="revue-jeu revue-jeu--sudoku">',
+    '            <h4 class="revue-jeu__title">Sudoku</h4>',
+    '            <p class="revue-jeu__rule">Chaque ligne, colonne et carré de 3 × 3 contient les chiffres de 1 à 9.</p>',
+    `            ${sudokuTable(g.sudoku.puzzle, 'revue-sudoku')}`,
+    '          </div>',
+  ].join('\n'));
+  if (!parts.length) return { jeux: '', solutions: '' };
+  const jeux = ['        <section class="seo-section revue-section revue-jeux" aria-hidden="true">', `          <h2>${emo('🧩')}Jeux</h2>`, ...parts, '        </section>'].join('\n');
+  const solutions = [
+    '        <section class="revue-solutions" aria-hidden="true">',
+    '          <div class="revue-solutions__flip">',
+    '            <p class="revue-solutions__title">Solutions</p>',
+    g.words ? `            ${lettersTable(g.words.answer, 'revue-mots revue-mots--sol')}` : '',
+    g.sudoku ? `            ${sudokuTable(g.sudoku.solution, 'revue-sudoku revue-sudoku--sol')}` : '',
+    '          </div>',
+    '        </section>',
+  ].filter(Boolean).join('\n');
+  return { jeux, solutions };
 }
 
 function colophonHtml(model) {
@@ -342,6 +411,7 @@ function colophonHtml(model) {
   ].filter(Boolean).join('\n');
 }
 function articleBody(model) {
+  const games = jeuxHtml(model);
   const pub = model.datePublished, mod = model.dateModified;
   const modified = mod && Date.parse(mod) - Date.parse(pub) > 60e3;
   const img = model.image;
@@ -365,7 +435,7 @@ function articleBody(model) {
     '      </div>',
     '      <nav class="revue-toc" aria-label="Sommaire"><a href="#presse">📰 Revue de presse</a><a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a><a href="#sources">Sources</a></nav>',
     '      <div class="revue-cols">',
-    presseHtml(model), radioHtml(model), sportHtml(model), sourcesHtml(model), colophonHtml(model),
+    presseHtml(model), radioHtml(model), sportHtml(model), sourcesHtml(model), meteoHtml(model), games.jeux, games.solutions, colophonHtml(model),
     '      </div>',
     `      <p class="revue-disclosure">${DISCLOSURE}</p>`,
     '      </article>',
