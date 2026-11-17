@@ -63,6 +63,7 @@ const { fetchViaRelay } = require('./feed-relay-lib');
 const {
   groupItemsBySource,
   markRetainedArticles,
+  mergeFetchedWithSessionArchive,
   retainablePriorArticles,
   readRegistry,
   writeRegistry,
@@ -73,7 +74,7 @@ const {
   getBotHints,
   isFetchableNewsSource,
 } = require('./source-retention-lib');
-const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
+const { mergeHistoricalCatalog, serializeHistoricalCatalog, newsItemFromRecord } = require('./historical-catalog-lib');
 const { pendingBatches, applyBatches, writeApplied } = require('./archive-inbox-lib');
 const { scheduledSlotFor } = require('./news-schedule-lib');
 const {
@@ -93,7 +94,7 @@ const IS_CI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
 const TIMEOUT = 15000;
 /** En CI : timeouts plus courts — verify-authors / ensure-lead-images sont des steps séparés. */
 const ENRICH_TIMEOUT = IS_CI ? 8_000 : 12_000;
-const MAX_PER_SOURCE = 20;  // archive par journal (certains flux RSS en ont 18+)
+const MAX_PER_SOURCE = 20;  // plafond d’un seul flux RSS (certains en ont 18+), pas de la session
 const MAX_WP_FEATURED = 8;  // vedettes WordPress (catégorie slider, etc.)
 const WP_FEATURED_SLUGS = ['slider', 'a-la-une', 'featured'];
 /* CI : assez d'enrich pour peupler une + features + En bref (photos),
@@ -962,6 +963,13 @@ async function main() {
 
   const registry = readRegistry();
   const sourceByName = new Map(SOURCES.map((s) => [s.name, s]));
+  const archiveBySource = new Map();
+  for (const record of priorArchive.records || []) {
+    const mapped = newsItemFromRecord(record);
+    if (!mapped || !mapped.source) continue;
+    if (!archiveBySource.has(mapped.source)) archiveBySource.set(mapped.source, []);
+    archiveBySource.get(mapped.source).push(mapped);
+  }
 
   for (const src of SOURCES) {
     process.stdout.write(`→ ${src.name} (${src.institution}) … `);
@@ -970,6 +978,7 @@ async function main() {
     let fetchOk = false;
     let usedStaleCache = false;
     const priorForSource = priorBySource.get(src.name) || [];
+    const sessionPrior = [...priorForSource, ...(archiveBySource.get(src.name) || [])];
 
     try {
       // Process isolé + SIGKILL : une source qui fige le CPU (regex) ou le
@@ -1026,7 +1035,7 @@ async function main() {
     }
 
     if (!items.length && !fetchOk) {
-      const retainable = retainablePriorArticles(priorForSource, referenceDate);
+      const retainable = retainablePriorArticles(sessionPrior, referenceDate);
       if (retainable.length) {
         items = markRetainedArticles(retainable);
         usedStaleCache = true;
@@ -1035,7 +1044,7 @@ async function main() {
         const registryEntry = (registry.active || []).find((s) => s.name === src.name);
         if (shouldDropSource({
           sourceName: src.name,
-          priorItems: priorForSource,
+          priorItems: sessionPrior,
           registryEntry,
           referenceDate,
         })) {
@@ -1070,6 +1079,15 @@ async function main() {
       referenceDate,
     });
 
+    // Le plafond RSS ne doit pas faire sortir un article encore dans la
+    // session (ou dans les 45 jours). On réunit le flux courant avec le
+    // fil déjà publié et le catalogue historique.
+    const mergedSession = mergeFetchedWithSessionArchive(items, sessionPrior, referenceDate);
+    if (mergedSession.retained) {
+      console.log(`  + ${mergedSession.retained} article(s) de la session conservés hors flux`);
+    }
+    items = mergedSession.items;
+
     const authorHints = getBotHints(src, 'authors');
     for (const it of items) {
       const next = {
@@ -1079,7 +1097,7 @@ async function main() {
         type: src.type,
         lang: src.lang,
         ...it,
-        author: authorHints.ignoreRssAuthor ? '' : it.author,
+        author: authorHints.ignoreRssAuthor && !it._retainedFromCache ? '' : it.author,
       };
       // Auteur résolu + marque de vérification du run précédent : disponibles
       // dès la phase d'enrichissement. Sans ce report, les sources

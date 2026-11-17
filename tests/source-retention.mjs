@@ -57,6 +57,7 @@ const fetchNews = readFileSync(join(ROOT, 'scripts/fetch-news.js'), 'utf8');
 assert.match(fetchNews, /isFetchableNewsSource/);
 assert.doesNotMatch(fetchNews, /s\._status === 'dead'\) return false/);
 assert.match(fetchNews, /re-probe previously dead/);
+assert.match(fetchNews, /mergeFetchedWithSessionArchive/);
 
 const discover = readFileSync(join(ROOT, 'scripts/discover-news-sources.js'), 'utf8');
 assert.match(discover, /applyUnreachableRegistryUpdate/);

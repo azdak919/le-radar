@@ -86,6 +86,74 @@ function markRetainedArticles(items) {
   }));
 }
 
+function itemHref(item = {}) {
+  if (typeof item.link === 'string' && item.link.trim()) return item.link.trim();
+  if (typeof item.canonicalOriginalUrl === 'string' && item.canonicalOriginalUrl.trim()) {
+    return item.canonicalOriginalUrl.trim();
+  }
+  if (typeof item.originalUrl === 'string' && item.originalUrl.trim()) {
+    return item.originalUrl.trim();
+  }
+  const link = item.link;
+  if (link && typeof link === 'object' && typeof link.resolvedUrl === 'string') {
+    return link.resolvedUrl.trim();
+  }
+  return '';
+}
+
+/** Clé d’union flux / cache / catalogue (utm, ancre et slash final ignorés). */
+function itemLinkKey(item = {}) {
+  const raw = itemHref(item);
+  if (!raw) return '';
+  try {
+    const url = new URL(raw);
+    if (!/^https?:$/.test(url.protocol)) return '';
+    url.hash = '';
+    url.hostname = url.hostname.toLowerCase();
+    for (const key of [...url.searchParams.keys()]) {
+      if (/^(utm_|fbclid$|gclid$|mc_cid$|mc_eid$)/i.test(key)) url.searchParams.delete(key);
+    }
+    url.pathname = url.pathname.replace(/\/+$/, '') || '/';
+    return url.toString();
+  } catch {
+    return raw.split('?')[0].split('#')[0].replace(/\/+$/, '');
+  }
+}
+
+/**
+ * Union du flux courant avec les articles déjà connus encore dans la
+ * fenêtre d’affichage (session en cours ou ≤ 45 j). Un plafond du type
+ * MAX_PER_SOURCE ne s’applique qu’à un seul fetch RSS, pas à cette union.
+ * Les articles repris du cache ou du catalogue portent `_retainedFromCache`.
+ *
+ * @returns {{ items: object[], retained: number }}
+ */
+function mergeFetchedWithSessionArchive(fetchedItems = [], priorItems = [], referenceDate = new Date()) {
+  const seen = new Set();
+  const merged = [];
+  for (const item of fetchedItems || []) {
+    const key = itemLinkKey(item);
+    if (key) {
+      if (seen.has(key)) continue;
+      seen.add(key);
+    }
+    merged.push(item);
+  }
+  let retained = 0;
+  for (const item of retainablePriorArticles(priorItems, referenceDate)) {
+    const key = itemLinkKey(item);
+    if (key && seen.has(key)) continue;
+    if (key) seen.add(key);
+    merged.push({
+      ...articlePayloadFromPrior(item),
+      _retainedFromCache: true,
+    });
+    retained += 1;
+  }
+  return { items: merged, retained };
+}
+
+
 // === Registry / news.json helpers ============================================
 
 function readNewsJson() {
@@ -273,7 +341,7 @@ function applyFetchRegistryUpdate(src, {
 const DAY_MS = 86400000;
 const OK_DAYS = 270;
 
-/** Classify a feed by latest item date using the 3-session UI window. */
+/** Classify a feed by latest item date using the 3-session source-lifecycle window. */
 function classifyFeedFreshness(lastItemMs, referenceDate = new Date()) {
   if (lastItemMs == null || !Number.isFinite(lastItemMs)) {
     return { status: 'stale', lastItemDate: null };
@@ -326,6 +394,8 @@ module.exports = {
   sourceHasFreshContent,
   retainablePriorArticles,
   markRetainedArticles,
+  mergeFetchedWithSessionArchive,
+  itemLinkKey,
   articlePayloadFromPrior,
   readNewsJson,
   readNewsItems,

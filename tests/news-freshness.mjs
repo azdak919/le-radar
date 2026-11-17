@@ -2,6 +2,9 @@
  * Run: node tests/news-freshness.mjs
  */
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const SF = require('../scripts/session-freshness-lib.js');
@@ -34,4 +37,12 @@ assert.equal(SF.filterFreshItemsLenient(inWindow, oct23).length, 2, 'filet inert
 // Cycle de vie des sources : toujours 3 sessions (pas de retrait prématuré).
 assert.equal(SF.isWithinSessionCycleWindow(item(d(2026, 3, 18)), oct23), true);
 assert.equal(RL.shouldDropSource({ priorItems: [], registryEntry: { _lastItemDate: d(2026, 3, 18).toISOString() }, referenceDate: oct23 }), false);
+
+// Les docs ne doivent plus confondre l'affichage (session ou 45 j)
+// avec le cycle de vie des sources (3 sessions).
+const docs = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../docs/adding-news-source.md'), 'utf8');
+assert.doesNotMatch(docs, /fenêtre de fraîcheur UI\s*\(3 sessions/, 'docs : fenêtre UI ≠ 3 sessions');
+assert.match(docs, /Le cycle de vie des sources suit 3 sessions/);
+assert.match(docs, /fenêtre d'affichage/);
+
 console.log('OK news-freshness');
