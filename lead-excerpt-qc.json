@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-17T21:27:42.123Z",
+  "updated": "2026-11-17T22:07:40.899Z",
   "total": 1018,
-  "pool": 60,
-  "incomplete": 27,
-  "withLeadExcerpt": 165,
-  "candidates": 27,
-  "enriched": 15,
+  "pool": 61,
+  "incomplete": 28,
+  "withLeadExcerpt": 166,
+  "candidates": 28,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": true
+    },
+    {
       "title": "Francisée, mais pas la bienvenue ?",
       "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
@@ -46,40 +55,31 @@
       "changed": false
     },
     {
-      "title": "Grammys 2027 : vent de folie québécois et triomphe féminin",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin/?utm_source=rss&utm_medium=rss&utm_campaign=grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin",
+      "title": "Les cuisines fantômes hantent-elles les restaurants?",
+      "link": "https://montrealcampus.ca/2026/11/17/les-cuisines-fantomes-hantent-elles-les-restaurants/",
       "ok": true,
       "score": 100,
-      "chars": 212,
-      "sample": "Taylor Swift obtient sa 5e nomination consécutive dans la catégorie Album de l’année avec The Life o",
-      "changed": true
+      "chars": 317,
+      "sample": "⁢⁢⁣⁢⁤⁤⁤⁣⁣⁣Des établissements regroupant plusieurs restaurants virtuels apparaissent progressivement ",
+      "changed": false
     },
     {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
+      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
+      "link": "https://theconcordian.com/2026/11/pierre-cerre-trying-keep-rosemont-orange/",
+      "ok": true,
+      "score": 96,
+      "chars": 259,
+      "sample": "On Dec. 7, Canadians in six ridings, including two in Montreal, will head to the polls to elect thei",
+      "changed": false
+    },
+    {
+      "title": "I don’t like waiting",
+      "link": "https://theconcordian.com/2026/11/i-dont-like-waiting/",
       "ok": true,
       "score": 100,
-      "chars": 192,
-      "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
-      "changed": true
-    },
-    {
-      "title": "Stingers 55, Martlets 54: Concordia takes it at the final buzzer",
-      "link": "https://thelinknewspaper.ca/article/16567",
-      "ok": true,
-      "score": 96,
-      "chars": 207,
-      "sample": "After suffering a 17-point loss to Bishop’s University on Nov. 7, the Concordia University Stingers ",
-      "changed": true
-    },
-    {
-      "title": "Concordia 68, McGill 44: the Stingers dominate in home opener",
-      "link": "https://thelinknewspaper.ca/article/16566",
-      "ok": true,
-      "score": 96,
-      "chars": 193,
-      "sample": "Coming off a nail-biting victory against Bishop’s University on Nov. 7, the Concordia University Sti",
-      "changed": true
+      "chars": 190,
+      "sample": "I was getting ready to head to the store to grab some things I needed. It was early in the morning; ",
+      "changed": false
     }
   ]
 }
