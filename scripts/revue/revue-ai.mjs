@@ -4,7 +4,7 @@
 // (revue-lib.mjs textReject : chiffre, nom ou date relative absents de la source, autre langue que le français) → repli
 // déterministe, article par article. Les secrets ne sont jamais écrits dans le journal.
 import { MODEL, aiEnabled as socialAiEnabled, parseAi, TOPICS } from '../social/ai-hook.mjs';
-import { textReject, itemSource, THEMES } from './revue-lib.mjs';
+import { textReject, itemReject, itemSource, THEMES } from './revue-lib.mjs';
 
 export { MODEL };
 export const aiEnabled = (env = process.env) => socialAiEnabled(env) && env.REVUE_AI !== 'off';
@@ -21,7 +21,9 @@ export function itemsPrompt(batch) {
   return 'Revue de presse des médias étudiants du Québec. Pour chaque article numéroté, écris en FRANÇAIS un résumé neutre ' +
     "d'une seule phrase (80 à 200 caractères), fondé UNIQUEMENT sur le titre et l'extrait fournis : aucun chiffre, nom propre, " +
     'citation ni date qui ne figure pas dans le texte, aucun guillemet, jamais « demain », « hier », « aujourd’hui » ni « week-end » ; ' +
-    'un article en anglais est résumé en français. Choisis aussi un thème parmi : ' + TOPICS.join(', ') + '.\n' +
+    'un article en anglais est résumé en français. Garde comme sujet la personne ou l’organisation nommée dans le titre, ' +
+    'ne la remplace jamais par une autre personne de l’extrait, et n’affirme rien que le texte ne dit pas ; un titre en forme de ' +
+    'question se résume par une question. Choisis aussi un thème parmi : ' + TOPICS.join(', ') + '.\n' +
     'Réponds seulement en JSON : {"items":[{"n":1,"resume":"…","theme":"…"}]}\n\n' +
     batch.map((x, i) => `${i + 1}. [${x.lang}] Titre : ${x.title}\nExtrait : ${String(x.excerpt || '').slice(0, 400)}`).join('\n\n');
 }
@@ -47,7 +49,7 @@ export async function aiReview(items, { env = process.env, fetchImpl = fetch, ba
         const a = list.find(e => Number(e?.n) === k + 1) || list[k];
         const resume = typeof a?.resume === 'string' ? a.resume.replace(/\s+/g, ' ').trim().replace(/^[«"“]\s*|\s*[»"”]$/g, '') : '';
         const theme = TOPIC_TO_THEME[a?.theme] || '';
-        const why = resume ? textReject(resume, itemSource(x)) : 'aucun résumé';
+        const why = resume ? itemReject(resume, x) : 'aucun résumé';
         if (why) out.log.push(`repli (extrait) — ${why} : ${x.id}`);
         out.items[x.id] = { resume: why ? '' : resume, theme };
       });

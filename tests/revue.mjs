@@ -107,6 +107,16 @@ assert.match(L.textReject('Le conseil municipal adopte son budget pendant le wee
 assert.match(L.textReject('The Sherbrooke city council adopted its budget and students want more housing now.', src), /français/);
 assert.match(L.textReject('Le conseil municipal « adopte » son budget, disent les étudiants de Sherbrooke.', src), /guillemet/);
 assert.match(L.textReject('Court.', src), /longueur/);
+// Fidélité au titre : pas de confusion de personnes, pas d'affirmation d'un titre interrogatif.
+const carney = { title: 'Mark Carney dévoile ses ambitions économiques', lang: 'fr', source: 'Le Collectif', authors: [], excerpt: 'Le 5 novembre dernier, François-Philippe Champagne, ministre des Finances du Canada, a déposé le plus récent budget du gouvernement canadien.' };
+assert.deepEqual(L.titleNames(carney.title), ['Mark Carney']);
+assert.deepEqual(L.titleNames('Le Vert & Or triomphe sous les yeux des anciens'), []);
+assert.deepEqual(L.titleNames('Le Québec s’unit afin de prévenir les violences conjugales'), []);
+assert.match(L.itemReject('Le ministre des Finances du Canada dévoile ses ambitions économiques pour le budget.', carney), /nom du titre absent \(Mark Carney\)/);
+assert.equal(L.itemReject('Mark Carney dévoile les ambitions économiques du gouvernement canadien dans le budget.', carney), null);
+const ganesha = { title: 'Can Ganesha Help You Pass Your Midterms?', lang: 'en', source: 'The Link', authors: [], excerpt: 'The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon orange.' };
+assert.match(L.itemReject('La couleur orange peut aider les étudiants à passer leurs examens de mi-session.', ganesha), /interrogatif/);
+assert.equal(L.itemReject('Ganesha peut-il aider les étudiants de Montreal à réussir leurs examens de mi-session?', ganesha), null);
 
 // ── IA simulée : réponse valide, hallucination, panne, IA absente ──
 const env = { CLOUDFLARE_AI_TOKEN: 'jeton-factice', CLOUDFLARE_ACCOUNT_ID: 'compte-factice' };

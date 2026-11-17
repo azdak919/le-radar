@@ -255,6 +255,7 @@ export const resultText = r => `${teamTxt(r.teams[0])} ${r.teams[0].score}-${r.t
 export const nextText = r => r.event || !r.verb ? `${teamTxt(r.teams[0])} · ${r.event || teamTxt(r.teams[1] || {})}` : `${teamTxt(r.teams[0])} ${r.verb} ${teamTxt(r.teams[1])}`;
 
 // ── Garde-fou des textes d'IA ────────────────────────────────────────────────
+const norm = s => String(s || '').normalize('NFC').toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, ' ');
 const words = s => new Set((String(s || '').normalize('NFC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || []));
 /** Mots capitalisés admis sans figurer dans la source : vocabulaire français courant d'une revue étudiante. */
 const ALLOW_CAPS = new Set(['université', 'universités', 'collège', 'cégep', 'cégeps', 'québec', 'montréal', 'canada', 'canadien', 'canadienne', 'québécois', 'québécoise', 'québécoises', 'québécois', 'sherbrooke', 'laval', 'ottawa']);
@@ -276,6 +277,31 @@ export function textReject(text, source, { min = 40, max = 220 } = {}) {
     if (!src.has(w) && !src.has(base) && !ALLOW_CAPS.has(w) && !ALLOW_CAPS.has(base) && !w.split(/[’'-]/).every(p => !p || src.has(p) || ALLOW_CAPS.has(p))) return `nom absent (${m[1]})`;
   }
   if (detectLang({ title: h }) === 'en') return 'pas en français';
+  return null;
+}
+const TITLE_STOP = new Set(['le', 'la', 'les', 'l', 'un', 'une', 'des', 'du', 'de', 'quand', 'retour', 'pourquoi', 'comment', 'the', 'a', 'an']);
+/** Noms propres de plusieurs mots d'un titre français (« Mark Carney », « Elizabeth May ») : le résumé doit les garder. */
+export function titleNames(title, lang = 'fr') {
+  if (lang !== 'fr') return [];
+  const out = [];
+  for (const m of String(title || '').matchAll(/(?:\p{Lu}[\p{L}’'-]*)(?:\s+\p{Lu}[\p{L}’'-]*)+/gu)) {
+    const parts = m[0].split(/\s+/);
+    while (parts.length && TITLE_STOP.has(parts[0].toLowerCase().replace(/[’'].*$/, ''))) parts.shift();
+    if (parts.length >= 2) out.push(parts.join(' '));
+  }
+  return out;
+}
+/**
+ * Garde-fou d'un résumé d'article : textReject + fidélité au titre. Un titre interrogatif se résume par une question (le
+ * résumé n'affirme pas ce que le titre demande) ; les noms propres de plusieurs mots du titre restent dans le résumé (pas de
+ * confusion de personnes : « Mark Carney dévoile… » ne devient pas « Le ministre des Finances dévoile… »).
+ */
+export function itemReject(resume, x) {
+  const why = textReject(resume, itemSource(x));
+  if (why) return why;
+  const h = String(resume).trim(), low = norm(h);
+  if (/\?\s*$/.test(String(x.title || '')) && !/\?\s*$/.test(h)) return 'titre interrogatif affirmé';
+  for (const n of titleNames(x.title, x.lang)) if (!low.includes(norm(n))) return `nom du titre absent (${n})`;
   return null;
 }
 /** Texte source d'un article pour le garde-fou (titre, extrait, média, établissement, auteurs). */
@@ -351,7 +377,7 @@ export function validateReview(model, data) {
     if (clean(it.source) !== x.source) p.push(`média modifié : ${x.source}`);
     const want = front.authorNames(it);
     if (JSON.stringify(want) !== JSON.stringify(x.authors)) p.push(`auteurs différents des données pour « ${x.title} » : ${JSON.stringify(x.authors)} ≠ ${JSON.stringify(want)}`);
-    if (x.resume) { const why = textReject(x.resume, itemSource(x)); if (why) p.push(`résumé refusé (${why}) : ${x.title}`); }
+    if (x.resume) { const why = itemReject(x.resume, x); if (why) p.push(`résumé refusé (${why}) : ${x.title}`); }
     if (x.excerpt && !clean(`${it.leadExcerpt || ''} ${it.excerpt || ''}`).includes(x.excerpt.replace(/…$/, '').trim())) p.push(`extrait absent de la source : ${x.title}`);
   }
   if (model.chapeau) { const why = textReject(model.chapeau, (model.items || []).map(itemSource).join(' '), { min: 60, max: 420 }); if (why) p.push(`chapeau refusé (${why})`); }
