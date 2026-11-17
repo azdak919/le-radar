@@ -21,6 +21,7 @@ const {
   rememberResolvedByline,
 } = require('./author-lib');
 const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
+const { buildCheckQueue, createDeadline, logQueue } = require('./article-check-queue-lib');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -28,6 +29,10 @@ const QC_PATH = path.join(ROOT, 'author-qc.json');
 
 const PAGE_FETCH_TIMEOUT = 12000;
 const PAGE_FETCH_DELAY = 200;
+// File de vérification (article-check-queue-lib) : lot fixe par passe + chrono.
+// Le reste attend la passe suivante avec son auteur actuel (jamais effacé).
+const AUTHOR_QUEUE_SIZE = Math.max(1, Number(process.env.LE_RADAR_AUTHOR_QUEUE_SIZE) || 80);
+const AUTHOR_BUDGET_MS = Math.max(10_000, Number(process.env.LE_RADAR_AUTHOR_BUDGET_MS) || 120_000);
 
 const args = process.argv.slice(2);
 const doUpdate = args.includes('--update');
@@ -71,30 +76,52 @@ async function wpStructuredAuthor(link = '') {
   return sorted[0][0];
 }
 
+/** Dernière consultation (réussie ou non) : position dans l'arriéré. */
+function authorLastTouch(item = {}) {
+  const a = Date.parse(item.authorCheckedAt || '') || 0;
+  const b = Date.parse(item.authorAttemptAt || '') || 0;
+  return a >= b ? (item.authorCheckedAt || '') : (item.authorAttemptAt || '');
+}
+
+/** File auteurs : jamais consultés d'abord (récents en tête), puis l'arriéré. */
+function buildAuthorQueue(items, feedDefaults, sourceMap = new Map(), { size = AUTHOR_QUEUE_SIZE } = {}) {
+  const needs = items.filter((item) => {
+    const hints = getBotHints(sourceMap.get(item.source), 'authors');
+    return needsPageAuthorVerification(item, feedDefaults, hints);
+  });
+  return buildCheckQueue({
+    items: needs,
+    isNew: (item) => !item.authorCheckedAt && !item.authorAttemptAt,
+    checkedAt: authorLastTouch,
+    size,
+  });
+}
+
 async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
   const pageAuthors = new Map();
   const checkedAtByKey = new Map();
-  const toFetch = items
-    .filter((item) => {
-      const hints = getBotHints(sourceMap.get(item.source), 'authors');
-      return needsPageAuthorVerification(item, feedDefaults, hints);
-    })
-    .sort((a, b) => {
-      const ah = getBotHints(sourceMap.get(a.source), 'authors').forcePageAuthor ? 0 : 1;
-      const bh = getBotHints(sourceMap.get(b.source), 'authors').forcePageAuthor ? 0 : 1;
-      return ah - bh;
-    });
+  const attemptAtByKey = new Map();
+  const queue = buildAuthorQueue(items, feedDefaults, sourceMap);
+  const toFetch = queue.batch;
 
   if (!toFetch.length) return { pageAuthors, stamped: 0 };
 
-  console.log(`\nVérification page source : ${toFetch.length} article(s)`);
+  logQueue('auteurs (page source)', queue);
+  const deadline = createDeadline(AUTHOR_BUDGET_MS);
 
   let fetched = 0;
   for (const item of toFetch) {
+    if (deadline.over()) {
+      console.log(`  ⏱ budget ${Math.round(AUTHOR_BUDGET_MS / 1000)} s atteint — reste reporté à la prochaine passe`);
+      break;
+    }
     const key = normalizeArticleUrl(item.link);
-    if (!key || pageAuthors.has(key)) continue;
+    if (!key || pageAuthors.has(key) || attemptAtByKey.has(key)) continue;
 
     const html = await fetchText(item.link, 3, PAGE_FETCH_TIMEOUT);
+    // Tentative notée même en échec : la page passe en fin d'arriéré au lieu
+    // de reprendre la tête de file à chaque passe.
+    attemptAtByKey.set(key, new Date().toISOString());
     // Marque la consultation : sans byline trouvée, on ne re-scrapera pas
     // cette page à chaque passe (needsPageAuthorVerification saute 24 h).
     if (html) checkedAtByKey.set(key, new Date().toISOString());
@@ -141,6 +168,11 @@ async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
     if (checkedAt && item.authorCheckedAt !== checkedAt) {
       item.authorCheckedAt = checkedAt;
       stamped += 1;
+    }
+    const attemptAt = key && attemptAtByKey.get(key);
+    if (attemptAt && item.authorAttemptAt !== attemptAt) {
+      item.authorAttemptAt = attemptAt;
+      if (!checkedAt) stamped += 1;
     }
   }
   return { pageAuthors, stamped };
@@ -223,7 +255,11 @@ async function main() {
   if (strict && fixable > 0 && !doUpdate) process.exit(1);
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+module.exports = { buildAuthorQueue, authorLastTouch };
+
+if (require.main === module) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

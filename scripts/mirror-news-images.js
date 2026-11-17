@@ -47,6 +47,13 @@ const DIR_BUDGET_BYTES = Number(process.env.MIRROR_DIR_BUDGET_BYTES) || 48 * 102
 const MIN_BYTES = 1_200;
 const CONCURRENCY = Math.max(1, Number(process.env.MIRROR_CONCURRENCY) || 4);
 const TIMEOUT_MS = 18_000;
+// File de téléchargement : au plus N nouveaux miroirs par passe, les articles
+// les plus récents d'abord. Une image retirée pour le plafond du dossier, ou
+// en échec, est notée dans manifest.deferred : elle n'est pas retéléchargée à
+// chaque passe (avant : ~400 téléchargements puis ~370 retraits à chaque
+// passe avec ~1 000 articles, 6 min perdues). Le client garde l'image distante.
+const MIRROR_QUEUE_SIZE = Math.max(1, Number(process.env.MIRROR_QUEUE_SIZE) || 80);
+const FAILED_RETRY_MS = 24 * 3600 * 1000;
 const UA = 'LE-RADAR-ImageMirror/1.0 (+https://le-radar.ca/; news image resilience cache)';
 
 /**
@@ -250,6 +257,8 @@ async function main() {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
   const manifest = readJson(MANIFEST_PATH, { version: 1, files: {} });
   if (!manifest.files || typeof manifest.files !== 'object') manifest.files = {};
+  if (!manifest.deferred || typeof manifest.deferred !== 'object') manifest.deferred = {};
+  const deferred = manifest.deferred;
 
   for (const item of news.items) {
     if (item.imageRemoteOnly === true) {
@@ -264,6 +273,28 @@ async function main() {
 
   console.log(`Miroir images : ${targets.length} URLs source (${news.items.length} articles)`);
 
+  // Tête de file : récents d'abord ; seules les images à télécharger
+  // consomment le lot (les miroirs déjà présents sont réutilisés sans réseau).
+  const nowMs = Date.now();
+  const needsDownload = ({ item }) => {
+    const key = mirrorKey(String(item.image).trim());
+    const prior = manifest.files[key];
+    if (!forceAll && prior?.local && fileExists(path.join(ROOT, prior.local))) return false;
+    return true;
+  };
+  const isDeferred = ({ item }) => {
+    if (forceAll) return false;
+    const d = deferred[mirrorKey(String(item.image).trim())];
+    if (!d) return false;
+    if (d.reason === 'budget') return true;
+    return nowMs - (Date.parse(d.at || '') || 0) < FAILED_RETRY_MS;
+  };
+  const byDateDesc = (a, b) => (Date.parse(b.item.date || '') || 0) - (Date.parse(a.item.date || '') || 0);
+  const downloadQueue = targets.filter((t) => needsDownload(t) && !isDeferred(t)).sort(byDateDesc);
+  const thisRun = new Set(downloadQueue.slice(0, MIRROR_QUEUE_SIZE));
+  const skippedTargets = targets.filter((t) => needsDownload(t) && !thisRun.has(t));
+  console.log(`File miroir : ${thisRun.size} à télécharger cette passe, ${downloadQueue.length - thisRun.size} reporté(s), ${skippedTargets.length - (downloadQueue.length - thisRun.size)} en attente (plafond / échec récent)`);
+
   let downloaded = 0;
   let reused = 0;
   let failed = 0;
@@ -271,10 +302,18 @@ async function main() {
   let fragileOk = 0;
   const keepKeys = new Set();
 
-  await mapPool(targets, CONCURRENCY, async ({ item }) => {
+  await mapPool(targets, CONCURRENCY, async (target) => {
+    const { item } = target;
     const remote = String(item.image).trim();
     const key = mirrorKey(remote);
     keepKeys.add(key);
+    if (!forceAll && needsDownload(target) && !thisRun.has(target)) {
+      // Pas son tour (ou plafond / échec récent) : carte servie en distant.
+      delete item.imageLocal;
+      delete item.imageLocalKey;
+      delete item.imageLocalVia;
+      return;
+    }
 
     const prior = manifest.files[key];
     const priorPath = prior?.local ? path.join(ROOT, prior.local) : null;
@@ -336,12 +375,14 @@ async function main() {
         nameKey: imageUrlKey(remote) || undefined,
       };
       downloaded += 1;
+      delete deferred[key];
       if (isFragile(remote)) fragileOk += 1;
       if (!process.env.CI) {
         console.log(`  ✓ ${via || 'origin'} ${rel} (${buf.length} B) ← ${hostOf(remote)}`);
       }
     } catch (err) {
       failed += 1;
+      deferred[key] = { reason: 'failed', at: new Date().toISOString() };
       const reason = String((err && err.message) || err).replace(/\(.*$/, '').trim() || 'error';
       failReasons[reason] = (failReasons[reason] || 0) + 1;
       // Conserver un ancien miroir si présent.
@@ -439,6 +480,7 @@ async function main() {
       try { fs.unlinkSync(path.join(ROOT, victim.entry.local)); } catch { /* gone */ }
     }
     delete manifest.files[victim.key];
+    deferred[victim.key] = { reason: 'budget', at: new Date().toISOString() };
     for (const item of news.items || []) {
       if (item.imageLocalKey === victim.key
         || (item.imageLocal && path.basename(item.imageLocal).startsWith(victim.key))) {
@@ -450,6 +492,9 @@ async function main() {
     budgetDropped += 1;
     pruned += 1;
   }
+
+  // File : on oublie les reports des images sorties du fil.
+  for (const key of Object.keys(deferred)) if (!keepKeys.has(key)) delete deferred[key];
 
   manifest.version = 1;
   manifest.updatedAt = new Date().toISOString();

@@ -81,6 +81,30 @@ const doUpdate = process.argv.includes('--update');
  * on mémorise pages/probes, et passé le budget on saute le réseau restant
  * pour TOUJOURS finir par les replis locaux + l'écriture de news.json.
  */
+const { buildCheckQueue, logQueue } = require('./article-check-queue-lib');
+// File de vérification (article-check-queue-lib) : les phases réseau par
+// article (validation sur page, pleine résolution, enrichissement, 2e chance
+// banque) ne voient que le lot de la passe — neufs / image changée d'abord,
+// puis l'arriéré le plus anciennement vérifié. Les filets locaux (campus,
+// dédoublonnage) restent sur tout le fil.
+const LEAD_QUEUE_SIZE = Math.max(1, Number(process.env.LE_RADAR_LEAD_QUEUE_SIZE) || 120);
+const LEAD_RECHECK_MS = 24 * 3600 * 1000;
+
+/** Signature de l'image vérifiée : la changer remet l'article en tête de file. */
+function leadImageSig(item = {}) {
+  return `${item.image || ''}|${item.stockImage || ''}`;
+}
+
+function buildLeadQueue(items = [], { now = Date.now(), size = LEAD_QUEUE_SIZE } = {}) {
+  return buildCheckQueue({
+    items,
+    isNew: (it) => it.leadImageCheckedKey !== leadImageSig(it),
+    isDue: (it) => now - (Date.parse(it.leadImageCheckedAt || '') || 0) >= LEAD_RECHECK_MS,
+    checkedAt: (it) => it.leadImageCheckedAt || '',
+    size,
+  });
+}
+
 const STEP_BUDGET_MS = Number(process.env.LE_RADAR_LEAD_BUDGET_MS) || 4 * 60 * 1000;
 const CONCURRENCY = Math.max(1, Number(process.env.LE_RADAR_LEAD_CONCURRENCY) || 8);
 const startedAt = Date.now();
@@ -523,17 +547,31 @@ function backfillImageCreator(item) {
   if (m) item.imageCreator = cleanCreatorName(m[1].trim());
 }
 
+/** Même fichier quelle que soit la taille WordPress (-1024x769, -scaled, ?ver). */
+function rubricBaseKey(url = '') {
+  return String(url || '').replace(/[?#].*$/, '').replace(/-(?:\d+x\d+|scaled)(?=\.\w+$)/i, '').toLowerCase();
+}
+
 async function purgeRubricBanners(items, { refill = null } = {}) {
   const store = rubricBanners.loadStore();
   const hits = await rubricBanners.findRubricBanners(items.filter((i) => i.image), { store });
   for (const item of hits) {
     console.log(`  ✂ bannière de rubrique ${item.source} : ${item.image}`);
     if (!doUpdate) continue;
+    const banned = rubricBaseKey(item.image);
     item.image = '';
     item.leadImageReady = false;
     clearMirroredLead(item);
     clearSourceImageCredit(item);
     if (refill) await refill(item);
+    // Le repli peut re-scraper la page et reposer la même bannière (autre
+    // taille, -1024x769 ↔ original) : on ne la remet jamais en une.
+    if (item.image && rubricBaseKey(item.image) === banned) {
+      item.image = '';
+      item.leadImageReady = false;
+      clearMirroredLead(item);
+      clearSourceImageCredit(item);
+    }
   }
   if (doUpdate) rubricBanners.saveStore(store);
   return hits.size;
@@ -560,6 +598,11 @@ async function main() {
   let imagesCleared = 0;
   const gaps = [];
 
+  const leadQueue = buildLeadQueue(items);
+  logQueue('photos de une', leadQueue);
+  const queued = new Set(leadQueue.batch);
+  const touched = new Set();
+
   // URLs campus déjà utilisées (y compris hors file d'attente) pour varier.
   const usedCampusUrls = new Set(
     items
@@ -567,7 +610,7 @@ async function main() {
       .map((i) => i.stockImage),
   );
 
-  await mapPool(items.filter((item) => shouldValidateImageOnPage(item, sourceMap)), CONCURRENCY, async (item) => {
+  await mapPool(leadQueue.batch.filter((item) => shouldValidateImageOnPage(item, sourceMap)), CONCURRENCY, async (item) => {
     const { reject, opts } = isCandidateForItem(item, sourceMap);
     const html = await fetchText(item.link);
     if (!html || articleImageIsValidOnPage(html, item.image, reject, opts, item.link)) return;
@@ -688,7 +731,7 @@ async function main() {
   logPhase('file sans photo (scrape)');
 
   let upgraded = 0;
-  await mapPool(items, CONCURRENCY, async (item) => {
+  await mapPool(leadQueue.batch, CONCURRENCY, async (item) => {
     if (await tryUpgradeExistingImage(item, sourceMap)) upgraded += 1;
   });
   if (upgraded) console.log(`↻ ${upgraded} image(s) WordPress passée(s) en pleine résolution`);
@@ -705,8 +748,9 @@ async function main() {
   if (stockCleared) console.log(`↻ ${stockCleared} photo(s) banque retirée(s) (hors-sujet)`);
 
   const stockQueue = [];
-  const enrichQueue = items.map((item, index) => ({ item, index }));
+  const enrichQueue = items.map((item, index) => ({ item, index })).filter(({ item }) => queued.has(item));
   await mapPool(enrichQueue, CONCURRENCY, async ({ item, index }) => {
+    touched.add(item);
     // Isolation par item : un échec (scrape, probe, parse) ne doit pas avorter
     // la boucle et empêcher la phase banque/campus des items suivants. L'item
     // fautif reste éligible au repli campus (poussé dans la file).
@@ -903,6 +947,7 @@ async function main() {
   if (doUpdate) {
     let freeRetry = 0;
     const retryQueue = items.filter((item) => {
+      if (!queued.has(item)) return false;
       if (hasSourcePhoto(item, sourceMap)) return false;
       // Campus déjà posé : encore le droit à une photo thématique (ordre 2 avant 3).
       const hasThematic = item.stockImage
@@ -961,10 +1006,16 @@ async function main() {
   const withStock = items.filter((i) => i.stockImage && isCandidateImageUrl(i.stockImage)).length;
   const withCampus = items.filter((i) => i.imageProvider === 'campus-bank' && i.stockImage).length;
   const fullyCovered = items.filter((i) => hasUsableImage(i)).length;
+  // Sonde des seuls articles du lot (le reste garde leadImageReady de sa
+  // dernière vérification) : sonder les ~1 000 cartes sans plafond faisait
+  // dépasser le délai de l'étape après le budget (17 nov. 2026).
   let leadReadyCount = 0;
-  await mapPool(items, CONCURRENCY * 2, async (i) => {
+  for (const i of items) {
+    if (!queued.has(i) && (i.leadImageReady === true || (i.stockImage && isCandidateImageUrl(i.stockImage)))) leadReadyCount += 1;
+  }
+  await mapPool(leadQueue.batch, CONCURRENCY * 2, async (i) => {
     if (await photoIsLeadReady(i)) leadReadyCount += 1;
-  }, { budget: null });
+  });
 
   const qc = {
     updated: new Date().toISOString(),
@@ -1013,6 +1064,13 @@ async function main() {
     if (lateBanners) console.log(`✂ ${lateBanners} bannière(s) de rubrique retirée(s) en fin de passage`);
     const dedup = await dedupeCardImages(allItems);
     if (dedup) console.log(`↻ ${dedup} photo(s) déjà sur une autre carte → banque libre / campus`);
+    // Sortie de la tête de file : signature de l'image telle que vérifiée.
+    const stampAt = new Date().toISOString();
+    for (const it of touched) {
+      it.leadImageCheckedKey = leadImageSig(it);
+      it.leadImageCheckedAt = stampAt;
+    }
+    console.log(`File photos de une : ${touched.size} article(s) vérifié(s) cette passe`);
     const kept = require('./non-article-filter').filterNonArticles(allItems, { log: console.log });
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: kept, count: kept.length }, null, 2) + '\n');
     fs.writeFileSync(QC_PATH, JSON.stringify(qc, null, 2) + '\n');
@@ -1024,7 +1082,7 @@ async function main() {
   }
 }
 
-module.exports = { dedupeCardImages, replacePortraitLead, fillClearedLead, mapPool, assignSourceImage, hasCropSafeImage, fillsLeadWhenCropped };
+module.exports = { buildLeadQueue, leadImageSig, dedupeCardImages, replacePortraitLead, fillClearedLead, mapPool, assignSourceImage, hasCropSafeImage, fillsLeadWhenCropped };
 
 if (require.main === module) {
   main().catch((e) => {

@@ -41,9 +41,11 @@ jobs:
   aggregate:
     if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-24.04
-    # 25 min suffit avec plafonds par source ; 45 min laissait un hang McGill
-    # Daily bloquer toute l'après-midi.
-    timeout-minutes: 25
+    # Plafonds par source + files de vérification par article
+    # (article-check-queue-lib : neufs d'abord, arriéré par lot fixe) : le job
+    # tient en ~12 min avec ~1 000 articles. 30 min = marge seulement ; 45 min
+    # laissait un hang McGill Daily bloquer toute l'après-midi.
+    timeout-minutes: 30
     outputs:
       publish: ${{ steps.bundle.outputs.publish }}
     permissions:

@@ -16,6 +16,8 @@ const PHOTO_CREDIT_FIELDS = [
   'sourceImageCreditCited',
   'sourceImageCreditImageKey',
   'sourceImageCreditRev',
+  // Dernière tentative (même sans résultat) : file crédits, arriéré.
+  'sourceImageCreditTriedAt',
 ];
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
@@ -77,6 +79,12 @@ function looksLikeTextCitationSource(name = '') {
 
 const LEAD_IMAGE_FIELDS = [
   'leadImageReady',
+  // Marques des files de vérification (article-check-queue-lib) : suivent
+  // l'article tant que son image ne change pas.
+  'leadImageCheckedKey',
+  'leadImageCheckedAt',
+  'imageHealthKey',
+  'imageHealthAt',
   'imageCropSafe',
   'imageCropFocalY',
   'imageRemoteOnly',
