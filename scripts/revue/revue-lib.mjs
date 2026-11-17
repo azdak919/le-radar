@@ -300,6 +300,8 @@ export function itemReject(resume, x) {
   const why = textReject(resume, itemSource(x));
   if (why) return why;
   const h = String(resume).trim(), low = norm(h);
+  const bare = t => norm(t).replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  if (bare(h) === bare(x.title)) return 'répète le titre';
   if (/\?\s*$/.test(String(x.title || '')) && !/\?\s*$/.test(h)) return 'titre interrogatif affirmé';
   for (const n of titleNames(x.title, x.lang)) if (!low.includes(norm(n))) return `nom du titre absent (${n})`;
   return null;

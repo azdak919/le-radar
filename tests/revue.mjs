@@ -113,6 +113,7 @@ assert.deepEqual(L.titleNames(carney.title), ['Mark Carney']);
 assert.deepEqual(L.titleNames('Le Vert & Or triomphe sous les yeux des anciens'), []);
 assert.deepEqual(L.titleNames('Le Québec s’unit afin de prévenir les violences conjugales'), []);
 assert.match(L.itemReject('Le ministre des Finances du Canada dévoile ses ambitions économiques pour le budget.', carney), /nom du titre absent \(Mark Carney\)/);
+assert.match(L.itemReject('Mark Carney dévoile ses ambitions économiques.', { ...carney, excerpt: carney.excerpt + ' Mark Carney dévoile ses ambitions économiques.' }), /répète le titre|longueur/);
 assert.equal(L.itemReject('Mark Carney dévoile les ambitions économiques du gouvernement canadien dans le budget.', carney), null);
 const ganesha = { title: 'Can Ganesha Help You Pass Your Midterms?', lang: 'en', source: 'The Link', authors: [], excerpt: 'The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon orange.' };
 assert.match(L.itemReject('La couleur orange peut aider les étudiants à passer leurs examens de mi-session.', ganesha), /interrogatif/);
