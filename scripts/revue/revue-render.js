@@ -8,7 +8,10 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { renderPage, escapeHtml } = require('../seo-pages-lib');
+const { renderPage, escapeHtml, T: SITE_T, BRAND_SIGNATURE, CONTACT_MAIL } = require('../seo-pages-lib');
+// Nayuki QR Code generator (licence MIT, compatible GPL v2), déjà vendu dans le dépôt pour les affiches.
+const qrcodegen = require('../vendor/qrcodegen-v1.8.0.js');
+const IC = require('../institution-color-lib.js');
 
 const ROOT = path.join(__dirname, '..', '..');
 const SITE = (process.env.RADAR_SITE_URL || 'https://le-radar.ca').replace(/\/$/, '');
@@ -20,6 +23,20 @@ const NEWS_SITEMAP = 'sitemap-news.xml';
 const EXT = ' target="_blank" rel="noopener noreferrer"';
 
 const readJson = (p, d) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
+const BRAND = readJson(path.join(ROOT, 'brand-colors.json'), {}).institutions || {};
+/**
+ * Couleur d'établissement du nom du média, comme dans La une : couleur de brand-colors.json (mêmes alias), foncée
+ * au besoin jusqu'à 4,6:1 sur papier blanc (lisible à l'écran comme à l'impression). Inconnue → couleur normale.
+ */
+function mediaColor(inst) {
+  const raw = String(inst || '').trim();
+  const c = raw && (IC.institutionColor(raw, BRAND) || IC.institutionColor(raw.replace(/\s*\([^)]*\)\s*$/, ''), BRAND));
+  return c ? IC.aaColor(c, ['#ffffff']) : '';
+}
+function mediaName(source, inst, cls = 'notranslate') {
+  const c = mediaColor(inst);
+  return `<span class="${cls}" translate="no"${c ? ` style="color:${c}"` : ''}>${esc(source)}</span>`;
+}
 const esc = (s) => escapeHtml(String(s == null ? '' : s));
 const escXml = (s) => String(s == null ? '' : s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -69,7 +86,17 @@ const instShort = (s) => { const m = String(s || '').match(/^.+\(([^()]+)\)\s*$/
 const emo = (e) => (e ? `<span class="revue-emoji" aria-hidden="true">${e}</span> ` : '');
 const plural = (n, one, many = `${one}s`) => `${n} ${n > 1 ? many : one}`;
 
-function itemHtml(x, leadId = '') {
+/** Photo de l'article (miroir du Radar seulement : même politique d'images que le site) ; '' sinon. */
+function itemPhoto(x) {
+  const u = String(x.image || '').trim();
+  if (/^assets\//.test(u)) return `${SITE}/${u}`;
+  return u.startsWith(`${SITE}/assets/`) ? u : '';
+}
+/** Vignette comme sur l'accueil : photo entière (jamais rognée), crédit discret. */
+function itemFig(src, credit, rank, big = false) {
+  return `            <figure class="revue-item__fig${big ? ' revue-item__fig--big' : ''}" data-photo="${rank}"><img src="${esc(src)}" alt="" loading="lazy" decoding="async" />${credit ? `<figcaption>${esc(credit)}</figcaption>` : ''}</figure>`;
+}
+function itemHtml(x, leadId = '', photo = null) {
   const lang = x.lang === 'en' ? ' lang="en"' : '';
   const when = `${frShort(mtlParts(x.date).ymd)} · ${frClock(x.date)}`;
   const authors = authorsLine(x.authors || []);
@@ -77,8 +104,9 @@ function itemHtml(x, leadId = '') {
     ? `<p class="revue-item__resume" data-texte="ia">${esc(x.resume)}</p>`
     : (x.excerpt ? `<blockquote class="revue-item__excerpt" data-texte="extrait"${lang} cite="${esc(x.link)}"><p>« ${esc(x.excerpt)} »</p></blockquote>` : '');
   return [
-    `          <li class="revue-item" id="a-${esc(x.id)}"${x.id === leadId ? ' data-une="1"' : ''}>`,
-    `            <p class="revue-item__media"><span class="notranslate" translate="no">${esc(x.source)}</span>${x.institution ? ` · <span class="revue-item__inst">${esc(instShort(x.institution))}</span>` : ''}</p>`,
+    `          <li class="revue-item${photo ? ' revue-item--photo' : ''}" id="a-${esc(x.id)}"${x.id === leadId ? ' data-une="1"' : ''}>`,
+    photo ? itemFig(photo.src, String(x.credit || '').trim(), photo.rank, photo.big) : '',
+    `            <p class="revue-item__media">${mediaName(x.source, x.institution)}${x.institution ? ` · <span class="revue-item__inst">${esc(instShort(x.institution))}</span>` : ''}</p>`,
     `            <h4 class="revue-item__title"><a href="${esc(x.link)}"${EXT}${lang}>${x.sport ? emo(esc(x.sport)) : ''}${esc(x.title)}</a></h4>`,
     `            <p class="revue-item__byline">${authors ? `Par <span class="notranslate" translate="no">${esc(authors)}</span> · ` : ''}<time datetime="${esc(isoMtl(x.date))}">${esc(when)}</time></p>`,
     text ? `            ${text}` : '',
@@ -89,6 +117,16 @@ function itemHtml(x, leadId = '') {
 function presseHtml(model) {
   const groups = groupByTheme(model.items);
   const leadId = leadOf(model)?.id || '';
+  // Une photo n'apparaît qu'une fois (la photo de la une, puis chaque image dans l'ordre de lecture) ; rang = data-photo.
+  const seen = new Set([model.image?.url].filter(Boolean)), photos = new Map();
+  for (const g of groups) {
+    let first = true;
+    for (const x of g.items) {
+      const src = itemPhoto(x);
+      if (x.id === leadId || !src || seen.has(src)) continue;
+      seen.add(src); photos.set(x.id, { src, rank: photos.size + 1, big: first }); first = false;
+    }
+  }
   return [
     '      <section class="seo-section revue-section" id="presse" aria-labelledby="presse-titre">',
     `        <h2 id="presse-titre">${emo('📰')}Revue de presse</h2>`,
@@ -96,7 +134,7 @@ function presseHtml(model) {
       // Thème qui ne contient que l'article à la une : à l'impression, l'article est déjà en tête de page.
       `        <h3 class="revue-theme" id="theme-${slug(g.theme)}"${g.items.every((x) => x.id === leadId) ? ' data-une="1"' : ''}>${emo(g.emoji)}${esc(g.theme)}</h3>`,
       '        <ol class="revue-items">',
-      ...g.items.map((x) => itemHtml(x, leadId)),
+      ...g.items.map((x) => itemHtml(x, leadId, photos.get(x.id))),
       '        </ol>',
     ].join('\n')),
     '      </section>',
@@ -198,8 +236,8 @@ function uneHead(x) {
   const authors = authorsLine(x.authors || []);
   return [
     '        <div class="revue-une" aria-hidden="true">',
-    `          <p class="revue-une__kicker">À la une · <span class="notranslate" translate="no">${esc(x.source)}</span>${x.institution ? ` · ${esc(instShort(x.institution))}` : ''}</p>`,
-    `          <p class="revue-une__title"${lang}>${x.sport ? `${emo(esc(x.sport))}` : ''}${esc(x.title)}</p>`,
+    `          <p class="revue-une__kicker">À la une · ${mediaName(x.source, x.institution)}${x.institution ? ` · ${esc(instShort(x.institution))}` : ''}</p>`,
+    `          <p class="revue-une__title"${lang}><a href="${esc(x.link)}" tabindex="-1"${EXT}>${x.sport ? `${emo(esc(x.sport))}` : ''}${esc(x.title)}</a></p>`,
     `          <p class="revue-une__byline">${authors ? `Par <span class="notranslate" translate="no">${esc(authors)}</span> · ` : ''}${esc(frShort(mtlParts(x.date).ymd))}, ${esc(frClock(x.date))}</p>`,
     '        </div>',
   ].join('\n');
@@ -218,8 +256,8 @@ function encadreHtml(model) {
   const sail = results.find(sailing);
   if (sail && !res.includes(sail)) res.splice(res.length - 1, 1, sail);
   const sport = res.length
-    ? res.map((r) => `            <li><b>${esc(r.sport)}</b> <span class="notranslate" translate="no">${esc(r.text)}</span></li>`)
-    : next.slice(0, 4).map((r) => `            <li><b>${esc(frShort(r.date))}${r.time ? `, ${esc(hhmm(r.time))}` : ''}</b> ${esc(r.sport)} · <span class="notranslate" translate="no">${esc(r.text)}</span></li>`);
+    ? res.map((r) => `            <li><b>${emo(esc(r.emoji))}${esc(r.sport)}</b> <span class="notranslate" translate="no">${esc(r.text)}</span></li>`)
+    : next.slice(0, 4).map((r) => `            <li><b>${esc(frShort(r.date))}${r.time ? `, ${esc(hhmm(r.time))}` : ''}</b> ${emo(esc(r.emoji))}${esc(r.sport)} · <span class="notranslate" translate="no">${esc(r.text)}</span></li>`);
   const shows = (model.radio || []).flatMap((st) => st.shows.map((s) => ({ ...s, station: st.station })))
     .sort((a, b) => String(a.start).localeCompare(String(b.start))).slice(0, 4);
   if (!sport.length && !shows.length) return '';
@@ -229,6 +267,34 @@ function encadreHtml(model) {
     sport.length ? `          <p class="revue-encadre__sub">${res.length ? 'Sport étudiant : résultats' : 'Sport étudiant : prochains matchs'}</p>\n          <ul>\n${sport.join('\n')}\n          </ul>` : '',
     shows.length ? `          <p class="revue-encadre__sub">À l’antenne, ${esc(frShort(model.edition.day))}</p>\n          <ul>\n${shows.map((s) => `            <li><b>${esc(hhmm(s.start))}</b> <span class="notranslate" translate="no">${esc(s.station)}</span> · ${esc(s.title)}</li>`).join('\n')}\n          </ul>` : '',
     '          <p class="revue-encadre__more">Tous les résultats et les grilles, plus loin dans cette édition.</p>',
+    '        </aside>',
+  ].filter(Boolean).join('\n');
+}
+/** Code QR en SVG (modules noirs, marge de 2 modules), sans script ni image externe. */
+function qrSvg(text) {
+  const qr = qrcodegen.QrCode.encodeText(String(text), qrcodegen.QrCode.Ecc.MEDIUM);
+  const n = qr.size, b = 2, d = [];
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.getModule(x, y)) d.push(`M${x + b},${y + b}h1v1h-1z`);
+  return `<svg class="revue-colophon__qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n + 2 * b} ${n + 2 * b}" shape-rendering="crispEdges" role="img" aria-label="Code QR"><rect width="100%" height="100%" fill="#fff"/><path fill="#000" d="${d.join('')}"/></svg>`;
+}
+const REPO = 'github.com/azdak919/le-radar';
+/**
+ * Colophon imprimé (caché à l'écran, où le pied du site fait ce travail) : à la fin de l'édition seulement, dans le
+ * flux des colonnes, il comble la fin de la dernière page. Tout est écrit en clair (un lien ne se clique pas sur papier).
+ */
+function colophonHtml(model) {
+  const url = String(model.url || '');
+  const shortUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  return [
+    '        <aside class="revue-colophon" aria-hidden="true">',
+    '          <p class="revue-colophon__brand"><img class="revue-colophon__logo" src="../../assets/icon.svg" width="28" height="28" alt="" /><span class="notranslate" translate="no">LE-RADAR.ca</span></p>',
+    `          <p class="revue-colophon__devise">${esc(BRAND_SIGNATURE)}</p>`,
+    `          <p class="revue-colophon__text">${esc(SITE_T.fr.unofficial)}</p>`,
+    `          <p class="revue-colophon__line"><b>Nous joindre</b> ${esc(CONTACT_MAIL)}</p>`,
+    `          <p class="revue-colophon__line"><b>Code libre</b> licence GNU GPL v2 · ${REPO}</p>`,
+    url ? `          <div class="revue-colophon__online">${qrSvg(url)}<p><b>Cette édition en ligne</b><br /><a href="${esc(url)}" tabindex="-1">${esc(shortUrl)}</a><br />Toutes les revues : <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p></div>` : `          <p class="revue-colophon__line"><b>En ligne</b> <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p>`,
+    `          <p class="revue-colophon__ia">${DISCLOSURE}</p>`,
+    '          <p class="revue-colophon__credit">Conçu avec ♡ par Azdak en 2026</p>',
     '        </aside>',
   ].filter(Boolean).join('\n');
 }
@@ -256,7 +322,7 @@ function articleBody(model) {
     '      </div>',
     '      <nav class="revue-toc" aria-label="Sommaire"><a href="#presse">📰 Revue de presse</a><a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a><a href="#sources">Sources</a></nav>',
     '      <div class="revue-cols">',
-    presseHtml(model), radioHtml(model), sportHtml(model), sourcesHtml(model),
+    presseHtml(model), radioHtml(model), sportHtml(model), sourcesHtml(model), colophonHtml(model),
     '      </div>',
     `      <p class="revue-disclosure">${DISCLOSURE}</p>`,
     '      </article>',

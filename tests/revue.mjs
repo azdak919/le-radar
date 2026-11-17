@@ -263,6 +263,33 @@ assert.ok(html.includes('Stingers (Concordia) 55-54 Martlets (McGill)'));
 assert.ok(html.includes('<span class="revue-item__inst">UdeS</span>') && !/Université de Sherbrooke \(UdeS\)/.test(html), 'établissement : sigle seul');
 assert.ok(R.articleBody({ ...m, items: m.items.map(x => ({ ...x, institution: 'Université de Sherbrooke (UdeS)' })) }).includes('<span class="revue-item__inst">UdeS</span>'), 'revue déjà générée « Nom (SIGLE) » : sigle seul au rendu');
 assert.match(html, /<header class="revue-flag" aria-hidden="true">[\s\S]*assets\/icon\.svg[\s\S]*LE-RADAR\.ca[\s\S]*La revue du matin[\s\S]*<\/header>/, 'manchette imprimée : logo à gauche du mot-symbole, édition');
+{
+  const colo = (html.match(/<aside class="revue-colophon"[\s\S]*?<\/aside>/) || [''])[0];
+  assert.ok(colo, 'colophon imprimé en fin d’édition');
+  assert.equal((html.match(/class="revue-colophon"/g) || []).length, 1, 'colophon une seule fois, pas répété');
+  for (const t of ['Le Réseau Académique de Découverte et d’Agrégation de Ressources', 'indépendant et non officiel', 'azdak-qc@proton.me', 'GNU GPL v2', 'le-radar.ca/revue', 'Conçu avec ♡ par Azdak en 2026', 'Revue préparée automatiquement'])
+    assert.ok(colo.replace(/'/g, '’').includes(t.replace(/'/g, '’')), `colophon : ${t}`);
+  assert.match(colo, /<svg[^>]*class="revue-colophon__qr"[\s\S]*<path fill="#000" d="M/, 'QR code SVG vers l’édition');
+  assert.doesNotMatch(colo, /Installer|Android|revue-nav/i, 'colophon sans navigation ni campagne');
+  assert.deepEqual([...colo.matchAll(/<a href="([^"]+)"/g)].map(x => x[1]), [m.url, 'https://le-radar.ca/revue/'], 'liens cliquables du colophon : l’édition et le-radar.ca/revue');
+}
+{
+  const many = { ...m, items: [m.items[0], ...m.items.map((x, i) => ({ ...x, id: `ph${i}`, link: `${x.link}?p=${i}`, image: `assets/news-images/p${i}.jpg`, credit: 'Photo : Jane Roy' }))] };
+  const body = R.articleBody(many);
+  assert.match(body, /class="revue-item revue-item--photo"[\s\S]*?<figure class="revue-item__fig[^"]*"[^>]*><img src="[^"]*assets\/news-images\/p\d\.jpg" alt=""[^>]*><figcaption>Photo : Jane Roy<\/figcaption><\/figure>/, 'vignette d’article avec crédit discret');
+  assert.ok(!R.articleBody({ ...m, items: m.items.map(x => ({ ...x, image: 'https://pirate.example/x.jpg' })) }).includes('pirate.example'), 'vignette : images du Radar seulement');
+}
+{
+  // Titres cliquables (vrais <a href>, conservés dans le PDF) et nom du média en couleur d'établissement.
+  assert.match(html, /<p class="revue-une__title"[^>]*><a href="https:\/\/[^"]+"/, 'titre de la une : lien vers l’article d’origine');
+  const colored = R.articleBody({ ...m, items: m.items.map(x => ({ ...x, institution: 'UdeS' })) });
+  assert.match(colored, /revue-item__media"><span class="notranslate" translate="no" style="color:rgb\(\d+, \d+, \d+\)">Le Collectif<\/span> · <span class="revue-item__inst">UdeS<\/span>/, 'média en couleur d’établissement, sigle en couleur normale');
+}
+{
+  const cov = JSON.parse(fs.readFileSync(new URL('../assets/revue/emoji-coverage.json', import.meta.url)));
+  const have = new Set(cov.emojis || cov);
+  for (const e of ['⛵', '📻', '📰']) assert.ok(have.has(e), `police emoji imprimable : ${e}`);
+}
 assert.ok(html.includes('La collation'));
 assert.ok(html.includes('lang="en"'), 'titre anglais balisé lang="en"');
 assert.deepEqual(L.foreignLinks(R.articleBody(m), m), [], 'aucun lien hors données');

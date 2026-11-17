@@ -316,26 +316,15 @@ function articleInstitutionLabel(name = '', type = '', form = 'short') {
     || formatInstitutionDisplay(String(name).replace(/\s*\([^)]*\)\s*$/, '').trim());
 }
 
-/** HTML meta institution : complet + acronyme pour bascule responsive CSS. */
-function articleInstitutionMetaHtml(name = '', type = '', role = 'standard') {
+/**
+ * HTML meta institution des cartes : forme courte seulement (sigle ou nom court, « Université Bishop’s » → « Bishop’s »),
+ * en couleur normale ; c’est le nom du média (.article-source) qui porte la couleur de l’établissement, comme dans La une.
+ */
+function articleInstitutionMetaHtml(name = '', type = '', _role = 'standard') {
   if (!name) return '';
-  const short = articleInstitutionLabel(name, type, 'short');
-  const full = articleInstitutionLabel(name, type, 'full');
-  // Une + vedettes + En bref + suite du fil : nom complet (dual full/short responsive).
-  const spacious = role === 'lead' || role === 'feature' || role === 'standard' || role === 'compact';
+  const label = articleInstitutionLabel(name, type, 'short') || articleInstitutionLabel(name, type, 'full');
   // Pas de notranslate : hors Original/FR/EN, translate.js localise (ES/PT…).
-  // En Original / FR / EN : libellés d’origine intacts.
-  if (spacious && full && full !== short) {
-    return `<span class="article-inst">`
-      + `<span class="article-inst__full">${escapeHtml(full)}</span>`
-      + `<span class="article-inst__short">${escapeHtml(short)}</span>`
-      + `</span>`;
-  }
-  // Spacious mais full === short (ex. cégep sans acronyme) : afficher full
-  if (spacious && full) {
-    return `<span class="article-inst">${escapeHtml(full)}</span>`;
-  }
-  return `<span class="article-inst">${escapeHtml(short || full)}</span>`;
+  return label ? `<span class="article-inst">${escapeHtml(label)}</span>` : '';
 }
 
 function shortInstitution(name = '', type = '') {

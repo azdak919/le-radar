@@ -79,15 +79,29 @@ réseaux, flux de travail).
   pied d’article.
 - Établissement : **sigle seul**, comme dans La une (« UdeS », « ULaval », « Concordia », « Bishop’s ») ; nom français
   seulement s’il n’a pas de sigle (« Cégep de Jonquière »). Jamais « Nom complet (SIGLE) » (`institutionDisplay`, et
-  au rendu pour les revues déjà générées).
+  au rendu pour les revues déjà générées). Le **nom du média** prend la couleur de l’établissement (`brand-colors.json`,
+  `institution-color-lib.js`, foncée jusqu’à 4,6:1 sur blanc pour rester lisible imprimée) ; le sigle reste en couleur
+  normale. Même règle sur les cartes de l’accueil (forme courte : « Université Bishop’s » → « Bishop’s »).
 - Impression de la revue : **un vrai journal**. Manchette (logo du Radar à gauche de LE‑RADAR.ca, devise, filet
   double, ligne de folio : édition, date, heure de publication), article **à la une** (surtitre, grand titre, tous les
   auteurs, photo, résumé) avec l’amorce « Dans cette édition », puis les rubriques en **colonnes séparées par des
   filets** : 2 colonnes en Lettre et A4 (photo à gauche, texte à droite), 3 en Légal, 4 en Tabloïd et A3, où la une
   gagne un **encadré « En bref »** (résultats ou prochains matchs, une régate si l’édition en a une, émissions de
-  radio). Texte à empattements justifié avec césure française, grilles de radio en agate, aucun émoji, aucun lien
-  « Lire… », aucun élément d’interface ; page nommée `@page revue`, mises en page choisies par `@media print` selon la
+  radio). Texte à empattements justifié avec césure française, grilles de radio en agate, aucun lien « Lire… », aucun
+  élément d’interface ; page nommée `@page revue`, mises en page choisies par `@media print` selon la
   largeur et la hauteur de la page (`revue.css`). La mention automatique reste une phrase discrète en pied.
+- Imprimé seulement, en plus :
+  - **émojis en couleur** (rubriques, sports dont ⛵, radio) avec un sous-ensemble de Noto Color Emoji (OFL,
+    `assets/revue/noto-color-emoji-revue.woff2`, `NOTO-EMOJI-OFL.txt`), régénéré par
+    `scripts/revue/subset-revue-emoji-font.py` (`--check` vérifie que chaque émoji utilisé est couvert) ;
+  - **vignettes** des autres articles, comme à l’accueil : photo entière (jamais rognée), crédit discret, images du
+    Radar seulement ; petites à droite en Lettre et A4, plus grandes en Légal, Tabloïd et A3 (première photo de chaque
+    rubrique pleine colonne) ;
+  - **titres cliquables** dans le PDF (vrais `<a href>` vers l’article d’origine, URL jamais affichée) ;
+  - **colophon** sobre, une seule fois à la fin : logo, « Le Réseau Académique de Découverte et d’Agrégation de
+    Ressources », mention d’indépendance, nous joindre (azdak-qc@proton.me), code libre sous GNU GPL v2, lien
+    cliquable et **code QR** vers l’édition (Nayuki QR Code generator, MIT, compatible GPL v2, déjà dans
+    `scripts/vendor/`), le-radar.ca/revue, phrase sur la préparation automatique, « Conçu avec ♡ par Azdak en 2026 ».
 - Impression (revue, accueil, fiches d’article) : LE‑RADAR.ca et son logo au pied de chaque feuille, intertitres jamais
   seuls en bas de page ou de colonne, cartes et lignes jamais coupées, images bornées dans la page.
   `tests/print-formats.spec.mjs` produit un PDF par format et le vérifie (débordement, pages presque vides, intertitres

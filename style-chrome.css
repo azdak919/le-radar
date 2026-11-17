@@ -2709,7 +2709,7 @@ html.has-tuner-safe-cap .tuner {
   .news-list .article::after { clear: both; content: ""; display: block; }
   .news-list .article > :not(.article-media) { width: auto !important; max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; grid-column: auto !important; float: none !important; }
 
-  /* Méta : une ligne qui se coupe aux mots, nom complet seulement, jamais rognée. */
+  /* Méta : une ligne qui se coupe aux mots, forme courte de l’établissement (comme à l’écran), jamais rognée. */
   .article-meta { display: block !important; }
   .article-meta__lead, .article-source, .article-inst, .article-time { display: inline !important; white-space: normal !important; }
   .article-inst__full { display: inline !important; }

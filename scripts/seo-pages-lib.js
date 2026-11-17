@@ -1566,6 +1566,9 @@ function scheduleTable(grid, t, { checkedAt = null, verifiedWeekOf = null, stati
 
 module.exports = {
   SITE_NAME,
+  BRAND_NAME,
+  BRAND_SIGNATURE,
+  CONTACT_MAIL,
   T,
   escapeHtml,
   slugify,

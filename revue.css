@@ -188,9 +188,20 @@
   border-top: 1px solid var(--rule);
 }
 
+/* Émojis (rubriques, sports, radio) : sous-ensemble de Noto Color Emoji (OFL) servi par le site, pour qu'ils
+ * s'affichent et s'impriment pareil partout (scripts/revue/subset-revue-emoji-font.py). */
+@font-face { font-family: "Radar Emoji"; src: url("assets/revue/noto-color-emoji-revue.woff2") format("woff2"); font-display: swap; }
+.revue-emoji { font-family: "Radar Emoji", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-weight: 400; font-style: normal; letter-spacing: 0; text-transform: none; }
+/* Vignettes des articles (comme sur l'accueil) : photo entière, jamais rognée, crédit discret. */
+.revue-item__fig { float: right; width: 116px; margin: 3px 0 8px 14px; }
+.revue-item__fig img { display: block; width: 100%; height: auto; max-height: 150px; object-fit: contain; object-position: center top; border-radius: 6px; }
+.revue-wire .revue-item__fig figcaption { font-family: var(--sans); font-size: 10.5px; line-height: 1.3; color: var(--muted); margin-top: 3px; overflow-wrap: anywhere; }
+.revue-item--photo::after { content: ""; display: block; clear: both; }
+@media (max-width: 520px) { .revue-item__fig { width: 92px; margin-left: 10px; } }
+
 /* Éléments du journal imprimé : absents à l'écran (le mât du site, le titre h1 et .revue-meta font ce travail) ;
  * les enveloppes de mise en page sont transparentes à l'écran. */
-.revue-flag, .revue-une, .revue-une__text, .revue-encadre { display: none; }
+.revue-flag, .revue-une, .revue-une__text, .revue-encadre, .revue-colophon { display: none; }
 .revue-top, .revue-top__main, .revue-top__side, .revue-cols { display: contents; }
 
 /* ══════════ IMPRESSION : un vrai journal (Letter, Legal, Tabloïd, A4, A3 en portrait) ══════════
@@ -207,7 +218,7 @@
   body:has(.revue-wire .revue) .site-foot,
   body:has(.revue-wire .revue) .site-sections,
   .revue-wire:has(.revue) > :not(.revue),
-  .revue-meta, .revue-toc, .revue-item__more, .revue-more, .revue-nav, .revue-emoji,
+  .revue-meta, .revue-toc, .revue-item__more, .revue-more, .revue-nav,
   .revue-item[data-une], .revue-theme[data-une], .revue-theme[data-une] + .revue-items { display: none !important; }
   .revue-wire:has(.revue) { padding: 0 !important; margin: 0 !important; max-width: none !important; }
   .revue-wire .revue { display: block !important; color: #000; font-family: var(--serif); }
@@ -301,6 +312,12 @@
   .revue-wire .revue .revue-item__resume, .revue-wire .revue .revue-item__excerpt p { font: 400 9pt/1.34 var(--serif) !important; color: #111 !important; font-style: normal !important; margin: 0 !important; }
   .revue-wire .revue-item__excerpt { border: 0 !important; padding: 0 !important; margin: 0 !important; }
 
+  /* Vignettes : à droite du texte en Lettre et A4 (petites), au-dessus de l'article sur les grands formats. */
+  .revue-wire .revue .revue-item__fig { float: right; width: 36%; margin: 1.5pt 0 2pt 5pt !important; break-inside: avoid; }
+  .revue-wire .revue .revue-item__fig img { width: 100% !important; height: auto !important; max-width: 100% !important; max-height: 3.1cm !important; object-fit: contain !important; object-position: center top; border-radius: 0 !important; }
+  .revue-wire .revue .revue-item__fig figcaption { font: 400 5.6pt/1.25 var(--sans) !important; color: #555 !important; margin-top: 1pt !important; text-align: left; }
+  .revue-wire .revue .revue-emoji { font-size: 1.05em; margin-right: .1em; }
+  .revue-wire .revue-section > h2 .revue-emoji, .revue-wire .revue-section > h3 .revue-emoji { font-size: 1.15em; letter-spacing: 0; }
   /* Radio et sport */
   .revue-wire .revue :is(.revue-shows, .revue-results, .revue-next) { font: 400 7.6pt/1.3 var(--sans) !important; margin: 0 0 2pt !important; columns: auto !important; }
   .revue-wire .revue :is(.revue-shows, .revue-results, .revue-next) li { padding: 1.6pt 0 !important; border-bottom: .4pt dotted #999 !important; break-inside: avoid; }
@@ -319,7 +336,24 @@
   /* Sources et mention de transparence (une phrase discrète, en pied) */
   .revue-wire .revue-sources > h2 { font-size: 7pt !important; border-top-width: 1pt !important; }
   .revue-wire .revue .revue-sources p { font: 400 6.8pt/1.35 var(--sans) !important; color: #333 !important; margin: 0 0 3pt !important; text-align: left; }
-  .revue-wire .revue .revue-disclosure { font: 400 6.5pt/1.35 var(--sans) !important; color: #555 !important; text-align: center; margin: 6pt 0 0 !important; padding-top: 3pt !important; border-top: .4pt solid #999 !important; break-before: avoid; }
+  /* La phrase sur l'IA vit dans le colophon à l'impression. */
+  .revue-wire .revue .revue-disclosure { display: none !important; }
+
+  /* Colophon : fin de l'édition seulement, dans la dernière colonne (il comble la fin de page), jamais coupé. */
+  .revue-wire .revue .revue-colophon { display: block !important; break-inside: avoid; margin: 10pt 0 0; padding: 6pt 0 0; border-top: 2.25pt solid #000; font: 400 6.8pt/1.38 var(--sans) !important; color: #222 !important; text-align: center; }
+  .revue-wire .revue .revue-colophon > * { break-inside: avoid; }
+  .revue-wire .revue .revue-colophon__brand, .revue-wire .revue .revue-colophon__devise { break-after: avoid; }
+  .revue-wire .revue .revue-colophon p { margin: 0 0 3pt; text-align: center; hyphens: manual; font: 400 6.8pt/1.38 var(--sans) !important; color: #222 !important; }
+  .revue-wire .revue p.revue-colophon__brand { display: flex !important; align-items: center; justify-content: center; gap: 4pt; font: 700 13pt/1 var(--serif) !important; color: #000 !important; margin-bottom: 2pt !important; }
+  .revue-wire .revue .revue-colophon__logo { width: 15pt !important; height: 15pt !important; max-height: none !important; }
+  .revue-wire .revue p.revue-colophon__devise { font: 400 7.2pt/1.3 var(--serif) !important; color: #000 !important; padding-bottom: 4pt; border-bottom: .5pt solid #999; margin-bottom: 4pt !important; }
+  .revue-wire .revue p.revue-colophon__text { color: #333 !important; }
+  .revue-wire .revue .revue-colophon b { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 6pt !important; margin-right: 3pt; color: #000 !important; }
+  .revue-wire .revue .revue-colophon__online { display: flex !important; align-items: center; justify-content: center; gap: 6pt; margin: 4pt 0; padding: 4pt 0; border-top: .4pt dotted #999; border-bottom: .4pt dotted #999; }
+  .revue-wire .revue .revue-colophon .revue-colophon__online p { text-align: left; margin: 0; }
+  .revue-wire .revue .revue-colophon__qr { display: block; width: 15mm !important; height: 15mm !important; max-width: none !important; flex: none; }
+  .revue-wire .revue p.revue-colophon__ia { color: #555 !important; font-size: 6.3pt !important; padding-top: 1pt; }
+  .revue-wire .revue p.revue-colophon__credit { font: 400 7pt/1.3 var(--serif) !important; color: #000 !important; margin: 0 !important; }
 
   /* Index des archives (/revue/) */
   .revue-wire .revue-archive__day { break-inside: avoid; }
@@ -335,6 +369,27 @@
   .revue-wire .revue p.revue-lede { border-top: 0; padding-top: 0; }
   .revue-wire .revue-encadre { display: block !important; }
   .revue-wire .revue-une__title { font-size: 27pt; }
+  /* Grands formats : première photo de chaque rubrique au-dessus de l'article, sur toute la colonne ; les autres à côté du
+   * texte, plus grandes qu'en Lettre (surtitre, titre et signature sur toute la colonne). */
+  .revue-wire .revue .revue-item--photo {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) 42%; column-gap: 5pt;
+    grid-template-areas: "media media" "title title" "byline byline" "text fig" "more more"; align-items: start;
+  }
+  .revue-wire .revue .revue-item--photo::after { content: none; }
+  .revue-wire .revue .revue-item--photo > .revue-item__media { grid-area: media; }
+  .revue-wire .revue .revue-item--photo > .revue-item__title { grid-area: title; }
+  .revue-wire .revue .revue-item--photo > .revue-item__byline { grid-area: byline; }
+  .revue-wire .revue .revue-item--photo > :is(.revue-item__resume, .revue-item__excerpt) { grid-area: text; }
+  .revue-wire .revue .revue-item--photo > .revue-item__fig { grid-area: fig; }
+  .revue-wire .revue .revue-item__fig { float: none; width: auto; margin: 1pt 0 1pt !important; }
+  .revue-wire .revue .revue-item__fig img { max-height: 3.4cm !important; }
+  .revue-wire .revue .revue-item--photo:has(> .revue-item__fig--big) { display: block !important; }
+  .revue-wire .revue .revue-item--photo > .revue-item__fig--big { width: 100%; margin: 1pt 0 3pt !important; }
+  .revue-wire .revue .revue-item__fig--big img { max-height: 4cm !important; }
+  /* Une : la photo occupe la hauteur laissée par l'amorce et l'encadré (entière, centrée, jamais rognée). */
+  .revue-wire .revue-top, .revue-wire .revue-top:has(.revue-cover) { grid-template-rows: auto 1fr auto; }
+  .revue-wire .revue-top .revue-cover { display: flex !important; flex-direction: column; justify-content: flex-start; }
+  .revue-wire .revue .revue-item--photo > :is(.revue-item__resume, .revue-item__excerpt), .revue-wire .revue .revue-item--photo > .revue-item__excerpt p { text-align: left !important; }
   .revue-wire .revue-cover img { max-height: 9.5cm !important; }
 }
 /* Tabloïd et A3 : 4 colonnes, manchette et une agrandies. */
@@ -351,6 +406,14 @@
   .revue-wire .revue-flag__ed { font-size: 11pt; }
   .revue-wire .revue-une__title { font-size: 38pt; }
   .revue-wire .revue-une__text { font-size: 13pt; line-height: 1.38; }
-  .revue-wire .revue-cover img { max-height: 14cm !important; }
+  .revue-wire .revue-cover img { max-height: 13cm !important; object-position: center top; }
   .revue-wire .revue-item__title { font-size: 11.5pt !important; }
+  .revue-wire .revue .revue-item__fig img { max-height: 4cm !important; }
+  .revue-wire .revue .revue-item__fig--big img { max-height: 5.2cm !important; }
+}
+
+/* Liens cliquables du PDF (titre de la une, colophon) : texte normal, URL jamais affichée. */
+@media print {
+  .revue-wire .revue-une__title a, .revue-wire .revue-colophon a { color: inherit !important; text-decoration: none !important; }
+  .revue-wire .revue-une__title a::after, .revue-wire .revue-colophon a::after, .revue-wire .revue-item__title a::after { content: none !important; }
 }
