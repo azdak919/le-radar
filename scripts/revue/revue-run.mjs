@@ -15,6 +15,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as L from './revue-lib.mjs';
 import { aiReview, aiEnabled } from './revue-ai.mjs';
+import { fetchWeather } from './revue-weather.mjs';
 
 const require = createRequire(import.meta.url);
 const R = require('./revue-render.js');
@@ -103,6 +104,10 @@ export async function generate(editionId, now, io) {
     model = L.buildModel({ edition, period, items, sports, radio, now, ai: null, published: model.datePublished, previous: model.previous });
     problems = L.validateReview(model, data);
   }
+  // Petite météo ECCC de la manchette, lue au moment de produire l'édition ; échec → pas de ligne, jamais un refus.
+  let weather = null;
+  try { weather = io.fetchWeather ? await io.fetchWeather(now) : null; } catch { weather = null; }
+  if (weather?.cities?.length) model = { ...model, weather };
   if (doubts.length) problems.push(...doubts.map(d => `DOUTE : ${d}`));
   if (problems.length) return { status: 'refusée', problems, model, why: 'garde-fou : rien ne sort' };
   return { status: 'publiée', model, why: `${items.length} article(s), ${sports.results.length} résultat(s), ${sports.next.length} match(s) à venir, ${radio.length} station(s)` };
@@ -164,7 +169,7 @@ async function main() {
   if (!sample && !cfg.publish) { summary('Revue : publication désactivée (data/revue/config.json publish = false) ; rien n’est écrit. Utiliser --sample --out pour un exemple.'); return; }
 
   const reviews = Object.fromEntries(index.slice(0, 12).map(r => [r.id, rd(path.join(dataRoot, `data/revue/reviews/${r.id}.json`), null)]).filter(([, m]) => m));
-  const io = { cfg, index, reviews, news: rd(newsFile), masthead: rd(arg('sports', 'sports-masthead.json'), { teams: {} }), schedules: rd(arg('radio', 'radio-schedules.json'), { stations: {} }), refresh: has('refresh') || process.env.REVUE_MODE === 'rafraichir' };
+  const io = { cfg, index, reviews, news: rd(newsFile), masthead: rd(arg('sports', 'sports-masthead.json'), { teams: {} }), schedules: rd(arg('radio', 'radio-schedules.json'), { stations: {} }), refresh: has('refresh') || process.env.REVUE_MODE === 'rafraichir', fetchWeather: has('sans-meteo') || process.env.REVUE_WEATHER === '0' ? null : (at) => fetchWeather({ now: at }) };
   console.log(`IA : ${aiEnabled() ? 'active (Workers AI)' : 'désactivée → gabarit déterministe'}`);
   const r = await generate(io.refresh ? 'soir' : forced, now, io);
   summary(`Revue (${sample ? 'EXEMPLE hors dépôt' : 'publication réelle'}) : ${r.status} — ${r.why}`);

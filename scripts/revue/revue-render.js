@@ -33,9 +33,27 @@ function mediaColor(inst) {
   const c = raw && (IC.institutionColor(raw, BRAND) || IC.institutionColor(raw.replace(/\s*\([^)]*\)\s*$/, ''), BRAND));
   return c ? IC.aaColor(c, ['#ffffff']) : '';
 }
+const RADIOS = (() => { const r = readJson(path.join(ROOT, 'radios.json'), []); return Array.isArray(r) ? r : (r.stations || Object.values(r)); })();
+/** Couleur d'établissement d'une station (radios.json → brand-colors.json), comme les noms de médias. */
+function stationStyle(id, name) {
+  const st = RADIOS.find(x => x && (x.id === id || (name && x.name === name)));
+  const c = st ? mediaColor(st.institution) : '';
+  return c ? ` style="--inst:${c}"` : '';
+}
+/**
+ * Ligne de station : « CFAK 88,3 FM » (indicatif + fréquence de radios.json) puis la ville en petit (la zone de
+ * couverture n'est pas vérifiée dans les données). Sans fréquence hertzienne (ex. « Web ») → le nom seul.
+ */
+function stationLabel(id, name) {
+  const st = RADIOS.find(x => x && (x.id === id || (name && x.name === name)));
+  const f = String(st?.frequency || '').trim();
+  if (!/^\d[\d,]*\s*(FM|AM)$/i.test(f)) return { name: String(name || ''), city: '' };
+  const call = String(name || st.name || '').trim().split(/\s+/)[0];
+  return { name: `${call} ${f}`, city: String(st.city || '').trim() };
+}
 function mediaName(source, inst, cls = 'notranslate') {
   const c = mediaColor(inst);
-  return `<span class="${cls}" translate="no"${c ? ` style="color:${c}"` : ''}>${esc(source)}</span>`;
+  return `<span class="${cls}${c ? ' revue-inst-c' : ''}" translate="no"${c ? ` style="--inst:${c}"` : ''}>${esc(source)}</span>`;
 }
 const esc = (s) => escapeHtml(String(s == null ? '' : s));
 const escXml = (s) => String(s == null ? '' : s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
@@ -150,7 +168,7 @@ function radioHtml(model) {
       ? `        <p class="seo-section__lead">Émissions originales prévues ${window} le ${esc(frDayYear(model.edition.day))}, selon les grilles publiées par les stations (heure de Montréal).</p>`
       : `        <p class="seo-section__lead">Aucune émission originale n’est inscrite aux grilles des radios étudiantes pour cette période. <a href="${SITE}/horaires/">Voir toutes les grilles</a>.</p>`,
     ...rows.map((st) => [
-      `        <h3 class="revue-station"><a href="${esc(st.page)}" class="notranslate" translate="no">${esc(st.station)}</a></h3>`,
+      `        <h3 class="revue-station"><a href="${esc(st.page)}" class="notranslate${stationStyle(st.id, st.station) ? ' revue-inst-c' : ''}" translate="no"${stationStyle(st.id, st.station)}>${esc(stationLabel(st.id, st.station).name)}</a>${stationLabel(st.id, st.station).city ? ` <span class="revue-station__city">· ${esc(stationLabel(st.id, st.station).city)}</span>` : ''}</h3>`,
       '        <ul class="revue-shows">',
       ...st.shows.map((s) => `          <li><time>${esc(s.when)}</time> <span class="revue-show">${s.url ? `<a href="${esc(s.url)}"${EXT}>${esc(s.title)}</a>` : esc(s.title)}</span></li>`),
       '        </ul>',
@@ -223,11 +241,12 @@ function flagHtml(model) {
   return [
     '      <header class="revue-flag" aria-hidden="true">',
     '        <p class="revue-flag__ears"><span>Revue de presse étudiante</span><span>Gratuit · le-radar.ca/revue</span></p>',
+    model.url ? `        <a class="revue-flag__qr" href="${esc(model.url)}" tabindex="-1">${qrSvg(model.url).replace('revue-colophon__qr', 'revue-flag__qrcode')}<span>Lire en ligne</span></a>` : '',
     '        <p class="revue-flag__brand"><img class="revue-flag__logo" src="../../assets/icon.svg" width="44" height="44" alt="" /><span class="revue-flag__name notranslate" translate="no">LE-RADAR.ca</span></p>',
     '        <p class="revue-flag__devise">Médias, radios et sport étudiants du Québec</p>',
-    `        <p class="revue-flag__folio"><span class="revue-flag__ed">${ed}</span><span class="revue-flag__date">${esc(cap(frDayYear(model.edition.day)))}</span><span class="revue-flag__time">Publiée à ${esc(frClock(pub))}, heure de Montréal</span></p>`,
+    `        <p class="revue-flag__folio"><span class="revue-flag__ed">${ed}</span><span class="revue-flag__date">${esc(cap(frDayYear(model.edition.day)))}</span><span class="revue-flag__time">Publiée à ${esc(frClock(pub))}, heure de Montréal${weatherLine(model, 'revue-wx--flag')}</span></p>`,
     '      </header>',
-  ].join('\n');
+  ].filter(Boolean).join('\n');
 }
 /** Bloc « À la une » imprimé : surtitre, grand titre, signature (tous les auteurs) ; le texte suit la photo. */
 function uneHead(x) {
@@ -258,14 +277,14 @@ function encadreHtml(model) {
   const sport = res.length
     ? res.map((r) => `            <li><b>${emo(esc(r.emoji))}${esc(r.sport)}</b> <span class="notranslate" translate="no">${esc(r.text)}</span></li>`)
     : next.slice(0, 4).map((r) => `            <li><b>${esc(frShort(r.date))}${r.time ? `, ${esc(hhmm(r.time))}` : ''}</b> ${emo(esc(r.emoji))}${esc(r.sport)} · <span class="notranslate" translate="no">${esc(r.text)}</span></li>`);
-  const shows = (model.radio || []).flatMap((st) => st.shows.map((s) => ({ ...s, station: st.station })))
+  const shows = (model.radio || []).flatMap((st) => st.shows.map((s) => ({ ...s, station: st.station, stationId: st.id })))
     .sort((a, b) => String(a.start).localeCompare(String(b.start))).slice(0, 4);
   if (!sport.length && !shows.length) return '';
   return [
     '        <aside class="revue-encadre" aria-hidden="true">',
     '          <p class="revue-encadre__head">En bref</p>',
     sport.length ? `          <p class="revue-encadre__sub">${res.length ? 'Sport étudiant : résultats' : 'Sport étudiant : prochains matchs'}</p>\n          <ul>\n${sport.join('\n')}\n          </ul>` : '',
-    shows.length ? `          <p class="revue-encadre__sub">À l’antenne, ${esc(frShort(model.edition.day))}</p>\n          <ul>\n${shows.map((s) => `            <li><b>${esc(hhmm(s.start))}</b> <span class="notranslate" translate="no">${esc(s.station)}</span> · ${esc(s.title)}</li>`).join('\n')}\n          </ul>` : '',
+    shows.length ? `          <p class="revue-encadre__sub">À l’antenne, ${esc(frShort(model.edition.day))}</p>\n          <ul>\n${shows.map((s) => `            <li><b>${esc(hhmm(s.start))}</b> <span class="notranslate${stationStyle(s.stationId, s.station) ? ' revue-inst-c' : ''}" translate="no"${stationStyle(s.stationId, s.station)}>${esc(s.station)}</span> · ${esc(s.title)}</li>`).join('\n')}\n          </ul>` : '',
     '          <p class="revue-encadre__more">Tous les résultats et les grilles, plus loin dans cette édition.</p>',
     '        </aside>',
   ].filter(Boolean).join('\n');
@@ -282,6 +301,30 @@ const REPO = 'github.com/azdak919/le-radar';
  * Colophon imprimé (caché à l'écran, où le pied du site fait ce travail) : à la fin de l'édition seulement, dans le
  * flux des colonnes, il comble la fin de la dernière page. Tout est écrit en clair (un lien ne se clique pas sur papier).
  */
+/* Petite météo de la manchette (ECCC, lue à la production de l'édition) : Québec et Montréal. Sans données → rien. */
+function wxEmoji(icon) {
+  const n = Number(icon);
+  if ([19, 39, 46, 47, 48].includes(n)) return '⛈️';
+  if ([23, 24, 44, 45].includes(n)) return '🌫️';
+  if ([7, 8, 14, 15, 16, 17, 18, 25, 26, 27, 37, 38, 40, 41].includes(n)) return '🌨️';
+  if ([6, 9, 11, 12, 13, 28, 36].includes(n)) return '🌧️';
+  if ([10].includes(n)) return '☁️';
+  if ([2, 3, 4, 5, 22, 32, 33, 34, 35].includes(n)) return '⛅';
+  if ([30, 31].includes(n)) return '🌙';
+  if ([0, 1, 20, 21].includes(n)) return '☀️';
+  return '';
+}
+function weatherLine(model, cls) {
+  const cities = (model.weather?.cities || []).filter(c => c && c.name && c.periods?.[0] && Number.isFinite(c.periods[0].temp)).slice(0, 2);
+  if (!cities.length) return '';
+  const bits = cities.map((c) => {
+    const p = c.periods[0];
+    const e = wxEmoji(p.icon);
+    return `<span class="revue-wx__city" title="${esc(p.name)} : ${esc(p.sky)}">${e ? emo(e) : ''}${esc(String(p.temp).replace('-', '−'))}°&#8239;${esc(c.name)}</span>`;
+  });
+  return `<span class="revue-wx ${cls}">${bits.join(' · ')}</span>`;
+}
+
 function colophonHtml(model) {
   const url = String(model.url || '');
   const shortUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
@@ -292,7 +335,7 @@ function colophonHtml(model) {
     `          <p class="revue-colophon__text">${esc(SITE_T.fr.unofficial)}</p>`,
     `          <p class="revue-colophon__line"><b>Nous joindre</b> ${esc(CONTACT_MAIL)}</p>`,
     `          <p class="revue-colophon__line"><b>Code libre</b> licence GNU GPL v2 · ${REPO}</p>`,
-    url ? `          <div class="revue-colophon__online">${qrSvg(url)}<p><b>Cette édition en ligne</b><br /><a href="${esc(url)}" tabindex="-1">${esc(shortUrl)}</a><br />Toutes les revues : <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p></div>` : `          <p class="revue-colophon__line"><b>En ligne</b> <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p>`,
+    url ? `          <div class="revue-colophon__online"><p><b>Cette édition en ligne</b><br /><a href="${esc(url)}" tabindex="-1">${esc(shortUrl)}</a><br />Toutes les revues : <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p></div>` : `          <p class="revue-colophon__line"><b>En ligne</b> <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p>`,
     `          <p class="revue-colophon__ia">${DISCLOSURE}</p>`,
     '          <p class="revue-colophon__credit">Conçu avec ♡ par Azdak en 2026</p>',
     '        </aside>',
@@ -308,7 +351,7 @@ function articleBody(model) {
   return [
     `      <article class="revue revue--${esc(model.edition.id)}" data-revue="${esc(model.id)}">`,
     flagHtml(model),
-    `      <p class="revue-meta">Par <strong>${PUBLISHER}</strong> · Publiée le <time datetime="${esc(isoMtl(pub))}">${esc(frDayYear(mtlParts(pub).ymd))} à ${esc(frClock(pub))}</time>${modified ? ` · Mise à jour à <time datetime="${esc(isoMtl(mod))}">${esc(frClock(mod))}</time>` : ''} (heure de Montréal)</p>`,
+    `      <p class="revue-meta">Par <strong>${PUBLISHER}</strong> · Publiée le <time datetime="${esc(isoMtl(pub))}">${esc(frDayYear(mtlParts(pub).ymd))} à ${esc(frClock(pub))}</time>${modified ? ` · Mise à jour à <time datetime="${esc(isoMtl(mod))}">${esc(frClock(mod))}</time>` : ''} (heure de Montréal)${weatherLine(model, 'revue-wx--meta') ? `<br />${weatherLine(model, 'revue-wx--meta')} <span class="revue-wx__src">Environnement Canada</span>` : ''}</p>`,
     '      <div class="revue-top">',
     '      <div class="revue-top__main">',
     uneHead(lead),

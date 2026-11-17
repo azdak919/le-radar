@@ -269,7 +269,7 @@ assert.match(html, /<header class="revue-flag" aria-hidden="true">[\s\S]*assets\
   assert.equal((html.match(/class="revue-colophon"/g) || []).length, 1, 'colophon une seule fois, pas répété');
   for (const t of ['Le Réseau Académique de Découverte et d’Agrégation de Ressources', 'indépendant et non officiel', 'azdak-qc@proton.me', 'GNU GPL v2', 'le-radar.ca/revue', 'Conçu avec ♡ par Azdak en 2026', 'Revue préparée automatiquement'])
     assert.ok(colo.replace(/'/g, '’').includes(t.replace(/'/g, '’')), `colophon : ${t}`);
-  assert.match(colo, /<svg[^>]*class="revue-colophon__qr"[\s\S]*<path fill="#000" d="M/, 'QR code SVG vers l’édition');
+  assert.match(html, /<a class="revue-flag__qr" href="[^"]+" tabindex="-1"><svg[^>]*class="revue-flag__qrcode"[\s\S]*?<path fill="#000" d="M[\s\S]*?<span>Lire en ligne<\/span><\/a>/, 'code QR vers l’édition dans le mât');
   assert.doesNotMatch(colo, /Installer|Android|revue-nav/i, 'colophon sans navigation ni campagne');
   assert.deepEqual([...colo.matchAll(/<a href="([^"]+)"/g)].map(x => x[1]), [m.url, 'https://le-radar.ca/revue/'], 'liens cliquables du colophon : l’édition et le-radar.ca/revue');
 }
@@ -283,7 +283,28 @@ assert.match(html, /<header class="revue-flag" aria-hidden="true">[\s\S]*assets\
   // Titres cliquables (vrais <a href>, conservés dans le PDF) et nom du média en couleur d'établissement.
   assert.match(html, /<p class="revue-une__title"[^>]*><a href="https:\/\/[^"]+"/, 'titre de la une : lien vers l’article d’origine');
   const colored = R.articleBody({ ...m, items: m.items.map(x => ({ ...x, institution: 'UdeS' })) });
-  assert.match(colored, /revue-item__media"><span class="notranslate" translate="no" style="color:rgb\(\d+, \d+, \d+\)">Le Collectif<\/span> · <span class="revue-item__inst">UdeS<\/span>/, 'média en couleur d’établissement, sigle en couleur normale');
+  assert.match(colored, /revue-item__media"><span class="notranslate revue-inst-c" translate="no" style="--inst:rgb\(\d+, \d+, \d+\)">Le Collectif<\/span> · <span class="revue-item__inst">UdeS<\/span>/, 'média en couleur d’établissement, sigle en couleur normale');
+}
+{
+  // Petite météo ECCC de la manchette : Québec et Montréal, codes vérifiés, pas de ligne sans données.
+  const W = await import('../scripts/revue/revue-weather.mjs');
+  assert.deepEqual(W.WEATHER_SITES.map(x => x.name), ['Québec', 'Montréal']);
+  assert.ok(!R.renderReviewPage(m).includes('revue-wx'), 'sans données météo : pas de ligne');
+  const xml = (code) => `<siteData><location><name code="${code}">Québec</name></location><forecastGroup><forecast><period textForecastName="Ce soir et cette nuit">x</period><abbreviatedForecast><iconCode format="gif">31</iconCode><textSummary>Quelques nuages</textSummary></abbreviatedForecast><temperatures><temperature class="low">-2</temperature></temperatures></forecast></forecastGroup></siteData>`;
+  const q = W.parseCitypage(xml('s0000620'), W.WEATHER_SITES[0]);
+  assert.deepEqual(q.periods[0], { name: 'Ce soir et cette nuit', sky: 'Quelques nuages', kind: 'low', temp: -2, icon: 31 }, 'citypage ECCC lu');
+  assert.equal(W.parseCitypage(xml('s0000999'), W.WEATHER_SITES[0]), null, 'code non vérifié : ignoré');
+  assert.equal(await W.fetchWeather({ fetchImpl: async () => { throw new Error('hors ligne'); } }), null, 'Datamart injoignable : null');
+  const page = R.renderReviewPage({ ...m, weather: { cities: [q] } });
+  assert.match(page, /revue-flag__time">Publiée à [^<]*<span class="revue-wx revue-wx--flag"><span class="revue-wx__city"[^>]*><span class="revue-emoji"[^>]*>🌙<\/span>\s?−2°&#8239;Québec<\/span><\/span>/, 'ligne météo sous « Publiée à » dans la manchette');
+  assert.match(page, /revue-wx--meta/, 'ligne météo aussi en ligne');
+}
+{
+  // Stations : nom en couleur d'établissement, fréquence et ville d'après radios.json ; sans fréquence, le nom seul.
+  const radioM = { ...m, radio: [{ id: 'cfak', station: 'CFAK 88,3', page: 'https://le-radar.ca/radios/cfak/', shows: [{ start: '20:00', when: '20 h à 22 h', title: 'Le terrain sportif' }] }, { id: 'choq', station: 'CHOQ.ca', page: 'https://le-radar.ca/radios/choq/', shows: [{ start: '21:00', when: '21 h', title: 'X' }] }] };
+  const rb = R.articleBody(radioM);
+  assert.match(rb, /<h3 class="revue-station"><a [^>]*class="notranslate revue-inst-c"[^>]*style="--inst:rgb\([^)]+\)">CFAK 88,3 FM<\/a> <span class="revue-station__city">· Sherbrooke<\/span><\/h3>/, 'station : fréquence et ville en petit sur la même ligne');
+  assert.match(rb, />CHOQ\.ca<\/a><\/h3>/, 'station sans fréquence : nom seul');
 }
 {
   const cov = JSON.parse(fs.readFileSync(new URL('../assets/revue/emoji-coverage.json', import.meta.url)));

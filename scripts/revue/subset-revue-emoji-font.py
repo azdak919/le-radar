@@ -21,7 +21,7 @@ FONT = OUT / "noto-color-emoji-revue.woff2"
 COVERAGE = OUT / "emoji-coverage.json"
 SRC_URL = "https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf"
 LOCAL = Path("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf")
-EXTRA = {"🏅", "📰", "🌙", "☀️"}  # repli des sports et des thèmes, éditions
+EXTRA = {"🏅", "📰", "🌙", "☀️", "⛅", "☁️", "🌧️", "🌨️", "⛈️", "🌫️"}  # repli des sports et des thèmes, éditions
 EMOJI_RE = re.compile(r"'([^'\x00-\x7f]+)'")
 
 
