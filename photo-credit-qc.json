@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-17T15:43:23.141Z",
+  "updated": "2026-11-17T15:53:13.396Z",
   "total": 1023,
-  "withImage": 885,
-  "withCredit": 566,
-  "cited": 313,
-  "pending": 477,
+  "withImage": 893,
+  "withCredit": 619,
+  "cited": 349,
+  "pending": 445,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 60,
-  "citedNew": 38,
-  "fallbackNew": 22,
+  "citedNew": 42,
+  "fallbackNew": 18,
   "samples": [
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -25,13 +25,6 @@
       "credit": "Photo : Lia Chayer",
       "cited": true,
       "method": "body-line"
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
     },
     {
       "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
@@ -55,27 +48,6 @@
       "method": "body-line"
     },
     {
-      "title": "Nos suggestions de films automnals",
-      "source": "Impact Campus",
-      "credit": "Photo : Impact Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Récapitulatif du cas de Lindsay Clancy",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia l Le Délit",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Une rentrée sauvée, et après?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "Cornell : Les fraternités au centre du débat",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
@@ -83,18 +55,46 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "PSPP (presque) tout-puissant",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière",
+      "source": "La Pige",
+      "credit": "Photo : Colin Boucher",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "body-line"
     },
     {
-      "title": "« Tous les chemins mènent à Rome »",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "Élections sous tension en Russie",
+      "source": "Le Collectif",
+      "credit": "Photo : AFP via Getty Images",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "json-ld"
+    },
+    {
+      "title": "Vos bonnes nouvelles environnementales #40",
+      "source": "Le Collectif",
+      "credit": "Photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Élections provinciales : La Pige sur le terrain au Saguenay—Lac-Saint-Jean",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Political occupation of vacant Montreal apartment building ended by police eviction",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Dernier droit des élections : regard sur les circonscriptions avoisinantes",
+      "source": "Le Collectif",
+      "credit": "Photo : Graham Hughes/NurPhoto via Getty Images",
+      "cited": true,
+      "method": "json-ld"
     }
   ]
 }
