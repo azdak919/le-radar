@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T06:07:03.163Z",
+  "updatedAt": "2026-11-17T07:07:18.288Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T06:06:13.934Z"
+      "checkedAt": "2026-11-17T07:06:27.045Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "À l'horizon",
         "source": "schedule",
         "start": "02:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/a-lhorizon"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "06:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T06:06:27.800Z"
+      "checkedAt": "2026-11-17T07:06:41.081Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Pirate et Libres",
         "source": "api-live",
         "start": "02:00",
         "end": "03:00"
       },
+      "next": {
+        "title": "Attik / Show For Children",
+        "source": "api-live",
+        "start": "03:00",
+        "end": "05:00"
+      },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "Pirate et Libres",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T06:06:30.550Z"
+      "checkedAt": "2026-11-17T07:06:44.632Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T06:06:44.006Z"
+      "checkedAt": "2026-11-17T07:06:58.675Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T06:06:44.928Z"
+      "checkedAt": "2026-11-17T07:06:59.636Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T06:07:02.812Z"
+      "checkedAt": "2026-11-17T07:07:17.938Z"
     }
   }
 }
