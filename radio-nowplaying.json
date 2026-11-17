@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-11-17T15:36:58.513Z",
+  "updatedAt": "2026-11-17T16:37:09.237Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "L'art des Histoires",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:30",
-        "url": "https://chyz.ca/emission/lart-des-histoires/"
-      },
+      "current": null,
       "next": {
         "title": "Émission (presque) sérieuse",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/emission-presque-serieuse/"
       },
       "track": "",
-      "showTitle": "L'art des Histoires",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-17T15:36:07.458Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Lentement mais sûrement",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/lentement-mais-surement"
-      },
-      "next": {
-        "title": "Les sentinelles de l'art",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
-      },
-      "track": "",
-      "showTitle": "Lentement mais sûrement",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T15:36:21.723Z"
+      "checkedAt": "2026-11-17T16:36:17.879Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "track": "",
+      "showTitle": "Les sentinelles de l'art",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-17T16:36:32.056Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Basa Basa",
+      "next": {
+        "title": "Universal Break",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
+      "track": "",
+      "showTitle": "Ecolibrium/Environment in Canada",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T15:36:24.163Z"
+      "checkedAt": "2026-11-17T16:36:34.977Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Mirror Journal",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/mirror-journal"
       },
+      "next": {
+        "title": "World Beat News",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/world-beat-news"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Mirror Journal",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T15:36:38.730Z"
+      "checkedAt": "2026-11-17T16:36:49.671Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +122,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T15:36:40.417Z"
+      "checkedAt": "2026-11-17T16:36:51.241Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde Dans Mes Oreilles",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
+      "next": {
+        "title": "L'UQAM en info",
+        "source": "api-live",
+        "start": "12:45",
+        "end": "13:30",
+        "slug": "uqam-en-info"
+      },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "",
+      "showTitle": "Le Monde Dans Mes Oreilles",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T15:36:58.162Z"
+      "checkedAt": "2026-11-17T16:37:08.886Z"
     }
   }
 }
