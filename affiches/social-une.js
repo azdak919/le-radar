@@ -101,6 +101,7 @@
       line.append(teamNode(r.teams[0], r.tie ? '' : 'win'), el('span', 'sc' + (r.tie ? '' : ' win'), NB + r.teams[0].score), el('span', 'dash', '–'), el('span', 'sc', r.teams[1].score + NB), teamNode(r.teams[1]));
     } else if (r.event || !r.verb) {
       line.append(teamNode(r.teams[0]), el('span', 'vb', ' · '), el('span', 'ev', r.event || (r.teams[1] && r.teams[1].name) || ''));
+      if (r.place) line.append(el('span', 'vb', ' · '), el('span', 'sc', r.place));
     } else {
       line.append(teamNode(r.teams[0]), el('span', 'vb', ' ' + r.verb + ' '), teamNode(r.teams[1]));
     }

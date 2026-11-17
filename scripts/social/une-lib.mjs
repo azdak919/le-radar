@@ -166,6 +166,17 @@ function isEventGame(t, g) {
   const sport = String(t?.sport || g?.sport || '').toLowerCase();
   return g?.scoreKind === 'place' || sport === 'sailing' || sport === 'voile';
 }
+/** Clé de diversité : le code de sport, voile et sailing unifiés. Jamais le libellé « Basketball (H) ». */
+function sportKeyOf(t) {
+  const k = String(t?.sportKey || t?.sport || '').toLowerCase().replace(/\s*\([^)]*\)\s*$/, '');
+  return k === 'voile' ? 'sailing' : k;
+}
+/** Place d’une régate, même forme que le site : « 1er/12 », « 2e/8 ». Vide si les données manquent. */
+function placeText(g) {
+  const n = Number(g?.scoreFor), field = Number(g?.scoreAgainst);
+  if (!Number.isFinite(n) || n < 1 || !Number.isFinite(field) || field < 1) return '';
+  return `${n === 1 ? '1er' : `${n}e`}/${field}`;
+}
 /** Nom d’épreuve en français (déjà traduit dans le payload CICSA) ; jamais le sigle de lieu anglais. */
 function eventLabel(g) {
   const fr = String(g?.opponent || '').trim();
@@ -181,9 +192,11 @@ function eventLabel(g) {
 }
 
 /**
- * Résultats sportifs étudiants récents (sports-masthead.json du site, RSEQ) : une rencontre par gameId, score connu,
+ * Résultats sportifs étudiants récents (sports-masthead.json du site, RSEQ) : une rencontre par gameId,
  * saison en cours, jouée dans les `days` jours civils précédant `day` (Montréal). Universitaire d'abord, puis le plus récent.
- * Repli : rencontres prévues aujourd'hui (sans score). Rien d'inventé : sans donnée récente, liste vide.
+ * Diversité par sport (pas par ligue) : un résultat par sport avant toute répétition ; même règle pour les à-venir.
+ * Classement de régate (scoreKind « place », voile) : ligne avec épreuve et place, seulement si les deux sont connus.
+ * Rien d'inventé : sans donnée récente, liste vide.
  */
 export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, afterToday = false } = {}) {
   const teams = Object.values(masthead?.teams || {}), seen = new Set(), res = [], next = [];
@@ -192,11 +205,19 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
     if (!t || !t.sport) continue;
     const me = teamLabel(t.nickname, t.institutionLabel || t.fullName || t.name);
     const label = `${t.sportLabel || t.sport}${SEX[t.sex] ? ` (${SEX[t.sex]})` : ''}`;
-    const base = { emoji: sportCodeEmoji(t.sport), sport: label, league: t.leagueLabel || '', uni: t.sector === 'universitaire' };
+    const base = { emoji: sportCodeEmoji(t.sport), sport: label, sportKey: sportKeyOf(t), league: t.leagueLabel || '', uni: t.sector === 'universitaire' };
     for (const g of t.results || []) {
       const id = g.gameId || `${t.id}:${g.date}`;
-      if (seen.has(id) || g.priorSeason || g.scoreFor == null || g.scoreAgainst == null || !g.date || g.date < from || g.date > day) continue;
-      if (isEventGame(t, g)) continue; // une régate n’a pas de score de match à deux équipes
+      if (seen.has(id) || g.priorSeason || !g.date || g.date < from || g.date > day) continue;
+      if (isEventGame(t, g)) {
+        const place = placeText(g);
+        const event = eventLabel(g);
+        if (!place || !event || !me.name) continue;
+        seen.add(id);
+        res.push({ ...base, kind: 'classement', gameId: g.gameId || '', date: g.date, when: frShort(g.date), teams: [me], event, place, verb: '' });
+        continue;
+      }
+      if (g.scoreFor == null || g.scoreAgainst == null) continue;
       seen.add(id);
       const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
       if (!me.name || !op.name) continue;
@@ -221,19 +242,22 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
       next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [me, op], verb: g.home ? 'reçoit' : 'visite', time: g.time || '' });
     }
   }
-  const vary = list => { const seenL = new Set(), first = [], more = []; for (const r of list) (seenL.has(r.league) ? more : first).push(r), seenL.add(r.league); return [...first, ...more]; };
+  const vary = list => { const seenS = new Set(), first = [], more = []; for (const r of list) (seenS.has(r.sportKey) ? more : first).push(r), seenS.add(r.sportKey); return [...first, ...more]; };
   const results = vary(res.sort((x, y) => (y.uni - x.uni) || String(y.date).localeCompare(String(x.date)))).slice(0, max);
-  const upcoming = vary(next.sort((x, y) => String(x.date).localeCompare(String(y.date)) || (y.uni - x.uni) || String(x.time).localeCompare(String(y.time)))).slice(0, max)
-    .sort((x, y) => String(x.date).localeCompare(String(y.date)) || String(x.time).localeCompare(String(y.time)));
+  // À-venir : tri date / universitaire / heure, puis diversité par sport. Pas de re-tri
+  // chronologique ensuite, pour qu’un sport ne se répète pas avant les autres.
+  const upcoming = vary(next.sort((x, y) => String(x.date).localeCompare(String(y.date)) || (y.uni - x.uni) || String(x.time).localeCompare(String(y.time)))).slice(0, max);
   return { results, next: upcoming };
 }
 const team = t => `${t.name}${t.inst ? ` (${t.inst})` : ''}`;
 /** Ligne texte : « 🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · jeu. 12 nov. ». */
 export const sportsLine = r => r.kind === 'resultat'
   ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${team(r.teams[1])} · ${r.when}`
-  : r.event || !r.verb
-    ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event || team(r.teams[1] || {})} · ${r.when}`
-    : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${r.when}`;
+  : r.place
+    ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event} · ${r.place} · ${r.when}`
+    : r.event || !r.verb
+      ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event || team(r.teams[1] || {})} · ${r.when}`
+      : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${r.when}`;
 
 // ── Radio étudiante : émissions à venir (radio-schedules.json, grille hebdo, day = 0 dimanche … 6 samedi, heure de Montréal) ──
 const seeded = str => { let h = 1779033703 ^ str.length; for (const c of str) { h = Math.imul(h ^ c.charCodeAt(0), 3432918353); h = (h << 13) | (h >>> 19); } return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; };

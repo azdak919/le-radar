@@ -3247,29 +3247,10 @@ function sportsStripPolicySignature(policy, now = Date.now()) {
   return JSON.stringify([torontoDayKey(now), policy.mode, keys(policy.lives), keys(policy.left), keys(policy.right), keys(policy.pool)]);
 }
 
-/** Clé de diversité : sport + niveau (univ./collégial) + ligue. */
-function sportsSlideLevel(slide) {
-  const sector = String(slide?.team?.sector || slide?.game?.opponentSector || '')
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-  if (sector === 'universitaire') return 'universitaire';
-  if (sector === 'collegial') return 'collegial';
-  return '';
-}
-
-function sportsSlideLeagueKey(slide) {
-  const id = String(slide?.team?.leagueId || slide?.game?.leagueId || '').trim();
-  if (id) return `id:${id}`;
-  const label = String(slide?.team?.leagueLabel || slide?.game?.competition || '').trim().toLowerCase();
-  if (label) return `lb:${label}`;
-  const div = String(slide?.team?.division || slide?.game?.division || '').trim().toLowerCase();
-  const sex = String(slide?.team?.sex || slide?.game?.sex || '').trim().toLowerCase();
-  return `dv:${div}|${sex}`;
-}
-
+/** Clé de diversité : le sport seulement (voile et sailing unifiés). Un sport ne se répète qu’après les autres. */
 function sportsSlideDiversityKey(slide) {
-  return `${sportsSlideSport(slide)}|${sportsSlideLevel(slide)}|${sportsSlideLeagueKey(slide)}`;
+  const sport = sportsSlideSport(slide);
+  return sport === 'voile' ? 'sailing' : sport;
 }
 
 /**
@@ -3347,8 +3328,8 @@ function sportsMixWeekAndResults(slides) {
 
 /**
  * Diversité du bandeau : directs déjà isolés par l’appelant. Ici, tournoi
- * sport+ligue+niveau, et mélange à-venir de la semaine / résultats récents
- * (sans hisser un score froid devant aujourd’hui ou demain).
+ * par sport (pas par ligue ni niveau), et mélange à-venir de la semaine /
+ * résultats récents (sans hisser un score froid devant aujourd’hui ou demain).
  */
 function sportsInterleaveByDiversity(slides, now = Date.now()) {
   if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
