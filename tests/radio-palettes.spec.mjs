@@ -29,7 +29,8 @@ async function contrast(locator,background=null,property='color'){
   const rgb=value=>{c.clearRect(0,0,1,1);c.fillStyle=value;c.fillRect(0,0,1,1);return [...c.getImageData(0,0,1,1).data].slice(0,3)};
   const luminance=v=>rgb(v).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4}).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0);
   const s=getComputedStyle(e);let node=e;let bg=background;
-  while(!bg&&node){const b=getComputedStyle(node).backgroundColor;if(b!=='rgba(0, 0, 0, 0)'&&b!=='transparent')bg=b;node=node.parentElement;}
+  const opaque=b=>{if(!b||b==='transparent')return false;const m=String(b).match(/rgba?\(([^)]+)\)/i);if(!m)return true;const p=m[1].split(',').map(x=>x.trim());return !(p.length===4&&Number(p[3])===0);};
+  while(!bg&&node){const b=getComputedStyle(node).backgroundColor;if(opaque(b))bg=b;node=node.parentElement;}
   const a=luminance(s[property]),b=luminance(bg||'#fff');return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
  },{background,property});
 }
@@ -43,6 +44,13 @@ async function captureSection(page,selector,path){
  await page.evaluate(()=>window.scrollTo({top:0,left:0,behavior:'instant'}));
  const clip=await page.locator(selector).boundingBox();await page.screenshot({path,clip,fullPage:true});
 }
+function samePaint(locator,token='--bg-soft'){
+ return locator.evaluate((e,token)=>{
+  const canvas=document.createElement('canvas');canvas.width=canvas.height=1;const c=canvas.getContext('2d',{willReadFrequently:true});
+  const rgb=v=>{c.clearRect(0,0,1,1);c.fillStyle=v;c.fillRect(0,0,1,1);return [...c.getImageData(0,0,1,1).data].slice(0,3).join(',')};
+  return rgb(getComputedStyle(e).backgroundColor)===rgb(getComputedStyle(document.documentElement).getPropertyValue(token).trim());
+ },token);
+}
 for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
  test(`institution palette contrasts and geometry ${theme} ${width}px @ci-critical`,async({page},info)=>{
   await open(page,width,theme,'/horaires/',airing.at);await expect(page.locator('[data-radio-day-view]')).toHaveAttribute('data-ready','true');
@@ -54,7 +62,8 @@ for(const theme of ['light','dark'])for(const width of [320,390,1024,1440]){
    expect(await card.evaluate(e=>e.style.getPropertyValue('--station-brand'))).toBe(p.primary);
    expect(await track.evaluate(e=>e.style.getPropertyValue('--station-brand'))).toBe(p.primary);
    for(const sel of ['.seo-radio-card__name','.seo-radio-card__place','.seo-radio-card__show','.seo-radio-card__when','.seo-radio-card__kicker']){const ratio=await contrast(card.locator(sel));ratios.push(ratio);expect(ratio,`${id} ${sel}`).toBeGreaterThanOrEqual(4.5);}
-   const block=track.locator('.radio-day-block').first();if(await block.count())expect(await contrast(block)).toBeGreaterThanOrEqual(4.5);
+   const nowBox=card.locator('.seo-radio-card__now');if(await nowBox.count())expect(await samePaint(nowBox,'--bg-soft'),`${id} now box is --bg-soft`).toBe(true);
+   const block=track.locator('.radio-day-block').first();if(await block.count()){expect(await contrast(block)).toBeGreaterThanOrEqual(4.5);expect(await samePaint(block,'--bg-soft'),`${id} day block is --bg-soft`).toBe(true);}
   }
   const current=page.locator('.radio-day-block.is-current-time').first();await expect(current).toHaveAttribute('aria-current','time');
   await expect(page.locator(`.radio-day-track[data-station="${airing.station}"] .radio-day-block.is-current-time`).first()).toBeVisible();await expect(current.locator('.radio-day-block__state')).toBeVisible();
@@ -73,13 +82,53 @@ for(const theme of ['light','dark'])for(const id of ids){
  test(`weekly institution palette ${id} ${theme} @ci-critical`,async({page},info)=>{
   await open(page,390,theme,`/radios/${id}/`);const section=page.locator('#horaire[data-radio-institution]');await expect(section).toBeVisible();
   expect(await section.evaluate(e=>e.style.getPropertyValue('--station-brand'))).toBe(radioPalette(id).primary);
+  const day=section.locator('.seo-day').first();const today=section.locator('.seo-day--today').first();
+  expect(await samePaint(day,'--bg-soft'),`${id} ${theme} week card is site --bg-soft`).toBe(true);
   expect(await contrast(section.locator('.seo-day h3').first())).toBeGreaterThanOrEqual(4.5);
+  expect(await contrast(section.locator('.seo-day li').first())).toBeGreaterThanOrEqual(4.5);
+  expect(await contrast(today,null,'borderTopColor')).toBeGreaterThanOrEqual(3);
   const badge=section.locator('.seo-slot__badge').first();await expect(badge).toBeVisible();expect(await contrast(badge)).toBeGreaterThanOrEqual(4.5);
   await expect(section.locator('li:not(.seo-slot--live):not(.seo-slot--upcoming) .seo-slot__badge')).toHaveCount(0);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);
   if(id==='chyz')await captureSection(page,'#horaire',info.outputPath(`week-${theme}.png`));
+  if(id==='cjlo')await captureSection(page,'#horaire',info.outputPath(`week-cjlo-${theme}.png`));
  });
 }
+test('week accents follow data-theme rather than prefers-color-scheme alone @ci-critical',async({page})=>{
+ await page.emulateMedia({colorScheme:'dark'});
+ await open(page,390,'light','/radios/cjlo/');
+ expect(await page.locator('html').getAttribute('data-theme')).toBe('light');
+ expect(await samePaint(page.locator('#horaire .seo-day').first(),'--bg-soft')).toBe(true);
+ const pale=await page.locator('#horaire .seo-day h3').first().evaluate(e=>{
+  const canvas=document.createElement('canvas');canvas.width=canvas.height=1;const c=canvas.getContext('2d',{willReadFrequently:true});
+  c.clearRect(0,0,1,1);c.fillStyle=getComputedStyle(e).color;c.fillRect(0,0,1,1);
+  const [r,g,b]=c.getImageData(0,0,1,1).data;return r+g+b>480;
+ });
+ expect(pale,'light theme must keep the darkened burgundy, not the dark-mode mix').toBe(false);
+ expect(await contrast(page.locator('#horaire .seo-day h3').first())).toBeGreaterThanOrEqual(4.5);
+});
+test('unset theme follows prefers-color-scheme via data-theme @ci-critical',async({page})=>{
+ await page.emulateMedia({colorScheme:'dark'});
+ await page.addInitScript(()=>localStorage.removeItem('radar-theme'));
+ await page.setViewportSize({width:390,height:1100});
+ await page.goto('/radios/cjlo/?labFrame=1',{waitUntil:'domcontentloaded'});
+ await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+ expect(await samePaint(page.locator('#horaire .seo-day').first(),'--bg-soft')).toBe(true);
+ expect(await contrast(page.locator('#horaire .seo-day h3').first())).toBeGreaterThanOrEqual(4.5);
+});
+test('forced-colors uses system surfaces on the week grid @ci-critical',async({page})=>{
+ await open(page,390,'dark','/radios/cjlo/');
+ await page.emulateMedia({forcedColors:'active'});
+ const day=page.locator('#horaire .seo-day').first();await expect(day).toBeVisible();
+ const heading=day.locator('h3');
+ await expect(heading).toBeVisible();
+ const colors=await day.evaluate(e=>{
+  const s=getComputedStyle(e);const h=getComputedStyle(e.querySelector('h3'));
+  return {bg:s.backgroundColor,heading:h.color,border:s.borderTopColor};
+ });
+ expect(colors.heading).not.toMatch(/^rgba?\(0,\s*0,\s*0,\s*0\)$/);
+ expect(await contrast(heading)).toBeGreaterThanOrEqual(4.5);
+});
 test('honest bilingual hub hierarchy and next-day labels @ci-critical',async({page})=>{
  await open(page,1440);await expect(page.getByRole('heading',{name:'En ce moment à la radio',exact:true})).toBeVisible();
  const cfak=page.locator('.seo-radio-card[data-schedule-station="cfak"]');await expect(cfak.locator('.seo-radio-card__kicker')).toHaveText('Prochaine émission');await expect(cfak.locator('.seo-radio-card__when')).toContainText('dimanche');

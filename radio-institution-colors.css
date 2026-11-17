@@ -1,15 +1,22 @@
 /* Shared radio affiliation accents. Sources and deliberately non-official UI mixes:
-   docs/radio-palettes.md. No logo recolouring, and no global site palette change. */
+   docs/radio-palettes.md. No logo recolouring, and no global site palette change.
+   Week/hub cards use the site’s neutral surfaces (--bg-soft / --bg / --rule).
+   Institution colour is reserved for accents (day name, current-day rule, listen
+   button, small bars). Theme tokens follow [data-theme], which seo-page-theme.js
+   sets from prefers-color-scheme (or a saved override) before first paint. */
 [data-radio-institution] {
   --station-color: color-mix(in srgb, var(--station-variant) 85%, #000);
-  --station-surface: color-mix(in srgb, var(--station-brand) 8%, var(--bg, #fff));
+  --station-surface: var(--bg-soft, var(--bg, #fff));
   --station-meta: color-mix(in srgb, var(--ink, #16181c) 78%, var(--bg, #fff));
   --station-badge-bg: var(--ink, #16181c);
   --station-badge-ink: var(--bg, #fff);
+  --station-on-accent: var(--bg, #fff);
 }
 [data-theme="dark"] [data-radio-institution] {
+  /* Burgundy / navy primaries are too dark on --bg-soft: lighten the accent. */
   --station-color: color-mix(in srgb, var(--station-variant) 30%, #fff);
-  --station-surface: color-mix(in srgb, var(--station-brand) 16%, var(--bg, #0e0f12));
+  --station-surface: var(--bg-soft, var(--bg, #0e0f12));
+  --station-on-accent: var(--bg, #0e0f12);
 }
 .seo-radio-now { margin-block: 1.5rem 2rem; }
 .seo-radio-now h2 { margin-bottom: .35rem; }
@@ -49,17 +56,22 @@
 }
 .radio-day-block__state { font-size: 9px; padding: 1px 3px; margin-bottom: 2px; }
 .radio-day-dialog[data-radio-institution] .radio-day-listen {
-  background: var(--station-color); border-color: var(--station-color); color: var(--bg);
+  background: var(--station-color); border-color: var(--station-color); color: var(--station-on-accent);
 }
 #horaire[data-radio-institution] .seo-day {
-  background: var(--station-surface); border-top: 3px solid var(--station-color);
+  background: var(--bg-soft, var(--bg, #fff));
+  border: 1px solid var(--rule, #e7e7e3);
+  border-top: 3px solid var(--station-color);
 }
 #horaire[data-radio-institution] .seo-day h3 { color: var(--station-color); animation: none; }
-#horaire[data-radio-institution] .seo-day--today { border-color: var(--station-color); box-shadow: inset 3px 0 var(--station-color); }
+#horaire[data-radio-institution] .seo-day--today {
+  border-color: var(--station-color);
+  box-shadow: inset 3px 0 var(--station-color);
+}
 #horaire[data-radio-institution] .seo-day--today h3::after { content: ' · Aujourd’hui'; }
 html:lang(en) #horaire[data-radio-institution] .seo-day--today h3::after { content: ' · Today'; }
 #horaire[data-radio-institution] .seo-day li:is(.seo-slot--live, .seo-slot--upcoming) {
-  background: var(--station-surface); border-left-color: var(--station-color); animation: none;
+  background: transparent; border-left-color: var(--station-color); animation: none;
 }
 #horaire[data-radio-institution] .seo-day li.seo-slot--upcoming { border-left-style: dashed; }
 #horaire[data-radio-institution] .seo-day li.seo-slot--playing { border-left-style: double; border-left-width: 5px; }
@@ -72,4 +84,52 @@ html:lang(en) #horaire[data-radio-institution] .seo-day--today h3::after { conte
 .radio-day-view :focus-visible, .radio-day-dialog :focus-visible,
 .radio-day-track[data-radio-institution] .radio-day-block:focus-visible {
   outline: 3px solid var(--ink, #16181c); outline-offset: 3px;
+}
+@media (forced-colors: active) {
+  [data-radio-institution],
+  [data-theme] [data-radio-institution],
+  [data-theme="dark"] [data-radio-institution],
+  [data-theme="light"] [data-radio-institution] {
+    --station-color: LinkText;
+    --station-surface: Canvas;
+    --station-meta: CanvasText;
+    --station-badge-bg: CanvasText;
+    --station-badge-ink: Canvas;
+    --station-on-accent: ButtonText;
+  }
+  .seo-radio-card[data-radio-institution] > a,
+  .radio-day-heading[data-radio-institution] {
+    background-image: none;
+    border-top: 4px solid LinkText;
+    padding-top: 12px;
+  }
+  .seo-radio-card[data-radio-institution][data-air-state] .seo-radio-card__now,
+  .radio-day-track[data-radio-institution] .radio-day-block,
+  #horaire[data-radio-institution] .seo-day,
+  #horaire[data-radio-institution] .seo-day li:is(.seo-slot--live, .seo-slot--upcoming) {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonBorder;
+    box-shadow: none;
+  }
+  .radio-day-dialog[data-radio-institution] .radio-day-listen {
+    background: ButtonFace;
+    border-color: ButtonBorder;
+    color: ButtonText;
+  }
+  #horaire[data-radio-institution] .seo-day h3,
+  #horaire[data-radio-institution] .seo-day li,
+  #horaire[data-radio-institution] .seo-day li .seo-slot__title,
+  #horaire[data-radio-institution] .seo-day li .seo-slot__title a {
+    color: CanvasText;
+  }
+  #horaire[data-radio-institution] .seo-day h3 {
+    color: LinkText;
+  }
+  #horaire[data-radio-institution] .seo-day--today,
+  .radio-day-track[data-radio-institution] .radio-day-block.is-current-time {
+    outline: 3px solid Highlight;
+    outline-offset: -3px;
+    border-color: Highlight;
+  }
 }
