@@ -88,10 +88,89 @@ for(const theme of ['light','dark'])for(const id of ids){
   expect(await contrast(section.locator('.seo-day li').first())).toBeGreaterThanOrEqual(4.5);
   expect(await contrast(today,null,'borderTopColor')).toBeGreaterThanOrEqual(3);
   const badge=section.locator('.seo-slot__badge').first();await expect(badge).toBeVisible();expect(await contrast(badge)).toBeGreaterThanOrEqual(4.5);
+  const live=section.locator('li.seo-slot--live').first();
+  const upcoming=section.locator('li.seo-slot--upcoming').first();
+  const liveCount=await section.locator('li.seo-slot--live').count();
+  const upCount=await section.locator('li.seo-slot--upcoming').count();
+  expect(liveCount+upCount,`${id} ${theme} has a live or upcoming slot`).toBeGreaterThan(0);
+  const air=await section.evaluate(e=>{
+    const canvas=document.createElement('canvas');canvas.width=canvas.height=1;const c=canvas.getContext('2d',{willReadFrequently:true});
+    const rgb=v=>{c.clearRect(0,0,1,1);c.fillStyle=v;c.fillRect(0,0,1,1);return [...c.getImageData(0,0,1,1).data].slice(0,3).join(',')};
+    const root=getComputedStyle(document.documentElement);
+    const liveEl=e.querySelector('li.seo-slot--live');
+    const upEl=e.querySelector('li.seo-slot--upcoming');
+    const liveB=e.querySelector('li.seo-slot--live .seo-slot__badge');
+    const upB=e.querySelector('li.seo-slot--upcoming .seo-slot__badge');
+    const liveTok=root.getPropertyValue('--status-live').trim()||'#c8102e';
+    const liveSoft=root.getPropertyValue('--status-live-soft').trim()||'#ff7d6e';
+    const upTok=root.getPropertyValue('--status-upcoming').trim()||'#9a6900';
+    const upSoft=root.getPropertyValue('--status-upcoming-soft').trim()||'#e8c07a';
+    const dark=document.documentElement.dataset.theme==='dark';
+    const station=getComputedStyle(e).getPropertyValue('--station-color').trim();
+    const livePaint=liveEl?getComputedStyle(liveEl).borderLeftColor:null;
+    const upPaint=upEl?getComputedStyle(upEl).borderLeftColor:null;
+    return {
+      liveWidth:liveEl?parseFloat(getComputedStyle(liveEl).borderLeftWidth):0,
+      upWidth:upEl?parseFloat(getComputedStyle(upEl).borderLeftWidth):0,
+      liveMatches:liveEl?rgb(livePaint)===rgb(dark?liveSoft:liveTok):null,
+      upMatches:upEl?rgb(upPaint)===rgb(dark?upSoft:upTok):null,
+      liveIsStation:liveEl?rgb(livePaint)===rgb(station):null,
+      upIsStation:upEl?rgb(upPaint)===rgb(station):null,
+      liveBadgeMatches:liveB?rgb(getComputedStyle(liveB).backgroundColor)===rgb(dark?liveSoft:liveTok):false,
+      upBadgeMatches:upB?rgb(getComputedStyle(upB).backgroundColor)===rgb(dark?upSoft:upTok):false,
+    };
+  });
+  if(liveCount){
+    expect(air.liveWidth,`${id} ${theme} live bar`).toBeGreaterThanOrEqual(3);
+    expect(air.liveMatches,`${id} ${theme} live bar is status red`).toBe(true);
+    expect(air.liveIsStation,`${id} ${theme} live bar is not institution colour`).toBe(false);
+    expect(air.liveBadgeMatches,`${id} ${theme} live badge matches the red bar`).toBe(true);
+    expect(await contrast(live,null,'borderLeftColor')).toBeGreaterThanOrEqual(3);
+    expect(await contrast(live.locator('.seo-slot__badge'))).toBeGreaterThanOrEqual(4.5);
+  }
+  if(upCount){
+    expect(air.upWidth,`${id} ${theme} upcoming bar`).toBeGreaterThanOrEqual(3);
+    expect(air.upMatches,`${id} ${theme} upcoming bar is status yellow`).toBe(true);
+    expect(air.upIsStation,`${id} ${theme} upcoming bar is not institution colour`).toBe(false);
+    expect(air.upBadgeMatches,`${id} ${theme} upcoming badge matches the yellow bar`).toBe(true);
+    expect(await contrast(upcoming,null,'borderLeftColor')).toBeGreaterThanOrEqual(3);
+    expect(await contrast(upcoming.locator('.seo-slot__badge'))).toBeGreaterThanOrEqual(4.5);
+  }
   await expect(section.locator('li:not(.seo-slot--live):not(.seo-slot--upcoming) .seo-slot__badge')).toHaveCount(0);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(1);
   if(id==='chyz')await captureSection(page,'#horaire',info.outputPath(`week-${theme}.png`));
   if(id==='cjlo')await captureSection(page,'#horaire',info.outputPath(`week-cjlo-${theme}.png`));
+ });
+}
+for(const theme of ['light','dark']){
+ test(`CJLO week card uses red on-air and yellow next bars ${theme} @ci-critical`,async({page})=>{
+  await open(page,1280,theme,'/en/radios/cjlo/',airing.at);
+  const section=page.locator('#horaire[data-radio-institution]');
+  await expect(section.locator('li.seo-slot--live')).toBeVisible();
+  await expect(section.locator('li.seo-slot--upcoming')).toBeVisible();
+  const live=section.locator('li.seo-slot--live').first();
+  const upcoming=section.locator('li.seo-slot--upcoming').first();
+  expect(await contrast(live,null,'borderLeftColor')).toBeGreaterThanOrEqual(3);
+  expect(await contrast(upcoming,null,'borderLeftColor')).toBeGreaterThanOrEqual(3);
+  expect(await contrast(live.locator('.seo-slot__badge'))).toBeGreaterThanOrEqual(4.5);
+  expect(await contrast(upcoming.locator('.seo-slot__badge'))).toBeGreaterThanOrEqual(4.5);
+  const ok=await section.evaluate(e=>{
+    const canvas=document.createElement('canvas');canvas.width=canvas.height=1;const c=canvas.getContext('2d',{willReadFrequently:true});
+    const rgb=v=>{c.clearRect(0,0,1,1);c.fillStyle=v;c.fillRect(0,0,1,1);return [...c.getImageData(0,0,1,1).data].slice(0,3).join(',')};
+    const root=getComputedStyle(document.documentElement);
+    const dark=document.documentElement.dataset.theme==='dark';
+    const liveTok=root.getPropertyValue('--status-live').trim()||'#c8102e';
+    const liveSoft=root.getPropertyValue('--status-live-soft').trim()||'#ff7d6e';
+    const upTok=root.getPropertyValue('--status-upcoming').trim()||'#9a6900';
+    const upSoft=root.getPropertyValue('--status-upcoming-soft').trim()||'#e8c07a';
+    const liveEl=e.querySelector('li.seo-slot--live');
+    const upEl=e.querySelector('li.seo-slot--upcoming');
+    return rgb(getComputedStyle(liveEl).borderLeftColor)===rgb(dark?liveSoft:liveTok)
+      && rgb(getComputedStyle(upEl).borderLeftColor)===rgb(dark?upSoft:upTok)
+      && parseFloat(getComputedStyle(liveEl).borderLeftWidth)>=3
+      && parseFloat(getComputedStyle(upEl).borderLeftWidth)>=3;
+  });
+  expect(ok,`${theme} CJLO bars are status red and yellow`).toBe(true);
  });
 }
 test('week accents follow data-theme rather than prefers-color-scheme alone @ci-critical',async({page})=>{
@@ -128,6 +207,20 @@ test('forced-colors uses system surfaces on the week grid @ci-critical',async({p
  });
  expect(colors.heading).not.toMatch(/^rgba?\(0,\s*0,\s*0,\s*0\)$/);
  expect(await contrast(heading)).toBeGreaterThanOrEqual(4.5);
+ const live=page.locator('#horaire li.seo-slot--live').first();
+ const upcoming=page.locator('#horaire li.seo-slot--upcoming').first();
+ await expect(live).toBeVisible();
+ await expect(upcoming).toBeVisible();
+ const bars=await live.evaluate((liveEl)=>{
+  const up=document.querySelector('#horaire li.seo-slot--upcoming');
+  const ls=getComputedStyle(liveEl),us=getComputedStyle(up);
+  return {liveW:parseFloat(ls.borderLeftWidth),upW:parseFloat(us.borderLeftWidth),liveC:ls.borderLeftColor,upC:us.borderLeftColor,upStyle:us.borderLeftStyle};
+ });
+ expect(bars.liveW).toBeGreaterThanOrEqual(3);
+ expect(bars.upW).toBeGreaterThanOrEqual(3);
+ expect(bars.liveC).not.toMatch(/^rgba?\(0,\s*0,\s*0,\s*0\)$/);
+ expect(bars.upC).not.toMatch(/^rgba?\(0,\s*0,\s*0,\s*0\)$/);
+ expect(bars.upStyle).toBe('dashed');
 });
 test('honest bilingual hub hierarchy and next-day labels @ci-critical',async({page})=>{
  await open(page,1440);await expect(page.getByRole('heading',{name:'En ce moment à la radio',exact:true})).toBeVisible();

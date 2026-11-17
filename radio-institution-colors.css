@@ -70,11 +70,36 @@
 }
 #horaire[data-radio-institution] .seo-day--today h3::after { content: ' · Aujourd’hui'; }
 html:lang(en) #horaire[data-radio-institution] .seo-day--today h3::after { content: ' · Today'; }
-#horaire[data-radio-institution] .seo-day li:is(.seo-slot--live, .seo-slot--upcoming) {
-  background: transparent; border-left-color: var(--station-color); animation: none;
+/* Live / upcoming side bars and badges use the shared status red and yellow,
+   not the institution accent, so every station reads the same. Light uses the
+   darker official tints (--status-live / --status-upcoming) for ≥ 3:1 on
+   --bg-soft; dark uses the lightened soft tints, with dark badge text. */
+#horaire[data-radio-institution] {
+  --air-live: var(--status-live, #c8102e);
+  --air-upcoming: var(--status-upcoming, #9a6900);
+  --air-badge-ink: #fff;
 }
-#horaire[data-radio-institution] .seo-day li.seo-slot--upcoming { border-left-style: dashed; }
-#horaire[data-radio-institution] .seo-day li.seo-slot--playing { border-left-style: double; border-left-width: 5px; }
+[data-theme="dark"] #horaire[data-radio-institution] {
+  --air-live: var(--status-live-soft, #ff7d6e);
+  --air-upcoming: var(--status-upcoming-soft, #e8c07a);
+  --air-badge-ink: #16181c;
+}
+#horaire[data-radio-institution] .seo-day li.seo-slot--live,
+#horaire[data-radio-institution] .seo-day li.seo-slot--upcoming {
+  background: transparent;
+  border-left: 3px solid var(--air-live);
+  animation: none;
+}
+#horaire[data-radio-institution] .seo-day li.seo-slot--upcoming {
+  border-left-color: var(--air-upcoming);
+}
+#horaire[data-radio-institution] .seo-day li.seo-slot--playing { border-left-width: 5px; }
+#horaire[data-radio-institution] .seo-slot--live .seo-slot__badge {
+  background: var(--air-live); color: var(--air-badge-ink);
+}
+#horaire[data-radio-institution] .seo-slot--upcoming .seo-slot__badge {
+  background: var(--air-upcoming); color: var(--air-badge-ink);
+}
 #horaire[data-radio-institution] .seo-day li .seo-slot__title,
 #horaire[data-radio-institution] .seo-day li .seo-slot__title a { color: var(--ink); }
 #horaire[data-radio-institution] .seo-day li .seo-slot__title a:hover { color: var(--station-color); }
@@ -106,11 +131,34 @@ html:lang(en) #horaire[data-radio-institution] .seo-day--today h3::after { conte
   .seo-radio-card[data-radio-institution][data-air-state] .seo-radio-card__now,
   .radio-day-track[data-radio-institution] .radio-day-block,
   #horaire[data-radio-institution] .seo-day,
-  #horaire[data-radio-institution] .seo-day li:is(.seo-slot--live, .seo-slot--upcoming) {
+  #horaire[data-radio-institution] .seo-day li.seo-slot--live,
+  #horaire[data-radio-institution] .seo-day li.seo-slot--upcoming {
     background: Canvas;
     color: CanvasText;
     border-color: ButtonBorder;
     box-shadow: none;
+  }
+  #horaire[data-radio-institution],
+  [data-theme] #horaire[data-radio-institution],
+  [data-theme="dark"] #horaire[data-radio-institution],
+  [data-theme="light"] #horaire[data-radio-institution] {
+    --air-live: LinkText;
+    --air-upcoming: LinkText;
+    --air-badge-ink: HighlightText;
+  }
+  #horaire[data-radio-institution] .seo-day li.seo-slot--live {
+    border-left-color: LinkText;
+    border-left-style: solid;
+  }
+  #horaire[data-radio-institution] .seo-day li.seo-slot--upcoming {
+    border-left-color: LinkText;
+    border-left-style: dashed;
+  }
+  #horaire[data-radio-institution] .seo-slot--live .seo-slot__badge {
+    background: Highlight; color: HighlightText;
+  }
+  #horaire[data-radio-institution] .seo-slot--upcoming .seo-slot__badge {
+    background: ButtonFace; color: ButtonText; border: 1px solid ButtonBorder;
   }
   .radio-day-dialog[data-radio-institution] .radio-day-listen {
     background: ButtonFace;
