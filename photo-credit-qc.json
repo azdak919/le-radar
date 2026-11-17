@@ -1,100 +1,100 @@
 {
-  "updated": "2026-11-17T10:05:06.536Z",
+  "updated": "2026-11-17T10:29:19.688Z",
   "total": 1023,
-  "withImage": 863,
-  "withCredit": 221,
-  "cited": 142,
-  "pending": 689,
+  "withImage": 877,
+  "withCredit": 280,
+  "cited": 175,
+  "pending": 652,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 60,
-  "citedNew": 33,
-  "fallbackNew": 27,
+  "citedNew": 34,
+  "fallbackNew": 26,
   "samples": [
     {
-      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
+      "title": "Souriez, vous êtes filmés !",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Marquer contre la fibrose kystique : un succès qui se poursuit",
+      "source": "La Pige",
+      "credit": "Photo : Alexis Auclair",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "La série de victoires des Sags s’arrête à trois",
+      "source": "La Pige",
+      "credit": "Photo : Arthur Bakahche",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "FASA opens anti-austerity week with town hall and general assembly",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "70 years of ‘Giovanni’s Room’",
+      "source": "The Tribune",
+      "credit": "Photo: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "What the Cornell case taught me",
       "source": "The Concordian",
-      "credit": "Photo: Sam Vandenberg",
-      "cited": true,
-      "method": "wp-media-caption"
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "The kids are not alright: the youth unemployment problem in Canada",
+      "title": "Revue de concert : Aya Nakamura",
       "source": "The Concordian",
-      "credit": "Illustration: Alexa Hawksworth",
-      "cited": true,
-      "method": "figcaption-illustration"
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "I don’t like waiting",
+      "title": "Vote YES for The Concordian’s fee levy increase",
       "source": "The Concordian",
-      "credit": "Illustration: Georgois Pantazopoulos",
-      "cited": true,
-      "method": "figcaption-illustration"
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "QUICKSPIN: Lil Baby — FRESH",
-      "source": "The Concordian",
-      "credit": "Photo : FRESH Album Cover",
-      "cited": true,
-      "method": "figcaption-bare"
+      "title": "Étudiant·e·s en cinéma, entre inquiétudes et ambitions",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "QUICKSPIN: Dove Cameron — FINAL GIRL",
-      "source": "The Concordian",
-      "credit": "Photo : FINAL GIRL Album Cover",
+      "title": "Au-delà de la vitesse: Villeneuve immortalisé",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
       "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "QUICKSPIN: Rex Orange County — Dream Fatigue",
-      "source": "The Concordian",
-      "credit": "Photo : Dream Fatigue Album Cover",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Quand l’intelligence artificielle fait une erreur, qui est responsable?",
-      "source": "Le Collectif",
-      "credit": "Photo : Canva",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Bilan des élections et des votes des dernières semaines au Canada",
-      "source": "Le Collectif",
-      "credit": "Photo : Pixabay",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "D’importantes pertes d’emplois au Québec",
-      "source": "Le Collectif",
-      "credit": "Photo : Wladyslaw Sojka",
-      "cited": true,
-      "method": "filename-credit"
-    },
-    {
-      "title": "Vos bonnes nouvelles environnementales #43",
-      "source": "Le Collectif",
-      "credit": "Photo : Martyn Unsworth",
-      "cited": true,
-      "method": "filename-credit"
-    },
-    {
-      "title": "Bruno Pelletier et l’OSS réunis pour un grand concert de Noël",
-      "source": "Le Collectif",
-      "credit": "Photo : OSS",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "La musique à l’ère des réseaux sociaux",
-      "source": "Le Collectif",
-      "credit": "Photo : Pexels",
-      "cited": true,
-      "method": "body-tail"
+      "method": "body-line"
     }
   ]
 }

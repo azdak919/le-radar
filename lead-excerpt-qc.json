@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-17T10:01:19.700Z",
+  "updated": "2026-11-17T10:26:32.787Z",
   "total": 1023,
-  "pool": 58,
-  "incomplete": 32,
-  "withLeadExcerpt": 161,
-  "candidates": 32,
-  "enriched": 16,
+  "pool": 59,
+  "incomplete": 25,
+  "withLeadExcerpt": 158,
+  "candidates": 25,
+  "enriched": 1,
   "failed": 4,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,39 +19,21 @@
       "changed": false
     },
     {
-      "title": "Bilan des élections et des votes des dernières semaines au Canada",
-      "link": "https://lecollectif.ca/edition-papier/bilan-des-elections-et-des-votes-des-dernieres-semaines-au-canada",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 914,
-      "sample": "Ce fut une longue campagne électorale de 39 jours au Québec cet automne. Avec cinq partis en lice, l",
-      "changed": true
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
     },
     {
-      "title": "Bruno Pelletier et l’OSS réunis pour un grand concert de Noël",
-      "link": "https://lecollectif.ca/culture/bruno-pelletier-et-loss-reunis-pour-un-grand-concert-de-noel",
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
-      "score": 100,
-      "chars": 814,
-      "sample": "L’Orchestre symphonique de Sherbrooke (OSS) invite la population estrienne à célébrer le début du te",
-      "changed": true
-    },
-    {
-      "title": "La musique à l’ère des réseaux sociaux",
-      "link": "https://lecollectif.ca/culture/la-musique-a-lere-des-reseaux-sociaux",
-      "ok": true,
-      "score": 100,
-      "chars": 381,
-      "sample": "Une chanson entendue dans une vidéo TikTok, un artiste découvert dans une publication Instagram ou u",
-      "changed": true
-    },
-    {
-      "title": "L’IA au cœur d’une entreprise de création montréalaise",
-      "link": "https://lecollectif.ca/edition-papier/lia-au-coeur-dune-entreprise-de-creation-montrealaise",
-      "ok": true,
-      "score": 100,
-      "chars": 576,
-      "sample": "L’intelligence artificielle (IA) s’impose dans de nombreux domaines, qu’ils soient universitaires, c",
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": true
     },
     {
@@ -70,16 +43,43 @@
       "score": 96,
       "chars": 259,
       "sample": "On Dec. 7, Canadians in six ridings, including two in Montreal, will head to the polls to elect thei",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "The kids are not alright: the youth unemployment problem in Canada",
-      "link": "https://theconcordian.com/2026/11/youth-unemployment-in-canada/",
+      "title": "I don’t like waiting",
+      "link": "https://theconcordian.com/2026/11/i-dont-like-waiting/",
       "ok": true,
       "score": 100,
-      "chars": 657,
-      "sample": "According to the 2026 federal budget, Canada’s youth unemployment rate has hit 13.7 per cent this ye",
-      "changed": true
+      "chars": 190,
+      "sample": "I was getting ready to head to the store to grab some things I needed. It was early in the morning; ",
+      "changed": false
+    },
+    {
+      "title": "QUICKSPIN: Dove Cameron — FINAL GIRL",
+      "link": "https://theconcordian.com/2026/11/quickspin-dove-cameron-final-girl/",
+      "ok": true,
+      "score": 100,
+      "chars": 472,
+      "sample": "Dove Cameron’s second studio album, FINAL GIRL, is her most confessional record yet. Vulnerability t",
+      "changed": false
+    },
+    {
+      "title": "QUICKSPIN: Rex Orange County — Dream Fatigue",
+      "link": "https://theconcordian.com/2026/11/rex-orange-county-dream-fatigue/",
+      "ok": true,
+      "score": 100,
+      "chars": 171,
+      "sample": "On his 6th studio album Dream Fatigue, Rex Orange County explores unrequited love and insecurity. Th",
+      "changed": false
+    },
+    {
+      "title": "Can Ganesha Help You Pass Your Midterms?",
+      "link": "https://thebucampus.ca/2026/11/16/can-ganesha-help-you-pass-your-midterms/",
+      "ok": true,
+      "score": 100,
+      "chars": 471,
+      "sample": "The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon oran",
+      "changed": false
     }
   ]
 }

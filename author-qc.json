@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-17T10:00:36.151Z",
+  "updated": "2026-11-17T10:26:01.875Z",
   "total": 1023,
   "withAuthor": 1023,
-  "mismatches": 73,
+  "mismatches": 71,
   "ok": true,
   "samples": [
     {
@@ -28,14 +28,6 @@
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Quand l’intelligence artificielle fait une erreur, qui est responsable?",
-      "link": "https://lecollectif.ca/edition-papier/quand-lintelligence-artificielle-fait-une-erreur-qui-est-responsable",
-      "source": "Le Collectif",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Ève Thibodeau",
-      "reason": "page-byline"
     },
     {
       "title": "Bilan des élections et des votes des dernières semaines au Canada",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "BU Snow Prepares for Another Winter at Bishop’s",
+      "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops",
+      "source": "The Campus",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 73
+  "fixed": 71
 }
