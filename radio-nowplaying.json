@@ -1,125 +1,17 @@
 {
-  "updatedAt": "2026-11-17T21:37:06.348Z",
+  "updatedAt": "2026-11-17T23:36:48.170Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-17T21:36:27.728Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "les pénibles",
-        "source": "schedule",
-        "start": "16:30",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
-      },
-      "next": {
-        "title": "Catharmix",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/catharmix"
-      },
-      "track": "",
-      "showTitle": "les pénibles",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-17T21:36:30.627Z"
-    },
-    "ckut": {
-      "id": "ckut",
-      "name": "CKUT 90,3",
-      "current": {
-        "title": "Montreal Sessions",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
-        "title": "Off The Hour: Local Journalism Stories",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "track": "",
-      "showTitle": "Montreal Sessions",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "stream"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-17T21:36:32.844Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "Bikini Brrroadcast",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
-      },
-      "next": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "track": "",
-      "showTitle": "Bikini Brrroadcast",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-17T21:36:46.251Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
       "current": null,
       "next": {
-        "title": "L'Aut'Rock",
+        "title": "CATHJO FAIT DE LA RADIO",
         "source": "schedule",
-        "start": "18:30",
-        "end": "19:59",
-        "url": "https://www.cfak.ca/balados/lautrock"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://chyz.ca/emission/la-plug/"
       },
       "track": "",
       "showTitle": "",
@@ -129,34 +21,141 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T21:36:47.687Z"
+      "checkedAt": "2026-11-17T23:36:07.704Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Catharmix",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/catharmix"
+      },
+      "next": {
+        "title": "Les garçons pleurent aussi (reprise)",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
+      "track": "",
+      "showTitle": "Catharmix",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-17T23:36:10.149Z"
+    },
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "current": {
+        "title": "Prison Radio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
+      "next": {
+        "title": "Soul Perspectives",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:30"
+      },
+      "track": "",
+      "showTitle": "Prison Radio",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-17T23:36:13.318Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "feminemix",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/feminemix"
+      },
+      "next": {
+        "title": "Ashes to Ashes",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
+      },
+      "track": "",
+      "showTitle": "feminemix",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-17T23:36:28.056Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "19:59",
+        "url": "https://www.cfak.ca/balados/lautrock"
+      },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:59",
+        "url": "https://www.cfak.ca/balados/dichotomie-883"
+      },
+      "track": "",
+      "showTitle": "L'Aut'Rock",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-17T23:36:29.286Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Passion Psy",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "slug": "passion-psy"
-      },
-      "next": {
         "title": "Le Studio",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00",
         "slug": "live"
       },
+      "next": {
+        "title": "10 sur 10 : un podcast 100% rap",
+        "source": "api-live",
+        "start": "20:30",
+        "end": "22:30",
+        "slug": "10-sur-10-un-podcast-100-rap"
+      },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "Passion Psy",
+      "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-17T21:37:05.997Z"
+      "checkedAt": "2026-11-17T23:36:47.819Z"
     }
   }
 }
