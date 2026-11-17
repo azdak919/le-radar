@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-17T00:37:44.315Z",
-  "total": 188,
+  "updated": "2026-11-17T10:01:19.700Z",
+  "total": 1023,
   "pool": 58,
-  "incomplete": 25,
-  "withLeadExcerpt": 145,
-  "candidates": 25,
-  "enriched": 0,
-  "failed": 0,
+  "incomplete": 32,
+  "withLeadExcerpt": 161,
+  "candidates": 32,
+  "enriched": 16,
+  "failed": 4,
   "ok": true,
   "samples": [
     {
@@ -28,58 +28,58 @@
       "changed": false
     },
     {
-      "title": "Can Ganesha Help You Pass Your Midterms?",
-      "link": "https://thebucampus.ca/2026/11/16/can-ganesha-help-you-pass-your-midterms/",
+      "title": "Bilan des élections et des votes des dernières semaines au Canada",
+      "link": "https://lecollectif.ca/edition-papier/bilan-des-elections-et-des-votes-des-dernieres-semaines-au-canada",
       "ok": true,
       "score": 100,
-      "chars": 471,
-      "sample": "The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon oran",
-      "changed": false
+      "chars": 914,
+      "sample": "Ce fut une longue campagne électorale de 39 jours au Québec cet automne. Avec cinq partis en lice, l",
+      "changed": true
     },
     {
-      "title": "Beyond Competition: The Importance of Intramural Sports at Bishop’s",
-      "link": "https://thebucampus.ca/2026/11/16/beyond-competition-the-importance-of-intramural-sports-at-bishops/",
+      "title": "Bruno Pelletier et l’OSS réunis pour un grand concert de Noël",
+      "link": "https://lecollectif.ca/culture/bruno-pelletier-et-loss-reunis-pour-un-grand-concert-de-noel",
+      "ok": true,
+      "score": 100,
+      "chars": 814,
+      "sample": "L’Orchestre symphonique de Sherbrooke (OSS) invite la population estrienne à célébrer le début du te",
+      "changed": true
+    },
+    {
+      "title": "La musique à l’ère des réseaux sociaux",
+      "link": "https://lecollectif.ca/culture/la-musique-a-lere-des-reseaux-sociaux",
+      "ok": true,
+      "score": 100,
+      "chars": 381,
+      "sample": "Une chanson entendue dans une vidéo TikTok, un artiste découvert dans une publication Instagram ou u",
+      "changed": true
+    },
+    {
+      "title": "L’IA au cœur d’une entreprise de création montréalaise",
+      "link": "https://lecollectif.ca/edition-papier/lia-au-coeur-dune-entreprise-de-creation-montrealaise",
+      "ok": true,
+      "score": 100,
+      "chars": 576,
+      "sample": "L’intelligence artificielle (IA) s’impose dans de nombreux domaines, qu’ils soient universitaires, c",
+      "changed": true
+    },
+    {
+      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
+      "link": "https://theconcordian.com/2026/11/pierre-cerre-trying-keep-rosemont-orange/",
       "ok": true,
       "score": 96,
-      "chars": 404,
-      "sample": "At Bishop’s, the Gaiters varsity teams often receive most of the spotlight; however, many students p",
-      "changed": false
+      "chars": 259,
+      "sample": "On Dec. 7, Canadians in six ridings, including two in Montreal, will head to the polls to elect thei",
+      "changed": true
     },
     {
-      "title": "Bring Back The Gait",
-      "link": "https://thebucampus.ca/2026/11/16/bring-back-the-gait/",
-      "ok": true,
-      "score": 96,
-      "chars": 985,
-      "sample": "When I started at Bishop’s, there was only one weekly occurrence that never changed: spending our ni",
-      "changed": false
-    },
-    {
-      "title": "Grammys 2027 : vent de folie québécois et triomphe féminin",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin/?utm_source=rss&utm_medium=rss&utm_campaign=grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin",
+      "title": "The kids are not alright: the youth unemployment problem in Canada",
+      "link": "https://theconcordian.com/2026/11/youth-unemployment-in-canada/",
       "ok": true,
       "score": 100,
-      "chars": 212,
-      "sample": "Taylor Swift obtient sa 5e nomination consécutive dans la catégorie Album de l’année avec The Life o",
-      "changed": false
-    },
-    {
-      "title": "Montrealers protest Bill C-39",
-      "link": "https://thelinknewspaper.ca/article/16570",
-      "ok": true,
-      "score": 100,
-      "chars": 161,
-      "sample": "Montreal residents gathered outside Industry Minister Mélanie Joly’s constituency office on Nov. 12 ",
-      "changed": false
-    },
-    {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
-      "ok": true,
-      "score": 100,
-      "chars": 192,
-      "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
-      "changed": false
+      "chars": 657,
+      "sample": "According to the 2026 federal budget, Canada’s youth unemployment rate has hit 13.7 per cent this ye",
+      "changed": true
     }
   ]
 }

@@ -1,30 +1,100 @@
 {
-  "updated": "2026-11-17T00:40:28.813Z",
-  "total": 188,
-  "withImage": 170,
-  "withCredit": 170,
-  "cited": 118,
-  "pending": 29,
+  "updated": "2026-11-17T10:05:06.536Z",
+  "total": 1023,
+  "withImage": 863,
+  "withCredit": 221,
+  "cited": 142,
+  "pending": 689,
   "missingHero": 0,
   "ok": false,
-  "checked": 41,
-  "updatedCount": 2,
-  "citedNew": 4,
-  "fallbackNew": 37,
+  "checked": 60,
+  "updatedCount": 60,
+  "citedNew": 33,
+  "fallbackNew": 27,
   "samples": [
     {
-      "title": "Élections : qu’en pense la communauté universitaire ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Guillaume Villeneuve",
+      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
+      "source": "The Concordian",
+      "credit": "Photo: Sam Vandenberg",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "wp-media-caption"
     },
     {
-      "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
+      "title": "The kids are not alright: the youth unemployment problem in Canada",
+      "source": "The Concordian",
+      "credit": "Illustration: Alexa Hawksworth",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
+    {
+      "title": "I don’t like waiting",
+      "source": "The Concordian",
+      "credit": "Illustration: Georgois Pantazopoulos",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
+    {
+      "title": "QUICKSPIN: Lil Baby — FRESH",
+      "source": "The Concordian",
+      "credit": "Photo : FRESH Album Cover",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "QUICKSPIN: Dove Cameron — FINAL GIRL",
+      "source": "The Concordian",
+      "credit": "Photo : FINAL GIRL Album Cover",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "QUICKSPIN: Rex Orange County — Dream Fatigue",
+      "source": "The Concordian",
+      "credit": "Photo : Dream Fatigue Album Cover",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Quand l’intelligence artificielle fait une erreur, qui est responsable?",
+      "source": "Le Collectif",
+      "credit": "Photo : Canva",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Bilan des élections et des votes des dernières semaines au Canada",
+      "source": "Le Collectif",
+      "credit": "Photo : Pixabay",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "D’importantes pertes d’emplois au Québec",
+      "source": "Le Collectif",
+      "credit": "Photo : Wladyslaw Sojka",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Vos bonnes nouvelles environnementales #43",
+      "source": "Le Collectif",
+      "credit": "Photo : Martyn Unsworth",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Bruno Pelletier et l’OSS réunis pour un grand concert de Noël",
+      "source": "Le Collectif",
+      "credit": "Photo : OSS",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "La musique à l’ère des réseaux sociaux",
+      "source": "Le Collectif",
+      "credit": "Photo : Pexels",
+      "cited": true,
+      "method": "body-tail"
     }
   ]
 }
