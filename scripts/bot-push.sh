@@ -28,7 +28,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 BRANCH="${GITHUB_REF_NAME:-main}"
-GENERATED_RE='^(index\.html|sitemap\.xml|sitemap-archives\.xml|llms\.txt|feed\.xml|(radios|journaux|etablissements|medias|horaires|en|archives|sports)/.*)$'
+GENERATED_RE='^(news-latest\.json|news-page-[0-9]+\.json|index\.html|sitemap\.xml|sitemap-archives\.xml|llms\.txt|feed\.xml|(radios|journaux|etablissements|medias|horaires|en|archives|sports)/.*)$'
 TRIES="${BOT_PUSH_TRIES:-5}"
 
 in_rebase() { local g; g="$(git rev-parse --git-dir)"; [ -d "$g/rebase-merge" ] || [ -d "$g/rebase-apply" ]; }

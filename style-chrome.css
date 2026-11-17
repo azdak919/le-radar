@@ -1622,6 +1622,17 @@ body.external-listen-open {
 .news-tail.has-overflow .news-tail-toggle {
   display: inline-flex;
 }
+/* « Charger plus » : lots suivants du fil (news-page-N.json). */
+.news-tail .news-tail-more {
+  display: inline-flex;
+}
+.news-tail .news-tail-more[hidden] {
+  display: none !important;
+}
+.news-tail-more[aria-busy="true"] {
+  cursor: progress;
+  opacity: 0.7;
+}
 @media (hover: hover) and (pointer: fine) {
 .news-tail-toggle:hover {
   border-color: var(--accent);

@@ -12,6 +12,7 @@ for (const [name, viewport] of [['desktop', {width:1440,height:1000}], ['mobile'
     await page.route('**/*', route => {
       const url = new URL(route.request().url());
       if (url.href === item.image) return route.fulfill({body:process.env.KARMINA_IMAGE ? readFileSync(process.env.KARMINA_IMAGE) : placeholder, contentType:process.env.KARMINA_IMAGE ? 'image/jpeg' : 'image/svg+xml'});
+      if (url.pathname === '/news-latest.json') return route.fulfill({status:404, body:''});
       if (url.pathname === '/news.json') return route.fulfill({json:{...news,items:[item]}});
       if (url.pathname === '/article/76bd8d7a1889e2e8/') return route.fulfill({body:pages.renderPage(pages.loadTemplate(),pages.recordOf(item)),contentType:'text/html'});
       if (url.hostname !== '127.0.0.1') return route.abort();
