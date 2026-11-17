@@ -118,6 +118,20 @@ assert.equal(U.institutionLabel({ institution: 'Concordia University' }), 'Unive
 assert.equal(U.institutionLabel({ institution: "Bishop's University" }), "Université Bishop's");
 assert.equal(U.institutionLabel({ institution: 'Cégep de Jonquière (ATM – journalisme)' }), 'Cégep de Jonquière');
 assert.equal(U.institutionLabel({ institution: 'Some Unknown College' }), '');
+assert.equal(U.unePlaceLabel({ institution: 'Concordia University' }), 'Concordia');
+assert.equal(U.unePlaceLabel({ institution: "Bishop's University" }), 'Bishop’s');
+assert.equal(U.unePlaceLabel({ institution: 'Université Laval' }), 'ULaval');
+assert.equal(U.unePlaceLabel({ institution: 'Université de Sherbrooke' }), 'UdeS');
+assert.equal(U.unePlaceLabel({ institution: 'Université de Montréal' }), 'UdeM');
+assert.equal(U.unePlaceLabel({ institution: 'Université du Québec à Montréal (UQAM)' }), 'UQAM');
+assert.equal(U.unePlaceLabel({ institution: 'McGill University' }), 'McGill');
+assert.equal(m.items[0].source, 'Quartier Libre');
+assert.equal(m.items[0].place, 'UdeM', 'image : sigle, pas le nom complet');
+{
+  const txt = U.buildUneText({ slot: sSlot, items: m.items, sports: { results: [], next: [] }, radio: [] }, 'mastodon');
+  assert.match(txt, /✍️ Autrice 1 Tremblay · Quartier Libre/, 'texte : auteur · média, déjà dans le bon ordre');
+  assert.doesNotMatch(txt, /Quartier Libre · UdeM/, 'texte : le sigle ne s’ajoute pas à la signature');
+}
 assert.equal(U.sportEmoji({ title: 'Le Rouge et Or remporte la Coupe Vanier' }), '🏈');
 assert.equal(U.sportEmoji({ title: 'Victoire des Carabins au hockey' }), '🏒');
 assert.equal(U.sportEmoji({ title: 'Une pièce de théâtre' }), '');
