@@ -183,6 +183,56 @@ assert.equal(sail.next[0].event, 'Championnat canadien de course en flotte');
 assert.equal(sail.next[0].verb, '');
 assert.equal(U.sportsLine(sail.next[0]), '⛵ Voile · Concordia · Championnat canadien de course en flotte · sam. 14 nov.');
 assert.doesNotMatch(U.sportsLine(sail.next[0]), /visite|WVYC|Fleet Race|0 h/);
+
+// Classement de régate récente : place réelle, nom d’épreuve en français, jamais « visite », rien d’inventé.
+const sailTeam = { id: 's', sport: 'sailing', sportLabel: 'Voile', sector: 'universitaire', leagueLabel: 'CICSA', name: 'Concordia Sailing', institutionLabel: 'Université Concordia', results: [], nextGames: [] };
+const sailClassement = (result) => ({ teams: { s: { ...sailTeam, results: [result] } } });
+const sailRes = U.pickSports(sailClassement({
+  gameId: 'fr', date: '2026-11-14', scoreKind: 'place', scoreFor: 2, scoreAgainst: 8,
+  opponent: 'Championnat canadien de course en flotte', opponentEn: 'Fleet Race Nationals',
+  opponentFullName: 'Fleet Race Nationals · WVYC',
+}), '2026-11-16');
+assert.equal(sailRes.results.length, 1, 'classement connu : une ligne');
+assert.equal(sailRes.results[0].kind, 'classement');
+assert.equal(sailRes.results[0].place, '2e/8');
+assert.equal(sailRes.results[0].event, 'Championnat canadien de course en flotte');
+assert.equal(sailRes.results[0].verb, '');
+assert.equal(U.sportsLine(sailRes.results[0]), '⛵ Voile · Concordia · Championnat canadien de course en flotte · 2e/8 · sam. 14 nov.');
+assert.doesNotMatch(U.sportsLine(sailRes.results[0]), /visite|WVYC|Fleet Race|Final/);
+assert.equal(U.pickSports(sailClassement({
+  gameId: 'fr2', date: '2026-11-14', scoreKind: 'place',
+  opponent: 'Championnat canadien de course en flotte',
+}), '2026-11-16').results.length, 0, 'sans place connue : pas de ligne inventée');
+assert.equal(U.pickSports(sailClassement({
+  gameId: 'fr3', date: '2026-11-14', scoreKind: 'place', scoreFor: 1, scoreAgainst: 10,
+  opponent: '', opponentEn: '',
+}), '2026-11-16').results.length, 0, 'sans nom d’épreuve : pas de ligne');
+assert.equal(U.pickSports(sailClassement({
+  gameId: 'fr4', date: '2026-11-14', scoreKind: 'place', scoreFor: 1, scoreAgainst: 12,
+  opponent: 'Championnat canadien de course en flotte',
+}), '2026-11-16').results[0].place, '1er/12', 'premier : 1er/12');
+
+// Diversité par sport (pas par ligue) : un résultat par sport avant toute répétition ; universitaire d’abord, puis le plus récent.
+const divMh = { teams: {
+  cb1: team({ id: 'cb1', sector: 'collegial', leagueLabel: 'Basketball collégial masculin D2', sex: 'M', nickname: 'Lynx', institutionLabel: 'Cégep de Rosemont', results: [{ gameId: 'cb1r', date: '2026-11-12', scoreFor: 80, scoreAgainst: 70, opponentNickname: 'B', opponentFullName: 'Cégep du Vieux Montréal' }] }),
+  cb2: team({ id: 'cb2', sector: 'collegial', leagueLabel: 'Basketball collégial féminin D1', sex: 'F', nickname: 'Boomerang', institutionLabel: 'Cégep de Saint-Laurent', results: [{ gameId: 'cb2r', date: '2026-11-12', scoreFor: 60, scoreAgainst: 50, opponentNickname: 'D', opponentFullName: 'Cégep de Maisonneuve' }] }),
+  ub: team({ id: 'ub', sector: 'universitaire', leagueLabel: 'Basketball universitaire masculin', sex: 'M', nickname: 'Carabins', institutionLabel: 'Université de Montréal', results: [{ gameId: 'ubr', date: '2026-11-11', scoreFor: 75, scoreAgainst: 68, opponentNickname: 'Rouge et Or', opponentFullName: 'Université Laval' }] }),
+  uh: team({ id: 'uh', sport: 'hockey', sportLabel: 'Hockey', sector: 'universitaire', leagueLabel: 'Hockey universitaire féminin', sex: 'F', nickname: 'Martlets', institutionLabel: 'Université McGill', results: [{ gameId: 'uhr', date: '2026-11-10', scoreFor: 3, scoreAgainst: 2, opponentNickname: 'Stingers', opponentFullName: 'Université Concordia' }] }),
+  cs: team({ id: 'cs', sport: 'soccer', sportLabel: 'Soccer', sector: 'collegial', leagueLabel: 'Soccer collégial', sex: 'M', nickname: 'Volontaires', institutionLabel: 'Cégep de Sherbrooke', results: [{ gameId: 'csr', date: '2026-11-12', scoreFor: 2, scoreAgainst: 1, opponentNickname: 'F', opponentFullName: 'Cégep de Lévis' }] }),
+} };
+const div = U.pickSports(divMh, '2026-11-12', { days: 5 });
+assert.deepEqual(div.results.slice(0, 3).map(r => r.sportKey), ['basketball', 'hockey', 'soccer'], 'un sport avant répétition ; universitaire d’abord');
+assert.equal(div.results[0].teams[0].name, 'Carabins', 'le basketball universitaire passe avant les ligues collégiales du même sport');
+assert.equal(div.results[3].sportKey, 'basketball', 'un 2e basketball seulement après les autres sports');
+const nextDivMh = { teams: {
+  cb1: team({ id: 'cb1', sector: 'collegial', leagueLabel: 'Basketball collégial masculin D2', sex: 'M', nickname: 'Lynx', institutionLabel: 'Cégep de Rosemont', nextGames: [{ gameId: 'ncb1', date: '2026-11-13', time: '19:00', home: true, opponentNickname: 'B', opponentFullName: 'Cégep du Vieux Montréal' }] }),
+  ub: team({ id: 'ub', sector: 'universitaire', leagueLabel: 'Basketball universitaire masculin', sex: 'M', nickname: 'Carabins', institutionLabel: 'Université de Montréal', nextGames: [{ gameId: 'nub', date: '2026-11-13', time: '18:00', home: true, opponentNickname: 'Rouge et Or', opponentFullName: 'Université Laval' }] }),
+  uh: team({ id: 'uh', sport: 'hockey', sportLabel: 'Hockey', sector: 'universitaire', leagueLabel: 'Hockey universitaire', sex: 'M', nickname: 'Carabins', institutionLabel: 'Université de Montréal', nextGames: [{ gameId: 'nuh', date: '2026-11-14', time: '19:30', home: false, opponentNickname: 'Patriotes', opponentFullName: 'Université du Québec à Trois-Rivières' }] }),
+} };
+const nextDiv = U.pickSports(nextDivMh, '2026-11-12', { nextDays: 5 });
+assert.deepEqual(nextDiv.next.map(r => r.sportKey), ['basketball', 'hockey', 'basketball'], 'à-venir : un sport avant répétition, puis le 2e basketball');
+assert.equal(nextDiv.next[0].teams[0].name, 'Carabins', 'à-venir : universitaire d’abord dans le groupe date/heure, puis diversité par sport');
+
 // ── Radio étudiante : à venir, tirage reproductible, une par station ──
 const rs = { stations: {
   a: { name: 'CHYZ 94,3', grid: [{ day: 4, start: '08:00', title: 'Café campus' }, { day: 4, start: '20:00', title: 'Jeudi soir' }, { day: 4, start: '02:00', title: 'Nuit' }, { day: 5, start: '11:00', title: 'Punk-o-rama' }] },

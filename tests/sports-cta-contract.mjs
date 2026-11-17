@@ -246,7 +246,7 @@ assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
 }
 
 
-// Diversité bandeau : tournoi sport+ligue+niveau, mélange à-venir / résultats,
+// Diversité bandeau : tournoi par sport (pas par ligue ni niveau), mélange à-venir / résultats,
 // ordre interne conservé, aucune carte retirée, déterministe.
 {
   const SPORTS_OPEN_TOMORROW_NEXT = 4;
@@ -264,7 +264,7 @@ assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
     sportsOpenOrderBucket: (slide) => slide.bucket,
   };
   vm.runInNewContext(
-    `${sourceBetween('function sportsSlideLevel', 'function sportsSplitVisible')}
+    `${sourceBetween('function sportsSlideDiversityKey', 'function sportsSplitVisible')}
      this.api = {
        sportsSlideDiversityKey, sportsRoundRobinByDiversity,
        sportsMixWeekAndResults, sportsInterleaveByDiversity,
@@ -303,14 +303,25 @@ assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
     [...ids(mixedLeagues)].sort(),
     'aucune carte retirée',
   );
-  const firstKeys = [...once].slice(0, 4).map((s) => api.sportsSlideDiversityKey(s));
-  assert.equal(new Set(firstKeys).size, 4, `4 premières clés distinctes, got ${firstKeys.join(' | ')}`);
+  const firstKeys = [...once].slice(0, 2).map((s) => api.sportsSlideDiversityKey(s));
+  assert.deepEqual(firstKeys, ['basketball', 'hockey'], 'un sport avant répétition (basketball et hockey, pas une clé par ligue)');
+  assert.deepEqual(ids(once).slice(0, 2), ['d2-a', 'hock-a'], 'le 1er hockey intercalé avant le 2e basketball');
   const d2Ids = new Set(d2.map((s) => s.id));
   assert.deepEqual(
     ids([...once].filter((s) => d2Ids.has(s.id))),
     ids(d2),
     'ordre chronologique conservé dans un même groupe',
   );
+
+  const sailMix = [
+    card('voile-a', { sport: 'voile', sector: 'universitaire', league: 'CICSA', time: '10:00' }),
+    card('sail-a', { sport: 'sailing', sector: 'universitaire', league: 'CICSA', time: '11:00' }),
+    card('bb-a', { sport: 'basketball', sector: 'universitaire', league: 'Basketball universitaire', time: '18:00' }),
+  ];
+  const sailOrder = api.sportsInterleaveByDiversity(sailMix, now);
+  assert.deepEqual(ids(sailOrder), ['voile-a', 'bb-a', 'sail-a'], 'voile et sailing comptent pour le même sport');
+  assert.equal(api.sportsSlideDiversityKey(sailMix[0]), 'sailing');
+  assert.equal(api.sportsSlideDiversityKey(sailMix[1]), 'sailing');
 
   const upcoming = [
     card('week-d2-a', { sport: 'basketball', sector: 'collegial', league: 'Basketball collégial masculin D2' }),
