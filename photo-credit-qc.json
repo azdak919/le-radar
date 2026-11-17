@@ -1,17 +1,45 @@
 {
-  "updated": "2026-11-17T14:11:08.734Z",
+  "updated": "2026-11-17T15:43:23.141Z",
   "total": 1023,
-  "withImage": 879,
-  "withCredit": 509,
-  "cited": 277,
-  "pending": 509,
+  "withImage": 885,
+  "withCredit": 566,
+  "cited": 313,
+  "pending": 477,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 60,
-  "citedNew": 11,
-  "fallbackNew": 49,
+  "citedNew": 38,
+  "fallbackNew": 22,
   "samples": [
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
+      "source": "La Pige",
+      "credit": "Photo : Rosalie Lepage",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "source": "La Griffe",
@@ -20,81 +48,53 @@
       "method": null
     },
     {
-      "title": "Math, now, … Thinking Outside the Box",
-      "source": "The Plant",
-      "credit": "Image via Charlie Reuter",
+      "title": "Le bijou, accessoire de mode pour hommes",
+      "source": "La Pige",
+      "credit": "Photo : Émile Barthe",
       "cited": true,
-      "method": "via-attribution"
+      "method": "body-line"
     },
     {
-      "title": "Fin de saison abrupte pour la cycliste Magdeleine Vallières Mill",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
+      "title": "Nos suggestions de films automnals",
+      "source": "Impact Campus",
+      "credit": "Photo : Impact Campus",
       "cited": false,
       "method": null
     },
     {
-      "title": "Le Grand Défi Pierre Lavoie débarque à Sherbrooke",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Vers une 10e équipe dans la LCF?",
-      "source": "Le Collectif",
-      "credit": "Photo : Richard Wolowicz Getty Images",
+      "title": "Récapitulatif du cas de Lindsay Clancy",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia l Le Délit",
       "cited": true,
-      "method": "filename-photo-name"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Le grand retour après plus de 50 ans d’absence",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "title": "Une rentrée sauvée, et après?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Le futur du hockey universitaire sherbrookois tatoué sur le cœur",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "title": "Cornell : Les fraternités au centre du débat",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Un résultat qui inquiète les personnes étudiantes",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "title": "PSPP (presque) tout-puissant",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-near"
     },
     {
-      "title": "Démission de Christine Fréchette : quel avenir pour la CAQ ?",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Movember : au-delà de la moustache",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le SOPK change de nom",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Élections en Lettonie : montée du populisme",
-      "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "title": "« Tous les chemins mènent à Rome »",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }
