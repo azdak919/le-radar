@@ -1834,6 +1834,11 @@
       en: 'Radio', es: 'Radios', pt: 'Rádios', de: 'Radios', it: 'Radio',
       fr: 'Radios',
     },
+    Revue: {
+      en: 'Review', es: 'Revista', pt: 'Revista', de: 'Rundschau', it: 'Rassegna',
+      nl: 'Revue', pl: 'Przegląd', tr: 'Derleme', ru: 'Обзор', zh: '综述',
+      ar: 'مراجعة', ko: '리뷰', ja: 'レビュー', fr: 'Revue',
+    },
     'À venir': {
       // Libellé panneau (text-transform: uppercase → UP NEXT) + sous-titres grille.
       // Pas de repli EN : IU/ar doivent passer par le MT, pas « Up next ».

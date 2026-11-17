@@ -497,7 +497,7 @@ function renderIndexPage(index = []) {
   for (const r of index) { if (!byDay.has(r.day)) byDay.set(r.day, []); byDay.get(r.day).push(r); }
   const rows = [...byDay.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([day, list]) => [
     `        <li class="revue-archive__day"><h3>${esc(cap(frDayYear(day)))}</h3><ul>`,
-    ...list.sort((a, b) => (a.edition === 'matin' ? 0 : 1) - (b.edition === 'matin' ? 0 : 1)).map((r) => `          <li><a href="../${esc(r.path.replace(/^revue\//, ''))}">${r.edition === 'soir' ? '🌙' : '☀️'} ${esc(r.edition === 'soir' ? 'La revue du soir' : 'La revue du matin')}</a> ${r.lead ? `<span class="revue-archive__meta">En tête : « ${esc(String(r.lead).replace(/[.]+$/, ''))} »</span>` : ''}</li>`),
+    ...list.sort((a, b) => (a.edition === 'matin' ? 0 : 1) - (b.edition === 'matin' ? 0 : 1)).map((r) => `          <li><a href="./${esc(r.path.replace(/^revue\//, ''))}">${r.edition === 'soir' ? '🌙' : '☀️'} ${esc(r.edition === 'soir' ? 'La revue du soir' : 'La revue du matin')}</a> ${r.lead ? `<span class="revue-archive__meta">En tête : « ${esc(String(r.lead).replace(/[.]+$/, ''))} »</span>` : ''}</li>`),
     '        </ul></li>',
   ].join('\n'));
   const path_ = 'revue/';
@@ -581,7 +581,7 @@ function feedContentHtml(model) {
   out.push(p(`<small>${DISCLOSURE}</small>`));
   return out.join('\n');
 }
-function feedItemXml(model) {
+function feedItemXml(model, { attachments = true } = {}) {
   const img = model.image;
   return [
     '    <item>',
@@ -593,8 +593,8 @@ function feedItemXml(model) {
     ...model.categories.map((c) => `      <category>${escXml(c)}</category>`),
     `      <description>${cdata(esc(model.description))}</description>`,
     `      <content:encoded>${cdata(feedContentHtml(model))}</content:encoded>`,
-    img ? `      <enclosure url="${escXml(img.url)}" length="${Number(img.length) > 0 ? Number(img.length) : 0}" type="${/\.png(\?|$)/i.test(img.url) ? 'image/png' : /\.webp(\?|$)/i.test(img.url) ? 'image/webp' : 'image/jpeg'}" />` : '',
-    img ? `      <media:content url="${escXml(img.url)}" medium="image" />` : '',
+    attachments && img ? `      <enclosure url="${escXml(img.url)}" length="${Number(img.length) > 0 ? Number(img.length) : 0}" type="${/\.png(\?|$)/i.test(img.url) ? 'image/png' : /\.webp(\?|$)/i.test(img.url) ? 'image/webp' : 'image/jpeg'}" />` : '',
+    attachments && img ? `      <media:content url="${escXml(img.url)}" medium="image" />` : '',
     '    </item>',
   ].filter(Boolean).join('\n');
 }

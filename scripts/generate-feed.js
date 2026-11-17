@@ -453,7 +453,7 @@ function revueFeedEntries(root = ROOT, limit = 3) {
   try {
     const { loadPublished, feedItemXml } = require('./revue/revue-render');
     const pub = loadPublished(root, { limit });
-    return pub.enabled ? pub.models.map((m) => ({ date: m.datePublished, xml: feedItemXml(m) })) : [];
+    return pub.enabled ? pub.models.map((m) => ({ date: m.datePublished, xml: feedItemXml(m, { attachments: false }) })) : [];
   } catch { return []; }
 }
 
@@ -533,16 +533,18 @@ function main() {
   const written = [];
 
   for (const config of FEEDS) {
-    const subset = items.filter(config.filter).slice(0, MAX_ITEMS);
-    const xml = buildFeedXml(subset, config, sourceSites, revueFeedEntries());
+    const revue = revueFeedEntries();
+    const subset = items.filter(config.filter).slice(0, Math.max(0, MAX_ITEMS - revue.length));
+    const xml = buildFeedXml(subset, config, sourceSites, revue);
     const outPath = path.join(ROOT, config.file);
+    const count = subset.length + revue.length;
 
     if (doUpdate) {
       fs.writeFileSync(outPath, xml, 'utf8');
     }
 
-    written.push({ file: config.file, count: subset.length, bytes: Buffer.byteLength(xml, 'utf8') });
-    console.log(`${config.file}: ${subset.length} item(s)${doUpdate ? ' → written' : ' (dry-run)'}`);
+    written.push({ file: config.file, count, bytes: Buffer.byteLength(xml, 'utf8') });
+    console.log(`${config.file}: ${count} item(s)${revue.length ? ` (dont ${revue.length} revue)` : ''}${doUpdate ? ' → written' : ' (dry-run)'}`);
   }
 
   if (!doUpdate) {

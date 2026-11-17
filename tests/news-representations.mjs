@@ -51,9 +51,11 @@ const htmlTitles = [...htmlBlock[1].matchAll(/<h3 class="article-title">([\s\S]*
   .map((match) => normalize(match[1]));
 
 const rss = read('feed.xml');
-const rssTitles = [...rss.matchAll(/<item>[\s\S]*?<title>([\s\S]*?)<\/title>[\s\S]*?<\/item>/g)]
+const rssTitles = [...rss.matchAll(/<item>([\s\S]*?)<\/item>/g)]
+  .map((match) => match[1])
+  .filter((it) => !/le-radar\.ca\/revue\//.test(it))
   .slice(0, TOP_ITEMS)
-  .map((match) => normalize(match[1]));
+  .map((it) => normalize((it.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || ''));
 
 for (const [name, titles] of [
   ['index.html JSON-LD', jsonLdTitles],

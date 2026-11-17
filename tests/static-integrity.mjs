@@ -153,14 +153,15 @@ for (const file of htmlFiles) {
   const navHrefs = hrefsIn(navBlock);
   assert.deepEqual(
     navHrefs,
-    ['./', 'medias/', 'medias/#journaux', 'horaires/', 'sports/'],
-    'index.html : sections = Accueil, Médias, Journaux, Radios, Sports (sans Archives)',
+    ['./', 'revue/', 'medias/', 'medias/#journaux', 'horaires/', 'sports/'],
+    'index.html : sections = Accueil, Revue, Médias, Journaux, Radios, Sports (sans Archives)',
   );
   assert(
     /data-home-nav[^>]*>Accueil</.test(navBlock) || /data-home-nav[\s\S]*?>Accueil</.test(navBlock),
     'index.html : lien Accueil avec data-home-nav (scroll + refresh soft)',
   );
   assert(navBlock.includes('>Accueil</a>'), 'index.html : libellé Accueil dans le menu de sections');
+  assert(navBlock.includes('>Revue</a>'), 'index.html : libellé Revue dans le menu de sections');
 
   const footBlock = home.slice(
     home.indexOf('<!-- RADAR:FOOTER:START -->'),
