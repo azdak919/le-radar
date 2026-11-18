@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T07:06:41.084Z",
+  "updatedAt": "2026-11-18T08:06:56.318Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T07:06:02.582Z"
+      "checkedAt": "2026-11-18T08:06:15.653Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Fréquence 440",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/frequence-440"
-      },
-      "next": {
         "title": "Ailleurs: escales en musique",
         "source": "schedule",
         "start": "03:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/ailleurs-en-musique"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "06:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Fréquence 440",
+      "showTitle": "Ailleurs: escales en musique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T07:06:04.724Z"
+      "checkedAt": "2026-11-18T08:06:17.790Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T07:06:07.077Z"
+      "checkedAt": "2026-11-18T08:06:22.582Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T07:06:20.792Z"
+      "checkedAt": "2026-11-18T08:06:36.572Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T07:06:21.885Z"
+      "checkedAt": "2026-11-18T08:06:37.526Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T07:06:40.733Z"
+      "checkedAt": "2026-11-18T08:06:55.967Z"
     }
   }
 }
