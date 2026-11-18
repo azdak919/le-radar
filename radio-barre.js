@@ -6,8 +6,16 @@
  * viennent de LE-RADAR : un changement ici arrive chez tous les sites qui
  * l'appellent, sans mise à jour de leur côté.
  *
- * - `data-station` : une station fixe (id de radios.json). Sans cet
- *   attribut, la barre propose toutes les stations (Pomodoro, Solitaire).
+ * Elle reprend la barre de le-radar.ca, mêmes informations, mêmes contrôles :
+ *  - ordinateur : logo, « En ondes », poste précédent / suivant, cadran
+ *    (établissement, poste et slogan, liste des postes), lecture / arrêt,
+ *    diffusion sur un appareil (grisée si le navigateur ne le permet pas), égaliseur,
+ *    couper le son, volume 0 à 200 %, « À l'antenne » et « À venir » ;
+ *  - mobile : logo, précédent / suivant, cadran (poste · sigle, puis
+ *    « À l'antenne · émission »), lecture / arrêt, bouton volume qui ouvre
+ *    couper le son, le volume 0 à 200 % et la diffusion.
+ *
+ * - `data-station` : la station de départ. Le cadran garde tous les postes.
  * - Si radios.json ne répond pas, ou si la station n'a pas de flux https,
  *   rien n'est affiché. Le parent du script reçoit `data-radar-radio="off"`,
  *   ou `"ready"` quand la barre est là, pour qu'il puisse se replier.
@@ -26,19 +34,43 @@
   const slot = script.parentElement;
   const KEY_STATION = 'radar-radio-station';
   const KEY_VOLUME = 'radar-radio-volume';
+  const KEY_MUTED = 'radar-radio-muted';
   const REFRESH_MS = 120000;
+  const MAX_GAIN = 2; // 200 %, comme le-radar.ca
+  // Comme radar-state.js : CHYZ (Centova) se lit en natif seulement.
+  const NO_BOOST = new Set(['chyz']);
+  // Sigles, comme le syntoniseur de le-radar.ca (radar-news.js).
+  const ACRONYMS = {
+    'Université Laval': 'ULaval', 'Université de Montréal': 'UdeM', 'McGill University': 'McGill',
+    'Université McGill': 'McGill', 'Concordia University': 'Concordia', 'Université Concordia': 'Concordia',
+    'Université de Sherbrooke': 'UdeS', 'Université du Québec à Montréal': 'UQAM',
+  };
 
   const read = (key) => { try { return localStorage.getItem(key); } catch (_) { return null; } };
   const write = (key, value) => { try { localStorage.setItem(key, value); } catch (_) { /* stockage bloqué */ } };
   const mark = (state) => { if (slot) slot.dataset.radarRadio = state; };
-
-  const ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>';
-  const ICON_STOP = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor"/></svg>';
-
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  const ICON = {
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
+    stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5" fill="currentColor"/></svg>',
+    prev: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z" fill="currentColor"/></svg>',
+    next: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/></svg>',
+    vol: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z" fill="currentColor"/></svg>',
+    muted: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a9 9 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z" fill="currentColor"/></svg>',
+    cast: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 4.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" fill="currentColor"/></svg>',
+  };
 
   function playable(station) {
     return station && typeof station.stream === 'string' && station.stream.startsWith('https://');
+  }
+  const acronym = (station) => ACRONYMS[station.institution] || station.institution || '';
+  /** « CISM 89,3 FM » : la bande vient de la fréquence si le nom ne l'a pas. */
+  function onAirName(station) {
+    const name = String(station.name || '');
+    if (/\b(FM|AM)\b/i.test(name)) return name;
+    const band = /\b(FM|AM)\b/i.exec(String(station.frequency || ''))?.[1];
+    return band ? `${name} ${band.toUpperCase()}` : (station.fullName || name);
   }
 
   async function json(path) {
@@ -57,8 +89,7 @@
       console.info('LE-RADAR : barre radio indisponible', error?.message || error);
       return;
     }
-    if (fixed) stations = stations.filter((item) => item.id === fixed);
-    if (!stations.length) { mark('off'); return; }
+    if (!stations.length || (fixed && !stations.some((item) => item.id === fixed))) { mark('off'); return; }
 
     const host = document.createElement('div');
     host.className = 'radar-radio';
@@ -71,65 +102,124 @@
     const loaded = new Promise((resolve) => { css.onload = () => resolve(true); css.onerror = () => resolve(false); });
     root.append(css);
 
-    const remembered = read(KEY_STATION);
-    let station = stations.find((item) => item.id === remembered) || stations[0];
+    let station = (fixed && stations.find((item) => item.id === fixed))
+      || stations.find((item) => item.id === read(KEY_STATION)) || stations[0];
+    const castable = 'remote' in HTMLMediaElement.prototype;
     const bar = document.createElement('div');
     bar.className = 'bar';
     bar.setAttribute('role', 'region');
     bar.setAttribute('aria-label', 'Radio étudiante — LE-RADAR');
     bar.dataset.state = 'idle';
+    const castButton = (where) => `<button type="button" class="cast cast--${where}" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil">${ICON.cast}</button>`;
     bar.innerHTML = `
-      <a class="brand" href="${new URL('radios/', base).href}" target="_blank" rel="noopener" title="LE-RADAR — radios étudiantes du Québec"><img src="${new URL('assets/icon.svg', base).href}" alt="LE-RADAR" width="24" height="24"></a>
+      <a class="brand" href="${new URL('radios/', base).href}" target="_blank" rel="noopener" title="LE-RADAR — radios étudiantes du Québec"><img src="${new URL('assets/icon.svg', base).href}" alt="LE-RADAR" width="28" height="28"></a>
+      <span class="onair">En ondes</span>
+      <button type="button" class="step" data-step="-1" title="Poste précédent" aria-label="Poste précédent">${ICON.prev}</button>
+      <label class="dial"><span class="sr">Choisir un poste</span><select>${stations.map((item) => `<option value="${esc(item.id)}">${esc(onAirName(item))} · ${esc(acronym(item))}</option>`).join('')}</select><span class="now" aria-hidden="true"><span class="line1"></span><span class="line2"></span></span></label>
+      <button type="button" class="step" data-step="1" title="Poste suivant" aria-label="Poste suivant">${ICON.next}</button>
       <button type="button" class="play" aria-pressed="false"></button>
-      <div class="meta"><span class="name"></span><span class="show" aria-live="polite"></span></div>
-      <span class="live" aria-hidden="true">En direct</span>
-      ${fixed || stations.length < 2 ? '' : `<label class="pick"><span class="sr">Station</span><select>${stations.map((item) => `<option value="${esc(item.id)}">${esc(item.name)}</option>`).join('')}</select></label>`}
-      <label class="volume"><span class="sr">Volume</span><input type="range" min="0" max="1" step="0.05"></label>`;
+      ${castButton('bar')}
+      <span class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <div class="vol">
+        <button type="button" class="vol-toggle" aria-expanded="false" aria-label="Réglages du volume" title="Réglages du volume">${ICON.vol}</button>
+        <div class="vol-slot">
+          <button type="button" class="mute" aria-pressed="false" aria-label="Couper le son" title="Couper le son">${ICON.vol}</button>
+          <span class="track"><input type="range" min="0" max="${MAX_GAIN}" step="0.02" aria-label="Volume — 0 % à gauche, 100 % au centre, 200 % à droite"><span class="labels" aria-hidden="true"><span>0 %</span><span>100 %</span><span>200 %</span></span></span>
+          ${castButton('pop')}
+        </div>
+      </div>
+      <a class="air air--now" target="_blank" rel="noopener" hidden><span class="air-label">À l’antenne</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>
+      <a class="air air--next" target="_blank" rel="noopener" hidden><span class="air-label">À venir</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>`;
     root.append(bar);
-    const audio = new Audio();
-    audio.preload = 'none';
-    const button = bar.querySelector('.play');
-    const name = bar.querySelector('.name');
-    const show = bar.querySelector('.show');
-    const select = bar.querySelector('select');
-    const volume = bar.querySelector('.volume input');
 
-    const stored = Number.parseFloat(read(KEY_VOLUME) ?? '');
-    audio.volume = Number.isFinite(stored) ? Math.min(1, Math.max(0, stored)) : 0.8;
-    volume.value = String(audio.volume);
-    volume.addEventListener('input', () => { audio.volume = Number(volume.value); write(KEY_VOLUME, volume.value); });
+    const $ = (selector) => bar.querySelector(selector);
+    const play = $('.play');
+    const select = $('select');
+    const line1 = $('.line1');
+    const line2 = $('.line2');
+    const volume = $('.vol input');
+    const mute = $('.mute');
+    const toggle = $('.vol-toggle');
+    const nowAir = $('.air--now');
+    const nextAir = $('.air--next');
+    let info = null;
+    // Même palier que la feuille : la largeur de la barre, pas de l'écran.
+    const narrow = () => host.getBoundingClientRect().width < 680;
+
+    // ── Audio : natif jusqu'à 100 %, gain Web Audio au-delà (si le flux le permet).
+    let audio = new Audio();
+    audio.preload = 'none';
+    let graph = null;
+    const boostBroken = new Set();
+    const boostable = () => !NO_BOOST.has(station.id) && !boostBroken.has(station.id) && 'AudioContext' in window;
+    const storedVolume = Number.parseFloat(read(KEY_VOLUME) ?? '');
+    let level = Number.isFinite(storedVolume) ? Math.min(MAX_GAIN, Math.max(0, storedVolume)) : 1;
+    let muted = read(KEY_MUTED) === '1';
+
+    function applyVolume() {
+      const effective = muted ? 0 : level;
+      if (graph) { audio.volume = 1; graph.gain.gain.value = effective; } else audio.volume = Math.min(1, effective);
+      volume.value = String(level);
+      const pct = Math.round(level * 100);
+      volume.style.setProperty('--fill', `${(level / MAX_GAIN) * 100}%`);
+      volume.setAttribute('aria-valuetext', `${pct} %`);
+      for (const node of [mute, toggle]) node.innerHTML = muted || level === 0 ? ICON.muted : ICON.vol;
+      mute.setAttribute('aria-pressed', String(muted));
+      mute.setAttribute('aria-label', muted ? 'Remettre le son' : 'Couper le son');
+      bar.classList.toggle('is-boost', level > 1);
+    }
+    function ensureGraph() {
+      if (graph || level <= 1 || !boostable()) return;
+      try {
+        const context = new AudioContext();
+        const source = context.createMediaElementSource(audio);
+        const gain = context.createGain();
+        source.connect(gain).connect(context.destination);
+        graph = { context, gain };
+      } catch (_) { boostBroken.add(station.id); }
+    }
 
     function setState(state) {
       bar.dataset.state = state;
-      const playing = state === 'playing' || state === 'loading';
-      button.innerHTML = playing ? ICON_STOP : ICON_PLAY;
-      button.setAttribute('aria-pressed', String(playing));
-      button.setAttribute('aria-label', `${playing ? 'Arrêter' : 'Écouter'} ${station.name}`);
-      if (state === 'error') show.textContent = 'Flux muet pour le moment. Réessayez plus tard.';
+      const on = state === 'playing' || state === 'loading';
+      play.innerHTML = on ? ICON.stop : ICON.play;
+      play.setAttribute('aria-pressed', String(on));
+      play.setAttribute('aria-label', `${on ? 'Arrêter' : 'Écouter'} ${station.name}`);
+      describe();
     }
 
-    function describe() {
-      name.textContent = station.name;
-      name.title = [station.institution, station.city].filter(Boolean).join(' · ');
-      if (select) select.value = station.id;
-      show.textContent = station.institution || '';
-      setState(bar.dataset.state === 'playing' ? 'playing' : 'idle');
-      nowPlaying();
+    const slotTime = (item) => (item?.start && item?.end ? `${item.start} – ${item.end}` : (item?.start || ''));
+    function fill(node, item) {
+      if (!item?.title) { node.hidden = true; return; }
+      node.hidden = false;
+      node.querySelector('.air-title').textContent = item.title;
+      node.querySelector('.air-time').textContent = slotTime(item);
+      if (/^https:\/\//.test(item.url || '')) node.href = item.url; else node.removeAttribute('href');
     }
+    function describe() {
+      select.value = station.id;
+      const current = info?.current?.title || info?.track || info?.showTitle || '';
+      // Ordinateur : établissement, puis « poste FM · slogan ». Mobile : « poste FM · sigle »,
+      // puis l'émission en ondes (la feuille choisit, comme le-radar.ca).
+      line1.dataset.wide = station.institution || station.name;
+      line1.dataset.narrow = `${onAirName(station)} · ${acronym(station)}`;
+      line2.dataset.wide = [onAirName(station), station.slogan].filter(Boolean).join(' · ');
+      line2.dataset.narrow = bar.dataset.state === 'error'
+        ? 'Flux muet pour le moment. Réessayez plus tard.'
+        : current ? `À l’antenne · ${current}` : info?.next?.title ? `À venir · ${info.next.title}` : (station.slogan || station.frequency || '');
+      for (const node of [line1, line2]) node.textContent = narrow() ? node.dataset.narrow : node.dataset.wide;
+      fill(nowAir, info?.current?.title ? info.current : (info?.track ? { title: info.track } : null));
+      fill(nextAir, info?.next);
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(describe).observe(host);
 
     let nowTimer = 0;
     async function nowPlaying() {
       window.clearTimeout(nowTimer);
       try {
         const data = await json('radio-nowplaying.json');
-        const info = data?.stations?.[station.id];
-        const current = info?.track || info?.current?.title || info?.showTitle;
-        const next = info?.next;
-        if (bar.dataset.state !== 'error') {
-          if (current) show.textContent = `En ondes : ${current}`;
-          else if (next?.title) show.textContent = `À ${next.start || 'venir'} : ${next.title}`;
-          else show.textContent = station.institution || '';
-        }
+        info = data?.stations?.[station.id] || null;
+        describe();
       } catch (_) { /* l'émission en cours est un bonus */ }
       nowTimer = window.setTimeout(nowPlaying, REFRESH_MS);
     }
@@ -140,12 +230,24 @@
       audio.removeAttribute('src');
       audio.load();
       setState('idle');
-      describe();
     }
-
-    async function play() {
+    function fresh() {
+      // createMediaElementSource est à usage unique : nouvel élément au changement de poste.
+      if (graph) { graph.context.close().catch(() => {}); graph = null; }
+      const next = new Audio();
+      next.preload = 'none';
+      next.addEventListener('error', () => { if (next.getAttribute('src')) setState('error'); });
+      next.addEventListener('playing', () => setState('playing'));
+      next.addEventListener('waiting', () => { if (bar.dataset.state === 'playing') setState('loading'); });
+      audio = next;
+    }
+    async function listen() {
+      fresh();
+      if (level > 1 && boostable()) audio.crossOrigin = 'anonymous';
       setState('loading');
       audio.src = station.stream;
+      ensureGraph();
+      applyVolume();
       try {
         await audio.play();
         setState('playing');
@@ -153,25 +255,69 @@
           navigator.mediaSession.metadata = new MediaMetadata({ title: station.name, artist: station.institution || 'Radio étudiante', album: 'LE-RADAR' });
         }
       } catch (_) {
+        if (audio.crossOrigin) { boostBroken.add(station.id); level = Math.min(level, 1); return listen(); }
         setState('error');
       }
     }
+    play.addEventListener('click', () => (bar.dataset.state === 'playing' || bar.dataset.state === 'loading' ? stop() : listen()));
 
-    button.addEventListener('click', () => (audio.src && bar.dataset.state !== 'error' && bar.dataset.state !== 'idle' ? stop() : play()));
-    audio.addEventListener('error', () => { if (audio.getAttribute('src')) setState('error'); });
-    audio.addEventListener('playing', () => setState('playing'));
-    select?.addEventListener('change', () => {
-      const next = stations.find((item) => item.id === select.value);
-      if (!next) return;
-      const wasPlaying = bar.dataset.state === 'playing' || bar.dataset.state === 'loading';
-      if (wasPlaying) stop();
+    function tune(id) {
+      const next = stations.find((item) => item.id === id);
+      if (!next || next.id === station.id) return;
+      const wasOn = bar.dataset.state === 'playing' || bar.dataset.state === 'loading';
+      if (wasOn) stop();
       station = next;
+      info = null;
       write(KEY_STATION, station.id);
-      describe();
-      if (wasPlaying) play();
-    });
+      setState('idle');
+      nowPlaying();
+      if (wasOn) listen();
+    }
+    select.addEventListener('change', () => tune(select.value));
+    for (const step of bar.querySelectorAll('[data-step]')) {
+      step.addEventListener('click', () => {
+        const at = stations.findIndex((item) => item.id === station.id);
+        tune(stations[(at + Number(step.dataset.step) + stations.length) % stations.length].id);
+      });
+    }
 
-    describe();
+    volume.addEventListener('input', () => {
+      level = Number(volume.value);
+      if (level > 1 && !boostable()) level = 1;
+      muted = false;
+      write(KEY_VOLUME, String(level));
+      write(KEY_MUTED, '0');
+      // Passer au-delà de 100 % en écoute : on relance le flux avec le gain.
+      if (level > 1 && !graph && boostable() && bar.dataset.state === 'playing') listen();
+      applyVolume();
+    });
+    mute.addEventListener('click', () => { muted = !muted; write(KEY_MUTED, muted ? '1' : '0'); applyVolume(); });
+    // Mobile : le bouton volume ouvre le réglage ; ordinateur : il coupe le son.
+    toggle.addEventListener('click', () => {
+      if (!narrow()) { mute.click(); return; }
+      const open = bar.classList.toggle('vol-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    root.addEventListener('keydown', (event) => { if (event.key === 'Escape' && bar.classList.contains('vol-open')) { bar.classList.remove('vol-open'); toggle.setAttribute('aria-expanded', 'false'); toggle.focus(); } });
+    document.addEventListener('click', (event) => { if (!event.composedPath().includes(host)) { bar.classList.remove('vol-open'); toggle.setAttribute('aria-expanded', 'false'); } });
+
+    // Diffusion, comme le-radar.ca : bouton toujours là. Chrome / Edge : Remote
+    // Playback (Chromecast) ; Safari : AirPlay. Sans API (Firefox) : grisé.
+    function wireCast() { /* l'état se lit au clic : rien à suivre */ }
+    const castApi = () => (typeof audio.webkitShowPlaybackTargetPicker === 'function' ? 'airplay' : castable ? 'remote' : '');
+    for (const node of bar.querySelectorAll('.cast')) {
+      if (!castApi()) { node.disabled = true; node.title = 'Diffusion non prise en charge par ce navigateur'; }
+      node.addEventListener('click', async () => {
+        if (bar.dataset.state === 'idle' || bar.dataset.state === 'error') await listen();
+        if (castApi() === 'airplay') { try { audio.webkitShowPlaybackTargetPicker(); } catch (_) { /* annulé */ } }
+        else if (castApi() === 'remote') audio.remote.prompt().catch(() => {});
+      });
+    }
+
+    fresh();
+    applyVolume();
+    setState('idle');
+    nowPlaying();
     // La barre ne s'affiche qu'avec son style : jamais de boutons nus.
     if (!(await loaded)) { host.remove(); mark('off'); return; }
     host.hidden = false;
