@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-17T22:07:40.899Z",
-  "total": 1018,
+  "updated": "2026-11-18T00:38:33.885Z",
+  "total": 1019,
   "pool": 61,
   "incomplete": 28,
-  "withLeadExcerpt": 166,
+  "withLeadExcerpt": 167,
   "candidates": 28,
-  "enriched": 1,
-  "failed": 0,
+  "enriched": 0,
+  "failed": 15,
   "ok": true,
   "samples": [
     {
@@ -28,13 +28,13 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": true
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": false
     },
     {
       "title": "Francisée, mais pas la bienvenue ?",
@@ -46,12 +46,12 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
       "changed": false
     },
     {
@@ -64,21 +64,21 @@
       "changed": false
     },
     {
-      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
-      "link": "https://theconcordian.com/2026/11/pierre-cerre-trying-keep-rosemont-orange/",
+      "title": "Can Ganesha Help You Pass Your Midterms?",
+      "link": "https://thebucampus.ca/2026/11/16/can-ganesha-help-you-pass-your-midterms/",
       "ok": true,
-      "score": 96,
-      "chars": 259,
-      "sample": "On Dec. 7, Canadians in six ridings, including two in Montreal, will head to the polls to elect thei",
+      "score": 100,
+      "chars": 471,
+      "sample": "The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon oran",
       "changed": false
     },
     {
-      "title": "I don’t like waiting",
-      "link": "https://theconcordian.com/2026/11/i-dont-like-waiting/",
+      "title": "Beyond Competition: The Importance of Intramural Sports at Bishop’s",
+      "link": "https://thebucampus.ca/2026/11/16/beyond-competition-the-importance-of-intramural-sports-at-bishops/",
       "ok": true,
-      "score": 100,
-      "chars": 190,
-      "sample": "I was getting ready to head to the store to grab some things I needed. It was early in the morning; ",
+      "score": 96,
+      "chars": 404,
+      "sample": "At Bishop’s, the Gaiters varsity teams often receive most of the spotlight; however, many students p",
       "changed": false
     }
   ]
