@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T18:07:28.286Z",
+  "updatedAt": "2026-11-18T18:38:47.956Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T18:06:34.358Z"
+      "checkedAt": "2026-11-18T18:37:57.484Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T18:06:48.683Z"
+      "checkedAt": "2026-11-18T18:38:11.522Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T18:06:54.580Z"
+      "checkedAt": "2026-11-18T18:38:14.894Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T18:07:08.357Z"
+      "checkedAt": "2026-11-18T18:38:28.895Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,17 +122,17 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T18:07:09.460Z"
+      "checkedAt": "2026-11-18T18:38:29.853Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Onde de CHOQ",
+        "title": "Échos du monde",
         "source": "api-live",
         "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "end": "14:00",
+        "slug": "echos-du-monde"
       },
       "next": {
         "title": "Palmarès CHOQ.ca",
@@ -142,14 +142,14 @@
         "slug": "palmareschoq"
       },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "Onde de CHOQ",
+      "showTitle": "Échos du monde",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T18:07:27.936Z"
+      "checkedAt": "2026-11-18T18:38:47.605Z"
     }
   }
 }
