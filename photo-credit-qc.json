@@ -1,17 +1,52 @@
 {
-  "updated": "2026-11-18T16:15:02.735Z",
+  "updated": "2026-11-18T17:09:35.137Z",
   "total": 1030,
-  "withImage": 845,
-  "withCredit": 845,
-  "cited": 492,
-  "pending": 240,
+  "withImage": 880,
+  "withCredit": 880,
+  "cited": 520,
+  "pending": 244,
   "missingHero": 0,
   "ok": false,
-  "checked": 24,
-  "updatedCount": 8,
-  "citedNew": 9,
-  "fallbackNew": 15,
+  "checked": 60,
+  "updatedCount": 7,
+  "citedNew": 8,
+  "fallbackNew": 52,
   "samples": [
+    {
+      "title": "Peut-on encore posséder de la culture ?",
+      "source": "La Pige",
+      "credit": "Photo : Maxence Gibault-Renault",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
+      "source": "La Pige",
+      "credit": "Photo : Rosalie Lepage",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le bijou, accessoire de mode pour hommes",
+      "source": "La Pige",
+      "credit": "Photo : Émile Barthe",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Cornell : Les fraternités au centre du débat",
       "source": "Le Délit",
@@ -23,48 +58,6 @@
       "title": "How a student-led movement prevailed in Serbia’s election",
       "source": "The Concordian",
       "credit": "Photo: Andjela Radojičić",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Political occupation of vacant Montreal apartment building ended by police eviction",
-      "source": "The Link",
-      "credit": "Photo: Cléo Clamen",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Students rallied under the slogan “Elections are a trap for fools”",
-      "source": "The Link",
-      "credit": "Photo: Moon Jinseok",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Every Child Matters march highlights National Day of Truth and Reconciliation",
-      "source": "The Link",
-      "credit": "Photo: Andraé Lerone Lewis",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Which Quebec political party put a price tag on maintaining Montreal public transit?",
-      "source": "The Link",
-      "credit": "Photo: Moon Jinseok",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Concordia University says no to open bargaining",
-      "source": "The Link",
-      "credit": "Photo: Eric Klempan",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Will the unhoused crisis be properly addressed after the Quebec provincial elections?",
-      "source": "The Link",
-      "credit": "Photo: Nicolas Tremblay",
       "cited": true,
       "method": "figcaption-trailing"
     }
