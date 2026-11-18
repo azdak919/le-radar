@@ -756,7 +756,13 @@ function shortInstitution(name = '', type = '') {
   if (CEGEP_SHORT[strippedName]) return CEGEP_SHORT[strippedName];
 
   if (isCegepInstitution(name, type)) {
+    const official = String(name).replace(/\s*\([^)]*\)\s*$/, '').trim();
     const stripped = stripInstitutionTypePrefix(name);
+    // Un sigle ne commence pas par un article minuscule (« l'Outaouais »).
+    // « La Pocatière » est un toponyme (L majuscule) et reste acceptable.
+    if (stripped && /^(l'|l’|le |la |les |du |des |d')/.test(stripped)) {
+      return official.replace(/\s+[—–-]\s+campus\s.+$/i, '').trim() || official;
+    }
     if (stripped) return stripped.length > 24 ? `${stripped.slice(0, 22)}…` : stripped;
   }
 
