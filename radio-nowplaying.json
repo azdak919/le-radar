@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-18T15:06:58.869Z",
+  "updatedAt": "2026-11-18T16:07:26.309Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Conduite Antisportive",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
-      },
-      "next": {
         "title": "Question de savoir",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "11:00",
         "end": "11:30",
         "url": "https://chyz.ca/emission/question-de-savoir/"
       },
+      "next": {
+        "title": "Radio-Ciné",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "14:30",
+        "url": "https://chyz.ca/emission/radio-cine/"
+      },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "Question de savoir",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,114 +28,109 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T15:06:07.181Z"
+      "checkedAt": "2026-11-18T16:06:32.334Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À la loupe du droit",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
-      },
-      "next": {
         "title": "La carte cadeau",
         "source": "schedule",
         "start": "11:00",
         "end": "13:00",
         "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "À la loupe du droit",
+      "showTitle": "La carte cadeau",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T15:06:21.377Z"
+      "checkedAt": "2026-11-18T16:06:47.019Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free City Radio",
         "source": "api-live",
         "start": "11:00",
         "end": "11:30"
       },
+      "next": {
+        "title": "If You Got Ears",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T15:06:25.230Z"
+      "checkedAt": "2026-11-18T16:06:52.415Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Code Switch",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/code-switch"
       },
+      "next": {
+        "title": "North-South Hockey",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Code Switch",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T15:06:39.388Z"
+      "checkedAt": "2026-11-18T16:07:06.416Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Le NEUF",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:59",
-        "url": "https://www.cfak.ca/balados/le-neuf"
-      },
+      "current": null,
       "next": {
         "title": "Le DOUZE",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "12:59",
         "url": "https://www.cfak.ca/balados/le-douze"
       },
       "track": "",
-      "showTitle": "Le NEUF",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T15:06:40.582Z"
+      "checkedAt": "2026-11-18T16:07:07.736Z"
     },
     "choq": {
       "id": "choq",
@@ -156,7 +151,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T15:06:58.518Z"
+      "checkedAt": "2026-11-18T16:07:25.958Z"
     }
   }
 }
