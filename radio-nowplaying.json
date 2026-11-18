@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-18T13:55:50.832Z",
+  "updatedAt": "2026-11-18T15:06:58.869Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Mercredi Bonbon",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
-      },
-      "next": {
         "title": "Conduite Antisportive",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "11:00",
         "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
+      "next": {
+        "title": "Question de savoir",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "11:30",
+        "url": "https://chyz.ca/emission/question-de-savoir/"
+      },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
+      "showTitle": "Conduite Antisportive",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:55:01.120Z"
+      "checkedAt": "2026-11-18T15:06:07.181Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "À la loupe du droit",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
       },
       "next": {
-        "title": "La 13",
+        "title": "La carte cadeau",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/la-13e"
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "À la loupe du droit",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:55:15.286Z"
+      "checkedAt": "2026-11-18T15:06:21.377Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "The Sleepy King/Terminal 5",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Free City Radio",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "11:30"
+      },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "The Sleepy King/Terminal 5",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,61 +81,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:55:17.787Z"
+      "checkedAt": "2026-11-18T15:06:25.230Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "Are We There Yet?",
+        "title": "Code Switch",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:55:31.225Z"
+      "checkedAt": "2026-11-18T15:06:39.388Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
-      },
-      "next": {
         "title": "Le NEUF",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:59",
         "url": "https://www.cfak.ca/balados/le-neuf"
       },
+      "next": {
+        "title": "Le DOUZE",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "12:59",
+        "url": "https://www.cfak.ca/balados/le-douze"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le NEUF",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:55:32.260Z"
+      "checkedAt": "2026-11-18T15:06:40.582Z"
     },
     "choq": {
       "id": "choq",
@@ -156,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:55:50.483Z"
+      "checkedAt": "2026-11-18T15:06:58.518Z"
     }
   }
 }
