@@ -48,7 +48,7 @@ for (const id of ['matin', 'soir']) {
 }
 
 assert.equal(U.revueEditionExists(U.slotFor('matin', T0)), true);
-assert.equal(U.revueEditionExists(U.slotFor('soir', Date.parse('2026-11-18T00:35:00Z'))), false);
+assert.equal(U.revueEditionExists(U.slotFor('soir', Date.parse('2026-11-18T00:35:00Z'))), true);
 
 // ── Bots par article : une revue publiée dans feed.xml est ignorée par parseFeed ──
 const reviewModel = {

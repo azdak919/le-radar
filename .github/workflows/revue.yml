@@ -6,16 +6,25 @@ name: Revue — matin et soir
 # aucun commit, rien dans sitemap.xml, sitemap-news.xml, robots.txt ni feed.xml. Seul l'exemple manuel (sample) tourne, en artefact.
 # Fenêtres (config.json) : matin 6 h 45-10 h 30, soir 19 h-22 h 30, mise à jour tardive des résultats du soir 23 h-23 h 59.
 # Pourquoi 7 h et 19 h 15 (avant La une, 7 h 45 et 19 h 30) : docs/revue.md, « Heures de publication ».
-# Les crons GitHub sont en UTC et partent souvent en retard : heure d'été (HAE) ET heure d'hiver (HNE), plus des secours ;
-# la porte ne fait rien hors fenêtre ni si l'édition est déjà publiée ou sautée (data/revue/index.json, state.json).
+# Les crons GitHub sont en UTC et partent souvent en retard, parfois de plusieurs heures, ou n'aboutissent pas
+# (17 nov. 2026 : les passages prévus à 20 h 02 et 20 h 37 HNE n'ont pas eu lieu ; des secours du matin sont arrivés
+# à 14 h 42 et 16 h 52, hors fenêtre). Heure d'été (HAE) ET heure d'hiver (HNE), secours plus serrés, et filet sur
+# la fin de « Update Student News ». La porte ne fait rien hors fenêtre ni si l'édition est déjà publiée ou sautée.
 # Aperçu d'une PR (exemples + captures) : revue-preview.yml.
 on:
   schedule:
-    - cron: '2 11,12 * * *'     # matin : 7 h 02 HAE / 7 h 02 HNE (l'autre heure tombe hors fenêtre ou trouve l'édition faite)
-    - cron: '37 13,14 * * *'    # matin, secours : 9 h 37 HAE / 8 h 37-9 h 37 HNE
-    - cron: '2 23,0 * * *'      # soir : 19 h 02 HAE / 19 h 02 HNE (18 h 02 HNE : hors fenêtre, rien ; 20 h 02 HAE : secours encore dans la fenêtre)
-    - cron: '37 1,2 * * *'      # soir, secours : 21 h 37 HAE / 20 h 37-21 h 37 HNE
-    - cron: '35 3,4 * * *'      # mise à jour tardive des résultats du soir : 23 h 35 HAE / 23 h 35 HNE
+    - cron: '2 11,12 * * *'          # matin : 7 h 02 HAE / 7 h 02 HNE
+    - cron: '17,32 11,12 * * *'      # matin, secours rapides : 7 h 17 et 7 h 32 (si le 7 h 02 est en retard ou abandonné)
+    - cron: '37 13,14 * * *'         # matin, secours tardif : 9 h 37 HAE / 8 h 37-9 h 37 HNE
+    - cron: '2,17,32,47 23,0 * * *'  # soir : 19 h 02, 17, 32, 47 HAE/HNE (l'autre fuseau : dans la fenêtre ou hors fenêtre)
+    - cron: '17 1 * * *'             # soir, secours : 20 h 17 HNE / 21 h 17 HAE
+    - cron: '37 1,2 * * *'           # soir, secours : 21 h 37 HAE / 20 h 37-21 h 37 HNE
+    - cron: '35 3,4 * * *'           # mise à jour tardive des résultats du soir : 23 h 35 HAE / 23 h 35 HNE
+  # Filet : la collecte tourne souvent (dont :20 chaque heure). La porte ne fait rien hors fenêtre ni si l'édition est déjà là.
+  # Le :20 UTC de 00 h et 23 h tombe à 19 h 20 heure de Montréal (HNE et HAE), après le 19 h 02 et avant La une (19 h 23).
+  workflow_run:
+    workflows: ['Update Student News']
+    types: [completed]
   workflow_dispatch:
     inputs:
       edition:
@@ -51,7 +60,7 @@ jobs:
         with:
           node-version: '24'
       - id: g
-        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.sample) }}
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.sample) && (github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')) }}
         env:
           REVUE_EDITION: ${{ inputs.edition || 'auto' }}
         run: node scripts/revue/revue-run.mjs --gate

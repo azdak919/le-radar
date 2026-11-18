@@ -60,8 +60,11 @@ Choisies d’après les données du site (novembre 2026) et les habitudes de lec
   fort que le midi, baisse après 21 h).
 - **La une** (réseaux sociaux) part à 7 h 45 et 19 h 30. La revue est produite **avant** : matin à 7 h (45 min d’avance, suffisantes pour la génération et le déploiement Pages), soir à 19 h 15 (cron 19 h 02, pour laisser au déploiement le temps d’aboutir avant le cron de La une à 19 h 23). Le lien texte en 2e ligne de La une n’est ajouté que si la page de l’édition est déjà en ligne ; sinon, la ligne reste omise. L’URL est l’adresse longue datée (`https://le-radar.ca/revue/AAAA-MM-JJ-matin|soir/`).
 
-Crons (UTC, heure normale et heure avancée) : `2 11,12 * * *` (matin 7 h 02), `37 13,14 * * *` (secours),
-`2 23,0 * * *` (soir 19 h 02), `37 1,2 * * *` (secours 21 h 37), `35 3,4 * * *` (rafraîchissement 23 h 35).
+Crons (UTC, heure normale et heure avancée) : `2 11,12 * * *` (matin 7 h 02), `17,32 11,12 * * *` (secours 7 h 17 et 7 h 32),
+`37 13,14 * * *` (secours tardif), `2,17,32,47 23,0 * * *` (soir 19 h 02, 17, 32 et 47), `17 1 * * *` et `37 1,2 * * *`
+(secours 20 h 17 / 21 h 37), `35 3,4 * * *` (rafraîchissement 23 h 35). Filet : à la fin de la collecte
+(« Update Student News »), dont le passage :20 UTC à 19 h 20 heure de Montréal, avant La une (19 h 23).
+Les crons GitHub peuvent partir en retard de plusieurs heures ou ne pas aboutir (17 nov. 2026 : 20 h 02 et 20 h 37 n’ont pas eu lieu).
 Le `--gate` choisit l’édition due ; `tests/revue.mjs` vérifie que crons, `config.json` et fenêtres concordent en janvier et en juillet.
 
 ## La revue n’est pas un item de La une

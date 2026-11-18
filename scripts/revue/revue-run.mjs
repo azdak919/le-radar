@@ -64,6 +64,7 @@ export async function generate(editionId, now, io) {
   const { cfg, index = [], reviews = {}, env = process.env } = io;
   const edition = editionId && editionId !== 'auto' ? L.editionFor(editionId, now, cfg) : L.editionAt(now, cfg);
   if (!edition) return { status: 'sautée', why: `hors des fenêtres de publication (${tz(now)})` };
+  if (!io.refresh && index.some(r => r.id === edition.key)) return { status: 'inchangée', why: `${edition.key} déjà publiée` };
   const data = { news: io.news, masthead: io.masthead, schedules: io.schedules };
   const doubts = [];
   const updated = Date.parse(io.news?.updated || '');

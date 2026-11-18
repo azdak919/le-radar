@@ -280,9 +280,8 @@ assert.equal(U.revueEditionHref(matin17), 'revue/2026-11-17-matin/');
 assert.equal(U.revueEditionHref(soir17), 'revue/2026-11-17-soir/');
 assert.equal(U.revueEditionHref({ id: 'matin', day: 'pas-une-date' }), '');
 assert.equal(U.revueEditionExists(matin17), true, 'édition du matin du 17 réellement dans le dépôt');
-assert.equal(U.revueEditionExists(soir17), false, 'édition du soir du 17 pas encore publiée');
-assert.equal(U.revueEditionLine(soir17), '', 'pas de ligne si l’édition n’existe pas');
-assert.equal(U.revueEditionLine(soir17, { exists: () => false }), '');
+assert.equal(U.revueEditionExists(soir17), true, 'édition du soir du 17 réellement dans le dépôt');
+assert.equal(U.revueEditionLine(soir17, { exists: () => false }), '', 'pas de ligne si l’édition n’existe pas');
 assert.equal(
   U.revueEditionLine(soir17, { exists: () => true }),
   'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-soir/',

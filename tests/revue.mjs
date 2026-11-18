@@ -28,7 +28,7 @@ assert.ok(feedLib.revueFeedEntries(process.cwd()).some((e) => /revue\/2026-11-17
 assert.ok(fs.readFileSync('robots.txt', 'utf8').includes('sitemap-news.xml'), 'robots.txt : sitemap Google News une fois publiée');
 assert.ok(fs.existsSync('sitemap-news.xml') && fs.existsSync('revue/index.html'), 'pages et sitemap de revue commités une fois publiée');
 assert.ok(fs.existsSync('revue/2026-11-17-matin/index.html'), 'édition du matin du 17 nov. 2026 présente');
-assert.ok(!fs.existsSync('revue/2026-11-17-soir/index.html'), 'la revue du soir n’est pas prépubliée');
+assert.ok(fs.existsSync('revue/2026-11-17-soir/index.html'), 'édition du soir du 17 nov. 2026 présente');
 assert.match(fs.readFileSync('revue/index.html', 'utf8'), /href="\.\/2026-11-17-matin\/"/, 'index des archives : lien relatif vers l’édition, pas vers la racine');
 
 
@@ -239,6 +239,7 @@ assert.equal(skip.status, 'sautée'); assert.match(skip.why, /aucun nouvel artic
 // news.json périmé : doute, rien ne sort.
 const stale = await generate('matin', tM, { ...io, news: { ...news, updated: T('2026-11-16T12:00:00Z') } });
 assert.equal(stale.status, 'refusée'); assert.ok(stale.problems.some(p => /DOUTE/.test(p)));
+assert.equal((await generate('matin', tM, { ...io, index: [{ id: m.id }] })).status, 'inchangée', 'une édition déjà publiée n’est pas refaite');
 // Mise à jour tardive : un nouveau résultat du jour avance dateModified, rien d'autre ne change.
 const soirAt = Date.parse('2026-11-17T00:16:00Z');
 const soir = (await generate('soir', soirAt, { ...io, news: { ...news, updated: T('2026-11-17T00:10:00Z') }, env: {} })).model;
@@ -408,7 +409,11 @@ fs.rmSync(tmp, { recursive: true, force: true });
 // ── Workflows : porte sur l'interrupteur, secrets jamais affichés, groupe d'écriture partagé ──
 const wf = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
 assert.match(wf, /revue-run\.mjs --gate/); assert.match(wf, /if: needs\.gate\.outputs\.due == 'true'/);
-assert.match(wf, /cron: '2 11,12 \* \* \*'/); assert.match(wf, /cron: '2 23,0 \* \* \*'/); assert.match(wf, /cron: '35 3,4 \* \* \*'/);
+assert.match(wf, /cron: '2 11,12 \* \* \*'/);
+assert.match(wf, /cron: '2,17,32,47 23,0 \* \* \*'/);
+assert.match(wf, /cron: '35 3,4 \* \* \*'/);
+assert.match(wf, /workflows: \['Update Student News'\]/, 'filet après la collecte');
+assert.match(wf, /workflow_run:/);
 assert.match(wf, /CLOUDFLARE_AI_TOKEN: \$\{\{ secrets\.CLOUDFLARE_AI_TOKEN \}\}/);
 assert.doesNotMatch(wf, /echo[^\n]*secrets\./, 'aucun secret affiché');
 assert.match(wf, /group: data-writers-site/);
