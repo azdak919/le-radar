@@ -467,8 +467,9 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.doesNotMatch(pb, /metaPick\([^\n]*,\s*[123],\s*true\)/);
 }
 
-// Période « jour » de La une : libellé « Les plus récents » / « Latest ».
+// Période « jour » des affiches : libellé « Les plus récents » / « Latest ».
 // L’affiche en direct continue d’écrire la date civile, pas ce libellé.
+// La une sociale reprend cette fenêtre vivante, sans le plafond de 9, puis un siège par média.
 {
   const html = readFileSync(join(root, 'affiches/index.html'), 'utf8');
   assert.match(html, /<option value="jour" selected>Les plus récents<\/option>/);
@@ -477,6 +478,7 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.match(pb, /jour: 'Les plus récents'/);
   assert.match(pb, /period && period\.id === 'demain' \? period\.fr : capDate/, 'affiche live : date civile, pas le libellé de période');
   const socialUne = readFileSync(join(root, 'scripts/social/une-lib.mjs'), 'utf8');
-  assert.match(socialUne, /période « Les plus récents »/);
+  assert.match(socialUne, /selectFrontPage\(raw, new Date\(now\), null, Infinity, 'jour'\)/);
+  assert.match(socialUne, /seatBySource\(cand, max\)/);
   assert.doesNotMatch(socialUne, /période « Aujourd/);
 }

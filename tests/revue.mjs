@@ -108,6 +108,30 @@ assert.equal(coll.institution, 'UdeS', 'sigle seul, comme dans La une (jamais «
 assert.equal(items.find(x => x.source === 'The Link').institution, 'Concordia');
 assert.equal(coll.theme, 'Politique');
 assert.equal(L.selectArticles(news, period, { coveredIds: new Set([coll.id]) }).some(x => x.id === coll.id), false, 'anti-doublon entre éditions');
+// Dans un thème, un média ne revient qu'après les autres. Sous le plafond, rien n'est écarté. « À la une » reste le plus récent.
+{
+  const burst = { items: [
+    { source: 'Quartier Libre', institution: 'Université de Montréal', lang: 'fr', title: 'Le conseil municipal vote le budget étudiant', link: 'https://quartierlibre.ca/budget-burst/', author: 'D E', date: T('2026-11-17T11:30:00Z'), excerpt: 'Le conseil municipal a voté.' },
+    { source: 'The Concordian', institution: 'Concordia University', lang: 'en', title: 'Fall concert opens the season', link: 'https://theconcordian.com/concert-a/', author: 'A', date: T('2026-11-17T10:00:00Z'), excerpt: 'A concert downtown.' },
+    { source: 'The Concordian', institution: 'Concordia University', lang: 'en', title: 'Second concert review of the night', link: 'https://theconcordian.com/concert-b/', author: 'B', date: T('2026-11-17T09:00:00Z'), excerpt: 'Another concert review.' },
+    { source: 'The Link', institution: 'Concordia University', lang: 'en', title: 'A packed concert hall downtown', link: 'https://thelinknewspaper.ca/concert-c/', author: 'C', date: T('2026-11-17T08:00:00Z'), excerpt: 'A concert.' },
+  ] };
+  const all = L.selectArticles(burst, period, { max: 40 });
+  assert.equal(all[0].source, 'Quartier Libre', 'la liste plate commence par le plus récent');
+  assert.equal(all.length, 4, 'sous le plafond, la rafale reste dans le corps');
+  const culture = L.groupByTheme(all).find(g => g.theme === 'Culture');
+  assert.deepEqual(culture.items.map(x => x.title), [
+    'Fall concert opens the season',
+    'A packed concert hall downtown',
+    'Second concert review of the night',
+  ], 'dans le thème : un titre par média, puis la répétition');
+  assert.equal(R.groupByTheme(all).find(g => g.theme === 'Culture').items[1].source, 'The Link', 'la page rend le même ordre');
+  const capped = L.selectArticles(burst, period, { max: 3 });
+  assert.equal(capped[0].source, 'Quartier Libre');
+  assert.deepEqual(capped.map(x => x.source), ['Quartier Libre', 'The Concordian', 'The Link'], 'au plafond, on coupe la répétition avant le seul titre d’un autre média');
+  const tight = L.selectArticles(burst, period, { max: 2 });
+  assert.deepEqual(tight.map(x => x.link), ['https://quartierlibre.ca/budget-burst/', 'https://theconcordian.com/concert-a/'], 'si les premiers titres dépassent le plafond, on garde les plus récents');
+}
 assert.equal(L.authorsLine(['A', 'B', 'C']), 'Par A, B et C');
 assert.ok(L.shortExcerpt('a '.repeat(300), 200).length <= 201);
 

@@ -91,10 +91,23 @@ const cap = (s) => String(s).replace(/^./, (c) => c.toUpperCase());
 // ── Fragments ───────────────────────────────────────────────────────────────
 const THEME_EMOJI = { 'Vie de campus': '🏫', Politique: '🏛️', Éducation: '🎓', Société: '👥', Culture: '🎭', Sport: '🏟️', Environnement: '🌱', Santé: '🩺', Science: '🔬', Économie: '💼', International: '🌍' };
 const THEME_ORDER = ['Vie de campus', 'Politique', 'Éducation', 'Société', 'Culture', 'Sport', 'Environnement', 'Santé', 'Science', 'Économie', 'International'];
+/** Dans un thème : un titre par média (le plus récent), puis les suivants par date. */
+function themePassOrder(list) {
+  const sorted = [...list].sort((a, b) => Date.parse(b.date || 0) - Date.parse(a.date || 0));
+  const seen = new Set();
+  const first = [];
+  const rest = [];
+  for (const x of sorted) {
+    const src = String(x.source || '').trim();
+    if (seen.has(src)) rest.push(x);
+    else { seen.add(src); first.push(x); }
+  }
+  return [...first, ...rest];
+}
 function groupByTheme(items) {
   const m = new Map();
   for (const x of items) { const k = THEME_ORDER.includes(x.theme) ? x.theme : 'Vie de campus'; if (!m.has(k)) m.set(k, []); m.get(k).push(x); }
-  return [...m.entries()].map(([theme, list]) => ({ theme, emoji: THEME_EMOJI[theme] || '📰', items: list }))
+  return [...m.entries()].map(([theme, list]) => ({ theme, emoji: THEME_EMOJI[theme] || '📰', items: themePassOrder(list) }))
     .sort((a, b) => (a.theme === 'Vie de campus') - (b.theme === 'Vie de campus') || b.items.length - a.items.length || THEME_ORDER.indexOf(a.theme) - THEME_ORDER.indexOf(b.theme));
 }
 const slug = (s) => String(s).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -238,7 +251,7 @@ function coverCaption(img) {
 /** Corps de l'article (aussi repris tel quel, sans la chrome, dans le flux RSS). */
 /** Mention de transparence, discrète, en pied d'article (une seule phrase). */
 const DISCLOSURE = 'Revue préparée automatiquement par Le Radar à partir des sources citées ; chaque texte, titre et photo appartient à son média et à ses auteurs.';
-/** Article à la une : le premier de la sélection (celui de l'amorce et de la photo). */
+/** Article à la une : le plus récent de la fenêtre (premier de la liste plate, classée par date). */
 function leadOf(model) { return (model.items || [])[0] || null; }
 const hhmm = (t) => String(t || '').replace(/^0/, '').replace(':00', ' h').replace(':', ' h ');
 /**

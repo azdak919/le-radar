@@ -12,7 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, buildUneAll, altText, frenchOnly, finalizeItems } from './une-lib.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, seatBySource, buildUneAll, altText, frenchOnly } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -141,7 +141,8 @@ async function main() {
   if (entry?.texts && !dry) {
     reason = 'reprise du créneau figé (réessai des réseaux en échec).'; sel = { doubts: [] };
   } else {
-    sel = selectUne(rd(arg('news', 'news.json')), slot, { now, state, max: 8, maxNewsAgeH: CFG.maxNewsAgeH ?? 6 });
+    // Toute la fenêtre d'abord : la traduction peut écarter des titres, les sièges se comptent ensuite.
+    sel = selectUne(rd(arg('news', 'news.json')), slot, { now, state, max: Infinity, maxNewsAgeH: CFG.maxNewsAgeH ?? 6 });
     // Français seulement : titres et résumés anglais traduits par translate.js ; en cas d'échec, l'article est exclu.
     if (sel.items.some(x => x.lang === 'en')) {
       const { createTranslator } = await import('./une-render.mjs');
@@ -153,7 +154,7 @@ async function main() {
       sel.translated = fr.kept.filter(x => x.translated).map(x => ({ from: x.originalTitle, to: x.title }));
       sel.items = fr.kept;
     }
-    sel.items = finalizeItems(sel.items, CFG.maxItems || 4); sel.ids = sel.items.map(x => x.id); sel.lead = sel.items[0] || null;
+    sel.items = seatBySource(sel.items, CFG.maxItems || 4); sel.ids = sel.items.map(x => x.id); sel.lead = sel.items[0] || null;
     if (!sel.items.length && !sel.skip) { sel.skip = true; sel.why = 'aucun article publiable en français : publication sautée'; }
     console.log(`Sélection ${slot.key} : ${sel.items.length} article(s)${sel.doubts.length ? ' ; doutes : ' + sel.doubts.join(' ; ') : ''}`);
     if (sel.skip) { reason = sel.why; fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), previewMarkdown(slot, sel, null, null, { dry, reason })); console.log(reason); if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${slot.label} : ${reason}\n`); return; }
