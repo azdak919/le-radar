@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-18T11:41:10.207Z",
-  "total": 1023,
+  "updated": "2026-11-18T13:09:09.501Z",
+  "total": 1024,
   "pool": 61,
   "incomplete": 29,
-  "withLeadExcerpt": 171,
+  "withLeadExcerpt": 172,
   "candidates": 29,
-  "enriched": 0,
-  "failed": 9,
+  "enriched": 1,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "Canada in Media: A Belated Review of Sterling Point - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/canada-in-media-a-belated-review-of-sterling-point/",
+      "ok": true,
+      "score": 96,
+      "chars": 612,
+      "sample": "As we enter November, I am confident that many McGillians share the dread I feel, knowing that the d",
+      "changed": true
+    },
+    {
       "title": "Police deploy tear gas and pepper spray at Montreal student protest",
       "link": "https://thelinknewspaper.ca/article/16573",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 167,
       "sample": "Montrealers gathered at Place du Canada on Nov. 11 for a Remembrance Day ceremony honouring fallen s",
-      "changed": false
-    },
-    {
-      "title": "Bittersweet end of season for the Montreal Roses",
-      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
-      "ok": true,
-      "score": 100,
-      "chars": 414,
-      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
       "changed": false
     }
   ]
