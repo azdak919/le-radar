@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T11:07:21.589Z",
+  "updatedAt": "2026-11-18T12:07:23.985Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T11:06:29.773Z"
+      "checkedAt": "2026-11-18T12:06:31.162Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T11:06:43.999Z"
+      "checkedAt": "2026-11-18T12:06:45.264Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Full Circle",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "The Wednesday Morning After",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "The Sleepy King/Terminal 5",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Full Circle",
+      "showTitle": "The Wednesday Morning After",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T11:06:47.612Z"
+      "checkedAt": "2026-11-18T12:06:50.313Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -102,45 +102,45 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T11:07:01.704Z"
+      "checkedAt": "2026-11-18T12:07:04.332Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "07:59",
         "url": "https://www.cfak.ca/balados/Folkswagen"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "08:59",
+        "url": "https://www.cfak.ca/balados/palmares-cfak"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T11:07:02.673Z"
+      "checkedAt": "2026-11-18T12:07:05.235Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Échos du monde",
+        "title": "Onde de CHOQ",
         "source": "api-live",
         "start": "13:00",
-        "end": "14:00",
-        "slug": "echos-du-monde"
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
       "track": "ID Kat Pereira.mp3",
       "showTitle": "",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T11:07:21.238Z"
+      "checkedAt": "2026-11-18T12:07:23.634Z"
     }
   }
 }
