@@ -87,7 +87,7 @@ réductions, on retire la ligne plutôt que de couper l’accroche ou les auteur
 
 ## Lecture et impression
 
-- À l’**écran**, la revue se lit en colonne d’environ 70 caractères. Les photos sont bornées (16:9, hauteur max. 360 px) ; une image de banque n’apparaît qu’en vignette, ou pas du tout. Météo et jeux sont visibles. En tête, un bouton « Télécharger le PDF » propose Lettre, Légal, Tabloïd, A4 et A3 (`lettre.pdf`, `legal.pdf`, `tabloid.pdf`, `a4.pdf`, `a3.pdf` dans le dossier de l’édition, générés à la publication par `scripts/revue/revue-pdfs.mjs`). Le bouton se traduit (« Download PDF »). Ces règles d’écran ne changent pas le CSS d’impression ni les PDF déjà produits.
+- À l’**écran**, la revue se lit en colonne d’environ 70 caractères. Les photos sont bornées (16:9, hauteur max. 360 px) ; une image de banque n’apparaît qu’en vignette, ou pas du tout. Météo et jeux sont visibles. En tête, un bouton « Télécharger le PDF » propose Lettre, Légal, Tabloïd, A4 et A3 (`lettre.pdf` … et le nom parlant `le-radar-revue-AAAA-MM-JJ-soir-tabloid.pdf`, via l’attribut `download` ; les anciennes URL restent. Générés à la publication par `scripts/revue/revue-pdfs.mjs`). Le bouton se traduit (« Download PDF »). Ces règles d’écran ne changent pas le CSS d’impression ni les PDF déjà produits.
 - L’article s’ouvre sur une **amorce** de deux ou trois phrases (articles marquants, puis sport ou radio), sans aucun
   décompte. IA vérifiée (`ledeReject` : médias nommés, aucune formule générique, aucun chiffre ni nom inventé) ou repli
   déterministe rédigé.

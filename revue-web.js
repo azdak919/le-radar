@@ -12,6 +12,19 @@
     { file: 'a3.pdf', label: 'A3' },
   ];
 
+  function pdfDownloadName(file) {
+    const id = root.getAttribute('data-revue') || '';
+    const stem = String(file).replace(/\.pdf$/i, '').split('/').pop();
+    return id ? `le-radar-revue-${id}-${stem}.pdf` : file;
+  }
+
+  function relabelPdfLinks() {
+    root.querySelectorAll('.revue-pdf a[href]').forEach((a) => {
+      const file = (a.getAttribute('href') || '').split('/').pop();
+      if (file) a.setAttribute('download', pdfDownloadName(file));
+    });
+  }
+
   function editionBase() {
     const path = location.pathname.replace(/index\.html$/, '');
     return path.endsWith('/') ? path : `${path}/`;
@@ -45,7 +58,7 @@
           const li = document.createElement('li');
           const a = document.createElement('a');
           a.href = `${base}${fmt.file}`;
-          a.download = fmt.file;
+          a.download = pdfDownloadName(fmt.file);
           a.textContent = fmt.label;
           li.appendChild(a);
           ul.appendChild(li);
@@ -91,6 +104,7 @@
   }
 
   injectPdf();
+  relabelPdfLinks();
   revealGames();
 
   const toc = root.querySelector('.revue-toc');
