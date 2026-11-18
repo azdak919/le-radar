@@ -1,24 +1,48 @@
 {
-  "updated": "2026-11-18T22:07:40.036Z",
-  "total": 1031,
-  "withPhoto": 878,
-  "withStock": 157,
-  "withCampusBank": 123,
-  "fullyCovered": 996,
-  "leadReadyPhotos": 870,
-  "pageScraped": 4,
-  "photosRecovered": 4,
-  "imagesCleared": 0,
-  "stockSearches": 1,
-  "stockFound": 25,
-  "campusBankFound": 24,
+  "updated": "2026-11-18T22:38:22.973Z",
+  "total": 1032,
+  "withPhoto": 901,
+  "withStock": 150,
+  "withCampusBank": 116,
+  "fullyCovered": 1012,
+  "leadReadyPhotos": 883,
+  "pageScraped": 28,
+  "photosRecovered": 27,
+  "imagesCleared": 3,
+  "stockSearches": 5,
+  "stockFound": 24,
+  "campusBankFound": 19,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "Rencontre Carney-PSPP au Cambodge",
+      "link": "https://lecollectif.ca/a-la-une/rencontre-carney-pspp-au-cambodge/",
+      "reason": "stock-too-small",
+      "image": null
+    },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "What we liked this summer break",
+      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "reason": "no-stock-match",
+      "image": "https://thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg"
     }
   ]
 }

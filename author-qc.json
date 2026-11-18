@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-18T22:06:55.585Z",
-  "total": 1031,
-  "withAuthor": 1031,
-  "mismatches": 58,
+  "updated": "2026-11-18T22:36:45.758Z",
+  "total": 1032,
+  "withAuthor": 1032,
+  "mismatches": 59,
   "ok": true,
   "samples": [
+    {
+      "title": "Parkour – L’art de repousser ses limites",
+      "link": "https://quartierlibre.ca/parkour-repousser-ses-limites/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Josephine Dao Devenyns",
+      "reason": "page-byline"
+    },
     {
       "title": "Quand une banque fait tomber un président",
       "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
@@ -156,15 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Transparency: A Tool and a Threat",
-      "link": "https://thebucampus.ca/2026/10/27/transparency-a-tool-and-a-threat",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 58
+  "fixed": 59
 }
