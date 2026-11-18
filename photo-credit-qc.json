@@ -1,31 +1,17 @@
 {
-  "updated": "2026-11-18T05:09:31.299Z",
+  "updated": "2026-11-18T06:38:21.215Z",
   "total": 1023,
   "withImage": 919,
   "withCredit": 919,
-  "cited": 512,
+  "cited": 511,
   "pending": 283,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 13,
-  "citedNew": 12,
-  "fallbackNew": 48,
+  "updatedCount": 12,
+  "citedNew": 11,
+  "fallbackNew": 49,
   "samples": [
-    {
-      "title": "Police deploy tear gas and pepper spray at Montreal student protest",
-      "source": "The Link",
-      "credit": "Photo: Cléo Clamen",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Montrealers honour veterans at Place du Canada",
-      "source": "The Link",
-      "credit": "Photo: Racha Rais",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
     {
       "title": "Peut-on encore posséder de la culture ?",
       "source": "La Pige",
@@ -34,11 +20,11 @@
       "method": "body-line"
     },
     {
-      "title": "Montrealers protest Bill C-39",
-      "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
+      "source": "The Concordian",
+      "credit": "Photo: Sam Vandenberg",
+      "cited": true,
+      "method": "wp-media-caption"
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -95,6 +81,20 @@
       "credit": "Photo : Arthur Bakhache",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Un nouveau souffle pour le centre-ville de Jonquière",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "How a student-led movement prevailed in Serbia’s election",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     }
   ]
 }
