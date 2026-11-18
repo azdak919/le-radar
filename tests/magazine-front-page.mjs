@@ -72,7 +72,7 @@ assert.equal(picked.items.length, expected.length);
 assert.deepEqual(
   picked.items.map((i) => i.link),
   expected.map((i) => i.link),
-  'tranche des N plus frais du pool normal, comme pickHeroSpotlight',
+  'tranche des N plus frais du pool normal (affiches ; l’accueil ne reprend plus cette tranche)',
 );
 assert.equal(picked.lead?.link, expected[0]?.link);
 assert.equal(picked.features.length, Math.max(0, expected.length - 1));

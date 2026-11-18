@@ -50,6 +50,7 @@
       'radar-state.js',
       'scripts/session-freshness-lib.js',
       'scripts/news-housekeeping-lib.js',
+      'scripts/homepage-diversity-lib.js',
       'scripts/sports-freshness-lib.js',
       'radar-weather.js',
       'radar-sports-cta.js',

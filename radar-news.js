@@ -12,8 +12,9 @@
  *   déjà lisible serait un pur inconvénient.
  */
 /**
- * Première page du fil (news-latest.json, ~60 articles) ; repli sur le fil
- * complet news.json si la page manque (ancien déploiement, hors-ligne).
+ * Première page du fil (news-latest.json : dernier article de chaque source
+ * des 14 jours, puis les plus récents) ; repli sur le fil complet news.json
+ * si la page manque (ancien déploiement, hors-ligne).
  */
 async function fetchNewsFirstPage() {
   try {
@@ -1945,10 +1946,15 @@ function updateNewsLayout() {
  * Partition magazine — fraîcheur d’abord, aucun article perdu :
  *
  *  A) SNAPSHOT :
- *     - Une + vedettes = les N plus frais (tranche contiguë)
- *     - En bref = 1) une source / établissement, 2) sources sœurs encore
- *       absentes, 3) 2ᵉ titre seulement quand toutes les sources du reste
- *       sont représentées (une ∪ En bref). Suite = tout le reste (rien d’omis).
+ *     - Une + vedettes = un bloc de sièges. La largeur décide seulement
+ *       combien sont des unes (1+4, 2+4 dès 1880, 3+6 dès 3840). Chaque
+ *       source des 14 derniers jours place d’abord son article le plus
+ *       récent ; une rafale ne prend une place restante que s’il en reste.
+ *       Le bloc est ensuite classé par date : les plus frais sont les unes.
+ *     - En bref = 1) une source / établissement de cet horizon, 2) journal
+ *       sœur encore absent, 3) 2ᵉ titre seulement quand chaque source des
+ *       14 jours a déjà un siège. L’ordre des passes est gardé. Une source
+ *       plus ancienne ne bloque pas ce 2ᵉ titre. Suite = tout le reste.
  *
  *  B) ÉQUILIBRE (magazine 2 col, dès 768 px) — *seulement* En bref :
  *     1) TRIM si trop haute (→ suite)
@@ -2122,6 +2128,15 @@ function newsHousekeepingApi() {
     return RadarNewsHousekeeping;
   }
   if (typeof globalThis !== 'undefined') return globalThis.RadarNewsHousekeeping || null;
+  return null;
+}
+function diversityApi() {
+  if (typeof RadarHomepageDiversity !== 'undefined' && RadarHomepageDiversity) {
+    return RadarHomepageDiversity;
+  }
+  if (typeof globalThis !== 'undefined' && globalThis.RadarHomepageDiversity) {
+    return globalThis.RadarHomepageDiversity;
+  }
   return null;
 }
 const FRESHNESS_SESSION_COUNT = sessionFreshnessApi()?.FRESHNESS_SESSION_COUNT ?? 3;
@@ -2338,15 +2353,12 @@ function isArticlePicked(item, picks) {
 }
 
 /**
- * À la une + vedettes — **strictement par date** sur le pool déjà filtré frais.
- * (filterFreshItems a déjà appliqué la fenêtre session en cours / 45 j ; pas de bande
- * intermédiaire qui re-trierait autrement.)
- * - Une = sorted[0] (le plus récent de tout le fil)
- * - Vedettes = sorted[1..n] (même source OK)
- * Ainsi on n'aura jamais un 12 mai en une/vedette tant qu'un 10 juil. reste
- * dans la suite du fil.
+ * À la une + vedettes — un siège par source des 14 derniers jours, puis
+ * la date s’il reste des places. Le résultat est en ordre de date : les
+ * `leadCount` premiers du bloc sont les unes. Repli : les N plus frais
+ * si le script de diversité n’est pas chargé.
  */
-function pickHeroSpotlight(items, _referenceDate = new Date()) {
+function pickHeroSpotlight(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   if (!sorted.length) {
     return { items: [], contingencyBand: 0 };
@@ -2354,9 +2366,10 @@ function pickHeroSpotlight(items, _referenceDate = new Date()) {
   const wideDual = isWideDualLeadViewport();
   const maxN = wideDual ? wideHeroSpotlightMax() : HERO_SPOTLIGHT_MAX;
   const n = Math.min(maxN, sorted.length);
-  // Tranche contiguë des n plus frais. Wide dual : les 2 unes = les 2 plus frais
-  // (même institution OK — pas de glissement pour « diversifier »).
-  const picked = sorted.slice(0, n);
+  const api = diversityApi();
+  const picked = api?.pickHeroSeats
+    ? api.pickHeroSeats(sorted, n, referenceDate, api.DIVERSITY_HORIZON_DAYS)
+    : sorted.slice(0, n);
   return {
     items: picked,
     contingencyBand: 0,
@@ -2388,105 +2401,44 @@ function poolHasUncoveredSource(pool, usedSources, skipKeys) {
 }
 
 /**
- * En bref, dans l’ordre (toujours date desc à l’intérieur d’une passe) :
- *  1) 1er titre d’un établissement pas encore à la une ni en En bref
- *     (et d’une source pas déjà à la une) — représentativité campus
- *  2) sources sœurs encore absentes (autre journal du même campus)
- *  3) 2ᵉ titre d’une source / institution **seulement** s’il ne reste
- *     aucune source non représentée dans le reste du fil
+ * En bref, dans l’ordre des passes (pas de reclassement global par date) :
+ *  1) 1er titre d’une source de l’horizon, établissement encore absent
+ *  2) journal sœur de l’horizon encore absent
+ *  3) 2ᵉ titre seulement quand chaque source des 14 jours a un siège
  *
- * Tout le reste va dans la suite : aucun article n’est omis.
+ * Repli sans le script : les N plus frais hors héros.
  * @param {number} [maxSlots]
  */
-function pickBriefSidebar(allItems, heroItems = [], _referenceDate = new Date(), maxSlots = null) {
-  const heroKeys = new Set(heroItems.map(articleKey));
-  const heroSources = new Set(heroItems.map(sourceKey).filter(Boolean));
-  const heroInsts = new Set(heroItems.map(institutionKey).filter(Boolean));
-  const remaining = sortByDateDesc(allItems).filter((item) => !heroKeys.has(articleKey(item)));
+function pickBriefSidebar(allItems, heroItems = [], referenceDate = new Date(), maxSlots = null) {
   const limit = Math.max(
     1,
     maxSlots == null ? briefSeedCountForHero(heroItems.length) : maxSlots,
   );
-
-  const picks = [];
-  const pickedKeys = new Set();
-  const briefSources = new Set();
-  const briefInsts = new Set();
-
-  const usedSources = () => {
-    const s = new Set(heroSources);
-    for (const x of briefSources) s.add(x);
-    return s;
-  };
-
-  const take = (item) => {
-    picks.push(item);
-    pickedKeys.add(articleKey(item));
-    const src = sourceKey(item);
-    const inst = institutionKey(item);
-    if (src) briefSources.add(src);
-    if (inst) briefInsts.add(inst);
-  };
-
-  // Passe 1 — un établissement, une source, fraîcheur.
-  for (const item of remaining) {
-    if (picks.length >= limit) break;
-    const src = sourceKey(item);
-    const inst = institutionKey(item);
-    if (!src) continue;
-    if (heroSources.has(src) || briefSources.has(src)) continue;
-    if (inst && (heroInsts.has(inst) || briefInsts.has(inst))) continue;
-    take(item);
+  const api = diversityApi();
+  if (!api?.pickBriefSeats) {
+    const heroKeys = new Set(heroItems.map(articleKey));
+    const picked = sortByDateDesc(allItems)
+      .filter((item) => !heroKeys.has(articleKey(item)))
+      .slice(0, limit);
+    return { items: picked, contingencyBand: 0 };
   }
-
-  // Passe 2 — sources encore absentes (journal sœur), toujours fraîcheur.
-  if (picks.length < limit) {
-    for (const item of remaining) {
-      if (picks.length >= limit) break;
-      if (pickedKeys.has(articleKey(item))) continue;
-      const src = sourceKey(item);
-      if (!src || heroSources.has(src) || briefSources.has(src)) continue;
-      take(item);
-    }
-  }
-
-  // Passe 3 — 2ᵉ titre seulement si toutes les sources du reste sont là.
-  if (picks.length < limit && !poolHasUncoveredSource(remaining, usedSources(), pickedKeys)) {
-    const perSrc = new Map();
-    for (const item of [...heroItems, ...picks]) {
-      const src = sourceKey(item);
-      if (src) perSrc.set(src, (perSrc.get(src) || 0) + 1);
-    }
-    for (const item of remaining) {
-      if (picks.length >= limit) break;
-      if (pickedKeys.has(articleKey(item))) continue;
-      const src = sourceKey(item);
-      if ((perSrc.get(src) || 0) >= 2) continue;
-      take(item);
-      if (src) perSrc.set(src, (perSrc.get(src) || 0) + 1);
-    }
-  }
-
   return {
-    items: sortByDateDesc(picks),
+    items: api.pickBriefSeats(allItems, heroItems, limit, referenceDate, api.DIVERSITY_HORIZON_DAYS),
     contingencyBand: 0,
   };
 }
 
 /**
- * Filet d'invariants après partition / fill :
- * - la une = article le plus frais du pool global
- * - aucune vedette plus ancienne qu'un article encore en suite du fil
- *   qui pourrait la remplacer dans le top-N hero
- * (réordonne hero en tranche contiguë des |hero| plus frais du pool).
+ * La première carte du héros reste le plus récent du fil. On ne remplace
+ * pas le bloc de sièges par les N plus frais : une rafale plus récente
+ * qu’une vedette d’une autre source reste dans la suite.
  */
 function enforceHeroDateOrder(heroItems, allSorted) {
   if (!heroItems?.length || !allSorted?.length) return heroItems || [];
-  const wideDual = isWideDualLeadViewport();
-  const floor = wideDual ? wideHeroSpotlightMax() : HERO_SPOTLIGHT_MAX;
-  const n = Math.min(Math.max(heroItems.length, floor), allSorted.length);
-  // Filet : n plus frais, dans l’ordre. Dual une = les 2 dates les plus récentes.
-  return allSorted.slice(0, n);
+  const newest = allSorted[0];
+  if (!newest || articleKey(heroItems[0]) === articleKey(newest)) return heroItems.slice();
+  const rest = heroItems.filter((item) => articleKey(item) !== articleKey(newest));
+  return [newest, ...rest].slice(0, heroItems.length);
 }
 
 function resetMagazineMeta(heroItems = [], briefItems = []) {
@@ -2506,12 +2458,17 @@ function partitionNewsFeed(items, referenceDate = new Date()) {
   const sortedNormal = sortByDateDesc(normal);
   const sortedAll = sortByDateDesc([...normal, ...forcedBrief]);
   const { items: rawHero, contingencyBand: heroBand } = pickHeroSpotlight(sortedNormal, referenceDate);
-  // Filet : une + vedettes = toujours les |n| plus frais du pool normal.
+  // La première une reste le plus récent. Le reste du bloc de sièges tient.
   const heroItems = enforceHeroDateOrder(
     ensureHeroLeadHasImage(rawHero, sortedNormal),
     sortedNormal,
   );
-  const briefSeed = briefSeedCountForHero(heroItems.length);
+  const heightSeed = briefSeedCountForHero(heroItems.length);
+  const horizonLeft = remainingHorizonSourceCount(sortedNormal, heroItems, referenceDate);
+  const briefSeed = Math.min(
+    briefSidebarMaxSlots(),
+    Math.max(heightSeed, horizonLeft),
+  );
   const { items: briefPicked, contingencyBand: briefBand } = pickBriefSidebar(
     sortedNormal,
     heroItems,
@@ -2602,12 +2559,81 @@ function removeTailArticleForItem(item) {
   }
 }
 
+/** Sources de l’horizon (14 jours) encore sans siège dans le héros. */
+function remainingHorizonSourceCount(items, heroItems, referenceDate = new Date()) {
+  const api = diversityApi();
+  if (!api?.sourcesInHorizon) return 0;
+  const horizon = api.sourcesInHorizon(items, referenceDate, api.DIVERSITY_HORIZON_DAYS);
+  const seated = new Set((heroItems || []).map(sourceKey).filter(Boolean));
+  let n = 0;
+  for (const src of horizon) if (!seated.has(src)) n += 1;
+  return n;
+}
+
+/** Vrai s’il reste, dans le pool, une source des 14 jours encore sans siège. */
+function horizonStillUncovered(pool, referenceDate = new Date()) {
+  const used = new Set([...magazineMeta.heroSources, ...magazineMeta.briefSources]);
+  const api = diversityApi();
+  if (!api?.hasUncoveredHorizonSource) {
+    return poolHasUncoveredSource(
+      pool,
+      used,
+      new Set([...magazineMeta.heroKeys, ...magazineMeta.briefKeys]),
+    );
+  }
+  const catalog = (typeof news !== 'undefined' && Array.isArray(news) && news.length)
+    ? news
+    : (pool || []);
+  return api.hasUncoveredHorizonSource(
+    catalog,
+    pool || [],
+    used,
+    referenceDate,
+    api.DIVERSITY_HORIZON_DAYS,
+  );
+}
+
+/** Nombre de sièges déjà pris par source (héros + En bref). */
+function sourceSeatCounts() {
+  const per = new Map();
+  const add = (src) => {
+    if (src) per.set(src, (per.get(src) || 0) + 1);
+  };
+  const heroEls = NEWS_LIST?.querySelectorAll?.('.news-hero .article--lead, .news-hero .article--feature');
+  const briefEls = NEWS_LIST?.querySelectorAll?.('.brief-rail .article--compact');
+  if ((heroEls?.length || 0) + (briefEls?.length || 0) > 0) {
+    heroEls?.forEach((el) => add(sourceKey(el.__radarItem)));
+    briefEls?.forEach((el) => add(sourceKey(el.__radarItem)));
+    return per;
+  }
+  for (const src of magazineMeta.heroSources) add(src);
+  for (const src of magazineMeta.briefSources) add(src);
+  return per;
+}
+
+/**
+ * Carte à retirer quand En bref dépasse le héros : un doublon d’abord
+ * (source déjà à deux sièges), sinon la dernière carte.
+ */
+function briefCardToTrim(brief) {
+  const cards = [...(brief?.querySelectorAll('.article--compact') || [])];
+  if (!cards.length) return null;
+  if (NEWS_LIST?.dataset?.mode === 'source') return cards[cards.length - 1];
+  const counts = sourceSeatCounts();
+  for (let i = cards.length - 1; i >= 0; i -= 1) {
+    const src = sourceKey(cards[i].__radarItem || resolveItemFromCard(cards[i]));
+    if (src && (counts.get(src) || 0) >= 2) return cards[i];
+  }
+  return cards[cards.length - 1];
+}
+
 /**
  * Prochain En bref depuis la réserve (date desc) :
- *  1) nouvelle institution + source pas encore à la une
- *  2) source encore absente (journal sœur)
- *  3) 2ᵉ titre (allowExtra) seulement s’il ne reste aucune source découverte
- * Vue source : `allowHeroInstitution` autorise le média filtré à se répéter.
+ *  1) nouvelle institution + source de l’horizon
+ *  2) journal sœur de l’horizon encore absent
+ *  3) 2ᵉ titre une fois chaque source des 14 jours assise
+ *  4) au-delà (3ᵉ titre, source plus ancienne) seulement si allowExtra
+ * Vue source : `allowHeroInstitution` remplit par date, sans ce plafond.
  */
 function takeNextBriefFromReserve({ allowExtra = false, allowHeroInstitution = false } = {}) {
   if (!magazineReserve.length) return null;
@@ -2622,6 +2648,8 @@ function takeNextBriefFromReserve({ allowExtra = false, allowHeroInstitution = f
     return magazineReserve.splice(idx, 1)[0];
   };
 
+  if (allowHeroInstitution) return tryPick(() => true);
+
   const srcUsed = (item) => {
     const src = sourceKey(item);
     return src && (magazineMeta.heroSources.has(src) || magazineMeta.briefSources.has(src));
@@ -2630,27 +2658,37 @@ function takeNextBriefFromReserve({ allowExtra = false, allowHeroInstitution = f
     const inst = institutionKey(item);
     if (!inst) return false;
     if (magazineMeta.briefInsts.has(inst)) return true;
-    if (!allowHeroInstitution && magazineMeta.heroInsts.has(inst)) return true;
+    if (magazineMeta.heroInsts.has(inst)) return true;
     return false;
   };
+  const api = diversityApi();
+  const horizon = api?.sourcesInHorizon
+    ? api.sourcesInHorizon(
+      (typeof news !== 'undefined' && Array.isArray(news) && news.length) ? news : magazineReserve,
+      new Date(),
+      api.DIVERSITY_HORIZON_DAYS,
+    )
+    : null;
+  const inHorizon = (item) => {
+    if (!horizon) return true;
+    const src = sourceKey(item);
+    return !!(src && horizon.has(src));
+  };
 
-  const uncovered = poolHasUncoveredSource(
-    magazineReserve,
-    new Set([...magazineMeta.heroSources, ...magazineMeta.briefSources]),
-    new Set([...magazineMeta.heroKeys, ...magazineMeta.briefKeys]),
-  );
-
-  // 1) Nouveau campus (source pas déjà à la une)
-  const freshInst = tryPick((item) => !srcUsed(item) && !instUsed(item));
+  const freshInst = tryPick((item) => inHorizon(item) && !srcUsed(item) && !instUsed(item));
   if (freshInst) return freshInst;
 
-  // 2) Source sœur encore absente — avant tout 2ᵉ titre d’un campus déjà là
-  const sister = tryPick((item) => !srcUsed(item));
+  const sister = tryPick((item) => inHorizon(item) && !srcUsed(item));
   if (sister) return sister;
 
-  // 3) Extra seulement si toutes les sources du reste sont représentées
-  if (allowExtra && !uncovered) {
-    return tryPick(() => true);
+  if (!horizonStillUncovered(magazineReserve)) {
+    const per = sourceSeatCounts();
+    const second = tryPick((item) => {
+      const src = sourceKey(item);
+      return !!(src && (per.get(src) || 0) === 1);
+    });
+    if (second) return second;
+    if (allowExtra) return tryPick(() => true);
   }
   return null;
 }
@@ -2717,11 +2755,7 @@ function rebuildHeroMetaFromDom(hero) {
  */
 function purgeBriefCardsFromHeroInstitutions(brief) {
   if (!brief || NEWS_LIST?.dataset.mode === 'source') return 0;
-  const uncovered = poolHasUncoveredSource(
-    magazineReserve,
-    new Set([...magazineMeta.heroSources, ...magazineMeta.briefSources]),
-    new Set([...magazineMeta.heroKeys, ...magazineMeta.briefKeys]),
-  );
+  const uncovered = horizonStillUncovered(magazineReserve);
   if (!uncovered) return 0;
   let removed = 0;
   const cards = [...brief.querySelectorAll('.article--compact')];
@@ -3038,7 +3072,7 @@ function balanceMagazineColumns() {
       }
       const cards = brief.querySelectorAll('.article--compact');
       if (cards.length <= hardMin) break;
-      if (!demoteBriefCardToTail(brief, cards[cards.length - 1])) break;
+      if (!demoteBriefCardToTail(brief, briefCardToTrim(brief))) break;
     }
   };
 
@@ -3153,7 +3187,7 @@ function balanceMagazineColumns() {
           if (bH <= hH + tol) break;
           const cards = brief.querySelectorAll('.article--compact');
           if (cards.length <= hardMin) break;
-          if (!demoteBriefCardToTail(brief, cards[cards.length - 1])) break;
+          if (!demoteBriefCardToTail(brief, briefCardToTrim(brief))) break;
         }
         // Fill prudent : trou sous En bref > ½ carte. Overshoot sous vedettes
         // plafonné à COLUMN_HEIGHT_TOL (petit spacer OK, pas de grand vide).

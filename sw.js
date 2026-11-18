@@ -79,6 +79,7 @@ const APP_SHELL = [
   "./engage-prompt.js",
   "./scripts/session-freshness-lib.js",
   "./scripts/news-housekeeping-lib.js",
+  "./scripts/homepage-diversity-lib.js",
   "./scripts/sports-freshness-lib.js",
   "./scripts/season-lib.js",
   "./brand-colors.json",

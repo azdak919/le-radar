@@ -1190,6 +1190,7 @@ ${extraStyles.map((src) => `    <link rel="stylesheet" href="${up}${escapeHtml(s
     <script src="${up}radar-weather.js" defer></script>
     <script src="${up}scripts/session-freshness-lib.js" defer></script>
     <script src="${up}scripts/news-housekeeping-lib.js" defer></script>
+    <script src="${up}scripts/homepage-diversity-lib.js" defer></script>
     <script src="${up}scripts/sports-freshness-lib.js" defer></script>
     <script src="${up}radar-sports-cta.js" defer></script>
     <script src="${up}radar-audience.js" defer></script>
