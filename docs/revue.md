@@ -5,8 +5,8 @@ Deux articles originaux par jour, générés à partir des données du site : `n
 Une revue n’est **pas** une réécriture : des extraits courts, un lien vers chaque original, le média et **tous** les
 auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de sport professionnel.
 
-> **Publication publique : activée le 17 novembre 2026** (décision de Charles). Les éditions restent à
-> 7 h et 20 h (heure de Montréal). La revue n’entre jamais dans La une des réseaux sociaux ni dans les stories.
+> **Publication publique : activée le 17 novembre 2026** (décision de Charles). Éditions à 7 h et 19 h 15
+> (heure de Montréal), avant La une (7 h 45 et 19 h 30). La revue n’est jamais une carte ni une image de La une, ni une story. Le texte de La une (matin et soir) peut porter, en 2e ligne, le lien daté vers l’édition du jour (`https://le-radar.ca/revue/AAAA-MM-JJ-soir/`) si la page existe déjà.
 > Pour désactiver : `"publish": false` dans `data/revue/config.json` (les pages déjà publiées restent).
 
 ## Fichiers
@@ -22,18 +22,18 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 | `scripts/revue/revue-run.mjs` | CLI : `--gate`, `--edition`, `--sample --out`, `--refresh`, `--rebuild`, `--sans-meteo`. |
 | `scripts/revue/revue-sample.sh`, `revue-screenshots.mjs` | Exemples matin + soir, captures (mobile 390 px, ordinateur 1280 px, clair/sombre) et PDF d’impression Letter, Legal, Tabloid, A4, A3 (`captures/impression/`). |
 | `revue.css` | Styles de la page (variables du site, mode sombre). Hors coquille du service worker. |
-| `.github/workflows/revue.yml` | Cron (7 h et 20 h, heure de Montréal, rafraîchissement à 23 h 35) + lancement manuel. |
+| `.github/workflows/revue.yml` | Cron (7 h et 19 h 15, heure de Montréal, rafraîchissement à 23 h 35) + lancement manuel. |
 | `.github/workflows/revue-preview.yml` | Sur PR : exemple réel avec les données en ligne et l’IA, artéfact `exemple-revue`. |
 | `tests/revue.mjs`, `tests/revue-render.spec.mjs` | Génération, garde, JSON-LD, sitemaps, RSS, crons, rendu navigateur. |
-| `tests/revue-une-isolation.mjs` | La revue n’entre jamais dans La une ni dans les publications sociales par article. |
+| `tests/revue-une-isolation.mjs` | La revue n’est pas un item de La une ni une publication sociale par article ; le lien texte en 2e ligne n’apparaît que si l’édition existe. |
 | `tests/print-formats.spec.mjs` | Impression Letter, Legal, Tabloid, A4, A3 (portrait) : revue, accueil, fiches d’article. |
 
 ## Éditions
 
-- **Matin** (cible 7 h, fenêtre 6 h 45 – 10 h 30) : couvre depuis la revue du soir de la veille (20 h) ;
+- **Matin** (cible 7 h, fenêtre 6 h 45 – 10 h 30) : couvre depuis la revue du soir de la veille (19 h 15) ;
   résultats de la veille et du jour ; matchs du jour aux trois jours suivants ; émissions de radio 7 h – 17 h.
-- **Soir** (cible 20 h, fenêtre 19 h 45 – 22 h 30) : couvre la journée depuis 7 h ; résultats du jour ; matchs du
-  soir même qui commencent à 20 h ou plus tard (datés en absolu), puis des trois jours suivants ; émissions 20 h – minuit.
+- **Soir** (cible 19 h 15, fenêtre 19 h – 22 h 30) : couvre la journée depuis 7 h ; résultats du jour ; matchs du
+  soir même qui commencent à 19 h 15 ou plus tard (datés en absolu), puis des trois jours suivants ; émissions 19 h 15 – minuit.
 - **Rafraîchissement** (23 h – 23 h 59, cron 23 h 35) : la revue du soir reçoit seulement les nouveaux résultats du
   jour (`dateModified` mis à jour, rien d’autre ne change).
 - Les crons GitHub tournent en UTC et peuvent être en retard : plusieurs déclenchements couvrent l’heure normale et
@@ -41,7 +41,7 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 - **Rien de neuf, rien de publié** : sans nouvel article dans la période (`skipWithoutArticles`), l’édition est
   sautée et notée dans `data/revue/state.json`. `news.json` vieux de plus de 6 h : refus.
 
-## Heures de publication (7 h et 20 h, heure de Montréal)
+## Heures de publication (7 h et 19 h 15, heure de Montréal)
 
 Choisies d’après les données du site (novembre 2026) et les habitudes de lecture des 18–25 ans :
 
@@ -52,25 +52,38 @@ Choisies d’après les données du site (novembre 2026) et les habitudes de lec
   (The Campus, Impact Campus, The Link), repris le lendemain matin. La collecte tourne chaque heure à :20 : les
   articles de 6 h sont là à 7 h. Les jours de semaine dominent (lundi 1 116, mardi 1 368 … dimanche 126).
 - **Sport** : 92 des 93 matchs de semaine commencent à 18 h ou plus tard (79 à 19 h ou plus tard, 27 à 20 h ou plus
-  tard). À 20 h, la revue du soir annonce les matchs de la soirée ; les résultats arrivent vers 21 h – 22 h 30, d’où
-  le rafraîchissement à 23 h 35 ; le lendemain, la revue du matin les reprend.
-- **Radio** : 15 % des émissions de semaine (52) commencent entre 20 h et minuit ; la revue du soir les liste.
+  tard). À 19 h 15, la revue du soir annonce les matchs qui commencent à cette heure ou plus tard ; les résultats
+  arrivent vers 21 h – 22 h 30, d’où le rafraîchissement à 23 h 35 ; le lendemain, la revue du matin les reprend.
+- **Radio** : les émissions de semaine à partir de 19 h 15 jusqu’à minuit figurent dans la revue du soir.
 - **Lecture** : chez les 16–24 ans, pics au réveil et en soirée (Reuters Digital News Report ; Pew, nouvelles sur
   téléphone le matin et en fin de journée ; suivi suisse des 18–25 ans, dont 69 % d’étudiants : 18 h – 21 h aussi
   fort que le midi, baisse après 21 h).
-- **La une** (réseaux sociaux) part à 7 h 45 et 19 h 30 : pas de collision, et la revue n’y figure jamais (ci-dessous).
+- **La une** (réseaux sociaux) part à 7 h 45 et 19 h 30. La revue est produite **avant** : matin à 7 h (45 min d’avance, suffisantes pour la génération et le déploiement Pages), soir à 19 h 15 (cron 19 h 02, pour laisser au déploiement le temps d’aboutir avant le cron de La une à 19 h 23). Le lien texte en 2e ligne de La une n’est ajouté que si la page de l’édition est déjà en ligne ; sinon, la ligne reste omise. L’URL est l’adresse longue datée (`https://le-radar.ca/revue/AAAA-MM-JJ-matin|soir/`).
 
-Crons (UTC, heure normale et heure avancée) : `2 11,12 * * *` (matin 7 h 02), `37 13,14 * * *` (secours),
-`2 0,1 * * *` (soir 20 h 02), `37 1,2 * * *` (secours), `35 3,4 * * *` (rafraîchissement 23 h 35). Le `--gate` choisit
-l’édition due ; `tests/revue.mjs` vérifie que crons, `config.json` et fenêtres concordent en janvier et en juillet.
+Crons (UTC, heure normale et heure avancée) : `2 11,12 * * *` (matin 7 h 02), `17,32 11,12 * * *` (secours 7 h 17 et 7 h 32),
+`37 13,14 * * *` (secours tardif), `2,17,32,47 23,0 * * *` (soir 19 h 02, 17, 32 et 47), `17 1 * * *` et `37 1,2 * * *`
+(secours 20 h 17 / 21 h 37), `35 3,4 * * *` (rafraîchissement 23 h 35). Filet : à la fin de la collecte
+(« Update Student News »), dont le passage :20 UTC à 19 h 20 heure de Montréal, avant La une (19 h 23).
+Les crons GitHub peuvent partir en retard de plusieurs heures ou ne pas aboutir (17 nov. 2026 : 20 h 02 et 20 h 37 n’ont pas eu lieu).
+Le `--gate` choisit l’édition due ; `tests/revue.mjs` vérifie que crons, `config.json` et fenêtres concordent en janvier et en juillet.
 
-## La revue n’entre jamais dans La une
+## La revue n’est pas un item de La une
 
 Les publications sociales « La une » (images du matin et du soir, `scripts/social/une-run.mjs`) lisent `news.json`,
-`sports-masthead.json` et `radio-schedules.json`, jamais les fichiers de la revue. Par sécurité, `selectUne` écarte
-tout lien `le-radar.ca/revue/…` et `parseFeed` (publications par article : Bluesky, Mastodon, Tumblr, Buffer) retire
-les revues de `feed.xml`. `tests/revue-une-isolation.mjs` le garantit (textes, liens, textes alternatifs de tous les
-réseaux, flux de travail).
+`sports-masthead.json` et `radio-schedules.json`, jamais les fichiers internes de la revue. `selectUne` écarte tout
+lien `le-radar.ca/revue/…` (la revue n’est jamais une carte, une image ou un item de La une) et `parseFeed`
+(publications par article : Bluesky, Mastodon, Tumblr, Buffer) retire les revues de `feed.xml`.
+
+En revanche, **dans le texte seulement**, si la page publique de l’édition du même créneau existe déjà
+(`revue/AAAA-MM-JJ-matin|soir/index.html`), une 2e ligne s’ajoute sous l’accroche, sans couper celle-ci ni les
+mentions d’auteurs :
+
+> Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/AAAA-MM-JJ-soir/
+
+(« du matin » pour le créneau de 7 h 45). Si la page n’existe pas, rien n’est ajouté. Instagram (légende sans lien
+cliquable, encore désactivé) n’a pas cette ligne. Si le texte dépasse encore la limite du réseau après les autres
+réductions, on retire la ligne plutôt que de couper l’accroche ou les auteurs. Les stories restent désactivées
+(`formats.une.story.publish`). `tests/revue-une-isolation.mjs` et `tests/social-une.mjs` le garantissent.
 
 ## Lecture et impression
 
@@ -160,7 +173,7 @@ Désactiver : repasser `"publish": false`. Les pages déjà publiées restent ; 
 ```bash
 node scripts/revue/revue-run.mjs --gate --now 2026-11-17T07:02:00-05:00   # édition due ?
 bash scripts/revue/revue-sample.sh /tmp/exemple-revue                       # exemples + captures (sans IA en local)
-node scripts/revue/revue-run.mjs --sample --edition soir --day 2026-11-16 --at 20:00 --out /tmp/x
+node scripts/revue/revue-run.mjs --sample --edition soir --day 2026-11-16 --at 19:15 --out /tmp/x
 npm run test:revue && npx playwright test tests/revue-render.spec.mjs tests/print-formats.spec.mjs --project=main
 PRINT_OUT=/tmp/impression npx playwright test tests/print-formats.spec.mjs --project=main   # garde les PDF
 ```

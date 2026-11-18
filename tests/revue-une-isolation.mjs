@@ -1,6 +1,7 @@
-// La revue du matin / du soir n'entre JAMAIS dans « La une » des réseaux sociaux (images du matin et du soir, textes, liens),
+// La revue du matin / du soir n'entre jamais dans la sélection de « La une » (cartes, images, texte alternatif)
 // ni dans les publications par article des bots sociaux (Bluesky, Mastodon, Tumblr, Buffer lisent feed.xml).
-// Décision de Charles, 16 nov. 2026 : la revue est une publication du site, pas une publication sociale.
+// Décision de Charles, 16 nov. 2026 : la revue n'est pas un item social. Ajustement du 17 nov. 2026 : le texte de
+// La une peut porter, en 2e ligne seulement, un lien vers l'édition du jour si la page publique existe déjà.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -27,9 +28,27 @@ for (const id of ['matin', 'soir']) {
   const sel = U.selectUne(news, U.slotFor(id, now), { now, max: 8 });
   assert.ok(!sel.items.some(x => isRevueLink(x.link) || REVUE.test(x.title)), `La une du ${id} : aucune revue dans la sélection`);
   const model = { slot: U.slotFor(id, now), items: sel.items, sports: { results: [], next: [] }, radio: [] };
-  for (const [net, t] of Object.entries(U.buildUneAll(model))) assert.doesNotMatch(String(t.text || ''), REVUE, `La une du ${id} (${net}) : ni lien ni mention de la revue`);
+  for (const [net, t] of Object.entries(U.buildUneAll(model, {}, { revueExists: () => false }))) {
+    assert.doesNotMatch(String(t.text || ''), REVUE, `La une du ${id} (${net}) : pas de revue si l’édition n’existe pas`);
+  }
+  const avec = U.buildUneAll(model, {}, { revueExists: () => true });
+  const wanted = `Consultez notre revue du ${id}, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-${id}/`;
+  for (const [net, t] of Object.entries(avec)) {
+    const text = String(t.text || '');
+    if (net === 'instagram') {
+      assert.doesNotMatch(text, /https?:\/\/|Consultez notre revue/, `Instagram (${id}) : pas de lien revue`);
+      continue;
+    }
+    if (text.includes('le-radar.ca/revue/')) {
+      assert.equal(text.split('\n')[1], wanted, `La une du ${id} (${net}) : 2e ligne seulement`);
+      assert.doesNotMatch(text.split('\n').slice(2).join('\n'), /Consultez notre revue/, `${net} : la revue n’apparaît qu’en 2e ligne`);
+    }
+  }
   assert.doesNotMatch(U.altText ? String(U.altText(model) || '') : '', REVUE, `texte alternatif de l’image du ${id}`);
 }
+
+assert.equal(U.revueEditionExists(U.slotFor('matin', T0)), true);
+assert.equal(U.revueEditionExists(U.slotFor('soir', Date.parse('2026-11-18T00:35:00Z'))), true);
 
 // ── Bots par article : une revue publiée dans feed.xml est ignorée par parseFeed ──
 const reviewModel = {
@@ -44,8 +63,11 @@ assert.deepEqual(parsed.map(x => x.link), ['https://quartierlibre.ca/a-1/'], 'la
 // ── Code et flux de travail : La une ne lit rien de la revue, la revue n'écrit rien que La une lit ──
 for (const f of ['scripts/social/une-run.mjs', 'scripts/social/une-lib.mjs', 'affiches/social-une.js', 'affiches/social-une.html', '.github/workflows/social-une.yml']) {
   const src = fs.readFileSync(f, 'utf8');
-  assert.doesNotMatch(src, /data\/revue|scripts\/revue|revue\/feed\.xml|sitemap-news|le-radar\.ca\/revue/, `${f} : aucune dépendance à la revue`);
+  assert.doesNotMatch(src, /data\/revue|scripts\/revue|revue\/feed\.xml|sitemap-news/, `${f} : ne lit pas les générateurs ni les données internes de la revue`);
 }
+assert.doesNotMatch(fs.readFileSync('affiches/social-une.js', 'utf8'), /le-radar\.ca\/revue|revueEdition/, 'l’affiche de La une n’embarque pas la revue');
+assert.doesNotMatch(fs.readFileSync('affiches/social-une.html', 'utf8'), /le-radar\.ca\/revue|revueEdition/, 'l’affiche de La une n’embarque pas la revue');
+assert.match(fs.readFileSync('scripts/social/une-lib.mjs', 'utf8'), /revueEditionLine/, 'lien texte optionnel vers l’édition publiée');
 const wf = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
 const added = (wf.match(/git add ([^\n]+)/) || [])[1] || '';
 assert.deepEqual(added.trim().split(/\s+/), ['revue', 'data/revue', 'sitemap-news.xml', 'robots.txt', 'feed.xml'], 'la revue n’écrit que ses propres fichiers (+ feed.xml filtré, robots.txt)');

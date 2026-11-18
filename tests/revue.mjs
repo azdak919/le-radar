@@ -22,24 +22,25 @@ const unpublished = L.mergeConfig({ publish: false });
 assert.equal(gate({ now: Date.parse('2026-11-17T12:35:00Z'), cfg: unpublished }).due, false);
 assert.match(gate({ now: Date.parse('2026-11-17T12:35:00Z'), cfg: unpublished }).why, /désactivée/);
 assert.equal(cfg.editions.matin.target, '07:00', 'heure idéale du matin inchangée');
-assert.equal(cfg.editions.soir.target, '20:00', 'heure idéale du soir inchangée');
+assert.equal(cfg.editions.soir.target, '19:15', 'heure idéale du soir : 19 h 15, avant La une');
 assert.equal(R.loadPublished(process.cwd()).enabled, true);
 assert.ok(feedLib.revueFeedEntries(process.cwd()).some((e) => /revue\/2026-11-17-matin/.test(e.xml)), 'feed.xml : la revue du matin est présente une fois publiée');
 assert.ok(fs.readFileSync('robots.txt', 'utf8').includes('sitemap-news.xml'), 'robots.txt : sitemap Google News une fois publiée');
 assert.ok(fs.existsSync('sitemap-news.xml') && fs.existsSync('revue/index.html'), 'pages et sitemap de revue commités une fois publiée');
 assert.ok(fs.existsSync('revue/2026-11-17-matin/index.html'), 'édition du matin du 17 nov. 2026 présente');
-assert.ok(!fs.existsSync('revue/2026-11-17-soir/index.html'), 'la revue du soir n’est pas prépubliée (cron 20 h)');
+assert.ok(fs.existsSync('revue/2026-11-17-soir/index.html'), 'édition du soir du 17 nov. 2026 présente');
 assert.match(fs.readFileSync('revue/index.html', 'utf8'), /href="\.\/2026-11-17-matin\/"/, 'index des archives : lien relatif vers l’édition, pas vers la racine');
 
 
-// ── Éditions : 7 h et 20 h heure de Montréal, été comme hiver (docs/revue.md, « Heures de publication ») ──
+// ── Éditions : 7 h et 19 h 15 heure de Montréal, été comme hiver (docs/revue.md, « Heures de publication ») ──
 const on = L.mergeConfig({ publish: true });
 assert.equal(L.editionAt(Date.parse('2026-11-17T12:01:00Z'), on)?.id, 'matin');     // 7 h 01 HNE
 assert.equal(L.editionAt(Date.parse('2026-07-17T11:01:00Z'), on)?.id, 'matin');     // 7 h 01 HAE
 assert.equal(L.editionAt(Date.parse('2026-11-17T11:40:00Z'), on), null);            // 6 h 40 : trop tôt
-assert.equal(L.editionAt(Date.parse('2026-11-18T01:01:00Z'), on)?.key, '2026-11-17-soir'); // 20 h 01 HNE le 17
-assert.equal(L.editionAt(Date.parse('2026-11-18T00:40:00Z'), on), null);            // 19 h 40 HNE : trop tôt
-assert.equal(L.editionAt(Date.parse('2026-07-18T00:01:00Z'), on)?.id, 'soir');      // 20 h 01 HAE
+assert.equal(L.editionAt(Date.parse('2026-11-18T00:16:00Z'), on)?.key, '2026-11-17-soir'); // 19 h 16 HNE le 17
+assert.equal(L.editionAt(Date.parse('2026-11-17T23:59:00Z'), on), null);            // 18 h 59 HNE : trop tôt
+assert.equal(L.editionAt(Date.parse('2026-07-17T23:16:00Z'), on)?.id, 'soir');      // 19 h 16 HAE
+assert.equal(L.editionAt(Date.parse('2026-11-18T01:01:00Z'), on)?.key, '2026-11-17-soir'); // 20 h 01 HNE : encore dans la fenêtre
 assert.equal(L.refreshAt(Date.parse('2026-11-18T04:35:00Z'), on)?.key, '2026-11-17-soir'); // 23 h 35
 assert.equal(L.refreshAt(Date.parse('2026-11-18T03:35:00Z'), on), null);            // 22 h 35 : trop tôt
 assert.equal(L.mtlInstant('2026-11-17', '07:30'), Date.parse('2026-11-17T12:30:00Z'));
@@ -49,19 +50,20 @@ assert.equal(R.isoMtl(Date.parse('2026-11-17T00:15:00Z')), '2026-11-16T19:15:00-
 assert.equal(R.isoMtl(Date.parse('2026-07-16T23:15:00Z')), '2026-07-16T19:15:00-04:00');
 assert.equal(L.reviewPath('2026-11-17', 'matin'), 'revue/2026-11-17-matin/');
 
-// Crons de revue.yml alignés sur les fenêtres : une exécution dans les 5 minutes qui suivent 7 h et 20 h, été comme hiver,
-// et une exécution dans la fenêtre de mise à jour tardive.
+// Crons de revue.yml alignés sur les fenêtres, été comme hiver : matin dans les 5 min. après 7 h ;
+// soir peu après l'ouverture (19 h), assez tôt pour précéder le cron de La une (19 h 23) ; plus la mise à jour tardive.
 {
   const wf = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
   const crons = [...wf.matchAll(/- cron: '(\S+) (\S+) \* \* \*'/g)].flatMap(([, mi, hr]) => mi.split(',').flatMap(m => hr.split(',').map(h => [+h, +m])));
   for (const day of ['2026-01-15', '2026-07-15']) {
     const locals = crons.map(([h, m]) => L.mtl(Date.parse(`${day}T${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:00Z`)).minutes);
-    for (const [name, target] of [['matin', 7 * 60], ['soir', 20 * 60]]) assert.ok(locals.some(x => x >= target && x <= target + 5), `cron ${name} à l'heure (${day})`);
+    assert.ok(locals.some(x => x >= 7 * 60 && x <= 7 * 60 + 5), `cron matin à l'heure (${day})`);
+    assert.ok(locals.some(x => x >= 19 * 60 && x <= 19 * 60 + 10 && x < 19 * 60 + 23), `cron soir avant La une (${day})`);
     assert.ok(locals.some(x => x >= 23 * 60 && x <= 23 * 60 + 59), `cron de mise à jour tardive (${day})`);
   }
-  assert.equal(on.editions.matin.target, '07:00'); assert.equal(on.editions.soir.target, '20:00');
+  assert.equal(on.editions.matin.target, '07:00'); assert.equal(on.editions.soir.target, '19:15');
   const file = L.mergeConfig(JSON.parse(fs.readFileSync('data/revue/config.json', 'utf8')));
-  assert.deepEqual([file.editions.matin.target, file.editions.soir.target, file.editions.matin.periodStart, file.editions.soir.periodStart], ['07:00', '20:00', '20:00', '07:00']);
+  assert.deepEqual([file.editions.matin.target, file.editions.soir.target, file.editions.matin.periodStart, file.editions.soir.periodStart], ['07:00', '19:15', '19:15', '07:00']);
 }
 
 // Porte (publication activée) : édition due, déjà publiée, sautée, rafraîchissement.
@@ -96,7 +98,7 @@ const schedules = { stations: { cism: { name: 'CISM 89,3', grid: [
 // ── Période et sélection ──
 const ed = L.editionFor('matin', tM, on);
 const period = L.periodOf(ed, tM, [], on);
-assert.equal(period.start, Date.parse('2026-11-17T01:00:00Z'), 'matin : depuis 20 h la veille');
+assert.equal(period.start, Date.parse('2026-11-17T00:15:00Z'), 'matin : depuis 19 h 15 la veille');
 assert.equal(L.periodOf(ed, tM, [{ id: '2026-11-16-matin', periodEnd: '2026-11-16T15:00:00Z' }], on).start, Date.parse('2026-11-16T15:00:00Z'), 'revue du soir sautée : la période recule jusqu’à la revue précédente');
 const items = L.selectArticles(news, period, { max: 40 });
 assert.deepEqual(items.map(x => x.source), ['Quartier Libre', 'The Link', 'Le Collectif'], 'période, plus récent d’abord, sport pro exclu (LNH, AFC Toronto), article hors période exclu');
@@ -117,13 +119,13 @@ assert.equal(sp.results[0].sport, 'Basketball (F)');
 assert.equal(sp.next.length, 1); assert.match(sp.next[0].text, /Stingers \(Concordia\) reçoit Carabins \(UdeM\)/);
 assert.equal(L.periodSports(masthead, ed, { cfg: on, coveredKeys: new Set([sp.results[0].key]) }).results.length, 0, 'résultat déjà publié : pas repris');
 assert.equal(L.periodSports(masthead, L.editionFor('soir', Date.parse('2026-11-17T23:59:00Z'), on), { cfg: on }).results.length, 0, 'soir : résultats du jour même seulement');
-// Soir à 20 h : les matchs du jour même qui commencent à 20 h ou après sont annoncés, pas ceux déjà commencés.
+// Soir à 19 h 15 : les matchs du jour même qui commencent à 19 h 15 ou après sont annoncés, pas ceux déjà commencés.
 const tonight = { teams: { c: team('c', 'Rouge et Or', 'Université Laval', [], [
   { gameId: 't1', date: '2026-11-17', time: '19:00', home: true, opponentNickname: 'Vert & Or', opponentFullName: 'Université de Sherbrooke' },
   { gameId: 't2', date: '2026-11-17', time: '21:00', home: false, opponentNickname: 'Carabins', opponentFullName: 'Université de Montréal' },
   { gameId: 't3', date: '2026-11-18', time: '18:00', home: true, opponentNickname: 'Gee-Gees', opponentFullName: 'Université d’Ottawa' }]) } };
 const edSoir = L.editionFor('soir', Date.parse('2026-11-18T01:01:00Z'), on);
-assert.deepEqual(L.periodSports(tonight, edSoir, { cfg: on, at: '20:00' }).next.map(r => r.time), ['21:00', '18:00'], 'soir : matchs de 21 h ce jour-là puis du lendemain');
+assert.deepEqual(L.periodSports(tonight, edSoir, { cfg: on, at: '19:15' }).next.map(r => r.time), ['21:00', '18:00'], 'soir : matchs à 19 h 15 ou après ce jour-là, puis du lendemain');
 assert.deepEqual(L.periodSports(tonight, ed, { cfg: on }).next.map(r => r.time), ['19:00', '21:00', '18:00'], 'matin : tous les matchs du jour');
 const radio = L.periodRadio(schedules, ed, on);
 assert.deepEqual(radio.map(s => s.shows.map(x => `${x.when} ${x.title}`)), [['8 h à 9 h La collation']], 'matin : émissions originales du jour, sans reprise');
@@ -237,6 +239,7 @@ assert.equal(skip.status, 'sautée'); assert.match(skip.why, /aucun nouvel artic
 // news.json périmé : doute, rien ne sort.
 const stale = await generate('matin', tM, { ...io, news: { ...news, updated: T('2026-11-16T12:00:00Z') } });
 assert.equal(stale.status, 'refusée'); assert.ok(stale.problems.some(p => /DOUTE/.test(p)));
+assert.equal((await generate('matin', tM, { ...io, index: [{ id: m.id }] })).status, 'inchangée', 'une édition déjà publiée n’est pas refaite');
 // Mise à jour tardive : un nouveau résultat du jour avance dateModified, rien d'autre ne change.
 const soirAt = Date.parse('2026-11-17T00:16:00Z');
 const soir = (await generate('soir', soirAt, { ...io, news: { ...news, updated: T('2026-11-17T00:10:00Z') }, env: {} })).model;
@@ -406,7 +409,11 @@ fs.rmSync(tmp, { recursive: true, force: true });
 // ── Workflows : porte sur l'interrupteur, secrets jamais affichés, groupe d'écriture partagé ──
 const wf = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
 assert.match(wf, /revue-run\.mjs --gate/); assert.match(wf, /if: needs\.gate\.outputs\.due == 'true'/);
-assert.match(wf, /cron: '2 11,12 \* \* \*'/); assert.match(wf, /cron: '2 0,1 \* \* \*'/); assert.match(wf, /cron: '35 3,4 \* \* \*'/);
+assert.match(wf, /cron: '2 11,12 \* \* \*'/);
+assert.match(wf, /cron: '2,17,32,47 23,0 \* \* \*'/);
+assert.match(wf, /cron: '35 3,4 \* \* \*'/);
+assert.match(wf, /workflows: \['Update Student News'\]/, 'filet après la collecte');
+assert.match(wf, /workflow_run:/);
 assert.match(wf, /CLOUDFLARE_AI_TOKEN: \$\{\{ secrets\.CLOUDFLARE_AI_TOKEN \}\}/);
 assert.doesNotMatch(wf, /echo[^\n]*secrets\./, 'aucun secret affiché');
 assert.match(wf, /group: data-writers-site/);

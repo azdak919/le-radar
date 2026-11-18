@@ -1,6 +1,6 @@
 // « La revue du matin » et « La revue du soir » : logique pure (testée dans tests/revue.mjs).
 //  - éditions en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées par Intl) ;
-//  - période : matin = la nuit et le matin (depuis 20 h la veille), soir = la journée (depuis 7 h), prolongée jusqu'à la
+//  - période : matin = la nuit et le matin (depuis 19 h 15 la veille), soir = la journée (depuis 7 h), prolongée jusqu'à la
 //    dernière revue publiée si une édition a été sautée (au plus `maxLookbackHours`) ; jamais deux fois le même article ;
 //  - articles : news.json (médias étudiants seulement, sport pro exclu), TOUS les auteurs (front.authorNames), média, établissement
 //    en français avec son sigle, lien vers l'original, extrait court ;
@@ -19,12 +19,12 @@ const front = require('../magazine-front-page-lib.js');
 export const SITE = 'https://le-radar.ca';
 export const PUBLISHER = 'Le Radar';
 export const EDITIONS = {
-  matin: { id: 'matin', label: 'La revue du matin', emoji: '☀️', target: '07:00', from: '06:45', to: '10:30', periodStart: '20:00', periodStartDayOffset: -1 },
-  soir: { id: 'soir', label: 'La revue du soir', emoji: '🌙', target: '20:00', from: '19:45', to: '22:30', periodStart: '07:00', periodStartDayOffset: 0 },
+  matin: { id: 'matin', label: 'La revue du matin', emoji: '☀️', target: '07:00', from: '06:45', to: '10:30', periodStart: '19:15', periodStartDayOffset: -1 },
+  soir: { id: 'soir', label: 'La revue du soir', emoji: '🌙', target: '19:15', from: '19:00', to: '22:30', periodStart: '07:00', periodStartDayOffset: 0 },
 };
 export const DEFAULT_CONFIG = {
   publish: false, editions: EDITIONS, refresh: { enabled: true, from: '23:00', to: '23:59' }, skipWithoutArticles: true,
-  maxLookbackHours: 48, maxArticles: 40, radio: { maxPerStation: 4, windows: { matin: ['07:00', '17:00'], soir: ['20:00', '24:00'] } },
+  maxLookbackHours: 48, maxArticles: 40, radio: { maxPerStation: 4, windows: { matin: ['07:00', '17:00'], soir: ['19:15', '24:00'] } },
   sports: { upcomingDays: 3, upcomingFallbackDays: 7 }, ai: { enabled: true, maxCallsPerRun: 6, batchSize: 8 }, newsSitemapHours: 48, feedItems: 10,
 };
 /** Réglages : data/revue/config.json par-dessus les valeurs par défaut (publish reste false sauf true explicite). */
@@ -82,7 +82,7 @@ export function refreshAt(now, cfg = DEFAULT_CONFIG) {
   return minutes >= hm(cfg.refresh.from) && minutes <= hm(cfg.refresh.to) ? { ...cfg.editions.soir, day: ymd, key: reviewId(ymd, 'soir'), refresh: true } : null;
 }
 /**
- * Période couverte : [début, fin]. Début = heure de départ de l'édition (la veille 20 h pour le matin, 7 h pour le soir),
+ * Période couverte : [début, fin]. Début = heure de départ de l'édition (la veille 19 h 15 pour le matin, 7 h pour le soir),
  * reculé jusqu'à la fin de la dernière revue publiée si une édition a été sautée, sans dépasser `maxLookbackHours`.
  */
 export function periodOf(edition, now, index = [], cfg = DEFAULT_CONFIG) {
