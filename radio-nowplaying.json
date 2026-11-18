@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-18T00:36:59.303Z",
+  "updatedAt": "2026-11-18T01:37:18.554Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "CATHJO FAIT DE LA RADIO",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://chyz.ca/emission/la-plug/"
-      },
+      "current": null,
       "next": {
         "title": "Mercredi Bonbon",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "CATHJO FAIT DE LA RADIO",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T00:36:22.571Z"
+      "checkedAt": "2026-11-18T01:36:38.779Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T00:36:24.537Z"
+      "checkedAt": "2026-11-18T01:36:40.935Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
-      },
-      "next": {
         "title": "Marca-RO",
         "source": "api-live",
         "start": "20:30",
         "end": "21:00"
       },
+      "next": {
+        "title": "Montreal Sound Ark",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Marca-RO",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,82 +74,88 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T00:36:26.775Z"
+      "checkedAt": "2026-11-18T01:36:44.161Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Ashes to Ashes",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
-      },
-      "next": {
         "title": "Hittin' All The Bases",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
+      "next": {
+        "title": "NSIDE!",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/nside"
+      },
       "track": "",
-      "showTitle": "Ashes to Ashes",
+      "showTitle": "Hittin' All The Bases",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T00:36:40.267Z"
+      "checkedAt": "2026-11-18T01:36:58.244Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "19:59",
-        "url": "https://www.cfak.ca/balados/lautrock"
-      },
-      "next": {
         "title": "Dichotomie 88.3",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:59",
         "url": "https://www.cfak.ca/balados/dichotomie-883"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Dichotomie 88.3",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T00:36:41.230Z"
+      "checkedAt": "2026-11-18T01:36:59.391Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "10 sur 10 : un podcast 100% rap",
         "source": "api-live",
         "start": "20:30",
         "end": "22:30",
         "slug": "10-sur-10-un-podcast-100-rap"
       },
+      "next": {
+        "title": "Onde de CHOQ",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
+      },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "",
+      "showTitle": "10 sur 10 : un podcast 100% rap",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T00:36:58.953Z"
+      "checkedAt": "2026-11-18T01:37:18.203Z"
     }
   }
 }
