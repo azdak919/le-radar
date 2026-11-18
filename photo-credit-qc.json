@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-18T18:18:58.843Z",
+  "updated": "2026-11-18T18:39:25.816Z",
   "total": 1031,
-  "withImage": 897,
-  "withCredit": 897,
-  "cited": 554,
-  "pending": 235,
+  "withImage": 908,
+  "withCredit": 908,
+  "cited": 563,
+  "pending": 233,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 28,
-  "citedNew": 28,
-  "fallbackNew": 32,
+  "updatedCount": 10,
+  "citedNew": 10,
+  "fallbackNew": 50,
   "samples": [
     {
       "title": "Peut-on encore posséder de la culture ?",
@@ -62,39 +62,25 @@
       "method": "body-line"
     },
     {
+      "title": "Journée mondiale du droit à l’avortement : toujours besoin de protection",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Saguenay acquiert officiellement l’église Saint-Édouard",
+      "source": "La Pige",
+      "credit": "Photo : Arthur Bakhache",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
       "title": "Un nouveau souffle pour le centre-ville de Jonquière",
       "source": "La Pige",
       "credit": "Photo : Lia Chayer",
       "cited": true,
       "method": "body-line"
-    },
-    {
-      "title": "Tabling in defiance of mezzanine ban",
-      "source": "The Link",
-      "credit": "Photo: Nicolas Tremblay",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Stingers 3, Gryphons 1: Concordia opens the Theresa Humes Cup with hard-earned win",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Marisa Filice",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Nostalgia Nook: Disney reboots",
-      "source": "The Link",
-      "credit": "Illustration: Aia Segal",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "World Press Photo : regarder le monde autrement",
-      "source": "Quartier Libre",
-      "credit": "Photo : © Carol Guzy, ZUMA Press, iWitness, pour le Miami Herald",
-      "cited": true,
-      "method": "figcaption"
     }
   ]
 }

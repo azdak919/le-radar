@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-18T18:15:14.146Z",
+  "updated": "2026-11-18T18:37:16.814Z",
   "total": 1031,
   "pool": 61,
   "incomplete": 27,
   "withLeadExcerpt": 179,
   "candidates": 27,
-  "enriched": 5,
-  "failed": 0,
+  "enriched": 0,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "Grammys 2027 : vent de folie québécois et triomphe féminin",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin/?utm_source=rss&utm_medium=rss&utm_campaign=grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin",
+      "title": "A new era for Hockey Canada",
+      "link": "https://theconcordian.com/2026/11/new-era-for-hockey-canada/",
       "ok": true,
       "score": 100,
-      "chars": 212,
-      "sample": "Taylor Swift obtient sa 5e nomination consécutive dans la catégorie Album de l’année avec The Life o",
-      "changed": true
+      "chars": 189,
+      "sample": "Team Canada was said to be old and unfit to face off against this young and promising American team.",
+      "changed": false
     },
     {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
+      "title": "Concordia receives $4.69 million to boost research and community partnerships",
+      "link": "https://theconcordian.com/2026/11/concordia-receives-funding-through-canada-research-chairs/",
       "ok": true,
       "score": 100,
-      "chars": 192,
-      "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
-      "changed": true
+      "chars": 252,
+      "sample": "Behind every research advance at Concordia is a network of funding programs that makes these breakth",
+      "changed": false
     },
     {
-      "title": "Les Valkyries de Golden State, reines de la WNBA",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/les-valkyries-de-golden-state-reines-de-la-wnba/",
+      "title": "Both Stingers’ basketball teams secure wins in home-opening double-header",
+      "link": "https://theconcordian.com/2026/11/stingers-basketball-win-home-openers/",
       "ok": true,
       "score": 100,
-      "chars": 942,
-      "sample": "Le propriétaire des Valkyries de Golden State, Joe Lacob, se donnait l’objectif de rafler au moins u",
-      "changed": true
+      "chars": 201,
+      "sample": "The Martlets started the game off strong, imposing their presence on offence and playing tough defen",
+      "changed": false
     }
   ]
 }

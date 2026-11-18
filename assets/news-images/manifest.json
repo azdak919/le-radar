@@ -3034,15 +3034,6 @@
       "via": "disk",
       "nameKey": "palestine-1.jpg"
     },
-    "7c744cffd74290cb": {
-      "local": "assets/news-images/7c744cffd74290cb.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-19-1024x683.jpg",
-      "host": "theconcordian.com",
-      "bytes": 269151,
-      "updatedAt": "2026-11-18T18:08:47.409Z",
-      "via": "disk",
-      "nameKey": "hannahnobile_141126_nslfinal_vol44-19.jpg"
-    },
     "467697863f7bc97d": {
       "local": "assets/news-images/467697863f7bc97d.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png",
@@ -3071,10 +3062,39 @@
       "updatedAt": "2026-11-18T18:17:41.261Z",
       "via": "resize-proxy",
       "nameKey": "hannahnobile_171126_hockeycanada_vol44.png"
+    },
+    "3671d3a4316da30b": {
+      "local": "assets/news-images/3671d3a4316da30b.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-38.jpg",
+      "host": "theconcordian.com",
+      "bytes": 37688,
+      "updatedAt": "2026-11-18T18:38:17.974Z",
+      "via": "disk",
+      "nameKey": "hannahnobile_141126_nslfinal_vol44-38.jpg"
+    },
+    "1c83f88a53f7aafa": {
+      "local": "assets/news-images/1c83f88a53f7aafa.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-10.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 164036,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-18T18:38:18.229Z",
+      "via": "origin",
+      "nameKey": "image-10.jpg"
+    },
+    "3cb2d9351d2c2d7a": {
+      "local": "assets/news-images/3cb2d9351d2c2d7a.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/0E8A9919-1.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 164778,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-18T18:38:18.679Z",
+      "via": "origin",
+      "nameKey": "0e8a9919-1.jpg"
     }
   },
-  "updatedAt": "2026-11-18T18:17:47.351Z",
-  "count": 319,
+  "updatedAt": "2026-11-18T18:38:25.182Z",
+  "count": 321,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5388,6 +5408,42 @@
     "2f5d69ee58c4d264": {
       "reason": "budget",
       "at": "2026-11-18T18:17:47.351Z"
+    },
+    "e6ffefe2ac1f7922": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.147Z"
+    },
+    "ccf0d70e784f3c6c": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.150Z"
+    },
+    "3b061c8c8b3fca9f": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.154Z"
+    },
+    "294ac9fb146011b0": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.158Z"
+    },
+    "dc00423fa40b815e": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.163Z"
+    },
+    "c055ebe3d20b9ee2": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.165Z"
+    },
+    "799a0a1ce895d871": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.168Z"
+    },
+    "7c63b89cd98be787": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.174Z"
+    },
+    "2827e297e61a94cb": {
+      "reason": "budget",
+      "at": "2026-11-18T18:38:25.180Z"
     }
   }
 }
