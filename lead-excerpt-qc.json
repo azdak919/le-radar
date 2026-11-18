@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-18T00:38:33.885Z",
-  "total": 1019,
+  "updated": "2026-11-18T02:07:30.986Z",
+  "total": 1021,
   "pool": 61,
-  "incomplete": 28,
-  "withLeadExcerpt": 167,
-  "candidates": 28,
-  "enriched": 0,
-  "failed": 15,
+  "incomplete": 29,
+  "withLeadExcerpt": 169,
+  "candidates": 29,
+  "enriched": 2,
+  "failed": 4,
   "ok": true,
   "samples": [
     {
@@ -28,21 +28,21 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": false
-    },
-    {
       "title": "Francisée, mais pas la bienvenue ?",
       "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": false
     },
     {
@@ -55,30 +55,30 @@
       "changed": false
     },
     {
+      "title": "Bittersweet end of season for the Montreal Roses",
+      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
+      "ok": true,
+      "score": 100,
+      "chars": 414,
+      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
+      "changed": true
+    },
+    {
+      "title": "How a student-led movement prevailed in Serbia’s election",
+      "link": "https://theconcordian.com/2026/11/students-movement-won-serbias-election/",
+      "ok": true,
+      "score": 96,
+      "chars": 571,
+      "sample": "The newly created Student List (SL) party won 140 seats, while President Aleksandar Vučić’s United S",
+      "changed": true
+    },
+    {
       "title": "Les cuisines fantômes hantent-elles les restaurants?",
       "link": "https://montrealcampus.ca/2026/11/17/les-cuisines-fantomes-hantent-elles-les-restaurants/",
       "ok": true,
       "score": 100,
       "chars": 317,
       "sample": "⁢⁢⁣⁢⁤⁤⁤⁣⁣⁣Des établissements regroupant plusieurs restaurants virtuels apparaissent progressivement ",
-      "changed": false
-    },
-    {
-      "title": "Can Ganesha Help You Pass Your Midterms?",
-      "link": "https://thebucampus.ca/2026/11/16/can-ganesha-help-you-pass-your-midterms/",
-      "ok": true,
-      "score": 100,
-      "chars": 471,
-      "sample": "The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon oran",
-      "changed": false
-    },
-    {
-      "title": "Beyond Competition: The Importance of Intramural Sports at Bishop’s",
-      "link": "https://thebucampus.ca/2026/11/16/beyond-competition-the-importance-of-intramural-sports-at-bishops/",
-      "ok": true,
-      "score": 96,
-      "chars": 404,
-      "sample": "At Bishop’s, the Gaiters varsity teams often receive most of the spotlight; however, many students p",
       "changed": false
     }
   ]
