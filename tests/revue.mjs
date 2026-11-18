@@ -430,3 +430,38 @@ console.log('revue : OK');
   assert.equal(L.resultText(reg), 'Concordia : 3e sur 11, Championnat canadien de course en flotte');
   assert.equal(L.resultKey(reg), '2026-11-15|Voile|Championnat canadien de course en flotte|Concordia:3e/11');
   console.log('revue (régates) : OK'); }
+
+// Couverture : une photo de banque ne devient pas la une (écran : vignette ou rien).
+{
+  const { siteImage, isStockOnlyImage } = await import('../scripts/social/une-lib.mjs');
+  const stockOnly = { title: 'x', link: 'https://x.ca/a', stockImage: 'https://upload.wikimedia.org/wikipedia/commons/hall.jpg' };
+  const real = { title: 'x', link: 'https://x.ca/b', image: 'https://theconcordian.com/pic.jpg', stockImage: 'https://upload.wikimedia.org/wikipedia/commons/hall.jpg' };
+  assert.equal(siteImage(stockOnly, { allowStock: false }), '');
+  assert.equal(isStockOnlyImage(stockOnly), true);
+  assert.equal(isStockOnlyImage(real), false);
+  assert.ok(siteImage(real, { allowStock: false }).includes('theconcordian.com'));
+  const stockItem = { ...m.items[0], id: 'stock1', link: 'https://journal.example/stock', image: 'https://upload.wikimedia.org/wikipedia/commons/hall.jpg', imageStock: true };
+  const realItem = { ...m.items[0], id: 'real1', link: 'https://journal.example/real', image: 'https://le-radar.ca/assets/news-images/abc.jpg', imageStock: false };
+  const bodyStock = R.articleBody({ ...m, items: [stockItem], image: null });
+  assert.doesNotMatch(bodyStock, /revue-cover/, 'pas de bandeau de une si seule une image de banque est dispo');
+  const bodyReal = R.articleBody({ ...m, items: [realItem], image: { url: realItem.image, title: 'T', credit: '', source: 'S' } });
+  assert.match(bodyReal, /revue-cover/);
+  assert.doesNotMatch(bodyReal, /data-stock/, 'photo réelle : pas le marquage banque');
+  const page = R.renderReviewPage(m);
+  assert.match(page, /revue-web\.js/, 'script écran (PDF, banque, jeux) sur la page');
+  const src = fs.readFileSync('scripts/revue/revue-render.js', 'utf8');
+  assert.match(src, /id="meteo"/);
+  assert.match(src, /id="jeux"/);
+  const css = fs.readFileSync('revue.css', 'utf8');
+  assert.match(css, /max-width:\s*70ch/);
+  assert.match(css, /max-height:\s*360px/);
+  assert.match(css, /data-stock/);
+  const printStart = css.indexOf('IMPRESSION : un vrai journal');
+  assert.ok(printStart > 0);
+  assert.match(css.slice(printStart), /max-height: 7\.8cm !important/);
+  const wfRevue = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
+  assert.match(wfRevue, /revue-pdfs\.mjs/);
+  const wfKit = fs.readFileSync('.github/workflows/update-kit-examples.yml', 'utf8');
+  assert.match(wfKit, /Update Student News/);
+  console.log('revue (écran : colonne, banque, PDF) : OK');
+}

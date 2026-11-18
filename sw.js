@@ -237,6 +237,21 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // Unes d'exemple du kit : réseau d'abord, sinon un rechargement garde un JPEG périmé
+  // (cache-first + previewV qui ne changeait qu'une fois par jour).
+  if (/\/assets\/kit\/affiches\/affiche-ex-une-/.test(url.pathname)) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cacheIfOk(cache, request, clone));
+          return networkResponse;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
   // Network-first for live data (news.json, radios.json) so content stays fresh.
   if (url.pathname.endsWith(".json")) {
     event.respondWith(

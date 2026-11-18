@@ -256,7 +256,7 @@ function writeGalleryMeta(periods) {
   const featuredPeriod = periods[featured] || {};
   const meta = {
     generatedAt: now.toISOString(),
-    previewV: `${ymd}-${featuredPeriod.id || 'semaine'}`,
+    previewV: `${now.toISOString().replace(/[:.]/g, '-')}`,
     featured,
     periods,
   };

@@ -99,7 +99,7 @@ jobs:
     needs: gate
     if: needs.gate.outputs.due == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     concurrency:
       group: data-writers-site
       cancel-in-progress: false
@@ -111,6 +111,8 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install chromium --with-deps
       - name: Revue (sélection, IA avec repli, garde-fou, pages, flux, sitemaps)
         env:
           REVUE_EDITION: ${{ needs.gate.outputs.edition }}
@@ -120,11 +122,14 @@ jobs:
         run: |
           node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION"
           node scripts/generate-feed.js --update
+          node scripts/revue/revue-pdfs.mjs --id "$REVUE_EDITION"
       - name: Commit et publication
+        env:
+          REVUE_EDITION: ${{ needs.gate.outputs.edition }}
         run: |
           git add revue data/revue sitemap-news.xml robots.txt feed.xml
           git diff --cached --quiet && { echo "Rien à publier."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
           git commit -s -m "bot(revue): ${{ needs.gate.outputs.edition }} ${{ needs.gate.outputs.mode }}"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"$REVUE_EDITION\""
