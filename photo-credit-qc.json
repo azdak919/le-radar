@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-18T17:09:35.137Z",
-  "total": 1030,
-  "withImage": 880,
-  "withCredit": 880,
-  "cited": 520,
-  "pending": 244,
+  "updated": "2026-11-18T17:40:29.715Z",
+  "total": 1031,
+  "withImage": 910,
+  "withCredit": 910,
+  "cited": 545,
+  "pending": 255,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 7,
-  "citedNew": 8,
-  "fallbackNew": 52,
+  "updatedCount": 15,
+  "citedNew": 13,
+  "fallbackNew": 47,
   "samples": [
+    {
+      "title": "A new era for Hockey Canada",
+      "source": "The Concordian",
+      "credit": "Illustration: Hannah Nobile",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
     {
       "title": "Peut-on encore posséder de la culture ?",
       "source": "La Pige",
@@ -55,11 +62,39 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "How a student-led movement prevailed in Serbia’s election",
-      "source": "The Concordian",
-      "credit": "Photo: Andjela Radojičić",
+      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière",
+      "source": "La Pige",
+      "credit": "Photo : Colin Boucher",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "body-line"
+    },
+    {
+      "title": "Journée mondiale du droit à l’avortement : toujours besoin de protection",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le PQ l’emporte dans Chicoutimi",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La Chambrée interpelle les partis",
+      "source": "La Pige",
+      "credit": "Photo : Laury-Ann Savard",
+      "cited": true,
+      "method": "wp-media-caption"
+    },
+    {
+      "title": "Une cinquième édition réussie pour Cap sur ma santé mentale",
+      "source": "La Pige",
+      "credit": "Photo : Alex Loiselle",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
