@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-18T13:19:05.904Z",
-  "total": 1024,
+  "updated": "2026-11-18T14:39:31.045Z",
+  "total": 1027,
   "pool": 61,
-  "incomplete": 28,
-  "withLeadExcerpt": 172,
-  "candidates": 28,
-  "enriched": 0,
-  "failed": 14,
+  "incomplete": 29,
+  "withLeadExcerpt": 175,
+  "candidates": 29,
+  "enriched": 3,
+  "failed": 5,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "Bittersweet end of season for the Montreal Roses",
-      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
-      "ok": true,
-      "score": 100,
-      "chars": 414,
-      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
-      "changed": false
-    },
-    {
-      "title": "Les cuisines fantômes hantent-elles les restaurants?",
-      "link": "https://montrealcampus.ca/2026/11/17/les-cuisines-fantomes-hantent-elles-les-restaurants/",
-      "ok": true,
-      "score": 100,
-      "chars": 317,
-      "sample": "⁢⁢⁣⁢⁤⁤⁤⁣⁣⁣Des établissements regroupant plusieurs restaurants virtuels apparaissent progressivement ",
-      "changed": false
-    },
-    {
-      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
-      "link": "https://theconcordian.com/2026/11/pierre-cerre-trying-keep-rosemont-orange/",
+      "title": "More than half of Quebecers are unsatisfied with Paul St-Pierre Plamondon, according to recent poll",
+      "link": "https://theconcordian.com/2026/11/polling-numbers-show-early-warning/",
       "ok": true,
       "score": 96,
-      "chars": 259,
-      "sample": "On Dec. 7, Canadians in six ridings, including two in Montreal, will head to the polls to elect thei",
-      "changed": false
+      "chars": 532,
+      "sample": "The results are even worse on the Island of Montreal, where the Parti Québécois (PQ) won two seats —",
+      "changed": true
+    },
+    {
+      "title": "Rencontre Carney-PSPP au Cambodge",
+      "link": "https://lecollectif.ca/a-la-une/rencontre-carney-pspp-au-cambodge/",
+      "ok": true,
+      "score": 100,
+      "chars": 570,
+      "sample": "Québec, Montréal ou Ottawa ? C’est finalement au Cambodge que le premier ministre canadien et le pre",
+      "changed": true
+    },
+    {
+      "title": "Abolir ou réformer Santé Québec ?",
+      "link": "https://lecollectif.ca/a-la-une/abolir-ou-reformer-sante-quebec/",
+      "ok": true,
+      "score": 100,
+      "chars": 483,
+      "sample": "Deux ans après la création de Santé Québec, quoi garder et quoi réformer ? Ce qui s’annonçait comme ",
+      "changed": true
     }
   ]
 }
