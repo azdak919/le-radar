@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T13:07:15.100Z",
+  "updatedAt": "2026-11-18T13:55:50.832Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:06:14.559Z"
+      "checkedAt": "2026-11-18T13:55:01.120Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:06:28.511Z"
+      "checkedAt": "2026-11-18T13:55:15.286Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:06:31.174Z"
+      "checkedAt": "2026-11-18T13:55:17.787Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
         "title": "Are We There Yet?",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/are-we-there-yet"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:06:55.715Z"
+      "checkedAt": "2026-11-18T13:55:31.225Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +135,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:06:56.903Z"
+      "checkedAt": "2026-11-18T13:55:32.260Z"
     },
     "choq": {
       "id": "choq",
@@ -156,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T13:07:14.750Z"
+      "checkedAt": "2026-11-18T13:55:50.483Z"
     }
   }
 }
