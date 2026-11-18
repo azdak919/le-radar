@@ -34,7 +34,10 @@ const ctx = { declaredCover: true, url: cover, link };
 assert.ok(A.isCropSafePortrait(W, H, ctx));
 assert.equal(A.isCropSafePortrait(W, H, { url: cover, link }), false, 'sans déclaration : règle inchangée');
 assert.equal(A.isCropSafePortrait(1080, 1920, ctx), false, 'story 9:16 : trop étroite');
-assert.equal(A.isCropSafePortrait(600, 860, ctx), false, 'trop petite pour la une');
+assert.ok(A.isCropSafePortrait(600, 900, ctx), 'affiche déclarée 600×900 (Concordian, Persepolis) : recadrable');
+assert.ok(A.isCropSafePortrait(600, 860, ctx), 'couverture déclarée 600 px : encore assez large pour la carte');
+assert.equal(A.isCropSafePortrait(600, 900, { url: ctx.url, link }), false, '600×900 sans déclaration : écartée');
+assert.equal(A.isCropSafePortrait(500, 750, ctx), false, 'trop petite pour la une');
 assert.equal(A.isCropSafePortrait(232, 309, ctx), false, 'La Griffe 232×309 : toujours trop petite');
 for (const bad of [
   { ...ctx, campaignGraphic: true },
@@ -55,6 +58,16 @@ assert.ok(byUrl(feat).length && byUrl(feat).every((c) => c.declaredCover), 'imag
 assert.ok(byUrl(body).every((c) => !c.declaredCover), 'image du corps : pas déclarée');
 const ogOther = A.listArticleImageCandidates(page(body), [], {}, 'https://journal.example/billet/');
 assert.ok(ogOther.filter((c) => A.imageUrlsMatch(c.url, body)).every((c) => !c.declaredCover), 'og:image seule ≠ couverture');
+
+// 3b) The Concordian (thème Csco) : vedette lazy-load 600×900 + og:image = déclarée et recadrable.
+const ogPoster = 'https://theconcordian.com/wp-content/uploads/2026/11/dYvyF1RlNokAd1N7Nek0vDpYsV6-0-600-0-900-crop.jpg';
+const csco = `<html><head><meta property="og:image" content="${ogPoster}"><meta property="og:image:width" content="600"><meta property="og:image:height" content="900"><meta property="og:image:alt" content="Persepolis"></head><body class="postid-999"><main><figure class="cs-entry__post-media"><img width="600" height="900" class="attachment-csco-medium-uncropped size-csco-medium-uncropped pk-lazyload wp-post-image" alt="Persepolis" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-pk-src="${ogPoster}"></figure><article><div class="entry-content">${filler}</div></article></main></body></html>`;
+const cscoCands = A.listArticleImageCandidates(csco, [], {}, 'https://theconcordian.com/2026/11/why-young-people-should-watch-persepolis/');
+assert.ok(cscoCands.some((c) => A.imageUrlsMatch(c.url, ogPoster) && c.declaredCover), 'vedette Csco + og:image = couverture déclarée');
+assert.ok(A.isCropSafePortrait(600, 900, { declaredCover: true, url: ogPoster, alt: 'Persepolis' }));
+assert.ok(A.isCropSafePortrait(600, 900, { declaredCover: true, url: ogPoster, alt: 'Persepolis', caption: 'Movie poster courtesy of 2.4.7. Films' }), 'légende « Movie poster courtesy of … » : affiche du film déclarée');
+assert.equal(A.isCropSafePortrait(600, 900, { url: ogPoster, alt: 'Persepolis', caption: 'Movie poster courtesy of 2.4.7. Films' }), false, 'même légende sans déclaration : écartée');
+
 
 // 4) Chaîne complète : page SPA sans image + couverture déclarée sondée (en-tête PNG).
 const png = Buffer.alloc(33); Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(png, 0);
@@ -129,6 +142,13 @@ const box = { LEAD_IMAGE_MIN: { width: 640, height: 360, pixels: 320000 }, FEATU
 vm.createContext(box); vm.runInContext(fn, box);
 assert.ok(box.isUsableArticleImage({ naturalWidth: W, naturalHeight: H }, 'lead', item));
 assert.equal(box.isUsableArticleImage({ naturalWidth: W, naturalHeight: H }, 'lead', { image: cover }), false);
+const persepolis = 'https://theconcordian.com/wp-content/uploads/2026/11/dYvyF1RlNokAd1N7Nek0vDpYsV6-0-600-0-900-crop.jpg';
+assert.ok(box.isUsableArticleImage({ naturalWidth: 600, naturalHeight: 900 }, 'lead', {
+  image: persepolis, imageCropSafe: persepolis, imageCropFocalY: 0.2,
+}), 'affiche déclarée 600×900 acceptée en une (focal haut)');
+assert.equal(box.isUsableArticleImage({ naturalWidth: 600, naturalHeight: 900 }, 'lead', {
+  image: persepolis, imageCropSafe: persepolis,
+}), false, '600 px sans focal revu ou déclaré : encore trop étroit en une');
 const css = readFileSync(new URL('../style-feed.css', import.meta.url), 'utf8');
 assert.match(css, /\.article-media img\.is-portrait-crop\s*\{\s*object-position:\s*50% 30%/, 'SSR imagePortraitCrop = CSS carte');
 console.log('declared-cover-crop: ok');

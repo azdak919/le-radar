@@ -17,6 +17,7 @@ const https = require('https');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { isAllowedFetchUrl } = require('./url-security-lib');
+const { htmlHeaders } = require('./http-bot-headers');
 const {
   articleLinkKey,
   pageTitleFromHtml,
@@ -30,7 +31,6 @@ const {
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
-const USER_AGENT = 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0; +https://le-radar.ca/)';
 const MAX_BODY = 80_000;
 const POOL = 4;
 const HOST_GAP_MS = 300;
@@ -61,10 +61,7 @@ function requestOnce(url, method) {
       req = lib.request(url, {
         method,
         timeout: 12_000,
-        headers: {
-          'User-Agent': USER_AGENT,
-          Accept: 'text/html,application/xhtml+xml',
-        },
+        headers: htmlHeaders(),
       }, (res) => {
         const statusCode = res.statusCode || 0;
         const location = res.headers.location || '';

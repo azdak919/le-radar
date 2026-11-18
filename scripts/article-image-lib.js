@@ -56,12 +56,7 @@ function isPathDemoted(rawUrl = '', demotePatterns = []) {
 
 const { decodeEntities } = require('./html-entities-lib');
 const { isPinnedReject } = require('./lead-image-pins-lib');
-
-const BOT_USER_AGENT = 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)';
-// Certains journaux (Wordfence, Elementor…) bloquent les UA « bot » : on
-// retente une fois avec une signature navigateur avant d'abandonner —
-// sans byline ni crédit lisibles, ces articles retombaient au repli générique.
-const BROWSER_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
+const { BOT_USER_AGENT, htmlHeaders, imageHeaders } = require('./http-bot-headers');
 
 const MAX_FETCH_BODY = 2_500_000;
 
@@ -80,8 +75,8 @@ function fetchTextWithAgent(url, redirects, timeout, userAgent) {
         url,
         {
           headers: {
+            ...htmlHeaders(),
             'User-Agent': userAgent,
-            Accept: 'application/rss+xml, application/xml, text/xml, text/html, image/*, */*',
           },
           timeout,
         },
@@ -142,11 +137,9 @@ async function fetchText(url, redirects = 3, timeout = DEFAULT_TIMEOUT) {
 }
 
 async function fetchTextUncached(url, redirects = 3, timeout = DEFAULT_TIMEOUT) {
-  const first = await fetchTextWithAgent(url, redirects, timeout, BOT_USER_AGENT);
-  // Réponse vide ou page d'interstitiel minuscule : probable blocage d'UA.
-  if (first && first.length >= 2048) return first;
-  const second = await fetchTextWithAgent(url, redirects, timeout, BROWSER_USER_AGENT);
-  return second && second.length > (first || '').length ? second : first;
+  // Une seule identité honnête. On ne retente pas avec une signature
+  // Chrome : un vrai blocage n'est pas contourné.
+  return fetchTextWithAgent(url, redirects, timeout, BOT_USER_AGENT);
 }
 
 function fetchBinaryPrefix(url, maxBytes = 65536, redirects = 3, timeout = DEFAULT_TIMEOUT) {
@@ -169,10 +162,7 @@ function fetchBinaryPrefix(url, maxBytes = 65536, redirects = 3, timeout = DEFAU
       req = mod.get(
         url,
         {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
-            Accept: 'image/*,*/*',
-          },
+          headers: imageHeaders(),
           timeout,
         },
         (res) => {
@@ -1015,10 +1005,20 @@ function isPortraitLeadRatio(width = 0, height = 0) {
  * légende, et aucun mot d'affiche dans l'alt, la légende ou le nom de fichier.
  */
 const LEAD_CROP_MIN_RATIO = 0.66;
+/**
+ * Couverture déclarée (ou pin revu) : une affiche WP typique 600×900
+ * (The Concordian, « Persepolis », nov. 2026) remplit encore la carte
+ * (~560 px) après un crop 3:2 (400 px de haut ≥ LEAD_MIN_HEIGHT).
+ * Le seuil général de la une reste 640 px.
+ */
+const DECLARED_COVER_MIN_WIDTH = 600;
 const LEAD_CROP_MIN_RATIO_SCREENSHOT = 0.64;
 /** The Link, fichier sous /images/articles/ : graphique 900×1582 (0,57). */
 const LEAD_CROP_MIN_RATIO_EDITORIAL = 0.55;
 const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infographi\p{L}*|programmation|programme|horaires?|calendrier|stor(?:y|ies)|invitations?|logos?|slogans?|menu|annonces?|communiqu[ée]s?|campagnes?|campaigns?|visuels?|textes?|texts?|quotes?|citations?)(?=$|[^\p{L}])/iu;
+/** Affiche du film dont l’article parle (couverture déclarée), pas un flyer de spectacle. */
+const MOVIE_POSTER_CREDIT_RE = /(?:movie|film|cin(?:e|é)ma)\s+posters?|affiches?\s+du\s+film|posters?\s+(?:courtesy|from|©)/iu;
+const EVENT_POSTER_RE = /(?:billets?|tickets?|spectacle|programmation|invitations?|horaires?)/iu;
 const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|graphics?|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
 /** The Link : « Graphic Naya Hachwa » sans « by » ni deux-points. */
 const GRAPHIC_NAME_RE = /(?:^|[^\p{L}])graphics?\s+(\p{Lu})/giu;
@@ -1050,14 +1050,22 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   // Affiche du sujet lui-même : exception revue et liée à article + URL + taille.
   // Aucun nouveau portrait/logo/pub n'est accepté par cette branche.
   if (reviewedSourceCrop(ctx, ctx.url, width, height) && !ctx.campaignGraphic) return true;
-  // Le recadrage 3:2 doit encore remplir la une.
-  if (width < LEAD_MIN_WIDTH || width / 1.5 < LEAD_MIN_HEIGHT) return false;
+  // Le recadrage 3:2 doit encore remplir la une. Une couverture déclarée
+  // peut descendre à 600 px (affiche WP 600×900) ; le reste reste à 640.
+  const minWidth = ctx.declaredCover ? DECLARED_COVER_MIN_WIDTH : LEAD_MIN_WIDTH;
+  if (width < minWidth || width / 1.5 < LEAD_MIN_HEIGHT) return false;
   if (ctx.campaignGraphic) return false;
   const text = `${ctx.alt || ''} ${ctx.caption || ''}`.replace(/\s+/g, ' ').trim();
   let path = String(ctx.url || '');
   try { path = decodeURIComponent(new URL(path).pathname); } catch { /* brut */ }
   const file = path.split('/').pop().replace(/[_+.-]+/g, ' ');
-  if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) return false;
+  if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) {
+    // PR 367 : le mot affiche/poster prime, sauf si la source a déclaré
+    // comme couverture l’affiche du film dont parle l’article
+    // (Concordian, « Persepolis », légende « Movie poster courtesy of … »).
+    const filmCover = ctx.declaredCover && MOVIE_POSTER_CREDIT_RE.test(text) && !EVENT_POSTER_RE.test(text) && !PORTRAIT_POSTER_RE.test(file);
+    if (!filmCover) return false;
+  }
   if (captionLooksLikeCampaignGraphic(text)) return false;
   // Fichier d’article ExpressionEngine (/images/articles/) : c’est le visuel
   // du billet (JVC26, NST26, aicha.online, graphique 900×1582). On le garde
@@ -1576,6 +1584,8 @@ module.exports = {
   isFeaturedContentImage,
   LEAD_CROP_MIN_RATIO,
   LEAD_CROP_MIN_RATIO_EDITORIAL,
+  DECLARED_COVER_MIN_WIDTH,
+  BOT_USER_AGENT,
   clearMirroredLead,
   dropSharedSourceImages,
   keepNewestSharedImage,

@@ -5,6 +5,7 @@
  */
 
 const https = require('https');
+const { BOT_USER_AGENT } = require('./http-bot-headers');
 const { stripCdata } = require('./cdata-lib');
 
 const DAY = 86400000;
@@ -173,7 +174,7 @@ function getJson(url, timeout = DEFAULT_TIMEOUT) {
     let req;
     try {
       req = https.get(url, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)' },
+        headers: { 'User-Agent': BOT_USER_AGENT },
         timeout,
       }, (res) => {
         let data = '';
@@ -206,7 +207,7 @@ function postJson(url, body, timeout = DEFAULT_TIMEOUT) {
         headers: {
           'Content-Type': 'application/json',
           'Content-Length': Buffer.byteLength(payload),
-          'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
+          'User-Agent': BOT_USER_AGENT,
         },
         timeout,
       },

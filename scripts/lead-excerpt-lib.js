@@ -7,6 +7,7 @@
  */
 
 const https = require('https');
+const { htmlHeaders } = require('./http-bot-headers');
 const { extractBylineFromText } = require('./author-lib');
 const { decodeEntities, stripHtml: stripHtmlDecoded, fixDropCapSpacing } = require('./html-entities-lib');
 
@@ -85,10 +86,7 @@ function fetchText(url, redirects = 3, timeout = FETCH_TIMEOUT) {
     const req = https.get(
       url,
       {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
-          Accept: 'text/html, application/xhtml+xml, */*',
-        },
+        headers: htmlHeaders(),
         timeout,
       },
       (res) => {

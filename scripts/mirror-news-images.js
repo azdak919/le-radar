@@ -29,6 +29,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { imageUrlKey } = require('./article-photo-credit-lib');
+const { BOT_USER_AGENT, IMAGE_ACCEPT } = require('./http-bot-headers');
 const { jpegNeedsFacebookSanitize, sanitizeJpegForFacebook } = require('./jpeg-facebook-safe');
 
 const ROOT = path.join(__dirname, '..');
@@ -54,7 +55,6 @@ const TIMEOUT_MS = 18_000;
 // passe avec ~1 000 articles, 6 min perdues). Le client garde l'image distante.
 const MIRROR_QUEUE_SIZE = Math.max(1, Number(process.env.MIRROR_QUEUE_SIZE) || 80);
 const FAILED_RETRY_MS = 24 * 3600 * 1000;
-const UA = 'LE-RADAR-ImageMirror/1.0 (+https://le-radar.ca/; news image resilience cache)';
 
 /**
  * Hôtes prioritaires : toujours tenter un miroir (et Wayback si l’origine échoue).
@@ -138,8 +138,8 @@ async function fetchBuffer(url, timeoutMs = TIMEOUT_MS) {
   const res = await fetch(url, {
     redirect: 'follow',
     headers: {
-      'User-Agent': UA,
-      Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+      'User-Agent': BOT_USER_AGENT,
+      Accept: IMAGE_ACCEPT,
     },
     signal: AbortSignal.timeout(timeoutMs),
   });

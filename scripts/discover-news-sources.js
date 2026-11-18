@@ -28,6 +28,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { feedHeaders } = require('./http-bot-headers');
 const { isAllowedFetchUrl } = require('./url-security-lib');
 const {
   isHtmlListSource,
@@ -109,8 +110,7 @@ function fetchText(url, redirects = 4) {
         url,
         {
           headers: {
-            'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
-            Accept: 'application/rss+xml, application/xml, text/xml, */*',
+            ...feedHeaders(),
           },
           timeout: TIMEOUT,
         },

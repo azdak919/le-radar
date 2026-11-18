@@ -172,9 +172,10 @@ function hasCropSafeImage(item) {
 }
 
 /** Portrait modéré qui remplit encore une une 3:2 une fois recadré au centre. */
-function fillsLeadWhenCropped(width = 0, height = 0, { reviewed = false } = {}) {
+function fillsLeadWhenCropped(width = 0, height = 0, { reviewed = false, declaredCover = false } = {}) {
   if (!width || !height) return false;
-  return width / height >= LEAD_CROP_MIN_RATIO && width >= (reviewed ? 600 : 640) && width / 1.5 >= 360;
+  const minW = (reviewed || declaredCover) ? 600 : 640;
+  return width / height >= LEAD_CROP_MIN_RATIO && width >= minW && width / 1.5 >= 360;
 }
 
 /** Crédit photo source : lié à l’image retirée, il ne doit pas survivre. */
@@ -330,7 +331,10 @@ async function probeLeadReady(url, reject = [], opts = {}, { cropSafe = false, i
   if (!dims) return false;
   if (meetsLeadDisplaySize(dims.width, dims.height)) return true;
   if (!(cropSafe && isPortraitLeadRatio(dims.width, dims.height))) return false;
-  if (fillsLeadWhenCropped(dims.width, dims.height, { reviewed: !!reviewedSourceCrop(item, url, dims.width, dims.height) })) return true;
+  if (fillsLeadWhenCropped(dims.width, dims.height, {
+    reviewed: !!reviewedSourceCrop(item, url, dims.width, dims.height),
+    declaredCover: !!cropSafe,
+  })) return true;
   // Graphique The Link plus haut que 2:3 (Archives 900×1582) : une fois
   // jugé recadrable, le plancher éditorial suffit. Le 0,66 global reste.
   return isEditorialArticleImage(url)
