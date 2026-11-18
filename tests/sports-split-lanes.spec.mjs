@@ -474,16 +474,38 @@ test('carte unique : refresh, vrai retour navigateur, resize et focus sans dilat
   await page.goto('/?labFrame=1', { waitUntil: 'domcontentloaded' });
   const card = page.locator('#masthead-sports-strip .sports-chip--match');
   const metrics = [];
+  async function cardGeometry() {
+    try {
+      return await card.evaluate(c => {
+        // Le bandeau remplace ses puces (replaceChildren) au fit, au resize
+        // et quand le fil change de hauteur (photos qui se chargent). Une
+        // référence peut être détachée le temps d’un paint : on retente.
+        if (!c?.isConnected) return null;
+        const strip = c.parentElement;
+        if (!(strip instanceof Element) || !strip.isConnected) return null;
+        const cs = getComputedStyle(strip);
+        const inner = strip.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        const slots = Math.min(sportsBoardCount(), sportsStripFitFloor());
+        const expected = (inner - parseFloat(cs.columnGap) * (slots - 1)) / slots;
+        return {
+          ok: Math.abs(c.getBoundingClientRect().width - expected) <= 1 && (inner < 520 || slots >= 2),
+          width: c.getBoundingClientRect().width,
+          height: c.getBoundingClientRect().height,
+          slots,
+          title: c.title,
+        };
+      });
+    } catch {
+      return null;
+    }
+  }
   async function bounded(stage, singleSlot = false) {
     await expect(card).toHaveCount(1);
-    await expect.poll(() => card.evaluate(c => {
-      const strip = c.parentElement, cs = getComputedStyle(strip);
-      const inner = strip.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-      const slots = Math.min(sportsBoardCount(), sportsStripFitFloor());
-      const expected = (inner - parseFloat(cs.columnGap) * (slots - 1)) / slots;
-      return Math.abs(c.getBoundingClientRect().width - expected) <= 1 && (inner < 520 || slots >= 2);
-    })).toBe(true);
-    const m = await card.evaluate(c => ({ width: c.getBoundingClientRect().width, height: c.getBoundingClientRect().height, slots: Math.min(sportsBoardCount(), sportsStripFitFloor()), title: c.title }));
+    let m;
+    await expect.poll(async () => {
+      m = await cardGeometry();
+      return m?.ok === true;
+    }).toBe(true);
     if (singleSlot) expect(m.slots).toBe(1); else expect(m.slots).toBeGreaterThanOrEqual(2);
     metrics.push({ stage, ...m });
   }
