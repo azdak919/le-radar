@@ -3,8 +3,8 @@ import { mkdirSync } from 'node:fs';
 import { mockRadarTranslateApis } from './translate-mt-route.mjs';
 
 /**
- * Animation « Charger plus d'articles » : même bague que l'overlay
- * traduction / chargement sports, sans interférer avec la traduction.
+ * « Charger plus d'articles » : clic explicite seulement, grande fenêtre
+ * de progression (même carte que la traduction / les sports).
  * Captures locales dans /workspace/radar-more-anim/ (hors CI).
  */
 
@@ -13,24 +13,31 @@ const SHOT_DIR = process.env.CI ? null : (process.env.NEWS_TAIL_SHOTS || '/works
 async function shot(locator, name) {
   if (!SHOT_DIR) return;
   mkdirSync(SHOT_DIR, { recursive: true });
-  await locator.scrollIntoViewIfNeeded();
+  const page = locator.page();
+  await page.evaluate(() => {
+    document.querySelectorAll('#local-lab-format-bar, #midwidth-preview-bar, #wide-desktop-bar, #local-lab-shell, #toast, .local-lab-bar').forEach((el) => el.remove());
+  });
   await locator.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   await locator.screenshot({ path: `${SHOT_DIR}/${name}.png` });
 }
 
-/** Empêche un chargement auto de lever aria-busy pendant les captures. */
 async function hangNewsPages(page) {
   await page.route('**/news-page-*.json', () => {});
 }
 
-async function openHome(page, { theme, colorScheme } = {}) {
-  await page.setViewportSize({ width: 1280, height: 900 });
+async function openHome(page, { theme, colorScheme, viewport } = {}) {
+  await page.setViewportSize(viewport || { width: 1280, height: 900 });
   if (colorScheme) await page.emulateMedia({ colorScheme });
   if (theme) {
     await page.addInitScript((t) => {
       try { localStorage.setItem('radar-theme', t); } catch { /* ignore */ }
     }, theme);
   }
+  await page.addInitScript(() => {
+    const css = document.createElement('style');
+    css.textContent = '#local-lab-format-bar,#midwidth-preview-bar,#wide-desktop-bar,#local-lab-shell,#toast,.local-lab-bar{display:none!important}';
+    document.documentElement.appendChild(css);
+  });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(
     () => document.querySelector('.news-tail')
@@ -40,127 +47,92 @@ async function openHome(page, { theme, colorScheme } = {}) {
   );
 }
 
-/** Déplie la suite du fil et révèle le bouton, sans déclencher le chargement auto. */
 async function revealMoreButton(page) {
   await page.evaluate(() => {
-    const tail = document.querySelector('.news-tail');
-    const toggle = tail?.querySelector('.news-tail-toggle:not(.news-tail-more)');
-    toggle?.click();
+    document.querySelector('.news-tail-toggle:not(.news-tail-more)')?.click();
   });
   const more = page.locator('.news-tail-more');
   await expect(more).toBeVisible({ timeout: 10_000 });
-  // Couper l'observateur : les captures et le clic restent déterministes.
-  await page.evaluate(() => {
-    const more = document.querySelector('.news-tail-more');
-    if (!more) return;
-    // Recréé à chaque sync : on le remplace par un observateur inerte.
-    const idle = new IntersectionObserver(() => {});
-    // Déconnecter tous les observateurs natifs n'est pas exposé ; on éloigne
-    // le bouton du seuil en le rendant hors écran le temps de poser l'état.
-    more.dataset.shotHold = '1';
-  });
   return more;
 }
 
-async function holdBusy(page) {
-  await page.evaluate(() => {
-    const more = document.querySelector('.news-tail-more');
-    if (more) more.setAttribute('aria-busy', 'true');
-  });
+function newsOverlay(page) {
+  return page.locator('#news-load.translate-progress--news');
 }
 
-function spinBox(page) {
-  return page.locator('.news-tail-more .news-tail-more__spin');
-}
-
-test.describe('Charger plus : animation de chargement', () => {
-  test('bague visible seulement pendant aria-busy, FR clair et sombre', async ({ page }) => {
-    await hangNewsPages(page);
+test.describe('Charger plus : fenêtre de progression', () => {
+  test('aucun chargement automatique au défilement', async ({ page }) => {
+    let pageHits = 0;
+    await page.route('**/news-page-*.json', async (route) => {
+      pageHits += 1;
+      await route.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"updated":"x"}' });
+    });
     await openHome(page, { theme: 'light', colorScheme: 'light' });
     const more = await revealMoreButton(page);
-    const spin = spinBox(page);
-
+    await more.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+    await page.waitForTimeout(800);
+    expect(pageHits).toBe(0);
     await expect(more).not.toHaveAttribute('aria-busy', 'true');
-    await expect(spin).toHaveCount(1);
-    await expect(spin).toHaveAttribute('aria-hidden', 'true');
-    await expect(spin).toHaveClass(/notranslate/);
-    await expect(spin).toHaveAttribute('translate', 'no');
-    await expect(spin).toBeHidden();
-    await expect(more.locator('.news-tail-more__label')).toContainText("Charger plus d'articles");
-
-    await holdBusy(page);
-    await expect(spin).toBeVisible();
-    const busyCss = await spin.evaluate((el) => {
-      const s = getComputedStyle(el);
-      return {
-        display: s.display,
-        animationName: s.animationName,
-        animationDuration: s.animationDuration,
-        width: s.width,
-        color: getComputedStyle(el.parentElement).color,
-        cursor: getComputedStyle(el.parentElement).cursor,
-        zIndex: s.zIndex,
-      };
-    });
-    expect(busyCss.display).toBe('block');
-    expect(busyCss.animationName).toMatch(/translate-progress-spin/);
-    expect(Number.parseFloat(busyCss.animationDuration)).toBeCloseTo(0.95, 2);
-    expect(busyCss.cursor).toBe('progress');
-    // Pas de z-index exotique : l'overlay traduction (60) reste au-dessus.
-    expect(['auto', '0']).toContain(busyCss.zIndex);
-    await shot(more, 'fr-light-busy');
-
-    await page.evaluate(() => {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      try { localStorage.setItem('radar-theme', 'dark'); } catch { /* ignore */ }
-    });
-    await page.emulateMedia({ colorScheme: 'dark' });
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-    await expect(spin).toBeVisible();
-    await shot(more, 'fr-dark-busy');
-
-    await page.evaluate(() => document.querySelector('.news-tail-more')?.removeAttribute('aria-busy'));
-    await expect(spin).toBeHidden();
+    await expect(newsOverlay(page)).toBeHidden();
+    await expect(page.locator('.news-tail-more__spin')).toHaveCount(0);
   });
 
-  test('libellé traduit, bague non envoyée à la MT, overlay au-dessus', async ({ page }) => {
+  test('clic : grande fenêtre FR, pourcentage, clic bloqué', async ({ page }) => {
+    let release;
+    const gate = new Promise((r) => { release = r; });
+    let hits = 0;
+    await page.route('**/news-page-*.json', async (route) => {
+      hits += 1;
+      await gate;
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        headers: { 'content-length': '24' },
+        body: '{"items":[],"updated":""}',
+      });
+    });
+    await openHome(page, { theme: 'light', colorScheme: 'light' });
+    const more = await revealMoreButton(page);
+    await expect(more.locator('.news-tail-more__label')).toContainText("Charger plus d'articles");
+    await more.click();
+    await expect(more).toHaveAttribute('aria-busy', 'true');
+    await expect(more).toHaveAttribute('aria-disabled', 'true');
+    const overlay = newsOverlay(page);
+    await expect(overlay).toBeVisible({ timeout: 10_000 });
+    await expect(overlay.locator('#news-load-label')).toHaveText('Chargement des articles…');
+    await expect(overlay.locator('.translate-progress__pct')).toBeVisible();
+    await expect(overlay.locator('.translate-progress__bar')).toBeVisible();
+    await expect(overlay.locator('.translate-progress__logo--article')).toBeVisible();
+    const firstHits = hits;
+    await more.click({ force: true });
+    await page.waitForTimeout(200);
+    expect(hits).toBe(firstHits);
+    await shot(overlay.locator('.translate-progress__card'), 'fil-progress-fr');
+    release();
+    await expect(more).not.toHaveAttribute('aria-busy', 'true', { timeout: 15_000 });
+    await expect(overlay).toBeHidden();
+  });
+
+  test('libellé EN et exclusivité avec la traduction', async ({ page }) => {
     await hangNewsPages(page);
     await mockRadarTranslateApis(page, ({ q }) => {
       if (q.includes("Charger plus d'articles")) return q.replace("Charger plus d'articles", 'Load more articles');
+      if (q.includes('Chargement des articles')) return 'Loading articles…';
       return `EN ${q}`;
     });
     await openHome(page, { theme: 'light', colorScheme: 'light' });
     const more = await revealMoreButton(page);
+    // Langue seule : évite le toast et le calque de traduction pendant la capture.
+    await page.evaluate(() => {
+      document.documentElement.dataset.translate = 'en';
+      document.documentElement.lang = 'en';
+    });
+    await more.click();
+    const overlay = newsOverlay(page);
+    await expect(overlay).toBeVisible({ timeout: 10_000 });
+    await expect(overlay.locator('#news-load-label')).toHaveText('Loading articles…');
+    await shot(overlay.locator('.translate-progress__card'), 'fil-progress-en');
 
-    await page.evaluate(() => window.RadarTranslate.applyMode('en', { persist: false, fromUserClick: true }));
-    await page.waitForFunction(
-      () => document.documentElement.dataset.translate === 'en'
-        && document.documentElement.getAttribute('data-translate-busy') !== 'true',
-      null,
-      { timeout: 25_000 },
-    );
-
-    const label = more.locator('.news-tail-more__label');
-    await expect(label).toBeVisible();
-    // Le libellé peut rester FR un instant si le cache n'a pas la phrase exacte
-    // (compte inclus) : il ne doit juste pas être vidé, ni porter notranslate.
-    await expect(label).not.toHaveClass(/notranslate/);
-    const labelText = (await label.textContent()) || '';
-    expect(labelText.length).toBeGreaterThan(4);
-    expect(labelText).toMatch(/articles|Articles/i);
-
-    const spin = spinBox(page);
-    await expect(spin).toHaveClass(/notranslate/);
-    await expect(spin).toHaveAttribute('aria-hidden', 'true');
-    await expect(spin).toHaveAttribute('translate', 'no');
-
-    await holdBusy(page);
-    await expect(spin).toBeVisible();
-    const afterBusy = (await label.textContent()) || '';
-    expect(afterBusy).toBe(labelText);
-    await shot(more, 'en-light-busy');
-
-    // Overlay de traduction complète : verrou + z-index 60, pas d'empilement bizarre.
     await page.evaluate(() => {
       window.__RADAR_TRANSLATE_RELEASE = null;
       window.__RADAR_TRANSLATE_HOLD = new Promise((resolve) => {
@@ -173,74 +145,53 @@ test.describe('Charger plus : animation de chargement', () => {
         fromUserClick: true,
       });
     });
-    const overlay = page.locator('.translate-progress');
-    await expect(overlay).toBeVisible({ timeout: 20_000 });
-    const stack = await page.evaluate(() => {
-      const ov = document.querySelector('.translate-progress');
-      const btn = document.querySelector('.news-tail-more');
-      const spin = document.querySelector('.news-tail-more__spin');
-      const main = document.querySelector('main.wire');
-      return {
-        overlayZ: ov ? getComputedStyle(ov).zIndex : null,
-        overlayHidden: ov?.hasAttribute('hidden') ?? null,
-        spinZ: spin ? getComputedStyle(spin).zIndex : null,
-        mainLocked: main?.classList.contains('is-translate-locked') ?? false,
-        mainBusy: main?.getAttribute('aria-busy') ?? null,
-        btnPe: btn ? getComputedStyle(btn).pointerEvents : null,
-        spinIsNotranslate: spin?.classList.contains('notranslate') ?? false,
-        spinInOverlay: Boolean(spin?.closest('.translate-progress')),
-        overlayInButton: Boolean(ov?.closest('.news-tail-more')),
-      };
+    const translateOv = page.locator('.translate-progress:not(.translate-progress--news):not(.translate-progress--sports)');
+    await expect(translateOv).toBeVisible({ timeout: 20_000 });
+    await expect(overlay).toBeHidden();
+    const both = await page.evaluate(() => {
+      const all = [...document.querySelectorAll('.translate-progress')].filter((el) => !el.hidden);
+      return all.length;
     });
-    expect(Number(stack.overlayZ)).toBeGreaterThanOrEqual(60);
-    expect(stack.spinIsNotranslate).toBe(true);
-    expect(stack.spinInOverlay).toBe(false);
-    expect(stack.overlayInButton).toBe(false);
-    expect(['auto', '0']).toContain(stack.spinZ);
-    // Pendant le verrou, le bouton du fil est inerte (tout sauf l'overlay).
-    if (stack.mainLocked) {
-      expect(stack.btnPe).toBe('none');
-    }
-    await shot(page.locator('.translate-progress__card'), 'en-overlay-card');
-    if (SHOT_DIR) await page.screenshot({ path: `${SHOT_DIR}/en-overlay-with-busy-button.png`, fullPage: false });
-
+    expect(both).toBe(1);
     await page.evaluate(() => {
-      if (typeof window.__RADAR_TRANSLATE_RELEASE === 'function') {
-        window.__RADAR_TRANSLATE_RELEASE();
-      }
+      if (typeof window.__RADAR_TRANSLATE_RELEASE === 'function') window.__RADAR_TRANSLATE_RELEASE();
       window.__RADAR_TRANSLATE_HOLD = null;
     });
     await page.evaluate(() => window.__radarOverlayRun).catch(() => {});
   });
 
-  test('défilement : même état aria-busy ; reduced-motion : anneau fixe', async ({ page }) => {
-    let releasePages;
-    const pagesGate = new Promise((r) => { releasePages = r; });
+  test('reduced-motion : pas d’animation d’anneau ; mobile + CPU limité', async ({ page, context }) => {
+    let release;
+    const gate = new Promise((r) => { release = r; });
     await page.route('**/news-page-*.json', async (route) => {
-      await pagesGate;
-      await route.continue();
+      await gate;
+      await route.fulfill({ status: 200, contentType: 'application/json', body: '{"items":[],"updated":""}' });
     });
-    await openHome(page, { theme: 'light', colorScheme: 'light' });
-    await page.evaluate(() => document.querySelector('.news-tail-toggle:not(.news-tail-more)')?.click());
-    const more = page.locator('.news-tail-more');
-    await expect(more).toBeVisible({ timeout: 10_000 });
-    // L'observateur (marge 600 px) ou un clic : l'état busy doit apparaître.
-    await more.evaluate((el) => el.scrollIntoView({ block: 'center' }));
-    await expect(more).toHaveAttribute('aria-busy', 'true', { timeout: 5_000 });
-    const spin = spinBox(page);
-    await expect(spin).toBeVisible();
-    await shot(more, 'fr-light-autoload-busy');
-    releasePages();
-    await expect(more).not.toHaveAttribute('aria-busy', 'true', { timeout: 15_000 });
-
+    const cdp = await context.newCDPSession(page);
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 6 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await holdBusy(page);
-    const reduced = await spin.evaluate((el) => {
-      const s = getComputedStyle(el);
-      return { display: s.display, animationName: s.animationName };
+    await openHome(page, {
+      theme: 'light',
+      colorScheme: 'light',
+      viewport: { width: 390, height: 844 },
     });
-    expect(reduced.display).toBe('block');
-    expect(reduced.animationName === 'none' || reduced.animationName === '').toBeTruthy();
-    await shot(more, 'fr-light-busy-reduced-motion');
+    const more = await revealMoreButton(page);
+    await more.click();
+    const overlay = newsOverlay(page);
+    await expect(overlay).toBeVisible({ timeout: 15_000 });
+    const motion = await overlay.evaluate((el) => {
+      const ring = el.querySelector('.translate-progress__ring');
+      const wave = el.querySelector('.translate-progress__wave');
+      return {
+        ringAnim: ring ? getComputedStyle(ring).animationName : '',
+        waveAnim: wave ? getComputedStyle(wave).animationName : '',
+      };
+    });
+    expect(motion.ringAnim === 'none' || motion.ringAnim === '' || !overlay).toBeTruthy();
+    expect(motion.waveAnim === 'none' || motion.waveAnim === '').toBeTruthy();
+    await shot(overlay.locator('.translate-progress__card'), 'fil-progress-fr-reduced-motion');
+    release();
+    await expect(more).not.toHaveAttribute('aria-busy', 'true', { timeout: 20_000 });
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   });
 });

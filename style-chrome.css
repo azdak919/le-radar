@@ -1630,60 +1630,12 @@ body.external-listen-open {
 .news-tail .news-tail-more[hidden] {
   display: none !important;
 }
-/* Bague indéterminée : même visuel que l’overlay traduction / chargement sports
- * (style-translate-overlay.css, translate-progress-spin, --accent). */
-.news-tail-more__spin {
-  display: none;
-  box-sizing: border-box;
-  width: 0.9em;
-  height: 0.9em;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 180deg,
-    transparent 0%,
-    var(--accent) 28%,
-    color-mix(in srgb, var(--accent) 20%, transparent) 52%,
-    transparent 72%
-  );
-  mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2px));
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2px));
-}
-.news-tail-more[aria-busy="true"] {
+/* Pendant un lot : clic bloqué, curseur d’attente. La grande fenêtre
+ * (.translate-progress--news) porte la progression. */
+.news-tail-more[aria-busy="true"],
+.news-tail-more[aria-disabled="true"] {
   cursor: progress;
-}
-.news-tail-more[aria-busy="true"] .news-tail-more__spin {
-  display: block;
-  animation: translate-progress-spin 0.95s linear infinite;
-}
-/* Même clé que l’overlay (chargé après) : défini ici pour que le bouton
- * tourne même si la feuille d’overlay n’est pas sur la page. */
-@keyframes translate-progress-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .news-tail-more[aria-busy="true"] .news-tail-more__spin {
-    animation: none;
-    /* Anneau accent fixe, toujours lisible sans rotation. */
-    background: conic-gradient(
-      from -90deg,
-      var(--accent) 100%,
-      var(--accent) 0
-    );
-  }
-}
-@media (forced-colors: active) {
-  .news-tail-more__spin {
-    background: none;
-    mask: none;
-    -webkit-mask: none;
-    border: 2px solid CanvasText;
-    border-top-color: Highlight;
-  }
-  .news-tail-more[aria-busy="true"] .news-tail-more__spin {
-    background: none;
-  }
+  pointer-events: none;
 }
 @media (hover: hover) and (pointer: fine) {
 .news-tail-toggle:hover {

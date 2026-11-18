@@ -1415,6 +1415,12 @@ html[data-translate-busy="1"] .translate-toggle {
 /* « Suite du fil » : vignette paysage 3:2 uniforme. Sans ce verrou, la règle
    « .article-media:has(.article-media-credit) img » (16:9, plus spécifique)
    l’emportait sur les cartes avec crédit et les autres restaient carrées. */
+/* Suite du fil : ne peindre que les cartes proches du viewport. */
+.news-tail-body > .article {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
+}
+
 .news-tail-body .article.article--thumb.has-image .article-media img {
   aspect-ratio: 3 / 2;
   width: 100%;

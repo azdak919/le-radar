@@ -1400,6 +1400,7 @@
     Enregistrés: { en: 'Saved' },
     Réglages: { en: 'Settings' },
     'Chargement du fil…': { en: 'Loading the feed…' },
+    'Chargement des articles…': { en: 'Loading articles…' },
     'Radio en cours': { en: 'Radio playing' },
     Écouter: { en: 'Listen' },
     'Arrêter la radio': { en: 'Stop the radio' },
