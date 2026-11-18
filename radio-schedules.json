@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T18:01:22.743Z",
+  "updatedAt": "2026-11-18T17:44:21.499Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,8 +27,8 @@
         },
         {
           "day": 0,
-          "start": "13:45",
-          "end": "16:30",
+          "start": "14:45",
+          "end": "17:30",
           "title": "Remparts de Québec",
           "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         },
@@ -188,24 +188,24 @@
         },
         {
           "day": 3,
-          "start": "17:45",
-          "end": "20:30",
-          "title": "Remparts de Québec",
-          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+          "start": "18:30",
+          "end": "19:30",
+          "title": "3600 secondes d'histoire",
+          "url": "https://chyz.ca/emission/3600-secondes-dhistoire/"
         },
         {
           "day": 3,
-          "start": "21:30",
-          "end": "22:30",
-          "title": "Blasphème",
-          "url": "https://chyz.ca/emission/blaspheme/"
+          "start": "19:30",
+          "end": "21:30",
+          "title": "Funk Connection",
+          "url": "https://chyz.ca/emission/funk-connection/"
         },
         {
           "day": 3,
           "start": "22:30",
           "end": "00:00",
           "title": "Nocturne",
-          "url": "https://chyz.ca/emission/nocture/"
+          "url": "https://chyz.ca/emission/nocturne/"
         },
         {
           "day": 4,
@@ -241,13 +241,6 @@
           "end": "19:00",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-        },
-        {
-          "day": 4,
-          "start": "17:45",
-          "end": "20:30",
-          "title": "Remparts de Québec",
-          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         },
         {
           "day": 4,
@@ -299,6 +292,13 @@
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
+          "day": 5,
+          "start": "18:45",
+          "end": "21:30",
+          "title": "Remparts de Québec",
+          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+        },
+        {
           "day": 6,
           "start": "09:00",
           "end": "10:00",
@@ -346,21 +346,14 @@
           "end": "16:00",
           "title": "Radio Futura",
           "url": "https://chyz.ca/emission/radio-futura/"
-        },
-        {
-          "day": 6,
-          "start": "17:45",
-          "end": "20:30",
-          "title": "Remparts de Québec",
-          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         }
       ],
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-17T18:01:22.743Z",
+      "checkedAt": "2026-11-18T17:44:21.499Z",
       "verifiedWeekOf": "2026-11-16",
-      "attemptedAt": "2026-11-17T18:01:22.743Z",
+      "attemptedAt": "2026-11-18T17:44:21.499Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
       "coveragePercent": 37
@@ -1141,9 +1134,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-17T18:01:22.743Z",
+      "checkedAt": "2026-11-18T17:44:21.499Z",
       "verifiedWeekOf": "2026-11-16",
-      "attemptedAt": "2026-11-17T18:01:22.743Z",
+      "attemptedAt": "2026-11-18T17:44:21.499Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1754,9 +1747,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-17T18:01:22.743Z",
+      "checkedAt": "2026-11-18T17:44:21.499Z",
       "verifiedWeekOf": "2026-11-16",
-      "attemptedAt": "2026-11-17T18:01:22.743Z",
+      "attemptedAt": "2026-11-18T17:44:21.499Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2628,9 +2621,9 @@
       "sources": [
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-11-17T18:01:22.743Z",
+      "checkedAt": "2026-11-18T17:44:21.499Z",
       "verifiedWeekOf": "2026-11-16",
-      "attemptedAt": "2026-11-17T18:01:22.743Z",
+      "attemptedAt": "2026-11-18T17:44:21.499Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "coveragePercent": 100
@@ -2938,9 +2931,9 @@
         "cfak:https://www.cfak.ca/programmation/",
         "published-page-data:https://www.cfak.ca/_nuxt/static/1794505537/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-17T18:01:22.743Z",
+      "checkedAt": "2026-11-18T17:44:21.499Z",
       "verifiedWeekOf": "2026-11-16",
-      "attemptedAt": "2026-11-17T18:01:22.743Z",
+      "attemptedAt": "2026-11-18T17:44:21.499Z",
       "id": "cfak",
       "name": "CFAK 88,3",
       "coveragePercent": 50
@@ -3175,9 +3168,9 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-17T18:01:22.743Z",
+      "checkedAt": "2026-11-18T17:44:21.499Z",
       "verifiedWeekOf": "2026-11-16",
-      "attemptedAt": "2026-11-17T18:01:22.743Z",
+      "attemptedAt": "2026-11-18T17:44:21.499Z",
       "id": "choq",
       "name": "CHOQ.ca",
       "coveragePercent": 20
