@@ -4895,9 +4895,13 @@ function attachArticleImage(article, item, role) {
     if (role === 'lead') {
       img.fetchPriority = 'high';
     } else {
-      /* Dans le DOM avant src, sinon loading=lazy ne charge jamais. */
-      img.loading = 'lazy';
-      if (!img.isConnected) media.appendChild(img);
+      /* Ne pas mettre loading=lazy tant que .article-media est en display:none
+         (il ne passe en block qu'avec .has-image, après onload). Un img lazy
+         dans un parent caché n'est jamais téléchargé : naturalWidth reste 0,
+         onload ne vient pas, la carte reste sans photo. C'est le cas de toutes
+         les cartes sauf la une. On charge donc d'abord (eager) ; l'image est
+         déjà décodée quand on l'affiche. */
+      img.loading = 'eager';
     }
     let settled = false;
 
