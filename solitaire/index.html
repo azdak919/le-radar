@@ -6,7 +6,7 @@
   <title>Solitaire — pause entre deux cours · LE-RADAR.ca</title>
   <meta name="description" content="Solitaire jouable en ligne, avec fonds photo du Québec. Une mini-app de LE-RADAR.ca, les médias étudiants du Québec.">
   <link rel="canonical" href="https://le-radar.ca/solitaire/">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-ataraxia-sol' https://cloud.umami.is; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org https://deckofcardsapi.com; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://clients5.google.com https://clients4.google.com https://le-radar-translate.azdak.workers.dev https://libretranslate.com https://cloud.umami.is https://gateway.umami.is; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-ataraxia-sol' https://cloud.umami.is; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://images.pexels.com https://upload.wikimedia.org https://commons.wikimedia.org https://deckofcardsapi.com; connect-src 'self' https://api.mymemory.translated.net https://translate.googleapis.com https://clients5.google.com https://clients4.google.com https://le-radar-translate.azdak.workers.dev https://libretranslate.com https://cloud.umami.is https://gateway.umami.is; frame-src 'self' https://le-radar.ca https://azdak919.github.io http://127.0.0.1:8888 http://localhost:8888; object-src 'none'; base-uri 'self'; form-action 'none'; media-src 'self' https: blob:">
 
   <!-- Favicons — carte à cœur retenue pour Solitaire -->
   <link rel="icon" href="favicon-32x32.png?v=3" sizes="32x32" type="image/png">
@@ -365,6 +365,10 @@
     .radar-embed-frame.is-ready {
       opacity: 1;
     }
+
+    /* Barre radio : module partagé ../radio-barre.js ; sans réponse du Radar, la rangée disparaît. */
+    .game-toolbar-tuner > .radar-radio { width: 100%; }
+    .game-toolbar-tuner[data-radar-radio="off"] { display: none; }
 
     /* Bas : contrôles et infos de partie */
     .game-toolbar-game {
@@ -1302,19 +1306,9 @@
     </div>
   </div>
 
-  <!-- Centre : synthétiseur Le Radar (centré entre les filets) -->
+  <!-- Centre : barre radio LE-RADAR (module partagé radio-barre.js) -->
   <div class="game-toolbar-tuner" id="game-toolbar-tuner">
-    <iframe
-      id="radar-embed"
-      class="radar-embed-frame"
-      src="about:blank"
-      data-src="../tuner-embed.html"
-      title="Le Radar — syntoniseur radio"
-      loading="lazy"
-      allowtransparency="true"
-      allow="autoplay; encrypted-media"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
+    <script src="../radio-barre.js" async></script>
   </div>
 
   <!-- Bas : actions et infos de jeu -->

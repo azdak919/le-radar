@@ -260,6 +260,11 @@
     opacity: 1;
   }
 
+  /* Barre radio : module partagé ../radio-barre.js. Sans réponse du Radar,
+     le module pose data-radar-radio="off" : la rangée disparaît. */
+  .app-toolbar-tuner > .radar-radio { width: 100%; }
+  .app-toolbar-tuner[data-radar-radio="off"] { display: none; }
+
   /* Barre météo régionale — seconde rangée du menu Pomodoro.
      Padding haut = bas pour centrer les pastilles sans clipper. */
   .app-toolbar-weather {
