@@ -17,9 +17,11 @@
  * de vérification (article-check-queue-lib) : le client ne les lit jamais.
  *
  * Taille des pages (mesurée le 17 nov. 2026, ~1 000 articles, ~1,1 ko par
- * article minifié, ~0,3 ko compressé) : 60 articles en 1re page (la une +
- * En bref + 10 cartes + réserve tiennent dans les ~40 plus récents), puis
- * 30 par page (≈ 9 ko compressés, un écran et demi de cartes).
+ * article minifié, ~0,3 ko compressé) : 60 articles en 1re page. Cette
+ * page réserve d’abord le dernier article de chaque source des 14 jours
+ * (repère : news.updated), puis complète avec les plus récents, pour que
+ * l’accueil puisse asseoir ces sources sans attendre les pages suivantes.
+ * Puis 30 par page (≈ 9 ko compressés, un écran et demi de cartes).
  *
  *   node scripts/news-pages.js --update
  */
@@ -60,7 +62,16 @@ function buildNewsPages(news = {}, { firstSize = FIRST_PAGE_SIZE, pageSize = PAG
     .sort((a, b) => (Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0))
     .map(publicItem);
   const total = items.length;
-  const rest = items.slice(firstSize);
+  const diversity = require('./homepage-diversity-lib.js');
+  const referenceDate = news.updated ? new Date(news.updated) : new Date();
+  const firstPage = diversity.reserveFirstPage(
+    items,
+    firstSize,
+    referenceDate,
+    diversity.DIVERSITY_HORIZON_DAYS,
+  );
+  const firstKeys = new Set(firstPage.map((item) => item.link || `${item.source}::${item.date}::${item.title}`));
+  const rest = items.filter((item) => !firstKeys.has(item.link || `${item.source}::${item.date}::${item.title}`));
   const pages = [];
   for (let i = 0; i < rest.length; i += pageSize) {
     const n = pages.length + 2;
@@ -82,7 +93,7 @@ function buildNewsPages(news = {}, { firstSize = FIRST_PAGE_SIZE, pageSize = PAG
     pageSize,
     pages: pages.map((p) => p.file),
     sourceList: [...seen.values()],
-    items: items.slice(0, firstSize),
+    items: firstPage,
   };
   if (news.freshnessSessions) latest.freshnessSessions = news.freshnessSessions;
   return { latest, pages };

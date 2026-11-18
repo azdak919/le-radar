@@ -22,7 +22,7 @@
 
 importScripts('../scripts/sports-document-refresh.js');
 
-const SHELL_CACHE  = 'sports-shell-v415';
+const SHELL_CACHE  = 'sports-shell-v416';
 const FONT_CACHE   = 'sports-fonts-v2';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -89,6 +89,7 @@ const SHARED_ASSETS = [
   '../scripts/media-follow-store.js',
   '../scripts/media-follow-ui.js',
   '../scripts/article-card-lib.js',
+  '../scripts/homepage-diversity-lib.js',
   '../radar-news.js',
   '../radar-lifecycle.js',
   '../app.js',

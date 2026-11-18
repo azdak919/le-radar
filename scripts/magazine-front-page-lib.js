@@ -4,8 +4,9 @@
  * Même règles que radar-news.js :
  *  - news.json, filtré par RadarSessionFreshness.filterFreshItems
  *  - avis de ménage exclus (RadarNewsHousekeeping.housekeepingNormalItems)
- *  - les N plus frais, tranche contiguë (pickHeroSpotlight / HERO_SPOTLIGHT_MAX = 5)
- *    → 1 une + 4 vedettes.
+ *  - les N plus frais, tranche contiguë (affiches, HERO_SPOTLIGHT_MAX = 5)
+ *    → 1 une + 4 vedettes. L’accueil (pickHeroSpotlight) suit une autre
+ *    règle : un siège par source sur 14 jours.
  *
  * Identifiant de fiche : même articleId que mobile/app/js/core.js
  * (FNV-1a 64 bits sur l’URL canonique) → https://le-radar.ca/article/<id>/
