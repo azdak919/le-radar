@@ -9,7 +9,8 @@ Doc courte pour agents et humains pressés. **Point d’entrée technique** avan
 **Fin de session (ticket OK) :** `npm run agents:propose` → afficher la proposition à l’humain → **attendre OK** avant de solder une dette → mettre à jour le ledger si besoin.
 
 Pour la maintenance bots/CI longue : [`maintenance.md`](maintenance.md).  
-Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).
+Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).  
+Compteur sportif anonyme, laissé de côté : [`compteur-sports.md`](compteur-sports.md).
 
 ---
 

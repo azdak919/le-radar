@@ -206,10 +206,255 @@
 .revue-item--photo::after { content: ""; display: block; clear: both; }
 @media (max-width: 520px) { .revue-item__fig { width: 92px; margin-left: 10px; } }
 
-/* Éléments du journal imprimé : absents à l'écran (le mât du site, le titre h1 et .revue-meta font ce travail) ;
- * les enveloppes de mise en page sont transparentes à l'écran. */
-.revue-flag, .revue-une, .revue-une__text, .revue-encadre, .revue-colophon, .revue-meteo, .revue-jeux, .revue-solutions { display: none; }
+/* Éléments du journal imprimé seulement : manchette, une typographique, encadré, colophon.
+ * Météo, jeux et solutions sont visibles à l'écran (ci-dessous). Les enveloppes de mise en
+ * page restent transparentes à l'écran. @media print inchangé plus bas. */
+.revue-flag, .revue-une, .revue-une__text, .revue-encadre, .revue-colophon { display: none; }
 .revue-top, .revue-top__main, .revue-top__side, .revue-cols { display: contents; }
+
+/* ══════════ ÉCRAN : colonne de lecture, images bornées, météo et jeux lisibles ══════════
+ * N'entre pas dans @media print (les règles d'impression plus bas gardent la main). */
+.revue-wire .revue {
+  max-width: 70ch;
+  margin-inline: 0;
+}
+.revue-wire .seo-title,
+.revue-wire .seo-eyebrow,
+.revue-wire .seo-crumbs,
+.revue-wire .revue-meta {
+  max-width: 70ch;
+}
+.revue-wire .seo-title {
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+.revue-wire .revue-toc { max-width: 70ch; }
+.revue-wire .revue-section > h2 {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 2rem 0 0.6rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+}
+.revue-wire .revue-section:first-child > h2,
+.revue-wire #presse > h2 { border-top: 0; padding-top: 0; }
+.revue-wire .revue-theme,
+.revue-wire .revue-sub,
+.revue-wire .revue-station {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 1.4rem;
+}
+
+/* Photo de une : 16:9 (repli 3:2), hauteur plafonnée, jamais pleine fenêtre. */
+.revue-cover {
+  margin: 0 0 1.1rem;
+  max-width: 70ch;
+}
+.revue-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 10px;
+  background: var(--bg-soft);
+}
+/* Image de banque (pas de photo réelle de l'article) : vignette, pas un bandeau. */
+.revue-cover[data-stock] {
+  width: 160px;
+  max-width: 40%;
+  margin: 0 0 1rem;
+}
+.revue-cover[data-stock] img {
+  max-height: 100px;
+  aspect-ratio: 3 / 2;
+  border-radius: 6px;
+}
+.revue-item__fig[data-stock] { width: 88px; }
+.revue-item__fig[data-stock] img { max-height: 66px; }
+
+/* Bouton PDF (formats publiés avec l'édition). */
+.revue-pdf { margin: 0 0 14px; max-width: 70ch; }
+.revue-pdf__box { position: relative; display: inline-block; }
+.revue-pdf__btn {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+.revue-pdf__btn::-webkit-details-marker { display: none; }
+.revue-pdf__btn::after { content: " ▾"; font-weight: 400; opacity: 0.7; }
+.revue-pdf__box[open] .revue-pdf__btn { border-color: var(--accent); }
+@media (hover: hover) and (pointer: fine) {
+  .revue-pdf__btn:hover { border-color: var(--accent); color: var(--accent); }
+}
+.revue-pdf__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.revue-pdf__list {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  top: calc(100% + 6px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  min-width: 12rem;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: 0 8px 28px -12px rgba(0,0,0,0.35);
+}
+.revue-pdf__list a {
+  display: block;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 7px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .revue-pdf__list a:hover { background: var(--bg-soft); color: var(--accent); }
+}
+
+/* Météo et jeux à l'écran. */
+.revue-wire .revue-meteo,
+.revue-wire .revue-jeux { display: block; }
+.revue-wire .revue-solutions { display: none; }
+.revue-wire .revue-solutions.is-open,
+.revue-wire details.revue-solutions-box { display: block; margin: 0.8rem 0 0; }
+.revue-wire details.revue-solutions-box > summary {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--accent);
+}
+.revue-wire .revue-solutions.is-open .revue-solutions__flip,
+.revue-wire details.revue-solutions-box[open] .revue-solutions__flip {
+  transform: none;
+  display: grid;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+.revue-meteo__table {
+  width: 100%;
+  max-width: 70ch;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.revue-meteo__table th,
+.revue-meteo__table td {
+  padding: 6px 8px 6px 0;
+  vertical-align: top;
+  text-align: left;
+  border-bottom: 1px dotted var(--rule);
+}
+.revue-meteo__table thead th {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+}
+.revue-meteo__table tbody th { font-weight: 700; color: var(--ink); width: 30%; }
+.revue-meteo__group th {
+  padding-top: 12px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--rule);
+}
+.revue-meteo__src,
+.revue-meteo__table caption {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+  text-align: left;
+  margin: 8px 0 0;
+  caption-side: bottom;
+}
+.revue-jeu { margin: 0 0 1.4rem; }
+.revue-jeu__title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+.revue-jeu__rule { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 0 0 8px; }
+.revue-mots,
+.revue-sudoku {
+  width: 100%;
+  max-width: min(22rem, 100%);
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.revue-mots td {
+  text-align: center;
+  font: 600 15px/1.2 var(--sans);
+  padding: 3px 0;
+  height: 1.5em;
+}
+.revue-mots__list {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.revue-sudoku {
+  border: 2px solid var(--ink);
+  aspect-ratio: 1;
+  max-width: 18rem;
+  background: var(--bg);
+}
+.revue-sudoku td {
+  border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
+  text-align: center;
+  vertical-align: middle;
+  font: 700 1.05rem/1 var(--sans);
+  color: var(--ink);
+  padding: 0;
+  height: 1.8em;
+}
+.revue-sudoku tr:nth-child(3n) td { border-bottom: 2px solid var(--ink); }
+.revue-sudoku td:nth-child(3n) { border-right: 2px solid var(--ink); }
+
+@media (max-width: 640px) {
+  .revue-cover img { max-height: 220px; }
+  .revue-meteo__table { font-size: 13.5px; }
+  .revue-mots td { font-size: 13px; }
+}
+
+@media print {
+  .revue-pdf { display: none !important; }
+  details.revue-solutions-box > summary { display: none !important; }
+}
 
 /* ══════════ IMPRESSION : un vrai journal (Letter, Legal, Tabloïd, A4, A3 en portrait) ══════════
  * Manchette (logo à gauche de LE-RADAR.ca, édition, date), article à la une, puis colonnes séparées par des filets :

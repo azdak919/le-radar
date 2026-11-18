@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v1039";
+const CACHE_NAME = "radar-shell-v1041";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
@@ -225,6 +225,21 @@ self.addEventListener("fetch", (event) => {
   // Network-first for fonts so a stale post-deploy cache heals itself
   // without the user reloading, clearing the cache, or reinstalling the PWA.
   if (/\.(woff2?|ttf|otf)$/i.test(url.pathname)) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cacheIfOk(cache, request, clone));
+          return networkResponse;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // Unes d'exemple du kit : réseau d'abord, sinon un rechargement garde un JPEG périmé
+  // (cache-first + previewV qui ne changeait qu'une fois par jour).
+  if (/\/assets\/kit\/affiches\/affiche-ex-une-/.test(url.pathname)) {
     event.respondWith(
       fetch(request)
         .then((networkResponse) => {

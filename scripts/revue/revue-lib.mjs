@@ -10,7 +10,7 @@
 //    pas des données ; textReject() refuse tout texte d'IA avec un chiffre, un nom ou une date relative absents de la source.
 // Aucune écriture ici.
 import { createRequire } from 'node:module';
-import { pickSports, frDay, frShort, frHour, institutionLabel, institutionSigle, siteImage, sportEmoji } from '../social/une-lib.mjs';
+import { pickSports, frDay, frShort, frHour, institutionLabel, institutionSigle, siteImage, isStockOnlyImage, sportEmoji } from '../social/une-lib.mjs';
 import { detectLang } from '../social/lib.mjs';
 
 const require = createRequire(import.meta.url);
@@ -171,7 +171,7 @@ export function selectArticles(news, period, { coveredIds = new Set(), max = 40 
     out.push({
       id: c.id, title: clean(it.title), link: String(it.link).trim(), source: clean(it.source), authors: front.authorNames(it),
       date: new Date(t).toISOString(), lang, institution: institutionDisplay(it.institution), sport: sportEmoji(it),
-      excerpt: shortExcerpt(it.leadExcerpt || it.excerpt, 200), image: siteImage(it), credit: front.photoCredit(it) || '',
+      excerpt: shortExcerpt(it.leadExcerpt || it.excerpt, 200), image: siteImage(it, { allowStock: true }), imageStock: isStockOnlyImage(it), credit: front.photoCredit(it) || '',
       pageUrl: c.pageUrl,
     });
     if (out.length >= max) break;
@@ -426,13 +426,13 @@ export function buildModel({ edition, period, items, sports, radio, now, ai = nu
     const a = ai?.items?.[x.id];
     return { ...x, theme: a?.theme && THEMES.includes(a.theme) ? a.theme : x.theme, resume: a?.resume || '', resumeBy: a?.resume ? 'ia' : '' };
   });
-  const lead = its.find(x => x.image) || null;
+  const lead = its.find(x => x.image && !x.imageStock) || null;
   const m = {
     version: 1, id: edition.key, edition: { id: edition.id, label: edition.label, emoji: edition.emoji, day: edition.day },
     path: reviewPath(edition.day, edition.id), url: reviewUrl(edition.day, edition.id),
     period: { start: period.start, end: period.end },
     datePublished: published || new Date(now).toISOString(), dateModified: new Date(now).toISOString(),
-    items: its, sports, radio, image: lead ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title } : null,
+    items: its, sports, radio, image: lead ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title, stock: !!lead.imageStock } : null,
     chapeau: ai?.chapeau || '', generator: ai && (ai.chapeau || Object.keys(ai.items || {}).length) ? `ia:${ai.model || 'workers-ai'}` : 'gabarit', previous,
   };
   m.headline = headlineOf(m); m.description = descriptionOf(m); m.intro = ledeOf(m);

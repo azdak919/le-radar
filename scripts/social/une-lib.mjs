@@ -342,10 +342,23 @@ export function finalizeItems(items, max = 4) {
 }
 
 /** Image publique de l'article sur le-radar.ca (repli si l'hébergement de l'affiche échoue). */
-export function siteImage(it) {
+/** Vrai si la seule image disponible est une photo de banque (pas de photo de l'article). */
+export function isStockOnlyImage(it) {
+  if (/^https:\/\//.test(String(it?.image || ''))) return false;
+  return /^https:\/\//.test(String(it?.stockImage || ''));
+}
+
+export function siteImage(it, { allowStock = true } = {}) {
   const local = String(it?.imageLocal || '');
-  if (/^assets\/news-images\//.test(local)) return `${SITE}/${local}`;
-  const u = String(it?.image || it?.stockImage || ''); return /^https:\/\//.test(u) ? u : '';
+  if (/^assets\/news-images\//.test(local)) {
+    if (isStockOnlyImage(it) && !allowStock) return '';
+    return `${SITE}/${local}`;
+  }
+  const real = String(it?.image || '');
+  if (/^https:\/\//.test(real)) return real;
+  if (!allowStock) return '';
+  const u = String(it?.stockImage || '');
+  return /^https:\/\//.test(u) ? u : '';
 }
 
 const FR_MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];

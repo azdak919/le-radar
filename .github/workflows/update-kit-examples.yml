@@ -9,6 +9,10 @@ on:
     # 12:00 UTC = 7 h HNE / 8 h HAE.
     - cron: '0 12 * * *'
   workflow_dispatch:
+  # Après chaque récolte publiée : les unes d'exemple suivent le fil du jour.
+  workflow_run:
+    workflows: ['Update Student News']
+    types: [completed]
 
 permissions:
   contents: write
@@ -21,6 +25,7 @@ concurrency:
 
 jobs:
   export:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:

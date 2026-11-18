@@ -346,7 +346,7 @@ function meteoHtml(model) {
     return r ? `            <tbody><tr class="revue-meteo__group"><th colspan="3">${esc(title)}</th></tr>\n${r}\n            </tbody>` : '';
   };
   return [
-    '        <section class="seo-section revue-section revue-meteo" aria-hidden="true">',
+    '        <section class="seo-section revue-section revue-meteo" id="meteo">',
     `          <h2>${emo('☀️')}Météo</h2>`,
     '          <table class="revue-meteo__table">',
     `            <thead><tr><th></th><th>${esc(h1)}</th><th>${esc(h2)}</th></tr></thead>`,
@@ -381,7 +381,7 @@ function jeuxHtml(model) {
     '          </div>',
   ].join('\n'));
   if (!parts.length) return { jeux: '', solutions: '' };
-  const jeux = ['        <section class="seo-section revue-section revue-jeux" aria-hidden="true">', `          <h2>${emo('🧩')}Jeux</h2>`, ...parts, '        </section>'].join('\n');
+  const jeux = ['        <section class="seo-section revue-section revue-jeux" id="jeux">', `          <h2>${emo('🧩')}Jeux</h2>`, ...parts, '        </section>'].join('\n');
   const solutions = [
     '        <section class="revue-solutions" aria-hidden="true">',
     '          <div class="revue-solutions__flip">',
@@ -410,6 +410,25 @@ function colophonHtml(model) {
     '        </aside>',
   ].filter(Boolean).join('\n');
 }
+function pdfBarHtml() {
+  const formats = [
+    ['lettre.pdf', 'Lettre'],
+    ['legal.pdf', 'Légal'],
+    ['tabloid.pdf', 'Tabloïd'],
+    ['a4.pdf', 'A4'],
+    ['a3.pdf', 'A3'],
+  ];
+  const items = formats.map(([file, label]) => `        <li><a href="${file}" download="${file}">${label}</a></li>`).join('\n');
+  return [
+    '      <div class="revue-pdf">',
+    '        <details class="revue-pdf__box">',
+    '          <summary class="revue-pdf__btn">Télécharger le PDF</summary>',
+    `          <ul class="revue-pdf__list">\n${items}`,
+    '          </ul>',
+    '        </details>',
+    '      </div>',
+  ].join('\n');
+}
 function articleBody(model) {
   const games = jeuxHtml(model);
   const pub = model.datePublished, mod = model.dateModified;
@@ -422,10 +441,11 @@ function articleBody(model) {
     `      <article class="revue revue--${esc(model.edition.id)}" data-revue="${esc(model.id)}">`,
     flagHtml(model),
     `      <p class="revue-meta">Par <strong>${PUBLISHER}</strong> · Publiée le <time datetime="${esc(isoMtl(pub))}">${esc(frDayYear(mtlParts(pub).ymd))} à ${esc(frClock(pub))}</time>${modified ? ` · Mise à jour à <time datetime="${esc(isoMtl(mod))}">${esc(frClock(mod))}</time>` : ''} (heure de Montréal)${weatherLine(model, 'revue-wx--meta') ? `<br />${weatherLine(model, 'revue-wx--meta')} <span class="revue-wx__src">Environnement Canada</span>` : ''}</p>`,
+    pdfBarHtml(),
     '      <div class="revue-top">',
     '      <div class="revue-top__main">',
     uneHead(lead),
-    img ? `      <figure class="revue-cover"><img src="${esc(img.url)}" alt="${esc(img.title)}" loading="eager" decoding="async" /><figcaption>${esc(coverCaption(img))}</figcaption></figure>` : '',
+    img ? `      <figure class="revue-cover"${img.stock ? ' data-stock="1"' : ''}><img src="${esc(img.url)}" alt="${esc(img.title)}" loading="eager" decoding="async" /><figcaption>${esc(coverCaption(img))}</figcaption></figure>` : '',
     uneText(lead),
     '      </div>',
     '      <div class="revue-top__side">',
@@ -433,7 +453,7 @@ function articleBody(model) {
     encadreHtml(model),
     '      </div>',
     '      </div>',
-    '      <nav class="revue-toc" aria-label="Sommaire"><a href="#presse">📰 Revue de presse</a><a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a><a href="#sources">Sources</a></nav>',
+    '      <nav class="revue-toc" aria-label="Sommaire"><a href="#presse">📰 Revue de presse</a><a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a><a href="#meteo">☀️ Météo</a><a href="#jeux">🧩 Jeux</a><a href="#sources">Sources</a></nav>',
     '      <div class="revue-cols">',
     presseHtml(model), radioHtml(model), sportHtml(model), sourcesHtml(model), meteoHtml(model), games.jeux, games.solutions, colophonHtml(model),
     '      </div>',
@@ -489,7 +509,7 @@ function renderReviewPage(model, { robots = 'index,follow,max-image-preview:larg
     h1: `${model.edition.emoji} ${model.headline}`, eyebrow: 'Revue de presse étudiante',
     crumbs: [{ label: 'Accueil', href: '../../' }, { label: 'Revues', href: '../' }, { label: model.headline }],
     bodyHtml: articleBody(model), jsonLd: jsonForScript(reviewJsonLd(model)), siteBase: SITE, updated: stamp(model.dateModified),
-    robots, alternate: false, extraHead: head, extraStyles: ['revue.css'], wireClass: 'revue-wire', ogType: 'article', ogImage: model.image?.url || null,
+    robots, alternate: false, extraHead: head, extraStyles: ['revue.css'], extraScripts: ['revue-web.js'], wireClass: 'revue-wire', ogType: 'article', ogImage: model.image?.url || null,
   });
 }
 function renderIndexPage(index = []) {

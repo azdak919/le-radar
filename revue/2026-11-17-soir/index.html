@@ -52,6 +52,7 @@
     <link rel="stylesheet" href="../../style-chrome.css" />
     <link rel="stylesheet" href="../../seo-pages.css" />
     <link rel="stylesheet" href="../../revue.css" />
+    <script src="../../revue-web.js" defer></script>
     <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e102" />
     <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
     <script src="../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
@@ -332,6 +333,18 @@
         <p class="revue-flag__folio"><span class="revue-flag__ed">La revue du soir</span><span class="revue-flag__date">Mardi 17 novembre 2026</span><span class="revue-flag__time">Publiée à 20 h 49, heure de Montréal<span class="revue-wx revue-wx--flag"><span class="revue-wx__city" title="Ce soir et cette nuit : Généralement nuageux"><span class="revue-emoji" aria-hidden="true">⛅</span> 4°&#8239;Québec</span> · <span class="revue-wx__city" title="Ce soir et cette nuit : Quelques nuages"><span class="revue-emoji" aria-hidden="true">🌙</span> 5°&#8239;Montréal</span></span></span></p>
       </header>
       <p class="revue-meta">Par <strong>Le Radar</strong> · Publiée le <time datetime="2026-11-17T20:49:00-05:00">mardi 17 novembre 2026 à 20 h 49</time> (heure de Montréal)<br /><span class="revue-wx revue-wx--meta"><span class="revue-wx__city" title="Ce soir et cette nuit : Généralement nuageux"><span class="revue-emoji" aria-hidden="true">⛅</span> 4°&#8239;Québec</span> · <span class="revue-wx__city" title="Ce soir et cette nuit : Quelques nuages"><span class="revue-emoji" aria-hidden="true">🌙</span> 5°&#8239;Montréal</span></span> <span class="revue-wx__src">Environnement Canada</span></p>
+      <div class="revue-pdf">
+        <details class="revue-pdf__box">
+          <summary class="revue-pdf__btn">Télécharger le PDF</summary>
+          <ul class="revue-pdf__list">
+        <li><a href="lettre.pdf" download="lettre.pdf">Lettre</a></li>
+        <li><a href="legal.pdf" download="legal.pdf">Légal</a></li>
+        <li><a href="tabloid.pdf" download="tabloid.pdf">Tabloïd</a></li>
+        <li><a href="a4.pdf" download="a4.pdf">A4</a></li>
+        <li><a href="a3.pdf" download="a3.pdf">A3</a></li>
+          </ul>
+        </details>
+      </div>
       <div class="revue-top">
       <div class="revue-top__main">
         <div class="revue-une" aria-hidden="true">
@@ -339,7 +352,7 @@
           <p class="revue-une__title" lang="en"><a href="https://theconcordian.com/2026/11/why-young-people-should-watch-persepolis/" tabindex="-1" target="_blank" rel="noopener noreferrer">Why young people should watch more films like Persepolis</a></p>
           <p class="revue-une__byline">Par <span class="notranslate" translate="no">Chloé Etienne</span> · mar. 17 nov., 18 h 18</p>
         </div>
-      <figure class="revue-cover"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&amp;utm_campaign=imageinfo&amp;utm_content=original" alt="Why young people should watch more films like Persepolis" loading="eager" decoding="async" /><figcaption>The Concordian, « Why young people should watch more films like Persepolis »</figcaption></figure>
+      <figure class="revue-cover" data-stock="1"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&amp;utm_campaign=imageinfo&amp;utm_content=original" alt="Why young people should watch more films like Persepolis" loading="eager" decoding="async" /><figcaption>The Concordian, « Why young people should watch more films like Persepolis »</figcaption></figure>
         <p class="revue-une__text" aria-hidden="true">Les jeunes devraient regarder plus de films comme Persepolis pour s'enrichir et s'éduquer</p>
       </div>
       <div class="revue-top__side">
@@ -485,7 +498,7 @@
         <p>Les résumés d’une phrase sont rédigés par une IA ouverte (@cf/meta/llama-3.1-8b-instruct-fp8-fast, Cloudflare Workers AI) à partir du titre et de l’extrait de chaque article, puis vérifiés automatiquement : un résumé qui contient un chiffre, un nom ou une date absents de la source est remplacé par un court extrait de l’article. Les liens, les auteurs, les grilles de radio et les résultats sportifs viennent directement des données du Radar et sont contrôlés avant publication.</p>
         <p class="revue-nav"><a href="https://le-radar.ca/revue/2026-11-17-matin/" rel="prev">← La revue du matin du mardi 17 novembre 2026</a> · <a href="https://le-radar.ca/revue/">Toutes les revues</a> · <a href="https://le-radar.ca/revue/feed.xml">Flux RSS des revues</a></p>
       </section>
-        <section class="seo-section revue-section revue-meteo" aria-hidden="true">
+        <section class="seo-section revue-section revue-meteo" id="meteo">
           <h2><span class="revue-emoji" aria-hidden="true">☀️</span> Météo</h2>
           <table class="revue-meteo__table">
             <thead><tr><th></th><th>Ce soir et cette nuit</th><th>Mercredi</th></tr></thead>
@@ -521,7 +534,7 @@
             <caption class="revue-meteo__src">Prévisions publiques d’Environnement et Changement climatique Canada, lues à la production de cette édition.</caption>
           </table>
         </section>
-        <section class="seo-section revue-section revue-jeux" aria-hidden="true">
+        <section class="seo-section revue-section revue-jeux" id="jeux">
           <h2><span class="revue-emoji" aria-hidden="true">🧩</span> Jeux</h2>
           <div class="revue-jeu revue-jeu--mots">
             <h4 class="revue-jeu__title">Mots cachés</h4>
