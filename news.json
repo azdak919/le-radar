@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18T20:07:22.726Z",
+  "updated": "2026-11-18T20:59:56.024Z",
   "updatedSlot": null,
   "count": 1031,
   "freshnessSessions": 3,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-17T20:19:55.000Z",
-      "lastFetchOk": "2026-11-18T20:06:29.827Z"
+      "lastFetchOk": "2026-11-18T20:59:26.644Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-11T12:00:00.000Z",
-      "lastFetchOk": "2026-11-18T20:06:32.456Z"
+      "lastFetchOk": "2026-11-18T20:59:29.328Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,15 +34,15 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-11-18T13:00:13.000Z",
-      "lastFetchOk": "2026-11-18T20:06:32.999Z"
+      "lastFetchOk": "2026-11-18T20:59:29.958Z"
     },
     "The Link": {
-      "fetchOk": true,
-      "stale": false,
-      "articleCount": 20,
-      "freshArticleCount": 20,
+      "fetchOk": false,
+      "stale": true,
+      "articleCount": 333,
+      "freshArticleCount": 333,
       "lastArticle": "2026-11-18T04:23:00.000Z",
-      "lastFetchOk": "2026-11-18T20:06:34.481Z"
+      "lastFetchOk": null
     },
     "Zone Campus": {
       "fetchOk": false,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-03T20:33:01.000Z",
-      "lastFetchOk": "2026-11-18T20:06:36.752Z"
+      "lastFetchOk": "2026-11-18T20:59:33.134Z"
     },
     "Le Collectif": {
       "fetchOk": false,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-11-18T20:06:49.146Z"
+      "lastFetchOk": "2026-11-18T20:59:33.753Z"
     },
     "La Pige": {
       "fetchOk": false,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 9,
       "lastArticle": "2026-11-06T21:21:04.110Z",
-      "lastFetchOk": "2026-11-18T20:06:50.568Z"
+      "lastFetchOk": "2026-11-18T20:59:35.245Z"
     },
     "The Tribune": {
       "fetchOk": false,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-11-16T23:42:52.000Z",
-      "lastFetchOk": "2026-11-18T20:06:51.143Z"
+      "lastFetchOk": "2026-11-18T20:59:35.787Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-14T23:42:59.000Z",
-      "lastFetchOk": "2026-11-18T20:06:51.418Z"
+      "lastFetchOk": "2026-11-18T20:59:35.987Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-11-18T20:06:52.738Z"
+      "lastFetchOk": "2026-11-18T20:59:37.274Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-11-18T20:06:52.916Z"
+      "lastFetchOk": "2026-11-18T20:59:37.448Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-11-18T20:06:53.541Z"
+      "lastFetchOk": "2026-11-18T20:59:38.010Z"
     },
     "The Concordian": {
       "fetchOk": true,
@@ -146,7 +146,7 @@
       "articleCount": 6,
       "freshArticleCount": 6,
       "lastArticle": "2026-11-18T17:24:15.000Z",
-      "lastFetchOk": "2026-11-18T20:06:54.197Z"
+      "lastFetchOk": "2026-11-18T20:59:39.182Z"
     },
     "Impact Campus": {
       "fetchOk": true,
@@ -154,7 +154,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-11-12T18:42:42.000Z",
-      "lastFetchOk": "2026-11-18T20:06:55.679Z"
+      "lastFetchOk": "2026-11-18T20:59:40.877Z"
     },
     "La Griffe": {
       "fetchOk": true,
@@ -162,7 +162,7 @@
       "articleCount": 10,
       "freshArticleCount": 8,
       "lastArticle": "2026-10-27T15:51:37.000Z",
-      "lastFetchOk": "2026-11-18T20:06:56.028Z"
+      "lastFetchOk": "2026-11-18T20:59:41.251Z"
     }
   },
   "items": [
@@ -304,7 +304,7 @@
       "sourceImageCreditTriedAt": "2026-11-18T14:41:35.422Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://theconcordian.com/wp-content/uploads/2026/10/P1144151RaynorAidan_2.9.2026_PSPP.PQ_.QC_.Election_Vol44.jpeg|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "https://theconcordian.com/wp-content/uploads/2026/10/P1144151RaynorAidan_2.9.2026_PSPP.PQ_.QC_.Election_Vol44.jpeg|",
       "imageHealthAt": "2026-11-18T14:41:30.213Z",
       "leadExcerpt": "The results are even worse on the Island of Montreal, where the Parti Québécois (PQ) won two seats — including St-Pierre Plamondon’s. Only 14 per cent of of respondents were satisfied with his government, compared to 62 per cent who were not. In the greater Montreal area — which encompasses Laval, the north and south shores — that number goes down to 50 per cent saying they’re unsatisfied with the performance so far and 26 per cent said they’re satisfied. On Oct. 5, the PQ carried 26 ridings in both the north and south shores.",
@@ -392,7 +392,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "mirror_lake_on_muskoka_line_i0021644.jpeg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:47.875Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:36.461Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Mirror_Lake_on_Muskoka_Line_I0021644.jpeg|",
       "leadImageCheckedAt": "2026-11-18T13:10:45.519Z",
@@ -417,7 +417,6 @@
       "image": "https://thelinknewspaper.ca/images/articles/_resized/HEADLINE.jpg",
       "authorCheckedAt": "2026-11-18T05:06:35.944Z",
       "authorAttemptAt": "2026-11-18T05:06:35.943Z",
-      "_pageAuthor": "Cléo Clamen",
       "sourceImageCredit": "Photo: Cléo Clamen",
       "sourceImageCreator": "Cléo Clamen",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16573",
@@ -434,7 +433,8 @@
       "leadExcerpt": "The demonstration was organized by the Coalition de résistance pour l’unité étudiante syndicale (CRUES) student union as part of the province-wide student strikes from Nov. 9 to Nov. 13. Student associations representing over 100,000 CEGEP and university students participated in the strike, according to CRUES.",
       "imageLocal": "assets/news-images/63eeda217342819e.jpg",
       "imageLocalKey": "63eeda217342819e",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -450,7 +450,6 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/RR26_1111_MG_7495_900_480_90.jpg",
       "authorCheckedAt": "2026-11-18T05:06:37.791Z",
       "authorAttemptAt": "2026-11-18T05:06:37.791Z",
-      "_pageAuthor": "Brendan Schwartz",
       "sourceImageCredit": "Photo: Racha Rais",
       "sourceImageCreator": "Racha Rais",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16572",
@@ -467,7 +466,8 @@
       "leadExcerpt": "Montrealers gathered at Place du Canada on Nov. 11 for a Remembrance Day ceremony honouring fallen soldiers, veterans and serving members of the Canadian Armed Forces.",
       "imageLocal": "assets/news-images/75ea361a84b43c59.jpg",
       "imageLocalKey": "75ea361a84b43c59",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -480,22 +480,22 @@
       "author": "Anthony Tapia Ancinez",
       "date": "2026-11-18T00:30:52.000Z",
       "excerpt": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stands next to the exit tunnel to greet their fans who travelled to Ottawa’s TD Place for the NSL final on Nov. 14. This moment represented what fans will remember from this season: a",
-      "image": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-19-1024x683.jpg",
+      "image": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-38.jpg",
       "leadExcerpt": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stands next to the exit tunnel to greet their fans who travelled to Ottawa’s TD Place for the NSL final on Nov. 14. This moment represented what fans will remember from this season: a reciprocal feeling of respect and passion between fans and players, despite an unfortunate end to what was a great season for the team.",
       "sourceImageCredit": "Photo: Hannah Nobile",
       "sourceImageCreator": "Hannah Nobile",
       "sourceImageCreditUrl": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
       "sourceImageCreditFrom": "rss-content",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "hannahnobile_141126_nslfinal_vol44-19.jpg",
+      "sourceImageCreditImageKey": "hannahnobile_141126_nslfinal_vol44-38.jpg",
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
-      "leadImageCheckedKey": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-19-1024x683.jpg|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
-      "imageLocal": "assets/news-images/7c744cffd74290cb.jpg",
-      "imageLocalKey": "7c744cffd74290cb",
-      "imageHealthKey": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-19-1024x683.jpg|",
-      "imageHealthAt": "2026-11-18T20:10:14.981Z"
+      "leadImageCheckedKey": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-38.jpg|",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
+      "imageLocal": "assets/news-images/3671d3a4316da30b.webp",
+      "imageLocalKey": "3671d3a4316da30b",
+      "imageHealthKey": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_141126_NSLFinal_VOL44-38.jpg|",
+      "imageHealthAt": "2026-11-18T21:01:21.928Z"
     },
     {
       "source": "The Concordian",
@@ -583,9 +583,9 @@
       "sourceImageCreditTriedAt": "2026-11-17T20:38:38.356Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://montrealcampus.ca/wp-content/uploads/2026/10/IMG_0876.jpeg|",
-      "leadImageCheckedAt": "2026-11-17T20:37:51.119Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "https://montrealcampus.ca/wp-content/uploads/2026/10/IMG_0876.jpeg|",
-      "imageHealthAt": "2026-11-17T20:38:35.197Z",
+      "imageHealthAt": "2026-11-18T21:01:21.928Z",
       "leadExcerpt": "⁢⁢⁣⁢⁤⁤⁤⁣⁣⁣Des établissements regroupant plusieurs restaurants virtuels apparaissent progressivement à Montréal, depuis quelques années. Ces cuisines fantômes submergent les plateformes de livraisons en ligne. Pour rester compétitifs, les restaurants traditionnels misent sur la qualité de leur service à la clientèle.",
       "imageLocal": "assets/news-images/426e8bffe1cefa87.jpg",
       "imageLocalKey": "426e8bffe1cefa87",
@@ -830,7 +830,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-18.42.18.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:48.322Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:36.863Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.42.18.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -862,7 +862,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-18.32.50.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:48.780Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:37.205Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.32.50.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -894,7 +894,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-18.29.11.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:49.151Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:37.590Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.29.11.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -926,7 +926,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-18.22.52.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:49.546Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:37.972Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.22.52.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -958,7 +958,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-18.17.07.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:49.935Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:38.338Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.17.07.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -990,7 +990,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-18.12.14.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:50.307Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:38.697Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.12.14.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -1022,10 +1022,10 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-18.08.13.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:50.756Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:39.120Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.08.13.png|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-18.08.13.png|",
       "imageHealthAt": "2026-11-18T10:28:47.254Z",
       "leadExcerpt": "With the temperatures nearing 20°C in Sherbrooke in November, it’s the kind of weather that makes you check the date. So, with the rising winter temperatures, it feels fitting that Bishop’s offered a screening of YUMI – The Whole World, which highlights the devastating effects climate change has on the world, especially in the Pacific. YUMI shows that the signs of a changing climate are harder to take in stride. In Vanuatu, heavy rain can topple papaya trees and damage the food families grow. Along Fiji’s coast, rising seas and erosion are washing away some communities, and forcing others to move inland.",
@@ -1082,7 +1082,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-17.58.34.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:51.136Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:39.558Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-17.58.34.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -1171,7 +1171,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-16-a-17.27.57.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:51.620Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:39.926Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-16-a-17.27.57.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -1201,7 +1201,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "creation-sans-titre.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:51.938Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:40.408Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Creation-sans-titre.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -1295,7 +1295,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "05_news_bill_c-39_backlash_sehra_maloney_690_518.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:53.312Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:41.827Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Bill_C-39_Backlash_Sehra_Maloney_690_518.PNG|",
       "leadImageCheckedAt": "2026-11-18T05:08:07.242Z",
@@ -1304,7 +1304,8 @@
       "leadExcerpt": "Montreal residents gathered outside Industry Minister Mélanie Joly’s constituency office on Nov. 12 to protest against Bill C-39, the Building Canada Strong Act.",
       "imageLocal": "assets/news-images/02e121ca9f1182f3.png",
       "imageLocalKey": "02e121ca9f1182f3",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1354,7 +1355,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1000030105.jpg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:53.629Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:42.144Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/1000030105.jpg|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -1384,7 +1385,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "dsc0108.jpg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:53.946Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:42.460Z",
       "leadImageReady": false,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -1425,7 +1426,8 @@
       "leadExcerpt": "Everyone should be respected and valued, regardless of the generation they belong to. Someone’s value, life experiences or potential should not be diminished simply due to their age. It’s easy to judge another generation based on surface impressions. But the reality is that every generation has its own culture, shared beliefs and challenges.",
       "imageLocal": "assets/news-images/4aadce85d3ba3205.jpg",
       "imageLocalKey": "4aadce85d3ba3205",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1456,7 +1458,8 @@
       "leadExcerpt": "AFC Toronto defeated the Montreal Roses in the Northern Super League (NSL) final, winning the Diana B. Matheson Cup at Ottawa’s TD Place on Saturday, with Olivia Chisholm’s lone tally being the sole difference on Nov. 14. AFC Toronto defeated the Montreal Roses in the Northern Super League (NSL) final, winning the Diana B. Matheson Cup at Ottawa’s TD Place on Saturday, with Olivia Chisholm’s lone tally being the sole difference on Nov. 14. The two sides shared possession throughout the opening half, with play mostly concentrated in the midfield. While the Roses struggled to get through Toronto's defensive line, Toronto made the most of its opportunity late in the half.",
       "imageLocal": "assets/news-images/7eff94fd7e63e4ac.jpg",
       "imageLocalKey": "7eff94fd7e63e4ac",
-      "imageLocalVia": "resize-proxy"
+      "imageLocalVia": "resize-proxy",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1487,7 +1490,8 @@
       "leadExcerpt": "After suffering a 17-point loss to Bishop’s University on Nov. 7, the Concordia University Stingers women’s basketball team returned to John Dore Court for their home opener against rivals McGill University.",
       "imageLocal": "assets/news-images/f0a9910a03d186e0.jpg",
       "imageLocalKey": "f0a9910a03d186e0",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -1518,7 +1522,8 @@
       "leadExcerpt": "Coming off a nail-biting victory against Bishop’s University on Nov. 7, the Concordia University Stingers men's basketball team returned to Notre-Dame-de-Grâce on Nov. 12 for their home opener.",
       "imageLocal": "assets/news-images/3aff5d4a194a6bc4.jpg",
       "imageLocalKey": "3aff5d4a194a6bc4",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1538,7 +1543,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_5372.jpg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:54.263Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:42.776Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_5372.jpg|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -2311,7 +2316,8 @@
       "leadExcerpt": "Around 40 students held a sit-in in the Henry F. Hall building mezzanine on Nov. 10 around 5 p.m. to protest austerity and the Concordia University administration’s recent ban on students tabling in the mezzanine. Students formed a barricade and erected several tents inside. Stephanie Tremblay, a Concordia student and organizer of the demonstration who was granted a pseudonym for safety reasons, said students occupied the mezzanine in response to the tabling ban and as part of the province-wide week-long student strikes organized by the Coalition de résistance pour l’unité étudiante syndicale (CRUES) student union.",
       "imageLocal": "assets/news-images/35a8e367fe6e5df2.jpg",
       "imageLocalKey": "35a8e367fe6e5df2",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -2361,7 +2367,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-18.jpeg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:54.579Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:43.092Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-18.jpeg|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -2491,7 +2497,7 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadImageCheckedKey": "https://theplantnews.com/wp-content/uploads/2026/11/image-2766bdaf.png|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "https://theplantnews.com/wp-content/uploads/2026/11/image-2766bdaf.png|",
       "imageHealthAt": "2026-11-18T10:28:47.254Z",
       "leadExcerpt": "Depuis le 18 septembre 2026, un sujet d’actualité prime sur nos médias et nos réseaux sociaux. Le mouvement lycéen de 2026 en France soulève plusieurs débats dans les sphères politiques. Que se soit des vidéos de citoyens déguisés en Captain America ou des extraits d’un orchestre qui rythme la marche des manifestants, il met surtout en lumière des dénonciations universelles et la violence choquante à l’encontre de jeunes étudiants du corps policier. Les étudiants marchent contre les conditions d’enseignements et de scolarité: pas assez de profs, des horaires scolaires insoutenables et des salles de classes en ruine. Ils militent également pour la suppression de l’application d’admission aux études supérieures Parcoursup, une plateforme longuement critiquée pour son manque de transparence au niveau des critères d’admissibilité et sa restriction de places disponibles. En 2025, près de 39 000 candidats n’avaient reçu aucune proposition d’universités à la fin de la procédure, soit 6,5% des demandeurs selon les calculs du Monde.",
@@ -2550,7 +2556,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image12.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:55.017Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:43.536Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://theplantnews.com/wp-content/uploads/2026/11/image12.png|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -2581,7 +2587,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "chloenovemberarticle.jpg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:55.549Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:43.921Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://theplantnews.com/wp-content/uploads/2026/11/chloenovemberarticle.jpg|",
       "leadImageCheckedAt": "2026-11-18T10:28:32.020Z",
@@ -3061,7 +3067,8 @@
       "leadExcerpt": "The Saputo family founded the team in 1992, which was then called Montreal Impact. The team entered Major League Soccer (MLS), the highest level of soccer in North America, in 2012.",
       "imageLocal": "assets/news-images/8de8955b46d69bfa.jpg",
       "imageLocalKey": "8de8955b46d69bfa",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Concordian",
@@ -3213,7 +3220,8 @@
       "leadExcerpt": "On Nov. 9, the Festival du Monde Arabe de Montréal presented The Echo of Grenada. The performance showcases Malouf, a Tunisian musical style, celebrating its enduring heritage. The festival’s mission is to create a space where different horizons of Arabic and Western cultures can meet. The festival’s 27th edition promotes a variety of artistic mediums such as cinema, music and theatre.",
       "imageLocal": "assets/news-images/28f4201f61263815.jpg",
       "imageLocalKey": "28f4201f61263815",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -3244,7 +3252,8 @@
       "leadExcerpt": "Refugee advocates held a rally in downtown Montreal on Nov. 9 to renew their demands for Canada to withdraw from the Safe Third Country Agreement (STCA). The rally coincided with the start of a four-day Federal Court hearing in Toronto on a constitutional challenge to the STCA. The applicants argue that the agreement violates refugees' equality rights under Section 15 of the Canadian Charter of Rights and Freedoms.",
       "imageLocal": "assets/news-images/16827d464dd9991f.jpg",
       "imageLocalKey": "16827d464dd9991f",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -3346,7 +3355,8 @@
       "leadExcerpt": "The Concordia University men’s hockey team obliterated the Ottawa Gee-Gees 7-0 on Nov. 7, with goaltender Brady James earning his first shutout of the season.",
       "imageLocal": "assets/news-images/adb62591e108fe00.jpg",
       "imageLocalKey": "adb62591e108fe00",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3832,7 +3842,7 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadImageCheckedKey": "https://www.delitfrancais.com/wp-content/uploads/2026/11/matteo1.png|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "https://www.delitfrancais.com/wp-content/uploads/2026/11/matteo1.png|",
       "imageHealthAt": "2026-11-18T10:28:47.254Z",
       "leadExcerpt": "Mardi soir, dans les locaux de Gerts, le rideau est tiré. La question posée et le débat, lancé : qui devrait nous représenter ? Voici la question posée lors de l’édition de Pints and Politics du mardi 3 novembre, une organisation qui engage le débat politique sur le campus autour d’un breuvage. Habituellement structurée autour de trois questions, la discussion sur la représentation lancée par le club mcgillois a cette fois laissé place, pour sa dernière partie, à la projection d’une carte des États-Unis.",
@@ -3862,7 +3872,7 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadImageCheckedKey": "https://www.delitfrancais.com/wp-content/uploads/2026/11/naomi-catvy.png|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "https://www.delitfrancais.com/wp-content/uploads/2026/11/naomi-catvy.png|",
       "imageHealthAt": "2026-11-18T10:28:47.254Z",
       "leadExcerpt": "Évidemment, peu de choses laissent penser que l’utilisation de l’IA atteindra une telle ubiquité. Même si cette technologie est sporadiquement utilisée comme soutien, l’enseignement de contenus originaux est aujourd’hui la norme et le demeurera sûrement. Cependant, lorsque des professeur·e·s de McGill nous déclarent ouvertement avoir utilisé l’IA pour agrémenter leurs diapositives, ou bien pour générer leurs exemples pédagogiques, la question persiste : quelle devrait être la place de l’IA au sein de l’Université McGill ?",
@@ -4371,7 +4381,7 @@
       "date": "2026-11-10T18:50:39.000Z",
       "excerpt": "Club owner Joey Saputo did not rule out selling to buyers who would move the team, though it would not be his preference.",
       "image": "https://theconcordian.com/wp-content/uploads/2026/11/107300.jpg",
-      "authorAttemptAt": "2026-11-18T20:07:38.784Z",
+      "authorAttemptAt": "2026-11-18T21:00:04.790Z",
       "imageLocal": "assets/news-images/717840021a9b47fa.webp",
       "imageLocalKey": "717840021a9b47fa",
       "imageHealthKey": "https://theconcordian.com/wp-content/uploads/2026/11/107300.jpg|",
@@ -4779,7 +4789,8 @@
       "leadExcerpt": "Mayor Martinez Ferrada has implemented policies since she was elected to address poverty, focusing on financial incentives. Her administration has increased the budget for the unhoused crisis and has allowed people living in encampments at specific sites to stay rather than being removed.",
       "imageLocal": "assets/news-images/7b74098fc1c70d4f.jpg",
       "imageLocalKey": "7b74098fc1c70d4f",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -4810,7 +4821,8 @@
       "leadExcerpt": "Students at Concordia University are still affected by the university’s ongoing deficit, which was intensified by government changes and tuition hikes. Concordia’s recovery plan to eliminate this deficit by 2028-2029 is actively straining the quality of its operational services.",
       "imageLocal": "assets/news-images/e4c01c7d717addc0.jpg",
       "imageLocalKey": "e4c01c7d717addc0",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -4832,7 +4844,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "05_news_canada_in_erasmus_plus_aia_segal_690_850.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:56.307Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:44.704Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_NEWS_Canada_in_Erasmus_Plus_Aia_Segal_690_850.PNG|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -4842,7 +4854,8 @@
       "leadExcerpt": "In the United States-Canada trade war, it is tricky to define a “winning” side. However, Canada is developing a unique relationship with Europe, one that could help Canada gain inclusion in the Erasmus+ exchange program. Canadian universities currently manage their exchange programs directly through bilateral agreements between institutions. This limits not only student mobility but also the funding available for them.",
       "imageLocal": "assets/news-images/5cfddfcef9df9642.png",
       "imageLocalKey": "5cfddfcef9df9642",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -4873,7 +4886,8 @@
       "leadExcerpt": "The demands of the campaign include closing Quebec’s office in Tel Aviv, divesting from companies complicit in violating international law through the Caisse de dépôt et placement du Québec (CDPQ), ending the flow of military equipment to Israel and extending healthcare coverage to residents arriving in Quebec from Gaza.",
       "imageLocal": "assets/news-images/ec7bb6ebea0ed431.jpg",
       "imageLocalKey": "ec7bb6ebea0ed431",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -4904,7 +4918,8 @@
       "leadExcerpt": "United States President Donald Trump’s second term has been a political disaster for the U.S. He’s left the country’s people, and the world as a whole, feeling politically hopeless.",
       "imageLocal": "assets/news-images/a9ba90c043435004.jpg",
       "imageLocalKey": "a9ba90c043435004",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -4935,7 +4950,8 @@
       "leadExcerpt": "The Montreal Roses have reached the Northern Super League (NSL) final in their second season. Montreal won its semi-final matchups by an aggregate score of 5-2 against Vancouver Rise FC, moving on after a 2-2 tie on Nov. 8 at Stade Boréale.",
       "imageLocal": "assets/news-images/575fc4aea3baee86.jpg",
       "imageLocalKey": "575fc4aea3baee86",
-      "imageLocalVia": "disk"
+      "imageLocalVia": "disk",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -4966,7 +4982,8 @@
       "leadExcerpt": "Drawing fouls is a big part of basketball. It is an art form in itself. But players are beginning to take it too far, embellishing and dramatically flopping on the court in hopes of a whistle. The worst part is, they are getting away with it. The referees do not care, and they are willing to blow the whistle at any sign that a star player is struggling to create space or score. Seeing it in the National Basketball Association (NBA), kids are starting to emulate it in their games as well. Their favourite players are throwing themselves on the ground, so why wouldn’t they?",
       "imageLocal": "assets/news-images/2f3093e46faf291d.jpg",
       "imageLocalKey": "2f3093e46faf291d",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -4997,7 +5014,8 @@
       "leadExcerpt": "The federal government has announced a $19.2 million investment in the Canadian athletics sector to restore public and athlete trust on the world stage. Secretary of State for Sport Adam van Koeverden announced the news on Oct. 7 in a press release.",
       "imageLocal": "assets/news-images/1dec29c4d084fdb2.jpg",
       "imageLocalKey": "1dec29c4d084fdb2",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -5146,7 +5164,7 @@
       "imageLocalKey": "8b62759e2d0ba554",
       "imageHealthKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_FRINGE_Liszt_Gabriel_Brothers_690_488.png|",
       "imageHealthAt": "2026-11-18T10:28:47.254Z",
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:56.764Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:45.173Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16542",
@@ -5211,7 +5229,7 @@
       "imageLocalKey": "066bb1d53c9bf73e",
       "imageHealthKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_FRINGE_Archives_Gaies_Halle_Keays_690_1213.png|",
       "imageHealthAt": "2026-11-18T10:28:47.254Z",
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:57.222Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:45.642Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16538",
@@ -5338,7 +5356,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-09-a-21.01.30.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:57.656Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:46.119Z",
       "leadImageReady": false,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -5370,7 +5388,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-09-a-20.57.42.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:58.032Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:46.532Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-20.57.42.png|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -5402,7 +5420,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-09-a-20.47.52.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:58.451Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:46.901Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-20.47.52.png|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -5433,7 +5451,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-09-a-20.44.07.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:58.824Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:47.293Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-20.44.07.png|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -5465,7 +5483,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-09-a-20.40.35.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:59.218Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:47.660Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-20.40.35.png|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -5496,7 +5514,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "capture-decran-le-2026-11-09-a-20.36.19.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:59.646Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:48.037Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-20.36.19.png|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -5552,7 +5570,7 @@
       "authorAttemptAt": "2026-11-18T10:26:31.168Z",
       "imageLocal": "assets/news-images/bf270e8b0f1ca0dc.jpg",
       "imageLocalKey": "bf270e8b0f1ca0dc",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:00.132Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:48.481Z",
       "sourceImageCredit": "Photo: The Campus",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thebucampus.ca/2026/11/09/the-multiversity-what-makes-the-bishops-experience-different",
@@ -6073,7 +6091,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "greta-kline-by-matthew-james-wilson-2016.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:01.135Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:49.585Z",
       "leadImageReady": true,
       "leadImageCheckedKey": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Greta-Kline-by-Matthew-James-Wilson-2016.png|",
       "leadImageCheckedAt": "2026-11-18T11:43:08.005Z",
@@ -6487,7 +6505,7 @@
       "date": "2026-11-07T02:49:45.000Z",
       "excerpt": "The Concordian is at a critical point in its history. A fee levy increase is the best way to ensure we can continue bringing you high-quality journalism and hold the institutions that impact our lives accountable for their actions.",
       "image": "https://theconcordian.com/wp-content/uploads/2026/11/combined-image-2.jpg",
-      "authorAttemptAt": "2026-11-18T20:07:39.792Z",
+      "authorAttemptAt": "2026-11-18T21:00:06.359Z",
       "imageLocal": "assets/news-images/4fb1d3eb457b00b6.webp",
       "imageLocalKey": "4fb1d3eb457b00b6",
       "leadImageReady": true,
@@ -6525,7 +6543,7 @@
       "leadImageCheckedAt": "2026-11-18T17:38:38.897Z",
       "imageHealthKey": "https://quartierlibre.ca/wp-content/uploads/2026/11/image2.jpg|",
       "imageHealthAt": "2026-11-18T13:11:27.492Z",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:25.294Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:50.124Z",
       "sourceImageCredit": "Photo : Quartier Libre",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/etudiantes-en-cinema-inquietudes-ambitions",
@@ -6894,7 +6912,7 @@
       "leadImageCheckedAt": "2026-11-18T17:38:38.897Z",
       "imageHealthKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/1er.jpg|",
       "imageHealthAt": "2026-11-18T13:11:27.492Z",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:25.777Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:50.605Z",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/11/06/une-moustache-pour-parler-de-deux-cancers-masculins",
@@ -7411,7 +7429,7 @@
       "imageLocalKey": "708ae36eb552295a",
       "imageHealthKey": "https://theplantnews.com/wp-content/uploads/2026/11/orioncanthelpmyself.jpeg|",
       "imageHealthAt": "2026-11-18T11:45:04.484Z",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:26.280Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:51.047Z",
       "sourceImageCredit": "Photo: The Plant",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/11/05/the-existential-horror-of-ai",
@@ -7591,7 +7609,7 @@
       "imageLocalKey": "f2dba12e65e50967",
       "imageHealthKey": "https://theplantnews.com/wp-content/uploads/2026/11/samantha-pop-mtl-img_3805.jpeg|",
       "imageHealthAt": "2026-11-18T11:45:04.484Z",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:26.721Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:51.506Z",
       "sourceImageCredit": "Photo: The Plant",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/11/05/lights-camera-seltzer-pop-montreal-2026",
@@ -7623,7 +7641,7 @@
       "imageLocalKey": "8e1b109c2e51e727",
       "imageHealthKey": "https://theplantnews.com/wp-content/uploads/2026/11/karina_borscharticle.jpeg|",
       "imageHealthAt": "2026-11-18T11:45:04.484Z",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:27.131Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:51.950Z",
       "sourceImageCredit": "Photo: The Plant",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/11/05/come-for-the-borsch-stay-for-the-culture",
@@ -8483,7 +8501,7 @@
       "sourceImageCreditRev": 17,
       "leadImageReady": true,
       "leadImageCheckedKey": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "https://www.delitfrancais.com/wp-content/uploads/2026/11/LacrymoBastien-1-930x620.png|",
       "imageHealthAt": "2026-11-18T11:45:04.484Z",
       "leadExcerpt": "Le 8 octobre 2026, le compte Instagram Lacrymos de Sang, en collaboration avec l’Observatoire Féministe des Violences Médicales (OBSMed), lance un appel aux témoignages. La description de la première publication du compte indique : « Tu as fait l’expérience de symptômes inquiétants par rapport à ton cycle menstruel après avoir été exposé·e à des lacrymos ces dernières semaines ? Partage ton témoignage anonymement au lien en bio ! ». En date du 30 octobre, le collectif Lacrymos de Sang avait reçu plus de 10 000 témoignages.",
@@ -8634,24 +8652,24 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "caricature-passation-caq-vers-pc.png.png",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:30.873Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:54.548Z",
       "leadImageReady": false,
-      "leadImageCheckedKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/Caricature-Passation-CAQ-vers-PC.png.png|https://upload.wikimedia.org/wikipedia/commons/7/70/Pavillon_Alexandre-Vachon_01.jpg",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
-      "imageHealthKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/Caricature-Passation-CAQ-vers-PC.png.png|https://upload.wikimedia.org/wikipedia/commons/7/70/Pavillon_Alexandre-Vachon_01.jpg",
-      "imageHealthAt": "2026-11-18T20:10:14.981Z",
+      "leadImageCheckedKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/Caricature-Passation-CAQ-vers-PC.png.png|https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
+      "imageHealthKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/Caricature-Passation-CAQ-vers-PC.png.png|https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "imageHealthAt": "2026-11-18T21:01:21.928Z",
       "leadExcerpt": "Les Québécois ont voté à 66,9 % lors de la dernière élection. Ce n’est cependant pas dans toutes les circonscriptions de la province où le taux de vote a été aussi haut. Certaines circonscriptions ont vu des baisses et d’autres des hausses marquées dans la participation de leurs citoyens. Que s'est-il passé plus précisément ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/70/Pavillon_Alexandre-Vachon_01.jpg",
-      "imageTitle": "Pavillon Alexandre-Vachon",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "imageTitle": "Pavillon Charles-Eugène-Marchand",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Alexandre-Vachon_01.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Charles-Eug%C3%A8ne-Marchand_05.jpg",
       "imageLocal": "assets/news-images/b7e1a314fc0f47c4.jpg",
       "imageLocalKey": "b7e1a314fc0f47c4",
       "imageLocalVia": "disk",
-      "stockImageLocal": "assets/stock-images/12253475a05cb15e.jpg",
+      "stockImageLocal": "assets/stock-images/9312d68b533a55b8.jpg",
       "sourceImageCreditHintRev": 1
     },
     {
@@ -8766,7 +8784,7 @@
       "leadImageCheckedKey": "https://theplantnews.com/wp-content/uploads/2026/11/voting.webp|",
       "leadImageCheckedAt": "2026-11-18T13:10:45.519Z",
       "imageLocalVia": "disk",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:31.280Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:55.015Z",
       "sourceImageCredit": "Photo: The Plant",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/11/03/quebec-2026-election-guide",
@@ -8798,7 +8816,7 @@
       "leadImageCheckedKey": "https://theplantnews.com/wp-content/uploads/2026/11/media.webp|",
       "leadImageCheckedAt": "2026-11-18T13:10:45.519Z",
       "imageLocalVia": "disk",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:31.682Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:55.400Z",
       "sourceImageCredit": "Photo: The Plant",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/11/03/the-resurrection-of-physical-media",
@@ -8830,7 +8848,7 @@
       "leadImageCheckedKey": "https://theplantnews.com/wp-content/uploads/2026/11/stm.webp|",
       "leadImageCheckedAt": "2026-11-18T13:10:45.519Z",
       "imageLocalVia": "disk",
-      "sourceImageCreditTriedAt": "2026-11-18T20:11:32.154Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:55.850Z",
       "sourceImageCredit": "Photo: The Plant",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/11/03/stm-anniversary",
@@ -8875,8 +8893,7 @@
       "imageLocal": "assets/news-images/7a15d9019b06c31f.jpg",
       "imageLocalKey": "7a15d9019b06c31f",
       "imageLocalVia": "origin",
-      "stockImageLocal": "assets/stock-images/897c6b961cd6c2af.jpg",
-      "sourceImageCreditHintRev": 1
+      "stockImageLocal": "assets/stock-images/897c6b961cd6c2af.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -8913,8 +8930,7 @@
       "imageLocal": "assets/news-images/157e1b0794b4afbb.jpg",
       "imageLocalKey": "157e1b0794b4afbb",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/91b8560ff50f0291.jpg",
-      "sourceImageCreditHintRev": 1
+      "stockImageLocal": "assets/stock-images/91b8560ff50f0291.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -9012,8 +9028,7 @@
       "imageLocal": "assets/news-images/af3f79ee87a691ca.jpg",
       "imageLocalKey": "af3f79ee87a691ca",
       "imageLocalVia": "resize-proxy",
-      "stockImageLocal": "assets/stock-images/b5d04c7f47bceb5c.jpg",
-      "sourceImageCreditHintRev": 1
+      "stockImageLocal": "assets/stock-images/b5d04c7f47bceb5c.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -9035,23 +9050,22 @@
       "sourceImageCreditRev": 17,
       "sourceImageCreditTriedAt": "2026-11-18T20:11:42.516Z",
       "leadImageReady": false,
-      "leadImageCheckedKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg|https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
-      "imageHealthKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg|https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageHealthAt": "2026-11-18T20:10:14.981Z",
+      "leadImageCheckedKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg|https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
+      "imageHealthKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg|https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+      "imageHealthAt": "2026-11-18T21:01:21.928Z",
       "leadExcerpt": "Initialement, le projet pilote àVélo comptait dix stations et cent vélos. Cinq ans plus tard, le projet est toujours en expansion et compte désormais 225 stations et 2300 vélos. Cette augmentation peut notamment s’expliquer par l’accessibilité de ce moyen de transport ainsi que par sa popularité auprès des usagers.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon Adrien-Pouliot 01",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
+      "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Adrien-Pouliot%2001.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
       "imageLocal": "assets/news-images/afc56adf8c65cd33.jpg",
       "imageLocalKey": "afc56adf8c65cd33",
       "imageLocalVia": "disk",
-      "stockImageLocal": "assets/stock-images/f0b7ee2de14eab1a.jpg",
-      "sourceImageCreditHintRev": 1
+      "stockImageLocal": "assets/stock-images/f1a23eb08d38a755.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -16163,18 +16177,18 @@
       "sourceImageCreditRev": 17,
       "sourceImageCreditTriedAt": "2026-11-17T21:29:29.587Z",
       "leadImageReady": false,
-      "leadImageCheckedKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/Projet-EMM4-deuxieme-image.jpg|https://upload.wikimedia.org/wikipedia/commons/2/2c/Pavillon_Envirotron_UL_01.jpg",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
-      "imageHealthKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/Projet-EMM4-deuxieme-image.jpg|https://upload.wikimedia.org/wikipedia/commons/2/2c/Pavillon_Envirotron_UL_01.jpg",
-      "imageHealthAt": "2026-11-18T20:10:14.981Z",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Pavillon_Envirotron_UL_01.jpg",
-      "imageTitle": "Pavillon Envirotron",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
+      "leadImageCheckedKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/Projet-EMM4-deuxieme-image.jpg|https://upload.wikimedia.org/wikipedia/commons/e/ec/Peps_Universit%C3%A9_Laval.jpg",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
+      "imageHealthKey": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/Projet-EMM4-deuxieme-image.jpg|https://upload.wikimedia.org/wikipedia/commons/e/ec/Peps_Universit%C3%A9_Laval.jpg",
+      "imageHealthAt": "2026-11-18T21:01:21.928Z",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Peps_Universit%C3%A9_Laval.jpg",
+      "imageTitle": "PEPS",
+      "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Wilfredor",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Envirotron_UL_01.jpg",
-      "stockImageLocal": "assets/stock-images/801a58f945524a6f.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Peps_Universit%C3%A9_Laval.jpg",
+      "stockImageLocal": "assets/stock-images/e058b3e1e6284d55.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -17306,11 +17320,11 @@
       "imageHealthKey": "https://www.delitfrancais.com/wp-content/uploads/2026/10/matteo.png|",
       "imageHealthAt": "2026-11-18T17:39:30.573Z",
       "leadImageCheckedKey": "https://www.delitfrancais.com/wp-content/uploads/2026/10/matteo.png|",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "sourceImageCreator": "Catvy Tran",
       "_retainedFromCache": true,
       "leadImageReady": true,
-      "sourceImageCreditTriedAt": "2026-11-18T20:10:16.978Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:24.141Z",
       "sourceImageCredit": "Photo : Catvy Tran",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/10/07/cornell-les-fraternites-au-centre-du-debat",
       "sourceImageCreditFrom": "article",
@@ -21043,9 +21057,9 @@
       "authorAttemptAt": "2026-11-18T13:17:02.603Z",
       "leadImageReady": false,
       "leadImageCheckedKey": "|https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg",
-      "leadImageCheckedAt": "2026-11-18T20:09:25.650Z",
+      "leadImageCheckedAt": "2026-11-18T21:00:48.445Z",
       "imageHealthKey": "|",
-      "imageHealthAt": "2026-11-18T20:10:14.981Z",
+      "imageHealthAt": "2026-11-18T21:01:21.928Z",
       "_retainedFromCache": true
     },
     {
@@ -23239,7 +23253,9 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "_u2a2490.jpg",
       "sourceImageCreditRev": 17,
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "imageTitle": "Henry F. Hall Building, Concordia University",
+      "imageProvider": "campus-bank"
     },
     {
       "source": "Le Polyscope",
@@ -27864,7 +27880,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_9055.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:41.966Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:24.712Z",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/jeunes-et-politique-un-desinteret-ou-un-manque-de-representation",
@@ -27891,7 +27907,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Substances-2.png|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:42.443Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:25.031Z",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/linquietante-banalisation-de-la-cocaine-chez-les-jeunes",
@@ -27918,7 +27934,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/20260831_160327894_iOS.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:42.920Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:25.348Z",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/formation-en-rcr-dans-les-ecoles-une-obligation-peu-respectee",
@@ -27947,7 +27963,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/golf1.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:43.397Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:25.666Z",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/le-golf-a-la-cote-chez-les-jeunes-du-saguenay-lac-saint-jean",
@@ -27974,7 +27990,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-2.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:43.874Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:25.984Z",
       "sourceImageCredit": "Photo : La Pige",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/pression-des-pairs-lelement-declencheur-du-vandalisme-chez-les-jeunes",
@@ -28080,7 +28096,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5694_1_900_571_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:49.815Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:27.493Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16372",
@@ -28109,7 +28125,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Sabrina_Paixao_favorite-DSC01093_900_506_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:50.698Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:28.488Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16371",
@@ -28138,7 +28154,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/articles/_resized/PAB19368.JPG|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:51.572Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:28.981Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16370",
@@ -28196,7 +28212,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/articles/_resized/DSC00912.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:52.955Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:29.471Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16367",
@@ -28223,7 +28239,9 @@
       "authorAttemptAt": "2026-11-18T14:38:00.558Z",
       "leadImageCheckedKey": "|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "_retainedFromCache": true
+      "_retainedFromCache": true,
+      "imageTitle": "Henry F. Hall Building 04",
+      "imageProvider": "campus-bank"
     },
     {
       "source": "The Link",
@@ -28273,7 +28291,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5699_900_543_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:53.827Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:29.961Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16364",
@@ -28331,7 +28349,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_3116_900_550_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:55.210Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:30.451Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16361",
@@ -28360,7 +28378,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/DSC_4640-edit_900_600_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:56.082Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:30.941Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16360",
@@ -28389,7 +28407,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5745_900_600_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:56.954Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:31.431Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16359",
@@ -28418,7 +28436,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5742_900_568_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:17:17.845Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:57.823Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:31.922Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16358",
@@ -28477,7 +28495,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5737_3_900_600_90.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:37:55.832Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:38:59.199Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:32.411Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16355",
@@ -28565,7 +28583,7 @@
       "imageCropSafe": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_690_863.png",
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_690_863.png|",
       "leadImageCheckedAt": "2026-11-18T18:37:55.832Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:39:01.078Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:32.897Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16350",
@@ -28594,7 +28612,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/articles/_resized/DSC06884-2.jpg|",
       "leadImageCheckedAt": "2026-11-18T18:37:55.832Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:39:01.943Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:33.383Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16349",
@@ -29067,7 +29085,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "camila_sierra_ordonez_2_ek.jpg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-17T20:39:03.722Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:33.819Z",
       "leadImageReady": false
     },
     {
@@ -29190,7 +29208,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sl-1-emiko-kamiya.jpg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-17T20:39:04.537Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:34.210Z",
       "leadImageReady": false,
       "leadImageCheckedKey": "https://thetribune.ca/wp-content/uploads/2026/09/SL-1-EMIKO-KAMIYA-scaled.jpg|",
       "leadImageCheckedAt": "2026-11-18T19:38:15.802Z",
@@ -29248,7 +29266,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "ae-1-julie-raout.jpg",
       "sourceImageCreditRev": 17,
-      "sourceImageCreditTriedAt": "2026-11-17T20:39:05.344Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:34.603Z",
       "leadImageReady": false,
       "leadImageCheckedKey": "https://thetribune.ca/wp-content/uploads/2026/09/AE-1-Julie-Raout-scaled.jpg|",
       "leadImageCheckedAt": "2026-11-18T19:38:15.802Z",
@@ -29540,7 +29558,7 @@
       "leadImageReady": true,
       "leadImageCheckedKey": "https://thelinknewspaper.ca/images/articles/_resized/DSC06923.jpg|",
       "leadImageCheckedAt": "2026-11-18T19:38:15.802Z",
-      "sourceImageCreditTriedAt": "2026-11-17T20:39:11.422Z",
+      "sourceImageCreditTriedAt": "2026-11-18T21:01:35.421Z",
       "sourceImageCredit": "Photo: The Link",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16343",
