@@ -1400,6 +1400,7 @@
     Enregistrés: { en: 'Saved' },
     Réglages: { en: 'Settings' },
     'Chargement du fil…': { en: 'Loading the feed…' },
+    'Chargement des articles…': { en: 'Loading articles…' },
     'Télécharger le PDF': { en: 'Download PDF' },
     'Lettre': { en: 'Letter' },
     'Légal': { en: 'Legal' },

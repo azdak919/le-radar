@@ -78,6 +78,287 @@ function newsRemainingCount() {
   return newsPaging.complete ? 0 : Math.max(0, (newsPaging.total || 0) - news.length);
 }
 
+/**
+ * Fenêtre de chargement du fil : même carte que la traduction et les sports
+ * (cercle, icône, pourcentage, message, barre). Une seule fenêtre à la fois.
+ */
+const NEWS_LOAD_FADE_MS = 250;
+const NEWS_LOAD_HOLD_MS = 220;
+
+function newsLoadCopy() {
+  const lang = ((document.documentElement.dataset.translate || document.documentElement.lang || 'fr') + '').toLowerCase();
+  const en = lang === 'en' || lang.startsWith('en-');
+  return en
+    ? { label: 'Loading articles…', ready: 'Ready' }
+    : { label: 'Chargement des articles…', ready: 'Prêt' };
+}
+
+function isTranslateBusy() {
+  const v = document.documentElement.getAttribute('data-translate-busy');
+  return v === '1' || v === 'true';
+}
+
+function isTranslateProgressOpen() {
+  if (isTranslateBusy()) return true;
+  const nodes = document.querySelectorAll('.translate-progress:not(.translate-progress--news):not(.translate-progress--sports)');
+  for (const el of nodes) {
+    if (el.hidden || el.classList.contains('is-leaving')) continue;
+    if (el.getClientRects().length) return true;
+  }
+  return false;
+}
+
+function newsLoadEnsure() {
+  let el = document.getElementById('news-load');
+  if (el) return el;
+  el = document.createElement('div');
+  el.id = 'news-load';
+  el.className = 'translate-progress translate-progress--news notranslate';
+  el.setAttribute('translate', 'no');
+  el.hidden = true;
+  el.innerHTML = [
+    '<div class="translate-progress__veil" aria-hidden="true"></div>',
+    '<div class="translate-progress__layout">',
+    '  <div class="translate-progress__card">',
+    '    <div class="translate-progress__mark" aria-hidden="true">',
+    '      <span class="translate-progress__wave"></span>',
+    '      <span class="translate-progress__wave"></span>',
+    '      <span class="translate-progress__wave"></span>',
+    '      <div class="translate-progress__ring"></div>',
+    '      <svg class="translate-progress__logo translate-progress__logo--article" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">',
+    '        <rect x="7" y="8" width="26" height="32" rx="2.5" fill="currentColor" opacity="0.16"/>',
+    '        <rect x="11" y="13" width="18" height="3.2" rx="1" fill="currentColor"/>',
+    '        <rect x="11" y="19" width="14" height="2" rx="0.8" fill="currentColor" opacity="0.75"/>',
+    '        <rect x="11" y="23.5" width="16" height="2" rx="0.8" fill="currentColor" opacity="0.55"/>',
+    '        <rect x="11" y="28" width="12" height="2" rx="0.8" fill="currentColor" opacity="0.45"/>',
+    '        <rect x="20" y="10" width="21" height="30" rx="2.5" fill="currentColor" opacity="0.12"/>',
+    '        <rect x="20" y="10" width="21" height="30" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.75"/>',
+    '        <rect x="24" y="16" width="13" height="2.4" rx="0.8" fill="currentColor"/>',
+    '        <rect x="24" y="21" width="10" height="1.8" rx="0.7" fill="currentColor" opacity="0.65"/>',
+    '        <rect x="24" y="25.5" width="12" height="1.8" rx="0.7" fill="currentColor" opacity="0.5"/>',
+    '        <rect x="24" y="30" width="8" height="1.8" rx="0.7" fill="currentColor" opacity="0.4"/>',
+    '      </svg>',
+    '    </div>',
+    '    <p class="translate-progress__pct" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="news-load-label">',
+    '      <span class="translate-progress__num">0</span><span class="translate-progress__suffix"> %</span>',
+    '    </p>',
+    '    <p id="news-load-label" class="translate-progress__label"></p>',
+    '    <div class="translate-progress__bar" aria-hidden="true"><div class="translate-progress__fill"></div></div>',
+    '  </div>',
+    '</div>',
+    '<div class="translate-progress__live" aria-live="polite"></div>',
+  ].join('');
+  const host = document.querySelector('main.wire') || document.documentElement;
+  host.appendChild(el);
+  return el;
+}
+
+function newsLoadLayout() {
+  const el = newsLoadEnsure();
+  if (!el || el.hidden) return;
+  const main = document.querySelector('main.wire');
+  const card = el.querySelector('.translate-progress__card');
+  if (!main) {
+    if (el.parentElement !== document.documentElement) document.documentElement.appendChild(el);
+    el.style.position = 'fixed';
+    el.style.top = '0';
+    el.style.left = '0';
+    el.style.width = '100%';
+    el.style.height = '100%';
+    if (card) {
+      card.style.position = 'absolute';
+      card.style.top = '50%';
+      card.style.left = '50%';
+      card.style.transform = 'translate(-50%, -50%)';
+      card.style.margin = '0';
+    }
+    return;
+  }
+  if (el.parentElement !== main) main.appendChild(el);
+  el.style.position = 'absolute';
+  const hostRect = main.getBoundingClientRect();
+  const visTop = Math.max(hostRect.top, 0);
+  const visBottom = Math.min(hostRect.bottom, window.innerHeight);
+  const visLeft = Math.max(hostRect.left, 0);
+  const visRight = Math.min(hostRect.right, window.innerWidth);
+  const width = Math.max(0, visRight - visLeft);
+  const height = Math.max(8, visBottom - visTop);
+  el.style.top = `${visTop - hostRect.top}px`;
+  el.style.left = `${visLeft - hostRect.left}px`;
+  el.style.width = `${width}px`;
+  el.style.height = `${height}px`;
+  if (card) {
+    const cardH = card.offsetHeight || 220;
+    const top = Math.max(16, Math.min((height / 2) - (cardH / 2), height - cardH - 16));
+    card.style.position = 'absolute';
+    card.style.top = `${Math.max(0, top)}px`;
+    card.style.left = '50%';
+    card.style.transform = 'translateX(-50%)';
+    card.style.margin = '0';
+  }
+}
+
+const RadarNewsLoad = {
+  shown: false,
+  peek: 0,
+  announced: {},
+  _layoutBound: false,
+  isOpen() {
+    const el = document.getElementById('news-load');
+    return !!(el && !el.hidden);
+  },
+  paint(percent, determined) {
+    const node = newsLoadEnsure();
+    const pct = Math.max(0, Math.min(100, percent));
+    const copy = newsLoadCopy();
+    const num = node.querySelector('.translate-progress__num');
+    const bar = node.querySelector('.translate-progress__pct');
+    const fill = node.querySelector('.translate-progress__fill');
+    const ring = node.querySelector('.translate-progress__ring');
+    const label = node.querySelector('#news-load-label');
+    const live = node.querySelector('.translate-progress__live');
+    const suffix = node.querySelector('.translate-progress__suffix');
+    node.classList.toggle('is-indeterminate', !determined);
+    if (num) num.textContent = determined ? String(Math.round(pct)) : '…';
+    if (suffix) suffix.hidden = !determined;
+    if (bar) {
+      if (determined) bar.setAttribute('aria-valuenow', String(Math.round(pct)));
+      else bar.removeAttribute('aria-valuenow');
+    }
+    if (fill && determined) fill.style.width = `${pct}%`;
+    if (ring) ring.style.setProperty('--translate-pct', determined ? String(pct) : '0');
+    if (label) label.textContent = determined && pct >= 100 ? copy.ready : copy.label;
+    if (live && determined) {
+      for (const mark of [25, 50, 75, 100]) {
+        if (pct >= mark && !this.announced[mark]) {
+          this.announced[mark] = true;
+          live.textContent = `${mark} %`;
+        }
+      }
+    }
+  },
+  begin() {
+    if (isTranslateProgressOpen()) return false;
+    const el = newsLoadEnsure();
+    this.shown = true;
+    this.peek = 8;
+    this.announced = {};
+    el.hidden = false;
+    el.classList.remove('is-leaving');
+    document.documentElement.classList.add('translate-articles-lock');
+    const main = document.querySelector('main.wire');
+    if (main) {
+      main.classList.add('is-translate-locked');
+      main.setAttribute('aria-busy', 'true');
+    }
+    this.paint(this.peek, true);
+    newsLoadLayout();
+    if (!this._layoutBound) {
+      this._layoutBound = true;
+      window.addEventListener('resize', newsLoadLayout);
+      try { window.visualViewport?.addEventListener('resize', newsLoadLayout); } catch { /* ignore */ }
+    }
+    return true;
+  },
+  /** Avance honnête : octets (0–fetchShare) puis rendu. */
+  bytes(loaded, total, fetchShare = 0.7) {
+    if (!this.shown) return;
+    let pct;
+    if (total > 0) {
+      pct = 8 + Math.min(1, loaded / total) * ((fetchShare * 100) - 8);
+    } else {
+      // Sans Content-Length : rampe douce bornée sous le plafond fetch.
+      const cap = (fetchShare * 100) - 2;
+      this.peek = Math.min(cap, this.peek + 3);
+      pct = this.peek;
+    }
+    this.paint(Math.max(8, Math.min(fetchShare * 100, pct)), true);
+  },
+  render(done, total, from = 70, to = 98) {
+    if (!this.shown) return;
+    const ratio = total > 0 ? Math.min(1, done / total) : 1;
+    this.paint(from + ratio * (to - from), true);
+  },
+  async finish() {
+    if (!this.shown) {
+      this.hide(true);
+      return;
+    }
+    this.paint(100, true);
+    await new Promise((r) => setTimeout(r, NEWS_LOAD_HOLD_MS));
+    this.hide();
+  },
+  hide(immediate = false) {
+    const el = document.getElementById('news-load');
+    this.shown = false;
+    const unlock = () => {
+      document.documentElement.classList.remove('translate-articles-lock');
+      const main = document.querySelector('main.wire');
+      if (main) {
+        main.classList.remove('is-translate-locked');
+        main.removeAttribute('aria-busy');
+      }
+    };
+    if (!el || el.hidden) { unlock(); return; }
+    if (immediate) {
+      el.hidden = true;
+      el.classList.remove('is-leaving');
+      unlock();
+      return;
+    }
+    el.classList.add('is-leaving');
+    window.setTimeout(() => {
+      el.hidden = true;
+      el.classList.remove('is-leaving');
+      unlock();
+    }, NEWS_LOAD_FADE_MS);
+  },
+};
+window.RadarNewsLoad = RadarNewsLoad;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.documentElement;
+  const obs = new MutationObserver(() => {
+    if (isTranslateBusy() && RadarNewsLoad.shown) {
+      RadarNewsLoad.hide(true);
+    }
+  });
+  obs.observe(root, { attributes: true, attributeFilter: ['data-translate-busy'] });
+});
+
+async function fetchJsonWithProgress(url, onProgress) {
+  const res = await fetch(url, { cache: 'no-cache' });
+  if (!res.ok) throw new Error(`${url} (${res.status})`);
+  if (!onProgress || !res.body || typeof res.body.getReader !== 'function') {
+    return res.json();
+  }
+  const total = Number(res.headers.get('content-length')) || 0;
+  const reader = res.body.getReader();
+  const chunks = [];
+  let loaded = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    loaded += value.byteLength;
+    onProgress(loaded, total);
+  }
+  const buf = new Uint8Array(loaded);
+  let offset = 0;
+  for (const c of chunks) { buf.set(c, offset); offset += c.byteLength; }
+  return JSON.parse(new TextDecoder().decode(buf));
+}
+
+function yieldNewsIdle() {
+  return new Promise((resolve) => {
+    if (typeof requestIdleCallback === 'function') {
+      requestIdleCallback(() => resolve(), { timeout: 80 });
+    } else {
+      requestAnimationFrame(() => resolve());
+    }
+  });
+}
+
 /** Ajoute des articles au fil en mémoire (sans doublon) ; renvoie les ajoutés. */
 function mergeNewsItems(items = []) {
   const known = new Set(news.map(articleKey));
@@ -100,14 +381,12 @@ function mergeNewsItems(items = []) {
  * Tout le fil d'un coup (recherche, filtre de source, médias suivis, ou pages
  * décalées par une récolte publiée entre-temps) : le fichier canonique.
  */
-function loadAllNews() {
+function loadAllNews({ onProgress } = {}) {
   if (newsPaging.complete) return Promise.resolve([]);
   if (newsPaging.loadingAll) return newsPaging.loadingAll;
   newsPaging.loadingAll = (async () => {
     try {
-      const res = await fetch(appAsset('news.json'), { cache: 'no-cache' });
-      if (!res.ok) return [];
-      const data = await res.json();
+      const data = await fetchJsonWithProgress(appAsset('news.json'), onProgress);
       const added = mergeNewsItems(Array.isArray(data) ? data : (data.items || []));
       newsPaging.complete = true;
       newsPaging.next = newsPaging.pages.length;
@@ -122,18 +401,16 @@ function loadAllNews() {
 }
 
 /** Lot suivant (news-page-N.json, 30 articles) ; renvoie les articles ajoutés. */
-function loadNextNewsPage() {
+function loadNextNewsPage({ onProgress } = {}) {
   if (!newsHasMorePages()) return Promise.resolve([]);
   if (newsPaging.loading) return newsPaging.loading;
   const file = newsPaging.pages[newsPaging.next];
   newsPaging.loading = (async () => {
     try {
-      const res = await fetch(appAsset(file), { cache: 'no-cache' });
-      if (!res.ok) throw new Error(`${file} (${res.status})`);
-      const page = await res.json();
+      const page = await fetchJsonWithProgress(appAsset(file), onProgress);
       // Nouvelle récolte publiée depuis la 1re page : les lots sont décalés.
       if (page.updated && newsPaging.updated && page.updated !== newsPaging.updated) {
-        return await loadAllNews();
+        return await loadAllNews({ onProgress });
       }
       newsPaging.next += 1;
       if (newsPaging.next >= newsPaging.pages.length) newsPaging.complete = true;
@@ -1482,7 +1759,12 @@ function renderNews() {
   // Recherche / filtre : il faut tout le fil. On affiche ce qui est chargé,
   // puis on refait le rendu une fois le fichier complet arrivé.
   if ((isSearchView || isSourceView || isFollowedView) && !newsPaging.complete && !newsPaging.loadingAll) {
-    loadAllNews().then((added) => { if (added.length) renderNews(); });
+    const showLoad = RadarNewsLoad.begin();
+    loadAllNews({
+      onProgress: (loaded, total) => { if (showLoad) RadarNewsLoad.bytes(loaded, total, 0.8); },
+    }).then((added) => {
+      if (added.length) renderNews();
+    }).finally(() => { if (showLoad) RadarNewsLoad.finish(); });
   }
 
   let items = isFollowedView
@@ -1818,14 +2100,11 @@ function syncNewsTailCollapse({ preserveExpanded = true } = {}) {
 
 /**
  * « Charger plus » : lots de 30 articles (news-page-N.json) au bas de la
- * Suite du fil dépliée. Chargement automatique quand le bouton approche de
- * l'écran (IntersectionObserver), bouton accessible en repli (clavier,
- * lecteurs d'écran, navigateurs sans observateur). Les cartes s'ajoutent
- * sous le contenu lu : aucun saut de mise en page.
+ * Suite du fil dépliée, uniquement sur un clic (ou Entrée) explicite.
+ * Pendant le chargement : grande fenêtre de progression, nouveau clic bloqué
+ * jusqu’à la fin du lot. Les cartes s’ajoutent sous le contenu lu, par
+ * morceaux (requestIdleCallback).
  */
-let newsTailMoreObserver = null;
-/** Clic / Entrée sur « Charger plus » : focus sur la 1re carte ajoutée, même si
- * l'observateur avait déjà lancé ce lot (le bouton focalisé défile à l'écran). */
 let newsTailMoreFocusPending = false;
 
 function syncNewsTailMore(tail) {
@@ -1843,7 +2122,6 @@ function syncNewsTailMore(tail) {
   const show = newsHasMorePages() && (newsTailExpanded || !overflow);
   if (!show) {
     if (more) more.hidden = true;
-    newsTailMoreObserver?.disconnect();
     return;
   }
   if (!more) {
@@ -1851,6 +2129,7 @@ function syncNewsTailMore(tail) {
     more.type = 'button';
     more.className = 'news-tail-toggle news-tail-more';
     more.addEventListener('click', () => {
+      if (more.getAttribute('aria-busy') === 'true' || more.getAttribute('aria-disabled') === 'true') return;
       newsTailMoreFocusPending = true;
       loadMoreIntoTail();
     });
@@ -1858,59 +2137,65 @@ function syncNewsTailMore(tail) {
     tail.insertBefore(more, toggle || live);
   }
   more.hidden = false;
-  // Bague décorative : pas de textContent sur le bouton (ça l’effacerait),
-  // notranslate + aria-hidden pour ne pas l’envoyer au module de traduction.
-  let spin = more.querySelector('.news-tail-more__spin');
-  if (!spin) {
-    spin = document.createElement('span');
-    spin.className = 'news-tail-more__spin notranslate';
-    spin.setAttribute('aria-hidden', 'true');
-    spin.setAttribute('translate', 'no');
-    more.prepend(spin);
-  }
   let label = more.querySelector('.news-tail-more__label');
   if (!label) {
     label = document.createElement('span');
     label.className = 'news-tail-more__label';
-    const leftovers = [...more.childNodes].filter((n) => n !== spin);
+    const leftovers = [...more.childNodes];
     const text = leftovers.map((n) => n.textContent).join('').trim();
     leftovers.forEach((n) => n.remove());
     more.appendChild(label);
     if (text) label.textContent = text;
   }
   label.textContent = adaptRadarUiText(`Charger plus d'articles (${newsRemainingCount()})`);
-  if ('IntersectionObserver' in window) {
-    newsTailMoreObserver?.disconnect();
-    newsTailMoreObserver = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) loadMoreIntoTail();
-    }, { rootMargin: '0px 0px 600px 0px' });
-    newsTailMoreObserver.observe(more);
-  }
 }
 
 async function loadMoreIntoTail() {
   const tail = NEWS_LIST?.querySelector('.news-tail');
-  if (!tail || NEWS_LIST.dataset.mode || !newsHasMorePages() || newsPaging.loading) return;
+  if (!tail || NEWS_LIST.dataset.mode || !newsHasMorePages()) return;
+  if (newsPaging.loading || newsPaging.loadingAll) return;
   const more = tail.querySelector('.news-tail-more');
+  if (more?.getAttribute('aria-busy') === 'true') return;
   // Pas de disabled : un bouton désactivé perd le focus clavier.
-  if (more) more.setAttribute('aria-busy', 'true');
-  const added = await loadNextNewsPage();
-  const body = ensureNewsTailBody(tail);
-  // Le fil a pu être re-rendu (filtre, recherche) pendant la requête.
-  if (!body || !tail.isConnected) return;
-  const shown = new Set([...NEWS_LIST.querySelectorAll('a.article, .article')]
-    .map((el) => el.getAttribute?.('href') || '').filter(Boolean));
-  const fresh = filterHousekeepingForDisplay(filterFreshItemsLenient(added));
-  const cards = [];
-  for (const item of sortByDateDesc(fresh)) {
-    const link = safeHttpUrl(item.link) || item.link || '';
-    if (link && shown.has(link)) continue;
-    const el = safeCreateArticle(item, 'standard');
-    if (!el) continue;
-    insertTailArticleByDate(body, el, item);
-    cards.push(el);
+  if (more) {
+    more.setAttribute('aria-busy', 'true');
+    more.setAttribute('aria-disabled', 'true');
   }
-  if (more) more.removeAttribute('aria-busy');
+  const showLoad = RadarNewsLoad.begin();
+  const cards = [];
+  try {
+    const added = await loadNextNewsPage({
+      onProgress: (loaded, total) => { if (showLoad) RadarNewsLoad.bytes(loaded, total, 0.7); },
+    });
+    const body = ensureNewsTailBody(tail);
+    // Le fil a pu être re-rendu (filtre, recherche) pendant la requête.
+    if (!body || !tail.isConnected) return;
+    const shown = new Set([...NEWS_LIST.querySelectorAll('a.article, .article')]
+      .map((el) => el.getAttribute?.('href') || '').filter(Boolean));
+    const fresh = sortByDateDesc(filterHousekeepingForDisplay(filterFreshItemsLenient(added)))
+      .filter((item) => {
+        const link = safeHttpUrl(item.link) || item.link || '';
+        return !(link && shown.has(link));
+      });
+    const CHUNK = 5;
+    for (let i = 0; i < fresh.length; i += CHUNK) {
+      const slice = fresh.slice(i, i + CHUNK);
+      for (const item of slice) {
+        const el = safeCreateArticle(item, 'standard');
+        if (!el) continue;
+        insertTailArticleByDate(body, el, item);
+        cards.push(el);
+      }
+      if (showLoad) RadarNewsLoad.render(Math.min(fresh.length, i + slice.length), fresh.length, 70, 98);
+      if (i + CHUNK < fresh.length) await yieldNewsIdle();
+    }
+  } finally {
+    if (more) {
+      more.removeAttribute('aria-busy');
+      more.removeAttribute('aria-disabled');
+    }
+    if (showLoad) await RadarNewsLoad.finish();
+  }
   const live = tail.querySelector('.news-tail-live');
   if (live) {
     live.textContent = adaptRadarUiText(cards.length
@@ -4606,10 +4891,14 @@ function attachArticleImage(article, item, role) {
     img.decoding = 'async';
     /* Hotlink WP : sans referrer, les origines qui bloquent le-radar.ca passent. */
     img.referrerPolicy = 'no-referrer';
-    /* Pas de loading="lazy" ici : une Image() hors du DOM en lazy ne se
-       charge jamais — le délai trop court la faisait basculer en mode texte. */
-    if (role === 'lead') img.fetchPriority = 'high';
     img.alt = '';
+    if (role === 'lead') {
+      img.fetchPriority = 'high';
+    } else {
+      /* Dans le DOM avant src, sinon loading=lazy ne charge jamais. */
+      img.loading = 'lazy';
+      if (!img.isConnected) media.appendChild(img);
+    }
     let settled = false;
 
     const settleShow = () => {
