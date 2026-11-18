@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-18T14:39:31.045Z",
-  "total": 1027,
+  "updated": "2026-11-18T15:08:20.356Z",
+  "total": 1028,
   "pool": 61,
-  "incomplete": 29,
-  "withLeadExcerpt": 175,
-  "candidates": 29,
-  "enriched": 3,
+  "incomplete": 26,
+  "withLeadExcerpt": 176,
+  "candidates": 26,
+  "enriched": 6,
   "failed": 5,
   "ok": true,
   "samples": [
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "More than half of Quebecers are unsatisfied with Paul St-Pierre Plamondon, according to recent poll",
-      "link": "https://theconcordian.com/2026/11/polling-numbers-show-early-warning/",
+      "title": "Bittersweet end of season for the Montreal Roses",
+      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
+      "ok": true,
+      "score": 100,
+      "chars": 414,
+      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
+      "changed": true
+    },
+    {
+      "title": "Three arrested at anti-austerity student protest",
+      "link": "https://theconcordian.com/2026/11/3-arrests-at-anti-austerity-protest/",
+      "ok": true,
+      "score": 100,
+      "chars": 647,
+      "sample": "On Friday, Nov. 13, thousands of students rallied at Square-Victoria around 2 p.m. to protest auster",
+      "changed": true
+    },
+    {
+      "title": "Police deploy tear gas and pepper spray at Montreal student protest",
+      "link": "https://thelinknewspaper.ca/article/16573",
       "ok": true,
       "score": 96,
-      "chars": 532,
-      "sample": "The results are even worse on the Island of Montreal, where the Parti Québécois (PQ) won two seats —",
-      "changed": true
-    },
-    {
-      "title": "Rencontre Carney-PSPP au Cambodge",
-      "link": "https://lecollectif.ca/a-la-une/rencontre-carney-pspp-au-cambodge/",
-      "ok": true,
-      "score": 100,
-      "chars": 570,
-      "sample": "Québec, Montréal ou Ottawa ? C’est finalement au Cambodge que le premier ministre canadien et le pre",
-      "changed": true
-    },
-    {
-      "title": "Abolir ou réformer Santé Québec ?",
-      "link": "https://lecollectif.ca/a-la-une/abolir-ou-reformer-sante-quebec/",
-      "ok": true,
-      "score": 100,
-      "chars": 483,
-      "sample": "Deux ans après la création de Santé Québec, quoi garder et quoi réformer ? Ce qui s’annonçait comme ",
-      "changed": true
+      "chars": 311,
+      "sample": "The demonstration was organized by the Coalition de résistance pour l’unité étudiante syndicale (CRU",
+      "changed": false
     }
   ]
 }
