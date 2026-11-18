@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Cartes d’accueil : le sigle d’un cégep ne commence plus par un article minuscule. « Cégep de l’Outaouais » (La Griffe) affiche le nom officiel, plus « l’Outaouais » ; même chose pour l’Abitibi-Témiscamingue et la Gaspésie et des Îles. « La Pocatière » reste, c’est un toponyme. Le groupement des flux (« Outaouais ») est inchangé.
 - Cartes du fil (mobile et bureau) : les photos autres que la une se chargent à nouveau. `loading=lazy` sur une image encore dans un `.article-media` en `display:none` (le bloc ne s’affiche qu’après `onload`, via `.has-image`) empêchait le navigateur de télécharger le fichier.
 
 - Revue imprimée (Tabloïd et les autres formats) : les PDF portent un nom parlant (`le-radar-revue-AAAA-MM-JJ-soir-tabloid.pdf`) via l’attribut `download`, les anciennes URL (`tabloid.pdf`, etc.) restent. Le code QR quitte le coin gauche du mât et s’aligne à droite, sous la ligne de publication et au-dessus de « Dans cette édition ». Les prochains matchs sont groupés par jour et plafonnés, avec un renvoi vers le site ; la météo s’imprime en tableau large et compact ; la grille de mots cachés est agrandie, les solutions à l’envers en pied de page. La photo de une n’est plus une image de banque si l’article a une vraie photo (Persepolis) ; sans image réelle, pas de photo géante.
