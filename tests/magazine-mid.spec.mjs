@@ -106,9 +106,10 @@ test('magazine mid : le téléphone garde l’empilement une colonne', async ({ 
   await expect(list).toHaveCSS('display', 'block');
 });
 
-for (const { width, height, label } of [
-  { width: 1440, height: 900, label: 'bureau auto E' },
-  { width: 1920, height: 1080, label: 'wide auto E' },
+for (const { width, height, label, leads, features } of [
+  { width: 1440, height: 900, label: 'bureau auto E', leads: 1, features: 4 },
+  { width: 1920, height: 1080, label: 'wide auto E', leads: 2, features: 4 },
+  { width: 3840, height: 1600, label: 'uhd auto E', leads: 3, features: 6 },
 ]) {
   test(`magazine ${label} : fraîcheur + sources avant un 2ᵉ d’institution`, async ({ page }) => {
     await page.setViewportSize({ width, height });
@@ -145,38 +146,48 @@ for (const { width, height, label } of [
     const hrefs = [...data.hero, ...data.brief, ...data.tail].map((a) => a.href).filter(Boolean);
     expect(new Set(hrefs).size, `${label} : pas de doublon une/bref/suite`).toBe(hrefs.length);
 
+    expect(await page.locator('.news-hero .article--lead').count(), `${label} : unes`).toBe(leads);
+    expect(await page.locator('.news-hero .article--feature').count(), `${label} : vedettes`).toBe(features);
+
     const ts = (d) => new Date(d).getTime() || 0;
+    const loaded = [...data.hero, ...data.brief, ...data.tail];
+    const newest = Math.max(...loaded.map((a) => ts(a.date)));
+    expect(ts(data.hero[0].date), `${label} : la première une est le plus récent chargé`).toBe(newest);
     for (let i = 1; i < data.hero.length; i += 1) {
       expect(ts(data.hero[i - 1].date), `${label} : une+vedettes date desc`)
         .toBeGreaterThanOrEqual(ts(data.hero[i].date));
     }
-    const oldestHero = ts(data.hero.at(-1)?.date);
-    for (const a of [...data.brief, ...data.tail]) {
-      if (!a.date || !oldestHero) continue;
-      expect(ts(a.date), `${label} : rien de plus frais que la dernière vedette`)
-        .toBeLessThanOrEqual(oldestHero);
+
+    const horizonMs = 14 * 86400000;
+    const horizonSources = new Set(
+      loaded.filter((a) => a.source && newest - ts(a.date) <= horizonMs).map((a) => a.source),
+    );
+    if (horizonSources.size >= data.hero.length) {
+      const heroSources = data.hero.map((a) => a.source).filter(Boolean);
+      expect(new Set(heroSources).size, `${label} : une source par siège du héros`).toBe(heroSources.length);
     }
 
-    const magSources = new Set(
-      [...data.hero, ...data.brief].map((a) => a.source).filter(Boolean),
-    );
-    const instCount = new Map();
-    for (const a of [...data.hero, ...data.brief]) {
-      const inst = a.inst || a.source;
-      if (!inst) continue;
-      instCount.set(inst, (instCount.get(inst) || 0) + 1);
+    const seen = new Set(data.hero.map((a) => a.source).filter(Boolean));
+    let repeatStarted = false;
+    for (const card of data.brief) {
+      if (!card.source) continue;
+      const repeat = seen.has(card.source);
+      if (repeatStarted && !repeat && horizonSources.has(card.source)) {
+        expect(card.source, `${label} : premier titre d’horizon après un 2e titre`).toBe('');
+      }
+      if (repeat) repeatStarted = true;
+      seen.add(card.source);
     }
-    const extras = data.brief.filter((a) => (instCount.get(a.inst || a.source) || 0) >= 2);
-    for (const extra of extras) {
-      const newerUncovered = data.tail.filter((t) => (
-        t.source
-        && !magSources.has(t.source)
-        && ts(t.date) > ts(extra.date)
-      ));
-      expect(
-        newerUncovered,
-        `${label} : source absente plus fraîche que le 2ᵉ titre (${extra.inst})`,
-      ).toEqual([]);
+
+    const counts = new Map();
+    for (const a of [...data.hero, ...data.brief]) {
+      if (!a.source) continue;
+      counts.set(a.source, (counts.get(a.source) || 0) + 1);
+    }
+    if ([...counts.values()].some((n) => n >= 2)) {
+      for (const src of horizonSources) {
+        expect(seen.has(src), `${label} : ${src} assise avant un 2e titre`).toBe(true);
+      }
     }
   });
 }
