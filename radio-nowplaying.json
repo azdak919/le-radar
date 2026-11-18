@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T08:06:56.318Z",
+  "updatedAt": "2026-11-18T09:07:20.325Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T08:06:15.653Z"
+      "checkedAt": "2026-11-18T09:06:07.712Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ailleurs: escales en musique",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Club classique",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "Ailleurs: escales en musique",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T08:06:17.790Z"
+      "checkedAt": "2026-11-18T09:06:21.859Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WarpCor / Out of the Void",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Full Circle",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "The Wednesday Morning After",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "WarpCor / Out of the Void",
+      "showTitle": "Full Circle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T08:06:22.582Z"
+      "checkedAt": "2026-11-18T09:06:24.908Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T08:06:36.572Z"
+      "checkedAt": "2026-11-18T09:06:39.141Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,28 +128,28 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T08:06:37.526Z"
+      "checkedAt": "2026-11-18T09:06:40.498Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Échos du monde",
-        "source": "api-live",
+        "title": "Onde de CHOQ",
+        "source": "schedule",
         "start": "13:00",
-        "end": "14:00",
-        "slug": "echos-du-monde"
+        "end": "13:45",
+        "url": "https://www.choq.ca/balados/onde-de-choq"
       },
       "track": "ID Kat Pereira.mp3",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T08:06:55.967Z"
+      "checkedAt": "2026-11-18T09:07:19.974Z"
     }
   }
 }
