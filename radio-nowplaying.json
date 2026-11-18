@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-18T16:07:26.309Z",
+  "updatedAt": "2026-11-18T17:07:22.616Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Question de savoir",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "11:30",
-        "url": "https://chyz.ca/emission/question-de-savoir/"
-      },
+      "current": null,
       "next": {
         "title": "Radio-Ciné",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "14:30",
         "url": "https://chyz.ca/emission/radio-cine/"
       },
       "track": "",
-      "showTitle": "Question de savoir",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T16:06:32.334Z"
+      "checkedAt": "2026-11-18T17:06:31.215Z"
     },
     "cism": {
       "id": "cism",
@@ -55,82 +48,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T16:06:47.019Z"
+      "checkedAt": "2026-11-18T17:06:45.490Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free City Radio",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
-      },
-      "next": {
         "title": "If You Got Ears",
-        "source": "schedule",
+        "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radyo Kapwa",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Free City Radio",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream",
-        "schedule"
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T16:06:52.415Z"
+      "checkedAt": "2026-11-18T17:06:48.177Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
-      },
-      "next": {
         "title": "North-South Hockey",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
+      "next": {
+        "title": "The Fluid Mosaic",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+      },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "North-South Hockey",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T16:07:06.416Z"
+      "checkedAt": "2026-11-18T17:07:02.514Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le DOUZE",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "12:59",
         "url": "https://www.cfak.ca/balados/le-douze"
       },
+      "next": {
+        "title": "Le SEIZE",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:59",
+        "url": "https://www.cfak.ca/balados/le-seize"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le DOUZE",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T16:07:07.736Z"
+      "checkedAt": "2026-11-18T17:07:04.267Z"
     },
     "choq": {
       "id": "choq",
@@ -151,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T16:07:25.958Z"
+      "checkedAt": "2026-11-18T17:07:22.266Z"
     }
   }
 }
