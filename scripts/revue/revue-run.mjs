@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// « La revue du matin » (≈ 7 h) et « La revue du soir » (≈ 20 h), heure de Montréal : articles originaux du Radar.
+// « La revue du matin » (≈ 7 h) et « La revue du soir » (≈ 19 h 15), heure de Montréal : articles originaux du Radar.
 //  - Sélection, sport, radio et garde-fou : scripts/revue/revue-lib.mjs ; résumés IA : revue-ai.mjs ; rendu : revue-render.js.
 //  - Publication RÉELLE seulement si data/revue/config.json `publish` vaut true (défaut : false). Sinon, rien n'est écrit dans
 //    le dépôt ; `--sample --out dossier` produit un exemple complet (pages, flux, sitemaps) hors du dépôt.
@@ -58,7 +58,7 @@ const indexEntry = m => ({
  * Génère une revue. Retourne { status: 'publiée'|'sautée'|'refusée'|'inchangée', model?, problems?, why }.
  * `io` : { news, masthead, schedules, index, reviews, cfg, env, fetchImpl, refresh }.
  */
-/** « 20:00 » (heure de Montréal) d'un instant : heure de publication pour les matchs du soir même. */
+/** « 19:15 » (heure de Montréal) d'un instant : heure de publication pour les matchs du soir même. */
 const atOf = t => { const p = L.mtl(typeof t === 'number' ? t : Date.parse(t)); return `${String(p.hh).padStart(2, '0')}:${String(p.mm).padStart(2, '0')}`; };
 export async function generate(editionId, now, io) {
   const { cfg, index = [], reviews = {}, env = process.env } = io;

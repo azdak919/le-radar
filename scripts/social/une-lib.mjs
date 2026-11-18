@@ -392,7 +392,7 @@ export function revueEditionExists(slot, { root = process.cwd(), exists } = {}) 
 }
 
 /**
- * Deuxième ligne du texte de La une, seulement si l'édition du même créneau (matin 7 h / soir 20 h) existe.
+ * Deuxième ligne du texte de La une, seulement si l'édition du même créneau (matin 7 h / soir 19 h 15) existe.
  * Chaîne vide sinon, et jamais pour un réseau sans lien cliquable (Instagram).
  */
 export function revueEditionLine(slot, opts = {}) {
