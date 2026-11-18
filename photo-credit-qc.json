@@ -1,52 +1,17 @@
 {
-  "updated": "2026-11-18T18:39:25.816Z",
+  "updated": "2026-11-18T19:39:51.390Z",
   "total": 1031,
-  "withImage": 908,
-  "withCredit": 908,
-  "cited": 563,
-  "pending": 233,
+  "withImage": 876,
+  "withCredit": 876,
+  "cited": 559,
+  "pending": 210,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 10,
-  "citedNew": 10,
-  "fallbackNew": 50,
+  "updatedCount": 15,
+  "citedNew": 15,
+  "fallbackNew": 45,
   "samples": [
-    {
-      "title": "Peut-on encore posséder de la culture ?",
-      "source": "La Pige",
-      "credit": "Photo : Maxence Gibault-Renault",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Élections : qu’en pense la communauté universitaire ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Guillaume Villeneuve",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
-      "source": "La Pige",
-      "credit": "Photo : Rosalie Lepage",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Le bijou, accessoire de mode pour hommes",
-      "source": "La Pige",
-      "credit": "Photo : Émile Barthe",
-      "cited": true,
-      "method": "body-line"
-    },
     {
       "title": "Cornell : Les fraternités au centre du débat",
       "source": "Le Délit",
@@ -55,32 +20,81 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Colin Boucher",
+      "title": "Federal government falls short on youth demands for good green jobs",
+      "source": "The Link",
+      "credit": "Photo : Courtesy Hailey Asquin/Common Horizon",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption"
     },
     {
-      "title": "Journée mondiale du droit à l’avortement : toujours besoin de protection",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
+      "title": "What the heck is professional attire anyway!?",
+      "source": "The Link",
+      "credit": "Illustration: Lauren McCarthy",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Saguenay acquiert officiellement l’église Saint-Édouard",
-      "source": "La Pige",
-      "credit": "Photo : Arthur Bakhache",
+      "title": "Free public transportation is worth investing in",
+      "source": "The Link",
+      "credit": "Photo: Santiago Sánchez",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Un nouveau souffle pour le centre-ville de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
+      "title": "Is a bachelor’s degree keeping its promise?",
+      "source": "The Link",
+      "credit": "Illustration: Aia Segal",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "McGill’s offence dominates in a bitter homecoming for the Concordia Stingers",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Activists urge party leaders to take clear actions",
+      "source": "The Link",
+      "credit": "Photo: Azel-Hana Brunet",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Vert et Or 3, Stingers 0: Concordia falls to Sherbrooke after difficult second half",
+      "source": "The Link",
+      "credit": "Photo: Andraé Lerone Lewis",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "17-year-old apprehended on Concordia’s Loyola campus",
+      "source": "The Link",
+      "credit": "Photo: Manoj Subramaniam",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Happy Birthday CAEO!",
+      "source": "The Link",
+      "credit": "Photo: Elliot Huneault",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Mourning the mezzanine",
+      "source": "The Link",
+      "credit": "Photo: Sean Richard",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Concordia unions join forces to face university at negotiation table",
+      "source": "The Link",
+      "credit": "Photo: Osei Agyemang",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
