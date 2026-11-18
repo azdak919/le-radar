@@ -213,12 +213,21 @@ function sportHtml(model) {
   }
   out.push('        <h3 class="revue-sub">Prochains matchs</h3>');
   if (!next.length) out.push('        <p class="revue-empty">Aucun match étudiant inscrit au calendrier pour les prochains jours.</p>');
-  for (const [d, list] of days) {
+  const NEXT_LIMIT = 12;
+  const flat = [];
+  for (const [d, list] of days) for (const r of list) flat.push({ d, r });
+  const shown = flat.slice(0, NEXT_LIMIT);
+  const rest = Math.max(0, flat.length - shown.length);
+  const byDay = new Map();
+  for (const { d, r } of shown) { if (!byDay.has(d)) byDay.set(d, []); byDay.get(d).push(r); }
+  for (const [d, list] of byDay) {
     out.push(`        <h4 class="revue-day">${esc(cap(frDayYear(d)))}</h4>`, '        <ul class="revue-next">');
-    for (const r of list) out.push(`          <li>${r.time ? `<time>${esc(r.time.replace(/^0/, '').replace(':00', ' h').replace(':', ' h '))}</time> ` : ''}<span class="revue-sportname">${emo(esc(r.emoji))}${esc(r.sport)}</span> · <span class="notranslate" translate="no">${esc(r.text)}</span>${r.league ? ` <span class="revue-league">${esc(r.league)}</span>` : ''}</li>`);
+    for (const r of list) out.push(`          <li>${r.time ? `<time>${esc(r.time.replace(/^0/, '').replace(':00', ' h').replace(':', ' h '))}</time> ` : ''}<span class="revue-sportname">${emo(esc(r.emoji))}${esc(r.sport)}</span> · <span class="notranslate" translate="no">${esc(r.text)}</span></li>`);
     out.push('        </ul>');
   }
-  out.push(`        <p class="revue-more"><a href="${SITE}/sports/">Tableau complet du sport étudiant</a></p>`, '      </section>');
+  out.push(rest
+    ? `        <p class="revue-more">${rest} autres matchs au calendrier : <a href="${SITE}/sports/">le-radar.ca/sports</a></p>`
+    : `        <p class="revue-more"><a href="${SITE}/sports/">Tableau complet du sport étudiant</a></p>`, '      </section>');
   return out.join('\n');
 }
 function sourcesHtml(model) {
@@ -255,7 +264,6 @@ function flagHtml(model) {
   return [
     '      <header class="revue-flag" aria-hidden="true">',
     '        <p class="revue-flag__ears"><span>Revue de presse <em class="revue-flag__etudiante">étudiante</em></span><span>Gratuit · le-radar.ca/revue</span></p>',
-    model.url ? `        <a class="revue-flag__qr" href="${esc(model.url)}" tabindex="-1">${qrSvg(model.url).replace('revue-colophon__qr', 'revue-flag__qrcode')}<span>Lire en ligne</span></a>` : '',
     '        <p class="revue-flag__brand"><img class="revue-flag__logo" src="../../assets/icon.svg" width="44" height="44" alt="" /><span class="revue-flag__name notranslate" translate="no">LE-RADAR.ca</span></p>',
     '        <p class="revue-flag__devise">Médias, radios et sport étudiants du Québec</p>',
     `        <p class="revue-flag__folio"><span class="revue-flag__ed">${ed}</span><span class="revue-flag__date">${esc(cap(frDayYear(model.edition.day)))}</span><span class="revue-flag__time">Publiée à ${esc(frClock(pub))}, heure de Montréal${weatherLine(model, 'revue-wx--flag')}</span></p>`,
@@ -310,6 +318,14 @@ function qrSvg(text) {
   for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (qr.getModule(x, y)) d.push(`M${x + b},${y + b}h1v1h-1z`);
   return `<svg class="revue-colophon__qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n + 2 * b} ${n + 2 * b}" shape-rendering="crispEdges" role="img" aria-label="Code QR"><rect width="100%" height="100%" fill="#fff"/><path fill="#000" d="${d.join('')}"/></svg>`;
 }
+function qrLinkHtml(model, cls = 'revue-top__qr', svgClass = 'revue-top__qrcode') {
+  if (!model.url) return '';
+  return `        <a class="${cls}" href="${esc(model.url)}" tabindex="-1">${qrSvg(model.url).replace('revue-colophon__qr', svgClass)}<span>Lire en ligne</span></a>`;
+}
+function pdfDownloadName(id, file) {
+  const stem = String(file).replace(/\.pdf$/i, '');
+  return `le-radar-revue-${id}-${stem}.pdf`;
+}
 const REPO = 'github.com/azdak919/le-radar';
 /**
  * Colophon imprimé (caché à l'écran, où le pied du site fait ce travail) : à la fin de l'édition seulement, dans le
@@ -354,20 +370,25 @@ function meteoHtml(model) {
   const [h1 = '', h2 = ''] = (cities[0].periods || []).map(p => p.name);
   const rows = (group) => cities.filter(c => c.group === group)
     .map(c => `              <tr><th scope="row">${esc(c.name)}</th>${meteoCell(c.periods[0], h1)}${meteoCell(c.periods[1], h2)}</tr>`).join('\n');
-  const part = (group, title) => {
+  const table = (group, title) => {
     const r = rows(group);
-    return r ? `            <tbody><tr class="revue-meteo__group"><th colspan="3">${esc(title)}</th></tr>\n${r}\n            </tbody>` : '';
+    return r ? [
+      '          <table class="revue-meteo__table">',
+      `            <thead><tr class="revue-meteo__group"><th>${esc(title)}</th><th>${esc(h1)}</th><th>${esc(h2)}</th></tr></thead>`,
+      `            <tbody>\n${r}\n            </tbody>`,
+      '          </table>',
+    ].join('\n') : '';
   };
+  const campus = table('campus', 'Villes universitaires');
+  const north = [table('nunavik', 'Nunavik'), table('eeyou', 'Eeyou Istchee')].filter(Boolean).join('\n');
   return [
     '        <section class="seo-section revue-section revue-meteo" id="meteo">',
     `          <h2>${emo('☀️')}Météo</h2>`,
-    '          <table class="revue-meteo__table">',
-    `            <thead><tr><th></th><th>${esc(h1)}</th><th>${esc(h2)}</th></tr></thead>`,
-    part('campus', 'Villes universitaires'),
-    part('nunavik', 'Nunavik'),
-    part('eeyou', 'Eeyou Istchee'),
-    `            <caption class="revue-meteo__src">Prévisions publiques d’${esc(w.source || 'Environnement et Changement climatique Canada')}, lues à la production de cette édition.</caption>`,
-    '          </table>',
+    '          <div class="revue-meteo__grid">',
+    campus,
+    north ? `          <div class="revue-meteo__north">\n${north}\n          </div>` : '',
+    '          </div>',
+    `          <p class="revue-meteo__src">Prévisions publiques d’${esc(w.source || 'Environnement et Changement climatique Canada')}, lues à la production de cette édition.</p>`,
     '        </section>',
   ].filter(Boolean).join('\n');
 }
@@ -423,7 +444,7 @@ function colophonHtml(model) {
     '        </aside>',
   ].filter(Boolean).join('\n');
 }
-function pdfBarHtml() {
+function pdfBarHtml(model = {}) {
   const formats = [
     ['lettre.pdf', 'Lettre'],
     ['legal.pdf', 'Légal'],
@@ -431,7 +452,7 @@ function pdfBarHtml() {
     ['a4.pdf', 'A4'],
     ['a3.pdf', 'A3'],
   ];
-  const items = formats.map(([file, label]) => `        <li><a href="${file}" download="${file}">${label}</a></li>`).join('\n');
+  const items = formats.map(([file, label]) => `        <li><a href="${file}" download="${pdfDownloadName(model.id, file)}">${label}</a></li>`).join('\n');
   return [
     '      <div class="revue-pdf">',
     '        <details class="revue-pdf__box">',
@@ -442,6 +463,7 @@ function pdfBarHtml() {
     '      </div>',
   ].join('\n');
 }
+
 function articleBody(model) {
   const games = jeuxHtml(model);
   const pub = model.datePublished, mod = model.dateModified;
@@ -454,7 +476,7 @@ function articleBody(model) {
     `      <article class="revue revue--${esc(model.edition.id)}" data-revue="${esc(model.id)}">`,
     flagHtml(model),
     `      <p class="revue-meta">Par <strong>${PUBLISHER}</strong> · Publiée le <time datetime="${esc(isoMtl(pub))}">${esc(frDayYear(mtlParts(pub).ymd))} à ${esc(frClock(pub))}</time>${modified ? ` · Mise à jour à <time datetime="${esc(isoMtl(mod))}">${esc(frClock(mod))}</time>` : ''} (heure de Montréal)${weatherLine(model, 'revue-wx--meta') ? `<br />${weatherLine(model, 'revue-wx--meta')} <span class="revue-wx__src">Environnement Canada</span>` : ''}</p>`,
-    pdfBarHtml(),
+    pdfBarHtml(model),
     '      <div class="revue-top">',
     '      <div class="revue-top__main">',
     uneHead(lead),
@@ -462,6 +484,7 @@ function articleBody(model) {
     uneText(lead),
     '      </div>',
     '      <div class="revue-top__side">',
+    qrLinkHtml(model),
     `      <p class="seo-lead revue-lede">${esc(model.intro)}</p>`,
     encadreHtml(model),
     '      </div>',
@@ -673,5 +696,6 @@ module.exports = {
   SITE, PUBLISHER, NEWS_SITEMAP, CONFIG_PATH, INDEX_PATH, REVIEWS_DIR,
   frDayYear, frShort, frClock, isoMtl, rfc822, groupByTheme,
   articleBody, reviewJsonLd, renderReviewPage, renderIndexPage, newsSitemap, sitemapEntries,
+  pdfDownloadName, pdfBarHtml, qrLinkHtml, sportHtml,
   feedContentHtml, feedItemXml, revueFeedXml, loadConfig, loadPublished, robotsWithNewsSitemap, jsonForScript,
 };

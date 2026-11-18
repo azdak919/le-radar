@@ -304,7 +304,8 @@ assert.match(html, /revue-flag__ears">[\s\S]*Revue de presse <em class="revue-fl
   assert.equal((html.match(/class="revue-colophon"/g) || []).length, 1, 'colophon une seule fois, pas répété');
   for (const t of ['Le Réseau Académique de Découverte et d’Agrégation de Ressources', 'indépendant et non officiel', 'azdak-qc@proton.me', 'GNU GPL v2', 'le-radar.ca/revue', 'Conçu avec ♡ par Azdak en 2026', 'Revue préparée automatiquement'])
     assert.ok(colo.replace(/'/g, '’').includes(t.replace(/'/g, '’')), `colophon : ${t}`);
-  assert.match(html, /<a class="revue-flag__qr" href="[^"]+" tabindex="-1"><svg[^>]*class="revue-flag__qrcode"[\s\S]*?<path fill="#000" d="M[\s\S]*?<span>Lire en ligne<\/span><\/a>/, 'code QR vers l’édition dans le mât');
+  assert.match(html, /<a class="revue-top__qr" href="[^"]+" tabindex="-1"><svg[^>]*class="revue-top__qrcode"[\s\S]*?<path fill="#000" d="M[\s\S]*?<span>Lire en ligne<\/span><\/a>/, 'code QR à droite, sous le folio, au-dessus de « Dans cette édition »');
+  assert.doesNotMatch(html, /revue-flag__qr/, 'plus de code QR dans le coin gauche du mât');
   assert.doesNotMatch(colo, /Installer|Android|revue-nav/i, 'colophon sans navigation ni campagne');
   assert.deepEqual([...colo.matchAll(/<a href="([^"]+)"/g)].map(x => x[1]), [m.url, 'https://le-radar.ca/revue/'], 'liens cliquables du colophon : l’édition et le-radar.ca/revue');
 }
@@ -353,7 +354,7 @@ assert.match(html, /revue-flag__ears">[\s\S]*Revue de presse <em class="revue-fl
   const titles = m.items.map(x => x.title).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
   if (g1.words) for (const w of g1.words.words) assert.ok(titles.includes(w), `mot caché tiré de l’édition : ${w}`);
   const body = R.articleBody(m);
-  assert.match(body, /revue-jeux[\s\S]*Sudoku[\s\S]*revue-solutions[\s\S]*revue-colophon/, 'jeux puis solutions à la fin, avant le colophon');
+  assert.match(body, /revue-jeux[\s\S]*Sudoku[\s\S]*revue-solutions[\s\S]*revue-colophon/, 'jeux, solutions à l’envers en pied, puis colophon');
 }
 {
   // Stations : nom en couleur d'établissement, fréquence et ville d'après radios.json ; sans fréquence, le nom seul.
@@ -487,5 +488,12 @@ console.log('revue : OK');
   assert.match(wfRevue, /revue-pdfs\.mjs/);
   const wfKit = fs.readFileSync('.github/workflows/update-kit-examples.yml', 'utf8');
   assert.match(wfKit, /Update Student News/);
+  assert.match(src, /pdfDownloadName/);
+  assert.match(src, /NEXT_LIMIT/);
+  assert.match(page, /download="le-radar-revue-[^"]+-lettre\.pdf"/);
+  assert.match(css.slice(printStart), /revue-top__qr/);
+  assert.match(css.slice(printStart), /column-span:\s*all/);
+  assert.match(css.slice(printStart), /revue-cover\[data-stock\]/);
   console.log('revue (écran : colonne, banque, PDF) : OK');
+
 }

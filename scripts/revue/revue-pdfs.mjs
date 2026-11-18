@@ -8,7 +8,7 @@
  *   node scripts/revue/revue-pdfs.mjs --all
  */
 import { spawn } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
@@ -52,10 +52,16 @@ async function printEdition(browser, id) {
   const page = await browser.newPage();
   await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 });
   await page.waitForSelector('article.revue, .revue-wire', { timeout: 20_000 });
+  await page.evaluate(() => {
+    document.querySelectorAll('details').forEach((d) => { d.open = true; });
+  });
+  await page.emulateMedia({ media: 'print' });
   for (const fmt of FORMATS) {
     const dest = join(outDir, fmt.file);
     await page.pdf({ path: dest, format: fmt.format, printBackground: false, preferCSSPageSize: true });
-    console.log('  ', fmt.file);
+    const longName = `le-radar-revue-${id}-${fmt.file}`;
+    copyFileSync(dest, join(outDir, longName));
+    console.log('  ', fmt.file, longName);
   }
   await page.close();
 }
