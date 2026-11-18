@@ -1,10 +1,26 @@
 {
-  "updated": "2026-11-18T03:37:20.447Z",
-  "total": 1021,
-  "withAuthor": 1021,
-  "mismatches": 58,
+  "updated": "2026-11-18T05:06:40.495Z",
+  "total": 1023,
+  "withAuthor": 1023,
+  "mismatches": 60,
   "ok": true,
   "samples": [
+    {
+      "title": "Police deploy tear gas and pepper spray at Montreal student protest",
+      "link": "https://thelinknewspaper.ca/article/16573",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Cléo Clamen",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Montrealers honour veterans at Place du Canada",
+      "link": "https://thelinknewspaper.ca/article/16572",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Brendan Schwartz",
+      "reason": "page-byline"
+    },
     {
       "title": "Quand une banque fait tomber un président",
       "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
@@ -148,23 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "BU Snow Prepares for Another Winter at Bishop’s",
-      "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Transparency: A Tool and a Threat",
-      "link": "https://thebucampus.ca/2026/10/27/transparency-a-tool-and-a-threat",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 58
+  "fixed": 60
 }
