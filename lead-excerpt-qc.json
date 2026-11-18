@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-18T22:37:39.766Z",
+  "updated": "2026-11-18T23:07:41.390Z",
   "total": 1032,
   "pool": 61,
-  "incomplete": 28,
+  "incomplete": 27,
   "withLeadExcerpt": 180,
-  "candidates": 28,
-  "enriched": 1,
+  "candidates": 27,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,15 +55,6 @@
       "changed": false
     },
     {
-      "title": "Parkour – L’art de repousser ses limites",
-      "link": "https://quartierlibre.ca/parkour-repousser-ses-limites/",
-      "ok": true,
-      "score": 100,
-      "chars": 697,
-      "sample": "À l’âge de 10 ans, Jérémy Gagnon découvre le parkour dans une vidéo de l’acrobate Damien Walters et ",
-      "changed": true
-    },
-    {
       "title": "A new era for Hockey Canada",
       "link": "https://theconcordian.com/2026/11/new-era-for-hockey-canada/",
       "ok": true,
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 252,
       "sample": "Behind every research advance at Concordia is a network of funding programs that makes these breakth",
+      "changed": false
+    },
+    {
+      "title": "Both Stingers’ basketball teams secure wins in home-opening double-header",
+      "link": "https://theconcordian.com/2026/11/stingers-basketball-win-home-openers/",
+      "ok": true,
+      "score": 100,
+      "chars": 201,
+      "sample": "The Martlets started the game off strong, imposing their presence on offence and playing tough defen",
       "changed": false
     }
   ]
