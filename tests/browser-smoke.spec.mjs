@@ -32,7 +32,10 @@ for (const viewport of [
         const bar = page.locator('.radar-radio');
         await expect(bar).toBeVisible();
         await expect(bar.locator('button.play')).toBeVisible();
-        await expect(bar.locator('.name')).not.toHaveText('');
+        await expect(bar.locator('.line1')).not.toHaveText('');
+        await expect(bar.locator('select option')).not.toHaveCount(0);
+        await expect(bar.locator('.step')).toHaveCount(2);
+        await expect(bar.locator('.vol input')).toHaveAttribute('max', '2');
       }
       if (route.path === '/pomo/' || route.path === '/solitaire/') {
         await expect(page.locator('link[rel="icon"][sizes="32x32"]'))
