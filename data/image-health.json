@@ -1,10 +1,23 @@
 {
-  "at": "2026-11-18T02:08:21.955Z",
+  "at": "2026-11-18T03:39:43.274Z",
   "cards": 1021,
-  "probedCards": 11,
+  "probedCards": 15,
   "queueDeferred": 0,
   "urls": 9,
-  "broken": 0,
-  "repaired": 0,
-  "items": []
+  "broken": 1,
+  "repaired": 1,
+  "items": [
+    {
+      "source": "Le Collectif",
+      "title": "Mark Carney dévoile ses ambitions économiques",
+      "link": "https://lecollectif.ca/societe/politique-canadienne/mark-carney-devoile-ses-ambitions-economiques/",
+      "field": "stockImage",
+      "variant": "",
+      "url": "https://live.staticflickr.com/4905/31162633417_536cd99aca_b.jpg",
+      "status": 403,
+      "type": "text/html",
+      "transient": false,
+      "repaired": true
+    }
+  ]
 }

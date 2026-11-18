@@ -2922,15 +2922,6 @@
       "via": "disk",
       "nameKey": "article-de-juliette-c.jpg"
     },
-    "d0d4eef2f356a4c4": {
-      "local": "assets/news-images/d0d4eef2f356a4c4.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/AK-MBAM-scaled.jpg",
-      "host": "www.delitfrancais.com",
-      "bytes": 282907,
-      "updatedAt": "2026-11-17T11:41:00.749Z",
-      "via": "disk",
-      "nameKey": "ak-mbam.jpg"
-    },
     "cd96f23e0f579813": {
       "local": "assets/news-images/cd96f23e0f579813.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/cynisme.elena_-scaled.png",
@@ -3048,15 +3039,6 @@
       "via": "origin",
       "nameKey": "05_ops_i_m_just_saying__generations_lola_mccarthy.jpeg"
     },
-    "467697863f7bc97d": {
-      "local": "assets/news-images/467697863f7bc97d.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/image.png",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 47525,
-      "updatedAt": "2026-11-18T02:08:16.915Z",
-      "via": "disk",
-      "nameKey": "image.png"
-    },
     "28c9110a5a1f5364": {
       "local": "assets/news-images/28c9110a5a1f5364.webp",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/image00449.jpeg",
@@ -3076,10 +3058,40 @@
       "updatedAt": "2026-11-18T02:08:21.351Z",
       "via": "photon-resize",
       "nameKey": "hannahnobile_141126_nslfinal_vol44-38.jpg"
+    },
+    "75c3d6ab4cd69153": {
+      "local": "assets/news-images/75c3d6ab4cd69153.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/ElfassiPerla_291026_VAVGalleryCoordinators_Vol44_DSF0757-800x1200.jpg",
+      "host": "theconcordian.com",
+      "bytes": 88983,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-18T03:39:39.820Z",
+      "via": "origin",
+      "nameKey": "elfassiperla_291026_vavgallerycoordinators_vol44_dsf0757.jpg"
+    },
+    "eed8d38288e8991f": {
+      "local": "assets/news-images/eed8d38288e8991f.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/dYvyF1RlNokAd1N7Nek0vDpYsV6-0-600-0-900-crop.jpg",
+      "host": "theconcordian.com",
+      "bytes": 49980,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-18T03:39:39.969Z",
+      "via": "origin",
+      "nameKey": "dyvyf1rlnokad1n7nek0vdpysv6-0-600-0-900-crop.jpg"
+    },
+    "c9de75e3e9a3580b": {
+      "local": "assets/news-images/c9de75e3e9a3580b.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0251.png",
+      "host": "theconcordian.com",
+      "bytes": 149202,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-18T03:39:42.534Z",
+      "via": "photon-resize",
+      "nameKey": "img_0251.png"
     }
   },
-  "updatedAt": "2026-11-18T02:08:21.394Z",
-  "count": 319,
+  "updatedAt": "2026-11-18T03:39:42.543Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -3717,10 +3729,6 @@
     "af2b1dc644e951f2": {
       "reason": "budget",
       "at": "2026-11-17T13:21:10.292Z"
-    },
-    "414ad18169e36f47": {
-      "reason": "budget",
-      "at": "2026-11-17T13:21:10.293Z"
     },
     "e4cb1497549561ec": {
       "reason": "budget",
@@ -5430,33 +5438,9 @@
       "reason": "budget",
       "at": "2026-11-17T20:38:34.767Z"
     },
-    "3a3bc948a7d06499": {
-      "reason": "budget",
-      "at": "2026-11-18T02:08:21.359Z"
-    },
-    "799a0a1ce895d871": {
-      "reason": "budget",
-      "at": "2026-11-18T02:08:21.363Z"
-    },
-    "1c83f88a53f7aafa": {
-      "reason": "budget",
-      "at": "2026-11-18T02:08:21.367Z"
-    },
     "7b8408203ab49777": {
       "reason": "budget",
       "at": "2026-11-18T02:08:21.371Z"
-    },
-    "6a484a2d36fef815": {
-      "reason": "budget",
-      "at": "2026-11-18T02:08:21.375Z"
-    },
-    "20e7f4e8b9cc0d90": {
-      "reason": "budget",
-      "at": "2026-11-18T02:08:21.378Z"
-    },
-    "166c965ceb7dcf6b": {
-      "reason": "budget",
-      "at": "2026-11-18T02:08:21.382Z"
     },
     "5743d8be72ba01da": {
       "reason": "budget",
@@ -5465,6 +5449,10 @@
     "360ee5218dfc19bc": {
       "reason": "budget",
       "at": "2026-11-18T02:08:21.392Z"
+    },
+    "d0d4eef2f356a4c4": {
+      "reason": "budget",
+      "at": "2026-11-18T03:39:42.541Z"
     }
   }
 }

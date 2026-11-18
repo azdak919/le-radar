@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-18T02:07:30.986Z",
+  "updated": "2026-11-18T03:38:22.016Z",
   "total": 1021,
   "pool": 61,
-  "incomplete": 29,
+  "incomplete": 28,
   "withLeadExcerpt": 169,
-  "candidates": 29,
-  "enriched": 2,
-  "failed": 4,
+  "candidates": 28,
+  "enriched": 4,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -61,16 +61,7 @@
       "score": 100,
       "chars": 414,
       "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
-      "changed": true
-    },
-    {
-      "title": "How a student-led movement prevailed in Serbia’s election",
-      "link": "https://theconcordian.com/2026/11/students-movement-won-serbias-election/",
-      "ok": true,
-      "score": 96,
-      "chars": 571,
-      "sample": "The newly created Student List (SL) party won 140 seats, while President Aleksandar Vučić’s United S",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Les cuisines fantômes hantent-elles les restaurants?",
@@ -80,6 +71,15 @@
       "chars": 317,
       "sample": "⁢⁢⁣⁢⁤⁤⁤⁣⁣⁣Des établissements regroupant plusieurs restaurants virtuels apparaissent progressivement ",
       "changed": false
+    },
+    {
+      "title": "Pierre Céré: Meet the man trying to save the NDP’s only seat in Quebec",
+      "link": "https://theconcordian.com/2026/11/pierre-cerre-trying-keep-rosemont-orange/",
+      "ok": true,
+      "score": 96,
+      "chars": 259,
+      "sample": "On Dec. 7, Canadians in six ridings, including two in Montreal, will head to the polls to elect thei",
+      "changed": true
     }
   ]
 }
