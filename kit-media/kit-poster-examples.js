@@ -247,38 +247,35 @@
     });
   });
 
+  function pickRandomUne(examples) {
+    const unes = (examples || []).filter((e) => (e.kind || '') === 'une');
+    if (!unes.length) return null;
+    return unes[Math.floor(Math.random() * unes.length)];
+  }
+
   function fillFeatured(examples, meta) {
     const fig = document.getElementById('kit-une-example');
     if (!fig) return;
-    const id = fig.dataset.featured || (meta && meta.featured);
-    const ex = (examples || []).find((e) => e.id === id);
-    const period = meta && meta.periods && id ? meta.periods[id] : null;
+    const ex = pickRandomUne(examples)
+      || (examples || []).find((e) => e.id === ((meta && meta.featured) || fig.dataset.featured));
+    if (!ex) return;
+    fig.dataset.featured = ex.id;
+    const period = meta && meta.periods ? meta.periods[ex.id] : null;
     const img = fig.querySelector('img');
     const link = document.getElementById('kit-une-example-link') || fig.querySelector('a');
     const cap = document.getElementById('kit-une-example-caption');
     const v = PREVIEW_V;
-    if (ex && link) {
-      const screen = ex.format === 'ecran-paysage' || ex.format === 'ecran-portrait';
-      const name = screen ? `affiche-ex-${ex.id}.png` : `affiche-ex-${ex.id}-600dpi.pdf`;
-      link.href = `${base}${name}?v=${v}`;
-    }
-    if (ex && img) {
-      img.src = `${base}affiche-ex-${ex.id}-preview.jpg?v=${v}`;
-    }
+    const screen = ex.format === 'ecran-paysage' || ex.format === 'ecran-portrait';
+    const name = screen ? `affiche-ex-${ex.id}.png` : `affiche-ex-${ex.id}-600dpi.pdf`;
+    if (link) link.href = `${base}${name}?v=${v}`;
+    if (img) img.src = `${base}affiche-ex-${ex.id}-preview.jpg?v=${v}`;
     if (!cap) return;
-    const label = lang === 'en' ? (ex && ex.labelEn) : (ex && ex.labelFr);
+    const label = lang === 'en' ? (ex.labelEn || '').replace(/^Front page — /i, '') : (ex.labelFr || '').replace(/^La une — /i, '');
+    const metaLine = lang === 'en' ? (ex.metaEn || '') : (ex.metaFr || '');
     const when = period ? (lang === 'en' ? period.en : period.fr) : '';
-    if (lang === 'en') {
-      cap.innerHTML = when
-        ? `<strong>Quartier Libre</strong> · UdeM · Letter · ${when}`
-        : '<strong>Quartier Libre</strong> · UdeM · Letter';
-      if (img && when) img.alt = `Quartier Libre front page, Université de Montréal, letter, ${when}`;
-    } else {
-      cap.innerHTML = when
-        ? `<strong>Quartier Libre</strong> · UdeM · Lettre · ${when}`
-        : '<strong>Quartier Libre</strong> · UdeM · Lettre';
-      if (img && when) img.alt = `La une Quartier Libre, Université de Montréal, format lettre, ${when}`;
-    }
+    const bits = [label, metaLine, when].filter(Boolean);
+    cap.innerHTML = bits.length ? `<strong>${label || 'La une'}</strong> · ${bits.slice(1).join(' · ')}` : '';
+    if (img) img.alt = bits.join(', ') || (lang === 'en' ? 'Front page example' : 'Exemple de une');
   }
 
   function openCharteForHash() {

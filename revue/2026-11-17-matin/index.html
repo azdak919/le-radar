@@ -53,6 +53,7 @@
     <link rel="stylesheet" href="../../style-chrome.css" />
     <link rel="stylesheet" href="../../seo-pages.css" />
     <link rel="stylesheet" href="../../revue.css" />
+    <script src="../../revue-web.js" defer></script>
     <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e102" />
     <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
     <script src="../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
@@ -333,6 +334,18 @@
         <p class="revue-flag__folio"><span class="revue-flag__ed">La revue du matin</span><span class="revue-flag__date">Mardi 17 novembre 2026</span><span class="revue-flag__time">Publiée à 7 h, heure de Montréal<span class="revue-wx revue-wx--flag"><span class="revue-wx__city" title="Ce soir et cette nuit : Généralement nuageux"><span class="revue-emoji" aria-hidden="true">⛅</span> 4°&#8239;Québec</span> · <span class="revue-wx__city" title="Ce soir et cette nuit : Quelques nuages"><span class="revue-emoji" aria-hidden="true">🌙</span> 5°&#8239;Montréal</span></span></span></p>
       </header>
       <p class="revue-meta">Par <strong>Le Radar</strong> · Publiée le <time datetime="2026-11-17T07:00:00-05:00">mardi 17 novembre 2026 à 7 h</time> (heure de Montréal)<br /><span class="revue-wx revue-wx--meta"><span class="revue-wx__city" title="Ce soir et cette nuit : Généralement nuageux"><span class="revue-emoji" aria-hidden="true">⛅</span> 4°&#8239;Québec</span> · <span class="revue-wx__city" title="Ce soir et cette nuit : Quelques nuages"><span class="revue-emoji" aria-hidden="true">🌙</span> 5°&#8239;Montréal</span></span> <span class="revue-wx__src">Environnement Canada</span></p>
+      <div class="revue-pdf">
+        <details class="revue-pdf__box">
+          <summary class="revue-pdf__btn">Télécharger le PDF</summary>
+          <ul class="revue-pdf__list">
+        <li><a href="lettre.pdf" download="lettre.pdf">Lettre</a></li>
+        <li><a href="legal.pdf" download="legal.pdf">Légal</a></li>
+        <li><a href="tabloid.pdf" download="tabloid.pdf">Tabloïd</a></li>
+        <li><a href="a4.pdf" download="a4.pdf">A4</a></li>
+        <li><a href="a3.pdf" download="a3.pdf">A3</a></li>
+          </ul>
+        </details>
+      </div>
       <div class="revue-top">
       <div class="revue-top__main">
         <div class="revue-une" aria-hidden="true">
@@ -535,7 +548,7 @@
         <p>Cette édition reprend un court extrait de chaque article, sans résumé rédigé par IA. Les liens, les auteurs, les grilles de radio et les résultats sportifs viennent directement des données du Radar et sont contrôlés avant publication.</p>
         <p class="revue-nav"><a href="https://le-radar.ca/revue/">Toutes les revues</a> · <a href="https://le-radar.ca/revue/feed.xml">Flux RSS des revues</a></p>
       </section>
-        <section class="seo-section revue-section revue-meteo" aria-hidden="true">
+        <section class="seo-section revue-section revue-meteo" id="meteo">
           <h2><span class="revue-emoji" aria-hidden="true">☀️</span> Météo</h2>
           <table class="revue-meteo__table">
             <thead><tr><th></th><th>Ce soir et cette nuit</th><th>Mercredi</th></tr></thead>
@@ -571,7 +584,7 @@
             <caption class="revue-meteo__src">Prévisions publiques d’Environnement et Changement climatique Canada, lues à la production de cette édition.</caption>
           </table>
         </section>
-        <section class="seo-section revue-section revue-jeux" aria-hidden="true">
+        <section class="seo-section revue-section revue-jeux" id="jeux">
           <h2><span class="revue-emoji" aria-hidden="true">🧩</span> Jeux</h2>
           <div class="revue-jeu revue-jeu--mots">
             <h4 class="revue-jeu__title">Mots cachés</h4>
