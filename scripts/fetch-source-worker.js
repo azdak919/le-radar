@@ -13,6 +13,7 @@ const {
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { feedHeaders } = require('./http-bot-headers');
 const { isAllowedFetchUrl } = require('./url-security-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
@@ -35,10 +36,7 @@ function fetchText(url, redirects = 3, timeout = TIMEOUT) {
     let req;
     try {
       req = https.get(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
-          Accept: 'application/rss+xml, application/xml, text/xml, text/html, */*',
-        },
+        headers: feedHeaders(),
         timeout,
       }, (res) => {
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && redirects > 0) {

@@ -31,11 +31,11 @@ const fs = require('fs');
 const path = require('path');
 const { loadPins, normUrl } = require('./lead-image-pins-lib');
 const { buildCheckQueue, logQueue } = require('./article-check-queue-lib');
+const { BOT_USER_AGENT, IMAGE_ACCEPT } = require('./http-bot-headers');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
 const REPORT_PATH = path.join(ROOT, 'data', 'image-health.json');
-const UA = 'LE-RADAR-ImageHealth/1.0 (+https://le-radar.ca/; image health check)';
 const TIMEOUT_MS = 15_000;
 const CONCURRENCY = 4;
 // File de vérification : chaque passe sonde les cartes neuves / dont l'image a
@@ -60,7 +60,7 @@ async function probe(url, attempt = 0, { range = true } = {}) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const headers = { 'User-Agent': UA, Accept: 'image/avif,image/webp,image/*,*/*;q=0.5' };
+    const headers = { 'User-Agent': BOT_USER_AGENT, Accept: IMAGE_ACCEPT };
     if (range) headers.Range = 'bytes=0-2047';
     const res = await fetch(url, { headers, redirect: 'follow', signal: ctrl.signal });
     const type = (res.headers.get('content-type') || '').toLowerCase();

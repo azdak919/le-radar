@@ -18,6 +18,7 @@ const { applyLeadImagePins } = require('./lead-image-pins-lib');
 const { filterNonArticles, nonArticleReason } = require('./non-article-filter');
 const path = require('path');
 const https = require('https');
+const { feedHeaders } = require('./http-bot-headers');
 const { fork } = require('child_process');
 const {
   reconcileAuthor,
@@ -216,10 +217,7 @@ function fetchText(url, redirects = 3, timeout = TIMEOUT) {
       req = https.get(
         url,
         {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)',
-            Accept: 'application/rss+xml, application/xml, text/xml, text/html, */*',
-          },
+          headers: feedHeaders(),
           timeout,
         },
         (res) => {
