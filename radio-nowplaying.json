@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T03:36:47.386Z",
+  "updatedAt": "2026-11-18T06:06:59.167Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T03:36:06.434Z"
+      "checkedAt": "2026-11-18T06:06:18.914Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "next": {
-        "title": "Les sentinelles de l'art (reprise)",
+        "title": "Fréquence 440",
         "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
       },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T03:36:08.603Z"
+      "checkedAt": "2026-11-18T06:06:21.620Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sound Ark",
+        "title": "Space Plane",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
+        "title": "WarpCor / Out of the Void",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Montreal Sound Ark",
+      "showTitle": "Space Plane",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,55 +74,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T03:36:11.520Z"
+      "checkedAt": "2026-11-18T06:06:25.948Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Turn Off The Lights",
+        "title": "Morning Electro-shock",
         "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T03:36:26.347Z"
+      "checkedAt": "2026-11-18T06:06:40.055Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T03:36:27.971Z"
+      "checkedAt": "2026-11-18T06:06:41.151Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-18T03:36:47.037Z"
+      "checkedAt": "2026-11-18T06:06:58.817Z"
     }
   }
 }
