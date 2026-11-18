@@ -3,7 +3,9 @@
 //  - période : matin = la nuit et le matin (depuis 19 h 15 la veille), soir = la journée (depuis 7 h), prolongée jusqu'à la
 //    dernière revue publiée si une édition a été sautée (au plus `maxLookbackHours`) ; jamais deux fois le même article ;
 //  - articles : news.json (médias étudiants seulement, sport pro exclu), TOUS les auteurs (front.authorNames), média, établissement
-//    en français avec son sigle, lien vers l'original, extrait court ;
+//    en français avec son sigle, lien vers l'original, extrait court. Sous le plafond, rien n'est écarté. Au-delà, on coupe
+//    d'abord un deuxième titre du même média dans le même thème. « À la une » reste le plus récent de la fenêtre (liste plate
+//    par date). Dans chaque thème, un média ne revient qu'une fois que les autres médias du thème ont un titre ;
 //  - radio étudiante : émissions originales de la période (radio-schedules.json) ;
 //  - sport étudiant : tous les résultats de la période et les prochains matchs (sports-masthead.json, même module que la une) ;
 //  - garde-fou : validateReview() refuse toute revue vide ou dont un lien, un auteur, un titre, une émission ou un score ne vient
@@ -157,10 +159,12 @@ export const isProSport = it => front.isProSportItem(it) || REVUE_PRO_RE.test(St
 /**
  * Articles de la période (news.json) : date dans ]début, fin], pas encore repris, pas de sport pro, du plus récent au plus ancien.
  * Chaque article garde ses champs d'origine (titre, lien, média, TOUS les auteurs) : rien n'est réécrit.
+ * Sous `max`, tout le corps reste. Au-delà, on écarte d'abord un deuxième article du même média dans le même thème
+ * (jamais le seul article d'un média dans un thème, tant que ces premiers titres tiennent dans le plafond).
  */
 export function selectArticles(news, period, { coveredIds = new Set(), max = 40 } = {}) {
   const raw = Array.isArray(news) ? news : news?.items || [];
-  const out = [], seen = new Set();
+  const pool = [], seen = new Set();
   for (const it of [...raw].sort((a, b) => Date.parse(b.date || 0) - Date.parse(a.date || 0))) {
     const t = Date.parse(it?.date || '');
     if (!it?.title || !/^https?:\/\//.test(String(it.link || '')) || !Number.isFinite(t) || t <= period.start || t > period.end) continue;
@@ -168,22 +172,51 @@ export function selectArticles(news, period, { coveredIds = new Set(), max = 40 
     const c = front.normalize(it, '..'); if (!c?.id || seen.has(c.id) || coveredIds.has(c.id)) continue;
     seen.add(c.id);
     const lang = it.lang === 'en' || it.lang === 'fr' ? it.lang : detectLang({ title: it.title, desc: it.excerpt });
-    out.push({
+    const item = {
       id: c.id, title: clean(it.title), link: String(it.link).trim(), source: clean(it.source), authors: front.authorNames(it),
       date: new Date(t).toISOString(), lang, institution: institutionDisplay(it.institution), sport: sportEmoji(it),
       excerpt: shortExcerpt(it.leadExcerpt || it.excerpt, 200), image: siteImage(it, { allowStock: true }), imageStock: isStockOnlyImage(it), credit: front.photoCredit(it) || '',
       pageUrl: c.pageUrl,
-    });
-    if (out.length >= max) break;
+    };
+    item.theme = themeOf(item);
+    pool.push(item);
   }
-  for (const x of out) x.theme = themeOf(x);
-  return out;
+  return capRevueItems(pool, max);
+}
+/** Plafond : d'abord le plus récent de chaque média dans chaque thème, puis les répétitions par date. Liste plate par date. */
+function capRevueItems(pool, max) {
+  const cap = Number(max);
+  if (!(cap > 0)) return [];
+  if (pool.length <= cap) return pool;
+  const seen = new Set();
+  const primaries = [];
+  const repeats = [];
+  for (const x of pool) {
+    const key = `${x.theme}\0${String(x.source || '').trim()}`;
+    if (seen.has(key)) repeats.push(x);
+    else { seen.add(key); primaries.push(x); }
+  }
+  const kept = primaries.length >= cap ? primaries.slice(0, cap) : primaries.concat(repeats.slice(0, cap - primaries.length));
+  return kept.sort((a, b) => Date.parse(b.date || 0) - Date.parse(a.date || 0));
+}
+/** Dans un thème : un titre par média (le plus récent), puis les suivants par date. */
+function themePassOrder(list) {
+  const sorted = [...list].sort((a, b) => Date.parse(b.date || 0) - Date.parse(a.date || 0));
+  const seen = new Set();
+  const first = [];
+  const rest = [];
+  for (const x of sorted) {
+    const src = String(x.source || '').trim();
+    if (seen.has(src)) rest.push(x);
+    else { seen.add(src); first.push(x); }
+  }
+  return [...first, ...rest];
 }
 /** Thèmes dans l'ordre (le plus fourni d'abord, « Vie de campus » en dernier s'il y en a d'autres). */
 export function groupByTheme(items) {
   const m = new Map();
   for (const x of items) { const k = THEMES.includes(x.theme) ? x.theme : 'Vie de campus'; if (!m.has(k)) m.set(k, []); m.get(k).push(x); }
-  return [...m.entries()].map(([theme, list]) => ({ theme, emoji: THEME_EMOJI[theme] || '📰', items: list }))
+  return [...m.entries()].map(([theme, list]) => ({ theme, emoji: THEME_EMOJI[theme] || '📰', items: themePassOrder(list) }))
     .sort((a, b) => (a.theme === 'Vie de campus') - (b.theme === 'Vie de campus') || b.items.length - a.items.length || THEMES.indexOf(a.theme) - THEMES.indexOf(b.theme));
 }
 /** « Par A, B et C » (tous les auteurs), sinon « Par la rédaction », sinon rien (le média seul). */

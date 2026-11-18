@@ -60,9 +60,36 @@ assert.equal(s2.skip, true, 'rien de nouveau : on saute'); assert.match(s2.why, 
 const mNext = U.selectUne(news, U.slotFor('matin', Date.parse('2026-11-14T12:45:00Z')), { now: Date.parse('2026-11-14T12:45:00Z'), state: { '2026-11-13:soir': { ids: m.ids } } });
 assert.ok(!mNext.ids.some(id => m.ids.includes(id)), 'le matin ne reprend pas la veille au soir');
 assert.ok(U.selectUne({ ...news, updated: '2026-11-13T10:00:00Z' }, sSlot, { now: T0 }).doubts.length, 'news.json périmé : doute');
-// Image : la une est le premier article AVEC photo.
+// La première carte reste la plus récente, même sans photo.
 const noImg = U.selectUne({ updated: news.updated, items: [art(7, '2026-11-13T22:30:00Z', { image: '' }), art(8, '2026-11-13T22:00:00Z')] }, sSlot, { now: T0 });
-assert.equal(noImg.items[0].title, 'Article 8 sur la vie étudiante');
+assert.equal(noImg.items[0].title, 'Article 7 sur la vie étudiante', 'photo ou non, la carte 1 est la plus récente');
+assert.equal(noImg.items[1].title, 'Article 8 sur la vie étudiante');
+// Un siège par média dans toute la fenêtre, pas dans les 9 plus récents. La rafale ne prend que les cartes restantes.
+const seatSlot = U.slotFor('matin', T0);
+const seated = U.selectUne({ updated: news.updated, items: [
+  art(11, '2026-11-13T22:00:00Z', { source: 'The Concordian', link: 'https://theconcordian.com/11/', title: 'Concordia 1' }),
+  art(12, '2026-11-13T21:00:00Z', { source: 'The Concordian', link: 'https://theconcordian.com/12/', title: 'Concordia 2' }),
+  art(13, '2026-11-13T20:00:00Z', { source: 'The Link', link: 'https://thelinknewspaper.ca/13/', title: 'Link 1' }),
+  art(14, '2026-11-13T19:00:00Z', { source: 'Quartier Libre', link: 'https://quartierlibre.ca/z-14/', title: 'QL 1' }),
+  art(15, '2026-11-13T18:00:00Z', { source: 'Le Délit', link: 'https://ledelit.ca/15/', title: 'Delit 1' }),
+] }, seatSlot, { now: T0 });
+assert.deepEqual(seated.items.map(x => x.source), ['The Concordian', 'The Link', 'Quartier Libre', 'Le Délit'], 'quatre médias : la rafale ne prend pas la carte 2');
+assert.equal(seated.items[0].title, 'Concordia 1');
+const leftover = U.selectUne({ updated: news.updated, items: [
+  art(21, '2026-11-13T22:00:00Z', { source: 'The Concordian', link: 'https://theconcordian.com/21/', title: 'Concordia 1' }),
+  art(22, '2026-11-13T21:00:00Z', { source: 'The Concordian', link: 'https://theconcordian.com/22/', title: 'Concordia 2' }),
+  art(23, '2026-11-13T20:30:00Z', { source: 'The Concordian', link: 'https://theconcordian.com/23/', title: 'Concordia 3' }),
+  art(24, '2026-11-13T19:00:00Z', { source: 'The Link', link: 'https://thelinknewspaper.ca/24/', title: 'Link 1' }),
+  art(25, '2026-11-13T18:00:00Z', { source: 'Quartier Libre', link: 'https://quartierlibre.ca/z-25/', title: 'QL 1' }),
+] }, seatSlot, { now: T0 });
+assert.deepEqual(leftover.items.map(x => x.title), ['Concordia 1', 'Concordia 2', 'Link 1', 'QL 1'], 'trois médias : la carte restante revient à la rafale, puis l’ordre est la date');
+const buried = [];
+for (let i = 0; i < 10; i++) buried.push(art(100 + i, new Date(Date.parse('2026-11-13T22:00:00Z') - i * 60000).toISOString(), { source: 'The Concordian', link: `https://theconcordian.com/b-${i}/`, title: `Rafale ${i}` }));
+buried.push(art(200, '2026-11-13T18:00:00Z', { source: 'The Link', link: 'https://thelinknewspaper.ca/seul/', title: 'Article Link seul' }));
+const wide = U.selectUne({ updated: news.updated, items: buried }, seatSlot, { now: T0, pool: 9 });
+assert.equal(wide.items[0].title, 'Rafale 0', 'la carte 1 reste la plus récente de la fenêtre');
+assert.equal(wide.items.filter(x => x.source === 'The Concordian').length, 3);
+assert.equal(wide.items.at(-1).source, 'The Link', 'un média hors des 9 plus récents a quand même un siège');
 
 // ── Textes : limites, liens, auteurs, aucun @, jamais « week-end » ──
 const real = JSON.parse(fs.readFileSync(new URL('../news.json', import.meta.url)));
@@ -112,7 +139,7 @@ const boom = await U.frenchOnly([enItem('f', 'Students rally for housing')], asy
 assert.equal(boom.kept.length, 0, 'erreur réseau : exclu');
 const stillEn = await U.frenchOnly([enItem('g', 'Students rally for housing')], async () => 'The students rally for the housing in the city');
 assert.equal(stillEn.kept.length, 0, 'encore anglais : exclu');
-assert.deepEqual(U.finalizeItems([{ id: 1 }, { id: 2, siteImage: 'x' }, { id: 3 }], 2).map(x => x.id), [2, 1]);
+assert.deepEqual(U.finalizeItems([{ id: 1 }, { id: 2, siteImage: 'x' }, { id: 3 }], 2).map(x => x.id), [1, 2], 'une photo ne passe pas devant le premier');
 // Établissements en français, aucune étiquette anglaise ; émojis de sport étudiant.
 assert.equal(U.institutionLabel({ institution: 'Concordia University' }), 'Université Concordia');
 assert.equal(U.institutionLabel({ institution: "Bishop's University" }), "Université Bishop's");

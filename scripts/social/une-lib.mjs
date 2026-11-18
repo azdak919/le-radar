@@ -1,6 +1,8 @@
 // « La une du matin » et « La une du soir » : logique pure (testée dans tests/social-une.mjs).
 //  - créneaux en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées par Intl) ;
-//  - sélection = la une de l'accueil (scripts/magazine-front-page-lib.js, période « Les plus récents », sport pro exclu) ;
+//  - sélection = articles du créneau (pas encore publiés ; le soir, le jour civil seulement), un siège par média.
+//    La première carte reste le plus récent. Une rafale ne remplit une carte restante que s'il en reste.
+//    Même filtres que l'affiche (fraîcheur, avis de ménage, sport pro), sans son plafond de 9 ni son horizon de 14 jours ;
 //  - anti-doublon : un article déjà publié dans un créneau récent n'est jamais repris ; le soir ne garde que les
 //    nouveautés de la journée et saute la publication s'il n'y en a aucune ;
 //  - textes par réseau en français, titres + auteurs (tous, sinon le média seul), liens le-radar.ca, hashtags, aucune mention @ ;
@@ -94,28 +96,51 @@ export function byline(item) {
   return src ? `${a} · ${src}` : a;
 }
 const ymdOf = d => front.mtlYmd(d);
-const hasImg = it => Boolean(it && !it._feedNoImage && (it.imageLocal || it.image || it.stockImage));
+
+/**
+ * Un siège par média (pas par établissement), le plus récent d'abord.
+ * Les cartes qui restent vont aux articles suivants, par date. Le résultat est reclassé par date :
+ * la première place est donc le plus récent du lot, même s'il n'a pas de photo.
+ * `max` non fini : la liste complète, par date.
+ */
+export function seatBySource(items, max = 4) {
+  const sorted = [...items].sort((a, b) => Date.parse(b?.date || 0) - Date.parse(a?.date || 0));
+  const cap = Number.isFinite(Number(max)) ? Math.max(0, Number(max)) : sorted.length;
+  if (!cap) return [];
+  const seen = new Set();
+  const primary = [];
+  const rest = [];
+  for (const it of sorted) {
+    const src = String(it?.source || '').trim();
+    if (seen.has(src)) rest.push(it);
+    else { seen.add(src); primary.push(it); }
+  }
+  const chosen = primary.slice(0, cap);
+  if (chosen.length < cap) chosen.push(...rest.slice(0, cap - chosen.length));
+  return chosen.sort((a, b) => Date.parse(b?.date || 0) - Date.parse(a?.date || 0));
+}
 
 /**
  * Sélection d'un créneau. `news` = news.json, `state` = data/social/une-state.json.
  * Retourne { items (normalisés), lead, ids, skip?, why, doubts }.
  */
-export function selectUne(news, slot, { now = Date.now(), state = {}, max = 4, pool = 9, maxNewsAgeH = 6 } = {}) {
+export function selectUne(news, slot, { now = Date.now(), state = {}, max = 4, maxNewsAgeH = 6 } = {}) {
   // La revue n'entre jamais dans la sélection de La une (ni carte, ni image). Un lien texte peut figurer en 2e ligne du post, seulement si l'édition du jour existe (revueEditionLine).
   const raw = (Array.isArray(news) ? news : news?.items || []).filter(it => !isRevueLink(it?.link));
   const doubts = [];
   const updated = Date.parse(news?.updated || '');
   if (!Number.isFinite(updated) || (now - updated) / 3600e3 > maxNewsAgeH) doubts.push(`news.json trop ancien ou sans date (${Number.isFinite(updated) ? Math.round((now - updated) / 3600e3) + ' h' : 'inconnu'})`);
-  const picked = front.selectFrontPage(raw, new Date(now), null, pool, 'jour').items;
+  // Infinity : toute la fenêtre admissible (fraîcheur, ménage, sport pro), pas les 9 plus récents de l'affiche.
+  const picked = front.selectFrontPage(raw, new Date(now), null, Infinity, 'jour').items;
   const seen = new Set(previousKeys(slot).flatMap(k => state[k]?.ids || []));
   let cand = picked.filter(it => { const id = front.articleId(it.link); return id && !seen.has(id) && Date.parse(it.date || 0) <= now; });
   if (slot.id === 'soir') cand = cand.filter(it => ymdOf(it.date) === slot.day);
-  cand = cand.slice(0, max);
-  const li = cand.findIndex(hasImg); if (li > 0) cand = [cand[li], ...cand.slice(0, li), ...cand.slice(li + 1)];
+  const available = cand.length;
+  cand = seatBySource(cand, max);
   const items = cand.map(it => ({ ...front.normalize(it, '..'), lang: it.lang || detectLang({ title: it.title }), place: unePlaceLabel(it), placeColor: institutionColor(it.institution), sport: sportEmoji(it), byline: byline(it), tag: institutionTag({ source: it.source, title: it.title, desc: it.excerpt || '' }), siteImage: siteImage(it) })).filter(x => x.id);
   const skip = !items.length;
   const why = skip ? (slot.id === 'soir' ? 'rien de nouveau depuis le matin : publication sautée' : 'aucun article nouveau à la une : publication sautée') : `${items.length} article(s)`;
-  return { items, lead: items[0] || null, ids: items.map(x => x.id), skip, why, doubts, available: picked.length };
+  return { items, lead: items[0] || null, ids: items.map(x => x.id), skip, why, doubts, available };
 }
 /** Établissement en français (publications en français seulement ; aucun logo d'université). */
 const FR_INSTITUTIONS = {
@@ -334,11 +359,9 @@ export async function frenchOnly(items, translate) {
   }
   return { kept, excluded };
 }
-/** Au plus `max` articles, la une étant le premier qui a une photo. */
+/** Au plus `max` articles, dans l'ordre reçu. Une photo ne passe pas devant le plus récent. */
 export function finalizeItems(items, max = 4) {
-  let out = items.slice(0, max);
-  const li = out.findIndex(x => x.image || x.siteImage); if (li > 0) out = [out[li], ...out.slice(0, li), ...out.slice(li + 1)];
-  return out;
+  return items.slice(0, max);
 }
 
 /** Image publique de l'article sur le-radar.ca (repli si l'hébergement de l'affiche échoue). */
