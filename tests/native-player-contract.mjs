@@ -6,7 +6,8 @@
  *   natif + app.js (pas d’iframe #radar-embed).
  * - feeds.html (page écrite à la main) : native-tuner.js injecte le même
  *   balisage depuis index.html, puis charge app.js — pas d’iframe.
- * - pomo / solitaire : exception explicite — iframe #radar-embed → tuner-embed.
+ * - pomo / solitaire : barre compacte du module partagé radio-barre.js (un
+ *   seul appel, plus d’iframe) ; le même module sert les journaux du Kiosque.
  * - offline.html : hors contrat audio (mini-jeu hors-ligne).
  */
 import assert from 'node:assert/strict';
@@ -32,7 +33,7 @@ function rel(p) {
   return relative(root, p).replace(/\\/g, '/');
 }
 
-const IFRAME_ALLOWED = new Set(['pomo/index.html', 'solitaire/index.html']);
+const MODULE_PAGES = new Set(['pomo/index.html', 'solitaire/index.html']);
 const NO_PLAYER = new Set([
   'offline.html',
   'easter-egg.html',
@@ -43,7 +44,7 @@ const NO_PLAYER = new Set([
 
 const pages = walkHtml(root);
 let native = 0;
-let iframeOk = 0;
+let moduleOk = 0;
 let skipped = 0;
 
 for (const file of pages) {
@@ -60,11 +61,11 @@ for (const file of pages) {
   const hasPlayerEl = /id=["']radar-player["']/.test(html) || hasNativeLoader;
   const hasApp = /app\.js/.test(html) || hasNativeLoader;
 
-  if (IFRAME_ALLOWED.has(r)) {
-    assert(hasEmbed, `${r}: exception iframe — #radar-embed requis`);
-    assert(/tuner-embed\.html/.test(html), `${r}: iframe doit cibler tuner-embed.html`);
-    assert(!hasNativeTuner, `${r}: pas de #tuner natif en parallèle de l’iframe`);
-    iframeOk += 1;
+  if (MODULE_PAGES.has(r)) {
+    assert(!hasEmbed, `${r}: plus d’iframe #radar-embed (module radio-barre.js)`);
+    assert(/<script src=["']\.\.\/radio-barre\.js["'] async><\/script>/.test(html), `${r}: appel au module radio-barre.js requis`);
+    assert(!hasNativeTuner, `${r}: pas de #tuner natif en parallèle du module`);
+    moduleOk += 1;
     continue;
   }
 
@@ -93,7 +94,7 @@ for (const file of pages) {
   if (!looksPublic) {
     // Fiches isolées sans chrome : pas de contrainte D17
     if (hasEmbed) {
-      assert.fail(`${r}: #radar-embed hors liste d’exceptions (pomo/solitaire)`);
+      assert.fail(`${r}: #radar-embed interdit (iframe retirée)`);
     }
     skipped += 1;
     continue;
@@ -111,6 +112,6 @@ for (const file of pages) {
 }
 
 assert(native >= 50, `attendu ≥ 50 pages natives, got ${native}`);
-assert(iframeOk === 2, `attendu 2 pages iframe (pomo+solitaire), got ${iframeOk}`);
+assert(moduleOk === 2, `attendu 2 pages au module radio (pomo+solitaire), got ${moduleOk}`);
 
-console.log(`OK native-player-contract (${native} natives, ${iframeOk} iframes, ${skipped} hors périmètre)`);
+console.log(`OK native-player-contract (${native} natives, ${moduleOk} au module radio, ${skipped} hors périmètre)`);

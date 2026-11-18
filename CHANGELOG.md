@@ -7,6 +7,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Barre radio partagée `radio-barre.js` : un appel d’une ligne pose la barre (stations de `radios.json`, émission en cours, lecture et arrêt, volume au bureau, petit logo LE-RADAR). Pomodoro et Solitaire l’utilisent à la place de l’iframe `tuner-embed.html` ; les journaux du Kiosque l’appellent depuis le-radar.ca, donc un changement de station, de code ou de style leur arrive sans mise à jour. Sans réponse de LE-RADAR, la barre ne s’affiche pas. Pomodoro et Solitaire ont `media-src https:` pour les flux.
 - Compteur anonyme du bandeau sportif, éteint. Un clic n’envoie rien. La page Mise à jour n’a que la ligne Socle. Le script Umami déjà en place n’est pas retiré.
 - Poids du bandeau, éteint. À heure égale et dans le même seau, une moyenne de clics ne départage que si l’interrupteur, quatre à huit semaines et un seuil fourni sont réunis. Sinon l’ordre reste celui du jour. La phrase de politique n’est pas publiée.
 - Note : le compteur et le poids restent dans le dépôt, laissés de côté. Voir `docs/compteur-sports.md`.

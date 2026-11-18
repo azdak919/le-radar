@@ -565,6 +565,7 @@ Pas de daemon qui lit le chat : la « détection pendant le vibe » = **observat
 - **Radio Android** : un seul `<audio>`, pas de 2ᵉ son, pas de proxy audio Worker.
 - **Banques** : mât ≠ pomo ≠ uni ; nations partagée ; favorites hors purge bots.
 - **SW** : bump `radar-shell-vN` / `pomo-shell-vN` si le shell cache change. Plus besoin d’y penser : `npm run check` refuse un `.css`/`.js` de shell modifié sans bump, et `npm run sw:bump` bumpe + resynchronise `sw-shell-lock.json`.
+- **Barre radio partagée** : `radio-barre.js` + `radio-barre.css` (Shadow DOM). Pomodoro, Solitaire et les journaux du Kiosque l'appellent en une ligne (`<script src="…/radio-barre.js" async>`). Ne pas copier ses stations, son code ou son style ailleurs : un changement ici doit arriver partout sans mise à jour des sites. Sans `radios.json`, rien ne s'affiche et le parent reçoit `data-radar-radio="off"`. Contrat : `docs/radio-barre.md`.
 - **UX** : en cas de doute, ne pas toucher — documenter dans §3.
 
 ---

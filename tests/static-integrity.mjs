@@ -486,9 +486,9 @@ assert(/talk\|discussion\|uploads/i.test(bgJs), 'mât : strip talk/uploads runti
 
 for (const app of ['pomo', 'solitaire']) {
   const html = readFileSync(join(root, app, 'index.html'), 'utf8');
-  assert(/id=["']radar-embed["']/.test(html), `${app}: iframe Le Radar requis`);
-  assert(/src=["']\.\.\/tuner-embed\.html["']/.test(html), `${app}: source iframe Le Radar invalide`);
-  assert(/allow=["'][^"']*autoplay/.test(html), `${app}: permission autoplay iframe requise`);
+  // Barre radio : un seul appel au module partagé, plus d'iframe.
+  assert(/<script src=["']\.\.\/radio-barre\.js["'] async><\/script>/.test(html), `${app}: appel au module radio-barre.js requis`);
+  assert(!/id=["']radar-embed["']/.test(html), `${app}: iframe tuner-embed retirée`);
 }
 
 const radiosRegistry = JSON.parse(readFileSync(join(root, 'radios.json'), 'utf8'));
@@ -1125,7 +1125,7 @@ for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
 }
 // Pages avec lecteur natif : sans media-src https:, les flux radio sont bloqués
 // par default-src 'self' (silence au play sur SEO / feeds).
-for (const rel of ['index.html', 'feeds.html', 'radios/chyz/index.html', 'scripts/seo-pages-lib.js']) {
+for (const rel of ['index.html', 'feeds.html', 'radios/chyz/index.html', 'scripts/seo-pages-lib.js', 'pomo/index.html', 'solitaire/index.html']) {
   const text = readFileSync(join(root, rel), 'utf8');
   assert(
     /media-src[^;\n]*https:/.test(text) || /media-src[\s\S]{0,80}https:/.test(text),

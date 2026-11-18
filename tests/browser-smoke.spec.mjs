@@ -27,10 +27,12 @@ for (const viewport of [
         await expect(page.locator('.article').first()).toBeVisible();
       }
       if (route.embed) {
-        const iframe = page.locator('#radar-embed');
-        await expect(iframe).toBeVisible();
-        await expect(iframe).toHaveAttribute('src', '../tuner-embed.html');
-        await expect(iframe.contentFrame().locator('#tuner-play')).toBeVisible();
+        // Barre radio : module partagé radio-barre.js, sans iframe.
+        await expect(page.locator('#radar-embed')).toHaveCount(0);
+        const bar = page.locator('.radar-radio');
+        await expect(bar).toBeVisible();
+        await expect(bar.locator('button.play')).toBeVisible();
+        await expect(bar.locator('.name')).not.toHaveText('');
       }
       if (route.path === '/pomo/' || route.path === '/solitaire/') {
         await expect(page.locator('link[rel="icon"][sizes="32x32"]'))
