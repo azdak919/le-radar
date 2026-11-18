@@ -1,65 +1,7 @@
 {
-  "updated": "2026-11-18T17:41:43.298Z",
-  "count": 23,
+  "updated": "2026-11-18T18:10:56.632Z",
+  "count": 19,
   "items": [
-    {
-      "name": "Quartier Libre",
-      "institution": "Université de Montréal",
-      "type": "universite",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "instagram",
-          "url": "https://www.instagram.com/quartierlibre.ca/",
-          "handle": "@quartierlibre.ca",
-          "stats": "",
-          "label": "Instagram"
-        },
-        {
-          "type": "facebook",
-          "url": "https://www.facebook.com/QuartierLibre.ca",
-          "handle": "QuartierLibre.ca",
-          "stats": "",
-          "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/quartierlibre",
-          "handle": "@quartierlibre",
-          "stats": "",
-          "label": "X"
-        }
-      ]
-    },
-    {
-      "name": "Montréal Campus",
-      "institution": "UQAM",
-      "type": "universite",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "instagram",
-          "url": "https://www.instagram.com/montrealcampus/",
-          "handle": "@montrealcampus",
-          "stats": "",
-          "label": "Instagram"
-        },
-        {
-          "type": "facebook",
-          "url": "https://www.facebook.com/montrealcampus",
-          "handle": "montrealcampus",
-          "stats": "",
-          "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/montrealcampus",
-          "handle": "@montrealcampus",
-          "stats": "🗞️ Le journal indépendant des étudiants et des étudiantes de l'Université du Québec à Montréal (UQAM) depuis 1980.",
-          "label": "X"
-        }
-      ]
-    },
     {
       "name": "Le Délit",
       "institution": "Université McGill",
@@ -67,25 +9,11 @@
       "kind": "journal",
       "networks": [
         {
-          "type": "instagram",
-          "url": "https://www.instagram.com/le.delit/",
-          "handle": "@le.delit",
-          "stats": "",
-          "label": "Instagram"
-        },
-        {
           "type": "facebook",
           "url": "https://facebook.com/ledelitfrancais",
           "handle": "ledelitfrancais",
           "stats": "",
           "label": "Facebook"
-        },
-        {
-          "type": "tiktok",
-          "url": "https://www.tiktok.com/@le.delit",
-          "handle": "@le.delit",
-          "stats": "",
-          "label": "TikTok"
         }
       ]
     },
@@ -119,24 +47,38 @@
       ]
     },
     {
-      "name": "Zone Campus",
-      "institution": "Université du Québec à Trois-Rivières",
+      "name": "The Link",
+      "institution": "Concordia University",
       "type": "universite",
       "kind": "journal",
       "networks": [
         {
           "type": "instagram",
-          "url": "https://www.instagram.com/zonecampus/",
-          "handle": "@zonecampus",
+          "url": "https://www.instagram.com/linknewspaper/",
+          "handle": "@linknewspaper",
           "stats": "",
           "label": "Instagram"
         },
         {
           "type": "facebook",
-          "url": "https://www.facebook.com/zonecampus",
-          "handle": "zonecampus",
+          "url": "https://facebook.com/thelinknewspaper",
+          "handle": "thelinknewspaper",
           "stats": "",
           "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/linknewspaper",
+          "handle": "@linknewspaper",
+          "stats": "",
+          "label": "X"
+        },
+        {
+          "type": "tiktok",
+          "url": "https://www.tiktok.com/@thelinknewspaper",
+          "handle": "@thelinknewspaper",
+          "stats": "",
+          "label": "TikTok"
         }
       ]
     },
@@ -163,28 +105,6 @@
       ]
     },
     {
-      "name": "Le Collectif",
-      "institution": "Université de Sherbrooke",
-      "type": "universite",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "instagram",
-          "url": "https://www.instagram.com/jlecollectif/",
-          "handle": "@jlecollectif",
-          "stats": "",
-          "label": "Instagram"
-        },
-        {
-          "type": "facebook",
-          "url": "https://www.facebook.com/journallecollectif",
-          "handle": "journallecollectif",
-          "stats": "",
-          "label": "Facebook"
-        }
-      ]
-    },
-    {
       "name": "Exil",
       "institution": "Cégep du Vieux Montréal",
       "type": "cegep",
@@ -203,28 +123,6 @@
           "handle": "WordPresscom",
           "stats": "",
           "label": "Facebook"
-        }
-      ]
-    },
-    {
-      "name": "La Pige",
-      "institution": "Cégep de Jonquière (ATM – journalisme)",
-      "type": "cegep",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "facebook",
-          "url": "https://www.facebook.com/2008",
-          "handle": "2008",
-          "stats": "",
-          "label": "Facebook"
-        },
-        {
-          "type": "youtube",
-          "url": "https://www.youtube.com/@atmlapige",
-          "handle": "@atmlapige",
-          "stats": "",
-          "label": "YouTube"
         }
       ]
     },
