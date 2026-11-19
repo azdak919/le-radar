@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-19T06:36:40.155Z",
+  "updated": "2026-11-19T08:05:28.486Z",
   "total": 1035,
   "pool": 61,
   "incomplete": 27,
   "withLeadExcerpt": 182,
   "candidates": 27,
-  "enriched": 3,
-  "failed": 0,
+  "enriched": 0,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "Grammys 2027 : vent de folie québécois et triomphe féminin",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin/?utm_source=rss&utm_medium=rss&utm_campaign=grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin",
-      "ok": true,
-      "score": 100,
-      "chars": 212,
-      "sample": "Taylor Swift obtient sa 5e nomination consécutive dans la catégorie Album de l’année avec The Life o",
-      "changed": true
-    },
-    {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
-      "ok": true,
-      "score": 100,
-      "chars": 192,
-      "sample": "Le CIUSS du Saguenay-Lac Saint-Jean oblige le port du masque à ses employés et aux patients. Après 7",
-      "changed": true
-    },
-    {
       "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
       "link": "https://theconcordian.com/2026/11/avi-lewis-carney-policies-terrifying/",
       "ok": true,
       "score": 100,
       "chars": 190,
       "sample": "Hundreds of New Democratic Party (NDP) supporters gathered at a rally on Nov. 17 at Ausgang Plaza in",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Finding calm in the stacks, CU Wellness brings 30-Minute sound baths to Webster Library",
+      "link": "https://theconcordian.com/2026/11/cu-wellness-sound-bath-session/",
+      "ok": true,
+      "score": 100,
+      "chars": 273,
+      "sample": "Seeking to help students find calm amid their busy schedules, Concordia University Wellness invited ",
+      "changed": false
+    },
+    {
+      "title": "A new era for Hockey Canada",
+      "link": "https://theconcordian.com/2026/11/new-era-for-hockey-canada/",
+      "ok": true,
+      "score": 100,
+      "chars": 190,
+      "sample": "Team Canada was said to be old and unfit to face off against this young and promising American team.",
+      "changed": false
     }
   ]
 }
