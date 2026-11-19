@@ -16,7 +16,7 @@
   position: relative;
   display: flex; align-items: center; justify-content: center; gap: 9px;
   width: 100%; max-width: 1326px; margin: 0 auto;
-  min-height: 68px; padding: 10px 20px;
+  height: 68px; min-height: 68px; padding: 10px 20px;
   background: #101816; color: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 24px -14px rgba(0, 0, 0, .78);
@@ -67,6 +67,17 @@ svg { display: block; }
 .line1 { font-size: 14px; line-height: 1.2; color: var(--radio-bright); }
 .line2 { font-size: 11px; line-height: 1.35; letter-spacing: .01em; color: rgba(255, 255, 255, .5); }
 .bar[data-state="error"] .line2 { color: #ff9a90; }
+/* Défilement droite → gauche : mêmes paramètres que style-tuner.css (repos compris). */
+.tuner-now-sub-text { display: inline-block; white-space: nowrap; }
+.is-marquee { text-overflow: clip; }
+.is-marquee > .tuner-now-sub-text {
+  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) var(--marquee-trips, 2) alternate both;
+  will-change: transform;
+}
+@keyframes tunerMarquee {
+  0%, 18%   { transform: translate3d(0, 0, 0); }
+  82%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
+}
 
 .play {
   flex: none; width: 42px; height: 42px; padding: 0; border: 0; border-radius: 50%;
@@ -115,9 +126,11 @@ svg { display: block; }
 
 /* À l'antenne / À venir. */
 .air {
-  flex: 0 1 170px; min-width: 110px; display: flex; flex-direction: column; gap: 2px;
+  flex: 0 1 170px; min-width: 110px; width: 170px; display: flex; flex-direction: column; gap: 2px;
   color: inherit; text-decoration: none; padding-left: 4px;
 }
+/* Vide : invisible, mais la place reste (évite le saut au changement de poste). */
+.air.is-empty { visibility: hidden; pointer-events: none; }
 .air[href] { cursor: pointer; }
 .air-label { font-size: 9px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; line-height: 1.35; color: var(--onair-live); white-space: nowrap; }
 .air--next .air-label { color: var(--upcoming); }
@@ -127,9 +140,11 @@ svg { display: block; }
 .air-time { font-size: 10px; font-weight: 600; line-height: 1.35; color: rgba(255, 255, 255, .48); white-space: nowrap; }
 @media (hover: hover) and (pointer: fine) { .air[href]:hover .air-title { text-decoration: underline; } }
 
-/* Barre moyenne : un seul panneau, l'émission en ondes, sinon celle à venir. */
+/* Barre moyenne : un seul cran réservé (ondes si présente, sinon à venir, sinon vide). */
 @container (max-width: 1059px) {
-  .air--now:not([hidden]) ~ .air--next { display: none !important; }
+  .air--now:not(.is-empty) ~ .air--next,
+  .air--now.is-empty ~ .air--next.is-empty { display: none !important; }
+  .air--now.is-empty:has(~ .air--next:not(.is-empty)) { display: none !important; }
 }
 @container (max-width: 859px) {
   .onair, .air { display: none !important; }
@@ -138,7 +153,7 @@ svg { display: block; }
 
 /* Barre étroite (< 680 px, téléphone) : 58 px, comme le syntoniseur téléphone. */
 @container (max-width: 679px) {
-  .bar { min-height: 58px; padding: 6px 8px; gap: 6px; border-radius: 10px; background: #252830; }
+  .bar { height: 58px; min-height: 58px; padding: 6px 8px; gap: 6px; border-radius: 10px; background: #252830; }
   .brand, .brand img { width: 24px; height: 24px; }
   .onair, .air, .eq, .cast--bar { display: none !important; }
   /* Précédent | cadran | suivant : un seul bloc, comme le-radar.ca. */
@@ -172,6 +187,8 @@ svg { display: block; }
 @keyframes wait { 50% { opacity: .7; } }
 @media (prefers-reduced-motion: reduce) {
   .onair::before, .eq span, .play { animation: none !important; }
+  .is-marquee { text-overflow: ellipsis; }
+  .is-marquee > .tuner-now-sub-text { animation: none; transform: none; }
 }
 .cast { background: transparent; border-color: transparent; box-shadow: none; }
 .cast:disabled { opacity: .35; cursor: not-allowed; }

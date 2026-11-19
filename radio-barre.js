@@ -7,6 +7,7 @@
  * l'appellent, sans mise à jour de leur côté.
  *
  * Elle reprend la barre de le-radar.ca, mêmes informations, mêmes contrôles :
+ *  - le logo à gauche mène seulement à https://le-radar.ca/ (sans chemin) ;
  *  - ordinateur : logo, « En ondes », poste précédent / suivant, cadran
  *    (établissement, poste et slogan, liste des postes), lecture / arrêt,
  *    diffusion sur un appareil (grisée si le navigateur ne le permet pas), égaliseur,
@@ -112,7 +113,7 @@
     bar.dataset.state = 'idle';
     const castButton = (where) => `<button type="button" class="cast cast--${where}" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil">${ICON.cast}</button>`;
     bar.innerHTML = `
-      <a class="brand" href="${new URL('radios/', base).href}" target="_blank" rel="noopener" title="LE-RADAR — radios étudiantes du Québec"><img src="${new URL('assets/icon.svg', base).href}" alt="LE-RADAR" width="28" height="28"></a>
+      <a class="brand" href="https://le-radar.ca/" target="_blank" rel="noopener" title="LE-RADAR"><img src="${new URL('assets/icon.svg', base).href}" alt="LE-RADAR" width="28" height="28"></a>
       <span class="onair">En ondes</span>
       <button type="button" class="step" data-step="-1" title="Poste précédent" aria-label="Poste précédent">${ICON.prev}</button>
       <label class="dial"><span class="sr">Choisir un poste</span><select>${stations.map((item) => `<option value="${esc(item.id)}">${esc(onAirName(item))} · ${esc(acronym(item))}</option>`).join('')}</select><span class="now" aria-hidden="true"><span class="line1"></span><span class="line2"></span></span></label>
@@ -128,8 +129,8 @@
           ${castButton('pop')}
         </div>
       </div>
-      <a class="air air--now" target="_blank" rel="noopener" hidden><span class="air-label">À l’antenne</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>
-      <a class="air air--next" target="_blank" rel="noopener" hidden><span class="air-label">À venir</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>`;
+      <a class="air air--now is-empty" target="_blank" rel="noopener" aria-hidden="true"><span class="air-label">À l’antenne</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>
+      <a class="air air--next is-empty" target="_blank" rel="noopener" aria-hidden="true"><span class="air-label">À venir</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>`;
     root.append(bar);
 
     const $ = (selector) => bar.querySelector(selector);
@@ -189,12 +190,77 @@
     }
 
     const slotTime = (item) => (item?.start && item?.end ? `${item.start} – ${item.end}` : (item?.start || ''));
+    // Mêmes constantes que le syntoniseur de le-radar.ca (radar-state.js).
+    const MARQUEE_READ_DELAY_MS = 1600;
+    const MARQUEE_ROUND_TRIPS = 2;
+    const REDUCE_MOTION = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+
+    function measureMarquee(el) {
+      if (!el || REDUCE_MOTION?.matches) return;
+      const span = el.querySelector('.tuner-now-sub-text');
+      if (!span) return;
+      const style = getComputedStyle(el);
+      const available = Math.max(0, el.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0));
+      if (!available) return;
+      const overflow = span.scrollWidth - available;
+      if (overflow <= 2) {
+        el.classList.remove('is-marquee');
+        el.style.removeProperty('--marquee-shift');
+        el.style.removeProperty('--marquee-duration');
+        el.style.removeProperty('--marquee-delay');
+        el.style.removeProperty('--marquee-trips');
+        return;
+      }
+      const distance = Math.round(overflow + 12);
+      const duration = Math.max(7, distance / 16);
+      el.style.setProperty('--marquee-shift', `-${distance}px`);
+      el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+      el.style.setProperty('--marquee-delay', `${(MARQUEE_READ_DELAY_MS / 1000).toFixed(1)}s`);
+      el.style.setProperty('--marquee-trips', String(MARQUEE_ROUND_TRIPS));
+      el.classList.add('is-marquee');
+    }
+    function applyMarquee(el, text) {
+      if (!el) return;
+      const value = String(text ?? '').trim();
+      el.classList.remove('is-marquee');
+      el.style.removeProperty('--marquee-shift');
+      el.style.removeProperty('--marquee-duration');
+      el.style.removeProperty('--marquee-delay');
+      el.style.removeProperty('--marquee-trips');
+      if (!value) { el.replaceChildren(); return; }
+      if (REDUCE_MOTION?.matches) { el.textContent = value; return; }
+      const span = document.createElement('span');
+      span.className = 'tuner-now-sub-text';
+      span.textContent = value;
+      el.replaceChildren(span);
+      requestAnimationFrame(() => requestAnimationFrame(() => measureMarquee(el)));
+    }
+    function refreshMarquees() {
+      for (const el of [line1, line2, nowAir.querySelector('.air-title'), nextAir.querySelector('.air-title')]) {
+        if (el?.querySelector('.tuner-now-sub-text')) measureMarquee(el);
+      }
+    }
+
+    // Place des panneaux toujours réservée (comme le syntoniseur) : on n'utilise
+    // pas [hidden], qui ferait sauter toute la barre au changement de poste.
     function fill(node, item) {
-      if (!item?.title) { node.hidden = true; return; }
-      node.hidden = false;
-      node.querySelector('.air-title').textContent = item.title;
+      const title = item?.title || '';
+      const empty = !title;
+      node.classList.toggle('is-empty', empty);
+      node.setAttribute('aria-hidden', String(empty));
+      if (empty) {
+        applyMarquee(node.querySelector('.air-title'), '');
+        node.querySelector('.air-time').textContent = '';
+        node.removeAttribute('href');
+        return;
+      }
+      applyMarquee(node.querySelector('.air-title'), title);
       node.querySelector('.air-time').textContent = slotTime(item);
       if (/^https:\/\//.test(item.url || '')) node.href = item.url; else node.removeAttribute('href');
+    }
+    function syncLines() {
+      const isNarrow = narrow();
+      for (const node of [line1, line2]) applyMarquee(node, isNarrow ? node.dataset.narrow : node.dataset.wide);
     }
     function describe() {
       select.value = station.id;
@@ -207,11 +273,18 @@
       line2.dataset.narrow = bar.dataset.state === 'error'
         ? 'Flux muet pour le moment. Réessayez plus tard.'
         : current ? `À l’antenne · ${current}` : info?.next?.title ? `À venir · ${info.next.title}` : (station.slogan || station.frequency || '');
-      for (const node of [line1, line2]) node.textContent = narrow() ? node.dataset.narrow : node.dataset.wide;
+      syncLines();
       fill(nowAir, info?.current?.title ? info.current : (info?.track ? { title: info.track } : null));
       fill(nextAir, info?.next);
     }
-    if ('ResizeObserver' in window) new ResizeObserver(describe).observe(host);
+    let wasNarrow = narrow();
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(() => {
+        const isNarrow = narrow();
+        if (isNarrow !== wasNarrow) { wasNarrow = isNarrow; syncLines(); }
+        else refreshMarquees();
+      }).observe(host);
+    }
 
     let nowTimer = 0;
     async function nowPlaying() {
@@ -322,6 +395,8 @@
     if (!(await loaded)) { host.remove(); mark('off'); return; }
     host.hidden = false;
     mark('ready');
+    wasNarrow = narrow();
+    requestAnimationFrame(() => requestAnimationFrame(() => { syncLines(); refreshMarquees(); }));
   }
 
   start();
