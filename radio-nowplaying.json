@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-19T17:07:25.784Z",
+  "updatedAt": "2026-11-19T17:34:15.936Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Conduite Antisportive",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:06:40.302Z"
+      "checkedAt": "2026-11-19T17:33:25.957Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:06:54.533Z"
+      "checkedAt": "2026-11-19T17:33:40.080Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:07:02.322Z"
+      "checkedAt": "2026-11-19T17:33:42.598Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "The Power Hour",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/the-power-hour"
       },
       "next": {
         "title": "What's Happening in NDG",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
@@ -103,12 +96,12 @@
       "track": "",
       "showTitle": "The Power Hour",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:07:16.994Z"
+      "checkedAt": "2026-11-19T17:33:54.781Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:07:18.855Z"
+      "checkedAt": "2026-11-19T17:33:56.042Z"
     },
     "choq": {
       "id": "choq",
@@ -156,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:07:25.434Z"
+      "checkedAt": "2026-11-19T17:34:15.585Z"
     }
   }
 }
