@@ -1,24 +1,84 @@
 {
-  "updated": "2026-11-19T11:39:28.675Z",
+  "updated": "2026-11-19T13:03:33.948Z",
   "total": 1035,
   "withPhoto": 920,
   "withStock": 145,
   "withCampusBank": 111,
   "fullyCovered": 1026,
-  "leadReadyPhotos": 893,
-  "pageScraped": 18,
-  "photosRecovered": 17,
-  "imagesCleared": 1,
-  "stockSearches": 1,
-  "stockFound": 13,
-  "campusBankFound": 12,
+  "leadReadyPhotos": 894,
+  "pageScraped": 20,
+  "photosRecovered": 19,
+  "imagesCleared": 2,
+  "stockSearches": 11,
+  "stockFound": 19,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "If Quebec stops the clocks, should they be frozen on standard or daylight savings time?",
+      "link": "https://theconcordian.com/2026/11/quebec-time-change-from-daylight-savings",
+      "reason": "no-stock-match",
+      "image": "https://theconcordian.com/wp-content/uploads/2013/09/LIFE_sleeping-01.png"
+    },
+    {
+      "title": "The magic of world-building through art",
+      "link": "https://theconcordian.com/2026/11/the-magic-of-world-building-through-art",
+      "reason": "no-stock-match",
+      "image": "https://theconcordian.com/wp-content/uploads/2026/11/Beyond-1.jpg"
+    },
+    {
+      "title": "Is Wearing Makeup Really a Choice?",
+      "link": "https://www.mcgilldaily.com/2026/11/is-wearing-makeup-really-a-choice/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "Rencontre Carney-PSPP au Cambodge",
+      "link": "https://lecollectif.ca/a-la-une/rencontre-carney-pspp-au-cambodge/",
+      "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "What is DEK Hockey?",
+      "link": "https://theconcordian.com/2026/11/what-is-dek-hockey",
+      "reason": "stock-too-small",
+      "image": "https://theconcordian.com/wp-content/uploads/2026/11/LVD_081126_DEKHockey_Vol44.jpg"
+    },
+    {
+      "title": "L’ombre comme médium artistique dans l’art de Carl Trahan",
+      "link": "https://theconcordian.com/2026/11/lombre-presence-ultime-carl-trahan",
+      "reason": "no-stock-match",
+      "image": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_8672.jpg"
+    },
+    {
+      "title": "Goodbye October, Hello Movember!",
+      "link": "https://thebucampus.ca/2026/11/09/goodbye-october-hello-movember/",
+      "reason": "no-stock-match",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png"
+    },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "“It’s Our Livelihood”: AMUSE Pushes for Job Security at McGill",
+      "link": "https://www.mcgilldaily.com/2026/11/its-our-livelihood-amuse-pushes-for-job-security-at-mcgill/",
+      "reason": "no-stock-match",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/amuse_photo_2_1024.png"
     }
   ]
 }
