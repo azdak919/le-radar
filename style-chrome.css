@@ -2244,6 +2244,45 @@ html.has-tuner-safe-cap .tuner {
 @media (min-width: 720px) {
   .tuner-safe-cap { background: #101816; }
 }
+/*
+ * Bande floue d'iOS / iPadOS 26+ sous la barre d'état (bug iPad, 2026-11-19).
+ * Ce flou n'est PAS dessiné par la page : c'est le « scroll edge effect » de
+ * WebKit, posé DEVANT le contenu, et `backdrop-filter: none` n'y peut rien. Il
+ * rendait floues la pastille de date et la rangée de boutons ronds du mât.
+ * WebKit le retire dès qu'un élément fixe, pleine largeur et de plus de 10 px
+ * de haut occupe le centre du bord supérieur : il teinte alors la barre d'état
+ * de la couleur DÉCLARÉE de cet élément (lue dans le style, pas dans les
+ * pixels). D'où ce bandeau : couleur du synthé, mais `background-clip: text`
+ * sur un élément vide, donc rien n'est peint dans la page, aucun clic n'est
+ * capté, et rien ne recouvre le mât. Seulement sous WebKit iOS / iPadOS.
+ * Prérequis : pas de status-bar-style « black-translucent » (index.html),
+ * sinon le système ne réserve aucune bande et garde son flou quoi qu'on fasse.
+ */
+.ios-top-edge { display: none; }
+@supports (-webkit-touch-callout: none) {
+  .ios-top-edge {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 11px;
+    z-index: 2147483647;
+    pointer-events: none;
+    background-color: var(--tuner-bg, #252830);
+    -webkit-background-clip: text;
+    background-clip: text;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    filter: none;
+  }
+  @media (min-width: 720px) {
+    .ios-top-edge { background-color: #101816; }
+  }
+}
+@media print {
+  .ios-top-edge { display: none !important; }
+}
 .masthead-inner,
 .tuner-inner,
 .wire {

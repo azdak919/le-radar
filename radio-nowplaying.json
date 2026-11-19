@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T19:07:03.700Z",
+  "updatedAt": "2026-11-19T20:07:13.058Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T19:06:24.465Z"
+      "checkedAt": "2026-11-19T20:06:33.869Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La session live",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
-      },
-      "next": {
         "title": "Rythmologie",
         "source": "schedule",
         "start": "15:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/rythmologie"
       },
+      "next": {
+        "title": "Entropie",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/entropie"
+      },
       "track": "",
-      "showTitle": "La session live",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T19:06:38.680Z"
+      "checkedAt": "2026-11-19T20:06:47.959Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Positive Vibes",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off the Hour: Labour Radio",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T19:06:41.074Z"
+      "checkedAt": "2026-11-19T20:06:51.411Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Secondhand Sounds",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
-      },
-      "next": {
         "title": "Weirdo Rippers",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
+      "next": {
+        "title": "Hooked On Sonics",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+      },
       "track": "",
-      "showTitle": "Secondhand Sounds",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T19:06:43.410Z"
+      "checkedAt": "2026-11-19T20:06:53.505Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +122,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T19:06:44.403Z"
+      "checkedAt": "2026-11-19T20:06:54.483Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Dans les airs",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00",
-        "slug": "dans-les-airs"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -142,14 +136,14 @@
         "slug": "palmareschoq"
       },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "Dans les airs",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T19:07:03.350Z"
+      "checkedAt": "2026-11-19T20:07:12.707Z"
     }
   }
 }
