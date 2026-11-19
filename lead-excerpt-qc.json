@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-19T00:32:44.586Z",
+  "updated": "2026-11-19T01:07:44.874Z",
   "total": 1032,
   "pool": 61,
   "incomplete": 27,
-  "withLeadExcerpt": 180,
+  "withLeadExcerpt": 181,
   "candidates": 27,
-  "enriched": 0,
-  "failed": 4,
+  "enriched": 1,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -59,9 +59,9 @@
       "link": "https://theconcordian.com/2026/11/new-era-for-hockey-canada/",
       "ok": true,
       "score": 100,
-      "chars": 189,
+      "chars": 190,
       "sample": "Team Canada was said to be old and unfit to face off against this young and promising American team.",
-      "changed": false
+      "changed": true
     },
     {
       "title": "Concordia receives $4.69 million to boost research and community partnerships",
