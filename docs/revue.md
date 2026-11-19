@@ -38,6 +38,8 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
   jour (`dateModified` mis à jour, rien d’autre ne change).
 - Les crons GitHub tournent en UTC et peuvent être en retard : plusieurs déclenchements couvrent l’heure normale et
   l’heure avancée ; le `--gate` décide s’il y a une édition due, et une édition déjà publiée n’est jamais refaite.
+- Les PDF d’impression se génèrent avec l’identifiant complet (`AAAA-MM-JJ-matin|soir`). Un `--id matin` seul faisait
+  échouer le job après la génération des pages (18 nov. 2026) et rien n’était commité ; un échec PDF ne bloque plus la publication des pages.
 - **Rien de neuf, rien de publié** : sans nouvel article dans la période (`skipWithoutArticles`), l’édition est
   sautée et notée dans `data/revue/state.json`. `news.json` vieux de plus de 6 h : refus.
 

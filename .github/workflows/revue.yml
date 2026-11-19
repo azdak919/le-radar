@@ -48,6 +48,7 @@ jobs:
       due: ${{ steps.g.outputs.due }}
       edition: ${{ steps.g.outputs.edition }}
       mode: ${{ steps.g.outputs.mode }}
+      id: ${{ steps.g.outputs.id }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -116,20 +117,24 @@ jobs:
       - name: Revue (sélection, IA avec repli, garde-fou, pages, flux, sitemaps)
         env:
           REVUE_EDITION: ${{ needs.gate.outputs.edition }}
+          REVUE_ID: ${{ needs.gate.outputs.id }}
           REVUE_MODE: ${{ needs.gate.outputs.mode }}
           CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION"
           node scripts/generate-feed.js --update
-          node scripts/revue/revue-pdfs.mjs --id "$REVUE_EDITION"
+          # --id doit être AAAA-MM-JJ-matin|soir (pas « matin » / « soir » seuls : 18 nov. 2026, les pages
+          # étaient générées puis les PDF échouaient, et le commit n'avait jamais lieu).
+          node scripts/revue/revue-pdfs.mjs --id "${REVUE_ID:-$REVUE_EDITION}" || echo "::warning::PDF de ${REVUE_ID:-$REVUE_EDITION} non générés ; les pages seront tout de même publiées."
       - name: Commit et publication
         env:
           REVUE_EDITION: ${{ needs.gate.outputs.edition }}
+          REVUE_ID: ${{ needs.gate.outputs.id }}
         run: |
           git add revue data/revue sitemap-news.xml robots.txt feed.xml
           git diff --cached --quiet && { echo "Rien à publier."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git commit -s -m "bot(revue): ${{ needs.gate.outputs.edition }} ${{ needs.gate.outputs.mode }}"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"$REVUE_EDITION\""
+          git commit -s -m "bot(revue): ${{ needs.gate.outputs.id || needs.gate.outputs.edition }} ${{ needs.gate.outputs.mode }}"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"${REVUE_ID:-$REVUE_EDITION}\""
