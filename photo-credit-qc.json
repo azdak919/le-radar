@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-19T21:15:02.315Z",
+  "updated": "2026-11-19T21:40:05.848Z",
   "total": 1039,
-  "withImage": 870,
-  "withCredit": 870,
-  "cited": 606,
-  "pending": 144,
+  "withImage": 868,
+  "withCredit": 868,
+  "cited": 605,
+  "pending": 138,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 9,
-  "citedNew": 9,
-  "fallbackNew": 51,
+  "updatedCount": 4,
+  "citedNew": 7,
+  "fallbackNew": 53,
   "samples": [
-    {
-      "title": "« Un grand Québec commence petit » : Saguenay lève le drapeau pour les tout-petits",
-      "source": "La Pige",
-      "credit": "Photo : Alex Loiselle",
-      "cited": true,
-      "method": "body-line"
-    },
     {
       "title": "Parkour – L’art de repousser ses limites",
       "source": "Quartier Libre",
@@ -41,39 +34,11 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "On avance quand même",
-      "source": "Quartier Libre",
-      "credit": "Photo : Illustration de Wendy Kim Pires",
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
       "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
-      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Know Your Artist: Stina Baudin",
-      "source": "The Tribune",
-      "credit": "Photo : Stina Baudin",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
-      "title": "Lumière sur les concerts gratuits!",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée du Facebook de Marie Céleste",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Three arrested at anti-austerity student protest",
-      "source": "The Concordian",
-      "credit": "Photo: Max Paster",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "method": "via-attribution"
     }
   ]
 }

@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-19T21:13:12.961Z",
+  "updated": "2026-11-19T21:38:12.425Z",
   "total": 1039,
   "pool": 61,
-  "incomplete": 28,
+  "incomplete": 27,
   "withLeadExcerpt": 186,
-  "candidates": 28,
-  "enriched": 1,
+  "candidates": 27,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -55,15 +55,6 @@
       "changed": false
     },
     {
-      "title": "« Un grand Québec commence petit » : Saguenay lève le drapeau pour les tout-petits",
-      "link": "https://lapige.atmjonquiere.com/2026/11/19/un-grand-quebec-commence-petit-saguenay-leve-le-drapeau-pour-les-tout-petits/?utm_source=rss&utm_medium=rss&utm_campaign=un-grand-quebec-commence-petit-saguenay-leve-le-drapeau-pour-les-tout-petits",
-      "ok": true,
-      "score": 100,
-      "chars": 645,
-      "sample": "Le drapeau de la Grande semaine des tout-petits a été hissé ce lundi devant l’hôtel de ville de Sagu",
-      "changed": true
-    },
-    {
       "title": "Concordia Student Union byelection results are in",
       "link": "https://theconcordian.com/2026/11/concordia-student-union-election-results/",
       "ok": true,
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 171,
       "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
+      "changed": false
+    },
+    {
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "link": "https://theconcordian.com/2026/11/avi-lewis-carney-policies-terrifying/",
+      "ok": true,
+      "score": 100,
+      "chars": 190,
+      "sample": "Hundreds of New Democratic Party (NDP) supporters gathered at a rally on Nov. 17 at Ausgang Plaza in",
       "changed": false
     }
   ]
