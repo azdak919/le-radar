@@ -1,7 +1,36 @@
 {
-  "updated": "2026-11-19T05:10:27.796Z",
-  "count": 20,
+  "updated": "2026-11-19T06:39:56.956Z",
+  "count": 24,
   "items": [
+    {
+      "name": "Quartier Libre",
+      "institution": "Université de Montréal",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/quartierlibre.ca/",
+          "handle": "@quartierlibre.ca",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/QuartierLibre.ca",
+          "handle": "QuartierLibre.ca",
+          "stats": "Quartier Libre, Montreal. 6,553 followers · 1 talking about this. Magazine indépendant des étudiant(e)s de l'UdeM, émission tous les vendredis à 12 h sur CISM",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/quartierlibre",
+          "handle": "@quartierlibre",
+          "stats": "",
+          "label": "X"
+        }
+      ]
+    },
     {
       "name": "Montréal Campus",
       "institution": "UQAM",
@@ -19,14 +48,14 @@
           "type": "facebook",
           "url": "https://www.facebook.com/montrealcampus",
           "handle": "montrealcampus",
-          "stats": "",
+          "stats": "Montréal Campus. 6,236 followers · 1 talking about this. Le journal indépendant des étudiantes et des étudiants de l'UQAM depuis 1980.",
           "label": "Facebook"
         },
         {
           "type": "x",
           "url": "https://twitter.com/montrealcampus",
           "handle": "@montrealcampus",
-          "stats": "🗞️ Le journal indépendant des étudiants et des étudiantes de l'Université du Québec à Montréal (UQAM) depuis 1980.",
+          "stats": "",
           "label": "X"
         }
       ]
@@ -41,7 +70,7 @@
           "type": "facebook",
           "url": "https://facebook.com/ledelitfrancais",
           "handle": "ledelitfrancais",
-          "stats": "",
+          "stats": "Le Délit. 4,679 followers · 1 talking about this. Le seul journal francophone de l'Université McGill. Chaque mardi sur le campus.",
           "label": "Facebook"
         }
       ]
@@ -63,14 +92,14 @@
           "type": "facebook",
           "url": "https://www.facebook.com/themcgilldaily",
           "handle": "themcgilldaily",
-          "stats": "",
+          "stats": "The McGill Daily. 7,212 followers · 1 talking about this. McGill's alternative journalism school since 1911",
           "label": "Facebook"
         },
         {
           "type": "x",
           "url": "https://twitter.com/mcgilldaily",
           "handle": "@mcgilldaily",
-          "stats": "An independent student newspaper at McGill since 1911. New issues hit stands Mondays.",
+          "stats": "",
           "label": "X"
         }
       ]
@@ -92,7 +121,7 @@
           "type": "facebook",
           "url": "https://facebook.com/thelinknewspaper",
           "handle": "thelinknewspaper",
-          "stats": "",
+          "stats": "The Link. 4,746 followers · 3 talking about this. The Link is an independent, student-run publication located at H-645 in Concordia’s Hall building",
           "label": "Facebook"
         },
         {
@@ -108,6 +137,28 @@
           "handle": "@thelinknewspaper",
           "stats": "",
           "label": "TikTok"
+        }
+      ]
+    },
+    {
+      "name": "Zone Campus",
+      "institution": "Université du Québec à Trois-Rivières",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/zonecampus/",
+          "handle": "@zonecampus",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/zonecampus",
+          "handle": "zonecampus",
+          "stats": "Zone Campus. 2,035 followers. Zone Campus, le journal étudiant indépendant de l'UQTR. Retrouvez nos mots au zonecampus.ca.",
+          "label": "Facebook"
         }
       ]
     },
@@ -128,8 +179,30 @@
           "type": "x",
           "url": "https://twitter.com/lexemplaire",
           "handle": "@lexemplaire",
-          "stats": "Le média-école des étudiant.e.s en journalisme de l'Université Laval, Québec.",
+          "stats": "",
           "label": "X"
+        }
+      ]
+    },
+    {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
         }
       ]
     },
@@ -150,8 +223,30 @@
           "type": "facebook",
           "url": "https://www.facebook.com/WordPresscom",
           "handle": "WordPresscom",
+          "stats": "WordPress.com. 746,991 followers · 252 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "La Pige",
+      "institution": "Cégep de Jonquière (ATM – journalisme)",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/2008",
+          "handle": "2008",
           "stats": "",
           "label": "Facebook"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/@atmlapige",
+          "handle": "@atmlapige",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
@@ -179,7 +274,7 @@
           "type": "x",
           "url": "https://twitter.com/Polyscope",
           "handle": "@Polyscope",
-          "stats": "Journal étudiant de Polytechnique Montréal @PolyMTL − De toute façon, on est les meilleurs depuis 1967!",
+          "stats": "",
           "label": "X"
         }
       ]
@@ -274,7 +369,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/WordPresscom",
           "handle": "WordPresscom",
-          "stats": "",
+          "stats": "WordPress.com. 746,991 followers · 252 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
           "label": "Facebook"
         }
       ]
@@ -289,14 +384,14 @@
           "type": "facebook",
           "url": "https://www.facebook.com/theconcordian",
           "handle": "theconcordian",
-          "stats": "",
+          "stats": "The Concordian. 2,928 followers · 2 were here. Get the facts. © 1973",
           "label": "Facebook"
         },
         {
           "type": "x",
           "url": "https://twitter.com/theconcordian",
           "handle": "@theconcordian",
-          "stats": "Concordia University’s independent student-run newspaper since 1973.",
+          "stats": "",
           "label": "X"
         }
       ]
@@ -318,7 +413,7 @@
           "type": "facebook",
           "url": "https://facebook.com/impactcampus",
           "handle": "impactcampus",
-          "stats": "",
+          "stats": "Impact Campus. 7,311 followers · 1 talking about this. Le magazine des étudiant.e.s de l'Université Laval",
           "label": "Facebook"
         }
       ]
@@ -456,14 +551,14 @@
           "type": "facebook",
           "url": "https://www.facebook.com/cjlo1690am",
           "handle": "cjlo1690am",
-          "stats": "",
+          "stats": "CJLO - 1690AM, Montreal. 7,011 followers · 5 talking about this. Your friendly neighbourhood campus-community radio station at Concordia University.",
           "label": "Facebook"
         },
         {
           "type": "x",
           "url": "https://twitter.com/CJLO1690AM",
           "handle": "@CJLO1690AM",
-          "stats": "We're your friendly campus-community radio station at @concordia. 📻 1690 on the AM dial 💻 https://t.co/t4p6fA8m2k",
+          "stats": "",
           "label": "X"
         },
         {
@@ -521,7 +616,7 @@
           "type": "x",
           "url": "https://twitter.com/choq_ca",
           "handle": "@choq_ca",
-          "stats": "📻 Podcasts • Reportages • Musique",
+          "stats": "",
           "label": "X"
         }
       ]
