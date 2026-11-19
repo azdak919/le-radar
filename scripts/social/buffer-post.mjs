@@ -103,7 +103,7 @@ const used = new Map(); let n = 0;
 for (const it of sel) {
   const im = await resolveImage(it, { used, repeated });
   if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
-  const pub = await mediaForNetwork(im.url, 'x', { thumb: wikimediaThumbUrl });
+  const pub = await mediaForNetwork(im.url, 'x', { thumb: wikimediaThumbUrl, log: m => console.log(m) });
   if (!pub) { console.log(`::warning::Image inaccessible ou trop lourde, non ajoutée à Buffer : ${im.url} (${it.id})`); continue; }
   im.url = pub.url;
   await withHook(it);

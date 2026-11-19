@@ -5,6 +5,8 @@
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const bank = require('../campus-photo-bank.js');
+const { sniffImageFormat, contentTypeMatches, SOCIAL_FORMATS } = require('../image-format.js');
+const { facebookRelayUrl: jpegRelayUrl } = require('../jpeg-facebook-safe.js');
 import { personCredit, articleId } from './lib.mjs';
 import { readFileSync } from 'node:fs';
 const UA = {'user-agent':'Mozilla/5.0 (compatible; LeRadarBot/1.0; +https://le-radar.ca)'};
@@ -40,21 +42,38 @@ export function dims(b){ // JPEG/PNG/GIF/WebP
 const cache=new Map();
 /** Plafond Buffer / X : au-delà, createPost est refusé (image trop lourde). */
 export const SOCIAL_MEDIA_MAX_BYTES = 5 * 1024 * 1024;
-/** Une URL n'est envoyée à Buffer que si elle répond 200, image/*, HTTPS et ≤ 5 Mo. */
-export function isPublicMedia({ status, contentType, bytes, url, maxBytes = SOCIAL_MEDIA_MAX_BYTES } = {}) {
-  return status === 200 && /^image\//i.test(contentType || '') && /^https:\/\//.test(url || '')
+/**
+ * Une URL n'est envoyée à Buffer que si elle répond 200, image/*, HTTPS et ≤ 5 Mo.
+ * Avec `format` (lu dans les octets, voir scripts/image-format.js) : JPEG ou PNG seulement, et
+ * Content-Type conforme au contenu. Un AVIF servi en « image/jpeg » (miroir <hash>.jpg) est refusé :
+ * LinkedIn a répondu « An unknown error has occurred » le 16 nov. 2026.
+ */
+export function isPublicMedia({ status, contentType, bytes, url, maxBytes = SOCIAL_MEDIA_MAX_BYTES, format } = {}) {
+  const ok = status === 200 && /^image\//i.test(contentType || '') && /^https:\/\//.test(url || '')
     && Number(bytes) > 0 && Number(bytes) <= maxBytes;
+  if (!ok || format === undefined) return ok;
+  return SOCIAL_FORMATS.has(format) && contentTypeMatches(contentType, format);
+}
+/** Raison lisible d'un refus (journal du workflow) ; '' si l'image est admise. */
+export function mediaRejectReason(p, service = 'x') {
+  if (!p) return 'inaccessible (pas de 200 image/* en HTTPS)';
+  const L = MEDIA_LIMITS[service] || MEDIA_LIMITS.x;
+  if (!SOCIAL_FORMATS.has(p.format)) return `format ${p.format || 'inconnu'} (JPEG ou PNG exigé)`;
+  if (!contentTypeMatches(p.ct, p.format)) return `Content-Type ${p.ct} pour un fichier ${p.format}`;
+  if (!(p.bytes > 0 && p.bytes <= L.bytes)) return `${Math.round(p.bytes / 1024)} Ko (plafond ${service} ${Math.round(L.bytes / 1048576)} Mo)`;
+  if (p.w && p.h && p.w * p.h > L.pixels) return `${p.w}×${p.h} px (plafond ${service} ${L.pixels / 1e6} Mpx)`;
+  return '';
 }
 export async function probe(url){ if(cache.has(url)) return cache.get(url);
   let r=null; try{ const res=await fetch(url,{headers:UA,redirect:'follow',signal:AbortSignal.timeout(20000)});
     const ct=res.headers.get('content-type')||''; if(res.ok&&/^image\//.test(ct)&&res.url.startsWith('https://')){
-      const b=Buffer.from(await res.arrayBuffer()); r={...dims(b),finalUrl:res.url,ct,bytes:b.length,buf:b}; } }catch{}
+      const b=Buffer.from(await res.arrayBuffer()); r={...dims(b),finalUrl:res.url,ct,bytes:b.length,buf:b,format:sniffImageFormat(b)}; } }catch{}
   cache.set(url,r); return r; }
 /** Sonde l'URL publique : 200 + image/* + HTTPS + taille admissible, sinon null. */
 export async function publicMedia(url, { maxBytes = SOCIAL_MEDIA_MAX_BYTES } = {}) {
   if (!url || !/^https:\/\//.test(url)) return null;
   const p = await probe(url);
-  if (!p || !isPublicMedia({ status: 200, contentType: p.ct, bytes: p.bytes, url: p.finalUrl, maxBytes })) return null;
+  if (!p || !isPublicMedia({ status: 200, contentType: p.ct, bytes: p.bytes, url: p.finalUrl, maxBytes, format: p.format })) return null;
   return p;
 }
 /**
@@ -68,19 +87,21 @@ export function withinLimits(p, service) {
   return p.bytes > 0 && p.bytes <= L.bytes && (!p.w || !p.h || p.w * p.h <= L.pixels);
 }
 /**
- * URL d'image à confier à Buffer pour `service`, vérifiée MAINTENANT (200, image/*, HTTPS, poids et pixels
- * du réseau ; Facebook : JPEG sans métadonnées refusées). Ordre : URL du Radar ; vignette Wikimedia ;
- * relais réencodé. Aucune candidate valable → null (l'article est sauté sur ce réseau, jamais d'URL morte).
- * `check(buf)` : contrôle facultatif du contenu (ex. JPEG Canva pour Facebook).
+ * URL d'image à confier à Buffer pour `service`, vérifiée MAINTENANT (200, HTTPS, JPEG ou PNG réel avec le
+ * bon Content-Type, poids et pixels du réseau ; Facebook : JPEG sans métadonnées refusées). Ordre : URL du
+ * Radar ; vignette Wikimedia ; relais qui réencode en JPEG (WebP, AVIF ou HEIC du miroir, JPEG Canva).
+ * Aucune candidate valable → null (l'article est sauté pour ce passage et repris au suivant, jamais d'URL morte).
+ * `check(buf)` : contrôle facultatif du contenu (ex. JPEG Canva pour Facebook). `log` : raisons des refus.
  */
-export async function mediaForNetwork(url, service, { thumb = () => '', relay = () => '', check = null } = {}) {
+export async function mediaForNetwork(url, service, { thumb = () => '', relay = jpegRelayUrl, check = null, log = null } = {}) {
   const tried = [];
   for (const u of [url, thumb(url, 1920), thumb(url, 1280), relay(url)].filter(Boolean)) {
     if (tried.includes(u)) continue; tried.push(u);
-    const p = await publicMedia(u, { maxBytes: (MEDIA_LIMITS[service] || MEDIA_LIMITS.x).bytes });
-    if (!p || !withinLimits(p, service)) continue;
-    if (check && !check(p.buf)) continue;
-    return { url: p.finalUrl, bytes: p.bytes, width: p.w, height: p.h, tried };
+    const p = await probe(u);
+    const why = (p && !/^https:\/\//.test(p.finalUrl || '')) ? 'pas en HTTPS' : mediaRejectReason(p, service)
+      || (check && !check(p.buf) ? 'contenu refusé par la plateforme' : '');
+    if (why) { if (log) log(`Image écartée pour ${service} : ${u} — ${why}`); continue; }
+    return { url: p.finalUrl, bytes: p.bytes, width: p.w, height: p.h, format: p.format, tried };
   }
   return null;
 }

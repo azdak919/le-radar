@@ -31,6 +31,7 @@ const crypto = require('crypto');
 const { imageUrlKey } = require('./article-photo-credit-lib');
 const { BOT_USER_AGENT, IMAGE_ACCEPT } = require('./http-bot-headers');
 const { jpegNeedsFacebookSanitize, sanitizeJpegForFacebook } = require('./jpeg-facebook-safe');
+const { sniffImageFormat, extForFormat, formatForExt, WEB_FORMATS } = require('./image-format');
 
 const ROOT = path.join(__dirname, '..');
 const NEWS_PATH = path.join(ROOT, 'news.json');
@@ -148,13 +149,44 @@ async function fetchBuffer(url, timeoutMs = TIMEOUT_MS) {
   const buf = Buffer.from(await res.arrayBuffer());
   if (buf.length < MIN_BYTES) throw new Error(`too small (${buf.length} B)`);
   if (buf.length > MAX_BYTES) throw new Error(`too large (${buf.length} B > ${MAX_BYTES})`);
-  // Magic bytes basiques
-  const isImg = buf[0] === 0xff && buf[1] === 0xd8
-    || (buf[0] === 0x89 && buf[1] === 0x50)
-    || (buf[0] === 0x47 && buf[1] === 0x49)
-    || (buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP');
-  if (!isImg && !/^image\//i.test(ct)) throw new Error(`not an image (${ct || 'no type'})`);
-  return { buf, contentType: ct, finalUrl: res.url || url };
+  // Format lu dans les octets (JPEG, PNG, GIF, WebP, AVIF, HEIC), jamais dans l'URL ni l'en-tête.
+  const format = sniffImageFormat(buf);
+  if (!format && !/^image\//i.test(ct)) throw new Error(`not an image (${ct || 'no type'})`);
+  return { buf, contentType: ct, finalUrl: res.url || url, format };
+}
+
+/**
+ * Le miroir ne publie que des formats web courants (JPEG, PNG, GIF, WebP), sous l'extension qui
+ * correspond au contenu. Un AVIF (WordPress qui négocie Accept: image/avif, ex. La Pige) ou un HEIC
+ * est réencodé en JPEG par le proxy de redimensionnement ; sinon, échec (la carte garde l'URL distante).
+ * Avant : AVIF enregistré sous <hash>.jpg, servi « image/jpeg » par GitHub Pages, refusé par LinkedIn.
+ */
+async function ensureWebFormat(result, url) {
+  if (WEB_FORMATS.has(result.format)) return result;
+  for (const cand of resizedCandidates(url)) {
+    try {
+      const out = await fetchBuffer(cand.url, 45_000);
+      if (WEB_FORMATS.has(out.format)) return { ...out, via: cand.via, sourceUrl: url };
+    } catch {
+      /* candidat suivant */
+    }
+  }
+  throw new Error(`unsupported format (${result.format || result.contentType || 'inconnu'})`);
+}
+
+/** Fichier miroir présent ET dont le contenu correspond à l'extension (AVIF dans un .jpg = à refaire). */
+function mirrorFileOk(abs) {
+  if (!fileExists(abs)) return false;
+  const want = formatForExt(abs);
+  if (!want) return true;
+  try {
+    const fd = fs.openSync(abs, 'r');
+    const head = Buffer.alloc(64);
+    try { fs.readSync(fd, head, 0, 64, 0); } finally { fs.closeSync(fd); }
+    return sniffImageFormat(head) === want;
+  } catch {
+    return false;
+  }
 }
 
 /** Largeur cible des versions réduites (cartes ≤ ~800 px CSS, 2× écran). */
@@ -178,6 +210,10 @@ function resizedCandidates(url = '') {
 }
 
 async function downloadWithFallback(url) {
+  return ensureWebFormat(await downloadAny(url), url);
+}
+
+async function downloadAny(url) {
   try {
     return { ...(await fetchBuffer(url)), via: 'origin' };
   } catch (err) {
@@ -279,7 +315,7 @@ async function main() {
   const needsDownload = ({ item }) => {
     const key = mirrorKey(String(item.image).trim());
     const prior = manifest.files[key];
-    if (!forceAll && prior?.local && fileExists(path.join(ROOT, prior.local))) return false;
+    if (!forceAll && prior?.local && mirrorFileOk(path.join(ROOT, prior.local))) return false;
     return true;
   };
   const isDeferred = ({ item }) => {
@@ -317,7 +353,7 @@ async function main() {
 
     const prior = manifest.files[key];
     const priorPath = prior?.local ? path.join(ROOT, prior.local) : null;
-    if (!forceAll && priorPath && fileExists(priorPath) && prior.local) {
+    if (!forceAll && priorPath && mirrorFileOk(priorPath) && prior.local) {
       item.imageLocal = prior.local;
       item.imageLocalKey = key;
       if (prior.via) item.imageLocalVia = prior.via;
@@ -331,7 +367,7 @@ async function main() {
     // Fichier déjà sur disque sans entrée manifeste (reprise).
     for (const ext of ['.jpg', '.jpeg', '.png', '.webp', '.gif']) {
       const guess = path.join(CACHE_DIR, `${key}${ext}`);
-      if (!forceAll && fileExists(guess)) {
+      if (!forceAll && mirrorFileOk(guess)) {
         const rel = localPathFor(key, ext === '.jpeg' ? '.jpg' : ext);
         item.imageLocal = rel;
         item.imageLocalKey = key;
@@ -351,8 +387,8 @@ async function main() {
     }
 
     try {
-      let { buf, contentType, via } = await downloadWithFallback(remote);
-      const ext = extFrom(contentType, remote);
+      let { buf, contentType, via, format } = await downloadWithFallback(remote);
+      const ext = extForFormat(format) || extFrom(contentType, remote);
       const rel = localPathFor(key, ext);
       const abs = path.join(ROOT, rel);
       if (ext === '.jpg' && jpegNeedsFacebookSanitize(buf)) {
@@ -534,4 +570,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { canMirrorSourceImage, resizedCandidates, resizeProxyUrl, photonUrl };
+module.exports = { canMirrorSourceImage, resizedCandidates, resizeProxyUrl, photonUrl, ensureWebFormat, mirrorFileOk, extFrom };

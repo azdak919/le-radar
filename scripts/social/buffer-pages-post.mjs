@@ -33,7 +33,9 @@ const fixedIds = { facebook: process.env.BUFFER_FACEBOOK_CHANNEL_ID, linkedin: p
  * on essaie d'abord la vignette Wikimedia, puis le relais, et l'on vérifie chaque URL avant de la confier à Buffer. */
 async function imageUrlForNetwork(service, url) {
   const isFb = service === 'facebook';
-  const r = await mediaForNetwork(url, service, { thumb: wikimediaThumbUrl, relay: isFb ? facebookRelayUrl : () => '',
+  // Relais JPEG pour tous les réseaux : un AVIF/WebP du miroir (ex. ebfd0e0cb64e1419.jpg, refusé par LinkedIn le 16 nov.)
+  // est réencodé plutôt que confié tel quel à Buffer.
+  const r = await mediaForNetwork(url, service, { thumb: wikimediaThumbUrl, relay: facebookRelayUrl, log: m => console.log(m),
     check: isFb ? (buf) => !(buf[0] === 0xff && buf[1] === 0xd8 && jpegNeedsFacebookSanitize(buf)) : null });
   if (r && r.url !== url) console.log(`Image remplacée pour ${service} : ${r.url} (${Math.round(r.bytes / 1024)} Ko, ${r.width}×${r.height})`);
   return r ? r.url : null;
