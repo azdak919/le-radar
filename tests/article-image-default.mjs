@@ -39,17 +39,17 @@ try {
 } finally { https.get = originalGet; globalThis.setTimeout = originalTimeout; }
 assert.ok(hit, 'Carney : la photo de l’article est trouvée');
 assert.ok(A.imageUrlsMatch(hit.url, url));
-assert.equal(hit.leadReady, false, '512 px : trop étroit pour la une recadrée, gardé hors une');
+assert.equal(hit.leadReady, true, '512 px : gardé partout, une comprise (cadre adapté)');
 assert.equal(hit.articleThumb, true);
 assert.equal(hit.cropSafe, true, 'portrait : cadrage tiers haut sur la fiche');
 
-// 2) Passe portrait : l'image reste, la banque campus ne sert qu'à la une.
+// 2) Passe portrait : l'image reste, la banque campus est retirée.
 const item = { link, source: 'Le Collectif', image: url, stockImage: campus, imageProvider: 'campus-bank' };
 const r = await E.replacePortraitLead(item, { probe: async () => ({ width: 512, height: 640 }), resolve: async () => hit });
 assert.equal(r, 'kept');
 assert.equal(item.image, url, 'vraie photo de l’article gardée');
-assert.equal(item.leadImageReady, false);
-assert.equal(item.stockImage, campus, 'repli campus gardé pour la une seulement');
+assert.equal(item.leadImageReady, true);
+assert.equal(item.stockImage, undefined, 'plus de photo de campus à la place de la vraie photo');
 assert.ok(E.hasCropSafeImage(item));
 assert.equal(await E.replacePortraitLead(item, { probe: async () => { throw Error('déjà jugée'); } }), null, 'idempotent');
 
@@ -91,5 +91,23 @@ assert.equal(pinned.image, '');
   const same = [{ ...pige('11'), link: 'a' }, { ...pige('11'), link: 'b', image: logo.replace('.jpg', '-1024x576.jpg') }];
   assert.equal(A.dropSharedSourceImages(same, 2), 2, 'même fichier (autre taille) : toujours retiré');
   assert.equal(A.sharedImageKey(`https://i0.wp.com/${logo.slice(8)}?ssl=1`), A.sharedImageKey(logo), 'Photon = origine');
+}
+// 7) Plus de préférence de format : l'image du billet passe avant une photo
+//    du corps « mieux cadrée », et la une pose un petit portrait dans un cadre.
+{
+  const { readFileSync } = await import('node:fs');
+  const vm = await import('node:vm');
+  const client = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
+  const fn = client.match(/const LEAD_FIT_MIN_PORTRAIT_WIDTH[\s\S]*?\nfunction leadNeedsFitFrame\([\s\S]*?\n}/)[0];
+  const box = {}; vm.createContext(box); vm.runInContext(`${fn}; this.f = leadNeedsFitFrame;`, box);
+  const f = (w, h) => box.f({ naturalWidth: w, naturalHeight: h });
+  assert.equal(f(512, 640), true, 'Carney 512×640 : cadre adapté en une');
+  assert.equal(f(1080, 1920), true, 'story : cadre adapté');
+  assert.equal(f(2560, 659), true, 'bandeau 3,9:1 : cadre adapté');
+  assert.equal(f(1200, 800), false, 'photo 3:2 : plein cadre');
+  assert.equal(f(900, 1200), false, 'portrait 900×1200 : recadré au tiers haut');
+  const css = readFileSync(new URL('../style-feed.css', import.meta.url), 'utf8');
+  assert.match(css, /\.article-media-fit__bg\s*\{[^}]*filter:\s*blur/, 'fond flouté de la même image');
+  assert.match(css, /img\.is-fit\s*\{[^}]*object-fit:\s*contain/, 'image entière');
 }
 console.log('article-image-default: ok');

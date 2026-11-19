@@ -313,9 +313,11 @@ const collectifPicked = imageFromArticleHtml(
   {},
   'https://lecollectif.ca/campus/la-fondation-de-ludes/',
 );
+// 19 nov. 2026 : le bandeau choisi par la rédaction (og:image) reste l'image
+// de l'article ; plus de préférence pour une photo 16:9 du corps.
 assert(
-  /FondationUdeSphoto-2/i.test(collectifPicked.url),
-  `2e photo 16:9 retenue plutôt que le bandeau campagne (got ${collectifPicked.url})`,
+  /FondationUdeS_Source_UdeS/i.test(collectifPicked.url),
+  `bandeau de l’article gardé (got ${collectifPicked.url})`,
 );
 
 const padded = collectifLikeHtml({ padCss: 160_000 });
@@ -336,8 +338,13 @@ const paddedPicked = imageFromArticleHtml(
   'https://lecollectif.ca/campus/la-fondation-de-ludes/',
 );
 assert(
-  /FondationUdeSphoto-2/i.test(paddedPicked.url),
+  /FondationUdeS_Source_UdeS/i.test(paddedPicked.url),
   `même choix après 160k de CSS inline (got ${paddedPicked.url})`,
+);
+assert(
+  listArticleImageCandidates(padded, [], {}, 'https://lecollectif.ca/campus/la-fondation-de-ludes/')
+    .some((c) => /FondationUdeSphoto-2/i.test(c.url)),
+  'la 2e photo reste lisible sous le plafond de parse',
 );
 
 const bannerOnly = imageFromArticleHtml(
@@ -408,8 +415,8 @@ assert(
   compareLeadCandidates(
     { url: 'banner', w: 1139, h: 500, score: 200, campaignGraphic: true },
     { url: 'photo', w: 1024, h: 576, score: 80 },
-  ) > 0,
-  'score og élevé ne bat pas une photo mieux cadrée',
+  ) < 0,
+  'ordre éditorial : le format ne déclasse plus le visuel de l’article',
 );
 
 // ── Pub in-article (Le Collectif / Antidote) vs photo éditoriale courte ──
@@ -466,7 +473,7 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(r1 === 'cropped' && a.image === base().image && a.sourceImageCredit === 'Photo : FEUS', 'portrait recadrable → l’image choisie par l’article reste, crédit gardé');
   const small = { ...base(), image: 'https://x/wp-content/uploads/a-500x700.jpg' };
   const r1b = await replacePortraitLead(small, { resolve: async () => ({ url: 'https://x/b-1200x800.jpg', width: 1200, height: 800, leadReady: true }) });
-  check(r1b === 'replaced' && small.image === 'https://x/b-1200x800.jpg' && !small.imageLocal && !small.sourceImageCredit, 'portrait trop petit pour la une → autre photo paysage du même article, crédit retiré');
+  check(r1b === 'kept' && small.image === 'https://x/wp-content/uploads/a-500x700.jpg' && small.sourceImageCredit === 'Photo : FEUS' && small.leadImageReady === true, 'portrait trop petit : gardé (cadre adapté en une), jamais remplacé par une autre photo');
   const b = base();
   const r2 = await replacePortraitLead(b, { resolve: async () => null });
   check(r2 === 'cropped' && b.image === base().image && hasCropSafe(b), 'sans autre photo → l’affiche de l’article reste (règle du 19 nov. 2026)');
@@ -668,7 +675,7 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(kept === 'cropped' && bare.image && hasCropSafeImage(bare), 'portrait sans crédit : gardé et recadré');
   const story = { link: 'https://example.com/b', image: 'https://example.com/story-1080x1920.jpg', stockImage: 'https://upload.wikimedia.org/c.jpg', imageProvider: 'campus-bank' };
   const r4 = await replacePortraitLead(story, { resolve: async () => null, probe: async () => { throw new Error('pas de probe'); } });
-  check(r4 === 'kept' && story.image && story.leadImageReady === false && story.stockImage, 'story 9:16 : image de l’article en vignette, campus gardé pour la une');
+  check(r4 === 'kept' && story.image && story.leadImageReady === true && !story.stockImage, 'story 9:16 : image de l’article gardée partout, une comprise (cadre adapté), campus retiré');
 }
 
 if (failed) {

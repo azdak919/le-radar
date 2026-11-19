@@ -216,40 +216,15 @@ async function replacePortraitLead(item, { reject = [], opts = {}, resolve = res
     clearStockPhoto(item);
     return 'cropped';
   }
-  const portraitUrl = item.image;
-  let resolved = null;
-  try { resolved = await resolve(item, reject, opts); } catch { resolved = null; }
-  // La photo de l'article elle-même est recadrable (crédit Photo/Dessin, pas
-  // une affiche) : la garder, centrée en 3:2, plutôt qu'un stock ou le campus.
-  if (resolved?.url && resolved.cropSafe && resolved.leadReady !== false
-    && imageUrlsMatch(resolved.url, portraitUrl)) {
-    assignSourceImage(item, portraitUrl, true, true, resolved.cropFocalY);
-    clearLegacyFallback(item);
-    clearStockPhoto(item);
-    return 'cropped';
-  }
-  const ok = resolved?.url
-    && resolved.leadReady !== false
-    && !imageUrlsMatch(resolved.url, portraitUrl)
-    && (resolved.cropSafe
-      || !(resolved.width && resolved.height && isPortraitLeadRatio(resolved.width, resolved.height)));
-  if (ok) {
-    assignSourceImage(item, resolved.url, true, !!resolved.cropSafe, resolved.cropFocalY);
-    clearSourceImageCredit(item);
-    clearLegacyFallback(item);
-    clearStockPhoto(item);
-    return 'replaced';
-  }
   // Règle du 19 nov. 2026 : l'image de l'article reste la sienne, même trop
-  // petite ou trop haute pour la une (Le Collectif, Carney-PSPP 512×640).
-  // Vignette et fiche la montrent ; la une seule passe au repli (banque ou
-  // campus gardé dans stockImage, sinon campus côté client).
-  // Seule une image minuscule ou introuvable est retirée.
-  const keepDims = dims || (resolved && resolved.width && resolved.height
-    && imageUrlsMatch(resolved.url || '', portraitUrl) ? resolved : null);
-  if (keepDims && meetsArticleThumbSize(keepDims.width, keepDims.height)) {
-    assignSourceImage(item, portraitUrl, false, true);
+  // petite ou trop haute pour un recadrage 3:2 (Le Collectif, Carney-PSPP
+  // 512×640). Aucune autre photo, banque ni campus ne la remplace : le
+  // navigateur la pose entière dans un cadre adapté (fond flouté), une
+  // comprise. Seule une image minuscule est retirée.
+  if (dims && meetsArticleThumbSize(dims.width, dims.height)) {
+    assignSourceImage(item, item.image, true, true, declaredCover ? DECLARED_COVER_FOCAL_Y : null);
     clearLegacyFallback(item);
+    clearStockPhoto(item);
     return 'kept';
   }
   clearMirroredLead(item);
@@ -346,17 +321,11 @@ async function probeLeadReady(url, reject = [], opts = {}, { cropSafe = false, i
   const dims = await probeRemoteImageSize(url);
   if (!dims) return false;
   if (meetsLeadDisplaySize(dims.width, dims.height)) return true;
-  if (!(cropSafe && isPortraitLeadRatio(dims.width, dims.height))) return false;
-  if (fillsLeadWhenCropped(dims.width, dims.height, {
-    reviewed: !!reviewedSourceCrop(item, url, dims.width, dims.height),
-    declaredCover: !!cropSafe,
-  })) return true;
-  // Graphique The Link plus haut que 2:3 (Archives 900×1582) : une fois
-  // jugé recadrable, le plancher éditorial suffit. Le 0,66 global reste.
-  return isEditorialArticleImage(url)
-    && dims.width / dims.height >= LEAD_CROP_MIN_RATIO_EDITORIAL
-    && dims.width >= 640
-    && dims.width / 1.5 >= 360;
+  // Image d'article (pas une photo de banque) : prête pour la une dès qu'elle
+  // n'est pas minuscule. Le cadre adapté du navigateur s'occupe du format
+  // (19 nov. 2026). Les paramètres cropSafe/item restent pour le focal revu.
+  void cropSafe; void item;
+  return meetsArticleThumbSize(dims.width, dims.height);
 }
 
 async function markSourceLeadQuality(item) {
@@ -668,13 +637,14 @@ async function main() {
     try {
       const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
       if (!ok(item.image)) return;
-      const urlBanner = imageUrlLooksBannerLike(item.image);
       const urlPortrait = imageUrlLooksPortrait(item.image);
-      const dims = (urlBanner || urlPortrait) ? null : await probeRemoteImageSize(item.image);
+      const dims = urlPortrait ? null : await probeRemoteImageSize(item.image);
       const portrait = urlPortrait || !!(dims && isPortraitLeadRatio(dims.width, dims.height));
       if (portrait && hasCropSafeImage(item)) return;
-      if (!urlBanner && !portrait && !(dims && isBannerLikeRatio(dims.width, dims.height))) return;
-      if (portrait) {
+      // Bandeau (campagne, ratio > 2,12) : depuis le 19 nov. 2026, il reste
+      // l'image de l'article ; plus de remplacement par une photo du corps.
+      if (!portrait) return;
+      {
         const r = doUpdate ? await replacePortraitLead(item, { reject, opts }) : 'dry';
         if (r === 'replaced') { pageScraped += 1; photosRecovered += 1; }
         if (r === 'cleared') {
@@ -690,20 +660,6 @@ async function main() {
         }
         console.log(`  ↻ une portrait (${r}) : ${item.source} — ${item.title}`);
         return;
-      }
-      const resolved = await resolveLeadReadyPhoto(item, reject, opts);
-      if (
-        resolved?.url
-        && resolved.leadReady !== false
-        && !imageUrlsMatch(resolved.url, item.image)
-      ) {
-        if (doUpdate) {
-          assignSourceImage(item, resolved.url, true, !!resolved.cropSafe, resolved.cropFocalY);
-          clearLegacyFallback(item);
-          clearStockPhoto(item);
-        }
-        pageScraped += 1;
-        photosRecovered += 1;
       }
     } catch (err) {
       console.warn(`  ⚠ banner upgrade skip ${item.source}: ${(err && err.message) || err}`);
@@ -790,25 +746,7 @@ async function main() {
 
       if (await photoIsLeadReady(item)) {
         if (doUpdate) {
-          // Bannière campagne lead-ready (ratio ~2.3:1) : une autre photo du
-          // corps peut mieux remplir le crop 3:2 de la une.
-          if (item.image && ok(item.image)) {
-            const dims = await probeRemoteImageSize(item.image);
-            if (dims && isBannerLikeRatio(dims.width, dims.height)) {
-              const resolved = await resolveLeadReadyPhoto(item, reject, opts);
-              if (
-                resolved?.url
-                && resolved.leadReady !== false
-                && !imageUrlsMatch(resolved.url, item.image)
-              ) {
-                assignSourceImage(item, resolved.url, true, !!resolved.cropSafe, resolved.cropFocalY);
-                clearLegacyFallback(item);
-                clearStockPhoto(item);
-                pageScraped += 1;
-                photosRecovered += 1;
-              }
-            }
-          }
+          // Bandeau de campagne : gardé tel quel (règle du 19 nov. 2026).
           // Ne retirer le stock QUE si la photo SOURCE seule est lead-ready.
           // Sinon (stock Assemblée + logo Exil) on effaçait le bon visuel.
           const sourceLead = item.image && ok(item.image)

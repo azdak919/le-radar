@@ -1175,12 +1175,14 @@ function cardFitBonus(width = 0, height = 0) {
   return 0;
 }
 
+/**
+ * Rang d'un candidat. Depuis le 19 nov. 2026, plus de préférence de format :
+ * un bandeau, une affiche ou un visuel de campagne choisi par la rédaction
+ * n'est plus relégué derrière une photo paysage du corps. Seule une image
+ * « demote » (capture d'interface signalée par la source) passe en dernier.
+ */
 function leadFitTier(c = {}) {
-  if (c.demoted) return 2;
-  const w = c.width || c.w || 0;
-  const h = c.height || c.h || 0;
-  if (c.campaignGraphic || isBannerLikeRatio(w, h)) return 1;
-  return 0;
+  return c.demoted ? 2 : 0;
 }
 
 function compareLeadCandidates(a = {}, b = {}) {
@@ -1228,9 +1230,7 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
         score: scoreBase
           + (url !== seed ? 25 : 0)
           + (url === unwrapped && unwrapped !== raw ? 15 : 0)
-          + Math.min(dimW, 1600) / 20
-          + cardFitBonus(dimW, dimH)
-          + (extra.campaignGraphic ? -25 : 0),
+          + Math.min(dimW, 1600) / 20,
         w: dimW,
         h: dimH,
         demoted: isPathDemoted(url, demotePatterns),
@@ -1288,8 +1288,6 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
     if (preferFirstContentImage && index === 0) score += 40;
     if (options.preferSizeFull && img.isFull) score += 20;
     if (options.preferSizeFull && isThumb) score -= 30;
-    score += cardFitBonus(img.w, img.h);
-    if (img.campaignGraphic) score -= 25;
     const unwrapped = unwrapCdnImageUrl(img.url);
     candidates.push({
       url: unwrapped || img.url,
@@ -1399,10 +1397,15 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     }
     return articleThumbHit(url, width, height, `${source}-thumb`);
   };
-  /** Image d'article gardée hors une (vignette, fiche), si elle n'est pas minuscule. */
+  /**
+   * Image d'article hors format « plein cadre » (petite, très haute, bandeau) :
+   * elle reste l'image du billet partout, une comprise. Le navigateur la pose
+   * dans un cadre adapté (fond flouté, image entière) au lieu de la remplacer.
+   * Seule une image minuscule (pixel, icône) est refusée.
+   */
   const articleThumbHit = (url, width, height, source) => {
     if (!meetsArticleThumbSize(width, height)) return null;
-    return { url, width, height, source, leadReady: false, articleThumb: true,
+    return { url, width, height, source, leadReady: true, articleThumb: true,
       ...(isPortraitLeadRatio(width, height) ? { cropSafe: true } : {}) };
   };
   const tryUrlOnce = async (url, metaW = 0, metaH = 0, ctx = {}) => {
@@ -1435,21 +1438,8 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     if (dims && meetsArticleKeepSize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-editorial', leadReady: true };
     }
-    // Sous le plafond une (LEAD_MAX_RATIO) : feature seulement.
-    if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) {
-      return { url, width: dims.width, height: dims.height, source: 'probe-feature', leadReady: false };
-    }
     if (dims && meetsArticleThumbSize(dims.width, dims.height)) {
-      return { url, width: dims.width, height: dims.height, source: 'probe-small', leadReady: false };
-    }
-    return null;
-  };
-
-  /** Ne retourne un hit « prêt vedette » que si leadReady !== false. */
-  const tryUrlLeadReady = async (url, metaW = 0, metaH = 0, ctx = {}) => {
-    for (const candidate of leadImageProbeUrls(url)) {
-      const hit = await tryUrlOnce(candidate, metaW, metaH, ctx);
-      if (hit && hit.leadReady !== false) return hit;
+      return articleThumbHit(url, dims.width, dims.height, 'probe-small');
     }
     return null;
   };
@@ -1462,12 +1452,22 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     return null;
   };
 
-  // Classer toutes les photos (RSS + corps) : un bandeau campagne lead-ready
-  // ne doit plus court-circuiter une 2e photo 16:9 / 3:2 du corps.
   const html = item.link ? await fetchText(item.link) : '';
   const fromPage = html && html.length > 200
     ? listArticleImageCandidates(html, extraRejectPatterns, options, item.link)
     : [];
+
+  // L'image déjà retenue pour le billet (flux, og:image, pin) passe d'abord,
+  // sous sa meilleure taille disponible : on ne la remplace plus par une
+  // autre photo du corps jugée « mieux cadrée » (règle du 19 nov. 2026).
+  if (item.image) {
+    const onPage = fromPage.find((c) => imageUrlsMatch(c.url, item.image));
+    const own = await tryUrlAny(item.image, onPage?.w || 0, onPage?.h || 0, {
+      ...(onPage || {}),
+      declaredCover: !!(onPage?.declaredCover || isDeclaredCoverImage(item, item.image)),
+    });
+    if (own) return own;
+  }
 
   const seen = new Set();
   const ranked = [];
@@ -1479,43 +1479,14 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     ranked.push(c);
   };
   for (const c of fromPage) addCandidate(c);
-  if (item.image) {
-    addCandidate({
-      url: item.image,
-      score: 50,
-      w: 0,
-      h: 0,
-      demoted: false,
-      campaignGraphic: false,
-      declaredCover: isDeclaredCoverImage(item, item.image),
-    });
-  }
   ranked.sort(compareLeadCandidates);
 
-  let bannerFallback = null;
-  let weakFallback = null;
+  // Ordre éditorial (image mise en avant, og:image, puis corps) : le premier
+  // candidat valable gagne, quel que soit son format.
   for (const c of ranked.slice(0, 8)) {
-    const hit = await tryUrlLeadReady(c.url, c.w || 0, c.h || 0, c);
-    if (hit) {
-      const merged = {
-        ...c,
-        ...hit,
-        width: hit.width,
-        height: hit.height,
-        w: hit.width,
-        h: hit.height,
-      };
-      if (leadFitTier(merged) === 0) return hit;
-      if (!bannerFallback) bannerFallback = hit;
-      continue;
-    }
-    if (!weakFallback) {
-      const weak = await tryUrlAny(c.url, c.w || 0, c.h || 0, c);
-      if (weak) weakFallback = weak;
-    }
+    const hit = await tryUrlAny(c.url, c.w || 0, c.h || 0, c);
+    if (hit) return hit;
   }
-  if (bannerFallback) return bannerFallback;
-  if (weakFallback) return weakFallback;
   return null;
 }
 
