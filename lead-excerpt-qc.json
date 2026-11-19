@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-19T02:07:59.712Z",
+  "updated": "2026-11-19T02:37:35.180Z",
   "total": 1033,
   "pool": 61,
   "incomplete": 27,
   "withLeadExcerpt": 181,
   "candidates": 27,
-  "enriched": 1,
-  "failed": 0,
+  "enriched": 0,
+  "failed": 3,
   "ok": true,
   "samples": [
     {
@@ -28,15 +28,6 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": false
-    },
-    {
       "title": "Sauve qui peut : l’IA à nos trousses",
       "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
@@ -55,13 +46,22 @@
       "changed": false
     },
     {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": false
+    },
+    {
       "title": "Finding calm in the stacks, CU Wellness brings 30-Minute sound baths to Webster Library",
       "link": "https://theconcordian.com/2026/11/cu-wellness-sound-bath-session/",
       "ok": true,
       "score": 100,
       "chars": 273,
       "sample": "Seeking to help students find calm amid their busy schedules, Concordia University Wellness invited ",
-      "changed": true
+      "changed": false
     },
     {
       "title": "A new era for Hockey Canada",
