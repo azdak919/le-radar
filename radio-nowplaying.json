@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T08:28:08.871Z",
+  "updatedAt": "2026-11-19T10:06:55.520Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T08:27:31.917Z"
+      "checkedAt": "2026-11-19T10:06:16.460Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Charlottes",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/les-charlottes"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "La lecture pis toi",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+      },
       "track": "",
-      "showTitle": "Les Charlottes",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T08:27:33.842Z"
+      "checkedAt": "2026-11-19T10:06:18.664Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "Freeform Air",
+      "next": {
+        "title": "Total €clipse of The ☾harts",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "07:00"
+      },
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T08:27:36.391Z"
+      "checkedAt": "2026-11-19T10:06:22.084Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T08:27:49.795Z"
+      "checkedAt": "2026-11-19T10:06:36.083Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T08:27:50.729Z"
+      "checkedAt": "2026-11-19T10:06:36.983Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T08:28:08.520Z"
+      "checkedAt": "2026-11-19T10:06:55.169Z"
     }
   }
 }
