@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T17:34:15.936Z",
+  "updatedAt": "2026-11-19T19:07:03.700Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:33:25.957Z"
+      "checkedAt": "2026-11-19T19:06:24.465Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque",
+        "title": "La session live",
         "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Rythmologie",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "15:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
       },
       "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "La session live",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:33:40.080Z"
+      "checkedAt": "2026-11-19T19:06:38.680Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Positive Vibes",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,82 +74,82 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:33:42.598Z"
+      "checkedAt": "2026-11-19T19:06:41.074Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Power Hour",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "title": "Secondhand Sounds",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "next": {
-        "title": "What's Happening in NDG",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "title": "Weirdo Rippers",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "track": "",
-      "showTitle": "The Power Hour",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-19T17:33:54.781Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Le DOUZE",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "12:59",
-        "url": "https://www.cfak.ca/balados/le-douze"
-      },
-      "next": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "track": "",
-      "showTitle": "Le DOUZE",
+      "showTitle": "Secondhand Sounds",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:33:56.042Z"
+      "checkedAt": "2026-11-19T19:06:43.410Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": null,
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      },
+      "track": "",
+      "showTitle": "",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-19T19:06:44.403Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Onde de CHOQ",
+      "current": {
+        "title": "Dans les airs",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "14:00",
+        "end": "15:00",
+        "slug": "dans-les-airs"
+      },
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:30",
+        "end": "16:30",
+        "slug": "palmareschoq"
       },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "",
+      "showTitle": "Dans les airs",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T17:34:15.585Z"
+      "checkedAt": "2026-11-19T19:07:03.350Z"
     }
   }
 }
