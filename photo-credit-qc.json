@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-19T14:40:00.585Z",
+  "updated": "2026-11-19T16:12:47.426Z",
   "total": 1035,
   "withImage": 912,
   "withCredit": 912,
-  "cited": 598,
-  "pending": 200,
+  "cited": 610,
+  "pending": 190,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 10,
-  "citedNew": 10,
-  "fallbackNew": 50,
+  "updatedCount": 26,
+  "citedNew": 24,
+  "fallbackNew": 36,
   "samples": [
     {
       "title": "Peut-on encore posséder de la culture ?",
@@ -81,6 +81,20 @@
       "credit": "Photo : Lia Chayer",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Que faire à Montréal en octobre ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Chantal Ginzi, tirée du projet Farīsāt: Gunpowder’s Daughters exposée au World Press Photo",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Le Marathon Beneva 2026 porté par la foule montréalaise",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
     }
   ]
 }
