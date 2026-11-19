@@ -7,7 +7,11 @@
     <meta name="theme-color" content="#0e0f12" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.youtube.com https://www.gstatic.com https://cloud.umami.is blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' blob: https://s1.rseq.ca https://le-radar-weather.azdak.workers.dev https://le-radar-nowplaying.azdak.workers.dev https://le-radar-bg-rotation.azdak.workers.dev https://le-radar-translate.azdak.workers.dev https://cloud.umami.is https://gateway.umami.is https://clients5.google.com https://clients4.google.com https://translate.googleapis.com https://api.mymemory.translated.net; frame-src 'self' https://chyz.ca https://cism893.ca https://ckut.ca https://www.cjlo.com https://www.cfak.ca https://www.choq.ca; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Pas de status-bar-style « black-translucent » : en plein écran, iOS et
+         iPadOS 26+ posent alors leur propre bande floue (« scroll edge
+         effect ») sous l'heure, par-dessus la date et les boutons du mât, et
+         aucune règle CSS ne peut la retirer. La barre d'état reste au système ;
+         sa couleur vient de .ios-top-edge (style-chrome.css). -->
     <meta name="apple-mobile-web-app-title" content="LE-RADAR.ca" />
     <title>LE-RADAR.ca — Journaux, radios et sports étudiants du Québec</title>
     <link rel="canonical" href="https://le-radar.ca/" />
@@ -161,6 +165,7 @@
     <script defer src="https://cloud.umami.is/script.js" data-website-id="32751d96-0b15-4e05-9b08-a04a333a1cde"></script>
   </head>
   <body>
+    <div class="ios-top-edge" aria-hidden="true"></div>
     <!-- ══════════ MASTHEAD ══════════ -->
     <header class="masthead">
       <!-- Fond photo (banque du Québec) : bannière plein largeur derrière le

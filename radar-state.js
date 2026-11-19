@@ -23,6 +23,19 @@ if (TUNER && !IS_TUNER_EMBED && !document.querySelector('.tuner-safe-cap')) {
   TUNER.before(safeCap);
   document.documentElement.classList.add('has-tuner-safe-cap');
 }
+/*
+ * Bande du haut iOS / iPadOS 26+ (voir .ios-top-edge dans style-chrome.css) :
+ * élément fixe, pleine largeur, qui DÉCLARE une couleur sans rien peindre.
+ * WebKit s'en sert pour teinter la barre d'état au lieu d'y poser son flou
+ * système par-dessus le haut du mât. index.html l'écrit en dur ; les autres
+ * pages le reçoivent ici.
+ */
+if (!IS_EMBED && document.body && !document.querySelector('.ios-top-edge')) {
+  const topEdge = document.createElement('div');
+  topEdge.className = 'ios-top-edge';
+  topEdge.setAttribute('aria-hidden', 'true');
+  document.body.prepend(topEdge);
+}
 var TUNER_SELECT   = document.getElementById('tuner-select');
 var TUNER_PREV     = document.getElementById('tuner-prev');
 var TUNER_NEXT     = document.getElementById('tuner-next');
