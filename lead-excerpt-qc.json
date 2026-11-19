@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-19T18:07:51.932Z",
+  "updated": "2026-11-19T18:24:23.776Z",
   "total": 1038,
   "pool": 61,
-  "incomplete": 29,
+  "incomplete": 28,
   "withLeadExcerpt": 185,
-  "candidates": 29,
-  "enriched": 3,
-  "failed": 0,
+  "candidates": 28,
+  "enriched": 0,
+  "failed": 2,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,12 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
       "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,13 +46,13 @@
       "changed": false
     },
     {
-      "title": "The conditions of compassion",
-      "link": "https://theconcordian.com/2026/11/the-conditions-of-compassion/",
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
-      "score": 100,
-      "chars": 793,
-      "sample": "There is an unspoken hierarchy in the way we distribute sympathy. Some victims are immediately recog",
-      "changed": true
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": false
     },
     {
       "title": "Concordia Student Union byelection results are in",
@@ -70,7 +61,7 @@
       "score": 96,
       "chars": 479,
       "sample": "Two new CSU councillors were elected. Students in the faculty of Fine Arts elected Alyson Bouffard a",
-      "changed": true
+      "changed": false
     },
     {
       "title": "ASFA asks students what issues matter most to them",
@@ -79,7 +70,16 @@
       "score": 100,
       "chars": 171,
       "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "link": "https://theconcordian.com/2026/11/avi-lewis-carney-policies-terrifying/",
+      "ok": true,
+      "score": 100,
+      "chars": 190,
+      "sample": "Hundreds of New Democratic Party (NDP) supporters gathered at a rally on Nov. 17 at Ausgang Plaza in",
+      "changed": false
     }
   ]
 }

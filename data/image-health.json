@@ -1,10 +1,10 @@
 {
-  "at": "2026-11-19T18:09:04.753Z",
+  "at": "2026-11-19T18:25:36.617Z",
   "cards": 1038,
-  "probedCards": 59,
+  "probedCards": 46,
   "queueDeferred": 0,
-  "urls": 53,
-  "broken": 1,
+  "urls": 42,
+  "broken": 7,
   "repaired": 1,
   "items": [
     {
@@ -18,6 +18,72 @@
       "type": "text/html",
       "transient": false,
       "repaired": true
+    },
+    {
+      "source": "Quartier Libre",
+      "title": "Québec solidaire : un cadre financier pour les générations futures ?",
+      "link": "https://quartierlibre.ca/quebec-solidaire-cadre-financier",
+      "field": "image",
+      "variant": "",
+      "url": "https://quartierlibre.ca/wp-content/uploads/2026/09/Devoilement-Cadre-Financier-QS-1024x532.jpeg",
+      "status": 415,
+      "type": "text/html",
+      "transient": true
+    },
+    {
+      "source": "La Pige",
+      "title": "Christine Fréchette visite la centre hydraulique de Jonquière.",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/christine-frechette-visite-la-centrale-hydroelectrique-de-jonquiere",
+      "field": "image",
+      "variant": "",
+      "url": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/photo-1.jpg",
+      "status": 415,
+      "type": "text/html",
+      "transient": true
+    },
+    {
+      "source": "La Pige",
+      "title": "Christine Fréchette, en campagne au Saguenay Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/christine-frechette-en-campagne-au-saguenay-lac-saint-jean",
+      "field": "image",
+      "variant": "",
+      "url": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Photo-mise-de-lavant.jpg",
+      "status": 415,
+      "type": "text/html",
+      "transient": true
+    },
+    {
+      "source": "La Pige",
+      "title": "À Jonquière, se déplacer sans voiture se paie en temps",
+      "link": "https://lapige.atmjonquiere.com/2026/09/09/a-jonquiere-se-deplacer-sans-voiture-se-paie-en-temps",
+      "field": "image",
+      "variant": "",
+      "url": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-4-1-scaled-e1788549888314.jpg",
+      "status": 415,
+      "type": "text/html",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Comment fonctionnent les élections au Québec ?",
+      "link": "https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Comment-fonctionnent-les-elections-au-Quebec_Pixabay.jpg",
+      "status": 415,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Présences troubles : le corps en métamorphose",
+      "link": "https://lecollectif.ca/culture/presences-troubles-le-corps-en-metamorphose",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/CULTURE_ExpositionGalerieDartAntoineSirois_LaccordTacite_CreditSarahCloutier.png",
+      "status": 415,
+      "type": "",
+      "transient": true
     }
   ]
 }
