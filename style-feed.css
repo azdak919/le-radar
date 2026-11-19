@@ -1743,3 +1743,39 @@ html[data-translate-busy="1"] .translate-toggle {
   .news-hero .article--lead .article-eyebrow { margin-bottom: 4px; }
   #news-filters-panel { margin-top: 6px; }
 }
+
+/* Une : cadre adapté (19 nov. 2026). L'image de l'article est gardée même
+   petite, très haute ou en bandeau : posée entière (contain) sur un fond
+   flouté de la même image, dans le 3:2 de la une. Jamais de bandes unies. */
+.article-media-fit {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 8px;
+  background: var(--bg-soft);
+  isolation: isolate;
+}
+.article-media-fit__bg {
+  position: absolute;
+  inset: -24px;
+  z-index: 0;
+  background-position: center;
+  background-size: cover;
+  filter: blur(22px) saturate(1.1) brightness(0.78);
+  transform: scale(1.06);
+}
+.article--lead.has-image .article-media .article-media-fit img.is-fit,
+.article-media .article-media-fit img.is-fit {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  border-radius: 0;
+}

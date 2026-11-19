@@ -1,6 +1,7 @@
 // Couverture déclarée par la source (Polyscope « Génie Mathématique », 8 nov. 2026) :
 // une illustration en hauteur choisie comme couverture du billet est recadrée en
-// cover, point focal haut, sans bandes ; les signaux d'affiche/capture priment.
+// cover, point focal haut, sans bandes. Depuis le 19 nov. 2026, plus de tri
+// par contenu (affiche, capture) : seules proportion et taille comptent.
 // Aucun crédit inventé. 0 réseau.
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
@@ -32,11 +33,11 @@ assert.equal(A.isDeclaredCoverImage(fromCover, cover.replace('portraitGenieMath'
 // 2) Règle générale : couverture déclarée en hauteur → recadrable.
 const ctx = { declaredCover: true, url: cover, link };
 assert.ok(A.isCropSafePortrait(W, H, ctx));
-assert.equal(A.isCropSafePortrait(W, H, { url: cover, link }), false, 'sans déclaration : règle inchangée');
+assert.equal(A.isCropSafePortrait(W, H, { url: cover, link }), true, '19 nov. 2026 : sans déclaration, l’image de l’article est gardée aussi');
 assert.equal(A.isCropSafePortrait(1080, 1920, ctx), false, 'story 9:16 : trop étroite');
 assert.ok(A.isCropSafePortrait(600, 900, ctx), 'affiche déclarée 600×900 (Concordian, Persepolis) : recadrable');
 assert.ok(A.isCropSafePortrait(600, 860, ctx), 'couverture déclarée 600 px : encore assez large pour la carte');
-assert.equal(A.isCropSafePortrait(600, 900, { url: ctx.url, link }), false, '600×900 sans déclaration : écartée');
+assert.equal(A.isCropSafePortrait(600, 900, { url: ctx.url, link }), false, '600×900 sans déclaration : trop étroite pour la une (taille seulement)');
 assert.equal(A.isCropSafePortrait(500, 750, ctx), false, 'trop petite pour la une');
 assert.equal(A.isCropSafePortrait(232, 309, ctx), false, 'La Griffe 232×309 : toujours trop petite');
 for (const bad of [
@@ -45,7 +46,7 @@ for (const bad of [
   { ...ctx, alt: 'Poster for the fall show' },
   { ...ctx, url: 'https://example.org/wp-content/uploads/affiche-soiree-2026.png' },
   { ...ctx, url: 'https://example.org/wp-content/uploads/Screenshot-2026-11-07.png' },
-]) assert.equal(A.isCropSafePortrait(W, H, bad), false, `signal affiche/capture prioritaire: ${JSON.stringify(bad).slice(0, 90)}`);
+]) assert.equal(A.isCropSafePortrait(W, H, bad), true, `19 nov. 2026 : plus de tri par contenu (affiche, capture): ${JSON.stringify(bad).slice(0, 90)}`);
 
 // 3) WordPress : image mise en avant = déclarée ; og:image seulement si elle la confirme.
 const feat = 'https://journal.example/wp-content/uploads/2026/11/illustration.jpg';

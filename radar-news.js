@@ -4827,6 +4827,24 @@ function showArticleImage(article, media, img, kind, item) {
     const h = img.naturalHeight || 0;
     if (w && h && w / h < 0.95) img.classList.add('is-portrait-crop');
   }
+  // Une : l'image de l'article est toujours gardée (19 nov. 2026). Si elle ne
+  // remplit pas le cadre 3:2 sans perte (portrait étroit ou petit, bandeau
+  // très large), on la pose entière dans un cadre adapté, sur un fond flouté
+  // de la même image, au lieu de la recadrer fort ou de la remplacer.
+  if (kind === 'photo' && !reviewedFocal && article.classList.contains('article--lead') && leadNeedsFitFrame(img)) {
+    const frame = document.createElement('span');
+    frame.className = 'article-media-fit';
+    const bg = document.createElement('span');
+    bg.className = 'article-media-fit__bg';
+    bg.setAttribute('aria-hidden', 'true');
+    const bgSrc = String(img.currentSrc || img.src || '').replace(/["\\\n\r]/g, encodeURIComponent);
+    bg.style.backgroundImage = `url("${bgSrc}")`;
+    img.classList.remove('is-portrait-crop', 'is-doc-crop');
+    img.style.objectPosition = '';
+    img.classList.add('is-fit');
+    frame.append(bg, img);
+    media.replaceChildren(frame);
+  }
   let cap = null;
   if (kind === 'photo') {
     // Crédit réel en priorité (légende / JSON-LD / légende WP) ; à défaut,
@@ -4847,6 +4865,23 @@ function showArticleImage(article, media, img, kind, item) {
   if (kind === 'stock') article.classList.add('article--stock-image');
   else if (kind !== 'photo') article.classList.add('article--fallback-image');
   updateNewsLayout();
+}
+
+/**
+ * Cadre adapté de la une : vrai si la photo ne remplit pas un 3:2 sans perte
+ * notable. Portrait plus étroit que 2:3 ou de moins de 640 px de large (crop
+ * flou et serré : Le Collectif, Carney-PSPP 512×640), bandeau au-delà de 2,12.
+ */
+const LEAD_FIT_MIN_PORTRAIT_WIDTH = 640;
+const LEAD_FIT_BANNER_RATIO = 2.12;
+function leadNeedsFitFrame(img) {
+  const w = img?.naturalWidth || 0;
+  const h = img?.naturalHeight || 0;
+  if (!w || !h) return false;
+  const r = w / h;
+  if (r > LEAD_FIT_BANNER_RATIO) return true;
+  if (r >= 0.95) return false;
+  return r < 0.66 || w < LEAD_FIT_MIN_PORTRAIT_WIDTH;
 }
 
 function dropArticleImage(article, media, role, item) {

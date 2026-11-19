@@ -45,6 +45,9 @@ const {
   imageUrlLooksPortrait,
   imageDimensionsFromUrl,
   isCropSafePortrait,
+  meetsArticleThumbSize,
+  isDeclaredCoverImage,
+  DECLARED_COVER_FOCAL_Y,
   LEAD_CROP_MIN_RATIO,
   LEAD_CROP_MIN_RATIO_EDITORIAL,
 } = require('./article-image-lib');
@@ -206,35 +209,23 @@ async function replacePortraitLead(item, { reject = [], opts = {}, resolve = res
   // Portrait déjà recadrable d'après l'URL (CE Image _900_1273, fichier
   // /images/articles/). Un 429 sur la page ne doit pas l'effacer au profit
   // du campus : on le garde sans re-télécharger le HTML.
-  if (dims && isCropSafePortrait(dims.width, dims.height, { url: item.image, link: item.link })) {
-    assignSourceImage(item, item.image, true, true);
+  const declaredCover = isDeclaredCoverImage(item, item.image);
+  if (dims && isCropSafePortrait(dims.width, dims.height, { url: item.image, link: item.link, declaredCover })) {
+    assignSourceImage(item, item.image, true, true, declaredCover ? DECLARED_COVER_FOCAL_Y : null);
     clearLegacyFallback(item);
     clearStockPhoto(item);
     return 'cropped';
   }
-  const portraitUrl = item.image;
-  let resolved = null;
-  try { resolved = await resolve(item, reject, opts); } catch { resolved = null; }
-  // La photo de l'article elle-même est recadrable (crédit Photo/Dessin, pas
-  // une affiche) : la garder, centrée en 3:2, plutôt qu'un stock ou le campus.
-  if (resolved?.url && resolved.cropSafe && resolved.leadReady !== false
-    && imageUrlsMatch(resolved.url, portraitUrl)) {
-    assignSourceImage(item, portraitUrl, true, true, resolved.cropFocalY);
+  // Règle du 19 nov. 2026 : l'image de l'article reste la sienne, même trop
+  // petite ou trop haute pour un recadrage 3:2 (Le Collectif, Carney-PSPP
+  // 512×640). Aucune autre photo, banque ni campus ne la remplace : le
+  // navigateur la pose entière dans un cadre adapté (fond flouté), une
+  // comprise. Seule une image minuscule est retirée.
+  if (dims && meetsArticleThumbSize(dims.width, dims.height)) {
+    assignSourceImage(item, item.image, true, true, declaredCover ? DECLARED_COVER_FOCAL_Y : null);
     clearLegacyFallback(item);
     clearStockPhoto(item);
-    return 'cropped';
-  }
-  const ok = resolved?.url
-    && resolved.leadReady !== false
-    && !imageUrlsMatch(resolved.url, portraitUrl)
-    && (resolved.cropSafe
-      || !(resolved.width && resolved.height && isPortraitLeadRatio(resolved.width, resolved.height)));
-  if (ok) {
-    assignSourceImage(item, resolved.url, true, !!resolved.cropSafe, resolved.cropFocalY);
-    clearSourceImageCredit(item);
-    clearLegacyFallback(item);
-    clearStockPhoto(item);
-    return 'replaced';
+    return 'kept';
   }
   clearMirroredLead(item);
   clearSourceImageCredit(item);
@@ -330,17 +321,11 @@ async function probeLeadReady(url, reject = [], opts = {}, { cropSafe = false, i
   const dims = await probeRemoteImageSize(url);
   if (!dims) return false;
   if (meetsLeadDisplaySize(dims.width, dims.height)) return true;
-  if (!(cropSafe && isPortraitLeadRatio(dims.width, dims.height))) return false;
-  if (fillsLeadWhenCropped(dims.width, dims.height, {
-    reviewed: !!reviewedSourceCrop(item, url, dims.width, dims.height),
-    declaredCover: !!cropSafe,
-  })) return true;
-  // Graphique The Link plus haut que 2:3 (Archives 900×1582) : une fois
-  // jugé recadrable, le plancher éditorial suffit. Le 0,66 global reste.
-  return isEditorialArticleImage(url)
-    && dims.width / dims.height >= LEAD_CROP_MIN_RATIO_EDITORIAL
-    && dims.width >= 640
-    && dims.width / 1.5 >= 360;
+  // Image d'article (pas une photo de banque) : prête pour la une dès qu'elle
+  // n'est pas minuscule. Le cadre adapté du navigateur s'occupe du format
+  // (19 nov. 2026). Les paramètres cropSafe/item restent pour le focal revu.
+  void cropSafe; void item;
+  return meetsArticleThumbSize(dims.width, dims.height);
 }
 
 async function markSourceLeadQuality(item) {
@@ -427,9 +412,10 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
   }
 
   // Avant toute banque libre : récupérer la photo d'article (RSS / og:image /
-  // corps). Si la page n'offre qu'un défaut de site trop faible (logo Exil,
-  // og:image partagée), on ne l'impose PAS — le stock thématique (ex. Hôtel
-  // du Parlement pour un billet Assemblée) est préférable.
+  // corps). Une image d'article hors format une est gardée comme image du
+  // billet ; le stock thématique (ex. Hôtel du Parlement pour un billet
+  // Assemblée) ne sert alors qu'au repli de la une. Les logos (Exil) et
+  // og:image partagées sont écartés avant d'arriver ici.
   let weakSiteImage = null;
   if ((!item.image || !hasSourcePhoto(item, sourceMap)) && item.link) {
     const { reject, opts } = isCandidateForItem(item, sourceMap);
@@ -454,10 +440,12 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
     const stock = await findStockPhoto(item);
     if (stock?.stockImage) {
       if (doUpdate) {
-        // Stock thématique gagne sur un défaut de site trop faible
+        // Image d'article hors format une (19 nov. 2026) : elle reste celle
+        // du billet (vignette, fiche) ; le stock ne sert qu'au repli de la une.
+        // Logos, défauts de site partagés et images minuscules sont déjà
+        // écartés en amont (isCandidateImageUrl, dédoublonnage, seuil vignette).
         if (weakSiteImage) {
-          item.image = '';
-          item.leadImageReady = false;
+          assignSourceImage(item, weakSiteImage.url, false, !!weakSiteImage.cropSafe);
         }
         applyPhotoFields(item, stock);
         const sourceReady = await markSourceLeadQuality(item);
@@ -649,13 +637,14 @@ async function main() {
     try {
       const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
       if (!ok(item.image)) return;
-      const urlBanner = imageUrlLooksBannerLike(item.image);
       const urlPortrait = imageUrlLooksPortrait(item.image);
-      const dims = (urlBanner || urlPortrait) ? null : await probeRemoteImageSize(item.image);
+      const dims = urlPortrait ? null : await probeRemoteImageSize(item.image);
       const portrait = urlPortrait || !!(dims && isPortraitLeadRatio(dims.width, dims.height));
       if (portrait && hasCropSafeImage(item)) return;
-      if (!urlBanner && !portrait && !(dims && isBannerLikeRatio(dims.width, dims.height))) return;
-      if (portrait) {
+      // Bandeau (campagne, ratio > 2,12) : depuis le 19 nov. 2026, il reste
+      // l'image de l'article ; plus de remplacement par une photo du corps.
+      if (!portrait) return;
+      {
         const r = doUpdate ? await replacePortraitLead(item, { reject, opts }) : 'dry';
         if (r === 'replaced') { pageScraped += 1; photosRecovered += 1; }
         if (r === 'cleared') {
@@ -672,20 +661,6 @@ async function main() {
         console.log(`  ↻ une portrait (${r}) : ${item.source} — ${item.title}`);
         return;
       }
-      const resolved = await resolveLeadReadyPhoto(item, reject, opts);
-      if (
-        resolved?.url
-        && resolved.leadReady !== false
-        && !imageUrlsMatch(resolved.url, item.image)
-      ) {
-        if (doUpdate) {
-          assignSourceImage(item, resolved.url, true, !!resolved.cropSafe, resolved.cropFocalY);
-          clearLegacyFallback(item);
-          clearStockPhoto(item);
-        }
-        pageScraped += 1;
-        photosRecovered += 1;
-      }
     } catch (err) {
       console.warn(`  ⚠ banner upgrade skip ${item.source}: ${(err && err.message) || err}`);
     }
@@ -700,19 +675,19 @@ async function main() {
     saveStockSearchCache();
   }
 
-  // Priorité : articles sans aucune photo (ex. Tribune RSS vide) d'abord,
-  // les plus récents en tête — récupère les vraies og:image avant la banque.
+  // Priorité : articles sans leur propre image (vide, banque ou campus), les
+  // plus récents en tête — récupère les vraies og:image avant la banque.
   const scrapeQueue = items
     .filter((item) => {
       const { ok } = isCandidateForItem(item, sourceMap);
       return item.link && !ok(item.image);
     })
-    .sort((a, b) => {
-      const aEmpty = a.image || a.stockImage ? 1 : 0;
-      const bEmpty = b.image || b.stockImage ? 1 : 0;
-      if (aEmpty !== bEmpty) return aEmpty - bEmpty;
-      return (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
-    })
+    // Une photo de banque ou du campus n'est pas l'image de l'article
+    // (19 nov. 2026) : ces billets passent au même rang que ceux sans image,
+    // les plus récents d'abord. Sinon l'arriéré de vieux billets vides
+    // retardait de plusieurs récoltes la vraie photo d'un billet de la veille
+    // (Le Collectif, Carney-PSPP, campus Georges-Cabana).
+    .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
     .slice(0, PAGE_SCRAPE_LIMIT);
 
   await mapPool(scrapeQueue, CONCURRENCY, async (item) => {
@@ -771,25 +746,7 @@ async function main() {
 
       if (await photoIsLeadReady(item)) {
         if (doUpdate) {
-          // Bannière campagne lead-ready (ratio ~2.3:1) : une autre photo du
-          // corps peut mieux remplir le crop 3:2 de la une.
-          if (item.image && ok(item.image)) {
-            const dims = await probeRemoteImageSize(item.image);
-            if (dims && isBannerLikeRatio(dims.width, dims.height)) {
-              const resolved = await resolveLeadReadyPhoto(item, reject, opts);
-              if (
-                resolved?.url
-                && resolved.leadReady !== false
-                && !imageUrlsMatch(resolved.url, item.image)
-              ) {
-                assignSourceImage(item, resolved.url, true, !!resolved.cropSafe, resolved.cropFocalY);
-                clearLegacyFallback(item);
-                clearStockPhoto(item);
-                pageScraped += 1;
-                photosRecovered += 1;
-              }
-            }
-          }
+          // Bandeau de campagne : gardé tel quel (règle du 19 nov. 2026).
           // Ne retirer le stock QUE si la photo SOURCE seule est lead-ready.
           // Sinon (stock Assemblée + logo Exil) on effaçait le bon visuel.
           const sourceLead = item.image && ok(item.image)
@@ -808,9 +765,10 @@ async function main() {
       if (!item.image || !ok(item.image)) {
         const resolved = await resolveLeadReadyPhoto(item, reject, opts);
         if (resolved?.url && doUpdate) {
-          // leadReady : vraie photo → garder. Sinon défaut de site faible
-          // (logo partagé) : ne pas l'imposer, laisser la file stock.
-          if (resolved.leadReady !== false || isEditorialArticleImage(resolved.url)) {
+          // Image de l'article : gardée même hors format une (19 nov. 2026).
+          // Logos et défauts partagés sont filtrés avant ; la une garde le
+          // repli banque / campus si l'image ne la remplit pas.
+          if (resolved.leadReady !== false || resolved.articleThumb || isEditorialArticleImage(resolved.url)) {
             assignSourceImage(
               item,
               resolved.url,

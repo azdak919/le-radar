@@ -313,9 +313,11 @@ const collectifPicked = imageFromArticleHtml(
   {},
   'https://lecollectif.ca/campus/la-fondation-de-ludes/',
 );
+// 19 nov. 2026 : le bandeau choisi par la rédaction (og:image) reste l'image
+// de l'article ; plus de préférence pour une photo 16:9 du corps.
 assert(
-  /FondationUdeSphoto-2/i.test(collectifPicked.url),
-  `2e photo 16:9 retenue plutôt que le bandeau campagne (got ${collectifPicked.url})`,
+  /FondationUdeS_Source_UdeS/i.test(collectifPicked.url),
+  `bandeau de l’article gardé (got ${collectifPicked.url})`,
 );
 
 const padded = collectifLikeHtml({ padCss: 160_000 });
@@ -336,8 +338,13 @@ const paddedPicked = imageFromArticleHtml(
   'https://lecollectif.ca/campus/la-fondation-de-ludes/',
 );
 assert(
-  /FondationUdeSphoto-2/i.test(paddedPicked.url),
+  /FondationUdeS_Source_UdeS/i.test(paddedPicked.url),
   `même choix après 160k de CSS inline (got ${paddedPicked.url})`,
+);
+assert(
+  listArticleImageCandidates(padded, [], {}, 'https://lecollectif.ca/campus/la-fondation-de-ludes/')
+    .some((c) => /FondationUdeSphoto-2/i.test(c.url)),
+  'la 2e photo reste lisible sous le plafond de parse',
 );
 
 const bannerOnly = imageFromArticleHtml(
@@ -408,8 +415,8 @@ assert(
   compareLeadCandidates(
     { url: 'banner', w: 1139, h: 500, score: 200, campaignGraphic: true },
     { url: 'photo', w: 1024, h: 576, score: 80 },
-  ) > 0,
-  'score og élevé ne bat pas une photo mieux cadrée',
+  ) < 0,
+  'ordre éditorial : le format ne déclasse plus le visuel de l’article',
 );
 
 // ── Pub in-article (Le Collectif / Antidote) vs photo éditoriale courte ──
@@ -451,7 +458,7 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
 // Une portrait (affiche FEUS 819×1024, Le Collectif 16 oct. 2026) : jamais
 // affichée en bandes ni rognée — autre photo paysage, sinon repli normal.
 {
-  const { replacePortraitLead } = require('../scripts/ensure-lead-images.js');
+  const { replacePortraitLead, hasCropSafeImage: hasCropSafe } = require('../scripts/ensure-lead-images.js');
   const { isPortraitLeadRatio, imageUrlLooksPortrait } = require('../scripts/article-image-lib.js');
   const check = (ok, msg) => { if (ok) console.log(`  ✓ ${msg}`); else { failed += 1; console.error(`  ✗ ${msg}`); } };
   check(isPortraitLeadRatio(1080, 1350) && !isPortraitLeadRatio(1200, 800), 'ratio portrait détecté');
@@ -463,10 +470,16 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   });
   const a = base();
   const r1 = await replacePortraitLead(a, { resolve: async () => ({ url: 'https://x/b-1200x800.jpg', width: 1200, height: 800, leadReady: true }) });
-  check(r1 === 'replaced' && a.image === 'https://x/b-1200x800.jpg' && !a.imageLocal && !a.sourceImageCredit, 'portrait → autre photo paysage de l’article, crédit FEUS retiré');
+  check(r1 === 'cropped' && a.image === base().image && a.sourceImageCredit === 'Photo : FEUS', 'portrait recadrable → l’image choisie par l’article reste, crédit gardé');
+  const small = { ...base(), image: 'https://x/wp-content/uploads/a-500x700.jpg' };
+  const r1b = await replacePortraitLead(small, { resolve: async () => ({ url: 'https://x/b-1200x800.jpg', width: 1200, height: 800, leadReady: true }) });
+  check(r1b === 'kept' && small.image === 'https://x/wp-content/uploads/a-500x700.jpg' && small.sourceImageCredit === 'Photo : FEUS' && small.leadImageReady === true, 'portrait trop petit : gardé (cadre adapté en une), jamais remplacé par une autre photo');
   const b = base();
   const r2 = await replacePortraitLead(b, { resolve: async () => null });
-  check(r2 === 'cleared' && !b.image && !b.imageLocal && !b.sourceImageCredit && !b.sourceImageCreator && b.leadImageReady === false, 'sans autre photo → image retirée (repli campus)');
+  check(r2 === 'cropped' && b.image === base().image && hasCropSafe(b), 'sans autre photo → l’affiche de l’article reste (règle du 19 nov. 2026)');
+  const tiny = { ...base(), image: 'https://x/wp-content/uploads/a-180x240.jpg' };
+  const r3 = await replacePortraitLead(tiny, { resolve: async () => null });
+  check(r3 === 'cleared' && !tiny.image && !tiny.imageLocal && !tiny.sourceImageCredit && tiny.leadImageReady === false, 'image minuscule (180×240) → retirée (repli campus)');
   const c = { link: 'https://x/c', image: 'https://x/c-1200x800.jpg' };
   check(await replacePortraitLead(c, { probe: async () => null }) === null && c.image, 'photo paysage conservée');
   const radar = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
@@ -487,23 +500,23 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   const QL_ALT = 'Environ 54 % des jeunes de 18 à 24 ans avaient voté aux élections provinciales de 2022, pour un taux de 66 %. Dessin: Wendy Kim Pires';
   check(isCropSafePortrait(724, 1024, { alt: QL_ALT, url: QL_URL }), 'dessin Quartier Libre 724×1024 crédité → recadré au centre');
   check(isCropSafePortrait(800, 1000, { caption: 'Crédit photo : Jean-Philippe Roy', url: 'https://x/manif-800x1000.jpg' }), 'photo portrait 4:5 créditée → recadrée');
-  check(!isCropSafePortrait(819, 1024, { alt: 'Photo : FEUS', url: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg' }), 'affiche FEUS (sigle) toujours écartée');
-  check(!isCropSafePortrait(800, 1000, { alt: 'Photo : Courtoisie Université Laval' }), 'crédit d’organisme → écartée');
+  check(isCropSafePortrait(819, 1024, { alt: 'Photo : FEUS', url: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg' }), 'affiche FEUS (sigle) gardée depuis le 19 nov. 2026');
+  check(isCropSafePortrait(800, 1000, { alt: 'Photo : Courtoisie Université Laval' }), 'crédit d’organisme → gardée');
   check(!isCropSafePortrait(1080, 1920, { alt: 'Photo : Marie Tremblay' }), 'story 9:16 → écartée (trop haute)');
   check(isCropSafePortrait(800, 1000, { caption: 'Graphic by Zelda Dover // The Concordian' }), 'illustration « Graphic by » (Concordian) → recadrée');
   check(isCropSafePortrait(800, 1000, { caption: 'Illustration by Zelda Dover // The Concordian' }), 'illustration « Illustration by » → recadrée');
-  check(!isCropSafePortrait(800, 1000, { alt: 'Affiche du spectacle. Graphic by Zelda Dover' }), 'affiche + Graphic by → toujours écartée');
-  check(!isCropSafePortrait(800, 1000, { alt: 'Affiche du spectacle. Photo : Marie Tremblay' }), 'mot « affiche » → écartée');
-  check(!isCropSafePortrait(800, 1000, { alt: 'Photo : Marie Tremblay', url: 'https://x/infographie-budget-800x1000.jpg' }), 'fichier « infographie » → écarté');
-  check(!isCropSafePortrait(800, 1000, {}), 'portrait sans crédit → règle inchangée (écarté)');
+  check(isCropSafePortrait(800, 1000, { alt: 'Affiche du spectacle. Graphic by Zelda Dover' }), 'affiche + Graphic by → gardée');
+  check(isCropSafePortrait(800, 1000, { alt: 'Affiche du spectacle. Photo : Marie Tremblay' }), 'mot « affiche » → gardée');
+  check(isCropSafePortrait(800, 1000, { alt: 'Photo : Marie Tremblay', url: 'https://x/infographie-budget-800x1000.jpg' }), 'fichier « infographie » → gardé');
+  check(isCropSafePortrait(800, 1000, {}), 'portrait sans crédit → gardé (image de l’article par défaut)');
   check(!isCropSafePortrait(400, 560, { alt: QL_ALT }), 'trop petit pour une une recadrée');
   check(isCropSafePortrait(900, 1200, { url: 'https://thelinknewspaper.ca/images/articles/_resized/IMG_0067.jpg' }), 'fichier d’appareil IMG_0067 (The Link) → photo recadrée');
   check(isCropSafePortrait(900, 1178, { url: 'https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg' }), 'fichier d’appareil _U2A7376 → photo recadrée');
   check(isCropSafePortrait(800, 1100, { url: 'https://thelinknewspaper.ca/images/made/images/articles/_resized/05_SPORTS_NBA_Flopping_Dia_Diekmann_900_1200_90.jpg' }), 'fichier The Link au nom du crédit (Dia Diekmann) → recadré');
   check(isCropSafePortrait(800, 1100, { caption: 'The council did not reach quorum. Graphic Naya Hachwa', url: 'https://thelinknewspaper.ca/article-art.jpg' }), 'légende « Graphic Prénom Nom » sans by → recadrée');
-  check(!isCropSafePortrait(800, 1100, { caption: 'Graphic design is not a person', url: 'https://x/a.jpg' }), '« graphic design » sans nom → écarté');
-  check(!isCropSafePortrait(819, 1024, { url: 'https://x/FEUS2026-819x1024.jpg' }), 'sigle + année ≠ fichier d’appareil');
-  check(!isCropSafePortrait(964, 1024, { alt: 'image couverture magazine Quartier Libre volume 33 n.1', url: 'https://x/AC7688E9-8982-4425-804C-B4DD9D09D6B6_1_201_a-964x1024.jpeg' }), 'couverture de magazine (texte) → écartée');
+  check(isCropSafePortrait(800, 1100, { caption: 'Graphic design is not a person', url: 'https://x/a.jpg' }), '« graphic design » sans nom → gardé');
+  check(isCropSafePortrait(819, 1024, { url: 'https://x/FEUS2026-819x1024.jpg' }), 'sigle + année → gardé');
+  check(isCropSafePortrait(964, 1024, { alt: 'image couverture magazine Quartier Libre volume 33 n.1', url: 'https://x/AC7688E9-8982-4425-804C-B4DD9D09D6B6_1_201_a-964x1024.jpeg' }), 'couverture de magazine (texte) → gardée');
   check(fillsLeadWhenCropped(724, 1024) && !fillsLeadWhenCropped(540, 1024), 'recadrage 3:2 remplit la une');
 
   const html = `<html><head><meta property="og:image" content="${QL_URL}" />
@@ -637,10 +650,10 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(!isCropSafePortrait(900, 1582, { caption: 'Graphic Halle Keays', url: 'https://example.org/archives.png' }), 'même ratio hors /images/articles/ : plancher 0,66 inchangé');
   check(!isCropSafePortrait(1080, 1920, { alt: 'Photo : Marie Tremblay' }), 'story 9:16 hors The Link → toujours écartée');
   check(!isCropSafePortrait(900, 2000, { url: archives.replace('1582', '2000') }), 'sous 0,55 même dans /images/articles/ → écarté');
-  check(!isCropSafePortrait(900, 1400, { url: poster }), 'affiche dans /images/articles/ → écartée');
-  check(!isCropSafePortrait(800, 1100, {}), 'portrait sans crédit ni chemin éditorial → écarté');
+  check(isCropSafePortrait(900, 1400, { url: poster }), 'affiche dans /images/articles/ → gardée');
+  check(isCropSafePortrait(800, 1100, {}), 'portrait sans crédit ni chemin éditorial → gardé');
   check(isCropSafePortrait(900, 1259, { caption: 'Technologist Christina Phensy. Photo Jade-S. Vachon-Côté', url: 'https://example.org/photo.jpg' }), '« Photo Jade-S. Vachon-Côté » sans deux-points → crédit');
-  check(!isCropSafePortrait(800, 1000, { alt: 'Photo : FEUS', url: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg' }), 'sigle FEUS toujours écarté');
+  check(isCropSafePortrait(800, 1000, { alt: 'Photo : FEUS', url: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg' }), 'sigle FEUS → gardé');
   const dims = imageDimensionsFromUrl(made('05_SPORTS_NBA_Flopping_Dia_Diekmann_900_1273_90.jpg'));
   check(dims && dims.width === 900 && dims.height === 1273, 'taille CE Image _900_1273 lue dans l’URL');
   const html = `<html><body><article class="content-inner"><figure class="entry-images">
@@ -658,8 +671,11 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   const r = await replacePortraitLead(it, { resolve: async () => { throw new Error('429'); }, probe: async () => { throw new Error('pas de probe'); } });
   check(r === 'cropped' && hasCropSafeImage(it) && !it.stockImage, '429 : portrait éditorial gardé, campus retiré');
   const bare = { link: 'https://example.com/a', image: 'https://example.com/portrait-800x1100.jpg' };
-  const cleared = await replacePortraitLead(bare, { resolve: async () => null, probe: async () => { throw new Error('pas de probe'); } });
-  check(cleared === 'cleared' && !bare.image, 'portrait sans crédit : toujours retiré');
+  const kept = await replacePortraitLead(bare, { resolve: async () => null, probe: async () => { throw new Error('pas de probe'); } });
+  check(kept === 'cropped' && bare.image && hasCropSafeImage(bare), 'portrait sans crédit : gardé et recadré');
+  const story = { link: 'https://example.com/b', image: 'https://example.com/story-1080x1920.jpg', stockImage: 'https://upload.wikimedia.org/c.jpg', imageProvider: 'campus-bank' };
+  const r4 = await replacePortraitLead(story, { resolve: async () => null, probe: async () => { throw new Error('pas de probe'); } });
+  check(r4 === 'kept' && story.image && story.leadImageReady === true && !story.stockImage, 'story 9:16 : image de l’article gardée partout, une comprise (cadre adapté), campus retiré');
 }
 
 if (failed) {
