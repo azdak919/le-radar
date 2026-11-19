@@ -5,13 +5,20 @@
  * aux tests tests/print-formats.spec.mjs (printBackground: false).
  *
  *   node scripts/revue/revue-pdfs.mjs --id 2026-11-17-soir
+ *   node scripts/revue/revue-pdfs.mjs --id soir
  *   node scripts/revue/revue-pdfs.mjs --all
+ *
+ * « matin » / « soir » se résolvent vers l'édition correspondante la plus récente
+ * déjà écrite sous revue/ (via data/revue/index.json). Le workflow doit pourtant
+ * passer l'identifiant complet AAAA-MM-JJ-matin|soir : un --id matin seul a
+ * fait échouer la publication du 18 nov. 2026 avant le commit.
  */
 import { spawn } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
+import { listEditionDirs, resolveEditionId } from './revue-pdf-id.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const PORT = Number(process.env.PW_PORT || 4193);
@@ -37,14 +44,6 @@ function startServer() {
   });
 }
 
-function listEditions() {
-  const dir = join(root, 'revue');
-  return readdirSync(dir).filter((name) => {
-    if (!/^\d{4}-\d{2}-\d{2}-(matin|soir)$/.test(name)) return false;
-    return existsSync(join(dir, name, 'index.html'));
-  });
-}
-
 async function printEdition(browser, id) {
   const pageUrl = `http://127.0.0.1:${PORT}/revue/${id}/`;
   const outDir = join(root, 'revue', id);
@@ -66,26 +65,34 @@ async function printEdition(browser, id) {
   await page.close();
 }
 
-const ids = process.argv.includes('--all')
-  ? listEditions()
-  : [process.argv.find((a) => a.startsWith('--id='))?.slice(5) || (process.argv.includes('--id') ? process.argv[process.argv.indexOf('--id') + 1] : '')].filter(Boolean);
-if (!ids.length) {
-  console.error('usage: revue-pdfs.mjs --id YYYY-MM-DD-matin|soir | --all');
-  process.exit(2);
+function requestedIds(argv = process.argv, base = root) {
+  if (argv.includes('--all')) return listEditionDirs(base);
+  const raw = argv.find((a) => a.startsWith('--id='))?.slice(5) || (argv.includes('--id') ? argv[argv.indexOf('--id') + 1] : '');
+  return raw ? [resolveEditionId(raw, base)] : [];
 }
 
-const server = await startServer();
-try {
-  const browser = await chromium.launch({ headless: true });
-  for (const id of ids) {
-    if (!existsSync(join(root, 'revue', id, 'index.html'))) {
-      console.error('édition introuvable :', id);
-      process.exit(1);
-    }
-    console.log(id);
-    await printEdition(browser, id);
+async function main() {
+  const ids = requestedIds();
+  if (!ids.length) {
+    console.error('usage: revue-pdfs.mjs --id YYYY-MM-DD-matin|soir | --id matin|soir | --all');
+    process.exit(2);
   }
-  await browser.close();
-} finally {
-  server.kill('SIGTERM');
+  const server = await startServer();
+  try {
+    const browser = await chromium.launch({ headless: true });
+    for (const id of ids) {
+      if (!existsSync(join(root, 'revue', id, 'index.html'))) {
+        console.error('édition introuvable :', id);
+        process.exit(1);
+      }
+      console.log(id);
+      await printEdition(browser, id);
+    }
+    await browser.close();
+  } finally {
+    server.kill('SIGTERM');
+  }
 }
+
+const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+if (isMain) await main();

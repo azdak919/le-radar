@@ -30,17 +30,21 @@ export const loadConfig = (root = ROOT) => L.mergeConfig(rd(path.join(root, 'dat
 
 /** Porte du workflow : rien sans publish = true ; sinon édition due (pas encore publiée ni sautée) ou mise à jour tardive. */
 export function gate({ now = Date.now(), cfg = loadConfig(), index = [], state = {}, forced = '' } = {}) {
-  if (!cfg.publish) return { due: false, edition: '', mode: '', why: 'publication désactivée (data/revue/config.json publish = false)' };
-  if (forced && forced !== 'auto') return { due: true, edition: forced, mode: 'publier', why: 'édition forcée (déclenchement manuel)' };
+  const withId = (g) => {
+    const id = g.edition === 'matin' || g.edition === 'soir' ? L.editionFor(g.edition, now, cfg).key : '';
+    return { ...g, id };
+  };
+  if (!cfg.publish) return withId({ due: false, edition: '', mode: '', why: 'publication désactivée (data/revue/config.json publish = false)' });
+  if (forced && forced !== 'auto') return withId({ due: true, edition: forced, mode: 'publier', why: 'édition forcée (déclenchement manuel)' });
   const e = L.editionAt(now, cfg);
   if (e) {
-    if (index.some(r => r.id === e.key)) return { due: false, edition: e.id, mode: '', why: `${e.key} déjà publiée` };
-    if (state[e.key]?.skipped) return { due: false, edition: e.id, mode: '', why: `${e.key} déjà sautée (${state[e.key].why})` };
-    return { due: true, edition: e.id, mode: 'publier', why: `${e.key} due` };
+    if (index.some(r => r.id === e.key)) return withId({ due: false, edition: e.id, mode: '', why: `${e.key} déjà publiée` });
+    if (state[e.key]?.skipped) return withId({ due: false, edition: e.id, mode: '', why: `${e.key} déjà sautée (${state[e.key].why})` });
+    return withId({ due: true, edition: e.id, mode: 'publier', why: `${e.key} due` });
   }
   const r = L.refreshAt(now, cfg);
-  if (r && index.some(x => x.id === r.key)) return { due: true, edition: 'soir', mode: 'rafraichir', why: `${r.key} : mise à jour tardive des résultats` };
-  return { due: false, edition: '', mode: '', why: `hors des fenêtres : ${tz(now)}` };
+  if (r && index.some(x => x.id === r.key)) return withId({ due: true, edition: 'soir', mode: 'rafraichir', why: `${r.key} : mise à jour tardive des résultats` });
+  return withId({ due: false, edition: '', mode: '', why: `hors des fenêtres : ${tz(now)}` });
 }
 
 /** Taille de l'image (enclosure RSS) : HEAD, 0 si inconnue. */
@@ -156,7 +160,7 @@ async function main() {
   if (has('gate')) {
     const g = gate({ now, cfg, index, state, forced });
     console.log(`Porte : ${g.why}`);
-    if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `due=${g.due}\nedition=${g.edition}\nmode=${g.mode}\n`);
+    if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `due=${g.due}\nedition=${g.edition}\nmode=${g.mode}\nid=${g.id}\n`);
     return;
   }
   if (has('rebuild')) {

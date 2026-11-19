@@ -9,6 +9,8 @@ import { createRequire } from 'node:module';
 import * as L from '../scripts/revue/revue-lib.mjs';
 import { aiReview, itemsPrompt, chapeauPrompt } from '../scripts/revue/revue-ai.mjs';
 import { generate, gate, writeOutputs, loadConfig } from '../scripts/revue/revue-run.mjs';
+import { resolveEditionId } from '../scripts/revue/revue-pdf-id.mjs';
+
 
 const require = createRequire(import.meta.url);
 const R = require('../scripts/revue/revue-render.js');
@@ -24,12 +26,16 @@ assert.match(gate({ now: Date.parse('2026-11-17T12:35:00Z'), cfg: unpublished })
 assert.equal(cfg.editions.matin.target, '07:00', 'heure idéale du matin inchangée');
 assert.equal(cfg.editions.soir.target, '19:15', 'heure idéale du soir : 19 h 15, avant La une');
 assert.equal(R.loadPublished(process.cwd()).enabled, true);
-assert.ok(feedLib.revueFeedEntries(process.cwd()).some((e) => /revue\/2026-11-17-matin/.test(e.xml)), 'feed.xml : la revue du matin est présente une fois publiée');
+const feedRevues = feedLib.revueFeedEntries(process.cwd());
+assert.ok(feedRevues.some((e) => /revue\/2026-11-18-matin/.test(e.xml)), 'feed.xml : la revue du matin du 18 nov. est dans les 3 dernières');
+assert.ok(feedRevues.some((e) => /revue\/2026-11-18-soir/.test(e.xml)), 'feed.xml : la revue du soir du 18 nov. est dans les 3 dernières');
 assert.ok(fs.readFileSync('robots.txt', 'utf8').includes('sitemap-news.xml'), 'robots.txt : sitemap Google News une fois publiée');
 assert.ok(fs.existsSync('sitemap-news.xml') && fs.existsSync('revue/index.html'), 'pages et sitemap de revue commités une fois publiée');
 assert.ok(fs.existsSync('revue/2026-11-17-matin/index.html'), 'édition du matin du 17 nov. 2026 présente');
 assert.ok(fs.existsSync('revue/2026-11-17-soir/index.html'), 'édition du soir du 17 nov. 2026 présente');
-assert.match(fs.readFileSync('revue/index.html', 'utf8'), /href="\.\/2026-11-17-matin\/"/, 'index des archives : lien relatif vers l’édition, pas vers la racine');
+assert.ok(fs.existsSync('revue/2026-11-18-matin/index.html'), 'édition du matin du 18 nov. 2026 présente');
+assert.ok(fs.existsSync('revue/2026-11-18-soir/index.html'), 'édition du soir du 18 nov. 2026 présente');
+assert.match(fs.readFileSync('revue/index.html', 'utf8'), /href="\.\/2026-11-18-matin\/"/, 'index des archives : lien relatif vers l’édition, pas vers la racine');
 
 
 // ── Éditions : 7 h et 19 h 15 heure de Montréal, été comme hiver (docs/revue.md, « Heures de publication ») ──
@@ -69,9 +75,12 @@ assert.equal(L.reviewPath('2026-11-17', 'matin'), 'revue/2026-11-17-matin/');
 // Porte (publication activée) : édition due, déjà publiée, sautée, rafraîchissement.
 const tM = Date.parse('2026-11-17T12:35:00Z');
 assert.equal(gate({ now: tM, cfg: on }).due, true);
+assert.equal(gate({ now: tM, cfg: on }).edition, 'matin');
+assert.equal(gate({ now: tM, cfg: on }).id, '2026-11-17-matin', 'la porte expose l’identifiant complet pour les PDF');
 assert.equal(gate({ now: tM, cfg: on, index: [{ id: '2026-11-17-matin' }] }).due, false);
 assert.equal(gate({ now: tM, cfg: on, state: { '2026-11-17-matin': { skipped: true, why: 'rien' } } }).due, false);
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on, index: [{ id: '2026-11-17-soir' }] }).mode, 'rafraichir');
+assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on, index: [{ id: '2026-11-17-soir' }] }).id, '2026-11-17-soir');
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on }).due, false, 'rien à rafraîchir sans revue du soir');
 
 // ── Données simulées ──
@@ -486,6 +495,24 @@ console.log('revue : OK');
   assert.match(css.slice(printStart), /max-height: 7\.8cm !important/);
   const wfRevue = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
   assert.match(wfRevue, /revue-pdfs\.mjs/);
+  assert.match(wfRevue, /needs\.gate\.outputs\.id/, 'le flux passe l’identifiant complet AAAA-MM-JJ-matin|soir aux PDF');
+  assert.doesNotMatch(wfRevue, /revue-pdfs\.mjs --id "\$REVUE_EDITION"/, 'ne plus passer matin/soir seuls à --id (échec du 18 nov. 2026 avant le commit)');
+  assert.match(wfRevue, /pages seront tout de même publiées/, 'un échec PDF ne doit plus bloquer la publication des pages');
+  const tmpPdf = fs.mkdtempSync(path.join(os.tmpdir(), 'revue-pdf-id-'));
+  fs.mkdirSync(path.join(tmpPdf, 'data/revue'), { recursive: true });
+  for (const id of ['2026-11-18-matin', '2026-11-17-matin', '2026-11-17-soir']) {
+    fs.mkdirSync(path.join(tmpPdf, 'revue', id), { recursive: true });
+    fs.writeFileSync(path.join(tmpPdf, 'revue', id, 'index.html'), '<html></html>');
+  }
+  fs.writeFileSync(path.join(tmpPdf, 'data/revue/index.json'), JSON.stringify([
+    { id: '2026-11-18-matin', edition: 'matin' },
+    { id: '2026-11-17-soir', edition: 'soir' },
+    { id: '2026-11-17-matin', edition: 'matin' },
+  ]));
+  assert.equal(resolveEditionId('2026-11-17-soir', tmpPdf), '2026-11-17-soir');
+  assert.equal(resolveEditionId('soir', tmpPdf), '2026-11-17-soir', 'soir → édition déjà écrite la plus récente');
+  assert.equal(resolveEditionId('matin', tmpPdf), '2026-11-18-matin', 'matin → première entrée de l’index encore présente sur le disque');
+  fs.rmSync(tmpPdf, { recursive: true, force: true });
   const wfKit = fs.readFileSync('.github/workflows/update-kit-examples.yml', 'utf8');
   assert.match(wfKit, /Update Student News/);
   assert.match(src, /pdfDownloadName/);
