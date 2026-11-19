@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T07:06:55.859Z",
+  "updatedAt": "2026-11-19T08:06:57.350Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T07:06:06.948Z"
+      "checkedAt": "2026-11-19T08:06:20.132Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T07:06:09.424Z"
+      "checkedAt": "2026-11-19T08:06:22.054Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T07:06:12.149Z"
+      "checkedAt": "2026-11-19T08:06:24.204Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Daydream Nation",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T07:06:35.860Z"
+      "checkedAt": "2026-11-19T08:06:37.614Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T07:06:36.872Z"
+      "checkedAt": "2026-11-19T08:06:38.557Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T07:06:55.508Z"
+      "checkedAt": "2026-11-19T08:06:56.999Z"
     }
   }
 }
