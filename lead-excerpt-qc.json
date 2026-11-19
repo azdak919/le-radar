@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-19T01:07:44.874Z",
-  "total": 1032,
+  "updated": "2026-11-19T02:07:59.712Z",
+  "total": 1033,
   "pool": 61,
   "incomplete": 27,
   "withLeadExcerpt": 181,
@@ -9,6 +9,15 @@
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -19,12 +28,12 @@
       "changed": false
     },
     {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
       "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": false
     },
     {
@@ -46,13 +55,13 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "title": "Finding calm in the stacks, CU Wellness brings 30-Minute sound baths to Webster Library",
+      "link": "https://theconcordian.com/2026/11/cu-wellness-sound-bath-session/",
       "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": false
+      "score": 100,
+      "chars": 273,
+      "sample": "Seeking to help students find calm amid their busy schedules, Concordia University Wellness invited ",
+      "changed": true
     },
     {
       "title": "A new era for Hockey Canada",
@@ -61,7 +70,7 @@
       "score": 100,
       "chars": 190,
       "sample": "Team Canada was said to be old and unfit to face off against this young and promising American team.",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Concordia receives $4.69 million to boost research and community partnerships",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 252,
       "sample": "Behind every research advance at Concordia is a network of funding programs that makes these breakth",
-      "changed": false
-    },
-    {
-      "title": "Both Stingers’ basketball teams secure wins in home-opening double-header",
-      "link": "https://theconcordian.com/2026/11/stingers-basketball-win-home-openers/",
-      "ok": true,
-      "score": 100,
-      "chars": 201,
-      "sample": "The Martlets started the game off strong, imposing their presence on offence and playing tough defen",
       "changed": false
     }
   ]
