@@ -2514,16 +2514,6 @@
       "via": "disk",
       "nameKey": "capture-decran-le-2026-10-28-a-09.43.54.png"
     },
-    "ed135e4648ea0986": {
-      "local": "assets/news-images/ed135e4648ea0986.jpg",
-      "remote": "https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-28-a-09.39.12.png",
-      "host": "thebucampus.ca",
-      "bytes": 163552,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:40:59.696Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-10-28-a-09.39.12.png"
-    },
     "cdaa958721d9ad90": {
       "local": "assets/news-images/cdaa958721d9ad90.jpg",
       "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/Cafeteria_Gabrielle.jpg",
@@ -3075,10 +3065,29 @@
       "updatedAt": "2026-11-19T21:14:06.901Z",
       "via": "resize-proxy",
       "nameKey": "photo-gstp-1.jpg"
+    },
+    "70d779abf4792bc3": {
+      "local": "assets/news-images/70d779abf4792bc3.png",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990-1024x703.png",
+      "host": "quartierlibre.ca",
+      "bytes": 247221,
+      "updatedAt": "2026-11-19T22:38:30.574Z",
+      "via": "disk",
+      "nameKey": "5infos_ql-e1769792962990.png"
+    },
+    "4ac59444b05c93ac": {
+      "local": "assets/news-images/4ac59444b05c93ac.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/21_mouvement-lyceenjpeg-1024x683.jpeg",
+      "host": "quartierlibre.ca",
+      "bytes": 82855,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-19T22:38:30.824Z",
+      "via": "origin",
+      "nameKey": "21_mouvement-lyceenjpeg.jpeg"
     }
   },
-  "updatedAt": "2026-11-19T21:39:04.446Z",
-  "count": 319,
+  "updatedAt": "2026-11-19T22:38:33.315Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5276,6 +5285,14 @@
     "ebefcac457d9e491": {
       "reason": "budget",
       "at": "2026-11-19T21:14:11.651Z"
+    },
+    "497355f96a224e3d": {
+      "reason": "failed",
+      "at": "2026-11-19T22:38:33.296Z"
+    },
+    "ed135e4648ea0986": {
+      "reason": "budget",
+      "at": "2026-11-19T22:38:33.312Z"
     }
   }
 }

@@ -1,21 +1,21 @@
 {
-  "updated": "2026-11-19T21:40:05.848Z",
-  "total": 1039,
-  "withImage": 868,
-  "withCredit": 868,
-  "cited": 605,
-  "pending": 138,
+  "updated": "2026-11-19T22:40:07.452Z",
+  "total": 1040,
+  "withImage": 871,
+  "withCredit": 871,
+  "cited": 607,
+  "pending": 144,
   "missingHero": 0,
   "ok": false,
-  "checked": 60,
-  "updatedCount": 4,
-  "citedNew": 7,
-  "fallbackNew": 53,
+  "checked": 55,
+  "updatedCount": 5,
+  "citedNew": 5,
+  "fallbackNew": 50,
   "samples": [
     {
-      "title": "Parkour – L’art de repousser ses limites",
+      "title": "En France, la colère lycéenne gagne tout le pays",
       "source": "Quartier Libre",
-      "credit": "Photo : Joséphine Dao-Devenyns",
+      "credit": "Photo : Clément Souchet",
       "cited": true,
       "method": "figcaption-trailing-fr"
     },
@@ -34,11 +34,18 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
-      "source": "The Plant",
-      "credit": "Image via Pinterest",
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
       "cited": true,
-      "method": "via-attribution"
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     }
   ]
 }
