@@ -101,9 +101,9 @@ console.log('news-image-relevance (équipes) OK');
 // passe avant la banque campus quand la source exporte ses photos ainsi (The Campus).
 const A = require('../scripts/article-image-lib.js');
 const shot = 'https://thebucampus.ca/wp-content/uploads/2026/10/capture-decran-le-2026-10-27-a-22.35.07.png';
-assert.equal(A.isCropSafePortrait(856, 1080, { url: shot }), false, 'sans indice de source : refus prudent');
+assert.equal(A.isCropSafePortrait(856, 1080, { url: shot }), true, '19 nov. 2026 : image de l’article par défaut, sans indice de source');
 assert.equal(A.isCropSafePortrait(856, 1080, { url: shot, screenshotPhotos: true }), true, 'The Campus : vraie photo');
-assert.equal(A.isCropSafePortrait(856, 1080, { url: shot.replace('capture-decran', 'affiche-capture-decran'), screenshotPhotos: true }), false, 'affiche : refus');
+assert.equal(A.isCropSafePortrait(856, 1080, { url: shot.replace('capture-decran', 'affiche-capture-decran'), screenshotPhotos: true }), true, '19 nov. 2026 : affiche gardée');
 assert.equal(A.isCropSafePortrait(600, 1080, { url: shot, screenshotPhotos: true }), false, 'trop en hauteur : refus');
 assert.equal(A.isCropSafePortrait(686, 1048, { url: 'https://thebucampus.ca/wp-content/uploads/2026/11/capture-decran-le-2026-11-09-a-21.01.30.png', screenshotPhotos: true }), true, 'The Campus Movember 686×1048 : illustration acceptée');
 assert.equal(A.isCropSafePortrait(686, 1048, { url: 'https://example.org/wp-content/uploads/2026/11/dessin.png' }), false, 'hors The Campus : seuil 0,66 inchangé');

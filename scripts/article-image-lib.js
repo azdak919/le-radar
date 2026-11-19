@@ -999,10 +999,9 @@ function isPortraitLeadRatio(width = 0, height = 0) {
  * Portrait « recadrable » : la une recadre en 3:2 centré (object-fit: cover,
  * jamais de bandes). Une photo ou un dessin modérément en hauteur s'y prête
  * (Quartier Libre, « Les jeunes voteront-ils… », dessin 724×1024 : mains et
- * urne au centre). Une affiche à texte (FEUS 819×1024), une story 9:16, une
- * infographie ou un logo, non. Sans OCR, on exige un signal éditorial :
- * crédit « Photo : / Dessin : / Illustration : Nom » dans l'alt ou la
- * légende, et aucun mot d'affiche dans l'alt, la légende ou le nom de fichier.
+ * urne au centre), une affiche aussi : depuis le 19 nov. 2026, l'image de
+ * l'article est gardée par défaut, sans tri par contenu. Seules la
+ * proportion (pas plus haute que 2:3) et la taille décident de la une.
  */
 const LEAD_CROP_MIN_RATIO = 0.66;
 /**
@@ -1015,26 +1014,6 @@ const DECLARED_COVER_MIN_WIDTH = 600;
 const LEAD_CROP_MIN_RATIO_SCREENSHOT = 0.64;
 /** The Link, fichier sous /images/articles/ : graphique 900×1582 (0,57). */
 const LEAD_CROP_MIN_RATIO_EDITORIAL = 0.55;
-const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infographi\p{L}*|programmation|programme|horaires?|calendrier|stor(?:y|ies)|invitations?|logos?|slogans?|menu|annonces?|communiqu[ée]s?|campagnes?|campaigns?|visuels?|textes?|texts?|quotes?|citations?)(?=$|[^\p{L}])/iu;
-/** Affiche du film dont l’article parle (couverture déclarée), pas un flyer de spectacle. */
-const MOVIE_POSTER_CREDIT_RE = /(?:movie|film|cin(?:e|é)ma)\s+posters?|affiches?\s+du\s+film|posters?\s+(?:courtesy|from|©)/iu;
-const EVENT_POSTER_RE = /(?:billets?|tickets?|spectacle|programmation|invitations?|horaires?)/iu;
-const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|graphics?|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
-/** The Link : « Graphic Naya Hachwa » sans « by » ni deux-points. */
-const GRAPHIC_NAME_RE = /(?:^|[^\p{L}])graphics?\s+(\p{Lu})/giu;
-/** « Photo Jade-S. Vachon-Côté » / « Photo Nicholas Tremblay » sans « : » ni « by ». */
-const BARE_MEDIA_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|dessins?|illustrations?)\s+(\p{Lu})/giu;
-const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+\.?)*\.?\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
-const CREDIT_ORG_RE = /(?:^|\s)(?:courtoisie|gracieuset[ée]|courtesy|universit[ée]|university|c[ée]gep|coll[eè]ge|college|association|f[ée]d[ée]ration|comit[ée]|syndicat|service|archives?|soci[ée]t[ée]|ville|minist[eè]re|gouvernement|union|club|groupe|r[ée]daction|staff)(?=\s|$)/iu;
-function looksLikeCameraFile(name = '') {
-  // « IMG 0067 900 1200 90 jpg » (séparateurs déjà normalisés en espaces)
-  const stem = String(name).replace(/\s+(?:jpe?g|png|webp|heic)$/i, '').trim();
-  if (/^(?:IMG|DSC[FN]?|MVIMG|PXL|GOPR|DJI|P\d{3})\s?\d{3,}/i.test(stem)) return true;
-  // Préfixe Canon/Nikon personnalisé : « _U2A7376 », « 5D3A1234 » (+ taille WP)
-  // Au moins un chiffre dans le préfixe : « FEUS2026 » n'est pas un appareil.
-  return /^(?=[A-Z]{0,3}\d)[A-Z0-9]{3,4}\d{4}(?:\s\d{2,4}){0,3}$/.test(stem);
-}
-
 function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   if (!width || !height || !isPortraitLeadRatio(width, height)) return false;
   // The Campus exporte ses images en « Capture d’écran » un peu plus hautes que
@@ -1054,58 +1033,29 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   // peut descendre à 600 px (affiche WP 600×900) ; le reste reste à 640.
   const minWidth = ctx.declaredCover ? DECLARED_COVER_MIN_WIDTH : LEAD_MIN_WIDTH;
   if (width < minWidth || width / 1.5 < LEAD_MIN_HEIGHT) return false;
-  if (ctx.campaignGraphic) return false;
-  const text = `${ctx.alt || ''} ${ctx.caption || ''}`.replace(/\s+/g, ' ').trim();
-  let path = String(ctx.url || '');
-  try { path = decodeURIComponent(new URL(path).pathname); } catch { /* brut */ }
-  const file = path.split('/').pop().replace(/[_+.-]+/g, ' ');
-  if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) {
-    // PR 367 : le mot affiche/poster prime, sauf si la source a déclaré
-    // comme couverture l’affiche du film dont parle l’article
-    // (Concordian, « Persepolis », légende « Movie poster courtesy of … »).
-    const filmCover = ctx.declaredCover && MOVIE_POSTER_CREDIT_RE.test(text) && !EVENT_POSTER_RE.test(text) && !PORTRAIT_POSTER_RE.test(file);
-    if (!filmCover) return false;
-  }
-  if (captionLooksLikeCampaignGraphic(text)) return false;
-  // Fichier d’article ExpressionEngine (/images/articles/) : c’est le visuel
-  // du billet (JVC26, NST26, aicha.online, graphique 900×1582). On le garde
-  // plutôt qu’une photo de campus. Affiche, campagne et abeille CSU restent
-  // écartées. Le plancher 0,66 des autres sources ne bouge pas.
-  if (editorial && !ctx.campaignGraphic) return true;
-  // Couverture déclarée par la source pour CE billet (champ cover Firebase,
-  // image mise en avant WordPress, og:image qui la confirme) : choix
-  // éditorial explicite, recadré en cover 3:2 au tiers haut, sans bandes.
-  // Les signaux d'affiche/campagne/capture ci-dessus et ci-dessous priment.
-  if (ctx.declaredCover && !SCREENSHOT_FILE_RE.test(file)) return true;
-  // Source qui exporte ses vraies photos en « Capture d’écran, le … » (The Campus,
-  // Bishop’s : photo du débat électoral 856×1080) : indice de source explicite.
-  if (ctx.screenshotPhotos && SCREENSHOT_FILE_RE.test(file)) return true;
-  // Nom de fichier d'appareil photo (IMG_0067, DSC_1234, _U2A7376) : une vraie
-  // photo, même sans alt (The Link, 900×1200) — pas une affiche montée.
-  if (looksLikeCameraFile(file)) return true;
-  // The Link nomme le fichier par le crédit : « …_Dia_Diekmann_900_600_90.jpg »,
-  // « …_Halle_Keays.png ». C'est la photo ou le graphique de l'article.
-  if (/thelinknewspaper\.ca/i.test(String(ctx.url || '')) && looksLikeNamedCreditFile(file)) return true;
-  // Crédité à une personne (« Dessin: Wendy Kim Pires ») : Prénom Nom.
-  // Un sigle ou un organisme (« Photo : FEUS », affiche FEUS du Collectif ;
-  // « Courtoisie », « Université… ») ne suffit pas.
-  for (const re of [EDITORIAL_CREDIT_RE, GRAPHIC_NAME_RE, BARE_MEDIA_CREDIT_RE]) {
-    for (const m of text.matchAll(re)) {
-      const name = text.slice(m.index + m[0].length - 1).split(/[|,;()\n]/)[0].trim();
-      if (EDITORIAL_PERSON_RE.test(name) && !CREDIT_ORG_RE.test(name.split(/\s+/).slice(0, 4).join(' '))) return true;
-    }
-  }
-  return false;
+  // Règle de Charles (19 nov. 2026, Le Collectif, « Rencontre Carney-PSPP
+  // au Cambodge ») : par défaut, l'image de l'article est la bonne, même une
+  // affiche ou un visuel avec du texte. Plus aucun tri par mots d'affiche,
+  // crédit nominatif ou légende de campagne : seuls la proportion et la
+  // taille décident si le recadrage 3:2 remplit la une. Une image qui ne
+  // convient pas se signale à la main (data/lead-image-pins.json).
+  return true;
 }
 
-/** « Dia Diekmann » en fin de fichier The Link, taille CE Image déjà retirée. */
-function looksLikeNamedCreditFile(name = '') {
-  const stem = String(name)
-    .replace(/\s+(?:jpe?g|png|webp|heic)$/i, '')
-    .replace(/\s+\d{2,4}\s+\d{2,4}(?:\s+\d{1,3})?(?:\s+s\s+c\d+)?$/i, '')
-    .replace(/\s+\d$/i, '')
-    .trim();
-  return /(?:^|\s)\p{Lu}\p{Ll}+\s+\p{Lu}\p{Ll}+$/u.test(stem);
+/**
+ * Vignette du fil (radar-news.js THUMB_IMAGE_MIN, ratio 0,4 à 4,8) : une image
+ * d'article plus petite que la une ou très en hauteur reste l'image du billet.
+ * La une, elle, passe au repli (banque, campus) côté client si l'image ne la
+ * remplit pas. Sous ce seuil : image minuscule, pixel de suivi, icône.
+ */
+const THUMB_MIN_WIDTH = 200;
+const THUMB_MIN_HEIGHT = 150;
+const THUMB_MIN_PIXELS = 40000;
+function meetsArticleThumbSize(width = 0, height = 0) {
+  if (!width || !height) return false;
+  const ratio = width / height;
+  return width >= THUMB_MIN_WIDTH && height >= THUMB_MIN_HEIGHT
+    && width * height >= THUMB_MIN_PIXELS && ratio >= 0.4 && ratio <= LEAD_MAX_RATIO;
 }
 
 /** Couverture déclarée par le flux structuré de la source, liée à l'URL actuelle. */
@@ -1142,8 +1092,29 @@ function clearMirroredLead(item) {
  * le placeholder / ré-enrichissement depuis sa page).
  * Retourne le nombre d'articles nettoyés.
  */
+/**
+ * Identité d'un fichier image pour repérer un visuel réellement partagé :
+ * hôte + dossier + nom, sans suffixe de taille WordPress ni « -scaled ».
+ * Le nom seul ne suffit pas : La Pige nomme ses photos « Image-9.jpg » chaque
+ * mois (/2026/10/ et /2026/11/), Quartier Libre « image2.jpg » ; deux photos
+ * différentes étaient prises pour un visuel générique et retirées des deux
+ * billets (19 nov. 2026).
+ */
+function sharedImageKey(raw = '') {
+  const src = decodeEntities(String(raw || '').trim());
+  if (!src) return '';
+  let u;
+  try { u = new URL(unwrapCdnImageUrl(src) || src); } catch { return normalizeImagePath(src) || src; }
+  const parts = decodeURIComponent(u.pathname).split('/');
+  const file = (parts.pop() || '').replace(/-(?:\d+x\d+|scaled)(?=\.[a-z]+$)/i, '').replace(/-(?:\d+x\d+|scaled)(?=\.[a-z]+$)/i, '');
+  // Photon (i0.wp.com/hôte/chemin) : même fichier que l'origine.
+  let host = u.hostname.replace(/^www\./, '');
+  if (/^i\d\.wp\.com$/i.test(host) && parts.length > 1) { host = parts[1].replace(/^www\./, ''); parts.splice(1, 1); }
+  return `${host}${parts.join('/')}/${file}`.toLowerCase();
+}
+
 function dropSharedSourceImages(items = [], minUses = 3) {
-  const key = (it) => `${it.source}\u0000${normalizeImagePath(it.image) || it.image}`;
+  const key = (it) => `${it.source}\u0000${sharedImageKey(it.image) || it.image}`;
   const uses = new Map();
   for (const it of items) {
     if (!it || !it.image || !it.source) continue;
@@ -1174,7 +1145,7 @@ function keepNewestSharedImage(items = []) {
   const byKey = new Map();
   for (const it of items) {
     if (!it || !it.image) continue;
-    const k = normalizeImagePath(it.image) || it.image;
+    const k = sharedImageKey(it.image) || it.image;
     if (!byKey.has(k)) byKey.set(k, []);
     byKey.get(k).push(it);
   }
@@ -1414,23 +1385,34 @@ function leadImageProbeUrls(raw = '') {
 }
 
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
-  /** Portrait recadrable (crédit Photo/Dessin, pas une affiche) : une 3:2 centrée. */
-  const portraitHit = (url, width, height, ctx, source) => (
-    isCropSafePortrait(width, height, { ...ctx, url, link: item.link, screenshotPhotos: !!options.screenshotPhotos })
-      ? { url, width, height, source, leadReady: true, cropSafe: true,
-        ...(ctx.declaredCover ? { declaredCover: true, cropFocalY: DECLARED_COVER_FOCAL_Y } : {}) }
-      : null
-  );
+  /**
+   * Portrait : recadré en 3:2 pour la une s'il la remplit. Sinon (trop petit,
+   * plus haut que 2:3), il reste l'image de l'article en vignette et sur la
+   * fiche ; seule la une passe au repli. Avant le 19 nov. 2026, ce cas
+   * renvoyait null et la photo du campus remplaçait la vraie photo
+   * (Le Collectif, « Rencontre Carney-PSPP au Cambodge », 512×640).
+   */
+  const portraitHit = (url, width, height, ctx, source) => {
+    if (isCropSafePortrait(width, height, { ...ctx, url, link: item.link, screenshotPhotos: !!options.screenshotPhotos })) {
+      return { url, width, height, source, leadReady: true, cropSafe: true,
+        ...(ctx.declaredCover ? { declaredCover: true, cropFocalY: DECLARED_COVER_FOCAL_Y } : {}) };
+    }
+    return articleThumbHit(url, width, height, `${source}-thumb`);
+  };
+  /** Image d'article gardée hors une (vignette, fiche), si elle n'est pas minuscule. */
+  const articleThumbHit = (url, width, height, source) => {
+    if (!meetsArticleThumbSize(width, height)) return null;
+    return { url, width, height, source, leadReady: false, articleThumb: true,
+      ...(isPortraitLeadRatio(width, height) ? { cropSafe: true } : {}) };
+  };
   const tryUrlOnce = async (url, metaW = 0, metaH = 0, ctx = {}) => {
     if (!url || !isCandidateImageUrl(url, extraRejectPatterns)) return null;
     // Ne pas abandonner une URL « weak » : leadImageUrlCandidates la promeut
     // (Image-16-600x315.jpg → Image-16.jpg). On ne skip que si *aucune*
     // variante n'est viable (géré par l'appelant via leadImageUrlCandidates).
     if (isWeakImageUrl(url, options)) return null;
-    // Jamais d'image en hauteur pour la une (même « faible ») : elle revenait
-    // par la file sans photo (Quartier Libre 964×1024, ratio 0,94 < 0,95)
-    // juste après avoir été retirée par la passe portrait.
-    if (isWideScreenshotGraphic(url, metaW, metaH)) return null;
+    // Capture d'écran en bandeau : gardée comme image de l'article, pas en une.
+    if (isWideScreenshotGraphic(url, metaW, metaH)) return articleThumbHit(url, metaW, metaH, 'meta-screenshot-thumb');
     if (metaW && metaH && isPortraitLeadRatio(metaW, metaH)) {
       return portraitHit(url, metaW, metaH, ctx, 'meta-portrait-crop');
     }
@@ -1441,7 +1423,9 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
       return { url, width: metaW, height: metaH, source: 'meta-editorial', leadReady: true };
     }
     const dims = await probeRemoteImageSize(url);
-    if (dims && isWideScreenshotGraphic(url, dims.width, dims.height)) return null;
+    if (dims && isWideScreenshotGraphic(url, dims.width, dims.height)) {
+      return articleThumbHit(url, dims.width, dims.height, 'probe-screenshot-thumb');
+    }
     if (dims && isPortraitLeadRatio(dims.width, dims.height)) {
       return portraitHit(url, dims.width, dims.height, ctx, 'probe-portrait-crop');
     }
@@ -1455,7 +1439,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-feature', leadReady: false };
     }
-    if (dims && dims.width >= 200 && dims.height >= 150 && !isPortraitLeadRatio(dims.width, dims.height)) {
+    if (dims && meetsArticleThumbSize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-small', leadReady: false };
     }
     return null;
@@ -1579,6 +1563,7 @@ module.exports = {
   isPortraitLeadRatio,
   imageUrlLooksPortrait,
   isCropSafePortrait,
+  meetsArticleThumbSize,
   DECLARED_COVER_FOCAL_Y,
   isDeclaredCoverImage,
   isFeaturedContentImage,
@@ -1588,6 +1573,7 @@ module.exports = {
   BOT_USER_AGENT,
   clearMirroredLead,
   dropSharedSourceImages,
+  sharedImageKey,
   keepNewestSharedImage,
   linksToOtherArticle,
   insideOtherPostArticle,

@@ -45,6 +45,9 @@ const {
   imageUrlLooksPortrait,
   imageDimensionsFromUrl,
   isCropSafePortrait,
+  meetsArticleThumbSize,
+  isDeclaredCoverImage,
+  DECLARED_COVER_FOCAL_Y,
   LEAD_CROP_MIN_RATIO,
   LEAD_CROP_MIN_RATIO_EDITORIAL,
 } = require('./article-image-lib');
@@ -206,8 +209,9 @@ async function replacePortraitLead(item, { reject = [], opts = {}, resolve = res
   // Portrait déjà recadrable d'après l'URL (CE Image _900_1273, fichier
   // /images/articles/). Un 429 sur la page ne doit pas l'effacer au profit
   // du campus : on le garde sans re-télécharger le HTML.
-  if (dims && isCropSafePortrait(dims.width, dims.height, { url: item.image, link: item.link })) {
-    assignSourceImage(item, item.image, true, true);
+  const declaredCover = isDeclaredCoverImage(item, item.image);
+  if (dims && isCropSafePortrait(dims.width, dims.height, { url: item.image, link: item.link, declaredCover })) {
+    assignSourceImage(item, item.image, true, true, declaredCover ? DECLARED_COVER_FOCAL_Y : null);
     clearLegacyFallback(item);
     clearStockPhoto(item);
     return 'cropped';
@@ -235,6 +239,18 @@ async function replacePortraitLead(item, { reject = [], opts = {}, resolve = res
     clearLegacyFallback(item);
     clearStockPhoto(item);
     return 'replaced';
+  }
+  // Règle du 19 nov. 2026 : l'image de l'article reste la sienne, même trop
+  // petite ou trop haute pour la une (Le Collectif, Carney-PSPP 512×640).
+  // Vignette et fiche la montrent ; la une seule passe au repli (banque ou
+  // campus gardé dans stockImage, sinon campus côté client).
+  // Seule une image minuscule ou introuvable est retirée.
+  const keepDims = dims || (resolved && resolved.width && resolved.height
+    && imageUrlsMatch(resolved.url || '', portraitUrl) ? resolved : null);
+  if (keepDims && meetsArticleThumbSize(keepDims.width, keepDims.height)) {
+    assignSourceImage(item, portraitUrl, false, true);
+    clearLegacyFallback(item);
+    return 'kept';
   }
   clearMirroredLead(item);
   clearSourceImageCredit(item);
@@ -427,9 +443,10 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
   }
 
   // Avant toute banque libre : récupérer la photo d'article (RSS / og:image /
-  // corps). Si la page n'offre qu'un défaut de site trop faible (logo Exil,
-  // og:image partagée), on ne l'impose PAS — le stock thématique (ex. Hôtel
-  // du Parlement pour un billet Assemblée) est préférable.
+  // corps). Une image d'article hors format une est gardée comme image du
+  // billet ; le stock thématique (ex. Hôtel du Parlement pour un billet
+  // Assemblée) ne sert alors qu'au repli de la une. Les logos (Exil) et
+  // og:image partagées sont écartés avant d'arriver ici.
   let weakSiteImage = null;
   if ((!item.image || !hasSourcePhoto(item, sourceMap)) && item.link) {
     const { reject, opts } = isCandidateForItem(item, sourceMap);
@@ -454,10 +471,12 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
     const stock = await findStockPhoto(item);
     if (stock?.stockImage) {
       if (doUpdate) {
-        // Stock thématique gagne sur un défaut de site trop faible
+        // Image d'article hors format une (19 nov. 2026) : elle reste celle
+        // du billet (vignette, fiche) ; le stock ne sert qu'au repli de la une.
+        // Logos, défauts de site partagés et images minuscules sont déjà
+        // écartés en amont (isCandidateImageUrl, dédoublonnage, seuil vignette).
         if (weakSiteImage) {
-          item.image = '';
-          item.leadImageReady = false;
+          assignSourceImage(item, weakSiteImage.url, false, !!weakSiteImage.cropSafe);
         }
         applyPhotoFields(item, stock);
         const sourceReady = await markSourceLeadQuality(item);
@@ -700,19 +719,19 @@ async function main() {
     saveStockSearchCache();
   }
 
-  // Priorité : articles sans aucune photo (ex. Tribune RSS vide) d'abord,
-  // les plus récents en tête — récupère les vraies og:image avant la banque.
+  // Priorité : articles sans leur propre image (vide, banque ou campus), les
+  // plus récents en tête — récupère les vraies og:image avant la banque.
   const scrapeQueue = items
     .filter((item) => {
       const { ok } = isCandidateForItem(item, sourceMap);
       return item.link && !ok(item.image);
     })
-    .sort((a, b) => {
-      const aEmpty = a.image || a.stockImage ? 1 : 0;
-      const bEmpty = b.image || b.stockImage ? 1 : 0;
-      if (aEmpty !== bEmpty) return aEmpty - bEmpty;
-      return (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
-    })
+    // Une photo de banque ou du campus n'est pas l'image de l'article
+    // (19 nov. 2026) : ces billets passent au même rang que ceux sans image,
+    // les plus récents d'abord. Sinon l'arriéré de vieux billets vides
+    // retardait de plusieurs récoltes la vraie photo d'un billet de la veille
+    // (Le Collectif, Carney-PSPP, campus Georges-Cabana).
+    .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
     .slice(0, PAGE_SCRAPE_LIMIT);
 
   await mapPool(scrapeQueue, CONCURRENCY, async (item) => {
@@ -808,9 +827,10 @@ async function main() {
       if (!item.image || !ok(item.image)) {
         const resolved = await resolveLeadReadyPhoto(item, reject, opts);
         if (resolved?.url && doUpdate) {
-          // leadReady : vraie photo → garder. Sinon défaut de site faible
-          // (logo partagé) : ne pas l'imposer, laisser la file stock.
-          if (resolved.leadReady !== false || isEditorialArticleImage(resolved.url)) {
+          // Image de l'article : gardée même hors format une (19 nov. 2026).
+          // Logos et défauts partagés sont filtrés avant ; la une garde le
+          // repli banque / campus si l'image ne la remplit pas.
+          if (resolved.leadReady !== false || resolved.articleThumb || isEditorialArticleImage(resolved.url)) {
             assignSourceImage(
               item,
               resolved.url,

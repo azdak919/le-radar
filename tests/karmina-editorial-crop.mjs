@@ -20,7 +20,7 @@ for (const bad of [{ ...ctx, link: 'https://quartierlibre.ca/autre/' }, { ...ctx
 }
 assert.equal(A.isCropSafePortrait(599, 779, ctx), false, 'dimensions changées : revue nécessaire');
 assert.equal(A.isCropSafePortrait(600, 1000, ctx), false, 'autre cadrage : revue nécessaire');
-assert.equal(A.isCropSafePortrait(800, 1000, { caption: 'Affiche du film Karmina. Crédit: Éléphant Films' }), false);
+assert.equal(A.isCropSafePortrait(800, 1000, { caption: 'Affiche du film Karmina. Crédit: Éléphant Films' }), true, '19 nov. 2026 : affiche de l’article gardée par défaut à taille suffisante');
 // Résolution complète sur une page source minimale, transport HTTPS simulé.
 const fixture = `<html><head><meta property="og:image" content="${url}"><meta property="og:image:width" content="600"><meta property="og:image:height" content="779"></head><body><article><figure><img src="${url}" width="600" height="779"><figcaption>${ctx.caption}</figcaption></figure></article><!--${' '.repeat(2100)}--></body></html>`;
 const originalGet = https.get, originalTimeout = globalThis.setTimeout;
