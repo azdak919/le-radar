@@ -114,4 +114,17 @@ for (const file of pages) {
 assert(native >= 50, `attendu ≥ 50 pages natives, got ${native}`);
 assert(moduleOk === 2, `attendu 2 pages au module radio (pomo+solitaire), got ${moduleOk}`);
 
+const barre = readFileSync(join(root, 'radio-barre.js'), 'utf8');
+assert(
+  barre.includes('href="https://le-radar.ca/"'),
+  'radio-barre.js : le logo doit mener seulement à https://le-radar.ca/',
+);
+assert(
+  !/new URL\(['"]radios\//.test(barre),
+  'radio-barre.js : le logo ne doit plus pointer vers /radios/',
+);
+assert(barre.includes('function applyMarquee'), 'radio-barre.js : défilement applyMarquee requis');
+assert(barre.includes('is-empty'), 'radio-barre.js : panneaux antenne à place réservée (is-empty)');
+assert(!/node\.hidden = true/.test(barre), 'radio-barre.js : ne plus masquer les panneaux antenne avec hidden (saut de barre)');
+
 console.log(`OK native-player-contract (${native} natives, ${moduleOk} au module radio, ${skipped} hors périmètre)`);
