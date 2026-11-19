@@ -1,125 +1,17 @@
 {
-  "updatedAt": "2026-11-19T03:06:59.244Z",
+  "updatedAt": "2026-11-19T05:06:46.222Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Blasphème",
-        "source": "api-live",
-        "start": "21:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/blaspheme/"
-      },
-      "next": {
-        "title": "Nocturne",
-        "source": "schedule-live",
-        "start": "22:30",
-        "end": "00:00",
-        "url": "https://chyz.ca/emission/nocturne/"
-      },
-      "track": "",
-      "showTitle": "Blasphème",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-19T03:06:22.948Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
-        "title": "La carte cadeau (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "track": "",
-      "showTitle": "Mix Anglo",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-19T03:06:24.828Z"
-    },
-    "ckut": {
-      "id": "ckut",
-      "name": "CKUT 90,3",
-      "current": {
-        "title": "Lo Signal - 3rd Wed Of The Week",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
-        "title": "Off The Hook",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "track": "",
-      "showTitle": "Lo Signal - 3rd Wed Of The Week",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "stream"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-19T03:06:27.201Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "Sippin' On Sound",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/sippin-on-sound"
-      },
-      "next": {
-        "title": "The Night Watch",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/the-night-watch"
-      },
-      "track": "",
-      "showTitle": "Sippin' On Sound",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-19T03:06:40.817Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
       "current": null,
       "next": {
-        "title": "Les nuits CFAK",
+        "title": "Jeudi Révolte",
         "source": "schedule",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
       "showTitle": "",
@@ -129,18 +21,125 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T03:06:41.787Z"
+      "checkedAt": "2026-11-19T05:06:04.749Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La carte cadeau (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "La carte cadeau (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-19T05:06:06.951Z"
+    },
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "current": {
+        "title": "Off The Hook",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
+      "next": {
+        "title": "Freeform Air",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
+      "track": "",
+      "showTitle": "Off The Hook",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-19T05:06:09.880Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "The Night Watch",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
+      },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
+      "track": "",
+      "showTitle": "The Night Watch",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-19T05:06:24.224Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
+      "track": "",
+      "showTitle": "Les nuits CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-19T05:06:25.323Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
       "track": "ID Kat Pereira.mp3",
       "showTitle": "",
@@ -150,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T03:06:58.894Z"
+      "checkedAt": "2026-11-19T05:06:45.871Z"
     }
   }
 }
