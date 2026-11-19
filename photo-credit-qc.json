@@ -1,17 +1,38 @@
 {
-  "updated": "2026-11-19T17:38:14.624Z",
-  "total": 1035,
-  "withImage": 918,
-  "withCredit": 918,
-  "cited": 613,
-  "pending": 185,
+  "updated": "2026-11-19T18:09:56.547Z",
+  "total": 1038,
+  "withImage": 921,
+  "withCredit": 921,
+  "cited": 619,
+  "pending": 187,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 10,
-  "citedNew": 10,
-  "fallbackNew": 50,
+  "updatedCount": 16,
+  "citedNew": 15,
+  "fallbackNew": 45,
   "samples": [
+    {
+      "title": "Concordia Student Union byelection results are in",
+      "source": "The Concordian",
+      "credit": "Illustration: Anna Huang",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
+    {
+      "title": "ASFA asks students what issues matter most to them",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of ASFA",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The conditions of compassion",
+      "source": "The Concordian",
+      "credit": "Illustration: Zelda Dover",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
     {
       "title": "Peut-on encore posséder de la culture ?",
       "source": "La Pige",
@@ -72,13 +93,6 @@
       "title": "Saguenay acquiert officiellement l’église Saint-Édouard",
       "source": "La Pige",
       "credit": "Photo : Arthur Bakhache",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Un nouveau souffle pour le centre-ville de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
       "cited": true,
       "method": "body-line"
     }

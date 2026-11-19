@@ -2609,35 +2609,6 @@
       "via": "resize-proxy",
       "nameKey": "cafeteria_gabrielle.jpg"
     },
-    "0da527b271273a7a": {
-      "local": "assets/news-images/0da527b271273a7a.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/rocky-930x620.jpeg",
-      "host": "www.delitfrancais.com",
-      "bytes": 70585,
-      "updatedAt": "2026-11-17T11:40:59.900Z",
-      "via": "disk",
-      "nameKey": "rocky.jpeg"
-    },
-    "b0a50074a7b067ba": {
-      "local": "assets/news-images/b0a50074a7b067ba.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/Olivia.jpeg",
-      "host": "www.delitfrancais.com",
-      "bytes": 79136,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:41:00.127Z",
-      "via": "origin",
-      "nameKey": "olivia.jpeg"
-    },
-    "1081e97359be3f07": {
-      "local": "assets/news-images/1081e97359be3f07.jpg",
-      "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/10/violence-2.png",
-      "host": "www.delitfrancais.com",
-      "bytes": 93517,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T13:10:20.468Z",
-      "via": "resize-proxy",
-      "nameKey": "violence-2.png"
-    },
     "e0e3c9e4644e958d": {
       "local": "assets/news-images/e0e3c9e4644e958d.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Yann_Rfd-4_900_600_90.jpg",
@@ -3084,15 +3055,6 @@
       "via": "disk",
       "nameKey": "image.png"
     },
-    "166c965ceb7dcf6b": {
-      "local": "assets/news-images/166c965ceb7dcf6b.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image.jpeg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 26219,
-      "updatedAt": "2026-11-19T09:08:27.861Z",
-      "via": "disk",
-      "nameKey": "image.jpeg"
-    },
     "63ce00f135238d39": {
       "local": "assets/news-images/63ce00f135238d39.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Dar_el_malouf_DSC_0557_900_597_90.jpg",
@@ -3102,19 +3064,39 @@
       "via": "disk",
       "nameKey": "dar_el_malouf_dsc_0557.jpg"
     },
-    "7965d56e2d7a5f89": {
-      "local": "assets/news-images/7965d56e2d7a5f89.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Racha.Rais_MG_0418_900_563_90.jpg",
-      "host": "thelinknewspaper.ca",
-      "bytes": 91959,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-19T17:37:15.396Z",
+    "d3b6becf2af8f54d": {
+      "local": "assets/news-images/d3b6becf2af8f54d.png",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Screenshot-2025-10-30-at-12.13.29-AM.png",
+      "host": "theconcordian.com",
+      "bytes": 90626,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-19T18:08:58.879Z",
       "via": "origin",
-      "nameKey": "racha.rais_mg_0418.jpg"
+      "nameKey": "screenshot-2025-10-30-at-12.13.29-am.png"
+    },
+    "b77c63977f985bc0": {
+      "local": "assets/news-images/b77c63977f985bc0.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2025/11/CSU-BY-ELECTIONS.jpg",
+      "host": "theconcordian.com",
+      "bytes": 99399,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-19T18:08:59.379Z",
+      "via": "origin",
+      "nameKey": "csu-by-elections.jpg"
+    },
+    "4210f9716074015a": {
+      "local": "assets/news-images/4210f9716074015a.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_0264.png",
+      "host": "theconcordian.com",
+      "bytes": 151394,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-19T18:09:01.641Z",
+      "via": "photon-resize",
+      "nameKey": "img_0264.png"
     }
   },
-  "updatedAt": "2026-11-19T17:37:15.533Z",
-  "count": 323,
+  "updatedAt": "2026-11-19T18:09:01.663Z",
+  "count": 321,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5496,6 +5478,26 @@
     "b2cf17834e168b0e": {
       "reason": "budget",
       "at": "2026-11-19T17:37:15.530Z"
+    },
+    "7965d56e2d7a5f89": {
+      "reason": "budget",
+      "at": "2026-11-19T18:09:01.648Z"
+    },
+    "166c965ceb7dcf6b": {
+      "reason": "budget",
+      "at": "2026-11-19T18:09:01.653Z"
+    },
+    "1081e97359be3f07": {
+      "reason": "budget",
+      "at": "2026-11-19T18:09:01.656Z"
+    },
+    "b0a50074a7b067ba": {
+      "reason": "budget",
+      "at": "2026-11-19T18:09:01.659Z"
+    },
+    "0da527b271273a7a": {
+      "reason": "budget",
+      "at": "2026-11-19T18:09:01.662Z"
     }
   }
 }
