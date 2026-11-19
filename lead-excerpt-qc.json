@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-19T21:04:38.673Z",
-  "total": 1038,
+  "updated": "2026-11-19T21:13:12.961Z",
+  "total": 1039,
   "pool": 61,
   "incomplete": 28,
-  "withLeadExcerpt": 185,
+  "withLeadExcerpt": 186,
   "candidates": 28,
-  "enriched": 0,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "« Un grand Québec commence petit » : Saguenay lève le drapeau pour les tout-petits",
+      "link": "https://lapige.atmjonquiere.com/2026/11/19/un-grand-quebec-commence-petit-saguenay-leve-le-drapeau-pour-les-tout-petits/?utm_source=rss&utm_medium=rss&utm_campaign=un-grand-quebec-commence-petit-saguenay-leve-le-drapeau-pour-les-tout-petits",
+      "ok": true,
+      "score": 100,
+      "chars": 645,
+      "sample": "Le drapeau de la Grande semaine des tout-petits a été hissé ce lundi devant l’hôtel de ville de Sagu",
+      "changed": true
+    },
+    {
       "title": "Concordia Student Union byelection results are in",
       "link": "https://theconcordian.com/2026/11/concordia-student-union-election-results/",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 171,
       "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
-      "changed": false
-    },
-    {
-      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
-      "link": "https://theconcordian.com/2026/11/avi-lewis-carney-policies-terrifying/",
-      "ok": true,
-      "score": 100,
-      "chars": 190,
-      "sample": "Hundreds of New Democratic Party (NDP) supporters gathered at a rally on Nov. 17 at Ausgang Plaza in",
       "changed": false
     }
   ]

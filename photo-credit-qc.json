@@ -1,30 +1,30 @@
 {
-  "updated": "2026-11-19T21:08:02.039Z",
-  "total": 1038,
-  "withImage": 860,
-  "withCredit": 860,
-  "cited": 599,
-  "pending": 147,
+  "updated": "2026-11-19T21:15:02.315Z",
+  "total": 1039,
+  "withImage": 870,
+  "withCredit": 870,
+  "cited": 606,
+  "pending": 144,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 30,
-  "citedNew": 30,
-  "fallbackNew": 30,
+  "updatedCount": 9,
+  "citedNew": 9,
+  "fallbackNew": 51,
   "samples": [
+    {
+      "title": "« Un grand Québec commence petit » : Saguenay lève le drapeau pour les tout-petits",
+      "source": "La Pige",
+      "credit": "Photo : Alex Loiselle",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Parkour – L’art de repousser ses limites",
       "source": "Quartier Libre",
       "credit": "Photo : Joséphine Dao-Devenyns",
       "cited": true,
       "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Rencontre Carney-PSPP au Cambodge",
-      "source": "Le Collectif",
-      "credit": "Photo : Page Facebook de Mark Carney",
-      "cited": true,
-      "method": "body-tail"
     },
     {
       "title": "Peut-on encore posséder de la culture ?",
@@ -34,27 +34,6 @@
       "method": "body-line"
     },
     {
-      "title": "Mark Carney dévoile ses ambitions économiques",
-      "source": "Le Collectif",
-      "credit": "Photo : X François-Philippe Champagne",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "L’IA au cœur d’une entreprise de création montréalaise",
-      "source": "Le Collectif",
-      "credit": "Photo : Agence Crimson Spark",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
       "credit": "Photo : Guillaume Villeneuve",
@@ -62,37 +41,37 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "La peur : un plaisir paradoxal",
+      "title": "On avance quand même",
       "source": "Quartier Libre",
-      "credit": "Illustration : Luchiano Bienvenue",
+      "credit": "Photo : Illustration de Wendy Kim Pires",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "figcaption-copyright"
     },
     {
-      "title": "Bien manger sans cuisiner: l’essor des traiteurs dans la région",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
-      "cited": true,
-      "method": "body-line"
+      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Un nouveau souffle pour le centre-ville de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Lia Chayer",
+      "title": "Know Your Artist: Stina Baudin",
+      "source": "The Tribune",
+      "credit": "Photo : Stina Baudin",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-attribution"
     },
     {
-      "title": "Montrealers gather for the city’s first-ever Climate Week",
-      "source": "The Link",
-      "credit": "Photo: Abigail Best",
+      "title": "Lumière sur les concerts gratuits!",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée du Facebook de Marie Céleste",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Every pizza is a blessing at 5 Pizza",
-      "source": "The Link",
-      "credit": "Photo: Asmaa Stora",
+      "title": "Three arrested at anti-austerity student protest",
+      "source": "The Concordian",
+      "credit": "Photo: Max Paster",
       "cited": true,
       "method": "figcaption-trailing"
     }
