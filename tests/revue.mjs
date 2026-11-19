@@ -272,6 +272,18 @@ assert.equal(skip.status, 'sautée'); assert.match(skip.why, /aucun nouvel artic
 // news.json périmé : doute, rien ne sort.
 const stale = await generate('matin', tM, { ...io, news: { ...news, updated: T('2026-11-16T12:00:00Z') } });
 assert.equal(stale.status, 'refusée'); assert.ok(stale.problems.some(p => /DOUTE/.test(p)));
+// Exemple « 7 h » lancé avant 7 h (aperçu de PR) : la collecte de la nuit est encore fraîche.
+{
+  const seven = Date.parse('2026-11-19T12:00:00Z');
+  const wall = Date.parse('2026-11-19T05:45:00Z');
+  const nightItem = { source: 'Le Collectif', institution: 'Université de Sherbrooke', lang: 'fr', title: 'Le conseil municipal de Sherbrooke adopte son budget', link: 'https://lecollectif.ca/budget-sherbrooke/', author: 'Aurélie Souka', date: T('2026-11-19T04:00:00Z'), excerpt: 'Le conseil municipal de Sherbrooke a adopté son budget 2027 lundi soir. Les étudiants réclament plus de logements.' };
+  const night = { updated: T('2026-11-19T05:07:00Z'), items: [nightItem] };
+  const preview = await generate('matin', seven, { ...io, news: night, wallClock: wall, env: {} });
+  assert.equal(preview.status, 'publiée', 'collecte de la nuit : l’exemple de 7 h ne doit pas être refusé avant 7 h ' + JSON.stringify(preview.problems || preview.why));
+  const atSeven = await generate('matin', seven, { ...io, news: night, wallClock: seven, env: {} });
+  assert.equal(atSeven.status, 'refusée', 'à 7 h, une collecte de 00 h 07 est périmée');
+  assert.ok((atSeven.problems || []).some((p) => /DOUTE/.test(p)));
+}
 assert.equal((await generate('matin', tM, { ...io, index: [{ id: m.id }] })).status, 'inchangée', 'une édition déjà publiée n’est pas refaite');
 // Mise à jour tardive : un nouveau résultat du jour avance dateModified, rien d'autre ne change.
 const soirAt = Date.parse('2026-11-17T00:16:00Z');

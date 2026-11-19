@@ -30,6 +30,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Aperçu de la revue (PR) : un exemple daté à 7 h, lancé après minuit et avant 7 h, ne traite plus la collecte de la nuit comme périmée (fraîcheur jugée à l’horloge réelle quand l’heure simulée est dans le futur).
 - Revue du 18 nov. 2026 : les pages du matin et du soir étaient bien générées, mais `revue-pdfs.mjs --id matin` (ou `soir`) échouait (« édition introuvable ») et, à cause de `bash -e`, le commit n’avait jamais lieu. La porte expose maintenant l’identifiant complet `AAAA-MM-JJ-matin|soir` ; le script accepte aussi `matin` / `soir` par repli ; un échec des PDF n’empêche plus de publier les pages.
 - Cartes d’accueil : le sigle d’un cégep ne commence plus par un article minuscule. « Cégep de l’Outaouais » (La Griffe) affiche le nom officiel, plus « l’Outaouais » ; même chose pour l’Abitibi-Témiscamingue et la Gaspésie et des Îles. « La Pocatière » reste, c’est un toponyme. Le groupement des flux (« Outaouais ») est inchangé.
 - Cartes du fil (mobile et bureau) : les photos autres que la une se chargent à nouveau. `loading=lazy` sur une image encore dans un `.article-media` en `display:none` (le bloc ne s’affiche qu’après `onload`, via `.has-image`) empêchait le navigateur de télécharger le fichier.

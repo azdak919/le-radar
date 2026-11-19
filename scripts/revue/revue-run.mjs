@@ -72,7 +72,11 @@ export async function generate(editionId, now, io) {
   const data = { news: io.news, masthead: io.masthead, schedules: io.schedules };
   const doubts = [];
   const updated = Date.parse(io.news?.updated || '');
-  if (!Number.isFinite(updated) || (now - updated) / 3600e3 > 6) doubts.push(`news.json trop ancien ou sans date (${Number.isFinite(updated) ? Math.round((now - updated) / 3600e3) + ' h' : 'inconnu'})`);
+  // Si --day/--at est dans le futur (exemple de PR à 7 h lancé avant 7 h), on juge
+  // la fraîcheur à l'horloge réelle : une collecte de la nuit ne doit pas être
+  // traitée comme périmée. En rattrapage (now dans le passé), on la juge à l'heure de l'édition.
+  const freshAt = Math.min(now, Number.isFinite(io.wallClock) ? io.wallClock : Date.now());
+  if (!Number.isFinite(updated) || (freshAt - updated) / 3600e3 > 6) doubts.push(`news.json trop ancien ou sans date (${Number.isFinite(updated) ? Math.round((freshAt - updated) / 3600e3) + ' h' : 'inconnu'})`);
 
   // Mise à jour tardive : seulement les nouveaux résultats du jour, rien d'autre ne change.
   if (io.refresh) {
