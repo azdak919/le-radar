@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-19T21:07:25.727Z",
+  "updatedAt": "2026-11-19T22:36:49.140Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T21:06:45.868Z"
+      "checkedAt": "2026-11-19T22:36:08.945Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
         "title": "Entropie",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/entropie"
       },
+      "next": {
+        "title": "La rumba latina",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
+      },
       "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "Entropie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T21:07:00.003Z"
+      "checkedAt": "2026-11-19T22:36:22.990Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off the Hour: Labour Radio",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Off the Hour: Labour Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T21:07:03.284Z"
+      "checkedAt": "2026-11-19T22:36:25.564Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T21:07:05.584Z"
+      "checkedAt": "2026-11-19T22:36:28.038Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,34 +129,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T21:07:06.545Z"
+      "checkedAt": "2026-11-19T22:36:29.206Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:30",
-        "end": "16:30",
-        "slug": "palmareschoq"
-      },
-      "next": {
         "title": "La 3ème demie",
         "source": "api-live",
         "start": "17:15",
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
+      "next": {
+        "title": "Les Apatrides Anonymes",
+        "source": "api-live",
+        "start": "18:30",
+        "end": "19:45",
+        "slug": "apatrides-anonymes"
+      },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "Palmarès CHOQ.ca",
+      "showTitle": "La 3ème demie",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-19T21:07:25.377Z"
+      "checkedAt": "2026-11-19T22:36:48.790Z"
     }
   }
 }
