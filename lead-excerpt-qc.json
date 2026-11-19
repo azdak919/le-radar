@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-19T04:08:12.813Z",
-  "total": 1033,
+  "updated": "2026-11-19T05:08:08.989Z",
+  "total": 1034,
   "pool": 61,
-  "incomplete": 27,
-  "withLeadExcerpt": 181,
-  "candidates": 27,
-  "enriched": 0,
-  "failed": 1,
+  "incomplete": 28,
+  "withLeadExcerpt": 182,
+  "candidates": 28,
+  "enriched": 1,
+  "failed": 3,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
+      "ok": true,
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "Documentary film ‘NAZA’ examines the banality of evil behind the horrific Gaza genocide",
+      "link": "https://thelinknewspaper.ca/article/16574",
+      "ok": true,
+      "score": 96,
+      "chars": 829,
+      "sample": "Each interviewee is shown only as a dark silhouette to protect their anonymity. This choice also tur",
+      "changed": true
+    },
+    {
       "title": "Finding calm in the stacks, CU Wellness brings 30-Minute sound baths to Webster Library",
       "link": "https://theconcordian.com/2026/11/cu-wellness-sound-bath-session/",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 190,
       "sample": "Team Canada was said to be old and unfit to face off against this young and promising American team.",
-      "changed": false
-    },
-    {
-      "title": "Concordia receives $4.69 million to boost research and community partnerships",
-      "link": "https://theconcordian.com/2026/11/concordia-receives-funding-through-canada-research-chairs/",
-      "ok": true,
-      "score": 100,
-      "chars": 252,
-      "sample": "Behind every research advance at Concordia is a network of funding programs that makes these breakth",
       "changed": false
     }
   ]
