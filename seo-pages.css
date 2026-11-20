@@ -772,8 +772,8 @@
 
 /* Le pied de page est un frère de <main>, pas son enfant : il sort ainsi de
    `.seo-wire p` (15 px, couleur du corps) et garde la typographie qu'il a
-   partout ailleurs sur le site. Il reprend en revanche la gouttière et la
-   largeur de la colonne principale pour rester aligné avec elle. */
+   partout ailleurs sur le site. Il garde la gouttière et la largeur --maxw
+   du site, même si la colonne de lecture d'une fiche est plus étroite. */
 .seo-wire + .site-foot {
   max-width: var(--maxw);
   margin: 0 auto;
@@ -1938,3 +1938,87 @@
 .sports-panel__upcoming-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .sports-panel__upcoming-toggle[hidden] { display: none; }
 @media print { .sports-panel__upcoming-toggle { display: none; } }
+
+
+/* ── Colonne de lecture des pages .seo-wire ───────────────────────────────
+ *
+ * Même principe que `.revue-wire` : une seule colonne bornée, centrée
+ * (`margin-inline: auto`). Les enfants typographiques la remplissent, donc
+ * fil d'Ariane, surtitre, titre, chapô, faits, manchettes, listes et cartes
+ * partagent un seul bord gauche ; le texte reste aligné à gauche.
+ *
+ * Lecture (~70ch + gouttières) : fiches journaux, radios, établissements,
+ * archives (index et par journal), et leurs équivalents anglais.
+ *
+ * Grilles qui gardent `--maxw` (seulement centrées) :
+ *   sports (`.seo-wire--sports`), affiches (`.affiche-wire`),
+ *   kit média (`.kit-wire`), médias / en/media (`.seo-dir-stats`),
+ *   horaires / schedules (`.seo-radio-cards`), accueil EN
+ *   (`:has(.seo-cards):has(.seo-cta)`), et `/feeds.html` (`.feeds-wire`,
+ *   déjà à `--maxw` dans wide-desktop-preview.css ; ne charge pas ce fichier).
+ *
+ * On n'y touche pas : `.seo-article`, en-tête, barre radio, bandeau sports,
+ * pied de page (reste à `--maxw`).
+ *
+ * Spécificité : `html[data-wide-preview] .seo-wire…` pour primer sur
+ * `html[data-wide-preview="e"] .seo-wire { max-width: var(--maxw) }`
+ * dans dev/wide-desktop-preview.css. Les exceptions « grille » viennent
+ * après la règle de lecture et portent un sélecteur plus spécifique.
+ */
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article),
+.seo-wire:not(.revue-wire):not(.seo-article) {
+  max-width: min(100%, calc(70ch + 2 * var(--pad)), var(--maxw));
+  margin-inline: auto;
+  width: auto;
+}
+
+html[data-wide-preview] .seo-wire.seo-wire--sports:not(.revue-wire):not(.seo-article),
+html[data-wide-preview] .seo-wire.affiche-wire:not(.revue-wire):not(.seo-article),
+html[data-wide-preview] .seo-wire.kit-wire:not(.revue-wire):not(.seo-article),
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):has(.seo-dir-stats),
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):has(.seo-radio-cards),
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):has(.seo-cards):has(.seo-cta),
+.seo-wire.seo-wire--sports:not(.revue-wire):not(.seo-article),
+.seo-wire.affiche-wire:not(.revue-wire):not(.seo-article),
+.seo-wire.kit-wire:not(.revue-wire):not(.seo-article),
+.seo-wire:not(.revue-wire):not(.seo-article):has(.seo-dir-stats),
+.seo-wire:not(.revue-wire):not(.seo-article):has(.seo-radio-cards),
+.seo-wire:not(.revue-wire):not(.seo-article):has(.seo-cards):has(.seo-cta) {
+  max-width: min(100%, var(--maxw));
+  margin-inline: auto;
+  width: auto;
+}
+
+/* Dans une colonne de lecture, annuler le 72ch posé par le shell E sur
+   chapô et manchettes — il suivrait sinon sa propre mesure typographique.
+   On ne touche pas à `.seo-facts` : `max-width: 100%` doit rester, pour que
+   les faits packés (`width: max-content`) s'enroulent dans la colonne. */
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-crumbs,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-eyebrow,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-title,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-lead,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-headlines,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-headlines__status,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-section,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-cards,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-toc,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-note,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-source-actions,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-archive,
+html[data-wide-preview] .seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .media-follow-row,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-crumbs,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-eyebrow,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-title,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-lead,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-headlines,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-headlines__status,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-section,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-cards,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-toc,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-note,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-source-actions,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .seo-archive,
+.seo-wire:not(.revue-wire):not(.seo-article):not(.seo-wire--sports):not(.affiche-wire):not(.kit-wire):not(:has(.seo-dir-stats)):not(:has(.seo-radio-cards)):not(:has(.seo-cards):has(.seo-cta)) .media-follow-row {
+  max-width: none;
+  margin-inline: 0;
+}
