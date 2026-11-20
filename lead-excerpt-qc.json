@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-20T19:08:17.618Z",
-  "total": 1021,
+  "updated": "2026-11-20T19:40:10.719Z",
+  "total": 1031,
   "pool": 61,
-  "incomplete": 26,
-  "withLeadExcerpt": 189,
-  "candidates": 26,
-  "enriched": 0,
+  "incomplete": 32,
+  "withLeadExcerpt": 199,
+  "candidates": 32,
+  "enriched": 10,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "En France, la colère lycéenne gagne tout le pays",
-      "link": "https://quartierlibre.ca/en-france-la-colere-lycee-gagne-tout-le-pays/",
+      "title": "On a testé le nouveau Centre Pickleball Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/on-a-teste-le-nouveau-centre-pickleball-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=on-a-teste-le-nouveau-centre-pickleball-saguenay",
       "ok": true,
       "score": 100,
-      "chars": 1087,
-      "sample": "Depuis près d’un mois, des lycéen·ne·s français·es bloquent leurs établissements scolaires et manife",
-      "changed": false
+      "chars": 526,
+      "sample": "Il a été présenté jeudi dernier aux médias, puis a proposé deux jours de portes ouvertes gratuites c",
+      "changed": true
     },
     {
-      "title": "Concordia Student Union byelection results are in",
-      "link": "https://theconcordian.com/2026/11/concordia-student-union-election-results/",
-      "ok": true,
-      "score": 96,
-      "chars": 479,
-      "sample": "Two new CSU councillors were elected. Students in the faculty of Fine Arts elected Alyson Bouffard a",
-      "changed": false
-    },
-    {
-      "title": "ASFA asks students what issues matter most to them",
-      "link": "https://theconcordian.com/2026/11/asfa-student-demands-survey/",
+      "title": "Journée mondiale de la philosophie quelle place occupe-t-elle encore dans la société ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/journee-mondiale-de-la-philosophie-quelle-place-occupe-t-elle-encore-dans-la-societe/?utm_source=rss&utm_medium=rss&utm_campaign=journee-mondiale-de-la-philosophie-quelle-place-occupe-t-elle-encore-dans-la-societe",
       "ok": true,
       "score": 100,
-      "chars": 171,
-      "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
-      "changed": false
+      "chars": 722,
+      "sample": "À l’heure de la désinformation, des tensions démocratiques et des bouleversements technologiques, la",
+      "changed": true
+    },
+    {
+      "title": "Les sachets de Nicotine, le nouveau stimulant des athlètes ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/les-sachets-de-nicotine-le-nouveau-stimulant-des-athletes/?utm_source=rss&utm_medium=rss&utm_campaign=les-sachets-de-nicotine-le-nouveau-stimulant-des-athletes",
+      "ok": true,
+      "score": 100,
+      "chars": 545,
+      "sample": "Les sachets de nicotine se glissent dans les habitudes de certains athlètes professionnels. Placés e",
+      "changed": true
     }
   ]
 }

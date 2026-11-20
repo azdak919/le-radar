@@ -1,17 +1,87 @@
 {
-  "updated": "2026-11-20T19:10:16.341Z",
-  "total": 1021,
-  "withImage": 875,
-  "withCredit": 875,
-  "cited": 614,
-  "pending": 152,
+  "updated": "2026-11-20T19:43:24.928Z",
+  "total": 1031,
+  "withImage": 904,
+  "withCredit": 904,
+  "cited": 632,
+  "pending": 164,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 6,
-  "citedNew": 5,
-  "fallbackNew": 55,
+  "updatedCount": 16,
+  "citedNew": 10,
+  "fallbackNew": 50,
   "samples": [
+    {
+      "title": "On a testé le nouveau Centre Pickleball Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Maxence Gibault-Renault",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Journée mondiale de la philosophie quelle place occupe-t-elle encore dans la société ?",
+      "source": "La Pige",
+      "credit": "Photo : Lucas Radoux",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Les sachets de Nicotine, le nouveau stimulant des athlètes ?",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le bungalow, un patrimoine à protéger ?",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Derrière les chiens à la mode, des dérives qui préoccupent les éleveurs et les refuges",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Éducation : innover pour la réussite",
+      "source": "La Pige",
+      "credit": "Photo : Laury-Ann Savard",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le bénévolat : une obligation plutôt qu’un choix ?",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le nez rouge, un remède contre l’isolement",
+      "source": "La Pige",
+      "credit": "Photo : Charline Lachance",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Voitures modifiées : quand la personnalisation peut compromettre la sécurité routière",
+      "source": "La Pige",
+      "credit": "Photo : Lucas Radoux",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "En France, la colère lycéenne gagne tout le pays",
       "source": "Quartier Libre",
@@ -25,34 +95,6 @@
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Le réseau à Vélo en roue libre auprès de la population",
-      "source": "L'Exemplaire",
-      "credit": "Photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
-      "source": "La Pige",
-      "credit": "Photo : Rosalie Lepage",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Le bijou, accessoire de mode pour hommes",
-      "source": "La Pige",
-      "credit": "Photo : Émile Barthe",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Colin Boucher",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
