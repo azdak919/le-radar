@@ -1,17 +1,31 @@
 {
-  "updated": "2026-11-20T13:42:24.420Z",
-  "total": 1018,
-  "withImage": 861,
-  "withCredit": 861,
-  "cited": 600,
+  "updated": "2026-11-20T14:09:37.527Z",
+  "total": 1020,
+  "withImage": 863,
+  "withCredit": 863,
+  "cited": 603,
   "pending": 147,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "updatedCount": 6,
+  "citedNew": 7,
+  "fallbackNew": 53,
   "samples": [
+    {
+      "title": "S’unir pour contrer l’insécurité alimentaire",
+      "source": "Le Collectif",
+      "credit": "Photo : Émy Robert",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Plus de 300 personnes témoignent d’une perte qui bouleverse leur vie",
+      "source": "Le Collectif",
+      "credit": "Photo : Hope & Cope",
+      "cited": true,
+      "method": "body-tail"
+    },
     {
       "title": "En France, la colère lycéenne gagne tout le pays",
       "source": "Quartier Libre",
@@ -22,9 +36,9 @@
     {
       "title": "ASFA asks students what issues matter most to them",
       "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
+      "credit": "Photo: Courtesy of ASFA",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "Peut-on encore posséder de la culture ?",

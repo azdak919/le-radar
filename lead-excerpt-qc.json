@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-20T13:39:31.862Z",
-  "total": 1018,
+  "updated": "2026-11-20T14:07:47.779Z",
+  "total": 1020,
   "pool": 61,
   "incomplete": 28,
-  "withLeadExcerpt": 186,
+  "withLeadExcerpt": 188,
   "candidates": 28,
-  "enriched": 0,
-  "failed": 12,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": false
+    },
+    {
       "title": "Francisée, mais pas la bienvenue ?",
       "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
@@ -46,13 +55,22 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "title": "S’unir pour contrer l’insécurité alimentaire",
+      "link": "https://lecollectif.ca/societe/sunir-pour-contrer-linsecurite-alimentaire/",
       "ok": true,
       "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
+      "chars": 709,
+      "sample": "La période des Fêtes approche à grands pas, entrainant avec elle joie, nostalgie et féérie. Cependan",
+      "changed": true
+    },
+    {
+      "title": "Plus de 300 personnes témoignent d’une perte qui bouleverse leur vie",
+      "link": "https://lecollectif.ca/societe/plus-de-300-personnes-temoignent-dune-perte-qui-bouleverse-leur-vie/",
+      "ok": true,
+      "score": 100,
+      "chars": 505,
+      "sample": "Le deuil à la suite d’un suicide laisse des traces qui peuvent persister pendant des années. À l’app",
+      "changed": true
     },
     {
       "title": "En France, la colère lycéenne gagne tout le pays",
@@ -61,24 +79,6 @@
       "score": 100,
       "chars": 1087,
       "sample": "Depuis près d’un mois, des lycéen·ne·s français·es bloquent leurs établissements scolaires et manife",
-      "changed": false
-    },
-    {
-      "title": "Police deploy tear gas and pepper spray at Montreal student protest",
-      "link": "https://thelinknewspaper.ca/article/16573",
-      "ok": true,
-      "score": 96,
-      "chars": 311,
-      "sample": "The demonstration was organized by the Coalition de résistance pour l’unité étudiante syndicale (CRU",
-      "changed": false
-    },
-    {
-      "title": "Montrealers honour veterans at Place du Canada",
-      "link": "https://thelinknewspaper.ca/article/16572",
-      "ok": true,
-      "score": 100,
-      "chars": 167,
-      "sample": "Montrealers gathered at Place du Canada on Nov. 11 for a Remembrance Day ceremony honouring fallen s",
       "changed": false
     }
   ]
