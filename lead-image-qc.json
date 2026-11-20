@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-20T11:09:48.693Z",
+  "updated": "2026-11-20T11:18:14.435Z",
   "total": 1018,
   "withPhoto": 867,
   "withStock": 114,
   "withCampusBank": 93,
   "fullyCovered": 951,
   "leadReadyPhotos": 887,
-  "pageScraped": 10,
-  "photosRecovered": 10,
-  "imagesCleared": 1,
-  "stockSearches": 5,
+  "pageScraped": 11,
+  "photosRecovered": 11,
+  "imagesCleared": 2,
+  "stockSearches": 4,
   "stockFound": 13,
   "campusBankFound": 9,
   "mainPageLeadReady": true,
@@ -21,28 +21,22 @@
       "image": null
     },
     {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
-    },
-    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
     },
     {
-      "title": "Saguenay vers des infrastructures durables",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
-      "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
-    },
-    {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "Saguenay vers des infrastructures durables",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
     }
   ]
 }
