@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-20T14:07:47.779Z",
-  "total": 1020,
+  "updated": "2026-11-20T14:40:11.609Z",
+  "total": 1021,
   "pool": 61,
-  "incomplete": 28,
-  "withLeadExcerpt": 188,
-  "candidates": 28,
-  "enriched": 2,
+  "incomplete": 27,
+  "withLeadExcerpt": 189,
+  "candidates": 27,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -55,21 +55,12 @@
       "changed": false
     },
     {
-      "title": "S’unir pour contrer l’insécurité alimentaire",
-      "link": "https://lecollectif.ca/societe/sunir-pour-contrer-linsecurite-alimentaire/",
+      "title": "Analyse : La communication politique du Parti québécois",
+      "link": "https://lecollectif.ca/societe/analyse-la-communication-politique-du-parti-quebecois/",
       "ok": true,
       "score": 100,
-      "chars": 709,
-      "sample": "La période des Fêtes approche à grands pas, entrainant avec elle joie, nostalgie et féérie. Cependan",
-      "changed": true
-    },
-    {
-      "title": "Plus de 300 personnes témoignent d’une perte qui bouleverse leur vie",
-      "link": "https://lecollectif.ca/societe/plus-de-300-personnes-temoignent-dune-perte-qui-bouleverse-leur-vie/",
-      "ok": true,
-      "score": 100,
-      "chars": 505,
-      "sample": "Le deuil à la suite d’un suicide laisse des traces qui peuvent persister pendant des années. À l’app",
+      "chars": 618,
+      "sample": "Il y a 46 jours, en date du 20 novembre, le Parti québécois a été porté au pouvoir à la tête d’un go",
       "changed": true
     },
     {
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 1087,
       "sample": "Depuis près d’un mois, des lycéen·ne·s français·es bloquent leurs établissements scolaires et manife",
+      "changed": false
+    },
+    {
+      "title": "Concordia Student Union byelection results are in",
+      "link": "https://theconcordian.com/2026/11/concordia-student-union-election-results/",
+      "ok": true,
+      "score": 96,
+      "chars": 479,
+      "sample": "Two new CSU councillors were elected. Students in the faculty of Fine Arts elected Alyson Bouffard a",
       "changed": false
     }
   ]
