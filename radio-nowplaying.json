@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T05:07:00.399Z",
+  "updatedAt": "2026-11-20T06:06:46.432Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,59 +21,60 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T05:06:18.275Z"
+      "checkedAt": "2026-11-20T06:06:16.592Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T05:06:33.336Z"
+      "checkedAt": "2026-11-20T06:06:18.897Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "L'aire du Diable",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor's Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "L'aire du Diable",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T05:06:37.907Z"
+      "checkedAt": "2026-11-20T06:06:24.723Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T05:06:39.991Z"
+      "checkedAt": "2026-11-20T06:06:26.756Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T05:06:41.336Z"
+      "checkedAt": "2026-11-20T06:06:27.730Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T05:07:00.049Z"
+      "checkedAt": "2026-11-20T06:06:46.081Z"
     }
   }
 }
