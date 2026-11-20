@@ -3047,16 +3047,6 @@
       "via": "origin",
       "nameKey": "21_mouvement-lyceenjpeg.jpeg"
     },
-    "75bc16a385dfdedb": {
-      "local": "assets/news-images/75bc16a385dfdedb.jpg",
-      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/Scitech-3-Zoe-Lee-.png",
-      "host": "thetribune.ca",
-      "bytes": 62271,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-20T00:08:56.858Z",
-      "via": "resize-proxy",
-      "nameKey": "scitech-3-zoe-lee-.png"
-    },
     "d3b6becf2af8f54d": {
       "local": "assets/news-images/d3b6becf2af8f54d.png",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Screenshot-2025-10-30-at-12.13.29-AM.png",
@@ -3114,9 +3104,19 @@
       "updatedAt": "2026-11-20T16:18:51.097Z",
       "via": "photon-resize",
       "nameKey": "img_2858-2.jpg"
+    },
+    "ddb53bf134cefce8": {
+      "local": "assets/news-images/ddb53bf134cefce8.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/IMG_1198-3.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 265171,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T17:41:23.709Z",
+      "via": "origin",
+      "nameKey": "img_1198-3.jpg"
     }
   },
-  "updatedAt": "2026-11-20T16:18:51.104Z",
+  "updatedAt": "2026-11-20T17:41:23.717Z",
   "count": 323,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5283,6 +5283,10 @@
     "ccd99384ee9d1b1f": {
       "reason": "budget",
       "at": "2026-11-20T00:08:59.946Z"
+    },
+    "75bc16a385dfdedb": {
+      "reason": "budget",
+      "at": "2026-11-20T17:41:23.715Z"
     }
   }
 }
