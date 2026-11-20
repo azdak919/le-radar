@@ -1,25 +1,19 @@
 {
-  "updated": "2026-11-19T22:37:59.476Z",
+  "updated": "2026-11-20T00:08:19.566Z",
   "total": 1040,
-  "withPhoto": 874,
-  "withStock": 130,
-  "withCampusBank": 106,
-  "fullyCovered": 970,
-  "leadReadyPhotos": 895,
-  "pageScraped": 8,
-  "photosRecovered": 8,
+  "withPhoto": 876,
+  "withStock": 131,
+  "withCampusBank": 107,
+  "fullyCovered": 972,
+  "leadReadyPhotos": 897,
+  "pageScraped": 10,
+  "photosRecovered": 10,
   "imagesCleared": 1,
   "stockSearches": 4,
-  "stockFound": 18,
-  "campusBankFound": 15,
+  "stockFound": 19,
+  "campusBankFound": 16,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-16/",
-      "reason": "no-stock-match",
-      "image": null
-    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -31,6 +25,12 @@
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "What we liked this summer break",
+      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "reason": "no-stock-match",
+      "image": "https://thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg"
     },
     {
       "title": "Battling Adversity",

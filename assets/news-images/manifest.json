@@ -3066,15 +3066,6 @@
       "via": "resize-proxy",
       "nameKey": "photo-gstp-1.jpg"
     },
-    "70d779abf4792bc3": {
-      "local": "assets/news-images/70d779abf4792bc3.png",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990-1024x703.png",
-      "host": "quartierlibre.ca",
-      "bytes": 247221,
-      "updatedAt": "2026-11-19T22:38:30.574Z",
-      "via": "disk",
-      "nameKey": "5infos_ql-e1769792962990.png"
-    },
     "4ac59444b05c93ac": {
       "local": "assets/news-images/4ac59444b05c93ac.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/21_mouvement-lyceenjpeg-1024x683.jpeg",
@@ -3084,10 +3075,29 @@
       "updatedAt": "2026-11-19T22:38:30.824Z",
       "via": "origin",
       "nameKey": "21_mouvement-lyceenjpeg.jpeg"
+    },
+    "95d1c982cd32b09e": {
+      "local": "assets/news-images/95d1c982cd32b09e.webp",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
+      "host": "quartierlibre.ca",
+      "bytes": 198136,
+      "updatedAt": "2026-11-20T00:08:53.938Z",
+      "via": "disk",
+      "nameKey": "5infos_ql-e1769792962990.png"
+    },
+    "75bc16a385dfdedb": {
+      "local": "assets/news-images/75bc16a385dfdedb.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/09/Scitech-3-Zoe-Lee-.png",
+      "host": "thetribune.ca",
+      "bytes": 62271,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T00:08:56.858Z",
+      "via": "resize-proxy",
+      "nameKey": "scitech-3-zoe-lee-.png"
     }
   },
-  "updatedAt": "2026-11-19T22:38:33.315Z",
-  "count": 320,
+  "updatedAt": "2026-11-20T00:08:59.948Z",
+  "count": 321,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5054,17 +5064,9 @@
       "reason": "budget",
       "at": "2026-11-18T22:38:56.330Z"
     },
-    "40426aa1b86cbe1d": {
-      "reason": "budget",
-      "at": "2026-11-18T22:38:56.333Z"
-    },
     "581ab3d9884a6f7c": {
       "reason": "budget",
       "at": "2026-11-18T22:38:56.336Z"
-    },
-    "97558e961f5039dd": {
-      "reason": "budget",
-      "at": "2026-11-18T22:38:56.341Z"
     },
     "ccf0d70e784f3c6c": {
       "reason": "budget",
@@ -5286,13 +5288,13 @@
       "reason": "budget",
       "at": "2026-11-19T21:14:11.651Z"
     },
-    "497355f96a224e3d": {
-      "reason": "failed",
-      "at": "2026-11-19T22:38:33.296Z"
-    },
     "ed135e4648ea0986": {
       "reason": "budget",
       "at": "2026-11-19T22:38:33.312Z"
+    },
+    "ccd99384ee9d1b1f": {
+      "reason": "budget",
+      "at": "2026-11-20T00:08:59.946Z"
     }
   }
 }

@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-19T22:36:55.390Z",
+  "updated": "2026-11-20T00:07:19.876Z",
   "total": 1040,
   "withAuthor": 1040,
-  "mismatches": 59,
+  "mismatches": 58,
   "ok": true,
   "samples": [
-    {
-      "title": "En France, la colère lycéenne gagne tout le pays",
-      "link": "https://quartierlibre.ca/en-france-la-colere-lycee-gagne-tout-le-pays/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Elise Miara",
-      "reason": "page-byline"
-    },
     {
       "title": "Quand une banque fait tomber un président",
       "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Transparency: A Tool and a Threat",
+      "link": "https://thebucampus.ca/2026/10/27/transparency-a-tool-and-a-threat",
+      "source": "The Campus",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 59
+  "fixed": 58
 }
