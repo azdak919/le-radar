@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-20T14:41:53.018Z",
+  "updated": "2026-11-20T16:08:59.027Z",
   "total": 1021,
-  "withPhoto": 870,
-  "withStock": 114,
+  "withPhoto": 871,
+  "withStock": 113,
   "withCampusBank": 93,
   "fullyCovered": 955,
-  "leadReadyPhotos": 903,
-  "pageScraped": 10,
-  "photosRecovered": 10,
+  "leadReadyPhotos": 909,
+  "pageScraped": 8,
+  "photosRecovered": 8,
   "imagesCleared": 1,
-  "stockSearches": 7,
-  "stockFound": 11,
-  "campusBankFound": 7,
+  "stockSearches": 4,
+  "stockFound": 13,
+  "campusBankFound": 10,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,16 +21,10 @@
       "image": null
     },
     {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
+      "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
+      "link": "https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre",
       "reason": "no-stock-match",
-      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
-    },
-    {
-      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
-      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/en-direct-de-lunivers.avif"
     },
     {
       "title": "Blackface at McGill",
@@ -39,22 +33,10 @@
       "image": null
     },
     {
-      "title": "Pour Halloween, ce sont les pesticides qui font peur",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/pour-halloween-ce-sont-les-pesticides-qui-font-peur",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/16.jpg"
-    },
-    {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
-    },
-    {
-      "title": "Bulletins La Pige radio 2 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/8197/28541561483_fa2e96b0b7_b.jpg"
     }
   ]
 }

@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-20T14:40:11.609Z",
+  "updated": "2026-11-20T16:08:45.219Z",
   "total": 1021,
   "pool": 61,
-  "incomplete": 27,
+  "incomplete": 26,
   "withLeadExcerpt": 189,
-  "candidates": 27,
-  "enriched": 1,
+  "candidates": 26,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,12 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -46,6 +37,15 @@
       "changed": false
     },
     {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -53,15 +53,6 @@
       "chars": 439,
       "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": false
-    },
-    {
-      "title": "Analyse : La communication politique du Parti québécois",
-      "link": "https://lecollectif.ca/societe/analyse-la-communication-politique-du-parti-quebecois/",
-      "ok": true,
-      "score": 100,
-      "chars": 618,
-      "sample": "Il y a 46 jours, en date du 20 novembre, le Parti québécois a été porté au pouvoir à la tête d’un go",
-      "changed": true
     },
     {
       "title": "En France, la colère lycéenne gagne tout le pays",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 479,
       "sample": "Two new CSU councillors were elected. Students in the faculty of Fine Arts elected Alyson Bouffard a",
+      "changed": false
+    },
+    {
+      "title": "ASFA asks students what issues matter most to them",
+      "link": "https://theconcordian.com/2026/11/asfa-student-demands-survey/",
+      "ok": true,
+      "score": 100,
+      "chars": 171,
+      "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
       "changed": false
     }
   ]
