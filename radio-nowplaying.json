@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T09:07:14.970Z",
+  "updatedAt": "2026-11-20T10:06:42.867Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T09:06:27.526Z"
+      "checkedAt": "2026-11-20T10:06:18.965Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T09:06:29.672Z"
+      "checkedAt": "2026-11-20T10:06:20.826Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T09:06:32.818Z"
+      "checkedAt": "2026-11-20T10:06:23.170Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T09:06:34.905Z"
+      "checkedAt": "2026-11-20T10:06:24.578Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T09:06:35.787Z"
+      "checkedAt": "2026-11-20T10:06:25.431Z"
     },
     "choq": {
       "id": "choq",
@@ -136,20 +136,20 @@
       "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:30",
         "end": "12:30",
-        "url": "https://www.choq.ca/balados/box-sophisme"
+        "slug": "box-sophisme"
       },
       "track": "ID Kat Pereira.mp3",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T09:07:14.619Z"
+      "checkedAt": "2026-11-20T10:06:42.516Z"
     }
   }
 }
