@@ -212,24 +212,48 @@
 .revue-flag, .revue-une, .revue-une__text, .revue-encadre, .revue-colophon, .revue-top__qr { display: none; }
 .revue-top, .revue-top__main, .revue-top__side, .revue-cols { display: contents; }
 
-/* ══════════ ÉCRAN : colonne de lecture, images bornées, météo et jeux lisibles ══════════
- * N'entre pas dans @media print (les règles d'impression plus bas gardent la main). */
+/* ══════════ ÉCRAN : colonne de lecture centrée, images bornées, météo et jeux lisibles ══════════
+ * N'entre pas dans @media print (les règles d'impression plus bas gardent la main).
+ * Seul le contenant (.revue-wire) est borné et centré. Les enfants remplissent
+ * cette colonne : un max-width: 70ch + margin-inline: auto sur chacun d'eux
+ * les recentrait séparément, car 70ch suit la taille de police de l'élément
+ * (fil d'Ariane et signature décalés par rapport au titre et à la photo).
+ * Le texte reste aligné à gauche. Pied, mât et barre radio inchangés. */
+/* Spécificité > html[data-wide-preview] .seo-wire (wide-desktop-preview.css,
+ * chargé après celui-ci) qui impose --maxw presque pleine page dès 1280 px. */
+html[data-wide-preview] .seo-wire.revue-wire,
+.revue-wire {
+  max-width: min(100%, calc(70ch + 2 * var(--pad)), var(--maxw));
+  margin-inline: auto;
+  width: auto;
+}
 .revue-wire .revue {
-  max-width: 70ch;
+  max-width: none;
   margin-inline: 0;
 }
 .revue-wire .seo-title,
 .revue-wire .seo-eyebrow,
 .revue-wire .seo-crumbs,
-.revue-wire .revue-meta {
-  max-width: 70ch;
+.revue-wire .seo-lead,
+.revue-wire .revue-meta,
+.revue-wire .revue-more,
+.revue-wire .revue-disclosure,
+.revue-wire .revue-toc,
+.revue-wire .revue-nav,
+.revue-wire .revue-cover,
+.revue-wire .revue-pdf,
+.revue-wire .revue-section,
+.revue-wire .revue-archive,
+.revue-wire .revue-lede {
+  max-width: none;
+  margin-inline: 0;
 }
 .revue-wire .seo-title {
   font-size: clamp(1.6rem, 2.4vw, 2.1rem);
   line-height: 1.2;
-  margin: 0 0 10px;
+  margin-block: 0 10px;
+  margin-inline: 0;
 }
-.revue-wire .revue-toc { max-width: 70ch; }
 .revue-wire .revue-section > h2 {
   font-family: var(--serif);
   font-size: 1.45rem;
@@ -256,7 +280,6 @@
 /* Photo de une : 16:9 (repli 3:2), hauteur plafonnée, jamais pleine fenêtre. */
 .revue-cover {
   margin: 0 0 1.1rem;
-  max-width: 70ch;
 }
 .revue-cover img {
   display: block;
@@ -284,7 +307,7 @@
 .revue-item__fig[data-stock] img { max-height: 66px; }
 
 /* Bouton PDF (formats publiés avec l'édition). */
-.revue-pdf { margin: 0 0 14px; max-width: 70ch; }
+.revue-pdf { margin: 0 0 14px; }
 .revue-pdf__box { position: relative; display: inline-block; }
 .revue-pdf__btn {
   font-family: var(--sans);
