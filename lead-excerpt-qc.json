@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-20T12:08:39.516Z",
+  "updated": "2026-11-20T13:39:31.862Z",
   "total": 1018,
   "pool": 61,
   "incomplete": 28,
   "withLeadExcerpt": 186,
   "candidates": 28,
   "enriched": 0,
-  "failed": 0,
+  "failed": 12,
   "ok": true,
   "samples": [
     {
@@ -64,21 +64,21 @@
       "changed": false
     },
     {
-      "title": "Concordia Student Union byelection results are in",
-      "link": "https://theconcordian.com/2026/11/concordia-student-union-election-results/",
+      "title": "Police deploy tear gas and pepper spray at Montreal student protest",
+      "link": "https://thelinknewspaper.ca/article/16573",
       "ok": true,
       "score": 96,
-      "chars": 479,
-      "sample": "Two new CSU councillors were elected. Students in the faculty of Fine Arts elected Alyson Bouffard a",
+      "chars": 311,
+      "sample": "The demonstration was organized by the Coalition de résistance pour l’unité étudiante syndicale (CRU",
       "changed": false
     },
     {
-      "title": "ASFA asks students what issues matter most to them",
-      "link": "https://theconcordian.com/2026/11/asfa-student-demands-survey/",
+      "title": "Montrealers honour veterans at Place du Canada",
+      "link": "https://thelinknewspaper.ca/article/16572",
       "ok": true,
       "score": 100,
-      "chars": 171,
-      "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
+      "chars": 167,
+      "sample": "Montrealers gathered at Place du Canada on Nov. 11 for a Remembrance Day ceremony honouring fallen s",
       "changed": false
     }
   ]

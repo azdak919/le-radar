@@ -2731,26 +2731,6 @@
       "via": "resize-proxy",
       "nameKey": "05_fringe_naza_tolganay_medet_900_629.png"
     },
-    "793e627e4bf94406": {
-      "local": "assets/news-images/793e627e4bf94406.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/KlempanEric_171126_NDPRally_Vol44_-5.jpg",
-      "host": "theconcordian.com",
-      "bytes": 76197,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-19T06:37:25.294Z",
-      "via": "resize-proxy",
-      "nameKey": "klempaneric_171126_ndprally_vol44_-5.jpg"
-    },
-    "d3b6becf2af8f54d": {
-      "local": "assets/news-images/d3b6becf2af8f54d.png",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Screenshot-2025-10-30-at-12.13.29-AM.png",
-      "host": "theconcordian.com",
-      "bytes": 90626,
-      "contentType": "image/png",
-      "updatedAt": "2026-11-19T18:08:58.879Z",
-      "via": "origin",
-      "nameKey": "screenshot-2025-10-30-at-12.13.29-am.png"
-    },
     "b77c63977f985bc0": {
       "local": "assets/news-images/b77c63977f985bc0.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2025/11/CSU-BY-ELECTIONS.jpg",
@@ -3076,10 +3056,20 @@
       "updatedAt": "2026-11-20T00:08:56.858Z",
       "via": "resize-proxy",
       "nameKey": "scitech-3-zoe-lee-.png"
+    },
+    "e7f462e9ba2bddc5": {
+      "local": "assets/news-images/e7f462e9ba2bddc5.png",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Screenshot-2026-11-19-at-10.38.42-AM.png",
+      "host": "theconcordian.com",
+      "bytes": 166736,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-20T13:41:15.445Z",
+      "via": "origin",
+      "nameKey": "screenshot-2026-11-19-at-10.38.42-am.png"
     }
   },
-  "updatedAt": "2026-11-20T12:09:29.219Z",
-  "count": 319,
+  "updatedAt": "2026-11-20T13:41:16.562Z",
+  "count": 318,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5249,6 +5239,10 @@
     "ccd99384ee9d1b1f": {
       "reason": "budget",
       "at": "2026-11-20T00:08:59.946Z"
+    },
+    "f48bd88848852a41": {
+      "reason": "failed",
+      "at": "2026-11-20T13:41:16.558Z"
     }
   }
 }
