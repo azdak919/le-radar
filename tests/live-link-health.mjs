@@ -165,7 +165,7 @@ console.log('OK live-link-health');
   assert.deepEqual(deduped.map((i) => i.title), ['A', 'C']);
   const src = readFileSync(new URL('../scripts/fetch-news.js', import.meta.url), 'utf8');
   assert.match(src, /allLinkKeys\.has\(linkKey\)/, 'fetch-news doit dédupliquer les liens à l’ingestion');
-  assert.match(src, /dedupeArticlesByLink\(filterHousekeepingForDisplay/, 'fetch-news doit dédupliquer avant écriture');
+  assert.match(src, /dedupeArticlesList\(filterHousekeepingForDisplay/, 'fetch-news doit dédupliquer avant écriture');
 }
 
 // Clé de dédoublonnage : http/https, www., slash final, utm_*, #ancre.

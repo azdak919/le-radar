@@ -52,6 +52,8 @@ function articleDedupeKey(link = '') {
     const query = params.length ? `?${new URLSearchParams(params).toString()}` : '';
     let pathname = url.pathname.replace(/\/{2,}/g, '/');
     if (pathname.length > 1) pathname = pathname.replace(/\/+$/, '');
+    pathname = pathname.replace(/\/amp$/i, '');
+    if (pathname.length > 1) pathname = pathname.replace(/\/+$/, '');
     const port = url.port && url.port !== '80' && url.port !== '443' ? `:${url.port}` : '';
     return `https://${host}${port}${pathname}${query}`;
   } catch {

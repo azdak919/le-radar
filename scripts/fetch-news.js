@@ -85,6 +85,7 @@ const {
   confirmedMissingUrlSet,
   omitMissingItems,
 } = require('./live-link-health-lib');
+const { dedupeArticlesList } = require('./news-dedupe-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const { readArchive, writeArchive } = require('./archive-store');
@@ -1224,7 +1225,7 @@ async function main() {
     }
   }
   const afterWithdrawn = withdrawn.items;
-  const visibleItems = dedupeArticlesByLink(filterHousekeepingForDisplay(afterWithdrawn, referenceDate));
+  const visibleItems = dedupeArticlesList(filterHousekeepingForDisplay(afterWithdrawn, referenceDate));
   // Après fusion du cache des passes précédentes : dernière garde unicité.
   const sharedVisible = keepNewestSharedImage(visibleItems);
   if (sharedVisible) console.log(`↻ ${sharedVisible} photo(s) en double dans le fil → repli`);

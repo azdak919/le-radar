@@ -42,13 +42,63 @@
   /** Âge max d’un article hors session en cours (chevauchement de rentrée). */
   const NEWS_MAX_AGE_DAYS = 45;
   const DAY_MS = 86400000;
+  /** Calendrier universitaire et jour civil du dédoublonnage : heure de Montréal. */
+  const FRESHNESS_TZ = 'America/Montreal';
+
+  function zonedParts(date, timeZone = FRESHNESS_TZ) {
+    const fmt = new Intl.DateTimeFormat('en-CA', {
+      timeZone,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23',
+    });
+    const parts = {};
+    for (const { type, value } of fmt.formatToParts(new Date(date))) {
+      if (type !== 'literal') parts[type] = value;
+    }
+    return {
+      year: Number(parts.year),
+      month: Number(parts.month),
+      day: Number(parts.day),
+      hour: Number(parts.hour),
+      minute: Number(parts.minute),
+      second: Number(parts.second),
+    };
+  }
+
+  /** Jour civil YYYY-MM-DD à Montréal (ou autre fuseau). */
+  function zonedYmd(date, timeZone = FRESHNESS_TZ) {
+    const p = zonedParts(date, timeZone);
+    if (!Number.isFinite(p.year) || !Number.isFinite(p.month) || !Number.isFinite(p.day)) return '';
+    return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
+  }
+
+  /**
+   * Instant UTC correspondant à une horloge civile dans le fuseau.
+   * monthIndex est 0-based, comme Date.
+   */
+  function zonedLocalToUtc(year, monthIndex, day, hour = 0, minute = 0, second = 0, timeZone = FRESHNESS_TZ) {
+    const utcGuess = Date.UTC(year, monthIndex, day, hour, minute, second);
+    const p = zonedParts(new Date(utcGuess), timeZone);
+    const asUtc = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+    return utcGuess - (asUtc - utcGuess);
+  }
+
+  function zonedMidnight(year, monthIndex, day, timeZone = FRESHNESS_TZ) {
+    return new Date(zonedLocalToUtc(year, monthIndex, day, 0, 0, 0, timeZone));
+  }
 
   function getCurrentUniversitySessionStart(referenceDate = new Date()) {
-    const year = referenceDate.getFullYear();
-    const month = referenceDate.getMonth();
-    if (month >= 8) return new Date(year, 8, 1); // automne
-    if (month >= 4) return new Date(year, 4, 1); // été
-    return new Date(year, 0, 1); // hiver
+    const p = zonedParts(referenceDate);
+    const year = p.year;
+    const month = p.month - 1; // 0-based
+    if (month >= 8) return zonedMidnight(year, 8, 1); // automne
+    if (month >= 4) return zonedMidnight(year, 4, 1); // été
+    return zonedMidnight(year, 0, 1); // hiver
   }
 
   /**
@@ -57,7 +107,7 @@
    * @returns {'automne'|'hiver'|'ete'}
    */
   function getCurrentUniversitySessionId(referenceDate = new Date()) {
-    const month = referenceDate.getMonth();
+    const month = zonedParts(referenceDate).month - 1;
     if (month >= 8) return 'automne';
     if (month >= 4) return 'ete';
     return 'hiver';
@@ -76,11 +126,12 @@
   }
 
   function getPriorUniversitySessionStart(sessionStart) {
-    const year = sessionStart.getFullYear();
-    const month = sessionStart.getMonth();
-    if (month === 8) return new Date(year, 4, 1); // automne → été
-    if (month === 4) return new Date(year, 0, 1); // été → hiver
-    return new Date(year - 1, 8, 1); // hiver → automne précédent
+    const p = zonedParts(sessionStart);
+    const year = p.year;
+    const month = p.month - 1;
+    if (month === 8) return zonedMidnight(year, 4, 1); // automne → été
+    if (month === 4) return zonedMidnight(year, 0, 1); // été → hiver
+    return zonedMidnight(year - 1, 8, 1); // hiver → automne précédent
   }
 
   function getUniversitySessionStart(referenceDate = new Date(), sessionsBack = 0) {
@@ -105,7 +156,7 @@
 
   /** Septembre : grâce avant de retirer l’automne d’avant. */
   function isSeptemberAutumnGrace(referenceDate = new Date()) {
-    return referenceDate.getMonth() === SEPTEMBER_AUTUMN_GRACE_MONTH;
+    return zonedParts(referenceDate).month - 1 === SEPTEMBER_AUTUMN_GRACE_MONTH;
   }
 
   /** Alias UI historique. */
@@ -189,6 +240,11 @@
     CONTINGENCY_MAX_SESSIONS_BACK,
     SEPTEMBER_AUTUMN_GRACE_MONTH,
     NEWS_MAX_AGE_DAYS,
+    FRESHNESS_TZ,
+    zonedParts,
+    zonedYmd,
+    zonedLocalToUtc,
+    zonedMidnight,
     isWithinSessionCycleWindow,
     sessionCycleWindowStart,
     getCurrentUniversitySessionStart,
