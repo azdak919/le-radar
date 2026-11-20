@@ -1,21 +1,28 @@
 {
-  "updated": "2026-11-20T21:39:20.210Z",
-  "total": 1035,
-  "withImage": 934,
-  "withCredit": 934,
-  "cited": 657,
-  "pending": 164,
+  "updated": "2026-11-20T22:09:35.543Z",
+  "total": 1036,
+  "withImage": 936,
+  "withCredit": 936,
+  "cited": 658,
+  "pending": 161,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 3,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "updatedCount": 4,
+  "citedNew": 5,
+  "fallbackNew": 55,
   "samples": [
     {
-      "title": "En France, la colère lycéenne gagne tout le pays",
+      "title": "La vie lors d’une régate d’aviron",
       "source": "Quartier Libre",
-      "credit": "Photo : Clément Souchet",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
       "cited": true,
       "method": "figcaption-trailing-fr"
     },
@@ -27,11 +34,11 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Is Wearing Makeup Really a Choice?",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zoé Sanguin",
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "via-attribution"
     }
   ]
 }

@@ -2449,26 +2449,6 @@
       "via": "resize-proxy",
       "nameKey": "btw-slave-play-_-the-exchange-pre-show-conversation-kristen-young-1.jpg"
     },
-    "a4094afb6ea4b820": {
-      "local": "assets/news-images/a4094afb6ea4b820.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/04.fringe.between_worlds.Sana_Paracha.online_1000094039-2_690_519_90.jpg",
-      "host": "thelinknewspaper.ca",
-      "bytes": 83717,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:40:58.997Z",
-      "via": "origin",
-      "nameKey": "04.fringe.between_worlds.sana_paracha.online_1000094039-2.jpg"
-    },
-    "e80f580a5098f024": {
-      "local": "assets/news-images/e80f580a5098f024.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/10/PSPPFirstannoucement-00000018.jpg",
-      "host": "theconcordian.com",
-      "bytes": 163845,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:40:59.168Z",
-      "via": "resize-proxy",
-      "nameKey": "psppfirstannoucement-00000018.jpg"
-    },
     "be611451563af4ef": {
       "local": "assets/news-images/be611451563af4ef.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
@@ -2833,16 +2813,6 @@
       "via": "disk",
       "nameKey": "5_fantome_charles-david.jpg"
     },
-    "b257119e33105803": {
-      "local": "assets/news-images/b257119e33105803.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/10-11_sensations-fortes_josephine-1024x683.jpg",
-      "host": "quartierlibre.ca",
-      "bytes": 97504,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-20T17:57:05.909Z",
-      "via": "origin",
-      "nameKey": "10-11_sensations-fortes_josephine.jpg"
-    },
     "3b61ef4fd4fa34c5": {
       "local": "assets/news-images/3b61ef4fd4fa34c5.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Vieux-Theatre-La-Baie.jpeg",
@@ -2917,15 +2887,6 @@
       "updatedAt": "2026-11-19T21:14:03.609Z",
       "via": "disk",
       "nameKey": "03.1autobus.jpg"
-    },
-    "3d829a1c4f26f96c": {
-      "local": "assets/news-images/3d829a1c4f26f96c.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Chicoutimi.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 124558,
-      "updatedAt": "2026-11-19T21:14:03.609Z",
-      "via": "disk",
-      "nameKey": "chicoutimi.jpg"
     },
     "acb1153bd09ec623": {
       "local": "assets/news-images/acb1153bd09ec623.jpg",
@@ -3174,10 +3135,38 @@
       "updatedAt": "2026-11-20T21:38:22.329Z",
       "via": "resize-proxy",
       "nameKey": "img_4302.png"
+    },
+    "1477266ce236d071": {
+      "local": "assets/news-images/1477266ce236d071.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/10-11_sensations-fortes_josephine.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 134849,
+      "updatedAt": "2026-11-20T22:08:34.021Z",
+      "via": "disk",
+      "nameKey": "10-11_sensations-fortes_josephine.jpg"
+    },
+    "95d1c982cd32b09e": {
+      "local": "assets/news-images/95d1c982cd32b09e.webp",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
+      "host": "quartierlibre.ca",
+      "bytes": 198136,
+      "updatedAt": "2026-11-20T22:08:34.030Z",
+      "via": "disk",
+      "nameKey": "5infos_ql-e1769792962990.png"
+    },
+    "ef9d41281ebe1801": {
+      "local": "assets/news-images/ef9d41281ebe1801.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/Photo-1-768x1024-1.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 157482,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T22:08:34.370Z",
+      "via": "origin",
+      "nameKey": "photo-1-768x1024-1.jpg"
     }
   },
-  "updatedAt": "2026-11-20T21:38:22.338Z",
-  "count": 327,
+  "updatedAt": "2026-11-20T22:08:34.387Z",
+  "count": 326,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5631,6 +5620,18 @@
     "7c9fbc3f2bfe5ba8": {
       "reason": "budget",
       "at": "2026-11-20T21:38:22.336Z"
+    },
+    "e80f580a5098f024": {
+      "reason": "budget",
+      "at": "2026-11-20T22:08:34.378Z"
+    },
+    "a4094afb6ea4b820": {
+      "reason": "budget",
+      "at": "2026-11-20T22:08:34.381Z"
+    },
+    "3d829a1c4f26f96c": {
+      "reason": "budget",
+      "at": "2026-11-20T22:08:34.385Z"
     }
   }
 }
