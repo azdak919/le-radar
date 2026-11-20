@@ -152,3 +152,133 @@ test('animations réduites : pas de défilement @ci-critical', async ({ page }) 
     expect(line.animation === 'none' || !line.isMarquee).toBeTruthy();
   }
 });
+
+
+/* Titres réels parmi les plus longs des grilles (radio-schedules.json). */
+const LONG_NOW = 'Easy Sonic Living/Zoe\'s Hour/Dreams And Tales/Internet Lunch Forever';
+const LONG_NEXT = 'electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?';
+
+async function forceAirTitles(page, nowTitle, nextTitle) {
+  await page.evaluate(({ nowTitle, nextTitle }) => {
+    const root = document.querySelector('.radar-radio')?.shadowRoot;
+    if (!root) return;
+    const fill = (node, title) => {
+      if (!node) return;
+      node.classList.remove('is-empty');
+      node.setAttribute('aria-hidden', 'false');
+      const el = node.querySelector('.air-title');
+      const span = document.createElement('span');
+      span.className = 'tuner-now-sub-text';
+      span.textContent = title;
+      el.replaceChildren(span);
+      const time = node.querySelector('.air-time');
+      if (time) time.textContent = '20 h 00 – 22 h 00';
+    };
+    fill(root.querySelector('.air--now'), nowTitle);
+    fill(root.querySelector('.air--next'), nextTitle);
+    // Relancer la mesure (ResizeObserver de l'hôte + rafraîchissement manuel).
+    const host = document.querySelector('.radar-radio');
+    const prev = host.style.width;
+    host.style.width = (host.getBoundingClientRect().width - 1) + 'px';
+    requestAnimationFrame(() => {
+      host.style.width = prev;
+      window.dispatchEvent(new Event('resize'));
+    });
+  }, { nowTitle, nextTitle });
+  await page.waitForTimeout(250);
+  // Mesure directe : measureMarquee n'est pas exposé, on l'imite puis
+  // on laisse le ResizeObserver faire le même calcul.
+  await page.evaluate(() => {
+    const root = document.querySelector('.radar-radio')?.shadowRoot;
+    if (!root) return;
+    const REDUCE = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    if (REDUCE) return;
+    const MARQUEE_READ_DELAY_MS = 1600;
+    const MARQUEE_ROUND_TRIPS = 2;
+    for (const el of root.querySelectorAll('.air-title, .line1, .line2')) {
+      const span = el.querySelector('.tuner-now-sub-text');
+      if (!span) continue;
+      const style = getComputedStyle(el);
+      const available = Math.max(0, el.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0));
+      if (!available) continue;
+      const overflow = span.scrollWidth - available;
+      if (overflow <= 2) {
+        el.classList.remove('is-marquee');
+        continue;
+      }
+      const distance = Math.round(overflow + 12);
+      const duration = Math.max(7, distance / 16);
+      el.style.setProperty('--marquee-shift', `-${distance}px`);
+      el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+      el.style.setProperty('--marquee-delay', `${(MARQUEE_READ_DELAY_MS / 1000).toFixed(1)}s`);
+      el.style.setProperty('--marquee-trips', String(MARQUEE_ROUND_TRIPS));
+      el.classList.add('is-marquee');
+    }
+  });
+  await page.waitForTimeout(80);
+}
+
+async function airBounds(page) {
+  return page.evaluate(() => {
+    const root = document.querySelector('.radar-radio')?.shadowRoot;
+    const bar = root?.querySelector('.bar');
+    if (!bar) return null;
+    const box = (sel) => {
+      const el = root.querySelector(sel);
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      const cs = getComputedStyle(el);
+      return {
+        left: r.left, right: r.right, top: r.top, bottom: r.bottom,
+        width: r.width, display: cs.display, hidden: cs.display === 'none',
+        isMarquee: !!el.querySelector('.air-title')?.classList.contains('is-marquee')
+          || el.classList.contains('is-marquee'),
+        title: (el.querySelector('.air-title')?.textContent || '').trim(),
+      };
+    };
+    const br = bar.getBoundingClientRect();
+    const padRight = parseFloat(getComputedStyle(bar).paddingRight) || 0;
+    return {
+      barRight: br.right,
+      barInnerRight: br.right - padRight,
+      padRight,
+      now: box('.air--now'),
+      next: box('.air--next'),
+      airs: box('.airs'),
+      play: box('.play'),
+      brand: box('a.brand'),
+    };
+  });
+}
+
+for (const path of ['/pomo/', '/solitaire/']) {
+  for (const width of [1024, 1280, 1440, 1920]) {
+    test(`À venir reste dans la barre à ${width} px (${path.replace(/\//g, '')}) @ci-critical`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(path, { waitUntil: 'domcontentloaded' });
+      const host = await waitBar(page);
+      const before = await airBounds(page);
+      expect(before).toBeTruthy();
+      await forceAirTitles(page, LONG_NOW, LONG_NEXT);
+      const after = await airBounds(page);
+      expect(after).toBeTruthy();
+      // Les commandes à gauche ne doivent pas bouger.
+      expect(Math.abs((after.play?.left ?? 0) - (before.play?.left ?? 0))).toBeLessThanOrEqual(1);
+      expect(Math.abs((after.brand?.left ?? 0) - (before.brand?.left ?? 0))).toBeLessThanOrEqual(1);
+      // Le bloc « À venir », s'il est visible à cette largeur de barre, ne dépasse pas.
+      if (after.next && !after.next.hidden && after.next.width > 0) {
+        expect(after.next.right, `À venir.right ${after.next.right} > inner ${after.barInnerRight}`).toBeLessThanOrEqual(after.barInnerRight + 0.5);
+        if (after.next.title && after.next.title.length > 40) {
+          expect(after.next.isMarquee, 'titre long sans défilement').toBe(true);
+        }
+      }
+      if (after.now && !after.now.hidden && after.now.width > 0) {
+        expect(after.now.right).toBeLessThanOrEqual(after.barInnerRight + 0.5);
+      }
+      if (after.airs && after.airs.width > 0) {
+        expect(after.airs.right).toBeLessThanOrEqual(after.barInnerRight + 0.5);
+      }
+      void host;
+    });
+  }
+}
