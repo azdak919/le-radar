@@ -129,8 +129,10 @@
           ${castButton('pop')}
         </div>
       </div>
-      <a class="air air--now is-empty" target="_blank" rel="noopener" aria-hidden="true"><span class="air-label">À l’antenne</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>
-      <a class="air air--next is-empty" target="_blank" rel="noopener" aria-hidden="true"><span class="air-label">À venir</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>`;
+      <div class="airs">
+        <a class="air air--now is-empty" target="_blank" rel="noopener" aria-hidden="true"><span class="air-label">À l’antenne</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>
+        <a class="air air--next is-empty" target="_blank" rel="noopener" aria-hidden="true"><span class="air-label">À venir</span><span class="air-body"><span class="air-title"></span><span class="air-time"></span></span></a>
+      </div>`;
     root.append(bar);
 
     const $ = (selector) => bar.querySelector(selector);

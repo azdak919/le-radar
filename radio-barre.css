@@ -124,10 +124,21 @@ svg { display: block; }
 .labels span:first-child { transform: translateX(-2px); }
 .labels span:last-child { color: rgba(255, 125, 110, .75); }
 
-/* À l'antenne / À venir. */
+/* À l'antenne / À venir.
+ * Groupe borné à l'intérieur de la barre : le texte long défile (même
+ * marquee que le cadran) et le bord droit du bloc « À venir » ne dépasse
+ * jamais le padding intérieur de la barre, même avec des titres très longs.
+ * min-width: 0 pour que le flex puisse rétrécir ; overflow caché ici, pas
+ * sur .bar (le menu volume sort sous la barre). */
+.airs {
+  display: flex; align-items: stretch; gap: 9px;
+  flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden;
+}
 .air {
-  flex: 0 1 170px; min-width: 110px; width: 170px; display: flex; flex-direction: column; gap: 2px;
+  flex: 0 1 170px; min-width: 0; width: 170px; max-width: 100%;
+  display: flex; flex-direction: column; gap: 2px;
   color: inherit; text-decoration: none; padding-left: 4px;
+  overflow: hidden;
 }
 /* Vide : invisible, mais la place reste (évite le saut au changement de poste). */
 .air.is-empty { visibility: hidden; pointer-events: none; }
