@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T04:06:59.819Z",
+  "updatedAt": "2026-11-20T05:07:00.399Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T04:06:21.212Z"
+      "checkedAt": "2026-11-20T05:06:18.275Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T04:06:35.441Z"
+      "checkedAt": "2026-11-20T05:06:33.336Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,66 +73,72 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T04:06:38.865Z"
+      "checkedAt": "2026-11-20T05:06:37.907Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Finally Midnight",
         "source": "schedule-live",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/finally-midnight"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Finally Midnight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T04:06:40.669Z"
+      "checkedAt": "2026-11-20T05:06:39.991Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T04:06:41.696Z"
+      "checkedAt": "2026-11-20T05:06:41.336Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Podcast Nomade: L'art de se rencontrer",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "slug": "podcast-nomade-lart-de-se-rencontrer"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
       "track": "ID Kat Pereira.mp3",
       "showTitle": "",
@@ -142,7 +148,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T04:06:59.468Z"
+      "checkedAt": "2026-11-20T05:07:00.049Z"
     }
   }
 }
