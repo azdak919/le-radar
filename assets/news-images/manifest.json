@@ -2251,16 +2251,6 @@
       "via": "resize-proxy",
       "nameKey": "587d85be-5abb-4716-8ea0-5eb24a0d87ee_1_201_a.jpeg"
     },
-    "1e1c34fb613861aa": {
-      "local": "assets/news-images/1e1c34fb613861aa.jpg",
-      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/IMG_1693.jpeg",
-      "host": "www.exemplaire.com.ulaval.ca",
-      "bytes": 200736,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:40:56.268Z",
-      "via": "resize-proxy",
-      "nameKey": "img_1693.jpeg"
-    },
     "81eba94ebcb817b3": {
       "local": "assets/news-images/81eba94ebcb817b3.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/RebeccaChan_OliviaRodrigo_Vol44-1.jpg",
@@ -3121,18 +3111,26 @@
       "via": "photon-resize",
       "nameKey": "img_2858-2.jpg"
     },
-    "ddb53bf134cefce8": {
-      "local": "assets/news-images/ddb53bf134cefce8.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/IMG_1198-3.jpg",
-      "host": "quartierlibre.ca",
-      "bytes": 265171,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-20T17:41:23.709Z",
-      "via": "origin",
-      "nameKey": "img_1198-3.jpg"
+    "afc56adf8c65cd33": {
+      "local": "assets/news-images/afc56adf8c65cd33.jpg",
+      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg",
+      "host": "www.exemplaire.com.ulaval.ca",
+      "bytes": 255983,
+      "updatedAt": "2026-11-20T19:09:16.154Z",
+      "via": "disk",
+      "nameKey": "avelo-passe-de-10-a-225.jpg"
+    },
+    "166c965ceb7dcf6b": {
+      "local": "assets/news-images/166c965ceb7dcf6b.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image.jpeg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 26219,
+      "updatedAt": "2026-11-20T19:09:16.165Z",
+      "via": "disk",
+      "nameKey": "image.jpeg"
     }
   },
-  "updatedAt": "2026-11-20T17:57:57.119Z",
+  "updatedAt": "2026-11-20T19:09:16.840Z",
   "count": 323,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5327,6 +5325,46 @@
     "3032e7c1fb7b08cf": {
       "reason": "failed",
       "at": "2026-11-20T17:57:35.366Z"
+    },
+    "6a484a2d36fef815": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.803Z"
+    },
+    "20e7f4e8b9cc0d90": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.809Z"
+    },
+    "04f831da7c7fb601": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.813Z"
+    },
+    "c8fb04997a0f182f": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.816Z"
+    },
+    "8bc5115f270474b1": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.818Z"
+    },
+    "3aebef8eeff37e65": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.822Z"
+    },
+    "d236b1c24486dc1c": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.827Z"
+    },
+    "3c66bad9e3ec3bb3": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.832Z"
+    },
+    "ddb53bf134cefce8": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.836Z"
+    },
+    "b76ebb62763a2c2b": {
+      "reason": "budget",
+      "at": "2026-11-20T19:09:16.839Z"
     }
   }
 }

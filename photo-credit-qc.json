@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-20T17:59:06.767Z",
+  "updated": "2026-11-20T19:10:16.341Z",
   "total": 1021,
-  "withImage": 865,
-  "withCredit": 865,
-  "cited": 605,
-  "pending": 147,
+  "withImage": 875,
+  "withCredit": 875,
+  "cited": 614,
+  "pending": 152,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 3,
-  "fallbackNew": 57,
+  "updatedCount": 6,
+  "citedNew": 5,
+  "fallbackNew": 55,
   "samples": [
     {
       "title": "En France, la colère lycéenne gagne tout le pays",
@@ -25,6 +25,34 @@
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Le réseau à Vélo en roue libre auprès de la population",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
+      "source": "La Pige",
+      "credit": "Photo : Rosalie Lepage",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le bijou, accessoire de mode pour hommes",
+      "source": "La Pige",
+      "credit": "Photo : Émile Barthe",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière",
+      "source": "La Pige",
+      "credit": "Photo : Colin Boucher",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
