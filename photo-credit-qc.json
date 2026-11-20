@@ -1,23 +1,30 @@
 {
-  "updated": "2026-11-20T20:39:41.284Z",
-  "total": 1033,
-  "withImage": 931,
-  "withCredit": 931,
-  "cited": 655,
-  "pending": 163,
+  "updated": "2026-11-20T21:10:26.652Z",
+  "total": 1035,
+  "withImage": 933,
+  "withCredit": 933,
+  "cited": 656,
+  "pending": 164,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 4,
-  "citedNew": 5,
-  "fallbackNew": 55,
+  "citedNew": 4,
+  "fallbackNew": 56,
   "samples": [
     {
-      "title": "Alliance Cheerleading : un départ au-delà des attentes",
+      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
       "source": "La Pige",
-      "credit": "Photo : Laury-Ann Savard",
+      "credit": "Photo : Juliette Pain",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Des étudiants du Cégep de Jonquière à « la COP qui chie »",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
       "title": "En France, la colère lycéenne gagne tout le pays",
@@ -32,13 +39,6 @@
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Les fermes du Québec ouvriront leurs portes dimanche",
-      "source": "La Pige",
-      "credit": "Photo : Augustin Spièce",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }

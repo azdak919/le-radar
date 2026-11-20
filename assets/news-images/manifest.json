@@ -2469,16 +2469,6 @@
       "via": "resize-proxy",
       "nameKey": "psppfirstannoucement-00000018.jpg"
     },
-    "e0e3c9e4644e958d": {
-      "local": "assets/news-images/e0e3c9e4644e958d.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Yann_Rfd-4_900_600_90.jpg",
-      "host": "thelinknewspaper.ca",
-      "bytes": 112932,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T13:10:21.089Z",
-      "via": "origin",
-      "nameKey": "yann_rfd-4.jpg"
-    },
     "be611451563af4ef": {
       "local": "assets/news-images/be611451563af4ef.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
@@ -2946,15 +2936,6 @@
       "via": "disk",
       "nameKey": "palestine-1.jpg"
     },
-    "064dba47b70cb096": {
-      "local": "assets/news-images/064dba47b70cb096.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/22_jeux-videos.jpeg",
-      "host": "quartierlibre.ca",
-      "bytes": 275035,
-      "updatedAt": "2026-11-19T21:14:03.609Z",
-      "via": "disk",
-      "nameKey": "22_jeux-videos.jpeg"
-    },
     "acb1153bd09ec623": {
       "local": "assets/news-images/acb1153bd09ec623.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/1_Couverture-peur-724x1024.jpg",
@@ -3162,10 +3143,40 @@
       "updatedAt": "2026-11-20T20:38:28.990Z",
       "via": "resize-proxy",
       "nameKey": "20261118_234444954_ios-scaled-e1795203912425.jpg"
+    },
+    "52f649e3ed90603e": {
+      "local": "assets/news-images/52f649e3ed90603e.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Capture-decran-le-2026-11-13-a-14.02.34-e1795204995685.png",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 127214,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T21:09:00.562Z",
+      "via": "resize-proxy",
+      "nameKey": "capture-decran-le-2026-11-13-a-14.02.34-e1795204995685.png"
+    },
+    "a1d4364e8d070696": {
+      "local": "assets/news-images/a1d4364e8d070696.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/6-7_peur_cassie-et-julie.png",
+      "host": "quartierlibre.ca",
+      "bytes": 207504,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T21:09:00.766Z",
+      "via": "resize-proxy",
+      "nameKey": "6-7_peur_cassie-et-julie.png"
+    },
+    "7c7db7c009aa0e05": {
+      "local": "assets/news-images/7c7db7c009aa0e05.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/0E9A5660.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 138317,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T21:09:24.587Z",
+      "via": "resize-proxy",
+      "nameKey": "0e9a5660.jpg"
     }
   },
-  "updatedAt": "2026-11-20T20:38:29.010Z",
-  "count": 326,
+  "updatedAt": "2026-11-20T21:09:24.600Z",
+  "count": 327,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5226,11 +5237,7 @@
     },
     "a32c9befae8ae981": {
       "reason": "failed",
-      "at": "2026-11-19T21:06:31.041Z"
-    },
-    "a1d4364e8d070696": {
-      "reason": "failed",
-      "at": "2026-11-19T21:06:37.933Z"
+      "at": "2026-11-20T21:09:00.392Z"
     },
     "5ae54d001340acaf": {
       "reason": "budget",
@@ -5611,6 +5618,14 @@
     "99fc6fc3bac23961": {
       "reason": "budget",
       "at": "2026-11-20T20:38:29.008Z"
+    },
+    "064dba47b70cb096": {
+      "reason": "budget",
+      "at": "2026-11-20T21:09:24.594Z"
+    },
+    "e0e3c9e4644e958d": {
+      "reason": "budget",
+      "at": "2026-11-20T21:09:24.598Z"
     }
   }
 }
