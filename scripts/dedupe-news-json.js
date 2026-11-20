@@ -14,22 +14,11 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { articleDedupeKey } = require('./live-link-health-lib');
+const { dedupeArticles } = require('./news-dedupe-lib');
 
-/** Garde une entrée par lien ; entre deux copies, préfère celle qui a son image locale. */
+/** Garde une entrée par article (lien canonique, ou source + titre + jour). */
 function dedupeNewsItems(items = []) {
-  const kept = [];
-  const index = new Map();
-  let removed = 0;
-  for (const item of items) {
-    const key = articleDedupeKey(item && item.link);
-    if (!key) { kept.push(item); continue; }
-    if (!index.has(key)) { index.set(key, kept.length); kept.push(item); continue; }
-    removed += 1;
-    const at = index.get(key);
-    if (item && item.imageLocal && !kept[at].imageLocal) kept[at] = item;
-  }
-  return { items: kept, removed };
+  return dedupeArticles(items);
 }
 
 function main(argv) {

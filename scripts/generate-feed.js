@@ -513,15 +513,9 @@ function main() {
     process.exit(1);
   }
 
-  // Doublons : même lien ou même titre normalisé (reprises multi-sources).
-  const seenKeys = new Set();
-  const unique = items.filter((it) => {
-    const keys = [String(it.link).trim().replace(/[?#].*$/, '').replace(/\/$/, ''),
-      `${String(it.source || '')}|${String(it.title).toLowerCase().replace(/\s+/g, ' ').trim()}`];
-    if (keys.some((k) => seenKeys.has(k))) return false;
-    keys.forEach((k) => seenKeys.add(k));
-    return true;
-  });
+  // Doublons : même lien canonique, ou même média + titre + jour à Montréal.
+  // On ne fusionne pas une série récurrente (jours distincts) ni deux médias.
+  const unique = dedupeArticlesList(items);
   items.length = 0;
   items.push(...unique);
 

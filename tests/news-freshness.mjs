@@ -45,4 +45,26 @@ assert.doesNotMatch(docs, /fenêtre de fraîcheur UI\s*\(3 sessions/, 'docs : fe
 assert.match(docs, /Le cycle de vie des sources suit 3 sessions/);
 assert.match(docs, /fenêtre d'affichage/);
 
+// Début de session : minuit heure de Montréal, pas minuit UTC (CI GitHub).
+const nov20 = new Date('2026-11-20T08:07:24.876Z');
+assert.equal(SF.FRESHNESS_TZ, 'America/Montreal');
+assert.equal(SF.getCurrentUniversitySessionStart(nov20).toISOString(), '2026-09-01T04:00:00.000Z');
+assert.equal(SF.getCurrentUniversitySessionId(nov20), 'automne');
+assert.equal(SF.getCurrentUniversitySessionStart(new Date('2026-02-15T15:00:00Z')).toISOString(), '2026-01-01T05:00:00.000Z');
+assert.equal(SF.getCurrentUniversitySessionStart(new Date('2026-06-15T15:00:00Z')).toISOString(), '2026-05-01T04:00:00.000Z');
+// 1er janv. 03 h UTC = 31 déc. 22 h à Montréal : encore l'automne.
+const nye = new Date('2027-01-01T03:00:00.000Z');
+assert.equal(SF.getCurrentUniversitySessionId(nye), 'automne');
+assert.equal(SF.getCurrentUniversitySessionStart(nye).toISOString(), '2026-09-01T04:00:00.000Z');
+// 1er sept. 03 h UTC = 31 août 23 h à Montréal : encore l'été.
+const aug31eve = new Date('2026-09-01T03:00:00.000Z');
+assert.equal(SF.getCurrentUniversitySessionId(aug31eve), 'ete');
+assert.equal(SF.getCurrentUniversitySessionStart(aug31eve).toISOString(), '2026-05-01T04:00:00.000Z');
+// Le 20 nov., un article du 31 août au soir (UTC du 1er sept.) sort de la fenêtre.
+assert.equal(SF.isWithinFreshnessWindow({ date: '2026-09-01T03:15:39.000Z' }, nov20), false, '31 août 23 h 15 Montréal hors session en novembre');
+assert.equal(SF.isWithinFreshnessWindow({ date: '2026-09-01T04:00:00.000Z' }, nov20), true, '1er sept. 0 h Montréal dans la session');
+// Début de session : la fenêtre de 45 jours garde encore la fin d'août.
+const sep5utc = new Date('2026-09-05T16:00:00.000Z');
+assert.equal(SF.isWithinFreshnessWindow({ date: '2026-09-01T03:15:39.000Z' }, sep5utc), true, '31 août encore visible le 5 sept. (45 j)');
+
 console.log('OK news-freshness');

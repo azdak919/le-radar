@@ -34,6 +34,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Compteur et fil : le début de session (1er septembre, 1er janvier, 1er mai) est minuit à Montréal, et non plus minuit UTC. Les doublons d’un même média (même titre le même jour, ou variantes d’URL : L’Exemplaire /a-la-une/ et /actualites/, chemins The Tribune, suffixe -2 de La Pige et du Délit) sont retirés du catalogue et du flux RSS. La série « Cinq nouvelles de la semaine » de Quartier Libre, publiée à des jours distincts, est conservée. Cache `radar-shell-v1048`.
+
 - Images d’article : deux photos différentes portant le même nom de fichier dans des dossiers mensuels distincts (La Pige « Image-9.jpg » d’octobre et de novembre, Le Délit « matteo.png ») ne sont plus prises pour un visuel générique partagé. Le dédoublonnage compare maintenant l’hôte, le dossier et le nom, sans le suffixe de taille. Environ 12 vraies photos étaient retirées à chaque récolte.
 
 - Publications Buffer : le format réel de l’image est lu dans ses octets. LinkedIn a refusé le 16 nov. 2026 (« An unknown error has occurred ») un AVIF que le miroir avait enregistré sous `ebfd0e0cb64e1419.jpg` et que GitHub Pages servait en `image/jpeg`. Seuls un JPEG ou un PNG au Content-Type conforme partent tels quels ; un WebP, un AVIF ou un HEIC passe par le relais qui réencode en JPEG, pour X, LinkedIn et Facebook. Le miroir réencode désormais les AVIF et HEIC en JPEG, nomme chaque fichier d’après son contenu et retélécharge un ancien AVIF caché sous `.jpg` (deux fichiers touchés). Les raisons d’un refus d’image sont écrites dans le journal du workflow. Essais simulés : `tests/social-media-format.mjs`.
