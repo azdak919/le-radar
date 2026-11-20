@@ -117,22 +117,23 @@ test('une fiche de journal garde byline, bref et fraîcheur factuelle', async ({
     const wire = document.querySelector('.seo-wire');
     const footer = document.querySelector('.site-foot');
     const inset = parseFloat(getComputedStyle(footer, '::before').left);
-    const wireStyle = getComputedStyle(wire);
-    const padL = parseFloat(wireStyle.paddingLeft) || 0;
-    const padR = parseFloat(wireStyle.paddingRight) || 0;
+    const footPadL = parseFloat(getComputedStyle(footer).paddingLeft) || 0;
+    const footPadR = parseFloat(getComputedStyle(footer).paddingRight) || 0;
     const wireRect = wire.getBoundingClientRect();
     const footerRect = footer.getBoundingClientRect();
     return {
-      contentLeft: wireRect.left + padL,
-      contentRight: wireRect.right - padR,
+      wireWidth: wireRect.width,
+      footerWidth: footerRect.width,
       footerRuleLeft: footerRect.left + inset,
       footerRuleRight: footerRect.right - inset,
+      footerPadLeft: footerRect.left + footPadL,
+      footerPadRight: footerRect.right - footPadR,
     };
   });
-  // Filet du pied = gouttière de `.seo-wire`, pas la mesure de lecture 720 px
-  // que le shell large peut poser sur `.seo-headlines`.
-  expect(rulesAlign.footerRuleLeft).toBeCloseTo(rulesAlign.contentLeft, 1);
-  expect(rulesAlign.footerRuleRight).toBeCloseTo(rulesAlign.contentRight, 1);
+  // Filet du pied = gouttière du pied (--maxw), pas la colonne de lecture ~70ch.
+  expect(rulesAlign.footerRuleLeft).toBeCloseTo(rulesAlign.footerPadLeft, 1);
+  expect(rulesAlign.footerRuleRight).toBeCloseTo(rulesAlign.footerPadRight, 1);
+  expect(rulesAlign.wireWidth, 'fiche plus étroite que le pied --maxw').toBeLessThan(rulesAlign.footerWidth - 8);
 });
 
 test('un journal francophone garde son nom sans pseudo-slogan traduit', async ({ page }) => {
@@ -425,7 +426,11 @@ test('wide E : faits packés et footer en colonnes, pas étalés', async ({ page
   const wireBox = await page.locator('.seo-wire').boundingBox();
   expect(factsBox, 'bandeau faits').toBeTruthy();
   expect(wireBox, 'colonne seo').toBeTruthy();
-  expect(factsBox.width).toBeLessThan(wireBox.width * 0.72);
+  // La fiche est une colonne de lecture (~70ch), pas le --maxw du shell E.
+  // Les faits restent packés (width: max-content, pastille ≤ 17.5rem) et
+  // ne débordent pas de cette colonne.
+  expect(wireBox.width, 'colonne de lecture bornée à 2560 px').toBeLessThan(900);
+  expect(factsBox.width).toBeLessThanOrEqual(wireBox.width + 1);
 
   const factWidths = await page.locator('.seo-fact').evaluateAll((els) =>
     els.map((el) => Math.round(el.getBoundingClientRect().width)),
