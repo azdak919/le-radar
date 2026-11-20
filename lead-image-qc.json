@@ -1,19 +1,31 @@
 {
-  "updated": "2026-11-20T02:07:58.716Z",
+  "updated": "2026-11-20T03:38:16.453Z",
   "total": 1040,
-  "withPhoto": 872,
-  "withStock": 133,
-  "withCampusBank": 109,
-  "fullyCovered": 970,
-  "leadReadyPhotos": 896,
-  "pageScraped": 2,
-  "photosRecovered": 2,
-  "imagesCleared": 0,
-  "stockSearches": 1,
-  "stockFound": 19,
-  "campusBankFound": 18,
+  "withPhoto": 876,
+  "withStock": 130,
+  "withCampusBank": 106,
+  "fullyCovered": 972,
+  "leadReadyPhotos": 899,
+  "pageScraped": 9,
+  "photosRecovered": 9,
+  "imagesCleared": 1,
+  "stockSearches": 3,
+  "stockFound": 18,
+  "campusBankFound": 15,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
+    },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",

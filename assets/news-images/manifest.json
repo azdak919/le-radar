@@ -3076,15 +3076,6 @@
       "via": "origin",
       "nameKey": "21_mouvement-lyceenjpeg.jpeg"
     },
-    "95d1c982cd32b09e": {
-      "local": "assets/news-images/95d1c982cd32b09e.webp",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
-      "host": "quartierlibre.ca",
-      "bytes": 198136,
-      "updatedAt": "2026-11-20T00:08:53.938Z",
-      "via": "disk",
-      "nameKey": "5infos_ql-e1769792962990.png"
-    },
     "75bc16a385dfdedb": {
       "local": "assets/news-images/75bc16a385dfdedb.jpg",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/09/Scitech-3-Zoe-Lee-.png",
@@ -3096,8 +3087,8 @@
       "nameKey": "scitech-3-zoe-lee-.png"
     }
   },
-  "updatedAt": "2026-11-20T02:08:35.598Z",
-  "count": 321,
+  "updatedAt": "2026-11-20T03:38:56.034Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5295,6 +5286,10 @@
     "ccd99384ee9d1b1f": {
       "reason": "budget",
       "at": "2026-11-20T00:08:59.946Z"
+    },
+    "497355f96a224e3d": {
+      "reason": "failed",
+      "at": "2026-11-20T03:38:56.028Z"
     }
   }
 }

@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-20T02:07:47.891Z",
+  "updated": "2026-11-20T03:37:55.006Z",
   "total": 1040,
   "pool": 61,
   "incomplete": 28,
   "withLeadExcerpt": 187,
   "candidates": 28,
   "enriched": 0,
-  "failed": 7,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "En France, la colère lycéenne gagne tout le pays",
+      "link": "https://quartierlibre.ca/en-france-la-colere-lycee-gagne-tout-le-pays/",
+      "ok": true,
+      "score": 100,
+      "chars": 1087,
+      "sample": "Depuis près d’un mois, des lycéen·ne·s français·es bloquent leurs établissements scolaires et manife",
+      "changed": false
+    },
+    {
       "title": "Concordia Student Union byelection results are in",
       "link": "https://theconcordian.com/2026/11/concordia-student-union-election-results/",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 171,
       "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
-      "changed": false
-    },
-    {
-      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
-      "link": "https://theconcordian.com/2026/11/avi-lewis-carney-policies-terrifying/",
-      "ok": true,
-      "score": 100,
-      "chars": 190,
-      "sample": "Hundreds of New Democratic Party (NDP) supporters gathered at a rally on Nov. 17 at Ausgang Plaza in",
       "changed": false
     }
   ]
