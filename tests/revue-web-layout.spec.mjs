@@ -51,8 +51,20 @@ test.describe('Revue écran', () => {
   }
 });
 
-async function columnMetrics(page) {
-  return page.evaluate(() => {
+const EDITION_EDGE_SELECTORS = [
+  '.seo-crumbs', '.seo-eyebrow', '.seo-title', '.revue-meta', '.revue-wx--meta',
+  '.revue-pdf', '.revue-pdf__btn', '.revue-cover', '.revue-cover img',
+  '.revue-lede, .seo-lead.revue-lede', '.revue-toc', '.revue-item__media',
+  '.revue-item__title', '.revue-nav', '#meteo', '#jeux', '.revue-section > h2',
+];
+const INDEX_EDGE_SELECTORS = [
+  '.seo-crumbs', '.seo-eyebrow', '.seo-title', '.seo-lead', '.revue-more',
+  '.revue-section > h2', '.revue-archive', '.revue-archive__day h3',
+  '.revue-disclosure',
+];
+
+async function columnMetrics(page, selectors) {
+  return page.evaluate((sels) => {
     const vw = window.innerWidth;
     const el = document.querySelector('article.revue')
       || document.querySelector('.seo-title')
@@ -62,6 +74,16 @@ async function columnMetrics(page) {
     const cover = document.querySelector('.revue-cover')?.getBoundingClientRect();
     const foot = document.querySelector('.site-foot')?.getBoundingClientRect();
     const ticker = document.querySelector('.masthead-sports-strip, .masthead')?.getBoundingClientRect();
+    const edges = [];
+    for (const sel of sels) {
+      for (const node of document.querySelectorAll(sel)) {
+        const cs = getComputedStyle(node);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        const b = node.getBoundingClientRect();
+        if (b.width === 0 && b.height === 0) continue;
+        edges.push({ sel, left: b.left });
+      }
+    }
     return {
       vw,
       left: r.left,
@@ -74,8 +96,9 @@ async function columnMetrics(page) {
       footWidth: foot?.width ?? null,
       tickerWidth: ticker?.width ?? null,
       padLeft: parseFloat(getComputedStyle(document.querySelector('.revue-wire')).paddingLeft) || 0,
+      edges,
     };
-  });
+  }, selectors);
 }
 
 test.describe('Revue écran : colonne centrée', () => {
@@ -99,14 +122,17 @@ test.describe('Revue écran : colonne centrée', () => {
         await page.goto(loc.path, { waitUntil: 'domcontentloaded' });
         await page.waitForSelector('.seo-title');
         await hideLab(page);
-        const m = await columnMetrics(page);
+        const selectors = loc.name === 'index' ? INDEX_EDGE_SELECTORS : EDITION_EDGE_SELECTORS;
+        const m = await columnMetrics(page, selectors);
         expect(m.overflowX, `${loc.name} ${vp.name} : pas de défilement horizontal`).toBe(false);
         expect(Math.abs(m.left - m.right), `${loc.name} ${vp.name} : colonne centrée (L=${m.left.toFixed(1)} R=${m.right.toFixed(1)})`).toBeLessThanOrEqual(8);
         expect(m.width, 'colonne bornée, pas toute la fenêtre sur bureau').toBeLessThan(vp.width < 600 ? vp.width + 1 : 900);
         expect(['left', 'start']).toContain(m.textAlign);
-        if (m.coverLeft != null && m.titleLeft != null) {
-          expect(Math.abs(m.coverLeft - m.titleLeft), 'photo alignée sur le texte').toBeLessThanOrEqual(8);
-        }
+        expect(m.edges.length, `${loc.name} : éléments de colonne à mesurer`).toBeGreaterThan(3);
+        const lefts = m.edges.map((e) => e.left);
+        const minL = Math.min(...lefts);
+        const maxL = Math.max(...lefts);
+        expect(maxL - minL, `${loc.name} ${vp.name} : même bord gauche (spread ${ (maxL-minL).toFixed(2) } px : ${m.edges.map((e)=>`${e.sel}@${e.left.toFixed(1)}`).join(', ')})`).toBeLessThanOrEqual(1);
         if (vp.width >= 1024) {
           expect(m.tickerWidth, 'bandeau sports toujours pleine largeur').toBeGreaterThan(vp.width * 0.9);
         }
