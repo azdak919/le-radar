@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T16:06:45.738Z",
+  "updatedAt": "2026-11-20T16:41:04.551Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T16:06:20.025Z"
+      "checkedAt": "2026-11-20T16:40:36.751Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T16:06:21.954Z"
+      "checkedAt": "2026-11-20T16:40:38.999Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T16:06:24.175Z"
+      "checkedAt": "2026-11-20T16:40:41.679Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T16:06:26.101Z"
+      "checkedAt": "2026-11-20T16:40:44.436Z"
     },
     "cfak": {
       "id": "cfak",
@@ -135,28 +135,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T16:06:27.465Z"
+      "checkedAt": "2026-11-20T16:40:45.510Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
         "start": "11:30",
         "end": "12:30",
         "slug": "box-sophisme"
       },
+      "next": {
+        "title": "Montréal au courant",
+        "source": "api-live",
+        "start": "12:45",
+        "end": "12:55",
+        "slug": "montreal-au-courant"
+      },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "",
+      "showTitle": "Opération beurre de cinoche",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T16:06:45.387Z"
+      "checkedAt": "2026-11-20T16:41:04.201Z"
     }
   }
 }
