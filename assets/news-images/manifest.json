@@ -1,16 +1,6 @@
 {
   "version": 1,
   "files": {
-    "99fc6fc3bac23961": {
-      "local": "assets/news-images/99fc6fc3bac23961.jpg",
-      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/neurodiversite-au-travail-Maud-Amoretti.jpg",
-      "host": "montrealcampus.ca",
-      "bytes": 208684,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:24.992Z",
-      "via": "resize-proxy",
-      "nameKey": "neurodiversite-au-travail-maud-amoretti.jpg"
-    },
     "daa8790952d545b8": {
       "local": "assets/news-images/daa8790952d545b8.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/IMG_4100.jpg",
@@ -3162,9 +3152,19 @@
       "updatedAt": "2026-11-20T20:08:22.735Z",
       "via": "origin",
       "nameKey": "20261112_150305292_ios.jpg"
+    },
+    "e68bdcc007899455": {
+      "local": "assets/news-images/e68bdcc007899455.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/20261118_234444954_iOS-scaled-e1795203912425.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 198222,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T20:38:28.990Z",
+      "via": "resize-proxy",
+      "nameKey": "20261118_234444954_ios-scaled-e1795203912425.jpg"
     }
   },
-  "updatedAt": "2026-11-20T20:08:57.374Z",
+  "updatedAt": "2026-11-20T20:38:29.010Z",
   "count": 326,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5579,6 +5579,38 @@
     "1c83f88a53f7aafa": {
       "reason": "budget",
       "at": "2026-11-20T20:08:57.373Z"
+    },
+    "0f9c3882c76873e9": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:28.995Z"
+    },
+    "e67a135472444de3": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:28.997Z"
+    },
+    "92b395962c6bdd4a": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:29.000Z"
+    },
+    "3f7d554e4d1a3d8a": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:29.001Z"
+    },
+    "543b8a4b1ce1951f": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:29.004Z"
+    },
+    "ab51877cda1d4709": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:29.005Z"
+    },
+    "4090588643f9f4fe": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:29.006Z"
+    },
+    "99fc6fc3bac23961": {
+      "reason": "budget",
+      "at": "2026-11-20T20:38:29.008Z"
     }
   }
 }
