@@ -29,7 +29,7 @@ test.describe('Revue écran', () => {
       if (stock === '1') expect(imgBox.height, 'banque en vignette').toBeLessThanOrEqual(120);
       await expect(page.locator('.revue-lede, .seo-lead.revue-lede')).toBeVisible();
       const lede = await page.locator('.revue-lede, .seo-lead.revue-lede').first().boundingBox();
-      expect(lede.y, 'le texte n’est pas chassé hors de l’écran par la photo').toBeLessThan(900);
+      expect(lede.y, 'le texte suit la photo, sans bandeau démesuré').toBeLessThan(box.y + box.height + 48);
       await expect(page.locator('.revue-pdf__btn')).toBeVisible({ timeout: 10_000 });
       await expect(page.locator('#meteo, .revue-meteo')).toBeVisible();
       await expect(page.locator('#jeux, .revue-jeux')).toBeVisible();
@@ -48,5 +48,72 @@ test.describe('Revue écran', () => {
         await page.screenshot({ path: `${SHOT}/${prefix}-jeux.png` });
       }
     });
+  }
+});
+
+async function columnMetrics(page) {
+  return page.evaluate(() => {
+    const vw = window.innerWidth;
+    const el = document.querySelector('article.revue')
+      || document.querySelector('.seo-title')
+      || document.querySelector('.revue-wire');
+    const r = el.getBoundingClientRect();
+    const title = document.querySelector('.seo-title')?.getBoundingClientRect();
+    const cover = document.querySelector('.revue-cover')?.getBoundingClientRect();
+    const foot = document.querySelector('.site-foot')?.getBoundingClientRect();
+    const ticker = document.querySelector('.masthead-sports-strip, .masthead')?.getBoundingClientRect();
+    return {
+      vw,
+      left: r.left,
+      right: vw - r.right,
+      width: r.width,
+      textAlign: getComputedStyle(document.querySelector('.seo-title') || el).textAlign,
+      titleLeft: title?.left ?? null,
+      coverLeft: cover?.left ?? null,
+      overflowX: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+      footWidth: foot?.width ?? null,
+      tickerWidth: ticker?.width ?? null,
+      padLeft: parseFloat(getComputedStyle(document.querySelector('.revue-wire')).paddingLeft) || 0,
+    };
+  });
+}
+
+test.describe('Revue écran : colonne centrée', () => {
+  const pages = [
+    { name: 'édition', path: '/revue/2026-11-19-soir/' },
+    { name: 'index', path: '/revue/' },
+  ];
+  const viewports = [
+    { name: '390', width: 390, height: 844 },
+    { name: '1024', width: 1024, height: 900 },
+    { name: '1440', width: 1440, height: 900 },
+    { name: '1920', width: 1920, height: 1080 },
+  ];
+
+  for (const loc of pages) {
+    for (const vp of viewports) {
+      test(`${loc.name} ${vp.name} px sombre : marges égales, pas de défilement horizontal`, async ({ page }) => {
+        await page.setViewportSize({ width: vp.width, height: vp.height });
+        await page.emulateMedia({ colorScheme: 'dark' });
+        await page.addInitScript(() => { try { localStorage.setItem('radar-theme', 'dark'); } catch {} });
+        await page.goto(loc.path, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('.seo-title');
+        await hideLab(page);
+        const m = await columnMetrics(page);
+        expect(m.overflowX, `${loc.name} ${vp.name} : pas de défilement horizontal`).toBe(false);
+        expect(Math.abs(m.left - m.right), `${loc.name} ${vp.name} : colonne centrée (L=${m.left.toFixed(1)} R=${m.right.toFixed(1)})`).toBeLessThanOrEqual(8);
+        expect(m.width, 'colonne bornée, pas toute la fenêtre sur bureau').toBeLessThan(vp.width < 600 ? vp.width + 1 : 900);
+        expect(['left', 'start']).toContain(m.textAlign);
+        if (m.coverLeft != null && m.titleLeft != null) {
+          expect(Math.abs(m.coverLeft - m.titleLeft), 'photo alignée sur le texte').toBeLessThanOrEqual(8);
+        }
+        if (vp.width >= 1024) {
+          expect(m.tickerWidth, 'bandeau sports toujours pleine largeur').toBeGreaterThan(vp.width * 0.9);
+        }
+        if (vp.width === 390) {
+          expect(m.padLeft, 'gouttière mobile conservée').toBeGreaterThanOrEqual(16);
+        }
+      });
+    }
   }
 });
