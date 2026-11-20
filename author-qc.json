@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-20T22:07:14.595Z",
+  "updated": "2026-11-20T23:37:02.986Z",
   "total": 1036,
   "withAuthor": 1036,
-  "mismatches": 54,
+  "mismatches": 53,
   "ok": true,
   "samples": [
-    {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Charles-David Desrochers",
-      "reason": "page-byline"
-    },
     {
       "title": "Quand une banque fait tomber un président",
       "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Transparency: A Tool and a Threat",
+      "link": "https://thebucampus.ca/2026/10/27/transparency-a-tool-and-a-threat",
+      "source": "The Campus",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 54
+  "fixed": 53
 }
