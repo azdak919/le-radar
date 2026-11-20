@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-20T17:40:47.531Z",
+  "updated": "2026-11-20T17:56:39.875Z",
   "total": 1021,
-  "withPhoto": 873,
-  "withStock": 106,
-  "withCampusBank": 91,
-  "fullyCovered": 955,
-  "leadReadyPhotos": 916,
-  "pageScraped": 12,
-  "photosRecovered": 12,
-  "imagesCleared": 2,
+  "withPhoto": 871,
+  "withStock": 107,
+  "withCampusBank": 92,
+  "fullyCovered": 954,
+  "leadReadyPhotos": 928,
+  "pageScraped": 8,
+  "photosRecovered": 8,
+  "imagesCleared": 1,
   "stockSearches": 4,
-  "stockFound": 16,
-  "campusBankFound": 13,
+  "stockFound": 13,
+  "campusBankFound": 10,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -25,12 +31,6 @@
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
-    },
-    {
-      "title": "Editorial: Welcome to Concordia University",
-      "link": "https://thelinknewspaper.ca/article/16365",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
     },
     {
       "title": "Battling Adversity",
