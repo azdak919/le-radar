@@ -1173,10 +1173,12 @@ html[data-wide-preview="e"] .news-hero-spacer {
     padding-right: max(var(--pad), 20px);
   }
 
-  /* Listes d’entités : cartes bornées, pas 1fr géant */
+  /* Listes d’entités : remplir la colonne. auto-fill + 1fr pour que
+     une rangée complète touche le bord droit ; les orphelins de la
+     dernière rangée restent sur leur piste, sans s’étirer. */
   html[data-wide-preview="e"] .seo-cards {
     max-width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 18rem));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     justify-content: start;
   }
 }
