@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T07:37:38.895Z",
+  "updatedAt": "2026-11-20T09:07:14.970Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T07:37:14.459Z"
+      "checkedAt": "2026-11-20T09:06:27.526Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Toute est dans toute",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+      },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T07:37:16.238Z"
+      "checkedAt": "2026-11-20T09:06:29.672Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "G-Flex Survivor's Corner",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "next": {
+        "title": "Morning Detour",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "G-Flex Survivor",
+      "showTitle": "G-Flex Survivor's Corner",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T07:37:18.913Z"
+      "checkedAt": "2026-11-20T09:06:32.818Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T07:37:20.327Z"
+      "checkedAt": "2026-11-20T09:06:34.905Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T07:37:21.241Z"
+      "checkedAt": "2026-11-20T09:06:35.787Z"
     },
     "choq": {
       "id": "choq",
@@ -136,20 +136,20 @@
       "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "api-live",
+        "source": "schedule",
         "start": "11:30",
         "end": "12:30",
-        "slug": "box-sophisme"
+        "url": "https://www.choq.ca/balados/box-sophisme"
       },
       "track": "ID Kat Pereira.mp3",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T07:37:38.545Z"
+      "checkedAt": "2026-11-20T09:07:14.619Z"
     }
   }
 }
