@@ -1,14 +1,14 @@
 {
-  "updated": "2026-11-20T05:10:09.979Z",
+  "updated": "2026-11-20T06:26:59.123Z",
   "total": 1040,
-  "withImage": 869,
-  "withCredit": 869,
+  "withImage": 870,
+  "withCredit": 870,
   "cited": 606,
   "pending": 144,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 3,
+  "updatedCount": 4,
   "citedNew": 4,
   "fallbackNew": 56,
   "samples": [
@@ -32,6 +32,13 @@
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Cancer du sein : les milieux professionnels à risque sous la loupe",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     }
   ]
 }
