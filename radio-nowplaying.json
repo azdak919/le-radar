@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T00:17:21.275Z",
+  "updatedAt": "2026-11-20T01:36:51.061Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T00:16:43.893Z"
+      "checkedAt": "2026-11-20T01:36:12.004Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T00:16:57.797Z"
+      "checkedAt": "2026-11-20T01:36:26.357Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Grey Matters",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Other Worlds on Earth/Dromostexte",
         "source": "api-live",
         "start": "20:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Chaud Pour/Francis",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Grey Matters",
+      "showTitle": "Other Worlds on Earth/Dromostexte",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T00:17:00.124Z"
+      "checkedAt": "2026-11-20T01:36:29.127Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Electric Messiah",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
-      },
-      "next": {
         "title": "Maiden Voyage",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/maiden-voyage"
       },
+      "next": {
+        "title": "The 514",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-514"
+      },
       "track": "",
-      "showTitle": "Electric Messiah",
+      "showTitle": "Maiden Voyage",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T00:17:02.111Z"
+      "checkedAt": "2026-11-20T01:36:31.353Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +122,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T00:17:03.284Z"
+      "checkedAt": "2026-11-20T01:36:32.708Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les Apatrides Anonymes",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "19:45",
-        "slug": "apatrides-anonymes"
-      },
+      "current": null,
       "next": {
         "title": "Le grand maître des jeux",
         "source": "api-live",
@@ -142,14 +136,14 @@
         "slug": "le-maitre-des-jeux"
       },
       "track": "ID Kat Pereira.mp3",
-      "showTitle": "Les Apatrides Anonymes",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T00:17:20.924Z"
+      "checkedAt": "2026-11-20T01:36:50.710Z"
     }
   }
 }
