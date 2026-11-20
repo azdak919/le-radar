@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T10:06:42.867Z",
+  "updatedAt": "2026-11-20T11:06:35.617Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T10:06:18.965Z"
+      "checkedAt": "2026-11-20T11:06:09.417Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Toute est dans toute",
         "source": "schedule",
         "start": "06:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/tout-est-dans-toute"
       },
+      "next": {
+        "title": "Quartier libre",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/quartier-libre"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Toute est dans toute",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T10:06:20.826Z"
+      "checkedAt": "2026-11-20T11:06:11.257Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T10:06:23.170Z"
+      "checkedAt": "2026-11-20T11:06:13.681Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Wake up Folks!",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
+      "next": {
+        "title": "CJLO News Hour",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Wake up Folks!",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T10:06:24.578Z"
+      "checkedAt": "2026-11-20T11:06:15.674Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T10:06:25.431Z"
+      "checkedAt": "2026-11-20T11:06:16.703Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T10:06:42.516Z"
+      "checkedAt": "2026-11-20T11:06:35.266Z"
     }
   }
 }
