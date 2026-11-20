@@ -1,31 +1,17 @@
 {
-  "updated": "2026-11-20T21:10:26.652Z",
+  "updated": "2026-11-20T21:39:20.210Z",
   "total": 1035,
-  "withImage": 933,
-  "withCredit": 933,
-  "cited": 656,
+  "withImage": 934,
+  "withCredit": 934,
+  "cited": 657,
   "pending": 164,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 4,
+  "updatedCount": 3,
   "citedNew": 4,
   "fallbackNew": 56,
   "samples": [
-    {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "source": "La Pige",
-      "credit": "Photo : Juliette Pain",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Des étudiants du Cégep de Jonquière à « la COP qui chie »",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "En France, la colère lycéenne gagne tout le pays",
       "source": "Quartier Libre",
@@ -39,6 +25,13 @@
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Is Wearing Makeup Really a Choice?",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zoé Sanguin",
+      "cited": true,
+      "method": "media-credit-near"
     }
   ]
 }

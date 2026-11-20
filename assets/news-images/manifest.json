@@ -2927,15 +2927,6 @@
       "via": "disk",
       "nameKey": "chicoutimi.jpg"
     },
-    "7c9fbc3f2bfe5ba8": {
-      "local": "assets/news-images/7c9fbc3f2bfe5ba8.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/10/Palestine-1.jpg",
-      "host": "quartierlibre.ca",
-      "bytes": 173936,
-      "updatedAt": "2026-11-19T21:14:03.609Z",
-      "via": "disk",
-      "nameKey": "palestine-1.jpg"
-    },
     "acb1153bd09ec623": {
       "local": "assets/news-images/acb1153bd09ec623.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/1_Couverture-peur-724x1024.jpg",
@@ -3173,9 +3164,19 @@
       "updatedAt": "2026-11-20T21:09:24.587Z",
       "via": "resize-proxy",
       "nameKey": "0e9a5660.jpg"
+    },
+    "7929864c56244142": {
+      "local": "assets/news-images/7929864c56244142.jpg",
+      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/IMG_4302.png",
+      "host": "www.mcgilldaily.com",
+      "bytes": 138405,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-20T21:38:22.329Z",
+      "via": "resize-proxy",
+      "nameKey": "img_4302.png"
     }
   },
-  "updatedAt": "2026-11-20T21:09:24.600Z",
+  "updatedAt": "2026-11-20T21:38:22.338Z",
   "count": 327,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5249,7 +5250,7 @@
     },
     "43b86bec94169bb9": {
       "reason": "failed",
-      "at": "2026-11-19T21:14:07.712Z"
+      "at": "2026-11-20T21:38:17.036Z"
     },
     "9a20e27119031429": {
       "reason": "budget",
@@ -5626,6 +5627,10 @@
     "e0e3c9e4644e958d": {
       "reason": "budget",
       "at": "2026-11-20T21:09:24.598Z"
+    },
+    "7c9fbc3f2bfe5ba8": {
+      "reason": "budget",
+      "at": "2026-11-20T21:38:22.336Z"
     }
   }
 }
