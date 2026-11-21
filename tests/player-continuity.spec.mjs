@@ -151,18 +151,17 @@ test('le module radio ne fait pas défiler les postes à l’arrêt', async ({ p
 });
 
 test('le bouton annule une connexion audio en attente', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.goto('/tuner-embed.html', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => page.locator('#tuner-select option').count(), { timeout: 15_000 })
+    .toBeGreaterThan(1);
   await page.locator('#tuner-select').selectOption({ index: 1 });
   const playButton = page.locator('#tuner-play');
-  await playButton.evaluate((button) => {
-    if (button.classList.contains('is-buffering') || /mettre en pause/i.test(button.getAttribute('aria-label') || '')) {
-      button.click();
-    }
-  });
+  await expect(playButton).toBeVisible();
   await page.locator('#radar-player').evaluate((player) => {
     // Un `waiting` à l'arrêt est ignoré : un src posé sans lecture peut
     // l'émettre. La connexion annulable n'existe qu'une fois la lecture
-    // demandée (paused === false).
+    // demandée (paused === false) et qu'un flux est engagé.
+    if (!player.getAttribute('src')) player.src = 'https://example.invalid/test-stream';
     Object.defineProperty(player, 'paused', { configurable: true, get: () => false });
     player.dispatchEvent(new Event('waiting'));
   });
