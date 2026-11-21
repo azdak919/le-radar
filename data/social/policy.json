@@ -36,6 +36,7 @@
  "automation": {
   "x_follow": false,
   "facebook_follow": false,
+  "instagram_follow": false,
   "bluesky_follow": {
    "enabled": true,
    "max_total": 87,
@@ -43,14 +44,15 @@
   }
  },
  "hashtags": {
-  "_doc": "Plafonds : Mastodon 2-4, Bluesky 1-2, X 1-2, Facebook 0-1, LinkedIn 2-3, Tumblr 10-15. Instagram et Threads ne sont pas publiés.",
+  "_doc": "Plafonds : Mastodon 2-4, Bluesky 1-2, X 1-2, Facebook 0-1, LinkedIn 2-3, Tumblr 10-15. Instagram : 3 à 5 en fin de légende, jamais en premier commentaire. Threads n’est pas publié.",
   "maxByNetwork": {
    "bluesky": 2,
    "mastodon": 4,
    "x": 2,
    "linkedin": 3,
    "facebook": 1,
-   "tumblr": 15
+   "tumblr": 15,
+   "instagram": 5
   }
  },
  "formats": {
@@ -140,7 +142,34 @@
    },
    "maxItems": 4,
    "maxNewsAgeH": 6,
-  "prepared": { "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que le compte et l’accès ne sont pas configurés et que ce bloc n’est pas activé dans une PR. Instagram : publication 4:5 1080×1350 (plage API 4:5 à 1,91:1, JPEG ≤ 8 Mo) et story 9:16 1080×1920 ; légende sans lien cliquable (lien en bio).", "instagram": { "enabled": false, "feed": "portrait", "story": "story" } }
+  "prepared": {
+   "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que enabled n’est pas true. Instagram : compte Buffer distinct (secret BUFFER_INSTAGRAM_API_KEY), fil seulement (type post), image 3:4 1080×1440 ou repli 4:5, légende sans lien cliquable. La présentation du 21 novembre 2026 est déjà publiée à la main : ne pas la republier. La montée part le 22 novembre (jour 1).",
+   "instagram": {
+    "enabled": true,
+    "feed": "grille",
+    "story": false,
+    "reel": false,
+    "type": "post",
+    "channelId": "6b012936ece6dfde5f3f554d",
+    "channelName": "le.radar.ca",
+    "secret": "BUFFER_INSTAGRAM_API_KEY",
+    "follow": false,
+    "firstComment": false,
+    "intro": { "posted": "2026-11-21", "manual": true, "republish": false },
+    "image": { "primary": { "format": "grille", "width": 1080, "height": 1440, "ratio": "3:4" }, "fallback": { "format": "portrait", "width": 1080, "height": 1350, "ratio": "4:5" } },
+    "caption": { "limit": 2200, "maxHashtags": 5, "credit": "📸" },
+    "ramp": {
+     "start": "2026-11-22",
+     "_doc": "Jour civil America/Toronto. Jours 1-3 : au plus 1 publication, La une du soir. Jours 4-7 : La une du soir. Jours 8-14 : matin et soir. Dès le jour 15 : résultats sportifs en après-midi (12 h–16 h, lundi et mardi), écartés des créneaux de La une.",
+     "phases": [
+      { "fromDay": 1, "toDay": 3, "maxPerDay": 1, "slots": ["soir"], "formats": ["une"] },
+      { "fromDay": 4, "toDay": 7, "maxPerDay": 1, "slots": ["soir"], "formats": ["une"] },
+      { "fromDay": 8, "toDay": 14, "maxPerDay": 2, "slots": ["matin", "soir"], "formats": ["une"] },
+      { "fromDay": 15, "maxPerDay": 3, "slots": ["matin", "soir"], "formats": ["une", "weekend_results"], "sports": { "hourFrom": 12, "hourTo": 16, "eligibleWeekdays": [1, 2], "maxPerWeekend": 1 } }
+     ]
+    }
+   }
+  }
   }
  }
 }
