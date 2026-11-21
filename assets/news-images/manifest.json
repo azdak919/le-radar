@@ -2367,16 +2367,6 @@
       "via": "photon-resize",
       "nameKey": "hannahnobile_141126_nslfinal_vol44-38.jpg"
     },
-    "2c0b30551fbd17ac": {
-      "local": "assets/news-images/2c0b30551fbd17ac.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_FRINGE_NAZA_Tolganay_Medet_900_629.png",
-      "host": "thelinknewspaper.ca",
-      "bytes": 50719,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-20T17:57:08.225Z",
-      "via": "resize-proxy",
-      "nameKey": "05_fringe_naza_tolganay_medet_900_629.png"
-    },
     "b77c63977f985bc0": {
       "local": "assets/news-images/b77c63977f985bc0.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2025/11/CSU-BY-ELECTIONS.jpg",
@@ -3018,15 +3008,6 @@
       "via": "photon-resize",
       "nameKey": "018e9411-468d-410c-9baa-a12faa27d293_1_201_a.jpeg"
     },
-    "95d1c982cd32b09e": {
-      "local": "assets/news-images/95d1c982cd32b09e.webp",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
-      "host": "quartierlibre.ca",
-      "bytes": 198136,
-      "updatedAt": "2026-11-21T18:10:27.422Z",
-      "via": "disk",
-      "nameKey": "5infos_ql-e1769792962990.png"
-    },
     "a92e8d7472119823": {
       "local": "assets/news-images/a92e8d7472119823.webp",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/9_True-crime.jpg",
@@ -3136,10 +3117,20 @@
       "updatedAt": "2026-11-21T18:10:29.532Z",
       "via": "resize-proxy",
       "nameKey": "auclair_crypto_ia_3.jpg"
+    },
+    "2aa26da9b941c49c": {
+      "local": "assets/news-images/2aa26da9b941c49c.png",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_FRINGE_NAZA_Tolganay_Medet_690_482.png",
+      "host": "thelinknewspaper.ca",
+      "bytes": 348817,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-21T19:45:20.551Z",
+      "via": "origin",
+      "nameKey": "05_fringe_naza_tolganay_medet_690_482.png"
     }
   },
-  "updatedAt": "2026-11-21T18:10:29.536Z",
-  "count": 325,
+  "updatedAt": "2026-11-21T19:45:29.458Z",
+  "count": 324,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5340,7 +5331,7 @@
     },
     "ab74741c6af119ea": {
       "reason": "failed",
-      "at": "2026-11-20T19:41:15.454Z"
+      "at": "2026-11-21T19:45:29.453Z"
     },
     "1db0110786007144": {
       "reason": "budget",

@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-21T18:11:26.270Z",
+  "updated": "2026-11-21T19:49:27.822Z",
   "total": 1038,
-  "withImage": 935,
-  "withCredit": 935,
-  "cited": 657,
-  "pending": 169,
+  "withImage": 934,
+  "withCredit": 934,
+  "cited": 655,
+  "pending": 171,
   "missingHero": 0,
   "ok": false,
-  "checked": 60,
-  "updatedCount": 7,
-  "citedNew": 7,
-  "fallbackNew": 53,
+  "checked": 11,
+  "updatedCount": 5,
+  "citedNew": 3,
+  "fallbackNew": 8,
   "samples": [
-    {
-      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
-      "source": "Impact Campus",
-      "credit": "Photo : David Mendonza-élaine",
-      "cited": true,
-      "method": "json-ld"
-    },
     {
       "title": "La vie lors d’une régate d’aviron",
       "source": "Quartier Libre",
@@ -34,11 +27,11 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
+      "title": "Documentary film ‘NAZA’ examines the banality of evil behind the horrific Gaza genocide",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
@@ -53,13 +46,6 @@
       "credit": "Photo: Eric Klempan",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "L’IA, nouvelle arme des fraudeurs en cryptomonnaies",
-      "source": "La Pige",
-      "credit": "Photo : Alexis Auclair",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }

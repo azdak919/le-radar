@@ -1,19 +1,31 @@
 {
-  "updated": "2026-11-21T18:10:07.574Z",
+  "updated": "2026-11-21T19:44:59.205Z",
   "total": 1038,
   "withPhoto": 939,
-  "withStock": 105,
+  "withStock": 104,
   "withCampusBank": 93,
-  "fullyCovered": 1022,
-  "leadReadyPhotos": 1007,
-  "pageScraped": 20,
-  "photosRecovered": 20,
+  "fullyCovered": 1021,
+  "leadReadyPhotos": 975,
+  "pageScraped": 8,
+  "photosRecovered": 8,
   "imagesCleared": 3,
-  "stockSearches": 6,
-  "stockFound": 13,
-  "campusBankFound": 9,
+  "stockSearches": 35,
+  "stockFound": 14,
+  "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -21,34 +33,58 @@
       "image": null
     },
     {
-      "title": "Bulletins de nouvelles La Pige Radio",
-      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio",
+      "title": "Est-ce encore possible de s’ennuyer ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/est-ce-encore-possible-de-sennuyer",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Image-10.jpg"
     },
     {
-      "title": "Cancer du sein : la sensibilisation au-delà d’Octobre rose",
-      "link": "https://lapige.atmjonquiere.com/2026/10/26/cancer-du-sein-la-sensibilisation-au-dela-doctobre-rose",
+      "title": "Vote obligatoire, idée réalisable ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/vote-obligatoire-idee-realisable",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/AdobeStock_1580462282.jpeg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_3341-1.jpeg"
     },
     {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
-      "image": null
-    },
-    {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
-    },
-    {
-      "title": "Reportages radio du 19 octobre 2026",
-      "link": "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026",
+      "title": "Prendre une photo, est-ce vraiment se souvenir ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/prendre-une-photo-est-ce-vraiment-se-souvenir",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/20261029_142730791_iOS.jpg"
+    },
+    {
+      "title": "Pénurie d’arbitres : le football durement touché au Saguenay–Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/penurie-darbitres-le-football-durement-touche-au-saguenay-lac-saint-jean",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Image-1-5.jpg"
+    },
+    {
+      "title": "L’IA, nouvelle arme des fraudeurs en cryptomonnaies",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/lia-nouvelle-arme-des-fraudeurs-en-cryptomonnaies",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/AUCLAIR_CRYPTO_IA_3.jpg"
+    },
+    {
+      "title": "Des vignes hybrides pour résister au froid",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/des-vignes-hybrides-pour-resister-au-froid",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_0017.jpg"
+    },
+    {
+      "title": "La Fondation du Domaine-du-Roy célèbre 40 ans d’impact sur les soins de santé de proximité",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/la-fondation-du-domaine-du-roy-celebre-40-ans-dimpact-sur-les-soins-de-sante-de-proximite",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Aucune-description-de-photo-disponible_.png"
+    },
+    {
+      "title": "De Sydenham à Albani : ce que racontent les rues du Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/de-sydenham-a-albani-ce-que-racontent-les-rues-du-saguenay",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Photo-rue-De-Quen.jpeg"
+    },
+    {
+      "title": "Quand la fièvre des cartes de hockey s’invite au comptoir",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/quand-la-fievre-des-cartes-de-hockey-sinvite-au-comptoir",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image.jpg"
     }
   ]
 }
