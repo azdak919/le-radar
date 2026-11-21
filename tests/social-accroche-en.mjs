@@ -70,6 +70,7 @@ assert.equal(deInstitution('Concordia University'), 'de l’Université Concordi
 assert.equal(deInstitution('Dawson College'), 'du Collège Dawson');
 assert.equal(deInstitution("Bishop's University"), 'de l’Université Bishop’s');
 assert.equal(aiText({ result: { response: 'x' } }), 'x');
+assert.ok(enAccrocheText({ ...it, author: 'Olivia Epstein', enAccroche: { phrase: 'analyse la série.', institutionFr: '' } }, [], 300, { photo: false }).includes('sous la plume d’Olivia Epstein, analyse'), 'élision');
 
 // Appel IA simulé : les deux formats de réponse Workers AI.
 for (const shape of ['openai', 'response']) {

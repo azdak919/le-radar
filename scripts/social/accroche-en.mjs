@@ -277,7 +277,7 @@ export async function enAccrocheDetail(it, { env = process.env, fetchImpl = fetc
   const a = parseJson(out.raw);
   if (!a) return { ...out, reason: 'réponse non JSON' };
   const cands = [].concat(a.citations ?? a.citation ?? []).map(unquote).filter(Boolean).slice(0, 3);
-  out.aiQuotes = cands; out.aiPhrase = String(a.phrase || '').replace(/\s+/g, ' ').trim();
+  out.aiQuotes = cands; out.aiPhrase = String(a.phrase || '').replace(/\s+/g, ' ').replace(/'/g, '’').trim(); // apostrophe typographique
   const inst = institutionOf(it);
   const fullSrc = [it.bare || it.title, src.text, it.desc, it.source, it.author, inst, INSTITUTION_FR[inst]].filter(Boolean).join('\n');
   // La citation vient du TEXTE de l'article seulement ; parmi les candidates valides, la plus courte (elle tient mieux).
