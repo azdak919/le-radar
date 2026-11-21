@@ -13,6 +13,7 @@ import { createTumblr } from './channels/tumblr.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
 import { withHook } from './ai-hook.mjs';
+import { gateArticleImage } from './ai-image.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/tumblr-sent.json');
@@ -60,10 +61,12 @@ for (const t of todo) {
   const it = items.find(i => i.id === t.id);
   const im = await resolveImage(it, { used, repeated });
   if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+  const gate = await gateArticleImage(it, im.url, { credit: im.credit });
+  if (gate.reject) continue;
   await withHook(it);
   const text = buildTumblrText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
-  const body = npfBody(it, text, { image: im, lang });
+  const body = npfBody(it, text, { image: { ...im, alt: gate.alt }, lang });
   console.log(`\n--- ${++n}. [${it.source}] ${lang} · image ${im ? im.url : 'AUCUNE'} · étiquettes ${body.tags}\n${text}`);
   if (dry) continue;
   if (posted.has(it.link) || posted.has(siteLink(it))) { console.log('Déjà sur Tumblr (vérifié dans le blogue) : noté, pas republié.'); state.sent[it.id] = { at: new Date().toISOString(), dedup: true }; save(); continue; }

@@ -26,7 +26,7 @@ export function npfBody(it, text, { image = null, lang = detectLang(it) } = {}) 
     if (/^https?:\/\/\S+$/.test(l)) b.formatting = [{ start: 0, end: [...l].length, type: 'link', url: l }];
     content.push(b);
   }
-  if (image) content.splice(1, 0, { type: 'image', media: [{ url: image.url, ...(image.width ? { width: image.width, height: image.height } : {}) }], alt_text: (it.bare || it.title || '').slice(0, 250) });
+  if (image) content.splice(1, 0, { type: 'image', media: [{ url: image.url, ...(image.width ? { width: image.width, height: image.height } : {}) }], alt_text: (image.alt || it.bare || it.title || '').slice(0, 250) });
   content.push({ type: 'link', url, title: (it.bare || it.title || '').slice(0, 250), ...(it.desc ? { description: it.desc.slice(0, 300) } : {}) });
   return { content, tags: tagsFor(it, lang).join(','), state: 'published', source_url: url };
 }
