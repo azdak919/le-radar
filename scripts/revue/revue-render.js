@@ -525,10 +525,10 @@ const publisherLd = () => ({
   '@type': 'NewsMediaOrganization', name: PUBLISHER, alternateName: 'LE-RADAR.ca', url: `${SITE}/`,
   logo: { '@type': 'ImageObject', url: `${SITE}/assets/icon-512.png`, width: 512, height: 512 },
   sameAs: [
-    'https://x.com/le_radar_ca', 'https://bsky.app/profile/le-radar.ca',
-    'https://www.facebook.com/profile.php?id=61596092762097', 'https://www.instagram.com/le.radar.ca/',
-    'https://www.linkedin.com/company/le-radar-ca/', 'https://le-radar-ca.tumblr.com',
-    'https://piaille.fr/@leradar', `${SITE}/feed.xml`,
+    'https://www.instagram.com/le.radar.ca/', 'https://www.facebook.com/profile.php?id=61596092762097',
+    'https://www.linkedin.com/company/le-radar-ca/', 'https://x.com/le_radar_ca',
+    'https://bsky.app/profile/le-radar.ca', 'https://piaille.fr/@leradar',
+    'https://le-radar-ca.tumblr.com', `${SITE}/feed.xml`,
   ],
 });
 function reviewJsonLd(model) {
