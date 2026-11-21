@@ -155,8 +155,11 @@ réductions, on retire la ligne plutôt que de couper l’accroche ou les auteur
    bandeau sportif).
 2. Texte IA (résumé, chapeau) : deux ou trois phrases finies, tirées du chapô. Une sortie coupée est ramenée au
    dernier point. Rejeté sans point final, s’il pose une question ou commente, s’il n’a aucun fait du chapô absent
-   du titre, s’il est trop court, trop proche du titre (Dice, seuil 0,55), ou s’il invente un chiffre, un nom ou
-   une date. Repli : extrait fidèle du chapô. Un article anglais sans résumé français reste une citation.
+   du titre, s’il est trop court, trop proche du titre (Dice, seuil 0,55), ou s’il contient un chiffre ou un nom
+   propre absent de la source. La comparaison ignore la casse et les accents, traite « 11 » et « 11e » comme le
+   même nombre, accepte une flexion légère et une courte table de traductions (Fine Arts = Beaux-Arts, Tehran =
+   Téhéran). Elle n’exige pas que tous les chiffres du chapô soient recopiés. Repli : extrait fidèle du chapô.
+   Un article anglais dont le modèle a produit un français valide le garde ; sinon il reste une citation.
 3. IA indisponible (secrets absents, erreur, quota de 10 000 neurones/jour, HTTP 429 ou 403) : même repli.
    Le modèle est llama 3.3 70B sur le forfait gratuit Workers AI. Un passage s’arrête à 1 800 neurones estimés
    (deux éditions ≈ 3 600, sous les 10 000 du jour, sans facturation à l’usage). Au-delà, chapô.

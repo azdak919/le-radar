@@ -14,7 +14,7 @@
 import { createRequire } from 'node:module';
 import { pickSports, frDay, frShort, frHour, institutionLabel, institutionSigle, siteImage, isStockOnlyImage, sportEmoji } from '../social/une-lib.mjs';
 import { detectLang } from '../social/lib.mjs';
-import { chapoExtract, cutAtLastSentence, extraFacts, sentenceCount, titleSimilarity, TITLE_SIMILARITY_MAX, RESUME_MIN_CHARS, RESUME_MAX_CHARS } from './revue-quality.mjs';
+import { chapoExtract, cutAtLastSentence, extraFacts, resumeCoversFact, sentenceCount, sourceHasName, sourceHasNumber, titleSimilarity, TITLE_SIMILARITY_MAX, RESUME_MIN_CHARS, RESUME_MAX_CHARS } from './revue-quality.mjs';
 
 const require = createRequire(import.meta.url);
 const front = require('../magazine-front-page-lib.js');
@@ -321,13 +321,16 @@ export function textReject(text, source, { min = 40, max = 220 } = {}) {
   if (/[«»"“”#@<>]|https?:|www\./i.test(h)) return 'guillemet, balise, hashtag ou lien';
   if (RELATIVE.test(h)) return 'date relative ou « week-end »';
   const src = words(source);
-  for (const n of h.match(/\d+/g) || []) if (!src.has(n)) return `chiffre absent (${n})`;
+  // Un chiffre du résumé doit être dans la source. « 11 » est le même fait que « 11e » ou « 11th ».
+  for (const n of h.match(/\d+/g) || []) if (!sourceHasNumber(source, n)) return `chiffre absent (${n})`;
   // Nombres en lettres : présents dans la source en lettres (français ou anglais) ou en chiffres.
   for (const w of words(h)) { const n = NUMBER_WORDS[w]; if (n && !n.some(v => src.has(v))) return `nombre absent (${w})`; }
-  // Mots capitalisés hors début de phrase : doivent venir de la source (noms propres, sigles).
+  // Mots capitalisés hors début de phrase : doivent venir de la source (casse, accents, flexion, traduction listée).
   for (const m of h.matchAll(/(?<![.!?:]\s|^)(?<=\s|[(’'-])(\p{Lu}[\p{L}’'-]*)/gu)) {
     const w = m[1].toLowerCase(), base = w.replace(/[’'].*$/, '').replace(/-.*$/, '');
-    if (!src.has(w) && !src.has(base) && !ALLOW_CAPS.has(w) && !ALLOW_CAPS.has(base) && !w.split(/[’'-]/).every(p => !p || src.has(p) || ALLOW_CAPS.has(p))) return `nom absent (${m[1]})`;
+    if (sourceHasName(source, m[1]) || ALLOW_CAPS.has(w) || ALLOW_CAPS.has(base)) continue;
+    if (w.split(/[’'-]/).every(p => !p || sourceHasName(source, p) || ALLOW_CAPS.has(p))) continue;
+    return `nom absent (${m[1]})`;
   }
   if (detectLang({ title: h }) === 'en') return 'pas en français';
   return null;
@@ -366,11 +369,10 @@ export function itemReject(resume, x) {
   const bare = t => norm(t).replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
   if (bare(h) === bare(x.title)) return 'répète le titre';
   const extra = extraFacts(x.body || x.excerpt || '', x.title);
-  if (extra.length && !extra.some(f => foldFact(h).includes(f) || h.includes(f))) return 'aucun fait hors titre';
+  if (extra.length && !extra.some(f => resumeCoversFact(h, f))) return 'aucun fait hors titre';
   for (const name of titleNames(x.title, x.lang)) if (!low.includes(norm(name))) return `nom du titre absent (${name})`;
   return null;
 }
-const foldFact = s => String(s || '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
 /** Chapô fidèle (français) quand le modèle est refusé ou absent. Vide si la source n’est pas en français. */
 export function chapoFallback(x) {
   if (x?.lang === 'en') return '';

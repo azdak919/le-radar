@@ -36,10 +36,9 @@ async function run(prompt, { env, fetchImpl, maxTokens }) {
 export function itemsPrompt(batch) {
   return 'Revue de presse des médias étudiants du Québec. Pour chaque article numéroté, écris en FRANÇAIS deux ou trois phrases ' +
     'complètes, chacune finie par un point, au ton d’un journal. Pars du chapô, pas du titre seul. ' +
-    'Reprends au moins un chiffre, une date, un nom ou un lieu du chapô qui n’est pas déjà dans le titre. ' +
-    'Seulement des faits : pas de question, pas de « quel », pas de commentaire, pas de formule creuse ' +
+    'Seulement des faits du chapô : pas de question, pas de « quel », pas de commentaire, pas de formule creuse ' +
     '(« cherche à comprendre », « mieux comprendre », « souhaite ainsi »). ' +
-    'Fondé UNIQUEMENT sur le titre et le chapô : aucun chiffre, nom propre, citation ni date qui ne figure pas dans le texte, ' +
+    'N’invente rien : aucun chiffre, nom propre, citation ni date qui ne figure pas dans le texte, ' +
     'aucun guillemet, jamais « demain », « hier », « aujourd’hui » ni « week-end ». ' +
     'Un article en anglais est résumé en français. Garde comme sujet la personne ou l’organisation nommée dans le titre, ' +
     'ne la remplace jamais par une autre personne du chapô, et n’affirme rien que le texte ne dit pas. ' +
