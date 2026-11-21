@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T06:06:48.824Z",
+  "updatedAt": "2026-11-21T07:07:05.965Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T06:06:21.362Z"
+      "checkedAt": "2026-11-21T07:06:17.984Z"
     },
     "cism": {
       "id": "cism",
@@ -48,42 +48,43 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T06:06:35.408Z"
+      "checkedAt": "2026-11-21T07:06:33.096Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Soca Sessions",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "The Mash Time Show",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "WEFUNK",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T06:06:38.934Z"
+      "checkedAt": "2026-11-21T07:06:39.244Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
@@ -93,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T06:06:41.114Z"
+      "checkedAt": "2026-11-21T07:06:54.777Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +122,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T06:06:42.428Z"
+      "checkedAt": "2026-11-21T07:06:55.734Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +146,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-21T06:06:48.474Z"
+      "checkedAt": "2026-11-21T07:07:05.614Z"
     }
   }
 }
