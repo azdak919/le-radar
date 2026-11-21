@@ -1,30 +1,37 @@
 {
-  "updated": "2026-11-21T21:10:00.716Z",
-  "total": 1050,
-  "withImage": 949,
-  "withCredit": 949,
-  "cited": 659,
-  "pending": 176,
+  "updated": "2026-11-21T22:10:19.765Z",
+  "total": 1051,
+  "withImage": 951,
+  "withCredit": 951,
+  "cited": 661,
+  "pending": 175,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 2,
-  "fallbackNew": 58,
+  "updatedCount": 3,
+  "citedNew": 5,
+  "fallbackNew": 55,
   "samples": [
     {
-      "title": "La vie lors d’une régate d’aviron",
+      "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Élections : qu’en pense la communauté universitaire ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Guillaume Villeneuve",
+      "credit": "Illustration : Mathilde Ségar",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "The UCI Road World Championships: Where Excitement Meets Inconvenience",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zoe Sanguin Zoe Sanguin",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }

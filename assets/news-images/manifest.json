@@ -3165,29 +3165,18 @@
       "via": "resize-proxy",
       "nameKey": "sports1-eliot-loose.png"
     },
-    "0d2f1b7568ff4231": {
-      "local": "assets/news-images/0d2f1b7568ff4231.jpg",
-      "remote": "https://lecollectif.ca/wp-content/uploads/2026/09/Sherbylove-Murales-Sherbrooke.jpg",
-      "host": "lecollectif.ca",
-      "bytes": 144035,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-21T21:08:43.459Z",
-      "via": "origin",
-      "nameKey": "sherbylove-murales-sherbrooke.jpg"
-    },
-    "b3f8c351ffdd42d1": {
-      "local": "assets/news-images/b3f8c351ffdd42d1.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/09/Frechette-Photo-Bus-1024x683.jpg",
+    "95d1c982cd32b09e": {
+      "local": "assets/news-images/95d1c982cd32b09e.webp",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
       "host": "quartierlibre.ca",
-      "bytes": 69753,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-21T21:08:43.499Z",
-      "via": "origin",
-      "nameKey": "frechette-photo-bus.jpg"
+      "bytes": 198136,
+      "updatedAt": "2026-11-21T22:08:59.914Z",
+      "via": "disk",
+      "nameKey": "5infos_ql-e1769792962990.png"
     }
   },
-  "updatedAt": "2026-11-21T21:08:43.504Z",
-  "count": 330,
+  "updatedAt": "2026-11-21T22:09:01.411Z",
+  "count": 329,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5240,7 +5229,7 @@
     },
     "a32c9befae8ae981": {
       "reason": "failed",
-      "at": "2026-11-20T21:09:00.392Z"
+      "at": "2026-11-21T22:09:00.934Z"
     },
     "5ae54d001340acaf": {
       "reason": "budget",
@@ -5252,7 +5241,7 @@
     },
     "43b86bec94169bb9": {
       "reason": "failed",
-      "at": "2026-11-20T21:38:17.036Z"
+      "at": "2026-11-21T22:09:01.394Z"
     },
     "9a20e27119031429": {
       "reason": "budget",
@@ -5689,6 +5678,18 @@
     "7ccc51ce546d30e2": {
       "reason": "budget",
       "at": "2026-11-21T19:57:14.355Z"
+    },
+    "939c3169930cec89": {
+      "reason": "budget",
+      "at": "2026-11-21T22:09:01.402Z"
+    },
+    "0d2f1b7568ff4231": {
+      "reason": "budget",
+      "at": "2026-11-21T22:09:01.405Z"
+    },
+    "b3f8c351ffdd42d1": {
+      "reason": "budget",
+      "at": "2026-11-21T22:09:01.409Z"
     }
   }
 }

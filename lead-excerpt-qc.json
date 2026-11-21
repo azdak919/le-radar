@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-21T21:07:50.834Z",
-  "total": 1052,
+  "updated": "2026-11-21T22:08:08.620Z",
+  "total": 1053,
   "pool": 61,
-  "incomplete": 25,
-  "withLeadExcerpt": 208,
-  "candidates": 25,
-  "enriched": 2,
-  "failed": 3,
+  "incomplete": 26,
+  "withLeadExcerpt": 207,
+  "candidates": 26,
+  "enriched": 4,
+  "failed": 9,
   "ok": true,
   "samples": [
     {
@@ -55,30 +55,30 @@
       "changed": false
     },
     {
+      "title": "Bittersweet end of season for the Montreal Roses",
+      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
+      "ok": true,
+      "score": 100,
+      "chars": 414,
+      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
+      "changed": true
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
+      "ok": true,
+      "score": 100,
+      "chars": 450,
+      "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
+      "changed": true
+    },
+    {
       "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
       "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
       "ok": true,
       "score": 100,
       "chars": 404,
       "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
-      "changed": false
-    },
-    {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
-      "changed": false
-    },
-    {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
-      "ok": true,
-      "score": 100,
-      "chars": 380,
-      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
       "changed": false
     }
   ]
