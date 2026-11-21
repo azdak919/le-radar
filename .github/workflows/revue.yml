@@ -22,6 +22,8 @@ on:
     - cron: '35 3,4 * * *'           # mise à jour tardive des résultats du soir : 23 h 35 HAE / 23 h 35 HNE
   # Filet : la collecte tourne souvent (dont :20 chaque heure). La porte ne fait rien hors fenêtre ni si l'édition est déjà là.
   # Le :20 UTC de 00 h et 23 h tombe à 19 h 20 heure de Montréal (HNE et HAE), après le 19 h 02 et avant La une (19 h 23).
+  # Lancement manuel : `day` (AAAA-MM-JJ, vide = aujourd’hui) avec matin ou soir republie cette édition à 7 h ou 19 h 15.
+  # Les crons et le filet workflow_run ignorent `day`.
   workflow_run:
     workflows: ['Update Student News']
     types: [completed]
@@ -36,6 +38,10 @@ on:
         description: 'Exemple seulement (artefact, rien n’est publié ni commité, même si publish = true)'
         type: boolean
         default: true
+      day:
+        description: 'Date AAAA-MM-JJ (vide = comportement actuel). Avec matin ou soir, exemple décoché : publie cette édition à 7 h ou 19 h 15, heure de Montréal.'
+        type: string
+        default: ''
 
 permissions:
   contents: write
@@ -64,7 +70,14 @@ jobs:
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.sample) && (github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')) }}
         env:
           REVUE_EDITION: ${{ inputs.edition || 'auto' }}
-        run: node scripts/revue/revue-run.mjs --gate
+          # Vide hors workflow_dispatch : le cron et le filet ne voient pas de date.
+          REVUE_DAY: ${{ github.event_name == 'workflow_dispatch' && inputs.day || '' }}
+        run: |
+          if [ -n "${REVUE_DAY}" ]; then
+            node scripts/revue/revue-run.mjs --gate --day "$REVUE_DAY"
+          else
+            node scripts/revue/revue-run.mjs --gate
+          fi
 
   sample:
     if: github.event_name == 'workflow_dispatch' && inputs.sample
@@ -119,10 +132,15 @@ jobs:
           REVUE_EDITION: ${{ needs.gate.outputs.edition }}
           REVUE_ID: ${{ needs.gate.outputs.id }}
           REVUE_MODE: ${{ needs.gate.outputs.mode }}
+          REVUE_DAY: ${{ github.event_name == 'workflow_dispatch' && inputs.day || '' }}
           CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION"
+          if [ -n "${REVUE_DAY}" ]; then
+            node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION" --day "$REVUE_DAY"
+          else
+            node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION"
+          fi
           node scripts/generate-feed.js --update
           # --id doit être AAAA-MM-JJ-matin|soir (pas « matin » / « soir » seuls : 18 nov. 2026, les pages
           # étaient générées puis les PDF échouaient, et le commit n'avait jamais lieu).

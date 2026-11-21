@@ -8,6 +8,8 @@
 // Usage :
 //   node scripts/revue/revue-run.mjs --gate                       # porte du workflow (due=true|false)
 //   node scripts/revue/revue-run.mjs [--edition auto|matin|soir] [--now ISO|news] [--refresh]
+//   node scripts/revue/revue-run.mjs --edition matin --day 2026-11-20
+//       # rattrapage réel : édition du 20 à 7 h (soir : 19 h 15), heure de Montréal
 //   node scripts/revue/revue-run.mjs --sample --edition matin --day 2026-11-17 --at 07:00 --out /tmp/revue
 //   node scripts/revue/revue-run.mjs --rebuild                     # re-rend pages, index, flux et sitemaps depuis data/revue
 import fs from 'node:fs';
@@ -28,13 +30,45 @@ const summary = s => { console.log(s); if (process.env.GITHUB_STEP_SUMMARY) fs.a
 
 export const loadConfig = (root = ROOT) => L.mergeConfig(rd(path.join(root, 'data/revue/config.json'), {}));
 
-/** Porte du workflow : rien sans publish = true ; sinon édition due (pas encore publiée ni sautée) ou mise à jour tardive. */
-export function gate({ now = Date.now(), cfg = loadConfig(), index = [], state = {}, forced = '' } = {}) {
+/** AAAA-MM-JJ calendaire (rejette 2026-11-31). */
+export function validDay(day) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(day || ''))) return false;
+  const [y, m, d] = day.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d;
+}
+
+/**
+ * Horloge d’un --day. Sans --at, le matin est à 7 h et le soir à 19 h 15 (heure de Montréal).
+ * `pastDate` : la date civile est avant aujourd’hui (la météo du jour ne se relit pas).
+ * `nominal` : l’instant demandé est déjà passé — fenêtre de l’édition (7 h / 19 h 15), sans reculer
+ * dans le créneau voisin. Un --at encore dans le futur (exemple lancé avant 7 h) garde le recul habituel.
+ */
+export function resolveEditionClock({ day = '', at = '', edition = 'auto', cfg = loadConfig(), wall = Date.now() } = {}) {
+  const backfill = !!day;
+  let hhmm = at;
+  if (day && !hhmm && (edition === 'matin' || edition === 'soir')) hhmm = cfg.editions[edition]?.target || '';
+  const now = day ? L.mtlInstant(day, hhmm || '12:00') : wall;
+  const pastDate = !!(day && L.mtl(now).ymd < L.mtl(wall).ymd);
+  const nominal = !!(day && now <= wall + 60_000);
+  return { now, at: hhmm, backfill, pastDate, nominal };
+}
+
+/** Porte du workflow : rien sans publish = true ; sinon édition due (pas encore publiée ni sautée) ou mise à jour tardive.
+ *  `backfill` (--day) : matin ou soir à l’horloge fournie, même hors fenêtre du jour. Une édition déjà dans l’index ne repart pas. */
+export function gate({ now = Date.now(), cfg = loadConfig(), index = [], state = {}, forced = '', backfill = false, wall = Date.now() } = {}) {
   const withId = (g) => {
     const id = g.edition === 'matin' || g.edition === 'soir' ? L.editionFor(g.edition, now, cfg).key : '';
     return { ...g, id };
   };
   if (!cfg.publish) return withId({ due: false, edition: '', mode: '', why: 'publication désactivée (data/revue/config.json publish = false)' });
+  if (backfill) {
+    if (forced !== 'matin' && forced !== 'soir') return { due: false, edition: '', mode: '', id: '', why: 'rattrapage : préciser l’édition matin ou soir' };
+    const id = L.editionFor(forced, now, cfg).key;
+    if (index.some(r => r.id === id)) return { due: false, edition: forced, mode: '', id, why: `${id} déjà publiée` };
+    if (now > wall + 60_000) return { due: false, edition: forced, mode: '', id, why: `${id} : la date est dans le futur` };
+    return { due: true, edition: forced, mode: 'publier', id, why: `${id} rattrapage à l’heure normale` };
+  }
   if (forced && forced !== 'auto') return withId({ due: true, edition: forced, mode: 'publier', why: 'édition forcée (déclenchement manuel)' });
   const e = L.editionAt(now, cfg);
   if (e) {
@@ -96,10 +130,11 @@ export async function generate(editionId, now, io) {
     return { status: 'publiée', model, why: `${added.length} nouveau(x) résultat(s)`, refreshed: true };
   }
 
-  const period = L.periodOf(edition, now, index, cfg);
+  const period = L.periodOf(edition, now, index, cfg, { nominal: !!io.nominal });
   const cov = L.covered(index, edition.key, reviews);
   const items = L.selectArticles(io.news, period, { coveredIds: cov.ids, max: cfg.maxArticles });
   if (!items.length && cfg.skipWithoutArticles) return { status: 'sautée', why: `aucun nouvel article entre ${tz(period.start)} et ${tz(period.end)} : édition sautée` };
+  // Sport de la date demandée : `edition.day` suit `now` (--day / --at), pas l’horloge réelle.
   const sports = L.periodSports(io.masthead, edition, { coveredKeys: cov.sports, cfg, at: atOf(reviews[edition.key]?.datePublished || now) });
   const radio = L.periodRadio(io.schedules, edition, cfg);
   const ai = cfg.ai?.enabled === false ? null : await aiReview(items, { env, fetchImpl: io.fetchImpl || fetch, batchSize: cfg.ai?.batchSize, maxCalls: cfg.ai?.maxCallsPerRun, edition: edition.id });
@@ -113,9 +148,14 @@ export async function generate(editionId, now, io) {
     model = L.buildModel({ edition, period, items, sports, radio, now, ai: null, published: model.datePublished, previous: model.previous });
     problems = L.validateReview(model, data);
   }
-  // Météo ECCC, lue à l'horloge réelle (le Datamart vit sous /today/) ; un --day/--at ne doit pas relire la veille. Échec → pas de bloc, jamais un refus.
+  // Météo ECCC du moment (Datamart sous /today/). Une date civile passée n’est pas relue :
+  // le bloc est omis, et un échec de lecture ne refuse jamais la revue.
+  const wall = Number.isFinite(io.wallClock) ? io.wallClock : Date.now();
+  const pastDate = L.mtl(now).ymd < L.mtl(wall).ymd;
   let weather = null;
-  try { weather = io.fetchWeather ? await io.fetchWeather() : null; } catch { weather = null; }
+  if (!pastDate) {
+    try { weather = io.fetchWeather ? await io.fetchWeather() : null; } catch { weather = null; }
+  }
   if (weather?.cities?.length) model = { ...model, weather };
   if (doubts.length) problems.push(...doubts.map(d => `DOUTE : ${d}`));
   if (problems.length) return { status: 'refusée', problems, model, why: 'garde-fou : rien ne sort' };
@@ -135,6 +175,7 @@ export function writeOutputs(root, { model, index, reviews, publish, now = Date.
     const i = index.findIndex(r => r.id === model.id);
     if (i >= 0) index[i] = indexEntry(model); else index.push(indexEntry(model));
   }
+  // Plus récent d’abord, y compris un rattrapage daté de son heure d’édition (pas de l’horloge du rattrapage).
   index.sort((a, b) => Date.parse(b.datePublished) - Date.parse(a.datePublished));
   w('data/revue/index.json', JSON.stringify(index, null, 1) + '\n');
   w('revue/index.html', R.renderIndexPage(index));
@@ -157,12 +198,20 @@ async function main() {
   const statePath = path.join(ROOT, 'data/revue/state.json');
   const state = rd(statePath, {});
   const newsFile = arg('news', 'news.json');
-  // --day AAAA-MM-JJ --at HH:MM : instant en heure de Montréal (exemples) ; --now ISO|news ; sinon maintenant.
-  const now = arg('day') ? L.mtlInstant(arg('day'), arg('at', '12:00')) : arg('now') === 'news' ? Date.parse(rd(newsFile).updated) : arg('now') ? Date.parse(arg('now')) : Date.now();
-  const forced = arg('edition', process.env.REVUE_EDITION || 'auto');
+  const editionArg = arg('edition', process.env.REVUE_EDITION || 'auto');
+  const dayArg = arg('day').trim();
+  if (dayArg && !validDay(dayArg)) {
+    console.error(`--day attend une date AAAA-MM-JJ (reçu : ${dayArg})`);
+    process.exit(1);
+  }
+  // --day AAAA-MM-JJ : rattrapage réel ou exemple. Sans --at, 7 h (matin) ou 19 h 15 (soir).
+  // --now ISO|news, sinon l’horloge réelle. --at explicite (exemples) l’emporte sur l’heure normale.
+  const wall = Date.now();
+  const clock = resolveEditionClock({ day: dayArg, at: arg('at', ''), edition: editionArg, cfg, wall });
+  const now = dayArg ? clock.now : arg('now') === 'news' ? Date.parse(rd(newsFile).updated) : arg('now') ? Date.parse(arg('now')) : wall;
 
   if (has('gate')) {
-    const g = gate({ now, cfg, index, state, forced });
+    const g = gate({ now, cfg, index, state, forced: editionArg, backfill: clock.backfill, wall });
     console.log(`Porte : ${g.why}`);
     if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `due=${g.due}\nedition=${g.edition}\nmode=${g.mode}\nid=${g.id}\n`);
     return;
@@ -178,13 +227,18 @@ async function main() {
   if (!sample && !cfg.publish) { summary('Revue : publication désactivée (data/revue/config.json publish = false) ; rien n’est écrit. Utiliser --sample --out pour un exemple.'); return; }
 
   const reviews = Object.fromEntries(index.slice(0, 12).map(r => [r.id, rd(path.join(dataRoot, `data/revue/reviews/${r.id}.json`), null)]).filter(([, m]) => m));
-  const io = { cfg, index, reviews, news: rd(newsFile), masthead: rd(arg('sports', 'sports-masthead.json'), { teams: {} }), schedules: rd(arg('radio', 'radio-schedules.json'), { stations: {} }), refresh: has('refresh') || process.env.REVUE_MODE === 'rafraichir', fetchWeather: has('sans-meteo') || process.env.REVUE_WEATHER === '0' ? null : () => fetchWeather() };
+  const io = {
+    cfg, index, reviews, news: rd(newsFile), masthead: rd(arg('sports', 'sports-masthead.json'), { teams: {} }), schedules: rd(arg('radio', 'radio-schedules.json'), { stations: {} }),
+    refresh: has('refresh') || process.env.REVUE_MODE === 'rafraichir', wallClock: wall, nominal: clock.nominal,
+    // Date civile passée : ne pas interroger le Datamart (il ne sert que /today/). Jamais un échec.
+    fetchWeather: has('sans-meteo') || process.env.REVUE_WEATHER === '0' || clock.pastDate ? null : () => fetchWeather(),
+  };
   console.log(`IA : ${aiEnabled() ? 'active (Workers AI)' : 'désactivée → gabarit déterministe'}`);
-  const r = await generate(io.refresh ? 'soir' : forced, now, io);
+  const r = await generate(io.refresh ? 'soir' : editionArg, now, io);
   summary(`Revue (${sample ? 'EXEMPLE hors dépôt' : 'publication réelle'}) : ${r.status} — ${r.why}`);
   if (r.problems?.length) { for (const p of r.problems) console.log(`::error::${p}`); process.exitCode = sample ? 1 : 0; return; }
   if (r.status === 'sautée') {
-    const e = forced !== 'auto' ? L.editionFor(forced, now, cfg) : L.editionAt(now, cfg);
+    const e = editionArg !== 'auto' ? L.editionFor(editionArg, now, cfg) : L.editionAt(now, cfg);
     if (!sample && e && !io.refresh) { state[e.key] = { skipped: true, why: r.why, at: new Date(now).toISOString() }; for (const k of Object.keys(state)) if (k < L.addDays(L.mtl(now).ymd, -14)) delete state[k]; fs.writeFileSync(statePath, JSON.stringify(state, null, 1) + '\n'); }
     return;
   }

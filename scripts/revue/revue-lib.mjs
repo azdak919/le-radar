@@ -87,8 +87,11 @@ export function refreshAt(now, cfg = DEFAULT_CONFIG) {
  * Période couverte : [début, fin]. Début = heure de départ de l'édition (la veille 19 h 15 pour le matin, 7 h pour le soir),
  * reculé jusqu'à la fin de la dernière revue publiée si une édition a été sautée, sans dépasser `maxLookbackHours`.
  */
-export function periodOf(edition, now, index = [], cfg = DEFAULT_CONFIG) {
+export function periodOf(edition, now, index = [], cfg = DEFAULT_CONFIG, { nominal = false } = {}) {
   let start = mtlInstant(addDays(edition.day, edition.periodStartDayOffset || 0), edition.periodStart);
+  // Rattrapage daté : la fenêtre nominale (19 h 15 → 7 h, ou 7 h → 19 h 15), sans reculer
+  // dans l’édition voisine qui sera publiée à part.
+  if (nominal) return { start, end: now };
   const floor = now - (cfg.maxLookbackHours || 48) * 3600e3;
   const prev = (index || []).filter(r => r.id !== edition.key && Date.parse(r.periodEnd) <= now).sort((a, b) => Date.parse(b.periodEnd) - Date.parse(a.periodEnd))[0];
   if (prev && Date.parse(prev.periodEnd) < start) start = Math.max(Date.parse(prev.periodEnd), floor);

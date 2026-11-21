@@ -2,13 +2,14 @@
 // garde-fou anti-hallucination (IA simulée), repli déterministe, validation des liens/auteurs/émissions/scores, JSON-LD,
 // sitemap Google News, RSS, rendu, interrupteur `publish` (activé le 17 nov. 2026) et workflows.
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as L from '../scripts/revue/revue-lib.mjs';
 import { aiReview, itemsPrompt, chapeauPrompt } from '../scripts/revue/revue-ai.mjs';
-import { generate, gate, writeOutputs, loadConfig } from '../scripts/revue/revue-run.mjs';
+import { generate, gate, writeOutputs, loadConfig, resolveEditionClock } from '../scripts/revue/revue-run.mjs';
 import { resolveEditionId } from '../scripts/revue/revue-pdf-id.mjs';
 
 
@@ -86,6 +87,35 @@ assert.equal(gate({ now: tM, cfg: on, state: { '2026-11-17-matin': { skipped: tr
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on, index: [{ id: '2026-11-17-soir' }] }).mode, 'rafraichir');
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on, index: [{ id: '2026-11-17-soir' }] }).id, '2026-11-17-soir');
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on }).due, false, 'rien à rafraîchir sans revue du soir');
+
+// Rattrapage daté (--day) : hors fenêtre du jour, sans écraser une édition déjà là.
+{
+  const wall = Date.parse('2026-11-21T18:00:00Z');
+  const matinAt = L.mtlInstant('2026-11-20', '07:00');
+  const soirAt = L.mtlInstant('2026-11-20', '19:15');
+  assert.equal(resolveEditionClock({ day: '2026-11-20', edition: 'matin', cfg: on, wall }).now, matinAt, 'sans --at, le matin est à 7 h');
+  assert.equal(resolveEditionClock({ day: '2026-11-20', edition: 'soir', cfg: on, wall }).now, soirAt, 'sans --at, le soir est à 19 h 15');
+  assert.equal(resolveEditionClock({ day: '2026-11-20', at: '10:15', edition: 'matin', cfg: on, wall }).now, L.mtlInstant('2026-11-20', '10:15'), '--at explicite l’emporte');
+  assert.equal(resolveEditionClock({ day: '2026-11-21', edition: 'matin', cfg: on, wall }).pastDate, false, 'le jour même garde la météo du moment');
+  assert.equal(resolveEditionClock({ day: '2026-11-21', edition: 'matin', cfg: on, wall }).nominal, true, '7 h déjà passée : fenêtre nominale');
+  assert.equal(resolveEditionClock({ day: '2026-11-20', edition: 'soir', cfg: on, wall }).pastDate, true);
+  assert.equal(resolveEditionClock({ day: '2026-11-21', at: '07:00', edition: 'matin', cfg: on, wall: Date.parse('2026-11-21T10:00:00Z') }).nominal, false, 'exemple lancé avant 7 h : pas encore un rattrapage');
+  const g20 = gate({ now: matinAt, cfg: on, forced: 'matin', backfill: true, index: [], wall });
+  assert.equal(g20.due, true);
+  assert.equal(g20.id, '2026-11-20-matin');
+  assert.equal(g20.edition, 'matin');
+  assert.equal(g20.mode, 'publier');
+  assert.match(g20.why, /rattrapage/);
+  assert.equal(gate({ now: soirAt, cfg: on, forced: 'soir', backfill: true, index: [], wall }).id, '2026-11-20-soir');
+  assert.equal(gate({ now: L.mtlInstant('2026-11-20', '12:00'), cfg: on, forced: 'matin', backfill: true, index: [], wall }).due, true, 'midi, hors fenêtre : le rattrapage passe');
+  assert.equal(gate({ now: matinAt, cfg: on, forced: 'matin', backfill: true, index: [{ id: '2026-11-20-matin' }], wall }).due, false);
+  assert.match(gate({ now: matinAt, cfg: on, forced: 'matin', backfill: true, index: [{ id: '2026-11-20-matin' }], wall }).why, /déjà publiée/);
+  assert.equal(gate({ now: tM, cfg: on, forced: 'matin', index: [{ id: '2026-11-17-matin' }] }).due, true, 'sans date : le forçage manuel reste dû, même si l’édition existe');
+  assert.equal(gate({ now: matinAt, cfg: on, forced: 'auto', backfill: true, wall }).due, false, 'une date sans matin ni soir ne publie pas');
+  assert.equal(gate({ now: matinAt, cfg: on, forced: 'matin', backfill: true, state: { '2026-11-20-matin': { skipped: true } }, wall }).due, true, 'un saut noté n’empêche pas le rattrapage manuel');
+  assert.equal(gate({ now: L.mtlInstant('2099-01-02', '07:00'), cfg: on, forced: 'matin', backfill: true, wall }).due, false, 'pas de date future');
+  assert.equal(gate({ now: matinAt, cfg: unpublished, forced: 'matin', backfill: true, wall }).due, false, 'publish = false bloque aussi le rattrapage');
+}
 
 // ── Données simulées ──
 const T = (iso) => new Date(Date.parse(iso)).toISOString();
@@ -289,6 +319,66 @@ assert.equal(stale.status, 'refusée'); assert.ok(stale.problems.some(p => /DOUT
   assert.ok((atSeven.problems || []).some((p) => /DOUTE/.test(p)));
 }
 assert.equal((await generate('matin', tM, { ...io, index: [{ id: m.id }] })).status, 'inchangée', 'une édition déjà publiée n’est pas refaite');
+// Rattrapage du 20 nov. : fenêtre nominale, sport de cette date, météo omise, pas d’écrasement.
+{
+  const wall = Date.parse('2026-11-21T18:00:00Z');
+  const matinAt = L.mtlInstant('2026-11-20', '07:00');
+  const soirAt = L.mtlInstant('2026-11-20', '19:15');
+  const night = { source: 'Le Collectif', institution: 'Université de Sherbrooke', lang: 'fr', title: 'Le conseil municipal de Sherbrooke adopte son budget', link: 'https://lecollectif.ca/nuit-20/', author: 'Aurélie Souka', date: T('2026-11-20T04:00:00Z'), excerpt: 'Le conseil municipal de Sherbrooke a adopté son budget 2027 lundi soir. Les étudiants réclament plus de logements.' };
+  const dayItem = { ...night, title: 'Le conseil municipal de Sherbrooke présente son budget étudiant', link: 'https://lecollectif.ca/jour-20/', date: T('2026-11-20T18:00:00Z'), excerpt: 'Le conseil municipal de Sherbrooke a présenté son budget étudiant aux associations.' };
+  const sports20 = { teams: { a: team('a', 'Stingers', 'Université Concordia', [
+    { gameId: 'r19', date: '2026-11-19', scoreFor: 1, scoreAgainst: 0, opponentNickname: 'Rouge et Or', opponentFullName: 'Université Laval' },
+    { gameId: 'r20', date: '2026-11-20', scoreFor: 3, scoreAgainst: 2, opponentNickname: 'Carabins', opponentFullName: 'Université de Montréal' },
+    { gameId: 'r21', date: '2026-11-21', scoreFor: 9, scoreAgainst: 0, opponentNickname: 'Vert & Or', opponentFullName: 'Université de Sherbrooke' },
+  ], [
+    { gameId: 'n19h', date: '2026-11-20', time: '19:00', home: true, opponentNickname: 'Rouge et Or', opponentFullName: 'Université Laval' },
+    { gameId: 'n21h', date: '2026-11-20', time: '21:00', home: false, opponentNickname: 'Carabins', opponentFullName: 'Université de Montréal' },
+    { gameId: 'n22', date: '2026-11-22', time: '18:00', home: true, opponentNickname: 'Gee-Gees', opponentFullName: 'Université d’Ottawa' },
+  ]) } };
+  let weatherCalls = 0;
+  const base20 = {
+    cfg: on, index: [], reviews: {}, schedules, env: {}, masthead: sports20, wallClock: wall, nominal: true,
+    fetchWeather: async () => { weatherCalls += 1; throw new Error('datamart'); },
+  };
+  const morningNews = { updated: T('2026-11-20T11:30:00Z'), items: [night, dayItem] };
+  const am = await generate('matin', matinAt, { ...base20, news: morningNews });
+  assert.equal(am.status, 'publiée', JSON.stringify(am.problems || am.why));
+  assert.equal(am.model.id, '2026-11-20-matin');
+  assert.equal(am.model.datePublished, new Date(matinAt).toISOString(), 'la date de publication est 7 h, pas l’horloge du rattrapage');
+  assert.equal(am.model.period.start, L.mtlInstant('2026-11-19', '19:15'));
+  assert.equal(am.model.period.end, matinAt);
+  assert.deepEqual(am.model.items.map(x => x.link), ['https://lecollectif.ca/nuit-20/'], 'matin : la nuit seulement');
+  assert.deepEqual([...new Set(am.model.sports.results.map(r => r.date))].sort(), ['2026-11-19', '2026-11-20'], 'sport du 19 et du 20, pas celui du 21');
+  assert.equal(weatherCalls, 0, 'date passée : la météo n’est pas relue');
+  assert.equal(am.model.weather, undefined, 'bloc météo omis');
+  const again = await generate('matin', matinAt, { ...base20, news: morningNews, index: [{ id: '2026-11-20-matin' }] });
+  assert.equal(again.status, 'inchangée', 'édition déjà là : pas d’écrasement sans --refresh');
+  assert.equal(again.model, undefined);
+  const prevEarly = { id: '2026-11-19-soir', periodEnd: '2026-11-19T17:00:00.000Z', datePublished: '2026-11-19T17:00:00.000Z', articleIds: [], sportKeys: [] };
+  const eveningNews = { updated: T('2026-11-21T00:00:00Z'), items: [night, dayItem] };
+  const pm = await generate('soir', soirAt, { ...base20, news: eveningNews, index: [prevEarly] });
+  assert.equal(pm.status, 'publiée', JSON.stringify(pm.problems || pm.why));
+  assert.equal(pm.model.id, '2026-11-20-soir');
+  assert.equal(pm.model.datePublished, new Date(soirAt).toISOString());
+  assert.equal(pm.model.period.start, L.mtlInstant('2026-11-20', '07:00'), 'le soir daté commence à 7 h');
+  assert.deepEqual(pm.model.items.map(x => x.link), ['https://lecollectif.ca/jour-20/']);
+  assert.deepEqual([...new Set(pm.model.sports.results.map(r => r.date))], ['2026-11-20']);
+  assert.deepEqual(pm.model.sports.next.filter(r => r.date === '2026-11-20').map(r => r.time), ['21:00'], 'matchs du soir à partir de 19 h 15');
+  assert.equal(pm.model.weather, undefined);
+  const swallowed = await generate('soir', soirAt, { ...base20, nominal: false, news: eveningNews, index: [prevEarly] });
+  assert.equal(swallowed.status, 'publiée', JSON.stringify(swallowed.problems || swallowed.why));
+  assert.ok(swallowed.model.items.some(x => x.link.includes('nuit-20')), 'sans --day, le soir reprend une édition du matin sautée');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'revue-ordre-'));
+  fs.writeFileSync(path.join(dir, 'robots.txt'), 'User-agent: *\nAllow: /\n');
+  const order = [
+    { id: '2026-11-21-matin', datePublished: '2026-11-21T12:00:00.000Z', periodEnd: '2026-11-21T12:00:00.000Z', edition: 'matin', day: '2026-11-21', path: 'revue/2026-11-21-matin/', url: 'https://le-radar.ca/revue/2026-11-21-matin/', headline: 'plus tard', articleIds: [], sportKeys: [] },
+    { id: '2026-11-19-soir', datePublished: '2026-11-20T00:15:00.000Z', periodEnd: '2026-11-20T00:15:00.000Z', edition: 'soir', day: '2026-11-19', path: 'revue/2026-11-19-soir/', url: 'https://le-radar.ca/revue/2026-11-19-soir/', headline: 'plus tôt', articleIds: [], sportKeys: [] },
+  ];
+  writeOutputs(dir, { model: am.model, index: order, reviews: {}, publish: false, now: matinAt, cfg: on });
+  writeOutputs(dir, { model: pm.model, index: order, reviews: {}, publish: false, now: soirAt, cfg: on });
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, 'data/revue/index.json'), 'utf8')).map(r => r.id), ['2026-11-21-matin', '2026-11-20-soir', '2026-11-20-matin', '2026-11-19-soir'], 'index chronologique, pas l’ordre d’écriture');
+  fs.rmSync(dir, { recursive: true, force: true });
+}
 // Mise à jour tardive : un nouveau résultat du jour avance dateModified, rien d'autre ne change.
 const soirAt = Date.parse('2026-11-17T00:16:00Z');
 const soir = (await generate('soir', soirAt, { ...io, news: { ...news, updated: T('2026-11-17T00:10:00Z') }, env: {} })).model;
@@ -467,6 +557,46 @@ assert.match(wf, /workflow_run:/);
 assert.match(wf, /CLOUDFLARE_AI_TOKEN: \$\{\{ secrets\.CLOUDFLARE_AI_TOKEN \}\}/);
 assert.doesNotMatch(wf, /echo[^\n]*secrets\./, 'aucun secret affiché');
 assert.match(wf, /group: data-writers-site/);
+{
+  const sched = wf.slice(wf.indexOf('schedule:'), wf.indexOf('workflow_dispatch:'));
+  assert.doesNotMatch(sched, /--day|inputs\.day/, 'cron et filet : pas de date forcée');
+  assert.match(wf, /day:\n\s+description: 'Date AAAA-MM-JJ/);
+  assert.match(wf, /type: string\n\s+default: ''/);
+  assert.match(wf, /REVUE_DAY: \$\{\{ github\.event_name == 'workflow_dispatch' && inputs\.day \|\| '' \}\}/);
+  assert.match(wf, /node scripts\/revue\/revue-run\.mjs --gate --day "\$REVUE_DAY"/);
+  assert.match(wf, /node scripts\/revue\/revue-run\.mjs --edition "\$REVUE_EDITION" --day "\$REVUE_DAY"/);
+  assert.match(wf, /else\n\s+node scripts\/revue\/revue-run\.mjs --gate\n/);
+  assert.match(wf, /else\n\s+node scripts\/revue\/revue-run\.mjs --edition "\$REVUE_EDITION"\n/);
+  assert.match(wf, /node scripts\/generate-feed\.js --update/);
+  assert.match(wf, /needs\.gate\.outputs\.id/);
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'revue-gate-'));
+  const gout = path.join(tmp, 'out');
+  const run = (args) => {
+    fs.writeFileSync(gout, '');
+    const r = spawnSync(process.execPath, ['scripts/revue/revue-run.mjs', '--gate', ...args], {
+      encoding: 'utf8',
+      env: { ...process.env, GITHUB_OUTPUT: gout, REVUE_EDITION: '', REVUE_AI: 'off' },
+    });
+    const kv = Object.fromEntries(fs.readFileSync(gout, 'utf8').split('\n').filter(Boolean).map((l) => {
+      const i = l.indexOf('=');
+      return [l.slice(0, i), l.slice(i + 1)];
+    }));
+    return { status: r.status, stdout: r.stdout, stderr: r.stderr, kv };
+  };
+  const exists = run(['--edition', 'matin', '--day', '2026-11-19']);
+  assert.equal(exists.status, 0, exists.stderr + exists.stdout);
+  assert.equal(exists.kv.due, 'false', 'édition déjà publiée : la porte ne la refait pas');
+  assert.equal(exists.kv.id, '2026-11-19-matin');
+  assert.match(exists.stdout, /déjà publiée/);
+  const bad = run(['--edition', 'matin', '--day', '2026-11-31']);
+  assert.equal(bad.status, 1);
+  assert.match(`${bad.stderr}`, /AAAA-MM-JJ/);
+  const auto = run(['--edition', 'auto', '--day', '2026-11-20']);
+  assert.equal(auto.status, 0, auto.stderr);
+  assert.equal(auto.kv.due, 'false');
+  assert.match(auto.stdout, /matin ou soir/);
+  fs.rmSync(tmp, { recursive: true, force: true });
+}
 const groups = JSON.parse(fs.readFileSync('scripts/data-writer-groups.json', 'utf8')).groups;
 assert.ok(groups.site.includes('revue.yml'));
 assert.match(fs.readFileSync('.github/workflows/pages-deploy.yml', 'utf8'), /- Revue — matin et soir/);

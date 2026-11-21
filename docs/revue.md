@@ -19,7 +19,7 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 | `scripts/revue/revue-render.js` | Page (chrome du site), index des archives, JSON-LD `NewsArticle`, sitemap Google News, entrées RSS. |
 | `scripts/revue/revue-weather.mjs` | Prévisions ECCC (Datamart MSC, fichiers citypage XML) lues à la production de l’édition. |
 | `scripts/revue/revue-games.js` | Sudoku et mots cachés déterministes (graine = date + édition), avec solutions. |
-| `scripts/revue/revue-run.mjs` | CLI : `--gate`, `--edition`, `--sample --out`, `--refresh`, `--rebuild`, `--sans-meteo`. |
+| `scripts/revue/revue-run.mjs` | CLI : `--gate`, `--edition`, `--day`, `--sample --out`, `--refresh`, `--rebuild`, `--sans-meteo`. |
 | `scripts/revue/revue-sample.sh`, `revue-screenshots.mjs` | Exemples matin + soir, captures (mobile 390 px, ordinateur 1280 px, clair/sombre) et PDF d’impression Letter, Legal, Tabloid, A4, A3 (`captures/impression/`). |
 | `revue.css` | Styles de la page (variables du site, mode sombre). Hors coquille du service worker. |
 | `.github/workflows/revue.yml` | Cron (7 h et 19 h 15, heure de Montréal, rafraîchissement à 23 h 35) + lancement manuel. |
@@ -42,6 +42,13 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
   échouer le job après la génération des pages (18 nov. 2026) et rien n’était commité ; un échec PDF ne bloque plus la publication des pages.
 - **Rien de neuf, rien de publié** : sans nouvel article dans la période (`skipWithoutArticles`), l’édition est
   sautée et notée dans `data/revue/state.json`. `news.json` vieux de plus de 6 h : refus.
+- **Rattrapage** : lancement manuel avec une date `AAAA-MM-JJ` et l’édition `matin` ou `soir` (exemple décoché).
+  L’horloge est celle de l’édition, 7 h ou 19 h 15 (heure de Montréal), même hors de la fenêtre du jour.
+  Les articles sont ceux de cette fenêtre (le soir commence à 7 h, il ne reprend pas la nuit du matin).
+  L’index `data/revue/index.json` reste trié par date de publication. Le PDF reçoit l’identifiant
+  `AAAA-MM-JJ-matin|soir`. Une édition déjà présente n’est pas réécrite (sauf `--refresh`, mise à jour sportive).
+  La météo d’une date antérieure à aujourd’hui est omise : le Datamart ne garde que le jour courant, et ce n’est jamais un échec.
+  Les crons et le filet après la collecte ignorent cette date.
 
 ## Heures de publication (7 h et 19 h 15, heure de Montréal)
 
@@ -177,6 +184,9 @@ Désactiver : repasser `"publish": false`. Les pages déjà publiées restent ; 
 node scripts/revue/revue-run.mjs --gate --now 2026-11-17T07:02:00-05:00   # édition due ?
 bash scripts/revue/revue-sample.sh /tmp/exemple-revue                       # exemples + captures (sans IA en local)
 node scripts/revue/revue-run.mjs --sample --edition soir --day 2026-11-16 --at 19:15 --out /tmp/x
+# Rattrapage réel (ne pas lancer sans décision) : matin d’abord, puis le soir.
+# gh workflow run revue.yml --ref main -f edition=matin -f sample=false -f day=2026-11-20
+# gh workflow run revue.yml --ref main -f edition=soir -f sample=false -f day=2026-11-20
 npm run test:revue && npx playwright test tests/revue-render.spec.mjs tests/print-formats.spec.mjs --project=main
 PRINT_OUT=/tmp/impression npx playwright test tests/print-formats.spec.mjs --project=main   # garde les PDF
 ```
