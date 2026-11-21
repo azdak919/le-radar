@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T19:38:49.508Z",
+  "updatedAt": "2026-11-21T20:36:55.256Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T19:38:26.578Z"
+      "checkedAt": "2026-11-21T20:36:29.651Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Contenu explicite",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/contenu-explicite"
       },
+      "next": {
+        "title": "Le radar",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "16:30",
+        "url": "https://cism893.ca/emissions/le-radar-2"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Contenu explicite",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T19:38:28.106Z"
+      "checkedAt": "2026-11-21T20:36:31.076Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T19:38:31.611Z"
+      "checkedAt": "2026-11-21T20:36:34.228Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T19:38:45.485Z"
+      "checkedAt": "2026-11-21T20:36:48.376Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T19:38:46.414Z"
+      "checkedAt": "2026-11-21T20:36:49.261Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
+      "next": {
+        "title": "D'amour et de sexe",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00",
+        "slug": "damour-et-de-sexe"
+      },
       "track": "ID - ID Comment Debord - Blood Pareil",
-      "showTitle": "",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T19:38:49.157Z"
+      "checkedAt": "2026-11-21T20:36:54.906Z"
     }
   }
 }
