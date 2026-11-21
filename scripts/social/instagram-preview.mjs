@@ -53,6 +53,21 @@ function toSrgb(file) {
   catch { /* le JPEG de Chromium est déjà en sRGB */ }
 }
 
+function carouselShots() {
+  const news = JSON.parse(fs.readFileSync(newsPath, 'utf8'));
+  const items = (news.items || []).filter(a => a.lang !== 'en' && a.title && a.source && (a.imageLocal || a.image)).slice(0, 2);
+  const slot = { label: 'La une du soir', dayLabel: 'Dimanche 22 novembre' };
+  const shots = items.map((it, i) => {
+    const img = it.imageLocal && fs.existsSync(path.join(ROOT, it.imageLocal)) ? '/' + it.imageLocal : it.image;
+    return [`carrousel-${i + 1}.jpg`, {
+      slot, variant: 'titre',
+      items: [{ title: it.title, source: it.source, credit: it.sourceImageCredit || it.sourceImageCreator || '', images: [img], focalY: 0.38 }],
+    }];
+  });
+  shots.push(['carrousel-fin.jpg', { poster: 'lien', slot, items: [] }]);
+  return shots;
+}
+
 const shots = [
   ['instagram-matin.jpg', lead('matin')],
   ['instagram-soir.jpg', lead('soir')],
@@ -60,6 +75,7 @@ const shots = [
   ['variante-couverture.jpg', lead('soir', 'couverture')],
   ['variante-titre.jpg', lead('soir', 'titre')],
   ['variante-affiche.jpg', lead('soir', 'affiche')],
+  ...carouselShots(),
 ];
 
 const port = 4217;

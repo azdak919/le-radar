@@ -2,7 +2,9 @@
 
 Document de décision pour le propriétaire. Rien ici n’est une consigne inventée : chaque recommandation renvoie à une page lue. Les textes des publications restent les titres, les médias, les auteurs et les crédits déjà validés. Aucun slogan n’est ajouté. Aucun abonnement automatique, aucune demande d’engagement (« like », « tague un ami »), aucun dépassement de mots-clics.
 
-La publication du dimanche 22 novembre 2026, vers 19 h 30 (heure de Montréal), part avec l’image 3:4 unique déjà dessinée (variante « couverture »). Le carrousel et le choix entre les trois variantes attendent un oui.
+**Choix retenu (21 novembre 2026).** Carrousel, variante **titre**. Une diapo par article (photo plus courte, titre à 84 px, logo sur fond noir, crédit 📸), puis une dernière diapo qui ne porte que `le-radar.ca`. Quatre articles au plus. Les variantes couverture et affiche restent générées en aperçu. La publication du dimanche 22 novembre 2026, vers 19 h 30 (heure de Montréal), part avec ce carrousel.
+
+Le carrousel est le format le mieux appuyé pour l’engagement : Buffer (2,14 fois l’image seule, octobre 2024), Later (2022), Socialinsider (0,55 % contre 0,37 % en 2025) et Metricool (10,15 % contre 7,36 % en 2024). Aucune de ces études ne classe nos trois mises en page. La variante titre est retenue parce que le centre d’aide Instagram rappelle que la photo est vue sur téléphone et que la grille recadre le centre : le titre le plus grand, sur un fond noir qui ne se mélange pas à la photo, est celui qui reste lisible dans ce carré. L’affiche pose le titre par-dessus la photo, à 68 px. La couverture donne plus de photo et un titre plus petit.
 
 ## Format : image seule ou carrousel
 
@@ -41,8 +43,8 @@ Identité, inchangée : logo du Radar sur fond noir, `LE-RADAR.ca` en Source Ser
 
 | Variante | Ce qui change | Fichier |
 | --- | --- | --- |
-| Couverture (défaut, dimanche) | Photo haute, titre en dessous sur le noir. Le titre reste à 68 px quand il tient : un écart de mesure de quelques pixels le rabattait à 48. | `variante-couverture.jpg` |
-| Titre | Photo plus courte, titre plus grand | `variante-titre.jpg` |
+| Couverture (aperçu) | Photo haute, titre en dessous sur le noir, 68 px quand il tient | `variante-couverture.jpg` |
+| Titre (publiée) | Photo plus courte, titre à 84 px. C’est la diapo de chaque article. | `variante-titre.jpg` |
 | Affiche | Titre posé sur le bas de la photo, fond noir opaque | `variante-affiche.jpg` |
 
 Aucun générateur externe n’a été ajouté. Des outils souvent cités pour fabriquer des images sociales sont sous Apache-2.0, incompatible avec la GPL-2.0-only du dépôt. Le rendu reste `affiches/social-une.js` et `affiches/social-une.css`, déjà dans le projet.

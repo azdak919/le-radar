@@ -195,10 +195,12 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .grille .ig-title { margin-top: 12px; font-weight: 700; font-size: 68px; line-height: 1.06; letter-spacing: -0.02em; color: #fff; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 .grille .ig-media { margin-top: 16px; font-weight: 700; font-size: 36px; line-height: 1.2; color: #fff; }
 .grille .ig-credit { margin-top: 12px; font-weight: 600; font-size: 24px; line-height: 1.25; color: #e7e7e3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-/* Variantes de la une, même identité. La couverture reste le défaut publié. */
+/* Variantes. Le carrousel publié utilise « titre » (photo courte, titre à 84 px). Couverture et affiche restent des aperçus. */
 .grille .ig.titre .ig-photo { flex: 0 0 380px; min-height: 0; }
 .grille .ig.titre .ig-title { font-size: 84px; -webkit-line-clamp: 4; }
 .grille .ig.affiche .ig-copy { margin-top: -320px; position: relative; z-index: 2; background: #000; }
+.grille .ig.lien .ig-copy { flex: 1 1 auto; display: flex; align-items: center; background: #000; }
+.grille .ig.lien .ig-title { font-size: 72px; -webkit-line-clamp: 2; }
 .grille .ig-match { padding: 18px 0; border-top: 1px solid rgba(255,255,255,.16); }
 .grille .ig-match:first-of-type { border-top: 0; }
 .grille .ig-sport { font-weight: 700; font-size: 26px; line-height: 1.2; color: #F6C177; }

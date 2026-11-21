@@ -6,6 +6,8 @@ import { gate, pruneState, CFG } from '../scripts/social/une-run.mjs';
 import { NET_SPEC } from '../scripts/social/formats.mjs';
 import { POLICY } from '../scripts/social/policy.mjs';
 import { chooseInstagramImage } from '../scripts/social/instagram.mjs';
+import { bufferImageAssets } from '../scripts/social/channels/x-buffer.mjs';
+import { instagramSlideAlt } from '../scripts/social/une-lib.mjs';
 
 // ── Créneaux : 7 h 45 et 19 h 30 heure de Montréal, été comme hiver ──
 assert.equal(U.slotAt(Date.parse('2026-11-13T12:45:00Z'))?.id, 'matin');       // 7 h 45 HNE
@@ -293,6 +295,20 @@ for (const n of U.NETS) assert.equal(U.IMAGE_FOR[n], 'portrait', n);
 assert.equal(U.IMAGE_FOR.instagram, 'grille');
 assert.equal(chooseInstagramImage({ portrait: 'portrait.jpg' }), null, 'Instagram ne reprend pas le portrait des autres réseaux');
 assert.equal(chooseInstagramImage({ grille: 'grille.jpg', portrait: 'portrait.jpg' }).ref, 'grille.jpg');
+const carousel = chooseInstagramImage({ grille: 'grille.jpg', slides: [{ url: 'https://exemple/a.jpg', alt: 'A' }, { url: 'https://exemple/b.jpg', alt: 'le-radar.ca' }] });
+assert.equal(carousel.carousel, true);
+assert.equal(carousel.slides.length, 2);
+assert.equal(carousel.ref, 'https://exemple/a.jpg');
+const single = chooseInstagramImage({ grille: 'grille.jpg', slides: [{ url: 'https://exemple/a.jpg', alt: 'A' }] });
+assert.equal(single.carousel, false, 'une seule diapo ne fait pas un carrousel');
+assert.equal(single.ref, 'grille.jpg');
+const assets = bufferImageAssets(null, '', [{ url: 'https://exemple/a.jpg', alt: 'Titre. La Pige' }, { url: 'https://exemple/b.jpg', alt: 'le-radar.ca' }]);
+assert.equal(assets.length, 2);
+assert.equal(assets[0].image.url, 'https://exemple/a.jpg');
+assert.equal(assets[0].image.metadata.altText, 'Titre. La Pige');
+assert.equal(assets[1].image.metadata.altText, 'le-radar.ca');
+assert.equal(bufferImageAssets('https://exemple/une.jpg', 'alt unique', undefined).length, 1);
+assert.equal(instagramSlideAlt({ title: 'Au marché', source: 'La Pige', credit: 'Photo : Juliette Pain' }), 'Au marché. La Pige. Juliette Pain');
 assert.deepEqual(U.IMAGE_SIZES.grille, { width: 1080, height: 1440 });
 assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formatsFor(['instagram']), ['grille'], 'Instagram : 3:4, jamais de story');
 assert.deepEqual(U.formatsFor(['instagram'], false, { story: true }), ['grille']); assert.deepEqual(U.formatsFor(U.NETS, true), ['portrait', 'story', 'paysage'], 'aperçu des autres réseaux');

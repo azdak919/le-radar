@@ -162,6 +162,24 @@ test('instagram 3:4 : les variantes titre et affiche gardent le titre dans le ca
   expect(sizes.affiche.copy).toBe('rgb(0, 0, 0)');
 });
 
+test('instagram 3:4 : la dernière diapo ne porte que le-radar.ca @ci-critical', async ({ page }) => {
+  await page.setViewportSize({ width: 1080, height: 1440 });
+  await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+  const info = await page.evaluate((a) => window.renderUne(a), { model: { poster: 'lien', slot: { label: 'La une du soir', dayLabel: 'Dimanche 22 novembre' }, items: [] }, format: 'grille' });
+  expect(info.overflow).toBe(false);
+  expect(info.lien).toBe(true);
+  const zone = await page.evaluate(() => {
+    const c = document.getElementById('card').getBoundingClientRect();
+    const e = document.querySelector('.ig-title');
+    const r = e.getBoundingClientRect();
+    return { text: e.textContent, top: r.top - c.top, bottom: r.bottom - c.top, brand: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor };
+  });
+  expect(zone.text).toBe('le-radar.ca');
+  expect(zone.brand).toBe('rgb(0, 0, 0)');
+  expect(zone.top).toBeGreaterThanOrEqual(180);
+  expect(zone.bottom).toBeLessThanOrEqual(1260);
+});
+
 test('instagram 3:4 sport : trois résultats réels dans le carré @ci-critical', async ({ page }) => {
   await page.setViewportSize({ width: 1080, height: 1440 });
   await page.goto('/affiches/social-une.html', { waitUntil: 'load' });

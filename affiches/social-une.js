@@ -138,12 +138,22 @@
   // Affiche Instagram native 3:4 : une photo, un titre, le média, le crédit. Rien d'inventé.
   async function renderGrille(card, model) {
     card.className = 'card grille';
-    const variant = model.variant === 'titre' || model.variant === 'affiche' ? model.variant : 'couverture';
+    const variant = model.poster === 'lien' ? 'lien' : (model.variant === 'titre' || model.variant === 'affiche' ? model.variant : 'couverture');
     const root = el('div', 'ig ' + variant);
     const top = el('div', 'ig-edge'); top.append(el('span', '', model.slot.dayLabel || ''));
     const safe = el('div', 'ig-safe');
     const brand = brandBar();
     const bottom = el('div', 'ig-edge'); bottom.append(el('span', '', model.slot.label || ''));
+    if (model.poster === 'lien') {
+      const copy = el('div', 'ig-copy');
+      const title = el('h1', 'ig-title', 'le-radar.ca');
+      copy.append(title);
+      safe.append(brand, copy);
+      root.append(top, safe, bottom); card.append(root);
+      await Promise.all([document.fonts.ready, brand.ready]);
+      const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2;
+      return { shown: 0, photo: false, sports: 0, radio: 0, overflow, lien: true };
+    }
     if (model.poster === 'sport') {
       const copy = el('div', 'ig-copy');
       copy.append(el('p', 'ig-kicker', model.slot.label || 'Résultats'));

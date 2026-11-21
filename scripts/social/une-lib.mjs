@@ -508,6 +508,12 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     cut = cut ? cut - 10 : 120; if (cut < 30) return null;
   }
 }
+/** Texte alternatif d'une diapo : titre, média, crédit. Rien d'inventé. */
+export function instagramSlideAlt(item) {
+  if (!item) return 'le-radar.ca';
+  const credit = String(item.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
+  return [item.title, item.source, credit].filter(Boolean).join('. ').slice(0, 1000);
+}
 /** Texte alternatif de l'image (≤ 1000 caractères). */
 export function altText(model) {
   const [lead, ...rest] = model.items;

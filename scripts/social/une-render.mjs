@@ -4,7 +4,7 @@
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { IMAGE_SIZES, MAX_IMAGE_BYTES, frDay, frTypo, frShort } from './une-lib.mjs';
+import { IMAGE_SIZES, MAX_IMAGE_BYTES, frDay, frTypo, frShort, instagramSlideAlt } from './une-lib.mjs';
 const frShortDay = (ymd, n) => frShort(new Date(Date.parse(ymd + 'T12:00:00Z') + n * 864e5).toISOString().slice(0, 10));
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -28,7 +28,34 @@ export function pageModel(model) {
   };
 }
 
-export async function renderImages(model, { outDir, formats = ['portrait', 'story', 'paysage'], prefix = 'une', port = Number(process.env.UNE_PORT || 4193), optionalFormats = [] } = {}) {
+async function shootCard(page, slideModel, file) {
+  const info = await page.evaluate(arg => window.renderUne(arg), { model: slideModel, format: 'grille' });
+  let buf;
+  for (const quality of [88, 80, 72, 64]) { buf = await page.locator('#card').screenshot({ type: 'jpeg', quality }); if (buf.length <= MAX_IMAGE_BYTES) break; }
+  if (info.overflow) console.log(`::warning::image ${path.basename(file)} : débordement résiduel`);
+  if (buf.length > MAX_IMAGE_BYTES) throw new Error(`image ${path.basename(file)} trop lourde (${buf.length} o)`);
+  fs.writeFileSync(file, buf);
+  return { file, bytes: buf.length, width: 1080, height: 1440, ...info };
+}
+
+/** Une diapo par article (variante titre) puis une diapo « le-radar.ca ». Quatre articles au plus. */
+export async function renderInstagramSlides(page, model, { outDir, prefix }) {
+  const base = pageModel(model);
+  const items = base.items.slice(0, 4);
+  if (!items.length) return [];
+  const slides = [];
+  for (let i = 0; i < items.length; i++) {
+    const file = path.join(outDir, `${prefix}-slide-${String(i).padStart(2, '0')}-1080x1440.jpg`);
+    const shot = await shootCard(page, { ...base, items: [items[i]], variant: 'titre' }, file);
+    slides.push({ ...shot, alt: instagramSlideAlt(items[i]) });
+  }
+  const end = path.join(outDir, `${prefix}-slide-fin-1080x1440.jpg`);
+  const fin = await shootCard(page, { ...base, items: [], poster: 'lien', variant: 'lien' }, end);
+  slides.push({ ...fin, alt: 'le-radar.ca' });
+  return slides;
+}
+
+export async function renderImages(model, { outDir, formats = ['portrait', 'story', 'paysage'], prefix = 'une', port = Number(process.env.UNE_PORT || 4193), optionalFormats = [], instagramSlides = false } = {}) {
   const { chromium } = await import('@playwright/test');
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, `${prefix}-page.json`), JSON.stringify(pageModel(model), null, 1));
@@ -51,6 +78,10 @@ export async function renderImages(model, { outDir, formats = ['portrait', 'stor
         if (buf.length > MAX_IMAGE_BYTES) throw new Error(`image ${format} trop lourde (${buf.length} o)`);
         fs.writeFileSync(file, buf);
         out[format] = { file, bytes: buf.length, width, height, ...info };
+        if (format === 'grille' && instagramSlides) {
+          try { out.slides = await renderInstagramSlides(page, model, { outDir, prefix }); }
+          catch (e) { console.log(`::warning::carrousel Instagram indisponible (${String(e.message).slice(0, 160)}) : envoi de l'image seule.`); }
+        }
       } catch (e) {
         if (!optional.has(format)) throw e;
         console.log(`Image ${format} indisponible (${String(e.message).slice(0, 160)}) : repli sur le format suivant.`);
