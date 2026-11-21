@@ -2,11 +2,10 @@ name: Social — Mastodon (@leradar@piaille.fr)
 
 # Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
-# Publication réelle seulement si la variable de dépôt MASTODON_LIVE vaut « true »
-# Idempotent : data/mastodon-sent.json + derniers posts du blogue.
+# Publication réelle si data/social/policy.json automation.mastodon_post est true.
+# Le cron suffit : aucun Worker ni variable GitHub n'est requis. Idempotent : data/mastodon-sent.json.
 on:
   schedule:
-    # Minutes peu chargées (GitHub saute souvent :00/:10/:40) ; filet : Worker le-radar-news-trigger (workflow_dispatch, dry_run: false).
     - cron: '7,37 * * * *'
   workflow_dispatch:
     inputs:
@@ -33,7 +32,6 @@ concurrency:
 
 jobs:
   post:
-    if: github.event_name == 'workflow_dispatch' || vars.MASTODON_LIVE == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -43,11 +41,13 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
+      - id: live
+        run: echo "live=$(node scripts/social/live-flag.mjs mastodon_post)" >> "$GITHUB_OUTPUT"
       - name: Publier les articles frais
         env:
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
           MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
-          DRY_RUN: ${{ (inputs.dry_run || vars.MASTODON_LIVE != 'true') && 'true' || 'false' }}
+          DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) || steps.live.outputs.live != 'true' && 'true' || 'false' }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}
         run: node scripts/social/mastodon-post.mjs

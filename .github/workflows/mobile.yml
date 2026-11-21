@@ -47,7 +47,14 @@ jobs:
         run: npm ci
 
       - name: Debug APK
-        run: npm run android:debug
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            npm run android:debug && exit 0
+            echo "Résolution Gradle échouée (essai ${attempt}/3), nouvel essai."
+            sleep 20
+          done
+          exit 1
 
       - name: Tests unitaires Android (fdroid + full)
         run: cd android && ./gradlew testFdroidDebugUnitTest testFullDebugUnitTest

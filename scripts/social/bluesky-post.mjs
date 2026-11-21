@@ -4,7 +4,7 @@
 // espacés (≤ perRun par passage, gapSec entre deux). Plafond bluesky de rate-limit.mjs (10/h,
 // 150/24 h glissantes) ; au-delà, sélection comme X (variété ≤ 2/source, photo, extrait, @),
 // le surplus est SAUTÉ (jamais remis en file). Idempotent : data/bluesky-sent.json + derniers
-// posts du compte. Déclenché par le Worker le-radar-news-trigger (:05/:35) + cron de secours.
+// posts du compte. Cron GitHub autonome ; le Worker news-trigger peut seulement l'avancer.
 // Sans BLUESKY_APP_PASSWORD : essai. SHARE_NOW=true : un article frais au hasard, tout de suite.
 import fs from 'node:fs';
 import path from 'node:path';

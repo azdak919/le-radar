@@ -41,18 +41,18 @@ export const PREPARED_NETS = ['instagram'];
 /**
  * Format d'image par réseau (revue du 12 nov. 2026, docs/social-engagement.md) : le portrait 4:5 s'affiche sans recadrage
  * pour une image seule dans les fils mobiles de X, Bluesky (recadre seulement au-delà de 1:2), Mastodon (4.x, ratio natif),
- * LinkedIn, Facebook, Tumblr et Instagram (plage API 4:5 à 1,91:1). Story Instagram : 9:16. Le paysage 16:9 reste rendu en
- * aperçu (repli), sans réseau attitré.
+ * LinkedIn, Facebook et Tumblr. Instagram : grille 3:4 1080×1440, repli 4:5. Jamais de story ni de reel.
+ * Le paysage 16:9 reste rendu en aperçu (repli), sans réseau attitré.
  */
-export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'portrait' };
-export const STORY_FOR = { instagram: 'story' };
-export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
+export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'grille' };
+export const STORY_FOR = {};
+export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
 /** Formats à rendre pour une liste de réseaux (aperçu : tous). */
 // Story 9:16 : publication DÉSACTIVÉE par défaut (décision de Charles, 13 nov. 2026 : refonte à valider). Seul
 // formats.une.story.publish === true dans data/social/policy.json la réactive ; l'aperçu (DRY_RUN) la rend toujours.
 export const storyEnabled = (cfg) => cfg?.story?.publish === true;
 export const formatsFor = (nets, all = false, { story = false } = {}) => all ? ['portrait', 'story', 'paysage']
-  : [...new Set(nets.flatMap(n => [IMAGE_FOR[n], story ? STORY_FOR[n] : null]).filter(Boolean))];
+  : [...new Set(nets.flatMap(n => [IMAGE_FOR[n], (story && n !== 'instagram') ? STORY_FOR[n] : null]).filter(Boolean))];
 /** Poids maximal d'une image (Bluesky : 976 Ko ; X : 5 Mo ; Mastodon : 8 Mo ; Facebook, LinkedIn, Tumblr : plus). */
 export const MAX_IMAGE_BYTES = 950 * 1024;
 
@@ -403,6 +403,13 @@ export function uneTags(items, max) {
   if (max >= 2 && out.length > max) return [...out.slice(0, max - 1), BASE_TAGS[1]].filter((t, i, a) => a.indexOf(t) === i).slice(0, max);
   return out.slice(0, max);
 }
+/** Instagram : 3 à 5 mots-clics ciblés. On complète avec #VieÉtudiante seulement s'il manque un troisième, sans dépasser 5. */
+export function instagramHashtags(items, max = 5) {
+  const cap = Math.min(5, max > 0 ? max : 5);
+  const tags = uneTags(items, cap);
+  if (tags.length < 3 && !tags.includes('#VieÉtudiante')) tags.push('#VieÉtudiante');
+  return tags.slice(0, cap);
+}
 /** Étiquettes Tumblr (sans #, 10 à 15). */
 export function uneTumblrTags(items) {
   const t = ['le radar', 'la une', 'médias étudiants', 'presse étudiante', 'journalisme étudiant', 'québec', 'quebec', 'université', 'vie étudiante', 'actualités'];
@@ -442,8 +449,25 @@ export function revueEditionLine(slot, opts = {}) {
  * Réseaux courts (X, Bluesky) : titres + signatures, un seul lien (l'article si un seul titre, sinon l'accueil).
  * Si le texte dépasse la limite : on retire radio et sport, puis des articles (jamais la une), puis des hashtags, puis on raccourcit les titres (jamais l’accroche ni les mentions). La 2e ligne vers l’édition de la revue, si elle existe, est retirée en dernier recours.
  */
-/** Instagram (préparé, désactivé) : légende ≤ 2200, aucun lien cliquable, « lien en bio ». */
-export const IG_SPEC = { limit: 2200, len: s => [...String(s)].length, subheaders: true, nolink: true };
+/** Instagram (préparé, désactivé) : légende ≤ 2200, 5 mots-clics au plus, aucun lien cliquable, « lien en bio », crédit 📸. */
+export const IG_SPEC = { limit: 2200, len: s => [...String(s)].length, subheaders: true, nolink: true, maxHashtags: 5 };
+
+/** « 📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons ». Jamais « Photo : », jamais de @. */
+export function igCreditLine(credit) {
+  let c = String(credit || '').replace(/\s+/g, ' ').trim();
+  c = c.replace(/^(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
+  if (!c || /@/.test(c)) return '';
+  if ([...c].length > 180) c = [...c].slice(0, 179).join('').replace(/[\s,;:.–—-]+$/, '') + '…';
+  return `📸 ${c}`;
+}
+
+/** Crédit incrusté : 📸 sur la grille Instagram, « Photo : » sur les autres formats. */
+export function embeddedCreditLabel(credit, format, nb = '\u00A0') {
+  const line = igCreditLine(credit);
+  if (!line) return '';
+  if (format === 'grille') return line;
+  return 'Photo' + nb + ': ' + line.replace(/^📸\s*/, '');
+}
 const SPORTS_NETS = new Set(['facebook', 'linkedin', 'tumblr', 'instagram']);
 export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : NET_SPEC[net], { tags = [], revueExists, root } = {}) {
   const len = spec.len || xlen, long = !!spec.subheaders;
@@ -461,8 +485,11 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     }
     if (sports.length) body += '\n\n🏟️ Sport étudiant :\n' + sports.map(sportsLine).join('\n');
     if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
-    if (spec.nolink) body += '\n\nToute la une : lien en bio (le-radar.ca)';
-    else if (long) body += `\n\nToute la une : ${HOME}`;
+    if (spec.nolink) {
+      body += '\n\nToute la une : lien en bio (le-radar.ca)';
+      const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');
+      if (credit) body += '\n\n' + credit;
+    } else if (long) body += `\n\nToute la une : ${HOME}`;
     const lead = revueLine ? `${head}\n${revueLine}` : head;
     return [lead, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
@@ -475,7 +502,8 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     if (radio.length) { radio = radio.slice(0, -1); continue; }
     if (sports.length) { sports = sports.slice(0, -1); continue; }
     if (items.length > 1) { items = items.slice(0, -1); continue; }
-    if (hash.length > 1) { hash = hash.slice(0, -1); continue; }
+    const hashFloor = spec.nolink ? 3 : 1;
+    if (hash.length > hashFloor) { hash = hash.slice(0, -1); continue; }
     if (cut && cut <= 30 && withRevue && revueLine) { withRevue = false; cut = 0; continue; }
     cut = cut ? cut - 10 : 120; if (cut < 30) return null;
   }
@@ -495,7 +523,18 @@ export function checkUneText(text, net, model, spec = net === 'instagram' ? IG_S
   if (/(^|[\s(])@[\w.]+/.test(text)) p.push('mention @ interdite');
   const own = model.items.reduce((t, x) => t.split(x.title).join(' '), text).replace(/https?:\/\/\S+/g, ' ');
   if (/week-?end/i.test(own)) p.push('« week-end » interdit (écrire « fin de semaine »)');
-  if (spec.nolink) { if (/https?:\/\//.test(text)) p.push('lien cliquable interdit (Instagram)'); if (!/lien en bio/.test(text)) p.push('« lien en bio » manquant'); }
+  if (spec.nolink) {
+    if (/https?:\/\//.test(text)) p.push('lien cliquable interdit (Instagram)');
+    if (!/lien en bio/.test(text)) p.push('« lien en bio » manquant');
+    if (!/le-radar\.ca/.test(text)) p.push('le-radar.ca en texte manquant');
+    const tags = text.match(/#[\p{L}\p{N}_]+/gu) || [];
+    if (tags.length > (spec.maxHashtags || 5)) p.push(`trop de mots-clics (${tags.length}/${spec.maxHashtags || 5})`);
+    if (tags.length < 3) p.push(`pas assez de mots-clics (${tags.length}/3)`);
+    if (/^Photo\s*:/m.test(text)) p.push('crédit « Photo : » interdit');
+    const want = igCreditLine(model.credit || model.items?.[0]?.credit || '');
+    if (want && !text.includes(want)) p.push('crédit 📸 manquant');
+    if (text.split('\n')[0] && [...text.split('\n')[0]].length > 125) p.push('accroche trop longue pour l’aperçu Instagram');
+  }
   else if (!/https:\/\/le-radar\.ca\//.test(text)) p.push('lien le-radar.ca manquant');
   if (/undefined|NaN|\[object|null/.test(text)) p.push('valeur invalide');
   const leadStart = [...model.items[0].title].slice(0, 20).join('');
@@ -506,9 +545,10 @@ export function checkUneText(text, net, model, spec = net === 'instagram' ? IG_S
 export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
   const out = {};
   for (const n of [...NETS, ...PREPARED_NETS]) {
-    const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n], tags = n === 'tumblr' ? [] : uneTags(model.items, maxByNetwork[n] ?? (n === 'instagram' ? 5 : 2));
+    const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n];
+    const tags = n === 'tumblr' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : uneTags(model.items, maxByNetwork[n] ?? 2);
     const text = buildUneText(model, n, spec, { tags, revueExists: opts.revueExists ?? model.revueExists, root: opts.root });
-    out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] + (STORY_FOR[n] ? ' + ' + STORY_FOR[n] : ''), problems: checkUneText(text, n, model, spec) };
+    out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] || '', problems: checkUneText(text, n, model, spec) };
   }
   return out;
 }

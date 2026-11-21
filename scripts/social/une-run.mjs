@@ -19,9 +19,11 @@ import { createMastodon, idemKey } from './channels/mastodon.mjs';
 import { createTumblr } from './channels/tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
+import { decideInstagram, deliverInstagram, dryRunReport, imageUrl, openInstagramIssue } from './instagram.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/social/une-state.json');
+const IG_STATE = path.join(ROOT, 'data/social/instagram-state.json');
 const MEDIA_BRANCH = 'social-une-media';
 const arg = (n, d = '') => { const i = process.argv.indexOf('--' + n); return i > 0 ? process.argv[i + 1] : d; };
 const rd = f => JSON.parse(fs.readFileSync(path.isAbsolute(f) ? f : path.join(ROOT, f), 'utf8'));
@@ -111,6 +113,32 @@ async function publishOne(net, entry, env) {
   return { id: post.id, status: post.status || '' };
 }
 
+function readIgState() {
+  try { return JSON.parse(fs.readFileSync(IG_STATE, 'utf8')); } catch { return { halted: false, sent: {} }; }
+}
+function writeIgState(s) { fs.writeFileSync(IG_STATE, JSON.stringify(s, null, 1) + '\n'); }
+
+/** Aperçu ou envoi Instagram. Un seul essai, clé dédiée, sans faire échouer les autres réseaux. */
+async function instagramPass({ now, slot, text, problems = [], images, dry, alt = '' }) {
+  const cfg = CFG.prepared?.instagram || {};
+  const state0 = readIgState();
+  const d = decideInstagram({ now, slotId: slot.id, format: 'une', cfg, state: state0, dry, env: process.env, text, problems, images: images || {}, dedupKey: `une:${slot.key}` });
+  if (d.action === 'preview') {
+    const report = dryRunReport(d);
+    console.log('\n' + report);
+    return report;
+  }
+  if (d.action !== 'send') { console.log(`Instagram : ${d.reason}`); return ''; }
+  const result = await deliverInstagram({
+    env: process.env, text, imageUrl: imageUrl(d.image?.ref), alt, state: state0,
+    now: new Date(now).toISOString(), slotId: slot.id, format: 'une', dedupKey: `une:${slot.key}`,
+    fileIssue: openInstagramIssue,
+  });
+  writeIgState(result.state || state0);
+  console.log(result.action === 'sent' ? `→ instagram : ${result.id}` : `Instagram arrêté : ${result.reason}`);
+  return '';
+}
+
 export function previewMarkdown(slot, sel, texts, images, { dry, reason }) {
   const L = [`## ${slot.label} (${slot.key}) — ${dry ? 'essai DRY_RUN, rien n\'est publié' : 'passage réel'}`, '', `Décision : ${reason}`, ''];
   if (sel.doubts?.length) L.push(`Doutes : ${sel.doubts.join(' ; ')}.`, '');
@@ -169,7 +197,10 @@ async function main() {
     const model = { slot, items: sel.items, sports, radio };
     texts = buildUneAll(model, POLICY.hashtags?.maxByNetwork || {});
     const { renderImages } = await import('./une-render.mjs');
-    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats: formatsFor(nets, dry, { story: storyEnabled(CFG) }) });
+    const igCfg = CFG.prepared?.instagram || {};
+    const formats = formatsFor(nets, dry, { story: storyEnabled(CFG) });
+    if ((dry || igCfg.enabled === true) && !formats.includes('grille')) formats.push('grille');
+    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats, optionalFormats: ['grille'] });
     if (!dry && !storyEnabled(CFG)) delete images.story; // jamais hébergée ni envoyée tant que formats.une.story.publish n’est pas true
     const bad = Object.entries(texts).filter(([n, v]) => nets.includes(n) && v.problems.length);
     if (dry) reason = 'essai (DRY_RUN) : aucun envoi.';
@@ -184,6 +215,13 @@ async function main() {
     if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + '\n');
     console.log(`\n=== ${slot.label} : ${reason}`);
     for (const [n, v] of Object.entries(texts)) console.log(`\n[${n}] ${v.len}/${v.limit}${v.problems.length ? ' PROBLÈMES : ' + v.problems.join(', ') : ''}\n${v.text}`);
+    if (dry) {
+      const igReport = await instagramPass({ now, slot, text: texts.instagram?.text || '', problems: texts.instagram?.problems || [], images, dry: true });
+      if (igReport) {
+        fs.writeFileSync(path.join(out, `instagram-${slot.id}.md`), igReport);
+        if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, igReport + '\n');
+      }
+    }
     if (reason !== 'publication réelle autorisée.') return;
     // Figer le créneau AVANT tout envoi : les réessais reprennent exactement les mêmes textes et images.
     let urls;
@@ -215,6 +253,7 @@ async function main() {
     }
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
   }
+  if (entry.texts?.instagram) await instagramPass({ now, slot, text: entry.texts.instagram, problems: [], images: entry.images || {}, dry: false, alt: entry.alt || '' });
   console.log(`\nRÉEL terminé : ${published} publication(s) pour ${slot.key}.`);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname) await main();
