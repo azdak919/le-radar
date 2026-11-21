@@ -1,31 +1,19 @@
 {
-  "updated": "2026-11-21T19:44:59.205Z",
-  "total": 1038,
-  "withPhoto": 939,
-  "withStock": 104,
-  "withCampusBank": 93,
-  "fullyCovered": 1021,
-  "leadReadyPhotos": 975,
-  "pageScraped": 8,
-  "photosRecovered": 8,
-  "imagesCleared": 3,
-  "stockSearches": 35,
-  "stockFound": 14,
-  "campusBankFound": 14,
+  "updated": "2026-11-21T19:56:56.026Z",
+  "total": 1050,
+  "withPhoto": 954,
+  "withStock": 103,
+  "withCampusBank": 92,
+  "fullyCovered": 1035,
+  "leadReadyPhotos": 989,
+  "pageScraped": 10,
+  "photosRecovered": 10,
+  "imagesCleared": 1,
+  "stockSearches": 2,
+  "stockFound": 8,
+  "campusBankFound": 6,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "no-stock-match",
-      "image": null
-    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -33,58 +21,10 @@
       "image": null
     },
     {
-      "title": "Est-ce encore possible de s’ennuyer ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/est-ce-encore-possible-de-sennuyer",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Image-10.jpg"
-    },
-    {
-      "title": "Vote obligatoire, idée réalisable ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/vote-obligatoire-idee-realisable",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_3341-1.jpeg"
-    },
-    {
-      "title": "Prendre une photo, est-ce vraiment se souvenir ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/prendre-une-photo-est-ce-vraiment-se-souvenir",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/20261029_142730791_iOS.jpg"
-    },
-    {
-      "title": "Pénurie d’arbitres : le football durement touché au Saguenay–Lac-Saint-Jean",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/penurie-darbitres-le-football-durement-touche-au-saguenay-lac-saint-jean",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Image-1-5.jpg"
-    },
-    {
-      "title": "L’IA, nouvelle arme des fraudeurs en cryptomonnaies",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/lia-nouvelle-arme-des-fraudeurs-en-cryptomonnaies",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/AUCLAIR_CRYPTO_IA_3.jpg"
-    },
-    {
-      "title": "Des vignes hybrides pour résister au froid",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/des-vignes-hybrides-pour-resister-au-froid",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_0017.jpg"
-    },
-    {
-      "title": "La Fondation du Domaine-du-Roy célèbre 40 ans d’impact sur les soins de santé de proximité",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/la-fondation-du-domaine-du-roy-celebre-40-ans-dimpact-sur-les-soins-de-sante-de-proximite",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Aucune-description-de-photo-disponible_.png"
-    },
-    {
-      "title": "De Sydenham à Albani : ce que racontent les rues du Saguenay",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/de-sydenham-a-albani-ce-que-racontent-les-rues-du-saguenay",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Photo-rue-De-Quen.jpeg"
-    },
-    {
-      "title": "Quand la fièvre des cartes de hockey s’invite au comptoir",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/quand-la-fievre-des-cartes-de-hockey-sinvite-au-comptoir",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image.jpg"
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
     }
   ]
 }
