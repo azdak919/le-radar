@@ -1,0 +1,3042 @@
+{
+ "version": 1,
+ "id": "2026-11-21-matin",
+ "edition": {
+  "id": "matin",
+  "label": "La revue du matin",
+  "emoji": "☀️",
+  "day": "2026-11-21"
+ },
+ "path": "revue/2026-11-21-matin/",
+ "url": "https://le-radar.ca/revue/2026-11-21-matin/",
+ "period": {
+  "start": 1795220100000,
+  "end": 1795262877525
+ },
+ "datePublished": "2026-11-21T12:07:57.525Z",
+ "dateModified": "2026-11-21T12:07:57.525Z",
+ "items": [
+  {
+   "id": "044a906ff7972672",
+   "title": "Will Montreal learn from New York about protest and police?",
+   "link": "https://thelinknewspaper.ca/article/16575",
+   "source": "The Link",
+   "authors": [
+    "Nicolas Tremblay"
+   ],
+   "date": "2026-11-21T04:06:00.000Z",
+   "lang": "en",
+   "institution": "Concordia",
+   "sport": "",
+   "excerpt": "Montreal's police response to the Nov. 13 student protest came under scrutiny at a city council meeting on Nov.",
+   "image": "https://le-radar.ca/assets/news-images/873a3f556402d7f6.jpg",
+   "imageStock": false,
+   "credit": "Photo: Yann Rifflard",
+   "pageUrl": "https://le-radar.ca/article/044a906ff7972672/",
+   "theme": "Politique",
+   "resume": "",
+   "resumeBy": ""
+  }
+ ],
+ "sports": {
+  "results": [
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D2",
+    "uni": false,
+    "kind": "resultat",
+    "gameId": "d7967b5c-7236-4237-81de-13cbc66bfa22",
+    "date": "2026-11-20",
+    "when": "Final · ven. 20 nov.",
+    "teams": [
+     {
+      "name": "Aigles",
+      "inst": "Ahuntsic",
+      "color": "",
+      "score": 89
+     },
+     {
+      "name": "Géants",
+      "inst": "Saint-Jean-sur-Richelieu",
+      "color": "",
+      "score": 73
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-20|Basketball (H)|Aigles (Ahuntsic):89|Géants (Saint-Jean-sur-Richelieu):73",
+    "text": "Aigles (Ahuntsic) 89-73 Géants (Saint-Jean-sur-Richelieu)"
+   }
+  ],
+  "next": [
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "356f1e68-dcda-4acc-9ee4-4475487cedae",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h",
+    "teams": [
+     {
+      "name": "Gladiateurs",
+      "inst": "Gérald-Godin",
+      "color": ""
+     },
+     {
+      "name": "Blues",
+      "inst": "Dawson",
+      "color": "#135CB2"
+     }
+    ],
+    "verb": "visite",
+    "time": "10:00",
+    "key": "2026-11-21|10:00|Badminton (mixte)||Blues (Dawson)|Gladiateurs (Gérald-Godin)",
+    "text": "Gladiateurs (Gérald-Godin) visite Blues (Dawson)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "f56d35a1-8724-4bad-b002-7f9a73813856",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h",
+    "teams": [
+     {
+      "name": "Noir et Or",
+      "inst": "Valleyfield",
+      "color": ""
+     },
+     {
+      "name": "Cavaliers",
+      "inst": "Champlain Saint-Lambert",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "10:00",
+    "key": "2026-11-21|10:00|Badminton (mixte)||Cavaliers (Champlain Saint-Lambert)|Noir et Or (Valleyfield)",
+    "text": "Noir et Or (Valleyfield) reçoit Cavaliers (Champlain Saint-Lambert)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "b5fea8b6-812b-4ea9-942e-49ac9fcd3fe3",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Jean-de-Brébeuf",
+      "color": ""
+     },
+     {
+      "name": "Dragons",
+      "inst": "Collégial international Sainte-Anne",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "10:00",
+    "key": "2026-11-21|10:00|Badminton (mixte)||Dragons (Collégial international Sainte-Anne)|Dynamiques (Jean-de-Brébeuf)",
+    "text": "Dynamiques (Jean-de-Brébeuf) visite Dragons (Collégial international Sainte-Anne)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4b4ffcb7-a436-4bfb-b703-7a6f2fd89c97",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Trappeurs",
+      "inst": "Baie-Comeau",
+      "color": ""
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (F)||Gaillards (Cégep de Jonquière)|Trappeurs (Baie-Comeau)",
+    "text": "Trappeurs (Baie-Comeau) reçoit Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "e0797d61-261f-4ad3-ae3c-8720bcb16ce4",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     },
+     {
+      "name": "Kioki",
+      "inst": "Saint-Félicien",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (F)||Kioki (Saint-Félicien)|Voyageurs (Sept-Îles)",
+    "text": "Voyageurs (Sept-Îles) reçoit Kioki (Saint-Félicien)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "8a44a2ae-7480-4b19-a4de-0d86a4bf8d73",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     },
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (H)||Dynamiques (Sainte-Foy)|Voyageurs (Sept-Îles)",
+    "text": "Dynamiques (Sainte-Foy) reçoit Voyageurs (Sept-Îles)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "5cb1786b-b920-4d81-9a27-5f151a878133",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Élans",
+      "inst": "Garneau",
+      "color": "#006944"
+     },
+     {
+      "name": "Portageurs",
+      "inst": "Rivière-du-Loup",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (H)||Portageurs (Rivière-du-Loup)|Élans (Garneau)",
+    "text": "Élans (Garneau) visite Portageurs (Rivière-du-Loup)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "7e3f2a36-769e-4be2-9620-aa1b4f076aaf",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Titans",
+      "inst": "Limoilou",
+      "color": ""
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "visite",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (H)||Gaillards (Cégep de Jonquière)|Titans (Limoilou)",
+    "text": "Titans (Limoilou) visite Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "29b0c481-38bd-4856-8e68-ce80d1fc0773",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     },
+     {
+      "name": "Pionniers",
+      "inst": "Rimouski",
+      "color": "#1B4F8C"
+     }
+    ],
+    "verb": "visite",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (H)||Condors (Beauce-Appalaches)|Pionniers (Rimouski)",
+    "text": "Condors (Beauce-Appalaches) visite Pionniers (Rimouski)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "de15d30b-8bfd-46d1-83d2-dc0cf2565423",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Barons",
+      "inst": "Séminaire de Sherbrooke",
+      "color": ""
+     },
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (H)||Barons (Séminaire de Sherbrooke)|Condors (Beauce-Appalaches)",
+    "text": "Barons (Séminaire de Sherbrooke) reçoit Condors (Beauce-Appalaches)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "d38e15ec-7c4d-49b1-bccd-f3a7acedbea5",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 10 h 15",
+    "teams": [
+     {
+      "name": "Sismiques",
+      "inst": "Centre d’études collégiales en Charlevoix",
+      "color": ""
+     },
+     {
+      "name": "Panthères",
+      "inst": "Mérici collégial privé",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "10:15",
+    "key": "2026-11-21|10:15|Volleyball (H)||Panthères (Mérici collégial privé)|Sismiques (Centre d’études collégiales en Charlevoix)",
+    "text": "Sismiques (Centre d’études collégiales en Charlevoix) reçoit Panthères (Mérici collégial privé)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "e24b434c-e50e-4592-8ed4-fdbf63f19eeb",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 15",
+    "teams": [
+     {
+      "name": "Blues",
+      "inst": "Dawson",
+      "color": "#135CB2"
+     },
+     {
+      "name": "Cavaliers",
+      "inst": "Champlain Saint-Lambert",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "11:15",
+    "key": "2026-11-21|11:15|Badminton (mixte)||Blues (Dawson)|Cavaliers (Champlain Saint-Lambert)",
+    "text": "Blues (Dawson) visite Cavaliers (Champlain Saint-Lambert)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4d72386f-d447-45e9-8c77-68edbd141aec",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 15",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Jean-de-Brébeuf",
+      "color": ""
+     },
+     {
+      "name": "Atlas",
+      "inst": "Marie-Victorin",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "11:15",
+    "key": "2026-11-21|11:15|Badminton (mixte)||Atlas (Marie-Victorin)|Dynamiques (Jean-de-Brébeuf)",
+    "text": "Dynamiques (Jean-de-Brébeuf) visite Atlas (Marie-Victorin)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "55defc4e-5295-40f5-a9a6-744952060baa",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 15",
+    "teams": [
+     {
+      "name": "Dragons",
+      "inst": "Collégial international Sainte-Anne",
+      "color": ""
+     },
+     {
+      "name": "Nomades",
+      "inst": "Montmorency",
+      "color": "#002768"
+     }
+    ],
+    "verb": "visite",
+    "time": "11:15",
+    "key": "2026-11-21|11:15|Badminton (mixte)||Dragons (Collégial international Sainte-Anne)|Nomades (Montmorency)",
+    "text": "Dragons (Collégial international Sainte-Anne) visite Nomades (Montmorency)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "e78c6d9b-61ec-4bff-b69a-bca59a2c47b9",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 30",
+    "teams": [
+     {
+      "name": "Cyclones",
+      "inst": "Lanaudière à L’Assomption",
+      "color": ""
+     },
+     {
+      "name": "Cheminots",
+      "inst": "Saint-Jérôme",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "11:30",
+    "key": "2026-11-21|11:30|Basketball (H)||Cheminots (Saint-Jérôme)|Cyclones (Lanaudière à L’Assomption)",
+    "text": "Cyclones (Lanaudière à L’Assomption) visite Cheminots (Saint-Jérôme)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "58a523ed-1a63-4d20-8f53-66c5779c5dc8",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 30",
+    "teams": [
+     {
+      "name": "Jeannois",
+      "inst": "Alma",
+      "color": ""
+     },
+     {
+      "name": "Kioki",
+      "inst": "Saint-Félicien",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "11:30",
+    "key": "2026-11-21|11:30|Volleyball (F)||Jeannois (Alma)|Kioki (Saint-Félicien)",
+    "text": "Jeannois (Alma) reçoit Kioki (Saint-Félicien)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4e001d65-fbf1-43b7-b952-05753f3c671c",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 30",
+    "teams": [
+     {
+      "name": "Couguars",
+      "inst": "Chicoutimi",
+      "color": "#00994C"
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "11:30",
+    "key": "2026-11-21|11:30|Volleyball (F)||Couguars (Chicoutimi)|Gaillards (Cégep de Jonquière)",
+    "text": "Couguars (Chicoutimi) reçoit Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "f06e0796-dd73-49a9-8bfa-93a5003295c5",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 30",
+    "teams": [
+     {
+      "name": "Faucons",
+      "inst": "Lévis",
+      "color": ""
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "visite",
+    "time": "11:30",
+    "key": "2026-11-21|11:30|Volleyball (H)||Faucons (Lévis)|Gaillards (Cégep de Jonquière)",
+    "text": "Faucons (Lévis) visite Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "e0c07a8a-5b2e-4eb1-b600-05319b7f7565",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 30",
+    "teams": [
+     {
+      "name": "Filons",
+      "inst": "Thetford",
+      "color": ""
+     },
+     {
+      "name": "Pionniers",
+      "inst": "Rimouski",
+      "color": "#1B4F8C"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "11:30",
+    "key": "2026-11-21|11:30|Volleyball (H)||Filons (Thetford)|Pionniers (Rimouski)",
+    "text": "Filons (Thetford) reçoit Pionniers (Rimouski)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "6f28d506-9dc1-45d9-929b-1f3496fdfc9a",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 30",
+    "teams": [
+     {
+      "name": "Capitaines",
+      "inst": "Matane",
+      "color": ""
+     },
+     {
+      "name": "Panthères",
+      "inst": "Mérici collégial privé",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "11:30",
+    "key": "2026-11-21|11:30|Volleyball (H)||Capitaines (Matane)|Panthères (Mérici collégial privé)",
+    "text": "Capitaines (Matane) reçoit Panthères (Mérici collégial privé)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "0938a848-e2d6-4023-b3bf-d21fb7738cc0",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 11 h 30",
+    "teams": [
+     {
+      "name": "Gaulois",
+      "inst": "La Pocatière",
+      "color": ""
+     },
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "11:30",
+    "key": "2026-11-21|11:30|Volleyball (H)||Condors (Beauce-Appalaches)|Gaulois (La Pocatière)",
+    "text": "Gaulois (La Pocatière) visite Condors (Beauce-Appalaches)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "0fcae94c-812b-4d74-97fd-9ca8cf4987cb",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h",
+    "teams": [
+     {
+      "name": "Cyclones",
+      "inst": "Lanaudière à L’Assomption",
+      "color": ""
+     },
+     {
+      "name": "Dynamiques",
+      "inst": "Jean-de-Brébeuf",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "12:00",
+    "key": "2026-11-21|12:00|Basketball (F)||Cyclones (Lanaudière à L’Assomption)|Dynamiques (Jean-de-Brébeuf)",
+    "text": "Cyclones (Lanaudière à L’Assomption) reçoit Dynamiques (Jean-de-Brébeuf)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "5e9f7d34-e03a-4e34-b5a0-8dc1d85818b7",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 30",
+    "teams": [
+     {
+      "name": "Gladiateurs",
+      "inst": "Gérald-Godin",
+      "color": ""
+     },
+     {
+      "name": "Noir et Or",
+      "inst": "Valleyfield",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "12:30",
+    "key": "2026-11-21|12:30|Badminton (mixte)||Gladiateurs (Gérald-Godin)|Noir et Or (Valleyfield)",
+    "text": "Gladiateurs (Gérald-Godin) reçoit Noir et Or (Valleyfield)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "fd33ec1e-9d11-4231-8c2c-5d9e1974efe8",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 30",
+    "teams": [
+     {
+      "name": "Cavaliers",
+      "inst": "Champlain Saint-Lambert",
+      "color": ""
+     },
+     {
+      "name": "Dynamiques",
+      "inst": "Jean-de-Brébeuf",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "12:30",
+    "key": "2026-11-21|12:30|Badminton (mixte)||Cavaliers (Champlain Saint-Lambert)|Dynamiques (Jean-de-Brébeuf)",
+    "text": "Cavaliers (Champlain Saint-Lambert) visite Dynamiques (Jean-de-Brébeuf)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "f7724de2-db75-4b56-a3ea-b796f8a6d682",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 30",
+    "teams": [
+     {
+      "name": "Nomades",
+      "inst": "Montmorency",
+      "color": "#002768"
+     },
+     {
+      "name": "Atlas",
+      "inst": "Marie-Victorin",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "12:30",
+    "key": "2026-11-21|12:30|Badminton (mixte)||Atlas (Marie-Victorin)|Nomades (Montmorency)",
+    "text": "Nomades (Montmorency) reçoit Atlas (Marie-Victorin)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "09b39008-33ea-4445-96d0-6aec676cae86",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 30",
+    "teams": [
+     {
+      "name": "Pionniers",
+      "inst": "Rimouski",
+      "color": "#1B4F8C"
+     },
+     {
+      "name": "Élans",
+      "inst": "Garneau",
+      "color": "#006944"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "12:30",
+    "key": "2026-11-21|12:30|Basketball (H)||Pionniers (Rimouski)|Élans (Garneau)",
+    "text": "Pionniers (Rimouski) reçoit Élans (Garneau)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "793b8d10-dab6-47a1-9bf5-720bd04115f4",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Trappeurs",
+      "inst": "Baie-Comeau",
+      "color": ""
+     },
+     {
+      "name": "Couguars",
+      "inst": "Chicoutimi, équipe Blanc",
+      "color": "#00994C"
+     }
+    ],
+    "verb": "visite",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (F)||Couguars (Chicoutimi, équipe Blanc)|Trappeurs (Baie-Comeau)",
+    "text": "Trappeurs (Baie-Comeau) visite Couguars (Chicoutimi, équipe Blanc)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "3895fe15-70d8-43db-acca-b478cf3e33a6",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Jeannois",
+      "inst": "Alma",
+      "color": ""
+     },
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (F)||Jeannois (Alma)|Voyageurs (Sept-Îles)",
+    "text": "Jeannois (Alma) reçoit Voyageurs (Sept-Îles)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4691d57a-dcb5-4538-8b32-4666be9ba4b9",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Faucons",
+      "inst": "Lévis",
+      "color": ""
+     },
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (H)||Faucons (Lévis)|Voyageurs (Sept-Îles)",
+    "text": "Faucons (Lévis) reçoit Voyageurs (Sept-Îles)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "d74a6597-0ecc-4b4d-918f-a549b4bd2f78",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Filons",
+      "inst": "Thetford",
+      "color": ""
+     },
+     {
+      "name": "Portageurs",
+      "inst": "Rivière-du-Loup",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (H)||Filons (Thetford)|Portageurs (Rivière-du-Loup)",
+    "text": "Filons (Thetford) visite Portageurs (Rivière-du-Loup)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "f0ae4b8f-1f7e-46f0-8292-9f0b09715a7d",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     },
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (H)||Condors (Beauce-Appalaches)|Dynamiques (Sainte-Foy)",
+    "text": "Dynamiques (Sainte-Foy) reçoit Condors (Beauce-Appalaches)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "f5de0fda-ff29-4eb8-aae9-4ce0bd2cf12f",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Élans",
+      "inst": "Garneau",
+      "color": "#006944"
+     },
+     {
+      "name": "Titans",
+      "inst": "Limoilou",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (H)||Titans (Limoilou)|Élans (Garneau)",
+    "text": "Élans (Garneau) visite Titans (Limoilou)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "3db4b0d4-87ea-4573-883a-c9c0869529c8",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Barons",
+      "inst": "Séminaire de Sherbrooke",
+      "color": ""
+     },
+     {
+      "name": "Gaulois",
+      "inst": "La Pocatière",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (H)||Barons (Séminaire de Sherbrooke)|Gaulois (La Pocatière)",
+    "text": "Barons (Séminaire de Sherbrooke) visite Gaulois (La Pocatière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4d163fa1-bd53-4732-a427-a10c62aae489",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Capitaines",
+      "inst": "Matane",
+      "color": ""
+     },
+     {
+      "name": "Sismiques",
+      "inst": "Centre d’études collégiales en Charlevoix",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "12:45",
+    "key": "2026-11-21|12:45|Volleyball (H)||Capitaines (Matane)|Sismiques (Centre d’études collégiales en Charlevoix)",
+    "text": "Capitaines (Matane) visite Sismiques (Centre d’études collégiales en Charlevoix)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball universitaire féminin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "36bc4eb0-258d-449f-928a-6b0e4dc6b0e2",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h",
+    "teams": [
+     {
+      "name": "Inuk",
+      "inst": "UQAC",
+      "color": "#5A7411"
+     },
+     {
+      "name": "Patriotes",
+      "inst": "UQTR",
+      "color": "#006534"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:00",
+    "key": "2026-11-21|13:00|Volleyball (F)||Inuk (UQAC)|Patriotes (UQTR)",
+    "text": "Inuk (UQAC) reçoit Patriotes (UQTR)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball universitaire masculin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "c2f2ee3e-7ae3-4466-b29b-b8300c9de4ab",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h",
+    "teams": [
+     {
+      "name": "Rouge et Or",
+      "inst": "ULaval",
+      "color": "#E30513"
+     },
+     {
+      "name": "Tigers",
+      "inst": "Dalhousie",
+      "color": "#FFD400"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:00",
+    "key": "2026-11-21|13:00|Volleyball (H)||Rouge et Or (ULaval)|Tigers (Dalhousie)",
+    "text": "Rouge et Or (ULaval) reçoit Tigers (Dalhousie)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "89a2658d-7314-47d3-a7b4-ff53065072f4",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h",
+    "teams": [
+     {
+      "name": "Couguars",
+      "inst": "Chicoutimi",
+      "color": "#00994C"
+     },
+     {
+      "name": "Lions",
+      "inst": "Champlain St. Lawrence",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "13:00",
+    "key": "2026-11-21|13:00|Basketball (F)||Couguars (Chicoutimi)|Lions (Champlain St. Lawrence)",
+    "text": "Couguars (Chicoutimi) visite Lions (Champlain St. Lawrence)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "512d3100-7a76-41b3-960e-13b63b434516",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h",
+    "teams": [
+     {
+      "name": "Filons",
+      "inst": "Thetford",
+      "color": ""
+     },
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     }
+    ],
+    "verb": "visite",
+    "time": "13:00",
+    "key": "2026-11-21|13:00|Basketball (F)||Dynamiques (Sainte-Foy)|Filons (Thetford)",
+    "text": "Filons (Thetford) visite Dynamiques (Sainte-Foy)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "203e7993-83c9-4ec2-a8b5-0924f981d81d",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h",
+    "teams": [
+     {
+      "name": "Gauloises",
+      "inst": "Rosemont",
+      "color": ""
+     },
+     {
+      "name": "Boomerang",
+      "inst": "André-Laurendeau",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:00",
+    "key": "2026-11-21|13:00|Basketball (F)||Boomerang (André-Laurendeau)|Gauloises (Rosemont)",
+    "text": "Gauloises (Rosemont) reçoit Boomerang (André-Laurendeau)"
+   },
+   {
+    "emoji": "🏈",
+    "sport": "Football (H)",
+    "sportKey": "football",
+    "league": "Football collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "ca8679bd-8adc-44d5-8787-2904a233131b",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h",
+    "teams": [
+     {
+      "name": "Lauréats",
+      "inst": "Saint-Hyacinthe",
+      "color": ""
+     },
+     {
+      "name": "Volontaires",
+      "inst": "Sherbrooke",
+      "color": "#00A759"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:00",
+    "key": "2026-11-21|13:00|Football (H)||Lauréats (Saint-Hyacinthe)|Volontaires (Sherbrooke)",
+    "text": "Lauréats (Saint-Hyacinthe) reçoit Volontaires (Sherbrooke)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D1",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "be54f8f2-ab5e-41ec-87b2-ff625c46a3f7",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h 30",
+    "teams": [
+     {
+      "name": "Nordiques",
+      "inst": "Lionel-Groulx",
+      "color": "#2F98D6"
+     },
+     {
+      "name": "Diablos",
+      "inst": "Trois-Rivières",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:30",
+    "key": "2026-11-21|13:30|Volleyball (F)||Diablos (Trois-Rivières)|Nordiques (Lionel-Groulx)",
+    "text": "Nordiques (Lionel-Groulx) reçoit Diablos (Trois-Rivières)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "8a44994e-c83a-4b65-8474-8c41d50590ae",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h 45",
+    "teams": [
+     {
+      "name": "Gladiateurs",
+      "inst": "Gérald-Godin",
+      "color": ""
+     },
+     {
+      "name": "Nomades",
+      "inst": "Montmorency",
+      "color": "#002768"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:45",
+    "key": "2026-11-21|13:45|Badminton (mixte)||Gladiateurs (Gérald-Godin)|Nomades (Montmorency)",
+    "text": "Gladiateurs (Gérald-Godin) reçoit Nomades (Montmorency)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "b3e0c9dd-9f5f-42e3-b409-fedb6ef99e11",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h 45",
+    "teams": [
+     {
+      "name": "Blues",
+      "inst": "Dawson",
+      "color": "#135CB2"
+     },
+     {
+      "name": "Dragons",
+      "inst": "Collégial international Sainte-Anne",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:45",
+    "key": "2026-11-21|13:45|Badminton (mixte)||Blues (Dawson)|Dragons (Collégial international Sainte-Anne)",
+    "text": "Blues (Dawson) reçoit Dragons (Collégial international Sainte-Anne)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "1d87ee19-550e-4730-821d-77194a1eced2",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 13 h 45",
+    "teams": [
+     {
+      "name": "Noir et Or",
+      "inst": "Valleyfield",
+      "color": ""
+     },
+     {
+      "name": "Atlas",
+      "inst": "Marie-Victorin",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "13:45",
+    "key": "2026-11-21|13:45|Badminton (mixte)||Atlas (Marie-Victorin)|Noir et Or (Valleyfield)",
+    "text": "Noir et Or (Valleyfield) reçoit Atlas (Marie-Victorin)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire masculin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "4f979d79-9848-4064-a744-5dddaa4b1a26",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 14 h",
+    "teams": [
+     {
+      "name": "Citadins",
+      "inst": "UQAM",
+      "color": "#0079BE"
+     },
+     {
+      "name": "Stingers",
+      "inst": "Concordia",
+      "color": "#912338"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "14:00",
+    "key": "2026-11-21|14:00|Basketball (H)||Citadins (UQAM)|Stingers (Concordia)",
+    "text": "Citadins (UQAM) reçoit Stingers (Concordia)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "0f1c322e-6591-4ed1-8d85-89abf2952b44",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 14 h",
+    "teams": [
+     {
+      "name": "Trappeurs",
+      "inst": "Baie-Comeau",
+      "color": ""
+     },
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "14:00",
+    "key": "2026-11-21|14:00|Volleyball (F)||Trappeurs (Baie-Comeau)|Voyageurs (Sept-Îles)",
+    "text": "Trappeurs (Baie-Comeau) reçoit Voyageurs (Sept-Îles)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "232879cb-555d-4b2f-a8f6-cfc71a0a6098",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 14 h",
+    "teams": [
+     {
+      "name": "Kioki",
+      "inst": "Saint-Félicien",
+      "color": ""
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "visite",
+    "time": "14:00",
+    "key": "2026-11-21|14:00|Volleyball (F)||Gaillards (Cégep de Jonquière)|Kioki (Saint-Félicien)",
+    "text": "Kioki (Saint-Félicien) visite Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "d6b26da1-2ef0-4f82-a88b-51188d035783",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 14 h",
+    "teams": [
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     },
+     {
+      "name": "Pionniers",
+      "inst": "Rimouski",
+      "color": "#1B4F8C"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "14:00",
+    "key": "2026-11-21|14:00|Volleyball (H)||Pionniers (Rimouski)|Voyageurs (Sept-Îles)",
+    "text": "Voyageurs (Sept-Îles) reçoit Pionniers (Rimouski)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "93a78676-4d9e-4fbd-b0fe-3272e9d9a1e2",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 14 h",
+    "teams": [
+     {
+      "name": "Portageurs",
+      "inst": "Rivière-du-Loup",
+      "color": ""
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "visite",
+    "time": "14:00",
+    "key": "2026-11-21|14:00|Volleyball (H)||Gaillards (Cégep de Jonquière)|Portageurs (Rivière-du-Loup)",
+    "text": "Portageurs (Rivière-du-Loup) visite Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "222630bc-aaaf-44cc-ab8c-9ff27347f10d",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 14 h",
+    "teams": [
+     {
+      "name": "Barons",
+      "inst": "Séminaire de Sherbrooke",
+      "color": ""
+     },
+     {
+      "name": "Sismiques",
+      "inst": "Centre d’études collégiales en Charlevoix",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "14:00",
+    "key": "2026-11-21|14:00|Volleyball (H)||Barons (Séminaire de Sherbrooke)|Sismiques (Centre d’études collégiales en Charlevoix)",
+    "text": "Barons (Séminaire de Sherbrooke) reçoit Sismiques (Centre d’études collégiales en Charlevoix)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "fc664c5f-a59a-4d5f-b92a-5f3c64973421",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 14 h",
+    "teams": [
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     },
+     {
+      "name": "Panthères",
+      "inst": "Mérici collégial privé",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "14:00",
+    "key": "2026-11-21|14:00|Volleyball (H)||Condors (Beauce-Appalaches)|Panthères (Mérici collégial privé)",
+    "text": "Condors (Beauce-Appalaches) visite Panthères (Mérici collégial privé)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "a0d83d43-3ddd-4777-80d6-418cddb4ba9c",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     },
+     {
+      "name": "Filons",
+      "inst": "Thetford",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "15:00",
+    "key": "2026-11-21|15:00|Basketball (H)||Dynamiques (Sainte-Foy)|Filons (Thetford)",
+    "text": "Dynamiques (Sainte-Foy) reçoit Filons (Thetford)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "6837b06f-7f16-4fa6-9c35-2174a7633a45",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h",
+    "teams": [
+     {
+      "name": "Jeannois",
+      "inst": "Alma",
+      "color": ""
+     },
+     {
+      "name": "Lions",
+      "inst": "Champlain St. Lawrence",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "15:00",
+    "key": "2026-11-21|15:00|Basketball (H)||Jeannois (Alma)|Lions (Champlain St. Lawrence)",
+    "text": "Jeannois (Alma) visite Lions (Champlain St. Lawrence)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "0d70568a-3a5e-408a-990e-52322952efcb",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h",
+    "teams": [
+     {
+      "name": "Gaulois",
+      "inst": "Rosemont",
+      "color": ""
+     },
+     {
+      "name": "Demons",
+      "inst": "Marianopolis",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "15:00",
+    "key": "2026-11-21|15:00|Basketball (H)||Demons (Marianopolis)|Gaulois (Rosemont)",
+    "text": "Gaulois (Rosemont) reçoit Demons (Marianopolis)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4ac068f4-96bb-4b82-a945-47c02debdbd9",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     },
+     {
+      "name": "Élans",
+      "inst": "Garneau",
+      "color": "#006944"
+     }
+    ],
+    "verb": "visite",
+    "time": "15:00",
+    "key": "2026-11-21|15:00|Basketball (H)||Dynamiques (Sainte-Foy)|Élans (Garneau)",
+    "text": "Dynamiques (Sainte-Foy) visite Élans (Garneau)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D1",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "739caa71-ab88-41a4-849c-17b0a7328be4",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h",
+    "teams": [
+     {
+      "name": "Titans",
+      "inst": "Limoilou",
+      "color": ""
+     },
+     {
+      "name": "Griffons",
+      "inst": "l’Outaouais",
+      "color": "#1F6FB2"
+     }
+    ],
+    "verb": "visite",
+    "time": "15:00",
+    "key": "2026-11-21|15:00|Volleyball (H)||Griffons (l’Outaouais)|Titans (Limoilou)",
+    "text": "Titans (Limoilou) visite Griffons (l’Outaouais)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D1",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "fcf10709-8a03-496e-b02e-608626e72903",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h",
+    "teams": [
+     {
+      "name": "Volontaires",
+      "inst": "Sherbrooke",
+      "color": "#00A759"
+     },
+     {
+      "name": "Cheminots",
+      "inst": "Saint-Jérôme",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "15:00",
+    "key": "2026-11-21|15:00|Volleyball (H)||Cheminots (Saint-Jérôme)|Volontaires (Sherbrooke)",
+    "text": "Volontaires (Sherbrooke) visite Cheminots (Saint-Jérôme)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "bc380399-47b6-49a6-b507-7073b54daa41",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Jeannois",
+      "inst": "Alma",
+      "color": ""
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "visite",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (F)||Gaillards (Cégep de Jonquière)|Jeannois (Alma)",
+    "text": "Jeannois (Alma) visite Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "839d037a-6402-49e6-8134-17eb90219a72",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Couguars",
+      "inst": "Chicoutimi",
+      "color": "#00994C"
+     },
+     {
+      "name": "Kioki",
+      "inst": "Saint-Félicien",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (F)||Couguars (Chicoutimi)|Kioki (Saint-Félicien)",
+    "text": "Couguars (Chicoutimi) visite Kioki (Saint-Félicien)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4cff420a-3d0b-46c3-bb79-f405ead33e1b",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Faucons",
+      "inst": "Lévis",
+      "color": ""
+     },
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (H)||Condors (Beauce-Appalaches)|Faucons (Lévis)",
+    "text": "Faucons (Lévis) visite Condors (Beauce-Appalaches)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "c4ab01cb-ed93-4976-950f-78c67b8c56fe",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Filons",
+      "inst": "Thetford",
+      "color": ""
+     },
+     {
+      "name": "Titans",
+      "inst": "Limoilou",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (H)||Filons (Thetford)|Titans (Limoilou)",
+    "text": "Filons (Thetford) reçoit Titans (Limoilou)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "c46912ad-975d-496b-9cb6-2a4a62c3f194",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (H)||Dynamiques (Sainte-Foy)|Gaillards (Cégep de Jonquière)",
+    "text": "Dynamiques (Sainte-Foy) reçoit Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "5be0e0da-8b47-4f54-bddb-96f09e216736",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Élans",
+      "inst": "Garneau",
+      "color": "#006944"
+     },
+     {
+      "name": "Pionniers",
+      "inst": "Rimouski",
+      "color": "#1B4F8C"
+     }
+    ],
+    "verb": "visite",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (H)||Pionniers (Rimouski)|Élans (Garneau)",
+    "text": "Élans (Garneau) visite Pionniers (Rimouski)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "1bda0ee7-0d41-4832-a1fc-468713563301",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Capitaines",
+      "inst": "Matane",
+      "color": ""
+     },
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (H)||Capitaines (Matane)|Condors (Beauce-Appalaches)",
+    "text": "Capitaines (Matane) reçoit Condors (Beauce-Appalaches)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "c82accc3-c7a7-48ef-9d86-4b7b68808889",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 15 h 15",
+    "teams": [
+     {
+      "name": "Gaulois",
+      "inst": "La Pocatière",
+      "color": ""
+     },
+     {
+      "name": "Panthères",
+      "inst": "Mérici collégial privé",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "15:15",
+    "key": "2026-11-21|15:15|Volleyball (H)||Gaulois (La Pocatière)|Panthères (Mérici collégial privé)",
+    "text": "Gaulois (La Pocatière) visite Panthères (Mérici collégial privé)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire féminin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "c2a4b4e3-a82a-430c-a98d-721d0a789c1c",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 16 h",
+    "teams": [
+     {
+      "name": "Citadins",
+      "inst": "UQAM",
+      "color": "#0079BE"
+     },
+     {
+      "name": "Stingers",
+      "inst": "Concordia",
+      "color": "#912338"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "16:00",
+    "key": "2026-11-21|16:00|Basketball (F)||Citadins (UQAM)|Stingers (Concordia)",
+    "text": "Citadins (UQAM) reçoit Stingers (Concordia)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball universitaire féminin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "07b4d1b8-b8b9-4a3f-a2a4-674576122345",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 16 h",
+    "teams": [
+     {
+      "name": "Piranhas",
+      "inst": "ÉTS",
+      "color": "#E40032"
+     },
+     {
+      "name": "Citadins",
+      "inst": "UQAM",
+      "color": "#0079BE"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "16:00",
+    "key": "2026-11-21|16:00|Volleyball (F)||Citadins (UQAM)|Piranhas (ÉTS)",
+    "text": "Piranhas (ÉTS) reçoit Citadins (UQAM)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "001fdbd5-c961-479f-bef8-7acb020d1775",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 16 h",
+    "teams": [
+     {
+      "name": "Noir et Or",
+      "inst": "Valleyfield",
+      "color": ""
+     },
+     {
+      "name": "Cavaliers",
+      "inst": "Bois-de-Boulogne",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "16:00",
+    "key": "2026-11-21|16:00|Basketball (H)||Cavaliers (Bois-de-Boulogne)|Noir et Or (Valleyfield)",
+    "text": "Noir et Or (Valleyfield) reçoit Cavaliers (Bois-de-Boulogne)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "fa4ca7fb-ba86-44e6-a097-53ced1e4ea80",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 17 h",
+    "teams": [
+     {
+      "name": "Élans",
+      "inst": "Garneau",
+      "color": "#006944"
+     },
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "17:00",
+    "key": "2026-11-21|17:00|Basketball (F)||Dynamiques (Sainte-Foy)|Élans (Garneau)",
+    "text": "Élans (Garneau) reçoit Dynamiques (Sainte-Foy)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire féminin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "79fdd86e-1e1c-403c-89d0-a4fa185d6d47",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 18 h",
+    "teams": [
+     {
+      "name": "Rouge et Or",
+      "inst": "ULaval",
+      "color": "#E30513"
+     },
+     {
+      "name": "Martlets",
+      "inst": "McGill",
+      "color": "#ED1B2F"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "18:00",
+    "key": "2026-11-21|18:00|Basketball (F)||Martlets (McGill)|Rouge et Or (ULaval)",
+    "text": "Rouge et Or (ULaval) reçoit Martlets (McGill)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "83fbf04e-9df0-44fe-b3bd-f3749191a454",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 18 h 30",
+    "teams": [
+     {
+      "name": "Patriotes",
+      "inst": "Saint-Laurent",
+      "color": ""
+     },
+     {
+      "name": "Nomades",
+      "inst": "Montmorency",
+      "color": "#002768"
+     }
+    ],
+    "verb": "visite",
+    "time": "18:30",
+    "key": "2026-11-21|18:30|Basketball (F)||Nomades (Montmorency)|Patriotes (Saint-Laurent)",
+    "text": "Patriotes (Saint-Laurent) visite Nomades (Montmorency)"
+   },
+   {
+    "emoji": "🏈",
+    "sport": "Football (H)",
+    "sportKey": "football",
+    "league": "Football collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "b42eee83-7f00-47b5-80cc-3b22e14c376d",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 18 h 30",
+    "teams": [
+     {
+      "name": "Pionniers",
+      "inst": "Rimouski",
+      "color": "#1B4F8C"
+     },
+     {
+      "name": "Griffons",
+      "inst": "l’Outaouais",
+      "color": "#1F6FB2"
+     }
+    ],
+    "verb": "visite",
+    "time": "18:30",
+    "key": "2026-11-21|18:30|Football (H)||Griffons (l’Outaouais)|Pionniers (Rimouski)",
+    "text": "Pionniers (Rimouski) visite Griffons (l’Outaouais)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "3aeb53d0-cbdd-4459-88a1-1c7f2a3d72fa",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 19 h 30",
+    "teams": [
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "19:30",
+    "key": "2026-11-21|19:30|Basketball (H)||Gaillards (Cégep de Jonquière)|Voyageurs (Sept-Îles)",
+    "text": "Voyageurs (Sept-Îles) reçoit Gaillards (Cégep de Jonquière)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire masculin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "65fa658a-92d2-462d-be40-6d4f532977a8",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 20 h",
+    "teams": [
+     {
+      "name": "Rouge et Or",
+      "inst": "ULaval",
+      "color": "#E30513"
+     },
+     {
+      "name": "Redbirds",
+      "inst": "McGill",
+      "color": "#ED1B2F"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "20:00",
+    "key": "2026-11-21|20:00|Basketball (H)||Redbirds (McGill)|Rouge et Or (ULaval)",
+    "text": "Rouge et Or (ULaval) reçoit Redbirds (McGill)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "af0319af-bcc2-4978-a952-19b83868587f",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Trappeurs",
+      "inst": "Baie-Comeau",
+      "color": ""
+     },
+     {
+      "name": "Jeannois",
+      "inst": "Alma, équipe Bleu",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (F)||Jeannois (Alma, équipe Bleu)|Trappeurs (Baie-Comeau)",
+    "text": "Trappeurs (Baie-Comeau) visite Jeannois (Alma, équipe Bleu)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "f1cd41e2-82a1-49b6-8e34-dac6de4340f7",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Couguars",
+      "inst": "Chicoutimi",
+      "color": "#00994C"
+     },
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (F)||Couguars (Chicoutimi)|Voyageurs (Sept-Îles)",
+    "text": "Couguars (Chicoutimi) visite Voyageurs (Sept-Îles)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "689bc1c5-6103-485c-9d15-10f42d8bfc12",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Faucons",
+      "inst": "Lévis",
+      "color": ""
+     },
+     {
+      "name": "Filons",
+      "inst": "Thetford",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (H)||Faucons (Lévis)|Filons (Thetford)",
+    "text": "Faucons (Lévis) visite Filons (Thetford)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "fd1e164b-fd63-4ef7-9751-ee60a9db5d2f",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Dynamiques",
+      "inst": "Sainte-Foy",
+      "color": "#002C77"
+     },
+     {
+      "name": "Élans",
+      "inst": "Garneau",
+      "color": "#006944"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (H)||Dynamiques (Sainte-Foy)|Élans (Garneau)",
+    "text": "Dynamiques (Sainte-Foy) reçoit Élans (Garneau)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "80199d95-83ec-448c-a20a-bd626f4d43ce",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": ""
+     },
+     {
+      "name": "Portageurs",
+      "inst": "Rivière-du-Loup",
+      "color": ""
+     }
+    ],
+    "verb": "reçoit",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (H)||Portageurs (Rivière-du-Loup)|Voyageurs (Sept-Îles)",
+    "text": "Voyageurs (Sept-Îles) reçoit Portageurs (Rivière-du-Loup)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "847a02d5-1dd0-4286-a91f-6fbe8f65de8d",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Titans",
+      "inst": "Limoilou",
+      "color": ""
+     },
+     {
+      "name": "Condors",
+      "inst": "Beauce-Appalaches",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (H)||Condors (Beauce-Appalaches)|Titans (Limoilou)",
+    "text": "Titans (Limoilou) visite Condors (Beauce-Appalaches)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "3ab2e5bf-7073-4fa1-aadb-613fe5f0cb7e",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Barons",
+      "inst": "Séminaire de Sherbrooke",
+      "color": ""
+     },
+     {
+      "name": "Capitaines",
+      "inst": "Matane",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (H)||Barons (Séminaire de Sherbrooke)|Capitaines (Matane)",
+    "text": "Barons (Séminaire de Sherbrooke) visite Capitaines (Matane)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (H)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial masculin D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "d1057374-37ea-434f-98b6-612134d04c74",
+    "date": "2026-11-21",
+    "when": "sam. 21 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Gaulois",
+      "inst": "La Pocatière",
+      "color": ""
+     },
+     {
+      "name": "Sismiques",
+      "inst": "Centre d’études collégiales en Charlevoix",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "9:00",
+    "key": "2026-11-21|9:00|Volleyball (H)||Gaulois (La Pocatière)|Sismiques (Centre d’études collégiales en Charlevoix)",
+    "text": "Gaulois (La Pocatière) visite Sismiques (Centre d’études collégiales en Charlevoix)"
+   }
+  ]
+ },
+ "radio": [
+  {
+   "id": "cism",
+   "station": "CISM 89,3",
+   "page": "https://le-radar.ca/radios/cism/",
+   "shows": [
+    {
+     "title": "Elkin Polo El Show",
+     "start": "08:00",
+     "end": "12:00",
+     "when": "8 h à 12 h",
+     "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+    },
+    {
+     "title": "Change le beat",
+     "start": "12:00",
+     "end": "13:00",
+     "when": "12 h à 13 h",
+     "url": "https://cism893.ca/emissions/change-le-beat"
+    },
+    {
+     "title": "Basses fréquences",
+     "start": "13:00",
+     "end": "15:00",
+     "when": "13 h à 15 h",
+     "url": "https://cism893.ca/emissions/basses-frequences"
+    },
+    {
+     "title": "Contenu explicite",
+     "start": "15:00",
+     "end": "16:00",
+     "when": "15 h à 16 h",
+     "url": "https://cism893.ca/emissions/contenu-explicite"
+    }
+   ]
+  },
+  {
+   "id": "chyz",
+   "station": "CHYZ 94,3",
+   "page": "https://le-radar.ca/radios/chyz/",
+   "shows": [
+    {
+     "title": "Au delà du geste",
+     "start": "09:00",
+     "end": "10:00",
+     "when": "9 h à 10 h",
+     "url": "https://chyz.ca/emission/au-dela-du-geste/"
+    },
+    {
+     "title": "Palmarès CHYZ",
+     "start": "10:00",
+     "end": "10:30",
+     "when": "10 h à 10 h 30",
+     "url": "https://chyz.ca/emission/palmares-chyz/"
+    },
+    {
+     "title": "Le Ré-Show : Deuxième Service",
+     "start": "11:00",
+     "end": "12:00",
+     "when": "11 h à 12 h",
+     "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+    },
+    {
+     "title": "Un Monde de Couleurs et de Son",
+     "start": "12:00",
+     "end": "12:30",
+     "when": "12 h à 12 h 30",
+     "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
+    }
+   ]
+  },
+  {
+   "id": "cjlo",
+   "station": "CJLO 1690AM",
+   "page": "https://le-radar.ca/radios/cjlo/",
+   "shows": [
+    {
+     "title": "The Live Wire Show",
+     "start": "09:00",
+     "end": "10:00",
+     "when": "9 h à 10 h",
+     "url": ""
+    },
+    {
+     "title": "Gospel Unlimited",
+     "start": "10:00",
+     "end": "12:00",
+     "when": "10 h à 12 h",
+     "url": ""
+    },
+    {
+     "title": "Anatomy of Caribbean Music",
+     "start": "12:00",
+     "end": "14:00",
+     "when": "12 h à 14 h",
+     "url": ""
+    },
+    {
+     "title": "Caribbean Callaloo",
+     "start": "14:00",
+     "end": "16:00",
+     "when": "14 h à 16 h",
+     "url": ""
+    }
+   ]
+  },
+  {
+   "id": "choq",
+   "station": "CHOQ.ca",
+   "page": "https://le-radar.ca/radios/choq/",
+   "shows": [
+    {
+     "title": "Podcast Nomade: L'art de se rencontrer",
+     "start": "10:00",
+     "end": "11:00",
+     "when": "10 h à 11 h",
+     "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
+    },
+    {
+     "title": "Palmarès CHOQ.ca",
+     "start": "15:00",
+     "end": "16:00",
+     "when": "15 h à 16 h",
+     "url": "https://www.choq.ca/balados/palmareschoq"
+    }
+   ]
+  },
+  {
+   "id": "ckut",
+   "station": "CKUT 90,3",
+   "page": "https://le-radar.ca/radios/ckut/",
+   "shows": [
+    {
+     "title": "Making Contact/Anything Goes",
+     "start": "10:00",
+     "end": "10:30",
+     "when": "10 h à 10 h 30",
+     "url": ""
+    },
+    {
+     "title": "Samedi Midi",
+     "start": "10:30",
+     "end": "14:00",
+     "when": "10 h 30 à 14 h",
+     "url": ""
+    },
+    {
+     "title": "Funky Revolutions",
+     "start": "14:00",
+     "end": "16:00",
+     "when": "14 h à 16 h",
+     "url": ""
+    },
+    {
+     "title": "West Indian Rhythms",
+     "start": "16:00",
+     "end": "19:00",
+     "when": "16 h à 19 h",
+     "url": ""
+    }
+   ]
+  }
+ ],
+ "image": {
+  "url": "https://le-radar.ca/assets/news-images/873a3f556402d7f6.jpg",
+  "credit": "Photo: Yann Rifflard",
+  "source": "The Link",
+  "title": "Will Montreal learn from New York about protest and police?",
+  "stock": false,
+  "length": 152330
+ },
+ "chapeau": "",
+ "generator": "ia:@cf/meta/llama-3.1-8b-instruct-fp8-fast",
+ "previous": {
+  "id": "2026-11-20-soir",
+  "path": "revue/2026-11-20-soir/",
+  "headline": "La revue du soir du vendredi 20 novembre 2026"
+ },
+ "headline": "La revue du matin du samedi 21 novembre 2026",
+ "description": "La revue du matin du samedi 21 novembre 2026. Pour ouvrir la journée, The Link publie « Will Montreal learn from New York about protest and police? », sous la plume de Nicolas Tremblay.",
+ "intro": "Pour ouvrir la journée, The Link publie « Will Montreal learn from New York about protest and police? », sous la plume de Nicolas Tremblay. Sur les terrains, en basketball (H) : Aigles (Ahuntsic) 89, Géants (Saint-Jean-sur-Richelieu) 73.",
+ "articleIds": [
+  "044a906ff7972672"
+ ],
+ "sportKeys": [
+  "2026-11-20|Basketball (H)|Aigles (Ahuntsic):89|Géants (Saint-Jean-sur-Richelieu):73"
+ ],
+ "categories": [
+  "Revue de presse",
+  "Médias étudiants",
+  "Québec",
+  "Politique",
+  "Sport étudiant",
+  "Radio étudiante"
+ ],
+ "weather": {
+  "source": "Environnement et Changement climatique Canada",
+  "fetchedAt": "2026-11-21T12:07:58.459Z",
+  "cities": [
+   {
+    "code": "s0000620",
+    "name": "Québec",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": 9,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Dégagé",
+      "kind": "low",
+      "temp": 0,
+      "icon": 30,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000635",
+    "name": "Montréal",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": 15,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques nuages",
+      "kind": "low",
+      "temp": 6,
+      "icon": 31,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000681",
+    "name": "Sherbrooke",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Ensoleillé",
+      "kind": "high",
+      "temp": 14,
+      "icon": 0,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Dégagé",
+      "kind": "low",
+      "temp": 2,
+      "icon": 30,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000346",
+    "name": "Trois-Rivières",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Ensoleillé",
+      "kind": "high",
+      "temp": 12,
+      "icon": 0,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Dégagé",
+      "kind": "low",
+      "temp": 6,
+      "icon": 30,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000393",
+    "name": "Rimouski",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": 11,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Dégagé",
+      "kind": "low",
+      "temp": 9,
+      "icon": 30,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000211",
+    "name": "Saguenay",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Dégagement",
+      "kind": "high",
+      "temp": 10,
+      "icon": 5,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Dégagé",
+      "kind": "low",
+      "temp": 3,
+      "icon": 30,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000611",
+    "name": "Gatineau",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": 15,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Dégagé",
+      "kind": "low",
+      "temp": 3,
+      "icon": 30,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000353",
+    "name": "Rouyn-Noranda",
+    "group": "campus",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": 14,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": 6,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000591",
+    "name": "Kangiqsualujjuaq",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -5,
+      "icon": 8,
+      "pop": 30
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -8,
+      "icon": 16,
+      "pop": 30
+     }
+    ]
+   },
+   {
+    "code": "s0000719",
+    "name": "Kuujjuaq",
+    "group": "nunavik",
+    "issued": "20261121114400",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -5,
+      "icon": 16,
+      "pop": 30
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -8,
+      "icon": 16,
+      "pop": 30
+     }
+    ]
+   },
+   {
+    "code": "s0000699",
+    "name": "Tasiujaq",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -7,
+      "icon": 8,
+      "pop": 30
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -8,
+      "icon": 16,
+      "pop": 30
+     }
+    ]
+   },
+   {
+    "code": "s0000586",
+    "name": "Aupaluk",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -8,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -12,
+      "icon": 38,
+      "pop": 30
+     }
+    ]
+   },
+   {
+    "code": "s0000480",
+    "name": "Kangirsuk",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -9,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -12,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000544",
+    "name": "Quaqtaq",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -7,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -7,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000574",
+    "name": "Kangiqsujuaq",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -10,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -11,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000793",
+    "name": "Salluit",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -15,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -14,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000563",
+    "name": "Ivujivik",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -11,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -10,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000578",
+    "name": "Akulivik",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -11,
+      "icon": 8,
+      "pop": 60
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -15,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000711",
+    "name": "Puvirnituq",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -6,
+      "icon": 8,
+      "pop": 60
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -16,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000627",
+    "name": "Inukjuak",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Quelques averses de neige",
+      "kind": "high",
+      "temp": -4,
+      "icon": 16,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -10,
+      "icon": 38,
+      "pop": 60
+     }
+    ]
+   },
+   {
+    "code": "s0000599",
+    "name": "Umiujaq",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Neige",
+      "kind": "high",
+      "temp": -2,
+      "icon": 17,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -4,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000542",
+    "name": "Kuujjuarapik",
+    "group": "nunavik",
+    "issued": "20261121093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Neige",
+      "kind": "high",
+      "temp": 1,
+      "icon": 17,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -2,
+      "icon": 16,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000579",
+    "name": "Waskaganish",
+    "group": "eeyou",
+    "issued": "20261121100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Pluie intermittente",
+      "kind": "high",
+      "temp": 13,
+      "icon": 12,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Pluie intermittente",
+      "kind": "low",
+      "temp": 2,
+      "icon": 12,
+      "pop": null
+     }
+    ]
+   }
+  ]
+ }
+}
