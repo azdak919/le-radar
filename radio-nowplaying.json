@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-21T14:06:43.236Z",
+  "updatedAt": "2026-11-21T15:06:45.055Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Au delà du geste",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/au-dela-du-geste/"
-      },
-      "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "Au delà du geste",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T14:06:18.465Z"
+      "checkedAt": "2026-11-21T15:06:18.112Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T14:06:19.697Z"
+      "checkedAt": "2026-11-21T15:06:19.633Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
-      },
-      "next": {
         "title": "Making Contact/Anything Goes",
         "source": "api-live",
         "start": "10:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "Samedi Midi",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Making Contact/Anything Goes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T14:06:22.136Z"
+      "checkedAt": "2026-11-21T15:06:22.438Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
-      },
-      "next": {
         "title": "Gospel Unlimited",
         "source": "schedule-live",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
+      "next": {
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+      },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Gospel Unlimited",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T14:06:36.168Z"
+      "checkedAt": "2026-11-21T15:06:37.000Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,21 +129,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T14:06:37.131Z"
+      "checkedAt": "2026-11-21T15:06:38.474Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Podcast Nomade: L'art de se rencontrer",
         "source": "api-live",
         "start": "10:00",
         "end": "11:00",
         "slug": "podcast-nomade-lart-de-se-rencontrer"
       },
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
       "track": "ID - ID Comment Debord - Blood Pareil",
-      "showTitle": "",
+      "showTitle": "Podcast Nomade: L'art de se rencontrer",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -153,7 +159,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-21T14:06:42.885Z"
+      "checkedAt": "2026-11-21T15:06:44.705Z"
     }
   }
 }
