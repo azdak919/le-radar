@@ -1,5 +1,6 @@
-# Déclencheur fiable de la collecte news (GitHub saute des crons fréquents).
-# Aucune route ni domaine public : Cron Triggers seulement.
+# Déclencheur de secours (GitHub saute des crons). Aucune route publique.
+# Deux crons déjà en place : le forfait Workers gratuit en autorise 5 par compte.
+# Ne pas en ajouter. La une, la revue et Buffer sont rattrapés par ces mêmes passages.
 # Secret requis (jamais dans le dépôt) : GH_TOKEN = jeton GitHub à droits
 # minimaux (Actions: write sur azdak919/le-radar seulement), posé avec
 #   npx wrangler secret put GH_TOKEN

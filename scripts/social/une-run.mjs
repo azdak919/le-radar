@@ -20,6 +20,7 @@ import { createTumblr } from './channels/tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
 import { decideInstagram, deliverInstagram, dryRunReport, imageUrl, openInstagramIssue } from './instagram.mjs';
+import { reviewSocialImage } from './ai-image.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/social/une-state.json');
@@ -109,7 +110,7 @@ async function publishOne(net, entry, env) {
   const pages = env.pages || {}, key = env.BUFFER_API_KEY;
   const ch = net === 'x' ? createXBuffer({ key, fallbackId: env.BUFFER_CHANNEL_ID || undefined })
     : createXBuffer({ key, service: pages[net].service, channelName: pages[net].name, fallbackId: (net === 'facebook' ? env.BUFFER_FACEBOOK_CHANNEL_ID : env.BUFFER_LINKEDIN_CHANNEL_ID) || null });
-  const post = await ch.add({ text, image: img, now: true, metadata: postMetadata(net) });
+  const post = await ch.add({ text, image: img, alt: entry.alt, now: true, metadata: postMetadata(net) });
   return { id: post.id, status: post.status || '' };
 }
 
@@ -119,6 +120,17 @@ function readIgState() {
 function writeIgState(s) { fs.writeFileSync(IG_STATE, JSON.stringify(s, null, 1) + '\n'); }
 
 /** Aperçu ou envoi Instagram. Un seul essai, clé dédiée, sans faire échouer les autres réseaux. */
+async function posterAlt(model, images) {
+  const fallback = altText(model);
+  const file = images?.grille?.file || images?.portrait?.file;
+  if (!file) return fallback;
+  const buf = fs.readFileSync(file);
+  const facts = [fallback, ...(model.items || []).map(i => `${i.title || ''} ${i.byline || ''}`)].join(' ');
+  const r = await reviewSocialImage({ buf, width: images.grille?.width || images.portrait?.width, height: images.grille?.height || images.portrait?.height, contentType: 'image/jpeg', facts, fallbackAlt: fallback, allowReject: false });
+  console.log(r.source === 'ia' ? 'IA : texte alternatif de l’affiche' : `Texte alternatif de l’affiche déterministe — ${r.reason || 'repli'}`);
+  return r.alt || fallback;
+}
+
 async function instagramPass({ now, slot, text, problems = [], images, dry, alt = '' }) {
   const cfg = CFG.prepared?.instagram || {};
   const state0 = readIgState();
@@ -211,12 +223,13 @@ async function main() {
     const md = previewMarkdown(slot, sel, texts, images, { dry, reason });
     fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), md);
     for (const [n, v] of Object.entries(texts)) fs.writeFileSync(path.join(out, `texte-${slot.id}-${n}.txt`), (v.text || '') + '\n');
-    fs.writeFileSync(path.join(out, `une-${slot.id}.json`), JSON.stringify({ at: new Date(now).toISOString(), reason, slot, ids: sel.ids, translated: sel.translated || [], alt: altText(model), texts, images }, null, 1));
+    let poster = await posterAlt(model, images);
+    fs.writeFileSync(path.join(out, `une-${slot.id}.json`), JSON.stringify({ at: new Date(now).toISOString(), reason, slot, ids: sel.ids, translated: sel.translated || [], alt: poster, texts, images }, null, 1));
     if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + '\n');
     console.log(`\n=== ${slot.label} : ${reason}`);
     for (const [n, v] of Object.entries(texts)) console.log(`\n[${n}] ${v.len}/${v.limit}${v.problems.length ? ' PROBLÈMES : ' + v.problems.join(', ') : ''}\n${v.text}`);
     if (dry) {
-      const igReport = await instagramPass({ now, slot, text: texts.instagram?.text || '', problems: texts.instagram?.problems || [], images, dry: true });
+      const igReport = await instagramPass({ now, slot, text: texts.instagram?.text || '', problems: texts.instagram?.problems || [], images, dry: true, alt: poster });
       if (igReport) {
         fs.writeFileSync(path.join(out, `instagram-${slot.id}.md`), igReport);
         if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, igReport + '\n');
@@ -229,9 +242,10 @@ async function main() {
     catch (e) {
       console.log(`::warning::hébergement des images impossible (${String(e.message).slice(0, 200)}) : repli sur la photo de la une.`);
       const lead = sel.items[0].siteImage || 'https://le-radar.ca/assets/og-cover.png'; urls = { portrait: lead };
+      poster = altText(model);
     }
     entry = state[slot.key] = { key: slot.key, at: new Date().toISOString(), ids: sel.ids, texts: Object.fromEntries(Object.entries(texts).map(([n, v]) => [n, v.text])),
-      tumblrTags: texts.tumblr.tags, alt: altText(model), images: urls, nets: {} };
+      tumblrTags: texts.tumblr.tags, alt: poster, images: urls, nets: {} };
     fs.writeFileSync(STATE, JSON.stringify(pruneState(state, now), null, 1) + '\n');
   }
   if (!entry?.texts) return;

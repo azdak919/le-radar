@@ -38,6 +38,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          cache: gradle
 
       - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
         with:
@@ -49,10 +50,10 @@ jobs:
       - name: Debug APK
         run: |
           set -euo pipefail
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4; do
             npm run android:debug && exit 0
-            echo "Résolution Gradle échouée (essai ${attempt}/3), nouvel essai."
-            sleep 20
+            echo "Résolution Gradle échouée (essai ${attempt}/4), nouvel essai."
+            sleep $((attempt * 40))
           done
           exit 1
 

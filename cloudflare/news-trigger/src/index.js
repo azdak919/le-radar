@@ -1,7 +1,7 @@
 // le-radar-news-trigger : lance update-news.yml (workflow_dispatch) seulement
 // s'il y a du nouveau dans les flux, ou si la dernière collecte publiée date
 // de plus de MAX_AGE_MIN. Jamais si une collecte est déjà en cours ou en file.
-import { decide, newestFeedDate, socialHours, socialWorkflows } from './lib.js';
+import { backupDue, backupStale, decide, newestFeedDate, socialHours, socialWorkflows } from './lib.js';
 
 const UA = 'LE-RADAR-NewsTrigger/1.0 (+https://le-radar.ca/)';
 
@@ -65,8 +65,8 @@ export async function runGuard(env, now = Date.now()) {
   return { guard: 'dispatch', age: Math.round(age), status: d.status };
 }
 
-// Bluesky, Tumblr et Mastodon n'ont pas de planificateur : à chaque passage de 7 h à minuit, lance chaque workflow de SOCIAL_WORKFLOW (chacun applique ses fenêtres horaires)
-// (le workflow publie les choix dus, idempotent). Aucune relance si une passe est en cours.
+// Bluesky, Tumblr et Mastodon ont leur cron GitHub. Ce passage les avance
+// pendant les heures sociales. Aucune relance si une passe est en cours.
 export async function runSocial(env, now = Date.now()) {
   const wfs = socialWorkflows(env.SOCIAL_WORKFLOW);
   if (!wfs.length || !socialHours(now)) return { social: 'idle' };
@@ -83,10 +83,38 @@ export async function runSocial(env, now = Date.now()) {
   return { social: 'dispatch', ...out };
 }
 
+// Secours des crons GitHub (La une, revue, file Buffer). Les workflows ont déjà
+// leur cron : on ne les relance que dans leur fenêtre, si la dernière passe est
+// vieille ou absente, et jamais si une passe est en cours. Aucun cron Cloudflare
+// de plus (le forfait gratuit en permet 5 par compte ; celui-ci en a déjà deux).
+export const BACKUP = [
+  { file: 'social-une.yml', kind: 'une', maxAgeMin: 45, inputs: { dry_run: 'false', slot: 'auto' } },
+  { file: 'revue.yml', kind: 'revue', maxAgeMin: 45, inputs: { sample: 'false', edition: 'auto' } },
+  { file: 'social-buffer.yml', kind: 'buffer', maxAgeMin: 12 * 60 },
+];
+
+export async function runBackup(env, now = Date.now(), specs = BACKUP) {
+  const out = {};
+  for (const b of specs) {
+    if (!backupDue(now, b.kind)) { out[b.file] = 'hors-fenetre'; continue; }
+    const r = await gh(env, `/actions/workflows/${b.file}/runs?per_page=1`);
+    const last = r.ok ? (await r.json()).workflow_runs?.[0] : null;
+    if (!backupStale({ lastCreated: last?.created_at, lastStatus: last?.status, now, maxAgeMin: b.maxAgeMin })) {
+      out[b.file] = last && last.status !== 'completed' ? 'busy' : 'recent';
+      continue;
+    }
+    const body = { ref: 'main', ...(b.inputs ? { inputs: b.inputs } : {}) };
+    const d = await gh(env, `/actions/workflows/${b.file}/dispatches`, { method: 'POST', body: JSON.stringify(body) });
+    out[b.file] = d.status;
+  }
+  return out;
+}
+
 export default {
   async scheduled(_event, env, ctx) {
     ctx.waitUntil(run(env).catch((e) => console.log('news', String(e))));
     ctx.waitUntil(runGuard(env).then((g) => console.log(JSON.stringify(g)), (e) => console.log('guard', String(e))));
     ctx.waitUntil(runSocial(env).then((g) => console.log(JSON.stringify(g)), (e) => console.log('social', String(e))));
+    ctx.waitUntil(runBackup(env).then((g) => console.log(JSON.stringify(g)), (e) => console.log('backup', String(e))));
   },
 };

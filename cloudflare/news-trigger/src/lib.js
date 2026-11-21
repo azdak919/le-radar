@@ -35,3 +35,32 @@ export function socialHours(now, tz = 'America/Toronto') {
   const h = +new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', hourCycle: 'h23' }).format(now);
   return h >= 7;
 }
+
+/** Minutes depuis minuit, heure de Toronto. */
+export function torontoMinutes(now, tz = 'America/Toronto') {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(x => [x.type, x.value]));
+  return +p.hour * 60 + +p.minute;
+}
+
+/**
+ * Fenêtre où un cron GitHub sauté mérite un rattrapage.
+ * une / revue : matin 7 h 30–10 h 30, soir 19 h–22 h 30 ; revue aussi 23 h–23 h 59.
+ * buffer : soir 21 h–22 h 30 et nuit 3 h–7 h.
+ */
+export function backupDue(now, kind) {
+  const m = torontoMinutes(now);
+  const inWin = (a, b) => m >= a && m <= b;
+  if (kind === 'une') return inWin(7 * 60 + 30, 10 * 60 + 30) || inWin(19 * 60, 22 * 60 + 30);
+  if (kind === 'revue') return inWin(6 * 60 + 45, 10 * 60 + 30) || inWin(19 * 60, 22 * 60 + 30) || inWin(23 * 60, 23 * 60 + 59);
+  if (kind === 'buffer') return inWin(21 * 60, 22 * 60 + 30) || inWin(3 * 60, 7 * 60);
+  return false;
+}
+
+/** Vrai si aucune passe n'est en cours et que la dernière date de plus de maxAgeMin. */
+export function backupStale({ lastCreated, lastStatus, now, maxAgeMin }) {
+  if (lastStatus && lastStatus !== 'completed') return false;
+  if (!lastCreated) return true;
+  const t = Date.parse(lastCreated);
+  if (!Number.isFinite(t)) return true;
+  return (now - t) / 60000 >= maxAgeMin;
+}

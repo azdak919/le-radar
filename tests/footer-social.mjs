@@ -14,6 +14,7 @@ const expected = {
   linkedin: 'https://www.linkedin.com/company/le-radar-ca/',
   tumblr: 'https://le-radar-ca.tumblr.com',
   mastodon: 'https://piaille.fr/@leradar',
+  instagram: 'https://www.instagram.com/le.radar.ca/',
   rss: 'https://le-radar.ca/feed.xml',
 };
 const on = links.filter((l) => l.enabled);
@@ -24,6 +25,12 @@ for (const l of on) {
   assert.ok(l.path.length > 20 && /^0 0 \d+ \d+$/.test(l.viewBox), `icône ${l.id}`);
 }
 assert.match(src, /a\.rel = 'me noopener'/);
+const ig = on.find((l) => l.id === 'instagram');
+const svg = fs.readFileSync(new URL('../assets/social-icons/instagram.svg', import.meta.url), 'utf8');
+assert.ok(svg.includes(ig.path.slice(0, 40)), 'le SVG Instagram est le tracé du pied');
+assert.match(fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8'), /https:\/\/www\.instagram\.com\/le\.radar\.ca\//);
+assert.match(fs.readFileSync(new URL('../scripts/revue/revue-render.js', import.meta.url), 'utf8'), /instagram\.com\/le\.radar\.ca/);
+assert.match(fs.readFileSync(new URL('../THIRD_PARTY.md', import.meta.url), 'utf8'), /CC0/);
 assert.doesNotMatch(src, /tison/i);
 assert.ok(fs.existsSync(new URL('../assets/social-icons/LICENSE.md', import.meta.url)));
 console.log('footer-social: OK');

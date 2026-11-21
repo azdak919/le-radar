@@ -19,6 +19,14 @@ Toutes ces fontes sont sous OFL 1.1. Les textes de licence correspondants sont d
 
 Les gabarits d’affiches eux-mêmes (mise en page réalisée par Azdak) sont sous [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), distincte de l’OFL des fontes et de la GPL du code.
 
+## Icônes des réseaux (pied de page)
+
+Fichiers dans `assets/social-icons/` (copie mobile : `mobile/app/assets/social-icons/`). Tracés aussi en ligne dans `nav-shell.js`.
+
+- Simple Icons v16.36.0, **CC0 1.0** (compatible GPL-2.0-only) : X, Bluesky, Facebook, Instagram, Tumblr, Mastodon, RSS. Instagram : `instagram.svg`, compte https://www.instagram.com/le.radar.ca/.
+- Bootstrap Icons v1.13.2, **MIT** : LinkedIn (retiré de Simple Icons à la demande de la marque).
+
+Les marques restent à leurs titulaires. Affichage monochrome, formes non altérées. Détail : `assets/social-icons/LICENSE.md`.
 ## Réessai des sources externes
 
 `scripts/vendor/retry/` — bibliothèque **retry 0.13.1**, copyright 2011 Tim Koschützki et Felix Geisendörfer, **MIT** (`scripts/vendor/retry/LICENSE`). `scripts/external-source-lib.js` s’en sert pour le délai croissant des récoltes (RSEQ, radios, liens, rétro-crawl, fil). Le cache de la dernière réponse valide et le signalement par une seule issue sont du code du dépôt (GPL-2.0-only). Aucun paquet Apache-2.0 n’est ajouté aux dépendances distribuées.

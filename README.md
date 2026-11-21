@@ -35,6 +35,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 - **Syntoniseur radio** collant : choix du poste, lecture native (flux HTTPS), volume, Media Session API
 - **Postes natifs** — écoute directe sur LE-RADAR pour les stations avec flux validé (ex. CHYZ, CISM, CKUT, CJLO, CFAK)
 - **Fil étudiant** — agrégation RSS des journaux étudiants, filtrable par source
+- **Réseaux** — X, Bluesky, Facebook, Instagram (https://www.instagram.com/le.radar.ca/), LinkedIn, Tumblr, Mastodon et le fil RSS, dans le pied de page
 - **Identité couleur par établissement** — pastilles sources, accents radio et marques institutionnelles (`brand-colors.json`)
 - **« À l'antenne »** — émission en cours selon la grille horaire colligée (bot) + titre live via métadonnées ICY du flux
 - **Bots automatisés** — agrégation des articles, images vedette, crédits photo, découverte de flux radio, horaires
@@ -241,6 +242,24 @@ cd workers/bg-rotation && npx wrangler deploy
 | `le-radar-nowplaying` | Cache métadonnées « à l'antenne » (JSON/XML, pas l'audio) |
 
 **Pas** de proxy de flux audio radio (coût bande passante trop élevé sur free tier).
+
+## Réseaux sociaux et Cloudflare (forfait Workers gratuit)
+
+Le dépôt reste la source de vérité (fichiers `data/`, secrets du dépôt, crons GitHub). Cloudflare ne sert que de filet. Rien ici n’exige le forfait Workers payant. Dépasser un plafond gratuit fait échouer l’appel ; ça ne facture pas. Aucune ressource nouvelle n’est créée sur le compte.
+
+| Service | Quota gratuit (plafond dur) | Usage estimé | Rôle |
+| --- | --- | --- | --- |
+| Workers, crons déjà en place | 100 000 requêtes/jour, 10 ms de CPU par passage, 5 crons par compte | 2 crons, environ 50 passages/jour | Le Worker `le-radar-news-trigger` rattrape La une, la revue et la file Buffer seulement si le cron GitHub est en retard et qu’aucune passe n’est en cours |
+| Workers AI | 10 000 neurones/jour ; au-delà, erreur, pas de facture | au plus 4 images par passage, plus l’accroche texte déjà plafonnée à 12 appels | Texte alternatif et contrôle d’image. Sans jeton ou si l’appel échoue, le texte déterministe part |
+
+Services évalués et non utilisés, parce qu’ils ne garantissent pas un coût nul ou qu’ils doublonneraient le dépôt :
+
+- **R2** : le palier gratuit existe, puis le stockage et les opérations sont facturés. Les images sociales restent sur la branche Git `social-une-media`.
+- **Images (stockage)** : forfait payant. Les transformations gratuites s’arrêtent à 5 000 par mois sans facture, mais les visuels sont déjà à la bonne taille.
+- **Queues** : le guide d’activation demande encore le forfait payant, et la rétention gratuite n’est que de 24 h. La reprise est l’état commité dans le dépôt.
+- **KV et D1** : plafonds gratuits à erreur (KV 100 000 lectures et 1 000 écritures/jour ; D1 5 millions de lignes lues et 100 000 écrites/jour), mais ce serait une deuxième mémoire. La déduplication reste le fichier d’état plus l’historique du réseau.
+
+Pour que le filet tourne, redéployer le Worker déjà existant depuis `cloudflare/news-trigger` (`npx wrangler deploy`). Le secret `GH_TOKEN` y est déjà posé. Aucun secret, aucune liaison et aucun cron de plus.
 
 ---
 
