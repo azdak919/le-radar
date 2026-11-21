@@ -1279,8 +1279,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
 /*
  * Horaires : jamais 7 jours trop étroits.
- * Une journée lisible ≈ 320–360 px (heure 92 + titre sans wrap forcé).
- * 1440 → 4 · 1920 → 5 · 2560+ → 7 (la semaine tient).
+ * Sous 1440 px, auto-fit garde une journée ≈ 320 px.
+ * Comptes fixes : 1440 → 4 · 1880 → 5 · 2560 → 7.
  */
 @media (min-width: 1280px) {
   html[data-wide-preview="e"] .seo-schedule {

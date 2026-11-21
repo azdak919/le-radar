@@ -28,26 +28,33 @@ export function pageModel(model) {
   };
 }
 
-export async function renderImages(model, { outDir, formats = ['portrait', 'story', 'paysage'], prefix = 'une', port = Number(process.env.UNE_PORT || 4193) } = {}) {
+export async function renderImages(model, { outDir, formats = ['portrait', 'story', 'paysage'], prefix = 'une', port = Number(process.env.UNE_PORT || 4193), optionalFormats = [] } = {}) {
   const { chromium } = await import('@playwright/test');
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, `${prefix}-page.json`), JSON.stringify(pageModel(model), null, 1));
   const server = await startServer(port), browser = await chromium.launch();
   const out = {};
   try {
+    const optional = new Set(optionalFormats);
     for (const format of formats) {
-      const { width, height } = IMAGE_SIZES[format];
+      const size = IMAGE_SIZES[format];
+      if (!size) { if (optional.has(format)) continue; throw new Error(`format inconnu : ${format}`); }
+      const { width, height } = size;
       const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
-      await page.goto(`http://127.0.0.1:${port}/affiches/social-une.html`, { waitUntil: 'load' });
-      const info = await page.evaluate(arg => window.renderUne(arg), { model: pageModel(model), format });
-      const file = path.join(outDir, `${prefix}-${format}-${width}x${height}.jpg`);
-      let buf;
-      for (const quality of [88, 80, 72, 64]) { buf = await page.locator('#card').screenshot({ type: 'jpeg', quality }); if (buf.length <= MAX_IMAGE_BYTES) break; }
-      if (info.overflow) console.log(`::warning::image ${format} : débordement résiduel`);
-      if (buf.length > MAX_IMAGE_BYTES) throw new Error(`image ${format} trop lourde (${buf.length} o)`);
-      fs.writeFileSync(file, buf);
-      out[format] = { file, bytes: buf.length, width, height, ...info };
-      await page.close();
+      try {
+        await page.goto(`http://127.0.0.1:${port}/affiches/social-une.html`, { waitUntil: 'load' });
+        const info = await page.evaluate(arg => window.renderUne(arg), { model: pageModel(model), format });
+        const file = path.join(outDir, `${prefix}-${format}-${width}x${height}.jpg`);
+        let buf;
+        for (const quality of [88, 80, 72, 64]) { buf = await page.locator('#card').screenshot({ type: 'jpeg', quality }); if (buf.length <= MAX_IMAGE_BYTES) break; }
+        if (info.overflow) console.log(`::warning::image ${format} : débordement résiduel`);
+        if (buf.length > MAX_IMAGE_BYTES) throw new Error(`image ${format} trop lourde (${buf.length} o)`);
+        fs.writeFileSync(file, buf);
+        out[format] = { file, bytes: buf.length, width, height, ...info };
+      } catch (e) {
+        if (!optional.has(format)) throw e;
+        console.log(`Image ${format} indisponible (${String(e.message).slice(0, 160)}) : repli sur le format suivant.`);
+      } finally { await page.close(); }
     }
   } finally { await browser.close(); server.kill(); }
   return out;

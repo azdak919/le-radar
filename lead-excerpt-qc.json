@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-21T05:07:37.224Z",
+  "updated": "2026-11-21T07:07:42.570Z",
   "total": 1038,
   "pool": 61,
-  "incomplete": 26,
+  "incomplete": 25,
   "withLeadExcerpt": 206,
-  "candidates": 26,
-  "enriched": 2,
+  "candidates": 25,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -55,15 +55,6 @@
       "changed": false
     },
     {
-      "title": "Will Montreal learn from New York about protest and police?",
-      "link": "https://thelinknewspaper.ca/article/16575",
-      "ok": true,
-      "score": 96,
-      "chars": 527,
-      "sample": "Montreal's police response to the Nov. 13 student protest came under scrutiny at a city council meet",
-      "changed": true
-    },
-    {
       "title": "La vie lors d’une régate d’aviron",
       "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
       "ok": true,
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 380,
       "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
+      "changed": false
+    },
+    {
+      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/et-si-le-referendum-de-95-avait-lieu-aujourdhui/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-le-referendum-de-95-avait-lieu-aujourdhui",
+      "ok": true,
+      "score": 96,
+      "chars": 378,
+      "sample": "« Je pense qu’aujourd’hui, la grosse différence, c’est que les échanges entourant la souveraineté se",
       "changed": false
     }
   ]

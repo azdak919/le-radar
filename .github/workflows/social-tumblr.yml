@@ -2,9 +2,8 @@ name: Social — Tumblr (le-radar-ca.tumblr.com)
 
 # Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
-# Publication réelle seulement si la variable de dépôt TUMBLR_LIVE vaut « true »
-# (les règles de Tumblr encadrent la publication automatisée : activation sur accord).
-# Idempotent : data/tumblr-sent.json + derniers posts du blogue.
+# Publication réelle si data/social/policy.json automation.tumblr_post est true.
+# Le cron suffit. Idempotent : data/tumblr-sent.json.
 on:
   schedule:
     - cron: '20,50 11-23,0-3 * * *'
@@ -33,7 +32,6 @@ concurrency:
 
 jobs:
   post:
-    if: github.event_name == 'workflow_dispatch' || vars.TUMBLR_LIVE == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -43,13 +41,15 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
+      - id: live
+        run: echo "live=$(node scripts/social/live-flag.mjs tumblr_post)" >> "$GITHUB_OUTPUT"
       - name: Publier les articles frais
         env:
           TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
           TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
           TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}
           TUMBLR_TOKEN_SECRET: ${{ secrets.TUMBLR_TOKEN_SECRET }}
-          DRY_RUN: ${{ (inputs.dry_run || vars.TUMBLR_LIVE != 'true') && 'true' || 'false' }}
+          DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) || steps.live.outputs.live != 'true' && 'true' || 'false' }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}
           CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}

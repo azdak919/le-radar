@@ -77,11 +77,11 @@
       setTimeout(() => end(img.complete && img.naturalWidth > 0), 15000);
     });
   }
-  function photo(it, cls, badge) {
+  function photo(it, cls, badge, format) {
     const box = el('div', cls); const img = el('img'); img.alt = ''; box.append(img);
     if (badge) box.append(el('span', 'badge', badge));
-    const credit = String(it.credit || '').replace(/^\s*(photo|crédit|credit)s?\s*:\s*/i, '').trim();
-    if (credit && badge) box.append(el('span', 'credit', 'Photo' + NB + ': ' + credit));
+    const credit = String(it.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
+    if (credit && badge) box.append(el('span', 'credit', format === 'grille' ? '📸 ' + credit : 'Photo' + NB + ': ' + credit));
     img.style.objectPosition = `50% ${Math.round((Number.isFinite(it.focalY) ? it.focalY : 0.4) * 100)}%`;
     box.ready = (it.images && it.images.length ? loadFirst(img, it.images) : Promise.resolve(false)).then((ok) => { if (!ok) { img.remove(); box.classList.add('empty'); } return ok ? img.currentSrc || img.src : ''; });
     return box;
@@ -137,7 +137,7 @@
     const brand = el('div', 'brand'); brand.append(li, el('span', 'wm', 'LE\u2011RADAR.ca'));
     const slot = el('div', 'slot'); slot.append(el('b', '', model.slot.label), el('span', '', model.slot.dayLabel));
     mast.append(brand, slot);
-    const ph = photo(lead, 'photo', 'À la une');
+    const ph = photo(lead, 'photo', 'À la une', format);
     const leadBox = el('section', 'lead glass'); leadBox.append(ph); const k = kicker(lead); if (k) leadBox.append(k);
     const lt = el('h1', 'title', lead.title); leadBox.append(lt, byline(lead));
     const hook = lead.hook ? el('p', 'hook', lead.hook) : null; if (hook) leadBox.append(hook);

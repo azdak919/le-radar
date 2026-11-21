@@ -105,7 +105,7 @@ for (const model of [{ slot: sSlot, items: m.items }, { slot: sSlot, items }, { 
     assert.match(v.text, /^(☀️|🌙) La une du (matin|soir) du Radar · /);
     if (n !== 'tumblr') assert.ok(v.tags.length <= POLICY.hashtags.maxByNetwork[n]);
   }
-  assert.equal(all.facebook.image, 'portrait'); assert.equal(all.x.image, 'portrait'); assert.equal(all.instagram.image, 'portrait + story');
+  assert.equal(all.facebook.image, 'portrait'); assert.equal(all.x.image, 'portrait'); assert.equal(all.instagram.image, 'grille');
   assert.match(all.mastodon.text, /https:\/\/le-radar\.ca\/article\/[0-9a-f]{16}\//, 'Mastodon : lien de la fiche');
   assert.ok(U.altText(model).length <= 1000);
 }
@@ -288,15 +288,25 @@ assert.doesNotMatch(txt0, /Sport étudiant|radio/i, 'sans sport ni radio : aucun
 assert.equal(U.frTypo("Les jeunes cyniques ? Plutôt idéalistes ! L'écho"), 'Les jeunes cyniques\u202F? Plutôt idéalistes\u202F! L’écho');
 assert.equal(U.frTypo('Il a dit "oui"'), 'Il a dit «\u202Foui\u202F»');
 // ── Formats par réseau : portrait 4:5 partout ; Instagram préparé (story 9:16), sans lien cliquable, désactivé ──
-for (const n of [...U.NETS, 'instagram']) assert.equal(U.IMAGE_FOR[n], 'portrait', n);
-assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formatsFor(['instagram']), ['portrait'], 'story désactivée par défaut');
-assert.deepEqual(U.formatsFor(['instagram'], false, { story: true }), ['portrait', 'story']); assert.deepEqual(U.formatsFor(U.NETS, true), ['portrait', 'story', 'paysage'], 'aperçu : story rendue');
+for (const n of U.NETS) assert.equal(U.IMAGE_FOR[n], 'portrait', n);
+assert.equal(U.IMAGE_FOR.instagram, 'grille');
+assert.deepEqual(U.IMAGE_SIZES.grille, { width: 1080, height: 1440 });
+assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formatsFor(['instagram']), ['grille'], 'Instagram : 3:4, jamais de story');
+assert.deepEqual(U.formatsFor(['instagram'], false, { story: true }), ['grille']); assert.deepEqual(U.formatsFor(U.NETS, true), ['portrait', 'story', 'paysage'], 'aperçu des autres réseaux');
 { const pol = JSON.parse(fs.readFileSync(new URL('../data/social/policy.json', import.meta.url), 'utf8'));
   assert.equal(U.storyEnabled(pol.formats.une), false, 'publication Story désactivée tant que Charles ne l’a pas validée'); assert.equal(U.storyEnabled({}), false); assert.equal(U.storyEnabled({ story: { publish: true } }), true); }
 assert.ok(!U.NETS.includes('instagram'), 'Instagram hors des réseaux publiés');
 const igModel = { slot: sSlot, items: m.items, sports: sp };
 const ig = U.buildUneAll(igModel).instagram;
 assert.deepEqual(ig.problems, []); assert.doesNotMatch(ig.text, /https?:\/\//); assert.match(ig.text, /lien en bio/); assert.match(ig.text, /🏀 Basketball \(F\) · Stingers/);
+const igCredit = U.buildUneAll({ ...igModel, items: [{ ...m.items[0], credit: 'Photo : Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' }, ...m.items.slice(1)] }).instagram;
+assert.match(igCredit.text, /📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons/);
+assert.doesNotMatch(igCredit.text, /^Photo\s*:/m);
+assert.equal(U.embeddedCreditLabel('Photo : Thekidpossum, CC BY-SA 4.0, Wikimedia Commons', 'grille'), '📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
+assert.match(U.embeddedCreditLabel('Photo : Thekidpossum, CC BY-SA 4.0, Wikimedia Commons', 'portrait'), /^Photo\u00A0: Thekidpossum/);
+assert.ok((ig.text.match(/#[\p{L}\p{N}_]+/gu) || []).length <= 5);
+assert.ok((ig.text.match(/#[\p{L}\p{N}_]+/gu) || []).length >= 3, ig.text);
+assert.ok((ig.text.split('\n')[0] || '').length <= 125);
 assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
 assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30'); assert.equal(U.frHour(''), ''); assert.equal(U.frHour('00:00'), '0 h');
 

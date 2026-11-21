@@ -16,6 +16,10 @@ const WIDTHS = [
 ];
 
 async function waitPreview(page) {
+  // ≤ 900 px : le studio ouvre sur Réglages et masque l’aperçu
+  // (data-mobile-pane=controls). Les mesures de canvas passent par Aperçu.
+  const previewPane = page.locator('.dash-mobile-switch__btn[data-pane="preview"]');
+  if (await previewPane.isVisible()) await previewPane.click();
   const canvas = page.locator('#preview canvas');
   await expect(canvas).toBeVisible({ timeout: 20000 });
   await expect.poll(async () => {
@@ -90,11 +94,14 @@ test.describe('affiches — largeurs labo', () => {
   test('390 : photo + cadrage restent utilisables', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
-    await waitPreview(page);
+    // Réglages d’abord : le volet Aperçu masque le formulaire (dont l’établissement).
     await page.locator('#campus-select').selectOption('laval');
     await page.locator('#photo-more').click();
     const laval = page.locator('#photo-grid label').nth(1);
     await laval.click();
+    const previewPane = page.locator('.dash-mobile-switch__btn[data-pane="preview"]');
+    if (await previewPane.isVisible()) await previewPane.click();
+    await expect(page.locator('#preview canvas')).toBeVisible({ timeout: 20000 });
     await expect(page.locator('#crop-tools')).toBeVisible();
     const box = await page.locator('#preview canvas').boundingBox();
     expect(box.height).toBeGreaterThan(100);

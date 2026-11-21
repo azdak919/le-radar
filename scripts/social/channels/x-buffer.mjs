@@ -17,13 +17,20 @@ export const matchChannel = (x, service, channelName) => {
   return re.test(x?.service || '') && (x.name || '').replace(/^@/, '').trim().toLowerCase() === channelName.toLowerCase();
 };
 
-export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x' }) {
+export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x', allowedChannelId = '', strictWarnings = false } = {}) {
   async function gql(query, variables = {}) {
     const res = await fetchImpl(API, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(30000) });
     let body = null; try { body = await res.json(); } catch {}
     const why = (body?.errors || []).map(e => `${e?.extensions?.code || '?'}: ${e?.message || ''}`).join(' | ').slice(0, 400);
     if (isAuthFailure(res.status, body)) throw new AuthError(`${AUTH_MSG} [HTTP ${res.status} ${why}]`);
     if (!res.ok || body?.errors?.length) throw new Error(`Buffer API ${res.status}: ${JSON.stringify(body?.errors || body).slice(0, 500)}`);
+    if (strictWarnings) {
+      const warnings = [].concat(body?.extensions?.warnings || [], body?.warnings || []);
+      if (warnings.length) {
+        const msg = warnings.map(w => (typeof w === 'string' ? w : w?.message || JSON.stringify(w))).join(' | ').slice(0, 400);
+        throw new Error(`Avertissement Buffer : ${msg}`);
+      }
+    }
     return body.data;
   }
   let ctx = null;
@@ -36,10 +43,14 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       const c = await gql('query($o: OrganizationId!) { channels(input: { organizationId: $o }) { id name service } }', { o: o.id });
       for (const x of c?.channels || []) seen.push(`${x.service}:${x.name}`);
       const ch = (c?.channels || []).find(x => matchChannel(x, service, channelName));
-      if (ch) return (ctx = { organizationId: o.id, channelId: ch.id, service: ch.service, discovered: true });
+      if (ch) {
+        if (allowedChannelId && ch.id !== allowedChannelId) throw new Error(`Buffer : canal ${service} « ${channelName} » inattendu (${ch.id})`);
+        return (ctx = { organizationId: o.id, channelId: ch.id, service: ch.service, discovered: true });
+      }
     }
     if (!orgs.length) throw new Error('Buffer : aucune organisation sur ce compte');
     if (!fallbackId) throw new Error(`Buffer : canal ${service} « ${channelName} » introuvable (canaux : ${seen.join(', ') || 'aucun'})`);
+    if (allowedChannelId && fallbackId !== allowedChannelId) throw new Error(`Buffer : repli ${fallbackId} interdit pour ce canal`);
     return (ctx = { organizationId: orgs[0].id, channelId: fallbackId, discovered: false });
   }
   return {
@@ -52,6 +63,18 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
         const d = await gql('query($i: ChannelId!) { channel(input: { id: $i }) { timezone postingSchedule { day paused times } } }', { i: channelId });
         return d?.channel || null;
       } catch (e) { if (e instanceof AuthError) throw e; return { error: e.message }; }
+    },
+    async heads() {
+      const { organizationId, channelId } = await context();
+      const texts = [];
+      for (const status of ['sent', 'scheduled']) {
+        try {
+          const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!], $s: [PostStatus!]) {
+            posts(first: 30, input: { organizationId: $o, filter: { channelIds: $c, status: $s } }) { edges { node { text } } } }`, { o: organizationId, c: [channelId], s: [status] });
+          for (const e of d?.posts?.edges || []) if (e?.node?.text) texts.push(e.node.text);
+        } catch (e) { if (e instanceof AuthError) throw e; }
+      }
+      return texts;
     },
     async queued() {
       const { organizationId, channelId } = await context();
@@ -83,11 +106,11 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
       return r.post;
     },
-    async add({ text, image, dueAt, now = false, metadata }) {
+    async add({ text, image, alt, dueAt, now = false, metadata }) {
       const { channelId } = await context();
       const input = { text, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
       if (dueAt) input.dueAt = dueAt;
-      if (image) input.assets = [{ image: { url: image } }];
+      if (image) input.assets = [{ image: { url: image, ...(alt ? { metadata: { altText: String(alt).slice(0, 1000) } } : {}) } }];
       if (metadata) input.metadata = metadata;
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
         ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`, { i: input });
