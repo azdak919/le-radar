@@ -1,15 +1,65 @@
 {
-  "updated": "2026-11-21T15:40:18.006Z",
+  "updated": "2026-11-21T16:57:19.870Z",
   "total": 1037,
-  "withImage": 908,
-  "withCredit": 908,
-  "cited": 633,
-  "pending": 167,
+  "withImage": 922,
+  "withCredit": 922,
+  "cited": 646,
+  "pending": 165,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 60,
-  "samples": []
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 54,
+  "samples": [
+    {
+      "title": "La vie lors d’une régate d’aviron",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La génération Z et le retour des médias physiques",
+      "source": "Quartier Libre",
+      "credit": "Photo : Alex Salcedo et Linus Bossardt",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Élections : qu’en pense la communauté universitaire ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Yachts, champagne et abonnés : pourquoi la vie des riches fascine tant",
+      "source": "La Pige",
+      "credit": "Photo : Google",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le fétichisme des pieds, une fascination singulière",
+      "source": "La Pige",
+      "credit": "Photo : Elena Simet",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Entretien avec le rappeur et historien Webster",
+      "source": "Quartier Libre",
+      "credit": "Photo : Geneviève Robitaille",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Quand notre quotidien change de couleur",
+      "source": "La Pige",
+      "credit": "Photo : Diego Pinto de Queiros",
+      "cited": true,
+      "method": "body-line"
+    }
+  ]
 }
