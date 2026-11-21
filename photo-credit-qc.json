@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-21T12:39:30.556Z",
+  "updated": "2026-11-21T14:10:35.862Z",
   "total": 1037,
-  "withImage": 935,
-  "withCredit": 935,
-  "cited": 657,
+  "withImage": 936,
+  "withCredit": 936,
+  "cited": 658,
   "pending": 165,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 2,
-  "fallbackNew": 58,
+  "updatedCount": 5,
+  "citedNew": 5,
+  "fallbackNew": 55,
   "samples": [
     {
       "title": "La vie lors d’une régate d’aviron",
@@ -20,11 +20,32 @@
       "method": null
     },
     {
+      "title": "ASFA asks students what issues matter most to them",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of ASFA",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
       "title": "Élections : qu’en pense la communauté universitaire ?",
       "source": "Quartier Libre",
       "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "source": "The Concordian",
+      "credit": "Photo: Eric Klempan",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
