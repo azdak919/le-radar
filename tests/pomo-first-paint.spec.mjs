@@ -40,6 +40,16 @@ test('pomodoro : la disposition est posée avant le premier rendu, et rien ne bo
     .poll(async () => root.evaluate((el) => el.hasAttribute('data-booting')), { timeout: 8000 })
     .toBe(false);
 
+  // La barre radio et la météo arrivent après le fondu et grandissent le chrome.
+  // On attend que la barre ait fini de bouger avant de figer la mesure.
+  const chrome = page.locator('.top-right-actions');
+  await expect.poll(async () => {
+    const first = (await chrome.boundingBox())?.height || 0;
+    await page.waitForTimeout(350);
+    const second = (await chrome.boundingBox())?.height || 0;
+    return first > 40 && Math.abs(first - second) < 1;
+  }, { timeout: 8000 }).toBe(true);
+
   const widget = page.locator('#pomo-widget');
   await expect(widget).toBeVisible();
   const settled = await widget.boundingBox();

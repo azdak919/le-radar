@@ -1319,15 +1319,41 @@ test('puces : un résultat à 6 j civils n’est plus dans les 5 j', async ({ pa
 });
 
 test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#masthead-sports-strip .sports-chip').first()).toBeVisible({ timeout: 8000 });
+  // Fixture, pas le corpus live : un soir de semaine chaque équipe n’a
+  // qu’un match à venir, et nexts === teams faisait échouer le critère
+  // même quand le code lisait bien le tableau nextGames.
+  const soon = liveKickGame({
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    offsetMs: 3 * 3600 * 1000,
+    extra: { live: false, gameId: 'next-soon' },
+  });
+  const later = liveKickGame({
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill',
+    offsetMs: 27 * 3600 * 1000,
+    extra: { live: false, gameId: 'next-later' },
+  });
+  const team = teamShell('collegial:soccer:sth-calendar', {
+    name: 'Saint-Hyacinthe',
+    fullName: 'Cégep de Saint-Hyacinthe',
+    code: 'STH',
+  });
+  team.nextGame = soon;
+  team.nextGames = [soon, later];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [team.id]: team },
+  });
   const n = await page.evaluate(() => {
     const nexts = (typeof sportsSlides !== 'undefined' ? sportsSlides : [])
       .filter((s) => s && s.mode === 'next');
     const teams = new Set(nexts.map((s) => s.team?.id).filter(Boolean));
     return { nexts: nexts.length, teams: teams.size };
   });
-  expect(n.teams, 'plusieurs équipes à venir').toBeGreaterThan(10);
+  expect(n.teams, 'l’équipe de la fixture est au bandeau').toBeGreaterThan(0);
   expect(n.nexts, 'calendrier nextGames, pas seulement nextGame').toBeGreaterThan(n.teams);
 });

@@ -16,7 +16,7 @@ const NATIVE_ROUTES = [
   '/en/',
 ];
 
-const IFRAME_ROUTES = [
+const MODULE_ROUTES = [
   { path: '/pomo/', label: 'pomo' },
   { path: '/solitaire/', label: 'solitaire' },
 ];
@@ -40,15 +40,12 @@ for (const path of NATIVE_ROUTES) {
   });
 }
 
-for (const { path, label } of IFRAME_ROUTES) {
-  test(`iframe autorisée sur ${label}`, async ({ page }) => {
+for (const { path, label } of MODULE_ROUTES) {
+  test(`barre radio du module sur ${label}`, async ({ page }) => {
     await page.goto(path, { waitUntil: 'domcontentloaded' });
-    const embed = page.locator('#radar-embed');
-    await expect(embed).toHaveCount(1);
-    await expect(embed).toHaveAttribute('src', /tuner-embed\.html/);
-    // Document de l’iframe initialisé
-    await expect(embed).toHaveAttribute('src', /tuner-embed\.html/, { timeout: 10_000 });
-    const frame = embed.contentFrame();
-    await expect(frame.locator('#tuner-play')).toBeVisible({ timeout: 12_000 });
+    await expect(page.locator('#radar-embed')).toHaveCount(0);
+    const host = page.locator('.radar-radio');
+    await expect(host).toBeVisible({ timeout: 12_000 });
+    await expect(host.locator('.play')).toBeVisible({ timeout: 12_000 });
   });
 }

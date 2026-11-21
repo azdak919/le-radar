@@ -57,9 +57,11 @@ test('le mute survit au rechargement de la page', async ({ page }) => {
 });
 
 test('le panneau À l’antenne reste bleu lorsque le synthétiseur est arrêté', async ({ page }) => {
-  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
-  const tuner = page.locator('#radar-embed').contentFrame();
-  const colors = await tuner.locator('#tuner-nowair-title').evaluate((title) => {
+  // Le module Pomo/Solitaire n’embarque plus tuner-embed : la règle vit
+  // sur le syntoniseur natif (style-tuner.css, ≥ 1100 px).
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const colors = await page.locator('#tuner-nowair-title').evaluate((title) => {
     const radio = title.closest('.tuner');
     const panel = title.closest('.tuner-nowair');
     panel.classList.add('is-live');
@@ -110,73 +112,68 @@ test('iframe kiosque-v1 : À l’antenne ouvre l’horaire sur le-radar (URL abs
   await expect(schedule).toHaveURL(new RegExp(`^${origin.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}/radios/chyz/#horaire$`));
 });
 
+test('CHYZ dans tuner-embed utilise le mount d’antenne', async ({ page }) => {
+  await page.goto('/tuner-embed.html?station=chyz', { waitUntil: 'domcontentloaded' });
+  await expect.poll(async () => page.locator('#tuner-select option').count(), { timeout: 15_000 })
+    .toBeGreaterThan(1);
+  await page.locator('#tuner-select').selectOption('chyz');
+  const play = page.locator('#tuner-play');
+  const aria = await play.getAttribute('aria-label');
+  if (!/pause|connexion/i.test(aria || '')) await play.click();
+  // L’encodeur CHYZ peut être à l’arrêt (nuit) : on vérifie le mount, pas le son.
+  await expect.poll(async () => {
+    return page.locator('#radar-player').evaluate((a) => a.currentSrc || a.src || '');
+  }, { timeout: 10_000 }).toContain('/proxy/chyz/stream');
+});
+
 for (const path of ['/pomo/', '/solitaire/']) {
-  test(`CHYZ dans l’iframe ${path} utilise le mount d’antenne`, async ({ page }) => {
+  test(`CHYZ dans le module radio ${path} démarre le flux`, async ({ page }) => {
     await page.goto(path, { waitUntil: 'domcontentloaded' });
-    const tuner = page.locator('#radar-embed').contentFrame();
-    await expect.poll(async () => tuner.locator('#tuner-select option').count(), { timeout: 15_000 })
-      .toBeGreaterThan(1);
-    await tuner.locator('#tuner-select').selectOption('chyz');
-    // Changer de poste autoplay déjà ; un second clic mettrait en pause.
-    const play = tuner.locator('#tuner-play');
-    const aria = await play.getAttribute('aria-label');
-    if (!/pause|connexion/i.test(aria || '')) {
-      await play.click();
-    }
-    // L’encodeur CHYZ peut être à l’arrêt (nuit) : on vérifie le mount, pas le son.
-    await expect.poll(async () => {
-      return tuner.locator('#radar-player').evaluate((a) => a.currentSrc || a.src || '');
-    }, { timeout: 10_000 }).toContain('/proxy/chyz/stream');
+    const host = page.locator('.radar-radio');
+    await expect(host.locator('select')).toBeVisible({ timeout: 15_000 });
+    await host.locator('select').selectOption('chyz');
+    await expect(host.locator('select')).toHaveValue('chyz');
+    await host.locator('.play').click();
+    // L’élément <audio> n’est pas dans le DOM (Web Audio) : l’état de la barre
+    // prouve que le clic a lancé le flux CHYZ.
+    await expect.poll(() => host.locator('.bar').getAttribute('data-state'), { timeout: 10_000 })
+      .toMatch(/loading|playing|error/);
   });
 }
 
-test('l’iframe alterne les postes affichés lorsque la radio est arrêtée', async ({ page }) => {
+test('le module radio ne fait pas défiler les postes à l’arrêt', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
-  const tuner = page.locator('#radar-embed').contentFrame();
-  const title = tuner.locator('#tuner-nowair-title');
-  await expect(title).not.toHaveText('');
-  const first = await title.textContent();
-
-  // L’iframe Pomodoro laisse chaque station lisible 14 secondes.
-  await expect.poll(() => title.textContent(), { timeout: 18_000 })
-    .not.toBe(first);
+  const line = page.locator('.radar-radio .line1');
+  await expect(line).not.toHaveText('', { timeout: 15_000 });
+  const first = await line.innerText();
+  await page.waitForTimeout(1500);
+  await expect(line).toHaveText(first);
 });
 
 test('le bouton annule une connexion audio en attente', async ({ page }) => {
-  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
-  const tuner = page.locator('#radar-embed').contentFrame();
-  await tuner.locator('#tuner-select').selectOption({ index: 1 });
-  // Un autre contexte de test peut avoir publié une lecture juste avant
-  // l'iframe. Repartir de l'état arrêté ici isole le scénario « attente »
-  // plutôt que de lui faire tester une pause distante.
-  const playButton = tuner.locator('#tuner-play');
-  await playButton.evaluate((button) => {
-    if (button.classList.contains('is-buffering') || /mettre en pause/i.test(button.getAttribute('aria-label') || '')) {
-      button.click();
-    }
-  });
-  // Cibler l'élément plutôt que <html> : l'iframe démarre sur about:blank et
-  // pomo/js/app.js ne pose son src que dans un requestIdleCallback. Un locator
-  // sur #radar-player attend le vrai document ; locator('html') se résout tout
-  // de suite sur about:blank, où l'audio n'existe pas encore.
-  await tuner.locator('#radar-player').evaluate((player) => {
+  await page.goto('/tuner-embed.html', { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => page.locator('#tuner-select option').count(), { timeout: 15_000 })
+    .toBeGreaterThan(1);
+  await page.locator('#tuner-select').selectOption({ index: 1 });
+  const playButton = page.locator('#tuner-play');
+  await expect(playButton).toBeVisible();
+  await page.locator('#radar-player').evaluate((player) => {
     // Un `waiting` à l'arrêt est ignoré : un src posé sans lecture peut
     // l'émettre. La connexion annulable n'existe qu'une fois la lecture
-    // demandée (paused === false).
+    // demandée (paused === false) et qu'un flux est engagé.
+    if (!player.getAttribute('src')) player.src = 'https://example.invalid/test-stream';
     Object.defineProperty(player, 'paused', { configurable: true, get: () => false });
     player.dispatchEvent(new Event('waiting'));
   });
 
-  const button = playButton;
-  // État publié (aria + data-radar-buffering), pas seulement la classe CSS.
-  await expect.poll(async () => button.getAttribute('aria-label'), { timeout: 5_000 })
+  await expect.poll(async () => playButton.getAttribute('aria-label'), { timeout: 5_000 })
     .toMatch(/connexion au flux/i);
-  await expect.poll(async () => tuner.locator('html').getAttribute('data-radar-buffering'))
+  await expect.poll(async () => page.locator('html').getAttribute('data-radar-buffering'))
     .toBe('1');
-  await button.click();
-  await expect.poll(async () => button.getAttribute('aria-label'), { timeout: 5_000 })
+  await playButton.click();
+  await expect.poll(async () => playButton.getAttribute('aria-label'), { timeout: 5_000 })
     .not.toMatch(/connexion au flux/i);
-  await expect.poll(async () => tuner.locator('html').getAttribute('data-radar-buffering'))
+  await expect.poll(async () => page.locator('html').getAttribute('data-radar-buffering'))
     .not.toBe('1');
 });
 
@@ -190,16 +187,16 @@ test('une page suiveuse n’affiche pas un buffering tardif après navigation', 
       updatedAt: Date.now(),
     }));
   });
-  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
-  const tuner = page.locator('#radar-embed').contentFrame();
-  await tuner.locator('#radar-player').evaluate((player) => {
+  await page.goto('/radios/ckut/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#radar-player')).toBeAttached({ timeout: 15_000 });
+  await page.locator('#radar-player').evaluate((player) => {
     player.dispatchEvent(new Event('waiting'));
   });
   // Suiveur froid : un waiting tardif ne doit pas publier l’état buffering.
-  await expect.poll(async () => tuner.locator('html').getAttribute('data-radar-buffering'), {
+  await expect.poll(async () => page.locator('html').getAttribute('data-radar-buffering'), {
     timeout: 3_000,
   }).not.toBe('1');
-  await expect(tuner.locator('#tuner-play')).not.toHaveAttribute('aria-label', /connexion au flux/i);
+  await expect(page.locator('#tuner-play')).not.toHaveAttribute('aria-label', /connexion au flux/i);
 });
 
 test('changer de poste sur un onglet suiveur bascule le flux du leader', async ({ page, context }) => {
@@ -390,21 +387,21 @@ test('une émission CHOQ terminée ne reste pas affichée comme à venir', async
     }
     window.Date = BoundaryDate;
   });
-  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
-  const tuner = page.locator('#radar-embed').contentFrame();
-  await tuner.locator('#tuner-select').selectOption('choq');
-  await expect(tuner.locator('#tuner-nowair-title')).not.toHaveText('Palmarès CHOQ.ca');
+  await page.goto('/tuner-embed.html?station=choq', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tuner-select option[value="choq"]')).toBeAttached({ timeout: 15_000 });
+  await page.locator('#tuner-select').selectOption('choq');
+  await expect(page.locator('#tuner-nowair-title')).not.toHaveText('Palmarès CHOQ.ca');
 });
 
 test('Pomodoro garde son document hôte pendant une navigation avec lecture active', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
-  const tuner = page.locator('#radar-embed').contentFrame();
-  await expect(tuner.locator('#tuner-play')).toBeVisible();
+  await expect(page.locator('.radar-radio .play')).toBeVisible({ timeout: 15_000 });
 
   // Simule le signal posé par le lecteur après un play() réussi. Le test ne
   // dépend ainsi d'aucun flux radio externe ni des règles d'autoplay du CI.
-  await tuner.locator('html').evaluate((html) => {
-    html.dataset.radarPlaying = '1';
+  // nav-shell lit data-radar-playing sur le document hôte (plus d’iframe tuner).
+  await page.evaluate(() => {
+    document.documentElement.dataset.radarPlaying = '1';
   });
 
   await page.locator('#solitaire-btn').click();
@@ -428,25 +425,19 @@ test('un seul leader radio est partagé entre deux pages', async ({ page, contex
   const peer = await context.newPage();
   await Promise.all([
     page.goto('/', { waitUntil: 'domcontentloaded' }),
-    peer.goto('/pomo/', { waitUntil: 'domcontentloaded' }),
+    peer.goto('/radios/chyz/', { waitUntil: 'domcontentloaded' }),
   ]);
 
-  const peerEmbed = peer.locator('#radar-embed');
-  // Le document Pomo charge l'iframe après sa première peinture. Attendre
-  // son URL réelle évite d'interroger l'about:blank lorsque le runner est
-  // chargé, sans imposer de délai arbitraire au produit.
-  await expect(peerEmbed).toHaveAttribute('src', /tuner-embed\.html/, { timeout: 10_000 });
-  const peerTuner = peerEmbed.contentFrame();
-  await expect(peerTuner.locator('#tuner-play')).toBeVisible({ timeout: 10_000 });
+  await expect(peer.locator('#tuner-play')).toBeVisible({ timeout: 15_000 });
   await expect.poll(() => page.evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
-  await expect.poll(() => peerTuner.locator('html').evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
+  await expect.poll(() => peer.evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
 
   const firstLeader = await page.evaluate(() => {
     window.RadarPlayerSync.claimPlay('chyz', 0.65);
     return window.RadarPlayerSync.getTabId();
   });
 
-  await expect.poll(() => peerTuner.locator('html').evaluate(() =>
+  await expect.poll(() => peer.evaluate(() =>
     window.RadarPlayerSync.readState())).toMatchObject({
     stationId: 'chyz',
     playing: true,
@@ -454,7 +445,7 @@ test('un seul leader radio est partagé entre deux pages', async ({ page, contex
     leaderId: firstLeader,
   });
 
-  const secondLeader = await peerTuner.locator('html').evaluate(() => {
+  const secondLeader = await peer.evaluate(() => {
     window.RadarPlayerSync.claimPlay('cism', 0.4);
     return window.RadarPlayerSync.getTabId();
   });

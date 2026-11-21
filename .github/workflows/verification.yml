@@ -140,8 +140,9 @@ jobs:
         run: npx playwright install chromium
       # Ubuntu 24.04 : ImageMagick 6, binaire `convert` (pas `magick`).
       # Le test d’affiche accepte les deux.
-      - name: Install ImageMagick
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends imagemagick
+      # pdftotext : même besoin que le job critical (tests/print-formats.spec.mjs).
+      - name: Install ImageMagick and pdftotext
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends imagemagick poppler-utils
       - name: Browser checks (full suite)
         timeout-minutes: 50
         run: npm run test:browser
