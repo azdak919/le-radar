@@ -19,6 +19,10 @@ Toutes ces fontes sont sous OFL 1.1. Les textes de licence correspondants sont d
 
 Les gabarits d’affiches eux-mêmes (mise en page réalisée par Azdak) sont sous [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), distincte de l’OFL des fontes et de la GPL du code.
 
+## Similarité des résumés
+
+`scripts/vendor/dice-coefficient.js` — coefficient de Sørensen–Dice, d’après dice-coefficient 2.1.1, Titus Wormer, **MIT**. Le copyright est en tête du fichier. Compatible GPL-2.0-only. Voir aussi [`THIRD_PARTY.md`](THIRD_PARTY.md).
+
 ## Bibliothèque QR
 
 `scripts/vendor/qrcodegen-v1.8.0.js` — QR Code generator, Project Nayuki, **MIT**. Le copyright et l’autorisation MIT sont conservés en tête du fichier. Compatible avec une distribution GPL v2 du code qui l’utilise.

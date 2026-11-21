@@ -15,7 +15,7 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
 | --- | --- |
 | `data/revue/config.json` | Interrupteur `publish`, heures des éditions, fenêtres, limites (articles, radio, sport, IA). |
 | `scripts/revue/revue-lib.mjs` | Fenêtres horaires (heure de Montréal, DST), sélection des articles, thèmes, radio, sport, garde anti-hallucination, validation. |
-| `scripts/revue/revue-ai.mjs` | Résumés d’une phrase et amorce éditoriale par Workers AI (même modèle et mêmes secrets que l’accroche IA de La une). |
+| `scripts/revue/revue-ai.mjs` | Résumés de deux ou trois phrases et amorce éditoriale par Workers AI (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`, forfait gratuit, plafond de neurones). |
 | `scripts/revue/revue-render.js` | Page (chrome du site), index des archives, JSON-LD `NewsArticle`, sitemap Google News, entrées RSS. |
 | `scripts/revue/revue-weather.mjs` | Prévisions ECCC (Datamart MSC, fichiers citypage XML) lues à la production de l’édition. |
 | `scripts/revue/revue-games.js` | Sudoku et mots cachés déterministes (graine = date + édition), avec solutions. |
@@ -153,10 +153,14 @@ réductions, on retire la ligne plutôt que de couper l’accroche ou les auteur
 1. Chaque lien, titre, média et auteur vient des données ; `validateReview` refuse la revue sinon (auteurs égaux à
    ceux du fil, extraits présents dans la source, émissions présentes dans la grille, résultats recalculés depuis le
    bandeau sportif).
-2. Texte IA (résumé, chapeau) : rejeté s’il contient un lien, des guillemets, une date relative (« demain »,
-   « week-end »…), un chiffre ou un nom propre absent de la source, ou s’il n’est pas en français. Repli : extrait
-   court de l’article et amorce déterministe rédigée.
-3. IA indisponible (secrets absents, erreur, `REVUE_AI=off`) : gabarit déterministe complet.
+2. Texte IA (résumé, chapeau) : deux ou trois phrases tirées du chapô, pas du titre seul. Rejeté s’il est trop court,
+   trop proche du titre (coefficient de Dice, seuil 0,55), s’il contient un lien, des guillemets, une date relative
+   (« demain », « week-end »…), un chiffre ou un nom propre absent de la source, ou s’il n’est pas en français.
+   Repli : extrait fidèle du chapô (les phrases d’origine), jamais un résumé vide. Un article anglais sans résumé
+   français reste une citation du chapô.
+3. IA indisponible (secrets absents, erreur, quota de 10 000 neurones/jour, HTTP 429 ou 403) : même repli.
+   Le modèle est llama 3.3 70B sur le forfait gratuit Workers AI. Un passage s’arrête à 1 800 neurones estimés
+   (deux éditions ≈ 3 600, sous les 10 000 du jour, sans facturation à l’usage). Au-delà, chapô.
 4. Avant écriture : tout lien de la page qui ne vient pas du modèle fait échouer l’écriture.
 
 ## Activer la publication (décision de Charles)
