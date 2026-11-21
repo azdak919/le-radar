@@ -135,7 +135,6 @@
 @media (hover: hover) and (pointer: fine) {
   .theme-toggle:hover,
   .masthead-home:hover,
-  .masthead-rss:hover:not([aria-current="page"]),
   .masthead-solitaire:hover,
   .masthead-sports:hover:not([aria-current="page"]),
   .masthead-coffee:hover {
@@ -149,14 +148,13 @@
 }
 .theme-toggle:active,
 .masthead-home:active,
-.masthead-rss:active,
 .masthead-pomo:active,
 .masthead-solitaire:active,
 .masthead-sports:active,
 .masthead-coffee:active {
   transform: scale(0.9);
 }
-/* Accueil : même pastille que RSS / pomo au repos. Mauve seulement au pressé
+/* Accueil : même pastille que pomo au repos. Mauve seulement au pressé
    — plus de fond persistant via aria-current / .is-active. */
 .masthead-home:active {
   color: var(--accent);
@@ -184,6 +182,73 @@
   text-align: center;
   max-width: 100%;
   min-width: 0;
+}
+
+/* Réseaux de chaque côté de la marque (même liste que le pied, sans RSS).
+   Sous 720 px ils cèdent la place aux outils du mât et restent au pied. */
+.masthead-brand:has(.masthead-social) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: 4px;
+}
+.masthead-brand:has(.masthead-social) > .wordmark {
+  width: auto;
+  max-width: 100%;
+  grid-column: 2;
+}
+.masthead-social { display: contents; }
+.masthead-social__group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+  padding-top: 18px;
+}
+.masthead-social__group--left {
+  grid-column: 1;
+  justify-self: end;
+  justify-content: flex-end;
+}
+.masthead-social__group--right {
+  grid-column: 3;
+  justify-self: start;
+  justify-content: flex-start;
+}
+.masthead-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 50%;
+  color: var(--muted);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+.masthead-social svg { width: 20px; height: 20px; display: block; }
+@media (hover: hover) and (pointer: fine) {
+  .masthead-social a:hover {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    text-decoration: none;
+  }
+}
+.masthead-social a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  color: var(--accent);
+}
+@media (max-width: 719.98px) {
+  .masthead-social { display: none; }
+  .masthead-brand:has(.masthead-social) { display: block; }
+  .masthead-brand:has(.masthead-social) > .wordmark { width: 100%; }
+}
+@media print {
+  .masthead-social { display: none !important; }
 }
 
 .wordmark {

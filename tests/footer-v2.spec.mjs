@@ -21,6 +21,9 @@ for (const [path, theme] of PAGES) {
       await expect(foot.locator('.site-foot__social a[data-social="instagram"]')).toHaveAttribute('rel', 'me noopener');
       await expect(foot.locator('.site-foot__social a[data-social="buymeacoffee"]')).toHaveAttribute('href', 'https://www.buymeacoffee.com/azdak');
       await expect(foot.locator('.site-foot__social a[data-social="buymeacoffee"]')).toHaveAttribute('rel', 'noopener noreferrer');
+
+      const footIds = await foot.locator('.site-foot__social a[data-social]').evaluateAll((as) => as.map((a) => a.dataset.social));
+      expect(footIds).toEqual(['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr', 'rss']);
       await expect(foot.locator('.site-foot__col')).toHaveCount(3);
       await expect(foot.locator('.site-foot__links .site-foot__sep:visible')).toHaveCount(0);
       for (const width of WIDTHS) {
@@ -44,3 +47,28 @@ for (const [path, theme] of PAGES) {
     });
   }
 }
+
+test('mât : réseaux de chaque côté de la marque, sans RSS, masqués sous 720 px', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('radar-theme', 'light'));
+  await page.goto('/', { waitUntil: 'load' });
+  const expected = ['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr'];
+  await expect(page.locator('.masthead-rss')).toHaveCount(0);
+  await expect(page.locator('.masthead-social a[data-social]')).toHaveCount(8);
+  const ids = await page.locator('.masthead-social a[data-social]').evaluateAll((as) => as.map((a) => a.dataset.social));
+  expect(ids).toEqual(expected);
+
+  for (const width of [390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    const visible = page.locator('.masthead-social a[data-social]').first();
+    if (width < 720) {
+      await expect(visible, `${width}px : réseaux du mât masqués`).toBeHidden();
+    } else {
+      await expect(visible, `${width}px : réseaux du mât visibles`).toBeVisible();
+      const small = await page.locator('.masthead-social a[data-social]').evaluateAll((as) => as.filter((a) => {
+        const b = a.getBoundingClientRect();
+        return b.height < 44 || b.width < 44;
+      }).length);
+      expect(small, `${width}px : cibles 44 px`).toBe(0);
+    }
+  }
+});

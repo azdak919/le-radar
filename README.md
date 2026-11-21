@@ -35,7 +35,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 - **Syntoniseur radio** collant : choix du poste, lecture native (flux HTTPS), volume, Media Session API
 - **Postes natifs** — écoute directe sur LE-RADAR pour les stations avec flux validé (ex. CHYZ, CISM, CKUT, CJLO, CFAK)
 - **Fil étudiant** — agrégation RSS des journaux étudiants, filtrable par source
-- **Réseaux** — Facebook, Instagram (https://www.instagram.com/le.radar.ca/), X, Bluesky, Mastodon, LinkedIn, Tumblr, le fil RSS et Buy Me a Coffee (https://www.buymeacoffee.com/azdak), dans le pied de page
+- **Réseaux** — Buy Me a Coffee (https://www.buymeacoffee.com/azdak), Instagram (https://www.instagram.com/le.radar.ca/), Facebook, LinkedIn, X, Bluesky, Mastodon et Tumblr, puis le fil RSS (en dernier, ce n’est pas un réseau) : au pied de page, et de chaque côté de la marque dans le mât à partir de 720 px
 - **Identité couleur par établissement** — pastilles sources, accents radio et marques institutionnelles (`brand-colors.json`)
 - **« À l'antenne »** — émission en cours selon la grille horaire colligée (bot) + titre live via métadonnées ICY du flux
 - **Bots automatisés** — agrégation des articles, images vedette, crédits photo, découverte de flux radio, horaires
