@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+      issues: write
     steps:
       # Partir du main ACTUEL : en file data-writers, le sha de l'événement
       # peut dater de plusieurs passes (rebase de données impossible ensuite).
@@ -31,16 +32,14 @@ jobs:
       - name: Collect a polite, resumable metadata-only slice
         id: crawl
         run: node scripts/retro-crawl-historical.js --update
-        # Un média qui ferme son API est un état à consigner, jamais un motif
-        # de courriel Vérification ni un blocage de l’agrégation quotidienne.
-        continue-on-error: true
+        # Un média qui ferme son API reste un état dans le journal de crawl.
+        # Le script garde l’avancement et sort 0 ; un bug du dépôt échoue encore.
         env:
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
       - name: Verify a small rotating sample of original links
         if: steps.crawl.outcome == 'success'
         id: links
         run: node scripts/verify-historical-links.js --update --limit=12
-        continue-on-error: true
       - name: Pre-push integrity (bot gate)
         if: steps.crawl.outcome == 'success'
         timeout-minutes: 8

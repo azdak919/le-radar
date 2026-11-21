@@ -19,6 +19,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import { listEditionDirs, resolveEditionId } from './revue-pdf-id.mjs';
+import { createRequire } from 'node:module';
+const { syncEditionPdfLinks } = createRequire(import.meta.url)('./revue-render.js');
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const PORT = Number(process.env.PW_PORT || 4193);
@@ -71,11 +73,20 @@ function requestedIds(argv = process.argv, base = root) {
   return raw ? [resolveEditionId(raw, base)] : [];
 }
 
+function syncIds(ids) {
+  for (const id of ids) syncEditionPdfLinks(join(root, 'revue', id));
+}
+
 async function main() {
   const ids = requestedIds();
   if (!ids.length) {
     console.error('usage: revue-pdfs.mjs --id YYYY-MM-DD-matin|soir | --id matin|soir | --all');
     process.exit(2);
+  }
+  if (process.argv.includes('--sync-only')) {
+    syncIds(ids);
+    console.log('liens PDF alignés sur les fichiers présents');
+    return;
   }
   const server = await startServer();
   try {
@@ -90,6 +101,7 @@ async function main() {
     }
     await browser.close();
   } finally {
+    syncIds(ids);
     server.kill('SIGTERM');
   }
 }

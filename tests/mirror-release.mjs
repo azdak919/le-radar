@@ -46,6 +46,7 @@ assert.match(gi, /^assets\/news-images\/\*$/m); assert.match(gi, /^!assets\/news
 assert.ok(isTransient('HTTP 500 (https://api.github.com/repos/azdak919/le-radar/releases/assets/700334505)'));
 assert.ok(isTransient('HTTP 502: Bad Gateway')); assert.ok(isTransient('read: connection reset by peer'));
 assert.ok(!isTransient('HTTP 404: Not Found')); assert.ok(!isTransient('HTTP 403: Resource not accessible'));
+assert.ok(isTransient('HTTP 403: API rate limit exceeded for installation'));
 assert.ok(!isTransient('no assets to download'));
 assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /isTransient\(msg\)/);
 // Déploiement Pages : un seul nouvel essai si le premier reste bloqué, sans masquer un double échec.

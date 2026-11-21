@@ -52,7 +52,13 @@ const SPORT_SLUG = {
   Volleyball: 'volleyball',
 };
 
+const { retryAsync } = require('./external-source-lib');
+
 function getJson(url) {
+  return retryAsync(() => getJsonOnce(url), { retries: 2, minTimeout: 200, maxTimeout: 4000 });
+}
+
+function getJsonOnce(url) {
   return new Promise((resolve, reject) => {
     const req = https.get(
       url,
@@ -74,7 +80,7 @@ function getJson(url) {
         res.on('end', () => {
           const body = Buffer.concat(chunks).toString('utf8');
           if (res.statusCode !== 200) {
-            reject(new Error(`HTTP ${res.statusCode} ${url}`));
+            reject(Object.assign(new Error(`HTTP ${res.statusCode} ${url}`), { status: res.statusCode }));
             return;
           }
           try {
@@ -647,8 +653,8 @@ async function main() {
   }
 }
 
-if (require.main === module) main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('catalogue RSEQ', () => main(), [path.join(ROOT, 'sports-leagues.json'), path.join(ROOT, 'sports-teams.json')]);
+}
 module.exports = { syncSportsTeamsRegistry };
