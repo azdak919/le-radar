@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T03:49:04.512Z",
+  "updatedAt": "2026-11-21T05:06:47.763Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,114 +21,107 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T03:48:44.063Z"
+      "checkedAt": "2026-11-21T05:06:20.585Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rebelles soniques (reprise)",
         "source": "schedule",
         "start": "23:00",
         "end": "01:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Rebelles soniques (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T03:48:57.892Z"
+      "checkedAt": "2026-11-21T05:06:34.672Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Weekend Groove",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "WEFUNK",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Soca Sessions",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Weekend Groove",
+      "showTitle": "WEFUNK",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T03:49:00.326Z"
+      "checkedAt": "2026-11-21T05:06:38.057Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Come Up",
+        "title": "Jazz Boulevard",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "World-Up'",
         "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "The Come Up",
+      "showTitle": "Jazz Boulevard",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T03:49:01.523Z"
+      "checkedAt": "2026-11-21T05:06:40.183Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Entre ciel et terre",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:59",
-        "url": "https://www.cfak.ca/balados/entre-ciel-et-terre"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "04:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": null,
       "track": "",
-      "showTitle": "Entre ciel et terre",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T03:49:02.359Z"
+      "checkedAt": "2026-11-21T05:06:41.508Z"
     },
     "choq": {
       "id": "choq",
@@ -136,24 +129,23 @@
       "current": null,
       "next": {
         "title": "Podcast Nomade: L'art de se rencontrer",
-        "source": "schedule",
+        "source": "api-live",
         "start": "10:00",
         "end": "11:00",
-        "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
+        "slug": "podcast-nomade-lart-de-se-rencontrer"
       },
       "track": "ID - ID Comment Debord - Blood Pareil",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-21T03:49:04.161Z"
+      "checkedAt": "2026-11-21T05:06:47.412Z"
     }
   }
 }
