@@ -1,10 +1,26 @@
 {
-  "updated": "2026-11-21T04:07:11.088Z",
-  "total": 1036,
-  "withAuthor": 1036,
-  "mismatches": 53,
+  "updated": "2026-11-21T05:07:04.666Z",
+  "total": 1038,
+  "withAuthor": 1038,
+  "mismatches": 55,
   "ok": true,
   "samples": [
+    {
+      "title": "Will Montreal learn from New York about protest and police?",
+      "link": "https://thelinknewspaper.ca/article/16575",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Nicolas Tremblay",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Musicians Among Us: Band Fest Season",
+      "link": "https://theplantnews.com/2026/11/18/musicians-among-us-band-fest-season/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "Quand une banque fait tomber un président",
       "link": "https://lecollectif.ca/edition-papier/quand-une-banque-fait-tomber-un-president/",
@@ -148,23 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "BU Snow Prepares for Another Winter at Bishop’s",
-      "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Transparency: A Tool and a Threat",
-      "link": "https://thebucampus.ca/2026/10/27/transparency-a-tool-and-a-threat",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 53
+  "fixed": 55
 }
