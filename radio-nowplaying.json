@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-11-20T22:57:42.206Z",
+  "updatedAt": "2026-11-21T03:49:04.512Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
-        "title": "Remparts de Québec",
-        "source": "schedule-live",
-        "start": "18:45",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+        "title": "Au delà du geste",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/au-dela-du-geste/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-20T22:57:05.501Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "OK Doomer",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/ok-doomer"
-      },
-      "next": {
-        "title": "Mix électro",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/mix-electro"
-      },
-      "track": "",
-      "showTitle": "OK Doomer",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T22:57:19.377Z"
+      "checkedAt": "2026-11-21T03:48:44.063Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "next": {
+        "title": "Rebelles soniques (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
+      },
+      "track": "",
+      "showTitle": "Mix Anglo",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-21T03:48:57.892Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+        "title": "Weekend Groove",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Café",
+        "title": "WEFUNK",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "track": "",
-      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+      "showTitle": "Weekend Groove",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,82 +74,86 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T22:57:21.452Z"
+      "checkedAt": "2026-11-21T03:49:00.326Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Groove Master's Hour",
+        "title": "The Come Up",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/the-come-up"
       },
       "next": {
-        "title": "The Go-Go Radio Magic Show",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "The Groove Master's Hour",
+      "showTitle": "The Come Up",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T22:57:23.316Z"
+      "checkedAt": "2026-11-21T03:49:01.523Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Remix ta console",
+        "title": "Entre ciel et terre",
         "source": "schedule-live",
-        "start": "16:30",
-        "end": "17:59",
-        "url": "https://www.cfak.ca/balados/remix-ta-console"
+        "start": "22:00",
+        "end": "23:59",
+        "url": "https://www.cfak.ca/balados/entre-ciel-et-terre"
       },
       "next": {
-        "title": "La Récréation",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "18:59",
-        "url": "https://www.cfak.ca/balados/la-recreation"
+        "start": "00:00",
+        "end": "04:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
       "track": "",
-      "showTitle": "Remix ta console",
+      "showTitle": "Entre ciel et terre",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-20T22:57:24.362Z"
+      "checkedAt": "2026-11-21T03:49:02.359Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les Amazones",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "les-amazones"
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
       },
-      "track": "ID Kat Pereira.mp3",
+      "track": "ID - ID Comment Debord - Blood Pareil",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-20T22:57:41.855Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-11-21T03:49:04.161Z"
     }
   }
 }
