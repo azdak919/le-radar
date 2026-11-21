@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-21T02:39:45.387Z",
+  "updated": "2026-11-21T02:46:39.632Z",
   "total": 1036,
-  "withImage": 935,
-  "withCredit": 935,
-  "cited": 657,
+  "withImage": 936,
+  "withCredit": 936,
+  "cited": 658,
   "pending": 165,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 2,
-  "fallbackNew": 58,
+  "updatedCount": 3,
+  "citedNew": 3,
+  "fallbackNew": 57,
   "samples": [
     {
       "title": "La vie lors d’une régate d’aviron",
@@ -18,6 +18,13 @@
       "credit": "Photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
     },
     {
       "title": "Élections : qu’en pense la communauté universitaire ?",
