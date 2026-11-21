@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-21T00:04:16.681Z",
+  "updated": "2026-11-21T01:08:00.707Z",
   "total": 1036,
   "pool": 61,
   "incomplete": 24,
   "withLeadExcerpt": 204,
   "candidates": 24,
   "enriched": 0,
-  "failed": 0,
+  "failed": 8,
   "ok": true,
   "samples": [
     {
@@ -28,15 +28,6 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
-      "changed": false
-    },
-    {
       "title": "Sauve qui peut : l’IA à nos trousses",
       "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
@@ -52,6 +43,15 @@
       "score": 100,
       "chars": 150,
       "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
       "changed": false
     },
     {
