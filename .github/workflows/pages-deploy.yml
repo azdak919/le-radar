@@ -67,14 +67,36 @@ jobs:
         with:
           source: ./
           destination: ./_site
-      # Images miroir publiées hors git (Release mirror-images) : mêmes URL
-      # /assets/news-images/<hash>.<ext>, même domaine, même cache PWA.
-      - name: Images miroir (Release)
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # Images miroir hors de main (branche media-mirror). Recopiées ici pour
+      # garder /assets/news-images/<hash>.<ext> (site, PWA, appli Android).
+      # Le cache évite de retélécharger le miroir à chaque passage (30 min).
+      # Si la branche manque, le job échoue et le déploiement précédent reste.
+      - name: Révision media-mirror
+        id: mirror_ref
         run: |
           sudo chown -R "$(id -u):$(id -g)" _site
-          node scripts/mirror-release.js restore _site/assets/news-images
+          sha=$(git ls-remote origin refs/heads/media-mirror | awk '{print $1}')
+          if [ -z "$sha" ]; then
+            echo "::error::branche media-mirror absente — pas de publication sans images"
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+      - name: Cache du miroir
+        id: mirror_cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .media-mirror-cache
+          key: media-mirror-${{ steps.mirror_ref.outputs.sha }}
+          restore-keys: media-mirror-
+      - name: Extraire media-mirror
+        if: steps.mirror_cache.outputs.cache-hit != 'true'
+        run: |
+          rm -rf .media-mirror-cache
+          node scripts/mirror-branch.js restore .media-mirror-cache/assets/news-images
+      - name: Copier les images dans l'artefact
+        run: |
+          mkdir -p _site/assets/news-images
+          find .media-mirror-cache/assets/news-images -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' -o -iname '*.avif' \) -exec cp -f {} _site/assets/news-images/ \;
       # Fiches /article/<id>/ statiques (carte de lien des réseaux sociaux) : registre
       # data/article-pages.json + news.json, gabarit horaires/index.html.
       - name: Fiches d'article statiques
@@ -88,6 +110,9 @@ jobs:
           node -e 'const fs=require("node:fs");for(const f of ["sports/index.html","en/sports/index.html"]){if(!fs.readFileSync("_site/"+f,"utf8").includes("data-sports-history=\"complete\""))throw new Error("Missing full-history contract: "+f)}'
           ls _site/*sw*.js >/dev/null
           test "$(cat _site/CNAME)" = "le-radar.ca"
+          n=$(find _site/assets/news-images -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.gif' -o -iname '*.avif' \) | wc -l)
+          test "$n" -gt 0 || { echo "::error::aucune image miroir dans l'artefact"; exit 1; }
+          echo "images miroir dans l'artefact : $n"
           du -sh _site
       - uses: actions/upload-pages-artifact@v5
         with:

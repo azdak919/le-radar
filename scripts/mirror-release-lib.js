@@ -1,9 +1,10 @@
 'use strict';
 /**
- * Stockage des images miroir hors historique git : fichiers d'une Release
- * GitHub dédiée (tag `mirror-images`, jamais android-v*). Les URL publiques ne
- * changent pas : pages-deploy.yml recopie ces fichiers dans
- * _site/assets/news-images/ (même domaine, même cache PWA, même app Android).
+ * Décision « quoi publier / quoi retirer » du miroir, partagée par
+ * l'ancien outil Release (scripts/mirror-release.js) et le stockage
+ * durable (scripts/mirror-branch.js, branche orpheline media-mirror).
+ * Les URL publiques ne changent pas : pages-deploy.yml recopie les
+ * fichiers dans _site/assets/news-images/.
  *
  * plan() est pur : quoi téléverser, quoi supprimer.
  *  - upload : fichier local non suivi par git, absent de la Release,
@@ -58,6 +59,14 @@ function keepNamesFromSocial(states, { now = Date.now(), keepDays = SOCIAL_KEEP_
   return [...names].sort();
 }
 
+/** Noms de fichiers cités dans du HTML déjà publié (revues, etc.). */
+function keepNamesFromHtml(html) {
+  const names = new Set();
+  const re = /assets\/news-images\/([A-Za-z0-9]+\.(?:jpe?g|png|webp|gif|avif))/gi;
+  for (const m of String(html || '').matchAll(re)) names.add(m[1]);
+  return [...names].sort();
+}
+
 function plan({ local = [], tracked = [], remote = [], sizes = {}, now = Date.now(), graceDays = SOCIAL_KEEP_DAYS, keep = [] }) {
   const loc = new Set(local.filter((n) => IMG.test(n)));
   const held = new Set([...keep, ...loc]);
@@ -83,4 +92,6 @@ function plan({ local = [], tracked = [], remote = [], sizes = {}, now = Date.no
 const TRANSIENT = /HTTP 5\d\d|HTTP 429|timed? ?out|ECONNRESET|ETIMEDOUT|EAI_AGAIN|connection reset|unexpected EOF|stream error/i;
 function isTransient(text) { return TRANSIENT.test(String(text || '')); }
 
-module.exports = { TAG, IMG, SOCIAL_KEEP_DAYS, keepNamesFromPages, keepNamesFromSocial, plan, isTransient };
+module.exports = {
+  TAG, IMG, SOCIAL_KEEP_DAYS, keepNamesFromPages, keepNamesFromSocial, keepNamesFromHtml, plan, isTransient,
+};

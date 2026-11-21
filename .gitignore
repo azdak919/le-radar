@@ -86,9 +86,10 @@ data/stock-search-cache.json
 data/source-health.md
 data/platform-health.md
 
-# Images miroir : nouvelles images publiées comme fichiers de la Release
-# `mirror-images` (scripts/mirror-release.js), recopiées dans le site par
-# pages-deploy.yml. Les images déjà suivies restent dans git. Retour arrière :
-# variable de dépôt MIRROR_STORE=git (update-news fait alors `git add -f`).
+# Images miroir : binaires sur la branche orpheline media-mirror
+# (scripts/mirror-branch.js), recopiés dans l'artefact Pages au déploiement.
+# Même URL publique /assets/news-images/<hash>.<ext>. Pas de repli dans main.
+# Restaurer en local : node scripts/mirror-branch.js restore
+.media-mirror-cache/
 assets/news-images/*
 !assets/news-images/manifest.json

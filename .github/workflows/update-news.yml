@@ -164,18 +164,18 @@ jobs:
       # Miroir local des photos source (GitHub Pages) — si un journal tombe
       # (ex. L’Exemplaire), le fil garde les images déjà cachées. Hôtes fragiles
       # : repli Wayback au téléchargement.
-      # Images miroir hors historique git : on récupère d'abord celles de la
-      # Release mirror-images (le miroir voit ainsi tout le dossier).
-      - name: Restore mirror images (Release)
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && vars.MIRROR_STORE != 'git'
+      # Les binaires vivent sur la branche orpheline media-mirror, pas dans
+      # main. Sans restore, on ne lance pas le miroir : un disque vide ne
+      # doit pas être publié (le script refuse d'ailleurs ce sync).
+      - name: Restore mirror images (branch)
+        id: mirror_restore
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         timeout-minutes: 4
-        run: node scripts/mirror-release.js restore
-        env:
-          GH_TOKEN: ${{ github.token }}
-        continue-on-error: true
+        run: node scripts/mirror-branch.js restore
 
       - name: Mirror source images
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        id: mirror
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.mirror_restore.outcome == 'success'
         timeout-minutes: 8
         run: node scripts/mirror-news-images.js --update
         env:
@@ -198,17 +198,14 @@ jobs:
         run: node scripts/check-news-images.js --update
         continue-on-error: true
 
-      # Publie les nouvelles images dans la Release (pas dans git) et retire
-      # celles que le miroir a purgées (délai de grâce 2 j). En cas d'échec, le
-      # commit retombe sur l'ancien mode (git add -f) : aucune image perdue.
-      - name: Publish mirror images (Release)
-        id: mirror_release
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && vars.MIRROR_STORE != 'git'
+      # Publie les images sur media-mirror (pas dans main). Le délai de grâce
+      # et les citations (revues, Buffer) restent sur la branche. Un échec
+      # ici ne recommit pas les binaires : la branche précédente reste en ligne.
+      - name: Publish mirror images (branch)
+        id: mirror_branch
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.mirror_restore.outcome == 'success' && steps.mirror.outcome == 'success'
         timeout-minutes: 6
-        run: node scripts/mirror-release.js sync
-        env:
-          GH_TOKEN: ${{ github.token }}
-        continue-on-error: true
+        run: node scripts/mirror-branch.js sync
 
       # Surveillance : flux en échec, sources muettes hors congés, taux
       # d'échecs d'images. Met aussi les sources muettes > 120 j en sommeil
@@ -329,7 +326,7 @@ jobs:
             news-sources.json data/byline-ledger.json data/image-mirror-stats.json
             data/archive-inbox-applied.json
             data/article-pages.json
-            assets/news-images assets/stock-images stock-images-map.js data/image-health.json data/dead-images.json
+            assets/news-images/manifest.json assets/stock-images stock-images-map.js data/image-health.json data/dead-images.json
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)
           # Un seul chemin absent (ex. data/archive-inbox-applied.json tant
@@ -341,10 +338,6 @@ jobs:
           done
           # Lot E : catalogue mensuel data/archives/ ; -A publie aussi un mois retiré
           # et la suppression de l'ancien news-archive.json monolithique.
-          if [ "${{ vars.MIRROR_STORE }}" = "git" ] || [ "${{ steps.mirror_release.outcome }}" = "failure" ]; then
-            echo "::warning::images miroir commitées dans git (MIRROR_STORE=git ou Release indisponible)"
-            git add -f -- assets/news-images
-          fi
           if [ -d data/archives ]; then git add -A -- data/archives; fi
           # Pages du fil : -A publie aussi le retrait d'une page devenue vide.
           if [ "${{ steps.pages.outcome }}" = "success" ]; then git add -A -- news-latest.json 'news-page-*.json'; fi
@@ -363,6 +356,15 @@ jobs:
             # indispensable — sans lui, une fiche retirée resterait en ligne.
             for d in radios journaux etablissements medias horaires en archives; do if [ -e "$d" ]; then git add -A -- "$d"; fi; done
           fi
+          # Filet : aucun binaire du miroir ne part dans le commit de main,
+          # même si un rebase en a réindexé. Seul le manifeste reste.
+          while IFS= read -r -d '' f; do
+            case "$f" in
+              assets/news-images/manifest.json) ;;
+              assets/news-images/*) git rm -q --cached -- "$f" || true ;;
+            esac
+          done < <(git ls-files -z -- assets/news-images)
+          if [ -e assets/news-images/manifest.json ]; then git add -- assets/news-images/manifest.json; fi
           if [ "${{ steps.prepush.outcome }}" = "success" ]; then
             MSG='bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)'
           elif [ "$SEO_OK" = true ]; then
