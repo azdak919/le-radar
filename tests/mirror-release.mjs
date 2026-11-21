@@ -38,8 +38,10 @@ assert.deepEqual(rewritten.delete, []);
 assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /\.size/);
 assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /sizes/);
 assert.ok(!TAG.startsWith('android-v'));
-// Le déploiement Pages recopie la Release dans le site ; l'ignore empêche de recommitter les nouvelles.
-assert.match(readFileSync('.github/workflows/pages-deploy.yml', 'utf8'), /mirror-release\.js restore _site\/assets\/news-images/);
+// Le déploiement Pages recopie la branche media-mirror dans le site.
+assert.match(readFileSync('.github/workflows/pages-deploy.yml', 'utf8'), /mirror-branch\.js restore/);
+assert.match(readFileSync('.github/workflows/update-news.yml', 'utf8'), /mirror-branch\.js sync/);
+assert.doesNotMatch(readFileSync('.github/workflows/update-news.yml', 'utf8'), /git add -f/);
 const gi = readFileSync('.gitignore', 'utf8');
 assert.match(gi, /^assets\/news-images\/\*$/m); assert.match(gi, /^!assets\/news-images\/manifest\.json$/m);
 // Restauration : HTTP 500 passager réessayé, erreurs définitives non.

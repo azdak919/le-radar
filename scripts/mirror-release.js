@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 'use strict';
-// node scripts/mirror-release.js restore [dir]   → télécharge les images de la Release absentes de dir
-// node scripts/mirror-release.js sync [--dry-run] → téléverse les nouvelles, supprime les purgées (délai de grâce)
+// Ancien stockage Release (tag mirror-images). Les workflows n'appellent
+// plus ce script : la branche orpheline media-mirror (scripts/mirror-branch.js)
+// est le stockage durable, recopié dans l'artefact Pages. Conservé pour
+// relire une Release déjà publiée. Ne pas réintroduire de `git add -f`.
+//
+// node scripts/mirror-release.js restore [dir]
+// node scripts/mirror-release.js sync [--dry-run]
 // Requiert gh et GH_TOKEN (contents: write pour sync). Dépôt : GITHUB_REPOSITORY.
 const { execFileSync } = require('child_process');
 const fs = require('fs');
