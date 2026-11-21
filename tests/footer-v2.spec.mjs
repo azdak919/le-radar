@@ -93,7 +93,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
   const ids = await page.locator('.masthead-social a[data-social]').evaluateAll((as) => as.map((a) => a.dataset.social));
   expect(ids).toEqual(expected);
 
-  for (const width of [320, 390, 768, 1440]) {
+  for (const width of [320, 360, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.locator('.masthead-social a[data-social]').first().waitFor({ state: 'visible' });
     const layout = await page.evaluate(() => {
@@ -140,11 +140,13 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
       const midNav = (navBox.left + navBox.right) / 2;
       const midWord = (wordBox.left + wordBox.right) / 2;
       const overflow = document.documentElement.scrollWidth - window.innerWidth;
-      const small = boxes.filter((b) => b.height < 44 || b.width < 44).length;
+      const minSide = window.innerWidth < 600 ? 40 : 44;
+      const small = boxes.filter((b) => b.height < minSide || b.width < minSide).length;
       return {
         rows,
         visible: boxes.every((b) => b.width > 0 && b.height > 0),
         small,
+        minSide,
         overflow,
         midDelta: Math.abs(midNav - midWord),
         belowMark: navBox.top + 1 >= markBox.bottom,
@@ -158,7 +160,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
       };
     });
     expect(layout.visible, `${width}px : réseaux du mât visibles`).toBe(true);
-    expect(layout.small, `${width}px : cibles 44 px`).toBe(0);
+    expect(layout.small, `${width}px : cibles ${layout.minSide} px`).toBe(0);
     expect(layout.overflow, `${width}px : débordement de page`).toBeLessThanOrEqual(1);
     expect(layout.midDelta, `${width}px : rangée centrée sous la marque`).toBeLessThanOrEqual(8);
     expect(layout.belowMark, `${width}px : sous le logo`).toBe(true);

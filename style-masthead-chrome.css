@@ -188,7 +188,8 @@
    Même liste que le pied, sans RSS. Le café des outils est retiré :
    Buy Me a Coffee est déjà la première icône de cette rangée.
    Visibles aussi sur téléphone (sous le logo, au-dessus des outils,
-   la devise étant masquée sous 600 px). Cibles 44 px. */
+   la devise étant masquée sous 600 px). Cibles 44 px dès 600 px,
+   au moins 40 px sous 600 px (pastille plus compacte). */
 .masthead-brand:has(.masthead-social) {
   display: flex;
   flex-direction: column;
@@ -247,25 +248,29 @@
   outline-offset: 2px;
   color: var(--accent);
 }
-/* 8 × 44 px = 352 px : sous ~360 px la rangée passe en 4+4 pour
-   garder les cibles 44 px sans déborder. */
+/* Téléphone : pastille plus compacte (icônes 40 px, peu de rembourrage).
+   8 × 40 px = 320 px : une seule rangée à 390 et 360 px ; 4+4 sous 360 px. */
+@media (max-width: 599.98px) {
+  .masthead-brand:has(.masthead-social) { gap: var(--mat-gap, 8px); }
+  .masthead-social--under-tagline { margin-top: 0; }
+  .masthead-social--under-tagline .masthead-social__group {
+    padding: 0;
+    border-radius: 0.5rem;
+  }
+  .masthead-social a {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+  }
+  .masthead-social svg { width: 18px; height: 18px; }
+}
 @media (max-width: 359.98px) {
   .masthead-social--under-tagline .masthead-social__group {
     flex-wrap: wrap;
     box-sizing: content-box;
-    width: calc(4 * 44px);
-    padding: 2px 8px;
+    width: calc(4 * 40px);
+    padding: 0 2px;
   }
-}
-/* À 390 px, 8 × 44 tient tout juste : pas de padding horizontal dans la pastille. */
-@media (min-width: 360px) and (max-width: 399.98px) {
-  .masthead-social--under-tagline .masthead-social__group {
-    padding: 2px 0;
-  }
-}
-@media (max-width: 599.98px) {
-  .masthead-brand:has(.masthead-social) { gap: var(--mat-gap, 8px); }
-  .masthead-social--under-tagline { margin-top: 0; }
 }
 @media print {
   .masthead-social { display: none !important; }
