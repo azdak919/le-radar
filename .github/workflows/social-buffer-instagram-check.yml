@@ -38,4 +38,7 @@ jobs:
         if: failure() && github.event_name == 'schedule'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh issue create --repo "${{ github.repository }}" --title "Instagram : le contrôle Buffer a échoué" --body "Le contrôle en lecture seule du lundi a échoué. Le journal de ce workflow contient la raison, sans clé. Les publications s'arrêtent aussi d'elles-mêmes au premier échec d'envoi."
+        run: |
+          gh issue create --repo "${{ github.repository }}" \
+            --title "Instagram : le contrôle Buffer a échoué" \
+            --body "Le contrôle en lecture seule du lundi a échoué. Le journal de ce workflow contient la raison, sans clé. Les publications s'arrêtent aussi d'elles-mêmes au premier échec d'envoi."
