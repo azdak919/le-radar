@@ -1,0 +1,54 @@
+name: Social — essai des accroches anglophones (aucune publication)
+
+# Essai À BLANC de scripts/social/accroche-en.mjs sur ~10 vrais articles anglophones récents de news.json :
+# citation vérifiée mot pour mot, phrase française vérifiée (chiffres, dates, noms), textes X et Bluesky.
+# Rien n'est publié (le script n'importe aucun canal). Workers AI, forfait gratuit : ≤ n × modèles appels.
+on:
+  workflow_dispatch:
+    inputs:
+      n:
+        description: 'Nombre d’articles (≤ 15)'
+        type: string
+        default: '10'
+      models:
+        description: 'Modèle(s) Workers AI, séparés par des virgules (≤ 3)'
+        type: string
+        default: '@cf/google/gemma-4-26b-a4b-it'
+  pull_request:
+    paths:
+      - scripts/social/accroche-en.mjs
+      - scripts/social/accroche-en-essai.mjs
+      - .github/workflows/social-accroche-en-essai.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: accroche-en-essai-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  essai:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Essai à blanc (aucune publication)
+        env:
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          N: ${{ inputs.n || '10' }}
+          MODELS: ${{ inputs.models || '@cf/google/gemma-4-26b-a4b-it,@cf/mistralai/mistral-small-3.1-24b-instruct' }}
+        run: |
+          node scripts/social/accroche-en-essai.mjs --n "$N" --models "$MODELS" --out accroches-en-essai.md > /dev/null
+          cat accroches-en-essai.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: accroches-en-essai
+          path: accroches-en-essai.md
+          if-no-files-found: ignore
+          retention-days: 14

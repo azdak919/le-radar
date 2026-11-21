@@ -40,6 +40,8 @@
   "mastodon_post": true,
   "tumblr_post": true,
   "engage": true,
+  "ai_en_accroche": false,
+  "_ai_en_accroche": "Accroche des articles anglophones sur X et Bluesky (scripts/social/accroche-en.mjs) : citation exacte de l’article, phrase française générée par Workers AI et vérifiée, « (En anglais) », lien vers la fiche. Éteinte tant que Charles n’a pas dit oui. Jamais sur Mastodon.",
   "_switches": "Interrupteurs dans le dépôt, lus par les workflows. Les variables GitHub MASTODON_LIVE, TUMBLR_LIVE et ENGAGE_LIVE ne sont plus requises. false = essai à blanc sur le cron, sans action manuelle.",
   "bluesky_follow": {
    "enabled": true,

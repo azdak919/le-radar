@@ -10,6 +10,7 @@ import { createRequire as _cr } from 'node:module';
 const { wikimediaThumbUrl } = _cr(import.meta.url)('../jpeg-facebook-safe.js');
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { withHook } from './ai-hook.mjs';
+import { withEnAccroche } from './accroche-en.mjs';
 import { gateArticleImage } from './ai-image.mjs';
 import { volumeFor, torontoDay, mentionLedger, accountsForPost, mentionedIn, noteMention, POLICY } from './policy.mjs';
 
@@ -109,6 +110,7 @@ for (const it of sel) {
   im.url = pub.url;
   const gate = await gateArticleImage(it, im.url, { credit: im.credit });
   if (gate.reject) continue;
+  await withEnAccroche(it, 'x'); // articles anglophones, interrupteur policy.json (éteint par défaut)
   await withHook(it);
   const dueAt = dues && !shareNow ? dues[n] : undefined;
   const day = torontoDay(dueAt ? Date.parse(dueAt) : Date.now());
