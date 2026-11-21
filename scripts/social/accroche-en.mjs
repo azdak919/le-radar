@@ -35,7 +35,9 @@ export const EN_NETWORKS = new Set(['x', 'bluesky']);
 // (9 091 / M en entrée, 27 273 / M en sortie). Plafond par exécution : 4 appels.
 export const EN_MAX_CALLS_PER_RUN = Number(process.env.SOCIAL_AI_EN_MAX || 4);
 // X (280, lien = 23) et Bluesky (300 graphèmes, lien entier) sont serrés : citation et phrase courtes.
-export const QUOTE_MIN = 25, QUOTE_MAX = 120, PHRASE_MIN = 30, PHRASE_MAX = 160;
+export const QUOTE_MIN = 25, QUOTE_MAX = 120, PHRASE_MIN = 30, PHRASE_MAX = 140;
+/** Texte de page minimal : sous ce seuil (extrait du flux seulement), pas d'accroche — trop peu pour résumer sans deviner. */
+export const MIN_PAGE_TEXT = 600;
 
 /** Interrupteur : variable d'essai d'abord, sinon policy.json (absent = éteint). */
 export function enAccrocheEnabled(env = process.env, policy = POLICY) {
@@ -132,7 +134,7 @@ const NUM_WORDS = {
   deux: ['2', 'two', 'second'], trois: ['3', 'three', 'third'], quatre: ['4', 'four'], cinq: ['5', 'five'], six: ['6', 'six'],
   sept: ['7', 'seven'], huit: ['8', 'eight'], neuf: ['9', 'nine'], dix: ['10', 'ten'], onze: ['11', 'eleven'], douze: ['12', 'twelve', 'dozen'],
   treize: ['13', 'thirteen'], quatorze: ['14', 'fourteen'], quinze: ['15', 'fifteen'], seize: ['16', 'sixteen'], vingt: ['20', 'twenty'],
-  trente: ['30', 'thirty'], quarante: ['40', 'forty'], cinquante: ['50', 'fifty'], soixante: ['60', 'sixty'], cent: ['100', 'hundred'], cents: ['100', 'hundred'],
+  trente: ['30', 'thirty'], quarante: ['40', 'forty'], cinquante: ['50', 'fifty'], soixante: ['60', 'sixty'], cent: ['100', 'hundred', 'cent', 'percent'], cents: ['100', 'hundred'],
   mille: ['1000', '000', 'thousand'], million: ['million', 'millions'], millions: ['million', 'millions'], milliard: ['billion', 'billions'], milliards: ['billion', 'billions'],
   douzaine: ['dozen', '12'], dizaine: ['10', 'dozen', 'ten'], dizaines: ['dozens', 'tens'], centaine: ['hundred', 'hundreds'], centaines: ['hundreds'], milliers: ['thousands'],
   moitié: ['half', '50'], tiers: ['third', 'thirds'], quart: ['quarter'], deuxième: ['second', '2nd', '2'], troisième: ['third', '3rd', '3'], quatrième: ['fourth', '4th', '4'],
@@ -143,7 +145,11 @@ const DAYS = { lundi: 'monday', mardi: 'tuesday', mercredi: 'wednesday', jeudi: 
 // Dates relatives : fausses dès que le post sort un autre jour que l'article.
 const RELATIVE = /\b(hier|avant-hier|demain|aujourd[’']hui|ce matin|ce soir|cette semaine|la semaine (dernière|prochaine)|le mois (dernier|prochain)|l[’']an dernier|l[’']année (dernière|prochaine)|récemment)\b/i;
 // Majuscules permises sans figurer dans la source (mots français courants).
-const CAP_OK = new Set(['québec', 'montréal', 'canada', 'université', 'conseil', 'ville', 'gouvernement', 'assemblée', 'nationale', 'cégep', 'collège', 'premier', 'première', 'ministre', 'état', 'états-unis', 'palestine', 'gaza', 'israël']);
+// Aucun nom de lieu ici : « Montréal » doit figurer dans la source (Montreal compte, accents ignorés).
+const CAP_OK = new Set(['université', 'conseil', 'ville', 'gouvernement', 'assemblée', 'nationale', 'cégep', 'collège', 'premier', 'première', 'ministre', 'état']);
+// Le sujet de la phrase est le MÉDIA : seuls des verbes qui décrivent ce que fait l'article (jamais « annonce »,
+// « interroge les étudiants »… qui prêteraient au journal l'action des personnes dont il parle).
+export const VERBS = /^(revient sur|rapporte|raconte|relate|explique|présente|se penche sur|s[’']intéresse à|s[’']interroge sur|analyse|examine|décrit|fait le point sur|dresse le portrait d|explore|met en lumière|résume|critique|commente|réfléchit à|donne la parole à|suit|couvre|rend compte d)\b/u;
 const toks = s => (String(s || '').normalize('NFC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || []);
 const bare = s => norm(s).replace(/\s+/g, '');
 
@@ -152,6 +158,7 @@ export function phraseReject(phrase, src, it = {}) {
   const p = String(phrase || '').replace(/\s+/g, ' ').trim();
   if (p.length < PHRASE_MIN || p.length > PHRASE_MAX) return `phrase de ${p.length} car. (${PHRASE_MIN}-${PHRASE_MAX})`;
   if (!/^\p{Ll}/u.test(p)) return 'la phrase doit commencer par un verbe en minuscule';
+  if (!VERBS.test(p)) return `verbe d'ouverture hors liste (${p.split(' ').slice(0, 2).join(' ')})`;
   if (!/[.!?…]$/.test(p)) return 'phrase sans point final';
   if (/[«»"“”#@]|https?:/i.test(p)) return 'guillemet, hashtag, @ ou lien dans la phrase';
   if (detectLang({ title: p }) !== 'fr') return 'phrase pas en français';
@@ -162,7 +169,8 @@ export function phraseReject(phrase, src, it = {}) {
   for (const n of p.match(/\p{N}+/gu) || []) if (!S.has(n)) return `chiffre absent de la source (${n})`;
   for (const w of toks(p)) {
     if (NUM_WORDS[w] && !NUM_WORDS[w].some(has)) return `nombre absent de la source (${w})`;
-    if (MONTHS[w] && !has(MONTHS[w]) && !has(w) && !has(MONTHS[w].slice(0, 3))) return `mois absent de la source (${w})`;
+    // Mois : nom anglais AVEC majuscule (« march », « may » ordinaires ne comptent pas) ou abréviation (« Nov. »).
+    if (MONTHS[w]) { const E = MONTHS[w][0].toUpperCase() + MONTHS[w].slice(1); if (!new RegExp(`\\b(${E}|${E.slice(0, 3)}\\.)`).test(src) && !new RegExp(`\\b${w}\\b`, 'iu').test(src)) return `mois absent de la source (${w})`; }
     if (DAYS[w] && !has(DAYS[w]) && !has(w)) return `jour absent de la source (${w})`;
   }
   // Noms propres et sigles (mot à majuscule hors début de phrase) : présents dans la source.
@@ -208,8 +216,8 @@ export async function articleSource(it, { fetchHtml } = {}) {
     const get = fetchHtml || (u => require('../article-image-lib.js').fetchText(u, 3, 15000));
     if (it?.link) body = articleTextFromHtml(await get(it.link));
   } catch { body = ''; }
-  const text = body.length >= 200 ? body : String(it?.desc || it?.excerpt || '').trim();
-  return { text, from: body.length >= 200 ? 'page' : 'extrait' };
+  const text = body.length >= MIN_PAGE_TEXT ? body : String(it?.desc || it?.excerpt || '').trim();
+  return { text, from: body.length >= MIN_PAGE_TEXT ? 'page' : 'extrait' };
 }
 
 // ── Appel Workers AI ──────────────────────────────────────────────────────────
@@ -220,11 +228,11 @@ export function enPrompt(it, text) {
     `Titre : ${it.bare || it.title}`,
     `Texte de l'article :\n${String(text).slice(0, 4000)}`,
     '',
-    'Réponds UNIQUEMENT en JSON : {"citation":"…","phrase":"…"}',
-    `- citation : UNE PHRASE ENTIÈRE frappante (${QUOTE_MIN} à 100 caractères, de la majuscule au point final) COPIÉE CARACTÈRE POUR CARACTÈRE du texte ci-dessus, en anglais, sans rien changer ni traduire. Pas de guillemets autour. Si rien ne convient, chaîne vide.`,
-    `- phrase : en français, ${PHRASE_MIN} à 130 caractères, qui commence par un verbe au présent à la 3e personne (par exemple « revient sur », « se penche sur », « raconte », « explique ») et dit de quoi parle l'article et pourquoi il compte. Elle sera précédée du nom du média et de l'auteur : ne les écris pas.`,
-    '- N\'utilise QUE des faits présents dans le texte. Aucun chiffre, date, nom ou sigle qui n\'y figure pas. Pas de date relative (hier, cette semaine). Pas de guillemets, de hashtag ni de lien dans la phrase.',
-    'Exemple de ton : {"citation":"Montreal police said in an email that the SPVM does not compile this type of data.","phrase":"revient sur la répression policière lors de la manifestation et sur la séance du conseil municipal où cette question a été abordée."}',
+    'Réponds UNIQUEMENT en JSON : {"citations":["…","…","…"],"phrase":"…"}',
+    `- citations : jusqu'à trois PHRASES ENTIÈRES frappantes (${QUOTE_MIN} à 100 caractères chacune, de la majuscule au point final), COPIÉES CARACTÈRE POUR CARACTÈRE du texte ci-dessus, en anglais, sans rien changer, corriger ni traduire, sans crochets ni coupures. Pas de guillemets autour. Les plus courtes d'abord. Liste vide si rien ne convient.`,
+    '- phrase : en français, 60 à 110 caractères, qui décrit ce que fait l\'ARTICLE (son sujet est le média) et commence par un de ces verbes : « revient sur », « rapporte », « raconte », « explique », « présente », « se penche sur », « s’intéresse à », « s’interroge sur », « analyse », « examine », « décrit », « fait le point sur », « explore », « met en lumière », « critique », « donne la parole à ». Jamais « annonce » ni un verbe qui prêterait au média l\'action des personnes dont il parle. Elle sera précédée du nom du média et de l\'auteur : ne les écris pas.',
+    '- N\'utilise QUE des faits présents dans le texte. Aucun chiffre, date, nom, lieu ou sigle qui n\'y figure pas. Pas de date relative (hier, cette semaine). Pas de guillemets, de hashtag ni de lien dans la phrase.',
+    'Exemple de ton : {"citations":["Montreal police said in an email that the SPVM does not compile this type of data."],"phrase":"revient sur la répression policière lors de la manifestation et sur la séance du conseil municipal."}',
   ].join('\n');
 }
 /** Texte de la réponse : `result.response` (anciens modèles) ou `result.choices[0].message.content` (format OpenAI). */
@@ -244,7 +252,7 @@ export function parseJson(s) {
 const unquote = s => { const t = String(s || '').trim(); const m = t.match(/^[«"“]\s*([\s\S]*?)\s*[»"”]$/); return m && !/["“”«»]/.test(m[1]) ? m[1] : t; };
 
 /**
- * Accroche validée { quote, phrase, institution } ou { reason } (et détails pour l'essai).
+ * Accroche validée { quote, phrase, institutionFr } ou { reason } (et détails pour l'essai).
  * fetchImpl / fetchHtml injectables pour les tests.
  */
 export async function enAccrocheDetail(it, { env = process.env, fetchImpl = fetch, fetchHtml, source, model = EN_MODEL } = {}) {
@@ -253,12 +261,12 @@ export async function enAccrocheDetail(it, { env = process.env, fetchImpl = fetc
   if (!aiReady(env)) return { ...out, reason: 'Workers AI non configuré' };
   const src = source || await articleSource(it, { fetchHtml });
   out.sourceFrom = src.from; out.sourceLen = src.text.length;
-  if (src.text.length < 120) return { ...out, reason: 'texte de l’article trop court' };
+  if (src.from !== 'page' || src.text.length < MIN_PAGE_TEXT) return { ...out, reason: 'page de l’article illisible (extrait du flux seulement)' };
   let j;
   try {
     const r = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/run/${model}`, {
       method: 'POST', headers: { Authorization: `Bearer ${env.CLOUDFLARE_AI_TOKEN}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{ role: 'user', content: enPrompt(it, src.text) }], max_tokens: 400, temperature: 0.2, chat_template_kwargs: { enable_thinking: false } }),
+      body: JSON.stringify({ messages: [{ role: 'user', content: enPrompt(it, src.text) }], max_tokens: 400, temperature: 0.2, ...(/gemma-4|qwen3/.test(model) ? { chat_template_kwargs: { enable_thinking: false } } : {}) }),
       signal: AbortSignal.timeout(30000),
     });
     if (!r.ok) return { ...out, reason: `HTTP ${r.status ?? '?'}${r.status === 429 ? ' (quota)' : ''}` };
@@ -268,11 +276,15 @@ export async function enAccrocheDetail(it, { env = process.env, fetchImpl = fetc
   out.raw = aiText(j);
   const a = parseJson(out.raw);
   if (!a) return { ...out, reason: 'réponse non JSON' };
-  out.aiQuote = unquote(a.citation); out.aiPhrase = String(a.phrase || '').replace(/\s+/g, ' ').trim();
+  const cands = [].concat(a.citations ?? a.citation ?? []).map(unquote).filter(Boolean).slice(0, 3);
+  out.aiQuotes = cands; out.aiPhrase = String(a.phrase || '').replace(/\s+/g, ' ').trim();
   const inst = institutionOf(it);
   const fullSrc = [it.bare || it.title, src.text, it.desc, it.source, it.author, inst, INSTITUTION_FR[inst]].filter(Boolean).join('\n');
-  const q = quoteReject(out.aiQuote, src.text); // la citation vient du TEXTE de l'article seulement
-  out.quoteCheck = q.why || 'trouvée telle quelle';
+  // La citation vient du TEXTE de l'article seulement ; parmi les candidates valides, la plus courte (elle tient mieux).
+  const checks = cands.map(c => ({ c, ...quoteReject(c, src.text) }));
+  out.quoteChecks = checks.map(k => ({ quote: k.c, check: k.why || 'trouvée telle quelle' }));
+  const q = checks.filter(k => !k.why).sort((x, y) => x.exact.length - y.exact.length)[0] || {};
+  out.aiQuote = q.c || cands[0] || ''; out.quoteCheck = q.exact ? 'trouvée telle quelle' : (checks[0]?.why || 'aucune citation proposée');
   const why = phraseReject(out.aiPhrase, fullSrc, it);
   out.phraseCheck = why || 'aucun chiffre, date ni nom absent de la source';
   if (why) return { ...out, reason: `garde-fou : ${why}` };

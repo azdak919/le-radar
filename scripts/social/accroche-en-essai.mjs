@@ -41,7 +41,8 @@ for (const n of pick) {
   for (const model of MODELS) {
     const r = await enAccrocheDetail(it, { env, source: src, model });
     const nr = neurons(model, r.usage); if (nr) totals[model].neurons += nr;
-    md.push(`### ${model}`, '', `- Citation proposée par l’IA : ${r.aiQuote ? `« ${r.aiQuote} »` : '—'}`, `- Vérification de la citation : ${r.quoteCheck || '—'}`,
+    const qs = (r.quoteChecks || []).map((q, i) => `  ${i + 1}. « ${q.quote} » → ${q.check}`);
+    md.push(`### ${model}`, '', `- Citations proposées par l’IA : ${qs.length ? '' : '—'}`, ...qs, `- Citation retenue : ${r.quote ? `« ${r.quote} »` : '— (aucune exacte)'}`,
       `- Phrase proposée : ${r.aiPhrase || '—'}`, `- Vérification chiffres, dates et noms : ${r.phraseCheck || '—'}`,
       `- Résultat : ${r.reason ? `**repli au format actuel** (${r.reason})` : r.quote ? 'accroche retenue avec citation' : 'accroche retenue sans citation'}`,
       `- Coût : ${r.usage ? `${r.usage.prompt_tokens ?? r.usage.input_tokens ?? '?'} jetons en entrée, ${r.usage.completion_tokens ?? r.usage.output_tokens ?? '?'} en sortie ≈ ${nr ?? '?'} neurones` : 'inconnu'}`, '');

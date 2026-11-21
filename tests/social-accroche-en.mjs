@@ -12,7 +12,9 @@ const BODY = `Montreal's police response to the Nov. 13 student protest came und
 
 Montreal police said in an email that “the SPVM does not compile this type of data (injured protesters).”
 
-Three students were arrested, according to witnesses.`;
+Three students were arrested, according to witnesses.
+
+Opposition councillors asked the administration to explain the tactics used by officers during the march, and several citizens described what they had seen near the downtown campus that evening, from kettling to the use of irritants against the crowd.`;
 const it = { id: 'l1', source: 'The Link', author: 'Nicolas Tremblay', institution: 'Concordia University', lang: 'en',
   title: 'Will Montreal learn from New York about protest and police?', bare: 'Will Montreal learn from New York about protest and police?',
   link: 'https://thelinknewspaper.ca/article/will-montreal-learn', desc: 'Montreal’s police response to the Nov. 13 student protest came under scrutiny.' };
@@ -55,8 +57,12 @@ assert.match(phraseReject('revient sur la manifestation d’hier et sur la répo
 assert.match(phraseReject('revient sur la réponse de Valérie Plante à la manifestation étudiante en ville.', S, it), /nom absent de la source \(Valérie\)/);
 assert.match(phraseReject('revient sur la manifestation et sur la séance où le SPVM a été critiqué par le GRC.', S, it), /nom absent de la source \(GRC\)/);
 assert.match(phraseReject('Revient sur la manifestation étudiante et la réponse de la police de Montréal.', S, it), /minuscule/);
-assert.match(phraseReject('looks back at the student protest and the police response in the city.', S, it), /français/);
-assert.match(phraseReject('revient, avec The Link, sur la manifestation et la réponse de la police.', S, it), /répète/);
+assert.match(phraseReject('looks back at the student protest and the police response in the city.', S, it), /verbe|français/);
+assert.match(phraseReject('annonce un partenariat entre la police et le conseil municipal de la ville.', S, it), /verbe d'ouverture/, 'le média n’annonce rien');
+assert.match(phraseReject('interroge les étudiants sur la manifestation et la réponse de la police.', S, it), /verbe d'ouverture/);
+assert.match(phraseReject('revient sur la manifestation à Québec et la réponse de la police.', S, it), /nom absent de la source \(Québec\)/, 'lieu absent');
+assert.equal(phraseReject('revient sur la manifestation à Montréal et la réponse de la police.', S, it), null, 'Montréal = Montreal');
+assert.match(phraseReject('revient sur la manifestation couverte par The Link et la réponse de la police.', S, it), /répète/);
 
 // Établissement en français (métadonnées, jamais l'IA).
 assert.equal(deInstitution('Concordia University'), 'de l’Université Concordia');
@@ -71,6 +77,9 @@ for (const shape of ['openai', 'response']) {
   assert.equal(r.quote, 'Montreal police said in an email that “the SPVM does not compile this type of data (injured protesters).”');
   assert.equal(r.institutionFr, 'de l’Université Concordia');
 }
+const multi = await enAccrocheDetail(it, { env, source: src, fetchImpl: reply({ citations: ['Police admitted everything.', QUOTE, 'Three students were arrested, according to witnesses.'], phrase: PHRASE }) });
+assert.equal(multi.quote, 'Three students were arrested, according to witnesses.', 'la plus courte des citations exactes');
+assert.match((await enAccrocheDetail(it, { env, source: { text: BODY, from: 'extrait' }, fetchImpl: reply({ citation: QUOTE, phrase: PHRASE }) })).reason, /illisible/, 'extrait seul : pas d’accroche');
 const inv = await enAccrocheDetail(it, { env, source: src, fetchImpl: reply({ citation: 'Police admitted they used excessive force on Nov. 13.', phrase: PHRASE }) });
 assert.equal(inv.reason, null); assert.equal(inv.quote, '', 'citation inventée → pas de citation');
 const bad = await enAccrocheDetail(it, { env, source: src, fetchImpl: reply({ citation: QUOTE, phrase: 'revient sur les 40 blessés de la manifestation et la séance du conseil municipal.' }) });
