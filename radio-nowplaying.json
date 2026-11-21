@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T05:06:47.763Z",
+  "updatedAt": "2026-11-21T06:06:48.824Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T05:06:20.585Z"
+      "checkedAt": "2026-11-21T06:06:21.362Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T05:06:34.672Z"
+      "checkedAt": "2026-11-21T06:06:35.408Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,7 +73,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T05:06:38.057Z"
+      "checkedAt": "2026-11-21T06:06:38.934Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T05:06:40.183Z"
+      "checkedAt": "2026-11-21T06:06:41.114Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T05:06:41.508Z"
+      "checkedAt": "2026-11-21T06:06:42.428Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-21T05:06:47.412Z"
+      "checkedAt": "2026-11-21T06:06:48.474Z"
     }
   }
 }
