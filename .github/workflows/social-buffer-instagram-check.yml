@@ -1,0 +1,33 @@
+name: Social — contrôle Buffer Instagram (lecture seule)
+
+# Interroge l'API Buffer sans rien publier et sans créer de brouillon.
+# Compte Instagram (BUFFER_INSTAGRAM_API_KEY) : clé valide, organisation accessible,
+# canal 6b012936ece6dfde5f3f554d (le.radar.ca) visible et connecté.
+# Compte principal (BUFFER_API_KEY) : LinkedIn, Facebook et X toujours visibles, Instagram absent.
+# Le script n'écrit jamais la clé, ni un fragment, ni les en-têtes.
+on:
+  pull_request:
+    paths:
+      - .github/workflows/social-buffer-instagram-check.yml
+      - scripts/social/buffer-instagram-check.mjs
+      - tests/buffer-instagram-check.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Lecture seule des deux comptes Buffer
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_INSTAGRAM_API_KEY: ${{ secrets.BUFFER_INSTAGRAM_API_KEY }}
+        run: node scripts/social/buffer-instagram-check.mjs
