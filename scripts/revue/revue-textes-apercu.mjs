@@ -39,6 +39,9 @@ const WANTED = [
   'La vie lors d’une régate d’aviron',
   'Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications',
   'Des étudiants du Cégep de Jonquière à « la COP qui chie »',
+  'S’enrôler dans l’armée à 48 ans : le parcours d’une vétérane autochtone',
+  'On a testé le nouveau Centre Pickleball Saguenay',
+  'Les sachets de Nicotine, le nouveau stimulant des athlètes ?',
 ];
 
 function article(title) {

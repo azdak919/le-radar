@@ -220,8 +220,8 @@ assert.match(L.itemReject('Mark Carney dévoile ses ambitions économiques.', { 
 assert.match(L.itemReject('Mark Carney dévoile les ambitions économiques du gouvernement canadien dans le budget.', carney), /trop court|trop proche/);
 assert.equal(L.itemReject('Mark Carney dévoile les ambitions économiques du gouvernement canadien dans le budget. François-Philippe Champagne, ministre des Finances du Canada, a déposé ce budget.', carney), null);
 const ganesha = { title: 'Can Ganesha Help You Pass Your Midterms?', lang: 'en', source: 'The Link', authors: [], excerpt: 'The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon orange.' };
-assert.match(L.itemReject('La couleur orange peut aider les étudiants à passer leurs examens de mi-session. Le temple de la Hindu Mission of Canada à Montreal est presque néon.', ganesha), /interrogatif/);
-assert.equal(L.itemReject('La couleur du jour au temple de la Hindu Mission of Canada à Montreal est orange. Ganesha peut-il aider les étudiants à réussir leurs examens de mi-session?', ganesha), null);
+assert.equal(L.itemReject('La couleur orange peut aider les étudiants à passer leurs examens de mi-session. Le temple de la Hindu Mission of Canada à Montreal est presque néon.', ganesha), null, 'faits du chapô, sans question');
+assert.match(L.itemReject('La couleur du jour au temple de la Hindu Mission of Canada à Montreal est orange. Ganesha peut-il aider les étudiants à réussir leurs examens de mi-session?', ganesha), /question/);
 
 // ── IA simulée : réponse valide, hallucination, panne, IA absente ──
 const env = { CLOUDFLARE_AI_TOKEN: 'jeton-factice', CLOUDFLARE_ACCOUNT_ID: 'compte-factice' };

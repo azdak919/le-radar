@@ -14,7 +14,7 @@
 import { createRequire } from 'node:module';
 import { pickSports, frDay, frShort, frHour, institutionLabel, institutionSigle, siteImage, isStockOnlyImage, sportEmoji } from '../social/une-lib.mjs';
 import { detectLang } from '../social/lib.mjs';
-import { chapoExtract, sentenceCount, titleSimilarity, TITLE_SIMILARITY_MAX, RESUME_MIN_CHARS, RESUME_MAX_CHARS } from './revue-quality.mjs';
+import { chapoExtract, cutAtLastSentence, extraFacts, sentenceCount, titleSimilarity, TITLE_SIMILARITY_MAX, RESUME_MIN_CHARS, RESUME_MAX_CHARS } from './revue-quality.mjs';
 
 const require = createRequire(import.meta.url);
 const front = require('../magazine-front-page-lib.js');
@@ -344,15 +344,20 @@ export function titleNames(title, lang = 'fr') {
   }
   return out;
 }
+const FILLER = /cherche(?:nt|r)? à comprendre|mieux comprendre|souhaite(?:nt)? ainsi|vise(?:nt)? à (?:recueillir|comprendre)|tient(?:nent)? le plus à cœur|quel(?:le)?s?\s+(?:est|sont|était|étaient)|on peut se demander|force est de|il (?:est|serait) (?:important|essentiel|intéressant)|cela (?:montre|illustre|rappelle)\b/i;
+
 /**
- * Garde-fou d'un résumé d'article : textReject + fidélité au titre. Un titre interrogatif se résume par une question (le
- * résumé n'affirme pas ce que le titre demande) ; les noms propres de plusieurs mots du titre restent dans le résumé (pas de
- * confusion de personnes : « Mark Carney dévoile… » ne devient pas « Le ministre des Finances dévoile… »).
+ * Garde-fou d'un résumé d'article. Phrases finies, faits du chapô absents du titre, pas de question
+ * ni de commentaire. Les noms propres de plusieurs mots du titre restent (pas de confusion de personnes).
  */
 export function itemReject(resume, x) {
-  const why = textReject(resume, itemSource(x), { min: RESUME_MIN_CHARS, max: RESUME_MAX_CHARS });
+  const h = String(resume || '').replace(/\s+/g, ' ').trim();
+  if (!h) return 'aucun résumé';
+  if (!/[.!?…]$/.test(h)) return 'sans point final';
+  if (/\?/.test(h) || FILLER.test(h)) return /\?/.test(h) ? 'question' : 'remplissage';
+  const why = textReject(h, itemSource(x), { min: RESUME_MIN_CHARS, max: RESUME_MAX_CHARS });
   if (why) return why;
-  const h = String(resume).trim(), low = norm(h);
+  const low = norm(h);
   const n = sentenceCount(h);
   if (n < 2) return 'trop court';
   if (n > 3) return 'trop de phrases';
@@ -360,10 +365,12 @@ export function itemReject(resume, x) {
   if (sim >= TITLE_SIMILARITY_MAX) return `trop proche du titre (${sim.toFixed(2)})`;
   const bare = t => norm(t).replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
   if (bare(h) === bare(x.title)) return 'répète le titre';
-  if (/\?\s*$/.test(String(x.title || '')) && !/\?\s*$/.test(h)) return 'titre interrogatif affirmé';
+  const extra = extraFacts(x.body || x.excerpt || '', x.title);
+  if (extra.length && !extra.some(f => foldFact(h).includes(f) || h.includes(f))) return 'aucun fait hors titre';
   for (const name of titleNames(x.title, x.lang)) if (!low.includes(norm(name))) return `nom du titre absent (${name})`;
   return null;
 }
+const foldFact = s => String(s || '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
 /** Chapô fidèle (français) quand le modèle est refusé ou absent. Vide si la source n’est pas en français. */
 export function chapoFallback(x) {
   if (x?.lang === 'en') return '';

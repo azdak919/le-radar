@@ -6,7 +6,7 @@
 // → extrait fidèle du chapô, article par article. Les secrets ne sont jamais écrits.
 import { aiEnabled as socialAiEnabled, parseAi, TOPICS } from '../social/ai-hook.mjs';
 import { itemReject, ledeReject, highlights, THEMES, chapoFallback } from './revue-lib.mjs';
-import { estimateNeurons, NEURON_BUDGET_PER_RUN } from './revue-quality.mjs';
+import { cutAtLastSentence, estimateNeurons, NEURON_BUDGET_PER_RUN } from './revue-quality.mjs';
 
 /** Libre sur le forfait Workers gratuit. Pas kimi-k2 ni glm-5.2 (réservés au forfait payant). */
 export const MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
@@ -14,9 +14,13 @@ export const aiEnabled = (env = process.env) => socialAiEnabled(env) && env.REVU
 const TOPIC_TO_THEME = Object.fromEntries(TOPICS.map(t => [t, THEMES.includes(t) ? t : 'Vie de campus']));
 const sourceOf = x => String(x.body || x.excerpt || '').slice(0, 1000);
 
+/** Jetons de sortie par article : assez pour deux ou trois phrases finies, plus le JSON. */
+export function tokensForBatch(n) { return 300 * Math.max(1, n) + 50; }
+
 function accept(x, resume, theme) {
-  const why = resume ? itemReject(resume, x) : 'aucun résumé';
-  if (!why) return { resume, theme, resumeBy: 'ia', why: '' };
+  const cut = cutAtLastSentence(resume, 3);
+  const why = cut ? itemReject(cut, x) : (resume ? 'phrase coupée' : 'aucun résumé');
+  if (!why) return { resume: cut, theme, resumeBy: 'ia', why: '' };
   const chapo = chapoFallback(x);
   return { resume: chapo, theme, resumeBy: chapo ? 'chapo' : '', why };
 }
@@ -31,12 +35,15 @@ async function run(prompt, { env, fetchImpl, maxTokens }) {
 
 export function itemsPrompt(batch) {
   return 'Revue de presse des médias étudiants du Québec. Pour chaque article numéroté, écris en FRANÇAIS deux ou trois phrases ' +
-    '(240 à 520 caractères), au ton d’un journal. Pars du chapô, pas du titre seul : dis qui, quoi, où et pourquoi, ' +
-    'et ajoute ce que le titre ne dit pas. Fondé UNIQUEMENT sur le titre et le chapô : aucun chiffre, nom propre, ' +
-    'citation ni date qui ne figure pas dans le texte, aucun guillemet, jamais « demain », « hier », « aujourd’hui » ni « week-end ». ' +
+    'complètes, chacune finie par un point, au ton d’un journal. Pars du chapô, pas du titre seul. ' +
+    'Reprends au moins un chiffre, une date, un nom ou un lieu du chapô qui n’est pas déjà dans le titre. ' +
+    'Seulement des faits : pas de question, pas de « quel », pas de commentaire, pas de formule creuse ' +
+    '(« cherche à comprendre », « mieux comprendre », « souhaite ainsi »). ' +
+    'Fondé UNIQUEMENT sur le titre et le chapô : aucun chiffre, nom propre, citation ni date qui ne figure pas dans le texte, ' +
+    'aucun guillemet, jamais « demain », « hier », « aujourd’hui » ni « week-end ». ' +
     'Un article en anglais est résumé en français. Garde comme sujet la personne ou l’organisation nommée dans le titre, ' +
-    'ne la remplace jamais par une autre personne du chapô, et n’affirme rien que le texte ne dit pas. Un titre en forme de ' +
-    'question se termine par une question. Choisis aussi un thème parmi : ' + TOPICS.join(', ') + '.\n' +
+    'ne la remplace jamais par une autre personne du chapô, et n’affirme rien que le texte ne dit pas. ' +
+    'Choisis aussi un thème parmi : ' + TOPICS.join(', ') + '.\n' +
     'Réponds seulement en JSON : {"items":[{"n":1,"resume":"…","theme":"…"}]}\n\n' +
     batch.map((x, i) => `${i + 1}. [${x.lang}] Titre : ${x.title}\nChapô : ${sourceOf(x)}`).join('\n\n');
 }
@@ -81,13 +88,14 @@ export async function aiReview(items, { env = process.env, fetchImpl = fetch, ba
   for (let i = 0; i < items.length && calls < maxCalls - 1 && !quota; i += batchSize) {
     const batch = items.slice(i, i + batchSize); calls++;
     const prompt = itemsPrompt(batch);
-    const maxTokens = 160 * batch.length + 80;
+    const maxTokens = tokensForBatch(batch.length);
     try {
       const j = await call(prompt, maxTokens);
       const list = Array.isArray(j?.items) ? j.items : [];
       batch.forEach((x, k) => {
         const a = list.find(e => Number(e?.n) === k + 1) || list[k];
-        const resume = typeof a?.resume === 'string' ? a.resume.replace(/\s+/g, ' ').trim().replace(/^[«"“]\s*|\s*[»"”]$/g, '') : '';
+        const raw = typeof a?.resume === 'string' ? a.resume.replace(/\s+/g, ' ').trim().replace(/^[«"“]\s*|\s*[»"”]$/g, '') : '';
+        const resume = cutAtLastSentence(raw, 3) || raw;
         const theme = TOPIC_TO_THEME[a?.theme] || '';
         const got = accept(x, resume, theme);
         if (got.why) out.log.push(`repli (extrait) — ${got.why} : ${x.id}`);

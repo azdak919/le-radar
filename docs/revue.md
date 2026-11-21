@@ -153,11 +153,10 @@ réductions, on retire la ligne plutôt que de couper l’accroche ou les auteur
 1. Chaque lien, titre, média et auteur vient des données ; `validateReview` refuse la revue sinon (auteurs égaux à
    ceux du fil, extraits présents dans la source, émissions présentes dans la grille, résultats recalculés depuis le
    bandeau sportif).
-2. Texte IA (résumé, chapeau) : deux ou trois phrases tirées du chapô, pas du titre seul. Rejeté s’il est trop court,
-   trop proche du titre (coefficient de Dice, seuil 0,55), s’il contient un lien, des guillemets, une date relative
-   (« demain », « week-end »…), un chiffre ou un nom propre absent de la source, ou s’il n’est pas en français.
-   Repli : extrait fidèle du chapô (les phrases d’origine), jamais un résumé vide. Un article anglais sans résumé
-   français reste une citation du chapô.
+2. Texte IA (résumé, chapeau) : deux ou trois phrases finies, tirées du chapô. Une sortie coupée est ramenée au
+   dernier point. Rejeté sans point final, s’il pose une question ou commente, s’il n’a aucun fait du chapô absent
+   du titre, s’il est trop court, trop proche du titre (Dice, seuil 0,55), ou s’il invente un chiffre, un nom ou
+   une date. Repli : extrait fidèle du chapô. Un article anglais sans résumé français reste une citation.
 3. IA indisponible (secrets absents, erreur, quota de 10 000 neurones/jour, HTTP 429 ou 403) : même repli.
    Le modèle est llama 3.3 70B sur le forfait gratuit Workers AI. Un passage s’arrête à 1 800 neurones estimés
    (deux éditions ≈ 3 600, sous les 10 000 du jour, sans facturation à l’usage). Au-delà, chapô.

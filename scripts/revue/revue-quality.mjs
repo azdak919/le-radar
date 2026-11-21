@@ -39,6 +39,42 @@ export function sentenceCount(text) {
 }
 
 /**
+ * Coupe au dernier point complet (. ! ? …), au plus `maxSentences` phrases.
+ * Une fin de phrase coupée par le plafond de jetons disparaît. Chaîne vide s’il n’y a aucune phrase finie.
+ */
+export function cutAtLastSentence(text, maxSentences = 3) {
+  const s = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!s) return '';
+  const ends = [];
+  const re = /[.!?…](?=\s|$)/g;
+  let m;
+  while ((m = re.exec(s))) ends.push(m.index + 1);
+  if (!ends.length) return '';
+  return s.slice(0, ends[Math.min(ends.length, maxSentences) - 1]).trim();
+}
+
+const FACT_STOP = new Set('le la les un une des du de d l au aux et ou en dans sur pour par avec son sa ses ce cet cette ces qui que est sont the a an of to in on for and or with its at by from nov dec jan feb mar apr jun jul aug sep oct'.split(' '));
+
+/** Chiffres et noms propres d’un texte (lieux, personnes, organismes). */
+export function factTokens(text) {
+  const s = String(text || '');
+  const out = new Set();
+  for (const m of s.matchAll(/\d+(?:[.,]\d+)?/g)) out.add(m[0].replace(',', '.'));
+  for (const m of s.matchAll(/(?<![\p{L}])(\p{Lu}[\p{L}’'-]{2,})/gu)) {
+    const w = m[1].toLowerCase().replace(/[’'].*$/, '');
+    if (!FACT_STOP.has(w)) out.add(w);
+  }
+  return out;
+}
+
+/** Faits du chapô absents du titre. Tableau vide : rien à exiger. */
+export function extraFacts(body, title) {
+  const titleFacts = factTokens(title);
+  const titleFold = fold(title);
+  return [...factTokens(body)].filter(f => !titleFacts.has(f) && !titleFold.includes(f));
+}
+
+/**
  * Préfixe fidèle du chapô : jusqu’à 3 phrases, sans réécrire un mot.
  * Si le chapô commence par le titre, on le saute : le résumé doit ajouter autre chose.
  */
