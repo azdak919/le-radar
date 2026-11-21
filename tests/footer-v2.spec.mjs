@@ -43,6 +43,34 @@ for (const [path, theme] of PAGES) {
           const small = await foot.locator('.site-foot__social a').evaluateAll((as) => as.filter((a) => a.getBoundingClientRect().height < 44).length);
           expect(small).toBe(0);
         }
+        if (width <= 390) {
+          const layout = await foot.locator('.site-foot__social').evaluate((nav) => {
+            const links = [...nav.querySelectorAll('a[data-social]')];
+            const boxes = links.map((a) => a.getBoundingClientRect());
+            const rows = [];
+            let y = null;
+            let n = 0;
+            for (const b of boxes) {
+              const top = Math.round(b.top);
+              if (y === null || Math.abs(top - y) <= 2) {
+                n += 1;
+                y = y ?? top;
+              } else {
+                rows.push(n);
+                n = 1;
+                y = top;
+              }
+            }
+            if (n) rows.push(n);
+            const mid = (arr) => (Math.min(...arr.map((b) => b.left)) + Math.max(...arr.map((b) => b.right))) / 2;
+            return {
+              rows,
+              delta: Math.abs(mid(boxes.slice(0, 5)) - mid(boxes.slice(5))),
+            };
+          });
+          expect(layout.rows, `${width}px : deux lignes 5+4`).toEqual([5, 4]);
+          expect(layout.delta, `${width}px : seconde ligne centrée sous la première`).toBeLessThanOrEqual(2);
+        }
       }
     });
   }

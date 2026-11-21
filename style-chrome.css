@@ -67,6 +67,32 @@
   gap: 6px;
   margin: 0 0 14px;
 }
+/* Colonne de la marque : quand 9 icônes de 44 px et leur gouttière
+   (9×44 + 8×6 = 444 px) n’y tiennent pas, on passe à deux lignes
+   5+4 centrées. Une seule ligne à 40 px est impossible à 360–390 px :
+   il reste 354 px à 390 px une fois la gouttière, et 9×40 = 360. */
+.site-foot--v2 .site-foot__brandcol {
+  container-type: inline-size;
+  container-name: foot-brand;
+}
+@container foot-brand (max-width: 443px) {
+  .site-foot__social {
+    width: calc(5 * 44px + 4 * 6px);
+    max-width: 100%;
+    margin-inline: auto;
+    justify-content: center;
+  }
+}
+/* Filet de sécurité pour les navigateurs sans @container, aux largeurs
+   où 9×44 ne tiennent jamais (téléphone). */
+@media (max-width: 479.98px) {
+  .site-foot .site-foot__social {
+    width: calc(5 * 44px + 4 * 6px);
+    max-width: 100%;
+    margin-inline: auto;
+    justify-content: center;
+  }
+}
 .site-foot .site-foot__social a {
   display: inline-flex;
   align-items: center;
