@@ -55,11 +55,11 @@ export function chapeauPrompt(items, edition = 'soir') {
  * { chapeau, items: { id: { resume, theme, resumeBy } }, model, neurons, log } ; jamais d'exception.
  * `items` = articles de revue-lib.selectArticles (champ `body` = chapô).
  */
-export async function aiReview(items, { env = process.env, fetchImpl = fetch, batchSize = 4, maxCalls = 12, edition = 'soir' } = {}) {
+export async function aiReview(items, { env = process.env, fetchImpl = fetch, batchSize = 4, maxCalls = 12, edition = 'soir', chapeau = true } = {}) {
   const out = { chapeau: '', items: {}, model: MODEL, neurons: 0, log: [] };
   const fillChapo = (x, why) => {
     const got = accept(x, '', '');
-    out.items[x.id] = { resume: got.resume, theme: out.items[x.id]?.theme || '', resumeBy: got.resumeBy };
+    out.items[x.id] = { resume: got.resume, theme: out.items[x.id]?.theme || '', resumeBy: got.resumeBy, modelText: '', why: why || got.why };
     if (why) out.log.push(`repli (extrait) — ${why} : ${x.id}`);
   };
   if (!aiEnabled(env)) { out.log.push('IA désactivée (secrets absents ou interrupteur) : chapô fidèle.'); return out; }
@@ -91,7 +91,7 @@ export async function aiReview(items, { env = process.env, fetchImpl = fetch, ba
         const theme = TOPIC_TO_THEME[a?.theme] || '';
         const got = accept(x, resume, theme);
         if (got.why) out.log.push(`repli (extrait) — ${got.why} : ${x.id}`);
-        out.items[x.id] = { resume: got.resume, theme: got.theme, resumeBy: got.resumeBy };
+        out.items[x.id] = { resume: got.resume, theme: got.theme, resumeBy: got.resumeBy, modelText: resume, why: got.why };
       });
     } catch (e) {
       const why = String(e?.message || e?.name || 'erreur').slice(0, 80);
@@ -100,7 +100,7 @@ export async function aiReview(items, { env = process.env, fetchImpl = fetch, ba
     }
   }
   for (const x of items) if (!out.items[x.id]) fillChapo(x, quota ? 'plafond de neurones' : '');
-  if (items.length && calls < maxCalls && !quota) {
+  if (chapeau && items.length && calls < maxCalls && !quota) {
     try {
       const pool = highlights(items, 12);
       const prompt = chapeauPrompt(pool, edition);
