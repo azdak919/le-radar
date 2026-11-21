@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-21T15:06:45.055Z",
+  "updatedAt": "2026-11-21T16:07:00.421Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Palmarès CHYZ",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Un Monde de Couleurs et de Son",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "12:30",
+        "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
+      },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T15:06:18.112Z"
+      "checkedAt": "2026-11-21T16:06:33.630Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T15:06:19.633Z"
+      "checkedAt": "2026-11-21T16:06:35.013Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Making Contact/Anything Goes",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
-      },
-      "next": {
         "title": "Samedi Midi",
         "source": "api-live",
         "start": "10:30",
         "end": "14:00"
       },
+      "next": {
+        "title": "Funky Revolutions",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Making Contact/Anything Goes",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T15:06:22.438Z"
+      "checkedAt": "2026-11-21T16:06:38.701Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T15:06:37.000Z"
+      "checkedAt": "2026-11-21T16:06:52.925Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,18 +129,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T15:06:38.474Z"
+      "checkedAt": "2026-11-21T16:06:53.873Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Podcast Nomade: L'art de se rencontrer",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "slug": "podcast-nomade-lart-de-se-rencontrer"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -149,17 +143,14 @@
         "slug": "palmareschoq"
       },
       "track": "ID - ID Comment Debord - Blood Pareil",
-      "showTitle": "Podcast Nomade: L'art de se rencontrer",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-11-21T15:06:44.705Z"
+      "clientPoll": null,
+      "checkedAt": "2026-11-21T16:07:00.071Z"
     }
   }
 }
