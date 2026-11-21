@@ -78,9 +78,9 @@ function plan({ local = [], tracked = [], remote = [], sizes = {}, now = Date.no
   return { upload, delete: del };
 }
 
-// Erreurs passagères de l'API GitHub (HTTP 5xx, coupure réseau) : on réessaie ;
-// les autres (404, droits, release absente) remontent tout de suite.
-const TRANSIENT = /HTTP 5\d\d|HTTP 429|timed? ?out|ECONNRESET|ETIMEDOUT|EAI_AGAIN|connection reset|unexpected EOF|stream error/i;
-function isTransient(text) { return TRANSIENT.test(String(text || '')); }
+// Erreurs passagères : même critère que scripts/external-source-lib.js
+// (5xx, 429, coupure, quota d'installation). Un 403 de droits n'est pas passager.
+const { isTransientError } = require('./external-source-lib');
+function isTransient(text) { return isTransientError(typeof text === 'string' ? new Error(text) : text); }
 
 module.exports = { TAG, IMG, SOCIAL_KEEP_DAYS, keepNamesFromPages, keepNamesFromSocial, plan, isTransient };

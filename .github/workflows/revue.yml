@@ -48,6 +48,14 @@ on:
 
 permissions:
   contents: write
+  issues: write
+
+# Les filets workflow_run partent à chaque récolte. On annule la porte déjà
+# en file ; le job qui publie garde la file data-writers (pas d’annulation
+# d’une écriture en cours).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || 'chain' }}
+  cancel-in-progress: true
 
 jobs:
   gate:
@@ -168,6 +176,7 @@ jobs:
             exit 0
           fi
           node scripts/revue/revue-pdfs.mjs --id "$ID" || echo "::warning::PDF de ${ID} non générés ; les pages seront tout de même publiées."
+          node scripts/revue/revue-pdfs.mjs --sync-only --id "$ID"
       - name: Commit et publication
         if: steps.revue.outcome == 'success'
         env:
@@ -184,7 +193,7 @@ jobs:
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
           git commit -s -m "bot(revue): ${REVUE_PUBLISHED_ID:-${{ needs.gate.outputs.id || needs.gate.outputs.edition }}} ${{ needs.gate.outputs.mode }}"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"${REVUE_PUBLISHED_ID:-${REVUE_ID:-$REVUE_EDITION}}\""
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"${REVUE_PUBLISHED_ID:-${REVUE_ID:-$REVUE_EDITION}}\"; node scripts/revue/revue-pdfs.mjs --sync-only --id \"${REVUE_PUBLISHED_ID:-${REVUE_ID:-$REVUE_EDITION}}\""
       - name: Le flux doit avoir suivi
         if: steps.feed.outcome == 'failure'
         run: |

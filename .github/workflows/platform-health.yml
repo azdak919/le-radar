@@ -19,7 +19,7 @@ permissions:
   pull-requests: read
 concurrency:
   group: platform-health
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   check:
     runs-on: ubuntu-latest

@@ -1096,8 +1096,7 @@ async function runSailingOnly() {
     ? previousPayload.teams
     : null;
   if (!previousTeams) {
-    console.error('sports: ABORT --sailing-only — sports.json précédent illisible.');
-    process.exit(1);
+    throw Object.assign(new Error('sports: ABORT --sailing-only — sports.json précédent illisible.'), { code: 'HUMAN_ACTION' });
   }
   const reg = loadSportsTeamsRegistry();
   const sailing = await fetchSailingTeams(reg);
@@ -1117,8 +1116,7 @@ async function runSailingOnly() {
   }
   const sailingCount = Object.values(teams).filter((team) => team && team.sport === 'sailing').length;
   if (!sailingCount) {
-    console.error('sports: ABORT --sailing-only — aucun club de voile. Refus d’écraser sports.json.');
-    process.exit(1);
+    throw Object.assign(new Error('sports: ABORT --sailing-only — aucun club de voile. Refus d’écraser sports.json.'), { code: 'HUMAN_ACTION' });
   }
   const fetchedAt = new Date().toISOString();
   const payload = {
@@ -1441,22 +1439,19 @@ async function main() {
   // --live fusionne le snapshot précédent : ces seuils ne s’appliquent qu’au crawl complet.
   if (!liveOnly) {
     if (teamCount < 50) {
-      console.error(
+      throw Object.assign(new Error(
         `sports: ABORT — trop peu d’équipes (${teamCount}). Refus d’écraser sports.json.`,
-      );
-      process.exit(1);
+      ), { code: 'HUMAN_ACTION' });
     }
     if (prevCount >= 100 && teamCount < prevCount * 0.5) {
-      console.error(
+      throw Object.assign(new Error(
         `sports: ABORT — chute d’équipes ${prevCount} → ${teamCount} (>50 %). Refus d’écraser.`,
-      );
-      process.exit(1);
+      ), { code: 'HUMAN_ACTION' });
     }
     if (shouldAbortSourceFailures(leaguesFailed, leagues.length, teamsPreservedOnError)) {
-      console.error(
+      throw Object.assign(new Error(
         `sports: ABORT — majorité des ligues S1 en erreur (${leaguesFailed}/${leagues.length}).`,
-      );
-      process.exit(1);
+      ), { code: 'HUMAN_ACTION' });
     }
   }
 
@@ -1533,8 +1528,8 @@ async function main() {
   }
 }
 
-if (require.main === module) main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('RSEQ', () => main(), [OUT_PATH, path.join(ROOT, 'sports-masthead.json')]);
+}
 module.exports = { allGames, restoreFailedHockeySectors, retainUnattemptedErrors, isolateSourceTask, shouldAbortSourceFailures };
