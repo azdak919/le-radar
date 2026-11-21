@@ -1,5 +1,5 @@
 // Compte Buffer réservé à Instagram (le.radar.ca). Jamais la clé du compte principal.
-// Publication de fil seulement (type post). Images 3:4, repli 4:5. Légendes de une-lib.
+// Publication de fil seulement (type post). Image 3:4 native seulement. Légendes de une-lib.
 // Montée lue dans data/social/policy.json. Au premier avertissement ou à la première erreur
 // Buffer, arrêt sans réessai. Sans BUFFER_INSTAGRAM_API_KEY : le canal est sauté, les autres réseaux continuent.
 import { execFile } from 'node:child_process';
@@ -28,7 +28,6 @@ export const INSTAGRAM_SECRET = 'BUFFER_INSTAGRAM_API_KEY';
 export const INSTAGRAM_METADATA = { instagram: { type: 'post' } };
 export const IG_IMAGE = {
   primary: { format: 'grille', width: 1080, height: 1440, ratio: '3:4' },
-  fallback: { format: 'portrait', width: 1080, height: 1350, ratio: '4:5' },
 };
 export const IG_CAPTION = { limit: 2200, maxHashtags: 5 };
 
@@ -123,10 +122,19 @@ export function instagramSlotAllowed({ now = Date.now(), slotId = '', format = '
   return { ok: true, day, phase, why: '' };
 }
 
-/** 3:4 d'abord, 4:5 seulement si le 3:4 n'a pas pu être produit. Jamais d'autre ratio. */
+function slideEntry(s) {
+  if (!s) return null;
+  if (typeof s === 'string') return { url: s, alt: '' };
+  const url = s.url || s.href || s.file || '';
+  return url ? { url, alt: s.alt || '' } : null;
+}
+
+/** Seulement le visuel 3:4 dessiné pour Instagram. Jamais le portrait d'un autre réseau.
+ *  Deux diapos ou plus : carrousel (une par article, puis le-radar.ca). */
 export function chooseInstagramImage(images = {}) {
-  if (images.grille) return { ...IG_IMAGE.primary, ref: images.grille, fallback: false };
-  if (images.portrait) return { ...IG_IMAGE.fallback, ref: images.portrait, fallback: true };
+  const slides = (Array.isArray(images.slides) ? images.slides : []).map(slideEntry).filter(Boolean);
+  if (slides.length >= 2) return { ...IG_IMAGE.primary, ref: slides[0].url, slides, carousel: true, fallback: false };
+  if (images.grille) return { ...IG_IMAGE.primary, ref: images.grille, slides: [], carousel: false, fallback: false };
   return null;
 }
 
@@ -183,7 +191,7 @@ export function decideInstagram({ now = Date.now(), slotId = '', format = 'une',
     if (!ramp.ok) bits.push(ramp.why);
     if (!key.key) bits.push(key.reason);
     if (problems?.length) bits.push('légende : ' + problems.join(', '));
-    if (!image) bits.push('aucune image 3:4 ni 4:5');
+    if (!image) bits.push('aucune image 3:4');
     return { action: 'preview', reason: bits.filter(Boolean).join(' · '), ready: enabled && ramp.ok && !!key.key && !!image && clean, ramp, image, text };
   }
   if (!enabled) return { action: 'skip', reason: 'instagram.enabled = false', ramp, image, text };
@@ -191,7 +199,7 @@ export function decideInstagram({ now = Date.now(), slotId = '', format = 'une',
   if (!key.key) return { action: 'skip', reason: key.reason, ramp, image, text };
   if (problems?.length) return { action: 'skip', reason: 'légende refusée : ' + problems.join(', '), ramp, image, text };
   if (!clean) return { action: 'skip', reason: 'légende hors format Instagram', ramp, image, text };
-  if (!image) return { action: 'skip', reason: 'aucune image 3:4 ni 4:5', ramp, image, text };
+  if (!image) return { action: 'skip', reason: 'aucune image 3:4', ramp, image, text };
   return { action: 'send', reason: 'envoi', ready, ramp, image, text };
 }
 
@@ -202,7 +210,7 @@ export function dryRunReport(decision) {
     '',
     decision.reason || '',
     '',
-    img ? `Image : ${img.ratio} ${img.width}×${img.height}${img.fallback ? ' (repli 4:5)' : ' (grille)'}` : 'Image : aucune',
+    img?.carousel ? `Carrousel : ${img.slides.length} images ${img.ratio} ${img.width}×${img.height}` : img ? `Image : ${img.ratio} ${img.width}×${img.height} (grille)` : 'Image : aucune',
     `Type : post (ni story, ni reel, ni premier commentaire)`,
     '',
     '```text',
@@ -242,7 +250,7 @@ export function alreadyPosted(texts, text) {
 }
 
 /** Un seul envoi. Toute erreur ou tout avertissement Buffer arrête le canal et ouvre une issue. */
-export async function deliverInstagram({ env = {}, text, imageUrl, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
+export async function deliverInstagram({ env = {}, text, imageUrl, alt = '', images, state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
   const ch = createInstagramBuffer(env, { fetchImpl });
   if (!ch) return { action: 'skip', reason: instagramKey(env).reason, state };
   try {
@@ -252,7 +260,8 @@ export async function deliverInstagram({ env = {}, text, imageUrl, alt = '', sta
       const sent = { ...(state.sent || {}), [dedupKey || 'dedup']: { at: now, day, slotId, format, id: 'deja-present', dedup: true } };
       return { action: 'sent', id: 'deja-present', dedup: true, state: { ...state, halted: false, sent } };
     }
-    const post = await ch.add({ text, image: imageUrl, alt, now: true, metadata: INSTAGRAM_METADATA });
+    const slides = (Array.isArray(images) ? images : []).filter(s => s && (typeof s === 'string' ? s : s.url));
+    const post = await ch.add({ text, image: imageUrl, alt, images: slides.length >= 2 ? slides : undefined, now: true, metadata: INSTAGRAM_METADATA });
     const when = Date.parse(now);
     const day = torontoDay(Number.isFinite(when) ? when : Date.now());
     const id = post?.id;

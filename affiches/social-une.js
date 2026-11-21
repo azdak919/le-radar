@@ -123,8 +123,75 @@
     while (node.scrollHeight > node.clientHeight + 2 && size > min) { size -= 2; node.style.fontSize = size + 'px'; }
   }
   let THEME = 'clair';
+  function brandBar() {
+    const bar = el('div', 'ig-brand'); const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
+    bar.append(logo, el('span', 'wm', 'LE\u2011RADAR.ca'));
+    bar.ready = new Promise((r) => { if (logo.complete) r(); else { logo.onload = r; logo.onerror = r; } });
+    return bar;
+  }
+  function fitTitle(node, floor) {
+    let size = parseFloat(getComputedStyle(node).fontSize);
+    // line-clamp laisse souvent 3 à 6 px entre scrollHeight et clientHeight
+    // même quand le texte tient : ne pas descendre jusqu'au plancher pour ça.
+    while (node.scrollHeight > node.clientHeight + 8 && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
+  }
+  // Affiche Instagram native 3:4 : une photo, un titre, le média, le crédit. Rien d'inventé.
+  async function renderGrille(card, model) {
+    card.className = 'card grille';
+    const variant = model.poster === 'lien' ? 'lien' : (model.variant === 'titre' || model.variant === 'affiche' ? model.variant : 'couverture');
+    const root = el('div', 'ig ' + variant);
+    const top = el('div', 'ig-edge'); top.append(el('span', '', model.slot.dayLabel || ''));
+    const safe = el('div', 'ig-safe');
+    const brand = brandBar();
+    const bottom = el('div', 'ig-edge'); bottom.append(el('span', '', model.slot.label || ''));
+    if (model.poster === 'lien') {
+      const copy = el('div', 'ig-copy');
+      const title = el('h1', 'ig-title', 'le-radar.ca');
+      copy.append(title);
+      safe.append(brand, copy);
+      root.append(top, safe, bottom); card.append(root);
+      await Promise.all([document.fonts.ready, brand.ready]);
+      const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2;
+      return { shown: 0, photo: false, sports: 0, radio: 0, overflow, lien: true };
+    }
+    if (model.poster === 'sport') {
+      const copy = el('div', 'ig-copy');
+      copy.append(el('p', 'ig-kicker', model.slot.label || 'Résultats'));
+      (model.results || []).slice(0, 3).forEach((r) => {
+        const row = el('div', 'ig-match');
+        row.append(el('p', 'ig-sport', [r.emoji, r.sport].filter(Boolean).join(' ')));
+        const line = el('p', 'ig-line');
+        line.append(el('span', '', r.a), el('span', 'sc', '  ' + r.as), el('span', '', ' – '), el('span', 'sc', r.bs + '  '), el('span', '', r.b));
+        row.append(line); copy.append(row);
+      });
+      if (model.media) copy.append(el('p', 'ig-media', model.media));
+      safe.append(brand, copy);
+      root.append(top, safe, bottom); card.append(root);
+      await Promise.all([document.fonts.ready, brand.ready]);
+      copy.querySelectorAll('.ig-line').forEach((n) => { let s = parseFloat(getComputedStyle(n).fontSize); while (n.scrollWidth > n.clientWidth + 1 && s > 28) { s -= 1; n.style.fontSize = s + 'px'; } });
+      return { shown: (model.results || []).length, photo: false, sports: (model.results || []).length, radio: 0, overflow: card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 };
+    }
+    const lead = model.items[0];
+    const photoBox = el('div', 'ig-photo'); const img = el('img'); img.alt = ''; photoBox.append(img);
+    img.style.objectPosition = `50% ${Math.round((Number.isFinite(lead.focalY) ? lead.focalY : 0.38) * 100)}%`;
+    const copy = el('div', 'ig-copy');
+    copy.append(el('p', 'ig-kicker', model.slot.label || ''));
+    const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
+    if (lead.source) copy.append(el('p', 'ig-media', lead.source));
+    const credit = String(lead.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
+    if (credit) copy.append(el('p', 'ig-credit', '📸 ' + credit));
+    safe.append(brand, photoBox, copy);
+    root.append(top, safe, bottom); card.append(root);
+    const ok = await (lead.images && lead.images.length ? loadFirst(img, lead.images) : Promise.resolve(false));
+    if (!ok) { img.remove(); photoBox.classList.add('empty'); }
+    await Promise.all([document.fonts.ready, brand.ready]);
+    fitTitle(title, 48);
+    const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 || copy.scrollHeight > copy.clientHeight + 2;
+    return { shown: 1, photo: ok, sports: 0, radio: 0, overflow };
+  }
   window.renderUne = async function renderUne({ model, format }) {
     const card = document.getElementById('card'); card.textContent = '';
+    if (format === 'grille') return renderGrille(card, model);
     THEME = model.slot.kind === 'soir' ? 'sombre' : 'clair';
     const [lead, ...rest] = model.items; const others = rest.slice(0, format === 'story' ? 5 : format === 'paysage' ? 3 : 4);
     const S = Array.isArray(model.sports) ? { results: model.sports, next: [] } : (model.sports || { results: [], next: [] });

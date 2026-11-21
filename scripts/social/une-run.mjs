@@ -66,12 +66,33 @@ export async function hostImages(images, key, repo = process.env.GITHUB_REPOSITO
     if (fresh) fs.writeFileSync(path.join(dir, 'README.md'), '# Images de « La une du matin » et « La une du soir »\n\nÉcrit par .github/workflows/social-une.yml. Ne pas fusionner dans main.\n');
     const [day, slot] = key.split(':'), rel = {};
     fs.mkdirSync(path.join(dir, 'une', day), { recursive: true });
-    for (const [fmt, img] of Object.entries(images)) { rel[fmt] = `une/${day}/${slot}-${fmt}.jpg`; fs.copyFileSync(img.file, path.join(dir, rel[fmt])); }
+    const slideRels = [];
+    for (const [fmt, img] of Object.entries(images)) {
+      if (fmt === 'slides' && Array.isArray(img)) {
+        img.forEach((s, i) => {
+          const r = `une/${day}/${slot}-slide-${String(i).padStart(2, '0')}.jpg`;
+          slideRels.push({ rel: r, alt: s.alt || '' });
+          fs.copyFileSync(s.file, path.join(dir, r));
+        });
+        continue;
+      }
+      if (!img?.file) continue;
+      rel[fmt] = `une/${day}/${slot}-${fmt}.jpg`;
+      fs.copyFileSync(img.file, path.join(dir, rel[fmt]));
+    }
     git(['add', '-A'], dir);
     git(['-c', 'user.name=Azdak', '-c', 'user.email=azdak-qc@proton.me', 'commit', '--quiet', '-s', '-m', `bot(social): images de la une ${key}`], dir);
     git(['push', '--quiet', 'origin', `HEAD:refs/heads/${MEDIA_BRANCH}`], dir);
     const sha = git(['rev-parse', 'HEAD'], dir), out = {};
     for (const [fmt, r] of Object.entries(rel)) { const u = `https://raw.githubusercontent.com/${repo}/${sha}/${r}`; if (!(await reachable(u))) throw new Error(`image ${fmt} injoignable : ${u}`); out[fmt] = u; }
+    if (slideRels.length) {
+      out.slides = [];
+      for (const s of slideRels) {
+        const u = `https://raw.githubusercontent.com/${repo}/${sha}/${s.rel}`;
+        if (!(await reachable(u))) throw new Error(`image carrousel injoignable : ${u}`);
+        out.slides.push({ url: u, alt: s.alt });
+      }
+    }
     return out;
   } finally { try { git(['worktree', 'remove', '--force', dir]); } catch {} fs.rmSync(dir, { recursive: true, force: true }); }
 }
@@ -130,7 +151,7 @@ async function instagramPass({ now, slot, text, problems = [], images, dry, alt 
   }
   if (d.action !== 'send') { console.log(`Instagram : ${d.reason}`); return ''; }
   const result = await deliverInstagram({
-    env: process.env, text, imageUrl: imageUrl(d.image?.ref), alt, state: state0,
+    env: process.env, text, imageUrl: imageUrl(d.image?.ref), alt, images: d.image?.slides || [], state: state0,
     now: new Date(now).toISOString(), slotId: slot.id, format: 'une', dedupKey: `une:${slot.key}`,
     fileIssue: openInstagramIssue,
   });
@@ -143,7 +164,11 @@ export function previewMarkdown(slot, sel, texts, images, { dry, reason }) {
   const L = [`## ${slot.label} (${slot.key}) — ${dry ? 'essai DRY_RUN, rien n\'est publié' : 'passage réel'}`, '', `Décision : ${reason}`, ''];
   if (sel.doubts?.length) L.push(`Doutes : ${sel.doubts.join(' ; ')}.`, '');
   for (const t of sel.translated || []) L.push(`Traduit : « ${t.from} » → « ${t.to} »`);
-  if (images) for (const [f, v] of Object.entries(images)) L.push(`Image ${f} : ${path.basename(v.file)} (${v.width}×${v.height}, ${Math.round(v.bytes / 1024)} Ko, ${v.shown} article(s), ${v.sports} match(s) (${v.sportsDetail}), ${v.radio} émission(s) radio, photo ${v.photo ? 'oui' : 'non'})`);
+  if (images) for (const [f, v] of Object.entries(images)) {
+    if (f === 'slides' && Array.isArray(v)) { L.push(`Carrousel Instagram : ${v.length} image(s) 3:4`); continue; }
+    if (!v?.file) continue;
+    L.push(`Image ${f} : ${path.basename(v.file)} (${v.width}×${v.height}, ${Math.round(v.bytes / 1024)} Ko, ${v.shown} article(s), ${v.sports} match(s) (${v.sportsDetail}), ${v.radio} émission(s) radio, photo ${v.photo ? 'oui' : 'non'})`);
+  }
   L.push('');
   for (const [n, v] of Object.entries(texts || {})) L.push(`### ${n} (${v.len}/${v.limit}, image ${v.image})`, '', '```text', v.text || '(aucun texte)', '```', v.problems.length ? `Problèmes : ${v.problems.join(' ; ')}` : 'Contrôles : OK', n === 'tumblr' ? `Étiquettes Tumblr : ${v.tags.join(', ')}` : '', '');
   return L.join('\n');
@@ -200,7 +225,7 @@ async function main() {
     const igCfg = CFG.prepared?.instagram || {};
     const formats = formatsFor(nets, dry, { story: storyEnabled(CFG) });
     if ((dry || igCfg.enabled === true) && !formats.includes('grille')) formats.push('grille');
-    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats, optionalFormats: ['grille'] });
+    images = await renderImages(model, { outDir: out, prefix: `une-${slot.id}`, formats, optionalFormats: ['grille'], instagramSlides: dry || igCfg.enabled === true });
     if (!dry && !storyEnabled(CFG)) delete images.story; // jamais hébergée ni envoyée tant que formats.une.story.publish n’est pas true
     const bad = Object.entries(texts).filter(([n, v]) => nets.includes(n) && v.problems.length);
     if (dry) reason = 'essai (DRY_RUN) : aucun envoi.';

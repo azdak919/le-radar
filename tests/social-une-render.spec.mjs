@@ -107,3 +107,99 @@ for (const kind of ['matin', 'soir']) {
     }
   }
 }
+
+for (const kind of ['matin', 'soir']) {
+  test(`instagram 3:4 ${kind} : titre, média et crédit dans le carré de la grille @ci-critical`, async ({ page }) => {
+    await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+    await page.setViewportSize({ width: 1080, height: 1440 });
+    await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
+    const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    expect(info.overflow).toBe(false);
+    expect(info.shown).toBe(1);
+    const zone = await page.evaluate(() => {
+      const c = document.getElementById('card').getBoundingClientRect();
+      const box = (sel) => { const e = document.querySelector(sel); const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top }; };
+      return {
+        title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'),
+        brandBg: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor,
+        size: parseFloat(getComputedStyle(document.querySelector('.ig-title')).fontSize),
+        creditText: document.querySelector('.ig-credit').textContent,
+        mediaText: document.querySelector('.ig-media').textContent,
+        w: c.width, h: c.height,
+      };
+    });
+    expect(zone.w).toBe(1080); expect(zone.h).toBe(1440);
+    expect(zone.brandBg).toBe('rgb(0, 0, 0)');
+    expect(zone.size).toBeGreaterThanOrEqual(48);
+    expect(zone.mediaText).toBe('Impact Campus');
+    expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
+    for (const b of [zone.title, zone.brand, zone.credit, zone.media]) {
+      expect(b.top).toBeGreaterThanOrEqual(180);
+      expect(b.bottom).toBeLessThanOrEqual(1260);
+    }
+  });
+}
+
+test('instagram 3:4 : les variantes titre et affiche gardent le titre dans le carré @ci-critical', async ({ page }) => {
+  await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+  await page.setViewportSize({ width: 1080, height: 1440 });
+  await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+  const model = { slot: { label: 'La une du soir', kind: 'soir', dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
+  const sizes = {};
+  for (const variant of ['couverture', 'titre', 'affiche']) {
+    await page.evaluate((a) => window.renderUne(a), { model: { ...model, variant }, format: 'grille' });
+    sizes[variant] = await page.evaluate(() => {
+      const c = document.getElementById('card').getBoundingClientRect();
+      const e = document.querySelector('.ig-title');
+      const r = e.getBoundingClientRect();
+      return { size: parseFloat(getComputedStyle(e).fontSize), top: r.top - c.top, bottom: r.bottom - c.top, copy: getComputedStyle(document.querySelector('.ig-copy')).backgroundColor };
+    });
+    expect(sizes[variant].top).toBeGreaterThanOrEqual(180);
+    expect(sizes[variant].bottom).toBeLessThanOrEqual(1260);
+  }
+  expect(sizes.titre.size).toBeGreaterThan(sizes.couverture.size);
+  expect(sizes.affiche.copy).toBe('rgb(0, 0, 0)');
+});
+
+test('instagram 3:4 : la dernière diapo ne porte que le-radar.ca @ci-critical', async ({ page }) => {
+  await page.setViewportSize({ width: 1080, height: 1440 });
+  await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+  const info = await page.evaluate((a) => window.renderUne(a), { model: { poster: 'lien', slot: { label: 'La une du soir', dayLabel: 'Dimanche 22 novembre' }, items: [] }, format: 'grille' });
+  expect(info.overflow).toBe(false);
+  expect(info.lien).toBe(true);
+  const zone = await page.evaluate(() => {
+    const c = document.getElementById('card').getBoundingClientRect();
+    const e = document.querySelector('.ig-title');
+    const r = e.getBoundingClientRect();
+    return { text: e.textContent, top: r.top - c.top, bottom: r.bottom - c.top, brand: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor };
+  });
+  expect(zone.text).toBe('le-radar.ca');
+  expect(zone.brand).toBe('rgb(0, 0, 0)');
+  expect(zone.top).toBeGreaterThanOrEqual(180);
+  expect(zone.bottom).toBeLessThanOrEqual(1260);
+});
+
+test('instagram 3:4 sport : trois résultats réels dans le carré @ci-critical', async ({ page }) => {
+  await page.setViewportSize({ width: 1080, height: 1440 });
+  await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+  const model = {
+    poster: 'sport',
+    slot: { label: 'Résultats de la fin de semaine', dayLabel: '14-16 nov.' },
+    media: 'U SPORTS · RSEQ',
+    results: [
+      { emoji: '🏈', sport: 'Football (H)', a: 'Rouge et Or', as: '24', b: 'Carabins', bs: '17' },
+      { emoji: '🏒', sport: 'Hockey (F)', a: 'Stingers', as: '3', b: 'Martlets', bs: '1' },
+      { emoji: '🏀', sport: 'Basketball (H)', a: 'Vert & Or', as: '78', b: 'Citadins', bs: '71' },
+    ],
+  };
+  const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+  expect(info.overflow).toBe(false);
+  expect(info.sports).toBe(3);
+  const lines = await page.locator('.ig-line').allTextContents();
+  expect(lines[0]).toContain('Rouge et Or');
+  expect(lines[0]).toContain('24');
+  const top = await page.locator('.ig-line').first().evaluate((e) => { const c = document.getElementById('card').getBoundingClientRect(); const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top }; });
+  expect(top.top).toBeGreaterThanOrEqual(180);
+  expect(top.bottom).toBeLessThanOrEqual(1260);
+});

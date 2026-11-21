@@ -41,7 +41,7 @@ export const PREPARED_NETS = ['instagram'];
 /**
  * Format d'image par réseau (revue du 12 nov. 2026, docs/social-engagement.md) : le portrait 4:5 s'affiche sans recadrage
  * pour une image seule dans les fils mobiles de X, Bluesky (recadre seulement au-delà de 1:2), Mastodon (4.x, ratio natif),
- * LinkedIn, Facebook et Tumblr. Instagram : grille 3:4 1080×1440, repli 4:5. Jamais de story ni de reel.
+ * LinkedIn, Facebook et Tumblr. Instagram : grille 3:4 1080×1440, dessinée pour ce ratio. Jamais de story ni de reel.
  * Le paysage 16:9 reste rendu en aperçu (repli), sans réseau attitré.
  */
 export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'grille' };
@@ -507,6 +507,12 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     if (cut && cut <= 30 && withRevue && revueLine) { withRevue = false; cut = 0; continue; }
     cut = cut ? cut - 10 : 120; if (cut < 30) return null;
   }
+}
+/** Texte alternatif d'une diapo : titre, média, crédit. Rien d'inventé. */
+export function instagramSlideAlt(item) {
+  if (!item) return 'le-radar.ca';
+  const credit = String(item.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
+  return [item.title, item.source, credit].filter(Boolean).join('. ').slice(0, 1000);
 }
 /** Texte alternatif de l'image (≤ 1000 caractères). */
 export function altText(model) {

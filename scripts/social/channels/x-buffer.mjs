@@ -17,6 +17,16 @@ export const matchChannel = (x, service, channelName) => {
   return re.test(x?.service || '') && (x.name || '').replace(/^@/, '').trim().toLowerCase() === channelName.toLowerCase();
 };
 
+/** Pièces jointes Buffer. Une image, ou un carrousel (liste ordonnée, 20 au plus). */
+export function bufferImageAssets(image, alt, images) {
+  const list = Array.isArray(images) && images.length
+    ? images.map(s => (typeof s === 'string' ? { url: s, alt } : { url: s?.url || '', alt: s?.alt || '' }))
+    : image ? [{ url: image, alt: alt || '' }] : [];
+  return list.filter(s => s.url).slice(0, 20).map(s => ({
+    image: { url: s.url, ...(s.alt ? { metadata: { altText: String(s.alt).slice(0, 1000) } } : {}) },
+  }));
+}
+
 export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x', allowedChannelId = '', strictWarnings = false } = {}) {
   async function gql(query, variables = {}) {
     const res = await fetchImpl(API, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` }, body: JSON.stringify({ query, variables }), signal: AbortSignal.timeout(30000) });
@@ -106,11 +116,12 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
       return r.post;
     },
-    async add({ text, image, alt, dueAt, now = false, metadata }) {
+    async add({ text, image, alt, images, dueAt, now = false, metadata }) {
       const { channelId } = await context();
       const input = { text, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
       if (dueAt) input.dueAt = dueAt;
-      if (image) input.assets = [{ image: { url: image, ...(alt ? { metadata: { altText: String(alt).slice(0, 1000) } } : {}) } }];
+      const assets = bufferImageAssets(image, alt, images);
+      if (assets.length) input.assets = assets;
       if (metadata) input.metadata = metadata;
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
         ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`, { i: input });
