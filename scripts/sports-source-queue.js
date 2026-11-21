@@ -15,8 +15,8 @@ function createSourceQueue({ concurrency = 3, attempts = 2, timeoutMs = 25000,
   let sequence = 0;
   let cooldownUntil = 0;
   const stats = { requests: 0, retries: 0, coalesced: 0, peak: 0 };
-  const transient = err => err?.status === 429 || err?.status >= 500
-    || /timeout|abort|ECONNRESET|ETIMEDOUT|EAI_AGAIN|socket hang up/i.test(String(err?.code || '') + ' ' + String(err?.message || ''));
+  const { isTransientError, backoffMs } = require('./external-source-lib');
+  const transient = isTransientError;
   async function execute(job) {
     for (let attempt = 0; attempt < attempts; attempt += 1) {
       if (now() - started >= deadlineMs) throw Object.assign(new Error('source harvest deadline; previous snapshot retained'), { code: 'QUEUE_DEADLINE' });
@@ -39,7 +39,7 @@ function createSourceQueue({ concurrency = 3, attempts = 2, timeoutMs = 25000,
         clearTimeout(timer);
         if (err?.status === 429) cooldownUntil = Math.max(cooldownUntil, now() + (err.retryAfterMs || 1000));
         if (attempt + 1 >= attempts || !transient(err)) throw err;
-        const backoff = Math.max(err.retryAfterMs || 0, 500 * (2 ** attempt) + Math.floor(random() * 250));
+        const backoff = Math.max(err.retryAfterMs || 0, backoffMs(attempt, { random }));
         if (backoff > maxRetryWaitMs) throw err; // never shorten a server's Retry-After
         stats.retries += 1;
         await wait(backoff);

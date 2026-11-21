@@ -20,6 +20,7 @@ jobs:
     permissions:
       contents: write
       actions: write
+      issues: write
     steps:
       # Partir du main ACTUEL : en file data-writers, le sha de l'événement
       # peut dater de plusieurs passes (rebase de données impossible ensuite).

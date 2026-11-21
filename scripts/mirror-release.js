@@ -7,6 +7,7 @@ const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { TAG, IMG, plan, isTransient, keepNamesFromPages, keepNamesFromSocial } = require('./mirror-release-lib');
+const { reportIncident } = require('./source-incident');
 
 const ROOT = path.join(__dirname, '..');
 const DIR = path.join(ROOT, 'assets', 'news-images');
@@ -35,11 +36,26 @@ if (mode === 'restore') {
     } catch (e) {
       const msg = String(e.stderr || e.message);
       if (/no assets/i.test(msg)) break; // Release vide : rien à restaurer
-      if (!isTransient(msg) || attempt >= ATTEMPTS) throw e;
+      if (!isTransient(msg) || attempt >= ATTEMPTS) {
+        // Quota GitHub : on ne publie pas un site sans images. Le déploiement
+        // précédent reste en ligne. Une seule issue, pas un échec à chaque passe.
+        if (isTransient(msg)) {
+          reportIncident({
+            key: 'miroir d’images Pages',
+            state: 'open',
+            body: `Le téléchargement de la Release \`${TAG}\` a échoué après ${ATTEMPTS} essais.\n\n\`\`\`\n${msg.trim().slice(0, 2000)}\n\`\`\`\n\nLe site déjà publié est conservé. La prochaine passe réessaiera.`,
+          });
+          if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, 'skip=true\n');
+          console.warn('mirror-release restore : quota ou panne passagère, déploiement précédent conservé');
+          process.exit(0);
+        }
+        throw e;
+      }
       console.warn(`mirror-release restore : erreur passagère (essai ${attempt}/${ATTEMPTS}) : ${msg.trim()} ; nouvel essai`);
       Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 10000 * attempt);
     }
   }
+  reportIncident({ key: 'miroir d’images Pages', state: 'close' });
   console.log(`mirror-release restore : ${fs.readdirSync(dir).length - before} fichier(s) ajoutés dans ${path.relative(ROOT, dir) || dir}`);
 } else if (mode === 'sync') {
   const dry = rest.includes('--dry-run');

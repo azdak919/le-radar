@@ -382,10 +382,28 @@ function fetchJsonText(url, timeout = DEFAULT_TIMEOUT) {
 }
 
 async function fetchJson(url, timeout = DEFAULT_TIMEOUT) {
-  const text = await fetchJsonText(url, timeout);
-  if (!text) return null;
+  const { retryAsync, fetchExternal } = require('./external-source-lib');
+  const opts = typeof timeout === 'object' && timeout ? timeout : { timeoutMs: timeout };
+  if (opts.fetchImpl) {
+    try {
+      return await fetchExternal(url, {
+        ...opts,
+        expect: 'json',
+        headers: { 'User-Agent': 'LE-RADAR-NowPlayingBot/1.0', Accept: 'application/json', ...(opts.headers || {}) },
+        retries: opts.retries ?? 2,
+        minTimeout: opts.minTimeout ?? 20,
+        maxTimeout: opts.maxTimeout ?? 200,
+      });
+    } catch {
+      return null;
+    }
+  }
   try {
-    return JSON.parse(text);
+    return await retryAsync(async () => {
+      const text = await fetchJsonText(url, opts.timeoutMs || DEFAULT_TIMEOUT);
+      if (!text) throw Object.assign(new Error(`now-playing vide ${url}`), { code: 'ECONNRESET' });
+      return JSON.parse(text);
+    }, { retries: opts.retries ?? 2, minTimeout: opts.minTimeout ?? 200, maxTimeout: opts.maxTimeout ?? 2000 });
   } catch {
     return null;
   }

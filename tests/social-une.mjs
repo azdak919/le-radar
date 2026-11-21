@@ -5,6 +5,7 @@ import * as U from '../scripts/social/une-lib.mjs';
 import { gate, pruneState, CFG } from '../scripts/social/une-run.mjs';
 import { NET_SPEC } from '../scripts/social/formats.mjs';
 import { POLICY } from '../scripts/social/policy.mjs';
+import { chooseInstagramImage } from '../scripts/social/instagram.mjs';
 
 // ── Créneaux : 7 h 45 et 19 h 30 heure de Montréal, été comme hiver ──
 assert.equal(U.slotAt(Date.parse('2026-11-13T12:45:00Z'))?.id, 'matin');       // 7 h 45 HNE
@@ -290,6 +291,8 @@ assert.equal(U.frTypo('Il a dit "oui"'), 'Il a dit «\u202Foui\u202F»');
 // ── Formats par réseau : portrait 4:5 partout ; Instagram préparé (story 9:16), sans lien cliquable, désactivé ──
 for (const n of U.NETS) assert.equal(U.IMAGE_FOR[n], 'portrait', n);
 assert.equal(U.IMAGE_FOR.instagram, 'grille');
+assert.equal(chooseInstagramImage({ portrait: 'portrait.jpg' }), null, 'Instagram ne reprend pas le portrait des autres réseaux');
+assert.equal(chooseInstagramImage({ grille: 'grille.jpg', portrait: 'portrait.jpg' }).ref, 'grille.jpg');
 assert.deepEqual(U.IMAGE_SIZES.grille, { width: 1080, height: 1440 });
 assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formatsFor(['instagram']), ['grille'], 'Instagram : 3:4, jamais de story');
 assert.deepEqual(U.formatsFor(['instagram'], false, { story: true }), ['grille']); assert.deepEqual(U.formatsFor(U.NETS, true), ['portrait', 'story', 'paysage'], 'aperçu des autres réseaux');

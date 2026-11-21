@@ -101,9 +101,9 @@ async function main() {
   else console.log('Dry-run — utilisez --update pour enregistrer les statuts.');
 }
 
-main().catch((error) => {
-  // Un fichier mal formé mérite d’échouer; une URL individuellement en panne,
-  // elle, est déjà convertie en statut dans request().
-  console.error(error.message || error);
-  process.exit(1);
-});
+if (require.main === module) {
+  // Un fichier mal formé mérite d’échouer; une URL individuellement en panne
+  // est déjà un statut. Une coupure générale garde le catalogue.
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('liens historiques', () => main(), []);
+}

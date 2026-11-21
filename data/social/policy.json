@@ -154,7 +154,7 @@
    "maxItems": 4,
    "maxNewsAgeH": 6,
   "prepared": {
-   "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que enabled n’est pas true. Instagram : compte Buffer distinct (secret BUFFER_INSTAGRAM_API_KEY), fil seulement (type post), image 3:4 1080×1440 ou repli 4:5, légende sans lien cliquable. La présentation du 21 novembre 2026 est déjà publiée à la main : ne pas la republier. La montée part le 22 novembre (jour 1).",
+   "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que enabled n’est pas true. Instagram : compte Buffer distinct (secret BUFFER_INSTAGRAM_API_KEY), fil seulement (type post), image 3:4 1080×1440 dessinée pour Instagram, légende sans lien cliquable. La présentation du 21 novembre 2026 est déjà publiée à la main : ne pas la republier. La montée part le 22 novembre (jour 1).",
    "instagram": {
     "enabled": true,
     "feed": "grille",
@@ -167,7 +167,7 @@
     "follow": false,
     "firstComment": false,
     "intro": { "posted": "2026-11-21", "manual": true, "republish": false },
-    "image": { "primary": { "format": "grille", "width": 1080, "height": 1440, "ratio": "3:4" }, "fallback": { "format": "portrait", "width": 1080, "height": 1350, "ratio": "4:5" } },
+    "image": { "primary": { "format": "grille", "width": 1080, "height": 1440, "ratio": "3:4" } },
     "caption": { "limit": 2200, "maxHashtags": 5, "credit": "📸" },
     "ramp": {
      "start": "2026-11-22",
