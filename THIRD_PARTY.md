@@ -9,4 +9,4 @@ Le code du projet est sous GPL-2.0-only. Ce fichier crédite les pièces copiée
 - Licence : **CC0 1.0** (domaine public). Compatible avec une distribution GPL-2.0-only. Aucune dépendance Apache-2.0.
 - La marque Instagram reste à son titulaire. L’icône est affichée en monochrome, sans modification de la forme.
 
-Les autres icônes du pied (X, Bluesky, Facebook, Tumblr, Mastodon, RSS) viennent de la même version de Simple Icons (CC0). LinkedIn vient de Bootstrap Icons v1.13.2 (MIT). Détail : `assets/social-icons/LICENSE.md`.
+Les autres icônes du pied (X, Bluesky, Facebook, Tumblr, Mastodon, RSS, Buy Me a Coffee) viennent de la même version de Simple Icons (CC0). LinkedIn vient de Bootstrap Icons v1.13.2 (MIT). Détail : `assets/social-icons/LICENSE.md`.

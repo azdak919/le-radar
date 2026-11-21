@@ -16,6 +16,7 @@ const expected = {
   linkedin: 'https://www.linkedin.com/company/le-radar-ca/',
   tumblr: 'https://le-radar-ca.tumblr.com',
   rss: 'https://le-radar.ca/feed.xml',
+  buymeacoffee: 'https://www.buymeacoffee.com/azdak',
 };
 const on = links.filter((l) => l.enabled);
 assert.deepEqual([...on.map((l) => l.id)], Object.keys(expected), 'réseaux actifs / ordre');
@@ -24,10 +25,15 @@ for (const l of on) {
   assert.match(l.label, /LE-RADAR\.ca/, `aria-label ${l.id}`);
   assert.ok(l.path.length > 20 && /^0 0 \d+ \d+$/.test(l.viewBox), `icône ${l.id}`);
 }
-assert.match(src, /a\.rel = 'me noopener'/);
+assert.match(src, /a\.rel = s\.rel \|\| 'me noopener'/);
 const ig = on.find((l) => l.id === 'instagram');
 const svg = fs.readFileSync(new URL('../assets/social-icons/instagram.svg', import.meta.url), 'utf8');
 assert.ok(svg.includes(ig.path.slice(0, 40)), 'le SVG Instagram est le tracé du pied');
+const bmc = on.find((l) => l.id === 'buymeacoffee');
+const bmcSvg = fs.readFileSync(new URL('../assets/social-icons/buymeacoffee.svg', import.meta.url), 'utf8');
+assert.ok(bmcSvg.includes(bmc.path.slice(0, 40)), 'le SVG Buy Me a Coffee est le tracé du pied');
+assert.equal(bmc.rel, 'noopener noreferrer');
+assert.match(src, /www\.buymeacoffee\.com\/azdak/);
 assert.match(fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8'), /https:\/\/www\.instagram\.com\/le\.radar\.ca\//);
 assert.match(fs.readFileSync(new URL('../scripts/revue/revue-render.js', import.meta.url), 'utf8'), /instagram\.com\/le\.radar\.ca/);
 assert.match(fs.readFileSync(new URL('../THIRD_PARTY.md', import.meta.url), 'utf8'), /CC0/);
