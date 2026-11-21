@@ -153,6 +153,7 @@ jobs:
           # --id doit être AAAA-MM-JJ-matin|soir (pas « matin » / « soir » seuls : 18 nov. 2026, les pages
           # étaient générées puis les PDF échouaient, et le commit n'avait jamais lieu).
           node scripts/revue/revue-pdfs.mjs --id "${REVUE_ID:-$REVUE_EDITION}" || echo "::warning::PDF de ${REVUE_ID:-$REVUE_EDITION} non générés ; les pages seront tout de même publiées."
+          node scripts/revue/revue-pdfs.mjs --sync-only --id "${REVUE_ID:-$REVUE_EDITION}"
       - name: Commit et publication
         env:
           REVUE_EDITION: ${{ needs.gate.outputs.edition }}
@@ -163,4 +164,4 @@ jobs:
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
           git commit -s -m "bot(revue): ${{ needs.gate.outputs.id || needs.gate.outputs.edition }} ${{ needs.gate.outputs.mode }}"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"${REVUE_ID:-$REVUE_EDITION}\""
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"${REVUE_ID:-$REVUE_EDITION}\"; node scripts/revue/revue-pdfs.mjs --sync-only --id \"${REVUE_ID:-$REVUE_EDITION}\""
