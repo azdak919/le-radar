@@ -1,0 +1,48 @@
+name: Revue — aperçu des huit textes
+
+# Huit résumés réels du modèle llama 3.3 70B, sur cette branche. Secrets déjà dans le dépôt.
+# Le jeton n’est jamais affiché. Artefact apercu-70b et commentaire de PR.
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: 'Numéro de PR pour le commentaire'
+        type: string
+        default: '498'
+  pull_request:
+    paths:
+      - 'scripts/revue/revue-textes-apercu.mjs'
+      - 'scripts/revue/revue-ai.mjs'
+      - 'scripts/revue/revue-quality.mjs'
+      - '.github/workflows/revue-textes-apercu.yml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  textes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Huit textes
+        env:
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node scripts/revue/revue-textes-apercu.mjs apercu-70b
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: apercu-70b
+          path: apercu-70b/
+          if-no-files-found: ignore
+      - name: Commentaire sur la PR
+        if: always() && hashFiles('apercu-70b/commentaire.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number || inputs.pr }}
+        run: gh pr comment "$PR" --body-file apercu-70b/commentaire.md
