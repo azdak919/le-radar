@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-21T22:08:08.620Z",
+  "updated": "2026-11-21T23:29:18.636Z",
   "total": 1053,
   "pool": 61,
   "incomplete": 26,
-  "withLeadExcerpt": 207,
+  "withLeadExcerpt": 209,
   "candidates": 26,
-  "enriched": 4,
-  "failed": 9,
+  "enriched": 11,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -55,22 +55,13 @@
       "changed": false
     },
     {
-      "title": "Bittersweet end of season for the Montreal Roses",
-      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
-      "ok": true,
-      "score": 100,
-      "chars": 414,
-      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
-      "changed": true
-    },
-    {
       "title": "Cinq nouvelles de la semaine",
       "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
       "ok": true,
       "score": 100,
       "chars": 450,
       "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 404,
       "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
+      "changed": false
+    },
+    {
+      "title": "La vie lors d’une régate d’aviron",
+      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
+      "ok": true,
+      "score": 100,
+      "chars": 342,
+      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
       "changed": false
     }
   ]

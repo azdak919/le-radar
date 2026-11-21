@@ -1,25 +1,19 @@
 {
-  "updated": "2026-11-21T22:08:37.552Z",
+  "updated": "2026-11-21T23:29:48.015Z",
   "total": 1051,
-  "withPhoto": 958,
-  "withStock": 100,
+  "withPhoto": 959,
+  "withStock": 101,
   "withCampusBank": 91,
-  "fullyCovered": 1036,
-  "leadReadyPhotos": 990,
+  "fullyCovered": 1038,
+  "leadReadyPhotos": 992,
   "pageScraped": 9,
   "photosRecovered": 9,
   "imagesCleared": 0,
-  "stockSearches": 4,
-  "stockFound": 11,
+  "stockSearches": 6,
+  "stockFound": 12,
   "campusBankFound": 9,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Remettre un classique au goût du jour",
-      "link": "https://www.delitfrancais.com/2026/09/23/remettre-un-classique-au-gout-du-jour",
-      "reason": "no-stock-match",
-      "image": null
-    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -27,15 +21,27 @@
       "image": null
     },
     {
-      "title": "Bulletin 21 septembre 11h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/21/bulletin-21-septembre-11h30",
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30",
       "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire",
+      "reason": "no-stock-match",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/BanalisationViolence2-scaled.jpg"
     },
     {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "Bulletin 12h La Pige radio",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30",
+      "reason": "no-stock-match",
       "image": null
     }
   ]

@@ -3165,17 +3165,18 @@
       "via": "resize-proxy",
       "nameKey": "sports1-eliot-loose.png"
     },
-    "95d1c982cd32b09e": {
-      "local": "assets/news-images/95d1c982cd32b09e.webp",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
+    "1effe24d0017bea7": {
+      "local": "assets/news-images/1effe24d0017bea7.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/09/Devoilement-Cadre-Financier-QS.jpeg",
       "host": "quartierlibre.ca",
-      "bytes": 198136,
-      "updatedAt": "2026-11-21T22:08:59.914Z",
-      "via": "disk",
-      "nameKey": "5infos_ql-e1769792962990.png"
+      "bytes": 132982,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-21T23:30:08.464Z",
+      "via": "resize-proxy",
+      "nameKey": "devoilement-cadre-financier-qs.jpeg"
     }
   },
-  "updatedAt": "2026-11-21T22:09:01.411Z",
+  "updatedAt": "2026-11-21T23:30:08.470Z",
   "count": 329,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5511,10 +5512,6 @@
       "reason": "budget",
       "at": "2026-11-20T20:08:57.348Z"
     },
-    "4ef22302b0e186e7": {
-      "reason": "budget",
-      "at": "2026-11-20T20:08:57.350Z"
-    },
     "64f0b2bf37877484": {
       "reason": "budget",
       "at": "2026-11-20T20:08:57.351Z"
@@ -5534,10 +5531,6 @@
     "68542e22dd0a2e45": {
       "reason": "budget",
       "at": "2026-11-20T20:08:57.359Z"
-    },
-    "57d8703f2b12cbf1": {
-      "reason": "budget",
-      "at": "2026-11-20T20:08:57.360Z"
     },
     "f8ed0eeaf5979b9c": {
       "reason": "budget",
@@ -5690,6 +5683,10 @@
     "b3f8c351ffdd42d1": {
       "reason": "budget",
       "at": "2026-11-21T22:09:01.409Z"
+    },
+    "f4cf5dccf794e9b9": {
+      "reason": "budget",
+      "at": "2026-11-21T23:30:08.469Z"
     }
   }
 }
