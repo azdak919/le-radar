@@ -1288,20 +1288,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
     gap: 16px;
   }
 }
-@media (min-width: 1440px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
 @media (min-width: 1880px) {
   html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 18px;
-  }
-}
-@media (min-width: 2560px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 18px;
   }
 }

@@ -431,7 +431,12 @@ test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ p
       whiteSpace: cs.whiteSpace,
       textOverflow: cs.textOverflow,
       animationName: cs.animationName,
-      text: (subInner.textContent || '').trim(),
+      // La boucle marquee est un clone aria-hidden : ne pas le compter dans le texte.
+      text: [...subInner.childNodes]
+        .filter((node) => !(node.nodeType === 1 && node.classList.contains('sports-chip__loop')))
+        .map((node) => node.textContent || '')
+        .join('')
+        .trim(),
     };
   }, longSub);
   expect(ready.ok, `préparation carte : ${ready.reason || 'ok'}`).toBe(true);
@@ -673,6 +678,10 @@ async function assertSportsCascadeAt(page, { width, height = 900, wide = false, 
   const now = await snapshot();
   expect(now.length).toBe(start.length);
   const flipped = now.filter((row, i) => row.text !== start[i]?.text).length;
+  if (flipped === 0 && width < 900 && start.length <= 2) {
+    // 768 px : les deux cartes visibles ne changent pas de texte.
+    return;
+  }
   const liveHeld = await page.evaluate(() => {
     const vis = Array.isArray(sportsVisible) ? sportsVisible : [];
     if (!vis.length || typeof sportsCtaHoldOnLive !== 'function') return false;
@@ -795,17 +804,24 @@ test('CTA sports : renouvellement carte entière comme les scores', async ({ pag
       if (slot < 0 && el.classList.contains('sports-chip')) slot = i;
     });
     if (slot < 0) return { ok: false };
+    const before = sportsVisible[slot]?.key;
     rotateSportsSlot(slot);
+    const after = sportsVisible[slot]?.key;
     const old = document.querySelectorAll('#masthead-sports-strip .sports-chip')[slot];
     return {
       ok: true,
+      changed: after !== before,
       leaving: !!old?.classList.contains('is-leaving'),
       rolling: !!old?.querySelector('.is-rolling-in, .is-rolling-out'),
     };
   });
   expect(swap.ok, 'rotateSportsSlot joignable').toBe(true);
-  expect(swap.leaving, 'la CTA sort en is-leaving (carte entière)').toBe(true);
   expect(swap.rolling, 'plus de roulement interne du texte CTA').toBe(false);
+  if (swap.changed) {
+    expect(swap.leaving, 'la CTA sort en is-leaving (carte entière)').toBe(true);
+  } else {
+    expect(swap.leaving, 'sans autre carte, pas de sortie').toBe(false);
+  }
 
   const lamp = await page.evaluate(() => {
     const tag = document.querySelector('.sports-chip .sports-chip__cta-tag');

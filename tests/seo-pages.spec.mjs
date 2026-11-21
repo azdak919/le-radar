@@ -154,6 +154,9 @@ test('les cartes d’articles affichent aussi leur heure de publication', async 
 });
 
 test('chaque filtre source expose tous ses articles, même hors de la fenêtre de fraîcheur', async ({ page }) => {
+  // Une passe par source du fil (15+). Le plafond global de 30 s coupe la
+  // boucle avant la dernière source quand le rendu du corpus est chargé.
+  test.setTimeout(90_000);
   const expectedBySource = await page.request.get('/news.json').then(async (response) => {
     const data = await response.json();
     return data.items.reduce((counts, item) => {
@@ -201,17 +204,20 @@ test('une vue source remplit En bref sans dépasser la colonne une et vedettes',
   // léger dépassement En bref (< ½ carte) plutôt qu’un grand vide.
   const MAX_RESIDUAL_GAP = 108;
   const MAX_BRIEF_OVERSHOOT = 72;
+  let lastBounds = null;
   await expect.poll(async () => {
-    const bounds = await readBounds();
-    return bounds.briefCount >= 2
-      && bounds.briefCount + bounds.tailCount === 7
-      && bounds.brief <= bounds.hero + MAX_BRIEF_OVERSHOOT
-      && (bounds.hero - bounds.brief) <= MAX_RESIDUAL_GAP;
+    lastBounds = await readBounds();
+    return lastBounds.briefCount >= 2
+      && lastBounds.briefCount + lastBounds.tailCount >= 7
+      && lastBounds.brief <= lastBounds.hero + MAX_BRIEF_OVERSHOOT
+      && (lastBounds.hero - lastBounds.brief) <= MAX_RESIDUAL_GAP;
   }, { timeout: 15_000 }).toBe(true);
 
-  const bounds = await readBounds();
+  const bounds = lastBounds;
   expect(bounds.briefCount).toBeGreaterThanOrEqual(2);
-  expect(bounds.briefCount + bounds.tailCount).toBe(7);
+  // La vue source garde tout le corpus (test du filtre) ; En bref reste
+  // aligné sur la une, le surplus va dans la suite.
+  expect(bounds.briefCount + bounds.tailCount).toBeGreaterThanOrEqual(7);
   expect(bounds.brief).toBeLessThanOrEqual(bounds.hero + MAX_BRIEF_OVERSHOOT);
   expect(bounds.hero - bounds.brief).toBeLessThanOrEqual(MAX_RESIDUAL_GAP);
 });
@@ -525,6 +531,9 @@ test('wide E : horaires et sports gardent des cartes assez larges', async ({ pag
 
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto('/sports/?wide=e', { waitUntil: 'domcontentloaded' });
+  const block = page.locator('details.sports-sport-block').first();
+  await expect(block).toBeVisible();
+  await block.evaluate((el) => { el.open = true; });
   const panels = page.locator('.sports-board .sports-panel:not([hidden])');
   await expect(panels.first()).toBeVisible({ timeout: 10_000 });
   const widths = await panels.evaluateAll((els) => {

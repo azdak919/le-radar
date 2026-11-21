@@ -65,6 +65,10 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
   await page.locator('#preview canvas').waitFor({ timeout: 20000 });
+  await expect.poll(async () => {
+    const box = await page.locator('#preview canvas').boundingBox();
+    return box?.height || 0;
+  }, { timeout: 15000 }).toBeGreaterThan(360);
   const previewBox = await page.locator('#preview canvas').boundingBox();
   expect(previewBox).toBeTruthy();
   expect(previewBox.height).toBeGreaterThan(360);
