@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-21T11:16:58.404Z",
+  "updated": "2026-11-21T12:38:02.310Z",
   "total": 1038,
   "pool": 61,
   "incomplete": 25,
   "withLeadExcerpt": 206,
   "candidates": 25,
-  "enriched": 1,
-  "failed": 5,
+  "enriched": 6,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -43,15 +52,6 @@
       "score": 100,
       "chars": 431,
       "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
