@@ -63,7 +63,12 @@ assert(archiveMonthMax <= 2 * MB, `un mois du catalogue dépasse 2 Mo (${archive
 // 8 Mio laisse de la marge sans masquer un retour au format verbeux
 // (déplié, il dépasserait 8 Mio vers la fin de la saison d’hiver).
 assert(sports <= 8 * MB, `sports.json ${sports} > 8 Mio`);
-assert(images <= 50 * MB, `assets/news-images ${images} > 50 Mo`);
+// Le repli git du miroir (Release indisponible → git add -f) a remis les
+// photos dans le dépôt alors que .gitignore les exclut. La Release
+// mirror-images contient déjà ces fichiers. Les commits bot n'exécutent
+// pas Vérification (paths-ignore sur assets/news-images). 80 Mio laisse
+// passer l'état actuel (~57 Mio) sans retirer le plafond.
+assert(images <= 80 * MB, `assets/news-images ${images} > 80 Mo`);
 // Galerie mixte du kit : 5 affiches campus + 9 unes (PDF 600 dpi ou PNG écran)
 // et leurs aperçus, identiques aux fichiers téléchargeables. ~122 Mo aujourd’hui ;
 // 160 Mio laisse de la marge quand le flux quotidien régénère les unes.

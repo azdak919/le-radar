@@ -2,8 +2,12 @@
  * Run: node tests/news-dedupe.mjs
  */
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const {
@@ -172,16 +176,70 @@ assert.match(
 }
 
 // fetch-news et le flux RSS doivent passer par la même bibliothèque.
+// Le flux est exécuté (données de test, à blanc) : un import manquant lève
+// ReferenceError et fait échouer ce test, au lieu d'un simple coup d'œil au source.
 {
   const fetchNews = readFileSync(new URL('../scripts/fetch-news.js', import.meta.url), 'utf8');
-  const feed = readFileSync(new URL('../scripts/generate-feed.js', import.meta.url), 'utf8');
+  const feedSrc = readFileSync(new URL('../scripts/generate-feed.js', import.meta.url), 'utf8');
   assert.match(fetchNews, /dedupeArticlesList/);
-  assert.match(feed, /dedupeArticlesList/);
   assert.doesNotMatch(
-    feed,
+    feedSrc,
     /même titre normalisé \(reprises multi-sources\)/,
     'le flux ne doit plus fusionner deux médias sur le seul titre',
   );
+
+  const dir = mkdtempSync(path.join(tmpdir(), 'radar-feed-'));
+  const now = new Date().toISOString();
+  const newsPath = path.join(dir, 'news.json');
+  writeFileSync(newsPath, JSON.stringify({
+    items: [
+      {
+        source: "L'Exemplaire",
+        title: 'Piece unique test dedupe',
+        date: now,
+        link: 'https://www.exemplaire.com.ulaval.ca/a-la-une/piece-unique-test-dedupe/',
+      },
+      {
+        source: "L'Exemplaire",
+        title: 'Piece unique test dedupe',
+        date: now,
+        link: 'https://www.exemplaire.com.ulaval.ca/actualites/piece-unique-test-dedupe',
+      },
+      {
+        source: 'The Link',
+        title: 'Meme titre deux medias',
+        date: now,
+        link: 'https://thelinknewspaper.ca/meme-titre-deux-medias-a',
+      },
+      {
+        source: 'The Concordian',
+        title: 'Meme titre deux medias',
+        date: now,
+        link: 'https://theconcordian.com/meme-titre-deux-medias-b',
+      },
+    ],
+  }));
+  try {
+    const script = fileURLToPath(new URL('../scripts/generate-feed.js', import.meta.url));
+    const result = spawnSync(process.execPath, [script], {
+      encoding: 'utf8',
+      env: {
+        ...process.env,
+        RADAR_NEWS_PATH: newsPath,
+        RADAR_FEED_DIR: dir,
+      },
+    });
+    assert.equal(
+      result.status,
+      0,
+      `generate-feed.js doit s'exécuter (import de dedupeArticlesList)\n${result.stderr || ''}\n${result.stdout || ''}`,
+    );
+    assert.match(result.stdout, /Articles : 3\b/, 'un doublon retiré, deux médias distincts conservés');
+    assert.match(result.stdout, /\(dry-run\)/, 'le test ne doit pas écrire le flux du dépôt');
+    assert.doesNotMatch(result.stdout, /→ written/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 }
 
 console.log('OK news-dedupe');
