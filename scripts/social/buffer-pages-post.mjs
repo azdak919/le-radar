@@ -11,9 +11,10 @@ import { createRequire } from 'node:module';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
-import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
+import { planDues, selectForPage, buildPageText, isRejection, postMetadata, pageLink } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
+import { potentialFlags, withUtm, galleryFrom } from './potential.mjs';
 const { jpegNeedsFacebookSanitize, facebookRelayUrl, wikimediaThumbUrl } = createRequire(import.meta.url)('../jpeg-facebook-safe.js');
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -89,14 +90,50 @@ for (const net of networks) {
   const sel = shareUrl ? [pickUrl()] : selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now, network: net });
   console.log(`File : ${queued.length}/${QUEUE_MAX} · places libres : ${free} · créneaux de pointe retenus : ${dues.length} · articles : ${sel.length}`);
   const used = new Map();
-  for (let i = 0; i < sel.length; i++) {
+  const flags = potentialFlags();
+  const galleryMax = net === 'facebook' ? flags.facebookImages : net === 'linkedin' ? flags.linkedinImages : 0;
+  let gallerySent = false;
+  if (galleryMax >= 2 && !shareUrl && dues.length) {
+    const picked = [];
+    const galleryUsed = new Map();
+    for (const it of sel) {
+      if (picked.length >= galleryMax) break;
+      const im = await resolveImage(it, { used: galleryUsed, repeated });
+      if (!im) continue;
+      const imageUrl = await imageUrlForNetwork(cfg.service, im.url);
+      if (!imageUrl) continue;
+      await withHook(it);
+      picked.push({ ...it, image: imageUrl, credit: im.credit || '', pageUrl: flags.utm ? withUtm(pageLink(it, cfg.link), net, true) : pageLink(it, cfg.link) });
+    }
+    const gallery = galleryFrom(picked, { network: net, limit: cfg.limit || 1500, max: galleryMax });
+    if (gallery) {
+      console.log(`\n--- ${net} plusieurs images (${gallery.count}, drapeau) ${new Date(dues[0]).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })} (HNE)\n${gallery.text}`);
+      if (dry) gallerySent = true;
+      else {
+        try {
+          const post = await ch.add({ text: gallery.text, images: gallery.assets, dueAt: dues[0], metadata: postMetadata(cfg.service) });
+          for (const it of picked.slice(0, gallery.count)) sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dues[0], image: it.image, gallery: gallery.count };
+          save();
+          gallerySent = true;
+          console.log(`→ Buffer ${net} : ${post.id} (${gallery.count} images)`);
+        } catch (e) {
+          if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); }
+          const why = e.message.slice(0, 400);
+          console.log(`::warning::${net} : galerie refusée (${why}) — articles laissés pour un passage simple.`);
+          problems.push(`- **${net}** : galerie refusée — ${why}`);
+        }
+      }
+    }
+  }
+  if (!gallerySent) for (let i = 0; i < sel.length; i++) {
     const it = sel[i], dueAt = dues[i];
     const im = await resolveImage(it, { used, repeated });
     if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
     const imageUrl = await imageUrlForNetwork(cfg.service, im.url);
     if (!imageUrl) { console.log(`::warning::${net} : image inaccessible, trop lourde ou refusée par la plateforme, article sauté : ${im.url} (${it.id})`); continue; }
     await withHook(it);
-    const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
+    const link = flags.utm ? withUtm(pageLink(it, cfg.link), net, true) : pageLink(it, cfg.link);
+    const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im, url: link });
     if (/tison/i.test(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
     console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}`);
     if (dry) continue;

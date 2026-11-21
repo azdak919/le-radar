@@ -21,8 +21,8 @@ export function pageLink(it, mode = 'le-radar') {
 }
 
 /** Titre, extrait, « 📰 Média · Auteur », lien, « 📸 crédit », hashtags (LinkedIn seulement : policy.json). Jamais de @ (noms en clair). */
-export function buildPageText(it, cfg = {}, { credit = '', photo = true, ai = true } = {}) {
-  const text = buildTagged(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link), ai }, cfg.service ? tagLine(it, cfg.service) : '');
+export function buildPageText(it, cfg = {}, { credit = '', photo = true, ai = true, url = pageLink(it, cfg.link) } = {}) {
+  const text = buildTagged(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url, ai }, cfg.service ? tagLine(it, cfg.service) : '');
   return text.replace(/(^|[\s(])@(?=\w)/g, '$1');
 }
 

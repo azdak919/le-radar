@@ -11,6 +11,7 @@ const { wikimediaThumbUrl } = _cr(import.meta.url)('../jpeg-facebook-safe.js');
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { withHook } from './ai-hook.mjs';
 import { volumeFor, torontoDay, mentionLedger, accountsForPost, mentionedIn, noteMention, POLICY } from './policy.mjs';
+import { potentialFlags, withUtm, xThread } from './potential.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-sent.json');
@@ -109,13 +110,19 @@ for (const it of sel) {
   await withHook(it);
   const dueAt = dues && !shareNow ? dues[n] : undefined;
   const day = torontoDay(dueAt ? Date.parse(dueAt) : Date.now());
-  const text = buildXText(it, accountsForPost(it, ACCOUNTS, ledger, day), { credit: im?.credit, photo: !!im, ai: true });
+  const flags = potentialFlags();
+  const xOpts = { credit: im?.credit, photo: !!im, ai: true, ...(flags.utm ? { url: withUtm(siteLink(it), 'x', true) } : {}) };
+  const accounts = accountsForPost(it, ACCOUNTS, ledger, day);
+  const text = buildXText(it, accounts, xOpts);
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }
+  const thread = flags.xThread ? xThread(it, accounts, xOpts) : null;
   const mentions = mentionedIn(text, ACCOUNTS); for (const h of mentions) noteMention(ledger, day, h);
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
+  if (thread) console.log(`Fil X prévu (${thread.length} posts, 1 fil en file au plus sur le forfait gratuit) :\n${thread.map(t => t.text).join('\n——\n')}`);
   if (dry) continue;
   try {
-    const post = await channel.add({ text, image: im?.url, dueAt, now: shareNow });
+    const post = await channel.add({ text, image: im?.url, dueAt, now: shareNow, ...(thread ? { thread } : {}) });
+    if (post.threadSkipped) console.log(`Fil X laissé de côté : ${post.threadSkipped}`);
     state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, image: im?.url || null, credit: im ? (im.credit || it.source) : null, ...(mentions.length ? { mention: mentions } : {}), ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
     console.log(`→ Buffer : ${post.id} (${shareNow ? 'publication immédiate ' + (post.status || '') + ' ' + (post.externalLink || '') : post.dueAt || 'heure auto'})`);

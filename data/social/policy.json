@@ -33,7 +33,14 @@
    "maxPerSourcePerDay": 1
   }
  },
- "automation": {
+  "potential": {
+    "_doc": "Tout est faux : le passage Buffer ne change pas. xThread = fil X (1 en file sur le forfait gratuit, 25 posts au plus). facebookImages / linkedinImages = plusieurs images réelles dans UNE publication (plafond de montée max, jamais Instagram ni X). utm = paramètres de mesure sur le lien le-radar.ca. Détail : docs/social-potential.md.",
+    "xThread": false,
+    "utm": false,
+    "facebookImages": { "enabled": false, "max": 4 },
+    "linkedinImages": { "enabled": false, "max": 4 }
+  },
+  "automation": {
   "x_follow": false,
   "facebook_follow": false,
   "instagram_follow": false,

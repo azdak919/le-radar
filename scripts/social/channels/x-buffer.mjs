@@ -1,4 +1,6 @@
 // Canal X (@le_radar_ca) via l'API GraphQL gratuite de Buffer.
+import { ALT_MAX, clipChars, X_THREAD_MAX } from '../potential.mjs';
+import { xlen } from '../lib.mjs';
 export const API = 'https://api.buffer.com';
 export const FALLBACK_CHANNEL_ID = '6ae6c47be29c69a171203706';
 export const AUTH_MSG = 'BUFFER_API_KEY expirée ou invalide (voir BUFFER_KEY_EXPIRES dans .github/workflows/social-buffer.yml) : régénérer la clé dans Buffer › Settings › API et mettre à jour le secret du dépôt.';
@@ -53,6 +55,34 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
     if (allowedChannelId && fallbackId !== allowedChannelId) throw new Error(`Buffer : repli ${fallbackId} interdit pour ce canal`);
     return (ctx = { organizationId: orgs[0].id, channelId: fallbackId, discovered: false });
   }
+  /**
+   * Place pour un fil X. Le forfait gratuit n'en garde qu'un en file ; la valeur
+   * réelle est `organization.limits.scheduledThreadsPerChannel`. Illisible : on n'envoie pas de fil.
+   */
+  async function threadRoom() {
+    const { organizationId, channelId } = await context();
+    let limit = null;
+    try {
+      const d = await gql('query { account { organizations { id limits { scheduledThreadsPerChannel } } } }');
+      const org = (d?.account?.organizations || []).find(o => o.id === organizationId) || d?.account?.organizations?.[0];
+      limit = org?.limits?.scheduledThreadsPerChannel;
+    } catch (e) {
+      if (e instanceof AuthError) throw e;
+      return { ok: false, reason: 'limite de fils illisible' };
+    }
+    if (!(Number(limit) > 0)) return { ok: false, reason: 'aucun fil permis sur ce forfait', limit: Number(limit) || 0 };
+    let used = 0;
+    try {
+      const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {
+        posts(first: 50, input: { organizationId: $o, filter: { channelIds: $c, status: [scheduled] } }) {
+          edges { node { metadata { ... on TwitterPostMetadata { threadCount } } } } } }`, { o: organizationId, c: [channelId] });
+      used = (d?.posts?.edges || []).filter(e => (e?.node?.metadata?.threadCount || 0) > 1).length;
+    } catch (e) {
+      if (e instanceof AuthError) throw e;
+      return { ok: false, reason: 'fils déjà en file illisibles', limit };
+    }
+    return { ok: used < limit, used, limit, reason: used < limit ? '' : `file de fils pleine (${used}/${limit})` };
+  }
   return {
     name: service,
     context,
@@ -96,6 +126,7 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
         return (d?.posts?.edges || []).map(e => e.node);
       }
     },
+    threadRoom,
     // Texte seulement : id, image et heure programmée conservés (mode/dueAt omis).
     // metadata : requis par Buffer pour Facebook ({ facebook: { type: 'post' } }), comme à l'ajout.
     async editText(id, text, metadata) {
@@ -106,17 +137,37 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
       return r.post;
     },
-    async add({ text, image, alt, dueAt, now = false, metadata }) {
+    async add({ text, image, images, alt, dueAt, now = false, metadata, thread } = {}) {
       const { channelId } = await context();
-      const input = { text, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
+      let body = text;
+      let meta = metadata || undefined;
+      let threadSkipped = '';
+      if (service === 'x' && Array.isArray(thread) && thread.length > 1) {
+        if (thread.length > X_THREAD_MAX || thread.some(t => !t?.text || xlen(t.text) > 280)) threadSkipped = 'fil refusé (longueur)';
+        else {
+          const room = await threadRoom();
+          if (!room.ok) threadSkipped = room.reason;
+          else {
+            body = thread[0].text;
+            meta = { ...(metadata || {}), twitter: { ...(metadata?.twitter || {}), thread: thread.map(t => ({ text: t.text })) } };
+          }
+        }
+      }
+      const input = { text: body, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
       if (dueAt) input.dueAt = dueAt;
-      if (image) input.assets = [{ image: { url: image, ...(alt ? { metadata: { altText: String(alt).slice(0, 1000) } } : {}) } }];
-      if (metadata) input.metadata = metadata;
+      const cap = ALT_MAX[service] || 1000;
+      const list = Array.isArray(images) && images.length ? images : (image ? [{ url: image, alt }] : []);
+      if (list.length) input.assets = list.map(img => {
+        const url = typeof img === 'string' ? img : img.url;
+        const a = typeof img === 'string' ? alt : (img.alt ?? alt);
+        return { image: { url, ...(a ? { metadata: { altText: clipChars(a, cap) } } : {}) } };
+      });
+      if (meta) input.metadata = meta;
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
         ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`, { i: input });
       const r = d?.createPost;
       if (!r?.post?.id) throw new Error(`Buffer createPost refusé : ${r?.message || JSON.stringify(r)}`);
-      return r.post;
+      return { ...r.post, ...(threadSkipped ? { threadSkipped } : {}) };
     },
   };
 }
