@@ -1,15 +1,23 @@
 {
-  "updated": "2026-11-21T23:31:13.014Z",
+  "updated": "2026-11-21T23:40:00.070Z",
   "total": 1051,
-  "withImage": 950,
-  "withCredit": 950,
-  "cited": 660,
+  "withImage": 951,
+  "withCredit": 951,
+  "cited": 661,
   "pending": 176,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 0,
-  "citedNew": 1,
-  "fallbackNew": 59,
-  "samples": []
+  "updatedCount": 1,
+  "citedNew": 2,
+  "fallbackNew": 58,
+  "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    }
+  ]
 }
