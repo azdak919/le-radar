@@ -113,7 +113,7 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('now-playing radio', () => main(), [OUT_PATH]);
+}

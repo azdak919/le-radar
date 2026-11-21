@@ -33,13 +33,37 @@ fi
 # static-integrity (sinon tout bot échoue jusqu’au passage horaires radio).
 node scripts/seo-week-freshness.js --refresh
 
+log="$(mktemp)"
+set +e
 if [[ "$mode" == "full" ]]; then
   echo "bot-prepush-check: npm test (full, Playwright)…"
   npx playwright install chromium 2>/dev/null || true
-  npm test
+  npm test >"$log" 2>&1
 else
   echo "bot-prepush-check: npm run check…"
-  npm run check
+  npm run check >"$log" 2>&1
+fi
+code=$?
+set -e
+cat "$log"
+if [[ "$code" -ne 0 ]]; then
+  # Sur Actions, un contrôle rouge ne pousse rien et n’envoie pas un courriel
+  # à chaque cron : une seule issue, les fichiers générés sont abandonnés.
+  if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+    key="contrôle ${GITHUB_WORKFLOW:-bots}"
+    node scripts/source-incident.js --state open --key "$key" --body-file "$log" || true
+    rm -f "$log"
+    git reset --hard HEAD
+    git clean -fd -e node_modules -e .npm
+    echo "bot-prepush-check: échec consigné, dernières données conservées"
+    exit 0
+  fi
+  rm -f "$log"
+  exit "$code"
+fi
+rm -f "$log"
+if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+  node scripts/source-incident.js --state close --key "contrôle ${GITHUB_WORKFLOW:-bots}" || true
 fi
 
 echo "bot-prepush-check: OK ($mode)"

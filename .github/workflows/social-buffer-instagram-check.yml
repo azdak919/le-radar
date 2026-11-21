@@ -19,6 +19,10 @@ permissions:
   contents: read
   issues: write
 
+concurrency:
+  group: social-buffer-instagram-check
+  cancel-in-progress: true
+
 jobs:
   probe:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository

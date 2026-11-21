@@ -201,11 +201,19 @@ function fetchSourceIsolated(src, referenceDate) {
 }
 
 function fetchText(url, redirects = 3, timeout = TIMEOUT) {
+  const { retryAsync } = require('./external-source-lib');
+  return retryAsync(
+    () => fetchTextOnce(url, redirects, timeout),
+    { retries: 2, minTimeout: 200, maxTimeout: 2500 },
+  ).catch(() => '');
+}
+
+function fetchTextOnce(url, redirects = 3, timeout = TIMEOUT) {
   if (!isAllowedFetchUrl(url)) {
     console.warn('fetch-news: URL bloquée (sécurité):', url);
     return Promise.resolve('');
   }
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     let settled = false;
     const done = (v) => {
       if (!settled) {
@@ -227,6 +235,12 @@ function fetchText(url, redirects = 3, timeout = TIMEOUT) {
             const next = new URL(res.headers.location, url).toString();
             return done(fetchText(next, redirects - 1, timeout));
           }
+          if (res.statusCode >= 500 || res.statusCode === 429 || res.statusCode === 408) {
+            res.resume();
+            const err = new Error(`HTTP ${res.statusCode}`);
+            err.status = res.statusCode;
+            return reject(err);
+          }
           if (res.statusCode >= 400) {
             res.resume();
             return done('');
@@ -241,16 +255,16 @@ function fetchText(url, redirects = 3, timeout = TIMEOUT) {
             }
           });
           res.on('end', () => done(data));
-          res.on('error', () => done(''));
+          res.on('error', () => reject(Object.assign(new Error('socket hang up'), { code: 'ECONNRESET' })));
         },
       );
-    } catch {
-      return done('');
+    } catch (err) {
+      return reject(err);
     }
-    req.on('error', () => done(''));
+    req.on('error', () => reject(Object.assign(new Error('ECONNRESET'), { code: 'ECONNRESET' })));
     req.on('timeout', () => {
       try { req.destroy(); } catch { /* ignore */ }
-      done('');
+      reject(Object.assign(new Error(`timeout ${url}`), { code: 'ETIMEDOUT' }));
     });
     // Deadline absolue : le timeout Node ne coupe pas une réponse qui « goutte ».
     setTimeout(() => {
@@ -1294,7 +1308,7 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('fil étudiant', () => main(), [NEWS_PATH]);
+}

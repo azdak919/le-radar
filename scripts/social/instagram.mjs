@@ -1,5 +1,5 @@
 // Compte Buffer réservé à Instagram (le.radar.ca). Jamais la clé du compte principal.
-// Publication de fil seulement (type post). Images 3:4, repli 4:5. Légendes de une-lib.
+// Publication de fil seulement (type post). Image 3:4 native seulement. Légendes de une-lib.
 // Montée lue dans data/social/policy.json. Au premier avertissement ou à la première erreur
 // Buffer, arrêt sans réessai. Sans BUFFER_INSTAGRAM_API_KEY : le canal est sauté, les autres réseaux continuent.
 import { execFile } from 'node:child_process';
@@ -28,7 +28,6 @@ export const INSTAGRAM_SECRET = 'BUFFER_INSTAGRAM_API_KEY';
 export const INSTAGRAM_METADATA = { instagram: { type: 'post' } };
 export const IG_IMAGE = {
   primary: { format: 'grille', width: 1080, height: 1440, ratio: '3:4' },
-  fallback: { format: 'portrait', width: 1080, height: 1350, ratio: '4:5' },
 };
 export const IG_CAPTION = { limit: 2200, maxHashtags: 5 };
 
@@ -123,10 +122,9 @@ export function instagramSlotAllowed({ now = Date.now(), slotId = '', format = '
   return { ok: true, day, phase, why: '' };
 }
 
-/** 3:4 d'abord, 4:5 seulement si le 3:4 n'a pas pu être produit. Jamais d'autre ratio. */
+/** Seulement le visuel 3:4 dessiné pour Instagram. Jamais le portrait d'un autre réseau. */
 export function chooseInstagramImage(images = {}) {
   if (images.grille) return { ...IG_IMAGE.primary, ref: images.grille, fallback: false };
-  if (images.portrait) return { ...IG_IMAGE.fallback, ref: images.portrait, fallback: true };
   return null;
 }
 

@@ -174,7 +174,7 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('horaires radio', () => main(), [OUT_PATH]);
+}

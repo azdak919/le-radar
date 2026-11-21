@@ -15,6 +15,25 @@ test.beforeEach(async ({ page }) => {
  * avec l’autre famille, dans l’ordre de chaleur.
  */
 
+/** Le JSON du mât arrive après le DOM. On attend qu'il ait peint, puis on coupe
+ *  le sondage : sinon il réécrit les cartes injectées et plus aucune n'est « en cours ». */
+async function settleSports(page) {
+  await expect.poll(() => page.evaluate(() => {
+    try { return typeof sportsSlides !== 'undefined' && sportsSlides.length > 0; }
+    catch { return false; }
+  })).toBe(true);
+  await page.route('**/sports-masthead.json*', (route) => route.abort());
+  await page.evaluate(() => {
+    if (typeof initMastheadSports !== 'undefined' && initMastheadSports._liveTimer) {
+      clearInterval(initMastheadSports._liveTimer);
+      initMastheadSports._liveTimer = 0;
+    }
+    try { pollLiveSportsJson = async () => {}; } catch { /* fonction absente */ }
+    try { pollRseqAndRerender = async () => {}; } catch { /* fonction absente */ }
+    try { applySportsPayload = () => {}; } catch { /* fonction absente */ }
+  });
+}
+
 function slide(key, mode, date, time, extra = {}) {
   const sport = extra.sport || 'football';
   return {
@@ -385,6 +404,7 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
     await expect.poll(() => page.evaluate(() => window.RadarTranslate?.getMode())).toBe(lang === 'en' ? 'en' : 'original');
     await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+    await settleSports(page);
     const measurements = [];
     for (const n of [7, 0, 1, 2, 3]) {
       const pool = Array.from({ length: n }, (_, i) => ({

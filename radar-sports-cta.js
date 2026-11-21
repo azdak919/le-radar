@@ -5182,9 +5182,20 @@ function sportsPublishBoardPayload() {
 /** Re-rendu minimal après un changement de score live (bot ou RSEQ direct). */
 function sportsRerenderAfterLiveChange(prevSig, prevKeys) {
   const nextSig = sportsBoardLiveSig();
-  const nextKeys = sportsVisibleLiveKeys();
   if (prevSig === nextSig) return;
-  if (prevKeys && prevKeys === nextKeys) {
+  // Les puces visibles peuvent tenir une copie du match. Si le slide source
+  // n’est plus en direct, on repeint : le raccourci « même clé » laisserait
+  // data-sports-live="1" après un résultat final.
+  const liveKeys = new Set();
+  for (const s of sportsSlides || []) {
+    if (sportsGameIsLive(s?.game || s?.ctaFrom?.game)) liveKeys.add(s.key || s.ctaFrom?.key || '');
+  }
+  const staleCopy = (sportsVisible || []).some((s) => {
+    const key = s?.key || s?.ctaFrom?.key || '';
+    return sportsGameIsLive(s?.game || s?.ctaFrom?.game) !== liveKeys.has(key);
+  });
+  const nextKeys = sportsVisibleLiveKeys();
+  if (!staleCopy && prevKeys && prevKeys === nextKeys) {
     patchVisibleLiveScorebugs();
     return;
   }

@@ -23,6 +23,10 @@ Les gabarits d’affiches eux-mêmes (mise en page réalisée par Azdak) sont so
 
 `scripts/vendor/dice-coefficient.js` — coefficient de Sørensen–Dice, d’après dice-coefficient 2.1.1, Titus Wormer, **MIT**. Le copyright est en tête du fichier. Compatible GPL-2.0-only. Voir aussi [`THIRD_PARTY.md`](THIRD_PARTY.md).
 
+## Réessai des sources externes
+
+`scripts/vendor/retry/` — bibliothèque **retry 0.13.1**, copyright 2011 Tim Koschützki et Felix Geisendörfer, **MIT** (`scripts/vendor/retry/LICENSE`). `scripts/external-source-lib.js` s’en sert pour le délai croissant des récoltes (RSEQ, radios, liens, rétro-crawl, fil). Le cache de la dernière réponse valide et le signalement par une seule issue sont du code du dépôt (GPL-2.0-only). Aucun paquet Apache-2.0 n’est ajouté aux dépendances distribuées.
+
 ## Bibliothèque QR
 
 `scripts/vendor/qrcodegen-v1.8.0.js` — QR Code generator, Project Nayuki, **MIT**. Le copyright et l’autorisation MIT sont conservés en tête du fichier. Compatible avec une distribution GPL v2 du code qui l’utilise.
