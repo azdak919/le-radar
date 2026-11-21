@@ -184,37 +184,42 @@
   min-width: 0;
 }
 
-/* Réseaux de chaque côté de la marque (même liste que le pied, sans RSS).
-   Sous 720 px ils cèdent la place aux outils du mât et restent au pied. */
+/* Réseaux : rangée compacte centrée sous la devise (variante C).
+   Même liste que le pied, sans RSS. Le café des outils est retiré :
+   Buy Me a Coffee est déjà la première icône de cette rangée.
+   Visibles aussi sur téléphone (sous le logo, au-dessus des outils,
+   la devise étant masquée sous 600 px). Cibles 44 px. */
 .masthead-brand:has(.masthead-social) {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: start;
-  column-gap: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .masthead-brand:has(.masthead-social) > .wordmark {
-  width: auto;
+  width: 100%;
   max-width: 100%;
-  grid-column: 2;
 }
-.masthead-social { display: contents; }
-.masthead-social__group {
+.masthead-social--under-tagline {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 6px;
+}
+.masthead-social--under-tagline .masthead-social__group {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  justify-content: center;
   gap: 0;
   min-width: 0;
-  padding-top: 18px;
-}
-.masthead-social__group--left {
-  grid-column: 1;
-  justify-self: end;
-  justify-content: flex-end;
-}
-.masthead-social__group--right {
-  grid-column: 3;
-  justify-self: start;
-  justify-content: flex-start;
+  box-sizing: border-box;
+  /* Pastille de verre, même famille que la devise (fond photo ci-dessous). */
+  padding: 2px 8px;
+  border-radius: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--rule, rgba(0, 0, 0, 0.12)) 80%, transparent);
+  background: color-mix(in srgb, var(--bg, #fff) 62%, transparent);
+  backdrop-filter: blur(8px) saturate(1.05);
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 .masthead-social a {
   display: inline-flex;
@@ -242,10 +247,25 @@
   outline-offset: 2px;
   color: var(--accent);
 }
-@media (max-width: 719.98px) {
-  .masthead-social { display: none; }
-  .masthead-brand:has(.masthead-social) { display: block; }
-  .masthead-brand:has(.masthead-social) > .wordmark { width: 100%; }
+/* 8 × 44 px = 352 px : sous ~360 px la rangée passe en 4+4 pour
+   garder les cibles 44 px sans déborder. */
+@media (max-width: 359.98px) {
+  .masthead-social--under-tagline .masthead-social__group {
+    flex-wrap: wrap;
+    box-sizing: content-box;
+    width: calc(4 * 44px);
+    padding: 2px 8px;
+  }
+}
+/* À 390 px, 8 × 44 tient tout juste : pas de padding horizontal dans la pastille. */
+@media (min-width: 360px) and (max-width: 399.98px) {
+  .masthead-social--under-tagline .masthead-social__group {
+    padding: 2px 0;
+  }
+}
+@media (max-width: 599.98px) {
+  .masthead-brand:has(.masthead-social) { gap: var(--mat-gap, 8px); }
+  .masthead-social--under-tagline { margin-top: 0; }
 }
 @media print {
   .masthead-social { display: none !important; }
@@ -460,9 +480,9 @@ html[data-script-dir="rtl"] .wordmark-full {
 }
 
 /* Téléphone (≤599 px, site et app Android) : le mât s’empile au lieu de
-   coincer la date et 9 boutons sur une seule rangée au-dessus du logo.
-   Ordre : date et heure, logo, slogan, puis une rangée de boutons qui tient
-   toujours dans la largeur (aucun chevauchement ni débordement à 360 px).
+   coincer la date et les boutons sur une seule rangée au-dessus du logo.
+   Ordre : date et heure, logo, réseaux (sous le logo ; le slogan est masqué),
+   puis une rangée de boutons qui tient dans la largeur.
    Hors accueil, l’app garde sa barre compacte (app-site.css, plus spécifique). */
 @media (max-width: 599.98px) {
   .masthead-inner {

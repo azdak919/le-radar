@@ -80,27 +80,97 @@ for (const [path, theme] of PAGES) {
   }
 }
 
-test('mât : réseaux de chaque côté de la marque, sans RSS, masqués sous 720 px', async ({ page }) => {
+test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur téléphone', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('radar-theme', 'light'));
   await page.goto('/', { waitUntil: 'load' });
+  await page.evaluate(() => document.querySelector('#bg-photo-layer')?.classList.add('loaded'));
   const expected = ['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr'];
   await expect(page.locator('.masthead-rss')).toHaveCount(0);
+  await expect(page.locator('.masthead-coffee')).toHaveCount(0);
   await expect(page.locator('.masthead-social a[data-social]')).toHaveCount(8);
+  await expect(page.locator('.masthead-social--under-tagline')).toHaveCount(1);
+  await expect(page.locator('.masthead-social__group--left, .masthead-social__group--right')).toHaveCount(0);
   const ids = await page.locator('.masthead-social a[data-social]').evaluateAll((as) => as.map((a) => a.dataset.social));
   expect(ids).toEqual(expected);
 
-  for (const width of [390, 768, 1440]) {
+  for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    const visible = page.locator('.masthead-social a[data-social]').first();
-    if (width < 720) {
-      await expect(visible, `${width}px : réseaux du mât masqués`).toBeHidden();
+    await page.locator('.masthead-social a[data-social]').first().waitFor({ state: 'visible' });
+    const layout = await page.evaluate(() => {
+      const overlaps = (a, b, pad = 1) => !(
+        a.right <= b.left + pad || a.left >= b.right - pad
+        || a.bottom <= b.top + pad || a.top >= b.bottom - pad
+      );
+      const nav = document.querySelector('.masthead-social--under-tagline');
+      const group = nav?.querySelector('.masthead-social__group');
+      const links = [...document.querySelectorAll('.masthead-social a[data-social]')];
+      const boxes = links.map((a) => a.getBoundingClientRect());
+      const rows = [];
+      let y = null;
+      let n = 0;
+      for (const b of boxes) {
+        const top = Math.round(b.top);
+        if (y === null || Math.abs(top - y) <= 2) {
+          n += 1;
+          y = y ?? top;
+        } else {
+          rows.push(n);
+          n = 1;
+          y = top;
+        }
+      }
+      if (n) rows.push(n);
+      const wordmark = document.querySelector('.masthead-brand > .wordmark');
+      const mark = document.querySelector('.wordmark-mark');
+      const tag = document.querySelector('.wordmark-full');
+      const tagCs = tag ? getComputedStyle(tag) : null;
+      const tagVisible = !!(tag && tagCs && tagCs.position !== 'absolute' && tagCs.clip === '' && !tagCs.clipPath.includes('inset'));
+      const actions = document.querySelector('.masthead-actions');
+      const tools = [...document.querySelectorAll('.masthead-actions .masthead-icon, .masthead-bg-shuffle')]
+        .map((el) => el.getBoundingClientRect())
+        .filter((b) => b.width > 0 && b.height > 0);
+      const credit = document.querySelector('.bg-photo-credit');
+      const creditBox = credit && credit.getBoundingClientRect().width > 1 ? credit.getBoundingClientRect() : null;
+      const navBox = nav.getBoundingClientRect();
+      const groupBox = group.getBoundingClientRect();
+      const wordBox = wordmark.getBoundingClientRect();
+      const markBox = mark.getBoundingClientRect();
+      const hitsTools = tools.filter((t) => overlaps(navBox, t));
+      const hitsCredit = creditBox ? overlaps(navBox, creditBox) : false;
+      const midNav = (navBox.left + navBox.right) / 2;
+      const midWord = (wordBox.left + wordBox.right) / 2;
+      const overflow = document.documentElement.scrollWidth - window.innerWidth;
+      const small = boxes.filter((b) => b.height < 44 || b.width < 44).length;
+      return {
+        rows,
+        visible: boxes.every((b) => b.width > 0 && b.height > 0),
+        small,
+        overflow,
+        midDelta: Math.abs(midNav - midWord),
+        belowMark: navBox.top + 1 >= markBox.bottom,
+        belowTag: !tagVisible || navBox.top + 1 >= tag.getBoundingClientRect().bottom,
+        aboveActions: !actions || navBox.bottom <= actions.getBoundingClientRect().top + 1
+          || window.innerWidth >= 600,
+        hitsTools: hitsTools.length,
+        hitsCredit,
+        tagVisible,
+        coffee: !!document.querySelector('.masthead-coffee'),
+      };
+    });
+    expect(layout.visible, `${width}px : réseaux du mât visibles`).toBe(true);
+    expect(layout.small, `${width}px : cibles 44 px`).toBe(0);
+    expect(layout.overflow, `${width}px : débordement de page`).toBeLessThanOrEqual(1);
+    expect(layout.midDelta, `${width}px : rangée centrée sous la marque`).toBeLessThanOrEqual(8);
+    expect(layout.belowMark, `${width}px : sous le logo`).toBe(true);
+    expect(layout.belowTag, `${width}px : sous la devise`).toBe(true);
+    expect(layout.aboveActions, `${width}px : au-dessus des outils`).toBe(true);
+    expect(layout.hitsTools, `${width}px : pas de chevauchement avec les outils`).toBe(0);
+    expect(layout.hitsCredit, `${width}px : pas de chevauchement avec le crédit photo`).toBe(false);
+    expect(layout.coffee, `${width}px : bouton café retiré`).toBe(false);
+    if (width <= 320) {
+      expect(layout.rows, `${width}px : deux lignes 4+4`).toEqual([4, 4]);
     } else {
-      await expect(visible, `${width}px : réseaux du mât visibles`).toBeVisible();
-      const small = await page.locator('.masthead-social a[data-social]').evaluateAll((as) => as.filter((a) => {
-        const b = a.getBoundingClientRect();
-        return b.height < 44 || b.width < 44;
-      }).length);
-      expect(small, `${width}px : cibles 44 px`).toBe(0);
+      expect(layout.rows, `${width}px : une seule rangée`).toEqual([8]);
     }
   }
 });

@@ -1,6 +1,7 @@
 /**
  * LE RADAR — icônes des réseaux sociaux dans le pied de page partagé (.site-foot)
- * et, hors téléphone, de chaque côté de la marque dans le mât.
+ * et en rangée compacte sous la devise dans le mât (sans RSS, visibles aussi
+ * sur téléphone).
  * Tracés : Simple Icons (CC0) et Bootstrap Icons (MIT, LinkedIn) — voir assets/social-icons/LICENSE.md.
  * Buy Me a Coffee : Simple Icons v16.36.0 (CC0) ; page de don, pas un profil
  * (pas de rel="me", pas dans sameAs). Il n’apparaît que sur LE-RADAR.
@@ -74,25 +75,21 @@
     return SOCIAL_LINKS.filter((s) => s.enabled && s.id !== 'rss');
   }
   function injectMastheadSocial() {
-    document.querySelectorAll('a.masthead-rss').forEach((el) => el.remove());
+    document.querySelectorAll('a.masthead-rss, a.masthead-coffee').forEach((el) => el.remove());
     const links = mastheadNetworkLinks();
     if (!links.length) return;
-    const mid = Math.ceil(links.length / 2);
     document.querySelectorAll('.masthead-brand').forEach((brand) => {
       if (brand.querySelector('.masthead-social')) return;
       const wordmark = brand.querySelector(':scope > .wordmark');
       if (!wordmark) return;
       const nav = document.createElement('nav');
-      nav.className = 'masthead-social';
+      nav.className = 'masthead-social masthead-social--under-tagline';
       nav.setAttribute('aria-label', 'LE-RADAR.ca sur les réseaux sociaux');
-      const left = document.createElement('div');
-      left.className = 'masthead-social__group masthead-social__group--left';
-      const right = document.createElement('div');
-      right.className = 'masthead-social__group masthead-social__group--right';
-      for (const s of links.slice(0, mid)) left.appendChild(buildAnchor(s));
-      for (const s of links.slice(mid)) right.appendChild(buildAnchor(s));
-      nav.append(left, right);
-      wordmark.before(nav);
+      const group = document.createElement('div');
+      group.className = 'masthead-social__group';
+      for (const s of links) group.appendChild(buildAnchor(s));
+      nav.append(group);
+      wordmark.after(nav);
     });
   }
   const COL_LABELS = {
