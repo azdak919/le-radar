@@ -1,7 +1,13 @@
 import { pathToFileURL } from 'node:url';
 
 export function verificationPassed({ full, staticResult, criticalResult, fullResult }) {
-  return staticResult === 'success' && (full ? fullResult : criticalResult) === 'success';
+  if (staticResult !== 'success') return false;
+  if (full) {
+    // PR : critical et full tournent. Dispatch full : critical est skipped.
+    return fullResult === 'success'
+      && (criticalResult === 'success' || criticalResult === 'skipped');
+  }
+  return criticalResult === 'success';
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
