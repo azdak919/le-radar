@@ -18,7 +18,7 @@ fs.mkdirSync(outDir, { recursive: true });
 const SEX = { M: '(H)', F: '(F)' };
 const SPORT_FR = { football: 'Football', hockey: 'Hockey', basketball: 'Basketball', volleyball: 'Volleyball', soccer: 'Soccer', rugby: 'Rugby', badminton: 'Badminton', sailing: 'Voile', cheerleading: 'Cheerleading', 'flag-football': 'Flag football' };
 
-function lead(kind) {
+function lead(kind, variant) {
   const news = JSON.parse(fs.readFileSync(newsPath, 'utf8'));
   const items = (news.items || []).filter(a => a.lang !== 'en' && a.title && a.source && (a.imageLocal || a.image));
   const it = items[kind === 'soir' ? 1 : 0] || items[0];
@@ -26,6 +26,7 @@ function lead(kind) {
   return {
     slot: { label: kind === 'soir' ? 'La une du soir' : 'La une du matin', dayLabel: 'Dimanche 22 novembre' },
     items: [{ title: it.title, source: it.source, credit: it.sourceImageCredit || it.sourceImageCreator || '', images: [img], focalY: 0.38 }],
+    variant: variant || 'couverture',
   };
 }
 
@@ -56,6 +57,9 @@ const shots = [
   ['instagram-matin.jpg', lead('matin')],
   ['instagram-soir.jpg', lead('soir')],
   ['instagram-sport.jpg', sportModel()],
+  ['variante-couverture.jpg', lead('soir', 'couverture')],
+  ['variante-titre.jpg', lead('soir', 'titre')],
+  ['variante-affiche.jpg', lead('soir', 'affiche')],
 ];
 
 const port = 4217;

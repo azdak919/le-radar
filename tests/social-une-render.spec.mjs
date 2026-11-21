@@ -141,6 +141,27 @@ for (const kind of ['matin', 'soir']) {
   });
 }
 
+test('instagram 3:4 : les variantes titre et affiche gardent le titre dans le carré @ci-critical', async ({ page }) => {
+  await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+  await page.setViewportSize({ width: 1080, height: 1440 });
+  await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+  const model = { slot: { label: 'La une du soir', kind: 'soir', dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
+  const sizes = {};
+  for (const variant of ['couverture', 'titre', 'affiche']) {
+    await page.evaluate((a) => window.renderUne(a), { model: { ...model, variant }, format: 'grille' });
+    sizes[variant] = await page.evaluate(() => {
+      const c = document.getElementById('card').getBoundingClientRect();
+      const e = document.querySelector('.ig-title');
+      const r = e.getBoundingClientRect();
+      return { size: parseFloat(getComputedStyle(e).fontSize), top: r.top - c.top, bottom: r.bottom - c.top, copy: getComputedStyle(document.querySelector('.ig-copy')).backgroundColor };
+    });
+    expect(sizes[variant].top).toBeGreaterThanOrEqual(180);
+    expect(sizes[variant].bottom).toBeLessThanOrEqual(1260);
+  }
+  expect(sizes.titre.size).toBeGreaterThan(sizes.couverture.size);
+  expect(sizes.affiche.copy).toBe('rgb(0, 0, 0)');
+});
+
 test('instagram 3:4 sport : trois résultats réels dans le carré @ci-critical', async ({ page }) => {
   await page.setViewportSize({ width: 1080, height: 1440 });
   await page.goto('/affiches/social-une.html', { waitUntil: 'load' });

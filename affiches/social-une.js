@@ -131,12 +131,15 @@
   }
   function fitTitle(node, floor) {
     let size = parseFloat(getComputedStyle(node).fontSize);
-    while (node.scrollHeight > node.clientHeight + 2 && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
+    // line-clamp laisse souvent 3 à 6 px entre scrollHeight et clientHeight
+    // même quand le texte tient : ne pas descendre jusqu'au plancher pour ça.
+    while (node.scrollHeight > node.clientHeight + 8 && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
   }
   // Affiche Instagram native 3:4 : une photo, un titre, le média, le crédit. Rien d'inventé.
   async function renderGrille(card, model) {
     card.className = 'card grille';
-    const root = el('div', 'ig');
+    const variant = model.variant === 'titre' || model.variant === 'affiche' ? model.variant : 'couverture';
+    const root = el('div', 'ig ' + variant);
     const top = el('div', 'ig-edge'); top.append(el('span', '', model.slot.dayLabel || ''));
     const safe = el('div', 'ig-safe');
     const brand = brandBar();
