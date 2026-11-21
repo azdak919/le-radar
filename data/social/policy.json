@@ -146,6 +146,12 @@
    },
    "maxItems": 4,
    "maxNewsAgeH": 6,
+   "panorama": {
+    "enabled": false,
+    "instagram": false,
+    "x": false,
+    "_doc": "OFF. Une photo réelle, assez large, découpée en 2 à 4 panneaux jointifs. Instagram : 1080×1440. X : 1080×1080, 2 côte à côte ou 4 en grille. Rien n'est envoyé tant que enabled est false."
+   },
   "prepared": {
    "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que enabled n’est pas true. Instagram : compte Buffer distinct (secret BUFFER_INSTAGRAM_API_KEY), fil seulement (type post), image 3:4 1080×1440 ou repli 4:5, légende sans lien cliquable. La présentation du 21 novembre 2026 est déjà publiée à la main : ne pas la republier. La montée part le 22 novembre (jour 1).",
    "instagram": {
