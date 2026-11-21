@@ -71,6 +71,7 @@ assert.equal(deInstitution('Dawson College'), 'du Collège Dawson');
 assert.equal(deInstitution("Bishop's University"), 'de l’Université Bishop’s');
 assert.equal(aiText({ result: { response: 'x' } }), 'x');
 assert.ok(enAccrocheText({ ...it, author: 'Olivia Epstein', enAccroche: { phrase: 'analyse la série.', institutionFr: '' } }, [], 300, { photo: false }).includes('sous la plume d’Olivia Epstein, analyse'), 'élision');
+assert.ok(!enAccrocheText({ ...it, author: 'The editorial team', enAccroche: { phrase: 'analyse la série.', institutionFr: '' } }, [], 300, { photo: false }).includes('plume'), 'auteur générique omis');
 
 // Appel IA simulé : les deux formats de réponse Workers AI.
 for (const shape of ['openai', 'response']) {

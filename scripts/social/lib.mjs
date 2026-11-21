@@ -244,7 +244,8 @@ export function enLead(it, accounts = [], inst = '') {
   const name = String(it.author || '').trim();
   const parts = [src ? `${media} (${src.handle})` : media];
   if (inst) parts.push(`média étudiant ${inst}`);
-  if (name && norm(name) !== norm(media)) parts.push(`sous la plume ${/^[AEIOUYÀÂÉÈÊÎÔÛ]/i.test(name) ? 'd’' : 'de '}${au ? `${name} (${au.handle})` : name}`); // « d’Olivia », « de Nicolas »
+  const generic = /\b(editorial|team|staff|board|desk|editors?|rédaction|équipe)\b/i.test(name); // « The editorial team » : pas une plume
+  if (name && !generic && norm(name) !== norm(media)) parts.push(`sous la plume ${/^[AEIOUYÀÂÉÈÊÎÔÛ]/i.test(name) ? 'd’' : 'de '}${au ? `${name} (${au.handle})` : name}`); // « d’Olivia », « de Nicolas »
   return parts.join(', ');
 }
 /**
