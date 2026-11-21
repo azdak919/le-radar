@@ -54,31 +54,42 @@ export function resolveEditionClock({ day = '', at = '', edition = 'auto', cfg =
   return { now, at: hhmm, backfill, pastDate, nominal };
 }
 
-/** Porte du workflow : rien sans publish = true ; sinon édition due (pas encore publiée ni sautée) ou mise à jour tardive.
- *  `backfill` (--day) : matin ou soir à l’horloge fournie, même hors fenêtre du jour. Une édition déjà dans l’index ne repart pas. */
+/** Un passage « publier » doit laisser une page, ou un saut noté (aucun article). Sinon le run échoue. */
+export function publicationGuard({ mode = '', produced = false, skipped = false } = {}) {
+  if (mode !== 'publier') return { ok: true, why: 'pas une publication due' };
+  if (produced) return { ok: true, why: 'édition écrite' };
+  if (skipped) return { ok: true, why: 'saut enregistré (aucun article)' };
+  return { ok: false, why: 'édition due, aucune page et aucun saut' };
+}
+
+/** Porte du workflow : rien sans publish = true ; sinon édition due (fenêtre ouverte ou créneau manqué
+ *  encore dans maxLookbackHours), ou mise à jour tardive. `backfill` (--day) : matin ou soir à l’horloge
+ *  fournie, même hors fenêtre du jour. Une édition déjà dans l’index ne repart pas. */
 export function gate({ now = Date.now(), cfg = loadConfig(), index = [], state = {}, forced = '', backfill = false, wall = Date.now() } = {}) {
   const withId = (g) => {
     const id = g.edition === 'matin' || g.edition === 'soir' ? L.editionFor(g.edition, now, cfg).key : '';
-    return { ...g, id };
+    return { ...g, id: g.id || id, day: g.day || '' };
   };
-  if (!cfg.publish) return withId({ due: false, edition: '', mode: '', why: 'publication désactivée (data/revue/config.json publish = false)' });
+  if (!cfg.publish) return withId({ due: false, edition: '', mode: '', id: '', day: '', why: 'publication désactivée (data/revue/config.json publish = false)' });
   if (backfill) {
-    if (forced !== 'matin' && forced !== 'soir') return { due: false, edition: '', mode: '', id: '', why: 'rattrapage : préciser l’édition matin ou soir' };
+    if (forced !== 'matin' && forced !== 'soir') return { due: false, edition: '', mode: '', id: '', day: '', why: 'rattrapage : préciser l’édition matin ou soir' };
     const id = L.editionFor(forced, now, cfg).key;
-    if (index.some(r => r.id === id)) return { due: false, edition: forced, mode: '', id, why: `${id} déjà publiée` };
-    if (now > wall + 60_000) return { due: false, edition: forced, mode: '', id, why: `${id} : la date est dans le futur` };
-    return { due: true, edition: forced, mode: 'publier', id, why: `${id} rattrapage à l’heure normale` };
+    if (index.some(r => r.id === id)) return { due: false, edition: forced, mode: '', id, day: '', why: `${id} déjà publiée` };
+    if (now > wall + 60_000) return { due: false, edition: forced, mode: '', id, day: '', why: `${id} : la date est dans le futur` };
+    return { due: true, edition: forced, mode: 'publier', id, day: L.mtl(now).ymd, why: `${id} rattrapage à l’heure normale` };
   }
-  if (forced && forced !== 'auto') return withId({ due: true, edition: forced, mode: 'publier', why: 'édition forcée (déclenchement manuel)' });
-  const e = L.editionAt(now, cfg);
-  if (e) {
-    if (index.some(r => r.id === e.key)) return withId({ due: false, edition: e.id, mode: '', why: `${e.key} déjà publiée` });
-    if (state[e.key]?.skipped) return withId({ due: false, edition: e.id, mode: '', why: `${e.key} déjà sautée (${state[e.key].why})` });
-    return withId({ due: true, edition: e.id, mode: 'publier', why: `${e.key} due` });
+  if (forced && forced !== 'auto') return withId({ due: true, edition: forced, mode: 'publier', day: '', why: 'édition forcée (déclenchement manuel)' });
+  const owed = L.owedEditions(now, cfg, index, state);
+  if (owed.length) {
+    const slot = owed[0];
+    return {
+      due: true, edition: slot.id, mode: 'publier', id: slot.key, day: slot.catchup ? slot.day : '',
+      why: slot.catchup ? `${slot.key} due (fenêtre manquée)` : `${slot.key} due`,
+    };
   }
   const r = L.refreshAt(now, cfg);
-  if (r && index.some(x => x.id === r.key)) return withId({ due: true, edition: 'soir', mode: 'rafraichir', why: `${r.key} : mise à jour tardive des résultats` });
-  return withId({ due: false, edition: '', mode: '', why: `hors des fenêtres : ${tz(now)}` });
+  if (r && index.some(x => x.id === r.key)) return { due: true, edition: 'soir', mode: 'rafraichir', id: r.key, day: '', why: `${r.key} : mise à jour tardive des résultats` };
+  return { due: false, edition: '', mode: '', id: '', day: '', why: `hors des fenêtres : ${tz(now)}` };
 }
 
 /** Taille de l'image (enclosure RSS) : HEAD, 0 si inconnue. */
@@ -213,7 +224,7 @@ async function main() {
   if (has('gate')) {
     const g = gate({ now, cfg, index, state, forced: editionArg, backfill: clock.backfill, wall });
     console.log(`Porte : ${g.why}`);
-    if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `due=${g.due}\nedition=${g.edition}\nmode=${g.mode}\nid=${g.id}\n`);
+    if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `due=${g.due}\nedition=${g.edition}\nmode=${g.mode}\nid=${g.id}\nday=${g.day || ''}\n`);
     return;
   }
   if (has('rebuild')) {
@@ -234,9 +245,48 @@ async function main() {
     fetchWeather: has('sans-meteo') || process.env.REVUE_WEATHER === '0' || clock.pastDate ? null : () => fetchWeather(),
   };
   console.log(`IA : ${aiEnabled() ? 'active (Workers AI)' : 'désactivée → gabarit déterministe'}`);
+  if (has('drain')) {
+    const slots = L.owedEditions(now, cfg, index, state);
+    let produced = false;
+    let skipped = false;
+    for (const slot of slots) {
+      const r = await generate(slot.id, slot.now, { ...io, refresh: false, nominal: slot.catchup });
+      summary(`Revue (publication réelle) : ${slot.key} ${r.status} — ${r.why}`);
+      if (r.status === 'refusée' || r.problems?.length) {
+        for (const p of r.problems || [`${slot.key} refusée`]) console.log(`::error::${p}`);
+        process.exit(1);
+      }
+      if (r.status === 'sautée') {
+        state[slot.key] = { skipped: true, why: r.why, at: new Date(wall).toISOString() };
+        skipped = true;
+        continue;
+      }
+      if (r.status !== 'publiée' || !r.model) {
+        console.error(`::error::${slot.key} : statut ${r.status || 'inconnu'}, rien n’est publié`);
+        process.exit(1);
+      }
+      if (r.model.image && !r.model.image.length) r.model.image.length = await imageLength(r.model.image.url);
+      writeOutputs(out, { model: r.model, index, reviews, publish: cfg.publish, now: slot.now, cfg });
+      summary(`→ ${r.model.url} (${r.model.generator})`);
+      if (process.env.GITHUB_ENV) fs.appendFileSync(process.env.GITHUB_ENV, `REVUE_PUBLISHED_ID=${r.model.id}\n`);
+      produced = true;
+      break;
+    }
+    if (skipped) {
+      for (const k of Object.keys(state)) if (k < L.addDays(L.mtl(wall).ymd, -14)) delete state[k];
+      fs.writeFileSync(statePath, JSON.stringify(state, null, 1) + '\n');
+    }
+    const guard = publicationGuard({ mode: 'publier', produced, skipped });
+    if (!guard.ok) { console.error(`::error::${guard.why}`); process.exit(1); }
+    if (!produced) summary('Revue : créneaux dus sans article, sauts enregistrés.');
+    return;
+  }
   const r = await generate(io.refresh ? 'soir' : editionArg, now, io);
   summary(`Revue (${sample ? 'EXEMPLE hors dépôt' : 'publication réelle'}) : ${r.status} — ${r.why}`);
-  if (r.problems?.length) { for (const p of r.problems) console.log(`::error::${p}`); process.exitCode = sample ? 1 : 0; return; }
+  if (r.problems?.length || r.status === 'refusée') {
+    for (const p of r.problems || ['revue refusée']) console.log(`::error::${p}`);
+    process.exit(1);
+  }
   if (r.status === 'sautée') {
     const e = editionArg !== 'auto' ? L.editionFor(editionArg, now, cfg) : L.editionAt(now, cfg);
     if (!sample && e && !io.refresh) { state[e.key] = { skipped: true, why: r.why, at: new Date(now).toISOString() }; for (const k of Object.keys(state)) if (k < L.addDays(L.mtl(now).ymd, -14)) delete state[k]; fs.writeFileSync(statePath, JSON.stringify(state, null, 1) + '\n'); }
@@ -246,5 +296,6 @@ async function main() {
   if (r.model.image && !r.model.image.length) r.model.image.length = await imageLength(r.model.image.url);
   writeOutputs(out, { model: r.model, index, reviews, publish: !sample && cfg.publish, now, cfg });
   summary(`→ ${sample ? path.join(out, r.model.path, 'index.html') : r.model.url} (${r.model.generator})`);
+  if (!sample && process.env.GITHUB_ENV) fs.appendFileSync(process.env.GITHUB_ENV, `REVUE_PUBLISHED_ID=${r.model.id}\n`);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname) await main();
