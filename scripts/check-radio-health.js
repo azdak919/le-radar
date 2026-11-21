@@ -3,6 +3,7 @@
 const fs=require('fs');
 const path=require('path');
 const lib=require('./radio-health-lib');
+const { retryAsync } = require('./external-source-lib');
 const silence=require('./stream-silence-lib');
 const discovery=require('./discover-streams');
 const ROOT=path.join(__dirname,'..');
@@ -42,7 +43,7 @@ async function publishedAlternatives(radio,{probe=lib.requestSample}={}) {
 }
 async function checkRadio(radio,previous={},deps={}) {
   const now=deps.now??Date.now(),inspect=deps.inspect||lib.inspect;
-  let result=await inspect(radio.stream,previous,{...deps,now});
+  let result=await retryAsync(()=>inspect(radio.stream,previous,{...deps,now}),{retries:deps.retries??2,minTimeout:deps.minTimeout??200,maxTimeout:2000});
   const primary=result;
   if(result.state!=='working'||result.expiry==='2d') {
     // L'absence du décodeur est un incident du contrôle, pas une panne de station.
@@ -124,4 +125,7 @@ async function main() {
   }
 }
 module.exports={publishedAlternatives,checkRadio,checkAll,checkCandidates};
-if(require.main===module)main().catch(e=>{console.error(e.message);process.exitCode=1;});
+if(require.main===module){
+  const {cliHarvest}=require('./external-source-lib');
+  cliHarvest('flux radio',()=>main(),[path.join(ROOT,'radios.json'),path.join(ROOT,'data/radio-health.json'),path.join(ROOT,'radios-candidates.json')]);
+}

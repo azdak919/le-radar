@@ -376,40 +376,47 @@ function selectScheduleGrid({ grid, sources, previous, now, weekOf, floor, force
 }
 
 // ─── Adaptateurs de sources ─────────────────────────────────────────────────────
-async function fetchJson(url, { fetchImpl = globalThis.fetch, timeoutMs = 15000 } = {}) {
-  if (typeof fetchImpl !== 'function') throw new Error('fetch indisponible');
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+const { fetchExternal } = require('./external-source-lib');
+
+async function fetchJson(url, opts = {}) {
+  const { fetchImpl = globalThis.fetch, timeoutMs = 15000 } = opts;
   try {
-    const res = await fetchImpl(url, {
-      signal: ctrl.signal,
-      redirect: 'follow',
-      headers: { 'User-Agent': 'LE-RADAR-ScheduleBot/1.0', Accept: 'application/json' },
+    return await fetchExternal(url, {
+      ...opts,
+      fetchImpl,
+      timeoutMs,
+      expect: 'json',
+      headers: { 'User-Agent': 'LE-RADAR-ScheduleBot/1.0', Accept: 'application/json', ...(opts.headers || {}) },
+      retries: opts.retries ?? 2,
+      minTimeout: opts.minTimeout ?? 200,
+      maxTimeout: opts.maxTimeout ?? 4000,
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } finally {
-    clearTimeout(timer);
+  } catch (err) {
+    if (err && err.status) throw new Error(`HTTP ${err.status}`);
+    throw err;
   }
 }
 
-async function fetchText(url, { fetchImpl = globalThis.fetch, timeoutMs = 20000 } = {}) {
-  if (typeof fetchImpl !== 'function') throw new Error('fetch indisponible');
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+async function fetchText(url, opts = {}) {
+  const { fetchImpl = globalThis.fetch, timeoutMs = 20000 } = opts;
   try {
-    const res = await fetchImpl(url, {
-      signal: ctrl.signal,
-      redirect: 'follow',
+    return await fetchExternal(url, {
+      ...opts,
+      fetchImpl,
+      timeoutMs,
+      expect: 'text',
       headers: {
         'User-Agent': BROWSER_UA,
         Accept: 'text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8',
+        ...(opts.headers || {}),
       },
+      retries: opts.retries ?? 2,
+      minTimeout: opts.minTimeout ?? 200,
+      maxTimeout: opts.maxTimeout ?? 4000,
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.text();
-  } finally {
-    clearTimeout(timer);
+  } catch (err) {
+    if (err && err.status) throw new Error(`HTTP ${err.status}`);
+    throw err;
   }
 }
 

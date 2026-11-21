@@ -29,6 +29,7 @@ const {
 } = require('./historical-retro-crawl-lib');
 const { isFirebaseSource, fetchFirebaseArchive } = require('./firebase-list-fetcher');
 const { isAllowedFetchUrl } = require('./url-security-lib');
+const { retryAsync } = require('./external-source-lib');
 
 const ROOT = path.join(__dirname, '..');
 const SOURCES_PATH = path.join(ROOT, 'news-sources.json');
@@ -78,10 +79,16 @@ async function wordpressPage(source, page, perPage, afterIso) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20_000);
   try {
-    const response = await fetch(endpoint, {
-      headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
-      redirect: 'follow', signal: controller.signal,
-    });
+    const response = await retryAsync(async () => {
+      const res = await fetch(endpoint, {
+        headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
+        redirect: 'follow', signal: controller.signal,
+      });
+      if (res.status >= 500 || res.status === 429 || res.status === 408) {
+        throw Object.assign(new Error(`HTTP ${res.status}`), { status: res.status });
+      }
+      return res;
+    }, { retries: 2, minTimeout: 200, maxTimeout: 4000 });
     const totalPages = Number(response.headers.get('x-wp-totalpages'));
     if (response.status === 400 && page > 1) return { ok: true, posts: [], totalPages: Number.isFinite(totalPages) ? totalPages : page - 1 };
     if (!response.ok && (response.status === 401 || response.status === 403 || response.status === 404)) {
@@ -267,7 +274,7 @@ async function main() {
   console.log(`Terminé : ${added} ajout(s), ${updated} mise(s) à jour. Le fil vivant n’a pas été modifié.`);
 }
 
-main().catch((error) => {
-  console.error(`Rétro-crawl interrompu : ${error?.message || error}`);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('rétro-crawl historique', () => main(), [STATE_PATH]);
+}

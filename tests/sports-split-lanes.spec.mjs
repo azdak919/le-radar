@@ -7,6 +7,11 @@ test.beforeEach(async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-11-08T18:59:00-05:00'));
   await page.route('**/assets/news-images/**', r => r.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"/>' }));
   await page.route('https://**/*', r => r.abort());
+  // Le JSON du mât est same-origin. S’il arrive après l’injection du test,
+  // il réécrit les cartes (direct perdu, ou direct qui reste « en cours »).
+  await page.route('**/sports-masthead.json*', r => r.abort());
+  await page.route('**/sports.json*', r => r.abort());
+  await page.route('**/sports-live-window.json*', r => r.abort());
 });
 
 /**

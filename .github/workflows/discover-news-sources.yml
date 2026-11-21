@@ -19,6 +19,7 @@ jobs:
       contents: write
       actions: write
       issues: write
+      issues: write
 
     steps:
       # Partir du main ACTUEL : en file data-writers, le sha de l'événement

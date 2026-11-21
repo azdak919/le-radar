@@ -17,6 +17,7 @@ const https = require('https');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { isAllowedFetchUrl } = require('./url-security-lib');
+const { retryAsync, isTransientError } = require('./external-source-lib');
 const { htmlHeaders } = require('./http-bot-headers');
 const {
   articleLinkKey,
@@ -94,15 +95,29 @@ function requestOnce(url, method) {
 }
 
 async function request(url, method, redirects = 4) {
-  const first = await requestOnce(url, method);
-  const code = first.statusCode || 0;
-  if (code >= 300 && code < 400 && first.location && redirects > 0) {
-    let next = '';
-    try { next = new URL(first.location, url).toString(); } catch { return first; }
-    if (!isAllowedFetchUrl(next)) return { ...first, error: 'blocked' };
-    return request(next, method, redirects - 1);
+  const once = async () => {
+    const first = await requestOnce(url, method);
+    const code = first.statusCode || 0;
+    if (code >= 300 && code < 400 && first.location && redirects > 0) {
+      let next = '';
+      try { next = new URL(first.location, url).toString(); } catch { return first; }
+      if (!isAllowedFetchUrl(next)) return { ...first, error: 'blocked' };
+      return request(next, method, redirects - 1);
+    }
+    if (first.error === 'network' || first.error === 'timeout' || code >= 500 || code === 429 || code === 408) {
+      const err = new Error(first.error || `HTTP ${code} ${url}`);
+      err.status = code || undefined;
+      if (!code) err.code = 'ECONNRESET';
+      throw err;
+    }
+    return first;
+  };
+  try {
+    return await retryAsync(once, { retries: 2, minTimeout: 150, maxTimeout: 2000 });
+  } catch (err) {
+    if (!isTransientError(err)) throw err;
+    return { statusCode: null, location: '', finalUrl: url, body: '', error: 'network' };
   }
-  return first;
 }
 
 function headLooksLive(originUrl, head) {
@@ -266,7 +281,8 @@ function LEDGER_COUNT(ledger) {
   return Object.keys(ledger.entries || {}).length;
 }
 
-main().catch((error) => {
-  console.error(error.message || error);
-  process.exit(1);
-});
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('liens du fil', () => main(), [path.join(ROOT, 'data/live-link-health.json')]);
+}
+module.exports = { request, probeUrl };

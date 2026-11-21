@@ -45,6 +45,14 @@ on:
 
 permissions:
   contents: write
+  issues: write
+
+# Les filets workflow_run partent à chaque récolte. On annule la porte déjà
+# en file ; le job qui publie garde la file data-writers (pas d’annulation
+# d’une écriture en cours).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || 'chain' }}
+  cancel-in-progress: true
 
 jobs:
   gate:
