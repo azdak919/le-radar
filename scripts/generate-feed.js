@@ -17,9 +17,16 @@ const path = require('path');
 const { stripCdata } = require('./cdata-lib');
 const { pruneToFreshWindow } = require('./source-retention-lib');
 const { buildAcronymMap } = require('./institution-labels-lib');
+const { dedupeArticlesList } = require('./news-dedupe-lib');
 
 const ROOT = path.join(__dirname, '..');
-const NEWS_PATH = path.join(ROOT, 'news.json');
+/** Surcharges de test : fichier d'articles et dossier du flux, sans toucher au dépôt. */
+const NEWS_PATH = process.env.RADAR_NEWS_PATH
+  ? path.resolve(process.env.RADAR_NEWS_PATH)
+  : path.join(ROOT, 'news.json');
+const FEED_DIR = process.env.RADAR_FEED_DIR
+  ? path.resolve(process.env.RADAR_FEED_DIR)
+  : ROOT;
 const SOURCES_PATH = path.join(ROOT, 'news-sources.json');
 /** Domaine canonique (Pages + custom domain). Surcharge : RADAR_SITE_URL. */
 const SITE_BASE = (process.env.RADAR_SITE_URL || 'https://le-radar.ca').replace(/\/$/, '');
@@ -530,7 +537,7 @@ function main() {
     const revue = revueFeedEntries();
     const subset = items.filter(config.filter).slice(0, Math.max(0, MAX_ITEMS - revue.length));
     const xml = buildFeedXml(subset, config, sourceSites, revue);
-    const outPath = path.join(ROOT, config.file);
+    const outPath = path.join(FEED_DIR, config.file);
     const count = subset.length + revue.length;
 
     if (doUpdate) {

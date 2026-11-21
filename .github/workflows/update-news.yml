@@ -228,23 +228,43 @@ jobs:
           CI: true
         continue-on-error: true
 
-      - name: Fetch social + generate RSS
+      # Optionnel (Open Graph public, sans clé — docs/maintenance.md).
+      # Un réseau qui ne répond pas ne doit pas bloquer le flux ni les pages.
+      - name: Fetch social
+        id: social
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         timeout-minutes: 4
-        run: |
-          node scripts/fetch-social.js --update
-          node scripts/generate-feed.js --update
-          node scripts/article-pages.js --update
+        run: node scripts/fetch-social.js --update
         env:
           CI: true
         continue-on-error: true
+
+      # Pas de continue-on-error : un plantage (symbole absent, XML invalide)
+      # doit rester rouge dans le journal du workflow. Les étapes suivantes
+      # portent !cancelled() pour que ce rouge n'empêche pas les pages
+      # d'article ni la publication de news.json.
+      - name: Generate RSS
+        id: rss
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        timeout-minutes: 2
+        run: node scripts/generate-feed.js --update
+        env:
+          CI: true
+
+      - name: Article pages
+        id: article_pages
+        if: ${{ !cancelled() && steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' }}
+        timeout-minutes: 2
+        run: node scripts/article-pages.js --update
+        env:
+          CI: true
 
       # Le tampon « mis à jour » = dernière *vérification* des sources, pas
       # seulement le dernier article neuf. Le gate 75 min (filet / radio /
       # sports) est l'anti-bruit ; une passe qui a vraiment fetché publie.
       - name: Check for changes
         id: check
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        if: ${{ !cancelled() && steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' }}
         run: |
           echo "changed=true" >> "$GITHUB_OUTPUT"
           echo "Successful fetch — always publish so the live stamp is the last check."
@@ -256,7 +276,7 @@ jobs:
       # committe toujours les artefacts (voir étape Commit).
       - name: Regenerate SEO artefacts
         id: seo
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
+        if: ${{ !cancelled() && steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true' }}
         timeout-minutes: 2
         run: node scripts/generate-seo.js --update
         env:
@@ -268,7 +288,7 @@ jobs:
       # generate-seo aurait pu réussir au retry.
       - name: Retry SEO artefacts
         id: seo_retry
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true' && steps.seo.outcome == 'failure'
+        if: ${{ !cancelled() && steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true' && steps.seo.outcome == 'failure' }}
         timeout-minutes: 2
         run: node scripts/generate-seo.js --update
         env:
@@ -280,7 +300,7 @@ jobs:
       # reste le fichier complet (scripts, appli, Worker, consommateurs).
       - name: Public feed pages
         id: pages
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
+        if: ${{ !cancelled() && steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true' }}
         timeout-minutes: 1
         run: node scripts/news-pages.js --update
         continue-on-error: true
@@ -291,14 +311,14 @@ jobs:
       # ne doit plus retenir news.json — le fil JS lit ce fichier.
       - name: Pre-push integrity (bot gate)
         id: prepush
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
+        if: ${{ !cancelled() && steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true' }}
         timeout-minutes: 8
         continue-on-error: true
         run: bash scripts/bot-prepush-check.sh
 
       - name: Commit updates (publication déléguée au job publish)
         id: bundle
-        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
+        if: ${{ !cancelled() && steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true' }}
         run: |
           git config user.name "LE-RADAR News Bot"
           git config user.email "actions@users.noreply.github.com"
@@ -373,7 +393,7 @@ jobs:
           echo "publish=true" >> "$GITHUB_OUTPUT"
 
       - name: Hand commit to publish job
-        if: steps.bundle.outputs.publish == 'true'
+        if: ${{ !cancelled() && steps.bundle.outputs.publish == 'true' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: news-commit
@@ -383,7 +403,7 @@ jobs:
       # UNE seule issue permanente : créée / mise à jour s'il y a un problème,
       # fermée automatiquement quand tout est réglé.
       - name: Sync source-health issue
-        if: steps.health.outcome == 'success'
+        if: ${{ !cancelled() && steps.health.outcome == 'success' }}
         continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -403,7 +423,7 @@ jobs:
 
   publish:
     needs: aggregate
-    if: needs.aggregate.outputs.publish == 'true'
+    if: ${{ !cancelled() && needs.aggregate.outputs.publish == 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     concurrency:
