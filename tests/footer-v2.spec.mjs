@@ -62,14 +62,18 @@ for (const [path, theme] of PAGES) {
               }
             }
             if (n) rows.push(n);
-            const mid = (arr) => (Math.min(...arr.map((b) => b.left)) + Math.max(...arr.map((b) => b.right))) / 2;
+            const brand = nav.closest('.site-foot__brandcol')?.querySelector('.site-foot__wordmark, .site-foot__brand') || nav.closest('.site-foot')?.querySelector('.site-foot__wordmark');
+            const brandLeft = brand ? brand.getBoundingClientRect().left : boxes[0].left;
             return {
               rows,
-              delta: Math.abs(mid(boxes.slice(0, 5)) - mid(boxes.slice(5))),
+              row1Left: boxes[0].left,
+              row2Left: boxes[5].left,
+              brandLeft,
             };
           });
           expect(layout.rows, `${width}px : deux lignes 5+4`).toEqual([5, 4]);
-          expect(layout.delta, `${width}px : seconde ligne centrée sous la première`).toBeLessThanOrEqual(2);
+          expect(Math.abs(layout.row2Left - layout.row1Left), `${width}px : seconde ligne alignée à gauche`).toBeLessThanOrEqual(2);
+          expect(Math.abs(layout.row1Left - layout.brandLeft), `${width}px : icônes sur le bord du texte`).toBeLessThanOrEqual(2);
         }
       }
     });
@@ -100,3 +104,50 @@ test('mât : réseaux de chaque côté de la marque, sans RSS, masqués sous 720
     }
   }
 });
+
+function footerTextHitsFabs() {
+  const fabs = [...document.querySelectorAll('.page-tools__fab, .news-search__fab')].filter((el) => {
+    if (el.hidden) return false;
+    const b = el.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    return b.width > 0 && cs.display !== 'none' && cs.visibility !== 'hidden';
+  }).map((el) => el.getBoundingClientRect());
+  const foot = document.querySelector('footer.site-foot');
+  const hits = [];
+  for (const el of foot.querySelectorAll('p, a, li, span')) {
+    const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!text) continue;
+    for (const r of el.getClientRects()) {
+      if (!r.width || !r.height) continue;
+      for (const f of fabs) {
+        const overlap = !(r.right <= f.left + 1 || r.left >= f.right - 1 || r.bottom <= f.top + 1 || r.top >= f.bottom - 1);
+        if (overlap) hits.push(text.slice(0, 80));
+      }
+    }
+  }
+  return hits;
+}
+
+for (const width of [320, 360, 390]) {
+  test(`pied téléphone : texte non couvert par les outils — ${width} px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.addInitScript(() => localStorage.setItem('radar-theme', 'light'));
+    await page.goto('/', { waitUntil: 'load' });
+    await expect(page.locator('.site-foot__social a[data-social]')).toHaveCount(9);
+
+    // Pied calé en bas du viewport (la licence se trouvait sous les pastilles).
+    await page.evaluate(() => {
+      const foot = document.querySelector('footer.site-foot');
+      const y = window.scrollY + foot.getBoundingClientRect().bottom - window.innerHeight;
+      window.scrollTo(0, Math.max(0, y));
+    });
+    await page.waitForTimeout(150);
+    const atFooter = await page.evaluate(footerTextHitsFabs);
+    expect(atFooter, `${width}px : recouvrement pied calé en bas`).toEqual([]);
+
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await page.waitForTimeout(150);
+    const atEnd = await page.evaluate(footerTextHitsFabs);
+    expect(atEnd, `${width}px : recouvrement en bas de page`).toEqual([]);
+  });
+}
