@@ -61,6 +61,7 @@ assert.match(phraseReject('looks back at the student protest and the police resp
 assert.match(phraseReject('annonce un partenariat entre la police et le conseil municipal de la ville.', S, it), /verbe d'ouverture/, 'le média n’annonce rien');
 assert.match(phraseReject('interroge les étudiants sur la manifestation et la réponse de la police.', S, it), /verbe d'ouverture/);
 assert.match(phraseReject('revient sur la manifestation à Québec et la réponse de la police.', S, it), /nom absent de la source \(Québec\)/, 'lieu absent');
+assert.equal(phraseReject('s’intéresse à la manifestation étudiante et à la réponse de la police.', S, it), null, '« s’intéresse à » accepté');
 assert.equal(phraseReject('revient sur la manifestation à Montréal et la réponse de la police.', S, it), null, 'Montréal = Montreal');
 assert.match(phraseReject('revient sur la manifestation couverte par The Link et la réponse de la police.', S, it), /répète/);
 

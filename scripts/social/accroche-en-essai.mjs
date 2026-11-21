@@ -42,7 +42,7 @@ for (const n of pick) {
     const r = await enAccrocheDetail(it, { env, source: src, model });
     const nr = neurons(model, r.usage); if (nr) totals[model].neurons += nr;
     const qs = (r.quoteChecks || []).map((q, i) => `  ${i + 1}. « ${q.quote} » → ${q.check}`);
-    md.push(`### ${model}`, '', `- Citations proposées par l’IA : ${qs.length ? '' : '—'}`, ...qs, `- Citation retenue : ${r.quote ? `« ${r.quote} »` : '— (aucune exacte)'}`,
+    md.push(`### ${model}`, '', `- Citations proposées par l’IA : ${qs.length ? '' : '—'}`, ...qs, `- Meilleure citation exacte : ${r.bestQuote ? `« ${r.bestQuote} »` : '— (aucune)'}`,
       `- Phrase proposée : ${r.aiPhrase || '—'}`, `- Vérification chiffres, dates et noms : ${r.phraseCheck || '—'}`,
       `- Résultat : ${r.reason ? `**repli au format actuel** (${r.reason})` : r.quote ? 'accroche retenue avec citation' : 'accroche retenue sans citation'}`,
       `- Coût : ${r.usage ? `${r.usage.prompt_tokens ?? r.usage.input_tokens ?? '?'} jetons en entrée, ${r.usage.completion_tokens ?? r.usage.output_tokens ?? '?'} en sortie ≈ ${nr ?? '?'} neurones` : 'inconnu'}`, '');

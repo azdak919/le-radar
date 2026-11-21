@@ -149,7 +149,7 @@ const RELATIVE = /\b(hier|avant-hier|demain|aujourd[’']hui|ce matin|ce soir|ce
 const CAP_OK = new Set(['université', 'conseil', 'ville', 'gouvernement', 'assemblée', 'nationale', 'cégep', 'collège', 'premier', 'première', 'ministre', 'état']);
 // Le sujet de la phrase est le MÉDIA : seuls des verbes qui décrivent ce que fait l'article (jamais « annonce »,
 // « interroge les étudiants »… qui prêteraient au journal l'action des personnes dont il parle).
-export const VERBS = /^(revient sur|rapporte|raconte|relate|explique|présente|se penche sur|s[’']intéresse à|s[’']interroge sur|analyse|examine|décrit|fait le point sur|dresse le portrait d|explore|met en lumière|résume|critique|commente|réfléchit à|donne la parole à|suit|couvre|rend compte d)\b/u;
+export const VERBS = /^(revient sur|rapporte|raconte|relate|explique|présente|se penche sur|s[’']intéresse à|s[’']interroge sur|analyse|examine|décrit|fait le point sur|dresse le portrait d|explore|met en lumière|résume|critique|commente|réfléchit à|donne la parole à|suit|couvre|rend compte d)(?=[\s’'e]|$)/u; // pas de \b : « à » final n'est pas un caractère de mot en JS
 const toks = s => (String(s || '').normalize('NFC').toLowerCase().match(/[\p{L}\p{N}]+/gu) || []);
 const bare = s => norm(s).replace(/\s+/g, '');
 
@@ -284,7 +284,7 @@ export async function enAccrocheDetail(it, { env = process.env, fetchImpl = fetc
   const checks = cands.map(c => ({ c, ...quoteReject(c, src.text) }));
   out.quoteChecks = checks.map(k => ({ quote: k.c, check: k.why || 'trouvée telle quelle' }));
   const q = checks.filter(k => !k.why).sort((x, y) => x.exact.length - y.exact.length)[0] || {};
-  out.aiQuote = q.c || cands[0] || ''; out.quoteCheck = q.exact ? 'trouvée telle quelle' : (checks[0]?.why || 'aucune citation proposée');
+  out.bestQuote = q.exact || ''; out.aiQuote = q.c || cands[0] || ''; out.quoteCheck = q.exact ? 'trouvée telle quelle' : (checks[0]?.why || 'aucune citation proposée');
   const why = phraseReject(out.aiPhrase, fullSrc, it);
   out.phraseCheck = why || 'aucun chiffre, date ni nom absent de la source';
   if (why) return { ...out, reason: `garde-fou : ${why}` };
