@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-21T14:16:42.001Z",
+  "updated": "2026-11-21T15:38:29.462Z",
   "total": 1038,
   "pool": 61,
   "incomplete": 25,
   "withLeadExcerpt": 206,
   "candidates": 25,
   "enriched": 1,
-  "failed": 0,
+  "failed": 4,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,30 +46,39 @@
       "changed": false
     },
     {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
       "changed": false
     },
     {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
-      "ok": true,
-      "score": 100,
-      "chars": 380,
-      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
-      "changed": false
-    },
-    {
-      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/et-si-le-referendum-de-95-avait-lieu-aujourdhui/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-le-referendum-de-95-avait-lieu-aujourdhui",
+      "title": "Concordia Student Union byelection results are in",
+      "link": "https://theconcordian.com/2026/11/concordia-student-union-election-results/",
       "ok": true,
       "score": 96,
-      "chars": 378,
-      "sample": "« Je pense qu’aujourd’hui, la grosse différence, c’est que les échanges entourant la souveraineté se",
+      "chars": 479,
+      "sample": "Two new CSU councillors were elected. Students in the faculty of Fine Arts elected Alyson Bouffard a",
+      "changed": false
+    },
+    {
+      "title": "ASFA asks students what issues matter most to them",
+      "link": "https://theconcordian.com/2026/11/asfa-student-demands-survey/",
+      "ok": true,
+      "score": 100,
+      "chars": 171,
+      "sample": "The Arts and Science Federation of Associations (ASFA) received 106 responses to its survey, as of N",
+      "changed": false
+    },
+    {
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "link": "https://theconcordian.com/2026/11/avi-lewis-carney-policies-terrifying/",
+      "ok": true,
+      "score": 100,
+      "chars": 190,
+      "sample": "Hundreds of New Democratic Party (NDP) supporters gathered at a rally on Nov. 17 at Ausgang Plaza in",
       "changed": false
     }
   ]
