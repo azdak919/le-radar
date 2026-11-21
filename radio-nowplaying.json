@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T09:07:18.328Z",
+  "updatedAt": "2026-11-21T11:06:50.063Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T09:06:17.122Z"
+      "checkedAt": "2026-11-21T11:06:21.966Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T09:06:31.198Z"
+      "checkedAt": "2026-11-21T11:06:24.143Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Mash Time Show",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Quebec Acadie",
         "source": "api-live",
         "start": "06:00",
         "end": "10:00"
       },
+      "next": {
+        "title": "Making Contact/Anything Goes",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "10:30"
+      },
       "track": "",
-      "showTitle": "The Mash Time Show",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,55 +74,55 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T09:06:35.941Z"
+      "checkedAt": "2026-11-21T11:06:27.147Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T09:06:50.077Z"
+      "checkedAt": "2026-11-21T11:06:41.899Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "04:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T09:06:51.265Z"
+      "checkedAt": "2026-11-21T11:06:43.483Z"
     },
     "choq": {
       "id": "choq",
@@ -130,23 +130,23 @@
       "current": null,
       "next": {
         "title": "Podcast Nomade: L'art de se rencontrer",
-        "source": "schedule",
+        "source": "api-live",
         "start": "10:00",
         "end": "11:00",
-        "url": "https://www.choq.ca/balados/podcast-nomade-lart-de-se-rencontrer"
+        "slug": "podcast-nomade-lart-de-se-rencontrer"
       },
       "track": "ID - ID Comment Debord - Blood Pareil",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-21T09:07:17.977Z"
+      "checkedAt": "2026-11-21T11:06:49.712Z"
     }
   }
 }
