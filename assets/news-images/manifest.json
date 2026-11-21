@@ -679,16 +679,6 @@
       "via": "resize-proxy",
       "nameKey": "0e8a1017.jpg"
     },
-    "1b9277d2d4e58681": {
-      "local": "assets/news-images/1b9277d2d4e58681.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Capture-decran-le-2026-11-13-a-14.02.34.png",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 200152,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-13T21:09:58.266Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-11-13-a-14.02.34.png"
-    },
     "d62e6e687179b0e5": {
       "local": "assets/news-images/d62e6e687179b0e5.webp",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/IMG_3930.jpeg",
@@ -3155,9 +3145,18 @@
       "updatedAt": "2026-11-21T05:08:05.538Z",
       "via": "origin",
       "nameKey": "yann_rfd-43.jpg"
+    },
+    "95d1c982cd32b09e": {
+      "local": "assets/news-images/95d1c982cd32b09e.webp",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
+      "host": "quartierlibre.ca",
+      "bytes": 198136,
+      "updatedAt": "2026-11-21T11:17:47.355Z",
+      "via": "disk",
+      "nameKey": "5infos_ql-e1769792962990.png"
     }
   },
-  "updatedAt": "2026-11-21T11:07:56.455Z",
+  "updatedAt": "2026-11-21T11:17:49.615Z",
   "count": 325,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -3167,7 +3166,7 @@
   "deferred": {
     "734b502fa8d3538a": {
       "reason": "failed",
-      "at": "2026-11-20T11:10:28.109Z"
+      "at": "2026-11-21T11:17:49.608Z"
     },
     "f21269c9def98be8": {
       "reason": "budget",
