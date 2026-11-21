@@ -417,7 +417,15 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
       })));
       await page.evaluate(pool => {
         sportsSlides = pool; sportsFitCount = null; sportsFitDepth = 0;
-        renderSportsStrip(); scheduleSportsRotate();
+        renderSportsStrip();
+        scheduleSportsRotate();
+        // La vague différée remplace l'unique carte (320 px) par un résultat
+        // avant la mesure. On la coupe ici ; la rotation est testée plus bas
+        // par rotateSportsSlot, de façon synchrone.
+        if (typeof sportsWaveTimer !== 'undefined' && sportsWaveTimer) {
+          clearTimeout(sportsWaveTimer);
+          sportsWaveTimer = 0;
+        }
       }, pool);
       await expect.poll(() => page.evaluate(() => {
         const strip = document.querySelector('#masthead-sports-strip');
