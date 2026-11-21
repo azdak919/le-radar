@@ -19,6 +19,15 @@ Toutes ces fontes sont sous OFL 1.1. Les textes de licence correspondants sont d
 
 Les gabarits d’affiches eux-mêmes (mise en page réalisée par Azdak) sont sous [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), distincte de l’OFL des fontes et de la GPL du code.
 
+## Icônes des réseaux (pied de page)
+
+Fichiers dans `assets/social-icons/` (copie mobile : `mobile/app/assets/social-icons/`). Tracés aussi en ligne dans `nav-shell.js`.
+
+- Simple Icons v16.36.0, **CC0 1.0** (compatible GPL-2.0-only) : X, Bluesky, Facebook, Instagram, Tumblr, Mastodon, RSS. Instagram : `instagram.svg`, compte https://www.instagram.com/le.radar.ca/.
+- Bootstrap Icons v1.13.2, **MIT** : LinkedIn (retiré de Simple Icons à la demande de la marque).
+
+Les marques restent à leurs titulaires. Affichage monochrome, formes non altérées. Détail : `assets/social-icons/LICENSE.md`.
+
 ## Bibliothèque QR
 
 `scripts/vendor/qrcodegen-v1.8.0.js` — QR Code generator, Project Nayuki, **MIT**. Le copyright et l’autorisation MIT sont conservés en tête du fichier. Compatible avec une distribution GPL v2 du code qui l’utilise.

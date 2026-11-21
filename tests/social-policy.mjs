@@ -59,7 +59,9 @@ const acc = [{ handle: '@DelitFrancais', type: 'source', cle_flux: 'Le Délit' }
 const xt = buildXText(art, acc, { credit: 'Marie Tremblay' });
 assert.ok(xlen(xt) <= 280 && /\n#McGill #Hockey$/.test(xt), xt);
 assert.ok(!/#PresseÉtudiante/.test(JSON.stringify(POLICY)));
-assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 2, mastodon: 4, x: 2, linkedin: 3, facebook: 1, tumblr: 15 });
+assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 2, mastodon: 4, x: 2, linkedin: 3, facebook: 1, tumblr: 15, instagram: 5 });
+assert.equal(POLICY.formats.une.prepared.instagram.enabled, false);
+assert.equal(POLICY.automation.instagram_follow, false);
 
 // ── X : au plus une mention par média et par jour
 const accounts = [{ handle: '@DelitFrancais', type: 'source', cle_flux: 'Le Délit' }, { handle: '@Linknewspaper', type: 'source', cle_flux: 'The Link' }];

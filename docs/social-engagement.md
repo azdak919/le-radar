@@ -38,9 +38,11 @@ Deux rendez-vous par jour, en plus des publications existantes : « La une du ma
   | LinkedIn (Buffer) | 4:5 1080×1350 | portrait plein écran sur mobile | guides de formats 2026 |
   | Facebook (Buffer) | 4:5 1080×1350 | format portrait du fil mobile | guides de formats 2026 |
   | Tumblr | 4:5 1080×1350 | ratio natif dans le tableau de bord | API NPF |
-  | Instagram (préparé, désactivé) | publication 4:5 1080×1350, story 9:16 1080×1920 | l'API refuse le 3:4 (plage 4:5 à 1,91:1, JPEG ≤ 8 Mo) ; story avec bandeau et pied sous l'interface | Meta, IG User Media et Content Publishing |
+  | Instagram (préparé, désactivé) | publication 3:4 1080×1440, repli 4:5 1080×1350 | grille actuelle du fil ; jamais de story ni de reel ; crédit 📸 | guides de formats Instagram 2026 |
 
-  Le paysage 16:9 1200×675 reste rendu en aperçu (repli), sans réseau attitré. Instagram : légende sans lien cliquable (« lien en bio »), jusqu'à 5 hashtags ; `formats.une.prepared.instagram.enabled = false` dans `data/social/policy.json`, rien n'est envoyé tant que le compte et l'accès ne sont pas configurés.
+  Le paysage 16:9 1200×675 reste rendu en aperçu (repli), sans réseau attitré. Les autres réseaux gardent le portrait 4:5 validé (carte du fil) ; la carte Open Graph du site reste le repli des liens. Instagram : image 3:4, légende sans lien cliquable (« lien en bio », le-radar.ca en texte), crédit photo commençant par 📸, au plus 5 mots-clics en fin de légende, aucun @, aucun premier commentaire, aucun abonnement automatique. `formats.une.prepared.instagram.enabled = false` : rien n'est envoyé tant que ce drapeau n'est pas passé à vrai dans une PR.
+
+  Pratiques retenues, sans réécrire les textes déjà validés : l'accroche reste la première ligne (« La une du matin / du soir ») ; le lien le-radar.ca reste dans le texte de X, Bluesky, Mastodon, Facebook et LinkedIn (facette ou carte d'aperçu du réseau) et en bloc lien sur Tumblr ; les mentions @ ne sont posées que si le compte du média est vérifié, et au plus une par jour sur X ; les plafonds de mots-clics sont ceux de `hashtags.maxByNetwork`.
 - Fenêtres d’envoi : matin 7 h 30 à 10 h 30, soir 19 h 15 à 22 h 30 (`data/social/policy.json`, `formats.une`). Crons pour l’heure d’été et l’heure d’hiver, plus un passage après chaque « Social — Mastodon ». `data/social/une-state.json` garantit une seule publication par réseau et par créneau ; un réseau en échec est réessayé seul (3 essais au plus).
 - Essai sans envoi : déclenchement manuel avec `dry_run` coché (défaut), ou le workflow d’aperçu des PR (`social-une-preview.yml`).
 

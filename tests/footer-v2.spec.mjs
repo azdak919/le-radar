@@ -16,7 +16,9 @@ for (const [path, theme] of PAGES) {
       await page.goto(path, { waitUntil: 'load' });
       const foot = page.locator('footer.site-foot--v2');
       await expect(foot).toHaveCount(1);
-      await expect(foot.locator('.site-foot__social a[data-social]')).toHaveCount(7);
+      await expect(foot.locator('.site-foot__social a[data-social]')).toHaveCount(8);
+      await expect(foot.locator('.site-foot__social a[data-social="instagram"]')).toHaveAttribute('href', 'https://www.instagram.com/le.radar.ca/');
+      await expect(foot.locator('.site-foot__social a[data-social="instagram"]')).toHaveAttribute('rel', 'me noopener');
       await expect(foot.locator('.site-foot__col')).toHaveCount(3);
       await expect(foot.locator('.site-foot__links .site-foot__sep:visible')).toHaveCount(0);
       for (const width of WIDTHS) {

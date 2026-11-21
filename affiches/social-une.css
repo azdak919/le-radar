@@ -16,7 +16,7 @@ body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-syn
 /* Soir « Marine » (choix de Charles, 12 nov. 2026) : cadre et cartes bleu marine, texte clair, pastille ambre. Verre opaque à 92 %
    (au lieu de 74 %) : même sur une zone blanche, le texte le plus pâle reste à ≥ 5,2:1 (AA). */
 .card { position: relative; overflow: hidden; background: var(--bg); color: var(--ink); display: flex; flex-direction: column; }
-.portrait { width: 1080px; height: 1350px; } .paysage { width: 1200px; height: 675px; } .story { width: 1080px; height: 1920px; }
+.portrait { width: 1080px; height: 1350px; } .grille { width: 1080px; height: 1440px; } .paysage { width: 1200px; height: 675px; } .story { width: 1080px; height: 1920px; }
 
 /* Fond : la photo de la une floutée sous un voile au thème (verre dépoli des cartes). */
 .bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--bg-soft); }
