@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T18:36:47.947Z",
+  "updatedAt": "2026-11-21T19:36:46.467Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T18:36:21.671Z"
+      "checkedAt": "2026-11-21T19:36:19.733Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T18:36:23.232Z"
+      "checkedAt": "2026-11-21T19:36:21.180Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Samedi Midi",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Funky Revolutions",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "West Indian Rhythms",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Samedi Midi",
+      "showTitle": "Funky Revolutions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T18:36:26.759Z"
+      "checkedAt": "2026-11-21T19:36:23.967Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Anatomy of Caribbean Music",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
-      },
-      "next": {
         "title": "Caribbean Callaloo",
         "source": "schedule-live",
         "start": "14:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
+      "next": {
+        "title": "Mi Dun Talk",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+      },
       "track": "",
-      "showTitle": "Anatomy of Caribbean Music",
+      "showTitle": "Caribbean Callaloo",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T18:36:40.903Z"
+      "checkedAt": "2026-11-21T19:36:38.677Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T18:36:42.038Z"
+      "checkedAt": "2026-11-21T19:36:40.173Z"
     },
     "choq": {
       "id": "choq",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T18:36:47.596Z"
+      "checkedAt": "2026-11-21T19:36:46.117Z"
     }
   }
 }
