@@ -67,6 +67,47 @@ export const frDayYear = ymd => `${frDay(ymd)} ${ymd.slice(0, 4)}`;
 export const reviewId = (day, ed) => `${day}-${ed}`;
 export const reviewPath = (day, ed) => `revue/${reviewId(day, ed)}/`;
 export const reviewUrl = (day, ed) => `${SITE}/${reviewPath(day, ed)}`;
+/** Fin connue d'une revue déjà dans l'index (periodEnd, sinon l'heure cible du créneau). */
+function publishedEnd(r) {
+  const t = Date.parse(r?.periodEnd || r?.datePublished || '');
+  if (Number.isFinite(t) && t > 0) return t;
+  const m = String(r?.id || '').match(/^(\d{4}-\d{2}-\d{2})-(matin|soir)$/);
+  const ed = m && (EDITIONS[m[2]] || null);
+  return ed ? mtlInstant(m[1], ed.target) : 0;
+}
+/**
+ * Créneaux encore dus : la fenêtre ouverte, puis chaque créneau fermé depuis la dernière
+ * revue publiée (au plus `maxLookbackHours`). Une page déjà dans l'index ou un saut noté
+ * ne revient pas. Le plus ancien d'abord, pour ne pas voler les articles du créneau suivant.
+ */
+export function owedEditions(now, cfg = DEFAULT_CONFIG, index = [], state = {}) {
+  const hours = Number(cfg.maxLookbackHours) > 0 ? Number(cfg.maxLookbackHours) : 48;
+  const floor = now - hours * 3600e3;
+  const latest = (index || []).reduce((m, r) => Math.max(m, publishedEnd(r)), 0);
+  const out = [];
+  let ymd = mtl(floor).ymd;
+  const last = mtl(now).ymd;
+  for (let n = 0; ymd <= last && n < 8; n++) {
+    for (const id of ['matin', 'soir']) {
+      const e = cfg.editions?.[id];
+      if (!e?.from || !e?.to || !e?.target) continue;
+      const openAt = mtlInstant(ymd, e.from);
+      const closeAt = mtlInstant(ymd, e.to);
+      if (!(closeAt > floor) || openAt > now) continue;
+      const key = reviewId(ymd, id);
+      if ((index || []).some(r => r.id === key)) continue;
+      if (state?.[key]?.skipped) continue;
+      const open = openAt <= now && now < closeAt;
+      if (!open) {
+        if (!latest) continue;
+        if (mtlInstant(ymd, e.target) <= latest) continue;
+      }
+      out.push({ id, day: ymd, key, catchup: !open, now: open ? now : mtlInstant(ymd, e.target) });
+    }
+    ymd = addDays(ymd, 1);
+  }
+  return out;
+}
 /** Édition dont la fenêtre de publication contient `now`, sinon null. */
 export function editionAt(now, cfg = DEFAULT_CONFIG) {
   const { ymd, minutes } = mtl(now);

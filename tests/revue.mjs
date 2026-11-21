@@ -9,7 +9,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as L from '../scripts/revue/revue-lib.mjs';
 import { aiReview, itemsPrompt, chapeauPrompt } from '../scripts/revue/revue-ai.mjs';
-import { generate, gate, writeOutputs, loadConfig, resolveEditionClock } from '../scripts/revue/revue-run.mjs';
+import { generate, gate, writeOutputs, loadConfig, resolveEditionClock, publicationGuard } from '../scripts/revue/revue-run.mjs';
 import { resolveEditionId } from '../scripts/revue/revue-pdf-id.mjs';
 
 
@@ -87,6 +87,39 @@ assert.equal(gate({ now: tM, cfg: on, state: { '2026-11-17-matin': { skipped: tr
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on, index: [{ id: '2026-11-17-soir' }] }).mode, 'rafraichir');
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on, index: [{ id: '2026-11-17-soir' }] }).id, '2026-11-17-soir');
 assert.equal(gate({ now: Date.parse('2026-11-18T04:35:00Z'), cfg: on }).due, false, 'rien à rafraîchir sans revue du soir');
+
+// 21 nov. 2026, 2 h (Montréal) : le soir du 20 n’est pas en ligne, les runs hors fenêtre étaient verts.
+{
+  const now = Date.parse('2026-11-21T07:06:00Z');
+  const index = [{ id: '2026-11-19-soir', periodEnd: '2026-11-20T00:16:00.434Z' }];
+  const owed = L.owedEditions(now, on, index, {});
+  assert.deepEqual(owed.map(s => s.key), ['2026-11-20-matin', '2026-11-20-soir'], 'les deux créneaux manqués, le plus ancien d’abord');
+  assert.equal(owed[0].catchup, true);
+  assert.equal(owed[0].now, L.mtlInstant('2026-11-20', '07:00'), 'rattrapage à 7 h, pas à l’horloge du run');
+  const g = gate({ now, cfg: on, index });
+  assert.equal(g.due, true);
+  assert.equal(g.id, '2026-11-20-matin');
+  assert.equal(g.day, '2026-11-20');
+  assert.match(g.why, /fenêtre manquée/);
+  const skipped = { '2026-11-20-matin': { skipped: true, why: 'aucun article' } };
+  const rest = L.owedEditions(now, on, index, skipped);
+  assert.deepEqual(rest.map(s => s.key), ['2026-11-20-soir']);
+  assert.equal(gate({ now, cfg: on, index, state: skipped }).id, '2026-11-20-soir');
+  assert.equal(L.owedEditions(now, on, [...index, { id: '2026-11-20-matin', periodEnd: '2026-11-20T12:00:00.000Z' }, { id: '2026-11-20-soir', periodEnd: '2026-11-21T00:15:00.000Z' }], {}).length, 0);
+  assert.equal(gate({ now, cfg: on, index: [...index, { id: '2026-11-20-matin' }, { id: '2026-11-20-soir', periodEnd: '2026-11-21T00:15:00.000Z' }] }).due, false, 'rien de dû une fois les deux créneaux publiés');
+  assert.equal(publicationGuard({ mode: 'publier', produced: false, skipped: false }).ok, false, 'succès silencieux interdit');
+  assert.match(publicationGuard({ mode: 'publier' }).why, /aucune page/);
+  assert.equal(publicationGuard({ mode: 'publier', produced: true }).ok, true);
+  assert.equal(publicationGuard({ mode: 'publier', skipped: true }).ok, true, 'un saut noté (aucun article) est un résultat');
+  assert.equal(publicationGuard({ mode: 'rafraichir', produced: false, skipped: false }).ok, true, 'un rafraîchissement sans résultat neuf peut sortir');
+  const wfGuard = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
+  assert.match(wfGuard, /Édition due, rien à publier/);
+  assert.match(wfGuard, /--drain/);
+  assert.match(wfGuard, /if \[ "\$REVUE_MODE" = "publier" \]; then\n\s+git diff --cached --quiet && \{ echo "::error::Édition due, rien à publier\."; exit 1; \}/);
+  const feed = spawnSync(process.execPath, ['scripts/generate-feed.js'], { encoding: 'utf8' });
+  assert.equal(feed.status, 0, feed.stderr || feed.stdout);
+  assert.doesNotMatch(`${feed.stdout}\n${feed.stderr}`, /dedupeArticlesList is not defined/, '21 nov. 2026 : le flux plantait après la revue et le commit n’avait pas lieu');
+}
 
 // Rattrapage daté (--day) : hors fenêtre du jour, sans écraser une édition déjà là.
 {
@@ -566,7 +599,7 @@ assert.match(wf, /group: data-writers-site/);
   assert.match(wf, /node scripts\/revue\/revue-run\.mjs --gate --day "\$REVUE_DAY"/);
   assert.match(wf, /node scripts\/revue\/revue-run\.mjs --edition "\$REVUE_EDITION" --day "\$REVUE_DAY"/);
   assert.match(wf, /else\n\s+node scripts\/revue\/revue-run\.mjs --gate\n/);
-  assert.match(wf, /else\n\s+node scripts\/revue\/revue-run\.mjs --edition "\$REVUE_EDITION"\n/);
+  assert.match(wf, /else\n\s+# Créneau ouvert[\s\S]*?node scripts\/revue\/revue-run\.mjs --drain\n/);
   assert.match(wf, /node scripts\/generate-feed\.js --update/);
   assert.match(wf, /needs\.gate\.outputs\.id/);
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'revue-gate-'));

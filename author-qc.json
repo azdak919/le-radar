@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-21T05:07:04.666Z",
+  "updated": "2026-11-21T07:25:20.788Z",
   "total": 1038,
   "withAuthor": 1038,
-  "mismatches": 55,
+  "mismatches": 54,
   "ok": true,
   "samples": [
-    {
-      "title": "Will Montreal learn from New York about protest and police?",
-      "link": "https://thelinknewspaper.ca/article/16575",
-      "source": "The Link",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Nicolas Tremblay",
-      "reason": "page-byline"
-    },
     {
       "title": "Musicians Among Us: Band Fest Season",
       "link": "https://theplantnews.com/2026/11/18/musicians-among-us-band-fest-season/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "BU Snow Prepares for Another Winter at Bishop’s",
+      "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops",
+      "source": "The Campus",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 55
+  "fixed": 54
 }
