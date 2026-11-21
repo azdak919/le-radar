@@ -114,19 +114,30 @@ const UNIVERSITIES = [
 ];
 
 function httpGet(url) {
-  return new Promise((resolve) => {
+  const { retryAsync } = require('./external-source-lib');
+  return retryAsync(() => httpGetOnce(url), { retries: 2, minTimeout: 200, maxTimeout: 2500 }).catch(() => null);
+}
+
+function httpGetOnce(url) {
+  return new Promise((resolve, reject) => {
     let req;
     try {
       req = https.get(url, { headers: { 'User-Agent': UA, Accept: 'application/sparql-results+json' }, timeout: TIMEOUT }, (res) => {
+        if (res.statusCode >= 500 || res.statusCode === 429 || res.statusCode === 408) {
+          res.resume();
+          const err = new Error(`HTTP ${res.statusCode}`);
+          err.status = res.statusCode;
+          return reject(err);
+        }
         if (res.statusCode >= 400) { res.resume(); return resolve(null); }
         let data = '';
         res.setEncoding('utf8');
         res.on('data', (c) => (data += c));
         res.on('end', () => resolve(data));
       });
-    } catch { return resolve(null); }
-    req.on('error', () => resolve(null));
-    req.on('timeout', () => { req.destroy(); resolve(null); });
+    } catch (err) { return reject(err); }
+    req.on('error', () => reject(Object.assign(new Error('ECONNRESET'), { code: 'ECONNRESET' })));
+    req.on('timeout', () => { req.destroy(); reject(Object.assign(new Error(`timeout ${url}`), { code: 'ETIMEDOUT' })); });
   });
 }
 
@@ -267,4 +278,7 @@ async function main() {
   }
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+if (require.main === module) {
+  const { cliHarvest } = require('./external-source-lib');
+  cliHarvest('établissements', () => main(), [OUT_PATH]);
+}

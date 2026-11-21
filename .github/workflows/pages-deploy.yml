@@ -42,13 +42,18 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: pages-deploy
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
+    # Un workflow_run en échec n’a rien publié : inutile de redéployer.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      skip: ${{ steps.mirror.outputs.skip }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -70,6 +75,7 @@ jobs:
       # Images miroir publiées hors git (Release mirror-images) : mêmes URL
       # /assets/news-images/<hash>.<ext>, même domaine, même cache PWA.
       - name: Images miroir (Release)
+        id: mirror
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -90,6 +96,7 @@ jobs:
           test "$(cat _site/CNAME)" = "le-radar.ca"
           du -sh _site
       - uses: actions/upload-pages-artifact@v5
+        if: steps.mirror.outputs.skip != 'true'
         with:
           path: ./_site
           # v4+ exclut les fichiers cachés : garder .well-known/assetlinks.json (Android).
@@ -97,8 +104,9 @@ jobs:
 
   deploy:
     needs: build
+    timeout-minutes: 20
     # Garde de bascule : tant que la variable PAGES_ARTIFACT != '1', build seul.
-    if: vars.PAGES_ARTIFACT == '1' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
+    if: needs.build.result == 'success' && needs.build.outputs.skip != 'true' && vars.PAGES_ARTIFACT == '1' && (github.event_name != 'workflow_dispatch' || inputs.deploy)
     runs-on: ubuntu-latest
     permissions:
       pages: write

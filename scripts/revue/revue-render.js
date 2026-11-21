@@ -444,6 +444,28 @@ function colophonHtml(model) {
     '        </aside>',
   ].filter(Boolean).join('\n');
 }
+/**
+ * Retire du HTML les liens PDF dont le fichier n'a pas été produit.
+ * Une impression ratée ne doit pas laisser un href mort : static-integrity
+ * échouerait à chaque poussée.
+ */
+function syncEditionPdfLinks(dir) {
+  const fs = require('fs');
+  const path = require('path');
+  const htmlPath = path.join(dir, 'index.html');
+  if (!fs.existsSync(htmlPath)) return false;
+  let html = fs.readFileSync(htmlPath, 'utf8');
+  const files = ['lettre.pdf', 'legal.pdf', 'tabloid.pdf', 'a4.pdf', 'a3.pdf'];
+  let present = 0;
+  for (const file of files) {
+    if (fs.existsSync(path.join(dir, file))) { present += 1; continue; }
+    html = html.replace(new RegExp(`\\s*<li><a href="${file}"[\\s\\S]*?</a></li>`), '');
+  }
+  if (!present) html = html.replace(/\s*<div class="revue-pdf">[\s\S]*?<\/div>/, '');
+  fs.writeFileSync(htmlPath, html);
+  return present;
+}
+
 function pdfBarHtml(model = {}) {
   const formats = [
     ['lettre.pdf', 'Lettre'],
@@ -705,6 +727,6 @@ module.exports = {
   SITE, PUBLISHER, NEWS_SITEMAP, CONFIG_PATH, INDEX_PATH, REVIEWS_DIR,
   frDayYear, frShort, frClock, isoMtl, rfc822, groupByTheme,
   articleBody, reviewJsonLd, renderReviewPage, renderIndexPage, newsSitemap, sitemapEntries,
-  pdfDownloadName, pdfBarHtml, qrLinkHtml, sportHtml,
+  pdfDownloadName, pdfBarHtml, syncEditionPdfLinks, qrLinkHtml, sportHtml,
   feedContentHtml, feedItemXml, revueFeedXml, loadConfig, loadPublished, robotsWithNewsSitemap, jsonForScript,
 };
