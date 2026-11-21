@@ -185,6 +185,36 @@ Documentation : [`docs/adding-news-source.md`](docs/adding-news-source.md)
 
 ---
 
+## Réseaux et revues (GitHub Actions)
+
+Tout le cycle social et les revues tournent par **cron dans ce dépôt**, avec les secrets du dépôt. Aucun agent, aucun bot conversationnel et aucune machine locale ne sont requis. L’état (ce qui a déjà été publié, l’arrêt Instagram) est dans `data/` et commité par le workflow. Un passage qui reprend après une panne ne renvoie pas un texte dont la première ligne est déjà chez Buffer ou dans cet état.
+
+L’essai à blanc est un `workflow_dispatch` avec la case d’essai cochée (`social-une.yml`, et les workflows d’articles). Le contrôle Buffer Instagram (lecture seule, sans publication) part aussi seul chaque lundi.
+
+Heures de Montréal en **hiver (HNE, UTC−5)**. En été (HAE, UTC−4), le même cron UTC tombe une heure plus tard ; les fenêtres du code ignorent le passage hors créneau.
+
+| Workflow | Rôle | Horaire (HNE) |
+| --- | --- | --- |
+| `revue.yml` | Revue du matin et du soir | matin vers 7 h 02, secours jusqu’à 9 h 37 ; soir vers 19 h 02 à 21 h 37 ; résultats tardifs vers 23 h 35 |
+| `social-une.yml` | La une, et Instagram selon la montée | matin vers 7 h 41 et 8 h 13–8 h 43 ; soir vers 19 h 23, 19 h 53 et 20 h 23 |
+| `social-buffer.yml` | File X, Facebook, LinkedIn | soir vers 21 h 07, nuit vers 3 h 07, secours vers 5 h 23 et 6 h 47 ; rapport lundi vers 8 h 41 |
+| `social-bluesky.yml` | Articles Bluesky | toutes les 30 min, de 6 h 20 à 22 h 50 |
+| `social-mastodon.yml` | Articles Mastodon | à :07 et :37 de chaque heure |
+| `social-tumblr.yml` | Articles Tumblr | toutes les 30 min, de 6 h 20 à 22 h 50 |
+| `social-formats.yml` | Résultats de fin de semaine | lundi et mardi matin et début d’après-midi ; aperçu radio vers 15 h 27 |
+| `social-engage.yml` | Interactions (si `automation.engage`) | toutes les 2 h de 8 h 20 à 20 h 20 |
+| `social-bluesky-follow.yml` | Abonnements Bluesky (plafond figé) | 9 h 23, 13 h 23, 17 h 23 |
+| `social-weekly-report.yml` | Bilan, sans publication | lundi vers 8 h 43 |
+| `social-buffer-instagram-check.yml` | Contrôle des clés, sans publication | lundi vers 8 h 17 |
+
+Instagram (`policy.json`, `formats.une.prepared.instagram`) : une une du soir la première semaine à partir du 22 novembre 2026, puis matin et soir, résultats sportifs seulement après le 14e jour. Au premier échec Buffer, le workflow ouvre une issue et n’essaie plus tant que `data/social/instagram-state.json` indique un arrêt.
+
+Les workflows `social-delete-post`, `social-purge`, `social-repost` et `social-replace-weekend-results` sont des outils de maintenance lancés à la main. Ils ne font pas partie du cycle quotidien.
+
+Les services appelés, en plus de GitHub et de Buffer : Bluesky, Mastodon (piaille.fr), Tumblr, et, pour traduire un titre anglais de La une, les moteurs déjà utilisés par le site. Le Worker `le-radar-news-trigger` peut avancer la collecte et quelques workflows ; les crons ci-dessus suffisent s’il est arrêté.
+
+---
+
 ## 🎙️ Proxy audio (optionnel)
 
 Pour les flux HTTP ou CORS difficiles, un Cloudflare Worker léger est fourni dans `proxy/cloudflare-worker.js`. Déploie-le, puis renseigne l’URL en tête de `app.js` :

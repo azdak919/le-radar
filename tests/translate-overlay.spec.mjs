@@ -339,6 +339,13 @@ test.describe('overlay traduction articles', () => {
         percent: document.querySelector('.translate-progress__num')?.textContent || '',
       };
     });
+    // Le premier paint peut être « … » (total encore inconnu) pendant
+    // l’hydratation du cache ; le chiffre arrive dès que les nœuds sont comptés.
+    await expect.poll(
+      () => page.locator('#translate-progress .translate-progress__num').innerText(),
+      { timeout: 10_000 },
+    ).toMatch(/\d/);
+    motion.percent = await page.locator('#translate-progress .translate-progress__num').innerText();
     expect(motion.percent).toMatch(/\d/);
     expect(motion.logoSrc).toMatch(/icon\.svg/);
     expect(motion.waveAnim === 'none' || !motion.waveAnim).toBeTruthy();

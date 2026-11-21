@@ -9,7 +9,9 @@ name: Revue — matin et soir
 # Les crons GitHub sont en UTC et partent souvent en retard, parfois de plusieurs heures, ou n'aboutissent pas
 # (17 nov. 2026 : les passages prévus à 20 h 02 et 20 h 37 HNE n'ont pas eu lieu ; des secours du matin sont arrivés
 # à 14 h 42 et 16 h 52, hors fenêtre). Heure d'été (HAE) ET heure d'hiver (HNE), secours plus serrés, et filet sur
-# la fin de « Update Student News ». La porte ne fait rien hors fenêtre ni si l'édition est déjà publiée ou sautée.
+# la fin de « Update Student News ». La porte ne republie pas une édition déjà en ligne ou déjà sautée.
+# Hors fenêtre, un créneau manqué (dans maxLookbackHours, après la dernière revue) reste dû :
+# le run échoue s'il n'écrit ni la page ni le saut.
 # Aperçu d'une PR (exemples + captures) : revue-preview.yml.
 on:
   schedule:
@@ -20,7 +22,8 @@ on:
     - cron: '17 1 * * *'             # soir, secours : 20 h 17 HNE / 21 h 17 HAE
     - cron: '37 1,2 * * *'           # soir, secours : 21 h 37 HAE / 20 h 37-21 h 37 HNE
     - cron: '35 3,4 * * *'           # mise à jour tardive des résultats du soir : 23 h 35 HAE / 23 h 35 HNE
-  # Filet : la collecte tourne souvent (dont :20 chaque heure). La porte ne fait rien hors fenêtre ni si l'édition est déjà là.
+  # Filet : la collecte tourne souvent (dont :20 chaque heure). Hors fenêtre, la porte rattrape
+  # un créneau manqué encore dû ; une édition déjà publiée ou sautée ne repart pas.
   # Le :20 UTC de 00 h et 23 h tombe à 19 h 20 heure de Montréal (HNE et HAE), après le 19 h 02 et avant La une (19 h 23).
   # Lancement manuel : `day` (AAAA-MM-JJ, vide = aujourd’hui) avec matin ou soir republie cette édition à 7 h ou 19 h 15.
   # Les crons et le filet workflow_run ignorent `day`.
@@ -127,7 +130,8 @@ jobs:
           node-version: '24'
       - run: npm ci --no-audit --no-fund
       - run: npx playwright install chromium --with-deps
-      - name: Revue (sélection, IA avec repli, garde-fou, pages, flux, sitemaps)
+      - name: Revue (sélection, IA avec repli, garde-fou, pages)
+        id: revue
         env:
           REVUE_EDITION: ${{ needs.gate.outputs.edition }}
           REVUE_ID: ${{ needs.gate.outputs.id }}
@@ -138,21 +142,51 @@ jobs:
         run: |
           if [ -n "${REVUE_DAY}" ]; then
             node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION" --day "$REVUE_DAY"
+          elif [ "$REVUE_MODE" = "rafraichir" ]; then
+            node scripts/revue/revue-run.mjs --refresh
           else
-            node scripts/revue/revue-run.mjs --edition "$REVUE_EDITION"
+            # Créneau ouvert ou fenêtre manquée : publie la plus ancienne encore due,
+            # ou note le saut. Un refus ou un passage à vide termine en erreur.
+            node scripts/revue/revue-run.mjs --drain
           fi
-          node scripts/generate-feed.js --update
-          # --id doit être AAAA-MM-JJ-matin|soir (pas « matin » / « soir » seuls : 18 nov. 2026, les pages
-          # étaient générées puis les PDF échouaient, et le commit n'avait jamais lieu).
-          node scripts/revue/revue-pdfs.mjs --id "${REVUE_ID:-$REVUE_EDITION}" || echo "::warning::PDF de ${REVUE_ID:-$REVUE_EDITION} non générés ; les pages seront tout de même publiées."
-      - name: Commit et publication
+      - name: Flux RSS
+        id: feed
+        if: steps.revue.outcome == 'success'
+        continue-on-error: true
+        run: node scripts/generate-feed.js --update
+      - name: PDF
+        if: steps.revue.outcome == 'success'
         env:
           REVUE_EDITION: ${{ needs.gate.outputs.edition }}
           REVUE_ID: ${{ needs.gate.outputs.id }}
         run: |
+          # --id doit être AAAA-MM-JJ-matin|soir (pas « matin » / « soir » seuls : 18 nov. 2026, les pages
+          # étaient générées puis les PDF échouaient, et le commit n'avait jamais lieu).
+          ID="${REVUE_PUBLISHED_ID:-${REVUE_ID}}"
+          if [ -z "$ID" ]; then
+            echo "Pas de page nouvelle (saut enregistré) : pas de PDF."
+            exit 0
+          fi
+          node scripts/revue/revue-pdfs.mjs --id "$ID" || echo "::warning::PDF de ${ID} non générés ; les pages seront tout de même publiées."
+      - name: Commit et publication
+        if: steps.revue.outcome == 'success'
+        env:
+          REVUE_EDITION: ${{ needs.gate.outputs.edition }}
+          REVUE_ID: ${{ needs.gate.outputs.id }}
+          REVUE_MODE: ${{ needs.gate.outputs.mode }}
+        run: |
           git add revue data/revue sitemap-news.xml robots.txt feed.xml
-          git diff --cached --quiet && { echo "Rien à publier."; exit 0; }
+          if [ "$REVUE_MODE" = "publier" ]; then
+            git diff --cached --quiet && { echo "::error::Édition due, rien à publier."; exit 1; }
+          else
+            git diff --cached --quiet && { echo "Rien à publier."; exit 0; }
+          fi
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git commit -s -m "bot(revue): ${{ needs.gate.outputs.id || needs.gate.outputs.edition }} ${{ needs.gate.outputs.mode }}"
-          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"${REVUE_ID:-$REVUE_EDITION}\""
+          git commit -s -m "bot(revue): ${REVUE_PUBLISHED_ID:-${{ needs.gate.outputs.id || needs.gate.outputs.edition }}} ${{ needs.gate.outputs.mode }}"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/revue/index.json\"))'" --regen "node scripts/generate-feed.js --update && node scripts/revue/revue-run.mjs --rebuild && node scripts/revue/revue-pdfs.mjs --id \"${REVUE_PUBLISHED_ID:-${REVUE_ID:-$REVUE_EDITION}}\""
+      - name: Le flux doit avoir suivi
+        if: steps.feed.outcome == 'failure'
+        run: |
+          echo "::error::generate-feed.js a échoué. Si le commit a eu lieu, la page est en ligne et le flux reste à réparer ; un succès silencieux n'est plus possible."
+          exit 1

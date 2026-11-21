@@ -60,8 +60,16 @@ const xt = buildXText(art, acc, { credit: 'Marie Tremblay' });
 assert.ok(xlen(xt) <= 280 && /\n#McGill #Hockey$/.test(xt), xt);
 assert.ok(!/#PresseÉtudiante/.test(JSON.stringify(POLICY)));
 assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 2, mastodon: 4, x: 2, linkedin: 3, facebook: 1, tumblr: 15, instagram: 5 });
-assert.equal(POLICY.formats.une.prepared.instagram.enabled, false);
+assert.equal(POLICY.formats.une.prepared.instagram.enabled, true);
 assert.equal(POLICY.automation.instagram_follow, false);
+assert.equal(POLICY.automation.mastodon_post, true);
+assert.equal(POLICY.automation.tumblr_post, true);
+assert.equal(POLICY.automation.engage, true);
+for (const f of ['social-mastodon.yml', 'social-tumblr.yml', 'social-engage.yml']) {
+  const y = fs.readFileSync(new URL('../.github/workflows/' + f, import.meta.url), 'utf8');
+  assert.doesNotMatch(y, /vars\.(MASTODON_LIVE|TUMBLR_LIVE|ENGAGE_LIVE)/, f);
+  assert.match(y, /live-flag\.mjs/, f);
+}
 
 // ── X : au plus une mention par média et par jour
 const accounts = [{ handle: '@DelitFrancais', type: 'source', cle_flux: 'Le Délit' }, { handle: '@Linknewspaper', type: 'source', cle_flux: 'The Link' }];

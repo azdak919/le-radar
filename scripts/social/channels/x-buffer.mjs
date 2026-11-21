@@ -64,6 +64,18 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
         return d?.channel || null;
       } catch (e) { if (e instanceof AuthError) throw e; return { error: e.message }; }
     },
+    async heads() {
+      const { organizationId, channelId } = await context();
+      const texts = [];
+      for (const status of ['sent', 'scheduled']) {
+        try {
+          const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!], $s: [PostStatus!]) {
+            posts(first: 30, input: { organizationId: $o, filter: { channelIds: $c, status: $s } }) { edges { node { text } } } }`, { o: organizationId, c: [channelId], s: [status] });
+          for (const e of d?.posts?.edges || []) if (e?.node?.text) texts.push(e.node.text);
+        } catch (e) { if (e instanceof AuthError) throw e; }
+      }
+      return texts;
+    },
     async queued() {
       const { organizationId, channelId } = await context();
       const d = await gql(`query($o: OrganizationId!, $c: [ChannelId!]) {

@@ -3469,11 +3469,19 @@ function updateViewLabel() {
 function sizeStudioDash() {
   const dash = document.querySelector('.affiche-wire--studio .dash');
   if (!dash) return;
+  // La feuille fixe déjà une hauteur d’atelier. L’écraser avec « le reste
+  // sous le mât » tombait vers 280 px sur une fenêtre courte : l’aperçu
+  // portrait fit alors sous ~230 px. On ne grandit que si la fenêtre laisse
+  // plus de place que la feuille.
+  dash.style.height = '';
+  dash.style.maxHeight = '';
+  const cssH = Math.round(dash.getBoundingClientRect().height);
   const top = dash.getBoundingClientRect().top;
-  const gap = 16;
-  const h = Math.max(280, Math.round(window.innerHeight - top - gap));
-  dash.style.height = `${h}px`;
-  dash.style.maxHeight = `${h}px`;
+  const room = Math.round(window.innerHeight - top - 16);
+  if (room > cssH + 24) {
+    dash.style.height = `${room}px`;
+    dash.style.maxHeight = `${room}px`;
+  }
 }
 
 function applyPreviewView() {

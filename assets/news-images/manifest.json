@@ -2879,15 +2879,6 @@
       "via": "origin",
       "nameKey": "msp26-1113-lacruesprotest-2479.jpg"
     },
-    "464c1ce990b899cf": {
-      "local": "assets/news-images/464c1ce990b899cf.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2024/02/03.1AUTOBUS.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 203427,
-      "updatedAt": "2026-11-19T21:14:03.609Z",
-      "via": "disk",
-      "nameKey": "03.1autobus.jpg"
-    },
     "acb1153bd09ec623": {
       "local": "assets/news-images/acb1153bd09ec623.jpg",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/1_Couverture-peur-724x1024.jpg",
@@ -3166,8 +3157,8 @@
       "nameKey": "yann_rfd-43.jpg"
     }
   },
-  "updatedAt": "2026-11-21T05:08:05.545Z",
-  "count": 326,
+  "updatedAt": "2026-11-21T07:26:13.025Z",
+  "count": 325,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5633,6 +5624,10 @@
     "3d829a1c4f26f96c": {
       "reason": "budget",
       "at": "2026-11-20T22:08:34.385Z"
+    },
+    "464c1ce990b899cf": {
+      "reason": "budget",
+      "at": "2026-11-21T07:08:20.386Z"
     }
   }
 }

@@ -37,6 +37,10 @@
   "x_follow": false,
   "facebook_follow": false,
   "instagram_follow": false,
+  "mastodon_post": true,
+  "tumblr_post": true,
+  "engage": true,
+  "_switches": "Interrupteurs dans le dépôt, lus par les workflows. Les variables GitHub MASTODON_LIVE, TUMBLR_LIVE et ENGAGE_LIVE ne sont plus requises. false = essai à blanc sur le cron, sans action manuelle.",
   "bluesky_follow": {
    "enabled": true,
    "max_total": 87,
@@ -145,7 +149,7 @@
   "prepared": {
    "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que enabled n’est pas true. Instagram : compte Buffer distinct (secret BUFFER_INSTAGRAM_API_KEY), fil seulement (type post), image 3:4 1080×1440 ou repli 4:5, légende sans lien cliquable. La présentation du 21 novembre 2026 est déjà publiée à la main : ne pas la republier. La montée part le 22 novembre (jour 1).",
    "instagram": {
-    "enabled": false,
+    "enabled": true,
     "feed": "grille",
     "story": false,
     "reel": false,

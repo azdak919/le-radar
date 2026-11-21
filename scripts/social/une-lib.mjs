@@ -403,6 +403,13 @@ export function uneTags(items, max) {
   if (max >= 2 && out.length > max) return [...out.slice(0, max - 1), BASE_TAGS[1]].filter((t, i, a) => a.indexOf(t) === i).slice(0, max);
   return out.slice(0, max);
 }
+/** Instagram : 3 à 5 mots-clics ciblés. On complète avec #VieÉtudiante seulement s'il manque un troisième, sans dépasser 5. */
+export function instagramHashtags(items, max = 5) {
+  const cap = Math.min(5, max > 0 ? max : 5);
+  const tags = uneTags(items, cap);
+  if (tags.length < 3 && !tags.includes('#VieÉtudiante')) tags.push('#VieÉtudiante');
+  return tags.slice(0, cap);
+}
 /** Étiquettes Tumblr (sans #, 10 à 15). */
 export function uneTumblrTags(items) {
   const t = ['le radar', 'la une', 'médias étudiants', 'presse étudiante', 'journalisme étudiant', 'québec', 'quebec', 'université', 'vie étudiante', 'actualités'];
@@ -495,7 +502,8 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     if (radio.length) { radio = radio.slice(0, -1); continue; }
     if (sports.length) { sports = sports.slice(0, -1); continue; }
     if (items.length > 1) { items = items.slice(0, -1); continue; }
-    if (hash.length > 1) { hash = hash.slice(0, -1); continue; }
+    const hashFloor = spec.nolink ? 3 : 1;
+    if (hash.length > hashFloor) { hash = hash.slice(0, -1); continue; }
     if (cut && cut <= 30 && withRevue && revueLine) { withRevue = false; cut = 0; continue; }
     cut = cut ? cut - 10 : 120; if (cut < 30) return null;
   }
@@ -521,6 +529,7 @@ export function checkUneText(text, net, model, spec = net === 'instagram' ? IG_S
     if (!/le-radar\.ca/.test(text)) p.push('le-radar.ca en texte manquant');
     const tags = text.match(/#[\p{L}\p{N}_]+/gu) || [];
     if (tags.length > (spec.maxHashtags || 5)) p.push(`trop de mots-clics (${tags.length}/${spec.maxHashtags || 5})`);
+    if (tags.length < 3) p.push(`pas assez de mots-clics (${tags.length}/3)`);
     if (/^Photo\s*:/m.test(text)) p.push('crédit « Photo : » interdit');
     const want = igCreditLine(model.credit || model.items?.[0]?.credit || '');
     if (want && !text.includes(want)) p.push('crédit 📸 manquant');
@@ -536,7 +545,8 @@ export function checkUneText(text, net, model, spec = net === 'instagram' ? IG_S
 export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
   const out = {};
   for (const n of [...NETS, ...PREPARED_NETS]) {
-    const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n], tags = n === 'tumblr' ? [] : uneTags(model.items, maxByNetwork[n] ?? (n === 'instagram' ? 5 : 2));
+    const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n];
+    const tags = n === 'tumblr' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : uneTags(model.items, maxByNetwork[n] ?? 2);
     const text = buildUneText(model, n, spec, { tags, revueExists: opts.revueExists ?? model.revueExists, root: opts.root });
     out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] || '', problems: checkUneText(text, n, model, spec) };
   }

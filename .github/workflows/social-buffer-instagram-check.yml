@@ -6,6 +6,8 @@ name: Social — contrôle Buffer Instagram (lecture seule)
 # Compte principal (BUFFER_API_KEY) : LinkedIn, Facebook et X toujours visibles, Instagram absent.
 # Le script n'écrit jamais la clé, ni un fragment, ni les en-têtes.
 on:
+  schedule:
+    - cron: '17 13 * * 1'   # lundi ≈ 8 h 17 heure de Montréal (HNE)
   pull_request:
     paths:
       - .github/workflows/social-buffer-instagram-check.yml
@@ -15,10 +17,11 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   probe:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -31,3 +34,11 @@ jobs:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_INSTAGRAM_API_KEY: ${{ secrets.BUFFER_INSTAGRAM_API_KEY }}
         run: node scripts/social/buffer-instagram-check.mjs
+      - name: Issue si le contrôle échoue
+        if: failure() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --repo "${{ github.repository }}" \
+            --title "Instagram : le contrôle Buffer a échoué" \
+            --body "Le contrôle en lecture seule du lundi a échoué. Le journal de ce workflow contient la raison, sans clé. Les publications s'arrêtent aussi d'elles-mêmes au premier échec d'envoi."

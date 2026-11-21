@@ -305,6 +305,8 @@ assert.doesNotMatch(igCredit.text, /^Photo\s*:/m);
 assert.equal(U.embeddedCreditLabel('Photo : Thekidpossum, CC BY-SA 4.0, Wikimedia Commons', 'grille'), '📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
 assert.match(U.embeddedCreditLabel('Photo : Thekidpossum, CC BY-SA 4.0, Wikimedia Commons', 'portrait'), /^Photo\u00A0: Thekidpossum/);
 assert.ok((ig.text.match(/#[\p{L}\p{N}_]+/gu) || []).length <= 5);
+assert.ok((ig.text.match(/#[\p{L}\p{N}_]+/gu) || []).length >= 3, ig.text);
+assert.ok((ig.text.split('\n')[0] || '').length <= 125);
 assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
 assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30'); assert.equal(U.frHour(''), ''); assert.equal(U.frHour('00:00'), '0 h');
 

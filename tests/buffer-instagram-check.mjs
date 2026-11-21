@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { scrub, assessInstagram, assessMain, bufferQuery, EXPECTED_MAIN } from '../scripts/social/buffer-instagram-check.mjs';
+import { alreadyPosted } from '../scripts/social/instagram.mjs';
 
 const SRC = fs.readFileSync(new URL('../scripts/social/buffer-instagram-check.mjs', import.meta.url), 'utf8');
 const WF = fs.readFileSync(new URL('../.github/workflows/social-buffer-instagram-check.yml', import.meta.url), 'utf8');
@@ -57,4 +58,6 @@ await bufferQuery('k', 'query { account { organizations { id } } }', {}, async (
   return { status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] } } }) };
 });
 assert.doesNotMatch(sentQuery, /\bmutation\b/);
+assert.equal(alreadyPosted(['🌙 La une du soir du Radar · dimanche\n\nsuite'], '🌙 La une du soir du Radar · dimanche\n\nautre'), true);
+assert.equal(alreadyPosted(['autre accroche'], '🌙 La une du soir du Radar · dimanche'), false);
 console.log('buffer-instagram-check ok');
