@@ -76,7 +76,7 @@ const compassion = {
 };
 assert.match(L.itemReject('Le texte évoque 2 populations civiles concernées par le conflit. Une seconde phrase décrit le cadre du cours sans autre invention.', compassion), /chiffre absent \(2\)/);
 assert.equal(sourceHasNumber('two civilian populations', '2'), true);
-assert.doesNotMatch(itemsPrompt([sag]), /Reprends au moins un chiffre|au moins un chiffre, une date/);
+assert.doesNotMatch(itemsPrompt([sag]), /Reprends au moins un chiffre|au moins un chiffre, une date/, 'le prompt n’ordonne pas d’insérer un chiffre');
 
 const kept = await aiReview([{ ...csu, id: 'csu' }], {
   env: { CLOUDFLARE_AI_TOKEN: 't', CLOUDFLARE_ACCOUNT_ID: 'c' },
