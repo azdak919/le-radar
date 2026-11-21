@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-21T19:56:56.026Z",
+  "updated": "2026-11-21T21:08:19.630Z",
   "total": 1050,
-  "withPhoto": 954,
-  "withStock": 103,
-  "withCampusBank": 92,
+  "withPhoto": 956,
+  "withStock": 101,
+  "withCampusBank": 91,
   "fullyCovered": 1035,
-  "leadReadyPhotos": 989,
+  "leadReadyPhotos": 988,
   "pageScraped": 10,
   "photosRecovered": 10,
   "imagesCleared": 1,
-  "stockSearches": 2,
-  "stockFound": 8,
-  "campusBankFound": 6,
+  "stockSearches": 7,
+  "stockFound": 19,
+  "campusBankFound": 17,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Huîtres, drogues et les tournants de la vie",
+      "link": "https://www.delitfrancais.com/2026/09/30/huitres-drogues-et-les-tournants-de-la-vie",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -21,9 +27,33 @@
       "image": null
     },
     {
+      "title": "Bulletins La Pige radio 28 septembre 12h, 14h, 16h et 18h",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/bulletin-la-pige-radio-28-septembre-12h",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
+      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "La Corse résonne dans une église de Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/la-corse-resonne-dans-une-eglise-de-chicoutimi",
+      "reason": "no-stock-match",
       "image": null
     }
   ]
