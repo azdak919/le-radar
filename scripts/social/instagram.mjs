@@ -234,11 +234,24 @@ export function instagramIssue({ reason, slotId = '', format = '', at = '' } = {
   return { title, body };
 }
 
+/** Vrai si un texte déjà envoyé ou en file a la même première ligne (reprise sans doublon). */
+export function alreadyPosted(texts, text) {
+  const head = String(text || '').split('\n')[0].trim();
+  if (!head) return false;
+  return (texts || []).some(t => String(t || '').split('\n')[0].trim() === head);
+}
+
 /** Un seul envoi. Toute erreur ou tout avertissement Buffer arrête le canal et ouvre une issue. */
 export async function deliverInstagram({ env = {}, text, imageUrl, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
   const ch = createInstagramBuffer(env, { fetchImpl });
   if (!ch) return { action: 'skip', reason: instagramKey(env).reason, state };
   try {
+    if (typeof ch.heads === 'function' && alreadyPosted(await ch.heads(), text)) {
+      const when = Date.parse(now);
+      const day = torontoDay(Number.isFinite(when) ? when : Date.now());
+      const sent = { ...(state.sent || {}), [dedupKey || 'dedup']: { at: now, day, slotId, format, id: 'deja-present', dedup: true } };
+      return { action: 'sent', id: 'deja-present', dedup: true, state: { ...state, halted: false, sent } };
+    }
     const post = await ch.add({ text, image: imageUrl, alt, now: true, metadata: INSTAGRAM_METADATA });
     const when = Date.parse(now);
     const day = torontoDay(Number.isFinite(when) ? when : Date.now());

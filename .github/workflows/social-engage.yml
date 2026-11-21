@@ -3,7 +3,8 @@ name: Social — Interactions (Bluesky, Tumblr, Mastodon)
 # Toutes les 2 h de 8 h à 20 h (heure de Toronto, HNE ; décalé d'1 h en HAE), jamais la nuit. Coût : 0 $.
 # Bluesky : j'aime + un émoji (liste blanche) ; Tumblr : j'aime des reblogs commentés ; Mastodon : favoris seulement, sans IA.
 # Au plus 3 réponses par publication de < 48 h, 20 actions/jour/réseau. État : data/engage-state.json.
-# Réel seulement si la variable ENGAGE_LIVE vaut « true » ou en lancement manuel avec dry_run décoché.
+# Réel si data/social/policy.json automation.engage est true. Le cron suffit.
+# Lancement manuel : dry_run coché = essai.
 on:
   schedule:
     - cron: '20 13,15,17,19,21,23 * * *'
@@ -34,6 +35,8 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
+      - id: live
+        run: echo "live=$(node scripts/social/live-flag.mjs engage)" >> "$GITHUB_OUTPUT"
       - name: Interactions
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
@@ -46,7 +49,7 @@ jobs:
           MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
           CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) || (github.event_name == 'schedule' && vars.ENGAGE_LIVE != 'true') && 'true' || 'false' }}
+          DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) || steps.live.outputs.live != 'true' && 'true' || 'false' }}
         run: node scripts/social/engage.mjs
       - name: Commit de l'état (data/engage-state.json seulement)
         if: always()

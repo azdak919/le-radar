@@ -4,7 +4,7 @@ name: Social — La une du matin et du soir
 # EN PLUS des publications existantes. Image rendue sans tête (affiches/social-une.html), liens cliquables dans le texte, aucune mention @.
 # Fenêtres d'envoi (data/social/policy.json formats.une.slots) : matin 7 h 30-10 h 30, soir 19 h 15-22 h 30, heure de Montréal.
 # Les crons GitHub sont en UTC et partent souvent en retard : on en pose pour l'heure d'été (HAE) ET l'heure d'hiver (HNE), plus des secours,
-# et on se greffe aussi sur la fin de « Social — Mastodon » (lancé aux 30 min par le Worker le-radar-news-trigger, plus ponctuel).
+# et on se greffe aussi sur la fin de « Social — Mastodon » (son propre cron, deux fois l'heure).
 # La porte (job « gate ») ne fait rien hors fenêtre ni si le créneau est déjà traité : data/social/une-state.json garantit une seule
 # publication par réseau et par créneau ; chaque réseau est traité séparément (un réseau en panne ne bloque pas les autres, 3 essais au plus).
 # Aperçu sans envoi d'une PR : social-une-preview.yml.

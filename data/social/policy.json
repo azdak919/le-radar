@@ -37,6 +37,10 @@
   "x_follow": false,
   "facebook_follow": false,
   "instagram_follow": false,
+  "mastodon_post": true,
+  "tumblr_post": true,
+  "engage": true,
+  "_switches": "Interrupteurs dans le dépôt, lus par les workflows. Les variables GitHub MASTODON_LIVE, TUMBLR_LIVE et ENGAGE_LIVE ne sont plus requises. false = essai à blanc sur le cron, sans action manuelle.",
   "bluesky_follow": {
    "enabled": true,
    "max_total": 87,
