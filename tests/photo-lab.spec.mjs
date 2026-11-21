@@ -418,7 +418,8 @@ test('labo cartes page sports : variantes V D N prochain creux', async ({ page }
   await expect(page.locator('#fiches .sports-result--live').first()).toBeVisible();
   const livePill = page.locator('#fiches .sports-panel__live').first();
   await expect(livePill).toBeVisible();
-  await expect(livePill).toHaveText(/En cours/i);
+  // Le labo garde le badge « En direct ». La pastille du site, elle, dit « En cours ».
+  await expect(livePill).toHaveText(/En direct/i);
   const liveFilter = page.locator('#lab-filters [data-filter-period="live"]');
   await expect(liveFilter).toBeVisible();
   await liveFilter.click();

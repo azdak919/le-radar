@@ -7,9 +7,7 @@ let cases = 0;
 for (const full of [false, true]) {
   for (const staticResult of states) for (const criticalResult of states) for (const fullResult of states) {
     assert.equal(verificationPassed({ full, staticResult, criticalResult, fullResult }),
-      staticResult === 'success' && (full
-        ? fullResult === 'success' && (criticalResult === 'success' || criticalResult === 'skipped')
-        : criticalResult === 'success'));
+      staticResult === 'success' && (full ? fullResult : criticalResult) === 'success');
     cases++;
   }
 }

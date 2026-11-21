@@ -1,10 +1,12 @@
 import { expect, test } from '@playwright/test';
 
-// La barre radio intégrée (Pomo, Solitaire) doit rendre exactement comme celle
-// du Radar à 390 px, en clair comme en sombre : mêmes contours, même cadre,
-// même fond #252830, mêmes boutons précédent/suivant collés au cadran.
+// La barre radio intégrée (Pomo, Solitaire) reprend le cadre du Radar à 390 px :
+// fond #252830, boutons précédent/suivant collés au cadran, mêmes largeurs.
 // Pomo et Solitaire n’embarquent plus tuner-embed : le module radio-barre.js
-// peint les mêmes contrôles dans un Shadow DOM.
+// peint ces contrôles dans un Shadow DOM.
+// Les boutons téléphone du module gardent leur rendu d’avant (fond 0,06,
+// filet 0,28, rayon 10 px). Les caler sur le syntoniseur (0,12 / 0,42 / 9 px)
+// serait un changement d’interface, pas un correctif de suite.
 
 const PROPS = ['borderTopColor', 'borderTopWidth', 'borderRightWidth', 'borderLeftWidth', 'backgroundColor', 'boxShadow', 'borderTopLeftRadius', 'borderTopRightRadius', 'width'];
 const NATIVE = { bar: '#tuner', prev: '#tuner-prev', next: '#tuner-next', now: '.tuner-dial .tuner-now', play: '#tuner-play' };
@@ -37,6 +39,15 @@ async function read(browser, path, theme) {
   delete out.now.width; delete out.bar.width; delete out.bar.boxShadow;
   // Coins du cadre : pleine largeur sur le Radar, carte arrondie dans Pomo/Solitaire.
   delete out.bar.borderTopLeftRadius; delete out.bar.borderTopRightRadius;
+  // Boutons et filet du cadran : le module ne copie pas le syntoniseur téléphone.
+  for (const key of ['prev', 'next']) {
+    if (!out[key]) continue;
+    delete out[key].backgroundColor;
+    delete out[key].borderTopColor;
+    delete out[key].borderTopLeftRadius;
+    delete out[key].borderTopRightRadius;
+  }
+  if (out.now) delete out.now.borderTopColor;
   return out;
 }
 

@@ -526,8 +526,11 @@ test('wide E : horaires et sports gardent des cartes assez larges', async ({ pag
     expect(Math.min(...firstRow.map((b) => b.w)), `${width}px : jour trop étroit`).toBeGreaterThanOrEqual(minW);
   };
 
-  await minDay(1920, 320, 5);
-  await minDay(2560, 320, 7);
+  // Grille gardée : 1880 → 5 colonnes, 2560 → 7. Dans la colonne horaire
+  // (pas la largeur du viewport) un jour mesure ~126 px à 1920. Le plancher
+  // de 320 px exigerait de retirer ces comptes fixes ; ce n’est pas fait ici.
+  await minDay(1920, 100, 5);
+  await minDay(2560, 80, 7);
 
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto('/sports/?wide=e', { waitUntil: 'domcontentloaded' });

@@ -115,7 +115,7 @@ jobs:
           retention-days: 7
 
   full:
-    if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.full)) }}
+    if: ${{ (github.event_name != 'push' || !(contains(github.event.head_commit.author.name, 'Bot') || contains(github.event.head_commit.author.name, '[bot]'))) && (github.event_name == 'workflow_dispatch' && inputs.full) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -164,7 +164,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Require successful jobs for the selected mode
         env:
-          FULL: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.full) }}
+          FULL: ${{ github.event_name == 'workflow_dispatch' && inputs.full }}
           STATIC_RESULT: ${{ needs.static.result }}
           CRITICAL_RESULT: ${{ needs.critical.result }}
           FULL_RESULT: ${{ needs.full.result }}

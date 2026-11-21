@@ -16,8 +16,8 @@ const { displayAuthorName, displayPhotoCredit, isSuspectAuthorName } = require('
 const path = require('path');
 const { stripCdata } = require('./cdata-lib');
 const { pruneToFreshWindow } = require('./source-retention-lib');
-const { dedupeArticlesList } = require('./news-dedupe-lib');
 const { buildAcronymMap } = require('./institution-labels-lib');
+const { dedupeArticlesList } = require('./news-dedupe-lib');
 
 const ROOT = path.join(__dirname, '..');
 /** Surcharges de test : fichier d'articles et dossier du flux, sans toucher au dépôt. */
