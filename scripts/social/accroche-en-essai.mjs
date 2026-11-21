@@ -6,7 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { enAccrocheDetail, articleSource, EN_MODEL } from './accroche-en.mjs';
-import { buildXText, siteLink, xlen, formatOk } from './lib.mjs';
+import { buildXText, siteLink, xlen, formatOk, enLead, EN_MARK } from './lib.mjs';
 import { buildBskyText, graphemes } from './bluesky.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -50,7 +50,7 @@ for (const n of pick) {
       totals[model].ok++; if (r.quote) totals[model].quote++;
       const a = { ...it, enAccroche: { quote: r.quote, phrase: r.phrase, institutionFr: r.institutionFr } };
       const x = buildXText(a, X_ACC, { credit, photo: !!credit, ai: true }), b = buildBskyText(a, B_ACC, { credit, photo: !!credit });
-      const full = [r.quote ? `« ${r.quote} »` : '', `${a.source}, média étudiant ${r.institutionFr}, sous la plume de ${a.author}, ${r.phrase}\n(En anglais)\n${siteLink(it)}`].filter(Boolean).join('\n\n');
+      const full = [r.quote ? `« ${r.quote} »` : '', `${enLead(a, [], r.institutionFr)}, ${r.phrase}\n${EN_MARK}\n${siteLink(it)}`].filter(Boolean).join('\n\n');
       md.push('Modèle complet (sans limite de longueur) :', '', '```text', full, '```', '',
         `X (${xlen(x)}/280, formatOk ${formatOk(x, a, credit) ? 'oui' : 'NON'}, ${x.includes('(En anglais)') ? 'accroche' : 'format actuel'}) :`, '', '```text', x, '```', '',
         `Bluesky (${graphemes(b)}/300, formatOk ${formatOk(b, a, credit) ? 'oui' : 'NON'}, ${b.includes('(En anglais)') ? 'accroche' : 'format actuel'}) :`, '', '```text', b, '```', '');
