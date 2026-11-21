@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-21T16:54:27.596Z",
-  "total": 1038,
+  "updated": "2026-11-21T18:09:41.299Z",
+  "total": 1040,
   "pool": 61,
   "incomplete": 25,
-  "withLeadExcerpt": 206,
+  "withLeadExcerpt": 208,
   "candidates": 25,
-  "enriched": 5,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -46,13 +55,13 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
+      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
+      "chars": 404,
+      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
+      "changed": true
     },
     {
       "title": "La vie lors d’une régate d’aviron",
@@ -61,7 +70,7 @@
       "score": 100,
       "chars": 342,
       "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
@@ -70,16 +79,7 @@
       "score": 100,
       "chars": 380,
       "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
-      "changed": true
-    },
-    {
-      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/et-si-le-referendum-de-95-avait-lieu-aujourdhui/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-le-referendum-de-95-avait-lieu-aujourdhui",
-      "ok": true,
-      "score": 96,
-      "chars": 378,
-      "sample": "« Je pense qu’aujourd’hui, la grosse différence, c’est que les échanges entourant la souveraineté se",
-      "changed": true
+      "changed": false
     }
   ]
 }

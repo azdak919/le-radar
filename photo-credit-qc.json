@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-21T16:57:19.870Z",
-  "total": 1037,
-  "withImage": 922,
-  "withCredit": 922,
-  "cited": 646,
-  "pending": 165,
+  "updated": "2026-11-21T18:11:26.270Z",
+  "total": 1038,
+  "withImage": 935,
+  "withCredit": 935,
+  "cited": 657,
+  "pending": 169,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 7,
-  "citedNew": 6,
-  "fallbackNew": 54,
+  "citedNew": 7,
+  "fallbackNew": 53,
   "samples": [
+    {
+      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
+      "source": "Impact Campus",
+      "credit": "Photo : David Mendonza-élaine",
+      "cited": true,
+      "method": "json-ld"
+    },
     {
       "title": "La vie lors d’une régate d’aviron",
       "source": "Quartier Libre",
@@ -20,9 +27,16 @@
       "method": null
     },
     {
-      "title": "La génération Z et le retour des médias physiques",
+      "title": "ASFA asks students what issues matter most to them",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of ASFA",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
-      "credit": "Photo : Alex Salcedo et Linus Bossardt",
+      "credit": "Illustration : Mathilde Ségar",
       "cited": true,
       "method": "figcaption-trailing-fr"
     },
@@ -34,30 +48,16 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Yachts, champagne et abonnés : pourquoi la vie des riches fascine tant",
-      "source": "La Pige",
-      "credit": "Photo : Google",
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "source": "The Concordian",
+      "credit": "Photo: Eric Klempan",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Le fétichisme des pieds, une fascination singulière",
+      "title": "L’IA, nouvelle arme des fraudeurs en cryptomonnaies",
       "source": "La Pige",
-      "credit": "Photo : Elena Simet",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Entretien avec le rappeur et historien Webster",
-      "source": "Quartier Libre",
-      "credit": "Photo : Geneviève Robitaille",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Quand notre quotidien change de couleur",
-      "source": "La Pige",
-      "credit": "Photo : Diego Pinto de Queiros",
+      "credit": "Photo : Alexis Auclair",
       "cited": true,
       "method": "body-line"
     }
