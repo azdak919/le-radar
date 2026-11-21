@@ -22,11 +22,15 @@ async function settleSports(page) {
     try { return typeof sportsSlides !== 'undefined' && sportsSlides.length > 0; }
     catch { return false; }
   })).toBe(true);
+  await page.route('**/sports-masthead.json*', (route) => route.abort());
   await page.evaluate(() => {
     if (typeof initMastheadSports !== 'undefined' && initMastheadSports._liveTimer) {
       clearInterval(initMastheadSports._liveTimer);
       initMastheadSports._liveTimer = 0;
     }
+    try { pollLiveSportsJson = async () => {}; } catch { /* fonction absente */ }
+    try { pollRseqAndRerender = async () => {}; } catch { /* fonction absente */ }
+    try { applySportsPayload = () => {}; } catch { /* fonction absente */ }
   });
 }
 
