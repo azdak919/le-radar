@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T20:36:50.985Z",
+  "updatedAt": "2026-11-22T21:31:00.723Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T20:36:16.464Z"
+      "checkedAt": "2026-11-22T21:30:32.136Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La Grapevine",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/la-grapevine"
-      },
-      "next": {
         "title": "Le grand repos",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/le-grand-repos"
       },
+      "next": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
       "track": "",
-      "showTitle": "La Grapevine",
+      "showTitle": "Le grand repos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T20:36:17.537Z"
+      "checkedAt": "2026-11-22T21:30:33.558Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "Bhum Bhum Time",
         "source": "api-live",
         "start": "16:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Desi Beats",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Bhum Bhum Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T20:36:19.972Z"
+      "checkedAt": "2026-11-22T21:30:37.978Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Fukubukuro",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/fukubukuro"
-      },
-      "next": {
         "title": "Grade A Explosives",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
+      "next": {
+        "title": "Bills Country and Western Favourites",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+      },
       "track": "",
-      "showTitle": "Fukubukuro",
+      "showTitle": "Grade A Explosives",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T20:36:43.823Z"
+      "checkedAt": "2026-11-22T21:30:52.024Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T20:36:44.728Z"
+      "checkedAt": "2026-11-22T21:30:52.971Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Shamir — On The Regular",
+      "track": "The Lights — Ice",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T20:36:50.634Z"
+      "checkedAt": "2026-11-22T21:31:00.373Z"
     }
   }
 }
