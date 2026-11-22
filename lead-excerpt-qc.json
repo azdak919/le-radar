@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-22T07:06:58.492Z",
-  "total": 1053,
+  "updated": "2026-11-22T07:35:07.622Z",
+  "total": 1041,
   "pool": 61,
   "incomplete": 26,
   "withLeadExcerpt": 209,
   "candidates": 26,
-  "enriched": 2,
-  "failed": 1,
+  "enriched": 3,
+  "failed": 8,
   "ok": true,
   "samples": [
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
+      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
+      "ok": true,
+      "score": 100,
+      "chars": 404,
+      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
+      "changed": true
+    },
+    {
       "title": "Cinq nouvelles de la semaine",
       "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 342,
       "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
-      "changed": false
-    },
-    {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
-      "ok": true,
-      "score": 100,
-      "chars": 380,
-      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
       "changed": false
     }
   ]
