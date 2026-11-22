@@ -52,6 +52,22 @@
     }
   } catch { /* ignore */ }
 
+  /* Barres superposées (Chrome « overlay » / macOS) : scrollbar-gutter: stable
+     ne réserve rien, le pouce se dessine sur le bord des pastilles du rail.
+     On le détecte une fois pour que le CSS donne une marge au pouce. */
+  function markOverlayScrollbars() {
+    try {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;top:-9999px;width:60px;height:60px;overflow:scroll;visibility:hidden';
+      document.documentElement.appendChild(probe);
+      const overlay = probe.offsetWidth - probe.clientWidth === 0;
+      probe.remove();
+      if (overlay) document.documentElement.dataset.overlayScrollbars = '1';
+      else delete document.documentElement.dataset.overlayScrollbars;
+    } catch { /* ignore */ }
+  }
+  markOverlayScrollbars();
+
   function resyncFilters() {
     try {
       const panel = document.getElementById('news-filters-panel')
