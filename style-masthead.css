@@ -1383,35 +1383,23 @@ html.doodle-on .wordmark-logo {
     drop-shadow(0 3px 8px rgba(0, 0, 0, 0.16));
 }
 
-/* Mobile : l’icône officielle passe dans la pastille de la date ;
-   le titre Pricedown reste seul au centre. */
+/* Mobile : le logo Radar reste à gauche du titre Pricedown,
+   comme sur le mât habituel. */
+html.doodle-on .wordmark-logo,
+html.doodle-on .wordmark-brand {
+  flex: 0 0 auto;
+}
 @media (max-width: 599.98px) {
-  html.doodle-on .wordmark-logo { display: none; }
-  html.doodle-on .masthead-date {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35em;
-    max-width: calc(100% - 16px);
-  }
-  html.doodle-on .masthead-date::before {
-    content: "";
-    display: inline-block;
-    flex: 0 0 18px;
-    width: 18px;
-    height: 18px;
-    background: url("assets/icon.svg") center / contain no-repeat;
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
-  }
   html.doodle-on .wordmark-brand {
-    height: 0.78em;
-    width: min(5.1em, 86vw);
+    height: 0.98em;
+    width: min(6.35em, 72vw); /* 0,98 × rapport ~6,45 du SVG */
   }
 }
 
-/* Nom de la ville en Mr Dafoe (SIL OFL), selon data-doodle-city. */
+/* Nom de la ville en Kaushan Script (SIL OFL), selon data-doodle-city. */
 @font-face {
-  font-family: "Mr Dafoe";
-  src: url("assets/doodle/mr-dafoe/MrDafoe-Regular.ttf") format("truetype");
+  font-family: "Kaushan Script";
+  src: url("assets/doodle/kaushan-script/KaushanScript-Regular.ttf") format("truetype");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -1435,12 +1423,13 @@ html.doodle-on .wordmark-mark::after {
   width: min(22.5rem, 92vw);
   margin: 0.12em auto 0;
   padding: 0 0.2em;
-  font-family: "Mr Dafoe", cursive;
+  font-family: "Kaushan Script", cursive;
   font-weight: 400;
   font-style: normal;
   font-size: 1.3rem;
   line-height: 1.15;
   letter-spacing: 0.01em;
+  word-spacing: 0.28em;
   text-align: center;
   color: #ff6ab0;
   text-shadow:

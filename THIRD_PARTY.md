@@ -36,10 +36,11 @@ Les deux photographies sont des adaptations CC BY-SA 3.0 (redimensionnement, rec
 
 Le titre Pricedown du doodle (`assets/doodle/le-radar-pricedown.svg`) est une image vectorielle fixe, sans fichier de police ni glyphe redistribués. Voir `assets/doodle/README.md`.
 
-## Police Mr Dafoe (nom de ville du doodle)
+## Police Kaushan Script (nom de ville du doodle)
 
-- Fichiers : `assets/doodle/mr-dafoe/MrDafoe-Regular.ttf`, licence : `assets/doodle/mr-dafoe/OFL.txt`.
-- Auteur : Alejandro Paul (Sudtipos).
-- Licence : **SIL Open Font License 1.1**, avec nom de police réservé « Mr Dafoe ». Compatible avec une distribution GPL-2.0-only : la police reste sous OFL, elle n’est pas relicenciée en GPL. Aucune dépendance Apache-2.0.
-- Usage : lettrage du nom de la ville affichée (« Ville de Montréal, QC » ou « Ville de Québec, QC ») sur le mât et les publications, en écriture script inclinée. Ce n’est pas la police propriétaire de Grand Theft Auto, et elle n’en est pas une copie.
-- Source : [Google Fonts / Mr Dafoe](https://fonts.google.com/specimen/Mr+Dafoe).
+- Fichiers : `assets/doodle/kaushan-script/KaushanScript-Regular.ttf`, licence : `assets/doodle/kaushan-script/OFL.txt`.
+- Auteur : Pablo Impallari, avec le crénage d’Igino Marini.
+- Licence : **SIL Open Font License 1.1**, avec nom de police réservé « Kaushan Script ». Compatible avec une distribution GPL-2.0-only : la police reste sous OFL, elle n’est pas relicenciée en GPL. Aucune dépendance Apache-2.0.
+- Usage : lettrage du nom de la ville affichée (« Ville de Montréal, QC » ou « Ville de Québec, QC ») sur le mât et les publications, en écriture script inclinée, rose à léger halo. Ce n’est pas la police propriétaire de Grand Theft Auto, et elle n’en est pas une copie. Yellowtail avait été envisagée pour la lisibilité du Q, mais elle est publiée sous Apache 2.0 (incompatible avec la règle du dépôt : aucune dépendance Apache-2.0) ; Kaushan Script, déjà sur la liste des polices OFL candidates, a un Q lisible.
+- Source : [Google Fonts / Kaushan Script](https://fonts.google.com/specimen/Kaushan+Script).
+
