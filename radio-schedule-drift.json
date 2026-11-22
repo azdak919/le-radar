@@ -1,13 +1,11 @@
 {
-  "checkedAt": "2026-11-21T03:55:35.363Z",
+  "checkedAt": "2026-11-22T03:02:06.015Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [
-      "choq"
-    ],
+    "stable": 6,
+    "drift": [],
     "overhaul": [],
     "unreachable": []
   },
@@ -64,18 +62,13 @@
     },
     {
       "id": "choq",
-      "published": 32,
+      "published": 33,
       "fresh": 33,
-      "added": [
-        "ven 13:10–13:55 Onde de CHOQ",
-        "ven 18:00–19:00 Les Amazones"
-      ],
-      "removed": [
-        "ven 13:00–13:45 Onde de CHOQ"
-      ],
-      "changed": 3,
-      "ratio": 0.094,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
