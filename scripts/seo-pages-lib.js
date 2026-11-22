@@ -32,7 +32,8 @@ const TAGLINE_EN_TAG = 'all in one place';
 const BRAND_NAME = 'LE-RADAR.ca';
 const BRAND_SIGNATURE = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
 
-const LICENSE_URL = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html';
+const LICENSE_URL = 'https://www.gnu.org/licenses/agpl-3.0.html';
+const REPO_URL = 'https://github.com/azdak919/le-radar';
 const COFFEE_URL = 'https://www.buymeacoffee.com/azdak';
 const CONTACT_MAIL = 'azdak-qc@proton.me';
 const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
@@ -407,7 +408,7 @@ const T = {
     paperOf: 'le journal étudiant {of}',
     seeAll: 'Voir tous les médias étudiants du Québec',
     backHome: 'Retour à l’accueil de LE-RADAR.ca',
-    unofficial: 'LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.',
+    unofficial: 'LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine. Tout média étudiant peut demander la modification ou le retrait immédiat de son flux sur simple demande.',
     updated: 'Mise à jour',
     otherLang: 'English',
     footerNav: 'Liens de pied de page',
@@ -419,8 +420,10 @@ const T = {
     archives: 'Archives',
     kitMedia: 'Affiches et identité visuelle',
     iframes: 'iFrames',
-    licenseIntro: 'Ce projet est distribué sous',
-    licenseName: 'licence publique générale GNU, version 2',
+    licenseIntro: 'Code source sous licence',
+    licenseName: 'GNU AGPLv3',
+    licenseRepo: 'dépôt',
+    licenseTail: 'Kit-média sous licence CC BY 4.0. Contenus et médias agrégés crédités à leurs auteurs respectifs.',
     sourceCode: 'Code source (GitHub)',
     creditMade: 'Conçu avec',
     creditBy: 'par',
@@ -598,7 +601,7 @@ const T = {
     paperOf: 'the student newspaper of {name}',
     seeAll: 'Browse all student media in Québec',
     backHome: 'Back to the LE-RADAR.ca home page',
-    unofficial: 'LE-RADAR.ca is an independent, unofficial project. It is not affiliated with any of the media outlets or institutions listed. All content belongs to its original publisher.',
+    unofficial: 'LE-RADAR.ca is an independent, unofficial project. It is not affiliated with any of the media outlets or institutions listed. All content belongs to its original publisher. Any student outlet can have its feed changed or removed immediately, on request.',
     updated: 'Updated',
     otherLang: 'Français',
     footerNav: 'Footer links',
@@ -610,8 +613,10 @@ const T = {
     archives: 'Archives',
     kitMedia: 'Posters & visual identity',
     iframes: 'iFrames',
-    licenseIntro: 'This project is distributed under the',
-    licenseName: 'GNU General Public License, version 2',
+    licenseIntro: 'Source code licensed under',
+    licenseName: 'GNU AGPLv3',
+    licenseRepo: 'repository',
+    licenseTail: 'Media kit under CC BY 4.0. Aggregated content and media credited to their respective authors.',
     sourceCode: 'Source code (GitHub)',
     creditMade: 'Made with',
     creditBy: 'by',
@@ -966,6 +971,12 @@ function ressourceItem(t, up, slug, nameKey, descKey, urlKey) {
     </li>`;
 }
 
+/** Ligne de licence du pied de page : code AGPLv3 + dépôt, kit-média, contenus agrégés.
+ *  `rel="license"` reste sur le lien de la licence : nav-shell.js s'en sert pour classer le paragraphe. */
+function renderFooterLicense(t) {
+  return `<p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a> (<a href="${REPO_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.licenseRepo)}</a>). ${escapeHtml(t.licenseTail)}</p>`;
+}
+
 function renderFooterRessources(t, up, p) {
   return `<section class="site-foot__ressources">
 ${p}    <p class="site-foot__ressources-title">${escapeHtml(t.ressourcesTitle)}</p>
@@ -1054,7 +1065,7 @@ ${p}      <p class="site-foot__summary">${escapeHtml(t.unofficial)}</p>
 ${p}      <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}        ${detailsNav}
 ${p}      </nav>
-${p}      <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}      ${renderFooterLicense(t)}
 ${p}      <p class="site-foot__kao"><a href="${escapeHtml(t.kaoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.kaoLabel)}</a> <span class="site-foot__kao-hint">${escapeHtml(t.kaoHint)}</span></p>
 ${p}      <div class="site-foot__credit">
 ${p}        <p class="site-foot__author">
@@ -1080,7 +1091,7 @@ ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
 ${p}  </nav>
 ${p}  ${renderFooterRessources(t, up, p)}
-${p}  <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}  ${renderFooterLicense(t)}
 ${p}  <p class="site-foot__kao"><a href="${escapeHtml(t.kaoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.kaoLabel)}</a> <span class="site-foot__kao-hint">${escapeHtml(t.kaoHint)}</span></p>
 ${p}  <div class="site-foot__credit">
 ${p}    <p class="site-foot__author">
