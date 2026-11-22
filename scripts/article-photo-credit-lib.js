@@ -22,7 +22,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 17; // rev 17 : « Photo de / d’X » (FR, The Concordian)
+const CREDIT_EXTRACTOR_REV = 18; // rev 18 : « Photo tirée de X » (Le Club-École) ; rev 17 : « Photo de / d’X » (FR, The Concordian)
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -468,7 +468,8 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
   const frTrail = t.match(TRAILING_FR_CREDIT_RE)
     || t.match(/^(Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Photo)\s*:\s*(.+?)\s*\.?$/iu);
   if (frTrail) {
-    let nameRaw = frTrail[2].trim().replace(/[.,;:]+$/g, '').trim();
+    // « … Ottawa / @Senators » : la poignée retirée laisse un « / » orphelin.
+    let nameRaw = stripCreditHandles(frTrail[2]).trim().replace(/[\s.,;:/]+$/g, '').trim();
     if (nameRaw.length < 2) return null;
     const parsed = creditFromPhrase(nameRaw);
     if (!parsed) return null;
@@ -639,6 +640,26 @@ function extractViaCredit(html = '', lang = 'fr') {
       const text = sanitizeCreditText(raw);
       if (!text || text.length > 280) continue;
       // « Via Source » seule, en fin de légende (après ¦ / point), ou unique contenu
+      // Le Club-École : légende en paragraphe sous la figure,
+      //   « Bellingham a été passeur décisif… Photo tirée de Getty images »
+      //   « … l’équipe. Photo tirée du compte X des Hornets FR »
+      // → provenance, pas photographe : « Image tirée de Getty images ».
+      const tiree = text.match(/(?:^|¦|[.!?…]\s)\s*(?:Photos?|Images?)\s+tir[ée]e?s?\s+(de\s+l['’]|de\s+la|de|du|des|d['’])\s*(.+?)\s*$/iu);
+      if (tiree) {
+        const src = sanitizeCreditText(stripCreditHandles(tiree[2]))
+          .replace(/[\s.,;:¦/]+$/g, '')
+          .trim();
+        if (src.length >= 2 && src.length <= 100 && !isPlaceholderPhotoCredit(src)) {
+          const prep = tiree[1].replace(/\s+/g, ' ').toLowerCase();
+          const joiner = /['’]$/.test(prep) ? prep : `${prep} `;
+          return {
+            creditLine: lang === 'en' ? `Image via ${src}` : `Image tirée ${joiner}${src}`,
+            creator: src,
+            agency: '',
+            source: 'tiree-attribution',
+          };
+        }
+      }
       const m = text.match(/(?:^|¦|\.)\s*Via\s+(.+?)\s*$/i)
         || text.match(/^Via\s+(.+)$/i);
       if (!m) continue;

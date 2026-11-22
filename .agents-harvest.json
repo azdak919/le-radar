@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-09T03:33:39.220Z",
+  "generatedAt": "2026-11-22T09:04:25.319Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 1011.6,
+    "score": 3387.2,
     "level": "heavy",
-    "files": 693,
-    "touches": 1819,
-    "commitCount": 74
+    "files": 2421,
+    "touches": 9649,
+    "commitCount": 225
   },
   "candidates": [
     {
@@ -17,30 +17,14 @@
       "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
       "related": "D1",
-      "heat": 188.4,
+      "heat": 2034,
       "files": [
-        "scripts/radio-nowplaying-lib.js",
-        "scripts/radio-schedule-lib.js",
-        "tests/radio-nowplaying.mjs",
-        "tests/masthead-sports-fit.spec.mjs",
-        "tests/static-integrity.mjs",
-        "scripts/fetch-radio-nowplaying.js"
-      ]
-    },
-    {
-      "zone": "pwa-sw",
-      "title": "PWA / service worker / install",
-      "why": "SW et install touchés souvent ; risque de cache oublié",
-      "effort": "S",
-      "related": null,
-      "heat": 76,
-      "files": [
-        "assets/news-images/manifest.json",
-        "sports/sw.js",
-        "sw.js",
-        "engage-prompt.js",
-        "manifest.json",
-        "offline.html"
+        "tests/social-une-render.spec.mjs",
+        "tests/social-une.mjs",
+        "tests/footer-v2.spec.mjs",
+        "scripts/social/une-lib.mjs",
+        "scripts/seo-pages-lib.js",
+        "scripts/social/une-render.mjs"
       ]
     },
     {
@@ -49,14 +33,30 @@
       "why": "Activité concentrée sur /pomo/",
       "effort": "S",
       "related": null,
-      "heat": 61.5,
+      "heat": 189,
       "files": [
         "pomo/LICENSE",
         "pomo/README.md",
+        "pomo/index.html",
         "pomo/apple-touch-icon-120x120.png",
         "pomo/apple-touch-icon-152x152.png",
-        "pomo/apple-touch-icon-180x180.png",
-        "pomo/apple-touch-icon.png"
+        "pomo/apple-touch-icon-180x180.png"
+      ]
+    },
+    {
+      "zone": "pwa-sw",
+      "title": "PWA / service worker / install",
+      "why": "SW et install touchés souvent ; risque de cache oublié",
+      "effort": "S",
+      "related": null,
+      "heat": 146,
+      "files": [
+        "sw.js",
+        "sports/sw.js",
+        "assets/news-images/manifest.json",
+        "offline.html",
+        "engage-prompt.js",
+        "manifest.json"
       ]
     },
     {
@@ -65,14 +65,14 @@
       "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
       "effort": "M",
       "related": "D3",
-      "heat": 42,
+      "heat": 132,
       "files": [
+        "data/quebec-backgrounds-rejected.json",
         "data/quebec-backgrounds.json",
         "data/quebec-favorites-backgrounds.json",
         "data/quebec-nations-backgrounds.json",
         "data/quebec-pomo-backgrounds.json",
-        "data/quebec-university-backgrounds.json",
-        "quebec-backgrounds-data.js"
+        "data/quebec-university-backgrounds.json"
       ]
     },
     {
@@ -81,14 +81,14 @@
       "why": "Zone audio mobile sensible ; regroupe les fix récurrents",
       "effort": "M",
       "related": null,
-      "heat": 37.5,
+      "heat": 75,
       "files": [
-        "scripts/radio-nowplaying-lib.js",
-        "tests/radio-nowplaying.mjs",
-        "scripts/fetch-radio-nowplaying.js",
         ".github/workflows/update-radio-nowplaying.yml",
         "cast.js",
-        "mobile-playback.js"
+        "mobile-playback.js",
+        "player-sync.js",
+        "scripts/fetch-radio-nowplaying.js",
+        "scripts/radio-nowplaying-lib.js"
       ]
     },
     {
@@ -97,28 +97,41 @@
       "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
       "effort": "L",
       "related": "D2",
-      "heat": 21,
+      "heat": 27,
       "files": [
         "app.js",
+        "mobile/app/js/app.js",
         "pomo/js/app.js"
       ]
     }
   ],
   "topFiles": [
     {
-      "file": "news-archive.json",
-      "n": 20
+      "file": "sports-masthead.json",
+      "n": 113
     },
     {
-      "file": "assets/news-images/manifest.json",
-      "n": 19
+      "file": "sports.json",
+      "n": 113
     },
     {
-      "file": "en/newspapers/exil/index.html",
-      "n": 19
+      "file": "en/sports/index.html",
+      "n": 27
     },
     {
-      "file": "en/newspapers/le-delit/index.html",
+      "file": "sw-shell-lock.json",
+      "n": 22
+    },
+    {
+      "file": "sw.js",
+      "n": 21
+    },
+    {
+      "file": "sports/index.html",
+      "n": 21
+    },
+    {
+      "file": "en/newspapers/la-griffe/index.html",
       "n": 19
     },
     {
@@ -126,23 +139,15 @@
       "n": 19
     },
     {
-      "file": "en/newspapers/montreal-campus/index.html",
+      "file": "en/newspapers/lexemplaire/index.html",
       "n": 19
     },
     {
-      "file": "en/newspapers/the-campus/index.html",
+      "file": "en/newspapers/the-tribune/index.html",
       "n": 19
     },
     {
-      "file": "en/newspapers/the-plant/index.html",
-      "n": 19
-    },
-    {
-      "file": "journaux/exil/index.html",
-      "n": 19
-    },
-    {
-      "file": "journaux/le-delit/index.html",
+      "file": "journaux/la-griffe/index.html",
       "n": 19
     },
     {
@@ -150,20 +155,16 @@
       "n": 19
     },
     {
-      "file": "journaux/montreal-campus/index.html",
+      "file": "journaux/lexemplaire/index.html",
       "n": 19
     },
     {
-      "file": "journaux/the-campus/index.html",
+      "file": "journaux/the-tribune/index.html",
       "n": 19
     },
     {
-      "file": "journaux/the-plant/index.html",
-      "n": 19
-    },
-    {
-      "file": "llms.txt",
-      "n": 19
+      "file": "sports/sw.js",
+      "n": 18
     }
   ]
 }

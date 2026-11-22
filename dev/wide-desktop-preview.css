@@ -482,9 +482,12 @@ html[data-wide-preview="e"] {
 }
 
 /* ═══════════════════════════════════════════════════
-   E — Rail sources + contenu (wide ≥1400)
-   ═══════════════════════════════════════════════════ */
-@media (min-width: 1400px) {
+   E — Rail sources + contenu (dès 1280, comme le JS)
+   ═══════════════════════════════════════════════════
+   Le rail (pastilles en 1 colonne, wide-desktop-preview.js) s’active dès
+   1280 : la grille doit suivre, sinon 1280–1399 empilait les sources en
+   une colonne pleine largeur au-dessus du fil. */
+@media (min-width: 1280px) {
   html[data-wide-preview="e"] .wire:has(#wide-rail-stack) {
     max-width: var(--maxw);
     width: 100%;
@@ -1410,6 +1413,11 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
   html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="8"] {
     grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+  /* MTL + QC au contenu dès 1280 (max/min + « Demain », 22 nov. 2026) ;
+     les secondaires se partagent le reliquat. */
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-dual-primary] {
+    grid-template-columns: max-content max-content repeat(var(--weather-sec, 2), minmax(0, 1fr));
   }
   html[data-wide-preview="e"] .masthead-weather__city.is-active {
     display: flex !important;

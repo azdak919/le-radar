@@ -843,7 +843,9 @@ function sportsBoardCountBase() {
   const gap = 6;
   // Un seul plancher : CTA et scores ont la même largeur. Assez large
   // pour un nom + sous-ligne sans clip ; si ça déborde encore, le fit −1.
-  const minSlot = comfort ? 220 : (wide ? 200 : 240);
+  // Bureau 1280–1439 (~1170 px utiles) : 3 cartes, comme à 1440 (décision
+  // du 22 nov. 2026 — 5 cartes à 200 px tronquaient noms et sous-lignes).
+  const minSlot = comfort ? 220 : (wide ? 360 : 240);
   let maxN = 4;
   if (comfort) {
     if (avail >= 3000) maxN = 14;

@@ -204,7 +204,23 @@ function weatherPrimaryGrowsForToday(el) {
   return !!el.closest('.masthead-weather__board')?.hasAttribute('data-weather-dual-primary');
 }
 
-function commitWeatherExtra(el, extra, mode, before) {
+/** Téléphone : max/min seulement pour MTL/QC (pas la place pour « Demain »). */
+const WEATHER_PHONE_MQ = window.matchMedia('(max-width: 599.98px)');
+
+/**
+ * Décision du 22 nov. 2026 : Montréal et Québec affichent toujours leurs
+ * extras — max/min + « Demain » (bureau, tablette), max/min seuls au
+ * téléphone. Les villes régionales n'affichent jamais « Demain ».
+ * Retourne le mode imposé, ou null pour une ville régionale.
+ */
+function weatherPrimaryForcedMode(el) {
+  const id = el?.dataset?.weatherCity;
+  if (!MASTHEAD_WEATHER_PRIMARY_IDS.has(id)) return null;
+  if (!WEATHER_PHONE_MQ.matches && el.dataset.wxNext) return 'both';
+  return 'today';
+}
+
+function commitWeatherExtra(el, extra, mode, before, need = null) {
   if (mode === 'off') {
     el.classList.remove('has-room');
     el.dataset.weatherExtra = 'off';
@@ -213,10 +229,18 @@ function commitWeatherExtra(el, extra, mode, before) {
   el.classList.add('has-room');
   el.dataset.weatherExtra = mode;
   const grew = el.clientWidth > before + 1;
-  const clipped = extra.scrollWidth > extra.clientWidth + 1;
+  // La puce elle-même peut déborder (colonne étroite) sans que l'extra le voie :
+  // dans ce cas on redescend both → today → off plutôt que de rogner.
+  // Ou l'extra est comprimé (flex) sous sa largeur mesurée — 1024 : une seule case.
+  const needW = need ? need[mode] : 0;
+  const clipped = extra.scrollWidth > extra.clientWidth + 1
+    || (weatherPrimaryForcedMode(el) !== null && el.scrollWidth > el.clientWidth + 1)
+    || (needW > 0 && extra.getBoundingClientRect().width + 2 < needW);
   const primaryToday = mode === 'today' && weatherPrimaryGrowsForToday(el);
-  if (!clipped && (!grew || primaryToday)) return;
-  commitWeatherExtra(el, extra, mode === 'both' ? 'today' : 'off', before);
+  // MTL/QC : la puce peut grandir (le fit du bandeau retire une ville régionale).
+  const forced = weatherPrimaryForcedMode(el) === mode;
+  if (!clipped && (!grew || primaryToday || forced)) return;
+  commitWeatherExtra(el, extra, mode === 'both' ? 'today' : 'off', before, need);
 }
 
 /**
@@ -229,11 +253,13 @@ function applyWeatherExtraFit(el, textW) {
   el.dataset.weatherExtra = 'off';
   if (!extra || !el.dataset.wxMax || el.clientWidth < 48 || textW < 1) return;
   const todayW = measureWeatherExtraWidth(extra, 'today');
-  const bothW = el.dataset.wxNext ? measureWeatherExtraWidth(extra, 'both') : 0;
+  const forced = weatherPrimaryForcedMode(el);
+  // Villes régionales : jamais « Demain » (réservé à MTL/QC).
+  const bothW = (forced && el.dataset.wxNext) ? measureWeatherExtraWidth(extra, 'both') : 0;
   const slack = weatherChipSlack(el, textW);
-  let mode = weatherExtraMode(slack, todayW, bothW);
+  let mode = forced || weatherExtraMode(slack, todayW, bothW);
   if (mode === 'off' && weatherPrimaryGrowsForToday(el) && todayW > 0) mode = 'today';
-  commitWeatherExtra(el, extra, mode, el.clientWidth);
+  commitWeatherExtra(el, extra, mode, el.clientWidth, forced ? { both: bothW, today: todayW } : null);
 }
 
 let mastheadWeatherTimer = null;
@@ -1122,15 +1148,15 @@ function weatherBoardCount() {
     if (isWideDesktopComfort()) {
       // MTL+QC portent le max/min (~230 px chacune). Le reliquat
       // laisse un nom court montrer le sien, pas une carte de plus trop étroite.
-      const nSec = Math.max(1, Math.floor((width - 480) / 240));
+      // MTL+QC portent max/min + « Demain » (~320 px chacune, 22 nov. 2026).
+      const nSec = Math.max(1, Math.floor((width - 640) / 240));
       count = Math.max(3, Math.min(12, 2 + nSec));
-    } else if (width >= 1800) count = 8;
-    else if (width >= 1200) count = 7;
-    else if (width >= 900) count = 6;
-    else if (width >= 700) count = 5;
-    else if (width >= 520) count = 4;
-    else if (width >= 360) count = 3;
-    else count = 2;
+    } else {
+      // 1280–1439 : MTL+QC en colonnes au contenu (max/min + demain) ;
+      // le reliquat se partage entre secondaires d'au moins ~150 px.
+      const nSec = Math.max(0, Math.floor((width - 640) / 150));
+      count = Math.max(2, Math.min(8, 2 + nSec));
+    }
   } else {
     // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
     // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
