@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-22T18:37:45.950Z",
+  "updatedAt": "2026-11-22T19:36:54.812Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:30",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Remparts de Québec",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:45",
         "end": "17:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T18:37:11.574Z"
+      "checkedAt": "2026-11-22T19:36:18.343Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T18:37:12.746Z"
+      "checkedAt": "2026-11-22T19:36:19.759Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Modular Systems/Future Classics",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "The Magic Roundabout",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "Bhum Bhum Time",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Modular Systems/Future Classics",
+      "showTitle": "The Magic Roundabout",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T18:37:15.077Z"
+      "checkedAt": "2026-11-22T19:36:22.775Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Northern Stagelights",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/northern-stagelights"
-      },
-      "next": {
         "title": "Methods and Madness",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/methods-and-madness"
       },
+      "next": {
+        "title": "Fukubukuro",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/fukubukuro"
+      },
       "track": "",
-      "showTitle": "Northern Stagelights",
+      "showTitle": "Methods and Madness",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T18:37:38.906Z"
+      "checkedAt": "2026-11-22T19:36:47.060Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T18:37:39.992Z"
+      "checkedAt": "2026-11-22T19:36:48.530Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +135,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Baby Rose — When I'm Gone",
+      "track": "FUUDGE — Oue! Non!",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T18:37:45.599Z"
+      "checkedAt": "2026-11-22T19:36:54.463Z"
     }
   }
 }
