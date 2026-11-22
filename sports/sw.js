@@ -22,7 +22,7 @@
 
 importScripts('../scripts/sports-document-refresh.js');
 
-const SHELL_CACHE  = 'sports-shell-v443';
+const SHELL_CACHE  = 'sports-shell-v444';
 const FONT_CACHE   = 'sports-fonts-v2';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];

@@ -1281,37 +1281,22 @@ html[data-wide-preview="e"] .news-hero-spacer {
 }
 
 /*
- * Horaires : jamais 7 jours trop étroits.
- * Sous 1440 px, auto-fit garde une journée ≈ 320 px.
- * Comptes fixes : 1440 → 4 · 1880 → 5 · 2560 → 7.
+ * Horaires : jamais de jours trop étroits.
+ * Le nombre de colonnes suit la largeur du conteneur, pas celle de la fenêtre :
+ * la page station a une colonne de lecture (~1000 px) même à 1920, et un
+ * repeat(5) fixe y donnait des cartes de 126 px. Plancher 300 px par jour.
  */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 16px;
   }
 }
-@media (min-width: 1440px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
 @media (min-width: 1880px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 18px;
-  }
-}
-@media (min-width: 2560px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 18px;
-  }
+  html[data-wide-preview="e"] .seo-schedule { gap: 18px; }
 }
 @media (min-width: 3440px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    gap: 22px;
-  }
+  html[data-wide-preview="e"] .seo-schedule { gap: 22px; }
 }
 
 /*
