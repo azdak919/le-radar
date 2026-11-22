@@ -176,30 +176,42 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .paysage .mt { padding-top: 3px; } .paysage .mh { font-size: 11px; } .paysage .mh .emo { font-size: 11px; } .paysage .ml { font-size: 14px; line-height: 1.25; }
 .paysage .sports { padding: 8px 16px 8px; }
 /* Story (focus-group du 13 nov. 2026) : plein écran sur téléphone, les lignes secondaires grossissent un peu pour rester lisibles. */
-/* Instagram 3:4 natif (1080×1440). Ce n'est pas le portrait 4:5 étiré.
+/* Instagram 3:4 natif (1080×1440), photo en pleine page avec dégradé.
    La grille du profil recadre le centre en carré : 180 px en haut et en bas sortent du carré.
-   Le logo, la photo, le titre, le média et le crédit tiennent dans ce carré. */
+   Le logo, le titre, les auteurs, le média et le crédit tiennent dans ce carré.
+   Le libellé du créneau n’apparaît qu’une fois, en kicker coloré. */
 .grille { background: #000; }
-.grille .ig { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; background: #000; color: #fff; }
-.grille .ig-edge { flex: none; height: 180px; background: #000; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 48px; }
-.grille .ig-edge span { font-weight: 700; font-size: 28px; line-height: 1.2; color: #d6deec; }
-.grille .ig-safe { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; background: #000; }
-.grille .ig-brand { flex: none; height: 108px; display: flex; align-items: center; gap: 18px; padding: 0 44px; background: #000; }
-.grille .ig-brand img { width: 76px; height: 76px; display: block; }
-.grille .ig-brand .wm { font-weight: 700; font-size: 52px; letter-spacing: -0.02em; line-height: 1; color: #fff; }
-.grille .ig-photo { position: relative; flex: 1 1 auto; min-height: 360px; overflow: hidden; background: #111; }
+.grille .ig { position: absolute; inset: 0; z-index: 3; background: #000; color: #fff; }
+.grille .ig-photo { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #111; }
 .grille .ig-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .grille .ig-photo.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
-.grille .ig-copy { flex: none; background: #000; padding: 28px 44px 32px; }
-.grille .ig-kicker { font-weight: 700; font-size: 26px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; color: #F6C177; }
-.grille .ig-title { margin-top: 12px; font-weight: 700; font-size: 68px; line-height: 1.06; letter-spacing: -0.02em; color: #fff; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
-.grille .ig-media { margin-top: 16px; font-weight: 700; font-size: 36px; line-height: 1.2; color: #fff; }
-.grille .ig-credit { margin-top: 12px; font-weight: 600; font-size: 24px; line-height: 1.25; color: #e7e7e3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grille .ig-veil-top { position: absolute; left: 0; right: 0; top: 0; height: 520px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(10,6,14,.90) 0%, rgba(10,6,14,.78) 24%, rgba(10,6,14,.62) 42%, rgba(10,6,14,.40) 58%, rgba(10,6,14,.16) 74%, rgba(10,6,14,0) 100%); }
+.grille .ig-veil-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 700px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(20,8,18,0) 0%, rgba(18,6,16,.28) 30%, rgba(12,4,12,.63) 55%, rgba(8,2,10,.84) 80%, rgba(8,2,10,.94) 100%); }
+.grille .ig-safe { position: absolute; left: 0; right: 0; top: 180px; height: 1080px; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 56px 20px; box-sizing: border-box; overflow: visible; }
+.grille .ig-brand { flex: none; align-self: flex-start; display: flex; flex-direction: row; align-items: flex-start; gap: 16px; background: none; border-radius: 0; padding: 0; overflow: visible; }
+.grille .ig-brand img { width: 100px; height: 100px; display: block; flex: none; filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }
+.grille .ig-brand-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0; overflow: visible; min-width: 0; }
+.grille .ig-brand .wm { font-weight: 700; font-size: 100px; letter-spacing: -0.02em; line-height: 1; color: #F1F2F4; text-shadow: 0 2px 12px rgba(0,0,0,.65); overflow: visible; padding: 0; margin: 0; display: block; }
+.grille .ig-motto { margin: -10px 0 0; padding: 0; box-sizing: border-box; max-width: 620px; font-family: Inter, system-ui, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25; color: #F1F2F4; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+.grille .ig-motto .lead, .grille .ig-motto .tag { display: block; }
+.grille .ig-copy { flex: none; padding: 0; background: transparent; }
+.grille .ig-kicker { display: block; width: auto; font-weight: 700; font-size: 22px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; background: none; color: #F28C28; padding: 0; border-radius: 0; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+.grille .ig-kicker .mid { color: #ffdcb4; }
+.grille .ig-kicker .date { color: #F6C177; }
+.grille .ig-qr { position: absolute; top: 184px; right: 32px; z-index: 3; width: 217px; height: 217px; padding: 10px; box-sizing: border-box; background: rgba(241,242,244,.93); border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+.grille .ig-qr canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+.grille .ig-title { margin-top: 14px; font-weight: 700; font-size: 80px; line-height: 1.05; letter-spacing: -0.02em; color: #fff; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.grille .ig-by { margin-top: 20px; font-size: 26px; line-height: 1.25; color: #fff; }
+.grille .ig-by .lbl { font-weight: 400; color: #d6deec; }
+.grille .ig-by .who { font-weight: 600; color: #fff; }
+.grille .ig-media { margin-top: 6px; font-weight: 700; font-size: 28px; line-height: 1.2; color: #fff; }
+.grille .ig-credit { margin-top: 12px; font-weight: 600; font-size: 22px; line-height: 1.25; color: #e7e7e3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .grille .ig-match { padding: 18px 0; border-top: 1px solid rgba(255,255,255,.16); }
 .grille .ig-match:first-of-type { border-top: 0; }
 .grille .ig-sport { font-weight: 700; font-size: 26px; line-height: 1.2; color: #F6C177; }
 .grille .ig-line { margin-top: 6px; font-weight: 700; font-size: 40px; line-height: 1.15; color: #fff; }
 .grille .ig-line .sc { font-variant-numeric: tabular-nums; }
+
 .story .mh { font-size: 16px; } .story .mh .emo { font-size: 17px; } .story .ml { font-size: 21px; }
 .story .show .when { font-size: 16px; } .story .scol h3, .story .radio h3 { font-size: 15px; }
 .story .item .by { font-size: 19px; } .story .item .kick { font-size: 15px; }

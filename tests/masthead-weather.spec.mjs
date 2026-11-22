@@ -743,6 +743,15 @@ test('météo : max, min et demain seulement s’il reste de la place', async ({
       const name = city.querySelector('.masthead-weather__name');
       const text = city.querySelector('.masthead-weather__name-text');
       const shown = city.classList.contains('has-room');
+      const temp = city.querySelector('.masthead-weather__temp');
+      const nr = name.getBoundingClientRect();
+      const tr = temp.getBoundingClientRect();
+      const cr = city.getBoundingClientRect();
+      const tomorrow = extra?.querySelector('.masthead-weather__tomorrow');
+      const ink = tomorrow && getComputedStyle(tomorrow).display !== 'none'
+        ? tomorrow
+        : extra?.querySelector('.masthead-weather__today');
+      const ir = ink ? ink.getBoundingClientRect() : null;
       return {
         shown,
         mode: city.dataset.weatherExtra || 'off',
@@ -751,6 +760,10 @@ test('météo : max, min et demain seulement s’il reste de la place', async ({
         nameFits: !shown || text.scrollWidth <= name.clientWidth + 2,
         extraFits: !shown || extra.scrollWidth <= extra.clientWidth + 1,
         aria: city.getAttribute('aria-label') || '',
+        tempAfterName: !shown || tr.left + 1 >= nr.right,
+        extraAfterTemp: !shown || (temp.nextElementSibling === extra && ir.left + 1 >= tr.right),
+        tempGlued: !shown || (tr.left - nr.right) <= 14,
+        extraAtEnd: !shown || (cr.right - ir.right) <= 12,
       };
     };
     full.textContent = 'Alma';
@@ -761,29 +774,59 @@ test('météo : max, min et demain seulement s’il reste de la place', async ({
     const tight = snapshot();
     full.textContent = original;
     measureWeatherNameOverflows();
-    const active = [...document.querySelectorAll('.masthead-weather__city.is-active')].map((el) => {
+    const place = (el) => {
       const shown = el.classList.contains('has-room');
       const extra = el.querySelector('.masthead-weather__extra');
-      const text = el.querySelector('.masthead-weather__name-text');
       const name = el.querySelector('.masthead-weather__name');
+      const text = el.querySelector('.masthead-weather__name-text');
+      const temp = el.querySelector('.masthead-weather__temp');
+      const nr = name.getBoundingClientRect();
+      const tr = temp.getBoundingClientRect();
+      const tomorrow = extra?.querySelector('.masthead-weather__tomorrow');
+      const ink = tomorrow && getComputedStyle(tomorrow).display !== 'none'
+        ? tomorrow
+        : extra?.querySelector('.masthead-weather__today');
+      const ir = ink ? ink.getBoundingClientRect() : null;
       return {
         id: el.dataset.weatherCity,
         shown,
+        mode: el.dataset.weatherExtra || 'off',
         width: Math.round(el.getBoundingClientRect().width),
-        nameFits: !shown || text.scrollWidth <= name.clientWidth + 2,
+        extraText: shown ? (extra?.innerText || '').replace(/\s+/g, ' ').trim() : '',
+        nameFits: !shown || !text || text.scrollWidth <= name.clientWidth + 2,
         extraFits: !shown || !extra || extra.scrollWidth <= extra.clientWidth + 1,
+        tempGlued: tr.left - nr.right <= 14,
+        extraAfterTemp: !shown || (temp.nextElementSibling === extra && ir.left + 1 >= tr.right),
       };
-    });
-    return { modes, open, tight, active };
+    };
+    const active = [...document.querySelectorAll('.masthead-weather__city.is-active')].map(place);
+    const primaries = ['montreal', 'quebec'].map((id) => (
+      place(document.querySelector(`.masthead-weather__city.is-active[data-weather-city="${id}"]`))
+    ));
+    return { modes, open, tight, active, primaries };
   });
 
   expect(probe.modes).toBe('bothtodayoff');
   expect(probe.open.shown, 'un nom court libère le vide').toBe(true);
   expect(probe.open.extraText).toMatch(/max /i);
   expect(probe.open.extraText).toMatch(/min /i);
+  expect(probe.open.tempAfterName, 'le degré suit le toponyme').toBe(true);
+  expect(probe.open.extraAfterTemp, 'max/min après le degré').toBe(true);
+  expect(probe.open.tempGlued, 'le degré reste collé au toponyme').toBe(true);
+  expect(probe.open.extraAtEnd, 'le supplément occupe le bout de la puce').toBe(true);
   expect(probe.open.nameFits, 'le toponyme reste entier').toBe(true);
   expect(probe.open.extraFits, 'le supplément n’est pas coupé').toBe(true);
   expect(probe.open.aria).toMatch(/max \d+°/);
+  for (const row of probe.primaries) {
+    expect(row.shown, `${row.id} montre le max et le min`).toBe(true);
+    expect(row.mode, `${row.id} reste au jour`).toBe('today');
+    expect(row.extraText, `${row.id}`).toMatch(/max /i);
+    expect(row.extraText, `${row.id}`).toMatch(/min /i);
+    expect(row.tempGlued, `${row.id} : degré collé au nom`).toBe(true);
+    expect(row.extraAfterTemp, `${row.id} : max/min après le degré`).toBe(true);
+    expect(row.nameFits, `${row.id} : nom entier`).toBe(true);
+    expect(row.extraFits, `${row.id} : supplément entier`).toBe(true);
+  }
   expect(probe.tight.shown, 'un nom qui remplit la puce ne gagne rien').toBe(false);
   expect(probe.tight.mode).toBe('off');
   expect(probe.active.every((row) => row.nameFits && row.extraFits)).toBe(true);
@@ -806,7 +849,7 @@ test('wide : marquee sports et météo bougent avant la cascade', async ({ page 
     refreshSportsChipScroll(chip);
     const city = [...document.querySelectorAll('.masthead-weather__city.is-active')]
       .find((el) => el.dataset.weatherCity !== 'montreal' && el.dataset.weatherCity !== 'quebec');
-    city.querySelector('.masthead-weather__name-full').textContent = 'Sainte-Anne-des-Monts-et-encore';
+    city.querySelector('.masthead-weather__name-full').textContent = 'Sainte-Anne-des-Monts-et-encore-plus-loin-que-la-puce';
     measureWeatherNameOverflows();
     scheduleWeatherCascade({ firstHold: true });
     window.__wxCity = city.dataset.weatherCity;
