@@ -963,7 +963,6 @@ function renderSiteFooter({
     const alt = lang === 'fr' ? 'en-CA' : 'fr-CA';
     links.push(`<a href="${href(altPath)}" hreflang="${alt}">${escapeHtml(t.otherLang)}</a>`);
   }
-  links.push(`<a href="${href('mise-a-jour/')}">${lang === 'en' ? 'Update' : 'Mise à jour'}</a>`);
   // Installer l'app est une destination du pied de page comme les autres, pas
   // un appel à l'action : la pastille pesait plus lourd que les sections
   // qu'elle surplombait. Reste un <button> — c'est une action, pas un lien —

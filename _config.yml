@@ -17,3 +17,5 @@ exclude:
   - android/
   - ios/
   - mobile/www/
+  # Outil d’administration : jamais publié sur le site public.
+  - mise-a-jour/

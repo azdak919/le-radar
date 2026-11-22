@@ -97,17 +97,6 @@ for (const rel of ['index.html', 'en/index.html', 'sports/index.html', 'en/sport
   assert.match(readFileSync(join(root, rel), 'utf8'), /radar-audience\.js/, rel);
 }
 
-const page = readFileSync(join(root, 'mise-a-jour/index.html'), 'utf8');
-const pageJs = readFileSync(join(root, 'mise-a-jour/page.js'), 'utf8');
-assert.match(page, /Socle/);
-assert.match(page, /1\.0\.0/);
-assert.doesNotMatch(page, /<h2>Kiosque<\/h2>/);
-assert.doesNotMatch(page, /type="password"/);
-assert.doesNotMatch(page + pageJs, /fetch\s*\(/);
-assert.doesNotMatch(page + pageJs, new RegExp(UUID));
-assert.match(page, /connect-src 'none'/);
-assert.match(readFileSync(join(root, 'index.html'), 'utf8'), /href="mise-a-jour\/"/);
-
 for (const rel of ['docs/politique-editoriale.md', 'docs/mobile/privacy.md']) {
   assert.doesNotMatch(readFileSync(join(root, rel), 'utf8'), new RegExp(PHRASE), rel);
 }
