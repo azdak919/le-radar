@@ -57,7 +57,7 @@ assert.equal(plan(day, {}, { network: 'bluesky', liveSince, now, schedule: false
 const art = { id: 'a', source: 'Le Délit', author: 'A B', title: 'Hockey : les Stingers gagnent', bare: 'Hockey : les Stingers gagnent', link: 'https://www.delitfrancais.com/x/', desc: 'Hockey à McGill.', img: 'x' };
 const acc = [{ handle: '@DelitFrancais', type: 'source', cle_flux: 'Le Délit' }];
 const xt = buildXText(art, acc, { credit: 'Marie Tremblay' });
-assert.ok(xlen(xt) <= 280 && /\n#RSEQ #McGill #USports$/.test(xt), xt);
+assert.ok(xlen(xt) <= 280 && /\n#RSEQ #Concordia #USports$/.test(xt), xt);
 assert.ok(!/#PresseÉtudiante/.test(JSON.stringify(POLICY)));
 assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 2, mastodon: 4, x: 3, linkedin: 3, facebook: 1, tumblr: 15, instagram: 5 });
 assert.equal(POLICY.formats.une.prepared.instagram.enabled, true);

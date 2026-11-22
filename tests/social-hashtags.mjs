@@ -1,8 +1,8 @@
 // Hashtags par réseau, étiquettes Tumblr, IA désactivée sans secret.
 import assert from 'node:assert/strict';
-import { bskyTags, tumblrTags, topicOf, articleTags, tagLine, PLACES, xArticleTags, xThematicFlags } from '../scripts/social/hashtags.mjs';
+import { bskyTags, tumblrTags, topicOf, articleTags, tagLine, PLACES, xArticleTags, xThematicFlags, xInstitutionTag } from '../scripts/social/hashtags.mjs';
 import { buildBskyText, facets, graphemes, BSKY_LIMIT, postRecord } from '../scripts/social/bluesky.mjs';
-import { buildText, buildXText, xlen, DAILY_SLOTS } from '../scripts/social/lib.mjs';
+import { buildText, buildXText, xlen, DAILY_SLOTS, sentences, cutExcerpt, stripCreditParens } from '../scripts/social/lib.mjs';
 import { buildPageText } from '../scripts/social/buffer-pages.mjs';
 import { aiEnabled, aiHook, validHook } from '../scripts/social/ai-hook.mjs';
 
@@ -81,14 +81,17 @@ console.log('social-hashtags : OK');
 // X : mots-clics thématiques (liste fixe, titre + résumé), au plus 3 ; les autres réseaux inchangés
 const carney = { source: 'Le Collectif', title: 'Rencontre Carney-PSPP au Cambodge',
   desc: 'Québec, Montréal ou Ottawa ? C’est finalement au Cambodge que le premier ministre canadien et le premier ministre québécois se sont rencontrés.' };
-assert.deepEqual(xArticleTags(carney), ['#polcan', '#cdnpoli', '#polqc']);
+assert.deepEqual(xArticleTags(carney), ['#polcan', '#UdeS', '#polqc']);
 assert.equal(tagLine(carney, 'linkedin'), '#UdeS #Sherbrooke #Politique', 'LinkedIn inchangé');
 assert.equal(tagLine(carney, 'facebook'), '#UdeS', 'Facebook inchangé');
 assert.deepEqual(bskyTags(carney), ['#UdeS', '#Sherbrooke'], 'Bluesky inchangé');
 assert.ok(!xArticleTags(carney).includes('#PaysQc'));
-const budget = { source: 'Le Collectif', title: 'Mark Carney dévoile ses ambitions économiques',
+assert.ok(!xArticleTags(carney).includes('#cdnpoli'), 'article FR : #polcan, jamais #cdnpoli en plus');
+assert.equal(xArticleTags(carney)[1], '#UdeS', 'établissement en 2e place');
+const budget = { source: 'Le Collectif', lang: 'fr', title: 'Mark Carney dévoile ses ambitions économiques',
   desc: 'François-Philippe Champagne, ministre des Finances du Canada, a déposé le plus récent budget du gouvernement canadien.' };
-assert.deepEqual(xArticleTags(budget), ['#polcan', '#cdnpoli', '#UdeS']);
+assert.deepEqual(xArticleTags(budget), ['#polcan', '#UdeS', '#Sherbrooke']);
+assert.ok(!xArticleTags(budget).includes('#cdnpoli'));
 const loi = { source: 'Le Collectif', title: 'Un projet de loi déposé à l’Assemblée nationale', desc: 'Le salon Bleu examine le texte en commission parlementaire.' };
 assert.deepEqual(xArticleTags(loi), ['#polqc', '#UdeS', '#assnat']);
 const rseq = { source: 'The Concordian', title: 'Stingers clinch final playoff spot', desc: 'Concordia secured the fourth seed in the RSEQ conference.' };
@@ -101,6 +104,71 @@ const campus = { source: 'La Rotonde', title: 'Nouvelle expo sur le campus', des
 assert.ok(!xThematicFlags(campus).federal, 'campus à Ottawa : pas de #polcan');
 assert.deepEqual(xArticleTags(campus), articleTags(campus, 3));
 assert.ok(xArticleTags(carney).length <= 3);
+
+// 1. Un seul tag fédéral, selon la langue
+const avi = { source: 'The Concordian', lang: 'en',
+  title: 'Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal',
+  desc: 'At a rally in Montreal on Tuesday, NDP Leader Avi Lewis spoke about his worries concerning Carney’s recent policies.' };
+assert.deepEqual(xArticleTags(avi), ['#cdnpoli', '#Concordia']);
+assert.ok(!xArticleTags(avi).includes('#polcan'), 'article EN : #cdnpoli seulement');
+assert.ok(!xArticleTags({ ...budget, lang: 'en' }).includes('#polcan'));
+assert.deepEqual(xArticleTags({ ...budget, lang: 'en' }).filter(t => t === '#cdnpoli' || t === '#polcan'), ['#cdnpoli']);
+
+// 2–3. Titre péquiste : #polqc seulement, même si l'extrait nomme Carney ; établissement en 2e
+const pq = { source: 'Le Collectif', lang: 'fr',
+  title: 'Analyse : la communication politique du Parti québécois',
+  desc: 'Il y a 46 jours, en date du 20 novembre, le Parti québécois a été porté au pouvoir à la tête d’un gouvernement minoritaire. Depuis, plusieurs dossiers ont fait les manchettes : la prise de bec entre le premier ministre du Canada, Mark Carney, et le premier ministre du Québec.' };
+assert.deepEqual(xArticleTags(pq), ['#polqc', '#UdeS', '#Sherbrooke']);
+assert.ok(!xThematicFlags(pq).federal, 'titre PQ : un Carney dans l’extrait ne déclenche pas #polcan');
+assert.equal(xArticleTags(carney)[0], '#polcan', 'titre Carney-PSPP : le premier nommé au titre mène');
+assert.deepEqual(xArticleTags(carney), ['#polcan', '#UdeS', '#polqc']);
+
+// 4. Surnom d'équipe : Vert & Or → #UdeS, pas l'adversaire (Stingers/Concordia) plus loin ; autres réseaux inchangés
+const vert = { source: 'Le Collectif', lang: 'fr',
+  title: 'Toujours pas de football éliminatoire à Sherbrooke cette année',
+  desc: 'Pour une 3e saison consécutive, les joueurs du Vert & Or agiront à titre de spectateurs à l’occasion des séries éliminatoires du RSEQ. Sherbrooke est mathématiquement éliminé après cette défaite du 24 octobre dernier face aux Stingers de Concordia, où l’équipe s’est inclinée par 40-14.' };
+assert.equal(xInstitutionTag(vert), '#UdeS');
+assert.deepEqual(xArticleTags(vert), ['#RSEQ', '#UdeS', '#USports']);
+assert.ok(!xArticleTags(vert).includes('#Concordia'));
+assert.ok(articleTags(vert, 3).includes('#Concordia'), 'autres réseaux : l’ancien choix (adversaire dans l’extrait) reste, à corriger ailleurs');
+assert.equal(tagLine(vert, 'facebook'), articleTags(vert, 1).join(' '));
+assert.equal(xInstitutionTag({ source: 'The Campus', title: 'Gaiters Women’s Soccer: A Season to Remember', desc: 'Sunday, Oct. 25, 2026 saw the Gaiters win.' }), '#BishopsU');
+assert.equal(xInstitutionTag({ source: 'The Link', title: 'Carabins 4, Stingers 0: Stingers lose in their home opener', desc: 'The Concordia University Stingers lost.' }), '#Concordia', 'plusieurs équipes au titre : l’école du média si elle y figure');
+
+// 5. Abréviations : ne pas couper l'extrait X sur « Oct. »
+const sting = { source: 'The Concordian', lang: 'en', link: 'https://theconcordian.com/2026/11/stingers-clinch-final-playoff-spot-despite-ongoing-coaching-search',
+  title: 'Stingers clinch final playoff spot despite ongoing coaching search',
+  bare: 'Stingers clinch final playoff spot despite ongoing coaching search',
+  desc: 'After defeating Bishop’s on Oct. 31, Concordia secured the fourth seed in the RSEQ conference as well as the final playoff spot.' };
+assert.deepEqual(sentences(sting.desc, { abbr: true }).length, 1, 'Oct. 31 n’est pas une fin de phrase');
+assert.ok(sentences(sting.desc).length > 1, 'sans l’option X, l’ancien découpage reste (autres réseaux)');
+const xtSting = buildXText(sting, [], { credit: '' });
+assert.ok(!/on Oct\.\s*$/m.test(xtSting.split('\n#')[0].trim()), `pas de coupe sur Oct. : ${xtSting}`);
+assert.ok(/Oct\. 31/.test(xtSting) || /…/.test(xtSting), xtSting);
+// 6. Parentheses de crédit : retirées sur X seulement
+const cop = { source: 'La Pige', lang: 'fr', link: 'https://lapige.atmjonquiere.com/x/',
+  title: 'Des étudiants du Cégep de Jonquière à « la COP qui chie »',
+  bare: 'Des étudiants du Cégep de Jonquière à « la COP qui chie »',
+  desc: 'Mercredi, les étudiants du Cégep de Jonquière ont pu joindre la délégation pour une conférence sur les enjeux de la COP. (Facebook) Depuis dimanche, trois étudiants du Cégep de Jonquière et leur enseignant se sont rendus à Antalya.' };
+assert.equal(stripCreditParens(cop.desc).includes('(Facebook)'), false);
+assert.ok(!/\(Facebook\)/i.test(buildXText(cop, [], { credit: '' })), buildXText(cop, [], { credit: '' }));
+assert.ok(/\(Facebook\)/i.test(buildText(cop, [], 280, { credit: '' })), 'buildText (autres réseaux) conserve (Facebook)');
+const oss = { source: 'Le Collectif', title: 'Bruno Pelletier et l’OSS réunis pour un grand concert de Noël',
+  desc: 'L’Orchestre symphonique de Sherbrooke (OSS) invite la population estrienne à célébrer le début du temps des Fêtes en musique.' };
+assert.ok(/\(OSS\)/.test(buildXText(oss, [], { credit: '' })), 'sigle utile conservé');
+assert.ok(/Ottawa \?/.test(buildXText(carney, [], { credit: '' })), 'espace fine/typographique avant ? conservée');
+assert.equal(stripCreditParens('Québec, Montréal ou Ottawa ? C’est finalement au Cambodge.'), 'Québec, Montréal ou Ottawa ? C’est finalement au Cambodge.');
+
+// 7. Casse exacte des formes les plus fréquentes
+const FORMS = ['#polqc', '#polcan', '#cdnpoli', '#assnat', '#cégep', '#RSEQ', '#USports', '#VanierCup'];
+for (const tags of [xArticleTags(carney), xArticleTags(budget), xArticleTags(avi), xArticleTags(pq), xArticleTags(loi), xArticleTags(rseq), xArticleTags(vanier), xArticleTags(cegep), xArticleTags(vert)]) {
+  for (const tag of tags) {
+    const canon = FORMS.find(f => f.toLocaleLowerCase('fr') === tag.toLocaleLowerCase('fr'));
+    if (canon) assert.equal(tag, canon, `casse : ${tag}`);
+  }
+  assert.ok(!tags.some(t => t === '#cegep' || t === '#Cégep' || t === '#USPORTS' || t === '#PolQc' || t === '#PolCan' || t === '#Cdnpoli'));
+}
+
 console.log('social-hashtags (X thématiques) : OK');
 import { formatOk } from '../scripts/social/lib.mjs';
 assert.ok(formatOk(buildBskyText(it, [], { credit: 'Jeanne Tremblay' }), it, 'Jeanne Tremblay'), 'ligne de hashtags tolérée par formatOk');
