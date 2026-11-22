@@ -488,6 +488,8 @@
   border: 0;
   background: none;
   font: inherit;
+  /* Bouton : centré par défaut ; sur deux lignes il se décalait des liens. */
+  text-align: start;
   color: var(--accent);
   font-weight: 600;
   cursor: pointer;
