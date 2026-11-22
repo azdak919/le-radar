@@ -220,7 +220,9 @@ for (const kind of ['matin', 'soir']) {
         wmSize: parseFloat(getComputedStyle(document.querySelector('.ig-brand .wm')).fontSize),
         logoH: document.querySelector('.ig-brand img')?.getBoundingClientRect().height,
         creditText: document.querySelector('.ig-credit').textContent,
-        mediaText: document.querySelector('.ig-media').textContent,
+        mediaText: document.querySelector('.ig-kicker .media')?.textContent,
+        mediaColor: document.querySelector('.ig-kicker .media')?.style.color,
+        mediaCount: document.querySelectorAll('.ig-media').length,
         byText: document.querySelector('.ig-by')?.textContent,
         dateText: document.querySelector('.ig-kicker .date')?.textContent,
         kickerText: document.querySelector('.ig-kicker')?.textContent,
@@ -235,11 +237,13 @@ for (const kind of ['matin', 'soir']) {
     expect(zone.size).toBeGreaterThanOrEqual(60);
     expect(zone.size).toBeLessThanOrEqual(80);
     expect(zone.mediaText).toBe('Impact Campus');
+    expect(zone.mediaCount, 'le média n’est plus répété sous le titre').toBe(0);
+    expect(zone.mediaColor, 'couleur d’établissement appliquée au nom du média').toBeTruthy();
     expect(zone.byText).toBe('Par\u00A0Autrice 1 et Autrice 2');
     expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
-    expect(zone.labels.filter((t) => t.toLowerCase().includes(`la une du ${kind}`)).length, 'libellé du créneau une seule fois').toBe(1);
+    expect(zone.labels.filter((t) => t.toLowerCase().includes(`la une du ${kind}`)).length, 'pas de libellé de créneau de une').toBe(0);
     expect(zone.dateText).toBe('Dimanche 22 novembre 2026');
-    expect(zone.kickerText.replace(/\s+/g, ' ').trim().toLowerCase()).toBe(`la une du ${kind} · dimanche 22 novembre 2026`);
+    expect(zone.kickerText.replace(/\s+/g, ' ').trim()).toBe('Impact Campus · Dimanche 22 novembre 2026');
     expect(zone.mottoText.replace(/\s+/g, ' ').trim()).toBe('Journaux, radios et sports étudiants du Québec, réunis au même endroit');
     expect(zone.wmSize, 'corps du mot-symbole = hauteur de l’icône').toBe(zone.logoH);
     expect(zone.wmSize).toBe(100);
@@ -255,7 +259,13 @@ for (const kind of ['matin', 'soir']) {
     expect(zone.brandBg === 'rgba(0, 0, 0, 0)' || zone.brandBg === 'transparent', 'pas de capsule derrière la marque').toBeTruthy();
     expect(zone.photo.top).toBeLessThanOrEqual(0);
     expect(zone.photo.bottom).toBeGreaterThanOrEqual(1440);
-    for (const b of [zone.title, zone.brand, zone.credit, zone.media, zone.by, zone.motto, zone.wm]) {
+    const kickerBox = await page.evaluate(() => {
+      const c = document.getElementById('card').getBoundingClientRect();
+      const e = document.querySelector('.ig-kicker');
+      const r = e.getBoundingClientRect();
+      return { top: r.top - c.top, bottom: r.bottom - c.top, left: r.left - c.left, right: r.right - c.left, text: e.textContent };
+    });
+    for (const b of [zone.title, zone.brand, zone.credit, kickerBox, zone.by, zone.motto, zone.wm]) {
       expect(b, 'élément présent dans le carré').toBeTruthy();
       expect(b.top).toBeGreaterThanOrEqual(180);
       expect(b.bottom).toBeLessThanOrEqual(1260);
@@ -269,7 +279,8 @@ for (const kind of ['matin', 'soir']) {
     const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { source: 'Impact Campus', byline: 'Impact Campus', credit: 'Photo : Équipe' })] };
     await page.evaluate((a) => window.renderUne(a), { model, format: 'article' });
     expect(await page.locator('.ig-by').count()).toBe(0);
-    expect(await page.locator('.ig-media').textContent()).toBe('Impact Campus');
+    expect(await page.locator('.ig-media').count()).toBe(0);
+    expect(await page.locator('.ig-kicker .media').textContent()).toBe('Impact Campus');
     expect(await page.locator('.ig-credit').textContent()).toBe('📸 Équipe');
   });
 }
