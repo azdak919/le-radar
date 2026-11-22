@@ -241,7 +241,8 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .grille.une-b .ig-also h2 { font-size: 20px; letter-spacing: .1em; text-transform: uppercase; color: #CF7EC1; font-weight: 700; margin-bottom: 12px; }
 .grille.une-b .ig-also-item { display: grid; grid-template-columns: 40px 112px 1fr; gap: 14px; align-items: center; margin-top: 12px; }
 .grille.une-b .ig-also-item:first-of-type { margin-top: 0; }
-.grille.une-b .ig-also-item .num { width: 40px; height: 40px; border-radius: 8px; background: #6C2163; color: #fff; font-weight: 700; font-size: 22px; display: grid; place-items: center; font-family: 'Source Serif 4', Georgia, serif; }
+.grille.une-b .ig-also-item .num { position: static; left: auto; top: auto; padding: 0; border-radius: 8px; width: 40px; height: 40px; background: #6C2163; color: #fff; font-weight: 700; font-size: 22px; display: grid; place-items: center; font-family: 'Source Serif 4', Georgia, serif; }
+.grille.une-b .ig-also-item .meta { min-width: 0; }
 .grille.une-b .ig-also-item .thumb { width: 112px; height: 80px; border-radius: 8px; overflow: hidden; background: #181A1E; }
 .grille.une-b .ig-also-item .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .grille.une-b .ig-also-item h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 30px; line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }

@@ -284,7 +284,7 @@
         const row = el('div', 'ig-also-item');
         row.append(el('span', 'num', String(i + 2)));
         const thumb = el('div', 'thumb'); const tImg = el('img'); tImg.alt = ''; thumb.append(tImg); row.append(thumb);
-        const meta = el('div', '');
+        const meta = el('div', 'meta');
         meta.append(el('h3', '', it.title || ''));
         const au = igAuthors(it);
         const oby = [au ? ('Par ' + au) : '', it.source || ''].filter(Boolean).join(' · ');

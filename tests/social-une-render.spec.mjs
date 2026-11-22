@@ -168,6 +168,28 @@ for (const kind of ['matin', 'soir']) {
     expect(zone.also[0]).toMatch(/Deuxième titre/);
     expect(zone.also[1]).toMatch(/Troisième titre/);
     expect(zone.also.join(' ')).not.toMatch(/Quatrième titre/);
+    const alsoLayout = await page.evaluate(() => {
+      const c = document.getElementById('card').getBoundingClientRect();
+      const pill = document.querySelector('.ig-pill').getBoundingClientRect();
+      const rows = [...document.querySelectorAll('.ig-also-item')].map((row) => {
+        const num = row.querySelector('.num').getBoundingClientRect();
+        const h3 = row.querySelector('h3').getBoundingClientRect();
+        const thumb = row.querySelector('.thumb').getBoundingClientRect();
+        return {
+          numLeft: num.left - c.left, numTop: num.top - c.top, numW: num.width,
+          h3W: h3.width, h3Left: h3.left - c.left, h3Text: row.querySelector('h3').textContent,
+          thumbLeft: thumb.left - c.left,
+          pillTop: pill.top - c.top, pillBottom: pill.bottom - c.top,
+        };
+      });
+      return rows;
+    });
+    for (const row of alsoLayout) {
+      expect(row.numTop, 'numéro aussi dans la liste, pas sur la pastille').toBeGreaterThan(row.pillBottom + 20);
+      expect(row.h3W, 'titre aussi assez large pour se lire').toBeGreaterThan(400);
+      expect(row.h3Left).toBeGreaterThan(row.thumbLeft);
+      expect(row.numW).toBeGreaterThanOrEqual(36);
+    }
   });
 }
 
