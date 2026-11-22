@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T01:36:52.389Z",
+  "updatedAt": "2026-11-22T02:37:03.290Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T01:36:26.324Z"
+      "checkedAt": "2026-11-22T02:36:25.006Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T01:36:27.715Z"
+      "checkedAt": "2026-11-22T02:36:38.377Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Masters At Work",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Howls From Hell/Too Loud For The Crowd",
         "source": "api-live",
         "start": "21:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "SKEwInGTheWaBeS$$",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Masters At Work",
+      "showTitle": "Howls From Hell/Too Loud For The Crowd",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T01:36:31.108Z"
+      "checkedAt": "2026-11-22T02:36:41.501Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "The Go Go Radio Magic Show",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "21:30",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
       "next": {
-        "title": "The Spacious Astrology Playlist",
+        "title": "Brave New Jams",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/brave-new-jams"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "The Go Go Radio Magic Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T01:36:45.320Z"
+      "checkedAt": "2026-11-22T02:36:55.708Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T01:36:46.297Z"
+      "checkedAt": "2026-11-22T02:36:56.698Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-22T01:36:52.038Z"
+      "checkedAt": "2026-11-22T02:37:02.939Z"
     }
   }
 }
