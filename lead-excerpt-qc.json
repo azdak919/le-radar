@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-22T14:39:18.504Z",
+  "updated": "2026-11-22T15:07:48.223Z",
   "total": 1042,
   "pool": 61,
   "incomplete": 25,
-  "withLeadExcerpt": 209,
+  "withLeadExcerpt": 210,
   "candidates": 25,
-  "enriched": 2,
-  "failed": 3,
+  "enriched": 5,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -37,15 +37,6 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
       "title": "Sauve qui peut : l’IA à nos trousses",
       "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
@@ -55,30 +46,39 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
+      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
+      "ok": true,
+      "score": 100,
+      "chars": 404,
+      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
+      "changed": true
+    },
+    {
+      "title": "Bittersweet end of season for the Montreal Roses",
+      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
+      "ok": true,
+      "score": 100,
+      "chars": 414,
+      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
+      "changed": true
+    },
+    {
       "title": "Cinq nouvelles de la semaine",
       "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
       "ok": true,
       "score": 100,
       "chars": 450,
       "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
-      "changed": false
-    },
-    {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
-      "changed": false
-    },
-    {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
-      "ok": true,
-      "score": 100,
-      "chars": 380,
-      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
       "changed": false
     }
   ]
