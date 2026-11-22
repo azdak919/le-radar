@@ -303,6 +303,17 @@ assert.ok(!U.NETS.includes('instagram'), 'Instagram hors des réseaux publiés')
 const igModel = { slot: sSlot, items: m.items, sports: sp };
 const ig = U.buildUneAll(igModel).instagram;
 assert.deepEqual(ig.problems, []); assert.doesNotMatch(ig.text, /https?:\/\//); assert.match(ig.text, /lien en bio/); assert.match(ig.text, /🏀 Basketball \(F\) · Stingers/);
+assert.match(ig.text, /🏟️ Sport étudiant :\n\n🏀/);
+assert.doesNotMatch(ig.text, /Final · /, 'Instagram : Final sans la date');
+const igRadio = U.buildUneAll({ ...igModel, radio: [{ title: 'Soirée en ondes', station: 'CKUT 90,3', when: 'jeu. 12 nov. · 18 h', date: igModel.slot.day, start: '18:00' }] }).instagram;
+assert.match(igRadio.text, /📻 À l’écoute \(radio étudiante\) :\n\nSoirée en ondes · CKUT 90,3 · 18 h/);
+assert.match(U.buildUneAll(igModel).facebook.text, /Final · /, 'les autres réseaux gardent la date du résultat');
+const resultLine = { kind: 'resultat', emoji: '🏀', sport: 'Basketball (F)', teams: [{ name: 'Stingers', inst: 'Concordia', score: 55 }, { name: 'Martlets', inst: 'McGill', score: 54 }], when: 'Final · jeu. 12 nov.', date: '2026-11-12' };
+assert.equal(U.sportsLine(resultLine), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · jeu. 12 nov.');
+assert.equal(U.sportsLine(resultLine, { compact: true, day: '2026-11-12' }), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final');
+const nextSame = { kind: 'avenir', emoji: '🏐', sport: 'Volleyball (F)', teams: [{ name: 'Patriotes', inst: 'UQTR' }, { name: 'Inuk', inst: 'UQAC' }], verb: 'visite', when: 'sam. 21 nov. · 13 h', date: '2026-11-21', time: '13:00' };
+assert.equal(U.sportsLine(nextSame, { compact: true, day: '2026-11-21' }), '🏐 Volleyball (F) · Patriotes (UQTR) visite Inuk (UQAC) · 13 h');
+assert.equal(U.sportsLine(nextSame, { compact: true, day: '2026-11-20' }), '🏐 Volleyball (F) · Patriotes (UQTR) visite Inuk (UQAC) · sam. 21 nov. · 13 h');
 const igCredit = U.buildUneAll({ ...igModel, items: [{ ...m.items[0], credit: 'Photo : Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' }, ...m.items.slice(1)] }).instagram;
 assert.match(igCredit.text, /📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons/);
 assert.doesNotMatch(igCredit.text, /^Photo\s*:/m);
