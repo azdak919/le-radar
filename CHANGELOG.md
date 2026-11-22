@@ -7,6 +7,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Sur téléphone, le texte qui défile dans le synthétiseur et dans les pastilles sources s’arrêtait pour de bon après un aller-retour. Les lignes qui **ne changent jamais** — nom du poste, établissement d’une source (« Université du Québec à Montréal ») — restaient donc tronquées pour le reste de la visite, sans même les trois points. Le défilement boucle maintenant : repos au début → aller → repos au bout → retour. Le texte n’est toujours remplacé qu’au repos, jamais en pleine course ; le survol le met en pause.
 - Pied de page FR/EN : la ligne grise dit de nouveau, en clair, que les contenus agrégés (articles et photos) sont crédités à leurs auteurs et à leurs médias d’origine. La ligne de licence s’arrête au kit-média, sans doublon. README : LE-RADAR **agrège** les médias étudiants (et non « fédère »).
 
 ### Modifié

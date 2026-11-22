@@ -1315,22 +1315,19 @@ function stopNowAirPreview() {
 }
 
 /**
- * Temps qu'il faut à un texte qui défile pour : lire → partir → revenir → reposer.
+ * Temps qu'il faut à un texte qui défile pour : lire → partir → reposer →
+ * revenir → reposer, soit **un cycle entier** de `tunerMarqueeLoop`.
  *
- * L'animation est `alternate` × `--marquee-trips` (2 ou 4) + delay lecture.
- * Un cycle complet = delay + trips × `--marquee-duration` + pause repos.
- *
- * On ne change jamais un texte avant la fin de ses aller-retour.
+ * L'animation boucle : le seul instant où le texte est au repos *et* recalé au
+ * début est la fin d'un cycle, après le délai de lecture. C'est là qu'on le
+ * remplace — jamais en pleine course. Toujours ≥ l'ancien aller-retour fini
+ * (2 allers + repos), donc l'embed, resté en `tunerMarquee`, n'est pas coupé.
  */
 function marqueeRoundTripMs(el) {
   if (!el?.classList.contains('is-marquee')) return 0;
   const sec = parseFloat(el.style.getPropertyValue('--marquee-duration'));
   if (!Number.isFinite(sec) || sec <= 0) return 0;
-  const tripsRaw = parseFloat(el.style.getPropertyValue('--marquee-trips'));
-  const trips = Number.isFinite(tripsRaw) && tripsRaw >= 2 ? tripsRaw : MARQUEE_ROUND_TRIPS;
-  return Math.ceil(sec * 1000 * trips)
-    + MARQUEE_READ_DELAY_MS
-    + MARQUEE_REST_MS;
+  return Math.ceil(sec * 1000 * MARQUEE_CYCLE_RATIO) + MARQUEE_READ_DELAY_MS;
 }
 
 /**
