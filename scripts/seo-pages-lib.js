@@ -901,7 +901,7 @@ function renderMastheadActions({ lang = 'fr', up = './', current = null, indent 
 ${p}  <a href="${href('')}" class="masthead-icon masthead-home" data-home-nav${cur('home')} title="${escapeHtml(c.home)}" aria-label="${escapeHtml(c.homeAria)}">${ICON_SVG.home}</a>
 ${p}  <a href="${href('pomo/')}" class="masthead-icon masthead-pomo" title="${escapeHtml(c.pomo)}" aria-label="${escapeHtml(c.pomo)}"><img class="app-emoji" src="${up}assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
 ${p}  <a href="${href('solitaire/')}" class="masthead-icon masthead-solitaire" title="${escapeHtml(c.solitaire)}" aria-label="${escapeHtml(c.solitaire)}"><img class="app-emoji" src="${up}assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
-${p}  <a href="${href(sportsPath)}" class="masthead-icon masthead-sports"${cur('sports')} title="${escapeHtml(c.sports)}" aria-label="${escapeHtml(c.sports)}"><img class="app-emoji" src="${up}assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>nk" rel="noopener noreferrer">${ICON_SVG.coffee}</a>
+${p}  <a href="${href(sportsPath)}" class="masthead-icon masthead-sports"${cur('sports')} title="${escapeHtml(c.sports)}" aria-label="${escapeHtml(c.sports)}"><img class="app-emoji" src="${up}assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
 ${p}  ${renderInstallMenu({ lang, up })}
 ${p}  <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="${escapeHtml(c.theme)}" title="${escapeHtml(c.themeTitle)}">${ICON_SVG.theme}</button>
 ${p}</div>`;
