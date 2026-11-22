@@ -507,8 +507,20 @@ html[data-wide-preview="e"] {
      *  .    | foot     ← crédits (pas sous le rail)
      */
     grid-template-areas:
+      "rail follow"
       "rail list"
       ".    foot";
+  }
+
+  /* Barre « Suivre · Fiche du média » (une source choisie) : au-dessus du fil,
+     dans la colonne contenu. Sans zone, la grille la posait dans la cellule
+     vide sous le rail sticky, visible entre les pastilles en bas de page. */
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) > .media-follow-bar {
+    grid-area: follow;
+    min-width: 0;
+  }
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) > .news-list {
+    grid-area: list;
   }
 
   /*
