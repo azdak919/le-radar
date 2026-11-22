@@ -2595,15 +2595,15 @@
 
   function _doodleBackground() {
     return {
-      url: "/assets/doodle/miami-skyline-joe-desousa.jpg",
-      credit: "Joe deSousa",
-      place: "Miami",
-      link: "https://commons.wikimedia.org/wiki/File:Miami_Skyline_(45860413504).jpg",
-      license: "CC0 1.0",
-      title: "Miami Skyline",
-      focalY: 0.50,
+      url: "/assets/doodle/montreal-skyline-stefan-fussan.jpg",
+      credit: "Stefan Fussan",
+      place: "Montréal",
+      link: "https://commons.wikimedia.org/wiki/File:Montreal_-_Skyline_-_0100.jpg",
+      license: "CC BY-SA 3.0",
+      title: "Skyline of Montreal at sunset",
+      focalY: 0.48,
       width: 2880,
-      height: 729,
+      height: 1236,
       permanent: true,
       bank: "doodle",
     };

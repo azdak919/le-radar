@@ -1342,9 +1342,9 @@ html[data-wide-preview="e"] .masthead-weather__city.has-room .masthead-weather__
    avant le premier paint). Aucun effet hors de cette classe.
    ═══════════════════════════════════════════════════════════ */
 html.doodle-on #bg-photo-layer {
-  background-image: url("assets/doodle/miami-skyline-joe-desousa.jpg");
+  background-image: url("assets/doodle/montreal-skyline-stefan-fussan.jpg");
   background-size: cover;
-  background-position: center 50%;
+  background-position: center 48%;
   background-repeat: no-repeat;
   opacity: 1;
 }

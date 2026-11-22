@@ -5,4 +5,4 @@ Titre LE-RADAR.ca en Pricedown, sous forme d’image vectorielle fixe
 produits par le mainteneur, titulaire de la licence de bureau Typodermic
 (EULA §2.2) ; ils ne sont pas découpés pour en tirer un alphabet.
 
-Photo : `miami-skyline-joe-desousa.jpg`, voir `THIRD_PARTY.md`.
+Photo : `montreal-skyline-stefan-fussan.jpg`, voir `THIRD_PARTY.md`.

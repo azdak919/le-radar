@@ -112,19 +112,19 @@ assert.match(bootSrc, /doodle=on/);
 
 const bgSrc = readFileSync(join(__dirname, "..", "quebec-backgrounds.js"), "utf8");
 assert.match(bgSrc, /_isDoodleOn/);
-assert.match(bgSrc, /miami-skyline-joe-desousa\.jpg/);
+assert.match(bgSrc, /montreal-skyline-stefan-fussan\.jpg/);
 assert.match(bgSrc, /if \(_isDoodleOn\(\)\) return;/);
 
 const root = join(__dirname, "..");
 assert.ok(existsSync(join(root, "assets/doodle/le-radar-pricedown.svg")));
-assert.ok(existsSync(join(root, "assets/doodle/miami-skyline-joe-desousa.jpg")));
+assert.ok(existsSync(join(root, "assets/doodle/montreal-skyline-stefan-fussan.jpg")));
 const svg = readFileSync(join(root, "assets/doodle/le-radar-pricedown.svg"), "utf8");
 assert.doesNotMatch(svg, /font-face|font-family|@font/i, "aucune police dans le SVG du titre");
 assert.match(svg, /stroke-width="102"/);
 
 const third = readFileSync(join(root, "THIRD_PARTY.md"), "utf8");
-assert.match(third, /Joe deSousa/);
-assert.match(third, /CC0 1\.0/);
-assert.match(third, /Miami Skyline/);
+assert.match(third, /Stefan Fussan/);
+assert.match(third, /CC BY-SA 3\.0/);
+assert.match(third, /Skyline of Montreal at sunset/);
 
 console.log("tests/doodle-boot.mjs : ok");

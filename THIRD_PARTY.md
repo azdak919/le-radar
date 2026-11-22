@@ -13,13 +13,13 @@ Les autres icônes du pied (X, Bluesky, Facebook, Tumblr, Mastodon, RSS, Buy Me 
 
 ## Photo du doodle de fin novembre 2026 (mât)
 
-- Fichier : `assets/doodle/miami-skyline-joe-desousa.jpg`
-- Œuvre originale : *Miami Skyline* (coucher de soleil, 1er janvier 2019)
-- Auteur : Joe deSousa
-- Source : [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Miami_Skyline_(45860413504).jpg)
-- Origine Flickr : https://www.flickr.com/photos/mustangjoe/45860413504/
-- Licence : **CC0 1.0** (Creative Commons Zero, dédicace au domaine public), confirmée sur la page Wikimedia et par FlickreviewR 2 (16 mars 2019, licence cc-zero sur Flickr). Compatible avec une distribution GPL-2.0-only. Aucune dépendance Apache-2.0.
-- Traitement : aucun étalonnage. La photographie est utilisée telle que publiée (pas de grain, de vignette ni de virage ajoutés).
-- Crédit affiché sur le mât : « Joe deSousa — Miami » (conservé par cohérence avec les autres photos, même s’il n’est pas exigé par le CC0).
+- Fichier : `assets/doodle/montreal-skyline-stefan-fussan.jpg`
+- Œuvre originale : *Montreal - Skyline - 0100* (*Skyline of Montreal at sunset* / *Sunset in Montreal*), 14 août 2017
+- Auteur : Stefan Fussan
+- Source : [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Montreal_-_Skyline_-_0100.jpg)
+- Licence : **CC BY-SA 3.0** (Creative Commons Attribution-ShareAlike 3.0 Unported), confirmée sur la page Wikimedia. https://creativecommons.org/licenses/by-sa/3.0/
+  Le redimensionnement et le recadrage pour le mât sont des adaptations : ils restent sous CC BY-SA 3.0 (share-alike). La photo n’est pas relicenciée en GPL. Le code du projet reste GPL-2.0-only. Aucune dépendance Apache-2.0.
+- Traitement : aucun étalonnage. La photographie est utilisée telle que publiée (pas de grain, de vignette ni de virage ajoutés). Le fichier du dépôt est un redimensionnement (vignette Commons 3 840 px, puis 2 880 × 1 236).
+- Crédit affiché sur le mât : « Stefan Fussan — Montréal ».
 
 Le titre Pricedown du doodle (`assets/doodle/le-radar-pricedown.svg`) est une image vectorielle fixe, sans fichier de police ni glyphe redistribués. Voir `assets/doodle/README.md`.
