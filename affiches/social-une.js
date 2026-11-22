@@ -1,6 +1,6 @@
 /* Image « La une du matin / du soir » du Radar (réseaux sociaux), en français seulement.
  * window.renderUne({ model, format }) dessine la carte puis attend polices et images.
- * model = { slot: { label, dayLabel, kind }, items: [{ title, byline, source, place, sport, credit, hook, images[], focalY }], sports: [...] }
+ * model = { slot: { label, dayLabel, kind }, items: [{ title, byline, source, place, sport, credit, hook, images[], focalY, focalX }], sports: [...] }
  * (scripts/social/une-lib.mjs). Matin : thème clair du site ; soir : thème sombre. Gabarit « Verre » + photo de la une
  * dégagée (panel du 12 nov. 2026, retour de Charles : mélange A/B, résultats sportifs étudiants pour combler le bas).
  * Grille Instagram : QR vers la fiche le-radar.ca/article/<id>/ si le post est un article. Aucun logo d'université. */
@@ -77,12 +77,22 @@
       setTimeout(() => end(img.complete && img.naturalWidth > 0), 15000);
     });
   }
+  // Recadrage object-fit: cover. focalX / focalY dans [0, 1] (défaut 50 % / defaultY).
+  function clamp01(n, fallback) {
+    const x = Number(n);
+    return Number.isFinite(x) ? Math.min(1, Math.max(0, x)) : fallback;
+  }
+  function objectPosition(it, defaultY) {
+    const fx = clamp01(it && it.focalX, 0.5);
+    const fy = clamp01(it && it.focalY, defaultY);
+    return `${Math.round(fx * 100)}% ${Math.round(fy * 100)}%`;
+  }
   function photo(it, cls, badge, format) {
     const box = el('div', cls); const img = el('img'); img.alt = ''; box.append(img);
     if (badge) box.append(el('span', 'badge', badge));
     const credit = String(it.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
     if (credit && badge) box.append(el('span', 'credit', format === 'grille' ? '📸 ' + credit : 'Photo' + NB + ': ' + credit));
-    img.style.objectPosition = `50% ${Math.round((Number.isFinite(it.focalY) ? it.focalY : 0.4) * 100)}%`;
+    img.style.objectPosition = objectPosition(it, 0.4);
     box.ready = (it.images && it.images.length ? loadFirst(img, it.images) : Promise.resolve(false)).then((ok) => { if (!ok) { img.remove(); box.classList.add('empty'); } return ok ? img.currentSrc || img.src : ''; });
     return box;
   }
@@ -173,9 +183,48 @@
     if (fx >= 0.6) { wrap.style.top = '180px'; wrap.style.right = '24px'; }
     return wrap;
   }
+  // Réduit le titre seulement s’il dépasse le nombre de lignes prévu (line-clamp).
+  // On ne se fie pas à clientHeight : avec -webkit-box, le dépassement des descendantes
+  // (souvent 8–15 px) ferait descendre le corps jusqu’au plancher pour un titre de 3 lignes.
   function fitTitle(node, floor) {
+    const lines = parseInt(getComputedStyle(node).webkitLineClamp, 10) || 3;
     let size = parseFloat(getComputedStyle(node).fontSize);
-    while (node.scrollHeight > node.clientHeight + 2 && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
+    const overflow = () => {
+      const lh = parseFloat(getComputedStyle(node).lineHeight) || size * 1.05;
+      return node.scrollHeight > lines * lh + Math.max(8, size * 0.25);
+    };
+    while (overflow() && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
+  }
+  // Coupe gloutonne puis rééquilibre : on évite une dernière ligne trop courte
+  // (« pays » / « le pays ») en reprenant un mot à la ligne précédente.
+  function balanceTitle(node) {
+    const text = String(node.textContent || '').replace(/\s+/g, ' ').trim();
+    const words = text.split(' ');
+    if (words.length < 4) return;
+    const probe = el('span');
+    const cs = getComputedStyle(node);
+    probe.style.cssText = `position:absolute;left:-9999px;white-space:nowrap;font-weight:${cs.fontWeight};font-size:${cs.fontSize};font-family:${cs.fontFamily};font-style:${cs.fontStyle};letter-spacing:${cs.letterSpacing};`;
+    document.body.append(probe);
+    const widthOf = (s) => { probe.textContent = s; return probe.getBoundingClientRect().width; };
+    const maxW = node.clientWidth;
+    const wrap = () => {
+      const lines = [];
+      let cur = [];
+      for (const w of words) {
+        const trial = cur.length ? `${cur.join(' ')} ${w}` : w;
+        if (cur.length && widthOf(trial) > maxW + 0.5) { lines.push(cur); cur = [w]; }
+        else cur.push(w);
+      }
+      if (cur.length) lines.push(cur);
+      return lines;
+    };
+    const lines = wrap();
+    while (lines.length >= 2 && lines[lines.length - 1].length <= 2 && lines[lines.length - 2].length >= 3) {
+      lines[lines.length - 1].unshift(lines[lines.length - 2].pop());
+    }
+    probe.remove();
+    if (lines.length < 2) return;
+    node.replaceChildren(...lines.flatMap((ln, i) => (i ? [el('br'), document.createTextNode(ln.join(' '))] : [document.createTextNode(ln.join(' '))])));
   }
   // Noms des auteurs pour la grille Instagram, sans le média (déjà sur ig-media).
   function igAuthors(it) {
@@ -213,7 +262,7 @@
     }
     const lead = model.items[0];
     const photoBox = el('div', 'ig-photo'); const img = el('img'); img.alt = ''; photoBox.append(img);
-    img.style.objectPosition = `50% ${Math.round((Number.isFinite(lead.focalY) ? lead.focalY : 0.44) * 100)}%`;
+    img.style.objectPosition = objectPosition(lead, 0.44);
     const copy = el('div', 'ig-copy');
     copy.append(igKicker(model.slot.label || '', model.slot.dayLabel || ''));
     const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
@@ -231,6 +280,7 @@
     if (!ok) { img.remove(); photoBox.classList.add('empty'); }
     await Promise.all([document.fonts.ready, brand.ready]);
     fitTitle(title, 60);
+    balanceTitle(title);
     const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 || copy.scrollHeight > copy.clientHeight + 2;
     return { shown: 1, photo: ok, sports: 0, radio: 0, overflow };
   }

@@ -438,6 +438,16 @@
     return 0.5;
   }
 
+  function cropFocalX(item) {
+    if (Number.isFinite(item.imageCropFocalX) && item.imageCropFocalX >= 0 && item.imageCropFocalX <= 1) {
+      return item.imageCropFocalX;
+    }
+    if (Number.isFinite(item.focalX) && item.focalX >= 0 && item.focalX <= 1) {
+      return item.focalX;
+    }
+    return 0.5;
+  }
+
   function photoCredit(item) {
     const raw = String(item.sourceImageCredit || '').replace(/\s+/g, ' ').trim();
     return raw;
@@ -513,6 +523,7 @@
       image: imageSrc(item, base),
       images: imageCandidates(item, base),
       focalY: cropFocalY(item),
+      focalX: cropFocalX(item),
       credit: photoCredit(item),
       pageUrl,
       originUrl: safeHttpUrl(item.link) || String(item.link || '').trim(),
@@ -929,6 +940,7 @@
     photonUrl,
     corsRelayUrls,
     cropFocalY,
+    cropFocalX,
     photoCredit,
     frDate,
     enDate,

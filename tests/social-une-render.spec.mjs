@@ -124,6 +124,8 @@ for (const kind of ['matin', 'soir']) {
       return {
         title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'), by: box('.ig-by'),
         motto: box('.ig-motto'), wm: box('.ig-brand .wm'),
+        mottoLead: box('.ig-motto .lead'), mottoTag: box('.ig-motto .tag'),
+        titleFont: getComputedStyle(document.querySelector('.ig-title')).fontFamily,
         brandBg: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor,
         size: parseFloat(getComputedStyle(document.querySelector('.ig-title')).fontSize),
         wmSize: parseFloat(getComputedStyle(document.querySelector('.ig-brand .wm')).fontSize),
@@ -152,8 +154,14 @@ for (const kind of ['matin', 'soir']) {
     expect(zone.mottoText.replace(/\s+/g, ' ').trim()).toBe('Journaux, radios et sports étudiants du Québec, réunis au même endroit');
     expect(zone.wmSize, 'corps du mot-symbole = hauteur de l’icône').toBe(zone.logoH);
     expect(zone.wmSize).toBe(100);
+    expect(zone.titleFont, 'titre en Source Serif 4').toMatch(/Source Serif 4/i);
     expect(zone.motto.left, 'slogan aligné à gauche sur le mot-symbole').toBeGreaterThanOrEqual(zone.wm.left - 2);
     expect(zone.motto.left).toBeLessThanOrEqual(zone.wm.left + 2);
+    expect(zone.mottoLead, 'première ligne du slogan').toBeTruthy();
+    expect(zone.mottoTag, 'deuxième ligne du slogan').toBeTruthy();
+    expect(Math.abs(zone.mottoLead.left - zone.wm.left), '1re ligne du slogan = bord gauche du mot-symbole').toBeLessThanOrEqual(2);
+    expect(Math.abs(zone.mottoTag.left - zone.wm.left), '2e ligne du slogan = bord gauche du mot-symbole').toBeLessThanOrEqual(2);
+    expect(Math.abs(zone.mottoLead.left - zone.mottoTag.left), 'les deux lignes du slogan alignées entre elles').toBeLessThanOrEqual(2);
     expect(zone.qr, 'pas de QR sans pageUrl d’article').toBeNull();
     expect(zone.brandBg === 'rgba(0, 0, 0, 0)' || zone.brandBg === 'transparent', 'pas de capsule derrière la marque').toBeTruthy();
     expect(zone.photo.top).toBeLessThanOrEqual(0);
@@ -240,6 +248,52 @@ for (const kind of ['matin', 'soir']) {
   });
 }
 
+
+test('instagram 3:4 : titre serif long en trois lignes à 80 px @ci-critical', async ({ page }) => {
+  await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+  await page.setViewportSize({ width: 1080, height: 1440 });
+  await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+  const model = {
+    slot: { label: 'La une du soir', kind: 'soir', dayLabel: 'Samedi 21 novembre 2026' },
+    items: [item(1, { title: 'En France, la colère lycéenne gagne tout le pays', source: 'Quartier Libre', byline: 'Elise Miara · Quartier Libre', credit: 'Clément Souchet' })],
+  };
+  const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+  expect(info.overflow).toBe(false);
+  const typo = await page.evaluate(() => {
+    const n = document.querySelector('.ig-title');
+    const cs = getComputedStyle(n);
+    return {
+      family: cs.fontFamily,
+      size: parseFloat(cs.fontSize),
+      height: n.getBoundingClientRect().height,
+      lineHeight: parseFloat(cs.lineHeight),
+      text: n.innerText,
+    };
+  });
+  expect(typo.family).toMatch(/Source Serif 4/i);
+  expect(typo.size, 'ne pas réduire un titre de trois lignes à 80 px').toBe(80);
+  expect(typo.height / typo.lineHeight, 'trois lignes').toBeGreaterThan(2.5);
+  expect(typo.height / typo.lineHeight).toBeLessThan(3.5);
+  const lines = typo.text.split(/\n/).map((x) => x.trim()).filter(Boolean);
+  expect(lines, 'coupures typographiques, sans veuve').toEqual([
+    'En France, la colère',
+    'lycéenne gagne',
+    'tout le pays',
+  ]);
+});
+
+test('instagram 3:4 : focalX recadre la photo, 50 % par défaut @ci-critical', async ({ page }) => {
+  await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+  await page.setViewportSize({ width: 1080, height: 1440 });
+  await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+  const slot = { label: 'La une du soir', kind: 'soir', dayLabel: 'Samedi 21 novembre 2026' };
+  await page.evaluate((a) => window.renderUne(a), { model: { slot, items: [item(1)] }, format: 'grille' });
+  const def = await page.locator('.ig-photo img').evaluate((e) => e.style.objectPosition);
+  expect(def, 'sans focalX : 50 % horizontal, focalY par défaut 0,44').toBe('50% 44%');
+  await page.evaluate((a) => window.renderUne(a), { model: { slot, items: [item(1, { focalX: 0.58, focalY: 0.50 })] }, format: 'grille' });
+  const applied = await page.locator('.ig-photo img').evaluate((e) => e.style.objectPosition);
+  expect(applied, 'focalX 0,58 appliqué (aperçu lycéens)').toBe('58% 50%');
+});
 test('instagram 3:4 sport : trois résultats réels dans le carré @ci-critical', async ({ page }) => {
   await page.setViewportSize({ width: 1080, height: 1440 });
   await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
