@@ -950,11 +950,12 @@ a { color: inherit; }
   /* Laisser voir translateY des anims leave/arrive (sinon clip parent). */
   overflow: visible;
 }
-/* Carte 0 = ancre spéciale MTL/QC (colonne un cran plus large). Secondaires à droite. */
+/* Carte 0 = ancre spéciale MTL/QC : colonne au contenu (max/min + « Demain »,
+   22 nov. 2026) ; le fit retire une secondaire si ça déborde. Secondaires à droite. */
 .masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(120px, 1fr) minmax(88px, 1fr); }
-.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(120px, .95fr) repeat(2, minmax(88px, 1fr)); }
-.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(118px, .9fr) repeat(3, minmax(80px, 1fr)); }
+.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(120px, max-content) minmax(88px, 1fr); }
+.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(120px, max-content) repeat(2, minmax(88px, 1fr)); }
+.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(118px, max-content) repeat(3, minmax(80px, 1fr)); }
 /* Jumeau : regroupement DOM seulement — les cartes restent des items du board. */
 .masthead-weather__twin { display: contents; }
 .masthead-weather__board[data-weather-count="3"] { --weather-sec: 1; }

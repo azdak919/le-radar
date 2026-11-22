@@ -129,15 +129,13 @@
 .site-foot--v2 { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
 /* Téléphone : les pastilles flèche + loupe (48 px, 16 px du bas) ne doivent
    couvrir ni la licence ni les mentions quand on est en bas de page.
-   On réserve leur hauteur sous le texte, et une marge à droite des lignes
-   du bas (2×48 + gouttière 12 + bord 14). Si le pied est dans `.wire`,
-   on retire les 80 px déjà prévus sous le fil, pour ne pas les empiler. */
+   On réserve leur hauteur sous le texte — pas de marge à droite : le texte
+   du bas prend toute la largeur (22 nov. 2026), les pastilles restent dessous.
+   Si le pied est dans `.wire`, on retire les 80 px déjà prévus sous le fil,
+   pour ne pas les empiler. */
 @media (max-width: 599.98px) {
   .site-foot--v2 {
     padding-bottom: calc(16px + 48px + max(16px, env(safe-area-inset-bottom, 0px)));
-  }
-  .site-foot--v2 .site-foot__bottom {
-    padding-right: calc(48px + 12px + 48px + 14px);
   }
   .wire:has(> .site-foot--v2) {
     padding-bottom: 0;
