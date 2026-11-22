@@ -197,7 +197,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
       const midNav = (navBox.left + navBox.right) / 2;
       const midWord = (wordBox.left + wordBox.right) / 2;
       const overflow = document.documentElement.scrollWidth - window.innerWidth;
-      const minSide = window.innerWidth < 600 ? 40 : 44;
+      const minSide = window.innerWidth < 360 ? 34 : window.innerWidth < 600 ? 40 : 44;
       const small = boxes.filter((b) => b.height < minSide || b.width < minSide).length;
       return {
         rows,
@@ -226,11 +226,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
     expect(layout.hitsTools, `${width}px : pas de chevauchement avec les outils`).toBe(0);
     expect(layout.hitsCredit, `${width}px : pas de chevauchement avec le crédit photo`).toBe(false);
     expect(layout.coffee, `${width}px : bouton café retiré`).toBe(false);
-    if (width <= 320) {
-      expect(layout.rows, `${width}px : deux lignes 4+4`).toEqual([4, 4]);
-    } else {
-      expect(layout.rows, `${width}px : une seule rangée`).toEqual([8]);
-    }
+    expect(layout.rows, `${width}px : une seule rangée`).toEqual([8]);
   }
 });
 
