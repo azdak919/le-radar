@@ -108,3 +108,16 @@ for (const path of ['/', '/horaires/']) {
     });
   }
 }
+
+// Régression : à 1920 la grille station forçait 5 colonnes dans une colonne de
+// lecture de ~1000 px → cartes de 126 px, titres coupés lettre par lettre.
+for (const width of [1440, 1920, 2560]) {
+  test(`station week cards stay readable at ${width}px @ci-critical`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/radios/choq/');
+    const days = page.locator('#horaire .seo-day');
+    await expect(days.first()).toBeVisible();
+    const widths = await days.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width));
+    expect(Math.min(...widths)).toBeGreaterThanOrEqual(280);
+  });
+}
