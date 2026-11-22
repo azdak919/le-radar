@@ -2,6 +2,7 @@
 // Sujet et lieu déduits UNIQUEMENT du titre, de l'extrait, des catégories et de la source : jamais inventés.
 // 10 nov. 2026 : plafonds par réseau, institution/sport/ville avant le sujet générique, pas de #Actualités
 // ni de #PresseÉtudiante. Mot déjà dans le texte : on n'ajoute pas le hashtag de lieu ou de sujet.
+// 21 nov. 2026 : sur X seulement, mots-clics thématiques (liste fixe, titre + résumé, au plus 3).
 // Accents conservés (Mastodon et Bluesky les gèrent ; X, Facebook et LinkedIn aussi).
 import { POLICY } from './policy.mjs';
 
@@ -88,8 +89,90 @@ export function articleTags(it, max = 3) {
   return out.slice(0, max);
 }
 export const maxTags = network => POLICY.hashtags?.maxByNetwork?.[network] ?? 0;
-/** Ligne de hashtags d'un réseau ('' si aucun). */
-export const tagLine = (it, network) => articleTags(it, maxTags(network)).join(' ');
+
+// ── Mots-clics thématiques X seulement (liste fixe, 21 nov. 2026) ──────────
+// Appariement déterministe sur le titre et le résumé, sans IA. Les autres réseaux
+// gardent articleTags (institution, sport précis, ville, sujet générique).
+const titleSummary = it => [it.bare || it.title, it.desc, it.excerpt, it.summary, it.hook].filter(Boolean).join(' ');
+const X_VANIER = wordRe('coupe vanier|vanier cup|vaniercup');
+const X_USPORTS = wordRe('u\\s*sports|usports|coupe vanier|vanier cup|coupe uteck|uteck bowl|\\boua\\b|canada west|carabins|rouge et or|rouge-et-or|vert et or|vert-et-or|vert\\s*&\\s*or|\\bstingers\\b|\\bgaiters\\b|\\bmartlets\\b|\\bredbirds\\b|citadins|gee-?gees');
+const X_RSEQ = wordRe('rseq|réseau du sport étudiant|sport collégial|carabins|rouge et or|rouge-et-or|vert et or|vert-et-or|vert\\s*&\\s*or|\\bstingers\\b|\\bgaiters\\b|\\bmartlets\\b|\\bredbirds\\b|citadins');
+const X_FEDERAL = wordRe('premier ministre (du Canada|canadien)|prime minister of canada|mark carney|\\bcarney\\b|poilievre|poilièvre|gouvernement (fédéral|du Canada|canadien)|federal government|budget fédéral|\\bfédér(?:al|aux|ale|ales)\\b|\\bfederal\\w*|chambre des communes|house of commons|élections? fédérales?|federal elections?|ministre fédéral|ministre des Finances du Canada|parti libéral du canada|parti conservateur du canada|\\bnpd\\b|\\bndp\\b|gouvcan|bill c-\\d+|projet de loi c-\\d+');
+const X_POLQC = wordRe('élections? provinciales?|provincial elections?|gouvernement (du Québec|québécois|provincial|minoritaire|péquiste|caquiste)|premier ministre (du Québec|québécois)|\\bpspp\\b|st-?pierre plamondon|plamondon|\\blegault\\b|assemblée nationale|\\bdéputé\\w*|\\bcaq\\b|parti québécois|parti libéral du québec|québec solidaire|politique québécoise|loi québécoise|budget provincial|\\bpq\\b|\\bqs\\b|\\bplq\\b|\\bpcq\\b');
+const X_ASSNAT = wordRe('assemblée nationale|salon bleu|commission parlementaire|période de questions');
+const X_ASSNAT_BILL = wordRe('projet de loi');
+const X_FED_BILL = wordRe('projet de loi c-\\d+|bill c-\\d+');
+const X_CEGEP = wordRe('cégep\\w*|cegep\\w*');
+
+/** Drapeaux thématiques X, d'après le titre et le résumé seulement. */
+export function xThematicFlags(it) {
+  const t = titleSummary(it);
+  const federal = X_FEDERAL.test(t);
+  const assnat = X_ASSNAT.test(t) || (X_ASSNAT_BILL.test(t) && !X_FED_BILL.test(t));
+  return {
+    vanier: X_VANIER.test(t),
+    usports: X_USPORTS.test(t),
+    rseq: X_RSEQ.test(t),
+    federal,
+    polqc: X_POLQC.test(t) || assnat,
+    assnat,
+    cegep: X_CEGEP.test(t),
+  };
+}
+
+/** Assemble au plus `max` tags : thématique, sigle d'établissement, puis ville ou second thématique. */
+export function assembleXTags(flags, { inst = '', city = '' } = {}, max = 3) {
+  if (!(max > 0)) return [];
+  const out = [];
+  const push = tag => { if (tag && !out.includes(tag) && out.length < max) out.push(tag); };
+  if (flags.vanier) push('#VanierCup');
+  else if (flags.rseq) push('#RSEQ');
+  else if (flags.usports) push('#USports');
+  else if (flags.federal) push('#polcan');
+  else if (flags.polqc) push('#polqc');
+  else if (flags.cegep) push('#cégep');
+  else if (flags.assnat) push('#assnat');
+  const companions = [];
+  if (flags.federal && out[0] === '#polcan') companions.push('#cdnpoli');
+  if (flags.vanier && flags.usports) companions.push('#USports');
+  else if (flags.vanier && flags.rseq) companions.push('#RSEQ');
+  if (flags.rseq && flags.usports && out[0] === '#RSEQ') companions.push('#USports');
+  if (flags.assnat) companions.push('#assnat');
+  if (flags.polqc && out[0] === '#polcan') companions.push('#polqc');
+  if (flags.federal && out[0] === '#polqc') companions.push('#polcan');
+  if (flags.cegep && out[0] !== '#cégep') companions.push('#cégep');
+  // Histoire clairement fédérale : #polcan + #cdnpoli prennent deux des trois places.
+  if (flags.federal && out[0] === '#polcan') {
+    push('#cdnpoli');
+    if (flags.polqc) push('#polqc');
+    else push(inst);
+    push(companions.find(c => !out.includes(c)) || '');
+    push(city);
+    return out.slice(0, max);
+  }
+  push(inst);
+  const second = companions.find(c => !out.includes(c));
+  if (second) push(second);
+  else push(city);
+  if (out.length < max) {
+    for (const c of companions) push(c);
+    push(city);
+  }
+  return out.slice(0, max);
+}
+
+/** Hashtags X d'un article (thématiques + établissement + ville), au plus 3. */
+export function xArticleTags(it, max = 3) {
+  const flags = xThematicFlags(it);
+  const hasThematic = flags.vanier || flags.usports || flags.rseq || flags.federal || flags.polqc || flags.assnat || flags.cegep;
+  const inst = institutionTag(it);
+  const city = placeTag(it);
+  if (!hasThematic) return articleTags(it, max);
+  return assembleXTags(flags, { inst, city }, max);
+}
+
+/** Ligne de hashtags d'un réseau ('' si aucun). X : liste thématique distincte. */
+export const tagLine = (it, network) => (network === 'x' ? xArticleTags(it, maxTags(network)) : articleTags(it, maxTags(network))).join(' ');
 export const bskyTags = it => articleTags(it, maxTags('bluesky'));
 // Tumblr : tout en minuscules, étiquettes les plus suivies d'abord (les 5 premières comptent en recherche),
 // forme sans accent ajoutée là où on la cherche, langue de l'article, 10 à 15 étiquettes dédupliquées.

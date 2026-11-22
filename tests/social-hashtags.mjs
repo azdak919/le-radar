@@ -1,6 +1,6 @@
 // Hashtags par réseau, étiquettes Tumblr, IA désactivée sans secret.
 import assert from 'node:assert/strict';
-import { bskyTags, tumblrTags, topicOf, articleTags, tagLine, PLACES } from '../scripts/social/hashtags.mjs';
+import { bskyTags, tumblrTags, topicOf, articleTags, tagLine, PLACES, xArticleTags, xThematicFlags } from '../scripts/social/hashtags.mjs';
 import { buildBskyText, facets, graphemes, BSKY_LIMIT, postRecord } from '../scripts/social/bluesky.mjs';
 import { buildText, buildXText, xlen, DAILY_SLOTS } from '../scripts/social/lib.mjs';
 import { buildPageText } from '../scripts/social/buffer-pages.mjs';
@@ -15,7 +15,7 @@ assert.deepEqual(articleTags({ source: 'Impact Campus', title: 'Les Carabins gag
 assert.deepEqual(articleTags({ source: 'The Link', title: 'Stingers women’s hockey' }, 2), ['#Concordia', '#Hockey'], 'X : 2 hashtags, les plus spécifiques');
 assert.deepEqual(articleTags({ source: 'The Link', title: 'x' }, 0), [], 'max 0 : aucun');
 assert.equal(tagLine(it, 'facebook'), '#CégepDeJonquière');
-assert.equal(tagLine(it, 'x').split(' ').length, 2);
+assert.equal(tagLine(it, 'x'), '#polqc #CégepDeJonquière #Saguenay');
 assert.equal(tagLine(it, 'linkedin').split(' ').length, 3);
 assert.equal(tagLine(it, 'mastodon'), '#CégepDeJonquière #Saguenay #Politique');
 assert.equal(tagLine(it, 'bluesky').split(' ').length, 2);
@@ -61,7 +61,7 @@ assert.ok(tt.every(x => x === x.toLowerCase()) && new Set(tt).size === tt.length
 assert.ok(tt.every(x => !/[#,]/.test(x)));
 // buildText seul : aucun hashtag ; X, LinkedIn et Facebook : ligne ajoutée par buildXText / buildPageText (cfg.service)
 const x = buildText(it, [], 280, { credit: '' }); assert.ok(!/#\p{L}/u.test(x) && x.trim().endsWith('le-radar.ca/' + x.trim().split('le-radar.ca/')[1]));
-const xt = buildXText(it, [], { credit: '' }); assert.ok(xt.endsWith('\n#CégepDeJonquière #Saguenay') && xlen(xt) <= 280, xt);
+const xt = buildXText(it, [], { credit: '' }); assert.ok(xt.endsWith('\n#polqc #CégepDeJonquière #Saguenay') && xlen(xt) <= 280, xt);
 const p = buildPageText(it, {}, { credit: 'Jeanne Tremblay' }); assert.ok(!/#\p{L}/u.test(p) && /https:\/\/le-radar\.ca\/\S+\n📸 Jeanne Tremblay$/.test(p), p);
 // X : créneaux espacés d'au moins 60 min
 const mins = DAILY_SLOTS.map(s => +s.slice(0, 2) * 60 + +s.slice(3)); for (let i = 1; i < mins.length; i++) assert.ok(mins[i] - mins[i - 1] >= 60);
@@ -77,6 +77,31 @@ assert.deepEqual(ok, { hook: null, topic: 'Politique' }, 'accroche qui paraphras
 assert.equal(await aiHook(it, { env, fetchImpl: async () => ({ ok: false, status: 429 }) }), null, 'quota → repli');
 assert.equal(await aiHook(it, { env, fetchImpl: async () => { throw new Error('net'); } }), null);
 console.log('social-hashtags : OK');
+
+// X : mots-clics thématiques (liste fixe, titre + résumé), au plus 3 ; les autres réseaux inchangés
+const carney = { source: 'Le Collectif', title: 'Rencontre Carney-PSPP au Cambodge',
+  desc: 'Québec, Montréal ou Ottawa ? C’est finalement au Cambodge que le premier ministre canadien et le premier ministre québécois se sont rencontrés.' };
+assert.deepEqual(xArticleTags(carney), ['#polcan', '#cdnpoli', '#polqc']);
+assert.equal(tagLine(carney, 'linkedin'), '#UdeS #Sherbrooke #Politique', 'LinkedIn inchangé');
+assert.equal(tagLine(carney, 'facebook'), '#UdeS', 'Facebook inchangé');
+assert.deepEqual(bskyTags(carney), ['#UdeS', '#Sherbrooke'], 'Bluesky inchangé');
+assert.ok(!xArticleTags(carney).includes('#PaysQc'));
+const budget = { source: 'Le Collectif', title: 'Mark Carney dévoile ses ambitions économiques',
+  desc: 'François-Philippe Champagne, ministre des Finances du Canada, a déposé le plus récent budget du gouvernement canadien.' };
+assert.deepEqual(xArticleTags(budget), ['#polcan', '#cdnpoli', '#UdeS']);
+const loi = { source: 'Le Collectif', title: 'Un projet de loi déposé à l’Assemblée nationale', desc: 'Le salon Bleu examine le texte en commission parlementaire.' };
+assert.deepEqual(xArticleTags(loi), ['#polqc', '#UdeS', '#assnat']);
+const rseq = { source: 'The Concordian', title: 'Stingers clinch final playoff spot', desc: 'Concordia secured the fourth seed in the RSEQ conference.' };
+assert.deepEqual(xArticleTags(rseq), ['#RSEQ', '#Concordia', '#USports']);
+const vanier = { source: 'Impact Campus', title: 'Le Rouge et Or en finale de la Coupe Vanier', desc: 'Laval affrontera les Carabins pour la Vanier Cup.' };
+assert.deepEqual(xArticleTags(vanier), ['#VanierCup', '#ULaval', '#USports']);
+const cegep = { source: 'La Pige', title: 'Des étudiants du Cégep de Jonquière à la COP', desc: 'Trois étudiants du Cégep de Jonquière et leur enseignant se sont rendus à la conférence.' };
+assert.deepEqual(xArticleTags(cegep), ['#cégep', '#CégepDeJonquière', '#Saguenay']);
+const campus = { source: 'La Rotonde', title: 'Nouvelle expo sur le campus', desc: 'Les étudiants de l’Université d’Ottawa exposent leurs œuvres.' };
+assert.ok(!xThematicFlags(campus).federal, 'campus à Ottawa : pas de #polcan');
+assert.deepEqual(xArticleTags(campus), articleTags(campus, 3));
+assert.ok(xArticleTags(carney).length <= 3);
+console.log('social-hashtags (X thématiques) : OK');
 import { formatOk } from '../scripts/social/lib.mjs';
 assert.ok(formatOk(buildBskyText(it, [], { credit: 'Jeanne Tremblay' }), it, 'Jeanne Tremblay'), 'ligne de hashtags tolérée par formatOk');
 console.log('social-hashtags (formatOk) : OK');

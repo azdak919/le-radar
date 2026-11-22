@@ -115,6 +115,8 @@ assert.ok(U.checkUneText('🌙 La une du soir · Bonne fin de semaine ! https://
 assert.ok(U.checkUneText('🌙 La une du soir @quelquun https://le-radar.ca/', 'mastodon', { items: [{ title: 'La une du soir' }] }).some(p => /@/.test(p)));
 assert.deepEqual(U.uneTags([{ tag: '#UdeM' }, { tag: '#McGill' }], 2), ['#MédiasÉtudiants', '#Québec']);
 assert.deepEqual(U.uneTags([{ tag: '#UdeM' }], 4), ['#MédiasÉtudiants', '#UdeM', '#Québec']);
+assert.deepEqual(U.uneTagsX([{ title: 'Rencontre Carney-PSPP au Cambodge', excerpt: 'Le premier ministre canadien et le premier ministre québécois se sont rencontrés.', source: 'Le Collectif' }]), ['#polcan', '#cdnpoli', '#polqc']);
+assert.deepEqual(U.uneTags([{ tag: '#UdeM' }, { tag: '#McGill' }], 4), ['#MédiasÉtudiants', '#UdeM', '#McGill', '#Québec'], 'autres réseaux inchangés');
 assert.ok(U.uneTumblrTags(m.items).length <= 15);
 // Le vrai fil passe aussi les contrôles (pas de régression sur des données réelles).
 const live = U.selectUne(real, U.slotFor('soir', Date.parse(real.updated)), { now: Date.parse(real.updated) });

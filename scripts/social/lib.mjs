@@ -225,7 +225,7 @@ export function buildTagged(it, accounts, limit, opts, tags, sep = '\n') {
   const text = buildText(it, accounts, room, opts);
   return text && tags ? `${text}${sep}${tags}` : text;
 }
-/** Texte X : format commun, 280 (xlen), 2 hashtags au plus (policy.json). */
+/** Texte X : format commun, 280 (xlen), 3 hashtags au plus (policy.json, mots-clics thématiques). */
 export const buildXText = (it, accounts = [], opts = {}) => buildTagged(it, accounts, LIMITS.x, opts, tagLine(it, 'x'));
 
 /**

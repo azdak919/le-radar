@@ -14,7 +14,7 @@ import { createRequire } from 'node:module';
 import { torontoDay } from './policy.mjs';
 import { xlen, SITE, isRevueLink } from './lib.mjs';
 import { NET_SPEC } from './formats.mjs';
-import { institutionTag, sportTagOf } from './hashtags.mjs';
+import { institutionTag, sportTagOf, xArticleTags } from './hashtags.mjs';
 import { detectLang } from './lib.mjs';
 
 const require = createRequire(import.meta.url);
@@ -402,6 +402,21 @@ export function frDayYear(ymd) {
 // ── Textes ───────────────────────────────────────────────────────────────────
 export const HOME = `${SITE}/`;
 const BASE_TAGS = ['#MédiasÉtudiants', '#Québec'];
+/**
+ * Hashtags X d'une une : mêmes règles thématiques que les articles (titres + résumés),
+ * au plus 3. Sans thématique, repli sur uneTags (les autres réseaux ne passent pas par ici).
+ */
+export function uneTagsX(items, max = 3) {
+  if (!(max > 0) || !items?.length) return [];
+  const it = {
+    title: items.map(x => x.title || x.bare).filter(Boolean).join(' · '),
+    desc: items.map(x => x.excerpt || x.desc || x.hook || '').filter(Boolean).join(' '),
+    source: items[0].source,
+    bare: items[0].title || items[0].bare,
+  };
+  return xArticleTags(it, max);
+}
+
 /** Hashtags : #MédiasÉtudiants, établissements présents, #Québec ; plafonds de policy.json (hashtags.maxByNetwork). */
 export function uneTags(items, max) {
   if (!(max > 0)) return [];
@@ -554,7 +569,7 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
   const out = {};
   for (const n of [...NETS, ...PREPARED_NETS]) {
     const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n];
-    const tags = n === 'tumblr' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : uneTags(model.items, maxByNetwork[n] ?? 2);
+    const tags = n === 'tumblr' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : n === 'x' ? uneTagsX(model.items, maxByNetwork[n] ?? 3) : uneTags(model.items, maxByNetwork[n] ?? 2);
     const text = buildUneText(model, n, spec, { tags, revueExists: opts.revueExists ?? model.revueExists, root: opts.root });
     out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] || '', problems: checkUneText(text, n, model, spec) };
   }
