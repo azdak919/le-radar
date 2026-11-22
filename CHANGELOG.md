@@ -34,6 +34,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Quartier Libre, chronique « Cinq nouvelles de la semaine » : l’illustration d’origine (texte et logo compris) n’est plus remplacée par une photo Wikimedia du campus. La règle qui retire un visuel générique partagé, ou une bannière de rubrique, laisse cette série de côté — exception courte approuvée le 21 novembre 2026, sans relâcher la règle générale. Crédit repris à la source : Illustration : Mathilde Ségar. Cache `radar-shell-v1063`.
 - Le lien « Mise à jour » est retiré de tous les pieds de page et la page `mise-a-jour/` (outil d’administration du Socle) n’est plus publiée. Le test `no-public-admin-tools` échoue si un tel lien ou une telle page revient ; `_config.yml` exclut aussi ce dossier. Caches `radar-shell-v1060` et `radar-offline-v23`.
 - Compteur et fil : le début de session (1er septembre, 1er janvier, 1er mai) est minuit à Montréal, et non plus minuit UTC. Les doublons d’un même média (même titre le même jour, ou variantes d’URL : L’Exemplaire /a-la-une/ et /actualites/, chemins The Tribune, suffixe -2 de La Pige et du Délit) sont retirés du catalogue et du flux RSS. La série « Cinq nouvelles de la semaine » de Quartier Libre, publiée à des jours distincts, est conservée. Cache `radar-shell-v1048`.
 
