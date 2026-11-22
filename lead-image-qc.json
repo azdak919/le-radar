@@ -1,22 +1,22 @@
 {
-  "updated": "2026-11-22T13:38:46.283Z",
+  "updated": "2026-11-22T14:39:49.908Z",
   "total": 1040,
   "withPhoto": 946,
   "withStock": 105,
   "withCampusBank": 92,
   "fullyCovered": 1026,
-  "leadReadyPhotos": 956,
-  "pageScraped": 9,
-  "photosRecovered": 9,
+  "leadReadyPhotos": 955,
+  "pageScraped": 10,
+  "photosRecovered": 10,
   "imagesCleared": 1,
-  "stockSearches": 3,
-  "stockFound": 12,
+  "stockSearches": 4,
+  "stockFound": 13,
   "campusBankFound": 10,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Wicker: More Than Meets The Eye - The McGill Daily",
-      "link": "https://www.mcgilldaily.com/2026/11/wicker-more-than-meets-the-eye/",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet",
       "reason": "no-stock-match",
       "image": null
     },
@@ -31,6 +31,12 @@
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "Saguenay vers des infrastructures durables",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
     }
   ]
 }
