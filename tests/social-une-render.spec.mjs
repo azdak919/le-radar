@@ -182,12 +182,24 @@ for (const kind of ['matin', 'soir']) {
     await expect(qr).toHaveAttribute('data-url', pageUrl);
     const box = await page.evaluate(() => {
       const c = document.getElementById('card').getBoundingClientRect();
-      const r = document.querySelector('.ig-qr').getBoundingClientRect();
-      return { top: r.top - c.top, bottom: r.bottom - c.top, left: r.left - c.left, right: r.right - c.left, mid: (r.left + r.right) / 2 - c.left };
+      const rel = (e) => { const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top, left: r.left - c.left, right: r.right - c.left, mid: (r.left + r.right) / 2 - c.left }; };
+      const qr = rel(document.querySelector('.ig-qr'));
+      const brand = rel(document.querySelector('.ig-brand'));
+      const logo = document.querySelector('.ig-brand img');
+      return {
+        qr, brand,
+        logo: logo.getBoundingClientRect().height,
+        wm: parseFloat(getComputedStyle(document.querySelector('.ig-brand .wm')).fontSize),
+      };
     });
-    expect(box.top).toBeGreaterThanOrEqual(180);
-    expect(box.bottom).toBeLessThanOrEqual(1260);
-    expect(box.mid, 'QR dans le quart supérieur droit').toBeGreaterThan(540);
+    expect(box.qr.top).toBeGreaterThanOrEqual(180);
+    expect(box.qr.bottom).toBeLessThanOrEqual(1260);
+    expect(box.qr.mid, 'QR dans le quart supérieur droit').toBeGreaterThan(540);
+    expect(box.brand.top).toBeGreaterThanOrEqual(180);
+    expect(box.brand.bottom).toBeLessThanOrEqual(1260);
+    expect(box.wm, 'corps du mot-symbole = hauteur de l’icône').toBe(box.logo);
+    expect(box.wm).toBe(100);
+    expect(box.brand.right, 'la signature ne chevauche pas le QR').toBeLessThanOrEqual(box.qr.left - 8);
     // Décode le JPEG rendu si zbarimg est disponible (aperçus v4 aussi vérifiés ainsi).
     const shot = await page.locator('#card').screenshot({ type: 'jpeg', quality: 92 });
     const fs = await import('node:fs');
