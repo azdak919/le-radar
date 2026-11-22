@@ -5,6 +5,7 @@
 @font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-600.woff2) format('woff2'); font-display: swap; font-weight: 600; }
 @font-face { font-family: 'Inter'; src: url(../mobile/app/fonts/inter-700.woff2) format('woff2'); font-display: swap; font-weight: 700; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow: hidden; }
 body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-synthesis: none; -webkit-font-smoothing: antialiased; font-kerning: normal; }
 .serif, .wm, .title, .item .t, .tm .pt, .num { font-family: 'Source Serif 4', 'Noto Color Emoji', Georgia, serif; }
 
@@ -40,6 +41,7 @@ body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-syn
 /* Photo de la une : pleine largeur, dégagée (seul le bas est effleuré par la carte). */
 .photo, .thumb { position: relative; overflow: hidden; background: linear-gradient(135deg, #6c2163, #3e1139); }
 .photo { flex: 1 1 0; min-height: 0; margin: -18px -26px 16px; border-radius: 24px 24px 0 0; }
+.card.grille, .card.article, .card.article-portrait { margin: 0; }
 .photo img, .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .photo.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
 .badge { position: absolute; left: 22px; top: 20px; background: #6c2163; color: #fff; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 20px; line-height: 1; padding: 10px 16px; border-radius: 999px; }
@@ -208,18 +210,18 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .grille.une-b .ig { position: absolute; inset: 0; display: block; background: #0E0F12; color: #F1F2F4; }
 .grille.une-b .ig-photo-full, .grille.une-b .ig-photo-well { position: absolute; inset: 0; }
 .grille.une-b .ig-photo-full img, .grille.une-b .ig-photo-well img { width: 100%; height: 100%; display: block; }
-.grille.une-b.photo .ig-photo-well { display: none; }
-.grille.une-b.photo .ig-photo-full img { object-fit: cover; object-position: 50% 40%; }
-.grille.une-b.illustration .ig-photo-full { display: none; }
-.grille.une-b.illustration .ig-photo-well { top: 230px; bottom: 560px; left: 40px; right: 40px; }
-.grille.une-b.illustration .ig-photo-well img { object-fit: contain; object-position: center center; }
+.grille.une-b.lead-photo .ig-photo-well { display: none; }
+.grille.une-b.lead-photo .ig-photo-full img { object-fit: cover; object-position: 50% 40%; }
+.grille.une-b.lead-illustration .ig-photo-full { display: none; }
+.grille.une-b.lead-illustration .ig-photo-well { top: 230px; bottom: 560px; left: 40px; right: 40px; }
+.grille.une-b.lead-illustration .ig-photo-well img { object-fit: contain; object-position: center center; }
 .grille.une-b .ig-photo-full.empty::after, .grille.une-b .ig-photo-well.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
 .grille.une-b .ig-veil-top { position: absolute; left: 0; right: 0; top: 0; height: 340px; pointer-events: none; z-index: 1; }
-.grille.une-b.photo .ig-veil-top { background: linear-gradient(180deg, rgba(14,15,18,.96) 0%, rgba(14,15,18,.90) 40%, rgba(14,15,18,.55) 72%, rgba(14,15,18,0) 100%); }
-.grille.une-b.illustration .ig-veil-top { height: 230px; background: #0E0F12; }
+.grille.une-b.lead-photo .ig-veil-top { background: linear-gradient(180deg, rgba(14,15,18,.96) 0%, rgba(14,15,18,.90) 40%, rgba(14,15,18,.55) 72%, rgba(14,15,18,0) 100%); }
+.grille.une-b.lead-illustration .ig-veil-top { height: 230px; background: #0E0F12; }
 .grille.une-b .ig-veil-bot { position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 1; }
-.grille.une-b.photo .ig-veil-bot { height: 780px; background: linear-gradient(180deg, rgba(14,15,18,0) 0%, rgba(14,15,18,.55) 18%, rgba(14,15,18,.88) 36%, rgba(14,15,18,.97) 52%, #0E0F12 68%); }
-.grille.une-b.illustration .ig-veil-bot { height: 560px; background: #0E0F12; }
+.grille.une-b.lead-photo .ig-veil-bot { height: 780px; background: linear-gradient(180deg, rgba(14,15,18,0) 0%, rgba(14,15,18,.55) 18%, rgba(14,15,18,.88) 36%, rgba(14,15,18,.97) 52%, #0E0F12 68%); }
+.grille.une-b.lead-illustration .ig-veil-bot { height: 560px; background: #0E0F12; }
 .grille.une-b .ig-top { position: absolute; left: 0; right: 0; top: 0; padding: 44px 56px 0; z-index: 2; }
 .grille.une-b .ig-brand { flex: none; height: auto; display: flex; align-items: flex-start; gap: 16px; padding: 0; background: none; }
 .grille.une-b .ig-brand img { width: 80px; height: 80px; display: block; filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }

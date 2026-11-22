@@ -45,6 +45,14 @@ export async function renderImages(model, { outDir, formats = ['portrait', 'stor
       try {
         await page.goto(`http://127.0.0.1:${port}/affiches/social-une.html`, { waitUntil: 'load' });
         const info = await page.evaluate(arg => window.renderUne(arg), { model: pageModel(model), format });
+        const box = await page.evaluate(() => {
+          window.scrollTo(0, 0);
+          const r = document.getElementById('card').getBoundingClientRect();
+          return { x: r.x, y: r.y, w: r.width, h: r.height };
+        });
+        if (box.x !== 0 || box.y !== 0 || box.w !== width || box.h !== height) {
+          throw new Error(`image ${format} : la carte n’est pas plein cadre (${box.x}, ${box.y}, ${box.w}×${box.h}, attendu 0, 0, ${width}×${height})`);
+        }
         const file = path.join(outDir, `${prefix}-${format}-${width}x${height}.jpg`);
         let buf;
         for (const quality of [88, 80, 72, 64]) { buf = await page.locator('#card').screenshot({ type: 'jpeg', quality }); if (buf.length <= MAX_IMAGE_BYTES) break; }

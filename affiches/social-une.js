@@ -257,7 +257,8 @@
     const items = model.items || [];
     const lead = items[0] || { title: '', images: [] };
     const illustration = isIllustrationCredit(lead.credit);
-    card.className = 'card grille une-b ' + (illustration ? 'illustration' : 'photo');
+    // lead-photo / lead-illustration : pas la classe .photo (marges négatives du portrait).
+    card.className = 'card grille une-b ' + (illustration ? 'lead-illustration' : 'lead-photo');
     const root = el('div', 'ig');
     const full = el('div', 'ig-photo-full'); const imgFull = el('img'); imgFull.alt = ''; full.append(imgFull);
     const well = el('div', 'ig-photo-well'); const imgWell = el('img'); imgWell.alt = ''; well.append(imgWell);
