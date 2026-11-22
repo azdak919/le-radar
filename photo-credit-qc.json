@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-22T20:40:31.243Z",
+  "updated": "2026-11-22T22:09:56.480Z",
   "total": 1051,
-  "withImage": 950,
-  "withCredit": 950,
-  "cited": 687,
-  "pending": 211,
+  "withImage": 951,
+  "withCredit": 951,
+  "cited": 694,
+  "pending": 189,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 60,
-  "citedNew": 29,
-  "fallbackNew": 31,
+  "citedNew": 15,
+  "fallbackNew": 45,
   "samples": [
-    {
-      "title": "What went wrong with the McGill Law controversy",
-      "source": "The Link",
-      "credit": "Illustration: Isobel Budding",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
     {
       "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
@@ -34,6 +27,13 @@
       "method": "figcaption-trailing"
     },
     {
+      "title": "Remembering Oliver Jones",
+      "source": "The Tribune",
+      "credit": "Photo : Eliot Loose",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
       "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
       "source": "The Concordian",
       "credit": "Photo: Eric Klempan",
@@ -41,58 +41,58 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Alphonse Bisaillon remporte le Prix collégial de la chanson de l’année",
+      "title": "Patrick Sénécal, un livre ouvert",
       "source": "Le Collectif",
-      "credit": "Photo : MelanieJouet",
+      "credit": "Photo : Frederique Maysenhoelder",
       "cited": true,
       "method": "filename-credit"
     },
     {
-      "title": "Lourde défaite pour le Parti républicain",
+      "title": "Le Mois de l’histoire des femmes, célébrer les bâtisseuses de l’Estrie",
       "source": "Le Collectif",
-      "credit": "Photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "La Cour supérieure du Québec, innovatrice face à l’IA dans le milieu juridique",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Affaires et procès : un lien permanent dans le sport moderne?",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "25 ans de cinéma… et de souvenirs!",
-      "source": "Montréal Campus",
-      "credit": "Photo : Montréal Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "L’enjeu de l’accès à la mer au milieu des combats dans le Tigré",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Paul St-Pierre Plamondon announces $28M in emergency funding for homelessness",
-      "source": "The Concordian",
-      "credit": "Photo: Aidan Raynor",
+      "credit": "Photo : Adèle Blais",
       "cited": true,
-      "method": "wp-media-caption"
+      "method": "body-tail"
     },
     {
-      "title": "When activism becomes a performance",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
+      "title": "De nouveaux espaces pour se connecter à la nature",
+      "source": "Le Collectif",
+      "credit": "Photo : MichelCaron",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Consommer plus de protéines ne sert à rien !",
+      "source": "Le Collectif",
+      "credit": "Photo : Science Presse",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Déjà une pagaille entre Bruno Marchand et le Parti conservateur",
+      "source": "Le Collectif",
+      "credit": "Photo : CDPQ Infra",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Une semaine pour sensibiliser aux violences sexuelles à l’UdeS",
+      "source": "Le Collectif",
+      "credit": "Photo : FEUS",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Décès de Jean-Luc Mongrain : une personnalité médiatique sherbrookoise nous quitte",
+      "source": "Le Collectif",
+      "credit": "Photo : BertrandExertier",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Retour sur La nature des choses de Renée Forest",
+      "source": "Impact Campus",
+      "credit": "Photo : Impact Campus",
       "cited": false,
       "method": null
     }
