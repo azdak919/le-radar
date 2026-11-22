@@ -146,3 +146,20 @@ console.log('credit-extraction la-rédaction OK');
   assert.equal(PC.resolveSourcePhotoCredit({ source: 'Montréal Campus', lang: 'fr', image: img }, h2).creditLine, 'Photo : Maud Amoretti');
   console.log('credit-extraction mention FR OK');
 }
+
+// Le Club-École (22 nov. 2026) : légende en paragraphe sous la figure,
+// « … Photo tirée de Getty images » → provenance, jamais la phrase entière.
+{
+  const img = 'https://leclubecole.com/wp-content/uploads/2026/11/image-10.jpeg';
+  const page = (caption) => `<html><body><div class="entry-content"><figure class="wp-block-image"><img src="${img}"></figure><p><strong></strong>${caption}&nbsp;</p><p><strong>La sélection anglaise, entraînée par Thomas Tuchel, a terminé sa campagne de qualification sans perdre un seul match.</strong></p>${pad}</div></body></html>`;
+  const r1 = PC.extractPhotoCreditFromHtml(page('Bellingham a été passeur décisif sur le but de Ben White. Photo tirée de Getty images'), img, 'fr');
+  assert.equal(r1.creditLine, 'Image tirée de Getty images');
+  const r2 = PC.extractPhotoCreditFromHtml(page('Kon Knueppel est très attendu pour changer la dynamique de l’équipe. Photo tirée du compte X des Hornets FR'), img, 'fr');
+  assert.equal(r2.creditLine, 'Image tirée du compte X des Hornets FR');
+  // Phrase ordinaire contenant « tirée de » : pas un crédit.
+  assert.equal(PC.extractViaCredit(page('Une leçon tirée de la défaite de mardi.'), 'fr'), null);
+  // Poignée retirée : pas de « / » orphelin en fin de crédit.
+  const t = PC.parseTrailingCaptionCredit('Linus Ullmark a marqué dans un filet désert. Crédit photo : compte X officiel des Sénateurs d’Ottawa / @Senators', 'fr');
+  assert.ok(t && !/\/\s*$/.test(t.creditLine), t && t.creditLine);
+  console.log('credit-extraction Club-École OK');
+}
