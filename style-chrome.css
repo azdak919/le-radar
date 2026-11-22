@@ -147,7 +147,8 @@
   gap: 24px 48px;
   align-items: start;
 }
-.site-foot--v2 .site-foot__about { max-width: 46ch; margin: 0; }
+/* Remplit sa colonne (plus de vide à côté), plafond lisible en pleine largeur. */
+.site-foot--v2 .site-foot__about { max-width: min(100%, 75ch); margin: 0; }
 .site-foot--v2 .site-foot__cols {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
