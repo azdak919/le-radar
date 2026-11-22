@@ -19,7 +19,7 @@ Les autres icônes du pied (X, Bluesky, Facebook, Tumblr, Mastodon, RSS, Buy Me 
 - Source : [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Miami_Skyline_(45860413504).jpg)
 - Origine Flickr : https://www.flickr.com/photos/mustangjoe/45860413504/
 - Licence : **CC0 1.0** (Creative Commons Zero, dédicace au domaine public), confirmée sur la page Wikimedia et par FlickreviewR 2 (16 mars 2019, licence cc-zero sur Flickr). Compatible avec une distribution GPL-2.0-only. Aucune dépendance Apache-2.0.
-- Traitement : étalonnage cinématographique « acier et or » (ciel d’acier, bande dorée à l’horizon, ombres teal, lumières ambre, voile, contrastes profonds, grain fin) réalisé pour le doodle, à la place d’un premier étalonnage vaporwave. La licence CC0 permet l’adaptation.
+- Traitement : aucun étalonnage. La photographie est utilisée telle que publiée (pas de grain, de vignette ni de virage ajoutés).
 - Crédit affiché sur le mât : « Joe deSousa — Miami » (conservé par cohérence avec les autres photos, même s’il n’est pas exigé par le CC0).
 
 Le titre Pricedown du doodle (`assets/doodle/le-radar-pricedown.svg`) est une image vectorielle fixe, sans fichier de police ni glyphe redistribués. Voir `assets/doodle/README.md`.
