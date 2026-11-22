@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-22T15:37:31.850Z",
-  "total": 1042,
+  "updated": "2026-11-22T16:08:54.280Z",
+  "total": 1043,
   "pool": 61,
-  "incomplete": 25,
-  "withLeadExcerpt": 210,
-  "candidates": 25,
-  "enriched": 2,
+  "incomplete": 26,
+  "withLeadExcerpt": 211,
+  "candidates": 26,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "Médias : après la crise du papier, la crise d’Internet ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
+      "ok": true,
+      "score": 100,
+      "chars": 340,
+      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
+      "changed": true
+    },
+    {
       "title": "Cinq nouvelles de la semaine",
       "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 404,
       "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
-      "changed": false
-    },
-    {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
       "changed": false
     }
   ]
