@@ -482,3 +482,21 @@ assert.ok(!front.isProSportItem({ title: 'Le Rouge et Or remporte la Coupe Dunsm
   assert.match(socialUne, /seatBySource\(cand, max\)/);
   assert.doesNotMatch(socialUne, /période « Aujourd/);
 }
+
+// Recadrage horizontal des unes : imageCropFocalX (sinon focalX), défaut 50 %.
+{
+  assert.equal(front.cropFocalX({}), 0.5);
+  assert.equal(front.cropFocalX({ imageCropFocalX: 0.58 }), 0.58);
+  assert.equal(front.cropFocalX({ focalX: 0.2 }), 0.2);
+  assert.equal(front.cropFocalX({ imageCropFocalX: 0.58, focalX: 0.2 }), 0.58, 'imageCropFocalX l’emporte');
+  assert.equal(front.cropFocalX({ imageCropFocalX: 1.4 }), 0.5, 'hors [0, 1] : défaut');
+  const withX = front.normalize({
+    title: 'En France, la colère lycéenne gagne tout le pays',
+    link: 'https://quartierlibre.ca/colere-lyceenne/',
+    source: 'Quartier Libre',
+    imageCropFocalX: 0.58,
+  });
+  assert.equal(withX.focalX, 0.58);
+  const bare = front.normalize({ title: 'Titre', link: 'https://ex.org/a', source: 'S' });
+  assert.equal(bare.focalX, 0.5);
+}

@@ -1,16 +1,6 @@
 {
   "version": 1,
   "files": {
-    "05d21acd6748e519": {
-      "local": "assets/news-images/05d21acd6748e519.jpg",
-      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/McGill-Daily.jpg",
-      "host": "www.mcgilldaily.com",
-      "bytes": 160775,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:22.982Z",
-      "via": "resize-proxy",
-      "nameKey": "mcgill-daily.jpg"
-    },
     "5507894bb1545913": {
       "local": "assets/news-images/5507894bb1545913.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Cundill-prize.jpg",
@@ -2070,16 +2060,6 @@
       "via": "origin",
       "nameKey": "rachel_szor_and_yuval_abraham_at_the_83rd_venice_international_film_festival.jpg"
     },
-    "f7ce6dd976b923ae": {
-      "local": "assets/news-images/f7ce6dd976b923ae.jpg",
-      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/BTW-Slave-Play-_-The-Exchange-Pre-Show-Conversation-Kristen-Young-1.jpg",
-      "host": "www.mcgilldaily.com",
-      "bytes": 98170,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:40:58.324Z",
-      "via": "resize-proxy",
-      "nameKey": "btw-slave-play-_-the-exchange-pre-show-conversation-kristen-young-1.jpg"
-    },
     "be611451563af4ef": {
       "local": "assets/news-images/be611451563af4ef.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
@@ -2999,15 +2979,6 @@
       "via": "resize-proxy",
       "nameKey": "auclair_crypto_ia_3.jpg"
     },
-    "2c0b30551fbd17ac": {
-      "local": "assets/news-images/2c0b30551fbd17ac.jpg",
-      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_FRINGE_NAZA_Tolganay_Medet_900_629.png",
-      "host": "thelinknewspaper.ca",
-      "bytes": 50719,
-      "updatedAt": "2026-11-21T19:57:08.348Z",
-      "via": "disk",
-      "nameKey": "05_fringe_naza_tolganay_medet_900_629.png"
-    },
     "bc6f0f904674d20c": {
       "local": "assets/news-images/bc6f0f904674d20c.jpg",
       "remote": "https://thetribune.ca/wp-content/uploads/2026/11/AE2-Evy-Shamber-scaled.jpeg",
@@ -3134,10 +3105,19 @@
       "updatedAt": "2026-11-22T02:38:18.129Z",
       "via": "disk",
       "nameKey": "5infos_ql-e1769792962990.png"
+    },
+    "2aa26da9b941c49c": {
+      "local": "assets/news-images/2aa26da9b941c49c.png",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_FRINGE_NAZA_Tolganay_Medet_690_482.png",
+      "host": "thelinknewspaper.ca",
+      "bytes": 348817,
+      "updatedAt": "2026-11-22T04:12:12.511Z",
+      "via": "disk",
+      "nameKey": "05_fringe_naza_tolganay_medet_690_482.png"
     }
   },
-  "updatedAt": "2026-11-22T02:45:21.056Z",
-  "count": 325,
+  "updatedAt": "2026-11-22T04:12:12.552Z",
+  "count": 323,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5667,6 +5647,14 @@
     "daa8790952d545b8": {
       "reason": "budget",
       "at": "2026-11-21T23:38:48.071Z"
+    },
+    "05d21acd6748e519": {
+      "reason": "budget",
+      "at": "2026-11-22T04:12:12.543Z"
+    },
+    "f7ce6dd976b923ae": {
+      "reason": "budget",
+      "at": "2026-11-22T04:12:12.548Z"
     }
   }
 }
