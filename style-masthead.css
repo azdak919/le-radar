@@ -1075,6 +1075,77 @@ a { color: inherit; }
   -webkit-text-stroke: 0;
   text-shadow: none;
 }
+/*
+ * Max, min et demain (comme le Kiosque) seulement dans le vide de la puce.
+ * display:none par défaut : ça ne change pas le min-content, donc pas le
+ * nombre de villes. .has-room est posé par applyWeatherExtraFit.
+ */
+.masthead-weather__extra { display: none; }
+.masthead-weather__extra.is-measuring {
+  display: inline-flex !important;
+  position: absolute !important;
+  visibility: hidden;
+  pointer-events: none;
+  width: max-content !important;
+  min-width: max-content !important;
+  flex: none !important;
+  overflow: visible !important;
+}
+.masthead-weather__city.has-room .masthead-weather__extra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+html[data-wide-preview="e"] .masthead-weather__city.has-room .masthead-weather__name,
+.masthead-weather__city.has-room .masthead-weather__name {
+  flex: 0 0 auto !important;
+  min-width: auto !important;
+  max-width: none !important;
+}
+.masthead-weather__city[data-weather-extra="today"] .masthead-weather__tomorrow,
+.masthead-weather__extra[data-measure="today"] .masthead-weather__tomorrow {
+  display: none !important;
+}
+.masthead-weather__today,
+.masthead-weather__hl,
+.masthead-weather__tomorrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.masthead-weather__tomorrow {
+  gap: 3px;
+  margin-left: 2px;
+  padding-left: 6px;
+  border-left: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+.masthead-weather__label {
+  font-weight: 600;
+  opacity: 0.72;
+}
+.masthead-weather__tomorrow-icon {
+  display: inline-flex;
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+}
+.masthead-weather__tomorrow-icon .weather-icon-meteocon {
+  display: block;
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
 .masthead-weather__city[data-weather-tone="sun"] { --weather-tone: #d88a0a; }
 .masthead-weather__city[data-weather-tone="cloud"] { --weather-tone: #66839e; }
 .masthead-weather__city[data-weather-tone="rain"] { --weather-tone: #287bb9; }
