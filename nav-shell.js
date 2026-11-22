@@ -109,8 +109,8 @@
   }
   /**
    * Pied de page v2 : marque + réseaux, colonnes (Explorer / Le projet / Installer),
-   * puis mentions en bas. Tous les gabarits (.site-foot) passent par ici ; le contenu
-   * existant est déplacé, jamais supprimé.
+   * section Ressources (Kiosque et Socle), puis mentions en bas. Tous les gabarits
+   * (.site-foot) passent par ici ; le contenu existant est déplacé, jamais supprimé.
    */
   function restructure(foot) {
     if (foot.classList.contains('site-foot--v2') || foot.classList.contains('site-foot--maintenance')) return;
@@ -156,8 +156,10 @@
     bottom.className = 'site-foot__bottom';
     if (credit) bottom.append(credit);
     if (licence) { licence.classList.add('site-foot__licence'); credit ? credit.insertBefore(licence, credit.querySelector('.site-foot__legal')) : bottom.append(licence); }
+    const ressources = foot.querySelector(':scope > .site-foot__ressources');
     foot.prepend(top);
-    top.after(bottom);
+    if (ressources) top.after(ressources);
+    (ressources || top).after(bottom);
     foot.classList.add('site-foot--v2');
   }
   const WORDMARK = 'LE\u2011RADAR.ca';

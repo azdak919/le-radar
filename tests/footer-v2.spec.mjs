@@ -26,6 +26,19 @@ for (const [path, theme] of PAGES) {
       expect(footIds).toEqual(['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr', 'rss']);
       await expect(foot.locator('.site-foot__col')).toHaveCount(3);
       await expect(foot.locator('.site-foot__links .site-foot__sep:visible')).toHaveCount(0);
+      await expect(foot.locator('.site-foot__ressources')).toHaveCount(1);
+      await expect(foot.locator('.site-foot__ressources-title')).toHaveCount(1);
+      await expect(foot.locator('.site-foot__ressources-title')).toHaveText(path.startsWith('/en') ? 'Resources' : 'Ressources');
+      await expect(foot.locator('.site-foot__ressource-link')).toHaveCount(2);
+      await expect(foot.locator('.site-foot__ressource-link').nth(0)).toHaveAttribute('href', 'https://kiosque.le-radar.ca/');
+      await expect(foot.locator('.site-foot__ressource-link').nth(1)).toHaveAttribute('href', 'https://socle.le-radar.ca/');
+      await expect(foot.locator('.site-foot__ressource-name')).toHaveText(['Le Kiosque', 'Le Socle']);
+      await expect(foot.locator('.site-foot__ressource-desc')).toHaveText(
+        path.startsWith('/en')
+          ? ['Free platform for student newspapers.', 'Editorial workspace for student newspapers.']
+          : ['Plateforme libre pour les journaux étudiants.', 'Espace de rédaction des journaux étudiants.'],
+      );
+      await expect(foot).not.toContainText(/projet\s+frère|projets\s+frères|sister project/i);
       for (const width of WIDTHS) {
         await page.setViewportSize({ width, height: 900 });
         const r = await foot.evaluate((f) => {
@@ -39,6 +52,50 @@ for (const [path, theme] of PAGES) {
         expect(r.out, `${width}px: éléments hors du pied`).toEqual([]);
         expect(r.sw, `${width}px: débordement du pied`).toBeLessThanOrEqual(r.cw + 1);
         expect(r.doc, `${width}px: débordement de page`).toBeLessThanOrEqual(r.vw + 1);
+        const res = await foot.locator('.site-foot__ressources').evaluate((sec, themeName) => {
+          const overlaps = (a, b, pad = 1) => !(
+            a.right <= b.left + pad || a.left >= b.right - pad
+            || a.bottom <= b.top + pad || a.top >= b.bottom - pad
+          );
+          const title = sec.querySelector('.site-foot__ressources-title');
+          const items = [...sec.querySelectorAll('.site-foot__ressource')];
+          const boxes = items.map((el) => el.getBoundingClientRect());
+          const itemHits = [];
+          for (let i = 0; i < boxes.length; i++) {
+            for (let j = i + 1; j < boxes.length; j++) {
+              if (overlaps(boxes[i], boxes[j])) itemHits.push(`${i}-${j}`);
+            }
+          }
+          const logos = items.map((el) => {
+            const light = el.querySelector('.site-foot__ressource-logo-img--light');
+            const dark = el.querySelector('.site-foot__ressource-logo-img--dark');
+            const name = el.querySelector('.site-foot__ressource-name');
+            const ls = getComputedStyle(light);
+            const ds = getComputedStyle(dark);
+            const lb = light.getBoundingClientRect();
+            const nb = name.getBoundingClientRect();
+            return {
+              lightShown: ls.display !== 'none' && lb.width > 0,
+              darkShown: ds.display !== 'none' && dark.getBoundingClientRect().width > 0,
+              logoLeftOfName: lb.right <= nb.left + 1,
+            };
+          });
+          const titleBox = title.getBoundingClientRect();
+          const titleHitsItem = boxes.some((b) => overlaps(titleBox, b));
+          return { itemHits, logos, titleHitsItem, titleText: title.textContent.trim() };
+        }, theme);
+        expect(res.itemHits, `${width}px: ressources qui se chevauchent`).toEqual([]);
+        expect(res.titleHitsItem, `${width}px: titre sur une fiche`).toBe(false);
+        for (const logo of res.logos) {
+          expect(logo.logoLeftOfName, `${width}px: logo à gauche du nom`).toBe(true);
+          if (theme === 'dark') {
+            expect(logo.darkShown, `${width}px: logo sombre visible`).toBe(true);
+            expect(logo.lightShown, `${width}px: logo clair masqué`).toBe(false);
+          } else {
+            expect(logo.lightShown, `${width}px: logo clair visible`).toBe(true);
+            expect(logo.darkShown, `${width}px: logo sombre masqué`).toBe(false);
+          }
+        }
         if (width <= 520) {
           const small = await foot.locator('.site-foot__social a').evaluateAll((as) => as.filter((a) => a.getBoundingClientRect().height < 44).length);
           expect(small).toBe(0);
@@ -140,7 +197,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
       const midNav = (navBox.left + navBox.right) / 2;
       const midWord = (wordBox.left + wordBox.right) / 2;
       const overflow = document.documentElement.scrollWidth - window.innerWidth;
-      const minSide = window.innerWidth < 600 ? 40 : 44;
+      const minSide = window.innerWidth < 360 ? 34 : window.innerWidth < 600 ? 40 : 44;
       const small = boxes.filter((b) => b.height < minSide || b.width < minSide).length;
       return {
         rows,
@@ -169,11 +226,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
     expect(layout.hitsTools, `${width}px : pas de chevauchement avec les outils`).toBe(0);
     expect(layout.hitsCredit, `${width}px : pas de chevauchement avec le crédit photo`).toBe(false);
     expect(layout.coffee, `${width}px : bouton café retiré`).toBe(false);
-    if (width <= 320) {
-      expect(layout.rows, `${width}px : deux lignes 4+4`).toEqual([4, 4]);
-    } else {
-      expect(layout.rows, `${width}px : une seule rangée`).toEqual([8]);
-    }
+    expect(layout.rows, `${width}px : une seule rangée`).toEqual([8]);
   }
 });
 

@@ -7,6 +7,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Pied de page : section « Ressources », avec les logos officiels, les liens et les descriptions de Le Kiosque et Le Socle. Caches `radar-shell-v1066` et `sports-shell-v440`.
+
 - Barre radio partagée `radio-barre.js` : un appel d’une ligne pose la barre (stations de `radios.json`, émission en cours, lecture et arrêt, volume au bureau, petit logo LE-RADAR). Pomodoro et Solitaire l’utilisent à la place de l’iframe `tuner-embed.html` ; les journaux du Kiosque l’appellent depuis le-radar.ca, donc un changement de station, de code ou de style leur arrive sans mise à jour. Sans réponse de LE-RADAR, la barre ne s’affiche pas. Pomodoro et Solitaire ont `media-src https:` pour les flux.
 - Compteur anonyme du bandeau sportif, éteint. Un clic n’envoie rien. La page Mise à jour n’a que la ligne Socle. Le script Umami déjà en place n’est pas retiré.
 - Poids du bandeau, éteint. À heure égale et dans le même seau, une moyenne de clics ne départage que si l’interrupteur, quatre à huit semaines et un seuil fourni sont réunis. Sinon l’ordre reste celui du jour. La phrase de politique n’est pas publiée.
@@ -17,6 +19,10 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Modifié
 
 - Mât : moins d’air entre la barre météo, le logo, la devise et les icônes des réseaux. Caches `radar-shell-v1066` et `sports-shell-v440`.
+
+- Mât, téléphone (moins de 600 px) : le logo passe à 48 px, légèrement plus grand que les boutons d’outils et les icônes de réseaux (40 px). Le titre LE-RADAR.ca grandit en proportion, reste sur une seule ligne et s’aligne avec le logo, sans débordement à 320, 360 et 390 px. Ordinateur inchangé. Cache `radar-shell-v1059`.
+
+- Mât, sous 360 px : les huit icônes de réseaux tiennent sur une seule rangée, comme à 390 px, avec des cibles de 34 à 36 px et une pastille plus compacte. Le logo reste à 48 px, le titre sur une ligne. Rien ne change à 390 px ni sur ordinateur. Caches `radar-shell-v1067` et `sports-shell-v441`.
 
 - Barre radio partagée : les panneaux « À l’antenne » et « À venir » restent à l’intérieur de la barre (leur bord droit ne dépasse pas le padding), même avec les plus longs titres d’émissions. Un titre trop long défile avec les mêmes paramètres que le cadran du syntoniseur (délai de lecture, vitesse, allers-retours). Les autres commandes, les coins arrondis et le logo à gauche vers https://le-radar.ca/ ne changent pas.
 

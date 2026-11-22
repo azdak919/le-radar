@@ -431,6 +431,15 @@ const T = {
     contactAria: 'Nous joindre par courriel',
     legalNote: 'Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.',
     botNote: 'Agrégateur automatisé de contenus.',
+    // Textes déjà publiés sur les vitrines et dans les README
+    // (kiosque.le-radar.ca, socle.le-radar.ca) : ne pas reformuler.
+    ressourcesTitle: 'Ressources',
+    kiosqueName: 'Le Kiosque',
+    kiosqueDesc: 'Plateforme libre pour les journaux étudiants.',
+    kiosqueUrl: 'https://kiosque.le-radar.ca/',
+    socleName: 'Le Socle',
+    socleDesc: 'Espace de rédaction des journaux étudiants.',
+    socleUrl: 'https://socle.le-radar.ca/',
     kaoLabel: 'Garder Android ouvert',
     kaoHint: 'Campagne contre la vérification obligatoire des développeurs Google.',
     kaoUrl: 'https://keepandroidopen.org/fr/',
@@ -613,6 +622,13 @@ const T = {
     contactAria: 'Contact us by email',
     legalNote: 'Open-source code used in accordance with the applicable licences; content and media credited to their respective authors.',
     botNote: 'Automated content aggregator.',
+    ressourcesTitle: 'Resources',
+    kiosqueName: 'Le Kiosque',
+    kiosqueDesc: 'Free platform for student newspapers.',
+    kiosqueUrl: 'https://kiosque.le-radar.ca/',
+    socleName: 'Le Socle',
+    socleDesc: 'Editorial workspace for student newspapers.',
+    socleUrl: 'https://socle.le-radar.ca/',
     kaoLabel: 'Keep Android Open',
     kaoHint: 'Campaign against Google’s mandatory developer verification.',
     kaoUrl: 'https://keepandroidopen.org/',
@@ -931,6 +947,35 @@ ${p}</div>`;
  * scroll + refresh soft via data-home-nav / app.js).
  * `updated` n'est passé que par les pages qui ont une fraîcheur propre.
  */
+
+function ressourceItem(t, up, slug, nameKey, descKey, urlKey) {
+  const name = escapeHtml(t[nameKey]);
+  const clair = `${up}assets/ressources/${slug}/icone-clair.svg`;
+  const sombre = `${up}assets/ressources/${slug}/icone-sombre.svg`;
+  return `<li class="site-foot__ressource">
+      <a class="site-foot__ressource-link" href="${escapeHtml(t[urlKey])}" target="_blank" rel="noopener noreferrer">
+        <span class="site-foot__ressource-logo" aria-hidden="true">
+          <img class="site-foot__ressource-logo-img site-foot__ressource-logo-img--light" src="${clair}" width="32" height="32" alt="" decoding="async">
+          <img class="site-foot__ressource-logo-img site-foot__ressource-logo-img--dark" src="${sombre}" width="32" height="32" alt="" decoding="async">
+        </span>
+        <span class="site-foot__ressource-text">
+          <span class="site-foot__ressource-name">${name}</span>
+          <span class="site-foot__ressource-desc">${escapeHtml(t[descKey])}</span>
+        </span>
+      </a>
+    </li>`;
+}
+
+function renderFooterRessources(t, up, p) {
+  return `<section class="site-foot__ressources">
+${p}    <p class="site-foot__ressources-title">${escapeHtml(t.ressourcesTitle)}</p>
+${p}    <ul class="site-foot__ressources-list">
+${p}    ${ressourceItem(t, up, 'kiosque', 'kiosqueName', 'kiosqueDesc', 'kiosqueUrl')}
+${p}    ${ressourceItem(t, up, 'socle', 'socleName', 'socleDesc', 'socleUrl')}
+${p}    </ul>
+${p}  </section>`;
+}
+
 function renderSiteFooter({
   lang = 'fr', up = './', home = false, altPath = null, updated = null, indent = '      ', variant = 'default',
 } = {}) {
@@ -1034,6 +1079,7 @@ ${p}  <p>${escapeHtml(t.unofficial)}</p>
 ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
 ${p}  </nav>
+${p}  ${renderFooterRessources(t, up, p)}
 ${p}  <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
 ${p}  <p class="site-foot__kao"><a href="${escapeHtml(t.kaoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.kaoLabel)}</a> <span class="site-foot__kao-hint">${escapeHtml(t.kaoHint)}</span></p>
 ${p}  <div class="site-foot__credit">
