@@ -194,9 +194,11 @@ function weatherChipSlack(el, textW) {
   return el.clientWidth - pad - iconW - namePad - textW - tempW - tempMargin - gap * 3;
 }
 
-/** MTL et QC sont en colonne max-content : le max/min les élargit, il ne vole pas une ville. */
+/** MTL et QC sont en colonne max-content (≥1440) : le max/min les élargit.
+ *  Entre 1280 et 1439 les colonnes sont à parts égales et le fit retire une
+ *  ville si la puce grossit — là, le max/min ne s’affiche que s’il reste du vide. */
 function weatherPrimaryGrowsForToday(el) {
-  if (mastheadWeatherDocked) return false;
+  if (mastheadWeatherDocked || !isWideDesktopComfort()) return false;
   const id = el.dataset.weatherCity;
   if (id !== 'montreal' && id !== 'quebec') return false;
   return !!el.closest('.masthead-weather__board')?.hasAttribute('data-weather-dual-primary');
