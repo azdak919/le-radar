@@ -2636,13 +2636,8 @@
   function _applyDoodleBackground() {
     const bg = _doodleBackground();
     _paintBackground(bg, bg.url, null);
-    const slot = document.querySelector(".masthead-shuffle-slot");
-    if (slot) slot.setAttribute("hidden", "");
-    const btn = document.getElementById("masthead-bg-shuffle");
-    if (btn) {
-      btn.setAttribute("hidden", "");
-      btn.setAttribute("aria-hidden", "true");
-    }
+    /* Bouton shuffle : visible comme sur le mât habituel.
+       shuffleMastheadBackground() reste un no-op tant que le doodle est on. */
   }
 
   function init() {

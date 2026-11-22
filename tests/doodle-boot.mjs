@@ -202,6 +202,10 @@ assert.match(cssSrc, /Ville de Québec, QC/);
 assert.doesNotMatch(cssSrc, /Vous amusez-vous dans le nouveau Vice City/);
 assert.doesNotMatch(cssSrc, /html\.doodle-on \.wordmark-logo \{ display: none/);
 assert.doesNotMatch(cssSrc, /doodle-on \.masthead-date::before/);
+assert.match(cssSrc, /text-shadow:\s*none\s*!important/, "titre : pas d’ombre serif fantôme");
+assert.doesNotMatch(cssSrc, /html\.doodle-on #masthead-bg-shuffle/, "shuffle visible pendant le doodle");
+assert.doesNotMatch(bgSrc, /slot\.setAttribute\("hidden"/, "shuffle : le doodle ne masque pas le bouton");
+assert.match(svg, /viewBox="-65\.00 -730\.00 5079\.00 821\.00"/);
 
 
 console.log("tests/doodle-boot.mjs : ok");

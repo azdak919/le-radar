@@ -37,6 +37,7 @@ async function openPage(browser, { origin, path, width, theme }) {
   const page = await context.newPage();
   await page.addInitScript((t) => {
     try { localStorage.setItem("radar-theme", t); } catch { /* ignore */ }
+    try { navigator.serviceWorker?.getRegistrations?.().then((rs) => rs.forEach((r) => r.unregister())); } catch { /* ignore */ }
   }, theme);
   await page.addInitScript((css) => {
     const style = document.createElement("style");
@@ -79,6 +80,15 @@ async function openPage(browser, { origin, path, width, theme }) {
       }
     });
   }
+  // Le bouton shuffle est déplacé dans .masthead-actions après l’ancrage
+  // de la météo (mobile). On attend qu’il soit visible.
+  await page.waitForFunction(() => {
+    const btn = document.getElementById("masthead-bg-shuffle");
+    if (!btn || btn.hidden) return false;
+    const cs = getComputedStyle(btn);
+    const r = btn.getBoundingClientRect();
+    return cs.display !== "none" && cs.visibility !== "hidden" && r.width > 1 && r.height > 1;
+  }, null, { timeout: 8000 }).catch(() => {});
   // Settle layout / photos.
   await page.waitForTimeout(400);
   await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
