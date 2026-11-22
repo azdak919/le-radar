@@ -391,6 +391,10 @@ export function frDay(ymd) {
   const [y, m, d] = ymd.split('-').map(Number), wd = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
   return `${FR_DAYS[wd]} ${d === 1 ? '1er' : d} ${FR_MONTHS[m - 1]}`;
 }
+/** « jeudi 12 novembre 2026 » (jour civil Montréal, avec l’année). */
+export function frDayYear(ymd) {
+  return `${frDay(ymd)} ${String(ymd).slice(0, 4)}`;
+}
 
 // ── Textes ───────────────────────────────────────────────────────────────────
 export const HOME = `${SITE}/`;
@@ -436,12 +440,13 @@ export function revueEditionExists(slot, { root = process.cwd(), exists } = {}) 
 
 /**
  * Deuxième ligne du texte de La une, seulement si l'édition du même créneau (matin 7 h / soir 19 h 15) existe.
- * Chaîne vide sinon, et jamais pour un réseau sans lien cliquable (Instagram).
+ * Chaîne vide sinon. Sur un réseau sans lien cliquable (Instagram), la phrase validée se termine par « lien en bio ».
  */
 export function revueEditionLine(slot, opts = {}) {
-  if (opts.nolink || !revueEditionExists(slot, opts)) return '';
+  if (!revueEditionExists(slot, opts)) return '';
   const which = slot.id === 'matin' ? 'du matin' : 'du soir';
-  return `Consultez notre revue ${which}, à imprimer avec sudoku et mots cachés : ${SITE}/${revueEditionHref(slot)}`;
+  const phrase = `Consultez notre revue ${which}, à imprimer avec sudoku et mots cachés :`;
+  return opts.nolink ? `${phrase} lien en bio` : `${phrase} ${SITE}/${revueEditionHref(slot)}`;
 }
 
 /**
@@ -486,7 +491,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     if (sports.length) body += '\n\n🏟️ Sport étudiant :\n' + sports.map(sportsLine).join('\n');
     if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
     if (spec.nolink) {
-      body += '\n\nToute la une : lien en bio (le-radar.ca)';
+      body += revueLine ? '\n\nToute la une : le-radar.ca' : '\n\nToute la une : lien en bio (le-radar.ca)';
       const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');
       if (credit) body += '\n\n' + credit;
     } else if (long) body += `\n\nToute la une : ${HOME}`;

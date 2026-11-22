@@ -3,7 +3,7 @@
  * model = { slot: { label, dayLabel, kind }, items: [{ title, byline, source, place, sport, credit, hook, images[], focalY }], sports: [...] }
  * (scripts/social/une-lib.mjs). Matin : thème clair du site ; soir : thème sombre. Gabarit « Verre » + photo de la une
  * dégagée (panel du 12 nov. 2026, retour de Charles : mélange A/B, résultats sportifs étudiants pour combler le bas).
- * Pas de code QR (liens dans le texte du post), aucun logo d'université. */
+ * Grille Instagram : QR vers la fiche le-radar.ca/article/<id>/ si le post est un article. Aucun logo d'université. */
 (function () {
   'use strict';
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
@@ -124,26 +124,79 @@
   }
   let THEME = 'clair';
   function brandBar() {
-    const bar = el('div', 'ig-brand'); const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
-    bar.append(logo, el('span', 'wm', 'LE\u2011RADAR.ca'));
+    const bar = el('div', 'ig-brand');
+    const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
+    const text = el('div', 'ig-brand-text');
+    text.append(el('span', 'wm', 'LE\u2011RADAR.ca'));
+    const motto = el('p', 'ig-motto');
+    motto.append(
+      el('span', 'lead', 'Journaux, radios et sports étudiants du Québec, '),
+      el('span', 'tag', 'réunis au même endroit'),
+    );
+    text.append(motto);
+    bar.append(logo, text);
     bar.ready = new Promise((r) => { if (logo.complete) r(); else { logo.onload = r; logo.onerror = r; } });
     return bar;
+  }
+  function igKicker(label, dayLabel) {
+    const k = el('p', 'ig-kicker');
+    k.append(el('span', 'slot', label || ''));
+    if (dayLabel) k.append(el('span', 'mid', ' · '), el('span', 'date', dayLabel));
+    return k;
+  }
+  // QR uniquement vers une fiche Radar (le-radar.ca/article/<id>/). Pas de QR sinon (sport, URL absente ou étrangère).
+  function articleQrUrl(u) {
+    const s = String(u || '').trim();
+    return /^https:\/\/le-radar\.ca\/article\/[0-9a-f]+\/$/i.test(s) ? s : '';
+  }
+  function igQr(url, lead) {
+    const wrap = el('div', 'ig-qr');
+    wrap.dataset.url = url;
+    const api = (typeof qrcodegen !== 'undefined' && qrcodegen.QrCode) ? qrcodegen.QrCode : null;
+    if (api) {
+      const qr = api.encodeText(url, api.Ecc.QUARTILE);
+      const n = qr.size, quiet = 3, dim = n + quiet * 2;
+      const c = document.createElement('canvas');
+      c.width = dim; c.height = dim;
+      const ctx = c.getContext('2d', { alpha: false });
+      ctx.fillStyle = '#F1F2F4'; ctx.fillRect(0, 0, dim, dim);
+      ctx.fillStyle = '#0E0F12';
+      for (let row = 0; row < n; row += 1) {
+        for (let col = 0; col < n; col += 1) {
+          if (qr.getModule(col, row)) ctx.fillRect(col + quiet, row + quiet, 1, 1);
+        }
+      }
+      wrap.append(c);
+    }
+    // Sujet à droite : on plaque le QR plus haut et plus à droite, toujours dans ce coin, pour éviter le sujet.
+    const fx = Number.isFinite(lead && lead.focalX) ? lead.focalX : 0.5;
+    if (fx >= 0.6) { wrap.style.top = '180px'; wrap.style.right = '24px'; }
+    return wrap;
   }
   function fitTitle(node, floor) {
     let size = parseFloat(getComputedStyle(node).fontSize);
     while (node.scrollHeight > node.clientHeight + 2 && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
   }
-  // Affiche Instagram native 3:4 : une photo, un titre, le média, le crédit. Rien d'inventé.
+  // Noms des auteurs pour la grille Instagram, sans le média (déjà sur ig-media).
+  function igAuthors(it) {
+    const raw = String(it.byline || '').trim();
+    if (!raw) return '';
+    const [who, src] = raw.split(' · ');
+    const name = (src ? who : raw).trim();
+    const media = String(it.source || '').trim();
+    if (!name || name.toLowerCase() === media.toLowerCase()) return '';
+    return name;
+  }
+  // Affiche Instagram 3:4 en pleine page : photo, dégradé, kicker unique, titre, « Par … », média, crédit.
+  // Logo, titre et mentions tiennent dans le carré du profil (180–1260 px). Rien d’inventé.
   async function renderGrille(card, model) {
     card.className = 'card grille';
     const root = el('div', 'ig');
-    const top = el('div', 'ig-edge'); top.append(el('span', '', model.slot.dayLabel || ''));
     const safe = el('div', 'ig-safe');
     const brand = brandBar();
-    const bottom = el('div', 'ig-edge'); bottom.append(el('span', '', model.slot.label || ''));
     if (model.poster === 'sport') {
       const copy = el('div', 'ig-copy');
-      copy.append(el('p', 'ig-kicker', model.slot.label || 'Résultats'));
+      copy.append(igKicker(model.slot.label || 'Résultats', model.slot.dayLabel || ''));
       (model.results || []).slice(0, 3).forEach((r) => {
         const row = el('div', 'ig-match');
         row.append(el('p', 'ig-sport', [r.emoji, r.sport].filter(Boolean).join(' ')));
@@ -153,26 +206,31 @@
       });
       if (model.media) copy.append(el('p', 'ig-media', model.media));
       safe.append(brand, copy);
-      root.append(top, safe, bottom); card.append(root);
+      root.append(safe); card.append(root);
       await Promise.all([document.fonts.ready, brand.ready]);
       copy.querySelectorAll('.ig-line').forEach((n) => { let s = parseFloat(getComputedStyle(n).fontSize); while (n.scrollWidth > n.clientWidth + 1 && s > 28) { s -= 1; n.style.fontSize = s + 'px'; } });
       return { shown: (model.results || []).length, photo: false, sports: (model.results || []).length, radio: 0, overflow: card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 };
     }
     const lead = model.items[0];
     const photoBox = el('div', 'ig-photo'); const img = el('img'); img.alt = ''; photoBox.append(img);
-    img.style.objectPosition = `50% ${Math.round((Number.isFinite(lead.focalY) ? lead.focalY : 0.38) * 100)}%`;
+    img.style.objectPosition = `50% ${Math.round((Number.isFinite(lead.focalY) ? lead.focalY : 0.44) * 100)}%`;
     const copy = el('div', 'ig-copy');
-    copy.append(el('p', 'ig-kicker', model.slot.label || ''));
+    copy.append(igKicker(model.slot.label || '', model.slot.dayLabel || ''));
     const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
+    const authors = igAuthors(lead);
+    if (authors) { const by = el('p', 'ig-by'); by.append(el('span', 'lbl', 'Par' + '\u00A0'), el('span', 'who', authors)); copy.append(by); }
     if (lead.source) copy.append(el('p', 'ig-media', lead.source));
     const credit = String(lead.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
     if (credit) copy.append(el('p', 'ig-credit', '📸 ' + credit));
-    safe.append(brand, photoBox, copy);
-    root.append(top, safe, bottom); card.append(root);
+    safe.append(brand, copy);
+    const qrUrl = articleQrUrl(lead.pageUrl);
+    if (qrUrl) root.append(igQr(qrUrl, lead));
+    root.append(photoBox, el('div', 'ig-veil-top'), el('div', 'ig-veil-bot'), safe);
+    card.append(root);
     const ok = await (lead.images && lead.images.length ? loadFirst(img, lead.images) : Promise.resolve(false));
     if (!ok) { img.remove(); photoBox.classList.add('empty'); }
     await Promise.all([document.fonts.ready, brand.ready]);
-    fitTitle(title, 48);
+    fitTitle(title, 60);
     const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 || copy.scrollHeight > copy.clientHeight + 2;
     return { shown: 1, photo: ok, sports: 0, radio: 0, overflow };
   }
