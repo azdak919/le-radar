@@ -133,14 +133,25 @@
     let size = parseFloat(getComputedStyle(node).fontSize);
     while (node.scrollHeight > node.clientHeight + 2 && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
   }
-  // Affiche Instagram native 3:4 : une photo, un titre, le média, le crédit. Rien d'inventé.
+  // Noms des auteurs pour la grille Instagram, sans le média (déjà sur ig-media).
+  function igAuthors(it) {
+    const raw = String(it.byline || '').trim();
+    if (!raw) return '';
+    const [who, src] = raw.split(' · ');
+    const name = (src ? who : raw).trim();
+    const media = String(it.source || '').trim();
+    if (!name || name.toLowerCase() === media.toLowerCase()) return '';
+    return name;
+  }
+  // Affiche Instagram native 3:4 : une photo, un titre, les auteurs (« Par … »), le média, le crédit. Rien d'inventé.
+  // « La une du matin / du soir » apparaît une seule fois, dans le carré (kicker), pas dans le bandeau bas recadré.
   async function renderGrille(card, model) {
     card.className = 'card grille';
     const root = el('div', 'ig');
     const top = el('div', 'ig-edge'); top.append(el('span', '', model.slot.dayLabel || ''));
     const safe = el('div', 'ig-safe');
     const brand = brandBar();
-    const bottom = el('div', 'ig-edge'); bottom.append(el('span', '', model.slot.label || ''));
+    const bottom = el('div', 'ig-edge');
     if (model.poster === 'sport') {
       const copy = el('div', 'ig-copy');
       copy.append(el('p', 'ig-kicker', model.slot.label || 'Résultats'));
@@ -164,6 +175,8 @@
     const copy = el('div', 'ig-copy');
     copy.append(el('p', 'ig-kicker', model.slot.label || ''));
     const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
+    const authors = igAuthors(lead);
+    if (authors) { const by = el('p', 'ig-by'); by.append(el('span', 'lbl', 'Par' + ' '), el('span', 'who', authors)); copy.append(by); }
     if (lead.source) copy.append(el('p', 'ig-media', lead.source));
     const credit = String(lead.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
     if (credit) copy.append(el('p', 'ig-credit', '📸 ' + credit));

@@ -109,23 +109,26 @@ for (const kind of ['matin', 'soir']) {
 }
 
 for (const kind of ['matin', 'soir']) {
-  test(`instagram 3:4 ${kind} : titre, média et crédit dans le carré de la grille @ci-critical`, async ({ page }) => {
+  test(`instagram 3:4 ${kind} : titre, auteurs, média et crédit dans le carré de la grille @ci-critical`, async ({ page }) => {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
-    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 et Autrice 2 · Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
     const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
     expect(info.overflow).toBe(false);
     expect(info.shown).toBe(1);
     const zone = await page.evaluate(() => {
       const c = document.getElementById('card').getBoundingClientRect();
-      const box = (sel) => { const e = document.querySelector(sel); const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top }; };
+      const box = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top, text: e.textContent }; };
+      const labels = [...document.querySelectorAll('.ig-kicker, .ig-edge span')].map((e) => e.textContent.trim()).filter(Boolean);
       return {
-        title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'),
+        title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'), by: box('.ig-by'),
         brandBg: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor,
         size: parseFloat(getComputedStyle(document.querySelector('.ig-title')).fontSize),
         creditText: document.querySelector('.ig-credit').textContent,
         mediaText: document.querySelector('.ig-media').textContent,
+        byText: document.querySelector('.ig-by')?.textContent,
+        labels,
         w: c.width, h: c.height,
       };
     });
@@ -133,11 +136,25 @@ for (const kind of ['matin', 'soir']) {
     expect(zone.brandBg).toBe('rgb(0, 0, 0)');
     expect(zone.size).toBeGreaterThanOrEqual(48);
     expect(zone.mediaText).toBe('Impact Campus');
+    expect(zone.byText).toBe('Par\u00A0Autrice 1 et Autrice 2');
     expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
-    for (const b of [zone.title, zone.brand, zone.credit, zone.media]) {
+    expect(zone.labels.filter((t) => t.toLowerCase() === `la une du ${kind}`).length, 'libellé du créneau une seule fois').toBe(1);
+    for (const b of [zone.title, zone.brand, zone.credit, zone.media, zone.by]) {
+      expect(b, 'élément présent dans le carré').toBeTruthy();
       expect(b.top).toBeGreaterThanOrEqual(180);
       expect(b.bottom).toBeLessThanOrEqual(1260);
     }
+  });
+
+  test(`instagram 3:4 ${kind} : pas de « Par » si la signature n’est que le média @ci-critical`, async ({ page }) => {
+    await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+    await page.setViewportSize({ width: 1080, height: 1440 });
+    await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { source: 'Impact Campus', byline: 'Impact Campus', credit: 'Photo : Équipe' })] };
+    await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    expect(await page.locator('.ig-by').count()).toBe(0);
+    expect(await page.locator('.ig-media').textContent()).toBe('Impact Campus');
+    expect(await page.locator('.ig-credit').textContent()).toBe('📸 Équipe');
   });
 }
 

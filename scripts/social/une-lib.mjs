@@ -436,12 +436,13 @@ export function revueEditionExists(slot, { root = process.cwd(), exists } = {}) 
 
 /**
  * Deuxième ligne du texte de La une, seulement si l'édition du même créneau (matin 7 h / soir 19 h 15) existe.
- * Chaîne vide sinon, et jamais pour un réseau sans lien cliquable (Instagram).
+ * Chaîne vide sinon. Sur un réseau sans lien cliquable (Instagram), la phrase validée se termine par « lien en bio ».
  */
 export function revueEditionLine(slot, opts = {}) {
-  if (opts.nolink || !revueEditionExists(slot, opts)) return '';
+  if (!revueEditionExists(slot, opts)) return '';
   const which = slot.id === 'matin' ? 'du matin' : 'du soir';
-  return `Consultez notre revue ${which}, à imprimer avec sudoku et mots cachés : ${SITE}/${revueEditionHref(slot)}`;
+  const phrase = `Consultez notre revue ${which}, à imprimer avec sudoku et mots cachés :`;
+  return opts.nolink ? `${phrase} lien en bio` : `${phrase} ${SITE}/${revueEditionHref(slot)}`;
 }
 
 /**

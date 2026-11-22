@@ -330,7 +330,12 @@ assert.equal(
   U.revueEditionLine(matin17),
   'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-matin/',
 );
-assert.equal(U.revueEditionLine(matin17, { nolink: true }), '', 'Instagram : pas de lien cliquable');
+assert.equal(
+  U.revueEditionLine(matin17, { nolink: true }),
+  'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : lien en bio',
+  'Instagram : phrase validée, sans URL, vers le lien en bio',
+);
+assert.doesNotMatch(U.revueEditionLine(matin17, { nolink: true }), /https?:\/\//);
 
 const modelRevue = { slot: soir17, items: m.items, sports: { results: [], next: [] }, radio: [] };
 const sans = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => false });
@@ -350,7 +355,7 @@ for (const n of U.NETS) {
 }
 const igRevue = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => true }).instagram;
 assert.doesNotMatch(igRevue.text, /https?:\/\//, 'Instagram : jamais d’URL, même si l’édition existe');
-assert.doesNotMatch(igRevue.text, /Consultez notre revue/);
+assert.equal(igRevue.text.split('\n')[1], 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : lien en bio');
 assert.deepEqual(igRevue.problems, []);
 assert.doesNotMatch(U.altText(modelRevue), /revue du (matin|soir)|le-radar\.ca\/revue\//, 'la revue n’entre pas dans le texte alternatif de l’image');
 
