@@ -36,7 +36,7 @@ for (const f of ['wordmark-on-dark.svg', 'wordmark-on-light.svg']) {
 }
 const imgs = [...html.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1]);
 for (const src of imgs) {
-  assert.ok(/^\.\.\/assets\/(icon|kit|emoji)/.test(src), `image hors kit (logo d’université ?) : ${src}`);
+  assert.ok(/^\.\.\/assets\/(icon|kit|emoji|ressources)/.test(src), `image hors kit (logo d’université ?) : ${src}`);
   assert.ok(existsSync(join(root, src.replace(/^\.\.\//, '').replace(/\?.*$/, ''))), `image manquante : ${src}`);
 }
 // Téléchargements : fichiers présents.

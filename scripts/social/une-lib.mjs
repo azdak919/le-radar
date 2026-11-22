@@ -282,14 +282,30 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
   return { results, next: upcoming };
 }
 const team = t => `${t.name}${t.inst ? ` (${t.inst})` : ''}`;
+/** Sur Instagram : « Final » sans la date ; pour un match à venir, on garde l’heure et on n’écrit la date que si elle diffère du jour de la une. */
+function compactSportsWhen(r, day) {
+  if (r.kind === 'resultat') return 'Final';
+  const time = r.time ? frHour(r.time) : '';
+  if (r.date && day && r.date === day) return time || frShort(r.date);
+  return [r.date ? frShort(r.date) : '', time].filter(Boolean).join(' · ') || r.when;
+}
 /** Ligne texte : « 🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · jeu. 12 nov. ». */
-export const sportsLine = r => r.kind === 'resultat'
-  ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${team(r.teams[1])} · ${r.when}`
-  : r.place
-    ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event} · ${r.place} · ${r.when}`
-    : r.event || !r.verb
-      ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event || team(r.teams[1] || {})} · ${r.when}`
-      : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${r.when}`;
+export const sportsLine = (r, opts = {}) => {
+  const when = opts.compact ? compactSportsWhen(r, opts.day) : r.when;
+  return r.kind === 'resultat'
+    ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${team(r.teams[1])} · ${when}`
+    : r.place
+      ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event} · ${r.place} · ${when}`
+      : r.event || !r.verb
+        ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event || team(r.teams[1] || {})} · ${when}`
+        : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${when}`;
+};
+/** Légende Instagram : une ligne par émission, date seulement si ce n’est pas le jour de la une. */
+function igRadioLine(x, day) {
+  const time = x.start ? frHour(x.start) : '';
+  const date = x.date && day && x.date !== day ? frShort(x.date) : '';
+  return [x.title, x.station, date, time].filter(Boolean).join(' · ');
+}
 
 // ── Radio étudiante : émissions à venir (radio-schedules.json, grille hebdo, day = 0 dimanche … 6 samedi, heure de Montréal) ──
 const seeded = str => { let h = 1779033703 ^ str.length; for (const c of str) { h = Math.imul(h ^ c.charCodeAt(0), 3432918353); h = (h << 13) | (h >>> 19); } return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; };
@@ -491,8 +507,14 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     } else {
       body = items.map(x => `${x.sport || '▪️'} ${T(x)} — ${x.byline}`).join('\n') + '\n\n' + (items.length === 1 ? items[0].pageUrl : HOME);
     }
-    if (sports.length) body += '\n\n🏟️ Sport étudiant :\n' + sports.map(sportsLine).join('\n');
-    if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
+    if (sports.length) {
+      const lines = sports.map(r => spec.nolink ? sportsLine(r, { compact: true, day: model.slot.day }) : sportsLine(r));
+      body += spec.nolink ? '\n\n🏟️ Sport étudiant :\n\n' + lines.join('\n') : '\n\n🏟️ Sport étudiant :\n' + lines.join('\n');
+    }
+    if (radio.length) {
+      const lines = radio.map(x => spec.nolink ? igRadioLine(x, model.slot.day) : `${x.title} · ${x.station} · ${x.when}`);
+      body += spec.nolink ? '\n\n📻 À l’écoute (radio étudiante) :\n\n' + lines.join('\n') : '\n\n📻 À l’écoute (radio étudiante) :\n' + lines.join('\n');
+    }
     if (spec.nolink) {
       body += revueLine ? '\n\nToute la une : le-radar.ca' : '\n\nToute la une : lien en bio (le-radar.ca)';
       const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');

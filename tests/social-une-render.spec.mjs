@@ -133,7 +133,8 @@ for (const kind of ['matin', 'soir']) {
       const also = [...document.querySelectorAll('.ig-also-item h3')].map((e) => e.textContent.trim());
       return {
         className: card.className,
-        w: c.width, h: c.height,
+        x: c.x, y: c.y, w: c.width, h: c.height,
+        margin: getComputedStyle(card).margin,
         title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'),
         by: box('.ig-by'), pill: box('.ig-pill'), date: box('.ig-date'),
         motto: box('.ig-motto'), mottoLead: box('.ig-motto .lead'), mottoTag: box('.ig-motto .tag'), wm: box('.ig-brand .wm'),
@@ -148,8 +149,11 @@ for (const kind of ['matin', 'soir']) {
       };
     });
     expect(zone.w).toBe(1080); expect(zone.h).toBe(1440);
+    expect(zone.x).toBe(0); expect(zone.y).toBe(0);
+    expect(zone.margin).toBe('0px');
     expect(zone.className).toMatch(/une-b/);
-    expect(zone.className).toMatch(/photo/);
+    expect(zone.className).toMatch(/lead-photo/);
+    expect(zone.className).not.toMatch(/(^| )photo( |$)/);
     expect(zone.edge, 'plus de barres noires de l’ancienne grille').toBeNull();
     expect(zone.qr, 'une Instagram : pas de QR (réservé à l’article)').toBeNull();
     expect(zone.pill.text.trim()).toBe(`La une du ${kind}`);
@@ -403,3 +407,67 @@ test('instagram 3:4 sport : trois résultats réels dans le carré @ci-critical'
   expect(top.bottom).toBeLessThanOrEqual(1260);
   expect(await page.locator('.ig-qr').count(), 'pas de QR sur un post qui n’est pas un article').toBe(0);
 });
+
+
+async function edgePixels(page) {
+  const shot = await page.locator('#card').screenshot({ type: 'jpeg', quality: 92 });
+  return page.evaluate(async (b64) => {
+    const img = new Image();
+    await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/jpeg;base64,' + b64; });
+    const c = document.createElement('canvas');
+    c.width = img.width;
+    c.height = img.height;
+    const g = c.getContext('2d', { alpha: false });
+    g.drawImage(img, 0, 0);
+    const px = (x, y) => { const d = g.getImageData(x, y, 1, 1).data; return [d[0], d[1], d[2]]; };
+    const light = ([r, g, b]) => r >= 240 && g >= 240 && b >= 240;
+    const col = (x) => Array.from({ length: c.height }, (_, y) => px(x, y));
+    const row = (y) => Array.from({ length: c.width }, (_, x) => px(x, y));
+    const countLight = (list) => list.filter(light).length;
+    return {
+      w: c.width,
+      h: c.height,
+      left: countLight(col(0)),
+      right: countLight(col(c.width - 1)),
+      top: countLight(row(0)),
+      bottom: countLight(row(c.height - 1)),
+      corners: { tl: px(0, 0), tr: px(c.width - 1, 0), bl: px(0, c.height - 1), br: px(c.width - 1, c.height - 1) },
+    };
+  }, shot.toString('base64'));
+}
+
+function expectFullBleedEdges(edges) {
+  expect(edges.w).toBe(1080);
+  expect(edges.h).toBe(1440);
+  expect(edges.left, 'bord gauche sans bande claire').toBe(0);
+  expect(edges.right, 'bord droit sans bande claire').toBe(0);
+  expect(edges.top, 'bord haut sans bande claire').toBe(0);
+  expect(edges.bottom, 'bord bas sans bande claire').toBe(0);
+}
+
+for (const [kind, credit, leadClass] of [
+  ['soir', 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons', 'lead-photo'],
+  ['soir', 'Illustration : Mathilde Ségar', 'lead-illustration'],
+]) {
+  test(`instagram 3:4 ${leadClass} : JPEG 1080×1440 plein cadre, sans bande claire @ci-critical`, async ({ page }) => {
+    await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+    await page.setViewportSize({ width: 1080, height: 1440 });
+    await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+    const model = {
+      slot: { label: `La une du ${kind}`, kind, dayLabel: 'Samedi 21 novembre', dayLabelYear: 'Samedi 21 novembre 2026' },
+      items: [
+        item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 · Impact Campus', credit }),
+        item(2, { title: 'Deuxième titre à la une du jour', source: 'Quartier Libre', byline: 'Autrice 2 · Quartier Libre' }),
+      ],
+    };
+    await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    const box = await page.evaluate(() => {
+      const r = document.getElementById('card').getBoundingClientRect();
+      return { x: r.x, y: r.y, w: r.width, h: r.height, className: document.getElementById('card').className, margin: getComputedStyle(document.getElementById('card')).margin };
+    });
+    expect(box).toMatchObject({ x: 0, y: 0, w: 1080, h: 1440, margin: '0px' });
+    expect(box.className).toContain('une-b');
+    expect(box.className).toContain(leadClass);
+    expectFullBleedEdges(await edgePixels(page));
+  });
+}

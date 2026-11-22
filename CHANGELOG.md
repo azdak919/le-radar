@@ -8,6 +8,9 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Ajouté
 
 - Doodle de fin novembre 2026 (mât) : titre LE-RADAR.ca en image Pricedown, photos de Montréal (Stefan Fussan) et de Québec (Martin St-Amant), CC BY-SA 3.0, couleurs modifiées (étalonnage façon coucher de soleil GTA VI, depuis les originaux Commons), nom de la ville (« Ville de Montréal, QC » ou « Ville de Québec, QC ») en police Kaushan Script (SIL OFL), tirage de la ville à parts égales et gardé pour la session, tirage aléatoire 1 sur 5 avant le premier affichage, interrupteurs `?doodle=on` et `?doodle=off`, fin le 30 novembre 2026 à 23 h 59 (heure de Montréal). Sur téléphone, le logo officiel reste à gauche du titre, comme sur le mât habituel. Le lettrage Pricedown est une image SVG (viewBox titre-seul), sans ombre serif fantôme. La ligne de ville a son propre espace, lisible à 390 px, sans chevaucher la devise ni la barre des réseaux. Le bouton de rotation du fond reste visible comme sur le mât habituel (sans effet tant que le doodle est affiché). Le pied de page n’est pas modifié.
+- Pied de page : section « Ressources », avec les logos officiels, les liens et les descriptions de Le Kiosque et Le Socle. Caches `radar-shell-v1066` et `sports-shell-v440`.
+
+
 - Barre radio partagée `radio-barre.js` : un appel d’une ligne pose la barre (stations de `radios.json`, émission en cours, lecture et arrêt, volume au bureau, petit logo LE-RADAR). Pomodoro et Solitaire l’utilisent à la place de l’iframe `tuner-embed.html` ; les journaux du Kiosque l’appellent depuis le-radar.ca, donc un changement de station, de code ou de style leur arrive sans mise à jour. Sans réponse de LE-RADAR, la barre ne s’affiche pas. Pomodoro et Solitaire ont `media-src https:` pour les flux.
 - Compteur anonyme du bandeau sportif, éteint. Un clic n’envoie rien. La page Mise à jour n’a que la ligne Socle. Le script Umami déjà en place n’est pas retiré.
 - Poids du bandeau, éteint. À heure égale et dans le même seau, une moyenne de clics ne départage que si l’interrupteur, quatre à huit semaines et un seuil fourni sont réunis. Sinon l’ordre reste celui du jour. La phrase de politique n’est pas publiée.
@@ -16,6 +19,10 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats de la fin de semaine » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
 
 ### Modifié
+
+- Mât, téléphone (moins de 600 px) : le logo passe à 48 px, légèrement plus grand que les boutons d’outils et les icônes de réseaux (40 px). Le titre LE-RADAR.ca grandit en proportion, reste sur une seule ligne et s’aligne avec le logo, sans débordement à 320, 360 et 390 px. Ordinateur inchangé. Cache `radar-shell-v1059`.
+
+- Mât, sous 360 px : les huit icônes de réseaux tiennent sur une seule rangée, comme à 390 px, avec des cibles de 34 à 36 px et une pastille plus compacte. Le logo reste à 48 px, le titre sur une ligne. Rien ne change à 390 px ni sur ordinateur. Caches `radar-shell-v1067` et `sports-shell-v441`.
 
 - Barre radio partagée : les panneaux « À l’antenne » et « À venir » restent à l’intérieur de la barre (leur bord droit ne dépasse pas le padding), même avec les plus longs titres d’émissions. Un titre trop long défile avec les mêmes paramètres que le cadran du syntoniseur (délai de lecture, vitesse, allers-retours). Les autres commandes, les coins arrondis et le logo à gauche vers https://le-radar.ca/ ne changent pas.
 
