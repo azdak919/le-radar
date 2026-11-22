@@ -249,7 +249,8 @@
   color: var(--accent);
 }
 /* Téléphone : pastille plus compacte (icônes 40 px, peu de rembourrage).
-   8 × 40 px = 320 px : une seule rangée à 390 et 360 px ; 4+4 sous 360 px. */
+   8 × 40 px = 320 px : une seule rangée à 390 et 360 px ; sous 360 px,
+   les cibles passent à 34–36 px pour rester sur une ligne. */
 @media (max-width: 599.98px) {
   .masthead-brand:has(.masthead-social) { gap: var(--mat-gap, 8px); }
   .masthead-social--under-tagline { margin-top: 0; }
@@ -265,12 +266,22 @@
   .masthead-social svg { width: 18px; height: 18px; }
 }
 @media (max-width: 359.98px) {
+  /* Une seule rangée, comme à 390 px : icônes plus petites, pastille
+     sans rembourrage superflu. 8 × 36 px tiendrait juste à 320 px hors
+     filet ; le plancher 34 px laisse la marge du mât et le bord. */
   .masthead-social--under-tagline .masthead-social__group {
-    flex-wrap: wrap;
-    box-sizing: content-box;
-    width: calc(4 * 40px);
-    padding: 0 2px;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    width: max-content;
+    max-width: 100%;
+    padding: 0;
   }
+  .masthead-social a {
+    width: clamp(34px, calc((100vw - 2 * var(--pad, 18px) - 2px) / 8), 36px);
+    height: clamp(34px, calc((100vw - 2 * var(--pad, 18px) - 2px) / 8), 36px);
+    flex: 0 0 clamp(34px, calc((100vw - 2 * var(--pad, 18px) - 2px) / 8), 36px);
+  }
+  .masthead-social svg { width: 16px; height: 16px; }
 }
 @media print {
   .masthead-social { display: none !important; }
