@@ -21,7 +21,7 @@ Les deux photographies sont des adaptations CC BY-SA 3.0 (redimensionnement, rec
 - Œuvre originale : *Montreal - Skyline - 0100* (*Skyline of Montreal at sunset* / *Sunset in Montreal*), 14 août 2017
 - Auteur : Stefan Fussan
 - Source : [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Montreal_-_Skyline_-_0100.jpg)
-- Traitement : couleurs modifiées (étalonnage vaporwave identique à la photo de Québec).
+- Traitement : couleurs modifiées (étalonnage vaporwave identique à la photo de Québec), à partir de l’original Commons (5 160 × 2 214). Le fichier du dépôt est un redimensionnement de qualité à 2 880 px de large.
 - Crédit affiché sur le mât : « Stefan Fussan — Montréal ».
 
 ### Québec
@@ -30,7 +30,7 @@ Les deux photographies sont des adaptations CC BY-SA 3.0 (redimensionnement, rec
 - Œuvre originale : *79 - Québec - Juin 2009* (ville de Québec vue de Lévis, au crépuscule), 13 juin 2009
 - Auteur : Martin St-Amant (S23678)
 - Source : [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:79_-_Qu%C3%A9bec_-_Juin_2009.jpg)
-- Traitement : couleurs modifiées (étalonnage vaporwave identique à la photo de Montréal). L’original Commons (15 262 × 3 628) n’est pas dans le dépôt ; le fichier vient de la vignette 3 840 px, redimensionnée.
+- Traitement : couleurs modifiées (étalonnage vaporwave identique à la photo de Montréal), à partir de l’original Commons (15 262 × 3 628), et non d’une vignette. L’original n’est pas dans le dépôt ; le fichier du dépôt est un redimensionnement de qualité à 2 880 px de large.
 - Demande de l’auteur, à faire figurer près de l’image : **Martin St-Amant - Wikipedia - CC-BY-SA-3.0**.
 - Crédit court affiché sur le mât : « Martin St-Amant — Québec ».
 
