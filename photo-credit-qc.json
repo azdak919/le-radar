@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-22T22:09:56.480Z",
+  "updated": "2026-11-22T23:10:39.783Z",
   "total": 1051,
   "withImage": 951,
   "withCredit": 951,
-  "cited": 694,
-  "pending": 189,
+  "cited": 698,
+  "pending": 171,
   "missingHero": 0,
   "ok": false,
-  "checked": 60,
-  "updatedCount": 60,
-  "citedNew": 15,
-  "fallbackNew": 45,
+  "checked": 47,
+  "updatedCount": 47,
+  "citedNew": 12,
+  "fallbackNew": 35,
   "samples": [
     {
       "title": "Cinq nouvelles de la semaine",
@@ -27,13 +27,6 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Remembering Oliver Jones",
-      "source": "The Tribune",
-      "credit": "Photo : Eliot Loose",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
       "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
       "source": "The Concordian",
       "credit": "Photo: Eric Klempan",
@@ -41,58 +34,65 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Patrick Sénécal, un livre ouvert",
-      "source": "Le Collectif",
-      "credit": "Photo : Frederique Maysenhoelder",
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
       "cited": true,
-      "method": "filename-credit"
+      "method": "via-attribution"
     },
     {
-      "title": "Le Mois de l’histoire des femmes, célébrer les bâtisseuses de l’Estrie",
+      "title": "Québec roule pour de saines habitudes de vie",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Benjamin Lessard / L’Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "La bière locale cherche sa place dans un marché saturé",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Les étudiants autochtones se sentent-ils bien représentés sur le campus ?",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Pourquoi « brosser » au tailgate du Rouge et Or ?",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Raphaël Bédard / L’Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Marcher pour mieux vieillir",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le conflit entre Trump et les médias atteint un nouveau sommet",
       "source": "Le Collectif",
-      "credit": "Photo : Adèle Blais",
+      "credit": "Photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Les mardis au centre-ville",
+      "source": "Le Collectif",
+      "credit": "Photo : Murales Sherbrooke",
       "cited": true,
       "method": "body-tail"
     },
     {
-      "title": "De nouveaux espaces pour se connecter à la nature",
-      "source": "Le Collectif",
-      "credit": "Photo : MichelCaron",
-      "cited": true,
-      "method": "filename-credit"
-    },
-    {
-      "title": "Consommer plus de protéines ne sert à rien !",
-      "source": "Le Collectif",
-      "credit": "Photo : Science Presse",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Déjà une pagaille entre Bruno Marchand et le Parti conservateur",
-      "source": "Le Collectif",
-      "credit": "Photo : CDPQ Infra",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Une semaine pour sensibiliser aux violences sexuelles à l’UdeS",
-      "source": "Le Collectif",
-      "credit": "Photo : FEUS",
-      "cited": true,
-      "method": "filename-credit"
-    },
-    {
-      "title": "Décès de Jean-Luc Mongrain : une personnalité médiatique sherbrookoise nous quitte",
-      "source": "Le Collectif",
-      "credit": "Photo : BertrandExertier",
-      "cited": true,
-      "method": "filename-credit"
-    },
-    {
-      "title": "Retour sur La nature des choses de Renée Forest",
-      "source": "Impact Campus",
-      "credit": "Photo : Impact Campus",
+      "title": "La culture : le laissé pour compte des tarifs douaniers",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
       "cited": false,
       "method": null
     }
