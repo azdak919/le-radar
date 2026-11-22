@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T13:06:54.541Z",
+  "updatedAt": "2026-11-22T14:06:58.732Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T13:06:15.558Z"
+      "checkedAt": "2026-11-22T14:06:21.523Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le 120e parallèle",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
-      },
-      "next": {
         "title": "Ya Raï",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "https://cism893.ca/emissions/ya-rai"
       },
+      "next": {
+        "title": "Effets sonores",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
+      },
       "track": "",
-      "showTitle": "Le 120e parallèle",
+      "showTitle": "Ya Raï",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T13:06:28.906Z"
+      "checkedAt": "2026-11-22T14:06:34.614Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Mind, Soul, & Spirit",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Latin Time",
         "source": "api-live",
         "start": "09:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "International Radio Report",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Mind, Soul, & Spirit",
+      "showTitle": "Latin Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T13:06:32.018Z"
+      "checkedAt": "2026-11-22T14:06:38.446Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Gigi Brown Experience",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
-      },
-      "next": {
         "title": "REVC",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/revc"
       },
+      "next": {
+        "title": "Rigged Sessions",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/rigged-sessions"
+      },
       "track": "",
-      "showTitle": "The Gigi Brown Experience",
+      "showTitle": "REVC",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T13:06:46.793Z"
+      "checkedAt": "2026-11-22T14:06:51.978Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +123,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T13:06:48.175Z"
+      "checkedAt": "2026-11-22T14:06:52.938Z"
     },
     "choq": {
       "id": "choq",
@@ -135,7 +136,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "Slippers - Til You Know",
+      "track": "Genesis Owusu - RUNNIN OUTTA TIME",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -146,7 +147,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-22T13:06:54.191Z"
+      "checkedAt": "2026-11-22T14:06:58.382Z"
     }
   }
 }
