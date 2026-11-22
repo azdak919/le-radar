@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T09:07:11.876Z",
+  "updatedAt": "2026-11-22T10:06:40.450Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T09:06:15.687Z"
+      "checkedAt": "2026-11-22T10:06:03.412Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T09:06:28.708Z"
+      "checkedAt": "2026-11-22T10:06:16.386Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,7 +73,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T09:06:31.171Z"
+      "checkedAt": "2026-11-22T10:06:18.794Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,28 +100,28 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T09:06:44.620Z"
+      "checkedAt": "2026-11-22T10:06:32.838Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "04:59",
+        "source": "schedule",
+        "start": "00:01",
+        "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T09:06:45.698Z"
+      "checkedAt": "2026-11-22T10:06:33.921Z"
     },
     "choq": {
       "id": "choq",
@@ -129,23 +129,23 @@
       "current": null,
       "next": {
         "title": "OPUS",
-        "source": "schedule",
+        "source": "api-live",
         "start": "12:00",
         "end": "13:00",
-        "url": "https://www.choq.ca/balados/opus"
+        "slug": "opus"
       },
       "track": "- Bloc Pub 21 juillet.mp3",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-22T09:07:11.525Z"
+      "checkedAt": "2026-11-22T10:06:40.100Z"
     }
   }
 }
