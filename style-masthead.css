@@ -195,14 +195,14 @@
   /* Crédit ancré bas ; brand rembourré bas pour ne pas chevaucher le slogan. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-top: 0;
-    padding-bottom: 16px;
+    padding-bottom: 8px;
   }
 }
 /* Bureau : la rangée sous la devise a besoin du même air au-dessus du crédit. */
 @media (min-width: 1024px) {
   .masthead:has(#bg-photo-layer):has(.masthead-social) .masthead-brand,
   .masthead:has(#bg-photo-layer.loaded):has(.masthead-social) .masthead-brand {
-    padding-bottom: 16px;
+    padding-bottom: 8px;
   }
 }
 @media (max-width: 360px) {
@@ -215,7 +215,7 @@
      remonter autant. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-top: 3px;
-    padding-bottom: 13px;
+    padding-bottom: 8px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -411,7 +411,7 @@
     max-width: min(92vw, 22rem);
     /* padding-inline > radius (0.6rem) : le glyphe ne rentre plus dans l’arc. */
     padding: 0.4rem 1rem;
-    margin-top: 0.25rem;
+    margin-top: 0.1rem;
     letter-spacing: 0.08em;
     gap: 0.08em;
   }
@@ -420,7 +420,7 @@
     letter-spacing: 0.08em;
   }
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
-    padding-bottom: 18px;
+    padding-bottom: 10px;
   }
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark {
@@ -899,7 +899,7 @@ a { color: inherit; }
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--muted);
-  padding-bottom: 12px;
+  padding-bottom: 6px;
   /* Filet retiré : rangée date/météo/actions sans trait (photo et hors photo). */
   border-bottom: none;
 }

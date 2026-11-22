@@ -178,7 +178,7 @@
 }
 
 .masthead-brand {
-  padding-top: 16px;
+  padding-top: 6px;
   text-align: center;
   max-width: 100%;
   min-width: 0;
@@ -203,7 +203,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 .masthead-social--under-tagline .masthead-social__group {
   display: flex;
@@ -499,7 +499,7 @@ html[data-script-dir="rtl"] .wordmark-full {
   /* .masthead-top se dissout : date (0), logo + slogan (1), boutons (2). */
   .masthead-inner > .masthead-brand { order: 1; }
   .masthead-inner > .masthead-top { display: contents; }
-  .masthead-inner > .masthead-top .masthead-date { order: 0; margin-bottom: 8px; }
+  .masthead-inner > .masthead-top .masthead-date { order: 0; margin-bottom: 4px; }
   .masthead-inner > .masthead-top .masthead-actions { order: 2; margin-top: 10px; }
   .masthead-inner > .masthead-top .masthead-date,
   .masthead:has(#bg-photo-layer) .masthead-inner > .masthead-top .masthead-date {
@@ -542,8 +542,8 @@ html[data-script-dir="rtl"] .wordmark-full {
 
 /* Mât empilé : un seul espacement vertical entre date, logo, slogan,
    boutons et crédit photo (--mat-gap), porté par `gap`, sans marges. */
-/* --mat-gap : 12 px par défaut, 8 px sous 600 px (bloc « version serrée »). */
-.masthead { --mat-gap: 12px; }
+/* --mat-gap : 8 px par défaut, 5 px sous 600 px (bloc « version serrée »). */
+.masthead { --mat-gap: 8px; }
 @media (max-width: 599.98px) {
   .masthead-inner { gap: var(--mat-gap); padding-top: var(--mat-gap); }
   .masthead-inner > .masthead-brand,
@@ -577,7 +577,7 @@ html[data-script-dir="rtl"] .wordmark-full {
    Espacement unique réduit à 8 px ; le slogan reste dans le lien (lecteurs
    d'écran) mais n'occupe plus de place à l'écran sous 600 px. */
 @media (max-width: 599.98px) {
-  .masthead { --mat-gap: 8px; }
+  .masthead { --mat-gap: 5px; }
   .masthead-inner > .masthead-brand .wordmark-full,
   .masthead:has(#bg-photo-layer.loaded) .masthead-inner > .masthead-brand .wordmark-full {
     position: absolute !important;
