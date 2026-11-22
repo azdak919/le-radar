@@ -487,7 +487,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     if (sports.length) body += '\n\n🏟️ Sport étudiant :\n' + sports.map(sportsLine).join('\n');
     if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
     if (spec.nolink) {
-      body += '\n\nToute la une : lien en bio (le-radar.ca)';
+      body += revueLine ? '\n\nToute la une : le-radar.ca' : '\n\nToute la une : lien en bio (le-radar.ca)';
       const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');
       if (credit) body += '\n\n' + credit;
     } else if (long) body += `\n\nToute la une : ${HOME}`;

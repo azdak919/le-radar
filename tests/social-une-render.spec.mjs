@@ -128,17 +128,22 @@ for (const kind of ['matin', 'soir']) {
         creditText: document.querySelector('.ig-credit').textContent,
         mediaText: document.querySelector('.ig-media').textContent,
         byText: document.querySelector('.ig-by')?.textContent,
+        dateText: document.querySelector('.ig-date')?.textContent,
+        photo: box('.ig-photo'),
         labels,
         w: c.width, h: c.height,
       };
     });
     expect(zone.w).toBe(1080); expect(zone.h).toBe(1440);
-    expect(zone.brandBg).toBe('rgb(0, 0, 0)');
-    expect(zone.size).toBeGreaterThanOrEqual(48);
+    expect(zone.size).toBeGreaterThanOrEqual(60);
+    expect(zone.size).toBeLessThanOrEqual(80);
     expect(zone.mediaText).toBe('Impact Campus');
     expect(zone.byText).toBe('Par\u00A0Autrice 1 et Autrice 2');
     expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
     expect(zone.labels.filter((t) => t.toLowerCase() === `la une du ${kind}`).length, 'libellé du créneau une seule fois').toBe(1);
+    expect(zone.dateText).toBe('Dimanche 22 novembre');
+    expect(zone.photo.top).toBeLessThanOrEqual(0);
+    expect(zone.photo.bottom).toBeGreaterThanOrEqual(1440);
     for (const b of [zone.title, zone.brand, zone.credit, zone.media, zone.by]) {
       expect(b, 'élément présent dans le carré').toBeTruthy();
       expect(b.top).toBeGreaterThanOrEqual(180);

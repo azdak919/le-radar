@@ -356,6 +356,9 @@ for (const n of U.NETS) {
 const igRevue = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => true }).instagram;
 assert.doesNotMatch(igRevue.text, /https?:\/\//, 'Instagram : jamais d’URL, même si l’édition existe');
 assert.equal(igRevue.text.split('\n')[1], 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : lien en bio');
+assert.match(igRevue.text, /Toute la une : le-radar\.ca/);
+assert.equal((igRevue.text.match(/lien en bio/g) || []).length, 1, 'un seul « lien en bio »');
+assert.doesNotMatch(igRevue.text, /Toute la une : lien en bio/);
 assert.deepEqual(igRevue.problems, []);
 assert.doesNotMatch(U.altText(modelRevue), /revue du (matin|soir)|le-radar\.ca\/revue\//, 'la revue n’entre pas dans le texte alternatif de l’image');
 

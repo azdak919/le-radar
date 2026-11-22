@@ -123,9 +123,10 @@
     while (node.scrollHeight > node.clientHeight + 2 && size > min) { size -= 2; node.style.fontSize = size + 'px'; }
   }
   let THEME = 'clair';
-  function brandBar() {
+  function brandBar(dayLabel) {
     const bar = el('div', 'ig-brand'); const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
     bar.append(logo, el('span', 'wm', 'LE\u2011RADAR.ca'));
+    if (dayLabel) bar.append(el('span', 'ig-date', dayLabel));
     bar.ready = new Promise((r) => { if (logo.complete) r(); else { logo.onload = r; logo.onerror = r; } });
     return bar;
   }
@@ -143,15 +144,13 @@
     if (!name || name.toLowerCase() === media.toLowerCase()) return '';
     return name;
   }
-  // Affiche Instagram native 3:4 : une photo, un titre, les auteurs (« Par … »), le média, le crédit. Rien d'inventé.
-  // « La une du matin / du soir » apparaît une seule fois, dans le carré (kicker), pas dans le bandeau bas recadré.
+  // Affiche Instagram 3:4 en pleine page : photo, dégradé, kicker unique, titre, « Par … », média, crédit.
+  // Logo, titre et mentions tiennent dans le carré du profil (180–1260 px). Rien d’inventé.
   async function renderGrille(card, model) {
     card.className = 'card grille';
     const root = el('div', 'ig');
-    const top = el('div', 'ig-edge'); top.append(el('span', '', model.slot.dayLabel || ''));
     const safe = el('div', 'ig-safe');
-    const brand = brandBar();
-    const bottom = el('div', 'ig-edge');
+    const brand = brandBar(model.slot.dayLabel || '');
     if (model.poster === 'sport') {
       const copy = el('div', 'ig-copy');
       copy.append(el('p', 'ig-kicker', model.slot.label || 'Résultats'));
@@ -164,28 +163,29 @@
       });
       if (model.media) copy.append(el('p', 'ig-media', model.media));
       safe.append(brand, copy);
-      root.append(top, safe, bottom); card.append(root);
+      root.append(safe); card.append(root);
       await Promise.all([document.fonts.ready, brand.ready]);
       copy.querySelectorAll('.ig-line').forEach((n) => { let s = parseFloat(getComputedStyle(n).fontSize); while (n.scrollWidth > n.clientWidth + 1 && s > 28) { s -= 1; n.style.fontSize = s + 'px'; } });
       return { shown: (model.results || []).length, photo: false, sports: (model.results || []).length, radio: 0, overflow: card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 };
     }
     const lead = model.items[0];
     const photoBox = el('div', 'ig-photo'); const img = el('img'); img.alt = ''; photoBox.append(img);
-    img.style.objectPosition = `50% ${Math.round((Number.isFinite(lead.focalY) ? lead.focalY : 0.38) * 100)}%`;
+    img.style.objectPosition = `50% ${Math.round((Number.isFinite(lead.focalY) ? lead.focalY : 0.44) * 100)}%`;
     const copy = el('div', 'ig-copy');
     copy.append(el('p', 'ig-kicker', model.slot.label || ''));
     const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
     const authors = igAuthors(lead);
-    if (authors) { const by = el('p', 'ig-by'); by.append(el('span', 'lbl', 'Par' + ' '), el('span', 'who', authors)); copy.append(by); }
+    if (authors) { const by = el('p', 'ig-by'); by.append(el('span', 'lbl', 'Par' + '\u00A0'), el('span', 'who', authors)); copy.append(by); }
     if (lead.source) copy.append(el('p', 'ig-media', lead.source));
     const credit = String(lead.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
     if (credit) copy.append(el('p', 'ig-credit', '📸 ' + credit));
-    safe.append(brand, photoBox, copy);
-    root.append(top, safe, bottom); card.append(root);
+    safe.append(brand, copy);
+    root.append(photoBox, el('div', 'ig-veil-top'), el('div', 'ig-veil-bot'), safe);
+    card.append(root);
     const ok = await (lead.images && lead.images.length ? loadFirst(img, lead.images) : Promise.resolve(false));
     if (!ok) { img.remove(); photoBox.classList.add('empty'); }
     await Promise.all([document.fonts.ready, brand.ready]);
-    fitTitle(title, 48);
+    fitTitle(title, 60);
     const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 || copy.scrollHeight > copy.clientHeight + 2;
     return { shown: 1, photo: ok, sports: 0, radio: 0, overflow };
   }
