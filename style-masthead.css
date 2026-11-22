@@ -1335,3 +1335,65 @@ html[data-wide-preview="e"] .masthead-weather__city.has-room .masthead-weather__
   filter: none;
   text-shadow: none;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   DOODLE VICE CITY — 21–30 novembre 2026
+   Activé par html.doodle-on (décision dans seo-page-theme.js,
+   avant le premier paint). Aucun effet hors de cette classe.
+   ═══════════════════════════════════════════════════════════ */
+html.doodle-on #bg-photo-layer {
+  background-image: url("assets/doodle/miami-skyline-joe-desousa-vaporwave.jpg");
+  background-size: cover;
+  background-position: center 52%;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+html.doodle-on #masthead-bg-shuffle,
+html.doodle-on .masthead-shuffle-slot { display: none !important; }
+
+/* Titre Pricedown (image fixe, pas de police) à la place du lettrage serif.
+   Le texte LE-RADAR.ca reste dans le DOM pour les lecteurs d’écran. */
+html.doodle-on .wordmark-brand {
+  display: inline-block;
+  color: transparent;
+  overflow: hidden;
+  vertical-align: middle;
+  background: url("assets/doodle/le-radar-pricedown.svg") no-repeat left center / contain;
+  height: 0.88em;
+  width: 5.7em; /* rapport du SVG (~6,45) × 0,88 */
+  max-width: 72vw;
+}
+html.doodle-on .wordmark-logo {
+  width: 0.92em;
+  height: 0.92em;
+  margin-right: 0.16em;
+  vertical-align: middle;
+  filter:
+    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.16));
+}
+
+/* Mobile : l’icône officielle passe dans la pastille de la date ;
+   le titre Pricedown reste seul au centre. */
+@media (max-width: 599.98px) {
+  html.doodle-on .wordmark-logo { display: none; }
+  html.doodle-on .masthead-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    max-width: calc(100% - 16px);
+  }
+  html.doodle-on .masthead-date::before {
+    content: "";
+    display: inline-block;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    background: url("assets/icon.svg") center / contain no-repeat;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+  }
+  html.doodle-on .wordmark-brand {
+    height: 0.78em;
+    width: min(5.1em, 86vw);
+  }
+}

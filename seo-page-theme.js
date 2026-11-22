@@ -117,3 +117,46 @@
     window.addEventListener('resize', applyWideLayoutFromViewport, { passive: true });
   } catch (err2) { /* ignore */ }
 })();
+
+/* Doodle Vice City, novembre 2026. Même décision que doodle-boot-lib.js
+   (fin 30 nov. 23 h 59 heure de Montréal, tirage 1/5, ?doodle=on|off).
+   Ici pour s’exécuter dans ce fichier déjà chargé avant le premier paint,
+   sans ajouter une balise <script> sur les 132 pages du mât. */
+(function () {
+  "use strict";
+  var STORAGE_KEY = "radar-doodle-2026-11";
+  var END_MS = Date.parse("2026-12-01T04:59:59.999Z");
+  var state = "off";
+  try {
+    var boot = typeof window !== "undefined" ? window.__lrDoodleBoot : null;
+    var search = "";
+    try { search = new URL(location.href).search; } catch (e1) { search = location.search || ""; }
+    if (boot && typeof boot.resolveDoodleState === "function") {
+      state = boot.resolveDoodleState({ search: search, storage: window.localStorage });
+    } else {
+      var force = "";
+      try {
+        force = (new URLSearchParams(search).get("doodle") || "").toLowerCase().trim();
+      } catch (e2) { force = ""; }
+      if (force === "on" || force === "off") {
+        state = force;
+      } else if (Date.now() <= END_MS) {
+        var saved = null;
+        try { saved = localStorage.getItem(STORAGE_KEY); } catch (e3) { saved = null; }
+        if (saved === "on" || saved === "off") {
+          state = saved;
+        } else {
+          state = Math.random() < 0.2 ? "on" : "off";
+          try { localStorage.setItem(STORAGE_KEY, state); } catch (e4) { /* ignore */ }
+        }
+      }
+    }
+  } catch (err) {
+    state = "off";
+  }
+  try {
+    document.documentElement.classList.remove("doodle-on", "doodle-off");
+    document.documentElement.classList.add(state === "on" ? "doodle-on" : "doodle-off");
+    document.documentElement.setAttribute("data-doodle", state);
+  } catch (err2) { /* ignore */ }
+})();

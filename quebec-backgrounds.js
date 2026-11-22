@@ -2584,7 +2584,49 @@
     img.src = url;
   }
 
+
+  function _isDoodleOn() {
+    try {
+      return document.documentElement.classList.contains("doodle-on");
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function _doodleBackground() {
+    return {
+      url: "/assets/doodle/miami-skyline-joe-desousa-vaporwave.jpg",
+      credit: "Joe deSousa",
+      place: "Miami",
+      link: "https://commons.wikimedia.org/wiki/File:Miami_Skyline_(45860413504).jpg",
+      license: "CC0 1.0",
+      title: "Miami Skyline",
+      focalY: 0.52,
+      width: 2560,
+      height: 648,
+      permanent: true,
+      bank: "doodle",
+    };
+  }
+
+  function _applyDoodleBackground() {
+    const bg = _doodleBackground();
+    _paintBackground(bg, bg.url, null);
+    const slot = document.querySelector(".masthead-shuffle-slot");
+    if (slot) slot.setAttribute("hidden", "");
+    const btn = document.getElementById("masthead-bg-shuffle");
+    if (btn) {
+      btn.setAttribute("hidden", "");
+      btn.setAttribute("aria-hidden", "true");
+    }
+  }
+
   function init() {
+    if (_isDoodleOn()) {
+      if (!document.getElementById("bg-photo-layer")) return;
+      _applyDoodleBackground();
+      return;
+    }
     const all = _mastheadPool();
     if (!all.length) return;
     if (!document.getElementById("bg-photo-layer")) return;
@@ -2614,6 +2656,7 @@
   }
 
   function shuffleMastheadBackground() {
+    if (_isDoodleOn()) return;
     const pool = _mastheadPool();
     const current = document.getElementById("bg-photo-layer")?.dataset.bgUrl || "";
     const shuffleOpts = { hardExcludeRecent: 15, fullWindow: true };
