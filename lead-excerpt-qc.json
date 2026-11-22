@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-22T05:48:19.342Z",
+  "updated": "2026-11-22T07:06:58.492Z",
   "total": 1053,
   "pool": 61,
   "incomplete": 26,
   "withLeadExcerpt": 209,
   "candidates": 26,
-  "enriched": 13,
-  "failed": 0,
+  "enriched": 2,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -55,30 +55,30 @@
       "changed": false
     },
     {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
-      "ok": true,
-      "score": 100,
-      "chars": 380,
-      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
-      "changed": true
-    },
-    {
-      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/et-si-le-referendum-de-95-avait-lieu-aujourdhui/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-le-referendum-de-95-avait-lieu-aujourdhui",
-      "ok": true,
-      "score": 96,
-      "chars": 378,
-      "sample": "« Je pense qu’aujourd’hui, la grosse différence, c’est que les échanges entourant la souveraineté se",
-      "changed": true
-    },
-    {
       "title": "Cinq nouvelles de la semaine",
       "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
       "ok": true,
       "score": 100,
       "chars": 450,
       "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
+      "changed": false
+    },
+    {
+      "title": "La vie lors d’une régate d’aviron",
+      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
+      "ok": true,
+      "score": 100,
+      "chars": 342,
+      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
+      "changed": false
+    },
+    {
+      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
+      "ok": true,
+      "score": 100,
+      "chars": 380,
+      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
       "changed": false
     }
   ]
