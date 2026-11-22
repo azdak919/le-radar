@@ -2593,7 +2593,31 @@
     }
   }
 
+  function _doodleCity() {
+    try {
+      const city = document.documentElement.getAttribute("data-doodle-city");
+      if (city === "quebec" || city === "montreal") return city;
+    } catch (err) { /* ignore */ }
+    return "montreal";
+  }
+
   function _doodleBackground() {
+    const city = _doodleCity();
+    if (city === "quebec") {
+      return {
+        url: "/assets/doodle/quebec-skyline-martin-st-amant.jpg",
+        credit: "Martin St-Amant",
+        place: "Québec",
+        link: "https://commons.wikimedia.org/wiki/File:79_-_Qu%C3%A9bec_-_Juin_2009.jpg",
+        license: "CC BY-SA 3.0",
+        title: "79 - Québec - Juin 2009",
+        focalY: 0.50,
+        width: 2880,
+        height: 685,
+        permanent: true,
+        bank: "doodle",
+      };
+    }
     return {
       url: "/assets/doodle/montreal-skyline-stefan-fussan.jpg",
       credit: "Stefan Fussan",

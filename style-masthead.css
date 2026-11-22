@@ -1341,10 +1341,17 @@ html[data-wide-preview="e"] .masthead-weather__city.has-room .masthead-weather__
    Activé par html.doodle-on (décision dans seo-page-theme.js,
    avant le premier paint). Aucun effet hors de cette classe.
    ═══════════════════════════════════════════════════════════ */
-html.doodle-on #bg-photo-layer {
+html.doodle-on[data-doodle-city="montreal"] #bg-photo-layer {
   background-image: url("assets/doodle/montreal-skyline-stefan-fussan.jpg");
   background-size: cover;
   background-position: center 48%;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+html.doodle-on[data-doodle-city="quebec"] #bg-photo-layer {
+  background-image: url("assets/doodle/quebec-skyline-martin-st-amant.jpg");
+  background-size: cover;
+  background-position: center 50%;
   background-repeat: no-repeat;
   opacity: 1;
 }
