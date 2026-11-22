@@ -3422,8 +3422,16 @@ function balanceMagazineColumns() {
    *  le chargement tardif des images, sans carte orpheline. */
   const applyBriefSpread = () => {
     const single = briefCols < 2;
-    const cards = brief.querySelectorAll('.article--compact').length;
-    brief.classList.toggle('brief-rail--spread', single && cards >= 2);
+    const cardEls = [...brief.querySelectorAll('.article--compact')];
+    brief.classList.remove('brief-rail--spread');
+    if (!single || cardEls.length < 2) return;
+    // Seulement un *reste* (< 1 carte) laissé par une carte de plus qui
+    // dépasserait. Réserve vide (source avec peu d’articles) : le vide vient
+    // du manque d’articles ; l’étaler étirait chaque carte (trous dans le texte).
+    if (!magazineReserve.length) return;
+    const gap = magazineColumnContentHeight(hero) - magazineColumnContentHeight(brief);
+    const avgCard = cardEls.reduce((sum, el) => sum + el.offsetHeight, 0) / cardEls.length;
+    brief.classList.toggle('brief-rail--spread', gap <= avgCard);
   };
 
   try {
