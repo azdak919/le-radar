@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-22T20:07:36.569Z",
-  "total": 1050,
-  "withPhoto": 956,
+  "updated": "2026-11-22T20:39:02.321Z",
+  "total": 1051,
+  "withPhoto": 958,
   "withStock": 105,
-  "withCampusBank": 92,
-  "fullyCovered": 1036,
+  "withCampusBank": 91,
+  "fullyCovered": 1038,
   "leadReadyPhotos": 1005,
-  "pageScraped": 15,
-  "photosRecovered": 15,
+  "pageScraped": 11,
+  "photosRecovered": 11,
   "imagesCleared": 2,
-  "stockSearches": 2,
-  "stockFound": 16,
-  "campusBankFound": 14,
+  "stockSearches": 4,
+  "stockFound": 10,
+  "campusBankFound": 7,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,6 +25,18 @@
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "Editorial: Welcome to Concordia University",
+      "link": "https://thelinknewspaper.ca/article/16365",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
+    },
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     }
   ]
 }

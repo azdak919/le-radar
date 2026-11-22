@@ -1,56 +1,28 @@
 {
-  "updated": "2026-11-22T20:09:42.510Z",
-  "total": 1050,
-  "withImage": 949,
-  "withCredit": 949,
-  "cited": 664,
-  "pending": 267,
+  "updated": "2026-11-22T20:40:31.243Z",
+  "total": 1051,
+  "withImage": 950,
+  "withCredit": 950,
+  "cited": 687,
+  "pending": 211,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 58,
-  "citedNew": 24,
-  "fallbackNew": 36,
+  "updatedCount": 60,
+  "citedNew": 29,
+  "fallbackNew": 31,
   "samples": [
     {
-      "title": "Retour à la case départ pour les Hornets de Charlotte",
-      "source": "Le Club-École",
-      "credit": "Image tirée du compte X des Hornets FR",
+      "title": "What went wrong with the McGill Law controversy",
+      "source": "The Link",
+      "credit": "Illustration: Isobel Budding",
       "cited": true,
-      "method": "tiree-attribution"
+      "method": "figcaption-trailing"
     },
     {
       "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
       "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Excellent début de saison du Canadien",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Heat c. Bucks : Miami s’impose dans la nuit de Vice City",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Canadiens de Montréal : victoire des Canadiens, Hutson en feu",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "La course au trophée Vézina s’intensifie",
-      "source": "Le Club-École",
-      "credit": "Photo : compte X officiel des Sénateurs d’Ottawa",
       "cited": true,
       "method": "figcaption-trailing-fr"
     },
@@ -62,35 +34,63 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Mission réussie pour les « Three Lions »",
-      "source": "Le Club-École",
-      "credit": "Image tirée de Getty images",
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "source": "The Concordian",
+      "credit": "Photo: Eric Klempan",
       "cited": true,
-      "method": "tiree-attribution"
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Les Roses de Montréal s’inclinent en finale de la Super Ligue du Nord",
-      "source": "Le Club-École",
-      "credit": "Image tirée du compte Instagram du AFC Toronto",
+      "title": "Alphonse Bisaillon remporte le Prix collégial de la chanson de l’année",
+      "source": "Le Collectif",
+      "credit": "Photo : MelanieJouet",
       "cited": true,
-      "method": "tiree-attribution"
+      "method": "filename-credit"
     },
     {
-      "title": "Matvei Michkov : un talent indéniable, mais une attitude qui dérange",
-      "source": "Le Club-École",
-      "credit": "Photo : NHL",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "NFL: Une première moitié de saison remplie de surprises",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
+      "title": "Lourde défaite pour le Parti républicain",
+      "source": "Le Collectif",
+      "credit": "Photo : Le Collectif",
       "cited": false,
       "method": null
     },
     {
-      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "title": "La Cour supérieure du Québec, innovatrice face à l’IA dans le milieu juridique",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Affaires et procès : un lien permanent dans le sport moderne?",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "source": "Montréal Campus",
+      "credit": "Photo : Montréal Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "L’enjeu de l’accès à la mer au milieu des combats dans le Tigré",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Paul St-Pierre Plamondon announces $28M in emergency funding for homelessness",
+      "source": "The Concordian",
+      "credit": "Photo: Aidan Raynor",
+      "cited": true,
+      "method": "wp-media-caption"
+    },
+    {
+      "title": "When activism becomes a performance",
       "source": "The Concordian",
       "credit": "Photo: The Concordian",
       "cited": false,

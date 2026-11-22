@@ -1,16 +1,6 @@
 {
   "version": 1,
   "files": {
-    "5507894bb1545913": {
-      "local": "assets/news-images/5507894bb1545913.jpg",
-      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Cundill-prize.jpg",
-      "host": "www.mcgilldaily.com",
-      "bytes": 78802,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:23.027Z",
-      "via": "origin",
-      "nameKey": "cundill-prize.jpg"
-    },
     "52778e0859eeea36": {
       "local": "assets/news-images/52778e0859eeea36.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Marche_pour_le_climat_27-09-2019_Montreal_07.jpg",
@@ -2050,16 +2040,6 @@
       "via": "origin",
       "nameKey": "img_8428.jpg"
     },
-    "b3268cb0c963ea0b": {
-      "local": "assets/news-images/b3268cb0c963ea0b.jpg",
-      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Rachel_Szor_and_Yuval_Abraham_at_the_83rd_Venice_International_Film_Festival-930x620.jpg",
-      "host": "www.mcgilldaily.com",
-      "bytes": 96026,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:40:57.661Z",
-      "via": "origin",
-      "nameKey": "rachel_szor_and_yuval_abraham_at_the_83rd_venice_international_film_festival.jpg"
-    },
     "be611451563af4ef": {
       "local": "assets/news-images/be611451563af4ef.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
@@ -3105,10 +3085,20 @@
       "updatedAt": "2026-11-22T20:08:06.090Z",
       "via": "resize-proxy",
       "nameKey": "image-16.png"
+    },
+    "1bb0e8f17234eaff": {
+      "local": "assets/news-images/1bb0e8f17234eaff.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/05_OPS_McGill_Law_Isobel_Budding_900_1305.png",
+      "host": "thelinknewspaper.ca",
+      "bytes": 215360,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-22T20:39:23.466Z",
+      "via": "resize-proxy",
+      "nameKey": "05_ops_mcgill_law_isobel_budding_900_1305.png"
     }
   },
-  "updatedAt": "2026-11-22T20:08:06.094Z",
-  "count": 322,
+  "updatedAt": "2026-11-22T20:39:23.480Z",
+  "count": 321,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5642,6 +5632,14 @@
     "ea6cda724eb8cda8": {
       "reason": "failed",
       "at": "2026-11-22T16:09:59.489Z"
+    },
+    "b3268cb0c963ea0b": {
+      "reason": "budget",
+      "at": "2026-11-22T20:39:23.475Z"
+    },
+    "5507894bb1545913": {
+      "reason": "budget",
+      "at": "2026-11-22T20:39:23.478Z"
     }
   }
 }
