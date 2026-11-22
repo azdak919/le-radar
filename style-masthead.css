@@ -198,11 +198,21 @@
     padding-bottom: 16px;
   }
 }
-/* Bureau : la rangée sous la devise a besoin du même air au-dessus du crédit. */
+/* Bureau : peu d’air sous la pastille sociale, assez pour le crédit à droite. */
 @media (min-width: 1024px) {
   .masthead:has(#bg-photo-layer):has(.masthead-social) .masthead-brand,
   .masthead:has(#bg-photo-layer.loaded):has(.masthead-social) .masthead-brand {
-    padding-bottom: 16px;
+    padding-bottom: 4px;
+  }
+  .masthead:has(.masthead-social) .masthead-inner {
+    padding-bottom: 8px;
+  }
+  /* La rangée prend la largeur de la pastille (pas tout le mât) : avec moins
+     d’air, sa boîte ne recouvre plus le crédit photo à droite. */
+  .masthead .masthead-social--under-tagline {
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
   }
 }
 @media (max-width: 360px) {
