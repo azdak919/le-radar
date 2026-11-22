@@ -49,11 +49,13 @@ assert.ok(!isTransient('HTTP 404: Not Found')); assert.ok(!isTransient('HTTP 403
 assert.ok(isTransient('HTTP 403: API rate limit exceeded for installation'));
 assert.ok(!isTransient('no assets to download'));
 assert.match(readFileSync('scripts/mirror-release.js', 'utf8'), /isTransient\(msg\)/);
-// Déploiement Pages : un seul nouvel essai si le premier reste bloqué, sans masquer un double échec.
+// Déploiement Pages : jusqu'à deux nouveaux essais (pause entre les essais), sans masquer un échec final.
 const wf = readFileSync('.github/workflows/pages-deploy.yml', 'utf8');
 assert.match(wf, /id: d\n\s+uses: actions\/deploy-pages@v5\n\s+continue-on-error: true/);
-assert.match(wf, /id: d2\n\s+if: steps\.d\.outcome == 'failure'\n\s+uses: actions\/deploy-pages@v5\n(?![\s\S]*continue-on-error[\s\S]*id: d2)/);
-assert.equal((wf.match(/continue-on-error/g) || []).length, 1);
+assert.match(wf, /id: d2\n\s+if: steps\.d\.outcome == 'failure'\n\s+uses: actions\/deploy-pages@v5\n\s+continue-on-error: true/);
+assert.match(wf, /id: d3\n\s+if: steps\.d2\.outcome == 'failure'\n\s+uses: actions\/deploy-pages@v5\n(?![\s\S]*continue-on-error[\s\S]*id: d3)/);
+assert.equal((wf.match(/continue-on-error/g) || []).length, 2);
+assert.equal((wf.match(/run: sleep 30/g) || []).length, 2);
 // Images des publications Buffer (file ou récentes) : gardées même si l'article a changé de photo.
 {
   const { keepNamesFromSocial } = createRequire(import.meta.url)('../scripts/mirror-release-lib.js');
