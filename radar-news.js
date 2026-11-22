@@ -1725,7 +1725,10 @@ function renderNewsFilters() {
     btn.className = 'filter-btn';
     btn.dataset.source = src;
     btn.style.setProperty('--c', color);
-    btn.title = institution ? `${src} — ${instLabel || formatInstitutionDisplay(institution)}` : src;
+    // Pas d’infobulle qui répète la pastille (nom + établissement déjà écrits,
+    // le défilement montre le texte qui déborde). Seulement si l’établissement
+    // n’est pas affiché.
+    if (institution && !instLabel) btn.title = `${src} — ${formatInstitutionDisplay(institution)}`;
     btn.innerHTML = `
       <span class="filter-btn__row">
         <span class="filter-btn__dot" aria-hidden="true"></span>
