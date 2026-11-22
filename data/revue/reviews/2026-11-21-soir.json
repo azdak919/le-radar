@@ -14,7 +14,7 @@
   "end": 1795306068127
  },
  "datePublished": "2026-11-22T00:07:48.127Z",
- "dateModified": "2026-11-22T00:07:48.127Z",
+ "dateModified": "2026-11-22T04:06:27.151Z",
  "items": [
   {
    "id": "7d286ce6138b61f9",
@@ -61,6 +61,34 @@
  ],
  "sports": {
   "results": [
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire féminin",
+    "uni": true,
+    "kind": "resultat",
+    "gameId": "79fdd86e-1e1c-403c-89d0-a4fa185d6d47",
+    "date": "2026-11-21",
+    "when": "Final · sam. 21 nov.",
+    "teams": [
+     {
+      "name": "Rouge et Or",
+      "inst": "ULaval",
+      "color": "#E30513",
+      "score": 62
+     },
+     {
+      "name": "Martlets",
+      "inst": "McGill",
+      "color": "#ED1B2F",
+      "score": 47
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-21|Basketball (F)|Martlets (McGill):47|Rouge et Or (ULaval):62",
+    "text": "Rouge et Or (ULaval) 62-47 Martlets (McGill)"
+   },
    {
     "emoji": "🏀",
     "sport": "Basketball (F)",
@@ -544,6 +572,34 @@
     "league": "Basketball collégial féminin D2",
     "uni": false,
     "kind": "resultat",
+    "gameId": "83fbf04e-9df0-44fe-b3bd-f3749191a454",
+    "date": "2026-11-21",
+    "when": "Final · sam. 21 nov.",
+    "teams": [
+     {
+      "name": "Nomades",
+      "inst": "Montmorency",
+      "color": "#002768",
+      "score": 64
+     },
+     {
+      "name": "Patriotes",
+      "inst": "Saint-Laurent",
+      "color": "",
+      "score": 57
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-21|Basketball (F)|Nomades (Montmorency):64|Patriotes (Saint-Laurent):57",
+    "text": "Nomades (Montmorency) 64-57 Patriotes (Saint-Laurent)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D2",
+    "uni": false,
+    "kind": "resultat",
     "gameId": "89a2658d-7314-47d3-a7b4-ff53065072f4",
     "date": "2026-11-21",
     "when": "Final · sam. 21 nov.",
@@ -768,6 +824,34 @@
     "league": "Basketball collégial masculin D3",
     "uni": false,
     "kind": "resultat",
+    "gameId": "3aeb53d0-cbdd-4459-88a1-1c7f2a3d72fa",
+    "date": "2026-11-21",
+    "when": "Final · sam. 21 nov.",
+    "teams": [
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00",
+      "score": 114
+     },
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": "",
+      "score": 42
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-21|Basketball (H)|Gaillards (Cégep de Jonquière):114|Voyageurs (Sept-Îles):42",
+    "text": "Gaillards (Cégep de Jonquière) 114-42 Voyageurs (Sept-Îles)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D3",
+    "uni": false,
+    "kind": "resultat",
     "gameId": "001fdbd5-c961-479f-bef8-7acb020d1775",
     "date": "2026-11-21",
     "when": "Final · sam. 21 nov.",
@@ -900,6 +984,34 @@
     "tie": false,
     "key": "2026-11-21|Football (H)|Lauréats (Saint-Hyacinthe):30|Volontaires (Sherbrooke):17",
     "text": "Lauréats (Saint-Hyacinthe) 30-17 Volontaires (Sherbrooke)"
+   },
+   {
+    "emoji": "🏈",
+    "sport": "Football (H)",
+    "sportKey": "football",
+    "league": "Football collégial masculin D3",
+    "uni": false,
+    "kind": "resultat",
+    "gameId": "b42eee83-7f00-47b5-80cc-3b22e14c376d",
+    "date": "2026-11-21",
+    "when": "Final · sam. 21 nov.",
+    "teams": [
+     {
+      "name": "Griffons",
+      "inst": "l’Outaouais",
+      "color": "#1F6FB2",
+      "score": 35
+     },
+     {
+      "name": "Pionniers",
+      "inst": "Rimouski",
+      "color": "#1B4F8C",
+      "score": 30
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-21|Football (H)|Griffons (l’Outaouais):35|Pionniers (Rimouski):30",
+    "text": "Griffons (l’Outaouais) 35-30 Pionniers (Rimouski)"
    },
    {
     "emoji": "🏐",
@@ -1236,6 +1348,34 @@
     "tie": false,
     "key": "2026-11-21|Volleyball (F)|Gaillards (Cégep de Jonquière):2|Trappeurs (Baie-Comeau):0",
     "text": "Gaillards (Cégep de Jonquière) 2-0 Trappeurs (Baie-Comeau)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "resultat",
+    "gameId": "0f1c322e-6591-4ed1-8d85-89abf2952b44",
+    "date": "2026-11-21",
+    "when": "Final · sam. 21 nov.",
+    "teams": [
+     {
+      "name": "Voyageurs",
+      "inst": "Sept-Îles",
+      "color": "",
+      "score": 2
+     },
+     {
+      "name": "Trappeurs",
+      "inst": "Baie-Comeau",
+      "color": "",
+      "score": 1
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-21|Volleyball (F)|Trappeurs (Baie-Comeau):1|Voyageurs (Sept-Îles):2",
+    "text": "Voyageurs (Sept-Îles) 2-1 Trappeurs (Baie-Comeau)"
    },
    {
     "emoji": "🏐",
@@ -2191,33 +2331,6 @@
    }
   ],
   "next": [
-   {
-    "emoji": "🏀",
-    "sport": "Basketball (H)",
-    "sportKey": "basketball",
-    "league": "Basketball collégial masculin D3",
-    "uni": false,
-    "kind": "avenir",
-    "gameId": "3aeb53d0-cbdd-4459-88a1-1c7f2a3d72fa",
-    "date": "2026-11-21",
-    "when": "sam. 21 nov. · 19 h 30",
-    "teams": [
-     {
-      "name": "Voyageurs",
-      "inst": "Sept-Îles",
-      "color": ""
-     },
-     {
-      "name": "Gaillards",
-      "inst": "Cégep de Jonquière",
-      "color": "#FF8B00"
-     }
-    ],
-    "verb": "reçoit",
-    "time": "19:30",
-    "key": "2026-11-21|19:30|Basketball (H)||Gaillards (Cégep de Jonquière)|Voyageurs (Sept-Îles)",
-    "text": "Voyageurs (Sept-Îles) reçoit Gaillards (Cégep de Jonquière)"
-   },
    {
     "emoji": "🏀",
     "sport": "Basketball (H)",
@@ -4050,12 +4163,13 @@
  },
  "headline": "La revue du soir du samedi 21 novembre 2026",
  "description": "La revue du soir du samedi 21 novembre 2026. En tête de cette revue du soir, Quartier Libre publie « Cinq nouvelles de la semaine », sous la plume de Samuel Girard.",
- "intro": "En tête de cette revue du soir, Quartier Libre publie « Cinq nouvelles de la semaine », sous la plume de Samuel Girard. À lire aussi : « Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale » dans Impact Campus. Sur les terrains, en basketball (F) : Stingers (Concordia) 54, Citadins (UQAM) 46.",
+ "intro": "En tête de cette revue du soir, Quartier Libre publie « Cinq nouvelles de la semaine », sous la plume de Samuel Girard. À lire aussi : « Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale » dans Impact Campus. Sur les terrains, en basketball (F) : Rouge et Or (ULaval) 62, Martlets (McGill) 47.",
  "articleIds": [
   "7d286ce6138b61f9",
   "3679e4b0d3ff8fd9"
  ],
  "sportKeys": [
+  "2026-11-21|Basketball (F)|Martlets (McGill):47|Rouge et Or (ULaval):62",
   "2026-11-21|Basketball (F)|Citadins (UQAM):46|Stingers (Concordia):54",
   "2026-11-21|Basketball (H)|Citadins (UQAM):62|Stingers (Concordia):82",
   "2026-11-21|Volleyball (F)|Citadins (UQAM):3|Piranhas (ÉTS):0",
@@ -4073,6 +4187,7 @@
   "2026-11-21|Badminton (mixte)|Cavaliers (Champlain Saint-Lambert):60|Noir et Or (Valleyfield):75",
   "2026-11-21|Badminton (mixte)|Atlas (Marie-Victorin):46|Dynamiques (Jean-de-Brébeuf):89",
   "2026-11-21|Badminton (mixte)|Cavaliers (Champlain Saint-Lambert):42|Dynamiques (Jean-de-Brébeuf):96",
+  "2026-11-21|Basketball (F)|Nomades (Montmorency):64|Patriotes (Saint-Laurent):57",
   "2026-11-21|Basketball (F)|Couguars (Chicoutimi):43|Lions (Champlain St. Lawrence):91",
   "2026-11-21|Basketball (F)|Dynamiques (Sainte-Foy):89|Filons (Thetford):48",
   "2026-11-21|Basketball (F)|Dynamiques (Sainte-Foy):37|Élans (Garneau):46",
@@ -4081,11 +4196,13 @@
   "2026-11-21|Basketball (H)|Dynamiques (Sainte-Foy):64|Filons (Thetford):80",
   "2026-11-21|Basketball (H)|Jeannois (Alma):97|Lions (Champlain St. Lawrence):42",
   "2026-11-21|Basketball (H)|Pionniers (Rimouski):68|Élans (Garneau):66",
+  "2026-11-21|Basketball (H)|Gaillards (Cégep de Jonquière):114|Voyageurs (Sept-Îles):42",
   "2026-11-21|Basketball (H)|Cavaliers (Bois-de-Boulogne):76|Noir et Or (Valleyfield):89",
   "2026-11-21|Basketball (H)|Demons (Marianopolis):56|Gaulois (Rosemont):64",
   "2026-11-21|Basketball (H)|Dynamiques (Sainte-Foy):83|Élans (Garneau):68",
   "2026-11-21|Basketball (H)|Cheminots (Saint-Jérôme):69|Cyclones (Lanaudière à L’Assomption):66",
   "2026-11-21|Football (H)|Lauréats (Saint-Hyacinthe):30|Volontaires (Sherbrooke):17",
+  "2026-11-21|Football (H)|Griffons (l’Outaouais):35|Pionniers (Rimouski):30",
   "2026-11-21|Volleyball (F)|Diablos (Trois-Rivières):1|Nordiques (Lionel-Groulx):3",
   "2026-11-21|Volleyball (F)|Couguars (Chicoutimi, équipe Blanc):2|Kioki (Saint-Félicien):1",
   "2026-11-21|Volleyball (F)|Gaillards (Cégep de Jonquière):2|Kioki (Saint-Félicien):0",
@@ -4098,6 +4215,7 @@
   "2026-11-21|Volleyball (F)|Jeannois (Alma):2|Voyageurs (Sept-Îles):1",
   "2026-11-21|Volleyball (F)|Jeannois (Alma):2|Trappeurs (Baie-Comeau):0",
   "2026-11-21|Volleyball (F)|Gaillards (Cégep de Jonquière):2|Trappeurs (Baie-Comeau):0",
+  "2026-11-21|Volleyball (F)|Trappeurs (Baie-Comeau):1|Voyageurs (Sept-Îles):2",
   "2026-11-21|Volleyball (H)|Griffons (l’Outaouais):1|Titans (Limoilou):3",
   "2026-11-21|Volleyball (H)|Cheminots (Saint-Jérôme):3|Volontaires (Sherbrooke):1",
   "2026-11-21|Volleyball (H)|Condors (Beauce-Appalaches):0|Faucons (Lévis):2",
@@ -4699,5 +4817,6 @@
     ]
    }
   ]
- }
+ },
+ "refreshedAt": "2026-11-22T04:06:27.151Z"
 }
