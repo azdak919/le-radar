@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-22T18:48:51.853Z",
-  "total": 1041,
-  "withImage": 940,
-  "withCredit": 940,
-  "cited": 660,
-  "pending": 166,
+  "updated": "2026-11-22T20:09:42.510Z",
+  "total": 1050,
+  "withImage": 949,
+  "withCredit": 949,
+  "cited": 664,
+  "pending": 267,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 3,
-  "fallbackNew": 57,
+  "updatedCount": 58,
+  "citedNew": 24,
+  "fallbackNew": 36,
   "samples": [
+    {
+      "title": "Retour à la case départ pour les Hornets de Charlotte",
+      "source": "Le Club-École",
+      "credit": "Image tirée du compte X des Hornets FR",
+      "cited": true,
+      "method": "tiree-attribution"
+    },
     {
       "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
@@ -20,11 +27,74 @@
       "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "title": "Excellent début de saison du Canadien",
+      "source": "Le Club-École",
+      "credit": "Photo : Le Club-École",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Heat c. Bucks : Miami s’impose dans la nuit de Vice City",
+      "source": "Le Club-École",
+      "credit": "Photo : Le Club-École",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Canadiens de Montréal : victoire des Canadiens, Hutson en feu",
+      "source": "Le Club-École",
+      "credit": "Photo : Le Club-École",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La course au trophée Vézina s’intensifie",
+      "source": "Le Club-École",
+      "credit": "Photo : compte X officiel des Sénateurs d’Ottawa",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "ASFA asks students what issues matter most to them",
       "source": "The Concordian",
-      "credit": "Photo: Eric Klempan",
+      "credit": "Photo: Courtesy of ASFA",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Mission réussie pour les « Three Lions »",
+      "source": "Le Club-École",
+      "credit": "Image tirée de Getty images",
+      "cited": true,
+      "method": "tiree-attribution"
+    },
+    {
+      "title": "Les Roses de Montréal s’inclinent en finale de la Super Ligue du Nord",
+      "source": "Le Club-École",
+      "credit": "Image tirée du compte Instagram du AFC Toronto",
+      "cited": true,
+      "method": "tiree-attribution"
+    },
+    {
+      "title": "Matvei Michkov : un talent indéniable, mais une attitude qui dérange",
+      "source": "Le Club-École",
+      "credit": "Photo : NHL",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "NFL: Une première moitié de saison remplie de surprises",
+      "source": "Le Club-École",
+      "credit": "Photo : Le Club-École",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     }
   ]
 }

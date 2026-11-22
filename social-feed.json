@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22T18:50:00.150Z",
+  "updated": "2026-11-22T20:11:05.328Z",
   "count": 24,
   "items": [
     {
@@ -159,28 +159,6 @@
           "handle": "zonecampus",
           "stats": "",
           "label": "Facebook"
-        }
-      ]
-    },
-    {
-      "name": "L'Exemplaire",
-      "institution": "Université Laval",
-      "type": "universite",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "facebook",
-          "url": "https://www.facebook.com/lexemplaire",
-          "handle": "lexemplaire",
-          "stats": "",
-          "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/lexemplaire",
-          "handle": "@lexemplaire",
-          "stats": "Le média-école des étudiant.e.s en journalisme de l'Université Laval, Québec.",
-          "label": "X"
         }
       ]
     },
@@ -437,6 +415,42 @@
           "handle": "journallagriffe",
           "stats": "",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "Le Club-École",
+      "institution": "UQAM",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/leclubecole/",
+          "handle": "@leclubecole",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/leclubecole",
+          "handle": "leclubecole",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://x.com/LeClubEcole",
+          "handle": "@LeClubEcole",
+          "stats": "",
+          "label": "X"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/channel/UCThDl9bMNdsi0FkgRfAxU7g",
+          "handle": "@UCThDl9bMNdsi0FkgRfAxU7g",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
