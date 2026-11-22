@@ -25,7 +25,7 @@ export const MAIN_BUFFER = {
 export const INSTAGRAM_CHANNEL_ID = '6b012936ece6dfde5f3f554d';
 export const INSTAGRAM_CHANNEL_NAME = 'le.radar.ca';
 export const INSTAGRAM_SECRET = 'BUFFER_INSTAGRAM_API_KEY';
-export const INSTAGRAM_METADATA = { instagram: { type: 'post' } };
+export const INSTAGRAM_METADATA = { instagram: { type: 'post', shouldShareToFeed: true } };
 export const IG_IMAGE = {
   primary: { format: 'grille', width: 1080, height: 1440, ratio: '3:4' },
 };
