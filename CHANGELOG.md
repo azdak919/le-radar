@@ -7,6 +7,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Pied de page : section « Ressources », avec les logos officiels, les liens et les descriptions de Le Kiosque et Le Socle. Caches `radar-shell-v1066` et `sports-shell-v440`.
+
 - Barre radio partagée `radio-barre.js` : un appel d’une ligne pose la barre (stations de `radios.json`, émission en cours, lecture et arrêt, volume au bureau, petit logo LE-RADAR). Pomodoro et Solitaire l’utilisent à la place de l’iframe `tuner-embed.html` ; les journaux du Kiosque l’appellent depuis le-radar.ca, donc un changement de station, de code ou de style leur arrive sans mise à jour. Sans réponse de LE-RADAR, la barre ne s’affiche pas. Pomodoro et Solitaire ont `media-src https:` pour les flux.
 - Compteur anonyme du bandeau sportif, éteint. Un clic n’envoie rien. La page Mise à jour n’a que la ligne Socle. Le script Umami déjà en place n’est pas retiré.
 - Poids du bandeau, éteint. À heure égale et dans le même seau, une moyenne de clics ne départage que si l’interrupteur, quatre à huit semaines et un seuil fourni sont réunis. Sinon l’ordre reste celui du jour. La phrase de politique n’est pas publiée.
@@ -34,6 +36,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Quartier Libre, chronique « Cinq nouvelles de la semaine » : l’illustration d’origine (texte et logo compris) n’est plus remplacée par une photo Wikimedia du campus. La règle qui retire un visuel générique partagé, ou une bannière de rubrique, laisse cette série de côté — exception courte approuvée le 21 novembre 2026, sans relâcher la règle générale. Crédit repris à la source : Illustration : Mathilde Ségar. Cache `radar-shell-v1063`.
+- Le lien « Mise à jour » est retiré de tous les pieds de page et la page `mise-a-jour/` (outil d’administration du Socle) n’est plus publiée. Le test `no-public-admin-tools` échoue si un tel lien ou une telle page revient ; `_config.yml` exclut aussi ce dossier. Caches `radar-shell-v1060` et `radar-offline-v23`.
 - Compteur et fil : le début de session (1er septembre, 1er janvier, 1er mai) est minuit à Montréal, et non plus minuit UTC. Les doublons d’un même média (même titre le même jour, ou variantes d’URL : L’Exemplaire /a-la-une/ et /actualites/, chemins The Tribune, suffixe -2 de La Pige et du Délit) sont retirés du catalogue et du flux RSS. La série « Cinq nouvelles de la semaine » de Quartier Libre, publiée à des jours distincts, est conservée. Cache `radar-shell-v1048`.
 
 - Images d’article : deux photos différentes portant le même nom de fichier dans des dossiers mensuels distincts (La Pige « Image-9.jpg » d’octobre et de novembre, Le Délit « matteo.png ») ne sont plus prises pour un visuel générique partagé. Le dédoublonnage compare maintenant l’hôte, le dossier et le nom, sans le suffixe de taille. Environ 12 vraies photos étaient retirées à chaque récolte.

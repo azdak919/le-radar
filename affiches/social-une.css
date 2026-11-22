@@ -16,7 +16,7 @@ body { font-family: 'Inter', 'Noto Color Emoji', system-ui, sans-serif; font-syn
 /* Soir « Marine » (choix de Charles, 12 nov. 2026) : cadre et cartes bleu marine, texte clair, pastille ambre. Verre opaque à 92 %
    (au lieu de 74 %) : même sur une zone blanche, le texte le plus pâle reste à ≥ 5,2:1 (AA). */
 .card { position: relative; overflow: hidden; background: var(--bg); color: var(--ink); display: flex; flex-direction: column; }
-.portrait { width: 1080px; height: 1350px; } .grille { width: 1080px; height: 1440px; } .paysage { width: 1200px; height: 675px; } .story { width: 1080px; height: 1920px; }
+.portrait { width: 1080px; height: 1350px; } .grille { width: 1080px; height: 1440px; } .article { width: 1080px; height: 1440px; } .article-portrait { width: 1080px; height: 1350px; } .paysage { width: 1200px; height: 675px; } .story { width: 1080px; height: 1920px; }
 
 /* Fond : la photo de la une floutée sous un voile au thème (verre dépoli des cartes). */
 .bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--bg-soft); }
@@ -176,9 +176,11 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .paysage .mt { padding-top: 3px; } .paysage .mh { font-size: 11px; } .paysage .mh .emo { font-size: 11px; } .paysage .ml { font-size: 14px; line-height: 1.25; }
 .paysage .sports { padding: 8px 16px 8px; }
 /* Story (focus-group du 13 nov. 2026) : plein écran sur téléphone, les lignes secondaires grossissent un peu pour rester lisibles. */
-/* Instagram 3:4 natif (1080×1440). Ce n'est pas le portrait 4:5 étiré.
+/* Instagram 3:4 natif (1080×1440), photo en pleine page avec dégradé.
    La grille du profil recadre le centre en carré : 180 px en haut et en bas sortent du carré.
-   Le logo, la photo, le titre, le média et le crédit tiennent dans ce carré. */
+   Le logo, le titre, les auteurs, le média et le crédit tiennent dans ce carré.
+   Le libellé du créneau n’apparaît qu’une fois, en kicker coloré. */
+/* Poster sport Instagram 3:4 : barres noires (inchangé). Les unes matin/soir Instagram utilisent .grille.une-b (modèle B). */
 .grille { background: #000; }
 .grille .ig { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; background: #000; color: #fff; }
 .grille .ig-edge { flex: none; height: 180px; background: #000; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 48px; }
@@ -200,6 +202,83 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .grille .ig-sport { font-weight: 700; font-size: 26px; line-height: 1.2; color: #F6C177; }
 .grille .ig-line { margin-top: 6px; font-weight: 700; font-size: 40px; line-height: 1.15; color: #fff; }
 .grille .ig-line .sc { font-variant-numeric: tabular-nums; }
+
+/* Une Instagram matin/soir 3:4 (modèle B) : couverture, pastille, date avec année, Aussi à la une. */
+.grille.une-b { background: #0E0F12; color: #F1F2F4; }
+.grille.une-b .ig { position: absolute; inset: 0; display: block; background: #0E0F12; color: #F1F2F4; }
+.grille.une-b .ig-photo-full, .grille.une-b .ig-photo-well { position: absolute; inset: 0; }
+.grille.une-b .ig-photo-full img, .grille.une-b .ig-photo-well img { width: 100%; height: 100%; display: block; }
+.grille.une-b.photo .ig-photo-well { display: none; }
+.grille.une-b.photo .ig-photo-full img { object-fit: cover; object-position: 50% 40%; }
+.grille.une-b.illustration .ig-photo-full { display: none; }
+.grille.une-b.illustration .ig-photo-well { top: 230px; bottom: 560px; left: 40px; right: 40px; }
+.grille.une-b.illustration .ig-photo-well img { object-fit: contain; object-position: center center; }
+.grille.une-b .ig-photo-full.empty::after, .grille.une-b .ig-photo-well.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
+.grille.une-b .ig-veil-top { position: absolute; left: 0; right: 0; top: 0; height: 340px; pointer-events: none; z-index: 1; }
+.grille.une-b.photo .ig-veil-top { background: linear-gradient(180deg, rgba(14,15,18,.96) 0%, rgba(14,15,18,.90) 40%, rgba(14,15,18,.55) 72%, rgba(14,15,18,0) 100%); }
+.grille.une-b.illustration .ig-veil-top { height: 230px; background: #0E0F12; }
+.grille.une-b .ig-veil-bot { position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 1; }
+.grille.une-b.photo .ig-veil-bot { height: 780px; background: linear-gradient(180deg, rgba(14,15,18,0) 0%, rgba(14,15,18,.55) 18%, rgba(14,15,18,.88) 36%, rgba(14,15,18,.97) 52%, #0E0F12 68%); }
+.grille.une-b.illustration .ig-veil-bot { height: 560px; background: #0E0F12; }
+.grille.une-b .ig-top { position: absolute; left: 0; right: 0; top: 0; padding: 44px 56px 0; z-index: 2; }
+.grille.une-b .ig-brand { flex: none; height: auto; display: flex; align-items: flex-start; gap: 16px; padding: 0; background: none; }
+.grille.une-b .ig-brand img { width: 80px; height: 80px; display: block; filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }
+.grille.une-b .ig-brand-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0; min-width: 0; }
+.grille.une-b .ig-brand .wm { font-weight: 700; font-size: 80px; letter-spacing: -0.02em; line-height: 1; color: #F1F2F4; display: block; text-shadow: 0 2px 10px rgba(0,0,0,.45); }
+.grille.une-b .ig-motto { margin: 6px 0 0; padding: 0; max-width: 720px; font-family: Inter, system-ui, sans-serif; font-weight: 600; font-size: 26px; line-height: 1.28; color: #F1F2F4; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+.grille.une-b .ig-motto .lead, .grille.une-b .ig-motto .tag { display: block; margin: 0; padding: 0; flex: none; min-height: 0; overflow: visible; }
+.grille.une-b .ig-bottom { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 56px 44px; z-index: 2; }
+.grille.une-b .ig-kicker-row { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 16px; margin-bottom: 16px; }
+.grille.une-b .ig-pill { display: inline-block; background: #F6C177; color: #0E0F12; font-weight: 700; font-size: 28px; letter-spacing: .01em; line-height: 1; padding: 10px 18px; border-radius: 999px; }
+.grille.une-b .ig-date { font-weight: 700; font-size: 28px; line-height: 1.2; color: #F6C177; }
+.grille.une-b .ig-title { margin-top: 0; max-width: none; font-family: 'Source Serif 4', 'Noto Color Emoji', Georgia, serif; font-weight: 700; font-size: 56px; line-height: 1.06; letter-spacing: -0.02em; color: #F1F2F4; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
+.grille.une-b .ig-by { margin-top: 14px; font-size: 28px; line-height: 1.25; color: #F1F2F4; }
+.grille.une-b .ig-by .lbl { font-weight: 400; color: #C2C6CD; }
+.grille.une-b .ig-by .who { font-weight: 600; color: #F1F2F4; }
+.grille.une-b .ig-media { margin-top: 2px; font-weight: 700; font-size: 28px; line-height: 1.2; color: #F1F2F4; }
+.grille.une-b .ig-credit { margin-top: 8px; font-weight: 600; font-size: 26px; line-height: 1.25; color: #C2C6CD; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grille.une-b .ig-also { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.22); }
+.grille.une-b .ig-also h2 { font-size: 20px; letter-spacing: .1em; text-transform: uppercase; color: #CF7EC1; font-weight: 700; margin-bottom: 12px; }
+.grille.une-b .ig-also-item { display: grid; grid-template-columns: 40px 112px 1fr; gap: 14px; align-items: center; margin-top: 12px; }
+.grille.une-b .ig-also-item:first-of-type { margin-top: 0; }
+.grille.une-b .ig-also-item .num { position: static; left: auto; top: auto; padding: 0; border-radius: 8px; width: 40px; height: 40px; background: #6C2163; color: #fff; font-weight: 700; font-size: 22px; display: grid; place-items: center; font-family: 'Source Serif 4', Georgia, serif; }
+.grille.une-b .ig-also-item .meta { min-width: 0; }
+.grille.une-b .ig-also-item .thumb { width: 112px; height: 80px; border-radius: 8px; overflow: hidden; background: #181A1E; }
+.grille.une-b .ig-also-item .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.grille.une-b .ig-also-item h3 { font-family: 'Source Serif 4', Georgia, serif; font-size: 30px; line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.grille.une-b .ig-also-item .oby { margin-top: 4px; font-size: 24px; color: #C2C6CD; }
+
+/* Post d’un seul article (modèle v6) : pleine page, slogan, kicker avec année, QR, recadrage focalX.
+   Instagram 3:4 1080×1440 ; les autres réseaux : article-portrait 4:5 1080×1350. */
+.article, .article-portrait { background: #000; }
+.article .ig, .article-portrait .ig { position: absolute; inset: 0; z-index: 3; background: #000; color: #fff; }
+.article .ig-photo, .article-portrait .ig-photo { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #111; }
+.article .ig-photo img, .article-portrait .ig-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.article .ig-photo.empty::after, .article-portrait .ig-photo.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
+.article .ig-veil-top, .article-portrait .ig-veil-top { position: absolute; left: 0; right: 0; top: 0; height: 520px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(10,6,14,.90) 0%, rgba(10,6,14,.78) 24%, rgba(10,6,14,.62) 42%, rgba(10,6,14,.40) 58%, rgba(10,6,14,.16) 74%, rgba(10,6,14,0) 100%); }
+.article .ig-veil-bot, .article-portrait .ig-veil-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 700px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(20,8,18,0) 0%, rgba(18,6,16,.28) 30%, rgba(12,4,12,.63) 55%, rgba(8,2,10,.84) 80%, rgba(8,2,10,.94) 100%); }
+.article .ig-safe { position: absolute; left: 0; right: 0; top: 180px; height: 1080px; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 56px 20px; box-sizing: border-box; overflow: visible; }
+.article-portrait .ig-safe { position: absolute; left: 0; right: 0; top: 36px; bottom: 28px; height: auto; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; padding: 8px 56px 20px; box-sizing: border-box; overflow: visible; }
+.article .ig-brand, .article-portrait .ig-brand { flex: none; align-self: flex-start; display: flex; flex-direction: row; align-items: flex-start; gap: 16px; background: none; border-radius: 0; padding: 0; overflow: visible; }
+.article .ig-brand img, .article-portrait .ig-brand img { width: 100px; height: 100px; display: block; flex: none; filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }
+.article .ig-brand-text, .article-portrait .ig-brand-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0; overflow: visible; min-width: 0; }
+.article .ig-brand .wm, .article-portrait .ig-brand .wm { font-weight: 700; font-size: 100px; letter-spacing: -0.02em; line-height: 1; color: #F1F2F4; text-shadow: 0 2px 12px rgba(0,0,0,.65); overflow: visible; padding: 0; margin: 0; display: block; }
+.article .ig-motto, .article-portrait .ig-motto { margin: -10px 0 0; padding: 0; box-sizing: border-box; max-width: 620px; font-family: Inter, system-ui, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25; color: #F1F2F4; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+.article .ig-motto .lead, .article .ig-motto .tag, .article-portrait .ig-motto .lead, .article-portrait .ig-motto .tag { display: block; margin: 0; padding: 0; flex: none; min-height: 0; overflow: visible; }
+.article .ig-copy, .article-portrait .ig-copy { flex: none; padding: 0; background: transparent; }
+.article .ig-kicker, .article-portrait .ig-kicker { display: block; width: auto; font-weight: 700; font-size: 22px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; background: none; color: #F28C28; padding: 0; border-radius: 0; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+.article .ig-kicker .mid, .article-portrait .ig-kicker .mid { color: #ffdcb4; }
+.article .ig-kicker .date, .article-portrait .ig-kicker .date { color: #F6C177; }
+.article .ig-qr { position: absolute; top: 184px; right: 32px; z-index: 3; width: 217px; height: 217px; padding: 10px; box-sizing: border-box; background: rgba(241,242,244,.93); border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+.article-portrait .ig-qr { position: absolute; top: 40px; right: 32px; z-index: 3; width: 217px; height: 217px; padding: 10px; box-sizing: border-box; background: rgba(241,242,244,.93); border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+.article .ig-qr canvas, .article-portrait .ig-qr canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+.article .ig-title, .article-portrait .ig-title { margin-top: 14px; max-width: 688px; font-family: 'Source Serif 4', 'Noto Color Emoji', Georgia, serif; font-weight: 700; font-size: 80px; line-height: 1.05; letter-spacing: -0.02em; color: #fff; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.article .ig-by, .article-portrait .ig-by { margin-top: 20px; font-size: 26px; line-height: 1.25; color: #fff; }
+.article .ig-by .lbl, .article-portrait .ig-by .lbl { font-weight: 400; color: #d6deec; }
+.article .ig-by .who, .article-portrait .ig-by .who { font-weight: 600; color: #fff; }
+.article .ig-media, .article-portrait .ig-media { margin-top: 6px; font-weight: 700; font-size: 28px; line-height: 1.2; color: #fff; }
+.article .ig-credit, .article-portrait .ig-credit { margin-top: 12px; font-weight: 600; font-size: 22px; line-height: 1.25; color: #e7e7e3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 .story .mh { font-size: 16px; } .story .mh .emo { font-size: 17px; } .story .ml { font-size: 21px; }
 .story .show .when { font-size: 16px; } .story .scol h3, .story .radio h3 { font-size: 15px; }
 .story .item .by { font-size: 19px; } .story .item .kick { font-size: 15px; }

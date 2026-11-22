@@ -34,6 +34,16 @@ async function settleSports(page) {
   });
 }
 
+/** Le fitter du bandeau tourne sur deux requestAnimationFrame après
+ *  renderSportsStrip. Sous clock.setFixedTime, ces images ne partent pas
+ *  toutes seules : elles n’arrivent que lorsque la vague reprend (pause
+ *  de 9 s, plus si le titre défile), et le délai de 30 s est alors
+ *  dépassé. On avance donc l’horloge de deux images (32 ms), bien en
+ *  deçà de cette pause. */
+async function flushSportsLayout(page) {
+  await page.clock.runFor(32);
+}
+
 function slide(key, mode, date, time, extra = {}) {
   const sport = extra.sport || 'football';
   return {
@@ -399,6 +409,16 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
     }, { theme, lang });
     // La route SEO /en/ n’embarque pas le traducteur. Tester ici le vrai
     // choix EN du bandeau public, via sa préférence native sur l’accueil.
+    // Snapshot figé : le JSON régénéré du CI (pointages RSEQ du soir) ne
+    // doit pas peindre ni retarder l’accueil avant l’injection du volet.
+    const frozenTeam = {
+      ...rosemontGeometry.team,
+      results: [], lastGame: null,
+      nextGame: rosemontGeometry.game, nextGames: [rosemontGeometry.game],
+    };
+    await page.route('**/sports-masthead.json*', r => r.fulfill({
+      json: { fetchedAt: '2026-11-08T23:59:00Z', teams: { [frozenTeam.id]: frozenTeam } },
+    }));
     await page.goto('/?labFrame=1', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('html')).toHaveAttribute('lang', new RegExp(`^${lang}(?:-|$)`));
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
@@ -422,21 +442,25 @@ for (const width of [320, 390, 1024, 1440]) for (const lang of ['fr', 'en']) for
         // La vague différée remplace l'unique carte (320 px) par un résultat
         // avant la mesure. On la coupe ici ; la rotation est testée plus bas
         // par rotateSportsSlot, de façon synchrone.
-        if (typeof sportsWaveTimer !== 'undefined' && sportsWaveTimer) {
+        if (typeof clearSportsWave === 'function') clearSportsWave();
+        else if (typeof sportsWaveTimer !== 'undefined' && sportsWaveTimer) {
           clearTimeout(sportsWaveTimer);
           sportsWaveTimer = 0;
         }
+        if (typeof clearSportsSlotTimers === 'function') clearSportsSlotTimers();
       }, pool);
-      await expect.poll(() => page.evaluate(() => {
+      // Deux paints observés, sans délai arbitraire ni appel direct du fitter.
+      await flushSportsLayout(page);
+      await expect.poll(() => page.evaluate(n => {
         const strip = document.querySelector('#masthead-sports-strip');
         const cards = [...strip.querySelectorAll('.sports-chip--match')];
-        return cards.length > 0 && cards.every(c => {
+        const slots = Math.min(sportsBoardCount(), sportsStripFitFloor());
+        const expected = Math.min(n + 2, slots);
+        return cards.length === expected && cards.every(c => {
           const cap = parseFloat(getComputedStyle(c).maxWidth);
           return Number.isFinite(cap) && c.getBoundingClientRect().width <= cap + 1;
         });
-      })).toBe(true);
-      // Deux paints observés, sans délai arbitraire ni appel direct du fitter.
-      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      }, n)).toBe(true);
       const geometry = await page.evaluate(() => {
         const strip = document.querySelector('#masthead-sports-strip');
         const cs = getComputedStyle(strip);

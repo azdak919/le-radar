@@ -22,7 +22,7 @@
 
 importScripts('../scripts/sports-document-refresh.js');
 
-const SHELL_CACHE  = 'sports-shell-v435';
+const SHELL_CACHE  = 'sports-shell-v440';
 const FONT_CACHE   = 'sports-fonts-v2';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -100,10 +100,6 @@ const SHARED_ASSETS = [
   '../scripts/sports-date-lib.js',
   '../assets/icon.svg',
   '../assets/icon-32.png',
-  '../assets/ressources/kiosque/icone-clair.svg',
-  '../assets/ressources/kiosque/icone-sombre.svg',
-  '../assets/ressources/socle/icone-clair.svg',
-  '../assets/ressources/socle/icone-sombre.svg',
   '../assets/emoji/satellite.png',
   '../assets/emoji/tomato.png',
   '../assets/emoji/playing-cards.png',
