@@ -1,6 +1,6 @@
 // Hashtags par réseau, étiquettes Tumblr, IA désactivée sans secret.
 import assert from 'node:assert/strict';
-import { bskyTags, tumblrTags, topicOf, articleTags, tagLine, PLACES, xArticleTags, xThematicFlags, xInstitutionTag } from '../scripts/social/hashtags.mjs';
+import { bskyTags, tumblrTags, topicOf, articleTags, tagLine, PLACES, xArticleTags, xThematicFlags, xInstitutionTag, institutionTag, institutionTagsFromText } from '../scripts/social/hashtags.mjs';
 import { buildBskyText, facets, graphemes, BSKY_LIMIT, postRecord } from '../scripts/social/bluesky.mjs';
 import { buildText, buildXText, xlen, DAILY_SLOTS, sentences, cutExcerpt, stripCreditParens } from '../scripts/social/lib.mjs';
 import { buildPageText } from '../scripts/social/buffer-pages.mjs';
@@ -11,7 +11,7 @@ const it = { id: 'a', link: 'https://lapige.atmjonquiere.com/2026/11/02/vote-obl
 assert.deepEqual(bskyTags(it), ['#CégepDeJonquière', '#Saguenay'], 'Bluesky : 2 hashtags, institution puis ville (La Pige : #Saguenay, plus #Québec générique)');
 assert.deepEqual(bskyTags({ title: 'Rien de précis' }), [], 'source inconnue : aucun hashtag inventé, jamais #PresseÉtudiante ni #Actualités');
 assert.deepEqual(articleTags({ source: 'Le Délit', title: 'x' }), ['#McGill', '#Montréal'], 'source montréalaise : institution puis ville');
-assert.deepEqual(articleTags({ source: 'Impact Campus', title: 'Les Carabins gagnent au football' }), ['#ULaval', '#Football', '#Québec']);
+assert.deepEqual(articleTags({ source: 'Impact Campus', title: 'Les Carabins gagnent au football' }), ['#UdeM', '#Football', '#Québec'], 'surnom au titre : l’équipe sujet, pas seulement l’école du média');
 assert.deepEqual(articleTags({ source: 'The Link', title: 'Stingers women’s hockey' }, 2), ['#Concordia', '#Hockey'], 'X : 2 hashtags, les plus spécifiques');
 assert.deepEqual(articleTags({ source: 'The Link', title: 'x' }, 0), [], 'max 0 : aucun');
 assert.equal(tagLine(it, 'facebook'), '#CégepDeJonquière');
@@ -123,17 +123,30 @@ assert.ok(!xThematicFlags(pq).federal, 'titre PQ : un Carney dans l’extrait ne
 assert.equal(xArticleTags(carney)[0], '#polcan', 'titre Carney-PSPP : le premier nommé au titre mène');
 assert.deepEqual(xArticleTags(carney), ['#polcan', '#UdeS', '#polqc']);
 
-// 4. Surnom d'équipe : Vert & Or → #UdeS, pas l'adversaire (Stingers/Concordia) plus loin ; autres réseaux inchangés
+// 4. Surnom d'équipe : Vert & Or → #UdeS, pas l'adversaire (Stingers/Concordia) plus loin — aussi sur les autres réseaux
 const vert = { source: 'Le Collectif', lang: 'fr',
   title: 'Toujours pas de football éliminatoire à Sherbrooke cette année',
   desc: 'Pour une 3e saison consécutive, les joueurs du Vert & Or agiront à titre de spectateurs à l’occasion des séries éliminatoires du RSEQ. Sherbrooke est mathématiquement éliminé après cette défaite du 24 octobre dernier face aux Stingers de Concordia, où l’équipe s’est inclinée par 40-14.' };
 assert.equal(xInstitutionTag(vert), '#UdeS');
 assert.deepEqual(xArticleTags(vert), ['#RSEQ', '#UdeS', '#USports']);
 assert.ok(!xArticleTags(vert).includes('#Concordia'));
-assert.ok(articleTags(vert, 3).includes('#Concordia'), 'autres réseaux : l’ancien choix (adversaire dans l’extrait) reste, à corriger ailleurs');
-assert.equal(tagLine(vert, 'facebook'), articleTags(vert, 1).join(' '));
+assert.equal(institutionTag(vert), '#UdeS');
+assert.deepEqual(institutionTagsFromText(vert)[0] ? [institutionTagsFromText(vert)[0]] : [], ['#UdeS'], 'surnom Vert & Or reconnu, avant Concordia dans l’extrait');
+assert.ok(institutionTagsFromText(vert).includes('#Concordia'), 'l’adversaire reste détecté, mais plus loin');
+assert.deepEqual(articleTags(vert, 3), ['#UdeS', '#Football']);
+assert.ok(!articleTags(vert, 3).includes('#Concordia'), 'Facebook, LinkedIn, Bluesky : pas l’adversaire');
+assert.equal(tagLine(vert, 'facebook'), '#UdeS');
+assert.equal(tagLine(vert, 'linkedin'), '#UdeS #Football');
+assert.deepEqual(bskyTags(vert), ['#UdeS', '#Football']);
 assert.equal(xInstitutionTag({ source: 'The Campus', title: 'Gaiters Women’s Soccer: A Season to Remember', desc: 'Sunday, Oct. 25, 2026 saw the Gaiters win.' }), '#BishopsU');
 assert.equal(xInstitutionTag({ source: 'The Link', title: 'Carabins 4, Stingers 0: Stingers lose in their home opener', desc: 'The Concordia University Stingers lost.' }), '#Concordia', 'plusieurs équipes au titre : l’école du média si elle y figure');
+const stingInst = { source: 'The Concordian', title: 'Stingers clinch final playoff spot despite ongoing coaching search',
+  desc: 'After defeating Bishop’s on Oct. 31, Concordia secured the fourth seed in the RSEQ conference as well as the final playoff spot. Meanwhile, the administration made a job posting for the football team’s head coaching position in the middle of the final week of the regular season.' };
+assert.equal(institutionTag(stingInst), '#Concordia');
+assert.ok(!articleTags(stingInst, 3).includes('#BishopsU'), 'adversaire (Bishop’s) dans l’extrait : pas de tag sur les autres réseaux');
+assert.deepEqual(articleTags(stingInst, 3), ['#Concordia', '#Football', '#Montréal']);
+assert.equal(tagLine(stingInst, 'linkedin'), '#Concordia #Football #Montréal');
+assert.deepEqual(bskyTags(stingInst), ['#Concordia', '#Football']);
 
 // 5. Abréviations : ne pas couper l'extrait X sur « Oct. »
 const sting = { source: 'The Concordian', lang: 'en', link: 'https://theconcordian.com/2026/11/stingers-clinch-final-playoff-spot-despite-ongoing-coaching-search',
