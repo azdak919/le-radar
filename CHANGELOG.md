@@ -18,7 +18,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
-- Mât : moins d’air entre la barre météo, le logo, la devise et les icônes des réseaux. Caches `radar-shell-v1066` et `sports-shell-v440`.
+- Mât : moins d’air entre la barre météo, le logo, la devise et les icônes des réseaux. Caches `radar-shell-v1068` et `sports-shell-v442`.
 
 - Mât, téléphone (moins de 600 px) : le logo passe à 48 px, légèrement plus grand que les boutons d’outils et les icônes de réseaux (40 px). Le titre LE-RADAR.ca grandit en proportion, reste sur une seule ligne et s’aligne avec le logo, sans débordement à 320, 360 et 390 px. Ordinateur inchangé. Cache `radar-shell-v1059`.
 
