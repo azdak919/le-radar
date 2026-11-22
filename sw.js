@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v1065";
+const CACHE_NAME = "radar-shell-v1066";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v23";
@@ -89,6 +89,10 @@ const APP_SHELL = [
   "./assets/icon-32.png",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
+  "./assets/ressources/kiosque/icone-clair.svg",
+  "./assets/ressources/kiosque/icone-sombre.svg",
+  "./assets/ressources/socle/icone-clair.svg",
+  "./assets/ressources/socle/icone-sombre.svg",
   "./assets/offline/coin.png",
   "./assets/offline/elevator-loop.opus",
   "./assets/offline/elevator-loop.mp3",

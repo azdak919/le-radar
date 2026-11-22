@@ -124,7 +124,8 @@
 
 /* ─────────────── FOOTER v2 (structuré par nav-shell.js) ───────────────
    Marque + réseaux + présentation | colonnes Explorer / Le projet / Installer,
-   puis mentions. Une seule grille pour tous les gabarits et tailles. */
+   section Ressources, puis mentions. Une seule grille pour tous les gabarits
+   et tailles. */
 .site-foot--v2 { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
 /* Téléphone : les pastilles flèche + loupe (48 px, 16 px du bas) ne doivent
    couvrir ni la licence ni les mentions quand on est en bas de page.
@@ -198,6 +199,92 @@
 @media (max-width: 340px) {
   .site-foot--v2 .site-foot__cols { grid-template-columns: minmax(0, 1fr); }
   .site-foot--v2 .site-foot__col--project { grid-row: auto; }
+}
+
+
+/* Section Ressources : Kiosque et Socle, sous les colonnes, compacte.
+   Logos officiels (clair / sombre), petit format à gauche du nom. */
+.site-foot--v2 .site-foot__ressources {
+  margin-top: 20px;
+}
+.site-foot__ressources {
+  margin: 16px 0 0;
+  max-width: 40rem;
+}
+.site-foot__ressources-title {
+  margin: 0 0 8px !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.site-foot__ressources-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+}
+.site-foot__ressource { min-width: 0; }
+.site-foot__ressource-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 44px;
+  color: inherit !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+}
+.site-foot__ressource-link:hover .site-foot__ressource-name { text-decoration: underline; }
+.site-foot__ressource-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.site-foot__ressource-logo {
+  position: relative;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  margin-top: 2px;
+}
+.site-foot__ressource-logo-img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+}
+.site-foot__ressource-logo-img--dark { display: none; }
+[data-theme="dark"] .site-foot__ressource-logo-img--light { display: none; }
+[data-theme="dark"] .site-foot__ressource-logo-img--dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .site-foot__ressource-logo-img--light { display: none; }
+  html:not([data-theme="light"]) .site-foot__ressource-logo-img--dark { display: block; }
+}
+.site-foot__ressource-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.site-foot__ressource-name {
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1.3;
+}
+.site-foot__ressource-desc {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+@media (max-width: 520px) {
+  .site-foot__ressources-list { grid-template-columns: minmax(0, 1fr); }
+}
+@media print {
+  .site-foot__ressources { display: none !important; }
 }
 
 .site-foot__sep {
@@ -2955,6 +3042,7 @@ html.has-tuner-safe-cap .tuner {
   /* Pied ramassé : le mot-symbole vit dans le QR ; on garde la ligne Azdak. */
   .site-foot__brand, .site-foot__wordmark, .site-foot__signature,
   .site-foot__about, .site-foot__licence, .site-foot__legal,
+  .site-foot__ressources,
   .site-foot > p, .site-foot__bottom > p:not(.site-foot__author) {
     display: none !important;
   }
