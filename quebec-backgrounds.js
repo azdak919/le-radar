@@ -2595,15 +2595,15 @@
 
   function _doodleBackground() {
     return {
-      url: "/assets/doodle/miami-skyline-joe-desousa-vaporwave.jpg",
+      url: "/assets/doodle/miami-skyline-joe-desousa.jpg",
       credit: "Joe deSousa",
       place: "Miami",
       link: "https://commons.wikimedia.org/wiki/File:Miami_Skyline_(45860413504).jpg",
       license: "CC0 1.0",
       title: "Miami Skyline",
-      focalY: 0.52,
-      width: 2560,
-      height: 648,
+      focalY: 0.50,
+      width: 2880,
+      height: 729,
       permanent: true,
       bank: "doodle",
     };

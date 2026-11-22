@@ -112,12 +112,12 @@ assert.match(bootSrc, /doodle=on/);
 
 const bgSrc = readFileSync(join(__dirname, "..", "quebec-backgrounds.js"), "utf8");
 assert.match(bgSrc, /_isDoodleOn/);
-assert.match(bgSrc, /miami-skyline-joe-desousa-vaporwave\.jpg/);
+assert.match(bgSrc, /miami-skyline-joe-desousa\.jpg/);
 assert.match(bgSrc, /if \(_isDoodleOn\(\)\) return;/);
 
 const root = join(__dirname, "..");
 assert.ok(existsSync(join(root, "assets/doodle/le-radar-pricedown.svg")));
-assert.ok(existsSync(join(root, "assets/doodle/miami-skyline-joe-desousa-vaporwave.jpg")));
+assert.ok(existsSync(join(root, "assets/doodle/miami-skyline-joe-desousa.jpg")));
 const svg = readFileSync(join(root, "assets/doodle/le-radar-pricedown.svg"), "utf8");
 assert.doesNotMatch(svg, /font-face|font-family|@font/i, "aucune police dans le SVG du titre");
 assert.match(svg, /stroke-width="102"/);
