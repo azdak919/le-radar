@@ -185,15 +185,18 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .grille .ig-photo { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #111; }
 .grille .ig-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .grille .ig-photo.empty::after { content: 'LE\2011RADAR.ca'; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.35); font: 700 64px 'Source Serif 4', serif; }
-.grille .ig-veil-top { position: absolute; left: 0; right: 0; top: 0; height: 280px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(21,10,20,.55) 0%, rgba(21,10,20,0) 100%); }
+.grille .ig-veil-top { position: absolute; left: 0; right: 0; top: 0; height: 340px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(8,2,10,.59) 0%, rgba(8,2,10,.28) 40%, rgba(8,2,10,0) 100%); }
 .grille .ig-veil-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 700px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(20,8,18,0) 0%, rgba(18,6,16,.28) 30%, rgba(12,4,12,.63) 55%, rgba(8,2,10,.84) 80%, rgba(8,2,10,.94) 100%); }
 .grille .ig-safe { position: absolute; left: 0; right: 0; top: 180px; height: 1080px; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; padding: 16px 56px 20px; box-sizing: border-box; }
-.grille .ig-brand { flex: none; align-self: flex-start; display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,.69); border-radius: 999px; padding: 8px 12px 8px 8px; }
-.grille .ig-brand img { width: 56px; height: 56px; display: block; }
-.grille .ig-brand .wm { font-weight: 700; font-size: 34px; letter-spacing: -0.02em; line-height: 1; color: #fff; }
-.grille .ig-date { font-weight: 600; font-size: 18px; line-height: 1; background: #F6C177; color: #15213b; padding: 7px 16px; border-radius: 999px; white-space: nowrap; }
+.grille .ig-brand { flex: none; align-self: flex-start; display: flex; align-items: center; gap: 16px; background: none; border-radius: 0; padding: 0; }
+.grille .ig-brand img { width: 120px; height: 120px; display: block; filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }
+.grille .ig-brand .wm { font-weight: 700; font-size: 64px; letter-spacing: -0.02em; line-height: 1; color: #F1F2F4; text-shadow: 0 2px 10px rgba(0,0,0,.55); }
 .grille .ig-copy { flex: none; padding: 0; background: transparent; }
-.grille .ig-kicker { display: inline-block; width: fit-content; font-weight: 700; font-size: 20px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; background: #F28C28; color: #fff; padding: 7px 16px; border-radius: 8px; }
+.grille .ig-kicker { display: block; width: auto; font-weight: 700; font-size: 22px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; background: none; color: #F28C28; padding: 0; border-radius: 0; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+.grille .ig-kicker .mid { color: #ffdcb4; }
+.grille .ig-kicker .date { color: #F6C177; }
+.grille .ig-qr { position: absolute; top: 184px; right: 32px; z-index: 3; width: 217px; height: 217px; padding: 10px; box-sizing: border-box; background: rgba(241,242,244,.93); border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+.grille .ig-qr canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
 .grille .ig-title { margin-top: 14px; font-weight: 700; font-size: 80px; line-height: 1.05; letter-spacing: -0.02em; color: #fff; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
 .grille .ig-by { margin-top: 20px; font-size: 26px; line-height: 1.25; color: #fff; }
 .grille .ig-by .lbl { font-weight: 400; color: #d6deec; }

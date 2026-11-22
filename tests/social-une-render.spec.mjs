@@ -128,7 +128,9 @@ for (const kind of ['matin', 'soir']) {
         creditText: document.querySelector('.ig-credit').textContent,
         mediaText: document.querySelector('.ig-media').textContent,
         byText: document.querySelector('.ig-by')?.textContent,
-        dateText: document.querySelector('.ig-date')?.textContent,
+        dateText: document.querySelector('.ig-kicker .date')?.textContent,
+        kickerText: document.querySelector('.ig-kicker')?.textContent,
+        qr: document.querySelector('.ig-qr'),
         photo: box('.ig-photo'),
         labels,
         w: c.width, h: c.height,
@@ -140,8 +142,11 @@ for (const kind of ['matin', 'soir']) {
     expect(zone.mediaText).toBe('Impact Campus');
     expect(zone.byText).toBe('Par\u00A0Autrice 1 et Autrice 2');
     expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
-    expect(zone.labels.filter((t) => t.toLowerCase() === `la une du ${kind}`).length, 'libellé du créneau une seule fois').toBe(1);
+    expect(zone.labels.filter((t) => t.toLowerCase().includes(`la une du ${kind}`)).length, 'libellé du créneau une seule fois').toBe(1);
     expect(zone.dateText).toBe('Dimanche 22 novembre');
+    expect(zone.kickerText.replace(/\s+/g, ' ').trim().toLowerCase()).toBe(`la une du ${kind} · dimanche 22 novembre`);
+    expect(zone.qr, 'pas de QR sans pageUrl d’article').toBeNull();
+    expect(zone.brandBg === 'rgba(0, 0, 0, 0)' || zone.brandBg === 'transparent', 'pas de capsule derrière la marque').toBeTruthy();
     expect(zone.photo.top).toBeLessThanOrEqual(0);
     expect(zone.photo.bottom).toBeGreaterThanOrEqual(1440);
     for (const b of [zone.title, zone.brand, zone.credit, zone.media, zone.by]) {
@@ -160,6 +165,53 @@ for (const kind of ['matin', 'soir']) {
     expect(await page.locator('.ig-by').count()).toBe(0);
     expect(await page.locator('.ig-media').textContent()).toBe('Impact Campus');
     expect(await page.locator('.ig-credit').textContent()).toBe('📸 Équipe');
+  });
+}
+
+
+for (const kind of ['matin', 'soir']) {
+  test(`instagram 3:4 ${kind} : QR vers la fiche Radar, dans le carré, décodable @ci-critical`, async ({ page }, testInfo) => {
+    await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+    await page.setViewportSize({ width: 1080, height: 1440 });
+    await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+    const pageUrl = 'https://le-radar.ca/article/dac64fa8d6a7b3df/';
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 · Impact Campus', credit: 'Photo : Équipe', pageUrl })] };
+    await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    const qr = page.locator('.ig-qr');
+    await expect(qr).toHaveCount(1);
+    await expect(qr).toHaveAttribute('data-url', pageUrl);
+    const box = await page.evaluate(() => {
+      const c = document.getElementById('card').getBoundingClientRect();
+      const r = document.querySelector('.ig-qr').getBoundingClientRect();
+      return { top: r.top - c.top, bottom: r.bottom - c.top, left: r.left - c.left, right: r.right - c.left, mid: (r.left + r.right) / 2 - c.left };
+    });
+    expect(box.top).toBeGreaterThanOrEqual(180);
+    expect(box.bottom).toBeLessThanOrEqual(1260);
+    expect(box.mid, 'QR dans le quart supérieur droit').toBeGreaterThan(540);
+    // Décode le JPEG rendu si zbarimg est disponible (aperçus v4 aussi vérifiés ainsi).
+    const shot = await page.locator('#card').screenshot({ type: 'jpeg', quality: 92 });
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+    const { execFileSync } = await import('node:child_process');
+    const tmp = testInfo.outputPath('ig-qr.jpg');
+    fs.writeFileSync(tmp, shot);
+    let decoded;
+    try {
+      decoded = execFileSync('zbarimg', ['-q', '--raw', tmp], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim().split(/\n/).filter(Boolean).pop();
+    } catch (e) {
+      if (e.code === 'ENOENT') decoded = undefined; // zbarimg optionnel en CI
+      else throw e;
+    }
+    if (decoded !== undefined) expect(decoded).toBe(pageUrl);
+  });
+
+  test(`instagram 3:4 ${kind} : pas de QR si l’URL n’est pas une fiche Radar @ci-critical`, async ({ page }) => {
+    await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+    await page.setViewportSize({ width: 1080, height: 1440 });
+    await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { pageUrl: 'https://quartierlibre.ca/exemple/' })] };
+    await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    expect(await page.locator('.ig-qr').count()).toBe(0);
   });
 }
 
@@ -185,4 +237,5 @@ test('instagram 3:4 sport : trois résultats réels dans le carré @ci-critical'
   const top = await page.locator('.ig-line').first().evaluate((e) => { const c = document.getElementById('card').getBoundingClientRect(); const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top }; });
   expect(top.top).toBeGreaterThanOrEqual(180);
   expect(top.bottom).toBeLessThanOrEqual(1260);
+  expect(await page.locator('.ig-qr').count(), 'pas de QR sur un post qui n’est pas un article').toBe(0);
 });
