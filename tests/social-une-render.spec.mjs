@@ -110,41 +110,64 @@ for (const kind of ['matin', 'soir']) {
 
 
 for (const kind of ['matin', 'soir']) {
-  test(`instagram 3:4 ${kind} : titre, média et crédit dans le carré de la grille @ci-critical`, async ({ page }) => {
+  test(`instagram 3:4 ${kind} : couverture modèle B, pastille, date avec année @ci-critical`, async ({ page }) => {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
-    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
+    const model = {
+      slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre', dayLabelYear: 'Dimanche 22 novembre 2026' },
+      items: [
+        item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 · Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' }),
+        item(2, { title: 'Deuxième titre à la une du jour', source: 'Quartier Libre', byline: 'Autrice 2 · Quartier Libre' }),
+        item(3, { title: 'Troisième titre retenu pour la couverture', source: 'Le Collectif', byline: 'Autrice 3 · Le Collectif' }),
+        item(4, { title: 'Quatrième titre seulement dans la légende', source: 'La Pige', byline: 'Autrice 4 · La Pige' }),
+      ],
+    };
     const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
     expect(info.overflow).toBe(false);
-    expect(info.shown).toBe(1);
+    expect(info.shown).toBe(3);
     const zone = await page.evaluate(() => {
-      const c = document.getElementById('card').getBoundingClientRect();
-      const box = (sel) => { const e = document.querySelector(sel); const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top }; };
+      const card = document.getElementById('card');
+      const c = card.getBoundingClientRect();
+      const box = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top, left: r.left - c.left, text: e.textContent }; };
+      const also = [...document.querySelectorAll('.ig-also-item h3')].map((e) => e.textContent.trim());
       return {
-        title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'),
-        brandBg: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor,
-        size: parseFloat(getComputedStyle(document.querySelector('.ig-title')).fontSize),
-        creditText: document.querySelector('.ig-credit').textContent,
-        mediaText: document.querySelector('.ig-media').textContent,
-        dateText: document.querySelector('.ig-edge span')?.textContent,
-        motto: document.querySelector('.ig-motto'),
-        qr: document.querySelector('.ig-qr'),
+        className: card.className,
         w: c.width, h: c.height,
+        title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'),
+        by: box('.ig-by'), pill: box('.ig-pill'), date: box('.ig-date'),
+        motto: box('.ig-motto'), mottoLead: box('.ig-motto .lead'), mottoTag: box('.ig-motto .tag'), wm: box('.ig-brand .wm'),
+        titleFont: getComputedStyle(document.querySelector('.ig-title')).fontFamily,
+        size: parseFloat(getComputedStyle(document.querySelector('.ig-title')).fontSize),
+        creditText: document.querySelector('.ig-credit')?.textContent,
+        mediaText: document.querySelector('.ig-media')?.textContent,
+        byText: document.querySelector('.ig-by')?.textContent,
+        edge: document.querySelector('.ig-edge'),
+        qr: document.querySelector('.ig-qr'),
+        also, alsoCount: also.length,
       };
     });
     expect(zone.w).toBe(1080); expect(zone.h).toBe(1440);
-    expect(zone.brandBg).toBe('rgb(0, 0, 0)');
-    expect(zone.size).toBeGreaterThanOrEqual(48);
+    expect(zone.className).toMatch(/une-b/);
+    expect(zone.className).toMatch(/photo/);
+    expect(zone.edge, 'plus de barres noires de l’ancienne grille').toBeNull();
+    expect(zone.qr, 'une Instagram : pas de QR (réservé à l’article)').toBeNull();
+    expect(zone.pill.text.trim()).toBe(`La une du ${kind}`);
+    expect(zone.date.text.trim()).toBe('Dimanche 22 novembre 2026');
+    expect(zone.title.text.trim()).toBe('La bibliothèque prolonge ses heures');
     expect(zone.mediaText).toBe('Impact Campus');
+    expect(zone.byText).toBe('Par\u00A0Autrice 1');
     expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
-    expect(zone.dateText).toBe('Dimanche 22 novembre');
-    expect(zone.motto, 'unes régulières : pas le slogan v6').toBeNull();
-    expect(zone.qr, 'unes régulières : pas de QR v6').toBeNull();
-    for (const b of [zone.title, zone.brand, zone.credit, zone.media]) {
-      expect(b.top).toBeGreaterThanOrEqual(180);
-      expect(b.bottom).toBeLessThanOrEqual(1260);
-    }
+    expect(zone.titleFont, 'titre en Source Serif 4').toMatch(/Source Serif 4/i);
+    expect(zone.size).toBeGreaterThanOrEqual(44);
+    expect(zone.mottoLead.text.trim()).toBe('Journaux, radios et sports étudiants du Québec,');
+    expect(zone.mottoTag.text.trim()).toBe('réunis au même endroit');
+    expect(zone.mottoTag.top, 'saut de ligne du slogan après « Québec, »').toBeGreaterThan(zone.mottoLead.bottom - 2);
+    expect(Math.abs(zone.mottoLead.left - zone.wm.left), 'slogan aligné sur le mot-symbole').toBeLessThanOrEqual(2);
+    expect(zone.alsoCount, 'jusqu’à 2 titres en Aussi à la une').toBe(2);
+    expect(zone.also[0]).toMatch(/Deuxième titre/);
+    expect(zone.also[1]).toMatch(/Troisième titre/);
+    expect(zone.also.join(' ')).not.toMatch(/Quatrième titre/);
   });
 }
 
