@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T08:06:56.603Z",
+  "updatedAt": "2026-11-22T09:07:11.876Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:17.280Z"
+      "checkedAt": "2026-11-22T09:06:15.687Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:30.572Z"
+      "checkedAt": "2026-11-22T09:06:28.708Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,7 +73,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:34.063Z"
+      "checkedAt": "2026-11-22T09:06:31.171Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:48.119Z"
+      "checkedAt": "2026-11-22T09:06:44.620Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:49.062Z"
+      "checkedAt": "2026-11-22T09:06:45.698Z"
     },
     "choq": {
       "id": "choq",
@@ -129,23 +129,23 @@
       "current": null,
       "next": {
         "title": "OPUS",
-        "source": "api-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
-        "slug": "opus"
+        "url": "https://www.choq.ca/balados/opus"
       },
       "track": "- Bloc Pub 21 juillet.mp3",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-22T08:06:56.252Z"
+      "checkedAt": "2026-11-22T09:07:11.525Z"
     }
   }
 }
