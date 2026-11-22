@@ -192,6 +192,9 @@ assert.match(third, /couleurs modifiées/);
 assert.match(third, /Mr Dafoe/);
 assert.match(third, /SIL Open Font License 1\.1/);
 assert.match(cssSrc, /Mr Dafoe/);
-assert.match(cssSrc, /vice-city-wink|MrDafoe-Regular/);
+assert.match(cssSrc, /MrDafoe-Regular/);
+assert.match(cssSrc, /Ville de Montréal, QC/);
+assert.match(cssSrc, /Ville de Québec, QC/);
+assert.doesNotMatch(cssSrc, /Vous amusez-vous dans le nouveau Vice City/);
 
 console.log("tests/doodle-boot.mjs : ok");

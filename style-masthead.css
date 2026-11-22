@@ -1408,7 +1408,7 @@ html.doodle-on .wordmark-logo {
   }
 }
 
-/* Clin d’œil Vice City : Mr Dafoe (SIL OFL), pas la police propriétaire GTA. */
+/* Nom de la ville en Mr Dafoe (SIL OFL), selon data-doodle-city. */
 @font-face {
   font-family: "Mr Dafoe";
   src: url("assets/doodle/mr-dafoe/MrDafoe-Regular.ttf") format("truetype");
@@ -1422,8 +1422,13 @@ html.doodle-on .wordmark-mark {
   justify-content: center;
   align-items: center;
 }
+html.doodle-on[data-doodle-city="montreal"] .wordmark-mark::after {
+  content: "Ville de Montréal, QC";
+}
+html.doodle-on[data-doodle-city="quebec"] .wordmark-mark::after {
+  content: "Ville de Québec, QC";
+}
 html.doodle-on .wordmark-mark::after {
-  content: "Vous amusez-vous dans le nouveau Vice City ?";
   flex: 0 0 100%;
   display: block;
   box-sizing: border-box;

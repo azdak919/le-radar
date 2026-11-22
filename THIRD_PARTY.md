@@ -36,10 +36,10 @@ Les deux photographies sont des adaptations CC BY-SA 3.0 (redimensionnement, rec
 
 Le titre Pricedown du doodle (`assets/doodle/le-radar-pricedown.svg`) est une image vectorielle fixe, sans fichier de police ni glyphe redistribués. Voir `assets/doodle/README.md`.
 
-## Police Mr Dafoe (clin d’œil Vice City du doodle)
+## Police Mr Dafoe (nom de ville du doodle)
 
 - Fichiers : `assets/doodle/mr-dafoe/MrDafoe-Regular.ttf`, licence : `assets/doodle/mr-dafoe/OFL.txt`.
 - Auteur : Alejandro Paul (Sudtipos).
 - Licence : **SIL Open Font License 1.1**, avec nom de police réservé « Mr Dafoe ». Compatible avec une distribution GPL-2.0-only : la police reste sous OFL, elle n’est pas relicenciée en GPL. Aucune dépendance Apache-2.0.
-- Usage : lettrage de la ligne « Vous amusez-vous dans le nouveau Vice City ? » (mât et publications), choisi pour son écriture script inclinée proche de l’esprit du logo Vice City. Ce n’est pas la police propriétaire de Grand Theft Auto, et elle n’en est pas une copie.
+- Usage : lettrage du nom de la ville affichée (« Ville de Montréal, QC » ou « Ville de Québec, QC ») sur le mât et les publications, en écriture script inclinée. Ce n’est pas la police propriétaire de Grand Theft Auto, et elle n’en est pas une copie.
 - Source : [Google Fonts / Mr Dafoe](https://fonts.google.com/specimen/Mr+Dafoe).
