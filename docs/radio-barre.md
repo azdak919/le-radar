@@ -17,6 +17,10 @@ Un site affiche la radio étudiante de LE-RADAR en une ligne :
 - Étroite (moins de 680 px, téléphone) : 58 px de haut ; le bouton volume ouvre un petit panneau.
 - Volume de 0 à 200 %, comme le-radar.ca. Au-delà de 100 %, le son passe par Web Audio si le flux le permet. CHYZ reste à 100 % au plus, comme sur le-radar.ca. Le volume et le son coupé sont retenus.
 
+## Licence
+
+`radio-barre.js` et `radio-barre.css` sont sous licence **MIT** (`SPDX-License-Identifier: MIT` en tête de fichier), comme les scripts d’intégration `embed.js` et `embed.css`. Les médias et les associations étudiantes peuvent les appeler, les copier ou les adapter librement. Le reste du code de LE-RADAR est sous GNU AGPLv3. Les flux, les noms et les logos des stations restent à leurs titulaires.
+
 ## Inventaire de la barre native
 
 | Élément de le-radar.ca | Ordinateur | Mobile | Dans le module |

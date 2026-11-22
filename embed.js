@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Iframe embed :
 // · tuner legacy (Pomo/Solitaire, sans surface=) — barre compacte 62 px, indépendante
 // · tuner bar — barre opaque campus (clair/sombre), 62 px

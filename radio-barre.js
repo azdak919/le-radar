@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* LE-RADAR — barre radio à intégrer en une ligne.
  *
  *   <script src="https://le-radar.ca/radio-barre.js" data-station="chyz" async></script>
