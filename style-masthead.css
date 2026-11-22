@@ -1449,9 +1449,17 @@ html.doodle-on .wordmark-mark::after {
   text-align: center;
   color: #ff6ab0;
   text-shadow:
-    0 0 2px rgba(255, 70, 160, 0.85),
-    0 0 8px rgba(255, 50, 150, 0.45),
-    0 1px 2px rgba(20, 0, 10, 0.7);
+    -1px 0 0 rgba(12, 6, 10, 0.82),
+    1px 0 0 rgba(12, 6, 10, 0.82),
+    0 -1px 0 rgba(12, 6, 10, 0.82),
+    0 1px 0 rgba(12, 6, 10, 0.82),
+    -1px -1px 0 rgba(12, 6, 10, 0.70),
+    1px -1px 0 rgba(12, 6, 10, 0.70),
+    -1px 1px 0 rgba(12, 6, 10, 0.70),
+    1px 1px 0 rgba(12, 6, 10, 0.70),
+    0 2px 3px rgba(8, 2, 6, 0.70),
+    0 0 2px rgba(255, 70, 160, 0.50),
+    0 0 8px rgba(255, 50, 150, 0.28);
   pointer-events: none;
 }
 /* Air entre la ligne de ville et la pastille-devise (bureau). */

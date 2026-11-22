@@ -199,6 +199,12 @@ assert.match(cssSrc, /word-spacing/);
 assert.doesNotMatch(cssSrc, /Mr Dafoe|MrDafoe-Regular/);
 assert.match(cssSrc, /Ville de Montréal, QC/);
 assert.match(cssSrc, /Ville de Québec, QC/);
+assert.match(
+  cssSrc,
+  /wordmark-mark::after[\s\S]*?text-shadow:[\s\S]*?rgba\(\s*12,\s*6,\s*10/,
+  "ligne de ville : contour sombre pour le contraste",
+);
+
 assert.doesNotMatch(cssSrc, /Vous amusez-vous dans le nouveau Vice City/);
 assert.doesNotMatch(cssSrc, /html\.doodle-on \.wordmark-logo \{ display: none/);
 assert.doesNotMatch(cssSrc, /doodle-on \.masthead-date::before/);
