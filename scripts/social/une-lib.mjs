@@ -41,12 +41,15 @@ export const PREPARED_NETS = ['instagram'];
 /**
  * Format d'image par réseau (revue du 12 nov. 2026, docs/social-engagement.md) : le portrait 4:5 s'affiche sans recadrage
  * pour une image seule dans les fils mobiles de X, Bluesky (recadre seulement au-delà de 1:2), Mastodon (4.x, ratio natif),
- * LinkedIn, Facebook et Tumblr. Instagram : grille 3:4 1080×1440, dessinée pour ce ratio. Jamais de story ni de reel.
+ * LinkedIn, Facebook et Tumblr. Instagram : une 3:4 1080×1440 (format grille, modèle B). Jamais de story ni de reel.
  * Le paysage 16:9 reste rendu en aperçu (repli), sans réseau attitré.
  */
 export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'grille' };
 export const STORY_FOR = {};
-export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
+export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, article: { width: 1080, height: 1440 }, 'article-portrait': { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
+/** Post d’un seul article (modèle v6) sur tous les réseaux. Les unes matin/soir automatiques : IMAGE_FOR (portrait 4:5 / grille Instagram 3:4 modèle B). */
+export const ARTICLE_IMAGE_FOR = { instagram: 'article', facebook: 'article-portrait', tumblr: 'article-portrait', x: 'article-portrait', bluesky: 'article-portrait', mastodon: 'article-portrait', linkedin: 'article-portrait' };
+export const articleFormatsFor = (nets) => [...new Set((nets || []).map((n) => ARTICLE_IMAGE_FOR[n]).filter(Boolean))];
 /** Formats à rendre pour une liste de réseaux (aperçu : tous). */
 // Story 9:16 : publication DÉSACTIVÉE par défaut (décision de Charles, 13 nov. 2026 : refonte à valider). Seul
 // formats.une.story.publish === true dans data/social/policy.json la réactive ; l'aperçu (DRY_RUN) la rend toujours.
