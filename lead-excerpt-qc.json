@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-22T04:10:15.293Z",
+  "updated": "2026-11-22T05:48:19.342Z",
   "total": 1053,
   "pool": 61,
   "incomplete": 26,
-  "withLeadExcerpt": 207,
+  "withLeadExcerpt": 209,
   "candidates": 26,
-  "enriched": 3,
-  "failed": 11,
+  "enriched": 13,
+  "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,12 +46,30 @@
       "changed": false
     },
     {
-      "title": "Bittersweet end of season for the Montreal Roses",
-      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
-      "chars": 414,
-      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
+      "ok": true,
+      "score": 100,
+      "chars": 380,
+      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
+      "changed": true
+    },
+    {
+      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/et-si-le-referendum-de-95-avait-lieu-aujourdhui/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-le-referendum-de-95-avait-lieu-aujourdhui",
+      "ok": true,
+      "score": 96,
+      "chars": 378,
+      "sample": "« Je pense qu’aujourd’hui, la grosse différence, c’est que les échanges entourant la souveraineté se",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 450,
       "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
-      "changed": false
-    },
-    {
-      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
-      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
-      "ok": true,
-      "score": 100,
-      "chars": 404,
-      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
       "changed": false
     }
   ]
