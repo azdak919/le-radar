@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-22T07:35:07.622Z",
-  "total": 1041,
+  "updated": "2026-11-22T18:47:05.286Z",
+  "total": 1043,
   "pool": 61,
   "incomplete": 26,
-  "withLeadExcerpt": 209,
+  "withLeadExcerpt": 211,
   "candidates": 26,
-  "enriched": 3,
-  "failed": 8,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -46,22 +55,13 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Médias : après la crise du papier, la crise d’Internet ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "chars": 340,
+      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
       "changed": false
-    },
-    {
-      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
-      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
-      "ok": true,
-      "score": 100,
-      "chars": 404,
-      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
-      "changed": true
     },
     {
       "title": "Cinq nouvelles de la semaine",
@@ -73,12 +73,12 @@
       "changed": false
     },
     {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
+      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
+      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
       "ok": true,
       "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
+      "chars": 404,
+      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
       "changed": false
     }
   ]

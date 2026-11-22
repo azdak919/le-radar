@@ -10,7 +10,7 @@
 
 > **Le Réseau Académique de Découverte et d'Agrégation de Ressources**
 
-LE-RADAR est une plateforme libre destinée à **fédérer les médias étudiants** et à leur
+LE-RADAR est une plateforme libre destinée à **agréger les médias étudiants** et à leur
 offrir une infrastructure moderne : journaux, radios et **sports** étudiants des cégeps
 et universités du Québec, réunis au même endroit.
 
@@ -291,7 +291,7 @@ Signale aussi les liens cassés, flux morts ou sources manquantes.
 
 **Contact du projet** — [azdak-qc@proton.me](mailto:azdak-qc@proton.me)
 
-Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
+Contenus agrégés : articles et photos crédités à leurs auteurs et à leurs médias d’origine. Code tiers utilisé conformément à ses licences.
 
 🤖 **Agrégateur automatisé de contenus** — LE-RADAR collecte et reformate des publications étudiantes tierces (titres, brèves, liens, métadonnées). Chaque article renvoie vers sa source originale. Les radios et journaux listés restent propriété de leurs équipes respectives.
 

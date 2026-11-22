@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v1071",
+    "cache": "radar-shell-v1070",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -26,8 +26,8 @@
       "radar-lifecycle.js": "434cb5cea8616dfa",
       "radar-news.js": "aaa88087bed7e5aa",
       "radar-sports-cta.js": "a00a45daf315f09b",
-      "radar-state.js": "23e3cc1db3da1cd9",
-      "radar-tuner.js": "da7eecc29375071c",
+      "radar-state.js": "1c36a4296feeabdf",
+      "radar-tuner.js": "d54e9a99851408de",
       "radar-utils.js": "7d624dbff2c4e2d3",
       "radar-weather.js": "7c5d901de8137bfe",
       "scripts/article-card-lib.js": "2f1e1cf8380c661c",
@@ -48,7 +48,7 @@
       "style-masthead.css": "3521f939e051f47d",
       "style-sports-strip.css": "d8babc48fd99cf03",
       "style-translate-overlay.css": "51298bec3a3a6654",
-      "style-tuner.css": "fe8ef45740974edb",
+      "style-tuner.css": "cc317ac09f022c3a",
       "style.css": "ed081517df482b04",
       "translate-menu.css": "fd0e95a4bc5b20c2",
       "translate-menu.js": "2f70f0aa5ff76db2",
@@ -104,7 +104,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v444",
+    "cache": "sports-shell-v443",
     "assets": {
       "app-sw-register.js": "5e30ff1ae069d10f",
       "app.js": "0e0df2c60f5900e3",
@@ -121,8 +121,8 @@
       "radar-lifecycle.js": "434cb5cea8616dfa",
       "radar-news.js": "aaa88087bed7e5aa",
       "radar-sports-cta.js": "a00a45daf315f09b",
-      "radar-state.js": "23e3cc1db3da1cd9",
-      "radar-tuner.js": "da7eecc29375071c",
+      "radar-state.js": "1c36a4296feeabdf",
+      "radar-tuner.js": "d54e9a99851408de",
       "radar-utils.js": "7d624dbff2c4e2d3",
       "radar-weather.js": "7c5d901de8137bfe",
       "scripts/article-card-lib.js": "2f1e1cf8380c661c",
@@ -142,7 +142,7 @@
       "style-masthead.css": "3521f939e051f47d",
       "style-sports-strip.css": "d8babc48fd99cf03",
       "style-translate-overlay.css": "51298bec3a3a6654",
-      "style-tuner.css": "fe8ef45740974edb",
+      "style-tuner.css": "cc317ac09f022c3a",
       "style.css": "ed081517df482b04",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }

@@ -1,17 +1,125 @@
 {
-  "updatedAt": "2026-11-22T08:06:56.603Z",
+  "updatedAt": "2026-11-22T18:37:45.950Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
+      "current": {
+        "title": "Radio Futura",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:30",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
+      "next": {
+        "title": "Remparts de Québec",
+        "source": "schedule-live",
+        "start": "14:45",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+      },
+      "track": "",
+      "showTitle": "Radio Futura",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-22T18:37:11.574Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le char de marge",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
+      },
+      "next": {
+        "title": "La Grapevine",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/la-grapevine"
+      },
+      "track": "",
+      "showTitle": "Le char de marge",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-22T18:37:12.746Z"
+    },
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "current": {
+        "title": "Modular Systems/Future Classics",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00"
+      },
+      "next": {
+        "title": "The Magic Roundabout",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
+      "track": "",
+      "showTitle": "Modular Systems/Future Classics",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-22T18:37:15.077Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "Northern Stagelights",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
+      "next": {
+        "title": "Methods and Madness",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/methods-and-madness"
+      },
+      "track": "",
+      "showTitle": "Northern Stagelights",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-22T18:37:38.906Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
       "current": null,
       "next": {
-        "title": "Palmarès CHYZ",
+        "title": "Les nuits CFAK",
         "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "start": "00:01",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
       "track": "",
       "showTitle": "",
@@ -21,131 +129,28 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:17.280Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
-        "title": "Genre de bleu",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
-      },
-      "track": "",
-      "showTitle": "Mix franco",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:30.572Z"
-    },
-    "ckut": {
-      "id": "ckut",
-      "name": "CKUT 90,3",
-      "current": {
-        "title": "Utopia's Paradise",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
-      },
-      "next": {
-        "title": "Mind, Soul, & Spirit",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
-      },
-      "track": "Utopia",
-      "showTitle": "Utopia's Paradise",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:34.063Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
-        "title": "Sun Ra, Sun Rise",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
-      },
-      "track": "",
-      "showTitle": "CJLO Late Night",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:48.119Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "04:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": null,
-      "track": "",
-      "showTitle": "Les nuits CFAK",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-22T08:06:49.062Z"
+      "checkedAt": "2026-11-22T18:37:39.992Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "OPUS",
+        "title": "Mutations",
         "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "opus"
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
       },
-      "track": "- Bloc Pub 21 juillet.mp3",
+      "track": "Baby Rose — When I'm Gone",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-11-22T08:06:56.252Z"
+      "clientPoll": null,
+      "checkedAt": "2026-11-22T18:37:45.599Z"
     }
   }
 }

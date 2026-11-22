@@ -2078,7 +2078,8 @@ assert(
     'wide : le marquee sports n’est pas gelé par transform:none, le nom météo peut dépasser',
   );
 }
-// Titre sports + dial : alternate, 1 aller-retour. Ligne du bas : boucle continue.
+// Titre sports : alternate, 1 aller-retour. Ligne du bas : boucle continue.
+// (Le dial boucle désormais aussi — assertion suivante.)
 assert(
   !/sports-chip-scroll(?!-sub)[^;]*infinite/.test(cssFlat)
     && /sports-chip-scroll-sub[^;]*--sports-scroll-duration-sub[^;]*linear[^;]*infinite/.test(cssFlat)
@@ -2087,10 +2088,22 @@ assert(
     && /sports-cta-scroll-sub[^;]*--sports-scroll-duration-sub[^;]*linear[^;]*infinite/.test(cssFlat)
     && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
     && /--sports-loop-gap:\s*48px/.test(cssFlat)
-    && /tunerMarquee[^;]*alternate\s+both/.test(cssFlat)
     && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs)
     && appJs.includes('function marqueeAlternateCount'),
-  'CSS/JS : titre sports et dial en aller-retour ; ligne du bas en boucle continue',
+  'CSS/JS : titre sports en aller-retour ; ligne du bas en boucle continue',
+);
+// Dial + pastilles sources : nom du poste et établissement ne tournent jamais.
+// Un aller-retour fini les laissait tronqués pour le reste de la visite →
+// boucle, repos dans les keyframes, ratio partagé CSS/JS, pause au survol.
+assert(
+  /\.is-marquee > \.tuner-now-sub-text \{ animation: tunerMarqueeLoop calc\(var\(--marquee-duration[^)]*\) \* var\(--marquee-cycle-ratio[^;]*infinite both/.test(cssFlat)
+    && /--marquee-cycle-ratio: 2\.5/.test(cssFlat)
+    && /@keyframes tunerMarqueeLoop \{ 0%, 10%/.test(cssFlat)
+    && /\.is-marquee:hover > \.tuner-now-sub-text, \.is-marquee:active > \.tuner-now-sub-text \{ animation-play-state: paused/.test(cssFlat)
+    && /MARQUEE_END_REST_RATIO\s*=\s*0\.25/.test(appJs)
+    && /MARQUEE_CYCLE_RATIO\s*=\s*MARQUEE_ROUND_TRIPS \+ MARQUEE_END_REST_RATIO \* 2/.test(appJs)
+    && /function marqueeRoundTripMs[\s\S]{0,300}?MARQUEE_CYCLE_RATIO/.test(appJs),
+  'CSS/JS : marquee dial/filtres en boucle (repos dans les keyframes), ratio 2.5 partagé',
 );
 // Magazine mid : CSS 2 col dès 768 (iPad portrait). Le JS d'équilibre /
 // graine En bref / extraits mid doit partager ce seuil — à 900 px les
