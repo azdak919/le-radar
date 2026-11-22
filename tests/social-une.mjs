@@ -6,6 +6,7 @@ import { gate, pruneState, CFG } from '../scripts/social/une-run.mjs';
 import { NET_SPEC } from '../scripts/social/formats.mjs';
 import { POLICY } from '../scripts/social/policy.mjs';
 import { chooseInstagramImage } from '../scripts/social/instagram.mjs';
+import { pageModel } from '../scripts/social/une-render.mjs';
 
 // ── Créneaux : 7 h 45 et 19 h 30 heure de Montréal, été comme hiver ──
 assert.equal(U.slotAt(Date.parse('2026-11-13T12:45:00Z'))?.id, 'matin');       // 7 h 45 HNE
@@ -312,6 +313,11 @@ assert.ok((ig.text.match(/#[\p{L}\p{N}_]+/gu) || []).length >= 3, ig.text);
 assert.ok((ig.text.split('\n')[0] || '').length <= 125);
 assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
 assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30'); assert.equal(U.frHour(''), ''); assert.equal(U.frHour('00:00'), '0 h');
+assert.equal(U.frDay('2026-11-21'), 'samedi 21 novembre');
+assert.equal(U.frDayYear('2026-11-21'), 'samedi 21 novembre 2026');
+assert.equal(U.frDayYear('2026-11-01'), 'dimanche 1er novembre 2026');
+assert.equal(pageModel({ slot: { label: 'La une du soir', id: 'soir', day: '2026-11-21' }, items: [] }).slot.dayLabel, 'Samedi 21 novembre 2026');
+
 
 // ── Lien vers l'édition de la revue : 2e ligne, seulement si la page existe ──
 const matin17 = U.slotFor('matin', Date.parse('2026-11-17T12:45:00Z'));

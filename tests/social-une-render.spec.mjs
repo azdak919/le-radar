@@ -113,23 +113,27 @@ for (const kind of ['matin', 'soir']) {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
-    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 et Autrice 2 · Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 et Autrice 2 · Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
     const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
     expect(info.overflow).toBe(false);
     expect(info.shown).toBe(1);
     const zone = await page.evaluate(() => {
       const c = document.getElementById('card').getBoundingClientRect();
-      const box = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top, text: e.textContent }; };
+      const box = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top, left: r.left - c.left, right: r.right - c.left, text: e.textContent }; };
       const labels = [...document.querySelectorAll('.ig-kicker, .ig-edge span')].map((e) => e.textContent.trim()).filter(Boolean);
       return {
         title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'), by: box('.ig-by'),
+        motto: box('.ig-motto'), wm: box('.ig-brand .wm'),
         brandBg: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor,
         size: parseFloat(getComputedStyle(document.querySelector('.ig-title')).fontSize),
+        wmSize: parseFloat(getComputedStyle(document.querySelector('.ig-brand .wm')).fontSize),
+        logoH: document.querySelector('.ig-brand img')?.getBoundingClientRect().height,
         creditText: document.querySelector('.ig-credit').textContent,
         mediaText: document.querySelector('.ig-media').textContent,
         byText: document.querySelector('.ig-by')?.textContent,
         dateText: document.querySelector('.ig-kicker .date')?.textContent,
         kickerText: document.querySelector('.ig-kicker')?.textContent,
+        mottoText: document.querySelector('.ig-motto')?.textContent,
         qr: document.querySelector('.ig-qr'),
         photo: box('.ig-photo'),
         labels,
@@ -143,13 +147,18 @@ for (const kind of ['matin', 'soir']) {
     expect(zone.byText).toBe('Par\u00A0Autrice 1 et Autrice 2');
     expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
     expect(zone.labels.filter((t) => t.toLowerCase().includes(`la une du ${kind}`)).length, 'libellé du créneau une seule fois').toBe(1);
-    expect(zone.dateText).toBe('Dimanche 22 novembre');
-    expect(zone.kickerText.replace(/\s+/g, ' ').trim().toLowerCase()).toBe(`la une du ${kind} · dimanche 22 novembre`);
+    expect(zone.dateText).toBe('Dimanche 22 novembre 2026');
+    expect(zone.kickerText.replace(/\s+/g, ' ').trim().toLowerCase()).toBe(`la une du ${kind} · dimanche 22 novembre 2026`);
+    expect(zone.mottoText.replace(/\s+/g, ' ').trim()).toBe('Journaux, radios et sports étudiants du Québec, réunis au même endroit');
+    expect(zone.wmSize, 'corps du mot-symbole = hauteur de l’icône').toBe(zone.logoH);
+    expect(zone.wmSize).toBe(100);
+    expect(zone.motto.left, 'slogan aligné à gauche sur le mot-symbole').toBeGreaterThanOrEqual(zone.wm.left - 2);
+    expect(zone.motto.left).toBeLessThanOrEqual(zone.wm.left + 2);
     expect(zone.qr, 'pas de QR sans pageUrl d’article').toBeNull();
     expect(zone.brandBg === 'rgba(0, 0, 0, 0)' || zone.brandBg === 'transparent', 'pas de capsule derrière la marque').toBeTruthy();
     expect(zone.photo.top).toBeLessThanOrEqual(0);
     expect(zone.photo.bottom).toBeGreaterThanOrEqual(1440);
-    for (const b of [zone.title, zone.brand, zone.credit, zone.media, zone.by]) {
+    for (const b of [zone.title, zone.brand, zone.credit, zone.media, zone.by, zone.motto, zone.wm]) {
       expect(b, 'élément présent dans le carré').toBeTruthy();
       expect(b.top).toBeGreaterThanOrEqual(180);
       expect(b.bottom).toBeLessThanOrEqual(1260);
@@ -160,7 +169,7 @@ for (const kind of ['matin', 'soir']) {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
-    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { source: 'Impact Campus', byline: 'Impact Campus', credit: 'Photo : Équipe' })] };
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { source: 'Impact Campus', byline: 'Impact Campus', credit: 'Photo : Équipe' })] };
     await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
     expect(await page.locator('.ig-by').count()).toBe(0);
     expect(await page.locator('.ig-media').textContent()).toBe('Impact Campus');
@@ -175,7 +184,7 @@ for (const kind of ['matin', 'soir']) {
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
     const pageUrl = 'https://le-radar.ca/article/dac64fa8d6a7b3df/';
-    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 · Impact Campus', credit: 'Photo : Équipe', pageUrl })] };
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 · Impact Campus', credit: 'Photo : Équipe', pageUrl })] };
     await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
     const qr = page.locator('.ig-qr');
     await expect(qr).toHaveCount(1);
@@ -185,9 +194,10 @@ for (const kind of ['matin', 'soir']) {
       const rel = (e) => { const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top, left: r.left - c.left, right: r.right - c.left, mid: (r.left + r.right) / 2 - c.left }; };
       const qr = rel(document.querySelector('.ig-qr'));
       const brand = rel(document.querySelector('.ig-brand'));
+      const motto = rel(document.querySelector('.ig-motto'));
       const logo = document.querySelector('.ig-brand img');
       return {
-        qr, brand,
+        qr, brand, motto,
         logo: logo.getBoundingClientRect().height,
         wm: parseFloat(getComputedStyle(document.querySelector('.ig-brand .wm')).fontSize),
       };
@@ -200,6 +210,9 @@ for (const kind of ['matin', 'soir']) {
     expect(box.wm, 'corps du mot-symbole = hauteur de l’icône').toBe(box.logo);
     expect(box.wm).toBe(100);
     expect(box.brand.right, 'la signature ne chevauche pas le QR').toBeLessThanOrEqual(box.qr.left - 8);
+    expect(box.motto.right, 'le slogan ne chevauche pas le QR').toBeLessThanOrEqual(box.qr.left - 8);
+    expect(box.motto.bottom).toBeLessThanOrEqual(1260);
+
     // Décode le JPEG rendu si zbarimg est disponible (aperçus v4 aussi vérifiés ainsi).
     const shot = await page.locator('#card').screenshot({ type: 'jpeg', quality: 92 });
     const fs = await import('node:fs');
@@ -221,7 +234,7 @@ for (const kind of ['matin', 'soir']) {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
-    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { pageUrl: 'https://quartierlibre.ca/exemple/' })] };
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { pageUrl: 'https://quartierlibre.ca/exemple/' })] };
     await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
     expect(await page.locator('.ig-qr').count()).toBe(0);
   });

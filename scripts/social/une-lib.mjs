@@ -391,6 +391,10 @@ export function frDay(ymd) {
   const [y, m, d] = ymd.split('-').map(Number), wd = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
   return `${FR_DAYS[wd]} ${d === 1 ? '1er' : d} ${FR_MONTHS[m - 1]}`;
 }
+/** « jeudi 12 novembre 2026 » (jour civil Montréal, avec l’année). */
+export function frDayYear(ymd) {
+  return `${frDay(ymd)} ${String(ymd).slice(0, 4)}`;
+}
 
 // ── Textes ───────────────────────────────────────────────────────────────────
 export const HOME = `${SITE}/`;

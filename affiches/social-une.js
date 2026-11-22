@@ -124,8 +124,17 @@
   }
   let THEME = 'clair';
   function brandBar() {
-    const bar = el('div', 'ig-brand'); const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
-    bar.append(logo, el('span', 'wm', 'LE\u2011RADAR.ca'));
+    const bar = el('div', 'ig-brand');
+    const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
+    const text = el('div', 'ig-brand-text');
+    text.append(el('span', 'wm', 'LE\u2011RADAR.ca'));
+    const motto = el('p', 'ig-motto');
+    motto.append(
+      el('span', 'lead', 'Journaux, radios et sports étudiants du Québec, '),
+      el('span', 'tag', 'réunis au même endroit'),
+    );
+    text.append(motto);
+    bar.append(logo, text);
     bar.ready = new Promise((r) => { if (logo.complete) r(); else { logo.onload = r; logo.onerror = r; } });
     return bar;
   }
