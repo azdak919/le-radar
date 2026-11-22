@@ -111,7 +111,8 @@ function weatherExtraSpan(className, text) {
   return node;
 }
 
-/** Max / min du jour, puis demain (icône + max). Hors flux tant que la puce n’a pas de vide. */
+/** Max / min du jour, puis demain (icône + max). Après le degré, comme le Kiosque.
+ *  Hors flux tant que la puce n’a pas de vide. */
 function paintWeatherExtra(el, entry) {
   const today = weatherDayPart(entry?.daily, 0);
   const tomorrow = weatherDayPart(entry?.daily, 1);
@@ -130,8 +131,10 @@ function paintWeatherExtra(el, entry) {
     extra = document.createElement('span');
     extra.className = 'masthead-weather__extra';
     extra.setAttribute('aria-hidden', 'true');
-    el.insertBefore(extra, el.querySelector('.masthead-weather__temp'));
   }
+  const temp = el.querySelector('.masthead-weather__temp');
+  if (temp) temp.after(extra);
+  else el.append(extra);
   const labels = weatherExtraLabelText(weatherUiEn());
   extra.replaceChildren();
   const todayEl = weatherExtraSpan('masthead-weather__today');
@@ -191,6 +194,16 @@ function weatherChipSlack(el, textW) {
   return el.clientWidth - pad - iconW - namePad - textW - tempW - tempMargin - gap * 3;
 }
 
+/** MTL et QC sont en colonne max-content (≥1440) : le max/min les élargit.
+ *  Entre 1280 et 1439 les colonnes sont à parts égales et le fit retire une
+ *  ville si la puce grossit — là, le max/min ne s’affiche que s’il reste du vide. */
+function weatherPrimaryGrowsForToday(el) {
+  if (mastheadWeatherDocked || !isWideDesktopComfort()) return false;
+  const id = el.dataset.weatherCity;
+  if (id !== 'montreal' && id !== 'quebec') return false;
+  return !!el.closest('.masthead-weather__board')?.hasAttribute('data-weather-dual-primary');
+}
+
 function commitWeatherExtra(el, extra, mode, before) {
   if (mode === 'off') {
     el.classList.remove('has-room');
@@ -201,7 +214,8 @@ function commitWeatherExtra(el, extra, mode, before) {
   el.dataset.weatherExtra = mode;
   const grew = el.clientWidth > before + 1;
   const clipped = extra.scrollWidth > extra.clientWidth + 1;
-  if (!grew && !clipped) return;
+  const primaryToday = mode === 'today' && weatherPrimaryGrowsForToday(el);
+  if (!clipped && (!grew || primaryToday)) return;
   commitWeatherExtra(el, extra, mode === 'both' ? 'today' : 'off', before);
 }
 
@@ -217,7 +231,9 @@ function applyWeatherExtraFit(el, textW) {
   const todayW = measureWeatherExtraWidth(extra, 'today');
   const bothW = el.dataset.wxNext ? measureWeatherExtraWidth(extra, 'both') : 0;
   const slack = weatherChipSlack(el, textW);
-  commitWeatherExtra(el, extra, weatherExtraMode(slack, todayW, bothW), el.clientWidth);
+  let mode = weatherExtraMode(slack, todayW, bothW);
+  if (mode === 'off' && weatherPrimaryGrowsForToday(el) && todayW > 0) mode = 'today';
+  commitWeatherExtra(el, extra, mode, el.clientWidth);
 }
 
 let mastheadWeatherTimer = null;
@@ -1104,9 +1120,9 @@ function weatherBoardCount() {
   if (weatherWideDualPrimary()) {
     // Plancher 2 = MTL + QC toujours visibles ; au-delà = secondaires rotatives.
     if (isWideDesktopComfort()) {
-      // MTL+QC compactes ; reliquat aux secondaires pour les longs noms
-      // (Trois-Rivières, Rouyn-Noranda), pas une 7e carte étroite + un trou.
-      const nSec = Math.max(1, Math.floor((width - 280) / 200));
+      // MTL+QC portent le max/min (~230 px chacune). Le reliquat
+      // laisse un nom court montrer le sien, pas une carte de plus trop étroite.
+      const nSec = Math.max(1, Math.floor((width - 480) / 240));
       count = Math.max(3, Math.min(12, 2 + nSec));
     } else if (width >= 1800) count = 8;
     else if (width >= 1200) count = 7;

@@ -1077,6 +1077,9 @@ a { color: inherit; }
 }
 /*
  * Max, min et demain (comme le Kiosque) seulement dans le vide de la puce.
+ * Ordre : icône, ville, degré, puis le supplément. Le degré reste collé
+ * au toponyme ; le max/min occupe le vide, calé à droite.
+ * Montréal et Québec (colonne au contenu) s’élargissent pour ce max/min.
  * display:none par défaut : ça ne change pas le min-content, donc pas le
  * nombre de villes. .has-room est posé par applyWeatherExtraFit.
  */
