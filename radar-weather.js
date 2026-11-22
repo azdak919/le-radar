@@ -30,6 +30,212 @@ function weatherTone(code) {
   return 'cloud';
 }
 
+function weatherUiEn() {
+  try {
+    if (typeof RadarTranslate !== 'undefined' && RadarTranslate?.getMode?.() === 'en') return true;
+  } catch { /* ignore */ }
+  return document.documentElement.lang.startsWith('en');
+}
+
+/** Jour i des prévisions quotidiennes (0 = aujourd’hui, 1 = demain). */
+function weatherDayPart(daily, index) {
+  if (!daily) return null;
+  const max = Number(daily.temperature_2m_max?.[index]);
+  const min = Number(daily.temperature_2m_min?.[index]);
+  if (!Number.isFinite(max) || !Number.isFinite(min)) return null;
+  const code = Number(daily.weather_code?.[index]);
+  return {
+    max: Math.round(max),
+    min: Math.round(min),
+    code: Number.isFinite(code) ? code : 3,
+  };
+}
+
+/**
+ * both = max, min et demain rentrent dans le vide.
+ * today = seulement le jour. off = la puce reste ville + degré.
+ */
+function weatherExtraMode(slack, todayW, bothW) {
+  const pad = 4;
+  if (bothW > 0 && slack >= bothW + pad) return 'both';
+  if (todayW > 0 && slack >= todayW + pad) return 'today';
+  return 'off';
+}
+
+function weatherExtraLabelText(en) {
+  return { max: 'Max ', min: 'Min ', next: en ? 'Tomorrow' : 'Demain' };
+}
+
+function syncWeatherCityAria(el) {
+  const base = el.dataset.weatherAria;
+  if (!base) return;
+  const en = weatherUiEn();
+  const max = el.dataset.wxMax;
+  const min = el.dataset.wxMin;
+  const next = el.dataset.wxNext;
+  let label = base;
+  if (max && min) {
+    label += en
+      ? `, high ${max}°, low ${min}°`
+      : `, max ${max}°, min ${min}°`;
+    if (next) label += en ? `, tomorrow ${next}°` : `, demain ${next}°`;
+  }
+  el.setAttribute('aria-label', label);
+  const titleBase = el.dataset.weatherTitle;
+  if (!titleBase) return;
+  el.title = max && min
+    ? `${titleBase} · ${max}° / ${min}°${next ? ` · ${en ? 'tomorrow' : 'demain'} ${next}°` : ''}`
+    : titleBase;
+}
+
+function syncWeatherExtraLanguage() {
+  if (!MASTHEAD_WEATHER) return;
+  const labels = weatherExtraLabelText(weatherUiEn());
+  MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__extra').forEach((extra) => {
+    const max = extra.querySelector('[data-wx-label="max"]');
+    const min = extra.querySelector('[data-wx-label="min"]');
+    const next = extra.querySelector('[data-wx-label="next"]');
+    if (max) max.textContent = labels.max;
+    if (min) min.textContent = labels.min;
+    if (next) next.textContent = labels.next;
+  });
+  MASTHEAD_WEATHER.querySelectorAll('.masthead-weather__city').forEach((el) => {
+    syncWeatherCityAria(el);
+  });
+}
+
+function weatherExtraSpan(className, text) {
+  const node = document.createElement('span');
+  node.className = className;
+  if (text != null) node.textContent = text;
+  return node;
+}
+
+/** Max / min du jour, puis demain (icône + max). Après le degré, comme le Kiosque.
+ *  Hors flux tant que la puce n’a pas de vide. */
+function paintWeatherExtra(el, entry) {
+  const today = weatherDayPart(entry?.daily, 0);
+  const tomorrow = weatherDayPart(entry?.daily, 1);
+  let extra = el.querySelector('.masthead-weather__extra');
+  if (!today) {
+    extra?.remove();
+    delete el.dataset.wxMax;
+    delete el.dataset.wxMin;
+    delete el.dataset.wxNext;
+    el.classList.remove('has-room');
+    el.dataset.weatherExtra = 'off';
+    syncWeatherCityAria(el);
+    return;
+  }
+  if (!extra) {
+    extra = document.createElement('span');
+    extra.className = 'masthead-weather__extra';
+    extra.setAttribute('aria-hidden', 'true');
+  }
+  const temp = el.querySelector('.masthead-weather__temp');
+  if (temp) temp.after(extra);
+  else el.append(extra);
+  const labels = weatherExtraLabelText(weatherUiEn());
+  extra.replaceChildren();
+  const todayEl = weatherExtraSpan('masthead-weather__today');
+  const max = weatherExtraSpan('masthead-weather__hl');
+  const maxLabel = weatherExtraSpan('masthead-weather__label', labels.max);
+  maxLabel.dataset.wxLabel = 'max';
+  max.append(maxLabel, document.createTextNode(`${today.max}°`));
+  const min = weatherExtraSpan('masthead-weather__hl');
+  const minLabel = weatherExtraSpan('masthead-weather__label', labels.min);
+  minLabel.dataset.wxLabel = 'min';
+  min.append(minLabel, document.createTextNode(`${today.min}°`));
+  todayEl.append(max, min);
+  extra.append(todayEl);
+  if (tomorrow) {
+    const next = weatherExtraSpan('masthead-weather__tomorrow');
+    const nextLabel = weatherExtraSpan('masthead-weather__label', labels.next);
+    nextLabel.dataset.wxLabel = 'next';
+    const icon = document.createElement('span');
+    icon.className = 'masthead-weather__tomorrow-icon';
+    icon.innerHTML = weatherIcon(tomorrow.code, 1);
+    next.append(nextLabel, icon, weatherExtraSpan('masthead-weather__tomorrow-temp', `${tomorrow.max}°`));
+    extra.append(next);
+  }
+  el.dataset.wxMax = String(today.max);
+  el.dataset.wxMin = String(today.min);
+  if (tomorrow) el.dataset.wxNext = String(tomorrow.max);
+  else delete el.dataset.wxNext;
+  syncWeatherCityAria(el);
+}
+
+function measureWeatherExtraWidth(extra, mode) {
+  extra.dataset.measure = mode;
+  extra.classList.add('is-measuring');
+  const width = extra.scrollWidth || 0;
+  extra.classList.remove('is-measuring');
+  extra.removeAttribute('data-measure');
+  return width;
+}
+
+/** Vide utile une fois l’icône, le toponyme, le degré et les 3 gouttières posés. */
+function weatherChipSlack(el, textW) {
+  const cs = getComputedStyle(el);
+  const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+  const gap = parseFloat(cs.columnGap || cs.gap) || 0;
+  const name = el.querySelector('.masthead-weather__name');
+  const nameCs = name ? getComputedStyle(name) : null;
+  const namePad = nameCs
+    ? (parseFloat(nameCs.paddingLeft) || 0) + (parseFloat(nameCs.paddingRight) || 0)
+    : 0;
+  const iconW = el.querySelector('.masthead-weather__icon')?.getBoundingClientRect().width || 0;
+  const temp = el.querySelector('.masthead-weather__temp');
+  const tempW = temp?.getBoundingClientRect().width || 0;
+  const tempCs = temp ? getComputedStyle(temp) : null;
+  const tempMargin = tempCs
+    ? (parseFloat(tempCs.marginLeft) || 0) + (parseFloat(tempCs.marginRight) || 0)
+    : 0;
+  return el.clientWidth - pad - iconW - namePad - textW - tempW - tempMargin - gap * 3;
+}
+
+/** MTL et QC sont en colonne max-content (≥1440) : le max/min les élargit.
+ *  Entre 1280 et 1439 les colonnes sont à parts égales et le fit retire une
+ *  ville si la puce grossit — là, le max/min ne s’affiche que s’il reste du vide. */
+function weatherPrimaryGrowsForToday(el) {
+  if (mastheadWeatherDocked || !isWideDesktopComfort()) return false;
+  const id = el.dataset.weatherCity;
+  if (id !== 'montreal' && id !== 'quebec') return false;
+  return !!el.closest('.masthead-weather__board')?.hasAttribute('data-weather-dual-primary');
+}
+
+function commitWeatherExtra(el, extra, mode, before) {
+  if (mode === 'off') {
+    el.classList.remove('has-room');
+    el.dataset.weatherExtra = 'off';
+    return;
+  }
+  el.classList.add('has-room');
+  el.dataset.weatherExtra = mode;
+  const grew = el.clientWidth > before + 1;
+  const clipped = extra.scrollWidth > extra.clientWidth + 1;
+  const primaryToday = mode === 'today' && weatherPrimaryGrowsForToday(el);
+  if (!clipped && (!grew || primaryToday)) return;
+  commitWeatherExtra(el, extra, mode === 'both' ? 'today' : 'off', before);
+}
+
+/**
+ * Pose max/min (et demain s’il reste assez de vide) sans élargir la puce.
+ * Une puce déjà pleine — nom qui défile, ou colonne au contenu — reste inchangée.
+ */
+function applyWeatherExtraFit(el, textW) {
+  const extra = el.querySelector('.masthead-weather__extra');
+  el.classList.remove('has-room');
+  el.dataset.weatherExtra = 'off';
+  if (!extra || !el.dataset.wxMax || el.clientWidth < 48 || textW < 1) return;
+  const todayW = measureWeatherExtraWidth(extra, 'today');
+  const bothW = el.dataset.wxNext ? measureWeatherExtraWidth(extra, 'both') : 0;
+  const slack = weatherChipSlack(el, textW);
+  let mode = weatherExtraMode(slack, todayW, bothW);
+  if (mode === 'off' && weatherPrimaryGrowsForToday(el) && todayW > 0) mode = 'today';
+  commitWeatherExtra(el, extra, mode, el.clientWidth);
+}
+
 let mastheadWeatherTimer = null;
 /** Vrai seulement pendant la pause entre deux vagues (pas pendant le pas 440 ms). */
 let mastheadWeatherHolding = false;
@@ -127,6 +333,7 @@ function refreshMastheadWeatherLinks() {
     const el = MASTHEAD_WEATHER.querySelector(`[data-weather-city="${city.id}"]`);
     if (el) el.href = weatherForecastUrl(city);
   });
+  syncWeatherExtraLanguage();
 }
 
 function buildMastheadWeatherBoard() {
@@ -147,8 +354,10 @@ function buildMastheadWeatherBoard() {
     el.target = '_blank';
     el.rel = 'noopener noreferrer';
     const provider = weatherForecastProvider(city);
-    el.title = `Prévisions de ${provider} — ${context}`;
-    el.setAttribute("aria-label", `Prévisions de ${provider} pour ${context}`);
+    el.dataset.weatherTitle = `Prévisions de ${provider} — ${context}`;
+    el.dataset.weatherAria = `Prévisions de ${provider} pour ${context}`;
+    el.title = el.dataset.weatherTitle;
+    el.setAttribute("aria-label", el.dataset.weatherAria);
     // Trusted static skeleton; city names are assigned with textContent.
     el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"><span class="masthead-weather__name-text"><span class="masthead-weather__name-full"></span><span class="masthead-weather__name-compact" aria-hidden="true"></span></span></span><span class="masthead-weather__temp">—</span>';
     el.querySelector('.masthead-weather__name-full').textContent = city.name;
@@ -911,9 +1120,9 @@ function weatherBoardCount() {
   if (weatherWideDualPrimary()) {
     // Plancher 2 = MTL + QC toujours visibles ; au-delà = secondaires rotatives.
     if (isWideDesktopComfort()) {
-      // MTL+QC compactes ; reliquat aux secondaires pour les longs noms
-      // (Trois-Rivières, Rouyn-Noranda), pas une 7e carte étroite + un trou.
-      const nSec = Math.max(1, Math.floor((width - 280) / 200));
+      // MTL+QC portent le max/min (~230 px chacune). Le reliquat
+      // laisse un nom court montrer le sien, pas une carte de plus trop étroite.
+      const nSec = Math.max(1, Math.floor((width - 480) / 240));
       count = Math.max(3, Math.min(12, 2 + nSec));
     } else if (width >= 1800) count = 8;
     else if (width >= 1200) count = 7;
@@ -1123,7 +1332,8 @@ function showMastheadWeatherBoard() {
     if (qc) mastheadWeatherSlots[1] = qc;
   }
   cities.forEach((city) => {
-    city.classList.remove('is-active', 'is-leaving', 'is-arriving');
+    city.classList.remove('is-active', 'is-leaving', 'is-arriving', 'has-room');
+    city.dataset.weatherExtra = 'off';
     city.setAttribute('aria-hidden', 'true');
     city.style.pointerEvents = '';
   });
@@ -1264,9 +1474,10 @@ function measureWeatherNameOverflows() {
     name.style.maxWidth = 'none';
     name.style.overflow = 'visible';
     const textW = Math.max(name.scrollWidth || 0, full?.scrollWidth || 0);
-    const viewW = viewport.clientWidth || 0;
     name.style.maxWidth = prevMax;
     name.style.overflow = prevOv;
+    applyWeatherExtraFit(el, textW);
+    const viewW = viewport.clientWidth || 0;
     const overflow = viewW > 0 ? Math.max(0, textW - viewW) : 0;
     const needs = overflow > 2;
     const had = el.classList.contains('is-overflowing');
@@ -1633,6 +1844,7 @@ function renderMastheadWeather(entries) {
     el.querySelector('.masthead-weather__icon').innerHTML = weatherIcon(current.weather_code, current.is_day);
     el.querySelector('.masthead-weather__temp').textContent = `${Math.round(current.temperature_2m)}°`;
     el.dataset.weatherTone = weatherTone(current.weather_code);
+    paintWeatherExtra(el, entries[index]);
   });
   MASTHEAD_WEATHER.classList.remove('hidden');
   syncMastheadShuffleButton();
@@ -1686,11 +1898,18 @@ function weatherLabFixtureEntries() {
     // Légère variation nord/sud + index pour que la rotation change de ton.
     const base = 16 + ((i * 3) % 11);
     const latNudge = Number.isFinite(city.lat) ? (48 - city.lat) * 0.35 : 0;
+    const temperature = Math.round((base - latNudge) * 10) / 10;
+    const code = [0, 1, 2, 3, 61, 0, 1, 80][i % 8];
     return {
       current: {
-        temperature_2m: Math.round((base - latNudge) * 10) / 10,
-        weather_code: [0, 1, 2, 3, 61, 0, 1, 80][i % 8],
+        temperature_2m: temperature,
+        weather_code: code,
         is_day: isDay,
+      },
+      daily: {
+        weather_code: [code, 1],
+        temperature_2m_max: [temperature + 2, temperature + 1],
+        temperature_2m_min: [temperature - 5, temperature - 4],
       },
     };
   });
@@ -1771,6 +1990,8 @@ async function initMastheadWeather() {
       latitude: WEATHER_CITIES.map((city) => city.lat).join(','),
       longitude: WEATHER_CITIES.map((city) => city.lon).join(','),
       current: 'temperature_2m,weather_code,is_day',
+      daily: 'weather_code,temperature_2m_max,temperature_2m_min',
+      forecast_days: '2',
       temperature_unit: 'celsius',
       timezone: 'America/Toronto',
     });

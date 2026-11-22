@@ -6,6 +6,7 @@ import { gate, pruneState, CFG } from '../scripts/social/une-run.mjs';
 import { NET_SPEC } from '../scripts/social/formats.mjs';
 import { POLICY } from '../scripts/social/policy.mjs';
 import { chooseInstagramImage } from '../scripts/social/instagram.mjs';
+import { pageModel } from '../scripts/social/une-render.mjs';
 
 // ── Créneaux : 7 h 45 et 19 h 30 heure de Montréal, été comme hiver ──
 assert.equal(U.slotAt(Date.parse('2026-11-13T12:45:00Z'))?.id, 'matin');       // 7 h 45 HNE
@@ -312,6 +313,18 @@ assert.ok((ig.text.match(/#[\p{L}\p{N}_]+/gu) || []).length >= 3, ig.text);
 assert.ok((ig.text.split('\n')[0] || '').length <= 125);
 assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
 assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30'); assert.equal(U.frHour(''), ''); assert.equal(U.frHour('00:00'), '0 h');
+assert.equal(U.frDay('2026-11-21'), 'samedi 21 novembre');
+assert.equal(U.frDayYear('2026-11-21'), 'samedi 21 novembre 2026');
+assert.equal(U.frDayYear('2026-11-01'), 'dimanche 1er novembre 2026');
+const pmSoir = pageModel({ slot: { label: 'La une du soir', id: 'soir', day: '2026-11-21' }, items: [] });
+assert.equal(pmSoir.slot.dayLabel, 'Samedi 21 novembre', 'portrait des autres réseaux : date sans l’année');
+assert.equal(pmSoir.slot.dayLabelYear, 'Samedi 21 novembre 2026', 'année : kicker Instagram (modèle B) et post d’un seul article');
+assert.deepEqual(U.IMAGE_SIZES.article, { width: 1080, height: 1440 });
+assert.deepEqual(U.IMAGE_SIZES['article-portrait'], { width: 1080, height: 1350 });
+assert.equal(U.ARTICLE_IMAGE_FOR.instagram, 'article');
+assert.equal(U.ARTICLE_IMAGE_FOR.facebook, 'article-portrait');
+assert.deepEqual(U.articleFormatsFor(['instagram', 'x', 'facebook']), ['article', 'article-portrait']);
+
 
 // ── Lien vers l'édition de la revue : 2e ligne, seulement si la page existe ──
 const matin17 = U.slotFor('matin', Date.parse('2026-11-17T12:45:00Z'));
@@ -330,7 +343,12 @@ assert.equal(
   U.revueEditionLine(matin17),
   'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-matin/',
 );
-assert.equal(U.revueEditionLine(matin17, { nolink: true }), '', 'Instagram : pas de lien cliquable');
+assert.equal(
+  U.revueEditionLine(matin17, { nolink: true }),
+  'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : lien en bio',
+  'Instagram : phrase validée, sans URL, vers le lien en bio',
+);
+assert.doesNotMatch(U.revueEditionLine(matin17, { nolink: true }), /https?:\/\//);
 
 const modelRevue = { slot: soir17, items: m.items, sports: { results: [], next: [] }, radio: [] };
 const sans = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => false });
@@ -350,7 +368,10 @@ for (const n of U.NETS) {
 }
 const igRevue = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => true }).instagram;
 assert.doesNotMatch(igRevue.text, /https?:\/\//, 'Instagram : jamais d’URL, même si l’édition existe');
-assert.doesNotMatch(igRevue.text, /Consultez notre revue/);
+assert.equal(igRevue.text.split('\n')[1], 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : lien en bio');
+assert.match(igRevue.text, /Toute la une : le-radar\.ca/);
+assert.equal((igRevue.text.match(/lien en bio/g) || []).length, 1, 'un seul « lien en bio »');
+assert.doesNotMatch(igRevue.text, /Toute la une : lien en bio/);
 assert.deepEqual(igRevue.problems, []);
 assert.doesNotMatch(U.altText(modelRevue), /revue du (matin|soir)|le-radar\.ca\/revue\//, 'la revue n’entre pas dans le texte alternatif de l’image');
 

@@ -1092,6 +1092,31 @@ function clearMirroredLead(item) {
  * le placeholder / ré-enrichissement depuis sa page).
  * Retourne le nombre d'articles nettoyés.
  */
+
+/**
+ * Chroniques récapitulatives dont l'illustration d'origine doit rester la une,
+ * même réutilisée chaque semaine, et même si elle contient du texte ou le logo
+ * du journal. Liste courte approuvée par Charles le 21 novembre 2026.
+ * Ne pas l'élargir sans nouvel accord : la règle générale contre les visuels
+ * génériques (logos, infographies, bannières de rubrique) reste inchangée.
+ */
+const RECURRING_ROUNDUP_LEAD_SOURCES = new Set(['Quartier Libre']);
+const RECURRING_ROUNDUP_LEAD_TITLE_RE = /^(?:cinq nouvelles de la semaine|cinq nouvelles marquantes\b|5 infos\b)/i;
+
+function foldTitle(text = '') {
+  return String(text || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function isRecurringRoundupLead(item = {}) {
+  if (!RECURRING_ROUNDUP_LEAD_SOURCES.has(String(item.source || '').trim())) return false;
+  return RECURRING_ROUNDUP_LEAD_TITLE_RE.test(foldTitle(item.title));
+}
+
 /**
  * Identité d'un fichier image pour repérer un visuel réellement partagé :
  * hôte + dossier + nom, sans suffixe de taille WordPress ni « -scaled ».
@@ -1124,6 +1149,9 @@ function dropSharedSourceImages(items = [], minUses = 3) {
   let dropped = 0;
   for (const it of items) {
     if (!it || !it.image || !it.source) continue;
+    // Chronique récapitulative : l'illustration d'origine, même partagée
+    // d'une semaine à l'autre, n'est pas un logo générique (21 nov. 2026).
+    if (isRecurringRoundupLead(it)) continue;
     if ((uses.get(key(it)) || 0) >= minUses) {
       it.image = '';
       clearMirroredLead(it);
@@ -1154,6 +1182,9 @@ function keepNewestSharedImage(items = []) {
     if (group.length < 2) continue;
     group.sort((a, b) => (Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0));
     for (const it of group.slice(1)) {
+      // Même illustration réutilisée par une chronique récapitulative :
+      // chaque billet la garde (21 nov. 2026).
+      if (isRecurringRoundupLead(it)) continue;
       it.image = '';
       clearMirroredLead(it);
       delete it.leadImageReady;
@@ -1546,6 +1577,8 @@ module.exports = {
   dropSharedSourceImages,
   sharedImageKey,
   keepNewestSharedImage,
+  isRecurringRoundupLead,
+  foldTitle,
   linksToOtherArticle,
   insideOtherPostArticle,
   stripOtherPostArticles,

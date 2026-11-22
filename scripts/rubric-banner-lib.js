@@ -11,6 +11,7 @@
  *    (l'empreinte est alors apprise dans le fichier).
  */
 const fs = require('fs');
+const { isRecurringRoundupLead } = require('./article-image-lib');
 const path = require('path');
 const zlib = require('zlib');
 const https = require('https');
@@ -127,6 +128,9 @@ async function findRubricBanners(items = [], { store = { generic: [], cache: {} 
   }));
   for (const it of items) {
     if (!it || !it.image) continue;
+    // Chronique récapitulative : garder l'illustration d'origine, même
+    // réutilisée et même si elle porte du texte ou un logo (21 nov. 2026).
+    if (isRecurringRoundupLead(it)) continue;
     if (genericFileName(it.image)) { hits.add(it); continue; }
     const h = store.cache[it.image];
     if (!h) continue;

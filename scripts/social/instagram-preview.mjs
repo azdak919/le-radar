@@ -24,7 +24,7 @@ function lead(kind) {
   const it = items[kind === 'soir' ? 1 : 0] || items[0];
   const img = it.imageLocal && fs.existsSync(path.join(ROOT, it.imageLocal)) ? '/' + it.imageLocal : it.image;
   return {
-    slot: { label: kind === 'soir' ? 'La une du soir' : 'La une du matin', dayLabel: 'Dimanche 22 novembre' },
+    slot: { label: kind === 'soir' ? 'La une du soir' : 'La une du matin', dayLabel: 'Dimanche 22 novembre', dayLabelYear: 'Dimanche 22 novembre 2026' },
     items: [{ title: it.title, source: it.source, credit: it.sourceImageCredit || it.sourceImageCreator || '', images: [img], focalY: 0.38 }],
   };
 }

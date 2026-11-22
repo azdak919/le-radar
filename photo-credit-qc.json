@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-21T23:40:00.070Z",
+  "updated": "2026-11-22T04:14:26.799Z",
   "total": 1051,
   "withImage": 951,
   "withCredit": 951,
-  "cited": 661,
-  "pending": 176,
+  "cited": 660,
+  "pending": 182,
   "missingHero": 0,
   "ok": false,
-  "checked": 60,
-  "updatedCount": 1,
-  "citedNew": 2,
-  "fallbackNew": 58,
+  "checked": 9,
+  "updatedCount": 4,
+  "citedNew": 3,
+  "fallbackNew": 6,
   "samples": [
     {
       "title": "Cinq nouvelles de la semaine",
@@ -18,6 +18,27 @@
       "credit": "Illustration : Mathilde Ségar",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "ASFA asks students what issues matter most to them",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of ASFA",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Documentary film ‘NAZA’ examines the banality of evil behind the horrific Gaza genocide",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "source": "The Concordian",
+      "credit": "Photo: Eric Klempan",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
