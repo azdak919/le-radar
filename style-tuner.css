@@ -330,11 +330,30 @@
  * forte densité. Le décalage est arrondi au pixel entier côté JS
  * (`measureMarquee`) pour que les deux positions de repos, celles qu'on lit
  * réellement, tombent sur la grille de pixels. */
-.is-marquee { text-overflow: clip; }
-/* 1 cycle (delay lecture + aller-retour), puis repos — pas infinite. */
+.is-marquee {
+  text-overflow: clip;
+  /* Cycle complet = 2 allers + 2 repos de 0,25 aller. Synchro
+     MARQUEE_CYCLE_RATIO (radar-state.js) : le JS s'en sert pour ne remplacer
+     un texte qu'au repos, jamais en pleine course. */
+  --marquee-cycle-ratio: 2.5;
+}
+/* Cycle continu : repos → aller → repos → retour, en boucle.
+ * Le nom du poste et l'établissement d'une pastille source ne changent jamais :
+ * un aller-retour unique les laissait tronqués pour le reste de la visite.
+ * `--marquee-duration` reste la durée d'un aller ; les repos vivent dans les
+ * keyframes, pas entre deux itérations. */
 .is-marquee > .tuner-now-sub-text {
-  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) var(--marquee-trips, 2) alternate both;
+  animation:
+    tunerMarqueeLoop
+    calc(var(--marquee-duration, 12s) * var(--marquee-cycle-ratio, 2.5))
+    linear var(--marquee-delay, 1.6s) infinite both;
   will-change: transform;
+}
+/* Mécanisme de pause (WCAG 2.2.2) : le survol fige le défilement à la souris ;
+ * `:active` fait de même sous un appui maintenu là où le moteur le propage. */
+.is-marquee:hover > .tuner-now-sub-text,
+.is-marquee:active > .tuner-now-sub-text {
+  animation-play-state: paused;
 }
 /* L'audio reste actif en arrière-plan; seules les animations de lecture sont
    suspendues. Au retour, app.js recrée volontairement un cycle calme. */
@@ -346,9 +365,16 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
   animation: none;
   transform: none;
 }
+/* Aller-retour fini — gardé pour embed.css et radio-barre.css. */
 @keyframes tunerMarquee {
   0%, 18%   { transform: translate3d(0, 0, 0); }
   82%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
+}
+/* Boucle du dial et des pastilles : 0,25 aller de repos à chaque bout. */
+@keyframes tunerMarqueeLoop {
+  0%, 10%  { transform: translate3d(0, 0, 0); }
+  50%, 60% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
+  100%     { transform: translate3d(0, 0, 0); }
 }
 /* Panneau antenne : même défilement doux que le dial lorsqu'un titre déborde.
  * Bureau ≥1100 : le titre passe sur 2 lignes (voir media plus bas). */
