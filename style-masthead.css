@@ -192,17 +192,27 @@
   }
   #bg-photo-layer.loaded ~ .bg-photo-credit { opacity: 0.9; }
 
-  /* Crédit ancré bas ; brand rembourré bas pour ne pas chevaucher le slogan. */
+  /* Crédit ancré bas ; brand rembourré bas pour ne pas chevaucher le slogan.
+     Avec la pastille sociale, moins d’air : elle est déjà sous la devise. */
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-top: 0;
     padding-bottom: 16px;
   }
+  .masthead:has(#bg-photo-layer.loaded):has(.masthead-social) .masthead-brand {
+    padding-bottom: 6px;
+  }
+  .masthead:has(.masthead-social) .masthead-inner {
+    padding-bottom: 8px;
+  }
 }
-/* Bureau : la rangée sous la devise a besoin du même air au-dessus du crédit. */
+/* Bureau : peu d’air sous la pastille sociale, assez pour le crédit à droite. */
 @media (min-width: 1024px) {
   .masthead:has(#bg-photo-layer):has(.masthead-social) .masthead-brand,
   .masthead:has(#bg-photo-layer.loaded):has(.masthead-social) .masthead-brand {
-    padding-bottom: 16px;
+    padding-bottom: 4px;
+  }
+  .masthead:has(.masthead-social) .masthead-inner {
+    padding-bottom: 8px;
   }
 }
 @media (max-width: 360px) {
