@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-22T15:07:48.223Z",
+  "updated": "2026-11-22T15:37:31.850Z",
   "total": 1042,
   "pool": 61,
   "incomplete": 25,
   "withLeadExcerpt": 210,
   "candidates": 25,
-  "enriched": 5,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -46,12 +55,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "chars": 450,
+      "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
       "changed": false
     },
     {
@@ -61,24 +70,15 @@
       "score": 100,
       "chars": 404,
       "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Bittersweet end of season for the Montreal Roses",
-      "link": "https://theconcordian.com/2026/11/roses-lose-nsl-final/",
+      "title": "La vie lors d’une régate d’aviron",
+      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
       "ok": true,
       "score": 100,
-      "chars": 414,
-      "sample": "As AFC Toronto hoisted the Diana B. Matheson trophy, some Montreal Roses players headed to the stand",
-      "changed": true
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
-      "ok": true,
-      "score": 100,
-      "chars": 450,
-      "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
+      "chars": 342,
+      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
       "changed": false
     }
   ]

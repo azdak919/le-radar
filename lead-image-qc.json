@@ -1,25 +1,19 @@
 {
-  "updated": "2026-11-22T15:08:11.532Z",
+  "updated": "2026-11-22T15:37:43.758Z",
   "total": 1040,
   "withPhoto": 946,
   "withStock": 105,
   "withCampusBank": 92,
   "fullyCovered": 1026,
-  "leadReadyPhotos": 955,
+  "leadReadyPhotos": 956,
   "pageScraped": 10,
   "photosRecovered": 10,
   "imagesCleared": 1,
-  "stockSearches": 4,
+  "stockSearches": 3,
   "stockFound": 13,
   "campusBankFound": 10,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first",
-      "reason": "no-stock-match",
-      "image": null
-    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -31,12 +25,6 @@
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
-    },
-    {
-      "title": "Saguenay vers des infrastructures durables",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
-      "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
     }
   ]
 }
