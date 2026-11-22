@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-22T12:40:59.218Z",
-  "total": 1041,
+  "updated": "2026-11-22T13:38:31.226Z",
+  "total": 1042,
   "pool": 61,
   "incomplete": 26,
-  "withLeadExcerpt": 208,
+  "withLeadExcerpt": 209,
   "candidates": 26,
-  "enriched": 2,
-  "failed": 3,
+  "enriched": 5,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -46,13 +55,22 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
       "ok": true,
       "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
+      "chars": 380,
+      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
+      "changed": true
+    },
+    {
+      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/20/et-si-le-referendum-de-95-avait-lieu-aujourdhui/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-le-referendum-de-95-avait-lieu-aujourdhui",
+      "ok": true,
+      "score": 96,
+      "chars": 378,
+      "sample": "« Je pense qu’aujourd’hui, la grosse différence, c’est que les échanges entourant la souveraineté se",
+      "changed": true
     },
     {
       "title": "Cinq nouvelles de la semaine",
@@ -61,24 +79,6 @@
       "score": 100,
       "chars": 450,
       "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
-      "changed": false
-    },
-    {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
-      "changed": false
-    },
-    {
-      "title": "En France, la colère lycéenne gagne tout le pays",
-      "link": "https://quartierlibre.ca/en-france-la-colere-lycee-gagne-tout-le-pays/",
-      "ok": true,
-      "score": 100,
-      "chars": 1087,
-      "sample": "Depuis près d’un mois, des lycéen·ne·s français·es bloquent leurs établissements scolaires et manife",
       "changed": false
     }
   ]

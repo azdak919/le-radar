@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-22T12:39:54.744Z",
-  "total": 1041,
-  "withAuthor": 1041,
-  "mismatches": 55,
+  "updated": "2026-11-22T13:37:47.668Z",
+  "total": 1042,
+  "withAuthor": 1042,
+  "mismatches": 56,
   "ok": true,
   "samples": [
+    {
+      "title": "Wicker: More Than Meets The Eye - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/wicker-more-than-meets-the-eye/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Abby Schiff",
+      "reason": "page-byline"
+    },
     {
       "title": "Musicians Among Us: Band Fest Season Part 2",
       "link": "https://theplantnews.com/2026/11/18/musicians-among-us-band-fest-season-part-2/",
@@ -156,15 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Keeping our unhoused community warm this winter",
-      "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 55
+  "fixed": 56
 }
