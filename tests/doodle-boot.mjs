@@ -176,6 +176,8 @@ const root = join(__dirname, "..");
 assert.ok(existsSync(join(root, "assets/doodle/le-radar-pricedown.svg")));
 assert.ok(existsSync(join(root, "assets/doodle/montreal-skyline-stefan-fussan.jpg")));
 assert.ok(existsSync(join(root, "assets/doodle/quebec-skyline-martin-st-amant.jpg")));
+assert.ok(existsSync(join(root, "assets/doodle/mr-dafoe/MrDafoe-Regular.ttf")));
+assert.ok(existsSync(join(root, "assets/doodle/mr-dafoe/OFL.txt")));
 const svg = readFileSync(join(root, "assets/doodle/le-radar-pricedown.svg"), "utf8");
 assert.doesNotMatch(svg, /font-face|font-family|@font/i, "aucune police dans le SVG du titre");
 assert.match(svg, /stroke-width="102"/);
@@ -187,5 +189,9 @@ assert.match(third, /Martin St-Amant - Wikipedia - CC-BY-SA-3.0/);
 assert.match(third, /79 - Québec - Juin 2009/);
 assert.match(third, /CC BY-SA 3\.0/);
 assert.match(third, /couleurs modifiées/);
+assert.match(third, /Mr Dafoe/);
+assert.match(third, /SIL Open Font License 1\.1/);
+assert.match(cssSrc, /Mr Dafoe/);
+assert.match(cssSrc, /vice-city-wink|MrDafoe-Regular/);
 
 console.log("tests/doodle-boot.mjs : ok");

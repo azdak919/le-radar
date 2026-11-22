@@ -6,3 +6,9 @@ produits par le mainteneur, titulaire de la licence de bureau Typodermic
 (EULA §2.2) ; ils ne sont pas découpés pour en tirer un alphabet.
 
 Photos : `montreal-skyline-stefan-fussan.jpg` et `quebec-skyline-martin-st-amant.jpg`, voir `THIRD_PARTY.md`. Quand le doodle est tiré, la ville est choisie à parts égales et gardée pour la session.
+
+La ligne « Vous amusez-vous dans le nouveau Vice City ? » est composée
+avec Mr Dafoe (SIL OFL 1.1, Alejandro Paul / Sudtipos), fournie dans
+`mr-dafoe/`. Ce n’est pas la police propriétaire de GTA / Vice City.
+Voir `THIRD_PARTY.md`.
+
