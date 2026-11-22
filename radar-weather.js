@@ -1488,8 +1488,35 @@ function weatherShellKey() {
   ].join('');
 }
 
+/* Max/min n’était décidé qu’à l’arrivée d’une ville : si la puce s’élargit
+   ensuite (une ville retirée du bandeau, fontes, colonnes), le vide restait
+   sans max/min. On refait l’ajustement quand une puce change de largeur. */
+const weatherChipWidths = new WeakMap();
+let weatherChipRefitFrame = 0;
+const weatherChipRO = typeof ResizeObserver === 'function'
+  ? new ResizeObserver((entries) => {
+    let changed = false;
+    for (const entry of entries) {
+      const el = entry.target;
+      const w = el.clientWidth;
+      const prev = weatherChipWidths.get(el);
+      weatherChipWidths.set(el, w);
+      if (prev !== undefined && Math.abs(w - prev) >= 2) changed = true;
+    }
+    if (!changed || weatherChipRefitFrame) return;
+    weatherChipRefitFrame = window.requestAnimationFrame(() => {
+      weatherChipRefitFrame = 0;
+      measureWeatherNameOverflows();
+    });
+  })
+  : null;
+
 function measureWeatherNameOverflows() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
+    if (weatherChipRO && !weatherChipWidths.has(el)) {
+      weatherChipWidths.set(el, el.clientWidth);
+      weatherChipRO.observe(el);
+    }
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
     const full = el.querySelector('.masthead-weather__name-full');
