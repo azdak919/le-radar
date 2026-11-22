@@ -16,6 +16,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Mât, téléphone (moins de 600 px) : le logo passe à 48 px, légèrement plus grand que les boutons d’outils et les icônes de réseaux (40 px). Le titre LE-RADAR.ca grandit en proportion, reste sur une seule ligne et s’aligne avec le logo, sans débordement à 320, 360 et 390 px. Ordinateur inchangé. Cache `radar-shell-v1059`.
+
 - Barre radio partagée : les panneaux « À l’antenne » et « À venir » restent à l’intérieur de la barre (leur bord droit ne dépasse pas le padding), même avec les plus longs titres d’émissions. Un titre trop long défile avec les mêmes paramètres que le cadran du syntoniseur (délai de lecture, vitesse, allers-retours). Les autres commandes, les coins arrondis et le logo à gauche vers https://le-radar.ca/ ne changent pas.
 
 - Images d’article : garder par défaut le visuel choisi par la rédaction, même une affiche ou une image avec du texte, avec ou sans crédit nominatif. Plus de rejet selon les mots de la légende ou du nom de fichier. L’image du billet est gardée partout, une comprise, quel que soit son format : un petit portrait (Le Collectif, « Rencontre Carney-PSPP au Cambodge », 512×640), une story ou un bandeau s’affichent en entier à la une, dans un cadre 3:2 au fond flouté de la même image, au lieu d’être remplacés par une photo de campus ou par une autre photo « mieux cadrée » du billet. Images minuscules, logos, favicons et publicités restent écartés. Les corrections manuelles (`data/lead-image-pins.json`) restent prioritaires.

@@ -592,3 +592,35 @@ html[data-script-dir="rtl"] .wordmark-full {
   }
   .masthead:has(#bg-photo-layer) .bg-photo-credit { bottom: calc(var(--mat-gap) / 2); }
 }
+
+/* Téléphone (moins de 600 px) : le logo est légèrement plus grand qu’un bouton
+   du mât (outils et réseaux : 40 px). Le titre grandit en proportion, reste
+   sur une seule ligne à 320, 360 et 390 px, et s’aligne avec le logo.
+   Ordinateur inchangé. Les écritures longues (inuktitut, arabe, etc.)
+   peuvent encore se couper, comme plus haut. */
+@media (max-width: 599.98px) {
+  :root {
+    --radar-wordmark-size: clamp(2.375rem, 12.2vw, 3.414rem);
+  }
+  .wordmark-logo {
+    width: 48px;
+    height: 48px;
+    margin: 0 0.1em 0 0;
+    vertical-align: middle;
+  }
+  .wordmark-mark {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  html[lang="iu"] .wordmark-mark,
+  html[data-translate="iu"] .wordmark-mark,
+  html[data-translate="iu-latn"] .wordmark-mark,
+  html[lang="ar"] .wordmark-mark,
+  html[data-translate="ar"] .wordmark-mark,
+  html[data-script-dir="rtl"] .wordmark-mark {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
