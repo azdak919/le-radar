@@ -108,13 +108,53 @@ for (const kind of ['matin', 'soir']) {
   }
 }
 
+
 for (const kind of ['matin', 'soir']) {
-  test(`instagram 3:4 ${kind} : titre, auteurs, média et crédit dans le carré de la grille @ci-critical`, async ({ page }) => {
+  test(`instagram 3:4 ${kind} : titre, média et crédit dans le carré de la grille @ci-critical`, async ({ page }) => {
+    await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+    await page.setViewportSize({ width: 1080, height: 1440 });
+    await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+    const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
+    const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    expect(info.overflow).toBe(false);
+    expect(info.shown).toBe(1);
+    const zone = await page.evaluate(() => {
+      const c = document.getElementById('card').getBoundingClientRect();
+      const box = (sel) => { const e = document.querySelector(sel); const r = e.getBoundingClientRect(); return { top: r.top - c.top, bottom: r.bottom - c.top }; };
+      return {
+        title: box('.ig-title'), brand: box('.ig-brand'), credit: box('.ig-credit'), media: box('.ig-media'),
+        brandBg: getComputedStyle(document.querySelector('.ig-brand')).backgroundColor,
+        size: parseFloat(getComputedStyle(document.querySelector('.ig-title')).fontSize),
+        creditText: document.querySelector('.ig-credit').textContent,
+        mediaText: document.querySelector('.ig-media').textContent,
+        dateText: document.querySelector('.ig-edge span')?.textContent,
+        motto: document.querySelector('.ig-motto'),
+        qr: document.querySelector('.ig-qr'),
+        w: c.width, h: c.height,
+      };
+    });
+    expect(zone.w).toBe(1080); expect(zone.h).toBe(1440);
+    expect(zone.brandBg).toBe('rgb(0, 0, 0)');
+    expect(zone.size).toBeGreaterThanOrEqual(48);
+    expect(zone.mediaText).toBe('Impact Campus');
+    expect(zone.creditText).toBe('📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons');
+    expect(zone.dateText).toBe('Dimanche 22 novembre');
+    expect(zone.motto, 'unes régulières : pas le slogan v6').toBeNull();
+    expect(zone.qr, 'unes régulières : pas de QR v6').toBeNull();
+    for (const b of [zone.title, zone.brand, zone.credit, zone.media]) {
+      expect(b.top).toBeGreaterThanOrEqual(180);
+      expect(b.bottom).toBeLessThanOrEqual(1260);
+    }
+  });
+}
+
+for (const kind of ['matin', 'soir']) {
+  test(`article 3:4 ${kind} : titre, auteurs, média et crédit dans le carré du post article @ci-critical`, async ({ page }) => {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
     const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 et Autrice 2 · Impact Campus', credit: 'Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' })] };
-    const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'article' });
     expect(info.overflow).toBe(false);
     expect(info.shown).toBe(1);
     const zone = await page.evaluate(() => {
@@ -173,12 +213,12 @@ for (const kind of ['matin', 'soir']) {
     }
   });
 
-  test(`instagram 3:4 ${kind} : pas de « Par » si la signature n’est que le média @ci-critical`, async ({ page }) => {
+  test(`article 3:4 ${kind} : pas de « Par » si la signature n’est que le média @ci-critical`, async ({ page }) => {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
     const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { source: 'Impact Campus', byline: 'Impact Campus', credit: 'Photo : Équipe' })] };
-    await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    await page.evaluate((a) => window.renderUne(a), { model, format: 'article' });
     expect(await page.locator('.ig-by').count()).toBe(0);
     expect(await page.locator('.ig-media').textContent()).toBe('Impact Campus');
     expect(await page.locator('.ig-credit').textContent()).toBe('📸 Équipe');
@@ -187,13 +227,13 @@ for (const kind of ['matin', 'soir']) {
 
 
 for (const kind of ['matin', 'soir']) {
-  test(`instagram 3:4 ${kind} : QR vers la fiche Radar, dans le carré, décodable @ci-critical`, async ({ page }, testInfo) => {
+  test(`article 3:4 ${kind} : QR vers la fiche Radar, dans le carré, décodable @ci-critical`, async ({ page }, testInfo) => {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
     const pageUrl = 'https://le-radar.ca/article/dac64fa8d6a7b3df/';
     const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { title: 'La bibliothèque prolonge ses heures', source: 'Impact Campus', byline: 'Autrice 1 · Impact Campus', credit: 'Photo : Équipe', pageUrl })] };
-    await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    await page.evaluate((a) => window.renderUne(a), { model, format: 'article' });
     const qr = page.locator('.ig-qr');
     await expect(qr).toHaveCount(1);
     await expect(qr).toHaveAttribute('data-url', pageUrl);
@@ -238,18 +278,18 @@ for (const kind of ['matin', 'soir']) {
     if (decoded !== undefined) expect(decoded).toBe(pageUrl);
   });
 
-  test(`instagram 3:4 ${kind} : pas de QR si l’URL n’est pas une fiche Radar @ci-critical`, async ({ page }) => {
+  test(`article 3:4 ${kind} : pas de QR si l’URL n’est pas une fiche Radar @ci-critical`, async ({ page }) => {
     await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
     await page.setViewportSize({ width: 1080, height: 1440 });
     await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
     const model = { slot: { label: `La une du ${kind}`, kind, dayLabel: 'Dimanche 22 novembre 2026' }, items: [item(1, { pageUrl: 'https://quartierlibre.ca/exemple/' })] };
-    await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+    await page.evaluate((a) => window.renderUne(a), { model, format: 'article' });
     expect(await page.locator('.ig-qr').count()).toBe(0);
   });
 }
 
 
-test('instagram 3:4 : titre serif long en trois lignes à 80 px @ci-critical', async ({ page }) => {
+test('article 3:4 : titre serif long en trois lignes à 80 px @ci-critical', async ({ page }) => {
   await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
   await page.setViewportSize({ width: 1080, height: 1440 });
   await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
@@ -257,7 +297,7 @@ test('instagram 3:4 : titre serif long en trois lignes à 80 px @ci-critical', a
     slot: { label: 'La une du soir', kind: 'soir', dayLabel: 'Samedi 21 novembre 2026' },
     items: [item(1, { title: 'En France, la colère lycéenne gagne tout le pays', source: 'Quartier Libre', byline: 'Elise Miara · Quartier Libre', credit: 'Clément Souchet' })],
   };
-  const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'grille' });
+  const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'article' });
   expect(info.overflow).toBe(false);
   const typo = await page.evaluate(() => {
     const n = document.querySelector('.ig-title');
@@ -282,15 +322,15 @@ test('instagram 3:4 : titre serif long en trois lignes à 80 px @ci-critical', a
   ]);
 });
 
-test('instagram 3:4 : focalX recadre la photo, 50 % par défaut @ci-critical', async ({ page }) => {
+test('article 3:4 : focalX recadre la photo, 50 % par défaut @ci-critical', async ({ page }) => {
   await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
   await page.setViewportSize({ width: 1080, height: 1440 });
   await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
   const slot = { label: 'La une du soir', kind: 'soir', dayLabel: 'Samedi 21 novembre 2026' };
-  await page.evaluate((a) => window.renderUne(a), { model: { slot, items: [item(1)] }, format: 'grille' });
+  await page.evaluate((a) => window.renderUne(a), { model: { slot, items: [item(1)] }, format: 'article' });
   const def = await page.locator('.ig-photo img').evaluate((e) => e.style.objectPosition);
   expect(def, 'sans focalX : 50 % horizontal, focalY par défaut 0,44').toBe('50% 44%');
-  await page.evaluate((a) => window.renderUne(a), { model: { slot, items: [item(1, { focalX: 0.58, focalY: 0.50 })] }, format: 'grille' });
+  await page.evaluate((a) => window.renderUne(a), { model: { slot, items: [item(1, { focalX: 0.58, focalY: 0.50 })] }, format: 'article' });
   const applied = await page.locator('.ig-photo img').evaluate((e) => e.style.objectPosition);
   expect(applied, 'focalX 0,58 appliqué (aperçu lycéens)').toBe('58% 50%');
 });

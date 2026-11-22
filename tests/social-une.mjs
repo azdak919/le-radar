@@ -316,7 +316,14 @@ assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19
 assert.equal(U.frDay('2026-11-21'), 'samedi 21 novembre');
 assert.equal(U.frDayYear('2026-11-21'), 'samedi 21 novembre 2026');
 assert.equal(U.frDayYear('2026-11-01'), 'dimanche 1er novembre 2026');
-assert.equal(pageModel({ slot: { label: 'La une du soir', id: 'soir', day: '2026-11-21' }, items: [] }).slot.dayLabel, 'Samedi 21 novembre 2026');
+const pmSoir = pageModel({ slot: { label: 'La une du soir', id: 'soir', day: '2026-11-21' }, items: [] });
+assert.equal(pmSoir.slot.dayLabel, 'Samedi 21 novembre', 'unes régulières : date sans l’année (visuel d’avant la PR #509)');
+assert.equal(pmSoir.slot.dayLabelYear, 'Samedi 21 novembre 2026', 'année réservée au post d’un seul article');
+assert.deepEqual(U.IMAGE_SIZES.article, { width: 1080, height: 1440 });
+assert.deepEqual(U.IMAGE_SIZES['article-portrait'], { width: 1080, height: 1350 });
+assert.equal(U.ARTICLE_IMAGE_FOR.instagram, 'article');
+assert.equal(U.ARTICLE_IMAGE_FOR.facebook, 'article-portrait');
+assert.deepEqual(U.articleFormatsFor(['instagram', 'x', 'facebook']), ['article', 'article-portrait']);
 
 
 // ── Lien vers l'édition de la revue : 2e ligne, seulement si la page existe ──

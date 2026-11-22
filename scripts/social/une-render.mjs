@@ -20,7 +20,8 @@ function startServer(port) {
 /** Modèle passé à la page : seulement ce qu'elle affiche. Images : miroir le-radar.ca d'abord (le dépôt n'a pas les fichiers miroir). */
 export function pageModel(model) {
   return {
-    slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDayYear(model.slot.day).replace(/^./, c => c.toUpperCase()),
+    slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()),
+      dayLabelYear: frDayYear(model.slot.day).replace(/^./, c => c.toUpperCase()),
       // Prochaine édition (date absolue) : bandeau bas de la story, dans la zone recouverte par l'interface d'Instagram et de Facebook.
       next: model.slot.id === 'soir' ? `La une du matin · ${frShortDay(model.slot.day, 1)} · 7 h 45` : `La une du soir · ${frShortDay(model.slot.day, 0)} · 19 h 30` },
     sports: model.sports || { results: [], next: [] }, radio: model.radio || [],

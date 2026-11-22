@@ -3,7 +3,7 @@
  * model = { slot: { label, dayLabel, kind }, items: [{ title, byline, source, place, sport, credit, hook, images[], focalY, focalX }], sports: [...] }
  * (scripts/social/une-lib.mjs). Matin : thème clair du site ; soir : thème sombre. Gabarit « Verre » + photo de la une
  * dégagée (panel du 12 nov. 2026, retour de Charles : mélange A/B, résultats sportifs étudiants pour combler le bas).
- * Grille Instagram : QR vers la fiche le-radar.ca/article/<id>/ si le post est un article. Aucun logo d'université. */
+ * Grille Instagram (unes régulières) : visuel d’avant la PR #509. Post d’un seul article (format article / article-portrait, modèle v6) : QR vers la fiche le-radar.ca/article/<id>/. Aucun logo d'université. */
 (function () {
   'use strict';
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
@@ -133,7 +133,13 @@
     while (node.scrollHeight > node.clientHeight + 2 && size > min) { size -= 2; node.style.fontSize = size + 'px'; }
   }
   let THEME = 'clair';
-  function brandBar() {
+  function brandBarGrille() {
+    const bar = el('div', 'ig-brand'); const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
+    bar.append(logo, el('span', 'wm', 'LE\u2011RADAR.ca'));
+    bar.ready = new Promise((r) => { if (logo.complete) r(); else { logo.onload = r; logo.onerror = r; } });
+    return bar;
+  }
+  function brandBarArticle() {
     const bar = el('div', 'ig-brand');
     const logo = el('img'); logo.src = '../assets/icon.svg'; logo.alt = '';
     const text = el('div', 'ig-brand-text');
@@ -183,10 +189,14 @@
     if (fx >= 0.6) { wrap.style.top = '180px'; wrap.style.right = '24px'; }
     return wrap;
   }
+  function fitTitle(node, floor) {
+    let size = parseFloat(getComputedStyle(node).fontSize);
+    while (node.scrollHeight > node.clientHeight + 2 && size > floor) { size -= 2; node.style.fontSize = size + 'px'; }
+  }
   // Réduit le titre seulement s’il dépasse le nombre de lignes prévu (line-clamp).
   // On ne se fie pas à clientHeight : avec -webkit-box, le dépassement des descendantes
   // (souvent 8–15 px) ferait descendre le corps jusqu’au plancher pour un titre de 3 lignes.
-  function fitTitle(node, floor) {
+  function fitArticleTitle(node, floor) {
     const lines = parseInt(getComputedStyle(node).webkitLineClamp, 10) || 3;
     let size = parseFloat(getComputedStyle(node).fontSize);
     const overflow = () => {
@@ -226,7 +236,7 @@
     if (lines.length < 2) return;
     node.replaceChildren(...lines.flatMap((ln, i) => (i ? [el('br'), document.createTextNode(ln.join(' '))] : [document.createTextNode(ln.join(' '))])));
   }
-  // Noms des auteurs pour la grille Instagram, sans le média (déjà sur ig-media).
+  // Noms des auteurs pour le post d’un seul article, sans le média (déjà sur ig-media).
   function igAuthors(it) {
     const raw = String(it.byline || '').trim();
     if (!raw) return '';
@@ -236,16 +246,17 @@
     if (!name || name.toLowerCase() === media.toLowerCase()) return '';
     return name;
   }
-  // Affiche Instagram 3:4 en pleine page : photo, dégradé, kicker unique, titre, « Par … », média, crédit.
-  // Logo, titre et mentions tiennent dans le carré du profil (180–1260 px). Rien d’inventé.
+  // Une Instagram régulière 3:4 (visuel d’avant la PR #509) : barres, date, photo, titre, média, crédit.
   async function renderGrille(card, model) {
     card.className = 'card grille';
     const root = el('div', 'ig');
+    const top = el('div', 'ig-edge'); top.append(el('span', '', model.slot.dayLabel || ''));
     const safe = el('div', 'ig-safe');
-    const brand = brandBar();
+    const brand = brandBarGrille();
+    const bottom = el('div', 'ig-edge'); bottom.append(el('span', '', model.slot.label || ''));
     if (model.poster === 'sport') {
       const copy = el('div', 'ig-copy');
-      copy.append(igKicker(model.slot.label || 'Résultats', model.slot.dayLabel || ''));
+      copy.append(el('p', 'ig-kicker', model.slot.label || 'Résultats'));
       (model.results || []).slice(0, 3).forEach((r) => {
         const row = el('div', 'ig-match');
         row.append(el('p', 'ig-sport', [r.emoji, r.sport].filter(Boolean).join(' ')));
@@ -255,16 +266,41 @@
       });
       if (model.media) copy.append(el('p', 'ig-media', model.media));
       safe.append(brand, copy);
-      root.append(safe); card.append(root);
+      root.append(top, safe, bottom); card.append(root);
       await Promise.all([document.fonts.ready, brand.ready]);
       copy.querySelectorAll('.ig-line').forEach((n) => { let s = parseFloat(getComputedStyle(n).fontSize); while (n.scrollWidth > n.clientWidth + 1 && s > 28) { s -= 1; n.style.fontSize = s + 'px'; } });
       return { shown: (model.results || []).length, photo: false, sports: (model.results || []).length, radio: 0, overflow: card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 };
     }
     const lead = model.items[0];
     const photoBox = el('div', 'ig-photo'); const img = el('img'); img.alt = ''; photoBox.append(img);
+    img.style.objectPosition = objectPosition(lead, 0.38);
+    const copy = el('div', 'ig-copy');
+    copy.append(el('p', 'ig-kicker', model.slot.label || ''));
+    const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
+    if (lead.source) copy.append(el('p', 'ig-media', lead.source));
+    const credit = String(lead.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
+    if (credit) copy.append(el('p', 'ig-credit', '📸 ' + credit));
+    safe.append(brand, photoBox, copy);
+    root.append(top, safe, bottom); card.append(root);
+    const ok = await (lead.images && lead.images.length ? loadFirst(img, lead.images) : Promise.resolve(false));
+    if (!ok) { img.remove(); photoBox.classList.add('empty'); }
+    await Promise.all([document.fonts.ready, brand.ready]);
+    fitTitle(title, 48);
+    const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 || copy.scrollHeight > copy.clientHeight + 2;
+    return { shown: 1, photo: ok, sports: 0, radio: 0, overflow };
+  }
+  // Post d’un seul article (modèle v6) : photo pleine page, slogan, kicker avec année, auteurs, QR, recadrage focalX.
+  async function renderArticle(card, model, format) {
+    card.className = format === 'article-portrait' ? 'card article-portrait' : 'card article';
+    const root = el('div', 'ig');
+    const safe = el('div', 'ig-safe');
+    const brand = brandBarArticle();
+    const lead = model.items[0];
+    const photoBox = el('div', 'ig-photo'); const img = el('img'); img.alt = ''; photoBox.append(img);
     img.style.objectPosition = objectPosition(lead, 0.44);
     const copy = el('div', 'ig-copy');
-    copy.append(igKicker(model.slot.label || '', model.slot.dayLabel || ''));
+    const day = model.slot.dayLabelYear || model.slot.dayLabel || '';
+    copy.append(igKicker(model.slot.label || '', day));
     const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
     const authors = igAuthors(lead);
     if (authors) { const by = el('p', 'ig-by'); by.append(el('span', 'lbl', 'Par' + '\u00A0'), el('span', 'who', authors)); copy.append(by); }
@@ -279,7 +315,7 @@
     const ok = await (lead.images && lead.images.length ? loadFirst(img, lead.images) : Promise.resolve(false));
     if (!ok) { img.remove(); photoBox.classList.add('empty'); }
     await Promise.all([document.fonts.ready, brand.ready]);
-    fitTitle(title, 60);
+    fitArticleTitle(title, 60);
     balanceTitle(title);
     const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 || copy.scrollHeight > copy.clientHeight + 2;
     return { shown: 1, photo: ok, sports: 0, radio: 0, overflow };
@@ -287,6 +323,8 @@
   window.renderUne = async function renderUne({ model, format }) {
     const card = document.getElementById('card'); card.textContent = '';
     if (format === 'grille') return renderGrille(card, model);
+    if (format === 'article' || format === 'article-portrait') return renderArticle(card, model, format);
+
     THEME = model.slot.kind === 'soir' ? 'sombre' : 'clair';
     const [lead, ...rest] = model.items; const others = rest.slice(0, format === 'story' ? 5 : format === 'paysage' ? 3 : 4);
     const S = Array.isArray(model.sports) ? { results: model.sports, next: [] } : (model.sports || { results: [], next: [] });
