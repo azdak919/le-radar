@@ -692,6 +692,12 @@ html[data-wide-preview="e"] {
     --tools-side-left: max(20px, env(safe-area-inset-left, 0px));
   }
 
+  /* Barre superposée (data-overlay-scrollbars, JS) : pas de gouttière réservée,
+     donc une marge fixe pour le pouce, ouvert comme replié (largeur stable). */
+  html[data-wide-preview="e"][data-overlay-scrollbars] .wide-rail-stack .filters-panel .filters {
+    padding-right: 8px;
+  }
+
   html[data-wide-preview="e"] .wide-rail-stack .filters-panel .filters::-webkit-scrollbar {
     width: 8px;
   }
