@@ -24,17 +24,28 @@
    ligne plutôt que de le tronquer ou de forcer un débordement. */
 .site-foot__brand {
   margin-bottom: 16px;
+  /* Échelle du mot-symbole : la largeur déjà prise par la colonne
+     (la signature, ou la colonne de marque une fois le pied en grille).
+     Le logo et LE-RADAR.ca grandissent dans ce trou, sans élargir
+     la colonne ni pousser les liens d’à côté. */
+  container-type: inline-size;
+  container-name: foot-brand-mark;
 }
 
 .site-foot__wordmark {
   margin: 0 0 2px;
   font-family: var(--serif);
-  font-size: 19px;
+  /* 32 px tient dans la colonne étroite (320 px, et la marque vers 1024).
+     10 % de la colonne rejoint la signature (~393 px) sans la dépasser.
+     Plafond 52 px : au-delà le nom irait plus loin que l’acronyme. */
+  font-size: clamp(32px, 10cqi, 52px);
   font-weight: 700;
   letter-spacing: 0.01em;
+  line-height: 1.05;
+  white-space: nowrap;
   color: var(--ink);
   /* Même axe optique que le mot-symbole du mât / des affiches, pas la
-     coupe « texte » de Source Serif 4 à 19 px (qui se rapproche d’Inter). */
+     coupe « texte » de Source Serif 4 à petit corps (qui se rapproche d’Inter). */
   font-optical-sizing: none;
   font-variation-settings: "opsz" 48;
 }
@@ -195,10 +206,10 @@
 }
 
 .site-foot__logo {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-  vertical-align: -.12em;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.32em;
+  vertical-align: -0.12em;
 }
 
 .site-foot__credit {

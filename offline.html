@@ -561,21 +561,26 @@
     /* Cette page ne charge pas style.css : elle doit s'afficher quand le
        réseau est tombé. Les règles du pied de page partagé y sont donc
        redéclarées — c'est une copie assumée, pas un oubli. */
-    .site-foot__brand { margin-bottom: 0.75rem; }
+    .site-foot__brand {
+      margin-bottom: 0.75rem;
+      container-type: inline-size;
+    }
     .site-foot__wordmark {
       margin: 0 0 0.15rem !important;
       font-family: var(--serif);
-      font-size: 1.05rem;
+      font-size: clamp(32px, 10cqi, 52px);
       font-weight: 700;
+      line-height: 1.05;
+      white-space: nowrap;
       color: var(--ink);
     }
     /* Manquait à la copie : sans cette règle l'image gardait ses attributs
        width/height (24 px), sans marge ni alignement — le seul pied de page
        du site où le logo ne tombait pas d'aplomb sur le mot-symbole. */
     .site-foot__logo {
-      width: 20px;
-      height: 20px;
-      margin-right: 6px;
+      width: 1.05em;
+      height: 1.05em;
+      margin-right: 0.32em;
       vertical-align: -0.12em;
     }
     .site-foot__signature {
