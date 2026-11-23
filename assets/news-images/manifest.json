@@ -2863,15 +2863,6 @@
       "via": "disk",
       "nameKey": "photo-rue-de-quen.jpeg"
     },
-    "4e95480ad005cf83": {
-      "local": "assets/news-images/4e95480ad005cf83.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 289636,
-      "updatedAt": "2026-11-21T18:10:27.439Z",
-      "via": "disk",
-      "nameKey": "image.jpg"
-    },
     "6dbacdf62e5173b7": {
       "local": "assets/news-images/6dbacdf62e5173b7.jpg",
       "remote": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/21114643/Tiers-Lieu-photo-1.jpg",
@@ -3087,9 +3078,18 @@
       "updatedAt": "2026-11-23T16:12:47.223Z",
       "via": "resize-proxy",
       "nameKey": "20261120_011146889_ios.jpg"
+    },
+    "7eaacc77a4689dd4": {
+      "local": "assets/news-images/7eaacc77a4689dd4.jpg",
+      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/CAMPUS_MobilisationRemunerationDesStages10Novembre_CreditNicolasHamel.jpg",
+      "host": "lecollectif.ca",
+      "bytes": 259851,
+      "updatedAt": "2026-11-23T17:54:06.908Z",
+      "via": "disk",
+      "nameKey": "campus_mobilisationremunerationdesstages10novembre_creditnicolashamel.jpg"
     }
   },
-  "updatedAt": "2026-11-23T17:43:03.069Z",
+  "updatedAt": "2026-11-23T17:54:06.937Z",
   "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5652,6 +5652,10 @@
     "52778e0859eeea36": {
       "reason": "budget",
       "at": "2026-11-23T05:09:41.615Z"
+    },
+    "4e95480ad005cf83": {
+      "reason": "budget",
+      "at": "2026-11-23T17:54:06.934Z"
     }
   }
 }
