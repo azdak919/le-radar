@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-23T02:09:57.987Z",
-  "total": 1054,
+  "updated": "2026-11-23T02:37:55.094Z",
+  "total": 1055,
   "pool": 61,
-  "incomplete": 25,
-  "withLeadExcerpt": 219,
-  "candidates": 25,
-  "enriched": 2,
-  "failed": 8,
+  "incomplete": 26,
+  "withLeadExcerpt": 217,
+  "candidates": 26,
+  "enriched": 8,
+  "failed": 3,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "Médias : après la crise du papier, la crise d’Internet ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
+      "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
+      "link": "https://leclubecole.com/daniel-jones-libere-les-colts-dindianapolis-tournent-la-page/?utm_source=rss&utm_medium=rss&utm_campaign=daniel-jones-libere-les-colts-dindianapolis-tournent-la-page",
       "ok": true,
       "score": 100,
-      "chars": 340,
-      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
-      "changed": false
+      "chars": 333,
+      "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
+      "changed": true
     },
     {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-17/",
+      "title": "Retour à la case départ pour les Hornets de Charlotte",
+      "link": "https://leclubecole.com/retour-a-la-case-depart-pour-les-hornets-de-charlotte/?utm_source=rss&utm_medium=rss&utm_campaign=retour-a-la-case-depart-pour-les-hornets-de-charlotte",
       "ok": true,
       "score": 100,
-      "chars": 450,
-      "sample": "Un rapport de Statistique Canada révèle que 45 % des femmes ont vécu de la violence conjugale au cou",
-      "changed": false
+      "chars": 291,
+      "sample": "Les Hornets de Charlotte n’ont remporté que quatre de leurs quatorze premiers matchs cette saison. U",
+      "changed": true
     },
     {
-      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
-      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
+      "title": "La course au trophée Vézina s’intensifie",
+      "link": "https://leclubecole.com/la-course-au-trophee-vezina-sintensifie/?utm_source=rss&utm_medium=rss&utm_campaign=la-course-au-trophee-vezina-sintensifie",
       "ok": true,
       "score": 100,
-      "chars": 404,
-      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
-      "changed": false
+      "chars": 295,
+      "sample": "La Ligue nationale de hockey (LNH) n’a rarement vu autant de buts marqués qu’en ce début de saison 2",
+      "changed": true
     }
   ]
 }

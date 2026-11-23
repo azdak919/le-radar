@@ -2021,16 +2021,6 @@
       "via": "resize-proxy",
       "nameKey": "msp26-1101-convmcg-9233-1.jpg"
     },
-    "a4f7301747717f82": {
-      "local": "assets/news-images/a4f7301747717f82.jpg",
-      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/IMG_8428-930x620.jpg",
-      "host": "www.mcgilldaily.com",
-      "bytes": 35480,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T11:40:57.185Z",
-      "via": "origin",
-      "nameKey": "img_8428.jpg"
-    },
     "be611451563af4ef": {
       "local": "assets/news-images/be611451563af4ef.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
@@ -2921,15 +2911,6 @@
       "via": "disk",
       "nameKey": "image.jpg"
     },
-    "3449afc5166db644": {
-      "local": "assets/news-images/3449afc5166db644.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_0771.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 106567,
-      "updatedAt": "2026-11-21T18:10:27.440Z",
-      "via": "disk",
-      "nameKey": "img_0771.jpg"
-    },
     "6dbacdf62e5173b7": {
       "local": "assets/news-images/6dbacdf62e5173b7.jpg",
       "remote": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/21114643/Tiers-Lieu-photo-1.jpg",
@@ -2949,15 +2930,6 @@
       "updatedAt": "2026-11-21T18:10:29.532Z",
       "via": "resize-proxy",
       "nameKey": "auclair_crypto_ia_3.jpg"
-    },
-    "489afba2f34844e7": {
-      "local": "assets/news-images/489afba2f34844e7.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/salle.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 132070,
-      "updatedAt": "2026-11-21T19:57:11.446Z",
-      "via": "disk",
-      "nameKey": "salle.jpg"
     },
     "d61fa8d6c0e1c0b8": {
       "local": "assets/news-images/d61fa8d6c0e1c0b8.jpg",
@@ -3096,10 +3068,20 @@
       "updatedAt": "2026-11-23T01:38:10.378Z",
       "via": "resize-proxy",
       "nameKey": "dsc03815-1.jpg"
+    },
+    "3ee8b17eb279a8d8": {
+      "local": "assets/news-images/3ee8b17eb279a8d8.png",
+      "remote": "https://leclubecole.com/wp-content/uploads/2026/11/image-33.png",
+      "host": "leclubecole.com",
+      "bytes": 323902,
+      "contentType": "image/png",
+      "updatedAt": "2026-11-23T02:38:33.117Z",
+      "via": "origin",
+      "nameKey": "image-33.png"
     }
   },
-  "updatedAt": "2026-11-23T02:10:42.672Z",
-  "count": 321,
+  "updatedAt": "2026-11-23T02:38:33.132Z",
+  "count": 319,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5649,6 +5631,18 @@
     "8db6d4b1d42ad4d5": {
       "reason": "budget",
       "at": "2026-11-23T01:38:10.385Z"
+    },
+    "a4f7301747717f82": {
+      "reason": "budget",
+      "at": "2026-11-23T02:38:33.125Z"
+    },
+    "489afba2f34844e7": {
+      "reason": "budget",
+      "at": "2026-11-23T02:38:33.128Z"
+    },
+    "3449afc5166db644": {
+      "reason": "budget",
+      "at": "2026-11-23T02:38:33.131Z"
     }
   }
 }
