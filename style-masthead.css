@@ -200,6 +200,10 @@
 }
 /* Bureau : peu d’air sous la pastille sociale, assez pour le crédit à droite. */
 @media (min-width: 1024px) {
+  /* Haut du mât : même 12 px que le bas (rangée météo → logo), au lieu de 28. */
+  .masthead .masthead-inner > .masthead-brand {
+    padding-top: 0;
+  }
   .masthead:has(#bg-photo-layer):has(.masthead-social) .masthead-brand,
   .masthead:has(#bg-photo-layer.loaded):has(.masthead-social) .masthead-brand {
     padding-bottom: 4px;
