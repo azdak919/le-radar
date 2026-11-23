@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-23T19:45:17.271Z",
+  "updated": "2026-11-23T20:47:44.271Z",
   "total": 1102,
   "withImage": 1002,
   "withCredit": 1002,
   "cited": 731,
-  "pending": 174,
+  "pending": 169,
   "missingHero": 0,
   "ok": false,
-  "checked": 38,
-  "updatedCount": 28,
-  "citedNew": 17,
-  "fallbackNew": 21,
+  "checked": 60,
+  "updatedCount": 4,
+  "citedNew": 4,
+  "fallbackNew": 56,
   "samples": [
     {
       "title": "Cinq nouvelles de la semaine",
@@ -27,74 +27,18 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Les Brewers de Milwaukee remportent le deuxième match de la Série mondiale",
+      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "source": "The Concordian",
+      "credit": "Photo: Eric Klempan",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Matvei Michkov : un talent indéniable, mais une attitude qui dérange",
       "source": "Le Club-École",
       "credit": "Photo : Le Club-École",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Harry Kane aux portes du Ballon d’Or ?",
-      "source": "Le Club-École",
-      "credit": "Photo : england / instagram",
-      "cited": true,
-      "method": "json-ld"
-    },
-    {
-      "title": "La NBA est enfin de retour",
-      "source": "Le Club-École",
-      "credit": "Photo : Sixers / X",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Qui est Rafael Câmara?",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le casse-tête devant le filet s’intensifie",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Cole Caufield tranche le débat en prolongation",
-      "source": "Le Club-École",
-      "credit": "Photo : compte X\\ @CanadiensMTL",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Real Madrid : Vinicius voit sa place fragilisée",
-      "source": "Le Club-École",
-      "credit": "Photo : @MadridXtra / X",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Séries de la MLB : Les champions en titre sont détrônés",
-      "source": "Le Club-École",
-      "credit": "Photo : Compte des Brewers de Milwaukee",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "PSG c. CITY: le conquérant poursuit sa mission",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Manchester United hanté par d’anciens démons",
-      "source": "Le Club-École",
-      "credit": "Photo : Manchester United / X",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
     }
   ]
 }

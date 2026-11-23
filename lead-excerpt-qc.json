@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-23T19:40:47.862Z",
+  "updated": "2026-11-23T20:40:44.710Z",
   "total": 1104,
   "pool": 61,
   "incomplete": 28,
-  "withLeadExcerpt": 222,
+  "withLeadExcerpt": 223,
   "candidates": 28,
-  "enriched": 2,
+  "enriched": 3,
   "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -58,10 +58,10 @@
       "title": "Bulletins La Pige radio 23 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
       "ok": true,
-      "score": 62,
-      "chars": 145,
-      "sample": "Un mort dans un accident de VTT à Saint-Thomas-Didyme, les skieurs devront s’armer de patience et Dy",
-      "changed": false
+      "score": 78,
+      "chars": 153,
+      "sample": "Le conseil régional de l’environnement déçu de la COP 31, la possibilité d’une grève générale illimi",
+      "changed": true
     },
     {
       "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
