@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-11-23T20:36:53.165Z",
+  "updatedAt": "2026-11-23T21:37:41.976Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, Jme Mobilise!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:00",
         "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, Jme Mobilise!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T20:36:14.598Z"
+      "checkedAt": "2026-11-23T21:36:50.203Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Les criquets crinqués",
         "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
+      "next": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T20:36:27.985Z"
+      "checkedAt": "2026-11-23T21:37:03.661Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T20:36:30.807Z"
+      "checkedAt": "2026-11-23T21:37:20.104Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whip Appeal",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
-      },
-      "next": {
         "title": "Dreamscapes",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/dreamscapes"
       },
+      "next": {
+        "title": "The Pressure Drop",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+      },
       "track": "",
-      "showTitle": "Whip Appeal",
+      "showTitle": "Dreamscapes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T20:36:45.251Z"
+      "checkedAt": "2026-11-23T21:37:34.299Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +129,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T20:36:46.365Z"
+      "checkedAt": "2026-11-23T21:37:35.714Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "schedule",
@@ -141,16 +142,16 @@
         "end": "07:00",
         "url": "https://www.choq.ca/balados/les-rois-de-larene"
       },
-      "track": "Laura Niquay — Mikwetc (Merci)",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Emma Ruth Rundle — Don't Delay Heaven",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T20:36:52.814Z"
+      "checkedAt": "2026-11-23T21:37:41.626Z"
     }
   }
 }
