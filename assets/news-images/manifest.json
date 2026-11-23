@@ -1962,15 +1962,6 @@
       "via": "disk",
       "nameKey": "della-harris.png"
     },
-    "b7e1a314fc0f47c4": {
-      "local": "assets/news-images/b7e1a314fc0f47c4.jpg",
-      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/Caricature-Passation-CAQ-vers-PC.png.png",
-      "host": "www.exemplaire.com.ulaval.ca",
-      "bytes": 172701,
-      "updatedAt": "2026-11-17T11:40:55.551Z",
-      "via": "disk",
-      "nameKey": "caricature-passation-caq-vers-pc.png.png"
-    },
     "93111c00ffaba865": {
       "local": "assets/news-images/93111c00ffaba865.jpg",
       "remote": "https://www.delitfrancais.com/wp-content/uploads/2026/11/matteo.png",
@@ -2461,15 +2452,6 @@
       "updatedAt": "2026-11-20T17:57:03.937Z",
       "via": "origin",
       "nameKey": "societe_communicationpolitiquepq_sourcepagefacebookdepaulst-pierreplamondon.jpg"
-    },
-    "afc56adf8c65cd33": {
-      "local": "assets/news-images/afc56adf8c65cd33.jpg",
-      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg",
-      "host": "www.exemplaire.com.ulaval.ca",
-      "bytes": 255983,
-      "updatedAt": "2026-11-20T19:09:16.154Z",
-      "via": "disk",
-      "nameKey": "avelo-passe-de-10-a-225.jpg"
     },
     "c0ee06024daddf1f": {
       "local": "assets/news-images/c0ee06024daddf1f.jpg",
@@ -3105,10 +3087,19 @@
       "updatedAt": "2026-11-23T19:05:53.445Z",
       "via": "resize-proxy",
       "nameKey": "image-5.png"
+    },
+    "450ce4243c899963": {
+      "local": "assets/news-images/450ce4243c899963.webp",
+      "remote": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg?resize=696%2C394&ssl=1",
+      "host": "i0.wp.com",
+      "bytes": 79184,
+      "updatedAt": "2026-11-23T19:42:20.253Z",
+      "via": "disk",
+      "nameKey": "avelo-passe-de-10-a-225.jpg"
     }
   },
-  "updatedAt": "2026-11-23T19:06:17.928Z",
-  "count": 321,
+  "updatedAt": "2026-11-23T19:42:20.644Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -3786,10 +3777,6 @@
     "28d1a35e3c4c9824": {
       "reason": "budget",
       "at": "2026-11-17T14:10:21.635Z"
-    },
-    "0eed6591ce349647": {
-      "reason": "budget",
-      "at": "2026-11-17T14:10:21.637Z"
     },
     "c23700e97557d38a": {
       "reason": "budget",
@@ -5854,6 +5841,14 @@
     "630c7d68ad99e069": {
       "reason": "budget",
       "at": "2026-11-23T19:06:17.927Z"
+    },
+    "8944669bc3987122": {
+      "reason": "failed",
+      "at": "2026-11-23T19:42:20.598Z"
+    },
+    "564f372d20a2583a": {
+      "reason": "failed",
+      "at": "2026-11-23T19:42:20.638Z"
     }
   }
 }
