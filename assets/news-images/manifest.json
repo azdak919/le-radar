@@ -1401,16 +1401,6 @@
       "via": "resize-proxy",
       "nameKey": "for-the-love-of-noir.png"
     },
-    "e8c42fb9098a809a": {
-      "local": "assets/news-images/e8c42fb9098a809a.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Beyond-1.jpg",
-      "host": "theconcordian.com",
-      "bytes": 336483,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T10:04:13.114Z",
-      "via": "resize-proxy",
-      "nameKey": "beyond-1.jpg"
-    },
     "de2eb02da3fe6319": {
       "local": "assets/news-images/de2eb02da3fe6319.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/visuals-concordian-no-one-wants-to-grow-old.png",
@@ -3067,10 +3057,40 @@
       "updatedAt": "2026-11-23T06:36:16.422Z",
       "via": "disk",
       "nameKey": "klempaneric_171126_ndprally_vol44_-5.jpg"
+    },
+    "bb63081e1390ef7e": {
+      "local": "assets/news-images/bb63081e1390ef7e.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Beyond-1-768x1024-1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 113659,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-23T16:12:43.802Z",
+      "via": "origin",
+      "nameKey": "beyond-1-768x1024-1.jpg"
+    },
+    "90ea2da1431400f5": {
+      "local": "assets/news-images/90ea2da1431400f5.jpg",
+      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/11/photo-du-gala-honoris-leonis-couture_2026-11-08-29.jpg",
+      "host": "montrealcampus.ca",
+      "bytes": 213903,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-23T16:12:43.963Z",
+      "via": "origin",
+      "nameKey": "photo-du-gala-honoris-leonis-couture_2026-11-08-29.jpg"
+    },
+    "cc5b0cfb4f61d39f": {
+      "local": "assets/news-images/cc5b0cfb4f61d39f.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/20261120_011146889_iOS.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 161740,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-23T16:12:47.223Z",
+      "via": "resize-proxy",
+      "nameKey": "20261120_011146889_ios.jpg"
     }
   },
-  "updatedAt": "2026-11-23T14:39:29.274Z",
-  "count": 318,
+  "updatedAt": "2026-11-23T16:12:47.230Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5595,7 +5615,7 @@
     },
     "ea6cda724eb8cda8": {
       "reason": "failed",
-      "at": "2026-11-22T16:09:59.489Z"
+      "at": "2026-11-23T16:12:46.298Z"
     },
     "b3268cb0c963ea0b": {
       "reason": "budget",

@@ -1,17 +1,31 @@
 {
-  "updated": "2026-11-23T14:40:39.430Z",
-  "total": 1053,
-  "withImage": 953,
-  "withCredit": 953,
-  "cited": 704,
-  "pending": 166,
+  "updated": "2026-11-23T16:14:24.180Z",
+  "total": 1055,
+  "withImage": 955,
+  "withCredit": 955,
+  "cited": 706,
+  "pending": 171,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 3,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "updatedCount": 29,
+  "citedNew": 5,
+  "fallbackNew": 55,
   "samples": [
+    {
+      "title": "La coupe ou rien : les coulisses d’une conquête inoubliable",
+      "source": "La Pige",
+      "credit": "Photo : Olivier Dubois",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
+      "source": "Montréal Campus",
+      "credit": "Photo : Nihad Ferdaous Khetir",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
     {
       "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
@@ -32,6 +46,55 @@
       "credit": "Photo: Eric Klempan",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Guerre en Palestine : trois ans plus tard, Montréal manifeste encore",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Where We Belong, We Give Back: BUCS’s Social Impact Portfolio",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "If You Ever Get the Chance, Take that Language Class",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Another Reform on International Students? This Time, it Could Help BU",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "BU Snow Prepares for Another Winter at Bishop’s",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Transparency: A Tool and a Threat",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The SRC Projects a Narrow Surplus for The Gait After Last Year’s Deficit",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
     }
   ]
 }

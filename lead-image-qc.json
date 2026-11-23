@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-23T14:39:06.311Z",
-  "total": 1053,
+  "updated": "2026-11-23T16:12:24.153Z",
+  "total": 1055,
   "withPhoto": 960,
-  "withStock": 102,
-  "withCampusBank": 92,
-  "fullyCovered": 1040,
-  "leadReadyPhotos": 1032,
+  "withStock": 104,
+  "withCampusBank": 94,
+  "fullyCovered": 1042,
+  "leadReadyPhotos": 1033,
   "pageScraped": 10,
   "photosRecovered": 10,
-  "imagesCleared": 2,
-  "stockSearches": 3,
-  "stockFound": 13,
-  "campusBankFound": 10,
+  "imagesCleared": 3,
+  "stockSearches": 5,
+  "stockFound": 16,
+  "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -31,6 +37,12 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "Saguenay vers des infrastructures durables",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
     }
   ]
 }
