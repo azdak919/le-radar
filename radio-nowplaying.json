@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-11-23T21:37:41.976Z",
+  "updatedAt": "2026-11-23T22:09:59.798Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Chéri.e, Jme Mobilise!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
-      },
+      "current": null,
       "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "Chéri.e, Jme Mobilise!",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T21:36:50.203Z"
+      "checkedAt": "2026-11-23T22:09:21.438Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T21:37:03.661Z"
+      "checkedAt": "2026-11-23T22:09:35.381Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T21:37:20.104Z"
+      "checkedAt": "2026-11-23T22:09:39.210Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
-      },
-      "next": {
         "title": "The Pressure Drop",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
+      "next": {
+        "title": "Voice of the Voiceless",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+      },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T21:37:34.299Z"
+      "checkedAt": "2026-11-23T22:09:52.776Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T21:37:35.714Z"
+      "checkedAt": "2026-11-23T22:09:54.358Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +135,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/balados/les-rois-de-larene"
       },
-      "track": "Emma Ruth Rundle — Don't Delay Heaven",
+      "track": "Luna Elle — Muse",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +144,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T21:37:41.626Z"
+      "checkedAt": "2026-11-23T22:09:59.448Z"
     }
   }
 }
