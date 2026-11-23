@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T00:06:59.888Z",
+  "updatedAt": "2026-11-23T01:06:53.585Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T00:06:30.494Z"
+      "checkedAt": "2026-11-23T01:06:26.779Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T00:06:31.824Z"
+      "checkedAt": "2026-11-23T01:06:28.103Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bluegrass Rambling",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Country Classics",
         "source": "api-live",
         "start": "20:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Cha Cha In Blue",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Bluegrass Rambling",
+      "showTitle": "Country Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T00:06:38.700Z"
+      "checkedAt": "2026-11-23T01:06:31.537Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "No Boundaries",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
-      },
-      "next": {
         "title": "Eastern Promises",
         "source": "schedule-live",
         "start": "20:00",
         "end": "20:30",
         "url": "http://www.cjlo.com/shows/eastern-promises"
       },
+      "next": {
+        "title": "Afro Archives",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
+      },
       "track": "",
-      "showTitle": "No Boundaries",
+      "showTitle": "Eastern Promises",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T00:06:52.702Z"
+      "checkedAt": "2026-11-23T01:06:45.732Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T00:06:53.604Z"
+      "checkedAt": "2026-11-23T01:06:46.767Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Planet Chloé — Radio",
+      "track": "Noé Lira — oceane (la fuerza del mar)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T00:06:59.537Z"
+      "checkedAt": "2026-11-23T01:06:53.234Z"
     }
   }
 }
