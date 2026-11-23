@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-23T21:14:56.708Z",
-  "total": 1104,
+  "updated": "2026-11-23T21:39:15.227Z",
+  "total": 1105,
   "pool": 61,
-  "incomplete": 28,
-  "withLeadExcerpt": 220,
-  "candidates": 28,
-  "enriched": 0,
-  "failed": 15,
+  "incomplete": 29,
+  "withLeadExcerpt": 221,
+  "candidates": 29,
+  "enriched": 1,
+  "failed": 12,
   "ok": true,
   "samples": [
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "The many controversies of the 2026 WNBA season",
+      "link": "https://thelinknewspaper.ca/article/16580",
+      "ok": true,
+      "score": 100,
+      "chars": 754,
+      "sample": "The 2026 Women’s National Basketball Association (WNBA) season was another reminder that sports and ",
+      "changed": true
+    },
+    {
       "title": "Bulletins La Pige radio 23 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 359,
       "sample": "Léonie Couture, la fondatrice de La rue des Femmes, un organisme à but non lucratif qui œuvre à aide",
-      "changed": false
-    },
-    {
-      "title": "Médias : après la crise du papier, la crise d’Internet ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
-      "ok": true,
-      "score": 100,
-      "chars": 340,
-      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
       "changed": false
     }
   ]
