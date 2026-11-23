@@ -90,6 +90,7 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/1/15/Mc
 "https://upload.wikimedia.org/wikipedia/commons/6/62/Pavillon_DKN%2C_Universit%C3%A9_Laval_11.jpg":"assets/stock-images/364c184501fed794.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG":"assets/stock-images/cdfd8bcc77ef6543.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/0/08/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%286%29.jpg":"assets/stock-images/1316b8df3f45dbbe.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/b/b7/Detail%2C_Kollhoff_Tower_and_BahnTower%2C_Potsdamer_Platz%2C_Berlin%2C_Germany-3380.jpg":"assets/stock-images/070256fe4e0b74e2.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/94/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%281%29.jpg":"assets/stock-images/e02c43fbba64df8b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/6b/Universit%C3%A9_de_Sherbrooke_-_R%C3%A9sidences_G8_%C3%A0_G15_%28panorama%29.jpg":"assets/stock-images/310169ba402dc06b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/8b/Universit%C3%A9_de_Sherbrooke_-_Centre_multifonctionnel.jpg":"assets/stock-images/a677cd0ea4dacce6.jpg",

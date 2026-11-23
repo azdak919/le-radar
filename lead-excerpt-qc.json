@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-23T22:11:01.609Z",
+  "updated": "2026-11-23T23:11:16.098Z",
   "total": 1106,
   "pool": 61,
-  "incomplete": 28,
+  "incomplete": 27,
   "withLeadExcerpt": 221,
-  "candidates": 28,
-  "enriched": 9,
+  "candidates": 27,
+  "enriched": 0,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -55,13 +55,22 @@
       "changed": false
     },
     {
-      "title": "Archivistique : Étudier le passé comme carrière d’avenir ?",
-      "link": "https://quartierlibre.ca/etudier-en-archivistique-une-carriere-davenir/",
+      "title": "Bulletins La Pige radio 23 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
+      "ok": true,
+      "score": 78,
+      "chars": 153,
+      "sample": "Le conseil régional de l’environnement déçu de la COP 31, la possibilité d’une grève générale illimi",
+      "changed": false
+    },
+    {
+      "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
+      "link": "https://montrealcampus.ca/2026/11/23/un-doctorat-dexception-pour-leonie-couture/",
       "ok": true,
       "score": 100,
-      "chars": 822,
-      "sample": "Les étudiant·e·s en archivistique entament leurs études sous le signe de l’incertitude. La multiplic",
-      "changed": true
+      "chars": 359,
+      "sample": "Léonie Couture, la fondatrice de La rue des Femmes, un organisme à but non lucratif qui œuvre à aide",
+      "changed": false
     },
     {
       "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
@@ -70,16 +79,7 @@
       "score": 100,
       "chars": 333,
       "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
-      "changed": true
-    },
-    {
-      "title": "Retour à la case départ pour les Hornets de Charlotte",
-      "link": "https://leclubecole.com/retour-a-la-case-depart-pour-les-hornets-de-charlotte/?utm_source=rss&utm_medium=rss&utm_campaign=retour-a-la-case-depart-pour-les-hornets-de-charlotte",
-      "ok": true,
-      "score": 100,
-      "chars": 291,
-      "sample": "Les Hornets de Charlotte n’ont remporté que quatre de leurs quatorze premiers matchs cette saison. U",
-      "changed": true
+      "changed": false
     }
   ]
 }

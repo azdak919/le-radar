@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-23T22:17:33.099Z",
+  "updated": "2026-11-23T23:19:33.306Z",
   "total": 1106,
   "withImage": 1006,
   "withCredit": 1006,
   "cited": 732,
-  "pending": 177,
+  "pending": 171,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "citedNew": 6,
+  "fallbackNew": 54,
   "samples": [
-    {
-      "title": "Archivistique : Étudier le passé comme carrière d’avenir ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Jeanne le Goff",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
     {
       "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
@@ -39,6 +32,13 @@
       "credit": "Photo: Eric Klempan",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
