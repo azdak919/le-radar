@@ -1,62 +1,62 @@
 {
-  "updated": "2026-11-16T16:24:45.476Z",
+  "updated": "2026-11-23T18:53:28.580Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 181992
+      "ms": 603490
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 53144
+      "ms": 56172
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 118468
+      "ms": 136017
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 107038
+      "ms": 91680
     }
   ],
   "summary": {
     "institutions": 79,
     "news": {
-      "active": 20,
+      "active": 21,
       "dead": 0,
-      "stale": 5,
+      "stale": 7,
       "candidates": 5,
-      "articles": 188,
-      "withAuthor": 188,
-      "withExcerpt": 188,
+      "articles": 1055,
+      "withAuthor": 1055,
+      "withExcerpt": 1051,
       "authorQc": {
         "ok": true,
-        "mismatches": 13
+        "mismatches": 56
       },
       "leadImageQc": {
-        "fullyCovered": 188,
-        "withPhoto": 173,
-        "withStock": 29,
-        "leadReadyPhotos": 162,
-        "pageScraped": 16,
+        "fullyCovered": 1042,
+        "withPhoto": 961,
+        "withStock": 103,
+        "leadReadyPhotos": 1033,
+        "pageScraped": 9,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": false,
-        "withCredit": 171,
-        "cited": 118,
-        "pending": 31,
+        "withCredit": 956,
+        "cited": 706,
+        "pending": 166,
         "missingHero": 0
       }
     },
     "backgrounds": {
       "masthead": {
-        "count": 120,
+        "count": 124,
         "maxBank": 200,
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
@@ -79,7 +79,7 @@
         "lastSessionCleanup": "2026-09-01",
         "lastSessionId": "automne"
       },
-      "count": 120,
+      "count": 124,
       "maxBank": 200,
       "lastSessionCleanup": "2026-09-01",
       "lastSessionId": "automne"
@@ -119,6 +119,11 @@
     {
       "level": "info",
       "code": "stale_news_feed",
+      "message": "Flux inactif : Le Collectif — dernier article 2026-11-20"
+    },
+    {
+      "level": "info",
+      "code": "stale_news_feed",
       "message": "Flux inactif : Exil — dernier article 2026-04-18"
     },
     {
@@ -138,13 +143,28 @@
     },
     {
       "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : Impact Campus — dernier article 2026-11-21"
+    },
+    {
+      "level": "warn",
+      "code": "stale_news_cache",
+      "message": "Cache conservé : Le Collectif — flux indisponible, articles frais du run précédent"
+    },
+    {
+      "level": "warn",
+      "code": "stale_news_cache",
+      "message": "Cache conservé : Impact Campus — flux indisponible, articles frais du run précédent"
+    },
+    {
+      "level": "info",
       "code": "news_coverage_gap",
       "message": "9 universités sans journal étudiant répertorié"
     },
     {
       "level": "info",
       "code": "lead_stock_gap",
-      "message": "12+ articles sans photo vedette (banques libres consultées)"
+      "message": "4+ articles sans photo vedette (banques libres consultées)"
     }
   ]
 }
