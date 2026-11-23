@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T07:06:26.689Z",
+  "updatedAt": "2026-11-23T08:06:58.385Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T07:06:01.801Z"
+      "checkedAt": "2026-11-23T08:06:11.323Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T07:06:03.326Z"
+      "checkedAt": "2026-11-23T08:06:24.362Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T07:06:05.693Z"
+      "checkedAt": "2026-11-23T08:06:26.378Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Experiments",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/experiments"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T07:06:19.479Z"
+      "checkedAt": "2026-11-23T08:06:50.234Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T07:06:20.648Z"
+      "checkedAt": "2026-11-23T08:06:51.332Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "11:00",
         "url": "https://www.choq.ca/balados/kongossa-na-uqam"
       },
-      "track": "Miserere Luminis — Aux bras des vagues & des vomissures",
+      "track": "Saidan — Womb of Hatred",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -150,7 +150,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T07:06:26.339Z"
+      "checkedAt": "2026-11-23T08:06:58.034Z"
     }
   }
 }
