@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T08:06:58.385Z",
+  "updatedAt": "2026-11-23T09:07:22.285Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T08:06:11.323Z"
+      "checkedAt": "2026-11-23T09:06:23.662Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge (reprise)",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "05:30",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule",
+        "start": "05:30",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+      },
       "track": "",
-      "showTitle": "Le char de marge (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T08:06:24.362Z"
+      "checkedAt": "2026-11-23T09:06:37.002Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Adventures In Music",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Unmuted",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T08:06:26.378Z"
+      "checkedAt": "2026-11-23T09:06:40.622Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Experiments",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/experiments"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T08:06:50.234Z"
+      "checkedAt": "2026-11-23T09:06:54.713Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T08:06:51.332Z"
+      "checkedAt": "2026-11-23T09:06:55.624Z"
     },
     "choq": {
       "id": "choq",
@@ -141,16 +141,15 @@
         "end": "11:00",
         "url": "https://www.choq.ca/balados/kongossa-na-uqam"
       },
-      "track": "Saidan — Womb of Hatred",
+      "track": "Vicky R — Le ciel est grand",
       "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
-        "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T08:06:58.034Z"
+      "checkedAt": "2026-11-23T09:07:21.934Z"
     }
   }
 }
