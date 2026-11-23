@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T09:07:22.285Z",
+  "updatedAt": "2026-11-23T10:07:08.009Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T09:06:23.662Z"
+      "checkedAt": "2026-11-23T10:06:25.057Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T09:06:37.002Z"
+      "checkedAt": "2026-11-23T10:06:38.399Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T09:06:40.622Z"
+      "checkedAt": "2026-11-23T10:06:46.767Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T09:06:54.713Z"
+      "checkedAt": "2026-11-23T10:07:00.828Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T09:06:55.624Z"
+      "checkedAt": "2026-11-23T10:07:01.763Z"
     },
     "choq": {
       "id": "choq",
@@ -141,15 +141,16 @@
         "end": "11:00",
         "url": "https://www.choq.ca/balados/kongossa-na-uqam"
       },
-      "track": "Vicky R — Le ciel est grand",
+      "track": "beabadoobee — Write Me A Letter",
       "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
+        "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T09:07:21.934Z"
+      "checkedAt": "2026-11-23T10:07:07.658Z"
     }
   }
 }
