@@ -2591,6 +2591,9 @@ function sportsCtaTagLinePair(wanted, shown, extra = {}) {
 
 function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
+  // « Résultat à venir » : pastille jaune, encre noire (comme « Prochain »).
+  if (wanted === SPORTS_CTA_TAG_PENDING) tag.dataset.ctaPending = '1';
+  else delete tag.dataset.ctaPending;
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
   const pair = sportsCtaTagLinePair(wanted, shown, extra);
