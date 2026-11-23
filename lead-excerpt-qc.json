@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-23T02:37:55.094Z",
+  "updated": "2026-11-23T03:07:57.841Z",
   "total": 1055,
   "pool": 61,
   "incomplete": 26,
-  "withLeadExcerpt": 217,
+  "withLeadExcerpt": 220,
   "candidates": 26,
-  "enriched": 8,
-  "failed": 3,
+  "enriched": 5,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -28,6 +28,15 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -46,22 +55,22 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
       "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
       "link": "https://leclubecole.com/daniel-jones-libere-les-colts-dindianapolis-tournent-la-page/?utm_source=rss&utm_medium=rss&utm_campaign=daniel-jones-libere-les-colts-dindianapolis-tournent-la-page",
       "ok": true,
       "score": 100,
       "chars": 333,
       "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Médias : après la crise du papier, la crise d’Internet ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
+      "ok": true,
+      "score": 100,
+      "chars": 340,
+      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
+      "changed": false
     },
     {
       "title": "Retour à la case départ pour les Hornets de Charlotte",
@@ -70,16 +79,7 @@
       "score": 100,
       "chars": 291,
       "sample": "Les Hornets de Charlotte n’ont remporté que quatre de leurs quatorze premiers matchs cette saison. U",
-      "changed": true
-    },
-    {
-      "title": "La course au trophée Vézina s’intensifie",
-      "link": "https://leclubecole.com/la-course-au-trophee-vezina-sintensifie/?utm_source=rss&utm_medium=rss&utm_campaign=la-course-au-trophee-vezina-sintensifie",
-      "ok": true,
-      "score": 100,
-      "chars": 295,
-      "sample": "La Ligue nationale de hockey (LNH) n’a rarement vu autant de buts marqués qu’en ce début de saison 2",
-      "changed": true
+      "changed": false
     }
   ]
 }

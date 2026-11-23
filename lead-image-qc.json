@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-23T02:38:11.384Z",
+  "updated": "2026-11-23T03:08:19.897Z",
   "total": 1053,
-  "withPhoto": 960,
+  "withPhoto": 962,
   "withStock": 105,
   "withCampusBank": 92,
-  "fullyCovered": 1040,
-  "leadReadyPhotos": 1008,
-  "pageScraped": 10,
-  "photosRecovered": 10,
+  "fullyCovered": 1042,
+  "leadReadyPhotos": 1010,
+  "pageScraped": 13,
+  "photosRecovered": 13,
   "imagesCleared": 2,
-  "stockSearches": 3,
+  "stockSearches": 4,
   "stockFound": 13,
   "campusBankFound": 10,
   "mainPageLeadReady": true,
@@ -25,6 +25,12 @@
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "What we liked this summer break",
+      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "reason": "no-stock-match",
+      "image": "https://thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg"
     },
     {
       "title": "Battling Adversity",
