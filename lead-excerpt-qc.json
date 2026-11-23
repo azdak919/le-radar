@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-23T16:10:52.715Z",
+  "updated": "2026-11-23T17:40:51.095Z",
   "total": 1057,
   "pool": 61,
-  "incomplete": 28,
+  "incomplete": 27,
   "withLeadExcerpt": 221,
-  "candidates": 28,
-  "enriched": 4,
+  "candidates": 27,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -28,15 +28,6 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -55,13 +46,13 @@
       "changed": false
     },
     {
-      "title": "La coupe ou rien : les coulisses d’une conquête inoubliable",
-      "link": "https://lapige.atmjonquiere.com/2026/11/23/la-coupe-ou-rien-les-coulisses-dune-conquete-inoubliable/?utm_source=rss&utm_medium=rss&utm_campaign=la-coupe-ou-rien-les-coulisses-dune-conquete-inoubliable",
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
       "ok": true,
       "score": 100,
-      "chars": 735,
-      "sample": "Les émotions derrière la conquête du trophée Gilles-Courteau sont revenues à la surface au Cinéma Od",
-      "changed": true
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
     },
     {
       "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
@@ -70,7 +61,7 @@
       "score": 100,
       "chars": 359,
       "sample": "Léonie Couture, la fondatrice de La rue des Femmes, un organisme à but non lucratif qui œuvre à aide",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 333,
       "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
+      "changed": false
+    },
+    {
+      "title": "Médias : après la crise du papier, la crise d’Internet ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
+      "ok": true,
+      "score": 100,
+      "chars": 340,
+      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
       "changed": false
     }
   ]
