@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-23T20:40:01.113Z",
+  "updated": "2026-11-23T21:12:27.821Z",
   "total": 1104,
   "withAuthor": 1104,
-  "mismatches": 56,
+  "mismatches": 55,
   "ok": true,
   "samples": [
     {
@@ -94,6 +94,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
+      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy",
       "source": "The Concordian",
@@ -156,15 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "BU Snow Prepares for Another Winter at Bishop’s",
-      "link": "https://thebucampus.ca/2026/10/27/bu-snow-prepares-for-another-winter-at-bishops",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 56
+  "fixed": 55
 }

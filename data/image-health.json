@@ -1,10 +1,10 @@
 {
-  "at": "2026-11-23T20:46:41.423Z",
-  "cards": 1102,
+  "at": "2026-11-23T21:22:00.499Z",
+  "cards": 1104,
   "probedCards": 150,
-  "queueDeferred": 124,
-  "urls": 143,
-  "broken": 22,
+  "queueDeferred": 2,
+  "urls": 148,
+  "broken": 34,
   "repaired": 1,
   "items": [
     {
@@ -239,6 +239,39 @@
       "transient": true
     },
     {
+      "source": "Le Collectif",
+      "title": "Collation des grades 2026 : une boucle bouclée",
+      "link": "https://lecollectif.ca/campus/collation-des-grades-2026-une-boucle-bouclee",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/10/Capture-decran-le-2026-10-05-a-12.50.25.png",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Accusation de viol collectif à l’université de Cornell",
+      "link": "https://lecollectif.ca/edition-papier/accusation-de-viol-collectif-a-luniversite-de-cornell",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/10/EDITO_AffaireCornell_Source-GettyImagesMattBurkhartt-1.png",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Quartier Libre",
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "link": "https://quartierlibre.ca/deficit-budgetaire-quebec",
+      "field": "image",
+      "variant": "",
+      "url": "https://quartierlibre.ca/wp-content/uploads/2026/10/Illustration-deficit-budgetaire-et-dette.png",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
       "source": "The Campus",
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
@@ -249,6 +282,105 @@
       "type": "text/html",
       "transient": false,
       "repaired": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Clin d’œil à Elisapie dans la deuxième saison de North of North",
+      "link": "https://lecollectif.ca/culture/clin-doeil-a-elisapie-dans-la-deuxieme-saison-de-north-of-north",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/CULTURE_North_of_North_S2_Source-APTN-CBC-et-Netflix.jpg",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Le conflit entre Trump et les médias atteint un nouveau sommet",
+      "link": "https://lecollectif.ca/societe/le-conflit-entre-trump-et-les-medias-atteint-un-nouveau-sommet",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Le-conflit-entre-Trump-et-les-medias-atteint-un-nouveau-sommet_Getty-Images.jpg",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Le DSM-6 ?",
+      "link": "https://lecollectif.ca/societe/le-dsm-6",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_DSM_SourceJessicaWeinkle.jpg",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Circonscriptions des personnes cheffes de parti",
+      "link": "https://lecollectif.ca/societe/circonscriptions-des-personnes-cheffes-de-parti",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Circonscription-des-personnes-cheffes-de-parti_Getty-Images.jpg",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Débat économique de TVA",
+      "link": "https://lecollectif.ca/societe/debat-economique-de-tva",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Debat-economique-de-TVA_Publication-de-TVA.png",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Le Québec est-il polarisé ?",
+      "link": "https://lecollectif.ca/societe/le-quebec-est-il-polarise",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Le-Quebec-est-il-polarise_Getty-Images.jpg",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Début de saison rocailleux pour le Vert & Or au football",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/debut-de-saison-rocailleux-pour-le-vert-or-au-football",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SPORTS-Football_universitaire_Debut_de_saison_rocailleux_pour_le_Vert__Or-Manuel_Ezeta_jpg-1.jpg",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Journée nationale de la vérité et de la réconciliation",
+      "link": "https://lecollectif.ca/societe/journee-nationale-de-la-verite-et-de-la-reconciliation",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_JourneeNationaleDeLaVeriteEtDeLaReconciliation_SourceGouvernementDuCanada.jpg",
+      "status": 0,
+      "type": "",
+      "transient": true
+    },
+    {
+      "source": "Le Collectif",
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/faire-du-sport-sans-se-ruiner-quand-on-est-aux-etudes",
+      "field": "image",
+      "variant": "",
+      "url": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Faire-du-sport-sans-se-ruiner-quand-on-est-etudiant_SourceUdeS-1.jpeg",
+      "status": 0,
+      "type": "",
+      "transient": true
     }
   ]
 }

@@ -1,24 +1,17 @@
 {
-  "updated": "2026-11-23T20:47:44.271Z",
-  "total": 1102,
-  "withImage": 1002,
-  "withCredit": 1002,
+  "updated": "2026-11-23T21:23:35.145Z",
+  "total": 1104,
+  "withImage": 1004,
+  "withCredit": 1004,
   "cited": 731,
-  "pending": 169,
+  "pending": 176,
   "missingHero": 0,
   "ok": false,
-  "checked": 60,
+  "checked": 43,
   "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "citedNew": 2,
+  "fallbackNew": 41,
   "samples": [
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
     {
       "title": "ASFA asks students what issues matter most to them",
       "source": "The Concordian",
@@ -27,18 +20,25 @@
       "method": "figcaption-trailing"
     },
     {
+      "title": "Musicians Among Us: Band Fest Season Part 2",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Musicians Among Us: Band Fest Season",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
       "source": "The Concordian",
       "credit": "Photo: Eric Klempan",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "Matvei Michkov : un talent indéniable, mais une attitude qui dérange",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
     }
   ]
 }

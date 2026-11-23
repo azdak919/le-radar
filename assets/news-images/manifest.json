@@ -719,16 +719,6 @@
       "via": "resize-proxy",
       "nameKey": "image1.png"
     },
-    "6608a65318b10998": {
-      "local": "assets/news-images/6608a65318b10998.jpg",
-      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/image30.png",
-      "host": "theplantnews.com",
-      "bytes": 156476,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-14T23:08:13.536Z",
-      "via": "resize-proxy",
-      "nameKey": "image30.png"
-    },
     "4cbfe20d919da38d": {
       "local": "assets/news-images/4cbfe20d919da38d.jpg",
       "remote": "https://theplantnews.com/wp-content/uploads/2026/11/image24.png",
@@ -957,16 +947,6 @@
       "updatedAt": "2026-11-20T17:57:19.631Z",
       "via": "resize-proxy",
       "nameKey": "creation-sans-titre.png"
-    },
-    "0d5fe95134bc5749": {
-      "local": "assets/news-images/0d5fe95134bc5749.jpg",
-      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/image31.png",
-      "host": "theplantnews.com",
-      "bytes": 130209,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-16T22:39:53.544Z",
-      "via": "resize-proxy",
-      "nameKey": "image31.png"
     },
     "b3e46a5a9568ebf2": {
       "local": "assets/news-images/b3e46a5a9568ebf2.jpg",
@@ -3096,9 +3076,28 @@
       "updatedAt": "2026-11-23T20:44:32.977Z",
       "via": "origin",
       "nameKey": "8484387.jpg"
+    },
+    "9968157305aa5a28": {
+      "local": "assets/news-images/9968157305aa5a28.jpg",
+      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/image13.png",
+      "host": "theplantnews.com",
+      "bytes": 39339,
+      "updatedAt": "2026-11-23T21:18:40.114Z",
+      "via": "disk",
+      "nameKey": "image13.png"
+    },
+    "f44ebc6e5b196c79": {
+      "local": "assets/news-images/f44ebc6e5b196c79.jpg",
+      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/image5.png",
+      "host": "theplantnews.com",
+      "bytes": 89955,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-23T21:18:42.353Z",
+      "via": "resize-proxy",
+      "nameKey": "image5.png"
     }
   },
-  "updatedAt": "2026-11-23T20:44:34.333Z",
+  "updatedAt": "2026-11-23T21:18:42.358Z",
   "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5849,6 +5848,14 @@
     "564f372d20a2583a": {
       "reason": "failed",
       "at": "2026-11-23T19:42:20.638Z"
+    },
+    "eb59bcfd3fbdc886": {
+      "reason": "failed",
+      "at": "2026-11-23T21:18:40.510Z"
+    },
+    "6b5378ae44760ce5": {
+      "reason": "failed",
+      "at": "2026-11-23T21:18:40.800Z"
     }
   }
 }

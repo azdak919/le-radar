@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-23T20:40:44.710Z",
+  "updated": "2026-11-23T21:14:56.708Z",
   "total": 1104,
   "pool": 61,
   "incomplete": 28,
-  "withLeadExcerpt": 223,
+  "withLeadExcerpt": 220,
   "candidates": 28,
-  "enriched": 3,
-  "failed": 1,
+  "enriched": 0,
+  "failed": 15,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,12 @@
       "changed": false
     },
     {
-      "title": "Souriez, vous êtes filmés !",
-      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
       "score": 96,
-      "chars": 439,
-      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,13 +46,22 @@
       "changed": false
     },
     {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": false
+    },
+    {
       "title": "Bulletins La Pige radio 23 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
       "ok": true,
       "score": 78,
       "chars": 153,
       "sample": "Le conseil régional de l’environnement déçu de la COP 31, la possibilité d’une grève générale illimi",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
@@ -73,12 +73,12 @@
       "changed": false
     },
     {
-      "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
-      "link": "https://leclubecole.com/daniel-jones-libere-les-colts-dindianapolis-tournent-la-page/?utm_source=rss&utm_medium=rss&utm_campaign=daniel-jones-libere-les-colts-dindianapolis-tournent-la-page",
+      "title": "Médias : après la crise du papier, la crise d’Internet ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
       "ok": true,
       "score": 100,
-      "chars": 333,
-      "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
+      "chars": 340,
+      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
       "changed": false
     }
   ]
