@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:06:53.585Z",
+  "updatedAt": "2026-11-23T01:56:27.386Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T01:06:26.779Z"
+      "checkedAt": "2026-11-23T01:56:01.036Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café (reprise)",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "20:30",
         "end": "23:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Basses fréquences (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "London café (reprise)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T01:06:28.103Z"
+      "checkedAt": "2026-11-23T01:56:02.302Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,17 +81,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T01:06:31.537Z"
+      "checkedAt": "2026-11-23T01:56:04.928Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Eastern Promises",
+        "title": "Towards A Common Horizon",
         "source": "schedule-live",
         "start": "20:00",
-        "end": "20:30",
-        "url": "http://www.cjlo.com/shows/eastern-promises"
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/towards-a-common-horizon"
       },
       "next": {
         "title": "Afro Archives",
@@ -101,14 +101,14 @@
         "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "track": "",
-      "showTitle": "Eastern Promises",
+      "showTitle": "Towards A Common Horizon",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T01:06:45.732Z"
+      "checkedAt": "2026-11-23T01:56:19.469Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T01:06:46.767Z"
+      "checkedAt": "2026-11-23T01:56:20.514Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Noé Lira — oceane (la fuerza del mar)",
+      "track": "BLUE GEMINI — Magenta",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T01:06:53.234Z"
+      "checkedAt": "2026-11-23T01:56:27.037Z"
     }
   }
 }
