@@ -1,16 +1,6 @@
 {
   "version": 1,
   "files": {
-    "52778e0859eeea36": {
-      "local": "assets/news-images/52778e0859eeea36.jpg",
-      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Marche_pour_le_climat_27-09-2019_Montreal_07.jpg",
-      "host": "www.mcgilldaily.com",
-      "bytes": 302314,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:09:23.376Z",
-      "via": "resize-proxy",
-      "nameKey": "marche_pour_le_climat_27-09-2019_montreal_07.jpg"
-    },
     "157e1b0794b4afbb": {
       "local": "assets/news-images/157e1b0794b4afbb.jpg",
       "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/10/Ruban-rose-metiers-et-risques-professionnels.png",
@@ -2452,25 +2442,6 @@
       "via": "resize-proxy",
       "nameKey": "photo-gstp-1.jpg"
     },
-    "d3b6becf2af8f54d": {
-      "local": "assets/news-images/d3b6becf2af8f54d.png",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Screenshot-2025-10-30-at-12.13.29-AM.png",
-      "host": "theconcordian.com",
-      "bytes": 90626,
-      "contentType": "image/png",
-      "updatedAt": "2026-11-20T17:57:04.368Z",
-      "via": "origin",
-      "nameKey": "screenshot-2025-10-30-at-12.13.29-am.png"
-    },
-    "793e627e4bf94406": {
-      "local": "assets/news-images/793e627e4bf94406.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/KlempanEric_171126_NDPRally_Vol44_-5.jpg",
-      "host": "theconcordian.com",
-      "bytes": 76197,
-      "updatedAt": "2026-11-20T14:08:36.526Z",
-      "via": "disk",
-      "nameKey": "klempaneric_171126_ndprally_vol44_-5.jpg"
-    },
     "4003bfe57fea9104": {
       "local": "assets/news-images/4003bfe57fea9104.jpg",
       "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_DeuilParSuicide_Source-Hope-Cope.jpg",
@@ -3078,10 +3049,29 @@
       "updatedAt": "2026-11-23T02:38:33.117Z",
       "via": "origin",
       "nameKey": "image-33.png"
+    },
+    "e7f462e9ba2bddc5": {
+      "local": "assets/news-images/e7f462e9ba2bddc5.png",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Screenshot-2026-11-19-at-10.38.42-AM.png",
+      "host": "theconcordian.com",
+      "bytes": 166736,
+      "updatedAt": "2026-11-23T05:09:39.482Z",
+      "via": "disk",
+      "nameKey": "screenshot-2026-11-19-at-10.38.42-am.png"
+    },
+    "f48bd88848852a41": {
+      "local": "assets/news-images/f48bd88848852a41.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/KlempanEric_171126_NDPRally_Vol44_-2.jpg",
+      "host": "theconcordian.com",
+      "bytes": 65005,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-23T05:09:41.609Z",
+      "via": "resize-proxy",
+      "nameKey": "klempaneric_171126_ndprally_vol44_-2.jpg"
     }
   },
-  "updatedAt": "2026-11-23T03:08:44.648Z",
-  "count": 319,
+  "updatedAt": "2026-11-23T05:09:41.616Z",
+  "count": 318,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5216,10 +5206,6 @@
       "reason": "budget",
       "at": "2026-11-20T17:41:23.715Z"
     },
-    "793e627e4bf94406": {
-      "reason": "failed",
-      "at": "2026-11-20T17:57:08.157Z"
-    },
     "a5d35385efd28c25": {
       "reason": "failed",
       "at": "2026-11-20T17:57:15.682Z"
@@ -5643,6 +5629,10 @@
     "3449afc5166db644": {
       "reason": "budget",
       "at": "2026-11-23T02:38:33.131Z"
+    },
+    "52778e0859eeea36": {
+      "reason": "budget",
+      "at": "2026-11-23T05:09:41.615Z"
     }
   }
 }
