@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-23T21:40:00.653Z",
-  "total": 1105,
-  "withPhoto": 1010,
+  "updated": "2026-11-23T22:12:46.132Z",
+  "total": 1106,
+  "withPhoto": 1011,
   "withStock": 105,
   "withCampusBank": 90,
-  "fullyCovered": 1091,
+  "fullyCovered": 1092,
   "leadReadyPhotos": 1048,
-  "pageScraped": 8,
-  "photosRecovered": 8,
+  "pageScraped": 9,
+  "photosRecovered": 9,
   "imagesCleared": 2,
-  "stockSearches": 3,
-  "stockFound": 10,
-  "campusBankFound": 7,
+  "stockSearches": 9,
+  "stockFound": 18,
+  "campusBankFound": 15,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Huîtres, drogues et les tournants de la vie",
+      "link": "https://www.delitfrancais.com/2026/09/30/huitres-drogues-et-les-tournants-de-la-vie",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -21,9 +27,39 @@
       "image": null
     },
     {
+      "title": "Bulletins La Pige radio 28 septembre 12h, 14h, 16h et 18h",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/bulletin-la-pige-radio-28-septembre-12h",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
+      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Clin d’œil à Elisapie dans la deuxième saison de North of North",
+      "link": "https://lecollectif.ca/culture/clin-doeil-a-elisapie-dans-la-deuxieme-saison-de-north-of-north",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/09/CULTURE_North_of_North_S2_Source-APTN-CBC-et-Netflix.jpg"
+    },
+    {
+      "title": "La Corse résonne dans une église de Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/la-corse-resonne-dans-une-eglise-de-chicoutimi",
+      "reason": "no-stock-match",
       "image": null
     },
     {
