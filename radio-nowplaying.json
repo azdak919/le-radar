@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-23T15:36:45.507Z",
+  "updatedAt": "2026-11-23T16:37:15.625Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "K-C'EST ÇA ?",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://chyz.ca/emission/k-cest-ca/"
-      },
-      "next": {
         "title": "APRIORI",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/apriori/"
       },
+      "next": {
+        "title": "Little Songs On The Prairie",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
+      },
       "track": "",
-      "showTitle": "K-C'EST ÇA ?",
+      "showTitle": "APRIORI",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T15:36:08.869Z"
+      "checkedAt": "2026-11-23T16:36:39.466Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "o'keb",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "L'alter ego",
         "source": "schedule",
         "start": "11:00",
         "end": "13:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "o'keb",
+      "showTitle": "L'alter ego",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T15:36:22.207Z"
+      "checkedAt": "2026-11-23T16:36:52.795Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Music Mondays",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "All Things Campus",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "World Skip The Beat",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Latin Music Mondays",
+      "showTitle": "All Things Campus",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,61 +81,55 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T15:36:24.518Z"
+      "checkedAt": "2026-11-23T16:36:55.304Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "I Think You Might Like This",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
+      "next": {
+        "title": "Twang City",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "I Think You Might Like This",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T15:36:38.535Z"
+      "checkedAt": "2026-11-23T16:37:08.730Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Le NEUF",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:59",
-        "url": "https://www.cfak.ca/balados/le-neuf"
-      },
+      "current": null,
       "next": {
         "title": "Solénoïde",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "13:59",
         "url": "https://www.cfak.ca/balados/solenoide"
       },
       "track": "",
-      "showTitle": "Le NEUF",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T15:36:39.563Z"
+      "checkedAt": "2026-11-23T16:37:09.806Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +142,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Rebe — Azucar y Sal",
+      "track": "Célia Kameni; Claire days — Best Cards",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T15:36:45.157Z"
+      "checkedAt": "2026-11-23T16:37:15.274Z"
     }
   }
 }
