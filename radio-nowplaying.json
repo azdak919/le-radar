@@ -1,17 +1,125 @@
 {
-  "updatedAt": "2026-11-23T18:36:59.481Z",
+  "updatedAt": "2026-11-23T19:37:20.145Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Little Songs On The Prairie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
+      },
+      "next": {
+        "title": "Chéri.e, Jme Mobilise!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
+      },
+      "track": "",
+      "showTitle": "Little Songs On The Prairie",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-23T19:36:44.972Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les garçons pleurent aussi",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
+      "next": {
+        "title": "Les criquets crinqués",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+      },
+      "track": "",
+      "showTitle": "Les garçons pleurent aussi",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-23T19:36:58.222Z"
+    },
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "current": {
+        "title": "Radio Is Dead",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "next": {
+        "title": "Whose Vibe Is It Anyway",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
+      "track": "",
+      "showTitle": "Radio Is Dead",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-23T19:37:00.400Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "L'Organe à la radio",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
+      },
+      "next": {
+        "title": "Whip Appeal",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/whip-appeal"
+      },
+      "track": "",
+      "showTitle": "L'Organe à la radio",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-23T19:37:13.867Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": null,
+      "next": {
+        "title": "Ma radio Académia",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "18:59",
+        "url": "https://www.cfak.ca/balados/ma-radio-academia"
       },
       "track": "",
       "showTitle": "",
@@ -21,125 +129,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T18:36:24.590Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "track": "",
-      "showTitle": "Le palmarès",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-23T18:36:36.508Z"
-    },
-    "ckut": {
-      "id": "ckut",
-      "name": "CKUT 90,3",
-      "current": {
-        "title": "World Skip The Beat",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
-        "title": "Radio Is Dead",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "track": "",
-      "showTitle": "World Skip The Beat",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "stream"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-23T18:36:38.826Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "The Tommy John Show",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
-      },
-      "next": {
-        "title": "L'Organe à la radio",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
-      },
-      "track": "",
-      "showTitle": "The Tommy John Show",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-23T18:36:52.235Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "13:59",
-        "url": "https://www.cfak.ca/balados/solenoide"
-      },
-      "next": {
-        "title": "Ma radio Académia",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "18:59",
-        "url": "https://www.cfak.ca/balados/ma-radio-academia"
-      },
-      "track": "",
-      "showTitle": "Solénoïde",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-23T18:36:54.390Z"
+      "checkedAt": "2026-11-23T19:37:14.791Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Onde de CHOQ",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -147,15 +142,15 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Boy Harsher — Faulty",
-      "showTitle": "Onde de CHOQ",
+      "track": "Bad Waitress — The Hunt",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T18:36:59.131Z"
+      "checkedAt": "2026-11-23T19:37:19.794Z"
     }
   }
 }
