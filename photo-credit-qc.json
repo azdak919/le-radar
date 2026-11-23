@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-23T11:41:39.488Z",
+  "updated": "2026-11-23T13:10:51.181Z",
   "total": 1053,
   "withImage": 953,
   "withCredit": 953,
   "cited": 704,
-  "pending": 166,
+  "pending": 163,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "updatedCount": 6,
+  "citedNew": 6,
+  "fallbackNew": 54,
   "samples": [
     {
       "title": "Cinq nouvelles de la semaine",
@@ -34,11 +34,25 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Biz Tec 2026 Connects Bishop’s Students with Employers",
-      "source": "The Campus",
-      "credit": "Photo: The Campus",
+      "title": "Le RADIS nourrit à petits prix",
+      "source": "L'Exemplaire",
+      "credit": "Photo : L'Exemplaire",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Juliette Kot / L'Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Le patrimoine religieux de Québec : un financement inégal",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Hermione Durocher / L’Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     }
   ]
 }
