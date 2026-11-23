@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:06:39.838Z",
+  "updatedAt": "2026-11-23T07:06:26.689Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T06:06:15.974Z"
+      "checkedAt": "2026-11-23T07:06:01.801Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Le char de marge (reprise)",
         "source": "schedule",
         "start": "02:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "05:30",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Le char de marge (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T06:06:17.052Z"
+      "checkedAt": "2026-11-23T07:06:03.326Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T06:06:19.135Z"
+      "checkedAt": "2026-11-23T07:06:05.693Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T06:06:32.589Z"
+      "checkedAt": "2026-11-23T07:06:19.479Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T06:06:33.535Z"
+      "checkedAt": "2026-11-23T07:06:20.648Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "11:00",
         "url": "https://www.choq.ca/balados/kongossa-na-uqam"
       },
-      "track": "Sadness — istoy",
+      "track": "Miserere Luminis — Aux bras des vagues & des vomissures",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -150,7 +150,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-23T06:06:39.487Z"
+      "checkedAt": "2026-11-23T07:06:26.339Z"
     }
   }
 }
