@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-23T17:55:40.986Z",
-  "total": 1055,
-  "withImage": 956,
-  "withCredit": 956,
+  "updated": "2026-11-23T18:46:53.672Z",
+  "total": 1056,
+  "withImage": 955,
+  "withCredit": 955,
   "cited": 706,
-  "pending": 166,
+  "pending": 169,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 4,
+  "updatedCount": 13,
   "citedNew": 4,
   "fallbackNew": 56,
   "samples": [
+    {
+      "title": "Bulletins La Pige radio 23 novembre",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
@@ -27,16 +34,65 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "Les dessous de la grève du 10 novembre",
-      "source": "Le Collectif",
-      "credit": "Photo : NicolasHamel",
-      "cited": true,
-      "method": "filename-credit"
-    },
-    {
       "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
       "source": "The Concordian",
-      "credit": "Photo: The Concordian",
+      "credit": "Photo: Eric Klempan",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The Chickens Are Fine: An Open Mic Night with Wit and Whimsy",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Dimprov: An Ode To Costume Design, Community, and The Candace Warner",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Béchard Hudon Brings Unseen Ecosystems to Light with Monologue de la Forêt",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le retour du Rocky Horror Picture Show",
+      "source": "Le Délit",
+      "credit": "Photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The Freedom to Be: The Enduring Legacies of Tim Curry and Dolly Parton Within the Queer Community",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Bishop’s Hosts Provincial Election Debate",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Queer Elders Sharing: Preserving Queer History Across Generations",
+      "source": "The Campus",
+      "credit": "Photo: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Beyond the Ballot",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
       "cited": false,
       "method": null
     }

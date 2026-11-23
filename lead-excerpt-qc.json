@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-23T17:52:45.710Z",
-  "total": 1057,
+  "updated": "2026-11-23T18:41:37.357Z",
+  "total": 1058,
   "pool": 61,
-  "incomplete": 27,
-  "withLeadExcerpt": 221,
-  "candidates": 27,
-  "enriched": 2,
-  "failed": 1,
+  "incomplete": 28,
+  "withLeadExcerpt": 222,
+  "candidates": 28,
+  "enriched": 3,
+  "failed": 6,
   "ok": true,
   "samples": [
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "Bulletins La Pige radio 23 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
+      "ok": true,
+      "score": 62,
+      "chars": 145,
+      "sample": "Un mort dans un accident de VTT à Saint-Thomas-Didyme, les skieurs devront s’armer de patience et Dy",
+      "changed": true
+    },
+    {
       "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
       "link": "https://montrealcampus.ca/2026/11/23/un-doctorat-dexception-pour-leonie-couture/",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 333,
       "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
-      "changed": false
-    },
-    {
-      "title": "Médias : après la crise du papier, la crise d’Internet ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
-      "ok": true,
-      "score": 100,
-      "chars": 340,
-      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
       "changed": false
     }
   ]
