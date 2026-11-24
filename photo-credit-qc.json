@@ -1,23 +1,44 @@
 {
-  "updated": "2026-11-24T17:40:37.880Z",
-  "total": 1145,
-  "withImage": 1042,
-  "withCredit": 1042,
-  "cited": 763,
-  "pending": 173,
+  "updated": "2026-11-24T18:42:14.083Z",
+  "total": 1149,
+  "withImage": 1045,
+  "withCredit": 1045,
+  "cited": 764,
+  "pending": 178,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 59,
+  "updatedCount": 4,
+  "citedNew": 2,
+  "fallbackNew": 58,
   "samples": [
     {
-      "title": "Canada-Union européenne : quelle suite au sommet ?",
+      "title": "L’activité physique, remède naturel pour lutter contre la déprime hivernale",
       "source": "L'Exemplaire",
       "credit": "Photo : L'Exemplaire",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Québec solidaire veut être reconnu comme groupe parlementaire",
+      "source": "Le Collectif",
+      "credit": "Photo : Page Facebook de Stéphanie Vachon",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "STEP : vers une grève pour la fin de session?",
+      "source": "Impact Campus",
+      "credit": "Photo : Impact Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of Felix Sobolewski",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }

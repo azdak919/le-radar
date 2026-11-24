@@ -2403,24 +2403,6 @@
       "via": "disk",
       "nameKey": "20261026_190024677_ios.jpg"
     },
-    "4016dc0eba659f01": {
-      "local": "assets/news-images/4016dc0eba659f01.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_1144.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 157848,
-      "updatedAt": "2026-11-21T16:55:30.612Z",
-      "via": "disk",
-      "nameKey": "img_1144.jpg"
-    },
-    "f5376b0027149e52": {
-      "local": "assets/news-images/f5376b0027149e52.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/unnamed.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 236517,
-      "updatedAt": "2026-11-21T16:55:30.612Z",
-      "via": "disk",
-      "nameKey": "unnamed.jpg"
-    },
     "bcb477df109aacf4": {
       "local": "assets/news-images/bcb477df109aacf4.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/billets_canadiens.png",
@@ -2885,16 +2867,6 @@
       "via": "photon-resize",
       "nameKey": "hannahnobile_191126_emilielavoievictoire_vol44-11-e1795479027790.jpg"
     },
-    "af79ae7e6e845b6c": {
-      "local": "assets/news-images/af79ae7e6e845b6c.webp",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Tamara-StudentSpaces-00976.jpg",
-      "host": "theconcordian.com",
-      "bytes": 182674,
-      "contentType": "image/webp",
-      "updatedAt": "2026-11-24T12:40:06.833Z",
-      "via": "photon-resize",
-      "nameKey": "tamara-studentspaces-00976.jpg"
-    },
     "1f3abf6c43653bd2": {
       "local": "assets/news-images/1f3abf6c43653bd2.webp",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Picture-4-.jpeg",
@@ -3144,10 +3116,48 @@
       "updatedAt": "2026-11-24T17:39:20.956Z",
       "via": "origin",
       "nameKey": "eu-canada-leaders-3-hands_0.jpg"
+    },
+    "962d005956e597af": {
+      "local": "assets/news-images/962d005956e597af.jpg",
+      "remote": "http://impactcampus.ca/wp-content/uploads/2026/11/step.png",
+      "host": "impactcampus.ca",
+      "bytes": 48353,
+      "updatedAt": "2026-11-24T18:40:44.263Z",
+      "via": "disk",
+      "nameKey": "step.png"
+    },
+    "a3f7a4090b3e15a6": {
+      "local": "assets/news-images/a3f7a4090b3e15a6.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/Tamara-StudentSpaces-00991.jpg",
+      "host": "theconcordian.com",
+      "bytes": 97811,
+      "updatedAt": "2026-11-24T18:40:44.267Z",
+      "via": "disk",
+      "nameKey": "tamara-studentspaces-00991.jpg"
+    },
+    "fdd360a3c045b9c9": {
+      "local": "assets/news-images/fdd360a3c045b9c9.jpg",
+      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_QuebecSolidaireStephanieVachon_SourcePageFacebookDeStephanieVachon.jpg",
+      "host": "lecollectif.ca",
+      "bytes": 245509,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T18:40:44.664Z",
+      "via": "origin",
+      "nameKey": "societe_quebecsolidairestephanievachon_sourcepagefacebookdestephanievachon.jpg"
+    },
+    "24ff2cac543aec49": {
+      "local": "assets/news-images/24ff2cac543aec49.jpg",
+      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/image-EMM5-scaled.jpg",
+      "host": "www.exemplaire.com.ulaval.ca",
+      "bytes": 180403,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T18:40:51.949Z",
+      "via": "resize-proxy",
+      "nameKey": "image-emm5.jpg"
     }
   },
-  "updatedAt": "2026-11-24T17:39:20.967Z",
-  "count": 323,
+  "updatedAt": "2026-11-24T18:40:51.960Z",
+  "count": 324,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -6049,6 +6059,14 @@
     "75c3d6ab4cd69153": {
       "reason": "budget",
       "at": "2026-11-24T17:39:20.965Z"
+    },
+    "f5376b0027149e52": {
+      "reason": "budget",
+      "at": "2026-11-24T18:40:51.956Z"
+    },
+    "4016dc0eba659f01": {
+      "reason": "budget",
+      "at": "2026-11-24T18:40:51.958Z"
     }
   }
 }

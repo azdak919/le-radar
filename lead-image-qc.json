@@ -1,19 +1,43 @@
 {
-  "updated": "2026-11-24T17:38:56.060Z",
-  "total": 1145,
-  "withPhoto": 1050,
-  "withStock": 112,
-  "withCampusBank": 92,
-  "fullyCovered": 1131,
-  "leadReadyPhotos": 1066,
-  "pageScraped": 7,
-  "photosRecovered": 7,
-  "imagesCleared": 0,
-  "stockSearches": 4,
-  "stockFound": 12,
-  "campusBankFound": 8,
+  "updated": "2026-11-24T18:40:19.254Z",
+  "total": 1149,
+  "withPhoto": 1053,
+  "withStock": 115,
+  "withCampusBank": 94,
+  "fullyCovered": 1136,
+  "leadReadyPhotos": 1064,
+  "pageScraped": 11,
+  "photosRecovered": 11,
+  "imagesCleared": 1,
+  "stockSearches": 12,
+  "stockFound": 18,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Concordia University could be complicit in human rights violations if its research is used to “crack down on human rights,” Human Rights Watch Asia director says",
+      "link": "https://theconcordian.com/2026/11/concordia-complicit-in-human-rights-violations-watchdog-says/",
+      "reason": "no-stock-match",
+      "image": "https://theconcordian.com/wp-content/uploads/2026/11/1793786979593_1793699374393-7438337156417159838-7438337156417159838-898dca5317699239f7efd7109ce8e47e-jpg-1.avif"
+    },
+    {
+      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
+      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+    },
+    {
+      "title": "Un monde bâti sur du sable",
+      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -21,10 +45,40 @@
       "image": null
     },
     {
-      "title": "Blackface at McGill",
-      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
+      "reason": "no-stock-match",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
+    },
+    {
+      "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
+      "link": "https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/en-direct-de-lunivers.avif"
+    },
+    {
+      "title": "Pour Halloween, ce sont les pesticides qui font peur",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/pour-halloween-ce-sont-les-pesticides-qui-font-peur",
+      "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Au-delà des déchets",
+      "link": "https://exilecvm.wordpress.com/2026/11/24/au-dela-des-dechets/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
+    },
+    {
+      "title": "Bulletins La Pige radio 2 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8197/28541561483_fa2e96b0b7_b.jpg"
+    },
+    {
+      "title": "Saguenay vers des infrastructures durables",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
     },
     {
       "title": "Battling Adversity",

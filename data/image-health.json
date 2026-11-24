@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-24T17:39:21.430Z",
-  "cards": 1145,
-  "probedCards": 4,
-  "queueDeferred": 0,
-  "urls": 4,
-  "broken": 2,
-  "repaired": 2,
+  "at": "2026-11-24T18:40:57.891Z",
+  "cards": 1149,
+  "probedCards": 150,
+  "queueDeferred": 49,
+  "urls": 139,
+  "broken": 3,
+  "repaired": 3,
   "items": [
     {
       "source": "The Concordian",
@@ -16,6 +16,18 @@
       "url": "https://theconcordian.com/wp-content/uploads/2026/11/1793786979593_1793699374393-7438337156417159838-7438337156417159838-898dca5317699239f7efd7109ce8e47e-jpg-1.avif",
       "status": 403,
       "type": "text/html; charset=utf-8",
+      "transient": false,
+      "repaired": true
+    },
+    {
+      "source": "La Pige",
+      "title": "Saguenay vers des infrastructures durables",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
+      "field": "stockImage",
+      "variant": "",
+      "url": "https://live.staticflickr.com/472/19873557183_dabab21fd3_b.jpg",
+      "status": 403,
+      "type": "text/html",
       "transient": false,
       "repaired": true
     },
