@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-24T03:40:50.584Z",
+  "updated": "2026-11-24T05:06:17.963Z",
   "total": 1108,
   "pool": 61,
-  "incomplete": 26,
+  "incomplete": 25,
   "withLeadExcerpt": 222,
-  "candidates": 26,
-  "enriched": 1,
-  "failed": 3,
+  "candidates": 25,
+  "enriched": 0,
+  "failed": 4,
   "ok": true,
   "samples": [
     {
@@ -55,15 +55,6 @@
       "changed": false
     },
     {
-      "title": "SPVM arrests two former Montreal police officers",
-      "link": "https://thelinknewspaper.ca/article/16588",
-      "ok": true,
-      "score": 96,
-      "chars": 660,
-      "sample": "Montreal police (SPVM) arrested two former officers on Nov. 21 for alleged discriminatory and racist",
-      "changed": true
-    },
-    {
       "title": "Bulletins La Pige radio 23 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
       "ok": true,
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 359,
       "sample": "Léonie Couture, la fondatrice de La rue des Femmes, un organisme à but non lucratif qui œuvre à aide",
+      "changed": false
+    },
+    {
+      "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
+      "link": "https://leclubecole.com/daniel-jones-libere-les-colts-dindianapolis-tournent-la-page/?utm_source=rss&utm_medium=rss&utm_campaign=daniel-jones-libere-les-colts-dindianapolis-tournent-la-page",
+      "ok": true,
+      "score": 100,
+      "chars": 333,
+      "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
       "changed": false
     }
   ]

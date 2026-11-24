@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-24T03:40:13.824Z",
+  "updated": "2026-11-24T05:05:26.312Z",
   "total": 1108,
   "withAuthor": 1108,
-  "mismatches": 56,
+  "mismatches": 55,
   "ok": true,
   "samples": [
-    {
-      "title": "SPVM arrests two former Montreal police officers",
-      "link": "https://thelinknewspaper.ca/article/16588",
-      "source": "The Link",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Nicolas Tremblay",
-      "reason": "page-byline"
-    },
     {
       "title": "Musicians Among Us: Band Fest Season Part 2",
       "link": "https://theplantnews.com/2026/11/18/musicians-among-us-band-fest-season-part-2/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Keeping our unhoused community warm this winter",
+      "link": "https://www.mcgilldaily.com/2026/11/keeping-our-unhoused-community-warm-this-winter/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 56
+  "fixed": 55
 }
