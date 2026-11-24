@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-24T21:09:22.908Z",
+  "updated": "2026-11-24T22:38:40.433Z",
   "total": 1150,
   "pool": 61,
-  "incomplete": 27,
-  "withLeadExcerpt": 261,
-  "candidates": 27,
-  "enriched": 1,
+  "incomplete": 26,
+  "withLeadExcerpt": 260,
+  "candidates": 26,
+  "enriched": 0,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -55,15 +55,6 @@
       "changed": false
     },
     {
-      "title": "Vendre sa personnalité pour payer un stage ?",
-      "link": "https://quartierlibre.ca/vendre-sa-personnalite-pour-payer-un-stage/",
-      "ok": true,
-      "score": 100,
-      "chars": 861,
-      "sample": "Pour obtenir un stage ou un premier emploi, le savoir-faire n’est plus suffisant. La démarche exige ",
-      "changed": true
-    },
-    {
       "title": "L’activité physique, remède naturel pour lutter contre la déprime hivernale",
       "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/lactivite-physique-remede-naturel-pour-lutter-contre-la-deprime-hivernale/",
       "ok": true,
@@ -79,6 +70,15 @@
       "score": 100,
       "chars": 981,
       "sample": "Les élections de mi-mandat de 2026 aux États-Unis ont été marquées par les publicités négatives. Leu",
+      "changed": false
+    },
+    {
+      "title": "Hockey junior : le retour de la Russie fait toujours débat",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/hockey-junior-le-retour-de-la-russie-fait-toujours-debat/",
+      "ok": true,
+      "score": 100,
+      "chars": 965,
+      "sample": "La Russie demeure exclue du prochain Championnat du monde junior de hockey des moins de 20 ans, malg",
       "changed": false
     }
   ]
