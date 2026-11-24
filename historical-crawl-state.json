@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-11-23T18:44:52.257Z",
+  "updated": "2026-11-24T18:19:44.288Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -224,13 +224,13 @@
     },
     "le-club-ecole": {
       "strategy": "wordpress-rest",
-      "nextPage": 5,
+      "nextPage": 9,
       "totalPages": 9,
-      "lastAttemptAt": "2026-11-23T18:44:50.016Z",
-      "lastSuccessAt": "2026-11-23T18:44:50.016Z",
+      "lastAttemptAt": "2026-11-24T18:19:42.022Z",
+      "lastSuccessAt": "2026-11-24T18:19:42.022Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-11-24T00:44:42.055Z",
+      "windowStart": "2023-11-25T00:19:34.245Z",
       "windowYears": 3
     }
   }
