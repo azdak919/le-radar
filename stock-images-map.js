@@ -1,9 +1,9 @@
 /* LE RADAR — miroir local des photos de repli Wikimedia (généré).
  * Régénéré par : node scripts/mirror-stock-images.js --update
  * Clé : URL de l'original Commons (sans requête) → vignette 500 px servie par le site. */
-var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/4/4b/Universite_Laval_building_in_snow.jpg":"assets/stock-images/115ea45ae4b3f5b4.jpg",
+var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg":"assets/stock-images/61ad1fc61b4f15f1.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG":"assets/stock-images/c1f2728c9e8c88a6.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/9/96/Pavillon_Adrien-Pouliot_03.jpg":"assets/stock-images/91b8560ff50f0291.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg":"assets/stock-images/0cd4a52262537f4a.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg":"assets/stock-images/539b5adacc45f50d.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/91/Pav_DesjardinsUL.JPG":"assets/stock-images/a1e23eb180b09002.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG":"assets/stock-images/3256aca6fed2d075.jpg",
@@ -105,6 +105,7 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/4/4b/Un
 "https://upload.wikimedia.org/wikipedia/commons/a/a9/Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg":"assets/stock-images/b8f07607bcc60c0f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/66/Pavillon_Adrien-Pouliot_01.jpg":"assets/stock-images/f0b7ee2de14eab1a.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/e/e5/Pavillon_Adrien-Pouliot_02.jpg":"assets/stock-images/b5d04c7f47bceb5c.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/9/96/Pavillon_Adrien-Pouliot_03.jpg":"assets/stock-images/91b8560ff50f0291.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/a0/Pavillon_DKN%2C_Universit%C3%A9_Laval_03.jpg":"assets/stock-images/573487065f7368a2.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg":"assets/stock-images/64ad689738cd231c.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/a7/Pavillon_DKN%2C_Universit%C3%A9_Laval_06.jpg":"assets/stock-images/394d452d38b98964.jpg",
@@ -118,7 +119,6 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/4/4b/Un
 "https://upload.wikimedia.org/wikipedia/commons/e/ee/UQAM_Pavillon_des_Sciences_de_la_gestion_07.jpg":"assets/stock-images/bd2facabe00455d0.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/81/Universit%C3%A9_de_Sherbrooke_-_Pavillon_Georges-Cabana_%28panorama%29.jpg":"assets/stock-images/145cf1750aca7c7f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/e/eb/Universit%C3%A9_de_Sherbrooke_-_Facult%C3%A9_d%27%C3%A9ducation.jpg":"assets/stock-images/1b494d6855e80f14.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg":"assets/stock-images/0cd4a52262537f4a.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/e/ea/Pavillons_principal_et_des_humanit%C3%A9s_de_l%27UQAC.JPG":"assets/stock-images/792cafdb106bf9fe.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/12/Pavillon_du_CURAL_sur_le_campus_de_l%27UQAC.JPG":"assets/stock-images/9ef6ccf2517243af.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/81/Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Rimouski_-_Entr%C3%A9e_principale.jpg":"assets/stock-images/06b5429ee7ccf6b6.jpg",
@@ -157,8 +157,8 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/4/4b/Un
 "https://upload.wikimedia.org/wikipedia/commons/1/10/Pavillon_Paul-Comtois_03.jpg":"assets/stock-images/897c6b961cd6c2af.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/5/52/Exterior_of_Ecole_Polytechnique_de_Montreal.jpg":"assets/stock-images/21ba2812c66ddf6f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG":"assets/stock-images/7ae2afa721d982b7.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/4/4b/Universite_Laval_building_in_snow.jpg":"assets/stock-images/115ea45ae4b3f5b4.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/f/fd/Varennes_%28Qu%C3%A9bec%29-Campus_de_l%27INRS-2023-09-23.jpg":"assets/stock-images/09fce167914e5c8b.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg":"assets/stock-images/61ad1fc61b4f15f1.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/af/Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg":"assets/stock-images/912fa583aa5bad54.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/5/57/Pavillon_DKN%2C_Universit%C3%A9_Laval_07.jpg":"assets/stock-images/22ed30c1ffd17db0.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/82/Pavillon_Judith-Jasmin_UQAM_08.JPG":"assets/stock-images/017b41d9ba0da66d.jpg",
