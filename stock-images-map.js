@@ -95,6 +95,7 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/1/15/Mc
 "https://upload.wikimedia.org/wikipedia/commons/6/6b/Universit%C3%A9_de_Sherbrooke_-_R%C3%A9sidences_G8_%C3%A0_G15_%28panorama%29.jpg":"assets/stock-images/310169ba402dc06b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/8b/Universit%C3%A9_de_Sherbrooke_-_Centre_multifonctionnel.jpg":"assets/stock-images/a677cd0ea4dacce6.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG":"assets/stock-images/582ef31c64537478.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/0/0c/Mark_carney_davos_2010.jpg":"assets/stock-images/3fdf80ff519f3c93.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg":"assets/stock-images/4242d9aea59f4d8b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/12/Universit%C3%A9_de_Sherbrooke_-_Facult%C3%A9_des_sciences_%28panorama%29.jpg":"assets/stock-images/9b1d23dd6487593f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/a9/Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg":"assets/stock-images/b8f07607bcc60c0f.jpg",
