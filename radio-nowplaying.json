@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-24T12:06:37.405Z",
+  "updatedAt": "2026-11-24T13:06:45.898Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Groovy",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "L'art des Histoires",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:30",
+        "url": "https://chyz.ca/emission/lart-des-histoires/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Groovy",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T12:06:10.492Z"
+      "checkedAt": "2026-11-24T13:06:08.198Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "450DB",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/450db"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "Lentement mais sûrement",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/lentement-mais-surement"
+      },
       "track": "",
-      "showTitle": "450DB",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T12:06:11.862Z"
+      "checkedAt": "2026-11-24T13:06:09.471Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt1",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Tuesday Morning After Pt2",
         "source": "api-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Basa Basa",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt1",
+      "showTitle": "Tuesday Morning After Pt2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T12:06:14.863Z"
+      "checkedAt": "2026-11-24T13:06:12.005Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
       "next": {
         "title": "At The Movies",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
@@ -96,39 +103,39 @@
       "track": "",
       "showTitle": "Hip's Time to Wake Hop",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T12:06:29.471Z"
+      "checkedAt": "2026-11-24T13:06:36.420Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "07:59",
-        "url": "https://www.cfak.ca/balados/Folkswagen"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "08:59",
         "url": "https://www.cfak.ca/balados/palmares-cfak"
       },
+      "next": {
+        "title": "Le DOUZE",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "12:59",
+        "url": "https://www.cfak.ca/balados/le-douze"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T12:06:30.493Z"
+      "checkedAt": "2026-11-24T13:06:37.786Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +148,7 @@
         "end": "13:30",
         "slug": "uqam-en-info"
       },
-      "track": "Sara-Danielle — Mother Tongue",
+      "track": "Valence — Tu choisis comment tu aimes",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T12:06:37.054Z"
+      "checkedAt": "2026-11-24T13:06:45.547Z"
     }
   }
 }
