@@ -1,58 +1,37 @@
 {
-  "updated": "2026-11-24T12:20:23.731Z",
-  "total": 1113,
-  "withImage": 1012,
-  "withCredit": 1012,
-  "cited": 737,
-  "pending": 174,
+  "updated": "2026-11-24T12:41:11.241Z",
+  "total": 1118,
+  "withImage": 1017,
+  "withCredit": 1017,
+  "cited": 742,
+  "pending": 172,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 7,
+  "updatedCount": 5,
   "citedNew": 5,
   "fallbackNew": 55,
   "samples": [
     {
-      "title": "The 69th Grammy Awards nominations boast inconsistency",
+      "title": "CRUES adopts strike motion for winter 2027, granted it meets threshold support",
       "source": "The Concordian",
-      "credit": "Illustration: Zelda Dover",
-      "cited": true,
-      "method": "figcaption-illustration"
-    },
-    {
-      "title": "QUICKSPIN: U2 — Carnaval de Luz",
-      "source": "The Concordian",
-      "credit": "Photo : Carnaval de Luz Album Cover",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "QUICKSPIN: Snoh Aalegra — Legendary Love",
-      "source": "The Concordian",
-      "credit": "Photo : Legendary Love Album Cover",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "La place des femmes en photojournalisme : qui a la chance de raconter le monde en images?",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le Québécois Maxime Lamarre est recruté par l’Université d’État de l’Arizona",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "N’ayez pas peur de recommencer!",
-      "source": "The Concordian",
-      "credit": "Illustration: Zelda Dover",
+      "credit": "Photo: Max Paster",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Concordia’s flooding: What happened?",
+      "source": "The Concordian",
+      "credit": "Photo: Tamara Galinato",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Archivistique : Étudier le passé comme carrière d’avenir",
+      "source": "Quartier Libre",
+      "credit": "Photo : Jeanne le Goff",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
     },
     {
       "title": "Cinq nouvelles de la semaine",
@@ -60,6 +39,13 @@
       "credit": "Illustration : Mathilde Ségar",
       "cited": true,
       "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "La place des femmes en photojournalisme : qui a la chance de raconter le monde en images?",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     }
   ]
 }
