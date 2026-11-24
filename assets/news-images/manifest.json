@@ -2705,24 +2705,6 @@
       "via": "disk",
       "nameKey": "istockphoto-1183370267-612x612-1.jpg"
     },
-    "50f82f1020330c8b": {
-      "local": "assets/news-images/50f82f1020330c8b.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Photo.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 106435,
-      "updatedAt": "2026-11-21T16:55:32.646Z",
-      "via": "disk",
-      "nameKey": "photo.jpg"
-    },
-    "f638ea5dfc2e189d": {
-      "local": "assets/news-images/f638ea5dfc2e189d.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_1827.jpeg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 81752,
-      "updatedAt": "2026-11-21T16:55:32.646Z",
-      "via": "disk",
-      "nameKey": "img_1827.jpeg"
-    },
     "f37c23ff58205334": {
       "local": "assets/news-images/f37c23ff58205334.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/zelda-dover-funding.png",
@@ -3115,10 +3097,20 @@
       "updatedAt": "2026-11-23T22:12:59.577Z",
       "via": "origin",
       "nameKey": "image1-1.jpg"
+    },
+    "1b3a201363eb141d": {
+      "local": "assets/news-images/1b3a201363eb141d.jpg",
+      "remote": "https://leclubecole.com/wp-content/uploads/2026/11/image-34.png",
+      "host": "leclubecole.com",
+      "bytes": 253169,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T03:13:31.246Z",
+      "via": "resize-proxy",
+      "nameKey": "image-34.png"
     }
   },
-  "updatedAt": "2026-11-24T02:14:54.102Z",
-  "count": 322,
+  "updatedAt": "2026-11-24T03:13:31.255Z",
+  "count": 321,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5876,6 +5868,14 @@
     "6b5378ae44760ce5": {
       "reason": "failed",
       "at": "2026-11-23T21:18:40.800Z"
+    },
+    "f638ea5dfc2e189d": {
+      "reason": "budget",
+      "at": "2026-11-24T03:13:31.252Z"
+    },
+    "50f82f1020330c8b": {
+      "reason": "budget",
+      "at": "2026-11-24T03:13:31.254Z"
     }
   }
 }

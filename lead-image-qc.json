@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-24T02:14:32.984Z",
-  "total": 1106,
-  "withPhoto": 1011,
+  "updated": "2026-11-24T03:12:56.068Z",
+  "total": 1107,
+  "withPhoto": 1014,
   "withStock": 111,
   "withCampusBank": 90,
-  "fullyCovered": 1092,
-  "leadReadyPhotos": 1028,
-  "pageScraped": 8,
-  "photosRecovered": 8,
+  "fullyCovered": 1095,
+  "leadReadyPhotos": 1030,
+  "pageScraped": 11,
+  "photosRecovered": 11,
   "imagesCleared": 2,
-  "stockSearches": 3,
-  "stockFound": 10,
+  "stockSearches": 5,
+  "stockFound": 11,
   "campusBankFound": 7,
   "mainPageLeadReady": true,
   "gaps": [
@@ -25,6 +25,18 @@
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "What we liked this summer break",
+      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "reason": "no-stock-match",
+      "image": "https://thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg"
+    },
+    {
+      "title": "Mark Carney dévoile ses ambitions économiques",
+      "link": "https://lecollectif.ca/societe/politique-canadienne/mark-carney-devoile-ses-ambitions-economiques/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_MarkCarneyDevoileSesAmbitionsEconomiques_Source-X-Francois-Philippe-Champagne-697x1024.png"
     },
     {
       "title": "Battling Adversity",

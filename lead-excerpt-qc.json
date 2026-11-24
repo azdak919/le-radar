@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-24T02:13:35.533Z",
-  "total": 1106,
+  "updated": "2026-11-24T03:11:15.926Z",
+  "total": 1107,
   "pool": 61,
   "incomplete": 27,
-  "withLeadExcerpt": 221,
+  "withLeadExcerpt": 222,
   "candidates": 27,
-  "enriched": 0,
-  "failed": 11,
+  "enriched": 1,
+  "failed": 4,
   "ok": true,
   "samples": [
     {
@@ -55,6 +55,15 @@
       "changed": false
     },
     {
+      "title": "Deux équipes couronnées championnes au soccer sud-américain",
+      "link": "https://leclubecole.com/deux-equipes-couronnees-championnes-au-soccer-sud-americain/?utm_source=rss&utm_medium=rss&utm_campaign=deux-equipes-couronnees-championnes-au-soccer-sud-americain",
+      "ok": true,
+      "score": 100,
+      "chars": 723,
+      "sample": "Deux compétitions sud-américaines ont vu un vainqueur désigné cette fin de semaine. Six fois champio",
+      "changed": true
+    },
+    {
       "title": "Bulletins La Pige radio 23 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
       "ok": true,
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 359,
       "sample": "Léonie Couture, la fondatrice de La rue des Femmes, un organisme à but non lucratif qui œuvre à aide",
-      "changed": false
-    },
-    {
-      "title": "Médias : après la crise du papier, la crise d’Internet ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
-      "ok": true,
-      "score": 100,
-      "chars": 340,
-      "sample": "« Après la disparition du papier, on pourrait bien assister à la disparition d’Internet. » C’est ain",
       "changed": false
     }
   ]
