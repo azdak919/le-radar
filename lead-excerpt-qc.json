@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-24T13:07:52.924Z",
-  "total": 1121,
+  "updated": "2026-11-24T14:09:54.982Z",
+  "total": 1141,
   "pool": 61,
-  "incomplete": 29,
-  "withLeadExcerpt": 224,
-  "candidates": 29,
-  "enriched": 2,
+  "incomplete": 42,
+  "withLeadExcerpt": 243,
+  "candidates": 42,
+  "enriched": 20,
   "failed": 11,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,21 +19,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,31 +37,49 @@
       "changed": false
     },
     {
-      "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
-      "link": "https://theconcordian.com/2026/11/armed-riot-police-enter-campus/",
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
       "score": 100,
-      "chars": 534,
-      "sample": "At around 5 p.m. on Tuesday, Nov. 10, an anonymous group of 50 or so masked and hooded individuals b",
-      "changed": true
-    },
-    {
-      "title": "Concordia launches new Sustainability Action Plan, outlining green goals for the next four years",
-      "link": "https://theconcordian.com/2026/11/concordia-new-sustainability-action-plan/",
-      "ok": true,
-      "score": 100,
-      "chars": 666,
-      "sample": "This semester, Concordia University launched its 2026-30 Sustainability Action Plan (SAP). The strat",
-      "changed": true
-    },
-    {
-      "title": "Bulletins La Pige radio 23 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
-      "ok": true,
-      "score": 78,
-      "chars": 153,
-      "sample": "Le conseil régional de l’environnement déçu de la COP 31, la possibilité d’une grève générale illimi",
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
       "changed": false
+    },
+    {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "Concordia University at a crossroads",
+      "link": "https://thelinknewspaper.ca/article/16604",
+      "ok": true,
+      "score": 100,
+      "chars": 632,
+      "sample": "In 2023, the province's English-language universities became another front in the debate when the go",
+      "changed": true
+    },
+    {
+      "title": "Canada proposes indefinite exclusion for people with mental illnesses seeking MAID",
+      "link": "https://thelinknewspaper.ca/article/16598",
+      "ok": true,
+      "score": 100,
+      "chars": 606,
+      "sample": "In October 2026, the Canadian government introduced Bill C-41, the Medical Assistance in Dying Safeg",
+      "changed": true
+    },
+    {
+      "title": "Albertan students reflect on referendum",
+      "link": "https://thelinknewspaper.ca/article/16596",
+      "ok": true,
+      "score": 100,
+      "chars": 502,
+      "sample": "Alberta hosted a vote on the possibility of a referendum on Oct. 19, with the results dictating that",
+      "changed": true
     }
   ]
 }
