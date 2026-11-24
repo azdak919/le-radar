@@ -2687,24 +2687,6 @@
       "via": "resize-proxy",
       "nameKey": "img_9646.jpg"
     },
-    "cdd4b8072ab2ed3b": {
-      "local": "assets/news-images/cdd4b8072ab2ed3b.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-1-750x375-1.jpeg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 50837,
-      "updatedAt": "2026-11-21T16:55:32.646Z",
-      "via": "disk",
-      "nameKey": "image-1-750x375-1.jpeg"
-    },
-    "2ead14e8873d5755": {
-      "local": "assets/news-images/2ead14e8873d5755.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/istockphoto-1183370267-612x612-1.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 39325,
-      "updatedAt": "2026-11-21T16:55:32.646Z",
-      "via": "disk",
-      "nameKey": "istockphoto-1183370267-612x612-1.jpg"
-    },
     "f37c23ff58205334": {
       "local": "assets/news-images/f37c23ff58205334.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/zelda-dover-funding.png",
@@ -3107,10 +3089,20 @@
       "updatedAt": "2026-11-24T03:13:31.246Z",
       "via": "resize-proxy",
       "nameKey": "image-34.png"
+    },
+    "ef0e929bff777fe2": {
+      "local": "assets/news-images/ef0e929bff777fe2.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/NST26_1111_SPVM_6365_900_600_90.jpg",
+      "host": "thelinknewspaper.ca",
+      "bytes": 120069,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T03:43:00.924Z",
+      "via": "origin",
+      "nameKey": "nst26_1111_spvm_6365.jpg"
     }
   },
-  "updatedAt": "2026-11-24T03:13:31.255Z",
-  "count": 321,
+  "updatedAt": "2026-11-24T03:43:00.934Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5876,6 +5868,14 @@
     "50f82f1020330c8b": {
       "reason": "budget",
       "at": "2026-11-24T03:13:31.254Z"
+    },
+    "2ead14e8873d5755": {
+      "reason": "budget",
+      "at": "2026-11-24T03:43:00.931Z"
+    },
+    "cdd4b8072ab2ed3b": {
+      "reason": "budget",
+      "at": "2026-11-24T03:43:00.933Z"
     }
   }
 }
