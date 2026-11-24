@@ -1795,16 +1795,6 @@
       "via": "photon-resize",
       "nameKey": "image00449.jpeg"
     },
-    "75c3d6ab4cd69153": {
-      "local": "assets/news-images/75c3d6ab4cd69153.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/ElfassiPerla_291026_VAVGalleryCoordinators_Vol44_DSF0757-800x1200.jpg",
-      "host": "theconcordian.com",
-      "bytes": 88983,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-18T03:39:39.820Z",
-      "via": "origin",
-      "nameKey": "elfassiperla_291026_vavgallerycoordinators_vol44_dsf0757.jpg"
-    },
     "eed8d38288e8991f": {
       "local": "assets/news-images/eed8d38288e8991f.jpg",
       "remote": "https://theconcordian.com/wp-content/uploads/2026/11/dYvyF1RlNokAd1N7Nek0vDpYsV6-0-600-0-900-crop.jpg",
@@ -3144,9 +3134,19 @@
       "updatedAt": "2026-11-24T17:09:56.626Z",
       "via": "resize-proxy",
       "nameKey": "photo-lead-sur-la-publicite-politique-negative-publicite-negative-aux-elections-de-mi-mandat.png"
+    },
+    "db627307a50c994a": {
+      "local": "assets/news-images/db627307a50c994a.jpg",
+      "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/EU-Canada-leaders-3-hands_0.jpg",
+      "host": "www.exemplaire.com.ulaval.ca",
+      "bytes": 48557,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T17:39:20.956Z",
+      "via": "origin",
+      "nameKey": "eu-canada-leaders-3-hands_0.jpg"
     }
   },
-  "updatedAt": "2026-11-24T17:09:56.636Z",
+  "updatedAt": "2026-11-24T17:39:20.967Z",
   "count": 323,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -6045,6 +6045,10 @@
     "038198215f0ad9f6": {
       "reason": "budget",
       "at": "2026-11-24T17:09:56.635Z"
+    },
+    "75c3d6ab4cd69153": {
+      "reason": "budget",
+      "at": "2026-11-24T17:39:20.965Z"
     }
   }
 }

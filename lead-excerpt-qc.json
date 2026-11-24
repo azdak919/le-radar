@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-24T17:08:48.738Z",
-  "total": 1144,
+  "updated": "2026-11-24T17:38:40.874Z",
+  "total": 1145,
   "pool": 61,
   "incomplete": 29,
-  "withLeadExcerpt": 255,
+  "withLeadExcerpt": 256,
   "candidates": 29,
   "enriched": 1,
   "failed": 2,
@@ -55,13 +55,22 @@
       "changed": false
     },
     {
+      "title": "Canada-Union européenne : quelle suite au sommet ?",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/canada-union-europeenne-quelle-suite-au-sommet/",
+      "ok": true,
+      "score": 100,
+      "chars": 609,
+      "sample": "Les 29 et 30 octobre derniers, le Canada et l’Union européenne se sont rencontrés à Montréal pour le",
+      "changed": true
+    },
+    {
       "title": "Midterms : les publicités négatives vont-elles trop loin ?",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/midterms-les-publicites-negatives-vont-elles-trop-loin/",
       "ok": true,
       "score": 100,
       "chars": 981,
       "sample": "Les élections de mi-mandat de 2026 aux États-Unis ont été marquées par les publicités négatives. Leu",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Hockey junior : le retour de la Russie fait toujours débat",
@@ -70,15 +79,6 @@
       "score": 100,
       "chars": 965,
       "sample": "La Russie demeure exclue du prochain Championnat du monde junior de hockey des moins de 20 ans, malg",
-      "changed": false
-    },
-    {
-      "title": "Wranglers 3, Rocket 1: A plushie game to remember",
-      "link": "https://thelinknewspaper.ca/article/16602",
-      "ok": true,
-      "score": 100,
-      "chars": 152,
-      "sample": "The Laval Rocket fell short against the Calgary Wranglers during their first-ever game at the Bell C",
       "changed": false
     }
   ]

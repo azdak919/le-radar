@@ -1,7 +1,8 @@
 /* LE RADAR — miroir local des photos de repli Wikimedia (généré).
  * Régénéré par : node scripts/mirror-stock-images.js --update
  * Clé : URL de l'original Commons (sans requête) → vignette 500 px servie par le site. */
-var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg":"assets/stock-images/539b5adacc45f50d.jpg",
+var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/5/57/Pavillon_DKN%2C_Universit%C3%A9_Laval_07.jpg":"assets/stock-images/22ed30c1ffd17db0.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg":"assets/stock-images/539b5adacc45f50d.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/91/Pav_DesjardinsUL.JPG":"assets/stock-images/a1e23eb180b09002.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG":"assets/stock-images/3256aca6fed2d075.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg":"assets/stock-images/63fe9495a34b6ccf.jpg",
@@ -158,7 +159,6 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/7/79/Pa
 "https://upload.wikimedia.org/wikipedia/commons/f/fd/Varennes_%28Qu%C3%A9bec%29-Campus_de_l%27INRS-2023-09-23.jpg":"assets/stock-images/09fce167914e5c8b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg":"assets/stock-images/61ad1fc61b4f15f1.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/af/Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg":"assets/stock-images/912fa583aa5bad54.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/5/57/Pavillon_DKN%2C_Universit%C3%A9_Laval_07.jpg":"assets/stock-images/22ed30c1ffd17db0.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/8/82/Pavillon_Judith-Jasmin_UQAM_08.JPG":"assets/stock-images/017b41d9ba0da66d.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/90/Pavillon_Judith-Jasmin_UQAM_1.jpg":"assets/stock-images/1ba2b6f9d06aca4d.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/f/ff/Universit%C3%A9_de_Sherbrooke_-_Centre_culturel.jpg":"assets/stock-images/d846ed7f5c330571.jpg",
