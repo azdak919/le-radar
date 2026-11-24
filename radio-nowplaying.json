@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-24T18:06:05.958Z",
+  "updatedAt": "2026-11-24T19:06:53.385Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Émission (presque) sérieuse",
-        "source": "schedule",
+        "source": "api-live",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/emission-presque-serieuse/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Émission (presque) sérieuse",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T18:05:26.209Z"
+      "checkedAt": "2026-11-24T19:06:15.120Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "À la bonne heure",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
+      "next": {
+        "title": "London café",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T18:05:40.147Z"
+      "checkedAt": "2026-11-24T19:06:29.423Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Universal Break",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voice of Korea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Montreal Sessions",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Universal Break",
+      "showTitle": "Voice of Korea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T18:05:44.451Z"
+      "checkedAt": "2026-11-24T19:06:31.862Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Shaking the Habitual",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
-      },
-      "next": {
         "title": "Something for the Mood",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
+      "next": {
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
+      },
       "track": "",
-      "showTitle": "Shaking the Habitual",
+      "showTitle": "Something for the Mood",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T18:05:58.529Z"
+      "checkedAt": "2026-11-24T19:06:45.638Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,34 +129,35 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T18:05:59.518Z"
+      "checkedAt": "2026-11-24T19:06:47.700Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "L'UQAM en info",
-        "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
-      },
-      "next": {
         "title": "Onde de CHOQ",
-        "source": "api-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "14:45",
-        "slug": "onde-de-choq"
+        "url": "https://www.choq.ca/balados/onde-de-choq"
       },
-      "track": "Fyore — QUI CA?",
-      "showTitle": "L'UQAM en info",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://www.choq.ca/balados/palmareschoq"
+      },
+      "track": "Antoine Aspirine — Parc La Fontaine",
+      "showTitle": "Onde de CHOQ",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T18:06:05.607Z"
+      "checkedAt": "2026-11-24T19:06:53.035Z"
     }
   }
 }
