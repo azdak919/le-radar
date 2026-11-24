@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T04:06:47.963Z",
+  "updatedAt": "2026-11-24T05:06:32.275Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T04:06:21.079Z"
+      "checkedAt": "2026-11-24T05:06:06.164Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T04:06:22.543Z"
+      "checkedAt": "2026-11-24T05:06:07.378Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "27th Hr.",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Harmony Express",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Pirate et Libres",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "03:00"
+      },
       "track": "",
-      "showTitle": "27th Hr.",
+      "showTitle": "Harmony Express",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,55 +74,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T04:06:26.015Z"
+      "checkedAt": "2026-11-24T05:06:09.851Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Hip's Time to Wake Hop",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T04:06:40.079Z"
+      "checkedAt": "2026-11-24T05:06:23.943Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T04:06:41.745Z"
+      "checkedAt": "2026-11-24T05:06:25.227Z"
     },
     "choq": {
       "id": "choq",
@@ -130,21 +136,20 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/balados/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
       },
-      "track": "DO, The Outcast & Lightitupav — Angles (ft. Butch Dawson)",
+      "track": "The Number Twelve Looks Like You — Joy is a Weapon",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T04:06:47.613Z"
+      "checkedAt": "2026-11-24T05:06:31.925Z"
     }
   }
 }
