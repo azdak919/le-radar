@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-24T22:07:09.362Z",
+  "updatedAt": "2026-11-24T23:07:25.348Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "CATHJO FAIT DE LA RADIO",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://chyz.ca/emission/la-plug/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T22:06:29.776Z"
+      "checkedAt": "2026-11-24T23:06:42.275Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "les pénibles",
-        "source": "schedule",
-        "start": "16:30",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
-      },
-      "next": {
         "title": "Catharmix",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/catharmix"
       },
+      "next": {
+        "title": "Les garçons pleurent aussi (reprise)",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
       "track": "",
-      "showTitle": "les pénibles",
+      "showTitle": "Catharmix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T22:06:44.129Z"
+      "checkedAt": "2026-11-24T23:06:55.623Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hour: Local Journalism Stories",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Rez Rock Radio",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Soul Perspectives",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:30"
+      },
       "track": "",
-      "showTitle": "Off The Hour: Local Journalism Stories",
+      "showTitle": "Rez Rock Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T22:06:47.570Z"
+      "checkedAt": "2026-11-24T23:06:58.516Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "feminemix",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/feminemix"
       },
+      "next": {
+        "title": "Ashes to Ashes",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "feminemix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T22:07:01.781Z"
+      "checkedAt": "2026-11-24T23:07:13.050Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,28 +129,35 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T22:07:02.684Z"
+      "checkedAt": "2026-11-24T23:07:14.170Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Studio",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Gabriella Olivo — Time",
-      "showTitle": "",
+      "next": {
+        "title": "Miroirs d’Orient",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://www.choq.ca/balados/miroirs-dorient"
+      },
+      "track": "Le Studio Ouverture",
+      "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T22:07:09.012Z"
+      "checkedAt": "2026-11-24T23:07:24.998Z"
     }
   }
 }
