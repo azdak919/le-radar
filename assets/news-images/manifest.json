@@ -1735,16 +1735,6 @@
       "via": "resize-proxy",
       "nameKey": "img_0217.png"
     },
-    "f5dd872bdef879bf": {
-      "local": "assets/news-images/f5dd872bdef879bf.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/hobbies.png",
-      "host": "theconcordian.com",
-      "bytes": 111638,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T10:28:04.929Z",
-      "via": "resize-proxy",
-      "nameKey": "hobbies.png"
-    },
     "b9326fad0c829473": {
       "local": "assets/news-images/b9326fad0c829473.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/NST26_1102_spvm_4031_900_600_90.jpg",
@@ -2146,16 +2136,6 @@
       "updatedAt": "2026-11-20T17:57:07.205Z",
       "via": "origin",
       "nameKey": "msp26-1113-lacruesprotest-2479.jpg"
-    },
-    "acb1153bd09ec623": {
-      "local": "assets/news-images/acb1153bd09ec623.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/1_Couverture-peur-724x1024.jpg",
-      "host": "quartierlibre.ca",
-      "bytes": 50943,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-19T21:14:03.714Z",
-      "via": "origin",
-      "nameKey": "1_couverture-peur.jpg"
     },
     "c0a28751e4546eb8": {
       "local": "assets/news-images/c0a28751e4546eb8.jpg",
@@ -3154,10 +3134,20 @@
       "updatedAt": "2026-11-24T18:40:51.949Z",
       "via": "resize-proxy",
       "nameKey": "image-emm5.jpg"
+    },
+    "f1dbdfb3c35e77a3": {
+      "local": "assets/news-images/f1dbdfb3c35e77a3.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/22_Propre-marque-1024x1024.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 170142,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T21:10:29.321Z",
+      "via": "origin",
+      "nameKey": "22_propre-marque.jpg"
     }
   },
-  "updatedAt": "2026-11-24T20:20:22.561Z",
-  "count": 324,
+  "updatedAt": "2026-11-24T21:10:30.273Z",
+  "count": 323,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5346,7 +5336,7 @@
     },
     "ab74741c6af119ea": {
       "reason": "failed",
-      "at": "2026-11-23T20:44:34.326Z"
+      "at": "2026-11-24T21:10:30.250Z"
     },
     "1db0110786007144": {
       "reason": "budget",
@@ -5884,14 +5874,6 @@
       "reason": "budget",
       "at": "2026-11-23T19:06:17.927Z"
     },
-    "8944669bc3987122": {
-      "reason": "failed",
-      "at": "2026-11-24T20:19:29.262Z"
-    },
-    "564f372d20a2583a": {
-      "reason": "failed",
-      "at": "2026-11-24T20:19:27.829Z"
-    },
     "eb59bcfd3fbdc886": {
       "reason": "failed",
       "at": "2026-11-23T21:18:40.510Z"
@@ -5932,10 +5914,6 @@
       "reason": "budget",
       "at": "2026-11-24T12:19:27.628Z"
     },
-    "450ce4243c899963": {
-      "reason": "budget",
-      "at": "2026-11-24T12:19:27.631Z"
-    },
     "af3f79ee87a691ca": {
       "reason": "budget",
       "at": "2026-11-24T12:40:07.076Z"
@@ -5959,10 +5937,6 @@
     "8927d8ae5d064080": {
       "reason": "budget",
       "at": "2026-11-24T12:40:07.086Z"
-    },
-    "d1be96350ac43828": {
-      "reason": "failed",
-      "at": "2026-11-24T13:08:36.565Z"
     },
     "91a63470d5e846ac": {
       "reason": "budget",
@@ -6067,6 +6041,26 @@
     "e281cbfb13ed39ce": {
       "reason": "budget",
       "at": "2026-11-24T20:20:22.560Z"
+    },
+    "0eed6591ce349647": {
+      "reason": "budget",
+      "at": "2026-11-24T21:10:30.259Z"
+    },
+    "afc56adf8c65cd33": {
+      "reason": "budget",
+      "at": "2026-11-24T21:10:30.262Z"
+    },
+    "b7e1a314fc0f47c4": {
+      "reason": "budget",
+      "at": "2026-11-24T21:10:30.265Z"
+    },
+    "acb1153bd09ec623": {
+      "reason": "budget",
+      "at": "2026-11-24T21:10:30.269Z"
+    },
+    "f5dd872bdef879bf": {
+      "reason": "budget",
+      "at": "2026-11-24T21:10:30.272Z"
     }
   }
 }
