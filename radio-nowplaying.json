@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T05:06:32.275Z",
+  "updatedAt": "2026-11-24T06:06:36.562Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T05:06:06.164Z"
+      "checkedAt": "2026-11-24T06:06:08.893Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'alter ego (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/lalter-ego"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "À l'horizon",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/a-lhorizon"
+      },
       "track": "",
-      "showTitle": "L'alter ego (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T05:06:07.378Z"
+      "checkedAt": "2026-11-24T06:06:10.391Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T05:06:09.851Z"
+      "checkedAt": "2026-11-24T06:06:13.316Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T05:06:23.943Z"
+      "checkedAt": "2026-11-24T06:06:27.842Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T05:06:25.227Z"
+      "checkedAt": "2026-11-24T06:06:29.248Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "The Number Twelve Looks Like You — Joy is a Weapon",
+      "track": "Protest The Hero — Grandfather's Axe",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T05:06:31.925Z"
+      "checkedAt": "2026-11-24T06:06:36.212Z"
     }
   }
 }
