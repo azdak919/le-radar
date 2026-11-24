@@ -179,7 +179,8 @@ for (const file of htmlFiles) {
   // Licence : code AGPLv3 + dépôt, kit-média CC BY 4.0, retrait du flux sur demande.
   assert(footBlock.includes('https://www.gnu.org/licenses/agpl-3.0.html'), 'index.html : pied de page sous AGPLv3');
   assert(footBlock.includes('href="https://github.com/azdak919/le-radar"'), 'index.html : lien vers le dépôt au pied');
-  assert(footBlock.includes('Kit-média sous licence CC BY 4.0'), 'index.html : kit-média CC BY 4.0 au pied');
+  assert(footBlock.includes('<a href="kit-media/">Kit-média</a> sous licence'), 'index.html : lien vers le kit-média au pied');
+  assert(footBlock.includes('href="https://creativecommons.org/licenses/by/4.0/deed.fr"'), 'index.html : lien vers la licence CC BY 4.0 au pied');
   assert(footBlock.includes('retrait immédiat de son flux'), 'index.html : retrait du flux sur demande au pied');
   assert(!/old-licenses\/gpl-2\.0/.test(footBlock), 'index.html : plus de GPL v2 au pied');
   // Accueil en tête du pied de page, avant Médias.
