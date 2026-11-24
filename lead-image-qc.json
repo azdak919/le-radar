@@ -1,16 +1,16 @@
 {
-  "updated": "2026-11-24T19:41:15.328Z",
+  "updated": "2026-11-24T20:18:55.608Z",
   "total": 1149,
   "withPhoto": 1053,
   "withStock": 114,
   "withCampusBank": 94,
   "fullyCovered": 1135,
   "leadReadyPhotos": 1070,
-  "pageScraped": 12,
-  "photosRecovered": 12,
-  "imagesCleared": 2,
-  "stockSearches": 8,
-  "stockFound": 14,
+  "pageScraped": 10,
+  "photosRecovered": 10,
+  "imagesCleared": 1,
+  "stockSearches": 7,
+  "stockFound": 13,
   "campusBankFound": 9,
   "mainPageLeadReady": true,
   "gaps": [
@@ -21,8 +21,8 @@
       "image": null
     },
     {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
+      "title": "Bulletins de nouvelles La Pige Radio",
+      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio",
       "reason": "no-stock-match",
       "image": null
     },
@@ -33,22 +33,10 @@
       "image": "https://theconcordian.com/wp-content/uploads/2026/11/1793786979593_1793699374393-7438337156417159838-7438337156417159838-898dca5317699239f7efd7109ce8e47e-jpg-1.avif"
     },
     {
-      "title": "Cancer du sein : la sensibilisation au-delà d’Octobre rose",
-      "link": "https://lapige.atmjonquiere.com/2026/10/26/cancer-du-sein-la-sensibilisation-au-dela-doctobre-rose",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/AdobeStock_1580462282.jpeg"
-    },
-    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
-    },
-    {
-      "title": "Saguenay vers des infrastructures durables",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
-      "reason": "stock-too-small",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
     },
     {
       "title": "Battling Adversity",
@@ -57,10 +45,16 @@
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     },
     {
-      "title": "Bulletins La Pige radio 23 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
+      "title": "Saguenay vers des infrastructures durables",
+      "link": "https://lapige.atmjonquiere.com/2026/11/13/saguenay-vers-des-infrastructures-durables/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-vers-des-infrastructures-durables",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/photo-dejarin-.avif"
+    },
+    {
+      "title": "Reportages radio du 19 octobre 2026",
+      "link": "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+      "image": null
     }
   ]
 }
