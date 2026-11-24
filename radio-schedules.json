@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T20:49:46.320Z",
+  "updatedAt": "2026-11-24T19:51:28.139Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -337,9 +337,9 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-23T20:49:46.320Z",
+      "checkedAt": "2026-11-24T19:51:28.139Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-23T20:49:46.320Z",
+      "attemptedAt": "2026-11-24T19:51:28.139Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
       "coveragePercent": 36
@@ -1120,9 +1120,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-23T20:49:46.320Z",
+      "checkedAt": "2026-11-24T19:51:28.139Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-23T20:49:46.320Z",
+      "attemptedAt": "2026-11-24T19:51:28.139Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1739,9 +1739,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-23T20:49:46.320Z",
+      "checkedAt": "2026-11-24T19:51:28.139Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-23T20:49:46.320Z",
+      "attemptedAt": "2026-11-24T19:51:28.139Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2613,14 +2613,12 @@
       "sources": [
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-11-23T15:45:23.288Z",
+      "checkedAt": "2026-11-24T19:51:28.139Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-23T20:49:46.320Z",
+      "attemptedAt": "2026-11-24T19:51:28.139Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
-      "coveragePercent": 100,
-      "unverified": true,
-      "retainedReason": "source-unavailable"
+      "coveragePercent": 100
     },
     "cfak": {
       "grid": [
@@ -2923,11 +2921,11 @@
       ],
       "sources": [
         "cfak:https://www.cfak.ca/programmation/",
-        "published-page-data:https://www.cfak.ca/_nuxt/static/1794505537/programmation/payload.js"
+        "published-page-data:https://www.cfak.ca/_nuxt/static/1795544435/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-23T20:49:46.320Z",
+      "checkedAt": "2026-11-24T19:51:28.139Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-23T20:49:46.320Z",
+      "attemptedAt": "2026-11-24T19:51:28.139Z",
       "id": "cfak",
       "name": "CFAK 88,3",
       "coveragePercent": 50
@@ -2978,15 +2976,15 @@
         },
         {
           "day": 2,
-          "start": "12:45",
-          "end": "13:30",
+          "start": "12:50",
+          "end": "13:35",
           "title": "L'UQAM en info",
           "url": "https://www.choq.ca/balados/uqam-en-info"
         },
         {
           "day": 2,
-          "start": "14:00",
-          "end": "14:45",
+          "start": "14:10",
+          "end": "14:55",
           "title": "Onde de CHOQ",
           "url": "https://www.choq.ca/balados/onde-de-choq"
         },
@@ -3120,9 +3118,9 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-23T20:49:46.320Z",
+      "checkedAt": "2026-11-24T19:51:28.139Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-23T20:49:46.320Z",
+      "attemptedAt": "2026-11-24T19:51:28.139Z",
       "id": "choq",
       "name": "CHOQ.ca",
       "coveragePercent": 16
