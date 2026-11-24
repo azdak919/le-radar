@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-24T16:09:13.052Z",
-  "total": 1143,
-  "withPhoto": 1048,
-  "withStock": 110,
-  "withCampusBank": 90,
-  "fullyCovered": 1129,
+  "updated": "2026-11-24T17:09:36.490Z",
+  "total": 1144,
+  "withPhoto": 1049,
+  "withStock": 111,
+  "withCampusBank": 91,
+  "fullyCovered": 1130,
   "leadReadyPhotos": 1064,
-  "pageScraped": 8,
-  "photosRecovered": 8,
-  "imagesCleared": 0,
-  "stockSearches": 5,
-  "stockFound": 11,
+  "pageScraped": 9,
+  "photosRecovered": 9,
+  "imagesCleared": 1,
+  "stockSearches": 6,
+  "stockFound": 12,
   "campusBankFound": 8,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -37,6 +43,12 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "CSU byelections fee levy campaign: Honey’s Soupe Populaire",
+      "link": "https://theconcordian.com/2026/11/csu-by-elections-honeys-soupe-populaire",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8197/28541561483_fa2e96b0b7_b.jpg"
     }
   ]
 }

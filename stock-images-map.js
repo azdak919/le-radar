@@ -1,7 +1,8 @@
 /* LE RADAR — miroir local des photos de repli Wikimedia (généré).
  * Régénéré par : node scripts/mirror-stock-images.js --update
  * Clé : URL de l'original Commons (sans requête) → vignette 500 px servie par le site. */
-var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/9/91/Pav_DesjardinsUL.JPG":"assets/stock-images/a1e23eb180b09002.jpg",
+var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg":"assets/stock-images/539b5adacc45f50d.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/9/91/Pav_DesjardinsUL.JPG":"assets/stock-images/a1e23eb180b09002.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG":"assets/stock-images/3256aca6fed2d075.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg":"assets/stock-images/63fe9495a34b6ccf.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/65/Bishop%27s_University%2C_McGreer_Hall%2C_2600%2C_rue_Coll%C3%A8ge%2C_Sherbrooke_une_partie_des_b%C3%A2timents_avec_le_chevet_de_la_chapelle_11-d.na.civile-78-3500.jpg":"assets/stock-images/5086e7f419a3f54f.jpg",
@@ -143,7 +144,6 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/9/91/Pa
 "https://upload.wikimedia.org/wikipedia/commons/3/3d/Pavillon_Abitibi-Price_02.jpg":"assets/stock-images/407561b39acb9670.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/68/Pavillon_Agathe-Lacerte_03.jpg":"assets/stock-images/85b4eff16b7ff90a.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg":"assets/stock-images/9312d68b533a55b8.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg":"assets/stock-images/539b5adacc45f50d.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/a/ac/Pavillon_de_l%27Est_01.jpg":"assets/stock-images/2c14dc92c5b3ab5b.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/e/ec/Peps_Universit%C3%A9_Laval.jpg":"assets/stock-images/e058b3e1e6284d55.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/9d/Pavillon_de_M%C3%A9decine_dentaire_01.jpg":"assets/stock-images/a7235a00dd7907ee.jpg",
