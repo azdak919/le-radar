@@ -1,7 +1,8 @@
 /* LE RADAR — miroir local des photos de repli Wikimedia (généré).
  * Régénéré par : node scripts/mirror-stock-images.js --update
  * Clé : URL de l'original Commons (sans requête) → vignette 500 px servie par le site. */
-var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG":"assets/stock-images/3256aca6fed2d075.jpg",
+var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/9/91/Pav_DesjardinsUL.JPG":"assets/stock-images/a1e23eb180b09002.jpg",
+"https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG":"assets/stock-images/3256aca6fed2d075.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg":"assets/stock-images/63fe9495a34b6ccf.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/65/Bishop%27s_University%2C_McGreer_Hall%2C_2600%2C_rue_Coll%C3%A8ge%2C_Sherbrooke_une_partie_des_b%C3%A2timents_avec_le_chevet_de_la_chapelle_11-d.na.civile-78-3500.jpg":"assets/stock-images/5086e7f419a3f54f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/9/9c/Observatoire_de_l%60universit%C3%A9_Bishop_-_panoramio.jpg":"assets/stock-images/1d5fff432b417f9a.jpg",
@@ -151,7 +152,6 @@ var RADAR_STOCK_LOCAL = {"https://upload.wikimedia.org/wikipedia/commons/1/15/Mc
 "https://upload.wikimedia.org/wikipedia/commons/b/ba/Pavillon_Maurice-Pollack.jpg":"assets/stock-images/66b237d2dd7516ea.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/1/10/Pavillon_Paul-Comtois_03.jpg":"assets/stock-images/897c6b961cd6c2af.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/4/4c/Pavillon_La_Laurentienne_ULaval.jpg":"assets/stock-images/69ebe6da771dbcb4.jpg",
-"https://upload.wikimedia.org/wikipedia/commons/9/91/Pav_DesjardinsUL.JPG":"assets/stock-images/a1e23eb180b09002.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/5/52/Exterior_of_Ecole_Polytechnique_de_Montreal.jpg":"assets/stock-images/21ba2812c66ddf6f.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG":"assets/stock-images/7ae2afa721d982b7.jpg",
 "https://upload.wikimedia.org/wikipedia/commons/4/4b/Universite_Laval_building_in_snow.jpg":"assets/stock-images/115ea45ae4b3f5b4.jpg",
