@@ -5,6 +5,13 @@
 // ─── Météo des principaux campus (desktop / tablette) ────────────────────────
 const WEATHER_CACHE_KEY = 'le_radar_masthead_weather_v2';
 const WEATHER_CACHE_MS = 15 * 60 * 1000;
+// Repli si le Worker ne répond pas : mieux vaut des températures d'il y a
+// quelques heures qu'un mât sans météo (il fallait rafraîchir à la main).
+const WEATHER_STALE_MS = 3 * 60 * 60 * 1000;
+// Un essai unique de 4,5 s échouait sur un MISS du Worker (Open-Meteo puis
+// met.no) ou un réseau lent au premier chargement : délais croissants.
+const WEATHER_FETCH_TIMEOUTS_MS = [6000, 10000, 15000];
+const WEATHER_RETRY_DELAY_MS = 2000;
 // Catalogue : weather-cities-data.js (var WEATHER_CITIES)
 // Radar principal : variante remplie et animée. Le Pomo pointe explicitement
 // vers /assets/meteocons/ pour rester statique et discret.
@@ -1919,10 +1926,11 @@ window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
 // fait déjà au resize, pour la même raison : la largeur disponible a changé.
 window.addEventListener('radar:translate-mode', scheduleMastheadWeatherLayout);
 
-function readWeatherCache() {
+function readWeatherCache(maxAgeMs = WEATHER_CACHE_MS) {
   try {
     const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
-    if (cached?.at && Date.now() - cached.at < WEATHER_CACHE_MS && Array.isArray(cached.entries)) return cached.entries;
+    if (cached?.at && Date.now() - cached.at < maxAgeMs && Array.isArray(cached.entries)
+        && cached.entries.length === WEATHER_CITIES.length) return cached.entries;
   } catch { /* cache absent ou invalide */ }
   return null;
 }
@@ -2031,46 +2039,90 @@ function ensureMastheadBoards() {
   mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER.nextSibling;
 }
 
-async function initMastheadWeather() {
-  // Sous le seuil du masthead, la météo se déplace sous le syntoniseur
-  // (setMastheadWeatherDocked) plutôt que d'être masquée : la charger
-  // reste utile à toutes les largeurs.
-  if (!MASTHEAD_WEATHER) return;
-  const cached = readWeatherCache();
-  if (cached) renderMastheadWeather(cached);
+function weatherForecastUrl() {
+  const params = new URLSearchParams({
+    latitude: WEATHER_CITIES.map((city) => city.lat).join(','),
+    longitude: WEATHER_CITIES.map((city) => city.lon).join(','),
+    current: 'temperature_2m,weather_code,is_day',
+    daily: 'weather_code,temperature_2m_max,temperature_2m_min',
+    forecast_days: '2',
+    temperature_unit: 'celsius',
+    timezone: 'America/Toronto',
+  });
+  // Passe par le cache partagé (workers/weather-cache) plutôt qu'Open-Meteo
+  // directement : à l'échelle, chaque visiteur qui appelle l'API anonyme
+  // épuisait son quota gratuit et coupait la météo pour tout le monde.
+  return `${WEATHER_API_BASE}/v1/forecast?${params}`;
+}
+
+async function fetchWeatherOnce(url, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const params = new URLSearchParams({
-      latitude: WEATHER_CITIES.map((city) => city.lat).join(','),
-      longitude: WEATHER_CITIES.map((city) => city.lon).join(','),
-      current: 'temperature_2m,weather_code,is_day',
-      daily: 'weather_code,temperature_2m_max,temperature_2m_min',
-      forecast_days: '2',
-      temperature_unit: 'celsius',
-      timezone: 'America/Toronto',
-    });
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4500);
-    // Passe par le cache partagé (workers/weather-cache) plutôt qu'Open-Meteo
-    // directement : à l'échelle, chaque visiteur qui appelle l'API anonyme
-    // épuisait son quota gratuit et coupait la météo pour tout le monde.
-    const response = await fetch(`${WEATHER_API_BASE}/v1/forecast?${params}`, {
-      signal: controller.signal,
-      cache: 'no-store',
-    });
-    clearTimeout(timer);
+    const response = await fetch(url, { signal: controller.signal, cache: 'no-store' });
     if (!response.ok) throw new Error(`weather ${response.status}`);
     const data = await response.json();
     const entries = Array.isArray(data) ? data : [data];
     if (entries.length !== WEATHER_CITIES.length) throw new Error('weather length');
-    try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries })); } catch { /* quota */ }
-    renderMastheadWeather(entries);
-  } catch {
-    // Lab local : afficher un bandeau même si le Worker refuse localhost
-    // (CORS) ou est offline — nécessaire pour juger météo ∥ sports.
-    if (!cached && isLocalWeatherLabHost()) {
-      renderMastheadWeather(weatherLabFixtureEntries());
+    return entries;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+let mastheadWeatherLoading = false;
+let mastheadWeatherRecoveryBound = false;
+
+/** Après échec total : réessayer au retour du réseau ou de l'onglet. */
+function bindMastheadWeatherRecovery() {
+  if (mastheadWeatherRecoveryBound) return;
+  mastheadWeatherRecoveryBound = true;
+  const retry = () => {
+    if (MASTHEAD_WEATHER?.dataset.ready === '1' && readWeatherCache()) return;
+    void initMastheadWeather();
+  };
+  window.addEventListener('online', retry);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') retry();
+  });
+}
+
+async function initMastheadWeather() {
+  // Sous le seuil du masthead, la météo se déplace sous le syntoniseur
+  // (setMastheadWeatherDocked) plutôt que d'être masquée : la charger
+  // reste utile à toutes les largeurs.
+  if (!MASTHEAD_WEATHER || mastheadWeatherLoading) return;
+  mastheadWeatherLoading = true;
+  try {
+    const fresh = readWeatherCache();
+    // Cache périmé (< 3 h) affiché tout de suite : le réseau le remplace.
+    const cached = fresh || readWeatherCache(WEATHER_STALE_MS);
+    if (cached) renderMastheadWeather(cached);
+    const url = weatherForecastUrl();
+    for (let attempt = 0; attempt < WEATHER_FETCH_TIMEOUTS_MS.length; attempt += 1) {
+      if (attempt > 0) {
+        await new Promise((resolve) => setTimeout(resolve, WEATHER_RETRY_DELAY_MS * attempt));
+      }
+      try {
+        const entries = await fetchWeatherOnce(url, WEATHER_FETCH_TIMEOUTS_MS[attempt]);
+        try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries })); } catch { /* quota */ }
+        renderMastheadWeather(entries);
+        return;
+      } catch {
+        // Lab local : afficher un bandeau même si le Worker refuse localhost
+        // (CORS) ou est offline — nécessaire pour juger météo ∥ sports.
+        // Dès le premier échec ; les essais suivants le remplacent au besoin.
+        if (attempt === 0 && !cached && isLocalWeatherLabHost()) {
+          renderMastheadWeather(weatherLabFixtureEntries());
+        }
+      }
     }
-    /* prod : module discret — absent si la météo est indisponible */
+    if (isLocalWeatherLabHost()) return;
+    /* prod : module discret — absent si la météo est indisponible ;
+       on réessaie quand le réseau ou l'onglet revient. */
+    bindMastheadWeatherRecovery();
+  } finally {
+    mastheadWeatherLoading = false;
   }
 }
 
