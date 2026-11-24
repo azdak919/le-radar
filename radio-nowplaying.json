@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-11-24T20:07:15.493Z",
+  "updatedAt": "2026-11-24T21:07:27.577Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T20:06:36.427Z"
+      "checkedAt": "2026-11-24T21:06:32.972Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T20:06:49.757Z"
+      "checkedAt": "2026-11-24T21:06:46.198Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T20:06:54.009Z"
+      "checkedAt": "2026-11-24T21:07:06.098Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
-      },
-      "next": {
         "title": "Bikini Brrroadcast",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
+      "showTitle": "Bikini Brrroadcast",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T20:07:07.808Z"
+      "checkedAt": "2026-11-24T21:07:19.965Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,18 +129,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T20:07:09.357Z"
+      "checkedAt": "2026-11-24T21:07:21.144Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Le Studio",
         "source": "api-live",
@@ -141,15 +142,15 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "DONALDA — C BEN D'VALEUR",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Bad Waitress — In the Hollow",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T20:07:15.143Z"
+      "checkedAt": "2026-11-24T21:07:27.227Z"
     }
   }
 }
