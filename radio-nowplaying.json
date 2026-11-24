@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T13:06:45.898Z",
+  "updatedAt": "2026-11-24T14:07:01.048Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T13:06:08.198Z"
+      "checkedAt": "2026-11-24T14:06:14.211Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Lentement mais sûrement",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/lentement-mais-surement"
       },
+      "next": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Lentement mais sûrement",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T13:06:09.471Z"
+      "checkedAt": "2026-11-24T14:06:27.560Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt2",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Basa Basa",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Ecolibrium/Environment in Canada",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt2",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,61 +81,55 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T13:06:12.005Z"
+      "checkedAt": "2026-11-24T14:06:30.058Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "At The Movies",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "At The Movies",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T13:06:36.420Z"
+      "checkedAt": "2026-11-24T14:06:53.967Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
-      },
+      "current": null,
       "next": {
         "title": "Le DOUZE",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "12:59",
         "url": "https://www.cfak.ca/balados/le-douze"
       },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T13:06:37.786Z"
+      "checkedAt": "2026-11-24T14:06:55.259Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +142,7 @@
         "end": "13:30",
         "slug": "uqam-en-info"
       },
-      "track": "Valence — Tu choisis comment tu aimes",
+      "track": "Mimi O'Bonsawin — Steady",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T13:06:45.547Z"
+      "checkedAt": "2026-11-24T14:07:00.698Z"
     }
   }
 }
