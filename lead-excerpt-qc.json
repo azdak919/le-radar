@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-24T14:09:54.982Z",
-  "total": 1141,
+  "updated": "2026-11-24T15:38:39.434Z",
+  "total": 1142,
   "pool": 61,
-  "incomplete": 42,
-  "withLeadExcerpt": 243,
-  "candidates": 42,
-  "enriched": 20,
-  "failed": 11,
+  "incomplete": 32,
+  "withLeadExcerpt": 253,
+  "candidates": 32,
+  "enriched": 10,
+  "failed": 2,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -25,6 +16,15 @@
       "score": 96,
       "chars": 1102,
       "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
+      "changed": false
+    },
+    {
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "ok": true,
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -55,31 +55,31 @@
       "changed": false
     },
     {
-      "title": "Concordia University at a crossroads",
-      "link": "https://thelinknewspaper.ca/article/16604",
+      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
+      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
       "ok": true,
       "score": 100,
-      "chars": 632,
-      "sample": "In 2023, the province's English-language universities became another front in the debate when the go",
+      "chars": 404,
+      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
       "changed": true
     },
     {
-      "title": "Canada proposes indefinite exclusion for people with mental illnesses seeking MAID",
-      "link": "https://thelinknewspaper.ca/article/16598",
+      "title": "Wranglers 3, Rocket 1: A plushie game to remember",
+      "link": "https://thelinknewspaper.ca/article/16602",
       "ok": true,
       "score": 100,
-      "chars": 606,
-      "sample": "In October 2026, the Canadian government introduced Bill C-41, the Medical Assistance in Dying Safeg",
-      "changed": true
+      "chars": 152,
+      "sample": "The Laval Rocket fell short against the Calgary Wranglers during their first-ever game at the Bell C",
+      "changed": false
     },
     {
-      "title": "Albertan students reflect on referendum",
-      "link": "https://thelinknewspaper.ca/article/16596",
+      "title": "Laying the foundation of women’s sports",
+      "link": "https://thelinknewspaper.ca/article/16601",
       "ok": true,
-      "score": 100,
-      "chars": 502,
-      "sample": "Alberta hosted a vote on the possibility of a referendum on Oct. 19, with the results dictating that",
-      "changed": true
+      "score": 96,
+      "chars": 215,
+      "sample": "“For me, the biggest thing is seeing everyone so happy, their families, friends, everyone that made ",
+      "changed": false
     }
   ]
 }

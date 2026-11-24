@@ -1763,16 +1763,6 @@
       "via": "disk",
       "nameKey": "bachbui_311026_finalregurlarseasongame_vol44-38.jpg"
     },
-    "b2c06c5f0ef0e269": {
-      "local": "assets/news-images/b2c06c5f0ef0e269.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/LISA-Press-Play-Courtesy-of-Spotify.png",
-      "host": "theconcordian.com",
-      "bytes": 121922,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T10:28:06.504Z",
-      "via": "resize-proxy",
-      "nameKey": "lisa-press-play-courtesy-of-spotify.png"
-    },
     "b9326fad0c829473": {
       "local": "assets/news-images/b9326fad0c829473.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/NST26_1102_spvm_4031_900_600_90.jpg",
@@ -3152,9 +3142,19 @@
       "updatedAt": "2026-11-24T14:11:08.788Z",
       "via": "resize-proxy",
       "nameKey": "06_fringe_rave_scene_anika_poch-mckee_900_604.png"
+    },
+    "847f5c99137a526d": {
+      "local": "assets/news-images/847f5c99137a526d.jpg",
+      "remote": "https://cdn.impactcampus.ca/wp-content/uploads/2026/11/24102458/issuu_web-1.png",
+      "host": "cdn.impactcampus.ca",
+      "bytes": 215624,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T15:39:32.981Z",
+      "via": "resize-proxy",
+      "nameKey": "issuu_web-1.png"
     }
   },
-  "updatedAt": "2026-11-24T14:11:08.820Z",
+  "updatedAt": "2026-11-24T15:39:32.989Z",
   "count": 324,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -6041,6 +6041,10 @@
     "3eb7337a1ac6f66b": {
       "reason": "budget",
       "at": "2026-11-24T14:11:08.819Z"
+    },
+    "b2c06c5f0ef0e269": {
+      "reason": "budget",
+      "at": "2026-11-24T15:39:32.987Z"
     }
   }
 }
