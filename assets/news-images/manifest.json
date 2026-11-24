@@ -1847,15 +1847,6 @@
       "via": "disk",
       "nameKey": "nobilehannah_290926_electionswingridings_vol44-2.jpg"
     },
-    "91a63470d5e846ac": {
-      "local": "assets/news-images/91a63470d5e846ac.webp",
-      "remote": "https://theplantnews.com/wp-content/uploads/2026/11/voting.webp",
-      "host": "theplantnews.com",
-      "bytes": 130446,
-      "updatedAt": "2026-11-17T10:28:07.675Z",
-      "via": "disk",
-      "nameKey": "voting.webp"
-    },
     "b9326fad0c829473": {
       "local": "assets/news-images/b9326fad0c829473.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/NST26_1102_spvm_4031_900_600_90.jpg",
@@ -3092,10 +3083,30 @@
       "updatedAt": "2026-11-24T12:40:07.070Z",
       "via": "photon-resize",
       "nameKey": "picture-4-.jpeg"
+    },
+    "0437039d01380c9b": {
+      "local": "assets/news-images/0437039d01380c9b.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/IMG_2273-1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 94204,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T13:08:38.415Z",
+      "via": "resize-proxy",
+      "nameKey": "img_2273-1.jpg"
+    },
+    "95f62153a4593a82": {
+      "local": "assets/news-images/95f62153a4593a82.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/10-1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 158629,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T13:08:39.898Z",
+      "via": "resize-proxy",
+      "nameKey": "10-1.jpg"
     }
   },
-  "updatedAt": "2026-11-24T12:40:07.087Z",
-  "count": 319,
+  "updatedAt": "2026-11-24T13:08:39.907Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5909,6 +5920,14 @@
     "8927d8ae5d064080": {
       "reason": "budget",
       "at": "2026-11-24T12:40:07.086Z"
+    },
+    "d1be96350ac43828": {
+      "reason": "failed",
+      "at": "2026-11-24T13:08:36.565Z"
+    },
+    "91a63470d5e846ac": {
+      "reason": "budget",
+      "at": "2026-11-24T13:08:39.905Z"
     }
   }
 }

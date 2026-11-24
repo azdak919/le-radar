@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-24T12:39:23.836Z",
-  "total": 1118,
+  "updated": "2026-11-24T13:07:52.924Z",
+  "total": 1121,
   "pool": 61,
-  "incomplete": 28,
-  "withLeadExcerpt": 222,
-  "candidates": 28,
-  "enriched": 1,
-  "failed": 10,
+  "incomplete": 29,
+  "withLeadExcerpt": 224,
+  "candidates": 29,
+  "enriched": 2,
+  "failed": 11,
   "ok": true,
   "samples": [
-    {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
-      "ok": true,
-      "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
-      "changed": false
-    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -28,12 +19,12 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
       "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -46,6 +37,15 @@
       "changed": false
     },
     {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
+      "changed": false
+    },
+    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -55,12 +55,21 @@
       "changed": false
     },
     {
-      "title": "Émilie Lavoie takes the next step with the Montreal Victoire",
-      "link": "https://theconcordian.com/2026/11/emilie-lavoie-montreal-victoire/",
+      "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
+      "link": "https://theconcordian.com/2026/11/armed-riot-police-enter-campus/",
       "ok": true,
       "score": 100,
-      "chars": 322,
-      "sample": "At the Fox Theatre in Detroit, Émilie Lavoie watched 71 players have their names announced on stage ",
+      "chars": 534,
+      "sample": "At around 5 p.m. on Tuesday, Nov. 10, an anonymous group of 50 or so masked and hooded individuals b",
+      "changed": true
+    },
+    {
+      "title": "Concordia launches new Sustainability Action Plan, outlining green goals for the next four years",
+      "link": "https://theconcordian.com/2026/11/concordia-new-sustainability-action-plan/",
+      "ok": true,
+      "score": 100,
+      "chars": 666,
+      "sample": "This semester, Concordia University launched its 2026-30 Sustainability Action Plan (SAP). The strat",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 78,
       "chars": 153,
       "sample": "Le conseil régional de l’environnement déçu de la COP 31, la possibilité d’une grève générale illimi",
-      "changed": false
-    },
-    {
-      "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
-      "link": "https://montrealcampus.ca/2026/11/23/un-doctorat-dexception-pour-leonie-couture/",
-      "ok": true,
-      "score": 100,
-      "chars": 359,
-      "sample": "Léonie Couture, la fondatrice de La rue des Femmes, un organisme à but non lucratif qui œuvre à aide",
       "changed": false
     }
   ]
