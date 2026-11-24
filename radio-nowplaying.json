@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T09:07:03.285Z",
+  "updatedAt": "2026-11-24T10:06:34.874Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T09:06:05.243Z"
+      "checkedAt": "2026-11-24T10:06:11.302Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T09:06:06.624Z"
+      "checkedAt": "2026-11-24T10:06:12.617Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Attik / Show For Children",
-        "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
-      },
-      "next": {
         "title": "The Beat Power Hour",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt1",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T09:06:09.514Z"
+      "checkedAt": "2026-11-24T10:06:15.135Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Hip's Time to Wake Hop",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T09:06:33.694Z"
+      "checkedAt": "2026-11-24T10:06:28.576Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,28 +128,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T09:06:34.942Z"
+      "checkedAt": "2026-11-24T10:06:29.452Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/balados/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
       },
-      "track": "@ — Judgement Farmer",
-      "showTitle": "",
+      "next": {
+        "title": "L'UQAM en info",
+        "source": "api-live",
+        "start": "12:45",
+        "end": "13:30",
+        "slug": "uqam-en-info"
+      },
+      "track": "Protomartyr — Third Country",
+      "showTitle": "Les rois de l'arène",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T09:07:02.934Z"
+      "checkedAt": "2026-11-24T10:06:34.523Z"
     }
   }
 }
