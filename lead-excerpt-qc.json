@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-24T12:09:50.426Z",
-  "total": 1107,
+  "updated": "2026-11-24T12:18:50.498Z",
+  "total": 1113,
   "pool": 61,
-  "incomplete": 26,
-  "withLeadExcerpt": 222,
-  "candidates": 26,
-  "enriched": 0,
-  "failed": 3,
+  "incomplete": 27,
+  "withLeadExcerpt": 224,
+  "candidates": 27,
+  "enriched": 2,
+  "failed": 8,
   "ok": true,
   "samples": [
-    {
-      "title": "Et si on parlait de la mort ?",
-      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
-      "ok": true,
-      "score": 96,
-      "chars": 1102,
-      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
-      "changed": false
-    },
     {
       "title": "Il était une fois elles n’ont pas obéi",
       "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
@@ -28,12 +19,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Et si on parlait de la mort ?",
+      "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
       "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "score": 96,
+      "chars": 1102,
+      "sample": "On porte des chandails à l’effigie de chanteurs décédés, on continue d’enseigner les théories de gra",
       "changed": false
     },
     {
@@ -55,30 +46,39 @@
       "changed": false
     },
     {
+      "title": "Francisée, mais pas la bienvenue ?",
+      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "ok": true,
+      "score": 100,
+      "chars": 150,
+      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "changed": false
+    },
+    {
+      "title": "La place des femmes en photojournalisme : qui a la chance de raconter le monde en images?",
+      "link": "https://theconcordian.com/2026/11/place-des-femmes-photojournalisme/",
+      "ok": true,
+      "score": 100,
+      "chars": 869,
+      "sample": "En cette session d’automne qui touche à sa fin, je m’apprête à terminer, dans quelques mois, un prog",
+      "changed": true
+    },
+    {
+      "title": "Le Québécois Maxime Lamarre est recruté par l’Université d’État de l’Arizona",
+      "link": "https://theconcordian.com/2026/11/maxime-lamarre-universite-arizona-ncaa/",
+      "ok": true,
+      "score": 100,
+      "chars": 535,
+      "sample": "Originaire de Terrebonne, le joueur de baseball québécois Maxime Lamarre rejoindra le circuit collég",
+      "changed": true
+    },
+    {
       "title": "Bulletins La Pige radio 23 novembre",
       "link": "https://lapige.atmjonquiere.com/2026/11/23/bulletins-la-pige-radio-23-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-23-novembre",
       "ok": true,
       "score": 78,
       "chars": 153,
       "sample": "Le conseil régional de l’environnement déçu de la COP 31, la possibilité d’une grève générale illimi",
-      "changed": false
-    },
-    {
-      "title": "Photoreportage : Un doctorat d’exception pour Léonie Couture",
-      "link": "https://montrealcampus.ca/2026/11/23/un-doctorat-dexception-pour-leonie-couture/",
-      "ok": true,
-      "score": 100,
-      "chars": 359,
-      "sample": "Léonie Couture, la fondatrice de La rue des Femmes, un organisme à but non lucratif qui œuvre à aide",
-      "changed": false
-    },
-    {
-      "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
-      "link": "https://leclubecole.com/daniel-jones-libere-les-colts-dindianapolis-tournent-la-page/?utm_source=rss&utm_medium=rss&utm_campaign=daniel-jones-libere-les-colts-dindianapolis-tournent-la-page",
-      "ok": true,
-      "score": 100,
-      "chars": 333,
-      "sample": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel ",
       "changed": false
     }
   ]

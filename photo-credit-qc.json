@@ -1,37 +1,65 @@
 {
-  "updated": "2026-11-24T12:11:47.408Z",
-  "total": 1107,
-  "withImage": 1006,
-  "withCredit": 1006,
-  "cited": 733,
-  "pending": 172,
+  "updated": "2026-11-24T12:20:23.731Z",
+  "total": 1113,
+  "withImage": 1012,
+  "withCredit": 1012,
+  "cited": 737,
+  "pending": 174,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 3,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "updatedCount": 7,
+  "citedNew": 5,
+  "fallbackNew": 55,
   "samples": [
+    {
+      "title": "The 69th Grammy Awards nominations boast inconsistency",
+      "source": "The Concordian",
+      "credit": "Illustration: Zelda Dover",
+      "cited": true,
+      "method": "figcaption-illustration"
+    },
+    {
+      "title": "QUICKSPIN: U2 — Carnaval de Luz",
+      "source": "The Concordian",
+      "credit": "Photo : Carnaval de Luz Album Cover",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "QUICKSPIN: Snoh Aalegra — Legendary Love",
+      "source": "The Concordian",
+      "credit": "Photo : Legendary Love Album Cover",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "La place des femmes en photojournalisme : qui a la chance de raconter le monde en images?",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le Québécois Maxime Lamarre est recruté par l’Université d’État de l’Arizona",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "N’ayez pas peur de recommencer!",
+      "source": "The Concordian",
+      "credit": "Illustration: Zelda Dover",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
       "credit": "Illustration : Mathilde Ségar",
       "cited": true,
       "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "ASFA asks students what issues matter most to them",
-      "source": "The Concordian",
-      "credit": "Photo: Courtesy of ASFA",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
-      "source": "The Concordian",
-      "credit": "Photo: Eric Klempan",
-      "cited": true,
-      "method": "figcaption-trailing"
     }
   ]
 }

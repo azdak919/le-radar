@@ -2687,16 +2687,6 @@
       "via": "resize-proxy",
       "nameKey": "zelda-dover-funding.png"
     },
-    "ec4924167e0297e4": {
-      "local": "assets/news-images/ec4924167e0297e4.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_2266.jpeg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 201840,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-21T16:55:35.515Z",
-      "via": "resize-proxy",
-      "nameKey": "img_2266.jpeg"
-    },
     "5b903d3f01ed8708": {
       "local": "assets/news-images/5b903d3f01ed8708.webp",
       "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/018E9411-468D-410C-9BAA-A12FAA27D293_1_201_a.jpeg",
@@ -3012,15 +3002,6 @@
       "via": "resize-proxy",
       "nameKey": "image-5.png"
     },
-    "450ce4243c899963": {
-      "local": "assets/news-images/450ce4243c899963.webp",
-      "remote": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/11/aVelo-passe-de-10-a-225.jpg?resize=696%2C394&ssl=1",
-      "host": "i0.wp.com",
-      "bytes": 79184,
-      "updatedAt": "2026-11-23T19:42:20.253Z",
-      "via": "disk",
-      "nameKey": "avelo-passe-de-10-a-225.jpg"
-    },
     "52437df648244ef2": {
       "local": "assets/news-images/52437df648244ef2.jpg",
       "remote": "https://leclubecole.com/wp-content/uploads/2026/11/8484387.jpg",
@@ -3089,10 +3070,40 @@
       "updatedAt": "2026-11-24T03:43:00.924Z",
       "via": "origin",
       "nameKey": "nst26_1111_spvm_6365.jpg"
+    },
+    "0e781493ca7d7532": {
+      "local": "assets/news-images/0e781493ca7d7532.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HEADER-PHOTO-.jpeg",
+      "host": "theconcordian.com",
+      "bytes": 134894,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-24T12:19:25.545Z",
+      "via": "photon-resize",
+      "nameKey": "header-photo-.jpeg"
+    },
+    "f76e1d119b00c1f2": {
+      "local": "assets/news-images/f76e1d119b00c1f2.jpg",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/image1.jpg",
+      "host": "theconcordian.com",
+      "bytes": 73801,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-24T12:19:25.564Z",
+      "via": "origin",
+      "nameKey": "image1.jpg"
+    },
+    "c8c49cd95a9351fd": {
+      "local": "assets/news-images/c8c49cd95a9351fd.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/grammys-nominations-zelda-dover.png",
+      "host": "theconcordian.com",
+      "bytes": 273928,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-24T12:19:26.951Z",
+      "via": "photon-resize",
+      "nameKey": "grammys-nominations-zelda-dover.png"
     }
   },
-  "updatedAt": "2026-11-24T12:10:38.149Z",
-  "count": 319,
+  "updatedAt": "2026-11-24T12:19:27.633Z",
+  "count": 320,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5862,6 +5873,26 @@
     "cdd4b8072ab2ed3b": {
       "reason": "budget",
       "at": "2026-11-24T03:43:00.933Z"
+    },
+    "7b22668cfd30105a": {
+      "reason": "failed",
+      "at": "2026-11-24T12:19:26.891Z"
+    },
+    "93c2f7c24ff9396c": {
+      "reason": "failed",
+      "at": "2026-11-24T12:19:27.397Z"
+    },
+    "798ada03f00d57ee": {
+      "reason": "failed",
+      "at": "2026-11-24T12:19:27.619Z"
+    },
+    "ec4924167e0297e4": {
+      "reason": "budget",
+      "at": "2026-11-24T12:19:27.628Z"
+    },
+    "450ce4243c899963": {
+      "reason": "budget",
+      "at": "2026-11-24T12:19:27.631Z"
     }
   }
 }
