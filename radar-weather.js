@@ -2112,8 +2112,8 @@ async function initMastheadWeather() {
         // Lab local : afficher un bandeau même si le Worker refuse localhost
         // (CORS) ou est offline — nécessaire pour juger météo ∥ sports.
         // Dès le premier échec ; les essais suivants le remplacent au besoin.
-        if (attempt === 0 && !cached && isLocalWeatherLabHost()) {
-          renderMastheadWeather(weatherLabFixtureEntries());
+        if (!cached && isLocalWeatherLabHost()) {
+          if (attempt === 0) renderMastheadWeather(weatherLabFixtureEntries());
         }
       }
     }
