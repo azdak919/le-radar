@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T02:06:49.005Z",
+  "updatedAt": "2026-11-24T03:06:49.532Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T02:06:21.391Z"
+      "checkedAt": "2026-11-24T03:06:24.947Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T02:06:23.592Z"
+      "checkedAt": "2026-11-24T03:06:26.169Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Underground Sounds",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Drastic Plastic",
         "source": "api-live",
         "start": "22:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "27th Hr.",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Underground Sounds",
+      "showTitle": "Drastic Plastic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,61 +74,55 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T02:06:26.272Z"
+      "checkedAt": "2026-11-24T03:06:28.388Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "LEKTOR DECODER",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/lektor-decoder"
-      },
-      "next": {
         "title": "Past Tense",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/past-tense"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "LEKTOR DECODER",
+      "showTitle": "Past Tense",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T02:06:39.437Z"
+      "checkedAt": "2026-11-24T03:06:41.823Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:59",
-        "url": "https://www.cfak.ca/balados/soccersports"
-      },
+      "current": null,
       "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T02:06:42.624Z"
+      "checkedAt": "2026-11-24T03:06:42.877Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +135,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/balados/les-rois-de-larene"
       },
-      "track": "Jess Williamson — Someone Else’s Horses",
+      "track": "Cherry Lena — Corset de joie",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -150,7 +144,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T02:06:48.654Z"
+      "checkedAt": "2026-11-24T03:06:49.182Z"
     }
   }
 }
