@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T21:07:27.577Z",
+  "updatedAt": "2026-11-24T22:07:09.362Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T21:06:32.972Z"
+      "checkedAt": "2026-11-24T22:06:29.776Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
-      },
-      "next": {
         "title": "les pénibles",
         "source": "schedule",
         "start": "16:30",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/les-penibles"
       },
+      "next": {
+        "title": "Catharmix",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/catharmix"
+      },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "les pénibles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T21:06:46.198Z"
+      "checkedAt": "2026-11-24T22:06:44.129Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Rez Rock Radio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Off The Hour: Local Journalism Stories",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T21:07:06.098Z"
+      "checkedAt": "2026-11-24T22:06:47.570Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bikini Brrroadcast",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "feminemix",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/feminemix"
+      },
       "track": "",
-      "showTitle": "Bikini Brrroadcast",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T21:07:19.965Z"
+      "checkedAt": "2026-11-24T22:07:01.781Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T21:07:21.144Z"
+      "checkedAt": "2026-11-24T22:07:02.684Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Bad Waitress — In the Hollow",
+      "track": "Gabriella Olivo — Time",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-24T21:07:27.227Z"
+      "checkedAt": "2026-11-24T22:07:09.012Z"
     }
   }
 }
