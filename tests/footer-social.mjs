@@ -17,7 +17,6 @@ const expected = {
   x: 'https://x.com/le_radar_ca',
   bluesky: 'https://bsky.app/profile/le-radar.ca',
   mastodon: 'https://piaille.fr/@leradar',
-  tumblr: 'https://le-radar-ca.tumblr.com',
   rss: 'https://le-radar.ca/feed.xml',
 };
 const on = links.filter((l) => l.enabled);
@@ -27,6 +26,14 @@ for (const l of on) {
   assert.match(l.label, /LE-RADAR\.ca/, `aria-label ${l.id}`);
   assert.ok(l.path.length > 20 && /^0 0 \d+ \d+$/.test(l.viewBox), `icône ${l.id}`);
 }
+// Tumblr masqué temporairement (reste dans sameAs) ; Threads prêt mais inactif.
+const tumblr = links.find((l) => l.id === 'tumblr');
+assert.ok(tumblr && tumblr.enabled === false, 'Tumblr masqué (mât + pied)');
+const threads = links.find((l) => l.id === 'threads');
+assert.ok(threads && threads.enabled === false, 'Threads prêt, inactif');
+assert.equal(threads.href, 'https://www.threads.com/@le.radar.ca');
+assert.ok(fs.readFileSync(new URL('../assets/social-icons/threads.svg', import.meta.url), 'utf8').includes(threads.path.slice(0, 40)), 'SVG Threads = tracé');
+assert.match(src, /--social-cols/);
 assert.match(src, /a\.rel = s\.rel \|\| 'me noopener'/);
 const ig = on.find((l) => l.id === 'instagram');
 const svg = fs.readFileSync(new URL('../assets/social-icons/instagram.svg', import.meta.url), 'utf8');

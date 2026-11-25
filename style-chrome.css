@@ -78,31 +78,39 @@
   gap: 6px;
   margin: 0 0 14px;
 }
-/* Colonne de la marque : quand 9 icônes de 44 px et leur gouttière
-   (9×44 + 8×6 = 444 px) n’y tiennent pas, on passe à deux lignes
-   5+4, alignées à gauche comme le reste du pied. Une seule ligne
-   à 40 px est impossible à 360–390 px : il reste 354 px à 390 px
-   une fois la gouttière, et 9×40 = 360. */
+/* Colonne de la marque : quand les icônes de 44 px et leur gouttière
+   (8×44 + 7×6 = 394 px) n’y tiennent pas, on passe à deux lignes égales
+   (--social-cols = moitié arrondie, posé par nav-shell.js ; 4 + 4) étalées
+   sur TOUTE la largeur de la colonne : première icône alignée au texte à
+   gauche, dernière au bord droit (25 nov. 2026 — avant : bloc figé à
+   5×44 px qui laissait la moitié droite vide). Ajouter/retirer un réseau :
+   ajuster le seuil (n×44 + (n−1)×6 − 1). */
 .site-foot--v2 .site-foot__brandcol {
   container-type: inline-size;
   container-name: foot-brand;
 }
-@container foot-brand (max-width: 443px) {
+@container foot-brand (max-width: 393.98px) {
   .site-foot__social {
-    width: calc(5 * 44px + 4 * 6px);
-    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(var(--social-cols, 4), 44px);
+    justify-content: space-between;
+    row-gap: 8px;
+    width: 100%;
     margin-inline: 0;
-    justify-content: flex-start;
   }
 }
 /* Filet de sécurité pour les navigateurs sans @container, aux largeurs
-   où 9×44 ne tiennent jamais (téléphone). */
-@media (max-width: 479.98px) {
-  .site-foot .site-foot__social {
-    width: calc(5 * 44px + 4 * 6px);
-    max-width: 100%;
-    margin-inline: 0;
-    justify-content: flex-start;
+   de téléphone. */
+@supports not (container-type: inline-size) {
+  @media (max-width: 479.98px) {
+    .site-foot .site-foot__social {
+      display: grid;
+      grid-template-columns: repeat(var(--social-cols, 4), 44px);
+      justify-content: space-between;
+      row-gap: 8px;
+      width: 100%;
+      margin-inline: 0;
+    }
   }
 }
 .site-foot .site-foot__social a {

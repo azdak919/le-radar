@@ -59,7 +59,7 @@ const acc = [{ handle: '@DelitFrancais', type: 'source', cle_flux: 'Le Délit' }
 const xt = buildXText(art, acc, { credit: 'Marie Tremblay' });
 assert.ok(xlen(xt) <= 280 && /\n#RSEQ #Concordia #USports$/.test(xt), xt);
 assert.ok(!/#PresseÉtudiante/.test(JSON.stringify(POLICY)));
-assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 2, mastodon: 4, x: 3, linkedin: 3, facebook: 1, tumblr: 15, instagram: 5 });
+assert.deepEqual(POLICY.hashtags.maxByNetwork, { bluesky: 2, mastodon: 4, x: 3, linkedin: 3, facebook: 1, tumblr: 15, instagram: 5, threads: 1 });
 assert.equal(POLICY.formats.une.prepared.instagram.enabled, true);
 assert.equal(POLICY.automation.instagram_follow, false);
 assert.equal(POLICY.automation.mastodon_post, true);

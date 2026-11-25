@@ -76,3 +76,14 @@ assert.equal(localParts(T('2026-11-01T17:00:00Z')).weekend, true);
 assert.deepEqual(postMetadata('facebook'), { facebook: { type: 'post' } }, 'Facebook : type post exigé par Buffer');
 assert.equal(postMetadata('linkedin'), undefined);
 console.log('social-buffer-pages : OK');
+// Threads : prêt mais inactif, 500 caractères lien compris, un seul mot-clic, fenêtres de pointe
+assert.equal(CFG.threads.enabled, false, 'Threads inactif tant que le profil n’est pas relié à Buffer');
+assert.equal(CFG.threads.service, 'threads');
+for (const n of ['facebook', 'linkedin']) assert.notEqual(CFG[n].enabled, false, `${n} reste actif`);
+const longIt = { ...it, desc: 'Très long résumé. '.repeat(60) };
+const th = buildPageText(longIt, CFG.threads, { credit: 'Marie Tremblay' });
+assert([...th].length <= 500, `Threads ≤ 500 (${[...th].length})`);
+assert(th.includes(pageLink(it)), 'Threads : lien conservé');
+assert.equal((th.match(/(^|\s)#\S/g) || []).length <= 1, true, 'Threads : au plus 1 mot-clic');
+assert(weightAt('threads', T('2026-11-10T13:30:00Z')) > 0.5, 'Threads : pointe du matin');
+assert.equal(weightAt('threads', T('2026-11-10T08:00:00Z')), 0, 'Threads : rien la nuit');

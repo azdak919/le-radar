@@ -126,6 +126,7 @@ jobs:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
           BUFFER_LINKEDIN_CHANNEL_ID: ${{ vars.BUFFER_LINKEDIN_CHANNEL_ID }}
+          BUFFER_THREADS_CHANNEL_ID: ${{ vars.BUFFER_THREADS_CHANNEL_ID }}
           PAGES_ISSUE_FILE: /tmp/pages-issue.md
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}

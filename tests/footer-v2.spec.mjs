@@ -16,14 +16,14 @@ for (const [path, theme] of PAGES) {
       await page.goto(path, { waitUntil: 'load' });
       const foot = page.locator('footer.site-foot--v2');
       await expect(foot).toHaveCount(1);
-      await expect(foot.locator('.site-foot__social a[data-social]')).toHaveCount(9);
+      await expect(foot.locator('.site-foot__social a[data-social]')).toHaveCount(8);
       await expect(foot.locator('.site-foot__social a[data-social="instagram"]')).toHaveAttribute('href', 'https://www.instagram.com/le.radar.ca/');
       await expect(foot.locator('.site-foot__social a[data-social="instagram"]')).toHaveAttribute('rel', 'me noopener');
       await expect(foot.locator('.site-foot__social a[data-social="buymeacoffee"]')).toHaveAttribute('href', 'https://www.buymeacoffee.com/azdak');
       await expect(foot.locator('.site-foot__social a[data-social="buymeacoffee"]')).toHaveAttribute('rel', 'noopener noreferrer');
 
       const footIds = await foot.locator('.site-foot__social a[data-social]').evaluateAll((as) => as.map((a) => a.dataset.social));
-      expect(footIds).toEqual(['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr', 'rss']);
+      expect(footIds).toEqual(['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'rss']);
       await expect(foot.locator('.site-foot__col')).toHaveCount(3);
       await expect(foot.locator('.site-foot__links .site-foot__sep:visible')).toHaveCount(0);
       await expect(foot.locator('.site-foot__ressources')).toHaveCount(1);
@@ -124,11 +124,15 @@ for (const [path, theme] of PAGES) {
             return {
               rows,
               row1Left: boxes[0].left,
-              row2Left: boxes[5].left,
+              row2Left: boxes[4].left,
+              rowRight: boxes[3].right,
+              navRight: nav.getBoundingClientRect().right,
+              colRight: nav.parentElement.getBoundingClientRect().right,
               brandLeft,
             };
           });
-          expect(layout.rows, `${width}px : deux lignes 5+4`).toEqual([5, 4]);
+          expect(layout.rows, `${width}px : deux lignes 4+4`).toEqual([4, 4]);
+          expect(Math.abs(layout.rowRight - layout.colRight), `${width}px : rangée étalée sur toute la largeur`).toBeLessThanOrEqual(2);
           expect(Math.abs(layout.row2Left - layout.row1Left), `${width}px : seconde ligne alignée à gauche`).toBeLessThanOrEqual(2);
           expect(Math.abs(layout.row1Left - layout.brandLeft), `${width}px : icônes sur le bord du texte`).toBeLessThanOrEqual(2);
         }
@@ -141,10 +145,10 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
   await page.addInitScript(() => localStorage.setItem('radar-theme', 'light'));
   await page.goto('/', { waitUntil: 'load' });
   await page.evaluate(() => document.querySelector('#bg-photo-layer')?.classList.add('loaded'));
-  const expected = ['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr'];
+  const expected = ['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon'];
   await expect(page.locator('.masthead-rss')).toHaveCount(0);
   await expect(page.locator('.masthead-coffee')).toHaveCount(0);
-  await expect(page.locator('.masthead-social a[data-social]')).toHaveCount(8);
+  await expect(page.locator('.masthead-social a[data-social]')).toHaveCount(7);
   await expect(page.locator('.masthead-social--under-tagline')).toHaveCount(1);
   await expect(page.locator('.masthead-social__group--left, .masthead-social__group--right')).toHaveCount(0);
   const ids = await page.locator('.masthead-social a[data-social]').evaluateAll((as) => as.map((a) => a.dataset.social));
@@ -226,7 +230,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
     expect(layout.hitsTools, `${width}px : pas de chevauchement avec les outils`).toBe(0);
     expect(layout.hitsCredit, `${width}px : pas de chevauchement avec le crédit photo`).toBe(false);
     expect(layout.coffee, `${width}px : bouton café retiré`).toBe(false);
-    expect(layout.rows, `${width}px : une seule rangée`).toEqual([8]);
+    expect(layout.rows, `${width}px : une seule rangée`).toEqual([7]);
   }
 });
 
@@ -258,7 +262,7 @@ for (const width of [320, 360, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.addInitScript(() => localStorage.setItem('radar-theme', 'light'));
     await page.goto('/', { waitUntil: 'load' });
-    await expect(page.locator('.site-foot__social a[data-social]')).toHaveCount(9);
+    await expect(page.locator('.site-foot__social a[data-social]')).toHaveCount(8);
 
     // Pied calé en bas du viewport (la licence se trouvait sous les pastilles).
     await page.evaluate(() => {
