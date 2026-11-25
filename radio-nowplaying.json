@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T18:36:52.111Z",
+  "updatedAt": "2026-11-25T20:37:14.915Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Radio-Ciné",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "14:00",
-        "end": "14:30",
-        "url": "https://chyz.ca/emission/radio-cine/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:24.011Z"
+      "checkedAt": "2026-11-25T20:36:34.434Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Le cours de math",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
       "next": {
-        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/vibrance"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:25.316Z"
+      "checkedAt": "2026-11-25T20:36:47.761Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Radyo Kapwa",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:29.041Z"
+      "checkedAt": "2026-11-25T20:36:51.062Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
+        "title": "Patch Notes",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
       },
       "next": {
-        "title": "Cherry Vamp and the Sonic Coffin",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:42.486Z"
+      "checkedAt": "2026-11-25T20:37:05.125Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,28 +122,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:43.588Z"
+      "checkedAt": "2026-11-25T20:37:06.160Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Aldous Harding — One Stop",
-      "showTitle": "",
+      "next": {
+        "title": "Effet Philo",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "17:45",
+        "slug": "effet-philo"
+      },
+      "track": "Chenier — Dans les cendres",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:51.760Z"
+      "checkedAt": "2026-11-25T20:37:14.564Z"
     }
   }
 }
