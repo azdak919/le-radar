@@ -2,8 +2,7 @@
 // Bot Tumblr : format, NPF (texte + image + lien cliquable), étiquettes, OAuth 1.0a, plafond.
 import assert from 'node:assert/strict';
 import { siteLink } from '../scripts/social/lib.mjs';
-import { buildTumblrText, npfBody, tagsFor, linksInPosts, plain } from '../scripts/social/tumblr.mjs';
-import { oauthHeader, createTumblr, isHaltStatus } from '../scripts/social/channels/tumblr.mjs';
+import { buildTumblrText, npfBody, npfFromText, tagsFor, linksInPosts, plain, oauthHeader, createTumblr, tumblrFromEnv, tumblrEnabled, isHaltStatus } from '../scripts/social/tumblr.mjs';
 import { NETWORKS } from '../scripts/social/rate-limit.mjs';
 
 const it = { id: 'a', source: 'Montréal Campus', author: 'Valentin Nucci', title: 'Quand la neurodiversité s’épanouit', bare: 'Quand la neurodiversité s’épanouit',
@@ -48,6 +47,20 @@ for (const st of [429, 401, 403]) {
 assert(!isHaltStatus(500));
 c = createTumblr({ ck: 'k', cs: 's', tk: 't', ts: 'u', blog: 'b', fetchImpl: fake(p => p.endsWith('/queue') ? [400, {}] : [200, { response: { posts: [] } }]) });
 assert.equal((await c.recentLinks()).size, 0, 'file illisible (400) : avertissement, pas d’arrêt');
+// Interrupteur : TUMBLR_ENABLED=false coupe TOUT appel (aucun fetch), absent = actif.
+assert.equal(tumblrEnabled({}), true); for (const v of ['false', '0', 'off', 'NO']) assert.equal(tumblrEnabled({ TUMBLR_ENABLED: v }), false);
+let fetched = 0;
+c = tumblrFromEnv({ TUMBLR_ENABLED: 'false' }, { fetchImpl: async () => { fetched++; return { ok: true, status: 201, json: async () => ({}) }; } });
+await assert.rejects(c.post({}), e => e.paused === true); await assert.rejects(c.request('GET', '/user/info'), e => e.paused);
+assert.equal(fetched, 0, 'pause : aucun appel réseau');
+// Post en file par défaut, même sans « state » fourni par l'appelant (Une, formats).
+let sent; c = createTumblr({ ck: 'k', cs: 's', tk: 't', ts: 'u', blog: 'b', fetchImpl: async (u, o) => { sent = JSON.parse(o.body); return { ok: true, status: 201, json: async () => ({ response: { id: 1 } }) }; } });
+await c.post({ content: [] }); assert.equal(sent.state, 'queue');
+// NPF générique (Une, formats) : URL cliquables, image 2e, bloc lien dernier, texte brut.
+const g = npfFromText('Titre <b>gras</b>\nVoir https://le-radar.ca/x ici', { image: { url: 'https://i/1.jpg', type: 'image/jpeg', width: 10, height: 5, alt: 'a' }, link: { url: 'https://le-radar.ca/x', title: 'T', description: '<p>D</p>' } });
+assert.deepEqual(g.map(b => b.type), ['text', 'image', 'text', 'link']);
+assert.equal(g[0].text, 'Titre gras'); assert.deepEqual(g[2].formatting[0], { start: 5, end: 26, type: 'link', url: 'https://le-radar.ca/x' });
+assert.deepEqual(g[1].media[0], { url: 'https://i/1.jpg', type: 'image/jpeg', width: 10, height: 5 }); assert.equal(g[3].description, 'D');
 // OAuth 1.0a : vecteur connu (RFC 5849 §1.2, requête GET photos)
 const h = oauthHeader('GET', 'http://photos.example.net/photos?file=vacation.jpg&size=original', { ck: 'dpf43f3p2l4k3l03', cs: 'kd94hf93k423kf44', tk: 'nnch734d00sl2jdk', ts: 'pfkkdhi9sl3r4s00' }, { nonce: 'kllo9940pd9333jh', time: 1191242096 });
 assert(h.includes('oauth_signature="tR3%2BTy81lMeYAr%2FFid0kMTYa%2FWM%3D"'), h);

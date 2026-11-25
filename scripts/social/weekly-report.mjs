@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { torontoDay } from './policy.mjs';
 import privacyGuard from '../privacy-guard.js';
+import { tumblrFromEnv, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const rd = (f, d = null) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8')); } catch { return d; } };
@@ -82,8 +83,9 @@ async function mastodon({ since, internal }) {
 }
 async function tumblr({ since, internal }) {
   const ck = process.env.TUMBLR_CONSUMER_KEY; if (!ck) return { skipped: 'clé d’API Tumblr absente (secret non fourni à ce job).' };
-  const blog = process.env.TUMBLR_BLOG || 'le-radar-ca.tumblr.com';
-  const r = await j(`https://api.tumblr.com/v2/blog/${blog}/posts?api_key=${ck}&notes_info=true&limit=50`);
+  if (!tumblrEnabled()) return { skipped: PAUSED_MSG };
+  const tb = tumblrFromEnv();
+  const r = { response: await tb.request('GET', `/blog/${tb.blog}/posts`, { query: { api_key: ck, notes_info: 'true', limit: '50' }, auth: false }) };
   const posts = (r.response?.posts || []).filter(p => p.timestamp * 1000 >= since).map(p => {
     const notes = p.notes || [], pick = t => notes.filter(n => n.type === t).map(n => n.blog_name);
     return { url: p.post_url, text: (p.summary || '').slice(0, 80), ext: externalCounts({ likes: pick('like'), reposts: pick('reblog'), replies: pick('reply') }, internal) };

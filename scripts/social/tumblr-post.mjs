@@ -11,31 +11,26 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, stripUtm, siteLink } from './lib.mjs';
 import { resolveImage } from './image-resolve.mjs';
-import { buildTumblrText, npfBody, detectLang, BLOG } from './tumblr.mjs';
-import { createTumblr, isHaltStatus } from './channels/tumblr.mjs';
+import { buildTumblrText, npfBody, detectLang, isHaltStatus, tumblrEnabled, tumblrKeys, tumblrBlog, hasTumblrKeys, tumblrFromEnv, PAUSED_MSG } from './tumblr.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
 import { gateArticleImage } from './ai-image.mjs';
 
-const off = v => /^(false|0|no|off)$/i.test(String(v ?? '').trim());
-if (off(process.env.TUMBLR_ENABLED)) {
-  console.log('Tumblr en pause (TUMBLR_ENABLED=false) : aucun appel à l\'API Tumblr, rien de publié ni noté.');
-  process.exit(0);
-}
+if (!tumblrEnabled()) { console.log(`${PAUSED_MSG} Rien de publié ni noté.`); process.exit(0); }
 const MAX_POSTS_PER_RUN = Math.max(1, Number.parseInt(process.env.MAX_POSTS_PER_RUN, 10) || 3);
 const gapMs = () => 3000 + Math.floor(Math.random() * 2001); // 3–5 s entre deux appels consécutifs
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/tumblr-sent.json');
 const ACCOUNTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/tumblr-accounts.json'), 'utf8')).accounts;
-const keys = { ck: process.env.TUMBLR_CONSUMER_KEY || '', cs: process.env.TUMBLR_CONSUMER_SECRET || '', tk: process.env.TUMBLR_TOKEN || '', ts: process.env.TUMBLR_TOKEN_SECRET || '' };
-const blog = process.env.TUMBLR_BLOG || BLOG;
+const keys = tumblrKeys();
+const blog = tumblrBlog();
 let dry = process.env.DRY_RUN === 'true' || process.argv.includes('--dry-run');
-const hasKeys = Object.values(keys).every(Boolean);
+const hasKeys = hasTumblrKeys();
 if (!hasKeys) { console.log('Clés Tumblr absentes : mode essai.'); dry = true; }
 const shareNow = process.env.SHARE_NOW === 'true';
 const save = () => { if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); };
-const tb = createTumblr({ ...keys, blog, gapMs });
+const tb = tumblrFromEnv(process.env, { gapMs });
 let halted = false;
 /** 429/401/403 : arrêt des appels Tumblr du passage (sans faire échouer le job). Autre erreur : rejetée. */
 const halt = (e, what) => {
