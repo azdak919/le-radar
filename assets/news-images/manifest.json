@@ -1836,24 +1836,6 @@
       "via": "disk",
       "nameKey": "image-6.jpg"
     },
-    "57a3b905ae46486e": {
-      "local": "assets/news-images/57a3b905ae46486e.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/IMG_9774.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 1541849,
-      "updatedAt": "2026-11-19T21:06:30.256Z",
-      "via": "disk",
-      "nameKey": "img_9774.jpg"
-    },
-    "ceffda555dece407": {
-      "local": "assets/news-images/ceffda555dece407.jpg",
-      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/5_fantome_charles-david.jpg",
-      "host": "quartierlibre.ca",
-      "bytes": 119141,
-      "updatedAt": "2026-11-19T21:06:30.256Z",
-      "via": "disk",
-      "nameKey": "5_fantome_charles-david.jpg"
-    },
     "ad95e3d0eb3cf942": {
       "local": "assets/news-images/ad95e3d0eb3cf942.jpg",
       "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/CULTURE_poster-du-film-Last-one_-IMAGE_-Agence-Crimson-Spark.png",
@@ -3113,10 +3095,19 @@
       "updatedAt": "2026-11-25T22:08:58.714Z",
       "via": "resize-proxy",
       "nameKey": "hx5z-v9xqaacraq-edited.jpg"
+    },
+    "e68bdcc007899455": {
+      "local": "assets/news-images/e68bdcc007899455.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/20261118_234444954_iOS-scaled-e1795203912425.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 198222,
+      "updatedAt": "2026-11-25T22:16:46.869Z",
+      "via": "disk",
+      "nameKey": "20261118_234444954_ios-scaled-e1795203912425.jpg"
     }
   },
-  "updatedAt": "2026-11-25T22:08:58.723Z",
-  "count": 318,
+  "updatedAt": "2026-11-25T22:16:46.950Z",
+  "count": 317,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -6138,6 +6129,18 @@
     "86d6a581397ae00f": {
       "reason": "budget",
       "at": "2026-11-25T22:08:58.722Z"
+    },
+    "d1be96350ac43828": {
+      "reason": "failed",
+      "at": "2026-11-25T22:16:46.938Z"
+    },
+    "ceffda555dece407": {
+      "reason": "budget",
+      "at": "2026-11-25T22:16:46.945Z"
+    },
+    "57a3b905ae46486e": {
+      "reason": "budget",
+      "at": "2026-11-25T22:16:46.948Z"
     }
   }
 }

@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-25T22:07:26.492Z",
-  "total": 1180,
-  "withAuthor": 1180,
-  "mismatches": 60,
+  "updated": "2026-11-25T22:15:25.732Z",
+  "total": 1181,
+  "withAuthor": 1181,
+  "mismatches": 59,
   "ok": true,
   "samples": [
-    {
-      "title": "Porter la voix de Gaza : la chance d’un journalisme éveillé à l’Université de Montréal",
-      "link": "https://quartierlibre.ca/gaza-journalisme-eveille-udem/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Louise Chonier",
-      "reason": "page-byline"
-    },
     {
       "title": "Embracing Uncertainty - The McGill Daily",
       "link": "https://www.mcgilldaily.com/2026/11/embracing-uncertainty/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Why is it important to vote?",
+      "link": "https://theplantnews.com/2026/11/03/quebec-2026-election-guide",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 60
+  "fixed": 59
 }

@@ -1,25 +1,19 @@
 {
-  "updated": "2026-11-25T22:08:30.055Z",
-  "total": 1180,
-  "withPhoto": 1075,
-  "withStock": 117,
-  "withCampusBank": 102,
-  "fullyCovered": 1163,
-  "leadReadyPhotos": 1129,
-  "pageScraped": 9,
-  "photosRecovered": 9,
+  "updated": "2026-11-25T22:16:23.414Z",
+  "total": 1181,
+  "withPhoto": 1077,
+  "withStock": 116,
+  "withCampusBank": 101,
+  "fullyCovered": 1164,
+  "leadReadyPhotos": 1130,
+  "pageScraped": 11,
+  "photosRecovered": 11,
   "imagesCleared": 1,
   "stockSearches": 4,
   "stockFound": 17,
   "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Un monde bâti sur du sable",
-      "link": "https://www.delitfrancais.com/2026/10/28/un-monde-bati-sur-du-sable",
-      "reason": "no-stock-match",
-      "image": null
-    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -30,6 +24,12 @@
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "Searching For a Third Space",
+      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space",
+      "reason": "no-stock-match",
       "image": null
     },
     {
