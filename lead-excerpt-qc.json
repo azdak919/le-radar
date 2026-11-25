@@ -1,14 +1,50 @@
 {
-  "updated": "2026-11-25T11:17:06.063Z",
-  "total": 1151,
+  "updated": "2026-11-25T21:10:09.358Z",
+  "total": 1177,
   "pool": 61,
-  "incomplete": 26,
-  "withLeadExcerpt": 261,
-  "candidates": 26,
-  "enriched": 0,
+  "incomplete": 28,
+  "withLeadExcerpt": 286,
+  "candidates": 28,
+  "enriched": 2,
   "failed": 2,
   "ok": true,
   "samples": [
+    {
+      "title": "Les professeurs en grève",
+      "link": "https://www.delitfrancais.com/2026/11/25/les-professeurs-en-greve/",
+      "ok": true,
+      "score": 96,
+      "chars": 291,
+      "sample": "Cette décision était attendue depuis le mois dernier, lorsque les membres de la Faculté des arts, de",
+      "changed": false
+    },
+    {
+      "title": "Étudier, sans savoir de quoi demain sera fait",
+      "link": "https://www.delitfrancais.com/2026/11/25/etudier-sans-savoir-de-quoi-demain-sera-fait/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
+      "changed": false
+    },
+    {
+      "title": "Deux mois de Parti québécois",
+      "link": "https://www.delitfrancais.com/2026/11/25/deux-mois-de-parti-quebecois/",
+      "ok": true,
+      "score": 100,
+      "chars": 324,
+      "sample": "Cela fait maintenant plus d’un mois que le Parti québécois est à la tête d’un gouvernement minoritai",
+      "changed": false
+    },
+    {
+      "title": "« Ceci n’est pas un jeu »",
+      "link": "https://www.delitfrancais.com/2026/11/25/ceci-nest-pas-un-jeu/",
+      "ok": true,
+      "score": 100,
+      "chars": 424,
+      "sample": "Que ce soient les salles d’évasion qui ont pris une ampleur considérable lors des dernières années o",
+      "changed": false
+    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -43,42 +79,6 @@
       "score": 100,
       "chars": 431,
       "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
-      "title": "L’AELIÉS en référendum pour un regroupement avec la CADEUL",
-      "link": "https://impactcampus.ca/actualites/laelies-en-referendum-pour-un-regroupement-avec-la-cadeul/",
-      "ok": true,
-      "score": 100,
-      "chars": 356,
-      "sample": "Le référendum permettant à la communauté étudiante des cycles supérieurs de se prononcer sur leur av",
-      "changed": false
-    },
-    {
-      "title": "L’activité physique, remède naturel pour lutter contre la déprime hivernale",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/lactivite-physique-remede-naturel-pour-lutter-contre-la-deprime-hivernale/",
-      "ok": true,
-      "score": 100,
-      "chars": 316,
-      "sample": "Le passage à l’heure d’hiver et les journées qui raccourcissent peuvent provoquer fatigue, baisse de",
-      "changed": false
-    },
-    {
-      "title": "Midterms : les publicités négatives vont-elles trop loin ?",
-      "link": "https://www.exemplaire.com.ulaval.ca/actualites/midterms-les-publicites-negatives-vont-elles-trop-loin/",
-      "ok": true,
-      "score": 100,
-      "chars": 981,
-      "sample": "Les élections de mi-mandat de 2026 aux États-Unis ont été marquées par les publicités négatives. Leu",
       "changed": false
     }
   ]

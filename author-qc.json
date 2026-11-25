@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-25T11:16:25.977Z",
-  "total": 1151,
-  "withAuthor": 1151,
-  "mismatches": 58,
+  "updated": "2026-11-25T21:09:08.603Z",
+  "total": 1177,
+  "withAuthor": 1177,
+  "mismatches": 60,
   "ok": true,
   "samples": [
+    {
+      "title": "Embracing Uncertainty - The McGill Daily",
+      "link": "https://www.mcgilldaily.com/2026/11/embracing-uncertainty/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "LE MAG | Insouciance | Automne 2026",
       "link": "https://impactcampus.ca/le-mag/le-mag-insouciance-automne-2026/",
@@ -156,15 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Streaming service Fatigue & the Resurrection of Physical Media",
-      "link": "https://theplantnews.com/2026/11/03/the-resurrection-of-physical-media",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 58
+  "fixed": 60
 }

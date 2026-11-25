@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T19:51:28.139Z",
+  "updatedAt": "2026-11-25T18:56:43.275Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -337,9 +337,9 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-11-24T19:51:28.139Z",
+      "checkedAt": "2026-11-25T18:56:43.275Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-24T19:51:28.139Z",
+      "attemptedAt": "2026-11-25T18:56:43.275Z",
       "id": "chyz",
       "name": "CHYZ 94,3",
       "coveragePercent": 36
@@ -1120,9 +1120,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-11-24T19:51:28.139Z",
+      "checkedAt": "2026-11-25T18:56:43.275Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-24T19:51:28.139Z",
+      "attemptedAt": "2026-11-25T18:56:43.275Z",
       "id": "cism",
       "name": "CISM 89,3",
       "coveragePercent": 100
@@ -1739,9 +1739,9 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-11-24T19:51:28.139Z",
+      "checkedAt": "2026-11-25T18:56:43.275Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-24T19:51:28.139Z",
+      "attemptedAt": "2026-11-25T18:56:43.275Z",
       "id": "ckut",
       "name": "CKUT 90,3",
       "coveragePercent": 100
@@ -2242,19 +2242,12 @@
           "day": 3,
           "start": "23:00",
           "end": "00:00",
-          "title": "The Night Watch",
-          "url": "http://www.cjlo.com/shows/the-night-watch"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 4,
           "start": "00:00",
-          "end": "01:00",
-          "title": "The Night Watch",
-          "url": "http://www.cjlo.com/shows/the-night-watch"
-        },
-        {
-          "day": 4,
-          "start": "01:00",
           "end": "06:00",
           "title": "CJLO Late Night",
           "url": "http://www.cjlo.com/shows/cjlo-late-night"
@@ -2382,8 +2375,8 @@
           "day": 4,
           "start": "23:00",
           "end": "00:00",
-          "title": "CJLO's Alternative Mega Mix",
-          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+          "title": "Death of the Midrange",
+          "url": "http://www.cjlo.com/shows/death-of-the-midrange"
         },
         {
           "day": 5,
@@ -2487,19 +2480,12 @@
           "day": 5,
           "start": "21:00",
           "end": "22:00",
-          "title": "CJLO's Alternative Mega Mix",
-          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-        },
-        {
-          "day": 5,
-          "start": "22:00",
-          "end": "23:00",
           "title": "The Come Up",
           "url": "http://www.cjlo.com/shows/the-come-up"
         },
         {
           "day": 5,
-          "start": "23:00",
+          "start": "22:00",
           "end": "00:00",
           "title": "CJLO's Alternative Mega Mix",
           "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
@@ -2613,9 +2599,9 @@
       "sources": [
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-11-24T19:51:28.139Z",
+      "checkedAt": "2026-11-25T18:56:43.275Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-24T19:51:28.139Z",
+      "attemptedAt": "2026-11-25T18:56:43.275Z",
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "coveragePercent": 100
@@ -2923,9 +2909,9 @@
         "cfak:https://www.cfak.ca/programmation/",
         "published-page-data:https://www.cfak.ca/_nuxt/static/1795544435/programmation/payload.js"
       ],
-      "checkedAt": "2026-11-24T19:51:28.139Z",
+      "checkedAt": "2026-11-25T18:56:43.275Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-24T19:51:28.139Z",
+      "attemptedAt": "2026-11-25T18:56:43.275Z",
       "id": "cfak",
       "name": "CFAK 88,3",
       "coveragePercent": 50
@@ -3118,9 +3104,9 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-11-24T19:51:28.139Z",
+      "checkedAt": "2026-11-25T18:56:43.275Z",
       "verifiedWeekOf": "2026-11-23",
-      "attemptedAt": "2026-11-24T19:51:28.139Z",
+      "attemptedAt": "2026-11-25T18:56:43.275Z",
       "id": "choq",
       "name": "CHOQ.ca",
       "coveragePercent": 16

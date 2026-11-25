@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T11:06:42.755Z",
+  "updatedAt": "2026-11-25T20:37:14.915Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Mercredi Bonbon",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:12.266Z"
+      "checkedAt": "2026-11-25T20:36:34.434Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
+        "title": "Le cours de math",
         "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
       "next": {
-        "title": "La collation",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:13.596Z"
+      "checkedAt": "2026-11-25T20:36:47.761Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Full Circle",
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "The Wednesday Morning After",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Full Circle",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,83 +74,82 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:16.489Z"
+      "checkedAt": "2026-11-25T20:36:51.062Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
+        "title": "Patch Notes",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "track": "",
-      "showTitle": "Morning Electro-shock",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:31.342Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "07:59",
-        "url": "https://www.cfak.ca/balados/Folkswagen"
-      },
-      "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:32.346Z"
+      "checkedAt": "2026-11-25T20:37:05.125Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": null,
+      "next": {
+        "title": "Le SEIZE",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:59",
+        "url": "https://www.cfak.ca/balados/le-seize"
+      },
+      "track": "",
+      "showTitle": "",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-25T20:37:06.160Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Miroirs d’Orient",
+      "current": {
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "miroirs-dorient"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Truck Violence — My dog would fuck the air",
-      "showTitle": "",
+      "next": {
+        "title": "Effet Philo",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "17:45",
+        "slug": "effet-philo"
+      },
+      "track": "Chenier — Dans les cendres",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:42.404Z"
+      "checkedAt": "2026-11-25T20:37:14.564Z"
     }
   }
 }

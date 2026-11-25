@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-25T11:18:35.940Z",
-  "total": 1151,
-  "withImage": 1043,
-  "withCredit": 1043,
-  "cited": 760,
-  "pending": 175,
+  "updated": "2026-11-25T21:13:38.821Z",
+  "total": 1177,
+  "withImage": 1065,
+  "withCredit": 1065,
+  "cited": 773,
+  "pending": 186,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 1,
-  "fallbackNew": 59,
+  "updatedCount": 3,
+  "citedNew": 3,
+  "fallbackNew": 57,
   "samples": [
+    {
+      "title": "Le geai moqueur parmi nous",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia et Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Vendre sa personnalité pour payer un stage ?",
       "source": "Quartier Libre",
