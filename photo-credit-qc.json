@@ -1,21 +1,35 @@
 {
-  "updated": "2026-11-25T18:11:47.932Z",
-  "total": 1172,
-  "withImage": 1060,
-  "withCredit": 1060,
-  "cited": 769,
-  "pending": 186,
+  "updated": "2026-11-25T19:13:36.018Z",
+  "total": 1173,
+  "withImage": 1062,
+  "withCredit": 1062,
+  "cited": 770,
+  "pending": 187,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 1,
-  "fallbackNew": 59,
+  "updatedCount": 4,
+  "citedNew": 2,
+  "fallbackNew": 58,
   "samples": [
+    {
+      "title": "The Association of McGill Professors of the Faculty of Arts (AMPFA) Confirms a Strike - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo: Courtesy of Charley Tamagno",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "Vendre sa personnalité pour payer un stage ?",
       "source": "Quartier Libre",
       "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "When Neutrality Becomes Silence: McGill’s Responsibility to Protect Political Dissent",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
       "cited": false,
       "method": null
     },

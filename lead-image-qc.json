@@ -1,30 +1,30 @@
 {
-  "updated": "2026-11-25T18:10:17.215Z",
-  "total": 1172,
-  "withPhoto": 1067,
+  "updated": "2026-11-25T19:11:27.326Z",
+  "total": 1173,
+  "withPhoto": 1069,
   "withStock": 117,
-  "withCampusBank": 102,
-  "fullyCovered": 1155,
-  "leadReadyPhotos": 1121,
-  "pageScraped": 9,
-  "photosRecovered": 9,
+  "withCampusBank": 101,
+  "fullyCovered": 1157,
+  "leadReadyPhotos": 1120,
+  "pageScraped": 11,
+  "photosRecovered": 11,
   "imagesCleared": 1,
-  "stockSearches": 6,
-  "stockFound": 19,
-  "campusBankFound": 16,
+  "stockSearches": 10,
+  "stockFound": 21,
+  "campusBankFound": 17,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first",
-      "reason": "no-stock-match",
-      "image": null
-    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
+      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -33,16 +33,40 @@
       "image": null
     },
     {
-      "title": "When Neutrality Becomes Silence: McGill’s Responsibility to Protect Political Dissent",
-      "link": "https://www.mcgilldaily.com/2026/11/when-neutrality-becomes-silence-mcgills-responsibility-to-protect-political-dissent/",
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
+      "reason": "no-stock-match",
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
+    },
+    {
+      "title": "Plus de 130 jours de manifestation en Albanie",
+      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+    },
+    {
+      "title": "« En direct de l’univers » : les billets gratuits offerts le 30 octobre",
+      "link": "https://lapige.atmjonquiere.com/2026/10/28/en-direct-de-lunivers-les-billets-gratuits-offerts-le-30-octobre",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/en-direct-de-lunivers.avif"
+    },
+    {
+      "title": "Reportages La Pige radio 2 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/03/reportages-la-pige-radio-2-novembre",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Entr%C3%A9e_du_pavillon_G%C3%A9rard-Arguin_du_C%C3%A9gep_de_Jonqui%C3%A8re02.JPG"
+    },
+    {
+      "title": "Pour Halloween, ce sont les pesticides qui font peur",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/pour-halloween-ce-sont-les-pesticides-qui-font-peur",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
-      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
-      "reason": "no-stock-match",
-      "image": null
+      "title": "Bulletins La Pige radio 2 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/bulletins-la-pige-radio-2-novembre",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8197/28541561483_fa2e96b0b7_b.jpg"
     },
     {
       "title": "Battling Adversity",
