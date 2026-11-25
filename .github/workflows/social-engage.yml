@@ -25,6 +25,7 @@ concurrency:
   queue: max
 
 env:
+  TUMBLR_ENABLED: ${{ vars.TUMBLR_ENABLED || 'false' }} # pause Tumblr (scripts/social/tumblr.mjs) tant que la variable n'est pas « true »
   FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
   INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
 
