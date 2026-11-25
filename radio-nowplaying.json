@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T06:06:37.454Z",
+  "updatedAt": "2026-11-25T07:06:36.142Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T06:06:07.342Z"
+      "checkedAt": "2026-11-25T07:06:06.638Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Fréquence 440",
         "source": "schedule",
         "start": "02:00",
         "end": "03:00",
         "url": "https://cism893.ca/emissions/frequence-440"
       },
+      "next": {
+        "title": "Ailleurs: escales en musique",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Fréquence 440",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T06:06:08.820Z"
+      "checkedAt": "2026-11-25T07:06:07.949Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "WarpCor / Out of the Void",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Full Circle",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "WarpCor / Out of the Void",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T06:06:11.438Z"
+      "checkedAt": "2026-11-25T07:06:10.598Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T06:06:26.121Z"
+      "checkedAt": "2026-11-25T07:06:24.915Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T06:06:27.412Z"
+      "checkedAt": "2026-11-25T07:06:26.046Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "12:00",
         "slug": "miroirs-dorient"
       },
-      "track": "Saints Martyrs — Kyrie eleison",
+      "track": "ZØRZA — Twilight of the Golden Star (feat. Harakiri for the Sky & Karg)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T06:06:37.104Z"
+      "checkedAt": "2026-11-25T07:06:35.791Z"
     }
   }
 }
