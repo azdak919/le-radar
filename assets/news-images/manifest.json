@@ -1,16 +1,6 @@
 {
   "version": 1,
   "files": {
-    "b5e0ae5ceaa51323": {
-      "local": "assets/news-images/b5e0ae5ceaa51323.jpg",
-      "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/97a15dafa9922b8717c1d3162c3013c6.jpg",
-      "host": "montrealcampus.ca",
-      "bytes": 14361,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:08:59.198Z",
-      "via": "origin",
-      "nameKey": "97a15dafa9922b8717c1d3162c3013c6.jpg"
-    },
     "54dcb5066e652d8e": {
       "local": "assets/news-images/54dcb5066e652d8e.jpg",
       "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/Silent-disco.png",
@@ -2416,16 +2406,6 @@
       "via": "resize-proxy",
       "nameKey": "image-7.png"
     },
-    "453b8a1661e8fdaf": {
-      "local": "assets/news-images/453b8a1661e8fdaf.jpg",
-      "remote": "https://leclubecole.com/wp-content/uploads/2026/11/HVsCcnRbMAA6Tkj-1-edited.jpg",
-      "host": "leclubecole.com",
-      "bytes": 206469,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-23T19:05:47.958Z",
-      "via": "origin",
-      "nameKey": "hvsccnrbmaa6tkj-1-edited.jpg"
-    },
     "07a583b9abc8d6db": {
       "local": "assets/news-images/07a583b9abc8d6db.jpg",
       "remote": "https://leclubecole.com/wp-content/uploads/2026/11/90057DAF-B336-4436-91C1-B111F1E0C9E7.jpg",
@@ -3111,10 +3091,20 @@
       "updatedAt": "2026-11-25T20:12:20.254Z",
       "via": "resize-proxy",
       "nameKey": "doomsdays.png"
+    },
+    "1b80cccf2ffce19f": {
+      "local": "assets/news-images/1b80cccf2ffce19f.jpg",
+      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/Media.jpg",
+      "host": "lecollectif.ca",
+      "bytes": 331325,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-25T20:40:49.265Z",
+      "via": "origin",
+      "nameKey": "media.jpg"
     }
   },
-  "updatedAt": "2026-11-25T20:12:22.164Z",
-  "count": 318,
+  "updatedAt": "2026-11-25T20:41:34.218Z",
+  "count": 317,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5969,10 +5959,6 @@
       "reason": "budget",
       "at": "2026-11-24T18:40:51.958Z"
     },
-    "ed24d511a0aee3ff": {
-      "reason": "failed",
-      "at": "2026-11-24T20:20:22.552Z"
-    },
     "039634dd89e6b3ba": {
       "reason": "budget",
       "at": "2026-11-24T20:20:22.558Z"
@@ -6116,6 +6102,18 @@
     "3b61ef4fd4fa34c5": {
       "reason": "budget",
       "at": "2026-11-25T19:12:00.509Z"
+    },
+    "ed24d511a0aee3ff": {
+      "reason": "budget",
+      "at": "2026-11-25T20:41:34.213Z"
+    },
+    "b5e0ae5ceaa51323": {
+      "reason": "budget",
+      "at": "2026-11-25T20:41:34.215Z"
+    },
+    "453b8a1661e8fdaf": {
+      "reason": "budget",
+      "at": "2026-11-25T20:41:34.217Z"
     }
   }
 }
