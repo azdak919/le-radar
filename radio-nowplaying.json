@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T11:06:42.755Z",
+  "updatedAt": "2026-11-25T12:04:56.704Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:12.266Z"
+      "checkedAt": "2026-11-25T12:04:27.412Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:13.596Z"
+      "checkedAt": "2026-11-25T12:04:28.766Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Full Circle",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "The Wednesday Morning After",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "The Sleepy King/Terminal 5",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Full Circle",
+      "showTitle": "The Wednesday Morning After",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:16.489Z"
+      "checkedAt": "2026-11-25T12:04:31.982Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -102,34 +102,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:31.342Z"
+      "checkedAt": "2026-11-25T12:04:45.995Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "07:59",
         "url": "https://www.cfak.ca/balados/Folkswagen"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "08:59",
+        "url": "https://www.cfak.ca/balados/palmares-cfak"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:32.346Z"
+      "checkedAt": "2026-11-25T12:04:46.999Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "end": "12:00",
         "slug": "miroirs-dorient"
       },
-      "track": "Truck Violence — My dog would fuck the air",
+      "track": "Land of Talk — 4:44",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T11:06:42.404Z"
+      "checkedAt": "2026-11-25T12:04:56.353Z"
     }
   }
 }
