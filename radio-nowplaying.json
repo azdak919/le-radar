@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T04:06:58.138Z",
+  "updatedAt": "2026-11-25T06:06:37.454Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T04:06:18.975Z"
+      "checkedAt": "2026-11-25T06:06:07.342Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Fréquence 440",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
+      },
       "track": "",
-      "showTitle": "Les sentinelles de l'art (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T04:06:32.051Z"
+      "checkedAt": "2026-11-25T06:06:08.820Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Space Plane",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
-      "track": "Easy Sonic Living/Zoe",
-      "showTitle": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
+      "next": {
+        "title": "WarpCor / Out of the Void",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
+      "track": "",
+      "showTitle": "Space Plane",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,55 +74,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T04:06:34.589Z"
+      "checkedAt": "2026-11-25T06:06:11.438Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Turn Off The Lights",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Morning Electro-shock",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+      },
       "track": "",
-      "showTitle": "Turn Off The Lights",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T04:06:48.050Z"
+      "checkedAt": "2026-11-25T06:06:26.121Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T04:06:48.885Z"
+      "checkedAt": "2026-11-25T06:06:27.412Z"
     },
     "choq": {
       "id": "choq",
@@ -130,21 +136,20 @@
       "current": null,
       "next": {
         "title": "Miroirs d’Orient",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
-        "url": "https://www.choq.ca/balados/miroirs-dorient"
+        "slug": "miroirs-dorient"
       },
-      "track": "Victoria Monét — Single (feat. Bryson Tiller)",
+      "track": "Saints Martyrs — Kyrie eleison",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T04:06:57.787Z"
+      "checkedAt": "2026-11-25T06:06:37.104Z"
     }
   }
 }
