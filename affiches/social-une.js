@@ -160,6 +160,24 @@
     if (dayLabel) k.append(el('span', 'mid', ' · '), el('span', 'date', dayLabel));
     return k;
   }
+  // Post d’un seul article : le kicker porte le nom du média (couleur
+  // d’établissement si elle est connue), puis la date avec l’année.
+  // Jamais le libellé d’un créneau de une (« La une du soir »).
+  function igArticleKicker(it, dayLabel) {
+    const k = el('p', 'ig-kicker');
+    const src = String(it && it.source || '').trim();
+    if (src) {
+      const media = el('span', 'media', src);
+      const c = aaBrandColor(it && it.placeColor, THEME);
+      if (c) media.style.color = c;
+      k.append(media);
+    }
+    if (dayLabel) {
+      if (src) k.append(el('span', 'mid', ' · '));
+      k.append(el('span', 'date', dayLabel));
+    }
+    return k;
+  }
   // QR uniquement vers une fiche Radar (le-radar.ca/article/<id>/). Pas de QR sinon (sport, URL absente ou étrangère).
   function articleQrUrl(u) {
     const s = String(u || '').trim();
@@ -332,9 +350,11 @@
     copy.querySelectorAll('.ig-line').forEach((n) => { let s = parseFloat(getComputedStyle(n).fontSize); while (n.scrollWidth > n.clientWidth + 1 && s > 28) { s -= 1; n.style.fontSize = s + 'px'; } });
     return { shown: (model.results || []).length, photo: false, sports: (model.results || []).length, radio: 0, overflow: card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 };
   }
-  // Post d’un seul article (modèle v6) : photo pleine page, slogan, kicker avec année, auteurs, QR, recadrage focalX.
+  // Post d’un seul article (modèle v6) : photo pleine page, slogan, kicker (média + année), auteurs, QR, recadrage focalX.
   async function renderArticle(card, model, format) {
     card.className = format === 'article-portrait' ? 'card article-portrait' : 'card article';
+    // Voile sombre sur la photo : les couleurs d’établissement sont ajustées pour le contraste sur fond sombre.
+    THEME = 'sombre';
     const root = el('div', 'ig');
     const safe = el('div', 'ig-safe');
     const brand = brandBarArticle();
@@ -343,11 +363,10 @@
     img.style.objectPosition = objectPosition(lead, 0.44);
     const copy = el('div', 'ig-copy');
     const day = model.slot.dayLabelYear || model.slot.dayLabel || '';
-    copy.append(igKicker(model.slot.label || '', day));
+    copy.append(igArticleKicker(lead, day));
     const title = el('h1', 'ig-title', lead.title || ''); copy.append(title);
     const authors = igAuthors(lead);
     if (authors) { const by = el('p', 'ig-by'); by.append(el('span', 'lbl', 'Par' + '\u00A0'), el('span', 'who', authors)); copy.append(by); }
-    if (lead.source) copy.append(el('p', 'ig-media', lead.source));
     const credit = String(lead.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
     if (credit) copy.append(el('p', 'ig-credit', '📸 ' + credit));
     safe.append(brand, copy);
