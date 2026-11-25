@@ -355,6 +355,7 @@ test('peinture réelle 0/1/2/3/7 directs + autres, resize, final et rotation @ci
   await page.clock.setFixedTime(new Date('2026-11-08T17:00:00-05:00'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  await settleSports(page);
   const cards = page.locator('#masthead-sports-strip > a');
   for (const n of [0, 1, 2, 3, 7]) {
     const pool = Array.from({ length: n }, (_, i) => slide(`direct-${i}`, 'next', '2026-11-08', '16:30', { live: true, scoreFor: i, scoreAgainst: 0, opponent: 'X', opponentCode: 'X' })).concat(slide('other', 'next', '2026-11-08', '19:00'));
@@ -646,6 +647,7 @@ test('focus reçu pendant la sortie animée : reste dans la carte sans saut de s
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/?labFrame=1', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#masthead-sports-strip')).toBeVisible();
+  await settleSports(page);
   const pool = [slide('live', 'next', '2026-11-08', '17:00', { live: true }), slide('yesterday', 'result', '2026-11-07', '19:00')];
   const before = await page.evaluate(pool => {
     sportsSlides = pool; sportsFitCount = null; sportsFitDepth = 0; renderSportsStrip();

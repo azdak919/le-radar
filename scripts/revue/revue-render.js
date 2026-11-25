@@ -9,7 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const { renderPage, escapeHtml, T: SITE_T, BRAND_SIGNATURE, CONTACT_MAIL } = require('../seo-pages-lib');
-// Nayuki QR Code generator (licence MIT, compatible GPL v2), déjà vendu dans le dépôt pour les affiches.
+// Nayuki QR Code generator (licence MIT, compatible AGPLv3), déjà vendu dans le dépôt pour les affiches.
 const qrcodegen = require('../vendor/qrcodegen-v1.8.0.js');
 const IC = require('../institution-color-lib.js');
 const { gamesFor } = require('./revue-games.js');
@@ -437,7 +437,7 @@ function colophonHtml(model) {
     `          <p class="revue-colophon__devise">${esc(BRAND_SIGNATURE)}</p>`,
     `          <p class="revue-colophon__text">${esc(SITE_T.fr.unofficial)}</p>`,
     `          <p class="revue-colophon__line"><b>Nous joindre</b> ${esc(CONTACT_MAIL)}</p>`,
-    `          <p class="revue-colophon__line"><b>Code libre</b> licence GNU GPL v2 · ${REPO}</p>`,
+    `          <p class="revue-colophon__line"><b>Code libre</b> licence GNU AGPLv3 · ${REPO}</p>`,
     url ? `          <div class="revue-colophon__online"><p><b>Cette édition en ligne</b><br /><a href="${esc(url)}" tabindex="-1">${esc(shortUrl)}</a><br />Toutes les revues : <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p></div>` : `          <p class="revue-colophon__line"><b>En ligne</b> <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p>`,
     `          <p class="revue-colophon__ia">${DISCLOSURE}</p>`,
     '          <p class="revue-colophon__credit">Conçu avec ♡ par Azdak en 2026</p>',

@@ -1,7 +1,33 @@
 {
  "_doc": "État du canal Instagram. La présentation du 21 novembre 2026 a été publiée à la main dans Buffer : ne pas la republier. halted=true coupe le canal sans réessai, jusqu’à correction humaine.",
- "intro": { "posted": "2026-11-21", "manual": true, "republish": false },
+ "intro": {
+  "posted": "2026-11-21",
+  "manual": true,
+  "republish": false
+ },
  "halted": false,
  "retry": false,
- "sent": {}
+ "sent": {
+  "une:2026-11-22:soir": {
+   "at": "2026-11-23T00:37:13.094Z",
+   "day": "2026-11-22",
+   "slotId": "soir",
+   "format": "une",
+   "id": "6b038ad8c72676f5e971baf2"
+  },
+  "une:2026-11-23:soir": {
+   "at": "2026-11-24T00:37:36.018Z",
+   "day": "2026-11-23",
+   "slotId": "soir",
+   "format": "une",
+   "id": "6b04dc6c9a4bd32ca3deecb1"
+  },
+  "une:2026-11-24:soir": {
+   "at": "2026-11-25T00:39:18.818Z",
+   "day": "2026-11-24",
+   "slotId": "soir",
+   "format": "une",
+   "id": "6b062e88a8becebb7749c28a"
+  }
+ }
 }

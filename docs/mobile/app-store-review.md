@@ -9,7 +9,7 @@ Sources lues le 21 septembre 2026 :
 
 ## Ce qu’est LE-RADAR
 
-LE-RADAR agrège des titres, des extraits et des liens vers des journaux, radios et pages d’établissements étudiants du Québec. La publication d’origine reste la destination du texte. Le projet est libre (GPL-2.0). Le site [le-radar.ca](https://le-radar.ca/) continue d’exister sans l’application.
+LE-RADAR agrège des titres, des extraits et des liens vers des journaux, radios et pages d’établissements étudiants du Québec. La publication d’origine reste la destination du texte. Le projet est libre (GNU AGPLv3, avec une permission additionnelle pour la distribution par les boutiques : voir `LICENSE-EXCEPTIONS.md`). Le site [le-radar.ca](https://le-radar.ca/) continue d’exister sans l’application.
 
 ## Pourquoi une application
 

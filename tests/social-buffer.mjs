@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Bot social (Buffer/X) : format, longueur, variété, mentions, dédoublonnage, image, auth.
+process.env.FORBIDDEN_NAMES = 'dupont'; // fictif : indépendant du secret CI
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { parseFeed, markImages, buildText, selectItems, xlen, mentionHead, unknownAccounts, stripUtm, slotsToday, selectDaily, freeSlots, quality, DAILY_SLOTS } from '../scripts/social/lib.mjs';
@@ -45,7 +46,7 @@ assert.equal(mediaLine({ source: 'Le Délit', author: 'Le Délit' }), '📰 Le D
 assert.equal(mediaLine({ source: 'Le Délit', author: '' }), '📰 Le Délit', 'sans auteur : pas de séparateur vide');
 assert.deepEqual(sentences('Un. Deux ? Trois! quatre'), ['Un.', 'Deux ?', 'Trois! quatre']);
 assert.equal(cutExcerpt('Une phrase. Deux phrases. Trois.', () => true), 'Une phrase. Deux phrases.');
-assert.equal(buildText({ source: 'X', title: 'Charles Tison parle', link: 'https://e.x/1' }), '', 'garde « tison »');
+assert.equal(buildText({ source: 'X', title: 'Jean Dupont parle', link: 'https://e.x/1' }), '', 'garde nom interdit');
 assert.equal(xlen('a https://x.org/' + 'z'.repeat(200)), 2 + 23);
 assert.equal(xlen('📸 A'), 4, 'emoji = 2');
 assert.equal(xlen('a • b…'), 8, '• et … comptent 2 sur X');

@@ -126,7 +126,9 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
   const at1280 = await resizeAndSettle(page, 1280, 800);
   expect(at1280.wide, '1280 : shell E').toBe('e');
   expect(at1280.docked).toBe(false);
-  expect(at1280.weather, '1280 : 4 cartes (shell E dual)').toBe(4);
+  // 22 nov. 2026 : MTL + QC portent max/min + « Demain » ; à 1280 il ne
+  // reste plus la place d'une ville régionale lisible (3+ dès ~1440).
+  expect(at1280.weather, '1280 : MTL + QC (shell E dual)').toBe(2);
   expect(at1280.chips).toBeGreaterThanOrEqual(1);
   expect(at1280.match, '1280 : plus qu’une carte').toBeGreaterThanOrEqual(1);
   expect(at1280.cta).toBe(0);
@@ -197,7 +199,7 @@ test('mât : revenir à la taille d’origine restaure les quantités', async ({
 
   const from1920 = await resizeAndSettle(page, 1920, 1080);
   const at1280 = await resizeAndSettle(page, 1280, 800);
-  expect(at1280.weather, '1920→1280 : 4 cartes (shell E), pas 1').toBe(4);
+  expect(at1280.weather, '1920→1280 : MTL + QC (shell E), pas 1').toBe(2);
   expect(at1280.wide).toBe('e');
   expect(from1920.weather).toBeGreaterThanOrEqual(4);
 });

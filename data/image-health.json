@@ -1,22 +1,23 @@
 {
-  "at": "2026-11-22T04:12:33.716Z",
-  "cards": 1051,
-  "probedCards": 15,
+  "at": "2026-11-25T21:12:06.159Z",
+  "cards": 1177,
+  "probedCards": 137,
   "queueDeferred": 0,
-  "urls": 12,
+  "urls": 129,
   "broken": 1,
-  "repaired": 0,
+  "repaired": 1,
   "items": [
     {
-      "source": "Le Collectif",
-      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
-      "field": "image",
+      "source": "The Campus",
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "field": "stockImage",
       "variant": "",
-      "url": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORTS_KimiAntonelli_CreditKuyper.jpg",
-      "status": 0,
-      "type": "",
-      "transient": true
+      "url": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg",
+      "status": 403,
+      "type": "text/html",
+      "transient": false,
+      "repaired": true
     }
   ]
 }

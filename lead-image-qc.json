@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-22T04:12:06.956Z",
-  "total": 1051,
-  "withPhoto": 955,
-  "withStock": 103,
-  "withCampusBank": 93,
-  "fullyCovered": 1036,
-  "leadReadyPhotos": 988,
-  "pageScraped": 7,
-  "photosRecovered": 7,
-  "imagesCleared": 2,
+  "updated": "2026-11-25T21:11:04.136Z",
+  "total": 1177,
+  "withPhoto": 1072,
+  "withStock": 117,
+  "withCampusBank": 102,
+  "fullyCovered": 1160,
+  "leadReadyPhotos": 1126,
+  "pageScraped": 9,
+  "photosRecovered": 9,
+  "imagesCleared": 1,
   "stockSearches": 4,
-  "stockFound": 13,
-  "campusBankFound": 11,
+  "stockFound": 22,
+  "campusBankFound": 19,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "La vache arrive au cinéma chinois",
+      "link": "https://www.delitfrancais.com/2026/11/25/la-vache-arrive-au-cinema-chinois/",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -21,22 +27,16 @@
       "image": null
     },
     {
-      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORTS_KimiAntonelli_CreditKuyper.jpg"
-    },
-    {
-      "title": "Et si on parlait de travail autrement : une soirée pour réinventer le travail, ensemble",
-      "link": "https://lapige.atmjonquiere.com/2026/09/04/et-si-on-parlait-de-travail-autrement-une-soiree-pour-reinventer-le-travail-ensemble",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/photo-gd-3.jpg"
-    },
-    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": null
+    },
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     }
   ]
 }

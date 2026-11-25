@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, QUEUE_MAX, refreshPhotoLine, stripUtm } from './lib.mjs';
 import { createRequire } from 'node:module';
+import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
@@ -100,7 +101,7 @@ for (const net of networks) {
     if (gate.reject) continue;
     await withHook(it);
     const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
-    if (/tison/i.test(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
+    if (privacyGuard.containsForbiddenName(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
     console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}`);
     if (dry) continue;
     try {

@@ -154,3 +154,42 @@ console.log('✓ canaux de distribution : RSS, Google Actualités, récolte soci
   if ('metadata' in sent.i) throw new Error('metadata inattendue');
   console.log('editText metadata : OK');
 }
+
+// createPost : un id Buffer n'est pas une publication réussie si le statut est déjà « error »
+// (ex. Facebook déconnecté : Buffer accepte le post, puis le refuse tout de suite).
+{
+  const { createXBuffer: mk, assertBufferPostOk } = await import('../scripts/social/channels/x-buffer.mjs');
+  const authLost = 'It looks like Buffer has lost authorization to post on your behalf. Please refresh your channel to resume scheduling.';
+  assertBufferPostOk({ id: 'ok', status: 'sent' });
+  assertBufferPostOk({ id: 'ok', status: 'scheduled' });
+  assertBufferPostOk({ id: 'ok' });
+  assert.throws(() => assertBufferPostOk({ id: '6afaf91b91c178a8ccd9186f', status: 'error', error: { message: authLost } }), /lost authorization/);
+  assert.throws(() => assertBufferPostOk({ id: 'x', status: 'error' }), /statut error/);
+  assert.throws(() => assertBufferPostOk({}), /refusé/);
+
+  const gql = (data) => ({ ok: true, status: 200, json: async () => ({ data }) });
+  const orgs = { account: { organizations: [{ id: 'org1', name: 'My organization' }] } };
+  const channels = { channels: [{ id: 'ch1', name: 'le_radar_ca', service: 'twitter' }] };
+  const fetchFor = (create) => async (_u, o) => {
+    const q = JSON.parse(o.body).query;
+    if (q.includes('account {')) return gql(orgs);
+    if (q.includes('channels(')) return gql(channels);
+    if (q.includes('createPost')) return gql({ createPost: create });
+    throw new Error(`requête inattendue : ${q.slice(0, 80)}`);
+  };
+
+  const bad = mk({ key: 'k', fetchImpl: fetchFor({ post: { id: '6afaf91b91c178a8ccd9186f', dueAt: '2026-11-16T12:37:47.131Z', status: 'error', error: { message: authLost } } }) });
+  await assert.rejects(() => bad.add({ text: '☀️ La une du matin', now: true }), /lost authorization/);
+
+  let createQuery = '';
+  const good = mk({ key: 'k', fetchImpl: async (_u, o) => {
+    const body = JSON.parse(o.body);
+    if (body.query.includes('createPost')) createQuery = body.query;
+    return fetchFor({ post: { id: 'ok1', dueAt: '2026-11-16T12:37:45Z', status: 'sent' } })(_u, o);
+  } });
+  const post = await good.add({ text: '☀️ La une du matin', now: true });
+  assert.equal(post.id, 'ok1');
+  assert.match(createQuery, /status/);
+  assert.match(createQuery, /error \{ message \}/);
+  console.log('createPost refuse un statut error : OK');
+}

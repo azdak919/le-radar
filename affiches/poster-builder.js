@@ -25,13 +25,13 @@ const SLOGAN_EN = 'Student newspapers, radio and sports from Quebec, all in one 
 const INDEP_1 = 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.';
 const INDEP_2 = 'Les contenus appartiennent à leurs publications d’origine.';
 const INDEP_EN = 'Independent, unofficial and not affiliated. Content belongs to the original publications.';
-/* Gabarits d’affiches : 🄯 Azdak, CC BY-SA 4.0. Le code du dépôt reste GNU GPL v2
- * (LICENSE). Les contenus des médias et les photos restent à leurs titulaires (INDEP_2). */
-const LICENSE_LINE = '\u{1F12F} Azdak CC BY-SA 4.0';
+/* Gabarits d’affiches : © Azdak, CC BY 4.0 (affiches/LICENSE). Le code du dépôt reste
+ * GNU AGPLv3 (LICENSE). Les contenus des médias et les photos restent à leurs titulaires (INDEP_2). */
+const LICENSE_LINE = '\u00A9 Azdak CC BY 4.0';
 const LICENSE_FR = LICENSE_LINE;
 const LICENSE_EN = LICENSE_LINE;
 const LICENSE_BI = LICENSE_LINE;
-const LICENSE_MARK = '\u{1F12F}';
+const LICENSE_MARK = '\u00A9';
 
 function posterLicenseText() {
   return LICENSE_LINE;
@@ -47,7 +47,7 @@ function licenseMarkFont(size) {
 }
 
 function measurePosterLicense(ctx, size) {
-  const rest = 'Azdak CC BY-SA 4.0';
+  const rest = 'Azdak CC BY 4.0';
   const gap = Math.max(2, Math.round(size * 0.22));
   ctx.textBaseline = 'top';
   ctx.font = licenseMarkFont(size);
@@ -112,7 +112,7 @@ const GREETINGS = {
   'saint-jean': 'Bonne Saint-Jean !',
   canada: 'Bonne fête du Canada !',
   nopub: 'Pas de publicité',
-  gpl: 'Code libre GPL 2.0',
+  gpl: 'Code libre AGPL 3.0',
   gratuit: 'Gratuit, pour toujours',
   independant: 'Indépendant',
   ncompte: 'Sans compte à créer',
@@ -134,7 +134,7 @@ const GREETINGS_EN = {
   'saint-jean': 'Happy Fête nationale!',
   canada: 'Happy Canada Day!',
   nopub: 'No ads',
-  gpl: 'Free software — GPL 2.0',
+  gpl: 'Free software — AGPL 3.0',
   gratuit: 'Free, forever',
   independant: 'Independent',
   ncompte: 'No account needed',
@@ -1602,6 +1602,11 @@ function composeFrontPage(ctx, w, h, opts) {
       titleH = tProbe.lines.length * Math.round(tProbe.size * 1.08);
       const rest = floor - ly - px(1.2) - creditH - titleH - px(1) - (leadQr ? leadQr + px(2.2) : px(6));
       if (rest >= minImg) break;
+    }
+    /* Titre très long (≈ 170 car.) : jamais « … » ; une 4e puis 5e ligne, la photo cède. */
+    for (let ml = 4; tProbe?.cut && ml <= 5; ml += 1) {
+      tProbe = wrapFit(lead.title, serif, lw, px(3), px(3), ml);
+      titleH = tProbe.lines.length * Math.round(tProbe.size * 1.08);
     }
     const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
     const leadMode = opts.leadPhoto || 'surimpression';

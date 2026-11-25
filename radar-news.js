@@ -1289,10 +1289,49 @@ function bindFiltersPanel() {
   bindMagazineViewportRelayout();
 }
 
+/**
+ * La source choisie se place juste après « Le Radar » ; les autres gardent
+ * leur ordre (popularité) et glissent à leur nouvelle place (FLIP). Retour à
+ * « Le Radar » : ordre d’origine. Sans animation si mouvement réduit.
+ */
+function placeSelectedSourceFirst(animate = true) {
+  if (!NEWS_FILTERS) return;
+  const all = NEWS_FILTERS.querySelector('.filter-btn[data-source="all"]');
+  const btns = [...NEWS_FILTERS.querySelectorAll('.filter-btn[data-order]')];
+  if (!all || !btns.length) return;
+  const sel = newsSourceFilter;
+  const ordered = btns.slice().sort((a, b) => {
+    if (a.dataset.source === sel) return -1;
+    if (b.dataset.source === sel) return 1;
+    return Number(a.dataset.order) - Number(b.dataset.order);
+  });
+  const current = [...NEWS_FILTERS.querySelectorAll('.filter-btn[data-order]')];
+  if (ordered.every((b, i) => b === current[i])) return;
+  let reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { /* ignore */ }
+  const doAnimate = animate && !reduce && typeof Element.prototype.animate === 'function';
+  const before = doAnimate ? new Map(btns.map((b) => [b, b.getBoundingClientRect()])) : null;
+  let anchor = all;
+  for (const b of ordered) { anchor.after(b); anchor = b; }
+  if (!doAnimate) return;
+  for (const b of btns) {
+    const a = before.get(b);
+    const r = b.getBoundingClientRect();
+    const dx = a.left - r.left;
+    const dy = a.top - r.top;
+    if (!a.width || !r.width || (Math.abs(dx) < 1 && Math.abs(dy) < 1)) continue;
+    b.animate(
+      [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
+      { duration: 320, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
+    );
+  }
+}
+
 function selectNewsSource(source) {
   newsSourceFilter = source;
   NEWS_FILTERS?.querySelectorAll('.filter-btn').forEach((b) =>
     b.classList.toggle('active', b.dataset.source === source));
+  placeSelectedSourceFirst(true);
   // Choisir une source (y compris « Le Radar ») referme le panneau déplié —
   // plus besoin de le laisser ouvert une fois la sélection faite.
   filtersExpanded = false;
@@ -1717,15 +1756,19 @@ function renderNewsFilters() {
     NEWS_FILTERS.appendChild(followedBtn);
   }
 
-  sources.forEach(src => {
+  sources.forEach((src, i) => {
     const btn = document.createElement('button');
     const { institution, type, color } = sourceInfo(src);
     const instLabel = filterSourceInstitutionLabel(institution, type, src);
 
     btn.className = 'filter-btn';
     btn.dataset.source = src;
+    btn.dataset.order = String(i);
     btn.style.setProperty('--c', color);
-    btn.title = institution ? `${src} — ${instLabel || formatInstitutionDisplay(institution)}` : src;
+    // Pas d’infobulle qui répète la pastille (nom + établissement déjà écrits,
+    // le défilement montre le texte qui déborde). Seulement si l’établissement
+    // n’est pas affiché.
+    if (institution && !instLabel) btn.title = `${src} — ${formatInstitutionDisplay(institution)}`;
     btn.innerHTML = `
       <span class="filter-btn__row">
         <span class="filter-btn__dot" aria-hidden="true"></span>
@@ -1742,6 +1785,7 @@ function renderNewsFilters() {
 
   NEWS_FILTERS.querySelectorAll('.filter-btn').forEach((b) =>
     b.classList.toggle('active', b.dataset.source === newsSourceFilter));
+  placeSelectedSourceFirst(false);
 
   syncFiltersPanel();
   registerFilterMarqueeObservers();
@@ -3422,8 +3466,16 @@ function balanceMagazineColumns() {
    *  le chargement tardif des images, sans carte orpheline. */
   const applyBriefSpread = () => {
     const single = briefCols < 2;
-    const cards = brief.querySelectorAll('.article--compact').length;
-    brief.classList.toggle('brief-rail--spread', single && cards >= 2);
+    const cardEls = [...brief.querySelectorAll('.article--compact')];
+    brief.classList.remove('brief-rail--spread');
+    if (!single || cardEls.length < 2) return;
+    // Seulement un *reste* (< 1 carte) laissé par une carte de plus qui
+    // dépasserait. Réserve vide (source avec peu d’articles) : le vide vient
+    // du manque d’articles ; l’étaler étirait chaque carte (trous dans le texte).
+    if (!magazineReserve.length) return;
+    const gap = magazineColumnContentHeight(hero) - magazineColumnContentHeight(brief);
+    const avgCard = cardEls.reduce((sum, el) => sum + el.offsetHeight, 0) / cardEls.length;
+    brief.classList.toggle('brief-rail--spread', gap <= avgCard);
   };
 
   try {

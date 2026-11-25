@@ -48,6 +48,10 @@ concurrency:
   group: pages-deploy
   cancel-in-progress: true
 
+env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
+
 jobs:
   build:
     # Un workflow_run en échec n’a rien publié : inutile de redéployer.

@@ -17,6 +17,7 @@ const plain = h => stripCdata(ent(ent(stripCdata(h || '').replace(/<[^>]*>/g, ' 
 export const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 import { createRequire } from 'node:module';
 import { tagLine } from './hashtags.mjs';
+import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 export const { stripCdata, hasCdata } = createRequire(import.meta.url)('../cdata-lib.js');
 export { articleId };
@@ -184,17 +185,52 @@ export function mediaLine(it, accounts = []) {
   return line ? `${MEDIA_ICON} ${line}` : '';
 }
 
-/** Phrases (fin . ! ? … suivie d'une majuscule, d'un chiffre ou d'un guillemet). */
-export const sentences = t => String(t || '').replace(/\s+/g, ' ').trim().split(/(?<=[.!?…»"”])\s+(?=[«"“A-ZÀ-ÝŒ0-9])/).filter(Boolean);
+/** Abréviations courantes (mois, titres, etc.) : un point final ne termine pas la phrase. */
+const SENTENCE_ABBR = /^(?:janv|févr|fevr|avr|juill?|sept?|oct|nov|déc|dec|jan|feb|mar|apr|jun|jul|aug|sep|mr|mrs|ms|dr|pr|prof|rev|lt|col|gen|sgt|capt|mgr|mme|mlle|st|ste|vs|etc|al|fig|vol|no|av|bd|boul|min|tel|approx|env)$/i;
+/** Vrai si le '.' à `dotIndex` est une abréviation (Oct. 31, Dr. Smith, M. Legault). */
+export function isAbbrevDot(text, dotIndex) {
+  const s = String(text || '');
+  if (s[dotIndex] !== '.') return false;
+  if (/^\s*\d/.test(s.slice(dotIndex + 1))) return true;
+  const tok = (s.slice(0, dotIndex).match(/([^\s/«"“'’(]+)$/) || [])[1] || '';
+  if (tok.length === 1 && /[A-ZÀ-ÝŒa-zà-ÿ]/i.test(tok)) return true;
+  return SENTENCE_ABBR.test(tok);
+}
+
+/** Phrases (fin . ! ? … suivie d'une majuscule, d'un chiffre ou d'un guillemet). `abbr: true` (X) : on ne coupe pas sur une abréviation. */
+export function sentences(t, { abbr = false } = {}) {
+  const s = String(t || '').replace(/\s+/g, ' ').trim();
+  if (!s) return [];
+  if (!abbr) return s.split(/(?<=[.!?…»"”])\s+(?=[«"“A-ZÀ-ÝŒ0-9])/).filter(Boolean);
+  const out = [];
+  let start = 0;
+  const re = /[.!?…»"”](?=\s+[«"“A-ZÀ-ÝŒ0-9])/g;
+  let m;
+  while ((m = re.exec(s))) {
+    if (s[m.index] === '.' && isAbbrevDot(s, m.index)) continue;
+    out.push(s.slice(start, m.index + 1).trim());
+    start = m.index + 1;
+    while (s[start] === ' ') start++;
+    re.lastIndex = start;
+  }
+  if (start < s.length) out.push(s.slice(start).trim());
+  return out.filter(Boolean);
+}
 
 /** Extrait coupé en fin de phrase : au plus `max` phrases qui tiennent ; sinon 1re phrase coupée au mot (« … », ≥ 40 car.). */
-export function cutExcerpt(ex, fits, max = 2) {
-  const ss = sentences(ex); let best = '';
+export function cutExcerpt(ex, fits, max = 2, { abbr = false } = {}) {
+  const ss = sentences(ex, { abbr }); let best = '';
   for (let k = 1; k <= Math.min(max, ss.length); k++) { const c = ss.slice(0, k).join(' '); if (fits(c)) best = c; else break; }
   if (best || !ss.length) return best;
   const words = ss[0].split(' ');
   for (let k = words.length - 1; k > 0; k--) { const c = words.slice(0, k).join(' ').replace(/[\s,;:.–—-]+$/, '') + '…'; if (fits(c)) return c.length >= 40 ? c : ''; }
   return '';
+}
+
+/** Retire un crédit ou une source triviaux entre parenthèses (« (Facebook) », « (Photo : …) »), sans toucher à un sigle utile comme (OSS). */
+export function stripCreditParens(s) {
+  const re = /\(\s*(?:facebook|instagram|twitter|\bx\b|tiktok|linkedin|flickr|wikimedia|getty|unsplash|pexels|archives?|courtoisie|\bdr\b|photo|source|crédits?|credits?|illustration)(?:\s*[:.].{0,40})?\s*\)/gi;
+  return String(s || '').replace(re, ' ').replace(/[ \t]{2,}/g, ' ').replace(/ \n/g, '\n').replace(/\n /g, '\n').trim();
 }
 
 /**
@@ -204,19 +240,19 @@ export function cutExcerpt(ex, fits, max = 2) {
  *   (ligne vide) 📰 Média (@média) · Auteur
  *   https://le-radar.ca/article/<id>/
  *   📸 Crédit            (seulement si un crédit réel est connu : jamais de doublon du média)
- * Jamais de séparateur vide ni de doublon. Texte contenant « tison » : '' (refusé).
+ * Jamais de séparateur vide ni de doublon. Texte contenant un nom interdit (FORBIDDEN_NAMES) : '' (refusé).
  */
-export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it), ai = false } = {}) {
+export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it), ai = false, cutAbbr = false } = {}) {
   const pl = photo ? photoLine(credit) : '';
   let title = String(it.bare || it.title || '').replace(/\s+/g, ' ').trim();
   const ml = mediaLine(it, accounts);
   const tail = [ml, link ? url : '', pl].filter(Boolean).join('\n');
   const mk = (t, e) => [t, e, tail].filter(Boolean).join('\n\n');
-  const ex = cutExcerpt(excerpt(it, { ai }), e => len(mk(title, e)) <= limit);
+  const ex = cutExcerpt(excerpt(it, { ai }), e => len(mk(title, e)) <= limit, 2, { abbr: !!cutAbbr });
   let text = mk(title, ex);
   while (len(text) > limit && title.length > 10) { title = title.slice(0, -2).trimEnd().replace(/[\s,;:.–—-]+$/, '') + '…'; text = mk(title, ''); }
   text = stripCdata(text); // dernier filet : jamais de marqueur CDATA dans une publication
-  return /tison/i.test(text) || hasCdata(text) ? '' : text;
+  return privacyGuard.containsForbiddenName(text) || hasCdata(text) ? '' : text;
 }
 
 /** buildText + ligne de hashtags en dernier (sa longueur est réservée avant l'extrait). `sep` = séparateur avant la ligne. */
@@ -225,8 +261,13 @@ export function buildTagged(it, accounts, limit, opts, tags, sep = '\n') {
   const text = buildText(it, accounts, room, opts);
   return text && tags ? `${text}${sep}${tags}` : text;
 }
-/** Texte X : format commun, 280 (xlen), 2 hashtags au plus (policy.json). */
-export const buildXText = (it, accounts = [], opts = {}) => buildTagged(it, accounts, LIMITS.x, opts, tagLine(it, 'x'));
+/** Texte X : format commun, 280 (xlen), 3 hashtags au plus (policy.json, mots-clics thématiques).
+ *  Extrait : pas de coupe sur une abréviation ; parenthèses de crédit/source triviales retirées. */
+export function buildXText(it, accounts = [], opts = {}) {
+  const desc = stripCreditParens(it.desc || '');
+  const cleaned = desc !== (it.desc || '') ? { ...it, desc } : it;
+  return buildTagged(cleaned, accounts, LIMITS.x, { ...opts, cutAbbr: true }, tagLine(it, 'x'));
+}
 
 /**
  * Choix des items : non envoyés, ≤ maxAgeH, round-robin par source (plus récente d'abord),

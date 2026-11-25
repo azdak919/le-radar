@@ -40,10 +40,10 @@
     <link rel="stylesheet" href="../../style-feed.css" />
     <link rel="stylesheet" href="../../style-chrome.css" />
     <link rel="stylesheet" href="../../seo-pages.css" />
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e102" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
-    <script src="../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
-    <script src="../../dev/wide-desktop-preview.js?v=wide-auto-e102"></script>
+    <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e104" />
+    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e104" />
+    <script src="../../dev/midwidth-preview.js?v=wide-auto-e104"></script>
+    <script src="../../dev/wide-desktop-preview.js?v=wide-auto-e104"></script>
     <!--
       CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
       dès le premier paint (avant le CSS mis en cache / le JS async).
@@ -133,7 +133,7 @@
     <script src="../../radar-lifecycle.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Exil","url":"https://exilecvm.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Cégep du Vieux Montréal"},"inLanguage":"fr","sameAs":["https://exilecvm.ca/","https://instagram.com/exilexcvm/"]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Exil","url":"https://exilecvm.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Cégep du Vieux Montréal"},"inLanguage":"fr","sameAs":["https://exilecvm.ca/","https://instagram.com/exilexcvm/"],"subjectOf":{"@type":"ItemList","numberOfItems":1,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://exilecvm.wordpress.com/2026/11/24/au-dela-des-dechets/","name":"Au-delà des déchets"}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -328,9 +328,13 @@
       </section>
       <section class="seo-section">
         <h2>Derniers articles</h2>
-        <p class="seo-empty">Aucun article publié dans la fenêtre de fraîcheur (session universitaire en cours ou 45 derniers jours).</p>
+        <p class="seo-headlines__status">Dernier article : 24 novembre 2026 à 13 h 02</p>
+      <ul class="seo-headlines">
+          <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2026/11/24/au-dela-des-dechets/" target="_blank" rel="noopener noreferrer">Au-delà des déchets</a><p class="seo-headline__meta"><time datetime="2026-11-24T18:02:12.000Z">2026-11-24 · 13 h 02</time><span class="seo-headline__by">Par Marie-Soleil Marleau</span></p><p class="seo-headline__brief">Troisième étage du cégep, devant l’Entrée verte : un pilulier géant qui contient des pots de pilules! De l’autre côté de la vitre, un mur avec des bacs pleins de granules de plastique arc-en-ciel, des machines de toutes sortes et des gens affairés à les utiliser. Vous êtes probablement déjà passé devant l’Atelier Écodesign et si, comme moi, vous vous êtes demandé ce que ça pouvait bien être, cet article répondra certainement à vos questions. … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2026/11/24/au-dela-des-dechets/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+      </ul>
         <div class="seo-source-actions">
-          <p class="seo-cta seo-cta--source"><a href="../../archives/exil/">Voir les archives</a></p>
+          <p class="seo-cta seo-cta--source"><a href="../../?source=Exil#news-list" data-news-source="Exil">Voir les articles les plus récents</a></p>
+          <p class="seo-cta seo-cta--secondary seo-cta--source"><a href="../../archives/exil/">Voir les archives</a></p>
         </div>
       </section>
 
@@ -340,7 +344,7 @@
         <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="../../assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">LE-RADAR.ca</p>
         <p class="site-foot__signature notranslate" translate="no" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
       </div>
-      <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
+      <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine. Tout média étudiant peut demander la modification ou le retrait immédiat de son flux sur simple demande.</p>
       <nav class="site-foot__links" aria-label="Liens de pied de page">
         <a href="../../" data-home-nav>Accueil</a>
         <span class="site-foot__sep" aria-hidden="true">·</span>
@@ -391,7 +395,7 @@
     </li>
         </ul>
       </section>
-      <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
+      <p>Code source sous licence <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer license">GNU AGPLv3</a> (<a href="https://github.com/azdak919/le-radar" target="_blank" rel="noopener noreferrer">dépôt</a>). <a href="../../kit-media/">Kit-média</a> sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.</p>
       <p class="site-foot__kao"><a href="https://keepandroidopen.org/fr/" target="_blank" rel="noopener noreferrer">Garder Android ouvert</a> <span class="site-foot__kao-hint">Campagne contre la vérification obligatoire des développeurs Google.</span></p>
       <div class="site-foot__credit">
         <p class="site-foot__author">
@@ -400,9 +404,10 @@
           en 2026
         </p>
         <p class="site-foot__contact"><a href="mailto:azdak-qc@proton.me" data-contact-channel="email" aria-label="Nous joindre par courriel"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>Nous joindre</a></p>
-        <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
+        <p class="site-foot__legal">Contenus agrégés : articles et photos crédités à leurs auteurs et à leurs médias d’origine. Code tiers utilisé conformément à ses licences.</p>
         <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
       </div>
+      <p class="seo-foot-meta">Mise à jour 2026-11-24</p>
     </footer>
   </body>
 </html>

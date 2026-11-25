@@ -176,6 +176,13 @@ for (const file of htmlFiles) {
       `index.html : « ${href} » est dans le menu de sections mais absent du pied de page`,
     );
   }
+  // Licence : code AGPLv3 + dépôt, kit-média CC BY 4.0, retrait du flux sur demande.
+  assert(footBlock.includes('https://www.gnu.org/licenses/agpl-3.0.html'), 'index.html : pied de page sous AGPLv3');
+  assert(footBlock.includes('href="https://github.com/azdak919/le-radar"'), 'index.html : lien vers le dépôt au pied');
+  assert(footBlock.includes('<a href="kit-media/">Kit-média</a> sous licence'), 'index.html : lien vers le kit-média au pied');
+  assert(footBlock.includes('href="https://creativecommons.org/licenses/by/4.0/deed.fr"'), 'index.html : lien vers la licence CC BY 4.0 au pied');
+  assert(footBlock.includes('retrait immédiat de son flux'), 'index.html : retrait du flux sur demande au pied');
+  assert(!/old-licenses\/gpl-2\.0/.test(footBlock), 'index.html : plus de GPL v2 au pied');
   // Accueil en tête du pied de page, avant Médias.
   const footAccueil = footBlock.indexOf('>Accueil<');
   const footMedias = footBlock.indexOf('>Médias<');
@@ -654,7 +661,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
   assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
   assert(!posterScript.includes('Azdak'), 'affiches campus : pas de mention Azdak');
-  assert(!/GPL-2/.test(posterScript), 'affiches campus : pas de GPL au pied');
+  assert(!/GPL/.test(posterScript), 'affiches campus : pas de GPL ni d’AGPL au pied');
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
   assert(builder.includes('Imprimer une affiche'), 'générateur public : titre');
@@ -756,7 +763,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(!builder.includes('value="nopub" selected'), 'affiche générique : Pas de publicité n’est plus le défaut');
   assert(!kit.includes('Pas de publicité ·'), 'kit-media : métadonnée générique sans phrase manuscrite');
   assert(!mediaKitEn.includes('No ads ·'), 'media-kit EN : métadonnée générique sans phrase manuscrite');
-  assert(builderJs.includes('Code libre GPL 2.0'), 'générateur public : phrase manuscrite GPL');
+  assert(builderJs.includes('Code libre AGPL 3.0'), 'générateur public : phrase manuscrite AGPL');
+  assert(!builderJs.includes('GPL 2.0'), 'générateur public : plus de GPL 2.0');
   assert(builderJs.includes('Gratuit, pour toujours'), 'générateur public : phrase manuscrite gratuit');
   assert(builder.includes('optgroup label="Le projet"'), 'générateur public : groupe de phrases projet');
   assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
@@ -2071,7 +2079,8 @@ assert(
     'wide : le marquee sports n’est pas gelé par transform:none, le nom météo peut dépasser',
   );
 }
-// Titre sports + dial : alternate, 1 aller-retour. Ligne du bas : boucle continue.
+// Titre sports : alternate, 1 aller-retour. Ligne du bas : boucle continue.
+// (Le dial boucle désormais aussi — assertion suivante.)
 assert(
   !/sports-chip-scroll(?!-sub)[^;]*infinite/.test(cssFlat)
     && /sports-chip-scroll-sub[^;]*--sports-scroll-duration-sub[^;]*linear[^;]*infinite/.test(cssFlat)
@@ -2080,10 +2089,22 @@ assert(
     && /sports-cta-scroll-sub[^;]*--sports-scroll-duration-sub[^;]*linear[^;]*infinite/.test(cssFlat)
     && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
     && /--sports-loop-gap:\s*48px/.test(cssFlat)
-    && /tunerMarquee[^;]*alternate\s+both/.test(cssFlat)
     && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs)
     && appJs.includes('function marqueeAlternateCount'),
-  'CSS/JS : titre sports et dial en aller-retour ; ligne du bas en boucle continue',
+  'CSS/JS : titre sports en aller-retour ; ligne du bas en boucle continue',
+);
+// Dial + pastilles sources : nom du poste et établissement ne tournent jamais.
+// Un aller-retour fini les laissait tronqués pour le reste de la visite →
+// boucle, repos dans les keyframes, ratio partagé CSS/JS, pause au survol.
+assert(
+  /\.is-marquee > \.tuner-now-sub-text \{ animation: tunerMarqueeLoop calc\(var\(--marquee-duration[^)]*\) \* var\(--marquee-cycle-ratio[^;]*infinite both/.test(cssFlat)
+    && /--marquee-cycle-ratio: 2\.5/.test(cssFlat)
+    && /@keyframes tunerMarqueeLoop \{ 0%, 10%/.test(cssFlat)
+    && /\.is-marquee:hover > \.tuner-now-sub-text, \.is-marquee:active > \.tuner-now-sub-text \{ animation-play-state: paused/.test(cssFlat)
+    && /MARQUEE_END_REST_RATIO\s*=\s*0\.25/.test(appJs)
+    && /MARQUEE_CYCLE_RATIO\s*=\s*MARQUEE_ROUND_TRIPS \+ MARQUEE_END_REST_RATIO \* 2/.test(appJs)
+    && /function marqueeRoundTripMs[\s\S]{0,300}?MARQUEE_CYCLE_RATIO/.test(appJs),
+  'CSS/JS : marquee dial/filtres en boucle (repos dans les keyframes), ratio 2.5 partagé',
 );
 // Magazine mid : CSS 2 col dès 768 (iPad portrait). Le JS d'équilibre /
 // graine En bref / extraits mid doit partager ce seuil — à 900 px les
