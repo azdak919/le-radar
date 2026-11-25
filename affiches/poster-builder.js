@@ -1603,6 +1603,11 @@ function composeFrontPage(ctx, w, h, opts) {
       const rest = floor - ly - px(1.2) - creditH - titleH - px(1) - (leadQr ? leadQr + px(2.2) : px(6));
       if (rest >= minImg) break;
     }
+    /* Titre très long (≈ 170 car.) : jamais « … » ; une 4e puis 5e ligne, la photo cède. */
+    for (let ml = 4; tProbe?.cut && ml <= 5; ml += 1) {
+      tProbe = wrapFit(lead.title, serif, lw, px(3), px(3), ml);
+      titleH = tProbe.lines.length * Math.round(tProbe.size * 1.08);
+    }
     const qrRowH = leadQr ? leadQr + px(2.2) : px(6);
     const leadMode = opts.leadPhoto || 'surimpression';
     const autoFy = img ? (lead.focalY ?? photoFocalY(img)) : (lead.focalY ?? 0.5);
