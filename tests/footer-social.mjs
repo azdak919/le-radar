@@ -1,4 +1,6 @@
 // Pied de page : liens des réseaux sociaux de LE-RADAR.ca (nav-shell.js).
+import privacyGuard from '../scripts/privacy-guard.js';
+const hasForbidden = (t) => privacyGuard.containsForbiddenName(t, ['dupont']);
 import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
@@ -58,6 +60,6 @@ assert.match(src, /s\.id !== 'rss'/);
 assert.doesNotMatch(indexHtml, /masthead-rss/);
 
 assert.match(fs.readFileSync(new URL('../THIRD_PARTY.md', import.meta.url), 'utf8'), /CC0/);
-assert.doesNotMatch(src, /tison/i);
+assert.ok(!hasForbidden(src));
 assert.ok(fs.existsSync(new URL('../assets/social-icons/LICENSE.md', import.meta.url)));
 console.log('footer-social: OK');

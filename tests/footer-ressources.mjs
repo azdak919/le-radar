@@ -1,4 +1,6 @@
 // Pied de page : section Ressources (Le Kiosque, Le Socle).
+import privacyGuard from '../scripts/privacy-guard.js';
+const hasForbidden = (t) => privacyGuard.containsForbiddenName(t, ['dupont']);
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
@@ -49,7 +51,7 @@ for (const rel of [
 const sources = fs.readFileSync(new URL('assets/ressources/SOURCES.txt', root), 'utf8');
 assert.match(sources, /azdak919\/le-kiosque/);
 assert.match(sources, /azdak919\/le-socle/);
-assert.doesNotMatch(sources, /tison/i);
+assert.ok(!hasForbidden(sources));
 
 const chrome = fs.readFileSync(new URL('style-chrome.css', root), 'utf8');
 assert.match(chrome, /\.site-foot__ressources\b/);
@@ -62,6 +64,6 @@ const sw = fs.readFileSync(new URL('sw.js', root), 'utf8');
 assert.match(sw, /assets\/ressources\/kiosque\/icone-clair\.svg/);
 assert.match(sw, /assets\/ressources\/socle\/icone-sombre\.svg/);
 
-assert.doesNotMatch(fr, /tison/i);
-assert.doesNotMatch(en, /tison/i);
+assert.ok(!hasForbidden(fr));
+assert.ok(!hasForbidden(en));
 console.log('footer-ressources: OK');

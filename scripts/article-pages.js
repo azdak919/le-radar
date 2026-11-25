@@ -18,6 +18,7 @@
 const fs = require('fs');
 const path = require('path');
 const { scrubDeep } = require('./cdata-lib');
+const { containsForbiddenName } = require('./privacy-guard');
 const { photoCreditLine, isLogoImageUrl } = require('./generate-feed');
 const { articleId } = require('../mobile/app/js/core.js');
 
@@ -232,7 +233,7 @@ function renderPage(tpl, a) {
     .replace(/<main[\s\S]*<\/main>/, articleMain(a))
     .replace(/href="\.\.\/\.\.\/en\/schedules\/"/, 'href="../../en/"');
   h = h.replace(/(<link rel="canonical"[^>]*>)/, `$1\n    ${og}`);
-  if (/tison/i.test(h)) throw new Error(`nom interdit dans la fiche ${a.id}`);
+  if (containsForbiddenName(h)) throw new Error(`nom interdit dans la fiche ${a.id}`);
   return h;
 }
 

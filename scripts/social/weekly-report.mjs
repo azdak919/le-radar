@@ -7,6 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { torontoDay } from './policy.mjs';
+import privacyGuard from '../privacy-guard.js';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const rd = (f, d = null) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8')); } catch { return d; } };
@@ -92,7 +93,7 @@ async function tumblr({ since, internal }) {
 const buffered = (state, since, key = 'sent') => Object.values((key ? state?.[key] : state) || {}).filter(s => s?.at && Date.parse(s.at) >= since && (s.postId || s.uri || s.url)).length;
 
 export function render({ now, days, nets, sentCounts, internal, prev }) {
-  const L = [`# Bilan hebdomadaire des interactions — semaine se terminant le ${torontoDay(now)}`, '', `Période : ${days} jours. Mesure automatique, comptes internes exclus (${Object.entries(internal).filter(([k]) => !k.startsWith('_')).map(([k, v]) => `${k} : ${v.join(', ')}`).join(' ; ')}). Aucun courriel envoyé, rien publié.`, ''];
+  const L = [`# Bilan hebdomadaire des interactions — semaine se terminant le ${torontoDay(now)}`, '', `Période : ${days} jours. Mesure automatique, comptes internes exclus. Aucun courriel envoyé, rien publié.`, ''];
   for (const [name, r] of Object.entries(nets)) {
     L.push(`## ${name}`, '');
     if (r.error) { L.push(`Mesure impossible ce passage : ${r.error}`, ''); continue; }
@@ -111,7 +112,7 @@ export function render({ now, days, nets, sentCounts, internal, prev }) {
 async function main() {
   const arg = (n, d = '') => { const i = process.argv.indexOf('--' + n); return i > 0 ? process.argv[i + 1] : d; };
   const now = arg('now') ? Date.parse(arg('now')) : Date.now(), days = +arg('days', 7), since = now - days * 864e5;
-  const internal = rd('data/social/internal-accounts.json', {}), out = path.resolve(ROOT, arg('out', 'data/social/weekly'));
+  const internal = privacyGuard.mergeInternalAccounts(rd('data/social/internal-accounts.json', {})), out = path.resolve(ROOT, arg('out', 'data/social/weekly'));
   fs.mkdirSync(out, { recursive: true });
   const snap = rd('data/social/weekly/snapshot.json', { history: [] }), prev = snap.history.filter(h => now - Date.parse(h.date) >= 5 * 864e5).at(-1);
   const nets = {};

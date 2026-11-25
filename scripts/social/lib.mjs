@@ -17,6 +17,7 @@ const plain = h => stripCdata(ent(ent(stripCdata(h || '').replace(/<[^>]*>/g, ' 
 export const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 import { createRequire } from 'node:module';
 import { tagLine } from './hashtags.mjs';
+import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 export const { stripCdata, hasCdata } = createRequire(import.meta.url)('../cdata-lib.js');
 export { articleId };
@@ -239,7 +240,7 @@ export function stripCreditParens(s) {
  *   (ligne vide) 📰 Média (@média) · Auteur
  *   https://le-radar.ca/article/<id>/
  *   📸 Crédit            (seulement si un crédit réel est connu : jamais de doublon du média)
- * Jamais de séparateur vide ni de doublon. Texte contenant « tison » : '' (refusé).
+ * Jamais de séparateur vide ni de doublon. Texte contenant un nom interdit (FORBIDDEN_NAMES) : '' (refusé).
  */
 export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, link = true, url = siteLink(it), ai = false, cutAbbr = false } = {}) {
   const pl = photo ? photoLine(credit) : '';
@@ -251,7 +252,7 @@ export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', pho
   let text = mk(title, ex);
   while (len(text) > limit && title.length > 10) { title = title.slice(0, -2).trimEnd().replace(/[\s,;:.–—-]+$/, '') + '…'; text = mk(title, ''); }
   text = stripCdata(text); // dernier filet : jamais de marqueur CDATA dans une publication
-  return /tison/i.test(text) || hasCdata(text) ? '' : text;
+  return privacyGuard.containsForbiddenName(text) || hasCdata(text) ? '' : text;
 }
 
 /** buildText + ligne de hashtags en dernier (sa longueur est réservée avant l'extrait). `sep` = séparateur avant la ligne. */
