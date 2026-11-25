@@ -1,22 +1,22 @@
 {
-  "updated": "2026-11-24T22:39:24.054Z",
+  "updated": "2026-11-25T00:08:51.476Z",
   "total": 1150,
-  "withPhoto": 1054,
-  "withStock": 112,
-  "withCampusBank": 97,
+  "withPhoto": 1053,
+  "withStock": 113,
+  "withCampusBank": 98,
   "fullyCovered": 1136,
   "leadReadyPhotos": 1106,
-  "pageScraped": 11,
-  "photosRecovered": 11,
+  "pageScraped": 9,
+  "photosRecovered": 9,
   "imagesCleared": 1,
-  "stockSearches": 5,
-  "stockFound": 16,
-  "campusBankFound": 12,
+  "stockSearches": 8,
+  "stockFound": 23,
+  "campusBankFound": 20,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "CSU votes to conduct formal review of enuf Canada contract",
-      "link": "https://thelinknewspaper.ca/article/16391",
+      "title": "Huîtres, drogues et les tournants de la vie",
+      "link": "https://www.delitfrancais.com/2026/09/30/huitres-drogues-et-les-tournants-de-la-vie",
       "reason": "no-stock-match",
       "image": null
     },
@@ -27,9 +27,27 @@
       "image": null
     },
     {
+      "title": "Bulletins La Pige radio 28 septembre 12h, 14h, 16h et 18h",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/bulletin-la-pige-radio-28-septembre-12h",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
+      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
+      "image": null
+    },
+    {
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming",
+      "reason": "no-stock-match",
       "image": null
     },
     {
@@ -37,6 +55,12 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "La Corse résonne dans une église de Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/la-corse-resonne-dans-une-eglise-de-chicoutimi",
+      "reason": "no-stock-match",
+      "image": null
     }
   ]
 }
