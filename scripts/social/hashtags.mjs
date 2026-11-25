@@ -2,6 +2,11 @@
 // Sujet et lieu déduits UNIQUEMENT du titre, de l'extrait, des catégories et de la source : jamais inventés.
 // 10 nov. 2026 : plafonds par réseau, institution/sport/ville avant le sujet générique, pas de #Actualités
 // ni de #PresseÉtudiante. Mot déjà dans le texte : on n'ajoute pas le hashtag de lieu ou de sujet.
+// 21 nov. 2026 : sur X seulement, mots-clics thématiques (liste fixe, titre + résumé, au plus 3).
+// 22 nov. 2026 : un tag fédéral selon la langue (#polcan ou #cdnpoli, jamais les deux) ; établissement
+// en 2e place ; le titre pèse plus que le résumé ; surnoms d'équipes → école, sujet du titre/amorce.
+// 22 nov. 2026 (autres réseaux) : le même choix d'établissement (surnom, titre, amorce) s'applique
+// à Facebook, LinkedIn, Bluesky et Mastodon ; le reste du format de ces réseaux ne change pas.
 // Accents conservés (Mastodon et Bluesky les gèrent ; X, Facebook et LinkedIn aussi).
 import { POLICY } from './policy.mjs';
 
@@ -47,10 +52,20 @@ const INSTITUTION_IN_TEXT = [
   ['#DawsonCollege', 'Dawson College|Dawson'],
   ['#CégepDeJonquière', 'Cégep de Jonquière|Cegep de Jonquiere'],
 ];
-export const institutionTagsFromText = it => INSTITUTION_IN_TEXT.filter(([, src]) => wordRe(src).test(blob(it))).map(([tag]) => tag);
+/** Institutions dans le texte, surnoms compris, dans l'ordre titre → amorce → reste (l'adversaire plus loin ne vient pas en premier). */
+export function institutionTagsFromText(it) {
+  const title = it.bare || it.title || '';
+  const desc = [it.desc, it.excerpt, it.summary].filter(Boolean).join(' ');
+  const rest = (it.categories || []).join(' ');
+  const seen = new Set(), out = [];
+  for (const tag of [...instHits(title), ...instHits(leadText(desc)), ...instHits(desc), ...instHits(rest)]) {
+    if (!seen.has(tag)) { seen.add(tag); out.push(tag); }
+  }
+  return out;
+}
 /** Ville réelle de la source, ou rien si elle est inconnue (jamais inventée). */
 export function placeTag(it) { return CITY_TAGS[placeOf(it)[0]] || ''; }
-export const institutionTag = it => institutionTagsFromText(it)[0] || INSTITUTION_TAGS[placeOf(it)[1]] || '';
+export const institutionTag = it => subjectInstitutionTag(it);
 // Sport précis (équipes, ligues, institutions) : étiquette du sport, plus parlante que #Sport.
 export const SPORT_TAGS = [
   ['#Football', wordRe('football|rouge et or|gridiron|vanier cup|coupe vanier')], ['#Hockey', wordRe('hockey|dek hockey|lnh|nhl')], ['#Basketball', wordRe('basket\\w*')],
@@ -72,8 +87,8 @@ export function tagAlreadyInText(tag, text) {
 /** Hashtags d'un article (ordre : institution, sport précis, ville, sujet), au plus `max`, sans doublon ni remplissage générique. */
 export function articleTags(it, max = 3) {
   if (!(max > 0)) return [];
-  const b = blob(it), mentioned = institutionTagsFromText(it);
-  const insts = mentioned.length ? mentioned : [INSTITUTION_TAGS[placeOf(it)[1]] || ''].filter(Boolean);
+  const b = blob(it);
+  const insts = [subjectInstitutionTag(it)].filter(Boolean);
   const t = topicOf(it);
   const sport = t?.tag === 'Sport' ? sportTagOf(b) : '';
   const topic = t && t.tag !== 'Sport' ? '#' + t.tag : '';
@@ -88,8 +103,158 @@ export function articleTags(it, max = 3) {
   return out.slice(0, max);
 }
 export const maxTags = network => POLICY.hashtags?.maxByNetwork?.[network] ?? 0;
-/** Ligne de hashtags d'un réseau ('' si aucun). */
-export const tagLine = (it, network) => articleTags(it, maxTags(network)).join(' ');
+
+// ── Mots-clics thématiques X seulement (liste fixe, 21–22 nov. 2026) ────────
+// Appariement déterministe sur le titre et le résumé, sans IA. Les autres réseaux
+// gardent articleTags (institution sujet, sport précis, ville, sujet générique).
+const titleSummary = it => [it.bare || it.title, it.desc, it.excerpt, it.summary, it.hook].filter(Boolean).join(' ');
+const X_VANIER = wordRe('coupe vanier|vanier cup|vaniercup');
+const X_USPORTS = wordRe('u\\s*sports|usports|coupe vanier|vanier cup|coupe uteck|uteck bowl|\\boua\\b|canada west|carabins|rouge et or|rouge-et-or|vert et or|vert-et-or|vert\\s*&\\s*or|\\bstingers\\b|\\bgaiters\\b|\\bmartlets\\b|\\bredbirds\\b|citadins|gee-?gees');
+const X_RSEQ = wordRe('rseq|réseau du sport étudiant|sport collégial|carabins|rouge et or|rouge-et-or|vert et or|vert-et-or|vert\\s*&\\s*or|\\bstingers\\b|\\bgaiters\\b|\\bmartlets\\b|\\bredbirds\\b|citadins');
+const X_FEDERAL = wordRe('premier ministre (du Canada|canadien)|prime minister of canada|mark carney|\\bcarney\\b|poilievre|poilièvre|gouvernement (fédéral|du Canada|canadien)|federal government|budget fédéral|\\bfédér(?:al|aux|ale|ales)\\b|\\bfederal\\w*|chambre des communes|house of commons|élections? fédérales?|federal elections?|ministre fédéral|ministre des Finances du Canada|parti libéral du canada|parti conservateur du canada|\\bnpd\\b|\\bndp\\b|gouvcan|bill c-\\d+|projet de loi c-\\d+|byelections?');
+const X_POLQC = wordRe('élections? provinciales?|provincial elections?|gouvernement (du Québec|québécois|provincial|minoritaire|péquiste|caquiste)|premier ministre (du Québec|québécois)|\\bpspp\\b|st-?pierre plamondon|plamondon|\\blegault\\b|assemblée nationale|\\bdéputé\\w*|\\bcaq\\b|parti québécois|parti libéral du québec|québec solidaire|politique québécoise|loi québécoise|budget provincial|\\bpq\\b|\\bqs\\b|\\bplq\\b|\\bpcq\\b');
+const X_ASSNAT = wordRe('assemblée nationale|salon bleu|commission parlementaire|période de questions');
+const X_ASSNAT_BILL = wordRe('projet de loi');
+const X_FED_BILL = wordRe('projet de loi c-\\d+|bill c-\\d+');
+const X_CEGEP = wordRe('cégep\\w*|cegep\\w*');
+const assnatOf = t => X_ASSNAT.test(t) || (X_ASSNAT_BILL.test(t) && !X_FED_BILL.test(t));
+// Langue de l'article (champ lang, sinon mots-outils) : pour choisir #polcan (fr) ou #cdnpoli (en).
+function xArticleLang(it) {
+  const l = String(it?.lang || it?.language || '').toLowerCase().slice(0, 2);
+  if (l === 'en' || l === 'fr') return l;
+  const title = it?.bare || it?.title || '', desc = it?.desc || it?.excerpt || '';
+  const w = ` ${(title + ' ' + desc).toLowerCase().replace(/[^a-zà-ÿœ’']+/g, ' ')} `;
+  const n = list => list.reduce((k, x) => k + (w.split(` ${x} `).length - 1), 0);
+  const fr = n(['le', 'la', 'les', 'des', 'du', 'de', 'et', 'est', 'une', 'un', 'dans', 'pour', 'que', 'qui', 'au', 'aux', 'sur', 'pas', 'avec', 'en']);
+  const en = n(['the', 'and', 'of', 'to', 'is', 'in', 'for', 'that', 'with', 'on', 'are', 'was', 'this', 'from', 'at', 'it', 'their', 'a']);
+  if (en > fr) return 'en';
+  if (fr > en) return 'fr';
+  return /[^\s]: /.test(title) && !/\s: /.test(title) ? 'en' : 'fr';
+}
+function firstFlagIndex(text, re) {
+  const copy = new RegExp(re.source, re.flags);
+  const m = copy.exec(String(text || ''));
+  return m ? m.index : Infinity;
+}
+
+/** Drapeaux thématiques X : le titre pèse plus que le résumé (un Carney dans l'extrait d'un texte péquiste ne suffit pas). */
+export function xThematicFlags(it) {
+  const title = String(it.bare || it.title || '');
+  const summary = [it.desc, it.excerpt, it.summary, it.hook].filter(Boolean).join(' ');
+  const t = titleSummary(it);
+  const fedT = X_FEDERAL.test(title), qcT = X_POLQC.test(title) || assnatOf(title);
+  const federal = (fedT || qcT) ? fedT : X_FEDERAL.test(summary);
+  const polqc = (fedT || qcT) ? qcT : (X_POLQC.test(summary) || assnatOf(summary));
+  const scope = (fedT || qcT) ? title : summary;
+  const leadFedFirst = federal && polqc && firstFlagIndex(scope, X_FEDERAL) <= firstFlagIndex(scope, X_POLQC);
+  return {
+    vanier: X_VANIER.test(t),
+    usports: X_USPORTS.test(t),
+    rseq: X_RSEQ.test(t),
+    federal,
+    polqc,
+    assnat: assnatOf(t),
+    cegep: X_CEGEP.test(t),
+    leadFedFirst,
+    lang: xArticleLang(it),
+  };
+}
+
+// Surnoms d'équipes → établissement (tous les réseaux). Le sujet du titre ou de l'amorce l'emporte sur un adversaire plus loin.
+const TEAM_SCHOOLS = [
+  ['#UdeS', 'vert\\s*(?:&|et|-)\\s*or'],
+  ['#ULaval', 'rouge\\s*(?:et|-)\\s*or'],
+  ['#Concordia', 'stingers'],
+  ['#BishopsU', 'gaiters'],
+  ['#UdeM', 'carabins'],
+  ['#McGill', 'redbirds|martlets'],
+  ['#UQAM', 'citadins'],
+  ['#uOttawa', 'gee-?gees'],
+  ['#UQTR', 'patriotes'],
+];
+function instHits(text) {
+  const s = String(text || ''), hits = [];
+  for (const [tag, src] of [...TEAM_SCHOOLS, ...INSTITUTION_IN_TEXT]) {
+    const m = wordRe(src).exec(s);
+    if (m) hits.push({ tag, index: m.index });
+  }
+  hits.sort((a, b) => a.index - b.index || 0);
+  const seen = new Set(), out = [];
+  for (const h of hits) { if (!seen.has(h.tag)) { seen.add(h.tag); out.push(h.tag); } }
+  return out;
+}
+/** Première phrase (amorce), assez robuste pour un surnom en tête d'extrait. */
+function leadText(text) {
+  const s = String(text || '').replace(/\s+/g, ' ').trim();
+  if (!s) return '';
+  const m = s.match(/^[^.!?…]{0,20}?[^.!?…]*(?:[.!?…]|$)/);
+  // si la « phrase » s'arrête sur une abréviation courte (Oct., Dr, M.), prendre plus loin
+  if (m && /(?:^|[\s(/])(?:janv|févr|fevr|avr|juill?|sept?|oct|nov|déc|dec|jan|feb|mar|apr|jun|jul|aug|sep|mr|mrs|ms|dr|pr|prof|st|ste|mme|mlle|mgr|vs|etc|al|vol|no|[A-ZÀ-ÝŒ])\.$/i.test(m[0]) && s.length > m[0].length) {
+    const rest = s.slice(m[0].length).trimStart();
+    const n = rest.match(/^[^.!?…]*(?:[.!?…]|$)/);
+    return (m[0] + ' ' + (n ? n[0] : rest)).trim();
+  }
+  return (m ? m[0] : s).trim();
+}
+/** Établissement sujet : titre, sinon amorce, sinon celui du média. Pas l'adversaire plus loin dans l'extrait. */
+export function subjectInstitutionTag(it) {
+  const title = it.bare || it.title || '';
+  const desc = [it.desc, it.excerpt, it.summary].filter(Boolean).join(' ');
+  const outlet = INSTITUTION_TAGS[placeOf(it)[1]] || '';
+  const pick = hits => {
+    if (hits.length === 1) return hits[0];
+    if (hits.length > 1) return (outlet && hits.includes(outlet)) ? outlet : hits[0];
+    return '';
+  };
+  return pick(instHits(title)) || pick(instHits(leadText(desc))) || outlet;
+}
+export const xInstitutionTag = subjectInstitutionTag;
+
+const FEDERAL_TAG = lang => lang === 'en' ? '#cdnpoli' : '#polcan';
+
+/** Assemble au plus `max` tags : thématique, sigle d'établissement, puis ville ou second thématique. */
+export function assembleXTags(flags, { inst = '', city = '' } = {}, max = 3) {
+  if (!(max > 0)) return [];
+  const out = [];
+  const push = tag => { if (tag && !out.includes(tag) && out.length < max) out.push(tag); };
+  const fed = FEDERAL_TAG(flags.lang || 'fr');
+  if (flags.vanier) push('#VanierCup');
+  else if (flags.rseq) push('#RSEQ');
+  else if (flags.usports) push('#USports');
+  else if (flags.federal && flags.polqc) push(flags.leadFedFirst ? fed : '#polqc');
+  else if (flags.federal) push(fed);
+  else if (flags.polqc) push('#polqc');
+  else if (flags.cegep) push('#cégep');
+  else if (flags.assnat) push('#assnat');
+  // 2e place : établissement, dès que le média (ou le sujet) en a un.
+  push(inst);
+  const second = [];
+  if (flags.federal && flags.polqc) second.push(out[0] === '#polqc' ? fed : '#polqc');
+  if (flags.vanier && flags.usports) second.push('#USports');
+  else if (flags.vanier && flags.rseq) second.push('#RSEQ');
+  if (flags.rseq && flags.usports) second.push('#USports');
+  if (flags.assnat) second.push('#assnat');
+  if (flags.cegep && out[0] !== '#cégep') second.push('#cégep');
+  const next = second.find(c => c && !out.includes(c));
+  if (next) push(next);
+  else push(city);
+  if (out.length < max) push(city);
+  return out.slice(0, max);
+}
+
+/** Hashtags X d'un article (thématiques + établissement + ville), au plus 3. */
+export function xArticleTags(it, max = 3) {
+  const flags = xThematicFlags(it);
+  const hasThematic = flags.vanier || flags.usports || flags.rseq || flags.federal || flags.polqc || flags.assnat || flags.cegep;
+  const inst = xInstitutionTag(it);
+  const hay = [it.bare || it.title, it.desc, it.excerpt, it.source].filter(Boolean).join(' ');
+  const rawCity = placeTag(it);
+  const city = rawCity && SKIP_IF_IN_TEXT.has(rawCity) && tagAlreadyInText(rawCity, hay) ? '' : rawCity;
+  if (!hasThematic) return articleTags(it, max);
+  return assembleXTags(flags, { inst, city }, max);
+}
+
+export const tagLine = (it, network) => (network === 'x' ? xArticleTags(it, maxTags(network)) : articleTags(it, maxTags(network))).join(' ');
 export const bskyTags = it => articleTags(it, maxTags('bluesky'));
 // Tumblr : tout en minuscules, étiquettes les plus suivies d'abord (les 5 premières comptent en recherche),
 // forme sans accent ajoutée là où on la cherche, langue de l'article, 10 à 15 étiquettes dédupliquées.

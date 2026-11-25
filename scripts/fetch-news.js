@@ -385,14 +385,28 @@ function isThinExcerpt(text = '') {
   return normalizeExcerptText(text).length < 120;
 }
 
+/**
+ * Légende en paragraphe sous la photo (Le Club-École) — pas un chapô :
+ *   « … l’équipe. Photo tirée du compte X des Hornets FR »
+ *   ou « Photo tirée du compte Instagram du AFC Toronto » seule, juste après la légende.
+ */
+function isTireeCaption(text = '', standalone = false) {
+  const t = String(text || '');
+  if (!t || t.length > 260) return false;
+  if (standalone) return /^(?:Photos?|Images?)\s+tir[ée]e?s?\s+(?:de|du|des|d['’])\s*[^.!?]{2,100}$/iu.test(t);
+  return /(?:Photos?|Images?)\s+tir[ée]e?s?\s+(?:de|du|des|d['’])\s*[^.!?]{2,100}$/iu.test(t);
+}
+
 function firstParagraphFromHtml(html = '', { fallback = true } = {}) {
   const decoded = decodeEntities(html);
   const paragraphs = decoded.match(/<p[^>]*>([\s\S]*?)<\/p>/gi) || [];
-  for (const p of paragraphs) {
-    const text = normalizeExcerptText(p);
+  const texts = paragraphs.map((p) => normalizeExcerptText(p)).filter(Boolean);
+  for (let i = 0; i < texts.length; i += 1) {
+    const text = texts[i];
     if (text.length < 40) continue;
     if (/^(?:Par|By)\s+[\p{Lu}]/u.test(text) && text.length < 80) continue;
     if (/^(?:Photo|Crédit|Credit)\s*:/i.test(text)) continue;
+    if (isTireeCaption(text) || isTireeCaption(texts[i + 1] || '', true)) continue;
     return text;
   }
   if (!fallback) return '';

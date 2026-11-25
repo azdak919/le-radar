@@ -27,10 +27,14 @@ ou `VisualCode/GIT-AND-TEST-SAFETY.md`.
 1. Baseline locale sur `main` **avant** de créer la branche (repro / smoke).
 2. Branche → **vérif locale** (tests + preview UI) verts → push → **PR**.
 3. **Lien PR cliquable** dans la réponse (l’humain regarde, puis dit **merge and delete**).
-4. Merger **seulement** sur cet ordre, après checks CI verts.
-   Identité publique : **Azdak** / `azdak-qc@proton.me`. **Pas** `gh pr merge`
-   (GitHub tamponne le courriel du compte). Merge **local** (`git merge --no-ff`)
-   puis `git push origin main` + suppression de branche.
+4. Merger **seulement** sur cet ordre, **par la PR sur GitHub** (auto-merge activé :
+   GitHub fusionne quand les checks CI sont verts). Le dépôt supprime la branche
+   tout seul (« Automatically delete head branches »). **Pas** de merge local ni de
+   `git push origin main` par un agent (les sessions cloud n’ont d’ailleurs pas le
+   droit de supprimer une branche distante : HTTP 403).
+   Identité : commits **Azdak** / `azdak-qc@proton.me` ; le commit de fusion
+   GitHub porte `Azdak <242694614+azdak919@users.noreply.github.com>` — accepté
+   (adresse noreply déjà publique dans l’historique).
 
 **Push ≠ livré.** Ne pas merger tout seul.  
 **LE-RADAR UI/CSS** : `npm run check` + Playwright (au minimum mât/smoke) avant push.
@@ -471,16 +475,16 @@ variantes de noms :
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-08-09T03:33:39.220Z · intensité **heavy** (score 1011.6) · fenêtre `36h`
+> Dernière récolte : 2026-11-25T08:30:05.894Z · intensité **heavy** (score 3090) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| bots-ci | 188.4 | M | Bots / CI / scripts de maintenance | `scripts/radio-nowplaying-lib.js`, `scripts/radio-schedule-lib.js`, `tests/radio-nowplaying.mjs`, `tests/masthead-sports-fit.spec.mjs`, `tests/static-integrity.mjs`, `scripts/fetch-radio-nowplaying.js` |
-| pwa-sw | 76 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sports/sw.js`, `sw.js`, `engage-prompt.js`, `manifest.json`, `offline.html` |
+| bots-ci | 715.2 | M | Bots / CI / scripts de maintenance | `scripts/social/channels/tumblr.mjs`, `scripts/social/tumblr-post.mjs`, `scripts/social/tumblr.mjs`, `tests/social-tumblr.mjs`, `.github/workflows/bluesky-delete-post.yml`, `.github/workflows/pages-deploy.yml` |
 | pomo | 61.5 | S | Isolation / qualité mini-app Pomo | `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png`, `pomo/apple-touch-icon-180x180.png`, `pomo/apple-touch-icon.png` |
-| banks-photo | 42 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json`, `quebec-backgrounds-data.js` |
-| radio-mobile | 37.5 | M | Radio mobile / Media Session / reprise | `scripts/radio-nowplaying-lib.js`, `tests/radio-nowplaying.mjs`, `scripts/fetch-radio-nowplaying.js`, `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js` |
-| monolith-app | 21 | L | Découper / modulariser app.js (tranche) | `app.js`, `pomo/js/app.js` |
+| banks-photo | 44 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds-rejected.json`, `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json` |
+| pwa-sw | 32 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `engage-prompt.js`, `manifest.json`, `offline.html`, `pomo/sw.js`, `solitaire/sw.js` |
+| radio-mobile | 25 | M | Radio mobile / Media Session / reprise | `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js`, `player-sync.js`, `scripts/fetch-radio-nowplaying.js`, `scripts/radio-nowplaying-lib.js` |
+| monolith-app | 9 | L | Découper / modulariser app.js (tranche) | `app.js`, `mobile/app/js/app.js`, `pomo/js/app.js` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)

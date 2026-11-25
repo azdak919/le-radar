@@ -1,10 +1,23 @@
 {
-  "at": "2026-11-21T21:08:49.585Z",
-  "cards": 1050,
-  "probedCards": 94,
+  "at": "2026-11-25T21:40:45.492Z",
+  "cards": 1178,
+  "probedCards": 6,
   "queueDeferred": 0,
-  "urls": 92,
-  "broken": 0,
-  "repaired": 0,
-  "items": []
+  "urls": 5,
+  "broken": 1,
+  "repaired": 1,
+  "items": [
+    {
+      "source": "The Campus",
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "field": "stockImage",
+      "variant": "",
+      "url": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg",
+      "status": 403,
+      "type": "text/html",
+      "transient": false,
+      "repaired": true
+    }
+  ]
 }

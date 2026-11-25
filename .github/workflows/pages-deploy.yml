@@ -48,6 +48,10 @@ concurrency:
   group: pages-deploy
   cancel-in-progress: true
 
+env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
+
 jobs:
   build:
     # Un workflow_run en échec n’a rien publié : inutile de redéployer.
@@ -113,19 +117,32 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.d.outputs.page_url || steps.d2.outputs.page_url }}
+      url: ${{ steps.d.outputs.page_url || steps.d2.outputs.page_url || steps.d3.outputs.page_url }}
     steps:
       # Le service Pages reste parfois bloqué en « syncing_files » jusqu'au
-      # délai (10 min) alors qu'un déploiement normal prend 1 à 2 min ; le
-      # déploiement est alors annulé et un second essai passe aussitôt.
-      # Un seul nouvel essai : s'il échoue aussi, le job échoue.
+      # délai (10 min) alors qu'un déploiement normal prend 1 à 2 min.
+      # L'API ne voit aussi parfois pas encore l'artefact (« Found 0 artifact(s) »)
+      # juste après l'envoi. Jusqu'à deux nouveaux essais, avec une pause.
+      # Chaque run publie son propre SHA ; la concurrence annule un run plus ancien.
       - id: d
         uses: actions/deploy-pages@v5
         continue-on-error: true
         with:
           timeout: 420000
+      - name: Pause avant un nouvel essai
+        if: steps.d.outcome == 'failure'
+        run: sleep 30
       - id: d2
         if: steps.d.outcome == 'failure'
+        uses: actions/deploy-pages@v5
+        continue-on-error: true
+        with:
+          timeout: 600000
+      - name: Pause avant le dernier essai
+        if: steps.d2.outcome == 'failure'
+        run: sleep 30
+      - id: d3
+        if: steps.d2.outcome == 'failure'
         uses: actions/deploy-pages@v5
         with:
           timeout: 600000

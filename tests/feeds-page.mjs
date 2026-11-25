@@ -1,4 +1,6 @@
 // Page des flux : la liste des campus vient de news-sources.json (sources réelles du fil).
+import privacyGuard from '../scripts/privacy-guard.js';
+const hasForbidden = (t) => privacyGuard.containsForbiddenName(t, ['dupont']);
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -51,7 +53,7 @@ for (const m of html.matchAll(/(?:href|data-feed)="([^"#:]+\.(?:xml|json))"/g)) 
   assert.ok(existsSync(new URL(`../${m[1]}`, import.meta.url)), `flux manquant : ${m[1]}`);
 }
 assert.ok(/<link rel="alternate" type="application\/rss\+xml"[^>]+href="feed\.xml"/.test(html));
-assert.ok(!/tison/i.test(html + page), 'nom réel dans la page');
+assert.ok(!hasForbidden(html + page), 'nom réel dans la page');
 console.log(`feeds-page: ${groups.length} établissements, ${shown.length} journaux, ${n} en intégration OK`);
 
 // Prochaine mise à jour : heure de Toronto, change d'heure inclus (HAE → HNE le 1er nov. 2026).

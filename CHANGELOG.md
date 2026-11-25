@@ -5,7 +5,18 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Corrigé
+
+- Sur téléphone, le texte qui défile dans le synthétiseur et dans les pastilles sources s’arrêtait pour de bon après un aller-retour. Les lignes qui **ne changent jamais** — nom du poste, établissement d’une source (« Université du Québec à Montréal ») — restaient donc tronquées pour le reste de la visite, sans même les trois points. Le défilement boucle maintenant : repos au début → aller → repos au bout → retour. Le texte n’est toujours remplacé qu’au repos, jamais en pleine course ; le survol le met en pause.
+- Pied de page FR/EN : la ligne grise dit de nouveau, en clair, que les contenus agrégés (articles et photos) sont crédités à leurs auteurs et à leurs médias d’origine. La ligne de licence s’arrête au kit-média, sans doublon. README : LE-RADAR **agrège** les médias étudiants (et non « fédère »).
+
+### Modifié
+
+- Licence : le code passe de la GPL-2.0-only à la GNU AGPLv3 (`AGPL-3.0-or-later`), ce qui règle l’incompatibilité avec AndroidX Media3 (Apache-2.0) et couvre l’usage en réseau des Workers. `LICENSE-EXCEPTIONS.md` autorise la distribution par l’App Store et Google Play. Kit-média et affiches : CC BY 4.0 avec réserve de marque (`kit-media/LICENSE`, `affiches/LICENSE`), au lieu de CC BY-SA 4.0. Annuaires factuels : CC0 1.0 (`LICENSE-DATA.md`). Scripts d’intégration (`embed.*`, `radio-barre.*`) : MIT. Pied de page FR/EN, pages Pomo et Solitaire, colophon de la Revue, phrase « Code libre AGPL 3.0 » du générateur et affiches du kit régénérées. Cache `radar-shell-v1068`.
+
 ### Ajouté
+
+- Pied de page : section « Ressources », avec les logos officiels, les liens et les descriptions de Le Kiosque et Le Socle. Caches `radar-shell-v1066` et `sports-shell-v440`.
 
 - Barre radio partagée `radio-barre.js` : un appel d’une ligne pose la barre (stations de `radios.json`, émission en cours, lecture et arrêt, volume au bureau, petit logo LE-RADAR). Pomodoro et Solitaire l’utilisent à la place de l’iframe `tuner-embed.html` ; les journaux du Kiosque l’appellent depuis le-radar.ca, donc un changement de station, de code ou de style leur arrive sans mise à jour. Sans réponse de LE-RADAR, la barre ne s’affiche pas. Pomodoro et Solitaire ont `media-src https:` pour les flux.
 - Compteur anonyme du bandeau sportif, éteint. Un clic n’envoie rien. La page Mise à jour n’a que la ligne Socle. Le script Umami déjà en place n’est pas retiré.
@@ -15,6 +26,12 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Réseaux sociaux : mentions natives des médias sources (comptes vérifiés seulement), hashtags corrigés (#Québec ou #Montréal et sujet, sport inclus), volume réduit à 3–5 par jour jusqu’au 23 nov. 2026 (`data/social/policy.json`), abonnements automatiques gelés, format « Résultats de la fin de semaine » (U SPORTS), format « À écouter ce soir » en essai à blanc et bilan hebdomadaire des interactions. Voir `docs/social-engagement.md`.
 
 ### Modifié
+
+- Articles à la pièce (modèle v6) : le kicker affiche le nom du média, dans la couleur de l’établissement quand elle est connue, puis la date avec l’année. Il ne reprend plus le libellé d’un créneau de une.
+
+- Mât, téléphone (moins de 600 px) : le logo passe à 48 px, légèrement plus grand que les boutons d’outils et les icônes de réseaux (40 px). Le titre LE-RADAR.ca grandit en proportion, reste sur une seule ligne et s’aligne avec le logo, sans débordement à 320, 360 et 390 px. Ordinateur inchangé. Cache `radar-shell-v1059`.
+
+- Mât, sous 360 px : les huit icônes de réseaux tiennent sur une seule rangée, comme à 390 px, avec des cibles de 34 à 36 px et une pastille plus compacte. Le logo reste à 48 px, le titre sur une ligne. Rien ne change à 390 px ni sur ordinateur. Caches `radar-shell-v1067` et `sports-shell-v441`.
 
 - Barre radio partagée : les panneaux « À l’antenne » et « À venir » restent à l’intérieur de la barre (leur bord droit ne dépasse pas le padding), même avec les plus longs titres d’émissions. Un titre trop long défile avec les mêmes paramètres que le cadran du syntoniseur (délai de lecture, vitesse, allers-retours). Les autres commandes, les coins arrondis et le logo à gauche vers https://le-radar.ca/ ne changent pas.
 
@@ -34,6 +51,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Quartier Libre, chronique « Cinq nouvelles de la semaine » : l’illustration d’origine (texte et logo compris) n’est plus remplacée par une photo Wikimedia du campus. La règle qui retire un visuel générique partagé, ou une bannière de rubrique, laisse cette série de côté — exception courte approuvée le 21 novembre 2026, sans relâcher la règle générale. Crédit repris à la source : Illustration : Mathilde Ségar. Cache `radar-shell-v1063`.
+- Le lien « Mise à jour » est retiré de tous les pieds de page et la page `mise-a-jour/` (outil d’administration du Socle) n’est plus publiée. Le test `no-public-admin-tools` échoue si un tel lien ou une telle page revient ; `_config.yml` exclut aussi ce dossier. Caches `radar-shell-v1060` et `radar-offline-v23`.
 - Compteur et fil : le début de session (1er septembre, 1er janvier, 1er mai) est minuit à Montréal, et non plus minuit UTC. Les doublons d’un même média (même titre le même jour, ou variantes d’URL : L’Exemplaire /a-la-une/ et /actualites/, chemins The Tribune, suffixe -2 de La Pige et du Délit) sont retirés du catalogue et du flux RSS. La série « Cinq nouvelles de la semaine » de Quartier Libre, publiée à des jours distincts, est conservée. Cache `radar-shell-v1048`.
 
 - Images d’article : deux photos différentes portant le même nom de fichier dans des dossiers mensuels distincts (La Pige « Image-9.jpg » d’octobre et de novembre, Le Délit « matteo.png ») ne sont plus prises pour un visuel générique partagé. Le dédoublonnage compare maintenant l’hôte, le dossier et le nom, sans le suffixe de taille. Environ 12 vraies photos étaient retirées à chaque récolte.

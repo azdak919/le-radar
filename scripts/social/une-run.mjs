@@ -16,7 +16,7 @@ import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSpor
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
-import { createTumblr } from './channels/tumblr.mjs';
+import { tumblrFromEnv, npfFromText, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
 import { decideInstagram, deliverInstagram, dryRunReport, imageUrl, openInstagramIssue } from './instagram.mjs';
@@ -43,7 +43,7 @@ export function gate({ now = Date.now(), state = {}, forced = '', cfg = CFG, dry
   if (forced && forced !== 'auto') return { due: true, slot: forced, why: 'créneau forcé (déclenchement manuel)' };
   const s = slotAt(now, cfg.slots || SLOTS);
   if (!s) return { due: false, slot: '', why: `hors des fenêtres d'envoi : ${tz(now)}` };
-  const nets = (cfg.networks || []).filter(n => NETS.includes(n));
+  const nets = (cfg.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()));
   if (slotDone(state[s.key], nets)) return { due: false, slot: s.id, why: `${s.key} déjà traité` };
   return { due: true, slot: s.id, why: `${s.key} dû` };
 }
@@ -97,14 +97,10 @@ async function publishOne(net, entry, env) {
     return { url: p.url, id: p.id };
   }
   if (net === 'tumblr') {
-    const tb = createTumblr({ ck: env.TUMBLR_CONSUMER_KEY, cs: env.TUMBLR_CONSUMER_SECRET, tk: env.TUMBLR_TOKEN, ts: env.TUMBLR_TOKEN_SECRET, blog: env.TUMBLR_BLOG || 'le-radar-ca.tumblr.com' });
-    const content = text.split('\n').filter(l => l.trim()).map((l, i) => {
-      const b = { type: 'text', text: l, ...(i === 0 ? { subtype: 'heading2' } : {}) }, f = [];
-      for (const m of l.matchAll(/https?:\/\/\S+/g)) { const s = [...l.slice(0, m.index)].length; f.push({ start: s, end: s + [...m[0]].length, type: 'link', url: m[0] }); }
-      if (f.length) b.formatting = f; return b;
-    });
-    content.splice(1, 0, { type: 'image', media: [{ url: img, type: 'image/jpeg', ...size }], alt_text: entry.alt.slice(0, 4096) });
-    const p = await tb.post({ content, tags: entry.tumblrTags.join(','), state: 'published', source_url: 'https://le-radar.ca/' });
+    const tb = tumblrFromEnv(env);
+    const content = npfFromText(text, { image: { url: img, type: 'image/jpeg', ...size, alt: entry.alt }, altMax: 4096 });
+    const p = await tb.post({ content, tags: entry.tumblrTags.join(','), source_url: 'https://le-radar.ca/' });
+    if (!p.created) throw new Error(`Tumblr ${p.status} (pas 201 Created)`);
     return { url: p.url, id: p.id };
   }
   const pages = env.pages || {}, key = env.BUFFER_API_KEY;
@@ -174,7 +170,8 @@ async function main() {
   const out = path.resolve(arg('out', 'une-preview')); fs.mkdirSync(out, { recursive: true });
   const slot = forced && forced !== 'auto' ? slotFor(forced, now, CFG.slots) : slotAt(now, CFG.slots);
   if (!slot) { console.log(`Hors des fenêtres d'envoi (${tz(now)}) : rien à faire.`); return; }
-  const nets = (CFG.networks || []).filter(n => NETS.includes(n));
+  const nets = (CFG.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()));
+  if (!tumblrEnabled() && (CFG.networks || []).includes('tumblr')) console.log(PAUSED_MSG);
   let entry = state[slot.key];
   if (!dry && slotDone(entry, nets)) { console.log(`${slot.key} : déjà traité.`); return; }
   let sel, texts, images, reason;

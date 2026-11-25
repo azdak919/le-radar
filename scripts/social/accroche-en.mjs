@@ -19,6 +19,7 @@
 // - la phrase française ne peut contenir aucun chiffre, nombre écrit, mois, jour, sigle ni nom propre
 //   absent de la source (phraseReject) ; sinon tout le modèle est abandonné.
 // Tout échec (IA éteinte, quota, page illisible, garde-fou, trop long) → format actuel (lib.mjs).
+import privacyGuard from '../privacy-guard.js';
 import { createRequire } from 'node:module';
 import { POLICY } from './policy.mjs';
 import { articleLang } from './ai-hook.mjs';
@@ -123,7 +124,7 @@ export function quoteReject(quote, source) {
   // Une phrase entière, comme dans le modèle : majuscule (ou guillemet) au début, ponctuation finale à la fin.
   if (!/^["“‘«(]?[\p{Lu}\p{N}]/u.test(n) || !/[.!?…]["”’»)]*$/.test(n)) return { why: 'citation qui n’est pas une phrase entière' };
   if (/https?:|@\w|#\w/.test(n)) return { why: 'citation avec lien, @ ou #' };
-  if (/tison/i.test(n)) return { why: 'nom interdit' };
+  if (privacyGuard.containsForbiddenName(n)) return { why: 'nom interdit' };
   const open = (n.match(/[“«]/g) || []).length, close = (n.match(/[”»]/g) || []).length, straight = (n.match(/"/g) || []).length;
   if (open !== close || straight % 2) return { why: 'citation aux guillemets déséquilibrés' };
   return { why: null, exact: n };
@@ -163,7 +164,7 @@ export function phraseReject(phrase, src, it = {}) {
   if (/[«»"“”#@]|https?:/i.test(p)) return 'guillemet, hashtag, @ ou lien dans la phrase';
   if (detectLang({ title: p }) !== 'fr') return 'phrase pas en français';
   if (RELATIVE.test(p)) return 'date relative (hier, cette semaine…)';
-  if (/tison/i.test(p)) return 'nom interdit';
+  if (privacyGuard.containsForbiddenName(p)) return 'nom interdit';
   const S = new Set(toks(src)), Sb = new Set(toks(src).map(bare));
   const has = w => S.has(w) || Sb.has(bare(w));
   for (const n of p.match(/\p{N}+/gu) || []) if (!S.has(n)) return `chiffre absent de la source (${n})`;

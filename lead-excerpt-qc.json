@@ -1,21 +1,48 @@
 {
-  "updated": "2026-11-21T21:07:50.834Z",
-  "total": 1052,
+  "updated": "2026-11-25T21:39:43.997Z",
+  "total": 1178,
   "pool": 61,
-  "incomplete": 25,
-  "withLeadExcerpt": 208,
-  "candidates": 25,
-  "enriched": 2,
-  "failed": 3,
+  "incomplete": 27,
+  "withLeadExcerpt": 287,
+  "candidates": 27,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
-      "title": "Il était une fois elles n’ont pas obéi",
-      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
+      "title": "« Ceci n’est pas un jeu »",
+      "link": "https://www.delitfrancais.com/2026/11/25/ceci-nest-pas-un-jeu/",
+      "ok": true,
+      "score": 100,
+      "chars": 424,
+      "sample": "Que ce soient les salles d’évasion qui ont pris une ampleur considérable lors des dernières années o",
+      "changed": false
+    },
+    {
+      "title": "Les professeurs en grève",
+      "link": "https://www.delitfrancais.com/2026/11/25/les-professeurs-en-greve/",
       "ok": true,
       "score": 96,
-      "chars": 353,
-      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "chars": 291,
+      "sample": "Cette décision était attendue depuis le mois dernier, lorsque les membres de la Faculté des arts, de",
+      "changed": false
+    },
+    {
+      "title": "Étudier, sans savoir de quoi demain sera fait",
+      "link": "https://www.delitfrancais.com/2026/11/25/etudier-sans-savoir-de-quoi-demain-sera-fait/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
+      "changed": false
+    },
+    {
+      "title": "Deux mois de Parti québécois",
+      "link": "https://www.delitfrancais.com/2026/11/25/deux-mois-de-parti-quebecois/",
+      "ok": true,
+      "score": 100,
+      "chars": 324,
+      "sample": "Cela fait maintenant plus d’un mois que le Parti québécois est à la tête d’un gouvernement minoritai",
       "changed": false
     },
     {
@@ -28,12 +55,12 @@
       "changed": false
     },
     {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
+      "title": "Il était une fois elles n’ont pas obéi",
+      "link": "https://www.delitfrancais.com/2026/11/11/il-etait-une-fois-elles-nont-pas-obei/",
       "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
+      "score": 96,
+      "chars": 353,
+      "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
       "changed": false
     },
     {
@@ -52,33 +79,6 @@
       "score": 100,
       "chars": 431,
       "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
-    {
-      "title": "Le Tiers-Lieu : les premiers pas du chronically online sur la scène théâtrale",
-      "link": "https://impactcampus.ca/arts-et-culture/le-tiers-lieu-les-premiers-pas-du-chronically-online-sur-la-scene-theatrale/",
-      "ok": true,
-      "score": 100,
-      "chars": 404,
-      "sample": "Jusqu’au 21 novembre, Premier Acte présente Le Tiers-Lieu, une pièce originale de Gabriel Sénéchal q",
-      "changed": false
-    },
-    {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
-      "changed": false
-    },
-    {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
-      "ok": true,
-      "score": 100,
-      "chars": 380,
-      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
       "changed": false
     }
   ]

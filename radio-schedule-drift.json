@@ -1,21 +1,19 @@
 {
-  "checkedAt": "2026-11-21T03:55:35.363Z",
+  "checkedAt": "2026-11-25T05:24:13.741Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [
-      "choq"
-    ],
+    "stable": 6,
+    "drift": [],
     "overhaul": [],
     "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 50,
-      "fresh": 50,
+      "published": 47,
+      "fresh": 47,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -34,8 +32,8 @@
     },
     {
       "id": "ckut",
-      "published": 100,
-      "fresh": 100,
+      "published": 101,
+      "fresh": 101,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -64,18 +62,13 @@
     },
     {
       "id": "choq",
-      "published": 32,
-      "fresh": 33,
-      "added": [
-        "ven 13:10–13:55 Onde de CHOQ",
-        "ven 18:00–19:00 Les Amazones"
-      ],
-      "removed": [
-        "ven 13:00–13:45 Onde de CHOQ"
-      ],
-      "changed": 3,
-      "ratio": 0.094,
-      "status": "drift"
+      "published": 26,
+      "fresh": 26,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }

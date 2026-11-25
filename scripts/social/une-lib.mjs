@@ -14,7 +14,7 @@ import { createRequire } from 'node:module';
 import { torontoDay } from './policy.mjs';
 import { xlen, SITE, isRevueLink } from './lib.mjs';
 import { NET_SPEC } from './formats.mjs';
-import { institutionTag, sportTagOf } from './hashtags.mjs';
+import { institutionTag, sportTagOf, xArticleTags } from './hashtags.mjs';
 import { detectLang } from './lib.mjs';
 
 const require = createRequire(import.meta.url);
@@ -41,12 +41,15 @@ export const PREPARED_NETS = ['instagram'];
 /**
  * Format d'image par réseau (revue du 12 nov. 2026, docs/social-engagement.md) : le portrait 4:5 s'affiche sans recadrage
  * pour une image seule dans les fils mobiles de X, Bluesky (recadre seulement au-delà de 1:2), Mastodon (4.x, ratio natif),
- * LinkedIn, Facebook et Tumblr. Instagram : grille 3:4 1080×1440, dessinée pour ce ratio. Jamais de story ni de reel.
+ * LinkedIn, Facebook et Tumblr. Instagram : une 3:4 1080×1440 (format grille, modèle B). Jamais de story ni de reel.
  * Le paysage 16:9 reste rendu en aperçu (repli), sans réseau attitré.
  */
 export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'grille' };
 export const STORY_FOR = {};
-export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
+export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, article: { width: 1080, height: 1440 }, 'article-portrait': { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
+/** Post d’un seul article (modèle v6) sur tous les réseaux. Les unes matin/soir automatiques : IMAGE_FOR (portrait 4:5 / grille Instagram 3:4 modèle B). */
+export const ARTICLE_IMAGE_FOR = { instagram: 'article', facebook: 'article-portrait', tumblr: 'article-portrait', x: 'article-portrait', bluesky: 'article-portrait', mastodon: 'article-portrait', linkedin: 'article-portrait' };
+export const articleFormatsFor = (nets) => [...new Set((nets || []).map((n) => ARTICLE_IMAGE_FOR[n]).filter(Boolean))];
 /** Formats à rendre pour une liste de réseaux (aperçu : tous). */
 // Story 9:16 : publication DÉSACTIVÉE par défaut (décision de Charles, 13 nov. 2026 : refonte à valider). Seul
 // formats.une.story.publish === true dans data/social/policy.json la réactive ; l'aperçu (DRY_RUN) la rend toujours.
@@ -279,14 +282,30 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
   return { results, next: upcoming };
 }
 const team = t => `${t.name}${t.inst ? ` (${t.inst})` : ''}`;
+/** Sur Instagram : « Final » sans la date ; pour un match à venir, on garde l’heure et on n’écrit la date que si elle diffère du jour de la une. */
+function compactSportsWhen(r, day) {
+  if (r.kind === 'resultat') return 'Final';
+  const time = r.time ? frHour(r.time) : '';
+  if (r.date && day && r.date === day) return time || frShort(r.date);
+  return [r.date ? frShort(r.date) : '', time].filter(Boolean).join(' · ') || r.when;
+}
 /** Ligne texte : « 🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · jeu. 12 nov. ». */
-export const sportsLine = r => r.kind === 'resultat'
-  ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${team(r.teams[1])} · ${r.when}`
-  : r.place
-    ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event} · ${r.place} · ${r.when}`
-    : r.event || !r.verb
-      ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event || team(r.teams[1] || {})} · ${r.when}`
-      : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${r.when}`;
+export const sportsLine = (r, opts = {}) => {
+  const when = opts.compact ? compactSportsWhen(r, opts.day) : r.when;
+  return r.kind === 'resultat'
+    ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.teams[0].score}-${r.teams[1].score} ${team(r.teams[1])} · ${when}`
+    : r.place
+      ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event} · ${r.place} · ${when}`
+      : r.event || !r.verb
+        ? `${r.emoji} ${r.sport} · ${team(r.teams[0])} · ${r.event || team(r.teams[1] || {})} · ${when}`
+        : `${r.emoji} ${r.sport} · ${team(r.teams[0])} ${r.verb} ${team(r.teams[1])} · ${when}`;
+};
+/** Légende Instagram : une ligne par émission, date seulement si ce n’est pas le jour de la une. */
+function igRadioLine(x, day) {
+  const time = x.start ? frHour(x.start) : '';
+  const date = x.date && day && x.date !== day ? frShort(x.date) : '';
+  return [x.title, x.station, date, time].filter(Boolean).join(' · ');
+}
 
 // ── Radio étudiante : émissions à venir (radio-schedules.json, grille hebdo, day = 0 dimanche … 6 samedi, heure de Montréal) ──
 const seeded = str => { let h = 1779033703 ^ str.length; for (const c of str) { h = Math.imul(h ^ c.charCodeAt(0), 3432918353); h = (h << 13) | (h >>> 19); } return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; };
@@ -391,10 +410,29 @@ export function frDay(ymd) {
   const [y, m, d] = ymd.split('-').map(Number), wd = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
   return `${FR_DAYS[wd]} ${d === 1 ? '1er' : d} ${FR_MONTHS[m - 1]}`;
 }
+/** « jeudi 12 novembre 2026 » (jour civil Montréal, avec l’année). */
+export function frDayYear(ymd) {
+  return `${frDay(ymd)} ${String(ymd).slice(0, 4)}`;
+}
 
 // ── Textes ───────────────────────────────────────────────────────────────────
 export const HOME = `${SITE}/`;
 const BASE_TAGS = ['#MédiasÉtudiants', '#Québec'];
+/**
+ * Hashtags X d'une une : mêmes règles thématiques que les articles (titres + résumés),
+ * au plus 3. Sans thématique, repli sur uneTags (les autres réseaux ne passent pas par ici).
+ */
+export function uneTagsX(items, max = 3) {
+  if (!(max > 0) || !items?.length) return [];
+  const it = {
+    title: items.map(x => x.title || x.bare).filter(Boolean).join(' · '),
+    desc: items.map(x => x.excerpt || x.desc || x.hook || '').filter(Boolean).join(' '),
+    source: items[0].source,
+    bare: items[0].title || items[0].bare,
+  };
+  return xArticleTags(it, max);
+}
+
 /** Hashtags : #MédiasÉtudiants, établissements présents, #Québec ; plafonds de policy.json (hashtags.maxByNetwork). */
 export function uneTags(items, max) {
   if (!(max > 0)) return [];
@@ -436,12 +474,13 @@ export function revueEditionExists(slot, { root = process.cwd(), exists } = {}) 
 
 /**
  * Deuxième ligne du texte de La une, seulement si l'édition du même créneau (matin 7 h / soir 19 h 15) existe.
- * Chaîne vide sinon, et jamais pour un réseau sans lien cliquable (Instagram).
+ * Chaîne vide sinon. Sur un réseau sans lien cliquable (Instagram), la phrase validée se termine par « lien en bio ».
  */
 export function revueEditionLine(slot, opts = {}) {
-  if (opts.nolink || !revueEditionExists(slot, opts)) return '';
+  if (!revueEditionExists(slot, opts)) return '';
   const which = slot.id === 'matin' ? 'du matin' : 'du soir';
-  return `Consultez notre revue ${which}, à imprimer avec sudoku et mots cachés : ${SITE}/${revueEditionHref(slot)}`;
+  const phrase = `Consultez notre revue ${which}, à imprimer avec sudoku et mots cachés :`;
+  return opts.nolink ? `${phrase} lien en bio` : `${phrase} ${SITE}/${revueEditionHref(slot)}`;
 }
 
 /**
@@ -483,10 +522,16 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     } else {
       body = items.map(x => `${x.sport || '▪️'} ${T(x)} — ${x.byline}`).join('\n') + '\n\n' + (items.length === 1 ? items[0].pageUrl : HOME);
     }
-    if (sports.length) body += '\n\n🏟️ Sport étudiant :\n' + sports.map(sportsLine).join('\n');
-    if (radio.length) body += '\n\n📻 À l’écoute (radio étudiante) :\n' + radio.map(x => `${x.title} · ${x.station} · ${x.when}`).join('\n');
+    if (sports.length) {
+      const lines = sports.map(r => spec.nolink ? sportsLine(r, { compact: true, day: model.slot.day }) : sportsLine(r));
+      body += spec.nolink ? '\n\n🏟️ Sport étudiant :\n\n' + lines.join('\n') : '\n\n🏟️ Sport étudiant :\n' + lines.join('\n');
+    }
+    if (radio.length) {
+      const lines = radio.map(x => spec.nolink ? igRadioLine(x, model.slot.day) : `${x.title} · ${x.station} · ${x.when}`);
+      body += spec.nolink ? '\n\n📻 À l’écoute (radio étudiante) :\n\n' + lines.join('\n') : '\n\n📻 À l’écoute (radio étudiante) :\n' + lines.join('\n');
+    }
     if (spec.nolink) {
-      body += '\n\nToute la une : lien en bio (le-radar.ca)';
+      body += revueLine ? '\n\nToute la une : le-radar.ca' : '\n\nToute la une : lien en bio (le-radar.ca)';
       const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');
       if (credit) body += '\n\n' + credit;
     } else if (long) body += `\n\nToute la une : ${HOME}`;
@@ -546,7 +591,7 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
   const out = {};
   for (const n of [...NETS, ...PREPARED_NETS]) {
     const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n];
-    const tags = n === 'tumblr' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : uneTags(model.items, maxByNetwork[n] ?? 2);
+    const tags = n === 'tumblr' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : n === 'x' ? uneTagsX(model.items, maxByNetwork[n] ?? 3) : uneTags(model.items, maxByNetwork[n] ?? 2);
     const text = buildUneText(model, n, spec, { tags, revueExists: opts.revueExists ?? model.revueExists, root: opts.root });
     out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] || '', problems: checkUneText(text, n, model, spec) };
   }

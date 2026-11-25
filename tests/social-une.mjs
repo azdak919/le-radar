@@ -6,6 +6,7 @@ import { gate, pruneState, CFG } from '../scripts/social/une-run.mjs';
 import { NET_SPEC } from '../scripts/social/formats.mjs';
 import { POLICY } from '../scripts/social/policy.mjs';
 import { chooseInstagramImage } from '../scripts/social/instagram.mjs';
+import { pageModel } from '../scripts/social/une-render.mjs';
 
 // ── Créneaux : 7 h 45 et 19 h 30 heure de Montréal, été comme hiver ──
 assert.equal(U.slotAt(Date.parse('2026-11-13T12:45:00Z'))?.id, 'matin');       // 7 h 45 HNE
@@ -114,6 +115,8 @@ assert.ok(U.checkUneText('🌙 La une du soir · Bonne fin de semaine ! https://
 assert.ok(U.checkUneText('🌙 La une du soir @quelquun https://le-radar.ca/', 'mastodon', { items: [{ title: 'La une du soir' }] }).some(p => /@/.test(p)));
 assert.deepEqual(U.uneTags([{ tag: '#UdeM' }, { tag: '#McGill' }], 2), ['#MédiasÉtudiants', '#Québec']);
 assert.deepEqual(U.uneTags([{ tag: '#UdeM' }], 4), ['#MédiasÉtudiants', '#UdeM', '#Québec']);
+assert.deepEqual(U.uneTagsX([{ title: 'Rencontre Carney-PSPP au Cambodge', excerpt: 'Le premier ministre canadien et le premier ministre québécois se sont rencontrés.', source: 'Le Collectif' }]), ['#polcan', '#UdeS', '#polqc']);
+assert.deepEqual(U.uneTags([{ tag: '#UdeM' }, { tag: '#McGill' }], 4), ['#MédiasÉtudiants', '#UdeM', '#McGill', '#Québec'], 'autres réseaux inchangés');
 assert.ok(U.uneTumblrTags(m.items).length <= 15);
 // Le vrai fil passe aussi les contrôles (pas de régression sur des données réelles).
 const live = U.selectUne(real, U.slotFor('soir', Date.parse(real.updated)), { now: Date.parse(real.updated) });
@@ -302,6 +305,17 @@ assert.ok(!U.NETS.includes('instagram'), 'Instagram hors des réseaux publiés')
 const igModel = { slot: sSlot, items: m.items, sports: sp };
 const ig = U.buildUneAll(igModel).instagram;
 assert.deepEqual(ig.problems, []); assert.doesNotMatch(ig.text, /https?:\/\//); assert.match(ig.text, /lien en bio/); assert.match(ig.text, /🏀 Basketball \(F\) · Stingers/);
+assert.match(ig.text, /🏟️ Sport étudiant :\n\n🏀/);
+assert.doesNotMatch(ig.text, /Final · /, 'Instagram : Final sans la date');
+const igRadio = U.buildUneAll({ ...igModel, radio: [{ title: 'Soirée en ondes', station: 'CKUT 90,3', when: 'jeu. 12 nov. · 18 h', date: igModel.slot.day, start: '18:00' }] }).instagram;
+assert.match(igRadio.text, /📻 À l’écoute \(radio étudiante\) :\n\nSoirée en ondes · CKUT 90,3 · 18 h/);
+assert.match(U.buildUneAll(igModel).facebook.text, /Final · /, 'les autres réseaux gardent la date du résultat');
+const resultLine = { kind: 'resultat', emoji: '🏀', sport: 'Basketball (F)', teams: [{ name: 'Stingers', inst: 'Concordia', score: 55 }, { name: 'Martlets', inst: 'McGill', score: 54 }], when: 'Final · jeu. 12 nov.', date: '2026-11-12' };
+assert.equal(U.sportsLine(resultLine), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final · jeu. 12 nov.');
+assert.equal(U.sportsLine(resultLine, { compact: true, day: '2026-11-12' }), '🏀 Basketball (F) · Stingers (Concordia) 55-54 Martlets (McGill) · Final');
+const nextSame = { kind: 'avenir', emoji: '🏐', sport: 'Volleyball (F)', teams: [{ name: 'Patriotes', inst: 'UQTR' }, { name: 'Inuk', inst: 'UQAC' }], verb: 'visite', when: 'sam. 21 nov. · 13 h', date: '2026-11-21', time: '13:00' };
+assert.equal(U.sportsLine(nextSame, { compact: true, day: '2026-11-21' }), '🏐 Volleyball (F) · Patriotes (UQTR) visite Inuk (UQAC) · 13 h');
+assert.equal(U.sportsLine(nextSame, { compact: true, day: '2026-11-20' }), '🏐 Volleyball (F) · Patriotes (UQTR) visite Inuk (UQAC) · sam. 21 nov. · 13 h');
 const igCredit = U.buildUneAll({ ...igModel, items: [{ ...m.items[0], credit: 'Photo : Thekidpossum, CC BY-SA 4.0, Wikimedia Commons' }, ...m.items.slice(1)] }).instagram;
 assert.match(igCredit.text, /📸 Thekidpossum, CC BY-SA 4.0, Wikimedia Commons/);
 assert.doesNotMatch(igCredit.text, /^Photo\s*:/m);
@@ -312,6 +326,18 @@ assert.ok((ig.text.match(/#[\p{L}\p{N}_]+/gu) || []).length >= 3, ig.text);
 assert.ok((ig.text.split('\n')[0] || '').length <= 125);
 assert.doesNotMatch(U.buildUneAll(igModel).x.text, /Stingers \(Concordia\)/, 'réseaux courts : pas de bloc sport');
 assert.equal(U.frShort('2026-11-13'), 'ven. 13 nov.'); assert.equal(U.frHour('19:30'), '19 h 30'); assert.equal(U.frHour(''), ''); assert.equal(U.frHour('00:00'), '0 h');
+assert.equal(U.frDay('2026-11-21'), 'samedi 21 novembre');
+assert.equal(U.frDayYear('2026-11-21'), 'samedi 21 novembre 2026');
+assert.equal(U.frDayYear('2026-11-01'), 'dimanche 1er novembre 2026');
+const pmSoir = pageModel({ slot: { label: 'La une du soir', id: 'soir', day: '2026-11-21' }, items: [] });
+assert.equal(pmSoir.slot.dayLabel, 'Samedi 21 novembre', 'portrait des autres réseaux : date sans l’année');
+assert.equal(pmSoir.slot.dayLabelYear, 'Samedi 21 novembre 2026', 'année : kicker Instagram (modèle B) et post d’un seul article');
+assert.deepEqual(U.IMAGE_SIZES.article, { width: 1080, height: 1440 });
+assert.deepEqual(U.IMAGE_SIZES['article-portrait'], { width: 1080, height: 1350 });
+assert.equal(U.ARTICLE_IMAGE_FOR.instagram, 'article');
+assert.equal(U.ARTICLE_IMAGE_FOR.facebook, 'article-portrait');
+assert.deepEqual(U.articleFormatsFor(['instagram', 'x', 'facebook']), ['article', 'article-portrait']);
+
 
 // ── Lien vers l'édition de la revue : 2e ligne, seulement si la page existe ──
 const matin17 = U.slotFor('matin', Date.parse('2026-11-17T12:45:00Z'));
@@ -330,7 +356,12 @@ assert.equal(
   U.revueEditionLine(matin17),
   'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-matin/',
 );
-assert.equal(U.revueEditionLine(matin17, { nolink: true }), '', 'Instagram : pas de lien cliquable');
+assert.equal(
+  U.revueEditionLine(matin17, { nolink: true }),
+  'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : lien en bio',
+  'Instagram : phrase validée, sans URL, vers le lien en bio',
+);
+assert.doesNotMatch(U.revueEditionLine(matin17, { nolink: true }), /https?:\/\//);
 
 const modelRevue = { slot: soir17, items: m.items, sports: { results: [], next: [] }, radio: [] };
 const sans = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => false });
@@ -350,7 +381,10 @@ for (const n of U.NETS) {
 }
 const igRevue = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => true }).instagram;
 assert.doesNotMatch(igRevue.text, /https?:\/\//, 'Instagram : jamais d’URL, même si l’édition existe');
-assert.doesNotMatch(igRevue.text, /Consultez notre revue/);
+assert.equal(igRevue.text.split('\n')[1], 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : lien en bio');
+assert.match(igRevue.text, /Toute la une : le-radar\.ca/);
+assert.equal((igRevue.text.match(/lien en bio/g) || []).length, 1, 'un seul « lien en bio »');
+assert.doesNotMatch(igRevue.text, /Toute la une : lien en bio/);
 assert.deepEqual(igRevue.problems, []);
 assert.doesNotMatch(U.altText(modelRevue), /revue du (matin|soir)|le-radar\.ca\/revue\//, 'la revue n’entre pas dans le texte alternatif de l’image');
 

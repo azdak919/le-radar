@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-11-19T16:03:37.342Z",
+  "updated": "2026-11-24T18:19:44.288Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -204,10 +204,10 @@
     },
     "the-concordian": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-10-23T12:07:17.279Z",
+      "lastAttemptAt": "2026-11-22T14:54:15.284Z",
       "error": "wordpress_http_403",
-      "retryAt": "2026-11-22T12:07:17.279Z",
-      "windowStart": "2023-10-23T18:07:00.656Z",
+      "retryAt": "2026-12-22T14:54:15.284Z",
+      "windowStart": "2023-11-22T20:54:15.203Z",
       "windowYears": 3
     },
     "la-griffe": {
@@ -220,6 +220,17 @@
       "error": null,
       "completedAt": "2026-10-26T13:34:19.231Z",
       "windowStart": "2023-10-26T19:34:15.526Z",
+      "windowYears": 3
+    },
+    "le-club-ecole": {
+      "strategy": "wordpress-rest",
+      "nextPage": 9,
+      "totalPages": 9,
+      "lastAttemptAt": "2026-11-24T18:19:42.022Z",
+      "lastSuccessAt": "2026-11-24T18:19:42.022Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-11-25T00:19:34.245Z",
       "windowYears": 3
     }
   }

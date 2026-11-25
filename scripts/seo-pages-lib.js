@@ -32,7 +32,8 @@ const TAGLINE_EN_TAG = 'all in one place';
 const BRAND_NAME = 'LE-RADAR.ca';
 const BRAND_SIGNATURE = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
 
-const LICENSE_URL = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html';
+const LICENSE_URL = 'https://www.gnu.org/licenses/agpl-3.0.html';
+const REPO_URL = 'https://github.com/azdak919/le-radar';
 const COFFEE_URL = 'https://www.buymeacoffee.com/azdak';
 const CONTACT_MAIL = 'azdak-qc@proton.me';
 const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
@@ -43,7 +44,7 @@ const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
  * CSS critique du synthé (copie de index.html) — FOUC sur pages SEO sans ce bloc.
  * Sans lui, la colonne « À l'antenne » peut rester figée / mal calée avant style.css.
  */
-const WIDE_LAYOUT_ASSET_V = 'wide-auto-e102';
+const WIDE_LAYOUT_ASSET_V = 'wide-auto-e104';
 
 function renderWideLayoutAssets(up) {
   return `    <link rel="stylesheet" href="${up}dev/midwidth-preview.css?v=${WIDE_LAYOUT_ASSET_V}" />
@@ -407,7 +408,7 @@ const T = {
     paperOf: 'le journal étudiant {of}',
     seeAll: 'Voir tous les médias étudiants du Québec',
     backHome: 'Retour à l’accueil de LE-RADAR.ca',
-    unofficial: 'LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.',
+    unofficial: 'LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine. Tout média étudiant peut demander la modification ou le retrait immédiat de son flux sur simple demande.',
     updated: 'Mise à jour',
     otherLang: 'English',
     footerNav: 'Liens de pied de page',
@@ -419,8 +420,12 @@ const T = {
     archives: 'Archives',
     kitMedia: 'Affiches et identité visuelle',
     iframes: 'iFrames',
-    licenseIntro: 'Ce projet est distribué sous',
-    licenseName: 'licence publique générale GNU, version 2',
+    licenseIntro: 'Code source sous licence',
+    licenseName: 'GNU AGPLv3',
+    licenseRepo: 'dépôt',
+    licenseKit: 'Kit-média',
+    licenseKitMid: 'sous licence',
+    licenseCcUrl: 'https://creativecommons.org/licenses/by/4.0/deed.fr',
     sourceCode: 'Code source (GitHub)',
     creditMade: 'Conçu avec',
     creditBy: 'par',
@@ -429,8 +434,17 @@ const T = {
     creditCoffee: 'Offrir un café — Buy me a coffee',
     contactLabel: 'Nous joindre',
     contactAria: 'Nous joindre par courriel',
-    legalNote: 'Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.',
+    legalNote: 'Contenus agrégés : articles et photos crédités à leurs auteurs et à leurs médias d’origine. Code tiers utilisé conformément à ses licences.',
     botNote: 'Agrégateur automatisé de contenus.',
+    // Textes déjà publiés sur les vitrines et dans les README
+    // (kiosque.le-radar.ca, socle.le-radar.ca) : ne pas reformuler.
+    ressourcesTitle: 'Ressources',
+    kiosqueName: 'Le Kiosque',
+    kiosqueDesc: 'Plateforme libre pour les journaux étudiants.',
+    kiosqueUrl: 'https://kiosque.le-radar.ca/',
+    socleName: 'Le Socle',
+    socleDesc: 'Espace de rédaction des journaux étudiants.',
+    socleUrl: 'https://socle.le-radar.ca/',
     kaoLabel: 'Garder Android ouvert',
     kaoHint: 'Campagne contre la vérification obligatoire des développeurs Google.',
     kaoUrl: 'https://keepandroidopen.org/fr/',
@@ -589,7 +603,7 @@ const T = {
     paperOf: 'the student newspaper of {name}',
     seeAll: 'Browse all student media in Québec',
     backHome: 'Back to the LE-RADAR.ca home page',
-    unofficial: 'LE-RADAR.ca is an independent, unofficial project. It is not affiliated with any of the media outlets or institutions listed. All content belongs to its original publisher.',
+    unofficial: 'LE-RADAR.ca is an independent, unofficial project. It is not affiliated with any of the media outlets or institutions listed. All content belongs to its original publisher. Any student outlet can have its feed changed or removed immediately, on request.',
     updated: 'Updated',
     otherLang: 'Français',
     footerNav: 'Footer links',
@@ -601,8 +615,12 @@ const T = {
     archives: 'Archives',
     kitMedia: 'Posters & visual identity',
     iframes: 'iFrames',
-    licenseIntro: 'This project is distributed under the',
-    licenseName: 'GNU General Public License, version 2',
+    licenseIntro: 'Source code licensed under',
+    licenseName: 'GNU AGPLv3',
+    licenseRepo: 'repository',
+    licenseKit: 'Media kit',
+    licenseKitMid: 'under',
+    licenseCcUrl: 'https://creativecommons.org/licenses/by/4.0/',
     sourceCode: 'Source code (GitHub)',
     creditMade: 'Made with',
     creditBy: 'by',
@@ -611,8 +629,15 @@ const T = {
     creditCoffee: 'Buy me a coffee',
     contactLabel: 'Contact us',
     contactAria: 'Contact us by email',
-    legalNote: 'Open-source code used in accordance with the applicable licences; content and media credited to their respective authors.',
+    legalNote: 'Aggregated content: articles and photos credited to their authors and original outlets. Third-party code used in accordance with its licences.',
     botNote: 'Automated content aggregator.',
+    ressourcesTitle: 'Resources',
+    kiosqueName: 'Le Kiosque',
+    kiosqueDesc: 'Free platform for student newspapers.',
+    kiosqueUrl: 'https://kiosque.le-radar.ca/',
+    socleName: 'Le Socle',
+    socleDesc: 'Editorial workspace for student newspapers.',
+    socleUrl: 'https://socle.le-radar.ca/',
     kaoLabel: 'Keep Android Open',
     kaoHint: 'Campaign against Google’s mandatory developer verification.',
     kaoUrl: 'https://keepandroidopen.org/',
@@ -895,16 +920,13 @@ function renderMastheadActions({ lang = 'fr', up = './', current = null, indent 
   // site et par tests/static-integrity.mjs. Le lien d'accueil garde './'.
   const href = (rel) => (rel ? `${up}${rel}`.replace(/^\.\//, '') : up);
   const cur = (id) => (current === id ? ' aria-current="page"' : '');
-  const feedsPath = 'feeds.html';
   const sportsPath = lang === 'fr' ? 'sports/' : 'en/sports/';
 
   return `<div class="masthead-actions">
 ${p}  <a href="${href('')}" class="masthead-icon masthead-home" data-home-nav${cur('home')} title="${escapeHtml(c.home)}" aria-label="${escapeHtml(c.homeAria)}">${ICON_SVG.home}</a>
-${p}  <a href="${href(feedsPath)}" class="masthead-icon masthead-rss"${cur('rss')} title="${escapeHtml(c.rss)}" aria-label="${escapeHtml(c.rssAria)}">${ICON_SVG.rss}</a>
 ${p}  <a href="${href('pomo/')}" class="masthead-icon masthead-pomo" title="${escapeHtml(c.pomo)}" aria-label="${escapeHtml(c.pomo)}"><img class="app-emoji" src="${up}assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
 ${p}  <a href="${href('solitaire/')}" class="masthead-icon masthead-solitaire" title="${escapeHtml(c.solitaire)}" aria-label="${escapeHtml(c.solitaire)}"><img class="app-emoji" src="${up}assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
 ${p}  <a href="${href(sportsPath)}" class="masthead-icon masthead-sports"${cur('sports')} title="${escapeHtml(c.sports)}" aria-label="${escapeHtml(c.sports)}"><img class="app-emoji" src="${up}assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
-${p}  <a href="${COFFEE_URL}" class="masthead-icon masthead-coffee" title="${escapeHtml(c.coffee)}" aria-label="${escapeHtml(c.coffeeAria)}" target="_blank" rel="noopener noreferrer">${ICON_SVG.coffee}</a>
 ${p}  ${renderInstallMenu({ lang, up })}
 ${p}  <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="${escapeHtml(c.theme)}" title="${escapeHtml(c.themeTitle)}">${ICON_SVG.theme}</button>
 ${p}</div>`;
@@ -934,6 +956,43 @@ ${p}</div>`;
  * scroll + refresh soft via data-home-nav / app.js).
  * `updated` n'est passé que par les pages qui ont une fraîcheur propre.
  */
+
+function ressourceItem(t, up, slug, nameKey, descKey, urlKey) {
+  const name = escapeHtml(t[nameKey]);
+  const clair = `${up}assets/ressources/${slug}/icone-clair.svg`;
+  const sombre = `${up}assets/ressources/${slug}/icone-sombre.svg`;
+  return `<li class="site-foot__ressource">
+      <a class="site-foot__ressource-link" href="${escapeHtml(t[urlKey])}" target="_blank" rel="noopener noreferrer">
+        <span class="site-foot__ressource-logo" aria-hidden="true">
+          <img class="site-foot__ressource-logo-img site-foot__ressource-logo-img--light" src="${clair}" width="32" height="32" alt="" decoding="async">
+          <img class="site-foot__ressource-logo-img site-foot__ressource-logo-img--dark" src="${sombre}" width="32" height="32" alt="" decoding="async">
+        </span>
+        <span class="site-foot__ressource-text">
+          <span class="site-foot__ressource-name">${name}</span>
+          <span class="site-foot__ressource-desc">${escapeHtml(t[descKey])}</span>
+        </span>
+      </a>
+    </li>`;
+}
+
+/** Ligne de licence du pied de page : code AGPLv3 + dépôt, kit-média, contenus agrégés.
+ *  `rel="license"` reste sur le lien de la licence : nav-shell.js s'en sert pour classer le paragraphe. */
+const KIT_PATH = { fr: 'kit-media/', en: 'en/media-kit/' };
+
+function renderFooterLicense(t, kitHref) {
+  return `<p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a> (<a href="${REPO_URL}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.licenseRepo)}</a>). <a href="${escapeHtml(kitHref)}">${escapeHtml(t.licenseKit)}</a> ${escapeHtml(t.licenseKitMid)} <a href="${escapeHtml(t.licenseCcUrl)}" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.</p>`;
+}
+
+function renderFooterRessources(t, up, p) {
+  return `<section class="site-foot__ressources">
+${p}    <p class="site-foot__ressources-title">${escapeHtml(t.ressourcesTitle)}</p>
+${p}    <ul class="site-foot__ressources-list">
+${p}    ${ressourceItem(t, up, 'kiosque', 'kiosqueName', 'kiosqueDesc', 'kiosqueUrl')}
+${p}    ${ressourceItem(t, up, 'socle', 'socleName', 'socleDesc', 'socleUrl')}
+${p}    </ul>
+${p}  </section>`;
+}
+
 function renderSiteFooter({
   lang = 'fr', up = './', home = false, altPath = null, updated = null, indent = '      ', variant = 'default',
 } = {}) {
@@ -966,7 +1025,6 @@ function renderSiteFooter({
     const alt = lang === 'fr' ? 'en-CA' : 'fr-CA';
     links.push(`<a href="${href(altPath)}" hreflang="${alt}">${escapeHtml(t.otherLang)}</a>`);
   }
-  links.push(`<a href="${href('mise-a-jour/')}">${lang === 'en' ? 'Update' : 'Mise à jour'}</a>`);
   // Installer l'app est une destination du pied de page comme les autres, pas
   // un appel à l'action : la pastille pesait plus lourd que les sections
   // qu'elle surplombait. Reste un <button> — c'est une action, pas un lien —
@@ -1013,7 +1071,7 @@ ${p}      <p class="site-foot__summary">${escapeHtml(t.unofficial)}</p>
 ${p}      <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}        ${detailsNav}
 ${p}      </nav>
-${p}      <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}      ${renderFooterLicense(t, href(KIT_PATH[lang] || KIT_PATH.fr))}
 ${p}      <p class="site-foot__kao"><a href="${escapeHtml(t.kaoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.kaoLabel)}</a> <span class="site-foot__kao-hint">${escapeHtml(t.kaoHint)}</span></p>
 ${p}      <div class="site-foot__credit">
 ${p}        <p class="site-foot__author">
@@ -1038,7 +1096,8 @@ ${p}  <p>${escapeHtml(t.unofficial)}</p>
 ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
 ${p}  </nav>
-${p}  <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}  ${renderFooterRessources(t, up, p)}
+${p}  ${renderFooterLicense(t, href(KIT_PATH[lang] || KIT_PATH.fr))}
 ${p}  <p class="site-foot__kao"><a href="${escapeHtml(t.kaoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.kaoLabel)}</a> <span class="site-foot__kao-hint">${escapeHtml(t.kaoHint)}</span></p>
 ${p}  <div class="site-foot__credit">
 ${p}    <p class="site-foot__author">
