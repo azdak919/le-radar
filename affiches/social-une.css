@@ -269,6 +269,7 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .article .ig-motto .lead, .article .ig-motto .tag, .article-portrait .ig-motto .lead, .article-portrait .ig-motto .tag { display: block; margin: 0; padding: 0; flex: none; min-height: 0; overflow: visible; }
 .article .ig-copy, .article-portrait .ig-copy { flex: none; padding: 0; background: transparent; }
 .article .ig-kicker, .article-portrait .ig-kicker { display: block; width: auto; font-weight: 700; font-size: 22px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; background: none; color: #F28C28; padding: 0; border-radius: 0; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+.article .ig-kicker .media, .article-portrait .ig-kicker .media { color: inherit; }
 .article .ig-kicker .mid, .article-portrait .ig-kicker .mid { color: #ffdcb4; }
 .article .ig-kicker .date, .article-portrait .ig-kicker .date { color: #F6C177; }
 .article .ig-qr { position: absolute; top: 184px; right: 32px; z-index: 3; width: 217px; height: 217px; padding: 10px; box-sizing: border-box; background: rgba(241,242,244,.93); border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }

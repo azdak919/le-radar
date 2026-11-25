@@ -27,6 +27,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Articles à la pièce (modèle v6) : le kicker affiche le nom du média, dans la couleur de l’établissement quand elle est connue, puis la date avec l’année. Il ne reprend plus le libellé d’un créneau de une.
+
 - Mât, téléphone (moins de 600 px) : le logo passe à 48 px, légèrement plus grand que les boutons d’outils et les icônes de réseaux (40 px). Le titre LE-RADAR.ca grandit en proportion, reste sur une seule ligne et s’aligne avec le logo, sans débordement à 320, 360 et 390 px. Ordinateur inchangé. Cache `radar-shell-v1059`.
 
 - Mât, sous 360 px : les huit icônes de réseaux tiennent sur une seule rangée, comme à 390 px, avec des cibles de 34 à 36 px et une pastille plus compacte. Le logo reste à 48 px, le titre sur une ligne. Rien ne change à 390 px ni sur ordinateur. Caches `radar-shell-v1067` et `sports-shell-v441`.
