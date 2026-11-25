@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T17:37:12.569Z",
+  "updatedAt": "2026-11-25T18:36:52.111Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T17:36:42.651Z"
+      "checkedAt": "2026-11-25T18:36:24.011Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
+      "next": {
+        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/vibrance"
+      },
       "track": "",
-      "showTitle": "La carte cadeau",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T17:36:44.042Z"
+      "checkedAt": "2026-11-25T18:36:25.316Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,61 +74,55 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T17:36:47.221Z"
+      "checkedAt": "2026-11-25T18:36:29.041Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "North-South Hockey",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
-      },
-      "next": {
         "title": "The Fluid Mosaic",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
+      "next": {
+        "title": "Cherry Vamp and the Sonic Coffin",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+      },
       "track": "",
-      "showTitle": "North-South Hockey",
+      "showTitle": "The Fluid Mosaic",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T17:37:01.278Z"
+      "checkedAt": "2026-11-25T18:36:42.486Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Le DOUZE",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "12:59",
-        "url": "https://www.cfak.ca/balados/le-douze"
-      },
+      "current": null,
       "next": {
         "title": "Le SEIZE",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:59",
         "url": "https://www.cfak.ca/balados/le-seize"
       },
       "track": "",
-      "showTitle": "Le DOUZE",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T17:37:02.682Z"
+      "checkedAt": "2026-11-25T18:36:43.588Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +135,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "THÉA — BODYBAG",
+      "track": "Aldous Harding — One Stop",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T17:37:12.219Z"
+      "checkedAt": "2026-11-25T18:36:51.760Z"
     }
   }
 }
