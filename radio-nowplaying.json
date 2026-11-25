@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T05:06:59.476Z",
+  "updatedAt": "2026-11-25T20:37:14.915Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Palmarès CHYZ",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T05:06:23.208Z"
+      "checkedAt": "2026-11-25T20:36:34.434Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie (reprise)",
+        "title": "Le cours de math",
         "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "track": "",
-      "showTitle": "Rythmologie (reprise)",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T05:06:36.927Z"
+      "checkedAt": "2026-11-25T20:36:47.761Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Utopia's Paradise",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "stereOphobic",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,79 +74,82 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T05:06:39.167Z"
+      "checkedAt": "2026-11-25T20:36:51.062Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Floydian Slip",
+        "title": "Patch Notes",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
       },
       "next": {
-        "title": "CJLO Late Night",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "track": "",
-      "showTitle": "Floydian Slip",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T05:06:52.536Z"
+      "checkedAt": "2026-11-25T20:37:05.125Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "04:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      "current": null,
+      "next": {
+        "title": "Le SEIZE",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:59",
+        "url": "https://www.cfak.ca/balados/le-seize"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-22T05:06:53.369Z"
+      "checkedAt": "2026-11-25T20:37:06.160Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "OPUS",
+      "current": {
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "opus"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "- Bloc Pub 21 juillet.mp3",
-      "showTitle": "",
+      "next": {
+        "title": "Effet Philo",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "17:45",
+        "slug": "effet-philo"
+      },
+      "track": "Chenier — Dans les cendres",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-11-22T05:06:59.125Z"
+      "clientPoll": null,
+      "checkedAt": "2026-11-25T20:37:14.564Z"
     }
   }
 }

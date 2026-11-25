@@ -18,6 +18,10 @@ concurrency:
   group: social-une-preview-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
+
 jobs:
   apercu:
     runs-on: ubuntu-latest

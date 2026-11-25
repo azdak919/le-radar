@@ -917,3 +917,44 @@ test('shell 1280 : nom météo trop long défile au lieu d’une ellipse', async
   expect(style.anim).toBe('weather-name-scroll');
   expect(style.hold).toBeGreaterThanOrEqual(12000);
 });
+
+test('météo campus : un premier essai raté est réessayé @ci-critical', async ({ page }) => {
+  let calls = 0;
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => {
+    calls += 1;
+    if (calls === 1) return route.abort('failed');
+    return route.fulfill({
+      contentType: 'application/json',
+      headers: { 'access-control-allow-origin': '*' },
+      body: JSON.stringify(weather),
+    });
+  });
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const ribbon = page.locator('#masthead-weather');
+  await expect.poll(() => calls, { timeout: 10_000 }).toBeGreaterThanOrEqual(2);
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toBeVisible();
+  // Données du mock (47 villes), pas la fixture lab (WEATHER_CITIES.length).
+  await expect.poll(() => page.evaluate(() => {
+    const raw = JSON.parse(localStorage.getItem('le_radar_masthead_weather_v2') || 'null');
+    return raw?.entries?.[0]?.current?.temperature_2m;
+  })).toBe(24.8);
+});
+
+test('météo campus : Worker en panne → cache d’il y a une heure affiché', async ({ page }) => {
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.abort('failed'));
+  await page.addInitScript((entries) => {
+    localStorage.setItem('le_radar_masthead_weather_v2', JSON.stringify({
+      at: Date.now() - 60 * 60 * 1000,
+      entries,
+    }));
+  }, weather);
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const ribbon = page.locator('#masthead-weather');
+  await expect(ribbon).toBeVisible();
+  await expect(ribbon.locator('.masthead-weather__city.is-active .masthead-weather__temp').first())
+    .toContainText('25');
+});

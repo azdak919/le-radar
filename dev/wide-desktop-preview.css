@@ -482,9 +482,12 @@ html[data-wide-preview="e"] {
 }
 
 /* ═══════════════════════════════════════════════════
-   E — Rail sources + contenu (wide ≥1400)
-   ═══════════════════════════════════════════════════ */
-@media (min-width: 1400px) {
+   E — Rail sources + contenu (dès 1280, comme le JS)
+   ═══════════════════════════════════════════════════
+   Le rail (pastilles en 1 colonne, wide-desktop-preview.js) s’active dès
+   1280 : la grille doit suivre, sinon 1280–1399 empilait les sources en
+   une colonne pleine largeur au-dessus du fil. */
+@media (min-width: 1280px) {
   html[data-wide-preview="e"] .wire:has(#wide-rail-stack) {
     max-width: var(--maxw);
     width: 100%;
@@ -504,8 +507,20 @@ html[data-wide-preview="e"] {
      *  .    | foot     ← crédits (pas sous le rail)
      */
     grid-template-areas:
+      "rail follow"
       "rail list"
       ".    foot";
+  }
+
+  /* Barre « Suivre · Fiche du média » (une source choisie) : au-dessus du fil,
+     dans la colonne contenu. Sans zone, la grille la posait dans la cellule
+     vide sous le rail sticky, visible entre les pastilles en bas de page. */
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) > .media-follow-bar {
+    grid-area: follow;
+    min-width: 0;
+  }
+  html[data-wide-preview="e"] .wire:has(#wide-rail-stack) > .news-list {
+    grid-area: list;
   }
 
   /*
@@ -687,6 +702,12 @@ html[data-wide-preview="e"] {
     right: 0;
     --tools-side-right: max(20px, env(safe-area-inset-right, 0px));
     --tools-side-left: max(20px, env(safe-area-inset-left, 0px));
+  }
+
+  /* Barre superposée (data-overlay-scrollbars, JS) : pas de gouttière réservée,
+     donc une marge fixe pour le pouce, ouvert comme replié (largeur stable). */
+  html[data-wide-preview="e"][data-overlay-scrollbars] .wide-rail-stack .filters-panel .filters {
+    padding-right: 8px;
   }
 
   html[data-wide-preview="e"] .wide-rail-stack .filters-panel .filters::-webkit-scrollbar {
@@ -1278,37 +1299,22 @@ html[data-wide-preview="e"] .news-hero-spacer {
 }
 
 /*
- * Horaires : jamais 7 jours trop étroits.
- * Sous 1440 px, auto-fit garde une journée ≈ 320 px.
- * Comptes fixes : 1440 → 4 · 1880 → 5 · 2560 → 7.
+ * Horaires : jamais de jours trop étroits.
+ * Le nombre de colonnes suit la largeur du conteneur, pas celle de la fenêtre :
+ * la page station a une colonne de lecture (~1000 px) même à 1920, et un
+ * repeat(5) fixe y donnait des cartes de 126 px. Plancher 300 px par jour.
  */
-@media (min-width: 1280px) {
+@media (min-width: 1281px) {
   html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 16px;
   }
 }
-@media (min-width: 1440px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
 @media (min-width: 1880px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 18px;
-  }
-}
-@media (min-width: 2560px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 18px;
-  }
+  html[data-wide-preview="e"] .seo-schedule { gap: 18px; }
 }
 @media (min-width: 3440px) {
-  html[data-wide-preview="e"] .seo-schedule {
-    gap: 22px;
-  }
+  html[data-wide-preview="e"] .seo-schedule { gap: 22px; }
 }
 
 /*
@@ -1410,6 +1416,11 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
   html[data-wide-preview="e"] .masthead-weather__board[data-weather-count="8"] {
     grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+  /* MTL + QC au contenu dès 1280 (max/min + « Demain », 22 nov. 2026) ;
+     les secondaires se partagent le reliquat. */
+  html[data-wide-preview="e"] .masthead-weather__board[data-weather-dual-primary] {
+    grid-template-columns: max-content max-content repeat(var(--weather-sec, 2), minmax(0, 1fr));
   }
   html[data-wide-preview="e"] .masthead-weather__city.is-active {
     display: flex !important;

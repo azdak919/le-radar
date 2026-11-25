@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 // Fiches /article/<id>/ : habillage complet, carte de lien (OG/Twitter), crédit du flux, registre sans retrait.
+import privacyGuard from '../scripts/privacy-guard.js';
+const hasForbidden = (t) => privacyGuard.containsForbiddenName(t, ['dupont']);
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
@@ -27,7 +29,7 @@ assert(!/hreflang="en-CA" href="https:\/\/le-radar\.ca\/en\/schedules/.test(html
 assert(!/(["'(])\.\.\/(?!\.\.\/)[a-z]/i.test(html.replace(/\.\.\/\.\.\//g, '')), 'chemins relevés de deux niveaux');
 assert(html.includes('📸 Benoît Rochon</figcaption>'), 'crédit visible');
 assert(html.includes(`href="${item.link}"`), 'bouton vers le média');
-assert(!/tison/i.test(html));
+assert(!hasForbidden(html));
 
 // Registre : un article sorti du fil reste ; un champ vidé garde l'ancienne valeur.
 const store = { articles: {} };

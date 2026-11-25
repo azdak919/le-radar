@@ -4,7 +4,7 @@ Décision du 2026-09-21 : **F-Droid est le canal de distribution voulu** pour l�
 
 ## Pourquoi F-Droid
 
-L’application est GPL-2.0, sans compte, sans publicité, sans Firebase et sans les services Google Play. Elle se construit avec Gradle à partir de ce dépôt. C’est le magasin qui correspond au projet.
+L’application est sous AGPL-3.0-or-later, sans compte, sans publicité, sans Firebase et sans les services Google Play. Elle se construit avec Gradle à partir de ce dépôt. C’est le magasin qui correspond au projet.
 
 ## Fiche
 

@@ -350,12 +350,23 @@ var AIR_PANEL_ROTATE_MS = 8000;
  * 1) délai de lecture au repos  2) aller L→R puis retour à l’origine
  * 3) si ce tour est trop court pour lire, un 2ᵉ aller-retour
  * 4) pause au repos  5) seulement alors changer le texte.
- * Jamais `infinite`.
+ *
+ * Exception — dial et pastilles sources (`style-tuner.css`) : ces lignes ne
+ * tournent pas (nom du poste, établissement), donc un aller-retour unique les
+ * laissait tronquées pour de bon. Elles bouclent (`tunerMarqueeLoop`), repos
+ * intégrés aux keyframes ; voir MARQUEE_CYCLE_RATIO.
  */
 /** Pause initiale avant le 1er pixel de scroll (CSS animation-delay). */
 var MARQUEE_READ_DELAY_MS = 1600;
 /** Un aller-retour = `alternate` × 2 (pas infinite). */
 var MARQUEE_ROUND_TRIPS = 2;
+/** Boucle du dial : repos à chaque bout, en fraction d'un aller. */
+var MARQUEE_END_REST_RATIO = 0.25;
+/**
+ * Boucle du dial : cycle ÷ un aller = 2,5. Synchro `--marquee-cycle-ratio`
+ * et keyframes `tunerMarqueeLoop` (style-tuner.css).
+ */
+var MARQUEE_CYCLE_RATIO = MARQUEE_ROUND_TRIPS + MARQUEE_END_REST_RATIO * 2;
 /** Plafond : 2 aller-retour (4 itérations) si le premier tour est trop vite. */
 var MARQUEE_TRIPS_MAX = 4;
 /** Pause de lecture après le retour, avant de changer de texte. */

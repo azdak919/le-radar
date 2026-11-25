@@ -26,6 +26,15 @@ export const INSTAGRAM_CHANNEL_ID = '6b012936ece6dfde5f3f554d';
 export const INSTAGRAM_CHANNEL_NAME = 'le.radar.ca';
 export const INSTAGRAM_SECRET = 'BUFFER_INSTAGRAM_API_KEY';
 export const INSTAGRAM_METADATA = { instagram: { type: 'post', shouldShareToFeed: true } };
+
+/** Forme exigée par Buffer (InstagramPostMetadataInput) : `type` et `shouldShareToFeed` sont requis. */
+export function instagramMetadataOrThrow(meta = INSTAGRAM_METADATA) {
+  const ig = meta && meta.instagram;
+  if (!ig || ig.type !== 'post' || ig.shouldShareToFeed !== true) {
+    throw new Error('Instagram : metadata Buffer invalide (type post et shouldShareToFeed: true requis)');
+  }
+  return meta;
+}
 export const IG_IMAGE = {
   primary: { format: 'grille', width: 1080, height: 1440, ratio: '3:4' },
 };
@@ -72,7 +81,7 @@ export function createInstagramBuffer(env = {}, { fetchImpl } = {}) {
     if (type !== 'post') throw new Error('Instagram : seul le type post est permis (ni story ni reel)');
     if (input.firstComment || input.metadata?.instagram?.firstComment) throw new Error('Instagram : premier commentaire interdit');
     if (input.channelId && input.channelId !== INSTAGRAM_CHANNEL_ID) throw new Error('Instagram : canal inattendu');
-    return add({ text: input.text, image: input.image, alt: input.alt, dueAt: input.dueAt, now: input.now !== false, metadata: INSTAGRAM_METADATA });
+    return add({ text: input.text, image: input.image, alt: input.alt, dueAt: input.dueAt, now: input.now !== false, metadata: instagramMetadataOrThrow(INSTAGRAM_METADATA) });
   };
   return ch;
 }

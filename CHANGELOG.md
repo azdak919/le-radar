@@ -5,6 +5,15 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Corrigé
+
+- Sur téléphone, le texte qui défile dans le synthétiseur et dans les pastilles sources s’arrêtait pour de bon après un aller-retour. Les lignes qui **ne changent jamais** — nom du poste, établissement d’une source (« Université du Québec à Montréal ») — restaient donc tronquées pour le reste de la visite, sans même les trois points. Le défilement boucle maintenant : repos au début → aller → repos au bout → retour. Le texte n’est toujours remplacé qu’au repos, jamais en pleine course ; le survol le met en pause.
+- Pied de page FR/EN : la ligne grise dit de nouveau, en clair, que les contenus agrégés (articles et photos) sont crédités à leurs auteurs et à leurs médias d’origine. La ligne de licence s’arrête au kit-média, sans doublon. README : LE-RADAR **agrège** les médias étudiants (et non « fédère »).
+
+### Modifié
+
+- Licence : le code passe de la GPL-2.0-only à la GNU AGPLv3 (`AGPL-3.0-or-later`), ce qui règle l’incompatibilité avec AndroidX Media3 (Apache-2.0) et couvre l’usage en réseau des Workers. `LICENSE-EXCEPTIONS.md` autorise la distribution par l’App Store et Google Play. Kit-média et affiches : CC BY 4.0 avec réserve de marque (`kit-media/LICENSE`, `affiches/LICENSE`), au lieu de CC BY-SA 4.0. Annuaires factuels : CC0 1.0 (`LICENSE-DATA.md`). Scripts d’intégration (`embed.*`, `radio-barre.*`) : MIT. Pied de page FR/EN, pages Pomo et Solitaire, colophon de la Revue, phrase « Code libre AGPL 3.0 » du générateur et affiches du kit régénérées. Cache `radar-shell-v1068`.
+
 ### Ajouté
 
 - Pied de page : section « Ressources », avec les logos officiels, les liens et les descriptions de Le Kiosque et Le Socle. Caches `radar-shell-v1066` et `sports-shell-v440`.

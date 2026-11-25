@@ -1,6 +1,8 @@
 // Affiches du kit (/kit-media/) : rien ne manque, rien n’est périmé.
 // Galerie mixte : affiches campus (gabarit a9e8f52) et La une dans plusieurs
 // formats. Chaque aperçu a le même rapport que le fichier téléchargeable.
+import privacyGuard from '../scripts/privacy-guard.js';
+const hasForbidden = (t) => privacyGuard.containsForbiddenName(t, ['dupont']);
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -126,7 +128,7 @@ const stamp = JSON.parse(readFileSync(join(dir, 'stamp.json'), 'utf8'));
 assert.equal(stamp.fingerprint, posterContentFingerprint(root),
   'affiches du kit périmées : le texte, les établissements ou les exemples ont changé. Relancer npm run kit:generic-posters && npm run kit:example-posters');
 
-assert.ok(!/tison/i.test(builder + html + JSON.stringify(examples)), 'mention privée interdite dans les affiches');
+assert.ok(!hasForbidden(builder + html + JSON.stringify(examples)), 'mention privée interdite dans les affiches');
 
 const withoutCampusEx = campuses.filter((s) => !examples.some((ex) => (ex.kind || 'campus') === 'campus' && ex.campus === s));
 if (withoutCampusEx.length) {

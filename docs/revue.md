@@ -142,8 +142,8 @@ réductions, on retire la ligne plutôt que de couper l’accroche ou les auteur
   - **jeux** : sudoku (solution unique) et mots cachés tirés des titres de l’édition, générés de façon déterministe à
     partir de la date et de l’édition (`scripts/revue/revue-games.js`), solutions en petit et à l’envers à la fin ;
   - **colophon** sobre, une seule fois à la fin : logo, « Le Réseau Académique de Découverte et d’Agrégation de
-    Ressources », mention d’indépendance, nous joindre (azdak-qc@proton.me), code libre sous GNU GPL v2, lien
-    cliquable et **code QR** vers l’édition (Nayuki QR Code generator, MIT, compatible GPL v2, déjà dans
+    Ressources », mention d’indépendance, nous joindre (azdak-qc@proton.me), code libre sous GNU AGPLv3, lien
+    cliquable et **code QR** vers l’édition (Nayuki QR Code generator, MIT, compatible AGPLv3, déjà dans
     `scripts/vendor/`), le-radar.ca/revue, phrase sur la préparation automatique, « Conçu avec ♡ par Azdak en 2026 ».
   - Remplissage : météo, jeux, solutions et colophon ferment le flux des colonnes et occupent la fin de la dernière
     page. Le format de papier est choisi à l’impression, donc aucune bibliothèque de pagination ne peut garantir une

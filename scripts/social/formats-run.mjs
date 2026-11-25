@@ -12,7 +12,7 @@ import { weekendModel, publishedModel, buildResultsText, resultsTags, resultsTum
 import { postRecord, facets, graphemes } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
-import { createTumblr } from './channels/tumblr.mjs';
+import { tumblrFromEnv, npfFromText, tumblrEnabled } from './tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
 
@@ -89,16 +89,10 @@ async function publishOne(net, text, built, cfg, env) {
     return { url: p.url, id: p.id };
   }
   if (net === 'tumblr') {
-    const keys = { ck: env.TUMBLR_CONSUMER_KEY, cs: env.TUMBLR_CONSUMER_SECRET, tk: env.TUMBLR_TOKEN, ts: env.TUMBLR_TOKEN_SECRET };
-    const tb = createTumblr({ ...keys, blog: env.TUMBLR_BLOG || 'le-radar-ca.tumblr.com' });
-    const content = text.split('\n').filter(l => l.trim()).map((l, i) => {
-      const b = { type: 'text', text: l, ...(i === 0 ? { subtype: 'heading2' } : {}) }, at = l.indexOf(link);
-      if (at >= 0) b.formatting = [{ start: [...l.slice(0, at)].length, end: [...l.slice(0, at)].length + [...link].length, type: 'link', url: link }];
-      return b;
-    });
-    content.splice(1, 0, { type: 'image', media: [{ url: cfg.image }], alt_text: title });
-    content.push({ type: 'link', url: link, title, description: desc });
-    const p = await tb.post({ content, tags: built.networks.tumblr.tags.join(','), state: 'published', source_url: link });
+    const tb = tumblrFromEnv(env);
+    const content = npfFromText(text, { image: { url: cfg.image, alt: title }, link: { url: link, title, description: desc } });
+    const p = await tb.post({ content, tags: built.networks.tumblr.tags.join(','), source_url: link });
+    if (!p.created) throw new Error(`Tumblr ${p.status} (pas 201 Created)`);
     return { url: p.url, id: p.id };
   }
   // X, Facebook, LinkedIn : Buffer (publication immédiate, une seule fois)
@@ -122,7 +116,7 @@ async function main() {
   for (const format of formats) {
     const cfg = POLICY.formats[format]; if (!cfg) throw new Error(`format inconnu : ${format}`);
     const built = buildAll(format, { sports, radio, teamAcc, now, buffer });
-    const nets = (cfg.networks || []).filter(n => NETS.includes(n));
+    const nets = (cfg.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()));
     const key = format === 'weekend_results' ? built.window.key : torontoDay(now);
     const done = (state[format] ||= {})[key] ||= {};
     const bad = Object.entries(built.networks).filter(([n, v]) => nets.includes(n) && v.problems.length);
