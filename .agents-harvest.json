@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-22T09:04:25.319Z",
+  "generatedAt": "2026-11-25T08:30:05.894Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 3387.2,
+    "score": 3090,
     "level": "heavy",
-    "files": 2421,
-    "touches": 9649,
-    "commitCount": 225
+    "files": 2455,
+    "touches": 3304,
+    "commitCount": 56
   },
   "candidates": [
     {
@@ -17,14 +17,14 @@
       "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
       "related": "D1",
-      "heat": 2034,
+      "heat": 715.2,
       "files": [
-        "tests/social-une-render.spec.mjs",
-        "tests/social-une.mjs",
-        "tests/footer-v2.spec.mjs",
-        "scripts/social/une-lib.mjs",
-        "scripts/seo-pages-lib.js",
-        "scripts/social/une-render.mjs"
+        "scripts/social/channels/tumblr.mjs",
+        "scripts/social/tumblr-post.mjs",
+        "scripts/social/tumblr.mjs",
+        "tests/social-tumblr.mjs",
+        ".github/workflows/bluesky-delete-post.yml",
+        ".github/workflows/pages-deploy.yml"
       ]
     },
     {
@@ -33,30 +33,14 @@
       "why": "Activité concentrée sur /pomo/",
       "effort": "S",
       "related": null,
-      "heat": 189,
+      "heat": 61.5,
       "files": [
         "pomo/LICENSE",
         "pomo/README.md",
-        "pomo/index.html",
         "pomo/apple-touch-icon-120x120.png",
         "pomo/apple-touch-icon-152x152.png",
-        "pomo/apple-touch-icon-180x180.png"
-      ]
-    },
-    {
-      "zone": "pwa-sw",
-      "title": "PWA / service worker / install",
-      "why": "SW et install touchés souvent ; risque de cache oublié",
-      "effort": "S",
-      "related": null,
-      "heat": 146,
-      "files": [
-        "sw.js",
-        "sports/sw.js",
-        "assets/news-images/manifest.json",
-        "offline.html",
-        "engage-prompt.js",
-        "manifest.json"
+        "pomo/apple-touch-icon-180x180.png",
+        "pomo/apple-touch-icon.png"
       ]
     },
     {
@@ -65,7 +49,7 @@
       "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
       "effort": "M",
       "related": "D3",
-      "heat": 132,
+      "heat": 44,
       "files": [
         "data/quebec-backgrounds-rejected.json",
         "data/quebec-backgrounds.json",
@@ -76,12 +60,28 @@
       ]
     },
     {
+      "zone": "pwa-sw",
+      "title": "PWA / service worker / install",
+      "why": "SW et install touchés souvent ; risque de cache oublié",
+      "effort": "S",
+      "related": null,
+      "heat": 32,
+      "files": [
+        "assets/news-images/manifest.json",
+        "engage-prompt.js",
+        "manifest.json",
+        "offline.html",
+        "pomo/sw.js",
+        "solitaire/sw.js"
+      ]
+    },
+    {
       "zone": "radio-mobile",
       "title": "Radio mobile / Media Session / reprise",
       "why": "Zone audio mobile sensible ; regroupe les fix récurrents",
       "effort": "M",
       "related": null,
-      "heat": 75,
+      "heat": 25,
       "files": [
         ".github/workflows/update-radio-nowplaying.yml",
         "cast.js",
@@ -97,7 +97,7 @@
       "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
       "effort": "L",
       "related": "D2",
-      "heat": 27,
+      "heat": 9,
       "files": [
         "app.js",
         "mobile/app/js/app.js",
@@ -107,64 +107,64 @@
   ],
   "topFiles": [
     {
-      "file": "sports-masthead.json",
-      "n": 113
+      "file": "assets/kit/affiches/affiche-ex-une-concordia-tabloid-semaine-verre-bilingue-600dpi.pdf",
+      "n": 12
     },
     {
-      "file": "sports.json",
-      "n": 113
+      "file": "assets/kit/affiches/affiche-ex-une-laval-tous-tabloid-semaine-verre-600dpi.pdf",
+      "n": 12
     },
     {
-      "file": "en/sports/index.html",
-      "n": 27
+      "file": "assets/kit/affiches/affiche-ex-une-mcgill-lettre-semaine-bilingue-600dpi.pdf",
+      "n": 12
     },
     {
-      "file": "sw-shell-lock.json",
-      "n": 22
+      "file": "assets/kit/affiches/affiche-ex-une-sherbrooke-lettre-semaine-600dpi.pdf",
+      "n": 12
     },
     {
-      "file": "sw.js",
-      "n": 21
+      "file": "assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-600dpi.pdf",
+      "n": 12
     },
     {
-      "file": "sports/index.html",
-      "n": 21
+      "file": "assets/kit/affiches/affiche-ex-une-udem-tous-tabloid-mois-600dpi.pdf",
+      "n": 12
     },
     {
-      "file": "en/newspapers/la-griffe/index.html",
-      "n": 19
+      "file": "assets/kit/affiches/affiche-ex-une-uqam-legal-mois-600dpi.pdf",
+      "n": 12
     },
     {
-      "file": "en/newspapers/le-polyscope/index.html",
-      "n": 19
+      "file": "assets/kit/affiches/gallery-meta.json",
+      "n": 12
     },
     {
-      "file": "en/newspapers/lexemplaire/index.html",
-      "n": 19
+      "file": "data/bluesky-sent.json",
+      "n": 10
     },
     {
-      "file": "en/newspapers/the-tribune/index.html",
-      "n": 19
+      "file": "assets/news-images/manifest.json",
+      "n": 8
     },
     {
-      "file": "journaux/la-griffe/index.html",
-      "n": 19
+      "file": "data/archives/2018-03.json",
+      "n": 8
     },
     {
-      "file": "journaux/le-polyscope/index.html",
-      "n": 19
+      "file": "data/archives/2018-04.json",
+      "n": 8
     },
     {
-      "file": "journaux/lexemplaire/index.html",
-      "n": 19
+      "file": "data/archives/2018-05.json",
+      "n": 8
     },
     {
-      "file": "journaux/the-tribune/index.html",
-      "n": 19
+      "file": "data/archives/2019-08.json",
+      "n": 8
     },
     {
-      "file": "sports/sw.js",
-      "n": 18
+      "file": "data/archives/2025-05.json",
+      "n": 8
     }
   ]
 }
