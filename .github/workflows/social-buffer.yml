@@ -58,6 +58,8 @@ on:
         default: all
 
 env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
   # Date d'expiration de la clé Buffer « le-radar-github » (pas un secret).
   BUFFER_KEY_EXPIRES: '2027-11-01'
 

@@ -37,6 +37,10 @@ concurrency:
   group: news-collect
   cancel-in-progress: false
 
+env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
+
 jobs:
   aggregate:
     if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}

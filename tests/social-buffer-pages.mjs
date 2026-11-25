@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 // Pages Facebook / LinkedIn via Buffer : fenêtres, rodage, places libres, écart, format sans @, lien.
+import privacyGuard from '../scripts/privacy-guard.js';
+const hasForbidden = (t) => privacyGuard.containsForbiddenName(t, ['dupont']);
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { planDues, dayCap, buildPageText, pageLink, selectForPage, isRejection, postMetadata } from '../scripts/social/buffer-pages.mjs';
@@ -55,7 +57,7 @@ assert(ln.endsWith('\n📰 Le Délit · Jeanne Roy\n' + pageLink(it) + '\n#McGil
 assert(fb.endsWith('\n#McGill'), 'Facebook : un hashtag spécifique en dernier');
 const at = buildPageText({ ...it, source: 'The Link', author: '@sana' }, CFG.facebook);
 assert(!/(^|\s)@\w/.test(at), 'aucun @');
-assert(!/tison/i.test(JSON.stringify(CFG)) && !/tison/i.test(fb));
+assert(!hasForbidden(JSON.stringify(CFG)) && !hasForbidden(fb));
 // sélection : quasi-doublon (même titre, autre source) et déjà en file écartés
 const dup = { ...it, id: 'g2', source: 'Impact Campus', link: 'https://impactcampus.ca/greve' };
 const other = { ...it, id: 'g3', source: 'Montréal Campus', bare: 'Autre sujet', title: 'Autre sujet', link: 'https://montrealcampus.ca/x' };

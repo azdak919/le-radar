@@ -38,6 +38,10 @@ permissions:
   contents: write
   issues: write
 
+env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
+
 jobs:
   gate:
     runs-on: ubuntu-latest
