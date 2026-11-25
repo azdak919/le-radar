@@ -17,7 +17,7 @@ const expected = {
   x: 'https://x.com/le_radar_ca',
   bluesky: 'https://bsky.app/profile/le-radar.ca',
   mastodon: 'https://piaille.fr/@leradar',
-  tumblr: 'https://le-radar-ca.tumblr.com',
+  threads: 'https://www.threads.com/@le.radar.ca',
   rss: 'https://le-radar.ca/feed.xml',
 };
 const on = links.filter((l) => l.enabled);
@@ -43,7 +43,7 @@ const sameAsOrder = [
   'https://x.com/le_radar_ca',
   'https://bsky.app/profile/le-radar.ca',
   'https://piaille.fr/@leradar',
-  'https://le-radar-ca.tumblr.com',
+  'https://www.threads.com/@le.radar.ca',
   'https://le-radar.ca/feed.xml',
 ];
 const indexHtml = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
