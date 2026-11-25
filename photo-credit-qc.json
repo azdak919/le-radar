@@ -1,100 +1,58 @@
 {
-  "updated": "2026-11-25T12:41:40.377Z",
-  "total": 1166,
-  "withImage": 1055,
-  "withCredit": 1055,
-  "cited": 766,
-  "pending": 184,
+  "updated": "2026-11-25T13:10:24.005Z",
+  "total": 1172,
+  "withImage": 1060,
+  "withCredit": 1060,
+  "cited": 769,
+  "pending": 186,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 20,
-  "citedNew": 13,
-  "fallbackNew": 47,
+  "updatedCount": 6,
+  "citedNew": 3,
+  "fallbackNew": 57,
   "samples": [
     {
-      "title": "Dis Siri, planifie ma journée",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Museum or Mausoleum? - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "La vie est un long fleuve agité",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "Thresholds: An Anthology of the Artists of Montreal - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo : Ainsley Nice",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-bare"
     },
     {
-      "title": "Soccer i Q : du soccer, même en hiver",
-      "source": "Le Délit",
-      "credit": "Photo : Romane Randria",
+      "title": "2027: A Renaissance for Subversive Music - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo : Jane Goodman",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-bare"
     },
     {
-      "title": "Un président destitué, un pays ébranlé",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Not My Bond - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "On voit tout, pourtant on ne comprend rien",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée de Variety",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Vendre sa personnalité pour payer un stage ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Fellow Travelers, ce que la musique ne tait pas",
-      "source": "Le Délit",
-      "credit": "Photo : Kevin Calixte",
+      "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of Felix Sobolewski",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Deux mois de Parti québécois",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Vos droits ne sont pas garantis",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier et Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "« Ceci n’est pas un jeu »",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pain au chocolat ou chocolatine ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les professeurs en grève",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Étudier, sans savoir de quoi demain sera fait",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-near"
+      "method": "figcaption-trailing"
     }
   ]
 }

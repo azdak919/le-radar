@@ -1,50 +1,14 @@
 {
-  "updated": "2026-11-25T12:38:53.239Z",
-  "total": 1166,
-  "pool": 59,
-  "incomplete": 36,
-  "withLeadExcerpt": 276,
-  "candidates": 36,
-  "enriched": 15,
+  "updated": "2026-11-25T13:07:50.517Z",
+  "total": 1172,
+  "pool": 60,
+  "incomplete": 31,
+  "withLeadExcerpt": 282,
+  "candidates": 31,
+  "enriched": 6,
   "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Deux mois de Parti québécois",
-      "link": "https://www.delitfrancais.com/2026/11/25/deux-mois-de-parti-quebecois/",
-      "ok": true,
-      "score": 100,
-      "chars": 324,
-      "sample": "Cela fait maintenant plus d’un mois que le Parti québécois est à la tête d’un gouvernement minoritai",
-      "changed": true
-    },
-    {
-      "title": "Vos droits ne sont pas garantis",
-      "link": "https://www.delitfrancais.com/2026/11/25/vos-droits-ne-sont-pas-garantis/",
-      "ok": true,
-      "score": 100,
-      "chars": 672,
-      "sample": "Presque une année s’est écoulée depuis la publication du premier article de la section Coin Queer. S",
-      "changed": true
-    },
-    {
-      "title": "« Ceci n’est pas un jeu »",
-      "link": "https://www.delitfrancais.com/2026/11/25/ceci-nest-pas-un-jeu/",
-      "ok": true,
-      "score": 100,
-      "chars": 424,
-      "sample": "Que ce soient les salles d’évasion qui ont pris une ampleur considérable lors des dernières années o",
-      "changed": true
-    },
-    {
-      "title": "Pain au chocolat ou chocolatine ?",
-      "link": "https://www.delitfrancais.com/2026/11/25/pain-au-chocolat-ou-chocolatine/",
-      "ok": true,
-      "score": 100,
-      "chars": 540,
-      "sample": "En arrivant à McGill, j’ai combiné ma première année d’études avec un petit boulot dans une boulange",
-      "changed": true
-    },
     {
       "title": "Les professeurs en grève",
       "link": "https://www.delitfrancais.com/2026/11/25/les-professeurs-en-greve/",
@@ -52,7 +16,7 @@
       "score": 96,
       "chars": 291,
       "sample": "Cette décision était attendue depuis le mois dernier, lorsque les membres de la Faculté des arts, de",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Étudier, sans savoir de quoi demain sera fait",
@@ -61,7 +25,25 @@
       "score": 100,
       "chars": 474,
       "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Deux mois de Parti québécois",
+      "link": "https://www.delitfrancais.com/2026/11/25/deux-mois-de-parti-quebecois/",
+      "ok": true,
+      "score": 100,
+      "chars": 324,
+      "sample": "Cela fait maintenant plus d’un mois que le Parti québécois est à la tête d’un gouvernement minoritai",
+      "changed": false
+    },
+    {
+      "title": "« Ceci n’est pas un jeu »",
+      "link": "https://www.delitfrancais.com/2026/11/25/ceci-nest-pas-un-jeu/",
+      "ok": true,
+      "score": 100,
+      "chars": 424,
+      "sample": "Que ce soient les salles d’évasion qui ont pris une ampleur considérable lors des dernières années o",
+      "changed": false
     },
     {
       "title": "Et si on parlait de la mort ?",
@@ -79,6 +61,24 @@
       "score": 96,
       "chars": 353,
       "sample": "Femme tentée, femme punie. Deux noms viennent aussitôt à l’esprit, bien avant celui de la moindre hé",
+      "changed": false
+    },
+    {
+      "title": "Souriez, vous êtes filmés !",
+      "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 439,
+      "sample": "On entre, on achète, on sort. Pour les étudiants de McGill qui fréquentent le dépanneur Couche-Tard ",
+      "changed": false
+    },
+    {
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
+      "ok": true,
+      "score": 100,
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
       "changed": false
     }
   ]
