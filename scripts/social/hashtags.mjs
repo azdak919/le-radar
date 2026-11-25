@@ -5,6 +5,8 @@
 // 21 nov. 2026 : sur X seulement, mots-clics thématiques (liste fixe, titre + résumé, au plus 3).
 // 22 nov. 2026 : un tag fédéral selon la langue (#polcan ou #cdnpoli, jamais les deux) ; établissement
 // en 2e place ; le titre pèse plus que le résumé ; surnoms d'équipes → école, sujet du titre/amorce.
+// 22 nov. 2026 (autres réseaux) : le même choix d'établissement (surnom, titre, amorce) s'applique
+// à Facebook, LinkedIn, Bluesky et Mastodon ; le reste du format de ces réseaux ne change pas.
 // Accents conservés (Mastodon et Bluesky les gèrent ; X, Facebook et LinkedIn aussi).
 import { POLICY } from './policy.mjs';
 
@@ -50,10 +52,20 @@ const INSTITUTION_IN_TEXT = [
   ['#DawsonCollege', 'Dawson College|Dawson'],
   ['#CégepDeJonquière', 'Cégep de Jonquière|Cegep de Jonquiere'],
 ];
-export const institutionTagsFromText = it => INSTITUTION_IN_TEXT.filter(([, src]) => wordRe(src).test(blob(it))).map(([tag]) => tag);
+/** Institutions dans le texte, surnoms compris, dans l'ordre titre → amorce → reste (l'adversaire plus loin ne vient pas en premier). */
+export function institutionTagsFromText(it) {
+  const title = it.bare || it.title || '';
+  const desc = [it.desc, it.excerpt, it.summary].filter(Boolean).join(' ');
+  const rest = (it.categories || []).join(' ');
+  const seen = new Set(), out = [];
+  for (const tag of [...instHits(title), ...instHits(leadText(desc)), ...instHits(desc), ...instHits(rest)]) {
+    if (!seen.has(tag)) { seen.add(tag); out.push(tag); }
+  }
+  return out;
+}
 /** Ville réelle de la source, ou rien si elle est inconnue (jamais inventée). */
 export function placeTag(it) { return CITY_TAGS[placeOf(it)[0]] || ''; }
-export const institutionTag = it => institutionTagsFromText(it)[0] || INSTITUTION_TAGS[placeOf(it)[1]] || '';
+export const institutionTag = it => subjectInstitutionTag(it);
 // Sport précis (équipes, ligues, institutions) : étiquette du sport, plus parlante que #Sport.
 export const SPORT_TAGS = [
   ['#Football', wordRe('football|rouge et or|gridiron|vanier cup|coupe vanier')], ['#Hockey', wordRe('hockey|dek hockey|lnh|nhl')], ['#Basketball', wordRe('basket\\w*')],
@@ -75,8 +87,8 @@ export function tagAlreadyInText(tag, text) {
 /** Hashtags d'un article (ordre : institution, sport précis, ville, sujet), au plus `max`, sans doublon ni remplissage générique. */
 export function articleTags(it, max = 3) {
   if (!(max > 0)) return [];
-  const b = blob(it), mentioned = institutionTagsFromText(it);
-  const insts = mentioned.length ? mentioned : [INSTITUTION_TAGS[placeOf(it)[1]] || ''].filter(Boolean);
+  const b = blob(it);
+  const insts = [subjectInstitutionTag(it)].filter(Boolean);
   const t = topicOf(it);
   const sport = t?.tag === 'Sport' ? sportTagOf(b) : '';
   const topic = t && t.tag !== 'Sport' ? '#' + t.tag : '';
@@ -94,7 +106,7 @@ export const maxTags = network => POLICY.hashtags?.maxByNetwork?.[network] ?? 0;
 
 // ── Mots-clics thématiques X seulement (liste fixe, 21–22 nov. 2026) ────────
 // Appariement déterministe sur le titre et le résumé, sans IA. Les autres réseaux
-// gardent articleTags (institution, sport précis, ville, sujet générique).
+// gardent articleTags (institution sujet, sport précis, ville, sujet générique).
 const titleSummary = it => [it.bare || it.title, it.desc, it.excerpt, it.summary, it.hook].filter(Boolean).join(' ');
 const X_VANIER = wordRe('coupe vanier|vanier cup|vaniercup');
 const X_USPORTS = wordRe('u\\s*sports|usports|coupe vanier|vanier cup|coupe uteck|uteck bowl|\\boua\\b|canada west|carabins|rouge et or|rouge-et-or|vert et or|vert-et-or|vert\\s*&\\s*or|\\bstingers\\b|\\bgaiters\\b|\\bmartlets\\b|\\bredbirds\\b|citadins|gee-?gees');
@@ -148,7 +160,7 @@ export function xThematicFlags(it) {
   };
 }
 
-// Surnoms d'équipes → établissement (X seulement). Le sujet du titre ou de l'amorce l'emporte sur un adversaire plus loin.
+// Surnoms d'équipes → établissement (tous les réseaux). Le sujet du titre ou de l'amorce l'emporte sur un adversaire plus loin.
 const TEAM_SCHOOLS = [
   ['#UdeS', 'vert\\s*(?:&|et|-)\\s*or'],
   ['#ULaval', 'rouge\\s*(?:et|-)\\s*or'],
@@ -184,8 +196,8 @@ function leadText(text) {
   }
   return (m ? m[0] : s).trim();
 }
-/** Établissement X : sujet du titre, sinon de l'amorce, sinon celui du média. Pas l'adversaire plus loin dans l'extrait. */
-export function xInstitutionTag(it) {
+/** Établissement sujet : titre, sinon amorce, sinon celui du média. Pas l'adversaire plus loin dans l'extrait. */
+export function subjectInstitutionTag(it) {
   const title = it.bare || it.title || '';
   const desc = [it.desc, it.excerpt, it.summary].filter(Boolean).join(' ');
   const outlet = INSTITUTION_TAGS[placeOf(it)[1]] || '';
@@ -196,6 +208,7 @@ export function xInstitutionTag(it) {
   };
   return pick(instHits(title)) || pick(instHits(leadText(desc))) || outlet;
 }
+export const xInstitutionTag = subjectInstitutionTag;
 
 const FEDERAL_TAG = lang => lang === 'en' ? '#cdnpoli' : '#polcan';
 
