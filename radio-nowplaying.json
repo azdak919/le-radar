@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T18:36:52.111Z",
+  "updatedAt": "2026-11-25T19:37:16.487Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Radio-Ciné",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "14:00",
-        "end": "14:30",
-        "url": "https://chyz.ca/emission/radio-cine/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:24.011Z"
+      "checkedAt": "2026-11-25T19:36:37.981Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "Vibrance: voyage dance vers Montréal et ailleurs",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/vibrance"
       },
+      "next": {
+        "title": "Le cours de math",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:25.316Z"
+      "checkedAt": "2026-11-25T19:36:51.111Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Radyo Kapwa",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "All Da Way Live",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "Radyo Kapwa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:29.041Z"
+      "checkedAt": "2026-11-25T19:36:53.733Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
-      },
-      "next": {
         "title": "Cherry Vamp and the Sonic Coffin",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
+      "next": {
+        "title": "Patch Notes",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
+      },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Cherry Vamp and the Sonic Coffin",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:42.486Z"
+      "checkedAt": "2026-11-25T19:37:06.983Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:43.588Z"
+      "checkedAt": "2026-11-25T19:37:07.977Z"
     },
     "choq": {
       "id": "choq",
@@ -135,7 +135,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Aldous Harding — One Stop",
+      "track": "KAYTRADAMUS — Fantasea",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -143,7 +143,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T18:36:51.760Z"
+      "checkedAt": "2026-11-25T19:37:16.136Z"
     }
   }
 }
