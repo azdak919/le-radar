@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-25T17:48:14.930Z",
+  "updated": "2026-11-25T18:10:17.215Z",
   "total": 1172,
   "withPhoto": 1067,
   "withStock": 117,
   "withCampusBank": 102,
   "fullyCovered": 1155,
-  "leadReadyPhotos": 1122,
+  "leadReadyPhotos": 1121,
   "pageScraped": 9,
   "photosRecovered": 9,
   "imagesCleared": 1,
-  "stockSearches": 5,
-  "stockFound": 20,
-  "campusBankFound": 17,
+  "stockSearches": 6,
+  "stockFound": 19,
+  "campusBankFound": 16,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
