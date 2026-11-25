@@ -658,6 +658,13 @@
   -webkit-text-fill-color: var(--lamp-past-ink);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
 }
+/* Résultat à venir : jaune « Prochain », encre noire (pas le pourpre des dates). */
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag[data-cta-pending="1"] {
+  background: #f5d000;
+  color: #1a1500;
+  -webkit-text-fill-color: #1a1500;
+  box-shadow: inset 0 0 0 1px rgba(255, 236, 70, 0.45);
+}
 /* Aujourd’hui (résultat) : même rouge + pulse que En direct. */
 .masthead-sports-strip .sports-chip[data-cta-state="live"] .sports-chip__cta-tag,
 .masthead-sports-strip .sports-chip .sports-chip__cta-tag[data-cta-lamp="live"],

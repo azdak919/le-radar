@@ -5,6 +5,13 @@
 // ─── Météo des principaux campus (desktop / tablette) ────────────────────────
 const WEATHER_CACHE_KEY = 'le_radar_masthead_weather_v2';
 const WEATHER_CACHE_MS = 15 * 60 * 1000;
+// Repli si le Worker ne répond pas : mieux vaut des températures d'il y a
+// quelques heures qu'un mât sans météo (il fallait rafraîchir à la main).
+const WEATHER_STALE_MS = 3 * 60 * 60 * 1000;
+// Un essai unique de 4,5 s échouait sur un MISS du Worker (Open-Meteo puis
+// met.no) ou un réseau lent au premier chargement : délais croissants.
+const WEATHER_FETCH_TIMEOUTS_MS = [6000, 10000, 15000];
+const WEATHER_RETRY_DELAY_MS = 2000;
 // Catalogue : weather-cities-data.js (var WEATHER_CITIES)
 // Radar principal : variante remplie et animée. Le Pomo pointe explicitement
 // vers /assets/meteocons/ pour rester statique et discret.
@@ -204,7 +211,23 @@ function weatherPrimaryGrowsForToday(el) {
   return !!el.closest('.masthead-weather__board')?.hasAttribute('data-weather-dual-primary');
 }
 
-function commitWeatherExtra(el, extra, mode, before) {
+/** Téléphone : max/min seulement pour MTL/QC (pas la place pour « Demain »). */
+const WEATHER_PHONE_MQ = window.matchMedia('(max-width: 599.98px)');
+
+/**
+ * Décision du 22 nov. 2026 : Montréal et Québec affichent toujours leurs
+ * extras — max/min + « Demain » (bureau, tablette), max/min seuls au
+ * téléphone. Les villes régionales n'affichent jamais « Demain ».
+ * Retourne le mode imposé, ou null pour une ville régionale.
+ */
+function weatherPrimaryForcedMode(el) {
+  const id = el?.dataset?.weatherCity;
+  if (!MASTHEAD_WEATHER_PRIMARY_IDS.has(id)) return null;
+  if (!WEATHER_PHONE_MQ.matches && el.dataset.wxNext) return 'both';
+  return 'today';
+}
+
+function commitWeatherExtra(el, extra, mode, before, need = null) {
   if (mode === 'off') {
     el.classList.remove('has-room');
     el.dataset.weatherExtra = 'off';
@@ -213,10 +236,18 @@ function commitWeatherExtra(el, extra, mode, before) {
   el.classList.add('has-room');
   el.dataset.weatherExtra = mode;
   const grew = el.clientWidth > before + 1;
-  const clipped = extra.scrollWidth > extra.clientWidth + 1;
+  // La puce elle-même peut déborder (colonne étroite) sans que l'extra le voie :
+  // dans ce cas on redescend both → today → off plutôt que de rogner.
+  // Ou l'extra est comprimé (flex) sous sa largeur mesurée — 1024 : une seule case.
+  const needW = need ? need[mode] : 0;
+  const clipped = extra.scrollWidth > extra.clientWidth + 1
+    || (weatherPrimaryForcedMode(el) !== null && el.scrollWidth > el.clientWidth + 1)
+    || (needW > 0 && extra.getBoundingClientRect().width + 2 < needW);
   const primaryToday = mode === 'today' && weatherPrimaryGrowsForToday(el);
-  if (!clipped && (!grew || primaryToday)) return;
-  commitWeatherExtra(el, extra, mode === 'both' ? 'today' : 'off', before);
+  // MTL/QC : la puce peut grandir (le fit du bandeau retire une ville régionale).
+  const forced = weatherPrimaryForcedMode(el) === mode;
+  if (!clipped && (!grew || primaryToday || forced)) return;
+  commitWeatherExtra(el, extra, mode === 'both' ? 'today' : 'off', before, need);
 }
 
 /**
@@ -229,11 +260,13 @@ function applyWeatherExtraFit(el, textW) {
   el.dataset.weatherExtra = 'off';
   if (!extra || !el.dataset.wxMax || el.clientWidth < 48 || textW < 1) return;
   const todayW = measureWeatherExtraWidth(extra, 'today');
-  const bothW = el.dataset.wxNext ? measureWeatherExtraWidth(extra, 'both') : 0;
+  const forced = weatherPrimaryForcedMode(el);
+  // Villes régionales : jamais « Demain » (réservé à MTL/QC).
+  const bothW = (forced && el.dataset.wxNext) ? measureWeatherExtraWidth(extra, 'both') : 0;
   const slack = weatherChipSlack(el, textW);
-  let mode = weatherExtraMode(slack, todayW, bothW);
+  let mode = forced || weatherExtraMode(slack, todayW, bothW);
   if (mode === 'off' && weatherPrimaryGrowsForToday(el) && todayW > 0) mode = 'today';
-  commitWeatherExtra(el, extra, mode, el.clientWidth);
+  commitWeatherExtra(el, extra, mode, el.clientWidth, forced ? { both: bothW, today: todayW } : null);
 }
 
 let mastheadWeatherTimer = null;
@@ -1122,15 +1155,15 @@ function weatherBoardCount() {
     if (isWideDesktopComfort()) {
       // MTL+QC portent le max/min (~230 px chacune). Le reliquat
       // laisse un nom court montrer le sien, pas une carte de plus trop étroite.
-      const nSec = Math.max(1, Math.floor((width - 480) / 240));
+      // MTL+QC portent max/min + « Demain » (~320 px chacune, 22 nov. 2026).
+      const nSec = Math.max(1, Math.floor((width - 640) / 240));
       count = Math.max(3, Math.min(12, 2 + nSec));
-    } else if (width >= 1800) count = 8;
-    else if (width >= 1200) count = 7;
-    else if (width >= 900) count = 6;
-    else if (width >= 700) count = 5;
-    else if (width >= 520) count = 4;
-    else if (width >= 360) count = 3;
-    else count = 2;
+    } else {
+      // 1280–1439 : MTL+QC en colonnes au contenu (max/min + demain) ;
+      // le reliquat se partage entre secondaires d'au moins ~150 px.
+      const nSec = Math.max(0, Math.floor((width - 640) / 150));
+      count = Math.max(2, Math.min(8, 2 + nSec));
+    }
   } else {
     // Modèle : 1 ancre MTL/QC + secondaires. Bureau 1280 board ~650 px → 3 cartes
     // (4 serraient les secondaires → marquee). 4 seulement si board vraiment large.
@@ -1462,8 +1495,35 @@ function weatherShellKey() {
   ].join('');
 }
 
+/* Max/min n’était décidé qu’à l’arrivée d’une ville : si la puce s’élargit
+   ensuite (une ville retirée du bandeau, fontes, colonnes), le vide restait
+   sans max/min. On refait l’ajustement quand une puce change de largeur. */
+const weatherChipWidths = new WeakMap();
+let weatherChipRefitFrame = 0;
+const weatherChipRO = typeof ResizeObserver === 'function'
+  ? new ResizeObserver((entries) => {
+    let changed = false;
+    for (const entry of entries) {
+      const el = entry.target;
+      const w = el.clientWidth;
+      const prev = weatherChipWidths.get(el);
+      weatherChipWidths.set(el, w);
+      if (prev !== undefined && Math.abs(w - prev) >= 2) changed = true;
+    }
+    if (!changed || weatherChipRefitFrame) return;
+    weatherChipRefitFrame = window.requestAnimationFrame(() => {
+      weatherChipRefitFrame = 0;
+      measureWeatherNameOverflows();
+    });
+  })
+  : null;
+
 function measureWeatherNameOverflows() {
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
+    if (weatherChipRO && !weatherChipWidths.has(el)) {
+      weatherChipWidths.set(el, el.clientWidth);
+      weatherChipRO.observe(el);
+    }
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
     const full = el.querySelector('.masthead-weather__name-full');
@@ -1866,10 +1926,11 @@ window.addEventListener('radar:translate-mode', refreshMastheadWeatherLinks);
 // fait déjà au resize, pour la même raison : la largeur disponible a changé.
 window.addEventListener('radar:translate-mode', scheduleMastheadWeatherLayout);
 
-function readWeatherCache() {
+function readWeatherCache(maxAgeMs = WEATHER_CACHE_MS) {
   try {
     const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
-    if (cached?.at && Date.now() - cached.at < WEATHER_CACHE_MS && Array.isArray(cached.entries)) return cached.entries;
+    if (cached?.at && Date.now() - cached.at < maxAgeMs && Array.isArray(cached.entries)
+        && cached.entries.length === WEATHER_CITIES.length) return cached.entries;
   } catch { /* cache absent ou invalide */ }
   return null;
 }
@@ -1978,46 +2039,90 @@ function ensureMastheadBoards() {
   mastheadWeatherHomeNextSibling = MASTHEAD_WEATHER.nextSibling;
 }
 
-async function initMastheadWeather() {
-  // Sous le seuil du masthead, la météo se déplace sous le syntoniseur
-  // (setMastheadWeatherDocked) plutôt que d'être masquée : la charger
-  // reste utile à toutes les largeurs.
-  if (!MASTHEAD_WEATHER) return;
-  const cached = readWeatherCache();
-  if (cached) renderMastheadWeather(cached);
+function weatherForecastUrl() {
+  const params = new URLSearchParams({
+    latitude: WEATHER_CITIES.map((city) => city.lat).join(','),
+    longitude: WEATHER_CITIES.map((city) => city.lon).join(','),
+    current: 'temperature_2m,weather_code,is_day',
+    daily: 'weather_code,temperature_2m_max,temperature_2m_min',
+    forecast_days: '2',
+    temperature_unit: 'celsius',
+    timezone: 'America/Toronto',
+  });
+  // Passe par le cache partagé (workers/weather-cache) plutôt qu'Open-Meteo
+  // directement : à l'échelle, chaque visiteur qui appelle l'API anonyme
+  // épuisait son quota gratuit et coupait la météo pour tout le monde.
+  return `${WEATHER_API_BASE}/v1/forecast?${params}`;
+}
+
+async function fetchWeatherOnce(url, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const params = new URLSearchParams({
-      latitude: WEATHER_CITIES.map((city) => city.lat).join(','),
-      longitude: WEATHER_CITIES.map((city) => city.lon).join(','),
-      current: 'temperature_2m,weather_code,is_day',
-      daily: 'weather_code,temperature_2m_max,temperature_2m_min',
-      forecast_days: '2',
-      temperature_unit: 'celsius',
-      timezone: 'America/Toronto',
-    });
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4500);
-    // Passe par le cache partagé (workers/weather-cache) plutôt qu'Open-Meteo
-    // directement : à l'échelle, chaque visiteur qui appelle l'API anonyme
-    // épuisait son quota gratuit et coupait la météo pour tout le monde.
-    const response = await fetch(`${WEATHER_API_BASE}/v1/forecast?${params}`, {
-      signal: controller.signal,
-      cache: 'no-store',
-    });
-    clearTimeout(timer);
+    const response = await fetch(url, { signal: controller.signal, cache: 'no-store' });
     if (!response.ok) throw new Error(`weather ${response.status}`);
     const data = await response.json();
     const entries = Array.isArray(data) ? data : [data];
     if (entries.length !== WEATHER_CITIES.length) throw new Error('weather length');
-    try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries })); } catch { /* quota */ }
-    renderMastheadWeather(entries);
-  } catch {
-    // Lab local : afficher un bandeau même si le Worker refuse localhost
-    // (CORS) ou est offline — nécessaire pour juger météo ∥ sports.
-    if (!cached && isLocalWeatherLabHost()) {
-      renderMastheadWeather(weatherLabFixtureEntries());
+    return entries;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+let mastheadWeatherLoading = false;
+let mastheadWeatherRecoveryBound = false;
+
+/** Après échec total : réessayer au retour du réseau ou de l'onglet. */
+function bindMastheadWeatherRecovery() {
+  if (mastheadWeatherRecoveryBound) return;
+  mastheadWeatherRecoveryBound = true;
+  const retry = () => {
+    if (MASTHEAD_WEATHER?.dataset.ready === '1' && readWeatherCache()) return;
+    void initMastheadWeather();
+  };
+  window.addEventListener('online', retry);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') retry();
+  });
+}
+
+async function initMastheadWeather() {
+  // Sous le seuil du masthead, la météo se déplace sous le syntoniseur
+  // (setMastheadWeatherDocked) plutôt que d'être masquée : la charger
+  // reste utile à toutes les largeurs.
+  if (!MASTHEAD_WEATHER || mastheadWeatherLoading) return;
+  mastheadWeatherLoading = true;
+  try {
+    const fresh = readWeatherCache();
+    // Cache périmé (< 3 h) affiché tout de suite : le réseau le remplace.
+    const cached = fresh || readWeatherCache(WEATHER_STALE_MS);
+    if (cached) renderMastheadWeather(cached);
+    const url = weatherForecastUrl();
+    for (let attempt = 0; attempt < WEATHER_FETCH_TIMEOUTS_MS.length; attempt += 1) {
+      if (attempt > 0) {
+        await new Promise((resolve) => setTimeout(resolve, WEATHER_RETRY_DELAY_MS * attempt));
+      }
+      try {
+        const entries = await fetchWeatherOnce(url, WEATHER_FETCH_TIMEOUTS_MS[attempt]);
+        try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ at: Date.now(), entries })); } catch { /* quota */ }
+        renderMastheadWeather(entries);
+        return;
+      } catch {
+        // Lab local : afficher un bandeau même si le Worker refuse localhost
+        // (CORS) ou est offline — nécessaire pour juger météo ∥ sports.
+        // Dès le premier échec ; les essais suivants le remplacent au besoin.
+        if (!cached && isLocalWeatherLabHost()) {
+          if (attempt === 0) renderMastheadWeather(weatherLabFixtureEntries());
+        }
+      }
     }
-    /* prod : module discret — absent si la météo est indisponible */
+    if (isLocalWeatherLabHost()) return;
+    /* prod : module discret — absent si la météo est indisponible ;
+       on réessaie quand le réseau ou l'onglet revient. */
+    bindMastheadWeatherRecovery();
+  } finally {
+    mastheadWeatherLoading = false;
   }
 }
 

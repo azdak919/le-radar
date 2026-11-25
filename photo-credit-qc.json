@@ -1,42 +1,35 @@
 {
-  "updated": "2026-11-22T04:14:26.799Z",
-  "total": 1051,
-  "withImage": 951,
-  "withCredit": 951,
-  "cited": 660,
-  "pending": 182,
+  "updated": "2026-11-25T21:13:38.821Z",
+  "total": 1177,
+  "withImage": 1065,
+  "withCredit": 1065,
+  "cited": 773,
+  "pending": 186,
   "missingHero": 0,
   "ok": false,
-  "checked": 9,
-  "updatedCount": 4,
+  "checked": 60,
+  "updatedCount": 3,
   "citedNew": 3,
-  "fallbackNew": 6,
+  "fallbackNew": 57,
   "samples": [
     {
-      "title": "Cinq nouvelles de la semaine",
+      "title": "Le geai moqueur parmi nous",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia et Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Vendre sa personnalité pour payer un stage ?",
       "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "ASFA asks students what issues matter most to them",
-      "source": "The Concordian",
-      "credit": "Photo: Courtesy of ASFA",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Documentary film ‘NAZA’ examines the banality of evil behind the horrific Gaza genocide",
-      "source": "The Link",
-      "credit": "Photo: The Link",
+      "credit": "Photo : Quartier Libre",
       "cited": false,
       "method": null
     },
     {
-      "title": "Avi Lewis calls Carney’s policies a “terrifying concentration of power” at byelection campaign event in Montreal",
+      "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
       "source": "The Concordian",
-      "credit": "Photo: Eric Klempan",
+      "credit": "Photo: Courtesy of Felix Sobolewski",
       "cited": true,
       "method": "figcaption-trailing"
     }
