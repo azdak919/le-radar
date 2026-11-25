@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-11-25T20:37:14.915Z",
+  "updatedAt": "2026-11-25T21:36:49.762Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T20:36:34.434Z"
+      "checkedAt": "2026-11-25T21:36:10.550Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le cours de math",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/le-cours-de-math"
-      },
-      "next": {
         "title": "Feu | Metal | Chaos",
         "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
+      "next": {
+        "title": "Effets sonores (reprise)",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
+      },
       "track": "",
-      "showTitle": "Le cours de math",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T20:36:47.761Z"
+      "checkedAt": "2026-11-25T21:36:23.730Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,66 +81,66 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T20:36:51.062Z"
+      "checkedAt": "2026-11-25T21:36:26.161Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
-      },
-      "next": {
         "title": "Borderline",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/borderline"
       },
+      "next": {
+        "title": "Advice By The Fireplace",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+      },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "Borderline",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T20:37:05.125Z"
+      "checkedAt": "2026-11-25T21:36:40.296Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le SEIZE",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "17:59",
         "url": "https://www.cfak.ca/balados/le-seize"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le SEIZE",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T20:37:06.160Z"
+      "checkedAt": "2026-11-25T21:36:41.404Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Effet Philo",
         "source": "api-live",
@@ -141,15 +148,15 @@
         "end": "17:45",
         "slug": "effet-philo"
       },
-      "track": "Chenier — Dans les cendres",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "knitting — I Wasn’t Fully Cooked",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T20:37:14.564Z"
+      "checkedAt": "2026-11-25T21:36:49.412Z"
     }
   }
 }
