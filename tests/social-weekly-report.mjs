@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Bilan hebdomadaire : comptes internes exclus, agrégation, rendu sans courriel ni publication.
+import privacyGuard from '../scripts/privacy-guard.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { isInternal, externalCounts, summarizePosts, render, delta } from '../scripts/social/weekly-report.mjs';
-const internal = JSON.parse(fs.readFileSync('data/social/internal-accounts.json', 'utf8'));
-assert.ok(internal.bluesky.includes('charlestison.bsky.social') && internal.bluesky.includes('le-radar.ca'), 'comptes internes connus');
-assert.ok(isInternal('@Le-Radar.ca', internal.bluesky) && isInternal('CHARLESTISON.bsky.social', internal.bluesky) && !isInternal('quartierlibre.bsky.social', internal.bluesky));
-const ext = externalCounts({ likes: ['charlestison.bsky.social', 'a.bsky.social', 'b.bsky.social'], reposts: ['le-radar.ca', 'c.bsky.social'], replies: ['charlestison.bsky.social'], quotes: [] }, internal.bluesky);
+process.env.INTERNAL_BLUESKY_ACCOUNTS = 'jeandupont.bsky.social';
+const internal = privacyGuard.mergeInternalAccounts(JSON.parse(fs.readFileSync('data/social/internal-accounts.json', 'utf8')));
+assert.ok(internal.bluesky.includes('jeandupont.bsky.social') && internal.bluesky.includes('le-radar.ca'), 'comptes internes connus');
+assert.ok(isInternal('@Le-Radar.ca', internal.bluesky) && isInternal('JEANDUPONT.bsky.social', internal.bluesky) && !isInternal('quartierlibre.bsky.social', internal.bluesky));
+const ext = externalCounts({ likes: ['jeandupont.bsky.social', 'a.bsky.social', 'b.bsky.social'], reposts: ['le-radar.ca', 'c.bsky.social'], replies: ['jeandupont.bsky.social'], quotes: [] }, internal.bluesky);
 assert.deepEqual(ext, { likes: 2, reposts: 1, replies: 0, quotes: 0, total: 3, internalExcluded: 3 });
 const s = summarizePosts([{ url: 'u1', text: 'A', ext }, { url: 'u2', text: 'B', ext: externalCounts({}, []) }, { url: 'u3', text: 'C', ext: externalCounts({ likes: ['x'] }, []) }]);
 assert.equal(s.posts, 3); assert.equal(s.total, 4); assert.equal(s.zero, 1); assert.equal(s.internal, 3); assert.equal(s.perPost, 1.33); assert.deepEqual(s.top.map(t => t.url), ['u1', 'u3']);

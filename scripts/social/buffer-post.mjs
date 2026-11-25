@@ -10,6 +10,7 @@ import { createRequire as _cr } from 'node:module';
 const { wikimediaThumbUrl } = _cr(import.meta.url)('../jpeg-facebook-safe.js');
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { withHook } from './ai-hook.mjs';
+import { gateArticleImage } from './ai-image.mjs';
 import { volumeFor, torontoDay, mentionLedger, accountsForPost, mentionedIn, noteMention, POLICY } from './policy.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -106,6 +107,8 @@ for (const it of sel) {
   const pub = await mediaForNetwork(im.url, 'x', { thumb: wikimediaThumbUrl, log: m => console.log(m) });
   if (!pub) { console.log(`::warning::Image inaccessible ou trop lourde, non ajoutée à Buffer : ${im.url} (${it.id})`); continue; }
   im.url = pub.url;
+  const gate = await gateArticleImage(it, im.url, { credit: im.credit });
+  if (gate.reject) continue;
   await withHook(it);
   const dueAt = dues && !shareNow ? dues[n] : undefined;
   const day = torontoDay(dueAt ? Date.parse(dueAt) : Date.now());
@@ -115,7 +118,7 @@ for (const it of sel) {
   console.log(`\n--- ${++n}.${dueAt ? ' ' + new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) : ''} [${it.source}] ${xlen(text)} car. · image ${im ? im.origin + ' ' + im.url : 'AUCUNE'}\n${text}`);
   if (dry) continue;
   try {
-    const post = await channel.add({ text, image: im?.url, dueAt, now: shareNow });
+    const post = await channel.add({ text, image: im?.url, alt: gate.alt, dueAt, now: shareNow });
     state.sent[it.id] = { at: new Date().toISOString(), source: it.source, postId: post.id, dueAt: post.dueAt || null, image: im?.url || null, credit: im ? (im.credit || it.source) : null, ...(mentions.length ? { mention: mentions } : {}), ...(shareNow ? { shareNow: true, link: post.externalLink || null } : {}) };
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
     console.log(`→ Buffer : ${post.id} (${shareNow ? 'publication immédiate ' + (post.status || '') + ' ' + (post.externalLink || '') : post.dueAt || 'heure auto'})`);

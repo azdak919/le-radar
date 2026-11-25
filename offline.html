@@ -561,21 +561,26 @@
     /* Cette page ne charge pas style.css : elle doit s'afficher quand le
        réseau est tombé. Les règles du pied de page partagé y sont donc
        redéclarées — c'est une copie assumée, pas un oubli. */
-    .site-foot__brand { margin-bottom: 0.75rem; }
+    .site-foot__brand {
+      margin-bottom: 0.75rem;
+      container-type: inline-size;
+    }
     .site-foot__wordmark {
       margin: 0 0 0.15rem !important;
       font-family: var(--serif);
-      font-size: 1.05rem;
+      font-size: clamp(32px, 10cqi, 52px);
       font-weight: 700;
+      line-height: 1.05;
+      white-space: nowrap;
       color: var(--ink);
     }
     /* Manquait à la copie : sans cette règle l'image gardait ses attributs
        width/height (24 px), sans marge ni alignement — le seul pied de page
        du site où le logo ne tombait pas d'aplomb sur le mot-symbole. */
     .site-foot__logo {
-      width: 20px;
-      height: 20px;
-      margin-right: 6px;
+      width: 1.05em;
+      height: 1.05em;
+      margin-right: 0.32em;
       vertical-align: -0.12em;
     }
     .site-foot__signature {
@@ -779,7 +784,7 @@
       <details class="site-foot__details">
         <summary>À propos de LE-RADAR.ca</summary>
         <div class="site-foot__details-body">
-          <p class="site-foot__summary">LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
+          <p class="site-foot__summary">LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine. Tout média étudiant peut demander la modification ou le retrait immédiat de son flux sur simple demande.</p>
           <nav class="site-foot__links" aria-label="Liens de pied de page">
             <a href="./" data-home-nav>Accueil</a>
             <span class="site-foot__sep" aria-hidden="true">·</span>
@@ -799,11 +804,9 @@
             <span class="site-foot__sep" aria-hidden="true">·</span>
             <a href="en/" hreflang="en-CA">English</a>
             <span class="site-foot__sep" aria-hidden="true">·</span>
-            <a href="mise-a-jour/">Mise à jour</a>
-            <span class="site-foot__sep" aria-hidden="true">·</span>
             <button type="button" class="site-foot__link-btn" data-install-app="radar">Installer LE-RADAR.ca</button>
           </nav>
-          <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
+          <p>Code source sous licence <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer license">GNU AGPLv3</a> (<a href="https://github.com/azdak919/le-radar" target="_blank" rel="noopener noreferrer">dépôt</a>). <a href="kit-media/">Kit-média</a> sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.</p>
           <p class="site-foot__kao"><a href="https://keepandroidopen.org/fr/" target="_blank" rel="noopener noreferrer">Garder Android ouvert</a> <span class="site-foot__kao-hint">Campagne contre la vérification obligatoire des développeurs Google.</span></p>
           <div class="site-foot__credit">
             <p class="site-foot__author">
@@ -811,7 +814,7 @@
               par <a href="https://www.buymeacoffee.com/azdak" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="Offrir un café — Buy me a coffee">Azdak</a>
               en 2026
             </p>
-            <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
+            <p class="site-foot__legal">Contenus agrégés : articles et photos crédités à leurs auteurs et à leurs médias d’origine. Code tiers utilisé conformément à ses licences.</p>
             <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
           </div>
         </div>

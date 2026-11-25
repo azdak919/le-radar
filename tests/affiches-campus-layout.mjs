@@ -30,9 +30,10 @@ const compose = extractFn(src, 'compose');
 const une = extractFn(src, 'composeFrontPage');
 const license = readFileSync(join(root, 'LICENSE'), 'utf8');
 
-assert.match(license, /GNU GENERAL PUBLIC LICENSE/);
-assert.match(license, /Version 2, June 1991/);
-assert.match(src, /LICENSE_LINE = '\\u\{1F12F\} Azdak CC BY-SA 4\.0'/);
+assert.match(license, /GNU AFFERO GENERAL PUBLIC LICENSE/);
+assert.match(license, /Version 3, 19 November 2007/);
+assert.match(src, /LICENSE_LINE = '\\u00A9 Azdak CC BY 4\.0'/);
+assert.match(readFileSync(join(root, 'affiches/LICENSE'), 'utf8'), /CC BY 4\.0/);
 assert.match(src, /licenseSansFont/);
 assert.match(src, /"LR Sans"/);
 assert.match(src, /LR Copyleft/);

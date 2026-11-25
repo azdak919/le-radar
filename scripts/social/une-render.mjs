@@ -4,7 +4,7 @@
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { IMAGE_SIZES, MAX_IMAGE_BYTES, frDay, frTypo, frShort } from './une-lib.mjs';
+import { IMAGE_SIZES, MAX_IMAGE_BYTES, frDay, frDayYear, frTypo, frShort } from './une-lib.mjs';
 const frShortDay = (ymd, n) => frShort(new Date(Date.parse(ymd + 'T12:00:00Z') + n * 864e5).toISOString().slice(0, 10));
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -21,10 +21,11 @@ function startServer(port) {
 export function pageModel(model) {
   return {
     slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()),
+      dayLabelYear: frDayYear(model.slot.day).replace(/^./, c => c.toUpperCase()),
       // Prochaine édition (date absolue) : bandeau bas de la story, dans la zone recouverte par l'interface d'Instagram et de Facebook.
       next: model.slot.id === 'soir' ? `La une du matin · ${frShortDay(model.slot.day, 1)} · 7 h 45` : `La une du soir · ${frShortDay(model.slot.day, 0)} · 19 h 30` },
     sports: model.sports || { results: [], next: [] }, radio: model.radio || [],
-    items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, source: String(x.source || '').trim(), place: x.place || '', placeColor: x.placeColor || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
+    items: model.items.map((x, i) => ({ title: frTypo(x.title), byline: x.byline, source: String(x.source || '').trim(), place: x.place || '', placeColor: x.placeColor || '', sport: x.sport || '', hook: i === 0 ? frTypo(x.hook || '') : '', credit: x.credit || '', focalY: x.focalY, focalX: x.focalX, pageUrl: x.pageUrl || (x.id ? `https://le-radar.ca/article/${x.id}/` : ''), images: [...new Set([x.siteImage, ...(x.images || []).filter(u => /^https:/.test(u))].filter(Boolean))] })),
   };
 }
 
@@ -44,6 +45,14 @@ export async function renderImages(model, { outDir, formats = ['portrait', 'stor
       try {
         await page.goto(`http://127.0.0.1:${port}/affiches/social-une.html`, { waitUntil: 'load' });
         const info = await page.evaluate(arg => window.renderUne(arg), { model: pageModel(model), format });
+        const box = await page.evaluate(() => {
+          window.scrollTo(0, 0);
+          const r = document.getElementById('card').getBoundingClientRect();
+          return { x: r.x, y: r.y, w: r.width, h: r.height };
+        });
+        if (box.x !== 0 || box.y !== 0 || box.w !== width || box.h !== height) {
+          throw new Error(`image ${format} : la carte n’est pas plein cadre (${box.x}, ${box.y}, ${box.w}×${box.h}, attendu 0, 0, ${width}×${height})`);
+        }
         const file = path.join(outDir, `${prefix}-${format}-${width}x${height}.jpg`);
         let buf;
         for (const quality of [88, 80, 72, 64]) { buf = await page.locator('#card').screenshot({ type: 'jpeg', quality }); if (buf.length <= MAX_IMAGE_BYTES) break; }

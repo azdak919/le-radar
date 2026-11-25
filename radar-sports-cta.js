@@ -843,7 +843,9 @@ function sportsBoardCountBase() {
   const gap = 6;
   // Un seul plancher : CTA et scores ont la même largeur. Assez large
   // pour un nom + sous-ligne sans clip ; si ça déborde encore, le fit −1.
-  const minSlot = comfort ? 220 : (wide ? 200 : 240);
+  // Bureau 1280–1439 (~1170 px utiles) : 3 cartes, comme à 1440 (décision
+  // du 22 nov. 2026 — 5 cartes à 200 px tronquaient noms et sous-lignes).
+  const minSlot = comfort ? 220 : (wide ? 360 : 240);
   let maxN = 4;
   if (comfort) {
     if (avail >= 3000) maxN = 14;
@@ -2589,6 +2591,9 @@ function sportsCtaTagLinePair(wanted, shown, extra = {}) {
 
 function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
+  // « Résultat à venir » : pastille jaune, encre noire (comme « Prochain »).
+  if (wanted === SPORTS_CTA_TAG_PENDING) tag.dataset.ctaPending = '1';
+  else delete tag.dataset.ctaPending;
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
   const pair = sportsCtaTagLinePair(wanted, shown, extra);
@@ -3173,8 +3178,30 @@ function sportsOpenOrderSlides(now = Date.now()) {
   }
   const list = sportsDedupeMatchSlides(nexts).concat(sportsDedupeHomepageResults(results));
   list.sort((a, b) => sportsCompareOpenOrder(a, b, now));
-  return sportsSoftSportDiversity(sportsMixSportsPreservingHeat(list, now), now)
-    .slice(0, SPORTS_CTA_MAX_POOL);
+  return sportsCapPoolByFamily(
+    sportsSoftSportDiversity(sportsMixSportsPreservingHeat(list, now), now),
+    SPORTS_CTA_MAX_POOL,
+  );
+}
+
+/**
+ * Plafond partagé entre résultats (ouest) et rencontres à venir (est) : la
+ * moitié chacun, la part inutilisée passe à l'autre. Un simple slice gardait
+ * les 80 premiers par fraîcheur — un dimanche soir, les résultats du jour et
+ * de la veille prenaient 78 places et l'est n'avait plus que 2 matchs à faire
+ * tourner (sur 100). L'ordre de fraîcheur est conservé.
+ */
+function sportsCapPoolByFamily(list, cap) {
+  if (!Array.isArray(list) || list.length <= cap) return list ? list.slice() : [];
+  const isNext = (s) => s?.mode === 'next' && !sportsGameIsLive(s.game);
+  const nexts = list.filter(isNext);
+  const others = list.filter((s) => !isNext(s));
+  const half = Math.floor(cap / 2);
+  let nNext = Math.min(nexts.length, half);
+  let nOther = Math.min(others.length, cap - nNext);
+  nNext = Math.min(nexts.length, cap - nOther);
+  const keep = new Set(nexts.slice(0, nNext).concat(others.slice(0, nOther)));
+  return list.filter((s) => keep.has(s));
 }
 
 function sportsTakeUnusedPrefix(pool, n, usedKeys) {

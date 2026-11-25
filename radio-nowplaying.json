@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-11-21T08:06:55.050Z",
+  "updatedAt": "2026-11-25T21:54:55.713Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "next": {
-        "title": "Au delà du geste",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/au-dela-du-geste/"
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T08:06:17.050Z"
+      "checkedAt": "2026-11-25T21:54:14.378Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "01:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "next": {
-        "title": "Voix tropicale",
+        "title": "Effets sonores (reprise)",
         "source": "schedule",
-        "start": "04:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/voix-tropicale"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T08:06:30.911Z"
+      "checkedAt": "2026-11-25T21:54:27.719Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soca Sessions",
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "The Mash Time Show",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Soca Sessions",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,79 +81,82 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T08:06:34.001Z"
+      "checkedAt": "2026-11-25T21:54:31.218Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "next": {
-        "title": "World-Up'",
+        "title": "Advice By The Fireplace",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Borderline",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T08:06:47.987Z"
+      "checkedAt": "2026-11-25T21:54:45.320Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
+        "title": "Le SEIZE",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:59",
+        "url": "https://www.cfak.ca/balados/le-seize"
+      },
+      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "04:59",
+        "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Le SEIZE",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-21T08:06:48.802Z"
+      "checkedAt": "2026-11-25T21:54:46.662Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Podcast Nomade: L'art de se rencontrer",
+        "title": "Effet Philo",
         "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "slug": "podcast-nomade-lart-de-se-rencontrer"
+        "start": "17:00",
+        "end": "17:45",
+        "slug": "effet-philo"
       },
-      "track": "ID - ID Comment Debord - Blood Pareil",
+      "track": "Mike Shabb — Mr.Triggerman! (Introduction)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-11-21T08:06:54.699Z"
+      "clientPoll": null,
+      "checkedAt": "2026-11-25T21:54:55.363Z"
     }
   }
 }

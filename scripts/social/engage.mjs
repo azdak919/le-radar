@@ -2,8 +2,7 @@
 // Interactions automatiques (Bluesky, Tumblr, Mastodon) : voir engage-lib.mjs. DRY_RUN=true par défaut.
 import fs from 'node:fs';
 import { createBluesky } from './channels/bluesky.mjs';
-import { createTumblr, oauthHeader, API as TAPI } from './channels/tumblr.mjs';
-import { BLOG } from './tumblr.mjs';
+import { tumblrFromEnv, tumblrEnabled, tumblrBlog, PAUSED_MSG } from './tumblr.mjs';
 import { decideSourceLike, sourceDone, markSource, sourceBudget, emptyState, budget, spend, seen, mark, okAccount, decide, MAX_PER_POST, MAX_AGE_H } from './engage-lib.mjs';
 
 const STATE = 'data/engage-state.json';
@@ -48,14 +47,11 @@ async function bluesky() {
 }
 
 async function tumblr() {
-  const e = process.env, keys = { ck: e.TUMBLR_CONSUMER_KEY, cs: e.TUMBLR_CONSUMER_SECRET, tk: e.TUMBLR_TOKEN, ts: e.TUMBLR_TOKEN_SECRET };
-  if (!keys.ck || !keys.tk) return log('Tumblr : secrets absents, sauté.');
-  const blog = e.TUMBLR_BLOG || BLOG;
-  const call = async (method, path, query, body) => {
-    const url = `${TAPI}${path}${query ? '?' + new URLSearchParams(query) : ''}`;
-    const r = await fetch(url, { method, headers: { authorization: oauthHeader(method, url, keys), ...(body ? { 'content-type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(30000) });
-    const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(`Tumblr ${path} ${r.status}`); return j.response;
-  };
+  const e = process.env;
+  if (!e.TUMBLR_CONSUMER_KEY || !e.TUMBLR_TOKEN) return log('Tumblr : secrets absents, sauté.');
+  if (!tumblrEnabled()) return log(PAUSED_MSG);
+  const blog = tumblrBlog(), tb = tumblrFromEnv();
+  const call = (method, path, query, body) => tb.request(method, path, { query: query || undefined, body: body || undefined });
   const list = (await call('GET', `/blog/${blog}/posts`, { limit: '30', npf: 'true' }))?.posts || [];
   let posts = 0, acts = 0, skippedReplies = 0;
   for (const p of list) {
@@ -141,8 +137,8 @@ async function sourcesBluesky() {
   report.sourcesBluesky = n;
 }
 async function sourcesTumblr() {
-  const e = process.env, keys = { ck: e.TUMBLR_CONSUMER_KEY, cs: e.TUMBLR_CONSUMER_SECRET, tk: e.TUMBLR_TOKEN, ts: e.TUMBLR_TOKEN_SECRET }; if (!keys.ck || !keys.tk) return;
-  const call = async (method, path, query, body) => { const url = `${TAPI}${path}${query ? '?' + new URLSearchParams(query) : ''}`; const r = await fetch(url, { method, headers: { authorization: oauthHeader(method, url, keys), ...(body ? { 'content-type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(30000) }); const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(`Tumblr ${path} ${r.status}`); return j.response; };
+  const e = process.env; if (!e.TUMBLR_CONSUMER_KEY || !e.TUMBLR_TOKEN || !tumblrEnabled()) return;
+  const tb = tumblrFromEnv(), call = (method, path, query, body) => tb.request(method, path, { query: query || undefined, body: body || undefined });
   let n = 0;
   for (const src of SRC) for (const acc of src.tumblr || []) {
     const posts = (await call('GET', `/blog/${acc}/posts`, { limit: '10', npf: 'true', reblog_info: 'true' }))?.posts || [];

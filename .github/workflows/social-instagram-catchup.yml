@@ -1,0 +1,59 @@
+# Envoi ponctuel, Instagram seulement, des unes B du 20 nov. soir, 21 nov. matin et 21 nov. soir.
+# Ne pas lancer le flux social-une.yml (cela republierait les autres réseaux).
+# Ne modifie pas data/social/policy.json ni data/social/une-state.json.
+name: Social — Envoi Instagram ponctuel (unes 20-21 nov.)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Essai : rendus et hébergement seulement, aucun envoi Buffer (décoché = publication Instagram réelle)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
+
+jobs:
+  catchup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    concurrency:
+      group: instagram-catchup-20-21-nov
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Cache Playwright Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Police émoji
+        run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
+      - name: Rendu, hébergement et envoi Instagram
+        env:
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          CATCHUP_GAP_MS: '180000'
+          BUFFER_INSTAGRAM_API_KEY: ${{ secrets.BUFFER_INSTAGRAM_API_KEY }}
+        run: node scripts/social/instagram-catchup-unes.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: instagram-catchup
+          path: une-preview/
+          if-no-files-found: ignore

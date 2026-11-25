@@ -1,30 +1,30 @@
 {
-  "updated": "2026-11-21T07:27:14.560Z",
-  "total": 1037,
-  "withImage": 936,
-  "withCredit": 936,
-  "cited": 658,
-  "pending": 165,
+  "updated": "2026-11-25T21:42:10.746Z",
+  "total": 1178,
+  "withImage": 1066,
+  "withCredit": 1066,
+  "cited": 773,
+  "pending": 188,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
   "updatedCount": 2,
-  "citedNew": 2,
-  "fallbackNew": 58,
+  "citedNew": 1,
+  "fallbackNew": 59,
   "samples": [
     {
-      "title": "La vie lors d’une régate d’aviron",
-      "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
+      "title": "What Can We Really Know, Even When We See Everything? - The McGill Daily",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
       "cited": false,
       "method": null
     },
     {
-      "title": "Élections : qu’en pense la communauté universitaire ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Guillaume Villeneuve",
+      "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of Felix Sobolewski",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "figcaption-trailing"
     }
   ]
 }

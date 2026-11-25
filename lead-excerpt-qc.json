@@ -1,14 +1,50 @@
 {
-  "updated": "2026-11-21T07:25:45.330Z",
-  "total": 1038,
+  "updated": "2026-11-25T21:39:43.997Z",
+  "total": 1178,
   "pool": 61,
-  "incomplete": 25,
-  "withLeadExcerpt": 206,
-  "candidates": 25,
+  "incomplete": 27,
+  "withLeadExcerpt": 287,
+  "candidates": 27,
   "enriched": 1,
-  "failed": 0,
+  "failed": 2,
   "ok": true,
   "samples": [
+    {
+      "title": "« Ceci n’est pas un jeu »",
+      "link": "https://www.delitfrancais.com/2026/11/25/ceci-nest-pas-un-jeu/",
+      "ok": true,
+      "score": 100,
+      "chars": 424,
+      "sample": "Que ce soient les salles d’évasion qui ont pris une ampleur considérable lors des dernières années o",
+      "changed": false
+    },
+    {
+      "title": "Les professeurs en grève",
+      "link": "https://www.delitfrancais.com/2026/11/25/les-professeurs-en-greve/",
+      "ok": true,
+      "score": 96,
+      "chars": 291,
+      "sample": "Cette décision était attendue depuis le mois dernier, lorsque les membres de la Faculté des arts, de",
+      "changed": false
+    },
+    {
+      "title": "Étudier, sans savoir de quoi demain sera fait",
+      "link": "https://www.delitfrancais.com/2026/11/25/etudier-sans-savoir-de-quoi-demain-sera-fait/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
+      "changed": false
+    },
+    {
+      "title": "Deux mois de Parti québécois",
+      "link": "https://www.delitfrancais.com/2026/11/25/deux-mois-de-parti-quebecois/",
+      "ok": true,
+      "score": 100,
+      "chars": 324,
+      "sample": "Cela fait maintenant plus d’un mois que le Parti québécois est à la tête d’un gouvernement minoritai",
+      "changed": false
+    },
     {
       "title": "Et si on parlait de la mort ?",
       "link": "https://www.delitfrancais.com/2026/11/11/et-si-on-parlait-de-la-mort/",
@@ -28,24 +64,6 @@
       "changed": false
     },
     {
-      "title": "Sauve qui peut : l’IA à nos trousses",
-      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
-      "ok": true,
-      "score": 100,
-      "chars": 431,
-      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
-      "changed": false
-    },
-    {
-      "title": "Francisée, mais pas la bienvenue ?",
-      "link": "https://www.delitfrancais.com/2026/11/04/francisee-mais-pas-la-bienvenue/",
-      "ok": true,
-      "score": 100,
-      "chars": 150,
-      "sample": "15 000 $. C’est environ cette somme que McGill et le gouvernement du Québec m’ont donnée à ce jour p",
-      "changed": false
-    },
-    {
       "title": "Souriez, vous êtes filmés !",
       "link": "https://www.delitfrancais.com/2026/11/04/souriez-vous-etes-filmes-2/",
       "ok": true,
@@ -55,30 +73,12 @@
       "changed": false
     },
     {
-      "title": "La vie lors d’une régate d’aviron",
-      "link": "https://quartierlibre.ca/la-vie-lors-dune-regate-aviron/",
+      "title": "Sauve qui peut : l’IA à nos trousses",
+      "link": "https://www.delitfrancais.com/2026/11/04/sauve-qui-peut-lia-a-nos-trousses/",
       "ok": true,
       "score": 100,
-      "chars": 342,
-      "sample": "Des rameur·euse·s ont ainsi effectué une course sur une distance de cinq kilomètres sur la rivière R",
-      "changed": false
-    },
-    {
-      "title": "Au marché de Noël de Chicoutimi, les artisans réclament davantage de vérifications",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
-      "ok": true,
-      "score": 100,
-      "chars": 380,
-      "sample": "Le marché de Noël de Chicoutimi a ouvert ses portes jeudi soir. Si la foule se faisait encore discrè",
-      "changed": false
-    },
-    {
-      "title": "Et si le référendum de 95 avait lieu aujourd’hui?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/et-si-le-referendum-de-95-avait-lieu-aujourdhui/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-le-referendum-de-95-avait-lieu-aujourdhui",
-      "ok": true,
-      "score": 96,
-      "chars": 378,
-      "sample": "« Je pense qu’aujourd’hui, la grosse différence, c’est que les échanges entourant la souveraineté se",
+      "chars": 431,
+      "sample": "L’intelligence artificielle a fait couler beaucoup d’encre (et d’eau) depuis l’avènement de ChatGPT ",
       "changed": false
     }
   ]

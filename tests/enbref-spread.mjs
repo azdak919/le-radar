@@ -9,4 +9,8 @@ assert.match(js, /brief\.classList\.remove\('brief-rail--spread'\)/, 'mesure san
 assert.match(js, /applyBriefSpread\(\);\s*window\.setTimeout/, 'spread appliqué en fin de balance');
 assert.match(css, /\.brief-rail\.brief-rail--spread > \.article--compact \{ flex: 1 0 auto; \}/);
 assert.match(css, /html\[data-wide-preview\] \.brief-rail\.brief-rail--spread \{ display: flex;/);
+// Source avec peu d’articles : réserve vide → pas d’étalement (cartes étirées).
+const spreadFn = js.slice(js.indexOf('const applyBriefSpread'), js.indexOf('};', js.indexOf('const applyBriefSpread')));
+assert.match(spreadFn, /if \(!magazineReserve\.length\) return;/, 'réserve vide : pas de spread');
+assert.match(spreadFn, /gap <= avgCard/, 'spread seulement pour un reste < 1 carte');
 console.log('enbref-spread OK');

@@ -36,7 +36,9 @@ for (const id of ['matin', 'soir']) {
   for (const [net, t] of Object.entries(avec)) {
     const text = String(t.text || '');
     if (net === 'instagram') {
-      assert.doesNotMatch(text, /https?:\/\/|Consultez notre revue/, `Instagram (${id}) : pas de lien revue`);
+      assert.doesNotMatch(text, /https?:\/\//, `Instagram (${id}) : jamais d’URL`);
+      assert.equal(text.split('\n')[1], `Consultez notre revue du ${id}, à imprimer avec sudoku et mots cachés : lien en bio`);
+      assert.doesNotMatch(text.split('\n').slice(2).join('\n'), /Consultez notre revue/, `Instagram (${id}) : la revue n’apparaît qu’en 2e ligne`);
       continue;
     }
     if (text.includes('le-radar.ca/revue/')) {

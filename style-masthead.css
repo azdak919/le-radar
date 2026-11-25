@@ -198,6 +198,27 @@
     padding-bottom: 16px;
   }
 }
+/* Bureau : peu d’air sous la pastille sociale, assez pour le crédit à droite. */
+@media (min-width: 1024px) {
+  /* Haut du mât : même 12 px que le bas (rangée météo → logo), au lieu de 28. */
+  .masthead .masthead-inner > .masthead-brand {
+    padding-top: 0;
+  }
+  .masthead:has(#bg-photo-layer):has(.masthead-social) .masthead-brand,
+  .masthead:has(#bg-photo-layer.loaded):has(.masthead-social) .masthead-brand {
+    padding-bottom: 4px;
+  }
+  .masthead:has(.masthead-social) .masthead-inner {
+    padding-bottom: 8px;
+  }
+  /* La rangée prend la largeur de la pastille (pas tout le mât) : avec moins
+     d’air, sa boîte ne recouvre plus le crédit photo à droite. */
+  .masthead .masthead-social--under-tagline {
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}
 @media (max-width: 360px) {
   .bg-photo-credit {
     font-size: 8.5px;
@@ -738,7 +759,6 @@
   stroke-width: 2.15;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.52));
 }
-.masthead:has(#bg-photo-layer.loaded) .masthead-rss { color: #ffad70; }
 .masthead:has(#bg-photo-layer.loaded) .masthead-coffee { color: #ffe08a; }
 .masthead:has(#bg-photo-layer.loaded) .masthead-pomo { border-color: rgba(255, 106, 106, 0.68); }
 .masthead:has(#bg-photo-layer.loaded) .masthead-solitaire { border-color: rgba(255, 154, 154, 0.56); }
@@ -753,7 +773,7 @@
   background: rgba(15, 61, 92, 0.54);
 }
 /*
- * Accueil sur photo : même verre sombre que RSS / pomo au repos.
+ * Accueil sur photo : même verre sombre que pomo au repos.
  * Le pourpre de marque n’apparaît qu’au pressé (:active), pas en
  * « page courante » permanente.
  */
@@ -768,11 +788,6 @@
     0 0 0 1px color-mix(in srgb, #6c2163 32%, transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
-.masthead:has(#bg-photo-layer.loaded) .masthead-rss[aria-current="page"] {
-  color: #ffd4a8;
-  background: color-mix(in srgb, #c45a12 42%, rgba(9, 14, 21, 0.55));
-  border-color: rgba(255, 173, 112, 0.62);
-}
 .masthead:has(#bg-photo-layer.loaded) .masthead-sports[aria-current="page"] {
   color: #ffe08a;
   background: color-mix(in srgb, #8a6a10 40%, rgba(9, 14, 21, 0.55));
@@ -780,11 +795,10 @@
 }
 
 /* Survols sur photo : verre clair. Accueil n’a plus de pastille mauve
-   persistante — le hover est le même que RSS / solitaire. */
+   persistante — le hover est le même que solitaire. */
 @media (hover: hover) and (pointer: fine) {
   .masthead:has(#bg-photo-layer.loaded) .theme-toggle:hover,
   .masthead:has(#bg-photo-layer.loaded) .masthead-home:hover,
-  .masthead:has(#bg-photo-layer.loaded) .masthead-rss:hover:not([aria-current="page"]),
   .masthead:has(#bg-photo-layer.loaded) .masthead-solitaire:hover,
   .masthead:has(#bg-photo-layer.loaded) .masthead-coffee:hover,
   .masthead:has(#bg-photo-layer.loaded) .masthead-sports:hover:not([aria-current="page"]) {
@@ -950,11 +964,12 @@ a { color: inherit; }
   /* Laisser voir translateY des anims leave/arrive (sinon clip parent). */
   overflow: visible;
 }
-/* Carte 0 = ancre spéciale MTL/QC (colonne un cran plus large). Secondaires à droite. */
+/* Carte 0 = ancre spéciale MTL/QC : colonne au contenu (max/min + « Demain »,
+   22 nov. 2026) ; le fit retire une secondaire si ça déborde. Secondaires à droite. */
 .masthead-weather__board[data-weather-count="1"] { --weather-grid: minmax(0, 1fr); }
-.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(120px, 1fr) minmax(88px, 1fr); }
-.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(120px, .95fr) repeat(2, minmax(88px, 1fr)); }
-.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(118px, .9fr) repeat(3, minmax(80px, 1fr)); }
+.masthead-weather__board[data-weather-count="2"] { --weather-grid: minmax(120px, max-content) minmax(88px, 1fr); }
+.masthead-weather__board[data-weather-count="3"] { --weather-grid: minmax(120px, max-content) repeat(2, minmax(88px, 1fr)); }
+.masthead-weather__board[data-weather-count="4"] { --weather-grid: minmax(118px, max-content) repeat(3, minmax(80px, 1fr)); }
 /* Jumeau : regroupement DOM seulement — les cartes restent des items du board. */
 .masthead-weather__twin { display: contents; }
 .masthead-weather__board[data-weather-count="3"] { --weather-sec: 1; }
@@ -1074,6 +1089,80 @@ a { color: inherit; }
   line-height: 1.15;
   -webkit-text-stroke: 0;
   text-shadow: none;
+}
+/*
+ * Max, min et demain (comme le Kiosque) seulement dans le vide de la puce.
+ * Ordre : icône, ville, degré, puis le supplément. Le degré reste collé
+ * au toponyme ; le max/min occupe le vide, calé à droite.
+ * Montréal et Québec (colonne au contenu) s’élargissent pour ce max/min.
+ * display:none par défaut : ça ne change pas le min-content, donc pas le
+ * nombre de villes. .has-room est posé par applyWeatherExtraFit.
+ */
+.masthead-weather__extra { display: none; }
+.masthead-weather__extra.is-measuring {
+  display: inline-flex !important;
+  position: absolute !important;
+  visibility: hidden;
+  pointer-events: none;
+  width: max-content !important;
+  min-width: max-content !important;
+  flex: none !important;
+  overflow: visible !important;
+}
+.masthead-weather__city.has-room .masthead-weather__extra {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+html[data-wide-preview="e"] .masthead-weather__city.has-room .masthead-weather__name,
+.masthead-weather__city.has-room .masthead-weather__name {
+  flex: 0 0 auto !important;
+  min-width: auto !important;
+  max-width: none !important;
+}
+.masthead-weather__city[data-weather-extra="today"] .masthead-weather__tomorrow,
+.masthead-weather__extra[data-measure="today"] .masthead-weather__tomorrow {
+  display: none !important;
+}
+.masthead-weather__today,
+.masthead-weather__hl,
+.masthead-weather__tomorrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.masthead-weather__tomorrow {
+  gap: 3px;
+  margin-left: 2px;
+  padding-left: 6px;
+  border-left: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+.masthead-weather__label {
+  font-weight: 600;
+  opacity: 0.72;
+}
+.masthead-weather__tomorrow-icon {
+  display: inline-flex;
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+}
+.masthead-weather__tomorrow-icon .weather-icon-meteocon {
+  display: block;
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
 }
 .masthead-weather__city[data-weather-tone="sun"] { --weather-tone: #d88a0a; }
 .masthead-weather__city[data-weather-tone="cloud"] { --weather-tone: #66839e; }
@@ -1219,3 +1308,48 @@ a { color: inherit; }
   }
 }
 
+
+
+/* Icônes sociales du mât, sur la photo : même lisibilité que le lettrage. */
+/* Pastille de la rangée sociale : même verre que la devise, pour rester
+   lisible sur n’importe quelle photo, en clair et en sombre. */
+.masthead:has(#bg-photo-layer.loaded) .masthead-social--under-tagline .masthead-social__group {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(12, 14, 18, 0.48);
+  backdrop-filter: blur(8px) saturate(1.05);
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+[data-theme="dark"] .masthead:has(#bg-photo-layer.loaded) .masthead-social--under-tagline .masthead-social__group {
+  background: rgba(8, 10, 14, 0.52);
+}
+[data-theme="light"] .masthead:has(#bg-photo-layer.loaded) .masthead-social--under-tagline .masthead-social__group {
+  background:
+    linear-gradient(90deg, rgba(200, 180, 120, 0.16) 0%, transparent 55%),
+    rgba(54, 59, 68, 0.68);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-social a {
+  color: rgba(255, 255, 255, 0.97);
+  filter: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+@media (hover: hover) and (pointer: fine) {
+  .masthead:has(#bg-photo-layer.loaded) .masthead-social a:hover {
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.92);
+    filter: none;
+    text-shadow: none;
+  }
+}
+.masthead:has(#bg-photo-layer.loaded) .masthead-social a:focus-visible {
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.92);
+  outline-color: #fff;
+  filter: none;
+  text-shadow: none;
+}

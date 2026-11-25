@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
-import { createTumblr, API as TUMBLR_API, oauthHeader } from './channels/tumblr.mjs';
+import { tumblrFromEnv, hasTumblrKeys, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/social/formats-state.json');
@@ -86,17 +86,9 @@ async function deleteMastodon(id) {
 }
 
 async function deleteTumblr(id) {
-  const keys = { ck: process.env.TUMBLR_CONSUMER_KEY, cs: process.env.TUMBLR_CONSUMER_SECRET, tk: process.env.TUMBLR_TOKEN, ts: process.env.TUMBLR_TOKEN_SECRET };
-  if (!Object.values(keys).every(Boolean)) throw new Error('clés Tumblr absentes');
-  const blog = process.env.TUMBLR_BLOG || 'le-radar-ca.tumblr.com';
-  const call = async (method, p, { query, body } = {}) => {
-    const url = `${TUMBLR_API}${p}${query ? '?' + new URLSearchParams(query) : ''}`;
-    const headers = { 'user-agent': 'LE-RADAR-Tumblr/1.0 (+https://le-radar.ca/)', ...(body ? { 'content-type': 'application/json' } : {}), authorization: oauthHeader(method, url, keys) };
-    const r = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(30000) });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(`Tumblr ${method} ${p} ${r.status}`);
-    return j.response;
-  };
+  if (!hasTumblrKeys()) throw new Error('clés Tumblr absentes');
+  if (!tumblrEnabled()) throw new Error(`${PAUSED_MSG} Mettre la variable TUMBLR_ENABLED à true pour remplacer.`);
+  const tb = tumblrFromEnv(), blog = tb.blog, call = tb.request;
   let post;
   try {
     const r = await call('GET', `/blog/${blog}/posts`, { query: { id, npf: 'true' } });

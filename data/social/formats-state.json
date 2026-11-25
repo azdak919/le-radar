@@ -63,6 +63,39 @@
     "id": "6afb8982f83aaca8f3920470",
     "status": ""
    }
+  },
+  "2026-11-22": {
+   "bluesky": {
+    "at": "2026-11-24T00:51:31.510Z",
+    "url": "https://bsky.app/profile/did:plc:uxuxieev7fbkiji3xyyhzgae/post/3n2zgibzldq22",
+    "uri": "at://did:plc:uxuxieev7fbkiji3xyyhzgae/app.bsky.feed.post/3n2zgibzldq22"
+   },
+   "mastodon": {
+    "at": "2026-11-24T00:51:33.582Z",
+    "url": "https://piaille.fr/@leradar/117668675154355587",
+    "id": "117668675154355587"
+   },
+   "x": {
+    "at": "2026-11-24T00:51:36.450Z",
+    "id": "6b04df969a4bd32ca3e00214",
+    "status": ""
+   },
+   "tumblr": {
+    "failed": true,
+    "attempts": 3,
+    "error": "Tumblr POST /blog/le-radar-ca.tumblr.com/posts 401 [{\"title\":\"Unauthorized\",\"code\":1009,\"detail\":\"Unable to authorize\"}]",
+    "lastTry": "2026-11-25T00:08:39.233Z"
+   },
+   "facebook": {
+    "at": "2026-11-24T00:51:43.278Z",
+    "id": "6b04df99bc151fa8ad0ee1bb",
+    "status": ""
+   },
+   "linkedin": {
+    "at": "2026-11-24T00:51:54.020Z",
+    "id": "6b04df9fdb52b449cf11866c",
+    "status": ""
+   }
   }
  },
  "listen_tonight": {}

@@ -5,8 +5,7 @@
 import { createRequire } from 'node:module';
 import fs from 'node:fs';
 import { createMastodon } from './channels/mastodon.mjs';
-import { oauthHeader } from './channels/tumblr.mjs';
-import { BLOG } from './tumblr.mjs';
+import { tumblrFromEnv, hasTumblrKeys, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 import { createXBuffer, API, isAuthFailure, AUTH_MSG } from './channels/x-buffer.mjs';
 const { hasCdata } = createRequire(import.meta.url)('../cdata-lib.js');
 
@@ -31,23 +30,15 @@ if (net === 'mastodon') {
   await md.deleteStatus(id);
   console.log(`Supprimé : ${st.url}`);
 } else if (net === 'tumblr') {
-  const keys = { ck: process.env.TUMBLR_CONSUMER_KEY, cs: process.env.TUMBLR_CONSUMER_SECRET, tk: process.env.TUMBLR_TOKEN, ts: process.env.TUMBLR_TOKEN_SECRET };
-  if (!Object.values(keys).every(Boolean)) throw new Error('clés Tumblr absentes');
-  const blog = process.env.TUMBLR_BLOG || BLOG;
-  const call = async (method, p, { query, body } = {}) => {
-    const url = `https://api.tumblr.com/v2${p}${query ? '?' + new URLSearchParams(query) : ''}`;
-    const headers = { 'user-agent': 'LE-RADAR-Tumblr/1.0 (+https://le-radar.ca/)', ...(body ? { 'content-type': 'application/json' } : {}), authorization: oauthHeader(method, url, keys) };
-    const r = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(30000) });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(`Tumblr ${method} ${p} ${r.status}`);
-    return j.response;
-  };
-  const r = await call('GET', `/blog/${blog}/posts`, { query: { id, npf: 'true' } });
+  if (!hasTumblrKeys()) throw new Error('clés Tumblr absentes');
+  if (!tumblrEnabled()) throw new Error(`${PAUSED_MSG} Mettre la variable TUMBLR_ENABLED à true pour supprimer.`);
+  const tb = tumblrFromEnv(), blog = tb.blog;
+  const r = await tb.request('GET', `/blog/${blog}/posts`, { query: { id, npf: 'true' } });
   const post = (r?.posts || []).find(p => (p.id_string || String(p.id)) === id);
   if (!post) throw new Error('post introuvable sur le blogue du Radar');
   verdict('Tumblr', JSON.stringify(post.content || post));
   if (dry) { console.log('Essai : rien supprimé.'); process.exit(0); }
-  await call('POST', `/blog/${blog}/post/delete`, { body: { id } });
+  await tb.deletePost(id);
   console.log(`Supprimé : https://${blog}/post/${id}`);
 } else if (net === 'buffer') {
   // Publications EN FILE seulement (l'API Buffer ne retire pas ce qui est déjà publié).

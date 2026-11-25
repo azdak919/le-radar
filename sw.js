@@ -1,7 +1,7 @@
-const CACHE_NAME = "radar-shell-v1052";
+const CACHE_NAME = "radar-shell-v1083";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
-const OFFLINE_CACHE = "radar-offline-v22";
+const OFFLINE_CACHE = "radar-offline-v23";
 // Isolated apps under /pomo/, /solitaire/ and /sports/ own their own SWs +
 // caches. Sans /sports/ ici, ce worker et sports/sw.js se disputeraient les
 // mêmes requêtes : l'app installée servirait tantôt le shell racine, tantôt
@@ -89,6 +89,10 @@ const APP_SHELL = [
   "./assets/icon-32.png",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
+  "./assets/ressources/kiosque/icone-clair.svg",
+  "./assets/ressources/kiosque/icone-sombre.svg",
+  "./assets/ressources/socle/icone-clair.svg",
+  "./assets/ressources/socle/icone-sombre.svg",
   "./assets/offline/coin.png",
   "./assets/offline/elevator-loop.opus",
   "./assets/offline/elevator-loop.mp3",

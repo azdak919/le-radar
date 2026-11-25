@@ -16,10 +16,11 @@ import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSpor
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
-import { createTumblr } from './channels/tumblr.mjs';
+import { tumblrFromEnv, npfFromText, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
 import { decideInstagram, deliverInstagram, dryRunReport, imageUrl, openInstagramIssue } from './instagram.mjs';
+import { reviewSocialImage } from './ai-image.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/social/une-state.json');
@@ -42,7 +43,7 @@ export function gate({ now = Date.now(), state = {}, forced = '', cfg = CFG, dry
   if (forced && forced !== 'auto') return { due: true, slot: forced, why: 'créneau forcé (déclenchement manuel)' };
   const s = slotAt(now, cfg.slots || SLOTS);
   if (!s) return { due: false, slot: '', why: `hors des fenêtres d'envoi : ${tz(now)}` };
-  const nets = (cfg.networks || []).filter(n => NETS.includes(n));
+  const nets = (cfg.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()));
   if (slotDone(state[s.key], nets)) return { due: false, slot: s.id, why: `${s.key} déjà traité` };
   return { due: true, slot: s.id, why: `${s.key} dû` };
 }
@@ -96,20 +97,16 @@ async function publishOne(net, entry, env) {
     return { url: p.url, id: p.id };
   }
   if (net === 'tumblr') {
-    const tb = createTumblr({ ck: env.TUMBLR_CONSUMER_KEY, cs: env.TUMBLR_CONSUMER_SECRET, tk: env.TUMBLR_TOKEN, ts: env.TUMBLR_TOKEN_SECRET, blog: env.TUMBLR_BLOG || 'le-radar-ca.tumblr.com' });
-    const content = text.split('\n').filter(l => l.trim()).map((l, i) => {
-      const b = { type: 'text', text: l, ...(i === 0 ? { subtype: 'heading2' } : {}) }, f = [];
-      for (const m of l.matchAll(/https?:\/\/\S+/g)) { const s = [...l.slice(0, m.index)].length; f.push({ start: s, end: s + [...m[0]].length, type: 'link', url: m[0] }); }
-      if (f.length) b.formatting = f; return b;
-    });
-    content.splice(1, 0, { type: 'image', media: [{ url: img, type: 'image/jpeg', ...size }], alt_text: entry.alt.slice(0, 4096) });
-    const p = await tb.post({ content, tags: entry.tumblrTags.join(','), state: 'published', source_url: 'https://le-radar.ca/' });
+    const tb = tumblrFromEnv(env);
+    const content = npfFromText(text, { image: { url: img, type: 'image/jpeg', ...size, alt: entry.alt }, altMax: 4096 });
+    const p = await tb.post({ content, tags: entry.tumblrTags.join(','), source_url: 'https://le-radar.ca/' });
+    if (!p.created) throw new Error(`Tumblr ${p.status} (pas 201 Created)`);
     return { url: p.url, id: p.id };
   }
   const pages = env.pages || {}, key = env.BUFFER_API_KEY;
   const ch = net === 'x' ? createXBuffer({ key, fallbackId: env.BUFFER_CHANNEL_ID || undefined })
     : createXBuffer({ key, service: pages[net].service, channelName: pages[net].name, fallbackId: (net === 'facebook' ? env.BUFFER_FACEBOOK_CHANNEL_ID : env.BUFFER_LINKEDIN_CHANNEL_ID) || null });
-  const post = await ch.add({ text, image: img, now: true, metadata: postMetadata(net) });
+  const post = await ch.add({ text, image: img, alt: entry.alt, now: true, metadata: postMetadata(net) });
   return { id: post.id, status: post.status || '' };
 }
 
@@ -119,6 +116,17 @@ function readIgState() {
 function writeIgState(s) { fs.writeFileSync(IG_STATE, JSON.stringify(s, null, 1) + '\n'); }
 
 /** Aperçu ou envoi Instagram. Un seul essai, clé dédiée, sans faire échouer les autres réseaux. */
+async function posterAlt(model, images) {
+  const fallback = altText(model);
+  const file = images?.grille?.file || images?.portrait?.file;
+  if (!file) return fallback;
+  const buf = fs.readFileSync(file);
+  const facts = [fallback, ...(model.items || []).map(i => `${i.title || ''} ${i.byline || ''}`)].join(' ');
+  const r = await reviewSocialImage({ buf, width: images.grille?.width || images.portrait?.width, height: images.grille?.height || images.portrait?.height, contentType: 'image/jpeg', facts, fallbackAlt: fallback, allowReject: false });
+  console.log(r.source === 'ia' ? 'IA : texte alternatif de l’affiche' : `Texte alternatif de l’affiche déterministe — ${r.reason || 'repli'}`);
+  return r.alt || fallback;
+}
+
 async function instagramPass({ now, slot, text, problems = [], images, dry, alt = '' }) {
   const cfg = CFG.prepared?.instagram || {};
   const state0 = readIgState();
@@ -162,7 +170,8 @@ async function main() {
   const out = path.resolve(arg('out', 'une-preview')); fs.mkdirSync(out, { recursive: true });
   const slot = forced && forced !== 'auto' ? slotFor(forced, now, CFG.slots) : slotAt(now, CFG.slots);
   if (!slot) { console.log(`Hors des fenêtres d'envoi (${tz(now)}) : rien à faire.`); return; }
-  const nets = (CFG.networks || []).filter(n => NETS.includes(n));
+  const nets = (CFG.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()));
+  if (!tumblrEnabled() && (CFG.networks || []).includes('tumblr')) console.log(PAUSED_MSG);
   let entry = state[slot.key];
   if (!dry && slotDone(entry, nets)) { console.log(`${slot.key} : déjà traité.`); return; }
   let sel, texts, images, reason;
@@ -211,12 +220,13 @@ async function main() {
     const md = previewMarkdown(slot, sel, texts, images, { dry, reason });
     fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), md);
     for (const [n, v] of Object.entries(texts)) fs.writeFileSync(path.join(out, `texte-${slot.id}-${n}.txt`), (v.text || '') + '\n');
-    fs.writeFileSync(path.join(out, `une-${slot.id}.json`), JSON.stringify({ at: new Date(now).toISOString(), reason, slot, ids: sel.ids, translated: sel.translated || [], alt: altText(model), texts, images }, null, 1));
+    let poster = await posterAlt(model, images);
+    fs.writeFileSync(path.join(out, `une-${slot.id}.json`), JSON.stringify({ at: new Date(now).toISOString(), reason, slot, ids: sel.ids, translated: sel.translated || [], alt: poster, texts, images }, null, 1));
     if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + '\n');
     console.log(`\n=== ${slot.label} : ${reason}`);
     for (const [n, v] of Object.entries(texts)) console.log(`\n[${n}] ${v.len}/${v.limit}${v.problems.length ? ' PROBLÈMES : ' + v.problems.join(', ') : ''}\n${v.text}`);
     if (dry) {
-      const igReport = await instagramPass({ now, slot, text: texts.instagram?.text || '', problems: texts.instagram?.problems || [], images, dry: true });
+      const igReport = await instagramPass({ now, slot, text: texts.instagram?.text || '', problems: texts.instagram?.problems || [], images, dry: true, alt: poster });
       if (igReport) {
         fs.writeFileSync(path.join(out, `instagram-${slot.id}.md`), igReport);
         if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, igReport + '\n');
@@ -229,9 +239,10 @@ async function main() {
     catch (e) {
       console.log(`::warning::hébergement des images impossible (${String(e.message).slice(0, 200)}) : repli sur la photo de la une.`);
       const lead = sel.items[0].siteImage || 'https://le-radar.ca/assets/og-cover.png'; urls = { portrait: lead };
+      poster = altText(model);
     }
     entry = state[slot.key] = { key: slot.key, at: new Date().toISOString(), ids: sel.ids, texts: Object.fromEntries(Object.entries(texts).map(([n, v]) => [n, v.text])),
-      tumblrTags: texts.tumblr.tags, alt: altText(model), images: urls, nets: {} };
+      tumblrTags: texts.tumblr.tags, alt: poster, images: urls, nets: {} };
     fs.writeFileSync(STATE, JSON.stringify(pruneState(state, now), null, 1) + '\n');
   }
   if (!entry?.texts) return;

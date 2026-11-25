@@ -16,6 +16,10 @@ on:
 permissions:
   contents: read
 
+env:
+  FORBIDDEN_NAMES: ${{ secrets.FORBIDDEN_NAMES }}
+  INTERNAL_BLUESKY_ACCOUNTS: ${{ secrets.INTERNAL_BLUESKY_ACCOUNTS }}
+
 jobs:
   delete:
     runs-on: ubuntu-latest

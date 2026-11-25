@@ -4,13 +4,13 @@
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://le-radar.ca/)
 ![PWA](https://img.shields.io/badge/PWA-ready-blue)
-![License](https://img.shields.io/badge/license-GPL--2.0-green)
+[![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](LICENSE)
 
 **LE-RADAR** signifie :
 
 > **Le Réseau Académique de Découverte et d'Agrégation de Ressources**
 
-LE-RADAR est une plateforme libre destinée à **fédérer les médias étudiants** et à leur
+LE-RADAR est une plateforme libre destinée à **agréger les médias étudiants** et à leur
 offrir une infrastructure moderne : journaux, radios et **sports** étudiants des cégeps
 et universités du Québec, réunis au même endroit.
 
@@ -35,6 +35,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 - **Syntoniseur radio** collant : choix du poste, lecture native (flux HTTPS), volume, Media Session API
 - **Postes natifs** — écoute directe sur LE-RADAR pour les stations avec flux validé (ex. CHYZ, CISM, CKUT, CJLO, CFAK)
 - **Fil étudiant** — agrégation RSS des journaux étudiants, filtrable par source
+- **Réseaux** — Buy Me a Coffee (https://www.buymeacoffee.com/azdak), Instagram (https://www.instagram.com/le.radar.ca/), Facebook, LinkedIn, X, Bluesky, Mastodon et Tumblr, puis le fil RSS (en dernier, ce n’est pas un réseau) : au pied de page, et en rangée compacte sous la devise dans le mât (sans RSS ; visibles aussi sur téléphone)
 - **Identité couleur par établissement** — pastilles sources, accents radio et marques institutionnelles (`brand-colors.json`)
 - **« À l'antenne »** — émission en cours selon la grille horaire colligée (bot) + titre live via métadonnées ICY du flux
 - **Bots automatisés** — agrégation des articles, images vedette, crédits photo, découverte de flux radio, horaires
@@ -242,6 +243,24 @@ cd workers/bg-rotation && npx wrangler deploy
 
 **Pas** de proxy de flux audio radio (coût bande passante trop élevé sur free tier).
 
+## Réseaux sociaux et Cloudflare (forfait Workers gratuit)
+
+Le dépôt reste la source de vérité (fichiers `data/`, secrets du dépôt, crons GitHub). Cloudflare ne sert que de filet. Rien ici n’exige le forfait Workers payant. Dépasser un plafond gratuit fait échouer l’appel ; ça ne facture pas. Aucune ressource nouvelle n’est créée sur le compte.
+
+| Service | Quota gratuit (plafond dur) | Usage estimé | Rôle |
+| --- | --- | --- | --- |
+| Workers, crons déjà en place | 100 000 requêtes/jour, 10 ms de CPU par passage, 5 crons par compte | 2 crons, environ 50 passages/jour | Le Worker `le-radar-news-trigger` rattrape La une, la revue et la file Buffer seulement si le cron GitHub est en retard et qu’aucune passe n’est en cours |
+| Workers AI | 10 000 neurones/jour ; au-delà, erreur, pas de facture | au plus 4 images par passage, plus l’accroche texte déjà plafonnée à 12 appels | Texte alternatif et contrôle d’image. Sans jeton ou si l’appel échoue, le texte déterministe part |
+
+Services évalués et non utilisés, parce qu’ils ne garantissent pas un coût nul ou qu’ils doublonneraient le dépôt :
+
+- **R2** : le palier gratuit existe, puis le stockage et les opérations sont facturés. Les images sociales restent sur la branche Git `social-une-media`.
+- **Images (stockage)** : forfait payant. Les transformations gratuites s’arrêtent à 5 000 par mois sans facture, mais les visuels sont déjà à la bonne taille.
+- **Queues** : le guide d’activation demande encore le forfait payant, et la rétention gratuite n’est que de 24 h. La reprise est l’état commité dans le dépôt.
+- **KV et D1** : plafonds gratuits à erreur (KV 100 000 lectures et 1 000 écritures/jour ; D1 5 millions de lignes lues et 100 000 écrites/jour), mais ce serait une deuxième mémoire. La déduplication reste le fichier d’état plus l’historique du réseau.
+
+Pour que le filet tourne, redéployer le Worker déjà existant depuis `cloudflare/news-trigger` (`npx wrangler deploy`). Le secret `GH_TOKEN` y est déjà posé. Aucun secret, aucune liaison et aucun cron de plus.
+
 ---
 
 ## 🛠️ Stack technique
@@ -272,7 +291,7 @@ Signale aussi les liens cassés, flux morts ou sources manquantes.
 
 **Contact du projet** — [azdak-qc@proton.me](mailto:azdak-qc@proton.me)
 
-Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.
+Contenus agrégés : articles et photos crédités à leurs auteurs et à leurs médias d’origine. Code tiers utilisé conformément à ses licences.
 
 🤖 **Agrégateur automatisé de contenus** — LE-RADAR collecte et reformate des publications étudiantes tierces (titres, brèves, liens, métadonnées). Chaque article renvoie vers sa source originale. Les radios et journaux listés restent propriété de leurs équipes respectives.
 
@@ -282,11 +301,24 @@ les corrections, crédits, demandes de retrait et contrôles automatisés.
 
 ---
 
-## 📄 Licence
+## 📄 Licence / License
 
-- **Code** — distribué sous **[GNU General Public License v2](LICENSE)** (identifiant SPDX : `GPL-2.0-only`). Le code n’est pas relicencié.
-- **Gabarits d’affiches et visuels réalisés par Le Radar** — 🄯 Azdak, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-- **Articles, photos, logos et marques** des médias et des établissements — restent à leurs titulaires. Sur les affiches, le crédit photo (et la licence de la source, souvent Wikimedia Commons) figure au pied, sous la mention d’indépendance.
+| Partie | Licence | Fichier |
+| --- | --- | --- |
+| Code source et infrastructure : site, scripts, Workers (`workers/`, `cloudflare/`, `proxy/`), application mobile (`android/`, `ios/`, `mobile/`) | [GNU AGPLv3](https://www.gnu.org/licenses/agpl-3.0.html) (`AGPL-3.0-or-later`), avec une permission additionnelle pour l’App Store et Google Play | [`LICENSE`](LICENSE), [`LICENSE-EXCEPTIONS.md`](LICENSE-EXCEPTIONS.md) |
+| Scripts d’intégration pour sites tiers : `embed.js`, `embed.css`, `radio-barre.js`, `radio-barre.css` | [MIT](https://opensource.org/license/mit) (`SPDX-License-Identifier` en tête de fichier) | [`docs/radio-barre.md`](docs/radio-barre.md) |
+| Kit-média, gabarits d’affiches et affiches originales (`assets/kit/`) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), avec réserve de marque | [`kit-media/LICENSE`](kit-media/LICENSE), [`affiches/LICENSE`](affiches/LICENSE) |
+| Annuaires factuels : `institutions.json`, `news-sources.json`, `radios.json`, grilles radio, ligues et équipes | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | [`LICENSE-DATA.md`](LICENSE-DATA.md) |
+| Contenus agrégés : articles, extraits, photos, flux radio, résultats | Propriété exclusive de leurs auteurs et de leurs médias | — |
+
+- L’AGPLv3 couvre aussi l’usage en réseau : quiconque fait tourner une version modifiée du site ou des Workers doit en offrir le code source à ses utilisateurs.
+- Réserve de marque : les licences libres ne confèrent aucun droit d’usage commercial trompeur ni d’affiliation officielle avec LE-RADAR.ca.
+- Les photos de tiers (souvent Wikimedia Commons) gardent leur licence d’origine, par exemple CC BY-SA 3.0. Sur les affiches, le crédit photo et la licence de la source figurent au pied, sous la mention d’indépendance.
+- Le projet est indépendant. Tout média étudiant peut demander la modification ou le retrait immédiat de son flux en écrivant à azdak-qc@proton.me.
+
+*English:* source code and infrastructure are under the GNU AGPLv3 (`AGPL-3.0-or-later`), plus an additional permission for app store distribution. Embed scripts are MIT. The media kit and poster templates are CC BY 4.0, subject to the trademark reservation. Factual directories are CC0 1.0. Aggregated content belongs to its authors and outlets.
+
+Projets liés : [LE KIOSQUE](https://github.com/azdak919/le-kiosque) (<https://kiosque.le-radar.ca/>) et [LE SOCLE](https://github.com/azdak919/le-socle) (<https://socle.le-radar.ca/>), sous la même licence.
 
 Les notices des fontes, de la bibliothèque QR et des dépendances npm sont dans [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 

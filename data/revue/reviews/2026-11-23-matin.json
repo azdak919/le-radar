@@ -1,0 +1,1054 @@
+{
+ "version": 1,
+ "id": "2026-11-23-matin",
+ "edition": {
+  "id": "matin",
+  "label": "La revue du matin",
+  "emoji": "☀️",
+  "day": "2026-11-23"
+ },
+ "path": "revue/2026-11-23-matin/",
+ "url": "https://le-radar.ca/revue/2026-11-23-matin/",
+ "period": {
+  "start": 1795392900000,
+  "end": 1795434483870
+ },
+ "datePublished": "2026-11-23T11:48:03.870Z",
+ "dateModified": "2026-11-23T11:48:03.870Z",
+ "items": [
+  {
+   "id": "356cacaea2915331",
+   "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
+   "link": "https://leclubecole.com/daniel-jones-libere-les-colts-dindianapolis-tournent-la-page/?utm_source=rss&utm_medium=rss&utm_campaign=daniel-jones-libere-les-colts-dindianapolis-tournent-la-page",
+   "source": "Le Club-École",
+   "authors": [
+    "Gabriel Naji"
+   ],
+   "date": "2026-11-23T01:46:57.000Z",
+   "lang": "fr",
+   "institution": "UQAM",
+   "sport": "",
+   "excerpt": "Le 21 novembre dernier, les Colts d’Indianapolis ont annoncé avoir libéré leur quart-arrière Daniel Jones. Pourtant, celui-ci venait de signer un nouveau contrat avec l’équipe plus tôt cette année.",
+   "image": "https://le-radar.ca/assets/news-images/3ee8b17eb279a8d8.png",
+   "imageStock": false,
+   "credit": "Image tirée du compte Instagram de la NFL",
+   "pageUrl": "https://le-radar.ca/article/356cacaea2915331/",
+   "theme": "Vie de campus",
+   "resume": "",
+   "resumeBy": ""
+  },
+  {
+   "id": "3511ed8e294affd8",
+   "title": "Le mont Apica dans la mire de l’éolien régional",
+   "link": "https://lapige.atmjonquiere.com/2026/11/22/le-mont-apica-dans-la-mire-de-leolien-regional/?utm_source=rss&utm_medium=rss&utm_campaign=le-mont-apica-dans-la-mire-de-leolien-regional",
+   "source": "La Pige",
+   "authors": [
+    "Charline Lachance"
+   ],
+   "date": "2026-11-23T01:28:55.000Z",
+   "lang": "fr",
+   "institution": "Cégep de Jonquière",
+   "sport": "",
+   "excerpt": "Le Comité Synergie Éolien a annoncé deux projets éoliens majeurs lundi pour le Saguenay–Lac-Saint-Jean.",
+   "image": "https://le-radar.ca/assets/news-images/f0b210a9416e5b23.jpg",
+   "imageStock": false,
+   "credit": "Photo : Charline Lachance",
+   "pageUrl": "https://le-radar.ca/article/3511ed8e294affd8/",
+   "theme": "Vie de campus",
+   "resume": "",
+   "resumeBy": ""
+  }
+ ],
+ "sports": {
+  "results": [
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial masculin D3",
+    "uni": false,
+    "kind": "resultat",
+    "gameId": "c6985a93-9401-4680-9479-eff1f1947b01",
+    "date": "2026-11-22",
+    "when": "Final · dim. 22 nov.",
+    "teams": [
+     {
+      "name": "Atlas",
+      "inst": "Marie-Victorin",
+      "color": "",
+      "score": 80
+     },
+     {
+      "name": "Phénix",
+      "inst": "André-Grasset",
+      "color": "",
+      "score": 69
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-22|Basketball (H)|Atlas (Marie-Victorin):80|Phénix (André-Grasset):69",
+    "text": "Atlas (Marie-Victorin) 80-69 Phénix (André-Grasset)"
+   }
+  ],
+  "next": [
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "503efcf3-844d-48eb-8100-a9b1a1f3977d",
+    "date": "2026-11-24",
+    "when": "mar. 24 nov. · 12 h 45",
+    "teams": [
+     {
+      "name": "Nomades",
+      "inst": "Montmorency",
+      "color": "#002768"
+     },
+     {
+      "name": "Aigles",
+      "inst": "Ahuntsic",
+      "color": ""
+     }
+    ],
+    "verb": "visite",
+    "time": "12:45",
+    "key": "2026-11-24|12:45|Volleyball (F)||Aigles (Ahuntsic)|Nomades (Montmorency)",
+    "text": "Nomades (Montmorency) visite Aigles (Ahuntsic)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire féminin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "91669338-645a-4ef0-8c47-d678db17ce23",
+    "date": "2026-11-26",
+    "when": "jeu. 26 nov. · 18 h",
+    "teams": [
+     {
+      "name": "Martlets",
+      "inst": "McGill",
+      "color": "#ED1B2F"
+     },
+     {
+      "name": "Stingers",
+      "inst": "Concordia",
+      "color": "#912338"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "18:00",
+    "key": "2026-11-26|18:00|Basketball (F)||Martlets (McGill)|Stingers (Concordia)",
+    "text": "Martlets (McGill) reçoit Stingers (Concordia)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire féminin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "27adfdbe-a48d-4219-b9d4-8e946031f9e0",
+    "date": "2026-11-26",
+    "when": "jeu. 26 nov. · 18 h",
+    "teams": [
+     {
+      "name": "Citadins",
+      "inst": "UQAM",
+      "color": "#0079BE"
+     },
+     {
+      "name": "Gaiters",
+      "inst": "Bishop’s",
+      "color": "#582C83"
+     }
+    ],
+    "verb": "visite",
+    "time": "18:00",
+    "key": "2026-11-26|18:00|Basketball (F)||Citadins (UQAM)|Gaiters (Bishop’s)",
+    "text": "Citadins (UQAM) visite Gaiters (Bishop’s)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire masculin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "ccc74162-f360-4727-81cc-9552e09da722",
+    "date": "2026-11-26",
+    "when": "jeu. 26 nov. · 20 h",
+    "teams": [
+     {
+      "name": "Redbirds",
+      "inst": "McGill",
+      "color": "#ED1B2F"
+     },
+     {
+      "name": "Stingers",
+      "inst": "Concordia",
+      "color": "#912338"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "20:00",
+    "key": "2026-11-26|20:00|Basketball (H)||Redbirds (McGill)|Stingers (Concordia)",
+    "text": "Redbirds (McGill) reçoit Stingers (Concordia)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire masculin",
+    "uni": true,
+    "kind": "avenir",
+    "gameId": "24ca88dc-52d3-4fde-bffb-9bc326cc658e",
+    "date": "2026-11-26",
+    "when": "jeu. 26 nov. · 20 h",
+    "teams": [
+     {
+      "name": "Citadins",
+      "inst": "UQAM",
+      "color": "#0079BE"
+     },
+     {
+      "name": "Gaiters",
+      "inst": "Bishop’s",
+      "color": "#582C83"
+     }
+    ],
+    "verb": "visite",
+    "time": "20:00",
+    "key": "2026-11-26|20:00|Basketball (H)||Citadins (UQAM)|Gaiters (Bishop’s)",
+    "text": "Citadins (UQAM) visite Gaiters (Bishop’s)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (F)",
+    "sportKey": "basketball",
+    "league": "Basketball collégial féminin D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "1dc65fbb-ebd3-4757-ada1-84ee5bc4e2ff",
+    "date": "2026-11-26",
+    "when": "jeu. 26 nov. · 20 h",
+    "teams": [
+     {
+      "name": "Couguars",
+      "inst": "Chicoutimi",
+      "color": "#00994C"
+     },
+     {
+      "name": "Gaillards",
+      "inst": "Cégep de Jonquière",
+      "color": "#FF8B00"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "20:00",
+    "key": "2026-11-26|20:00|Basketball (F)||Couguars (Chicoutimi)|Gaillards (Cégep de Jonquière)",
+    "text": "Couguars (Chicoutimi) reçoit Gaillards (Cégep de Jonquière)"
+   }
+  ]
+ },
+ "radio": [
+  {
+   "id": "cfak",
+   "station": "CFAK 88,3",
+   "page": "https://le-radar.ca/radios/cfak/",
+   "shows": [
+    {
+     "title": "Folkswagen",
+     "start": "07:00",
+     "end": "07:59",
+     "when": "7 h à 8 h",
+     "url": "https://www.cfak.ca/balados/Folkswagen"
+    },
+    {
+     "title": "Palmarès CFAK",
+     "start": "08:00",
+     "end": "08:59",
+     "when": "8 h à 9 h",
+     "url": "https://www.cfak.ca/balados/palmares-cfak"
+    },
+    {
+     "title": "Le NEUF",
+     "start": "09:00",
+     "end": "10:59",
+     "when": "9 h à 11 h",
+     "url": "https://www.cfak.ca/balados/le-neuf"
+    },
+    {
+     "title": "Solénoïde",
+     "start": "13:00",
+     "end": "13:59",
+     "when": "13 h à 14 h",
+     "url": "https://www.cfak.ca/balados/solenoide"
+    }
+   ]
+  },
+  {
+   "id": "cism",
+   "station": "CISM 89,3",
+   "page": "https://le-radar.ca/radios/cism/",
+   "shows": [
+    {
+     "title": "Yallah! Lâcher prise avec Rhabibiii",
+     "start": "07:00",
+     "end": "08:00",
+     "when": "7 h à 8 h",
+     "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+    },
+    {
+     "title": "La collation",
+     "start": "08:00",
+     "end": "09:00",
+     "when": "8 h à 9 h",
+     "url": "https://cism893.ca/emissions/mix-collation"
+    },
+    {
+     "title": "Faits de société!",
+     "start": "09:00",
+     "end": "10:00",
+     "when": "9 h à 10 h",
+     "url": "https://cism893.ca/emissions/faits-de-societe"
+    },
+    {
+     "title": "o'keb",
+     "start": "10:00",
+     "end": "11:00",
+     "when": "10 h à 11 h",
+     "url": "https://cism893.ca/emissions/okeb"
+    }
+   ]
+  },
+  {
+   "id": "ckut",
+   "station": "CKUT 90,3",
+   "page": "https://le-radar.ca/radios/ckut/",
+   "shows": [
+    {
+     "title": "Unmuted",
+     "start": "07:00",
+     "end": "08:00",
+     "when": "7 h à 8 h",
+     "url": ""
+    },
+    {
+     "title": "Le Lendemain de la veille",
+     "start": "08:00",
+     "end": "09:00",
+     "when": "8 h à 9 h",
+     "url": ""
+    },
+    {
+     "title": "Latin Music Mondays",
+     "start": "09:00",
+     "end": "11:00",
+     "when": "9 h à 11 h",
+     "url": ""
+    },
+    {
+     "title": "All Things Campus",
+     "start": "11:00",
+     "end": "12:00",
+     "when": "11 h à 12 h",
+     "url": ""
+    }
+   ]
+  },
+  {
+   "id": "chyz",
+   "station": "CHYZ 94,3",
+   "page": "https://le-radar.ca/radios/chyz/",
+   "shows": [
+    {
+     "title": "Lundi Indie",
+     "start": "08:00",
+     "end": "10:00",
+     "when": "8 h à 10 h",
+     "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+    },
+    {
+     "title": "K-C'EST ÇA ?",
+     "start": "10:00",
+     "end": "11:00",
+     "when": "10 h à 11 h",
+     "url": "https://chyz.ca/emission/k-cest-ca/"
+    },
+    {
+     "title": "APRIORI",
+     "start": "11:00",
+     "end": "12:00",
+     "when": "11 h à 12 h",
+     "url": "https://chyz.ca/emission/apriori/"
+    },
+    {
+     "title": "Spillthepsy",
+     "start": "13:00",
+     "end": "14:00",
+     "when": "13 h à 14 h",
+     "url": "https://chyz.ca/emission/spillthepsy/"
+    }
+   ]
+  },
+  {
+   "id": "cjlo",
+   "station": "CJLO 1690AM",
+   "page": "https://le-radar.ca/radios/cjlo/",
+   "shows": [
+    {
+     "title": "Trawling the Megahertz",
+     "start": "08:00",
+     "end": "09:00",
+     "when": "8 h à 9 h",
+     "url": ""
+    },
+    {
+     "title": "Death of the Midrange",
+     "start": "09:00",
+     "end": "10:00",
+     "when": "9 h à 10 h",
+     "url": ""
+    },
+    {
+     "title": "Democracy Now",
+     "start": "10:00",
+     "end": "11:00",
+     "when": "10 h à 11 h",
+     "url": ""
+    },
+    {
+     "title": "I Think You Might Like This",
+     "start": "11:00",
+     "end": "12:00",
+     "when": "11 h à 12 h",
+     "url": ""
+    }
+   ]
+  },
+  {
+   "id": "choq",
+   "station": "CHOQ.ca",
+   "page": "https://le-radar.ca/radios/choq/",
+   "shows": [
+    {
+     "title": "Kongossa na UQAM",
+     "start": "10:00",
+     "end": "11:00",
+     "when": "10 h à 11 h",
+     "url": "https://www.choq.ca/balados/kongossa-na-uqam"
+    },
+    {
+     "title": "Onde de CHOQ",
+     "start": "13:00",
+     "end": "13:45",
+     "when": "13 h à 13 h 45",
+     "url": "https://www.choq.ca/balados/onde-de-choq"
+    },
+    {
+     "title": "Palmarès CHOQ.ca",
+     "start": "15:00",
+     "end": "16:00",
+     "when": "15 h à 16 h",
+     "url": "https://www.choq.ca/balados/palmareschoq"
+    }
+   ]
+  }
+ ],
+ "image": {
+  "url": "https://le-radar.ca/assets/news-images/3ee8b17eb279a8d8.png",
+  "credit": "Image tirée du compte Instagram de la NFL",
+  "source": "Le Club-École",
+  "title": "Daniel Jones libéré : les Colts d’Indianapolis tournent la page",
+  "stock": false,
+  "length": 323902
+ },
+ "chapeau": "",
+ "generator": "ia:@cf/meta/llama-3.1-8b-instruct-fp8-fast",
+ "previous": {
+  "id": "2026-11-22-soir",
+  "path": "revue/2026-11-22-soir/",
+  "headline": "La revue du soir du dimanche 22 novembre 2026"
+ },
+ "headline": "La revue du matin du lundi 23 novembre 2026",
+ "description": "La revue du matin du lundi 23 novembre 2026. Pour ouvrir la journée, Le Club-École publie « Daniel Jones libéré : les Colts d’Indianapolis tournent la page », sous la plume de Gabriel Naji.",
+ "intro": "Pour ouvrir la journée, Le Club-École publie « Daniel Jones libéré : les Colts d’Indianapolis tournent la page », sous la plume de Gabriel Naji. À lire aussi : « Le mont Apica dans la mire de l’éolien régional » dans La Pige. Sur les terrains, en basketball (H) : Atlas (Marie-Victorin) 80, Phénix (André-Grasset) 69.",
+ "articleIds": [
+  "356cacaea2915331",
+  "3511ed8e294affd8"
+ ],
+ "sportKeys": [
+  "2026-11-22|Basketball (H)|Atlas (Marie-Victorin):80|Phénix (André-Grasset):69"
+ ],
+ "categories": [
+  "Revue de presse",
+  "Médias étudiants",
+  "Québec",
+  "Vie de campus",
+  "Sport étudiant",
+  "Radio étudiante"
+ ],
+ "weather": {
+  "source": "Environnement et Changement climatique Canada",
+  "fetchedAt": "2026-11-23T11:48:05.404Z",
+  "cities": [
+   {
+    "code": "s0000620",
+    "name": "Québec",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Quelques averses",
+      "kind": "high",
+      "temp": 10,
+      "icon": 12,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -6,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000635",
+    "name": "Montréal",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses",
+      "kind": "high",
+      "temp": 13,
+      "icon": 6,
+      "pop": 30
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques nuages",
+      "kind": "low",
+      "temp": -2,
+      "icon": 31,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000681",
+    "name": "Sherbrooke",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses",
+      "kind": "high",
+      "temp": 12,
+      "icon": 6,
+      "pop": 40
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -6,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000346",
+    "name": "Trois-Rivières",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Quelques averses",
+      "kind": "high",
+      "temp": 9,
+      "icon": 12,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques nuages",
+      "kind": "low",
+      "temp": -2,
+      "icon": 31,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000393",
+    "name": "Rimouski",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses",
+      "kind": "high",
+      "temp": 11,
+      "icon": 12,
+      "pop": 60
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -5,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000211",
+    "name": "Saguenay",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Quelques averses de pluie ou de neige",
+      "kind": "high",
+      "temp": 10,
+      "icon": 15,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -6,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000611",
+    "name": "Gatineau",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": 8,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Généralement nuageux",
+      "kind": "low",
+      "temp": -5,
+      "icon": 33,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000353",
+    "name": "Rouyn-Noranda",
+    "group": "campus",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Quelques averses de neige",
+      "kind": "high",
+      "temp": -3,
+      "icon": 16,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Généralement nuageux",
+      "kind": "low",
+      "temp": -10,
+      "icon": 33,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000591",
+    "name": "Kangiqsualujjuaq",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement nuageux",
+      "kind": "high",
+      "temp": -8,
+      "icon": 3,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -13,
+      "icon": 38,
+      "pop": 30
+     }
+    ]
+   },
+   {
+    "code": "s0000719",
+    "name": "Kuujjuaq",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -5,
+      "icon": 8,
+      "pop": 30
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -16,
+      "icon": 38,
+      "pop": 30
+     }
+    ]
+   },
+   {
+    "code": "s0000699",
+    "name": "Tasiujaq",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -8,
+      "icon": 8,
+      "pop": 40
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -16,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000586",
+    "name": "Aupaluk",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": -9,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques nuages",
+      "kind": "low",
+      "temp": -14,
+      "icon": 31,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000480",
+    "name": "Kangirsuk",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": -12,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques nuages",
+      "kind": "low",
+      "temp": -16,
+      "icon": 31,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000544",
+    "name": "Quaqtaq",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -7,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -8,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000574",
+    "name": "Kangiqsujuaq",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": -9,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Partiellement nuageux",
+      "kind": "low",
+      "temp": -13,
+      "icon": 32,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000793",
+    "name": "Salluit",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Alternance de soleil et de nuages",
+      "kind": "high",
+      "temp": -13,
+      "icon": 2,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -14,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000563",
+    "name": "Ivujivik",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -8,
+      "icon": 8,
+      "pop": 30
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques averses de neige",
+      "kind": "low",
+      "temp": -9,
+      "icon": 16,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000578",
+    "name": "Akulivik",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -9,
+      "icon": 8,
+      "pop": 40
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques averses de neige",
+      "kind": "low",
+      "temp": -7,
+      "icon": 16,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000711",
+    "name": "Puvirnituq",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -13,
+      "icon": 8,
+      "pop": 40
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -13,
+      "icon": 16,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000627",
+    "name": "Inukjuak",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": -10,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques averses de neige",
+      "kind": "low",
+      "temp": -8,
+      "icon": 16,
+      "pop": null
+     }
+    ]
+   },
+   {
+    "code": "s0000599",
+    "name": "Umiujaq",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Généralement ensoleillé",
+      "kind": "high",
+      "temp": -14,
+      "icon": 1,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -16,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000542",
+    "name": "Kuujjuarapik",
+    "group": "nunavik",
+    "issued": "20261123093000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "high",
+      "temp": -6,
+      "icon": 8,
+      "pop": 30
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Possibilité d’averses de neige",
+      "kind": "low",
+      "temp": -11,
+      "icon": 38,
+      "pop": 40
+     }
+    ]
+   },
+   {
+    "code": "s0000579",
+    "name": "Waskaganish",
+    "group": "eeyou",
+    "issued": "20261123100000",
+    "periods": [
+     {
+      "name": "Aujourd’hui",
+      "sky": "Averses de neige parfois fortes",
+      "kind": "high",
+      "temp": -2,
+      "icon": 16,
+      "pop": null
+     },
+     {
+      "name": "Ce soir et cette nuit",
+      "sky": "Quelques averses de neige",
+      "kind": "low",
+      "temp": -13,
+      "icon": 16,
+      "pop": null
+     }
+    ]
+   }
+  ]
+ }
+}

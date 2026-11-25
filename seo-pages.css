@@ -159,10 +159,11 @@
 }
 .seo-wire .site-foot .site-foot__wordmark {
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: clamp(32px, 10cqi, 52px);
   font-weight: 700;
   letter-spacing: 0.01em;
-  line-height: 1.6;
+  line-height: 1.05;
+  white-space: nowrap;
   color: var(--ink);
   font-optical-sizing: none;
   font-variation-settings: "opsz" 48;

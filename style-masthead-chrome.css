@@ -135,7 +135,6 @@
 @media (hover: hover) and (pointer: fine) {
   .theme-toggle:hover,
   .masthead-home:hover,
-  .masthead-rss:hover:not([aria-current="page"]),
   .masthead-solitaire:hover,
   .masthead-sports:hover:not([aria-current="page"]),
   .masthead-coffee:hover {
@@ -149,14 +148,13 @@
 }
 .theme-toggle:active,
 .masthead-home:active,
-.masthead-rss:active,
 .masthead-pomo:active,
 .masthead-solitaire:active,
 .masthead-sports:active,
 .masthead-coffee:active {
   transform: scale(0.9);
 }
-/* Accueil : même pastille que RSS / pomo au repos. Mauve seulement au pressé
+/* Accueil : même pastille que pomo au repos. Mauve seulement au pressé
    — plus de fond persistant via aria-current / .is-active. */
 .masthead-home:active {
   color: var(--accent);
@@ -184,6 +182,109 @@
   text-align: center;
   max-width: 100%;
   min-width: 0;
+}
+
+/* Réseaux : rangée compacte centrée sous la devise (variante C).
+   Même liste que le pied, sans RSS. Le café des outils est retiré :
+   Buy Me a Coffee est déjà la première icône de cette rangée.
+   Visibles aussi sur téléphone (sous le logo, au-dessus des outils,
+   la devise étant masquée sous 600 px). Cibles 44 px dès 600 px,
+   au moins 40 px sous 600 px (pastille plus compacte). */
+.masthead-brand:has(.masthead-social) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.masthead-brand:has(.masthead-social) > .wordmark {
+  width: 100%;
+  max-width: 100%;
+}
+.masthead-social--under-tagline {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 6px;
+}
+.masthead-social--under-tagline .masthead-social__group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  min-width: 0;
+  box-sizing: border-box;
+  /* Pastille de verre, même famille que la devise (fond photo ci-dessous). */
+  padding: 2px 8px;
+  border-radius: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--rule, rgba(0, 0, 0, 0.12)) 80%, transparent);
+  background: color-mix(in srgb, var(--bg, #fff) 62%, transparent);
+  backdrop-filter: blur(8px) saturate(1.05);
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.masthead-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 50%;
+  color: var(--muted);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+.masthead-social svg { width: 20px; height: 20px; display: block; }
+@media (hover: hover) and (pointer: fine) {
+  .masthead-social a:hover {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    text-decoration: none;
+  }
+}
+.masthead-social a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  color: var(--accent);
+}
+/* Téléphone : pastille plus compacte (icônes 40 px, peu de rembourrage).
+   8 × 40 px = 320 px : une seule rangée à 390 et 360 px ; sous 360 px,
+   les cibles passent à 34–36 px pour rester sur une ligne. */
+@media (max-width: 599.98px) {
+  .masthead-brand:has(.masthead-social) { gap: var(--mat-gap, 8px); }
+  .masthead-social--under-tagline { margin-top: 0; }
+  .masthead-social--under-tagline .masthead-social__group {
+    padding: 0;
+    border-radius: 0.5rem;
+  }
+  .masthead-social a {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+  }
+  .masthead-social svg { width: 18px; height: 18px; }
+}
+@media (max-width: 359.98px) {
+  /* Une seule rangée, comme à 390 px : icônes plus petites, pastille
+     sans rembourrage superflu. 8 × 36 px tiendrait juste à 320 px hors
+     filet ; le plancher 34 px laisse la marge du mât et le bord. */
+  .masthead-social--under-tagline .masthead-social__group {
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    width: max-content;
+    max-width: 100%;
+    padding: 0;
+  }
+  .masthead-social a {
+    width: clamp(34px, calc((100vw - 2 * var(--pad, 18px) - 2px) / 8), 36px);
+    height: clamp(34px, calc((100vw - 2 * var(--pad, 18px) - 2px) / 8), 36px);
+    flex: 0 0 clamp(34px, calc((100vw - 2 * var(--pad, 18px) - 2px) / 8), 36px);
+  }
+  .masthead-social svg { width: 16px; height: 16px; }
+}
+@media print {
+  .masthead-social { display: none !important; }
 }
 
 .wordmark {
@@ -395,9 +496,9 @@ html[data-script-dir="rtl"] .wordmark-full {
 }
 
 /* Téléphone (≤599 px, site et app Android) : le mât s’empile au lieu de
-   coincer la date et 9 boutons sur une seule rangée au-dessus du logo.
-   Ordre : date et heure, logo, slogan, puis une rangée de boutons qui tient
-   toujours dans la largeur (aucun chevauchement ni débordement à 360 px).
+   coincer la date et les boutons sur une seule rangée au-dessus du logo.
+   Ordre : date et heure, logo, réseaux (sous le logo ; le slogan est masqué),
+   puis une rangée de boutons qui tient dans la largeur.
    Hors accueil, l’app garde sa barre compacte (app-site.css, plus spécifique). */
 @media (max-width: 599.98px) {
   .masthead-inner {
@@ -501,4 +602,36 @@ html[data-script-dir="rtl"] .wordmark-full {
     padding-bottom: calc(var(--mat-gap) * 1.5 + var(--mat-credit-h, 15.4px));
   }
   .masthead:has(#bg-photo-layer) .bg-photo-credit { bottom: calc(var(--mat-gap) / 2); }
+}
+
+/* Téléphone (moins de 600 px) : le logo est légèrement plus grand qu’un bouton
+   du mât (outils et réseaux : 40 px). Le titre grandit en proportion, reste
+   sur une seule ligne à 320, 360 et 390 px, et s’aligne avec le logo.
+   Ordinateur inchangé. Les écritures longues (inuktitut, arabe, etc.)
+   peuvent encore se couper, comme plus haut. */
+@media (max-width: 599.98px) {
+  :root {
+    --radar-wordmark-size: clamp(2.375rem, 12.2vw, 3.414rem);
+  }
+  .wordmark-logo {
+    width: 48px;
+    height: 48px;
+    margin: 0 0.1em 0 0;
+    vertical-align: middle;
+  }
+  .wordmark-mark {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  html[lang="iu"] .wordmark-mark,
+  html[data-translate="iu"] .wordmark-mark,
+  html[data-translate="iu-latn"] .wordmark-mark,
+  html[lang="ar"] .wordmark-mark,
+  html[data-translate="ar"] .wordmark-mark,
+  html[data-script-dir="rtl"] .wordmark-mark {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 }

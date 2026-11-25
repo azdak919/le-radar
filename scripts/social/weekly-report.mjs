@@ -7,6 +7,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { torontoDay } from './policy.mjs';
+import privacyGuard from '../privacy-guard.js';
+import { tumblrFromEnv, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const rd = (f, d = null) => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8')); } catch { return d; } };
@@ -81,8 +83,9 @@ async function mastodon({ since, internal }) {
 }
 async function tumblr({ since, internal }) {
   const ck = process.env.TUMBLR_CONSUMER_KEY; if (!ck) return { skipped: 'clé d’API Tumblr absente (secret non fourni à ce job).' };
-  const blog = process.env.TUMBLR_BLOG || 'le-radar-ca.tumblr.com';
-  const r = await j(`https://api.tumblr.com/v2/blog/${blog}/posts?api_key=${ck}&notes_info=true&limit=50`);
+  if (!tumblrEnabled()) return { skipped: PAUSED_MSG };
+  const tb = tumblrFromEnv();
+  const r = { response: await tb.request('GET', `/blog/${tb.blog}/posts`, { query: { api_key: ck, notes_info: 'true', limit: '50' }, auth: false }) };
   const posts = (r.response?.posts || []).filter(p => p.timestamp * 1000 >= since).map(p => {
     const notes = p.notes || [], pick = t => notes.filter(n => n.type === t).map(n => n.blog_name);
     return { url: p.post_url, text: (p.summary || '').slice(0, 80), ext: externalCounts({ likes: pick('like'), reposts: pick('reblog'), replies: pick('reply') }, internal) };
@@ -92,7 +95,7 @@ async function tumblr({ since, internal }) {
 const buffered = (state, since, key = 'sent') => Object.values((key ? state?.[key] : state) || {}).filter(s => s?.at && Date.parse(s.at) >= since && (s.postId || s.uri || s.url)).length;
 
 export function render({ now, days, nets, sentCounts, internal, prev }) {
-  const L = [`# Bilan hebdomadaire des interactions — semaine se terminant le ${torontoDay(now)}`, '', `Période : ${days} jours. Mesure automatique, comptes internes exclus (${Object.entries(internal).filter(([k]) => !k.startsWith('_')).map(([k, v]) => `${k} : ${v.join(', ')}`).join(' ; ')}). Aucun courriel envoyé, rien publié.`, ''];
+  const L = [`# Bilan hebdomadaire des interactions — semaine se terminant le ${torontoDay(now)}`, '', `Période : ${days} jours. Mesure automatique, comptes internes exclus. Aucun courriel envoyé, rien publié.`, ''];
   for (const [name, r] of Object.entries(nets)) {
     L.push(`## ${name}`, '');
     if (r.error) { L.push(`Mesure impossible ce passage : ${r.error}`, ''); continue; }
@@ -111,7 +114,7 @@ export function render({ now, days, nets, sentCounts, internal, prev }) {
 async function main() {
   const arg = (n, d = '') => { const i = process.argv.indexOf('--' + n); return i > 0 ? process.argv[i + 1] : d; };
   const now = arg('now') ? Date.parse(arg('now')) : Date.now(), days = +arg('days', 7), since = now - days * 864e5;
-  const internal = rd('data/social/internal-accounts.json', {}), out = path.resolve(ROOT, arg('out', 'data/social/weekly'));
+  const internal = privacyGuard.mergeInternalAccounts(rd('data/social/internal-accounts.json', {})), out = path.resolve(ROOT, arg('out', 'data/social/weekly'));
   fs.mkdirSync(out, { recursive: true });
   const snap = rd('data/social/weekly/snapshot.json', { history: [] }), prev = snap.history.filter(h => now - Date.parse(h.date) >= 5 * 864e5).at(-1);
   const nets = {};

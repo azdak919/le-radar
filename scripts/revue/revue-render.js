@@ -9,7 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const { renderPage, escapeHtml, T: SITE_T, BRAND_SIGNATURE, CONTACT_MAIL } = require('../seo-pages-lib');
-// Nayuki QR Code generator (licence MIT, compatible GPL v2), déjà vendu dans le dépôt pour les affiches.
+// Nayuki QR Code generator (licence MIT, compatible AGPLv3), déjà vendu dans le dépôt pour les affiches.
 const qrcodegen = require('../vendor/qrcodegen-v1.8.0.js');
 const IC = require('../institution-color-lib.js');
 const { gamesFor } = require('./revue-games.js');
@@ -437,7 +437,7 @@ function colophonHtml(model) {
     `          <p class="revue-colophon__devise">${esc(BRAND_SIGNATURE)}</p>`,
     `          <p class="revue-colophon__text">${esc(SITE_T.fr.unofficial)}</p>`,
     `          <p class="revue-colophon__line"><b>Nous joindre</b> ${esc(CONTACT_MAIL)}</p>`,
-    `          <p class="revue-colophon__line"><b>Code libre</b> licence GNU GPL v2 · ${REPO}</p>`,
+    `          <p class="revue-colophon__line"><b>Code libre</b> licence GNU AGPLv3 · ${REPO}</p>`,
     url ? `          <div class="revue-colophon__online"><p><b>Cette édition en ligne</b><br /><a href="${esc(url)}" tabindex="-1">${esc(shortUrl)}</a><br />Toutes les revues : <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p></div>` : `          <p class="revue-colophon__line"><b>En ligne</b> <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p>`,
     `          <p class="revue-colophon__ia">${DISCLOSURE}</p>`,
     '          <p class="revue-colophon__credit">Conçu avec ♡ par Azdak en 2026</p>',
@@ -521,7 +521,16 @@ function articleBody(model) {
 }
 
 // ── JSON-LD ──────────────────────────────────────────────────────────────────
-const publisherLd = () => ({ '@type': 'NewsMediaOrganization', name: PUBLISHER, alternateName: 'LE-RADAR.ca', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/icon-512.png`, width: 512, height: 512 } });
+const publisherLd = () => ({
+  '@type': 'NewsMediaOrganization', name: PUBLISHER, alternateName: 'LE-RADAR.ca', url: `${SITE}/`,
+  logo: { '@type': 'ImageObject', url: `${SITE}/assets/icon-512.png`, width: 512, height: 512 },
+  sameAs: [
+    'https://www.instagram.com/le.radar.ca/', 'https://www.facebook.com/profile.php?id=61596092762097',
+    'https://www.linkedin.com/company/le-radar-ca/', 'https://x.com/le_radar_ca',
+    'https://bsky.app/profile/le-radar.ca', 'https://piaille.fr/@leradar',
+    'https://le-radar-ca.tumblr.com', `${SITE}/feed.xml`,
+  ],
+});
 function reviewJsonLd(model) {
   return {
     '@context': 'https://schema.org',

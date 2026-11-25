@@ -456,7 +456,7 @@ assert.match(html, /revue-flag__ears">[\s\S]*Revue de presse <em class="revue-fl
   const colo = (html.match(/<aside class="revue-colophon"[\s\S]*?<\/aside>/) || [''])[0];
   assert.ok(colo, 'colophon imprimé en fin d’édition');
   assert.equal((html.match(/class="revue-colophon"/g) || []).length, 1, 'colophon une seule fois, pas répété');
-  for (const t of ['Le Réseau Académique de Découverte et d’Agrégation de Ressources', 'indépendant et non officiel', 'azdak-qc@proton.me', 'GNU GPL v2', 'le-radar.ca/revue', 'Conçu avec ♡ par Azdak en 2026', 'Revue préparée automatiquement'])
+  for (const t of ['Le Réseau Académique de Découverte et d’Agrégation de Ressources', 'indépendant et non officiel', 'azdak-qc@proton.me', 'GNU AGPLv3', 'le-radar.ca/revue', 'Conçu avec ♡ par Azdak en 2026', 'Revue préparée automatiquement'])
     assert.ok(colo.replace(/'/g, '’').includes(t.replace(/'/g, '’')), `colophon : ${t}`);
   assert.match(html, /<a class="revue-top__qr" href="[^"]+" tabindex="-1"><svg[^>]*class="revue-top__qrcode"[\s\S]*?<path fill="#000" d="M[\s\S]*?<span>Lire en ligne<\/span><\/a>/, 'code QR à droite, sous le folio, au-dessus de « Dans cette édition »');
   assert.doesNotMatch(html, /revue-flag__qr/, 'plus de code QR dans le coin gauche du mât');

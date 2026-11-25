@@ -11,9 +11,10 @@ assert(agents.includes('GIT-AND-TEST-SAFETY.md'), 'AGENTS.md : source de v√©rit√
 assert(/merge and delete/i.test(agents), 'AGENTS.md : merge and delete requis');
 assert(/Lien PR cliquable/.test(agents), 'AGENTS.md : lien PR requis');
 assert(
-  agents.includes('azdak-qc@proton.me') && /Pas.*`gh pr merge`/.test(agents),
-  'AGENTS.md : merge local Azdak/proton, pas gh pr merge',
+  agents.includes('azdak-qc@proton.me') && /par la PR sur GitHub/.test(agents) && /auto-merge/.test(agents),
+  'AGENTS.md : commits Azdak/proton, fusion par la PR GitHub (auto-merge)',
 );
+assert(/Pas\*\* de merge local/.test(agents), 'AGENTS.md : pas de merge local par un agent');
 
 const playbook = read('docs/agent-playbook.md');
 assert(

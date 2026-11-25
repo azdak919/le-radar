@@ -25,4 +25,4 @@ python -m http.server 8080
 
 ## Licence
 
-[GNU GPL v2](LICENSE)
+[GNU AGPLv3](LICENSE) (`AGPL-3.0-or-later`), comme le reste du dépôt Le Radar.

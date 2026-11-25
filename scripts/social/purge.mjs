@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createBluesky } from './channels/bluesky.mjs';
 import { API, isAuthFailure, AUTH_MSG } from './channels/x-buffer.mjs';
-import { BLOG } from './tumblr.mjs';
+import { tumblrFromEnv, hasTumblrKeys, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 import { createMastodon } from './channels/mastodon.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -59,19 +59,10 @@ if (nets.has('bluesky')) {
 }
 
 if (nets.has('tumblr')) {
-  const keys = { ck: process.env.TUMBLR_CONSUMER_KEY || '', cs: process.env.TUMBLR_CONSUMER_SECRET || '', tk: process.env.TUMBLR_TOKEN || '', ts: process.env.TUMBLR_TOKEN_SECRET || '' };
-  if (!Object.values(keys).every(Boolean)) summary.push('Tumblr : clés absentes, sauté.');
+  if (!hasTumblrKeys()) summary.push('Tumblr : clés absentes, sauté.');
+  else if (!tumblrEnabled()) summary.push(`${PAUSED_MSG} Sauté.`);
   else {
-    const blog = process.env.TUMBLR_BLOG || BLOG;
-    const call = async (method, p, opt = {}) => {
-      const { oauthHeader } = await import('./channels/tumblr.mjs');
-      const url = `https://api.tumblr.com/v2${p}${opt.query ? '?' + new URLSearchParams(opt.query) : ''}`;
-      const headers = { 'user-agent': 'LE-RADAR-Tumblr/1.0 (+https://le-radar.ca/)', ...(opt.body ? { 'content-type': 'application/json' } : {}), authorization: oauthHeader(method, url, keys) };
-      const r = await fetch(url, { method, headers, body: opt.body ? JSON.stringify(opt.body) : undefined, signal: AbortSignal.timeout(30000) });
-      const j = await r.json().catch(() => ({}));
-      if (!r.ok) throw new Error(`Tumblr ${method} ${p} ${r.status} ${JSON.stringify(j.errors || j.meta || {}).slice(0, 200)}`);
-      return j.response;
-    };
+    const tb = tumblrFromEnv(), blog = tb.blog, call = tb.request;
     let n = 0; const seen = new Set();
     for (let guard = 0; guard < 50; guard++) {
       const r = await call('GET', `/blog/${blog}/posts`, { query: { limit: '20', npf: 'true' } });
@@ -80,7 +71,7 @@ if (nets.has('tumblr')) {
       for (const p of posts) {
         const id = p.id_string || String(p.id); seen.add(id);
         console.log(`Tumblr ${dry ? 'à supprimer' : 'supprimé'} : https://${blog}/post/${id}`);
-        if (!dry) await call('POST', `/blog/${blog}/post/delete`, { body: { id } });
+        if (!dry) await tb.deletePost(id);
         n++;
       }
       if (dry) break;
