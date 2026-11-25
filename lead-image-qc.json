@@ -1,22 +1,28 @@
 {
-  "updated": "2026-11-25T00:08:51.476Z",
+  "updated": "2026-11-25T00:22:39.798Z",
   "total": 1150,
-  "withPhoto": 1053,
-  "withStock": 113,
-  "withCampusBank": 98,
-  "fullyCovered": 1136,
-  "leadReadyPhotos": 1106,
-  "pageScraped": 9,
-  "photosRecovered": 9,
+  "withPhoto": 1050,
+  "withStock": 117,
+  "withCampusBank": 100,
+  "fullyCovered": 1135,
+  "leadReadyPhotos": 1093,
+  "pageScraped": 6,
+  "photosRecovered": 6,
   "imagesCleared": 1,
-  "stockSearches": 8,
-  "stockFound": 23,
-  "campusBankFound": 20,
+  "stockSearches": 31,
+  "stockFound": 19,
+  "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Huîtres, drogues et les tournants de la vie",
-      "link": "https://www.delitfrancais.com/2026/09/30/huitres-drogues-et-les-tournants-de-la-vie",
+      "title": "Remettre un classique au goût du jour",
+      "link": "https://www.delitfrancais.com/2026/09/23/remettre-un-classique-au-gout-du-jour",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Bulletin 21 septembre 11h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/21/bulletin-21-septembre-11h30",
       "reason": "no-stock-match",
       "image": null
     },
@@ -27,16 +33,22 @@
       "image": null
     },
     {
-      "title": "Bulletins La Pige radio 28 septembre 12h, 14h, 16h et 18h",
-      "link": "https://lapige.atmjonquiere.com/2026/09/28/bulletin-la-pige-radio-28-septembre-12h",
+      "title": "Le conflit entre Trump et les médias atteint un nouveau sommet",
+      "link": "https://lecollectif.ca/societe/le-conflit-entre-trump-et-les-medias-atteint-un-nouveau-sommet",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Le-conflit-entre-Trump-et-les-medias-atteint-un-nouveau-sommet_Getty-Images.jpg"
     },
     {
-      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
-      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential",
+      "title": "Les mardis au centre-ville",
+      "link": "https://lecollectif.ca/culture/les-mardis-au-centre-ville",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/09/Sherbylove-Murales-Sherbrooke.jpg"
+    },
+    {
+      "title": "La sécurité ferroviaire au cœur des rappels au Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/09/24/la-securite-ferroviaire-au-coeur-des-rappels-au-saguenay",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-3-1.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -45,22 +57,34 @@
       "image": null
     },
     {
-      "title": "A Tradition on the Edge: The Future of Homecoming",
-      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming",
+      "title": "Plus de 40 000$ amassés pour le Parkinson",
+      "link": "https://lapige.atmjonquiere.com/2026/09/23/plus-de-40-000-amasses-pour-le-parkinson",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_4579.jpg"
     },
     {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+      "title": "Le pré-DEP maintenant offert à Jonquière",
+      "link": "https://lapige.atmjonquiere.com/2026/09/22/le-pre-dep-maintenant-offert-a-jonquiere",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Ecole-secondaire-des-Batisseurs-scaled-e1789755926399.jpg"
     },
     {
-      "title": "La Corse résonne dans une église de Chicoutimi",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/la-corse-resonne-dans-une-eglise-de-chicoutimi",
+      "title": "Tatouages et politique: un couteau à double tranchant",
+      "link": "https://lapige.atmjonquiere.com/2026/09/22/tatouages-et-politique-un-couteau-a-double-tranchant",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Bouchard_Rencontre_Public.png"
+    },
+    {
+      "title": "Nommer un endroit… plus complexe qu’il n’y paraît",
+      "link": "https://lapige.atmjonquiere.com/2026/09/22/nommer-un-endroit-plus-complexe-quil-ny-parait",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Selection-IMG_5099.jpg"
+    },
+    {
+      "title": "Santé mentale des jeunes : le besoin de se sentir entouré à l’ère des écrans",
+      "link": "https://lapige.atmjonquiere.com/2026/09/23/sante-mentale-des-jeunes-le-besoin-de-se-sentir-entoure-a-lere-des-ecrans",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-1-6.jpg"
     }
   ]
 }
