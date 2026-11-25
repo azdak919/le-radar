@@ -1519,25 +1519,6 @@
       "via": "disk",
       "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
     },
-    "86d6a581397ae00f": {
-      "local": "assets/news-images/86d6a581397ae00f.jpg",
-      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/CULTURE_AlphonseBisaillon_CreditMelanieJouet.jpg",
-      "host": "lecollectif.ca",
-      "bytes": 81723,
-      "updatedAt": "2026-11-17T10:28:02.354Z",
-      "via": "disk",
-      "nameKey": "culture_alphonsebisaillon_creditmelaniejouet.jpg"
-    },
-    "d485becdac01f72e": {
-      "local": "assets/news-images/d485becdac01f72e.jpg",
-      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/ExCULTURE_monument-aux-braves_IMAGE_Francois-Lafrance-2009.jpg",
-      "host": "lecollectif.ca",
-      "bytes": 317950,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-17T10:28:02.644Z",
-      "via": "origin",
-      "nameKey": "exculture_monument-aux-braves_image_francois-lafrance-2009.jpg"
-    },
     "be611451563af4ef": {
       "local": "assets/news-images/be611451563af4ef.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
@@ -3112,9 +3093,29 @@
       "updatedAt": "2026-11-25T21:40:44.905Z",
       "via": "origin",
       "nameKey": "png-image.jpg"
+    },
+    "ca34faf22ef4969d": {
+      "local": "assets/news-images/ca34faf22ef4969d.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/image1-2.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 72944,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-25T22:08:57.600Z",
+      "via": "origin",
+      "nameKey": "image1-2.jpg"
+    },
+    "961cf957c60445bd": {
+      "local": "assets/news-images/961cf957c60445bd.jpg",
+      "remote": "https://leclubecole.com/wp-content/uploads/2026/11/HX5Z-v9XQAACRaQ-edited.jpg",
+      "host": "leclubecole.com",
+      "bytes": 280249,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-25T22:08:58.714Z",
+      "via": "resize-proxy",
+      "nameKey": "hx5z-v9xqaacraq-edited.jpg"
     }
   },
-  "updatedAt": "2026-11-25T21:40:44.913Z",
+  "updatedAt": "2026-11-25T22:08:58.723Z",
   "count": 318,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -6129,6 +6130,14 @@
     "14a85e2d6cf843fb": {
       "reason": "budget",
       "at": "2026-11-25T21:11:57.477Z"
+    },
+    "d485becdac01f72e": {
+      "reason": "budget",
+      "at": "2026-11-25T22:08:58.720Z"
+    },
+    "86d6a581397ae00f": {
+      "reason": "budget",
+      "at": "2026-11-25T22:08:58.722Z"
     }
   }
 }
