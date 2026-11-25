@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24T14:25:14.785Z",
+  "updated": "2026-11-25T00:16:53.139Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -6800,14 +6800,80 @@
       "via": "save-page-now",
       "source": "The Concordian",
       "snapshot": "https://web.archive.org/web/20261124142453/https://theconcordian.com/2026/11/water-main-break-concordias-flooding/"
+    },
+    "https://theplantnews.com/2026/11/22/seasonal-depression/": {
+      "at": "2026-11-25T00:06:39.441Z",
+      "via": "save-page-now",
+      "source": "The Plant",
+      "snapshot": "https://web.archive.org/web/20261125000623/https://theplantnews.com/2026/11/22/seasonal-depression/"
+    },
+    "https://leclubecole.com/como-de-la-faillite-a-la-plus-grande-scene-europeenne": {
+      "at": "2026-11-25T00:07:08.124Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125000649/https://leclubecole.com/como-de-la-faillite-a-la-plus-grande-scene-europeenne"
+    },
+    "https://leclubecole.com/luka-doncic-un-homme-en-mission": {
+      "at": "2026-11-25T00:07:36.750Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125000717/https://leclubecole.com/luka-doncic-un-homme-en-mission"
+    },
+    "https://leclubecole.com/de-gros-dossiers-a-surveiller-dans-la-lnh": {
+      "at": "2026-11-25T00:08:29.479Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125000811/https://leclubecole.com/de-gros-dossiers-a-surveiller-dans-la-lnh"
+    },
+    "https://leclubecole.com/kimi-antonelli-devient-le-plus-jeune-champion-de-formule-1": {
+      "at": "2026-11-25T00:08:57.936Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125000838/https://leclubecole.com/kimi-antonelli-devient-le-plus-jeune-champion-de-formule-1"
+    },
+    "https://leclubecole.com/une-hecatombe-qui-redessine-le-portrait-de-la-nba": {
+      "at": "2026-11-25T00:11:16.616Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125001057/https://leclubecole.com/une-hecatombe-qui-redessine-le-portrait-de-la-nba"
+    },
+    "https://leclubecole.com/canadiens-de-montreal-une-classique-signee-fowler": {
+      "at": "2026-11-25T00:12:20.551Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125001201/https://leclubecole.com/canadiens-de-montreal-une-classique-signee-fowler"
+    },
+    "https://leclubecole.com/la-grogne-des-partisans-sintensifie-au-cf-montreal": {
+      "at": "2026-11-25T00:12:49.023Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125001230/https://leclubecole.com/la-grogne-des-partisans-sintensifie-au-cf-montreal"
+    },
+    "https://leclubecole.com/paris-met-fin-a-linvincibilite-barcelonaise": {
+      "at": "2026-11-25T00:13:17.512Z",
+      "via": "save-page-now",
+      "source": "Le Club-École",
+      "snapshot": "https://web.archive.org/web/20261125001258/https://leclubecole.com/paris-met-fin-a-linvincibilite-barcelonaise"
+    },
+    "https://quartierlibre.ca/vendre-sa-personnalite-pour-payer-un-stage/": {
+      "at": "2026-11-25T00:15:14.293Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20261125001459/https://quartierlibre.ca/vendre-sa-personnalite-pour-payer-un-stage/"
+    },
+    "https://impactcampus.ca/actualites/step-vers-une-greve-pour-la-fin-de-session/": {
+      "at": "2026-11-25T00:16:53.139Z",
+      "via": "save-page-now",
+      "source": "Impact Campus",
+      "snapshot": "https://web.archive.org/web/20261125001634/https://impactcampus.ca/actualites/step-vers-une-greve-pour-la-fin-de-session/"
     }
   },
   "stats": {
-    "total": 1192,
+    "total": 1203,
     "lastRun": {
-      "saved": 13,
+      "saved": 11,
       "skipped": 0,
-      "failed": 7,
+      "failed": 9,
       "stoppedEarly": false
     }
   },
@@ -6815,7 +6881,8 @@
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 27,
-      "checkedAt": "2026-11-17T23:07:40.732Z"
+      "checkedAt": "2026-11-17T23:07:40.732Z",
+      "stale": true
     },
     "The Tribune": {
       "host": "thetribune.ca",
@@ -6840,7 +6907,7 @@
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
       "pages": 9,
-      "checkedAt": "2026-11-17T23:07:42.595Z"
+      "checkedAt": "2026-11-25T00:05:37.937Z"
     },
     "Quartier Libre": {
       "host": "quartierlibre.ca",
@@ -6865,7 +6932,8 @@
     "Exil": {
       "host": "exilecvm.wordpress.com",
       "pages": 1,
-      "checkedAt": "2026-10-22T00:10:25.970Z"
+      "checkedAt": "2026-10-22T00:10:25.970Z",
+      "stale": true
     },
     "The Campus": {
       "host": "thebucampus.ca",
