@@ -79,8 +79,8 @@
   margin: 0 0 14px;
 }
 /* Colonne de la marque : quand les icônes de 44 px et leur gouttière
-   (8×44 + 7×6 = 394 px) n’y tiennent pas, on passe à deux lignes égales
-   (--social-cols = moitié arrondie, posé par nav-shell.js ; 4 + 4) étalées
+   (9×44 + 8×6 = 444 px) n’y tiennent pas, on passe à deux lignes égales
+   (--social-cols = moitié arrondie, posé par nav-shell.js ; 5 + 4) étalées
    sur TOUTE la largeur de la colonne : première icône alignée au texte à
    gauche, dernière au bord droit (25 nov. 2026 — avant : bloc figé à
    5×44 px qui laissait la moitié droite vide). Ajouter/retirer un réseau :
@@ -89,7 +89,7 @@
   container-type: inline-size;
   container-name: foot-brand;
 }
-@container foot-brand (max-width: 393.98px) {
+@container foot-brand (max-width: 443.98px) {
   .site-foot__social {
     display: grid;
     grid-template-columns: repeat(var(--social-cols, 4), 44px);

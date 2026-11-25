@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Pages Facebook et LinkedIn « LE-RADAR.ca » (et Threads, prêt mais inactif) via Buffer (forfait gratuit). Remplit SEULEMENT les
+// Pages Facebook et LinkedIn « LE-RADAR.ca » (et Threads) via Buffer (forfait gratuit). Remplit SEULEMENT les
 // places libres de chaque canal (10 max), à des heures de pointe tirées au hasard (buffer-pages.mjs).
 // Refus du lien/post (ex. blocage des nouvelles de Meta) : journalisé, réseau arrêté pour ce passage,
 // détails écrits dans $PAGES_ISSUE_FILE (une seule issue GitHub, mise à jour par le workflow).
@@ -26,7 +26,7 @@ const key = process.env.BUFFER_API_KEY || '';
 let dry = args.includes('--dry-run') || process.env.DRY_RUN === 'true';
 if (!key) { console.log('BUFFER_API_KEY absent : mode essai (sans lecture de la file).'); dry = true; }
 const feedArg = args.includes('--feed') ? args[args.indexOf('--feed') + 1] : null;
-// Par défaut : les canaux de buffer-pages.json sans « enabled: false » (Threads est prêt mais inactif).
+// Par défaut : les canaux de buffer-pages.json sans « enabled: false » (désactiver un canal : enabled: false).
 const defaultNets = Object.keys(CFG).filter(n => !n.startsWith('_') && CFG[n].enabled !== false).join(',');
 const networks = (process.env.PAGES || defaultNets).split(',').map(s => s.trim()).filter(n => CFG[n]);
 const issueFile = process.env.PAGES_ISSUE_FILE || '';

@@ -76,8 +76,8 @@ assert.equal(localParts(T('2026-11-01T17:00:00Z')).weekend, true);
 assert.deepEqual(postMetadata('facebook'), { facebook: { type: 'post' } }, 'Facebook : type post exigé par Buffer');
 assert.equal(postMetadata('linkedin'), undefined);
 console.log('social-buffer-pages : OK');
-// Threads : prêt mais inactif, 500 caractères lien compris, un seul mot-clic, fenêtres de pointe
-assert.equal(CFG.threads.enabled, false, 'Threads inactif tant que le profil n’est pas relié à Buffer');
+// Threads : actif, 500 caractères lien compris, un seul mot-clic, fenêtres de pointe
+assert.equal(CFG.threads.enabled, true, 'Threads actif (relié à Buffer le 25 nov. 2026)');
 assert.equal(CFG.threads.service, 'threads');
 for (const n of ['facebook', 'linkedin']) assert.notEqual(CFG[n].enabled, false, `${n} reste actif`);
 const longIt = { ...it, desc: 'Très long résumé. '.repeat(60) };

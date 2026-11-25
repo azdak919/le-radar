@@ -12,6 +12,7 @@ const links = vm.runInNewContext(m[1]);
 const expected = {
   buymeacoffee: 'https://www.buymeacoffee.com/azdak',
   instagram: 'https://www.instagram.com/le.radar.ca/',
+  threads: 'https://www.threads.com/@le.radar.ca',
   facebook: 'https://www.facebook.com/profile.php?id=61596092762097',
   linkedin: 'https://www.linkedin.com/company/le-radar-ca/',
   x: 'https://x.com/le_radar_ca',
@@ -26,11 +27,11 @@ for (const l of on) {
   assert.match(l.label, /LE-RADAR\.ca/, `aria-label ${l.id}`);
   assert.ok(l.path.length > 20 && /^0 0 \d+ \d+$/.test(l.viewBox), `icône ${l.id}`);
 }
-// Tumblr masqué temporairement (reste dans sameAs) ; Threads prêt mais inactif.
+// Tumblr masqué temporairement (reste dans sameAs) ; Threads actif.
 const tumblr = links.find((l) => l.id === 'tumblr');
 assert.ok(tumblr && tumblr.enabled === false, 'Tumblr masqué (mât + pied)');
 const threads = links.find((l) => l.id === 'threads');
-assert.ok(threads && threads.enabled === false, 'Threads prêt, inactif');
+assert.ok(threads && threads.enabled === true, 'Threads actif');
 assert.equal(threads.href, 'https://www.threads.com/@le.radar.ca');
 assert.ok(fs.readFileSync(new URL('../assets/social-icons/threads.svg', import.meta.url), 'utf8').includes(threads.path.slice(0, 40)), 'SVG Threads = tracé');
 assert.match(src, /--social-cols/);
@@ -45,6 +46,7 @@ assert.equal(bmc.rel, 'noopener noreferrer');
 assert.match(src, /www\.buymeacoffee\.com\/azdak/);
 const sameAsOrder = [
   'https://www.instagram.com/le.radar.ca/',
+  'https://www.threads.com/@le.radar.ca',
   'https://www.facebook.com/profile.php?id=61596092762097',
   'https://www.linkedin.com/company/le-radar-ca/',
   'https://x.com/le_radar_ca',
