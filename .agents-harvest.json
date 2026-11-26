@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-26T16:53:21.333Z",
+  "generatedAt": "2026-11-26T21:39:06.733Z",
   "since": "36h",
   "sinceGit": "36 hours ago",
   "intense": true,
   "intensity": {
-    "score": 3182.8,
+    "score": 3460,
     "level": "heavy",
-    "files": 2484,
-    "touches": 8104,
-    "commitCount": 85
+    "files": 2685,
+    "touches": 4116,
+    "commitCount": 103
   },
   "candidates": [
     {
@@ -17,14 +17,14 @@
       "why": "Beaucoup de scripts touchés — opportunité de factoriser",
       "effort": "M",
       "related": "D1",
-      "heat": 2136,
+      "heat": 822,
       "files": [
+        "tests/revue-linkedin.mjs",
+        "scripts/revue/revue-linkedin.js",
         "scripts/social/une-lib.mjs",
-        "tests/social-une.mjs",
         "scripts/social/une-run.mjs",
-        "scripts/social/une-render.mjs",
-        "scripts/revue/revue-lib.mjs",
-        "scripts/social/buffer-pages-post.mjs"
+        "tests/social-une.mjs",
+        "scripts/revue/revue-pdfs.mjs"
       ]
     },
     {
@@ -33,7 +33,7 @@
       "why": "Activité concentrée sur /pomo/",
       "effort": "S",
       "related": null,
-      "heat": 184.5,
+      "heat": 61.5,
       "files": [
         "pomo/LICENSE",
         "pomo/README.md",
@@ -49,7 +49,7 @@
       "why": "Beaucoup d’activité sur les fonds — documenter ou automatiser le reste",
       "effort": "M",
       "related": "D3",
-      "heat": 132,
+      "heat": 44,
       "files": [
         "data/quebec-backgrounds-rejected.json",
         "data/quebec-backgrounds.json",
@@ -65,12 +65,12 @@
       "why": "SW et install touchés souvent ; risque de cache oublié",
       "effort": "S",
       "related": null,
-      "heat": 78,
+      "heat": 42,
       "files": [
         "assets/news-images/manifest.json",
+        "offline.html",
         "sports/sw.js",
         "sw.js",
-        "offline.html",
         "engage-prompt.js",
         "manifest.json"
       ]
@@ -81,7 +81,7 @@
       "why": "Zone audio mobile sensible ; regroupe les fix récurrents",
       "effort": "M",
       "related": null,
-      "heat": 75,
+      "heat": 25,
       "files": [
         ".github/workflows/update-radio-nowplaying.yml",
         "cast.js",
@@ -92,79 +92,82 @@
       ]
     },
     {
-      "zone": "monolith-app",
-      "title": "Découper / modulariser app.js (tranche)",
-      "why": "Fichier monolithe touché souvent en vibe-code → re-lit cher en tokens",
-      "effort": "L",
-      "related": "D2",
-      "heat": 27,
+      "zone": "docs-agents",
+      "title": "Playbook / ledger agents (méta)",
+      "why": "Travail sur le système d’agents lui-même",
+      "effort": "S",
+      "related": null,
+      "heat": 12.8,
       "files": [
-        "app.js",
-        "mobile/app/js/app.js",
-        "pomo/js/app.js"
+        "AGENTS.md",
+        ".agents-harvest.json",
+        "agents-harvest.json",
+        ".cursor/rules/git-and-test-safety.mdc",
+        ".cursor/rules/le-radar-agents.mdc",
+        "CLAUDE.md"
       ]
     }
   ],
   "topFiles": [
     {
       "file": "assets/kit/affiches/affiche-ex-une-concordia-tabloid-semaine-verre-bilingue-600dpi.pdf",
-      "n": 17
+      "n": 22
     },
     {
       "file": "assets/kit/affiches/affiche-ex-une-laval-tous-tabloid-semaine-verre-600dpi.pdf",
-      "n": 17
+      "n": 22
     },
     {
       "file": "assets/kit/affiches/affiche-ex-une-mcgill-lettre-semaine-bilingue-600dpi.pdf",
-      "n": 17
+      "n": 22
     },
     {
       "file": "assets/kit/affiches/affiche-ex-une-sherbrooke-lettre-semaine-600dpi.pdf",
-      "n": 17
+      "n": 22
     },
     {
       "file": "assets/kit/affiches/affiche-ex-une-udem-ql-lettre-semaine-600dpi.pdf",
-      "n": 17
+      "n": 22
     },
     {
       "file": "assets/kit/affiches/affiche-ex-une-udem-tous-tabloid-mois-600dpi.pdf",
-      "n": 17
+      "n": 22
     },
     {
       "file": "assets/kit/affiches/affiche-ex-une-uqam-legal-mois-600dpi.pdf",
-      "n": 17
+      "n": 22
     },
     {
       "file": "assets/kit/affiches/gallery-meta.json",
-      "n": 17
+      "n": 22
     },
     {
-      "file": "en/newspapers/la-griffe/index.html",
-      "n": 13
-    },
-    {
-      "file": "en/newspapers/le-polyscope/index.html",
-      "n": 13
-    },
-    {
-      "file": "journaux/la-griffe/index.html",
-      "n": 13
-    },
-    {
-      "file": "journaux/le-polyscope/index.html",
-      "n": 13
-    },
-    {
-      "file": "CHANGELOG.md",
+      "file": "tests/revue-linkedin.mjs",
       "n": 12
     },
     {
-      "file": "assets/news-images/manifest.json",
+      "file": "affiches/social-une.js",
       "n": 12
     },
     {
-      "file": "data/archives/2018-03.json",
-      "n": 12
+      "file": "scripts/revue/revue-linkedin.js",
+      "n": 11
+    },
+    {
+      "file": "en/radios/cism/index.html",
+      "n": 11
+    },
+    {
+      "file": "en/schedules/index.html",
+      "n": 11
+    },
+    {
+      "file": "horaires/index.html",
+      "n": 11
+    },
+    {
+      "file": "radios/cism/index.html",
+      "n": 11
     }
   ]
 }
