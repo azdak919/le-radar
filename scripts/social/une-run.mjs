@@ -30,6 +30,10 @@ const MEDIA_BRANCH = 'social-une-media';
 const arg = (n, d = '') => { const i = process.argv.indexOf('--' + n); return i > 0 ? process.argv[i + 1] : d; };
 const rd = f => JSON.parse(fs.readFileSync(path.isAbsolute(f) ? f : path.join(ROOT, f), 'utf8'));
 const tz = t => new Date(t).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (heure de Montréal)';
+/** Sujet Threads de La une (un seul par publication, sans « . » ni « & »). */
+export const UNE_THREADS_TOPIC = 'Médias étudiants';
+/** Threads suit l'interrupteur de data/social/buffer-pages.json (enabled). */
+export const threadsEnabled = () => { try { return rd('data/social/buffer-pages.json').threads?.enabled === true; } catch { return false; } };
 export const CFG = POLICY.formats?.une || { publish: false, networks: [], slots: SLOTS };
 
 /** Garde l'état court : créneaux des `days` derniers jours seulement. */
@@ -44,7 +48,7 @@ export function gate({ now = Date.now(), state = {}, forced = '', cfg = CFG, dry
   if (forced && forced !== 'auto') return { due: true, slot: forced, why: 'créneau forcé (déclenchement manuel)' };
   const s = slotAt(now, cfg.slots || SLOTS);
   if (!s) return { due: false, slot: '', why: `hors des fenêtres d'envoi : ${tz(now)}` };
-  const nets = (cfg.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()));
+  const nets = (cfg.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()) && (n !== 'threads' || threadsEnabled()));
   if (slotDone(state[s.key], nets)) return { due: false, slot: s.id, why: `${s.key} déjà traité` };
   return { due: true, slot: s.id, why: `${s.key} dû` };
 }
@@ -105,6 +109,12 @@ async function publishOne(net, entry, env) {
     return { url: p.url, id: p.id };
   }
   const pages = env.pages || {}, key = env.BUFFER_API_KEY;
+  if (net === 'threads') {
+    // Compte Buffer d'Instagram ; texte seul (le lien de la une devient la carte d'aperçu), un sujet.
+    const th = createXBuffer({ key: env[pages.threads?.secret || 'BUFFER_INSTAGRAM_API_KEY'], service: 'threads', channelName: pages.threads?.name || 'le.radar.ca', fallbackId: env.BUFFER_THREADS_CHANNEL_ID || null });
+    const post = await th.add({ text, now: true, metadata: { threads: { type: 'post', topic: UNE_THREADS_TOPIC } } });
+    return { id: post.id, status: post.status || '' };
+  }
   const ch = net === 'x' ? createXBuffer({ key, fallbackId: env.BUFFER_CHANNEL_ID || undefined })
     : createXBuffer({ key, service: pages[net].service, channelName: pages[net].name, fallbackId: (net === 'facebook' ? env.BUFFER_FACEBOOK_CHANNEL_ID : env.BUFFER_LINKEDIN_CHANNEL_ID) || null });
   const post = await ch.add({ text, image: img, alt: entry.alt, now: true, metadata: postMetadata(net) });
@@ -171,7 +181,7 @@ async function main() {
   const out = path.resolve(arg('out', 'une-preview')); fs.mkdirSync(out, { recursive: true });
   const slot = forced && forced !== 'auto' ? slotFor(forced, now, CFG.slots) : slotAt(now, CFG.slots);
   if (!slot) { console.log(`Hors des fenêtres d'envoi (${tz(now)}) : rien à faire.`); return; }
-  const nets = (CFG.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()));
+  const nets = (CFG.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()) && (n !== 'threads' || threadsEnabled()));
   if (!tumblrEnabled() && (CFG.networks || []).includes('tumblr')) console.log(PAUSED_MSG);
   let entry = state[slot.key];
   if (!dry && slotDone(entry, nets)) { console.log(`${slot.key} : déjà traité.`); return; }

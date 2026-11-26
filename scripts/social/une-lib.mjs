@@ -31,7 +31,7 @@ export function institutionColor(name) {
 }
 const authors = require('../author-lib.js');
 
-export const NETS = ['bluesky', 'mastodon', 'x', 'tumblr', 'facebook', 'linkedin'];
+export const NETS = ['bluesky', 'mastodon', 'x', 'tumblr', 'facebook', 'linkedin', 'threads'];
 export const SLOTS = {
   matin: { id: 'matin', label: 'La une du matin', emoji: '☀️', target: '07:45', from: '07:30', to: '10:30' },
   soir: { id: 'soir', label: 'La une du soir', emoji: '🌙', target: '19:30', from: '19:15', to: '22:30' },
@@ -515,7 +515,12 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
   const compose = (items, hash, cut, sports, radio, revueLine) => {
     const T = x => cut ? clip(x.title, cut) : x.title;
     let body;
-    if (spec.nolink) {
+    if (spec.style === 'lead') {
+      // Article principal, puis les autres en une ligne (Threads) ou leur nombre (X), puis le lien vers la une.
+      const [first, ...rest] = items, more = model.items.length - 1;
+      const others = spec.others && rest.length ? `Aussi à la une : ${rest.map(T).join(' · ')}` : more > 0 ? `+ ${more} autre${more > 1 ? 's' : ''} à la une` : '';
+      body = [`${first.sport ? first.sport + ' ' : ''}${T(first)}\n✍️ ${first.byline}`, others, HOME].filter(Boolean).join('\n\n');
+    } else if (spec.nolink) {
       body = items.map((x, i) => `${i + 1}. ${x.sport ? x.sport + ' ' : ''}${T(x)}\n✍️ ${x.byline}`).join('\n\n');
     } else if (long) {
       body = items.map((x, i) => `${i + 1}. ${x.sport ? x.sport + ' ' : ''}${T(x)}\n✍️ ${x.byline}\n${x.pageUrl}`).join('\n\n');
@@ -535,7 +540,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
       const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');
       if (credit) body += '\n\n' + credit;
     } else if (long) body += `\n\nToute la une : ${HOME}`;
-    const lead = revueLine ? `${head}\n${revueLine}` : head;
+    const lead = [head, revueLine, spec.intro].filter(Boolean).join('\n');
     return [lead, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
   let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = SPORTS_NETS.has(net) ? [...(model.radio || [])] : [];
@@ -591,7 +596,7 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
   const out = {};
   for (const n of [...NETS, ...PREPARED_NETS]) {
     const spec = n === 'instagram' ? IG_SPEC : NET_SPEC[n];
-    const tags = n === 'tumblr' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : n === 'x' ? uneTagsX(model.items, maxByNetwork[n] ?? 3) : uneTags(model.items, maxByNetwork[n] ?? 2);
+    const tags = n === 'tumblr' || n === 'threads' ? [] : n === 'instagram' ? instagramHashtags(model.items, maxByNetwork[n] ?? 5) : n === 'x' ? uneTagsX(model.items, maxByNetwork[n] ?? 3) : uneTags(model.items, maxByNetwork[n] ?? 2);
     const text = buildUneText(model, n, spec, { tags, revueExists: opts.revueExists ?? model.revueExists, root: opts.root });
     out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] || '', problems: checkUneText(text, n, model, spec) };
   }
