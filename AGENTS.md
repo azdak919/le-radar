@@ -475,16 +475,16 @@ variantes de noms :
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-11-25T08:30:05.894Z · intensité **heavy** (score 3090) · fenêtre `36h`
+> Dernière récolte : 2026-11-26T13:35:22.599Z · intensité **heavy** (score 3184.4) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| bots-ci | 715.2 | M | Bots / CI / scripts de maintenance | `scripts/social/channels/tumblr.mjs`, `scripts/social/tumblr-post.mjs`, `scripts/social/tumblr.mjs`, `tests/social-tumblr.mjs`, `.github/workflows/bluesky-delete-post.yml`, `.github/workflows/pages-deploy.yml` |
-| pomo | 61.5 | S | Isolation / qualité mini-app Pomo | `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png`, `pomo/apple-touch-icon-180x180.png`, `pomo/apple-touch-icon.png` |
-| banks-photo | 44 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds-rejected.json`, `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json` |
-| pwa-sw | 32 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `engage-prompt.js`, `manifest.json`, `offline.html`, `pomo/sw.js`, `solitaire/sw.js` |
-| radio-mobile | 25 | M | Radio mobile / Media Session / reprise | `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js`, `player-sync.js`, `scripts/fetch-radio-nowplaying.js`, `scripts/radio-nowplaying-lib.js` |
-| monolith-app | 9 | L | Découper / modulariser app.js (tranche) | `app.js`, `mobile/app/js/app.js`, `pomo/js/app.js` |
+| bots-ci | 2722.8 | M | Bots / CI / scripts de maintenance | `scripts/social/buffer-pages-post.mjs`, `scripts/social/lib.mjs`, `scripts/social/buffer-post.mjs`, `tests/social-buffer-pages.mjs`, `scripts/revue/revue-render.js`, `scripts/social/une-run.mjs` |
+| pomo | 246 | S | Isolation / qualité mini-app Pomo | `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png`, `pomo/apple-touch-icon-180x180.png`, `pomo/apple-touch-icon.png` |
+| banks-photo | 176 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds-rejected.json`, `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json` |
+| radio-mobile | 100 | M | Radio mobile / Media Session / reprise | `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js`, `player-sync.js`, `scripts/fetch-radio-nowplaying.js`, `scripts/radio-nowplaying-lib.js` |
+| pwa-sw | 98 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sports/sw.js`, `sw.js`, `offline.html`, `engage-prompt.js`, `manifest.json` |
+| monolith-app | 36 | L | Découper / modulariser app.js (tranche) | `app.js`, `mobile/app/js/app.js`, `pomo/js/app.js` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)
