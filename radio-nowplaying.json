@@ -1,80 +1,72 @@
 {
-  "updatedAt": "2026-11-26T16:07:04.305Z",
+  "updatedAt": "2026-11-26T18:06:44.350Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Sons de Cloches",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/sons-de-cloches/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Sons de Cloches",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:15.061Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La grande ludothèque",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:16.047Z"
+      "checkedAt": "2026-11-26T18:06:18.408Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "next": {
+        "title": "La session live",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
+      },
+      "track": "",
+      "showTitle": "Le palmarès",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-26T18:06:19.502Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Under The Olive Tree",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Venus Radio",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Under The Olive Tree",
+      "next": {
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,82 +74,83 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:18.271Z"
+      "checkedAt": "2026-11-26T18:06:21.971Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Chi and Ri",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/chi-and-ri"
+        "title": "What's Happening in NDG",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
       },
       "next": {
-        "title": "The Power Hour",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "title": "Secondhand Sounds",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "track": "",
-      "showTitle": "Chi and Ri",
+      "showTitle": "What's Happening in NDG",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live",
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-26T18:06:23.496Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": null,
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      },
+      "track": "",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:42.092Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "À nous le futur",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "11:59",
-        "url": "https://www.cfak.ca/balados/a-nous-le-futur"
-      },
-      "next": {
-        "title": "Le DOUZE",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "12:59",
-        "url": "https://www.cfak.ca/balados/le-douze"
-      },
-      "track": "",
-      "showTitle": "À nous le futur",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:43.238Z"
+      "checkedAt": "2026-11-26T18:06:24.429Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Onde de CHOQ",
         "source": "api-live",
         "start": "13:00",
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Isla Den — Closer",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:30",
+        "end": "16:30",
+        "slug": "palmareschoq"
+      },
+      "track": "Jonny Boyle — Snake In The Grass",
+      "showTitle": "Onde de CHOQ",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:07:03.954Z"
+      "checkedAt": "2026-11-26T18:06:43.999Z"
     }
   }
 }
