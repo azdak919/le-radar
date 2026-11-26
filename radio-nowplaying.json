@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T05:07:18.389Z",
+  "updatedAt": "2026-11-26T06:07:18.894Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T05:06:25.244Z"
+      "checkedAt": "2026-11-26T06:06:29.422Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Les Charlottes",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/les-charlottes"
+      },
       "track": "",
-      "showTitle": "La carte cadeau (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T05:06:38.560Z"
+      "checkedAt": "2026-11-26T06:06:42.449Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T05:06:42.143Z"
+      "checkedAt": "2026-11-26T06:06:44.632Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T05:06:56.048Z"
+      "checkedAt": "2026-11-26T06:06:58.055Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T05:06:57.018Z"
+      "checkedAt": "2026-11-26T06:06:59.097Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Kaatayra — Remanso de Maria",
+      "track": "Chat Pile — Family Funeral",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T05:07:18.039Z"
+      "checkedAt": "2026-11-26T06:07:18.543Z"
     }
   }
 }
