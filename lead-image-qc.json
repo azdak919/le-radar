@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-25T21:40:11.544Z",
-  "total": 1178,
-  "withPhoto": 1073,
-  "withStock": 117,
-  "withCampusBank": 102,
-  "fullyCovered": 1161,
-  "leadReadyPhotos": 1127,
-  "pageScraped": 8,
-  "photosRecovered": 8,
+  "updated": "2026-11-26T02:08:11.995Z",
+  "total": 1181,
+  "withPhoto": 1049,
+  "withStock": 121,
+  "withCampusBank": 104,
+  "fullyCovered": 1143,
+  "leadReadyPhotos": 1123,
+  "pageScraped": 12,
+  "photosRecovered": 12,
   "imagesCleared": 1,
-  "stockSearches": 4,
-  "stockFound": 19,
-  "campusBankFound": 15,
+  "stockSearches": 7,
+  "stockFound": 18,
+  "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,10 +21,16 @@
       "image": null
     },
     {
-      "title": "Queer Language is Queer Resistance",
-      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance",
-      "reason": "campus-bank",
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30",
+      "reason": "no-stock-match",
       "image": null
+    },
+    {
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire",
+      "reason": "no-stock-match",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/BanalisationViolence2-scaled.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -37,6 +43,12 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "Bulletin 12h La Pige radio",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30",
+      "reason": "no-stock-match",
+      "image": null
     }
   ]
 }

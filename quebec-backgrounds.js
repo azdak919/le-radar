@@ -2584,7 +2584,68 @@
     img.src = url;
   }
 
+
+  function _isDoodleOn() {
+    try {
+      return document.documentElement.classList.contains("doodle-on");
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function _doodleCity() {
+    try {
+      const city = document.documentElement.getAttribute("data-doodle-city");
+      if (city === "quebec" || city === "montreal") return city;
+    } catch (err) { /* ignore */ }
+    return "montreal";
+  }
+
+  function _doodleBackground() {
+    const city = _doodleCity();
+    if (city === "quebec") {
+      return {
+        url: "/assets/doodle/quebec-skyline-martin-st-amant.jpg",
+        credit: "Martin St-Amant",
+        place: "Québec",
+        link: "https://commons.wikimedia.org/wiki/File:79_-_Qu%C3%A9bec_-_Juin_2009.jpg",
+        license: "CC BY-SA 3.0",
+        title: "79 - Québec - Juin 2009",
+        focalY: 0.50,
+        width: 2880,
+        height: 685,
+        permanent: true,
+        bank: "doodle",
+      };
+    }
+    return {
+      url: "/assets/doodle/montreal-skyline-stefan-fussan.jpg",
+      credit: "Stefan Fussan",
+      place: "Montréal",
+      link: "https://commons.wikimedia.org/wiki/File:Montreal_-_Skyline_-_0100.jpg",
+      license: "CC BY-SA 3.0",
+      title: "Skyline of Montreal at sunset",
+      focalY: 0.48,
+      width: 2880,
+      height: 1236,
+      permanent: true,
+      bank: "doodle",
+    };
+  }
+
+  function _applyDoodleBackground() {
+    const bg = _doodleBackground();
+    _paintBackground(bg, bg.url, null);
+    /* Bouton shuffle : visible comme sur le mât habituel.
+       shuffleMastheadBackground() reste un no-op tant que le doodle est on. */
+  }
+
   function init() {
+    if (_isDoodleOn()) {
+      if (!document.getElementById("bg-photo-layer")) return;
+      _applyDoodleBackground();
+      return;
+    }
     const all = _mastheadPool();
     if (!all.length) return;
     if (!document.getElementById("bg-photo-layer")) return;
@@ -2614,6 +2675,7 @@
   }
 
   function shuffleMastheadBackground() {
+    if (_isDoodleOn()) return;
     const pool = _mastheadPool();
     const current = document.getElementById("bg-photo-layer")?.dataset.bgUrl || "";
     const shuffleOpts = { hardExcludeRecent: 15, fullWindow: true };

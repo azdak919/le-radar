@@ -117,3 +117,78 @@
     window.addEventListener('resize', applyWideLayoutFromViewport, { passive: true });
   } catch (err2) { /* ignore */ }
 })();
+
+/* Doodle Vice City, novembre 2026. Même décision que doodle-boot-lib.js
+   (fin 30 nov. 23 h 59 heure de Montréal, tirage 1/5, ?doodle=on|off,
+   ville Montréal/Québec à parts égales, gardée pour la session,
+   ?doodle-city=montreal|quebec). Ce fichier est déjà chargé dans le
+   <head> avant style-masthead.css, donc data-doodle-city est posé
+   avant le premier paint, sans flash. */
+(function () {
+  "use strict";
+  var STORAGE_KEY = "radar-doodle-2026-11";
+  var CITY_STORAGE_KEY = "radar-doodle-2026-11-city";
+  var END_MS = Date.parse("2026-12-01T04:59:59.999Z");
+  var state = "off";
+  var city = "";
+  try {
+    var boot = typeof window !== "undefined" ? window.__lrDoodleBoot : null;
+    var search = "";
+    try { search = new URL(location.href).search; } catch (e1) { search = location.search || ""; }
+    if (boot && typeof boot.resolveDoodleState === "function") {
+      state = boot.resolveDoodleState({ search: search, storage: window.localStorage });
+    } else {
+      var force = "";
+      try {
+        force = (new URLSearchParams(search).get("doodle") || "").toLowerCase().trim();
+      } catch (e2) { force = ""; }
+      if (force === "on" || force === "off") {
+        state = force;
+      } else if (Date.now() <= END_MS) {
+        var saved = null;
+        try { saved = localStorage.getItem(STORAGE_KEY); } catch (e3) { saved = null; }
+        if (saved === "on" || saved === "off") {
+          state = saved;
+        } else {
+          state = Math.random() < 0.2 ? "on" : "off";
+          try { localStorage.setItem(STORAGE_KEY, state); } catch (e4) { /* ignore */ }
+        }
+      }
+    }
+    if (state === "on") {
+      if (boot && typeof boot.resolveDoodleCity === "function") {
+        city = boot.resolveDoodleCity({ search: search, cityStorage: window.sessionStorage });
+      } else {
+        var cityForce = "";
+        try {
+          cityForce = (new URLSearchParams(search).get("doodle-city") || "").toLowerCase().trim();
+        } catch (e5) { cityForce = ""; }
+        if (cityForce === "montreal" || cityForce === "quebec") {
+          city = cityForce;
+        } else {
+          var citySaved = null;
+          try { citySaved = sessionStorage.getItem(CITY_STORAGE_KEY); } catch (e6) { citySaved = null; }
+          if (citySaved === "montreal" || citySaved === "quebec") {
+            city = citySaved;
+          } else {
+            city = Math.random() < 0.5 ? "montreal" : "quebec";
+            try { sessionStorage.setItem(CITY_STORAGE_KEY, city); } catch (e7) { /* ignore */ }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    state = "off";
+    city = "";
+  }
+  try {
+    document.documentElement.classList.remove("doodle-on", "doodle-off");
+    document.documentElement.classList.add(state === "on" ? "doodle-on" : "doodle-off");
+    document.documentElement.setAttribute("data-doodle", state);
+    if (state === "on" && (city === "montreal" || city === "quebec")) {
+      document.documentElement.setAttribute("data-doodle-city", city);
+    } else {
+      document.documentElement.removeAttribute("data-doodle-city");
+    }
+  } catch (err2) { /* ignore */ }
+})();
