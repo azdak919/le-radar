@@ -10,7 +10,7 @@ const LONG = 'Patriotes de l’Université du Québec à Trois-Rivières';
 const item = (n, o = {}) => ({ id: `id${n}`, title: `Un titre d’article étudiant numéro ${n} assez long pour passer à la ligne`, link: `https://journal.example/a${n}`, source: 'Le Collectif', authors: ['Aurélie Souka', 'Caroline Lizin', 'Émile Brochu'], date: '2026-11-17T02:00:00.000Z', lang: 'fr', institution: 'Université de Sherbrooke (UdeS)', sport: '', excerpt: 'Un court extrait de l’article, coupé à la phrase.', resume: n % 2 ? 'Un résumé d’une phrase rédigé en français à partir du titre et de l’extrait.' : '', theme: n % 3 ? 'Culture' : 'Politique', image: '', credit: '', ...o });
 const model = (id) => ({
   id: `2026-11-17-${id}`, edition: { id, label: id === 'soir' ? 'La revue du soir' : 'La revue du matin', emoji: id === 'soir' ? '🌙' : '☀️', day: '2026-11-17' },
-  path: `revue/2026-11-17-${id}/`, url: `https://le-radar.ca/revue/2026-11-17-${id}/`, period: { start: 0, end: 0 },
+  path: `revues/2026-11-17-${id}/`, url: `https://le-radar.ca/revues/2026-11-17-${id}/`, period: { start: 0, end: 0 },
   datePublished: '2026-11-17T12:30:00.000Z', dateModified: '2026-11-17T12:30:00.000Z', headline: `La revue du ${id} du mardi 17 novembre 2026`,
   description: 'Revue de presse étudiante du Québec.', intro: 'Pour ouvrir la journée, Le Collectif publie « Un titre d’article étudiant numéro 1 ». À lire aussi : « An English title from a student newspaper » dans The Link.', chapeau: '', generator: 'gabarit', previous: null,
   categories: ['Revue de presse', 'Médias étudiants'], image: null,
@@ -27,10 +27,10 @@ for (const id of ['matin', 'soir']) {
     for (const scheme of ['light', 'dark']) {
       test(`revue ${id} ${dev} ${scheme} @ci-critical`, async ({ page }) => {
         await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
-        await page.route(`**/revue/2026-11-17-${id}/`, (r) => r.fulfill({ contentType: 'text/html; charset=utf-8', body: R.renderReviewPage(model(id)) }));
+        await page.route(`**/revues/2026-11-17-${id}/`, (r) => r.fulfill({ contentType: 'text/html; charset=utf-8', body: R.renderReviewPage(model(id)) }));
         await page.emulateMedia({ colorScheme: scheme });
         await page.setViewportSize({ width, height });
-        await page.goto(`/revue/2026-11-17-${id}/`, { waitUntil: 'load' });
+        await page.goto(`/revues/2026-11-17-${id}/`, { waitUntil: 'load' });
         await expect(page.locator('h1.seo-title')).toContainText(`La revue du ${id}`);
         await expect(page.locator('.revue-note')).toHaveCount(0);
         await expect(page.locator('.revue-lede')).toContainText('Pour ouvrir la journée, Le Collectif publie');

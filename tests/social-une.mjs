@@ -346,19 +346,19 @@ assert.deepEqual(U.articleFormatsFor(['instagram', 'x', 'facebook']), ['article'
 // ── Lien vers l'édition de la revue : 2e ligne, seulement si la page existe ──
 const matin17 = U.slotFor('matin', Date.parse('2026-11-17T12:45:00Z'));
 const soir17 = U.slotFor('soir', Date.parse('2026-11-18T00:30:00Z'));
-assert.equal(U.revueEditionHref(matin17), 'revue/2026-11-17-matin/');
-assert.equal(U.revueEditionHref(soir17), 'revue/2026-11-17-soir/');
+assert.equal(U.revueEditionHref(matin17), 'revues/2026-11-17-matin/');
+assert.equal(U.revueEditionHref(soir17), 'revues/2026-11-17-soir/');
 assert.equal(U.revueEditionHref({ id: 'matin', day: 'pas-une-date' }), '');
 assert.equal(U.revueEditionExists(matin17), true, 'édition du matin du 17 réellement dans le dépôt');
 assert.equal(U.revueEditionExists(soir17), true, 'édition du soir du 17 réellement dans le dépôt');
 assert.equal(U.revueEditionLine(soir17, { exists: () => false }), '', 'pas de ligne si l’édition n’existe pas');
 assert.equal(
   U.revueEditionLine(soir17, { exists: () => true }),
-  'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-soir/',
+  'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revues/2026-11-17-soir/',
 );
 assert.equal(
   U.revueEditionLine(matin17),
-  'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-matin/',
+  'Consultez notre revue du matin, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revues/2026-11-17-matin/',
 );
 assert.equal(
   U.revueEditionLine(matin17, { nolink: true }),
@@ -370,14 +370,14 @@ assert.doesNotMatch(U.revueEditionLine(matin17, { nolink: true }), /https?:\/\//
 const modelRevue = { slot: soir17, items: m.items, sports: { results: [], next: [] }, radio: [] };
 const sans = U.buildUneAll(modelRevue, { ...POLICY.hashtags.maxByNetwork, ...moduleHashtags() }, { revueExists: () => false });
 const avec = U.buildUneAll(modelRevue, { ...POLICY.hashtags.maxByNetwork, ...moduleHashtags() }, { revueExists: () => true });
-const ligneSoir = 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-soir/';
+const ligneSoir = 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revues/2026-11-17-soir/';
 for (const n of U.NETS) {
   const a = String(avec[n].text || ''), b = String(sans[n].text || '');
   assert.deepEqual(avec[n].problems, [], `${n} + revue : ${avec[n].problems}`);
   assert.ok(NET_SPEC[n].len(a) <= NET_SPEC[n].limit, `${n} + revue : limite`);
   assert.equal(a.split('\n')[0], b.split('\n')[0], `${n} : 1re ligne (accroche) inchangée`);
   assert.doesNotMatch(b, /revue du soir|le-radar\.ca\/revue\//, `${n} : rien si l’édition n’existe pas`);
-  if (a.includes('le-radar.ca/revue/')) {
+  if (a.includes('le-radar.ca/revues/')) {
     assert.equal(a.split('\n')[1], ligneSoir, `${n} : 2e ligne = phrase + lien, entière`);
     assert.match(a, /Tremblay/, `${n} : mentions / auteurs non coupés`);
   }
@@ -398,7 +398,7 @@ const tightTxt = U.buildUneText(tight, 'x', NET_SPEC.x, { tags: ['#MédiasÉtudi
 assert.ok(tightTxt);
 assert.match(tightTxt.split('\n')[0], /^🌙 La une du soir du Radar · mardi 17 novembre$/);
 assert.match(tightTxt, /Autrice 1 Tremblay · Quartier Libre/, 'auteur jamais coupé');
-if (tightTxt.includes('le-radar.ca/revue/')) assert.equal(tightTxt.split('\n')[1], ligneSoir);
+if (tightTxt.includes('le-radar.ca/revues/')) assert.equal(tightTxt.split('\n')[1], ligneSoir);
 
 // ── Workflow : planifié, déclenchement manuel, DRY_RUN, fenêtres été/hiver, verrou partagé ──
 const wf = fs.readFileSync(new URL('../.github/workflows/social-une.yml', import.meta.url), 'utf8');

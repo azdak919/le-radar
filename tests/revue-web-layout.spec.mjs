@@ -16,7 +16,7 @@ test.describe('Revue écran', () => {
       await page.setViewportSize({ width: 1440, height: 900 });
       await page.emulateMedia({ colorScheme: theme });
       await page.addInitScript((t) => { try { localStorage.setItem('radar-theme', t); } catch {} }, theme === 'dark' ? 'dark' : 'light');
-      await page.goto('/revue/2026-11-17-soir/', { waitUntil: 'domcontentloaded' });
+      await page.goto('/revues/2026-11-17-soir/', { waitUntil: 'domcontentloaded' });
       await page.waitForSelector('article.revue');
       await hideLab(page);
       const cover = page.locator('.revue-cover');
@@ -103,8 +103,8 @@ async function columnMetrics(page, selectors) {
 
 test.describe('Revue écran : colonne centrée', () => {
   const pages = [
-    { name: 'édition', path: '/revue/2026-11-19-soir/' },
-    { name: 'index', path: '/revue/' },
+    { name: 'édition', path: '/revues/2026-11-19-soir/' },
+    { name: 'index', path: '/revues/' },
   ];
   const viewports = [
     { name: '390', width: 390, height: 844 },

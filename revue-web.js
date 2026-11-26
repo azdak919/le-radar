@@ -1,4 +1,4 @@
-/* LE-RADAR.ca — enrichissement écran des pages /revue/… (PDF, images de banque, jeux).
+/* LE-RADAR.ca — enrichissement écran des pages /revues/… (PDF, images de banque, jeux).
  * Ne change pas la feuille d'impression : le bouton PDF est masqué en @media print. */
 (() => {
   const root = document.querySelector('article.revue[data-revue]');

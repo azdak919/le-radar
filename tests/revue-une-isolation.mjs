@@ -15,11 +15,12 @@ const REVUE = /le-radar\.ca\/revue|\/revue\/|revue du (matin|soir)/i;
 // ── Données : un fil normal dans lequel une revue se serait glissée (pire cas) ──
 const T0 = Date.parse('2026-11-17T12:45:00Z'); // 7 h 45, créneau du matin de La une
 const art = (n, iso, extra = {}) => ({ source: 'Quartier Libre', institution: 'Université de Montréal', lang: 'fr', title: `Article ${n} sur la vie étudiante`, link: `https://quartierlibre.ca/a-${n}/`, author: `Autrice ${n} Tremblay`, date: iso, image: `https://quartierlibre.ca/${n}.jpg`, ...extra });
-const revueItem = { source: 'Le Radar', institution: '', lang: 'fr', title: 'La revue du matin du mardi 17 novembre 2026', link: 'https://le-radar.ca/revue/2026-11-17-matin/', author: 'Le Radar', date: '2026-11-17T12:02:00Z', image: 'https://le-radar.ca/assets/og-cover.png' };
+const revueItem = { source: 'Le Radar', institution: '', lang: 'fr', title: 'La revue du matin du mardi 17 novembre 2026', link: 'https://le-radar.ca/revues/2026-11-17-matin/', author: 'Le Radar', date: '2026-11-17T12:02:00Z', image: 'https://le-radar.ca/assets/og-cover.png' };
 const news = { updated: '2026-11-17T12:30:00Z', items: [revueItem, art(1, '2026-11-17T11:00:00Z'), art(2, '2026-11-17T10:00:00Z'), art(3, '2026-11-17T02:00:00Z')] };
 
-assert.equal(isRevueLink('https://le-radar.ca/revue/2026-11-17-matin/'), true);
-assert.equal(isRevueLink('https://www.le-radar.ca/revue/'), true);
+assert.equal(isRevueLink('https://le-radar.ca/revues/2026-11-17-matin/'), true);
+assert.equal(isRevueLink('https://le-radar.ca/revue/2026-11-17-matin/'), true, 'ancienne adresse');
+assert.equal(isRevueLink('https://www.le-radar.ca/revues/'), true);
 assert.equal(isRevueLink('https://le-radar.ca/article/abc/'), false);
 assert.equal(isRevueLink('https://quartierlibre.ca/revue-de-presse/'), false, 'un article de média étudiant sur une « revue » reste admissible');
 
@@ -32,7 +33,7 @@ for (const id of ['matin', 'soir']) {
     assert.doesNotMatch(String(t.text || ''), REVUE, `La une du ${id} (${net}) : pas de revue si l’édition n’existe pas`);
   }
   const avec = U.buildUneAll(model, {}, { revueExists: () => true });
-  const wanted = `Consultez notre revue du ${id}, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-${id}/`;
+  const wanted = `Consultez notre revue du ${id}, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revues/2026-11-17-${id}/`;
   for (const [net, t] of Object.entries(avec)) {
     const text = String(t.text || '');
     if (net === 'instagram') {
@@ -41,7 +42,7 @@ for (const id of ['matin', 'soir']) {
       assert.doesNotMatch(text.split('\n').slice(2).join('\n'), /Consultez notre revue/, `Instagram (${id}) : la revue n’apparaît qu’en 2e ligne`);
       continue;
     }
-    if (text.includes('le-radar.ca/revue/')) {
+    if (text.includes('le-radar.ca/revues/')) {
       assert.equal(text.split('\n')[1], wanted, `La une du ${id} (${net}) : 2e ligne seulement`);
       assert.doesNotMatch(text.split('\n').slice(2).join('\n'), /Consultez notre revue/, `${net} : la revue n’apparaît qu’en 2e ligne`);
     }
@@ -54,7 +55,7 @@ assert.equal(U.revueEditionExists(U.slotFor('soir', Date.parse('2026-11-18T00:35
 
 // ── Bots par article : une revue publiée dans feed.xml est ignorée par parseFeed ──
 const reviewModel = {
-  id: '2026-11-17-matin', edition: { id: 'matin', label: 'La revue du matin', emoji: '☀️', day: '2026-11-17' }, path: 'revue/2026-11-17-matin/', url: 'https://le-radar.ca/revue/2026-11-17-matin/',
+  id: '2026-11-17-matin', edition: { id: 'matin', label: 'La revue du matin', emoji: '☀️', day: '2026-11-17' }, path: 'revues/2026-11-17-matin/', url: 'https://le-radar.ca/revues/2026-11-17-matin/',
   datePublished: '2026-11-17T12:02:00.000Z', dateModified: '2026-11-17T12:02:00.000Z', headline: 'La revue du matin du mardi 17 novembre 2026', description: 'd', intro: 'i', chapeau: '', generator: 'gabarit',
   categories: ['Revue de presse'], image: null, items: [], radio: [], sports: { results: [], next: [] }, previous: null,
 };
@@ -72,7 +73,7 @@ assert.doesNotMatch(fs.readFileSync('affiches/social-une.html', 'utf8'), /le-rad
 assert.match(fs.readFileSync('scripts/social/une-lib.mjs', 'utf8'), /revueEditionLine/, 'lien texte optionnel vers l’édition publiée');
 const wf = fs.readFileSync('.github/workflows/revue.yml', 'utf8');
 const added = (wf.match(/git add ([^\n]+)/) || [])[1] || '';
-assert.deepEqual(added.trim().split(/\s+/), ['revue', 'data/revue', 'sitemap-news.xml', 'robots.txt', 'feed.xml'], 'la revue n’écrit que ses propres fichiers (+ feed.xml filtré, robots.txt)');
+assert.deepEqual(added.trim().split(/\s+/), ['revues', 'revue', 'data/revue', 'sitemap-news.xml', 'robots.txt', 'feed.xml'], 'la revue n’écrit que ses propres fichiers (+ feed.xml filtré, robots.txt)');
 for (const f of ['news.json', 'sports-masthead.json', 'radio-schedules.json', 'data/social']) assert.ok(!added.split(/\s+/).includes(f), `la revue ne touche pas ${f} (sources de La une)`);
 assert.doesNotMatch(fs.readFileSync('.github/workflows/social-une.yml', 'utf8'), /Revue — matin et soir/, 'La une ne se déclenche pas après la revue');
 

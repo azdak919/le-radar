@@ -86,7 +86,7 @@ export function refreshPhotoLine(text, it, assetUrl = '', limit = X_LIMIT) {
 }
 
 /** Pages « La revue du matin / du soir » du Radar (scripts/revue/) : jamais publiées par les bots sociaux (ni La une, ni par article). */
-export const REVUE_LINK = /^https?:\/\/(www\.)?le-radar\.ca\/revue(\/|$)/i;
+export const REVUE_LINK = /^https?:\/\/(www\.)?le-radar\.ca\/revues?(\/|$)/i;
 export const isRevueLink = (u) => REVUE_LINK.test(String(u || '').trim());
 export function parseFeed(xml) {
   return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(m => {

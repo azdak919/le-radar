@@ -840,7 +840,7 @@ const SECTIONS = [
   // Accueil en tête : data-home-nav → app.js scroll + refresh soft du fil
   // sans recharger la page (la radio continue si elle joue).
   { id: 'home', key: 'home', path: { fr: '', en: 'en/' }, attrs: ' data-home-nav' },
-  { id: 'revue', key: 'footerRevue', path: { fr: 'revue/', en: 'revue/' } },
+  { id: 'revue', key: 'footerRevue', path: { fr: 'revues/', en: 'revues/' } },
   { id: 'medias', key: 'footerDirectory', path: { fr: 'medias/', en: 'en/media/' } },
   // L'annuaire n'a pas de hub « journaux » dédié, mais il porte déjà l'ancre.
   { id: 'journaux', key: 'footerNewspapers', path: { fr: 'medias/#journaux', en: 'en/media/#journaux' } },

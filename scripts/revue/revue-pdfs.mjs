@@ -13,14 +13,16 @@
  * passer l'identifiant complet AAAA-MM-JJ-matin|soir : un --id matin seul a
  * fait échouer la publication du 18 nov. 2026 avant le commit.
  */
-import { spawn } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
+import { spawn, execFileSync } from 'node:child_process';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import { listEditionDirs, resolveEditionId } from './revue-pdf-id.mjs';
+import { socialModel, withVenues } from './revue-social-pick.mjs';
 import { createRequire } from 'node:module';
 const { syncEditionPdfLinks } = createRequire(import.meta.url)('./revue-render.js');
+const { renderLinkedInCarousel, carouselAlts, W: LI_W, H: LI_H } = createRequire(import.meta.url)('./revue-linkedin.js');
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const PORT = Number(process.env.PW_PORT || 4193);
@@ -47,8 +49,8 @@ function startServer() {
 }
 
 async function printEdition(browser, id) {
-  const pageUrl = `http://127.0.0.1:${PORT}/revue/${id}/`;
-  const outDir = join(root, 'revue', id);
+  const pageUrl = `http://127.0.0.1:${PORT}/revues/${id}/`;
+  const outDir = join(root, 'revues', id);
   mkdirSync(outDir, { recursive: true });
   const page = await browser.newPage();
   await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 });
@@ -84,6 +86,69 @@ async function printEdition(browser, id) {
   await page.close();
 }
 
+/**
+ * Carrousel LinkedIn (revues/<id>/linkedin.pdf, pages 1080 × 1350) et sa vignette (linkedin-cover.jpg,
+ * exigée par Buffer pour un document). Données : data/revue/reviews/<id>.json.
+ */
+async function printLinkedIn(browser, id) {
+  const file = join(root, 'data/revue/reviews', `${id}.json`);
+  if (!existsSync(file)) { console.log(`   (carrousel LinkedIn sauté : ${file} absent)`); return; }
+  // Réseaux seulement : les meilleurs articles (note sociale). La page et les PDF d'impression restent complets.
+  const model = await withVenues(socialModel(JSON.parse(readFileSync(file, 'utf8')), { root }));
+  const html = renderLinkedInCarousel(model);
+  const page = await browser.newPage({ viewport: { width: LI_W, height: LI_H } });
+  // Servi depuis la même origine que le site local : sinon (about:blank) les polices du site sont refusées.
+  const at = `http://127.0.0.1:${PORT}/revues/${id}/__linkedin.html`;
+  await page.route(at, (route) => route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: html }));
+  // Photos réduites à la taille d'affichage (JPEG q80) : sans ça, Chrome intègre les originaux (44 Mo).
+  await page.route(/\.(jpe?g|png|webp|avif)(\?.*)?$/i, async (route) => {
+    try {
+      const res = await route.fetch();
+      const buf = await res.body();
+      let out = buf;
+      try { out = execFileSync('convert', ['-', '-auto-orient', '-resize', `${LI_W}x${LI_H}>`, '-strip', '-quality', '80', 'jpg:-'], { input: buf, maxBuffer: 64 << 20 }); } catch { /* ImageMagick absent : original */ }
+      await route.fulfill({ status: res.status(), contentType: 'image/jpeg', body: out });
+    } catch { await route.continue(); }
+  });
+  await page.goto(at, { waitUntil: 'load', timeout: 60_000 });
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; setTimeout(r, 15000); }))));
+    // Image d'article introuvable : la page passe en mise en page sans photo plutôt qu'un cadre vide.
+    for (const im of document.querySelectorAll('.li-photo img')) if (!im.naturalWidth) { const p = im.closest('.li-page'); im.closest('.li-photo').remove(); p.classList.add('li-article--noimg'); }
+    for (const im of document.querySelectorAll('.li-cover__img')) if (!im.naturalWidth) im.remove();
+    // Page finale : tant que sport et radio débordent au-dessus de l'encadré du lien, retirer la dernière ligne de la
+    // liste la plus longue (jamais sous une ligne par liste) ; une liste vidée emporte son titre.
+    for (const body of document.querySelectorAll('.li-end__body')) {
+      for (let guard = 0; body.scrollHeight > body.clientHeight + 1 && guard < 30; guard++) {
+        const lists = [...body.querySelectorAll('.li-list')].sort((a, b) => b.children.length - a.children.length);
+        // Voile (data-keep) : jamais retirée.
+        const drop = (x) => [...x.children].reverse().find((li) => !li.dataset.keep);
+        const l = lists.find((x) => x.children.length > 1 && drop(x));
+        if (l) drop(l).remove(); else { const last = lists.find((x) => drop(x)); if (!last) break; last.previousElementSibling?.remove(); last.remove(); }
+      }
+    }
+  });
+  const outDir = join(root, 'revues', id);
+  await page.screenshot({ path: join(outDir, 'linkedin-cover.jpg'), type: 'jpeg', quality: 82, clip: { x: 0, y: 0, width: LI_W, height: LI_H } });
+  const dest = join(outDir, 'linkedin.pdf');
+  await page.pdf({ path: dest, width: `${LI_W}px`, height: `${LI_H}px`, printBackground: true, preferCSSPageSize: true });
+  copyFileSync(dest, join(outDir, `le-radar-revue-${id}-linkedin.pdf`));
+  console.log('   linkedin.pdf', `le-radar-revue-${id}-linkedin.pdf`, 'linkedin-cover.jpg');
+  // Mêmes pages en images 4:5 (carrousel Facebook et Instagram, qui n'acceptent pas de PDF) + carrousel.json
+  // (fichiers et textes alternatifs), lu par scripts/social/une-run.mjs → revueCarousel.
+  for (const f of readdirSync(outDir)) if (/^carrousel-\d+\.jpg$/.test(f)) rmSync(join(outDir, f));
+  const alts = carouselAlts(model), shots = page.locator('.li-page'), n = await shots.count(), files = [];
+  for (let i = 0; i < n; i++) {
+    const f = `carrousel-${i + 1}.jpg`;
+    await shots.nth(i).screenshot({ path: join(outDir, f), type: 'jpeg', quality: 85 });
+    files.push({ file: f, alt: alts[i] || '' });
+  }
+  writeFileSync(join(outDir, 'carrousel.json'), JSON.stringify({ id, width: LI_W, height: LI_H, pages: files }, null, 1) + '\n');
+  console.log(`   carrousel-1..${n}.jpg carrousel.json`);
+  await page.close();
+}
+
 function requestedIds(argv = process.argv, base = root) {
   if (argv.includes('--all')) return listEditionDirs(base);
   const raw = argv.find((a) => a.startsWith('--id='))?.slice(5) || (argv.includes('--id') ? argv[argv.indexOf('--id') + 1] : '');
@@ -91,7 +156,7 @@ function requestedIds(argv = process.argv, base = root) {
 }
 
 function syncIds(ids) {
-  for (const id of ids) syncEditionPdfLinks(join(root, 'revue', id));
+  for (const id of ids) syncEditionPdfLinks(join(root, 'revues', id));
 }
 
 async function main() {
@@ -109,12 +174,13 @@ async function main() {
   try {
     const browser = await chromium.launch({ headless: true });
     for (const id of ids) {
-      if (!existsSync(join(root, 'revue', id, 'index.html'))) {
+      if (!existsSync(join(root, 'revues', id, 'index.html'))) {
         console.error('édition introuvable :', id);
         process.exit(1);
       }
       console.log(id);
       await printEdition(browser, id);
+      await printLinkedIn(browser, id);
     }
     await browser.close();
   } finally {
