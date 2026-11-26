@@ -51,3 +51,14 @@ Deux rendez-vous par jour, en plus des publications existantes : « La une du ma
 ### Images envoyées à Buffer (échecs des 9, 10 et 12 nov. 2026)
 
 Buffer ne télécharge l'image qu'à l'heure prévue, parfois 36 h après l'ajout. Chaque URL est donc vérifiée par réseau juste avant l'ajout (`mediaForNetwork`, `scripts/social/image-resolve.mjs`) : 200, `image/*`, HTTPS, poids et pixels admis (X 5 Mo ; Facebook 4 Mo et JPEG sans ICC/XMP ; LinkedIn 5 Mo ; ≤ 20 Mpx), sinon vignette Wikimedia, puis relais réencodé, sinon l'article est sauté sur ce réseau (jamais d'URL morte). L'URL envoyée est mémorisée (`image` dans `data/buffer-sent.json` et `data/buffer-pages-sent.json`) et `mirror-release.js` garde ces images 10 jours, même si l'article a changé de photo ou est sorti du fil.
+
+## Story match du jour (`scripts/social/match-story-run.mjs`)
+
+Demande de Charles le 26 nov. 2026 : une **story 9:16 plein cadre par match du jour**, sans la liste ni la radio de la story de La une.
+
+- **Réseaux** : Facebook (page, Buffer `type: story`) et Instagram (canal dédié, `type: story`). Réglages : `data/social/policy.json` → `formats.matchStory` (`publish`, `networks`, `max` = 6 par jour, fenêtre 9 h – 17 h, heure de Montréal).
+- **Workflow** : `.github/workflows/social-match-story.yml` (cron vers 10 h 37 + secours ; manuel avec essai `dry_run`, `now`, `force`). État : `data/social/match-story-state.json` (une story par match et par réseau, 3 essais au plus). Images hébergées sur la branche `social-une-media`.
+- **Sélection** (`scripts/social/match-story-lib.mjs`) : matchs du jour de `sports-masthead.json`, universitaire d'abord puis par heure ; un match déjà commencé n'est pas publié.
+- **Affiche** (`affiches/social-une.js`, format `match-story`) : diagonale aux couleurs des deux établissements, visiteur en haut et hôte en bas, VS au centre, heure en gros, « Chez les … ». Sport écrit « Basketball féminin / masculin » (pas « (F) / (H) »). Pied : crédits en petit comme les autres visuels (nom complet, « Calendrier : RSEQ », mise en page CC BY 4.0), compteur « 2 de 5 ».
+- **Voile (régate)** : classement par place, pas de face-à-face. Une story par épreuve, « Jour de régate », « Voile mixte », titre = l'épreuve, liste des clubs québécois inscrits, « Toute la journée » sans heure connue, crédit « Calendrier : CICSA ».
+- **Logos d'équipes** : seulement s'ils sont déposés à la main dans `assets/logos/teams/<registryId>.svg|png|webp` (voir le README du dossier) ; sur la ligne du VS, de part et d'autre. Sans fichier : affiche typographique. Rien n'est téléchargé ; le pied ajoute alors « Logos propriété de leurs établissements ; projet indépendant, sans affiliation ». Exception assumée à la règle « aucun logo d'université » des autres visuels, sur demande de Charles.

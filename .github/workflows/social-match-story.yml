@@ -1,0 +1,82 @@
+name: Social — Story match du jour
+
+# Une story 9:16 plein cadre par match étudiant du jour (affiche seule, sans liste ni radio) sur Facebook (page) et Instagram (canal dédié).
+# Script : scripts/social/match-story-run.mjs ; réglages : data/social/policy.json → formats.matchStory ; état : data/social/match-story-state.json
+# (une seule story par match et par réseau, 3 essais au plus). Fenêtre 9 h – 17 h heure de Montréal ; un match déjà commencé n'est pas publié.
+# Les crons GitHub sont en UTC et partent souvent en retard : un passage pour l'heure d'été (HAE), un pour l'heure d'hiver (HNE), un secours.
+on:
+  schedule:
+    - cron: '37 14 * * *'   # 10 h 37 HAE / 9 h 37 HNE
+    - cron: '37 15 * * *'   # 10 h 37 HNE / 11 h 37 HAE
+    - cron: '37 17 * * *'   # secours : 12 h 37 HNE / 13 h 37 HAE
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Essai : aperçus seulement, rien n’est hébergé ni publié'
+        type: boolean
+        default: true
+      now:
+        description: 'Simuler cet instant (ISO, ex. 2026-11-26T15:40:00Z) ; vide = maintenant'
+        type: string
+        default: ''
+      force:
+        description: 'Ignorer la fenêtre 9 h – 17 h (déclenchement manuel)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  stories:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Cache Playwright Chromium
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Police émoji (émoji du sport sur l'affiche)
+        run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
+      - name: Affiches et publication éventuelle
+        env:
+          DRY_RUN: ${{ (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
+          NOW_OVERRIDE: ${{ inputs.now || '' }}
+          MATCH_STORY_FORCE: ${{ inputs.force && 'true' || 'false' }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
+          BUFFER_INSTAGRAM_API_KEY: ${{ secrets.BUFFER_INSTAGRAM_API_KEY }}
+        run: node scripts/social/match-story-run.mjs ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"} --out match-story-preview
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: apercu-story-match
+          path: match-story-preview/
+          if-no-files-found: ignore
+      - name: Commit de l'état (data/social/match-story-state.json)
+        if: always()
+        run: |
+          git diff --quiet -- data/social/match-story-state.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/social/match-story-state.json
+          git commit -s -m "bot(social): état des stories match du jour"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/social/match-story-state.json\"))'"

@@ -118,6 +118,19 @@
    "toHour": 22,
    "image": "https://le-radar.ca/assets/og-cover.png"
   },
+  "matchStory": {
+   "_doc": "« Story match du jour » (scripts/social/match-story-run.mjs, workflow social-match-story.yml) : une story 9:16 plein cadre par match étudiant du jour (affiche seule, sans liste ni radio), sur Facebook (page, Buffer type story) et Instagram (canal dédié, type story). Demande de Charles le 26 nov. 2026. Universitaire d'abord puis par heure, au plus `max` par jour ; un match déjà commencé n'est pas publié ; une seule story par match et par réseau (data/social/match-story-state.json). Logos d'équipes seulement s'ils sont déposés à la main dans assets/logos/teams/. publish = false : aperçus seulement.",
+   "publish": true,
+   "networks": [
+    "facebook",
+    "instagram"
+   ],
+   "max": 6,
+   "window": {
+    "from": "09:00",
+    "to": "17:00"
+   }
+  },
   "une": {
    "_doc": "« La une du matin » et « La une du soir » (scripts/social/une-run.mjs, workflow social-une.yml). Décision de Charles le 12 nov. 2026 : deux rendez-vous par jour, EN PLUS des publications existantes (hors plafonds de volume), publication réelle dès la fusion. Fenêtres en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées) : une seule publication par réseau et par créneau. Le soir ne reprend aucun article du matin et saute s'il n'y a rien de nouveau. Aucune mention @.",
    "publish": true,

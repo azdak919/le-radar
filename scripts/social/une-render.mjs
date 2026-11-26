@@ -19,6 +19,8 @@ function startServer(port) {
 
 /** Modèle passé à la page : seulement ce qu'elle affiche. Images : miroir le-radar.ca d'abord (le dépôt n'a pas les fichiers miroir). */
 export function pageModel(model) {
+  // Story « Jour de match » (match-story-lib.mjs) : modèle déjà réduit à l'affiche.
+  if (model.match) return { match: model.match, slot: { kind: 'match' } };
   return {
     slot: { label: model.slot.label, kind: model.slot.id, dayLabel: frDay(model.slot.day).replace(/^./, c => c.toUpperCase()),
       dayLabelYear: frDayYear(model.slot.day).replace(/^./, c => c.toUpperCase()),

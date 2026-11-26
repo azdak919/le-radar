@@ -49,7 +49,7 @@ export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrai
 export const STORY_FOR = { facebook: 'story' };
 /** Réseaux où la story de La une part (formats.une.story.networks ; défaut : Facebook et Instagram). */
 export const storyNets = (cfg) => (Array.isArray(cfg?.story?.networks) ? cfg.story.networks : ['facebook', 'instagram']).filter(n => n === 'facebook' || n === 'instagram');
-export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, article: { width: 1080, height: 1440 }, 'article-portrait': { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
+export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, article: { width: 1080, height: 1440 }, 'article-portrait': { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 }, 'match-story': { width: 1080, height: 1920 } };
 /** Post d’un seul article (modèle v6) sur tous les réseaux. Les unes matin/soir automatiques : IMAGE_FOR (portrait 4:5 / grille Instagram 3:4 modèle B). */
 export const ARTICLE_IMAGE_FOR = { instagram: 'article', facebook: 'article-portrait', tumblr: 'article-portrait', x: 'article-portrait', bluesky: 'article-portrait', mastodon: 'article-portrait', linkedin: 'article-portrait' };
 export const articleFormatsFor = (nets) => [...new Set((nets || []).map((n) => ARTICLE_IMAGE_FOR[n]).filter(Boolean))];
@@ -268,13 +268,13 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
       if (isEventGame(t, g)) {
         const event = eventLabel(g);
         if (!me.name || !event) continue;
-        next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [me], verb: '', event, time: g.time || '' });
+        next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [{ ...me, reg: t.registryId || t.institutionId || '' }], verb: '', event, time: g.time || '' });
         continue;
       }
-      const op = teamLabel(g.opponentNickname, g.opponentFullName || g.opponent);
+      const op = { ...teamLabel(g.opponentNickname, g.opponentFullName || g.opponent), reg: g.opponentRegistryId || '' };
       if (!me.name || !op.name) continue;
       // Comme sur le site : « Équipe reçoit Adversaire » à domicile, « Équipe visite Adversaire » à l'étranger.
-      next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [me, op], verb: g.home ? 'reçoit' : 'visite', time: g.time || '' });
+      next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [{ ...me, reg: t.registryId || t.institutionId || '' }, op], verb: g.home ? 'reçoit' : 'visite', time: g.time || '' });
     }
   }
   const vary = list => { const seenS = new Set(), first = [], more = []; for (const r of list) (seenS.has(r.sportKey) ? more : first).push(r), seenS.add(r.sportKey); return [...first, ...more]; };

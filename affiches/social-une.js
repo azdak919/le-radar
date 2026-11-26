@@ -435,8 +435,59 @@
     const overflow = card.scrollHeight > card.clientHeight + 2 || safe.scrollHeight > safe.clientHeight + 2 || copy.scrollHeight > copy.clientHeight + 2;
     return { shown: 1, photo: ok, sports: 0, radio: 0, overflow };
   }
+  // Story « Jour de match » (scripts/social/match-story-run.mjs) : une affiche 9:16 plein cadre par match, sans liste ni radio.
+  // Diagonale aux couleurs des deux établissements (visiteur en haut, hôte en bas), logos d'équipes seulement s'ils sont déposés
+  // dans assets/logos/teams/. Rien d'essentiel dans les 150 px du haut ni les 250 px du bas (interface d'Instagram et de Facebook).
+  async function renderMatchStory(card, model) {
+    const m = model.match; card.className = 'card match-story';
+    const ca = m.kind === 'regatta' ? (m.clubs[0] || {}).color : m.away.color, cb = m.kind === 'regatta' ? (m.clubs[1] || {}).color : m.home.color;
+    card.style.setProperty('--ca', ca || '#6c2163'); card.style.setProperty('--cb', cb || '#1f2a44');
+    card.append(el('div', 'ms-bg'));
+    const top = el('header', 'ms-top'); const li = el('img', 'logo'); li.src = '../assets/icon.svg'; li.alt = '';
+    const brand = el('div', 'brand'); brand.append(li, el('span', 'wm', 'LE\u2011RADAR.ca'));
+    top.append(brand, el('span', 'ms-pill', 'Jour de match')); card.append(top);
+    const kick = el('p', 'ms-kick'); kick.append(el('span', 'art-emo', m.emoji), el('span', '', m.sport)); card.append(kick);
+    const imgs = [];
+    if (m.kind === 'regatta') {
+      card.classList.add('ms-regatta'); top.lastChild.textContent = 'Jour de régate';
+      card.append(el('h1', 'ms-event', m.event), el('p', 'ms-format', 'Régate · classement par place'));
+      const list = el('div', 'ms-clubs');
+      m.clubs.forEach((c) => {
+        const row = el('div', 'ms-club'); if (c.color) row.style.setProperty('--cc', c.color);
+        if (c.logo) { const im = el('img'); im.alt = ''; im.src = c.logo; row.append(im); imgs.push(im); }
+        row.append(el('b', '', c.name)); if (c.inst) row.append(el('span', '', c.inst)); list.append(row);
+      });
+      if (m.more) list.append(el('div', 'ms-club more', `et ${m.more} autre${m.more > 1 ? 's' : ''} club${m.more > 1 ? 's' : ''} du Québec`));
+      card.append(list);
+    }
+    const side = (t, cls) => {
+      const d = el('div', 'ms-team ' + cls);
+      // Logo (s'il est déposé) dans l'espace libre de son camp, de part et d'autre du VS : le titrage garde toute sa taille.
+      if (t.logo) { const w = el('div', 'ms-logo ' + cls); const im = el('img'); im.alt = ''; im.src = t.logo; w.append(im); card.append(w); imgs.push(im); }
+      d.append(el('b', 'ms-name', t.name)); if (t.inst) d.append(el('span', 'ms-inst', t.inst));
+      return d;
+    };
+    if (m.kind !== 'regatta') card.append(side(m.away, 'away'), el('b', 'ms-vs', 'VS'), side(m.home, 'home'));
+    const when = el('div', 'ms-when'); when.append(el('b', 'ms-hour' + (m.hour ? '' : ' long'), m.hour || (m.kind === 'regatta' ? 'Toute la journée' : m.dayShort)), el('span', 'ms-day', m.day)); if (m.where) when.append(el('span', 'ms-where', m.where));
+    card.append(when);
+    // Pied : mêmes crédits que les autres visuels sociaux (nom complet + mention), en petit ; source des données sportives.
+    const foot = el('footer', 'ms-foot');
+    if (m.total > 1) foot.append(el('span', 'ms-count', `${m.index + 1} de ${m.total}`));
+    foot.append(el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources'));
+    const logos = imgs.length ? ' Logos propriété de leurs établissements ; projet indépendant, sans affiliation.' : '';
+    foot.append(el('p', 'ind', `Calendrier : ${m.kind === 'regatta' ? 'CICSA' : 'RSEQ'}.${logos} Mise en page 🄯\u00A0Azdak CC BY 4.0.`));
+    card.append(foot);
+    await Promise.all(imgs.map((im) => new Promise((r) => { if (im.complete) r(); else { im.onload = r; im.onerror = () => { (im.parentNode.classList.contains('ms-logo') ? im.parentNode : im).remove(); r(); }; } })));
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    // Noms longs : la police rétrécit jusqu'à tenir sur deux lignes au plus (jamais d'ellipse).
+    const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > 780) { f -= 4; ev.style.fontSize = f + 'px'; } }
+    card.querySelectorAll('.ms-name').forEach((n) => { let f = parseFloat(getComputedStyle(n).fontSize); const lh = () => parseFloat(getComputedStyle(n).lineHeight) || f; while (f > 56 && (n.scrollWidth > n.clientWidth + 1 || n.clientHeight > lh() * 2 + 2)) { f -= 4; n.style.fontSize = f + 'px'; } });
+    const overflow = [...card.children].some((c) => c.getBoundingClientRect().bottom > 1920 || c.scrollWidth > c.clientWidth + 2);
+    return { overflow, shown: 0, sports: 1, sportsDetail: m.kind === 'regatta' ? m.event : m.sport, radio: 0, photo: false, logos: imgs.filter((i) => i.isConnected).length };
+  }
   window.renderUne = async function renderUne({ model, format }) {
     const card = document.getElementById('card'); card.textContent = '';
+    if (format === 'match-story') return renderMatchStory(card, model);
     if (format === 'grille') return renderGrille(card, model);
     if (format === 'article' || format === 'article-portrait') return renderArticle(card, model, format);
 
