@@ -23,7 +23,7 @@ Les gabarits d’affiches eux-mêmes (mise en page réalisée par Azdak) sont so
 
 Fichiers dans `assets/social-icons/` (copie mobile : `mobile/app/assets/social-icons/`). Tracés aussi en ligne dans `nav-shell.js`.
 
-- Simple Icons v16.36.0, **CC0 1.0** (compatible AGPL-3.0-or-later) : X, Bluesky, Facebook, Instagram, Tumblr, Mastodon, RSS, Buy Me a Coffee. Instagram : `instagram.svg`, compte https://www.instagram.com/le.radar.ca/. Buy Me a Coffee : `buymeacoffee.svg`, page https://www.buymeacoffee.com/azdak (soutien, pas un profil).
+- Simple Icons v16.36.0, **CC0 1.0** (compatible AGPL-3.0-or-later) : X, Bluesky, Facebook, Instagram, Threads, Tumblr, Mastodon, RSS, Buy Me a Coffee. Threads : `threads.svg`, compte https://www.threads.com/@le.radar.ca (Tumblr éteint depuis le 24 novembre 2026). Instagram : `instagram.svg`, compte https://www.instagram.com/le.radar.ca/. Buy Me a Coffee : `buymeacoffee.svg`, page https://www.buymeacoffee.com/azdak (soutien, pas un profil).
 - Bootstrap Icons v1.13.2, **MIT** : LinkedIn (retiré de Simple Icons à la demande de la marque).
 
 Les marques restent à leurs titulaires. Affichage monochrome, formes non altérées. Détail : `assets/social-icons/LICENSE.md`.

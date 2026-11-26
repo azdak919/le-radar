@@ -23,7 +23,7 @@ for (const [path, theme] of PAGES) {
       await expect(foot.locator('.site-foot__social a[data-social="buymeacoffee"]')).toHaveAttribute('rel', 'noopener noreferrer');
 
       const footIds = await foot.locator('.site-foot__social a[data-social]').evaluateAll((as) => as.map((a) => a.dataset.social));
-      expect(footIds).toEqual(['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr', 'rss']);
+      expect(footIds).toEqual(['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'threads', 'rss']);
       await expect(foot.locator('.site-foot__col')).toHaveCount(3);
       await expect(foot.locator('.site-foot__links .site-foot__sep:visible')).toHaveCount(0);
       await expect(foot.locator('.site-foot__ressources')).toHaveCount(1);
@@ -141,7 +141,7 @@ test('mât : réseaux en rangée sous la devise, sans RSS ni café, visibles sur
   await page.addInitScript(() => localStorage.setItem('radar-theme', 'light'));
   await page.goto('/', { waitUntil: 'load' });
   await page.evaluate(() => document.querySelector('#bg-photo-layer')?.classList.add('loaded'));
-  const expected = ['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'tumblr'];
+  const expected = ['buymeacoffee', 'instagram', 'facebook', 'linkedin', 'x', 'bluesky', 'mastodon', 'threads'];
   await expect(page.locator('.masthead-rss')).toHaveCount(0);
   await expect(page.locator('.masthead-coffee')).toHaveCount(0);
   await expect(page.locator('.masthead-social a[data-social]')).toHaveCount(8);
