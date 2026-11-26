@@ -439,3 +439,5 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .ms-line .ms-nm b { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 32px; text-transform: none; white-space: nowrap; }
 .ms-line .ms-nm small { font-size: 18px; margin-top: 2px; }
 .ms-more .ms-when { top: 1440px; }
+/* Copyleft dessiné avec un « © » retourné (🄯 absent des polices du rendu sans tête). */
+.cl { display: inline-block; transform: scaleX(-1); }
