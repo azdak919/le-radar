@@ -3,7 +3,7 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
+import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, freePlaces, blockedMessage, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
 const inText = (t, i) => !!t && (t.includes(i.link) || t.includes(siteLink(i)));
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createRequire as _cr } from 'node:module';
@@ -32,13 +32,14 @@ const state = JSON.parse(fs.readFileSync(STATE, 'utf8'));
 state.sent ||= {};
 
 const channel = key ? createXBuffer({ key, fallbackId: process.env.BUFFER_CHANNEL_ID || undefined }) : null;
-let queued = [];
+let queued = [], errored = [];
 try {
   if (channel) {
     const c = await channel.context();
     console.log(`Canal X : ${c.channelId} (${c.discovered ? 'découvert via channels' : 'id de repli'})`);
     console.log('Horaire du canal :', JSON.stringify(await channel.schedule()));
     queued = await channel.queued();
+    try { errored = await channel.errored(); } catch (e) { if (e instanceof AuthError) throw e; console.log(`(lecture des échecs Buffer indisponible : ${e.message.slice(0, 160)})`); }
   }
 } catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); } throw e; }
 
@@ -57,8 +58,10 @@ if (channel && process.env.REFRESH_CREDITS !== 'false') {
 const byPost = new Map(Object.values(state.sent).filter(s => s.postId).map(s => [s.postId, s.source]));
 const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => inText(p.text, i))?.source).filter(Boolean);
 const maxNew = parseInt(process.env.MAX_NEW || '', 10);
-const slots = Math.min(Math.max(0, QUEUE_MAX - queued.length), maxNew > 0 ? maxNew : QUEUE_MAX);
-console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} · places : ${slots}`);
+const slots = Math.min(freePlaces(queued.length, errored.length), maxNew > 0 ? maxNew : QUEUE_MAX);
+const blocked = blockedMessage('x', queued.length, errored.length);
+if (blocked) console.log(`::warning::${blocked}`);
+console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} (+${errored.length} en échec) · places : ${slots}`);
 const maxAgeH = parseInt(process.env.MAX_AGE_H || '', 10) || MAX_AGE_H;
 // SLOT_TIMES="07:30,09:00,…" : programme aujourd'hui à ces heures (America/Toronto) au lieu de l'horaire Buffer.
 // DAILY=true (cron nocturne) : veille + classement, créneaux fixes du jour (jamais l'horaire Buffer).

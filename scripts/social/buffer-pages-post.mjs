@@ -6,7 +6,7 @@
 // Usage : node scripts/social/buffer-pages-post.mjs [--dry-run] [--feed fichier.xml]   (PAGES=facebook,linkedin)
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, QUEUE_MAX, refreshPhotoLine, stripUtm } from './lib.mjs';
+import { parseFeed, markImages, QUEUE_MAX, freePlaces, blockedMessage, refreshPhotoLine, stripUtm } from './lib.mjs';
 import { createRequire } from 'node:module';
 import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
@@ -68,14 +68,14 @@ for (const net of networks) {
   if (!key) console.log(`${cfg.secret || 'BUFFER_API_KEY'} absent : ${net} en essai (sans lecture de la file).`);
   if (cfg.enabled === false) console.log(`${net} éteint (enabled: false) : aperçu seulement, rien n'est envoyé.`);
   const ch = key ? createXBuffer({ key, service: cfg.service, channelName: cfg.name, fallbackId: fixedIds[net] || null }) : null;
-  let queued = [];
+  let queued = [], errored = [];
   try {
     if (ch) {
       const c = await ch.context();
       console.log(`Canal ${net} : ${c.channelId} (${c.discovered ? 'découvert via channels, service ' + c.service : 'id de repli'})`);
       queued = await ch.queued();
       try {
-        const bad = await ch.errored();
+        const bad = await ch.errored(); errored = bad;
         if (bad.length) { const msg = `${bad.length} publication(s) ${net} en erreur dans Buffer : ` + bad.map(b => `${b.id} ${b.error?.message || ''}`.trim()).join(' ; ');
           console.log(`::warning::${msg}`); problems.push(`- **${net}** : ${msg}`); }
       } catch (e) { if (e instanceof AuthError) throw e; console.log(`(lecture des erreurs Buffer indisponible : ${e.message.slice(0, 160)})`); }
@@ -94,11 +94,13 @@ for (const net of networks) {
   }
   const now = Date.now();
   const taken = [...queued.map(p => p.dueAt), ...Object.values(sent).map(s => s.dueAt || s.at)].filter(Boolean);
-  const free = Math.max(0, QUEUE_MAX - queued.length);
+  const free = freePlaces(queued.length, errored.length);
+  const blocked = blockedMessage(net, queued.length, errored.length);
+  if (blocked) { console.log(`::warning::${blocked}`); problems.push(`- **${net}** : ${blocked}`); }
   const dues = shareUrl ? [undefined] : planDues({ network: net, cfg, now, taken, free });
   const bySource = new Map(Object.values(sent).filter(s => s.postId).map(s => [s.postId, s.source]));
   const sel = shareUrl ? [pickUrl()] : selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now, network: net });
-  console.log(`File : ${queued.length}/${QUEUE_MAX} · places libres : ${free} · créneaux de pointe retenus : ${dues.length} · articles : ${sel.length}`);
+  console.log(`File : ${queued.length}/${QUEUE_MAX} (+${errored.length} en échec) · places libres : ${free} · créneaux de pointe retenus : ${dues.length} · articles : ${sel.length}`);
   const used = new Map();
   for (let i = 0; i < sel.length; i++) {
     const it = sel[i], dueAt = dues[i];

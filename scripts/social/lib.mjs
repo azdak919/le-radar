@@ -5,6 +5,18 @@ export const LIMITS = { x: 280, bluesky: 300, mastodon: 500 };
 export const X_LIMIT = LIMITS.x;
 export const URL_LEN = 23;       // X compte tout lien comme 23 caractères
 export const QUEUE_MAX = 10;     // forfait gratuit Buffer : 10 posts planifiés par canal
+/**
+ * Places libres d'un canal Buffer gratuit. Les publications en échec (« Not Published ») comptent
+ * dans la limite de 10 : 41 échecs Facebook bloquaient toute la file le 25 novembre 2026 alors que
+ * le script ne voyait que les 7 programmées.
+ */
+export const freePlaces = (queuedCount = 0, erroredCount = 0, max = QUEUE_MAX) => Math.max(0, max - queuedCount - erroredCount);
+/** Avertissement quand les échecs prennent des places : à supprimer (ou relancer) dans Buffer. */
+export function blockedMessage(net, queuedCount, erroredCount, max = QUEUE_MAX) {
+  if (!erroredCount) return '';
+  const free = freePlaces(queuedCount, erroredCount, max);
+  return `${net} : ${erroredCount} publication(s) en échec occupent des places de la file Buffer (${queuedCount} programmée(s), ${free} place(s) libre(s) sur ${max})${free ? '' : ' — FILE BLOQUÉE'}. Les supprimer ou les relancer dans Buffer.`;
+}
 export const PER_SOURCE_MAX = 2;
 export const MAX_AGE_H = 72;
 
