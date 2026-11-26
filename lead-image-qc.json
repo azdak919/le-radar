@@ -1,88 +1,52 @@
 {
-  "updated": "2026-11-26T01:46:30.261Z",
+  "updated": "2026-11-26T02:08:11.995Z",
   "total": 1181,
-  "withPhoto": 1040,
-  "withStock": 123,
-  "withCampusBank": 106,
-  "fullyCovered": 1136,
-  "leadReadyPhotos": 1116,
-  "pageScraped": 1,
-  "photosRecovered": 1,
-  "imagesCleared": 30,
-  "stockSearches": 41,
-  "stockFound": 20,
-  "campusBankFound": 17,
+  "withPhoto": 1049,
+  "withStock": 121,
+  "withCampusBank": 104,
+  "fullyCovered": 1143,
+  "leadReadyPhotos": 1123,
+  "pageScraped": 12,
+  "photosRecovered": 12,
+  "imagesCleared": 1,
+  "stockSearches": 7,
+  "stockFound": 18,
+  "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Les artisans réclament davantage de vérifications sur les marchés de Noël",
-      "link": "https://lapige.atmjonquiere.com/2026/11/20/au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications/?utm_source=rss&utm_medium=rss&utm_campaign=au-marche-de-noel-de-chicoutimi-les-artisans-reclament-davantage-de-verifications",
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Le vote à distance s’invite sur les campus",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/le-vote-a-distance-sinvite-sur-les-campus",
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Des nuisances nocturnes entendus à Chicoutimi-Nord dénoncées sur Facebook",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/des-nuisances-nocturnes-entendus-a-chicoutimi-nord-denoncees-sur-facebook",
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire",
       "reason": "no-stock-match",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/BanalisationViolence2-scaled.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
       "image": null
     },
     {
-      "title": "La Corse résonne dans une église de Chicoutimi",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/la-corse-resonne-dans-une-eglise-de-chicoutimi",
-      "reason": "no-stock-match",
-      "image": null
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     },
     {
-      "title": "Un débat économique à saveur régionale",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/un-debat-economique-a-saveur-regionale",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Le bilan mitigé de la chasse à la grue au Saguenay",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/le-bilan-mitige-de-la-chasse-a-la-grue-au-saguenay",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Le vintage condamné à mort ?",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/le-vintage-condamne-a-mort",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Les centres de données : maître chez nous ?",
-      "link": "https://lapige.atmjonquiere.com/2026/09/25/les-centres-de-donnees-maitre-chez-nous",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "La sécurité ferroviaire au cœur des rappels au Saguenay",
-      "link": "https://lapige.atmjonquiere.com/2026/09/24/la-securite-ferroviaire-au-coeur-des-rappels-au-saguenay",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Plus de 40 000$ amassés pour le Parkinson",
-      "link": "https://lapige.atmjonquiere.com/2026/09/23/plus-de-40-000-amasses-pour-le-parkinson",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Remettre un classique au goût du jour",
-      "link": "https://www.delitfrancais.com/2026/09/23/remettre-un-classique-au-gout-du-jour",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Santé mentale des jeunes : le besoin de se sentir entouré à l’ère des écrans",
-      "link": "https://lapige.atmjonquiere.com/2026/09/23/sante-mentale-des-jeunes-le-besoin-de-se-sentir-entoure-a-lere-des-ecrans",
+      "title": "Bulletin 12h La Pige radio",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30",
       "reason": "no-stock-match",
       "image": null
     }
