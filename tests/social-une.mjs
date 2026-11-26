@@ -275,7 +275,7 @@ const rs = { stations: {
 } };
 const soirSlot = { id: 'soir', day: '2026-11-12', target: '19:30' }, matinSlot = { id: 'matin', day: '2026-11-12', target: '07:45' };
 const rr = U.pickRadio(rs, soirSlot, { max: 3 });
-assert.deepEqual(rr.map(U.radioLine), ['📻 Soirée en ondes · CKUT 90,3 · jeu. 12 nov. · 18 h', '📻 Jeudi soir · CHYZ 94,3 · jeu. 12 nov. · 20 h', '📻 Le Séismix · CISM 89,3 · jeu. 12 nov. · 21 h'], 'soir : soirée du jour même (17 h – minuit), en ondes ou à venir, sans reprise ni nuit');
+assert.deepEqual(rr.map(U.radioLine), ['📻 Soirée en ondes · CKUT 90,3 FM · jeu. 12 nov. · 18 h', '📻 Jeudi soir · CHYZ 94,3 FM · jeu. 12 nov. · 20 h', '📻 Le Séismix · CISM 89,3 FM · jeu. 12 nov. · 21 h'], 'soir : soirée du jour même (17 h – minuit), en ondes ou à venir, sans reprise ni nuit');
 assert.deepEqual(U.pickRadio(rs, soirSlot, { max: 3 }), rr, 'reproductible');
 assert.equal(new Set(rr.map(x => x.station)).size, rr.length, 'une station par émission');
 const rm = U.pickRadio(rs, matinSlot, { max: 3 });
@@ -440,4 +440,16 @@ console.log('social-une ok');
   assert.equal(radio.kind, 'radio'); assert.equal(radio.stations.length, logos.length, 'toutes les stations');
   assert.equal(radio.stations[0].name, logos[3].name, 'la station à l’antenne en premier'); assert.ok(radio.stations[0].on);
   assert.equal(quietArt(slot, { sports: {}, radio: [] }), null);
+}
+{
+  const { fmLabel } = await import('../scripts/social/une-lib.mjs');
+  assert.equal(fmLabel('CHYZ 94,3'), 'CHYZ 94,3 FM'); assert.equal(fmLabel('CJLO 1690AM'), 'CJLO 1690AM'); assert.equal(fmLabel('CHOQ.ca'), 'CHOQ.ca');
+}
+{
+  const { moreRadio } = await import('../scripts/social/une-lib.mjs');
+  const sch = { stations: { a: { name: 'CHYZ 94,3', grid: [{ day: 4, start: '09:00', title: 'Matinale' }, { day: 4, start: '11:00', title: 'Midi campus' }, { day: 4, start: '06:00', end: '07:00', title: 'Passée' }] }, b: { name: 'CISM 89,3', grid: [{ day: 4, start: '10:00', title: 'Le Midi' }] } } };
+  const slot = { id: 'matin', day: '2026-11-12', target: '07:45' };
+  const more = moreRadio(sch, slot, [{ station: 'CHYZ 94,3 FM', title: 'Matinale' }]);
+  assert.deepEqual(more.map(x => `${x.start} ${x.station} ${x.title}`), ['10:00 CISM 89,3 FM Le Midi', '11:00 CHYZ 94,3 FM Midi campus'], 'suite de la grille, sans reprise ni émission passée');
+  assert.ok(more.every(x => x.extra));
 }

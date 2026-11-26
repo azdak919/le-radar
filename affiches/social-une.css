@@ -82,6 +82,12 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .card:not(.paysage) .grid[data-cols="1"] .scol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 22px; align-content: start; }
 .card:not(.paysage) .grid[data-cols="1"] .scol h3 { grid-column: 1 / -1; }
 .card:not(.paysage) .grid[data-cols="1"] .scol h3 + .mt + .mt { border-top: 0; padding-top: 2px; }
+/* Colonnes très inégales : résultats puis prochains matchs, chacun sur toute la largeur, deux rencontres par rangée. */
+.card:not(.paysage) .grid[data-cols="stack"] { grid-template-columns: minmax(0, 1fr); gap: 8px 0; }
+.card:not(.paysage) .grid[data-cols="stack"] .scol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 22px; align-content: start; }
+.card:not(.paysage) .grid[data-cols="stack"] .scol h3 { grid-column: 1 / -1; }
+.card:not(.paysage) .grid[data-cols="stack"] .scol h3 + .mt + .mt { border-top: 0; padding-top: 2px; }
+.card:not(.paysage) .grid[data-cols="stack"] .scol + .scol { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 8px; }
 .scol { min-width: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: 6px; }
 .scol + .scol { border-left: 1px solid var(--rule); padding-left: 22px; }
 .scol h3 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
@@ -109,10 +115,19 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 /* Story Instagram 9:16 : zones réservées à l'interface (haut ≈ 250 px, bas ≈ 250 px) couvertes par le bandeau et le pied pleins. */
 .story .mast { height: 250px; padding-top: 150px; align-items: center; background: transparent; border-bottom: 0; }
 .story .foot { padding-bottom: 0; }
-/* Bande basse de la story (zone sûre Instagram/Facebook) : la prochaine édition, en grand, rien d'essentiel. */
-.nextEd { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 14px -40px 0; padding: 22px 40px 150px; background: var(--pill); color: var(--on-pill); width: calc(100% + 80px); text-align: center; }
-.nextEd .lbl { font-size: 18px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-.nextEd b { font: 700 34px/1.15 'Source Serif 4', serif; } .nextEd .url { font-size: 20px; font-weight: 600; }
+/* Story : fond sombre plein cadre (photo de la une floutée s'il y en a une), logo blanc dans la zone du haut, pied et
+   prochaine édition sur le même fond, sans bloc de couleur : les zones de l'interface restent calmes et sans contenu essentiel. */
+.story { background: radial-gradient(ellipse at 15% 0%, #5a1d52 0, transparent 55%), radial-gradient(ellipse at 100% 100%, #3b1436 0, transparent 50%), #14161b; }
+.story .bg { background: transparent; }
+.story .bg img { filter: blur(60px) saturate(1.2) brightness(.55); }
+.story .bg::after { background: linear-gradient(180deg, rgba(20,22,27,.35), rgba(20,22,27,.6) 40%, rgba(20,22,27,.85)); }
+.story .mast { color: #fff; }
+.story .mast .wm { color: #fff; }
+.story .mast .slot span { color: rgba(255,255,255,.82); }
+.story .foot { background: transparent; color: #fff; border-top: 0; padding-top: 18px; }
+.nextEd { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 16px 0 0; padding: 16px 0 170px; width: 100%; border-top: 1px solid rgba(255,255,255,.18); text-align: center; }
+.nextEd .lbl { font-size: 16px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #F28C28; }
+.nextEd b { font: 700 30px/1.15 'Source Serif 4', serif; color: #fff; } .nextEd .url { font-size: 18px; font-weight: 600; color: rgba(255,255,255,.75); }
 .story .title { -webkit-line-clamp: 4; }
 .story .title { font-size: 56px; }
 
@@ -132,7 +147,7 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .paysage .hook { font-size: 16px; margin-top: 6px; }
 .paysage h2 { font-size: 13px; }
 .paysage .side { padding: 8px 16px 2px; border-radius: 18px; flex: 0 1 auto; }
-.paysage .sports { flex: 1 1 auto; display: flex; flex-direction: column; } .paysage .sports .grid { flex: 1; align-content: space-between; }
+.paysage .sports { flex: 1 1 auto; display: flex; flex-direction: column; } .paysage .sports .grid { flex: 1; align-content: start; }
 .paysage .item { grid-template-columns: 84px 1fr; gap: 12px; padding: 5px 0; }
 .paysage .item .thumb { width: 84px; height: 60px; border-radius: 8px; }
 .paysage .num { font-size: 15px; padding: 4px 7px; }
@@ -162,7 +177,12 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .sbody.radio-wide .radio { border-left: 0; padding-left: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 28px; align-content: start; }
 .sbody.radio-wide .radio h3 { grid-column: 1 / -1; }
 .paysage .sbody.radio-wide .radio { border-top: 0; grid-template-columns: minmax(0, 1fr); gap: 10px; }
-.paysage .sbody.radio-wide .show { flex: none; }
+.paysage .sbody.radio-wide .show { flex: none; display: block; }
+.paysage .sbody.radio-wide .radio { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; padding-top: 2px; }
+.paysage .sbody.radio-wide .show .st { font-size: 16px; } .paysage .sbody.radio-wide .show .when { font-size: 12px; margin-top: 2px; white-space: normal; }
+.paysage .sbody.radio-wide .show .stt { -webkit-line-clamp: 2; }
+.paysage .sbody.radio-wide .radio { align-content: center; gap: 22px 18px; }
+.paysage .sbody.radio-wide .show .st { font-size: 19px; } .paysage .sbody.radio-wide .show .when { font-size: 14px; } .paysage .sbody.radio-wide .radio h3 { font-size: 12px; }
 .radio { border-left: 1px solid var(--rule); padding: 0 0 4px 20px; display: flex; flex-direction: column; justify-content: flex-start; gap: 7px; min-height: 0; overflow: hidden; }
 .radio h3 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
 .show .st { display: flex; gap: 8px; align-items: baseline; font-weight: 700; font-size: 18px; line-height: 1.18; }
@@ -323,7 +343,31 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .art-logo img { width: 100%; max-width: 30cqh; aspect-ratio: 1; object-fit: contain; background: #fff; border-radius: 18%; padding: 8%; box-shadow: 0 6px 20px rgba(0,0,0,.35); opacity: .55; filter: grayscale(.6); }
 .art-logo.on img { opacity: 1; filter: none; outline: 3px solid #F28C28; outline-offset: 2px; }
 .art-logo span { font-weight: 700; font-size: clamp(10px, 3.4cqh, 24px); line-height: 1.2; white-space: nowrap; opacity: .9; margin-top: .4em; }
+/* Affiche basse et large (la liste a pris la place) : les six logos sur une rangée, plus grands. */
+@container (min-aspect-ratio: 2.2) {
+  .art-logos { grid-template-columns: repeat(6, minmax(0, 1fr)); width: 100%; gap: 2cqh 2.4cqw; }
+  .art-logo img { max-width: 44cqh; }
+  .art-logo span { font-size: clamp(10px, 5cqh, 22px); }
+  .art { gap: 6cqh; }
+}
 /* Instagram 3:4 : l'affiche occupe le haut, au-dessus du texte. */
 .grille.une-b.quiet-art .ig-photo-full { bottom: 36%; top: 210px; }
 .grille.une-b.quiet-art .ig-photo-full .art { border-radius: 0; }
 .grille.une-b.quiet-art .ig { background: #14161b; }
+
+/* Radio groupée par station (aucun autre article) : deux colonnes équilibrées, texte agrandi pour la lecture sur téléphone. */
+.sbody.radio-wide .radio.grouped { display: flex; flex-direction: column; gap: 10px; }
+.radio.grouped .gcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 34px; align-items: start; }
+.radio.grouped .gcol { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.stg { min-width: 0; }
+.stg .stn { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--accent); font-size: 21px; line-height: 1.1; padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--rule); }
+.stg .stn img { width: 34px; height: 34px; border-radius: 8px; background: #fff; object-fit: contain; padding: 2px; box-shadow: 0 1px 4px rgba(0,0,0,.15); flex: none; }
+.stg .gl { display: flex; flex-direction: column; gap: 5px; }
+.gshow { display: flex; gap: 12px; align-items: baseline; font-size: 21px; line-height: 1.25; min-width: 0; }
+.gshow b { flex: none; min-width: 62px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.gshow span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--ink-soft); font-weight: 600; }
+.story .stg .stn { font-size: 23px; } .story .gshow { font-size: 23px; } .story .gshow b { min-width: 68px; }
+.paysage .sbody.radio-wide .radio.grouped { display: flex; gap: 6px; border-top: 0; }
+.paysage .radio.grouped .gcols { gap: 0 22px; } .paysage .radio.grouped .gcol { gap: 9px; }
+.paysage .stg .stn { font-size: 14px; gap: 7px; padding-bottom: 3px; margin-bottom: 3px; } .paysage .stg .stn img { width: 22px; height: 22px; border-radius: 5px; }
+.paysage .stg .gl { gap: 2px; } .paysage .gshow { font-size: 14px; gap: 8px; } .paysage .gshow b { min-width: 42px; }

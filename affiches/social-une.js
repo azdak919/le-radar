@@ -154,7 +154,7 @@
     if (line.scrollWidth > line.clientWidth + 1) { line.style.fontSize = Math.max(min, s0 - 2) + 'px'; line.classList.add('wrap'); }
   }
   function radioRow(x) {
-    const r = el('div', 'show'); const t = el('p', 'st'); t.append(el('span', 'emo', x.emoji), el('span', 'stt', x.title));
+    const r = el('div', 'show'); r.dataset.start = String(x.date || '') + ' ' + String(x.start || '').padStart(5, '0'); const t = el('p', 'st'); t.append(el('span', 'emo', x.emoji), el('span', 'stt', x.title));
     const m = el('p', 'when'); m.append(el('b', 'sta', x.station), document.createTextNode(' · ' + x.when)); r.append(t, m); return r;
   }
   function fit(node, min, lines) {
@@ -443,7 +443,8 @@
     THEME = model.slot.kind === 'soir' ? 'sombre' : 'clair';
     const [lead, ...rest] = model.items; const others = rest.slice(0, format === 'story' ? 5 : format === 'paysage' ? 3 : 4);
     const S = Array.isArray(model.sports) ? { results: model.sports, next: [] } : (model.sports || { results: [], next: [] });
-    const T = format === 'paysage' ? 4 : format === 'story' ? 8 : 6, R0 = S.results || [], N0 = S.next || [];
+    // Plafond de rencontres ; le rognage retire ce qui ne tient pas (paysage : 6, l'encadré sport a la hauteur).
+    const T = format === 'paysage' ? 6 : format === 'story' ? 8 : 6, R0 = S.results || [], N0 = S.next || [];
     const nr = Math.min(R0.length, Math.max(Math.ceil(T / 2), T - N0.length)); const res = R0.slice(0, nr), nxt = N0.slice(0, T - nr); const sports = [...res, ...nxt];
     const theme = model.slot.kind === 'soir' ? 'sombre' : 'clair';
     card.className = `card ${format} ${theme} ${model.slot.kind || ''} ${others.length ? '' : 'solo'} ${sports.length ? '' : 'nosport'} ${res.length && nxt.length ? 'two' : 'one'}`;
@@ -468,20 +469,59 @@
     // Sport : « Résultats » à gauche, « Prochains matchs » à droite ; une colonne vide laisse l'autre prendre toute la largeur.
     const sp = el('section', 'sports glass'); const grid = el('div', 'grid');
     const colR = el('div', 'scol res'), colN = el('div', 'scol nxt');
+    // Colonnes très inégales (ex. 1 résultat, 6 matchs) : empilées sur toute la largeur, deux rencontres par rangée,
+    // au lieu d'une colonne presque vide à côté d'une colonne pleine. Paysage : déjà empilé.
+    const sportLayout = () => {
+      const cnt = (c) => (c.isConnected ? c.querySelectorAll('.mt').length : 0); const r = cnt(colR), n = cnt(colN);
+      grid.dataset.cols = format !== 'paysage' && r && n && (2 * r <= n || 2 * n <= r) ? 'stack' : String(grid.children.length);
+    };
     if (res.length) { colR.append(el('h3', '', 'Résultats')); res.forEach((r) => colR.append(match(r))); grid.append(colR); }
     if (nxt.length) { colN.append(el('h3', '', 'Prochains matchs')); nxt.forEach((r) => colN.append(match(r))); grid.append(colN); }
-    grid.dataset.cols = String(grid.children.length);
+    sportLayout();
     sp.append(el('h2', '', 'Sport étudiant'), grid);
     // Radio étudiante (radio-schedules.json) : à droite de « Aussi à la une » (4:5, story), sous la liste en paysage.
     // Radio seule (aucun autre article) : la grille s'étale sur deux colonnes, jusqu'à 8 émissions (5 en paysage).
-    const radio = (model.radio || []).slice(0, others.length ? (format === 'paysage' ? 3 : 4) : (format === 'paysage' ? 5 : 8)); const rb = el('div', 'radio'); if (radio.length) { rb.append(el('h3', '', 'À l’écoute · radio étudiante')); radio.forEach((x) => rb.append(radioRow(x))); }
+    const radio = (model.radio || []).slice(0, others.length ? (format === 'paysage' ? 3 : 4) : 8); const rb = el('div', 'radio');
+    // Sans autre article : la radio est groupée par station (logo + nom, puis ses émissions dans l'ordre de diffusion),
+    // les stations réparties sur deux colonnes équilibrées. Sinon : liste courte, une émission par station.
+    const grouped = !others.length && radio.length > 0;
+    const logoOf = new Map(((lead.art && lead.art.stations) || lead.stations || []).map((st) => [st.name, st.logo]));
+    const groups = new Map(); const gcols = [el('div', 'gcol'), el('div', 'gcol')];
+    const hourTxt = (t) => { const m = String(t || '').match(/^(\d{1,2}):(\d{2})/); return m ? `${Number(m[1])}${NB}h${m[2] !== '00' ? NB + m[2] : ''}` : ''; };
+    const layoutGroups = () => {
+      const list = [...groups.values()].sort((a, b) => String(a.first).localeCompare(String(b.first)));
+      const load = [0, 0]; gcols.forEach((c) => { c.textContent = ''; });
+      list.forEach((g) => { const i = load[0] <= load[1] ? 0 : 1; gcols[i].append(g.el); load[i] += 1.6 + g.ul.children.length; });
+    };
+    const addShow = (x) => {
+      let g = groups.get(x.station);
+      if (!g) {
+        const box = el('div', 'stg'); const head = el('p', 'stn'); const lg = logoOf.get(x.station);
+        if (lg) { const im = el('img'); im.src = lg; im.alt = ''; head.append(im); }
+        head.append(el('span', '', x.station)); const ul = el('div', 'gl'); box.append(head, ul);
+        g = { el: box, ul, first: '' }; groups.set(x.station, g);
+      }
+      const row = el('p', 'gshow'); row.dataset.start = String(x.date || '') + ' ' + String(x.start || '').padStart(5, '0');
+      row.append(el('b', '', hourTxt(x.start)), el('span', '', x.title));
+      const after = [...g.ul.children].find((r) => r.dataset.start > row.dataset.start); g.ul.insertBefore(row, after || null);
+      g.first = g.ul.firstChild.dataset.start; layoutGroups(); return row;
+    };
+    const dropShow = (row) => { const g = [...groups.values()].find((v) => v.ul.contains(row)); row.remove(); if (g && !g.ul.children.length) groups.delete(([...groups.entries()].find(([, v]) => v === g) || [])[0]); else if (g) g.first = g.ul.firstChild.dataset.start; layoutGroups(); };
+    const showCount = () => rb.querySelectorAll('.show, .gshow').length;
+    if (radio.length) {
+      rb.append(el('h3', '', 'À l’écoute · radio étudiante'));
+      if (grouped) { rb.classList.add('grouped'); const gc = el('div', 'gcols'); gc.append(...gcols); rb.append(gc); radio.forEach(addShow); }
+      else radio.forEach((x) => rb.append(radioRow(x)));
+    }
+    // Radio groupée : retirer la dernière émission de la station la plus fournie (jamais la seule d'une station).
+    const trimGrouped = () => { if (!grouped || !rb.isConnected || rb.scrollHeight <= rb.clientHeight + 2) return false; const big = [...groups.values()].sort((a, b) => b.ul.children.length - a.ul.children.length)[0]; if (!big || big.ul.children.length < 2) return false; dropShow(big.ul.lastChild); return true; };
     // Pied conforme aux affiches : icône + marque « LE‑RADAR.ca » (serif), nom complet (serif) centré, puis la ligne d'indépendance centrée.
     const foot = el('footer', 'foot'); const fm = el('p', 'fmark'); const fi = el('img', 'ficon'); fi.src = '../assets/icon.svg'; fi.alt = '';
     fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca'));
     const full = el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources');
     foot.append(fm, full);
     // Même mention que le pied du site (contenus agrégés crédités) + licence des gabarits (affiches/LICENSE).
-    foot.append(el('p', 'ind', 'Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Mise en page © Azdak CC BY 4.0.'));
+    foot.append(el('p', 'ind', 'Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Mise en page 🄯 Azdak CC BY 4.0.'));
     // Story : la bande du bas (sous l'interface d'Instagram et de Facebook) annonce la prochaine édition ; rien d'essentiel n'y est.
     if (format === 'story') { const nx = el('p', 'nextEd'); nx.append(el('span', 'lbl', model.slot.next ? 'Prochaine édition' : 'Toute l’actualité étudiante'), el('b', '', model.slot.next || 'Deux unes par jour, matin et soir'), el('span', 'url', 'le\u2011radar.ca')); foot.append(nx); }
     const main = el('div', 'main'); const colA = el('div', 'col a'); const colB = el('div', 'col b');
@@ -509,6 +549,7 @@
     const clampHook = (floor) => { if (!hook || !hook.isConnected) return false; const n = Number(hook.style.webkitLineClamp) - 1; if (n < floor) return false; hook.style.webkitLineClamp = String(n); return true; };
     const steps = [
       () => clampHook(2),
+      () => trimGrouped(),
       () => { if (rb.children.length > 4 && rb.scrollHeight > rb.clientHeight + 2) { rm(rb); return true; } return false; },
       () => { if (list.children.length > 3) { rm(list); return true; } return false; },
       () => dropMatch(4),
@@ -537,7 +578,29 @@
     const hookMax = solo ? 6 : format === 'paysage' ? 2 : format === 'story' ? 4 : 3;
     if (hook && hook.isConnected) for (let n = Number(hook.style.webkitLineClamp) + 1; n <= hookMax; n++) { hook.style.webkitLineClamp = String(n); if (over()) { hook.style.webkitLineClamp = String(n - 1); break; } }
     [colR, colN].forEach((c) => { if (c.isConnected && !c.querySelector('.mt')) c.remove(); });
-    grid.dataset.cols = String(grid.children.length);
-    return { shown: 1 + list.children.length, photo: Boolean(src), sports: sp.isConnected ? sp.querySelectorAll('.mt').length : 0, sportsDetail: sp.isConnected ? `${colR.querySelectorAll('.mt').length} résultat(s) + ${colN.querySelectorAll('.mt').length} prochain(s)` : 'aucun', radio: rb.isConnected ? rb.querySelectorAll('.show').length : 0, overflow: over() };
+    // Remplissage : tant qu'il reste de la place (photo au-dessus de son minimum, rien ne déborde), on ajoute des
+    // rencontres et des émissions au-delà du plafond de départ, une à la fois, en alternant ; la première qui ne tient
+    // pas est retirée et sa file s'arrête. Les données en ont souvent plus que le gabarit n'en montrait.
+    {
+      const fitMl = (n) => n.querySelectorAll('.ml').forEach((l) => fitLine(l, format === 'paysage' ? 10.5 : 13));
+      const pools = [
+        { col: colR, list: R0.slice(res.length), make: match, sport: true },
+        { col: colN, list: N0.slice(nxt.length), make: match, sport: true },
+        { col: rb, list: (model.radio || []).slice(radio.length), make: grouped ? addShow : radioRow, sport: false, grouped },
+      ].filter((p) => p.col.isConnected && p.list.length && (!p.sport || sp.isConnected));
+      sportLayout();
+      let added = 0;
+      while (pools.length && !over() && added < 24) {
+        for (let i = 0; i < pools.length; i++) {
+          const p = pools[i]; const node = p.make(p.list.shift()); if (!p.grouped) p.col.append(node); fitMl(node); if (p.sport) sportLayout();
+          if (over()) { if (p.grouped) dropShow(node); else node.remove(); if (p.sport) sportLayout(); pools.splice(i, 1); i--; } else added++;
+          if (!p.list.length && pools.includes(p)) { pools.splice(pools.indexOf(p), 1); i--; }
+        }
+      }
+      // Grille radio dans l'ordre des heures (la réserve s'ajoute à la fin, puis tout est remis en ordre).
+      if (rb.isConnected && !grouped) [...rb.querySelectorAll('.show')].sort((a, b) => String(a.dataset.start).localeCompare(String(b.dataset.start))).forEach((n) => rb.append(n));
+    }
+    sportLayout();
+    return { shown: 1 + list.children.length, photo: Boolean(src), sports: sp.isConnected ? sp.querySelectorAll('.mt').length : 0, sportsDetail: sp.isConnected ? `${colR.querySelectorAll('.mt').length} résultat(s) + ${colN.querySelectorAll('.mt').length} prochain(s)` : 'aucun', radio: rb.isConnected ? showCount() : 0, overflow: over() };
   };
 }());

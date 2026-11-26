@@ -12,7 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, slotAt, slotFor, slotDone, selectUne, seatBySource, buildUneAll, altText, frenchOnly } from './une-lib.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, moreRadio, slotAt, slotFor, slotDone, selectUne, seatBySource, buildUneAll, altText, frenchOnly } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -208,11 +208,12 @@ async function main() {
     if (sel.skip) { reason = sel.why; fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), previewMarkdown(slot, sel, null, null, { dry, reason })); console.log(reason); if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${slot.label} : ${reason}\n`); return; }
     // Sport étudiant : résultats récents du site (sports-masthead.json) pour l'image et les textes longs ; rien si aucune donnée récente.
     let sports = { results: [], next: [] };
-    try { sports = pickSports(rd(arg('sports', 'sports-masthead.json')), slot.day, { max: 8, days: 2, afterToday: slot.id === 'soir' }); } catch (e) { console.log(`::warning::résultats sportifs illisibles (${String(e.message).slice(0, 120)}) : image sans bloc sport.`); }
+    try { sports = pickSports(rd(arg('sports', 'sports-masthead.json')), slot.day, { max: 16, days: 2, afterToday: slot.id === 'soir' }); } catch (e) { console.log(`::warning::résultats sportifs illisibles (${String(e.message).slice(0, 120)}) : image sans bloc sport.`); }
     console.log(`Sport étudiant : ${sports.results.length} résultat(s), ${sports.next.length} prochain(s) match(s)`);
     // Radio étudiante : émissions à venir (matin : du jour ; soir : du lendemain), tirage reproductible par date ; rien si aucune grille.
     let radio = [];
-    try { radio = pickRadio(rd(arg('radio', 'radio-schedules.json')), slot, { max: 5 }); } catch (e) { console.log(`::warning::grilles radio illisibles (${String(e.message).slice(0, 120)}) : image sans bloc radio.`); }
+    // Une émission par station d'abord (diversité), puis la suite de la grille du jour : le gabarit en ajoute tant qu'il y a de la place.
+    try { const sch = rd(arg('radio', 'radio-schedules.json')); radio = pickRadio(sch, slot, { max: 8 }); radio = [...radio, ...moreRadio(sch, slot, radio)]; } catch (e) { console.log(`::warning::grilles radio illisibles (${String(e.message).slice(0, 120)}) : image sans bloc radio.`); }
     console.log(`Radio étudiante (${slot.id}) : ${radio.length} émission(s)${radio.some(x => x.fallback) ? `, dont ${radio.filter(x => x.fallback).length} en repli (fenêtre trop peu fournie)` : ""}`);
     const model = { slot, items: sel.items, sports, radio };
     texts = buildUneAll(model, { ...(POLICY.hashtags?.maxByNetwork || {}), ...moduleHashtags() });

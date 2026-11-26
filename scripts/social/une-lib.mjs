@@ -319,6 +319,29 @@ const NOT_A_SHOW = g => /\breprise\b|\brediffusion\b|^(les nuits|late night|.*\b
  * Repli documenté (`fallback: true`) si l'édition compte moins de `max` stations : pour les stations restantes, l'émission
  * à venir la plus proche de la fenêtre (même jour, puis lendemain avant midi). Sans reprise ni bouche-trou ; rien sans grille.
  */
+/** « CHYZ 94,3 » → « CHYZ 94,3 FM » (bande FM) ; « CJLO 1690AM » et « CHOQ.ca » inchangés. */
+export const fmLabel = name => { const n = String(name || '').trim(); return /\d{2,3},\d$/.test(n) ? `${n} FM` : n; };
+/**
+ * Réserve pour remplir l'image : les autres émissions de la journée (toutes les stations, à venir ou en ondes, dans la
+ * fenêtre du créneau), par ordre d'heure, sans reprendre celles de `taken` ni deux fois le même titre d'une station.
+ */
+export function moreRadio(schedules, slot, taken = [], { max = 16 } = {}) {
+  const day = slot.day, ed = slot.id === 'soir' ? 'soir' : 'matin', [w0, w1] = RADIO_WINDOWS[ed];
+  const now = hm(slot.target || (ed === 'soir' ? '19:30' : '07:45'));
+  const [y, m, d] = day.split('-').map(Number), dow = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
+  const seen = new Set(taken.map(x => `${x.station}|${String(x.title).trim().toLowerCase()}`)), out = [];
+  for (const st of Object.values(schedules?.stations || {})) {
+    if (!st.name) continue;
+    for (const g of st.grid || []) {
+      if (!g.title || NOT_A_SHOW(g) || g.day !== dow || hm(g.start) < w0 || hm(g.start) >= w1) continue;
+      if (!(hm(g.start) >= now || (g.end && hm(g.end) > now))) continue;
+      const station = fmLabel(st.name), k = `${station}|${g.title.trim().toLowerCase()}`;
+      if (seen.has(k)) continue; seen.add(k);
+      out.push({ emoji: '📻', title: g.title.trim(), station, date: day, start: g.start, when: `${frShort(day)} · ${frHour(g.start)}`, extra: true });
+    }
+  }
+  return out.sort((a, b) => hm(a.start) - hm(b.start) || a.station.localeCompare(b.station)).slice(0, max);
+}
 export function pickRadio(schedules, slot, { max = 3 } = {}) {
   const day = slot.day, ed = slot.id === 'soir' ? 'soir' : 'matin', [w0, w1] = RADIO_WINDOWS[ed];
   const now = hm(slot.target || (ed === 'soir' ? '19:30' : '07:45'));
@@ -339,7 +362,7 @@ export function pickRadio(schedules, slot, { max = 3 } = {}) {
   const chosen = main.sort((a, b) => a.r - b.r).slice(0, max);
   chosen.push(...spare.sort((a, b) => a.dist - b.dist).slice(0, Math.max(0, max - chosen.length)));
   const key = x => (x.d === day ? 0 : 1440) + hm(x.pick.start);
-  return chosen.sort((a, b) => key(a) - key(b)).map(x => ({ emoji: '📻', title: x.pick.title.trim(), station: schedules.stations && Object.values(schedules.stations).find(st => (st.grid || []).includes(x.pick)).name, date: x.d, start: x.pick.start, when: `${frShort(x.d)} · ${frHour(x.pick.start)}`, ...(x.fallback ? { fallback: true } : {}) }));
+  return chosen.sort((a, b) => key(a) - key(b)).map(x => ({ emoji: '📻', title: x.pick.title.trim(), station: fmLabel(schedules.stations && Object.values(schedules.stations).find(st => (st.grid || []).includes(x.pick)).name), date: x.d, start: x.pick.start, when: `${frShort(x.d)} · ${frHour(x.pick.start)}`, ...(x.fallback ? { fallback: true } : {}) }));
 }
 /** « 📻 Punk-o-rama · CHYZ 94,3 · ven. 13 nov. · 11 h ». */
 export const radioLine = x => `${x.emoji} ${x.title} · ${x.station} · ${x.when}`;
@@ -543,7 +566,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     const lead = [head, revueLine, spec.intro].filter(Boolean).join('\n');
     return [lead, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
-  let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = SPORTS_NETS.has(net) ? [...(model.radio || [])] : [];
+  let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = SPORTS_NETS.has(net) ? (model.radio || []).filter(x => !x.extra).slice(0, 5) : []; // réserve de l'image (extra) hors texte
   let withRevue = true;
   for (;;) {
     const revueLine = withRevue ? revueEditionLine(model.slot, revueOpts) : '';
@@ -623,7 +646,7 @@ export function quietLead(slot, { sports = {}, radio = [], cover = null } = {}) 
   // Couverture graphique (pas de photo) : affiche de match aux couleurs des établissements, ou logos officiels des radios.
   const art = quietArt(slot, { sports, radio });
   const credit = !art && cover ? String(cover.credit || '').replace(/^Photo\s*:\s*/i, '') : '';
-  return { id: '', title, byline: '', source: '', place: '', placeColor: '', sport: '', hook, credit, images: art ? [] : [...new Set([cover?.commons, cover?.url].filter(Boolean))], quiet: true, art };
+  return { id: '', title, byline: '', source: '', place: '', placeColor: '', sport: '', hook, credit, images: art ? [] : [...new Set([cover?.commons, cover?.url].filter(Boolean))], quiet: true, art, stations: stationLogos().map(({ name, logo }) => ({ name, logo })) };
 }
 let RADIOS = null;
 /** Stations de radios.json qui ont un logo officiel (assets/logos/stations/<id>-512.png). */
@@ -633,7 +656,7 @@ export function stationLogos(root = path.resolve(path.dirname(new URL(import.met
     const raw = JSON.parse(fs.readFileSync(path.join(root, 'radios.json'), 'utf8'));
     const list = Array.isArray(raw) ? raw : (raw.stations || Object.values(raw));
     RADIOS = list.filter(r => r && r.id && r.name && fs.existsSync(path.join(root, `assets/logos/stations/${r.id}-512.png`)))
-      .map(r => ({ id: r.id, name: r.name, freq: r.frequency || '', city: r.city || '', logo: `../assets/logos/stations/${r.id}-512.png` }));
+      .map(r => ({ id: r.id, name: fmLabel(r.name), freq: r.frequency || '', city: r.city || '', logo: `../assets/logos/stations/${r.id}-512.png` }));
   } catch { RADIOS = []; }
   return RADIOS;
 }
