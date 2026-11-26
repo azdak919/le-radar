@@ -364,8 +364,8 @@ favoris n'étaient jamais examinés alors qu'ils alimentent aussi le mât.
 banques pourtant curées. Exemple de faux positif : « Bishop's University campus
 2011 » est signalé `religious_architecture` pour un clocheton de toit sur un
 pavillon académique de 1891. L'étape est donc en `|| true` dans
-`scripts/maintain.js` : elle informe, elle ne purge pas. Le calibrage est
-consigné en dette **D15**.
+`scripts/maintain.js` : elle informe, elle ne purge pas. Le calibrage reste
+à faire.
 
 **Retirer une photo** passe toujours par `scripts/quebec-backgrounds-blacklist.js`
 puis `npm run bank:sync` — jamais par une édition du miroir `*-data.js`, qui est
