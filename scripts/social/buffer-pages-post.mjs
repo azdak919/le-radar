@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Pages Facebook et LinkedIn « LE-RADAR.ca » via Buffer (forfait gratuit). Remplit SEULEMENT les
+// Pages Facebook et LinkedIn « LE-RADAR.ca », et Threads @le.radar.ca (éteint par défaut), via Buffer (forfait gratuit). Remplit SEULEMENT les
 // places libres de chaque canal (10 max), à des heures de pointe tirées au hasard (buffer-pages.mjs).
 // Refus du lien/post (ex. blocage des nouvelles de Meta) : journalisé, réseau arrêté pour ce passage,
 // détails écrits dans $PAGES_ISSUE_FILE (une seule issue GitHub, mise à jour par le workflow).
@@ -12,7 +12,7 @@ import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
-import { planDues, selectForPage, buildPageText, isRejection, postMetadata } from './buffer-pages.mjs';
+import { planDues, selectForPage, buildPageText, buildThreadsText, threadsLen, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
 import { gateArticleImage } from './ai-image.mjs';
@@ -22,13 +22,15 @@ const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../.
 const STATE = path.join(ROOT, 'data/buffer-pages-sent.json');
 const CFG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/buffer-pages.json'), 'utf8'));
 const args = process.argv.slice(2);
-const key = process.env.BUFFER_API_KEY || '';
-let dry = args.includes('--dry-run') || process.env.DRY_RUN === 'true';
-if (!key) { console.log('BUFFER_API_KEY absent : mode essai (sans lecture de la file).'); dry = true; }
+const dryAll = args.includes('--dry-run') || process.env.DRY_RUN === 'true';
+// Clé par réseau : Threads vit sur le compte Buffer d'Instagram (cfg.secret), les Pages sur le compte principal.
+const keyFor = cfg => process.env[cfg.secret || 'BUFFER_API_KEY'] || '';
+let dry = dryAll;
 const feedArg = args.includes('--feed') ? args[args.indexOf('--feed') + 1] : null;
-const networks = (process.env.PAGES || 'facebook,linkedin').split(',').map(s => s.trim()).filter(n => CFG[n]);
+// Par défaut : tous les réseaux allumés. Un réseau éteint (enabled: false) nommé dans PAGES passe en essai seulement.
+const networks = (process.env.PAGES || Object.keys(CFG).filter(n => !n.startsWith('_') && CFG[n].enabled !== false).join(',')).split(',').map(s => s.trim()).filter(n => CFG[n]);
 const issueFile = process.env.PAGES_ISSUE_FILE || '';
-const fixedIds = { facebook: process.env.BUFFER_FACEBOOK_CHANNEL_ID, linkedin: process.env.BUFFER_LINKEDIN_CHANNEL_ID };
+const fixedIds = { facebook: process.env.BUFFER_FACEBOOK_CHANNEL_ID, linkedin: process.env.BUFFER_LINKEDIN_CHANNEL_ID, threads: process.env.BUFFER_THREADS_CHANNEL_ID };
 
 /** Image vérifiée pour ce réseau au moment de l'ajout (publique, poids/pixels admis ; Facebook : JPEG sans ICC/XMP).
  * Facebook refuse les JPEG Canva (ICC + XMP) ; le relais wsrv.nl répond 404 pour Wikimedia (429 en amont) :
@@ -49,7 +51,9 @@ const items = parseFeed(xml);
 if (!items.length) throw new Error('feed.xml vide ou illisible');
 const repeated = markImages(items);
 const state = JSON.parse(fs.readFileSync(STATE, 'utf8'));
-const save = () => { if (!dry) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); };
+// L'état s'écrit si au moins un réseau a tourné pour de vrai (dry varie d'un réseau à l'autre).
+let anyReal = false;
+const save = () => { if (!dry || anyReal) fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n'); };
 const problems = [];
 // SHARE_NOW=true + SHARE_URL : cet article précis, publié tout de suite sur chaque Page (hors file).
 const shareUrl = (process.env.SHARE_NOW === 'true' && process.env.SHARE_URL || '').trim();
@@ -57,7 +61,12 @@ const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/
 
 for (const net of networks) {
   const cfg = CFG[net]; const sent = (state[net] ||= {});
-  console.log(`\n===== ${net} « ${cfg.name} » · lien ${cfg.link} · ${cfg.perDay}/jour à pleine vitesse =====`);
+  const key = keyFor(cfg);
+  dry = dryAll || !key || cfg.enabled === false;
+  if (!dry) anyReal = true;
+  console.log(`\n===== ${net} « ${cfg.name} » · lien ${cfg.link} · ${cfg.perDay}/jour à pleine vitesse${dry ? ' · ESSAI' : ''} =====`);
+  if (!key) console.log(`${cfg.secret || 'BUFFER_API_KEY'} absent : ${net} en essai (sans lecture de la file).`);
+  if (cfg.enabled === false) console.log(`${net} éteint (enabled: false) : aperçu seulement, rien n'est envoyé.`);
   const ch = key ? createXBuffer({ key, service: cfg.service, channelName: cfg.name, fallbackId: fixedIds[net] || null }) : null;
   let queued = [];
   try {
@@ -76,7 +85,7 @@ for (const net of networks) {
     console.log(`::warning::${net} : canal indisponible (${e.message.slice(0, 200)}) — réseau sauté.`); problems.push(`- **${net}** : canal indisponible — ${e.message.slice(0, 300)}`); continue;
   }
   // Crédit actuel du site (même source que X/Bluesky/Tumblr) réappliqué aux posts en file avant publication.
-  if (ch && process.env.REFRESH_CREDITS !== 'false') for (const p of queued) {
+  if (ch && cfg.image !== false && process.env.REFRESH_CREDITS !== 'false') for (const p of queued) {
     const it = items.find(i => p.text?.includes(i.link) || p.text?.includes(articleId(i.link))); if (!it) continue;
     const r = refreshPhotoLine(p.text, it, p.assets?.[0]?.source || '', 5000);
     if (!r || r === p.text || Date.parse(p.dueAt) - Date.now() < 10 * 60e3) continue;
@@ -93,19 +102,22 @@ for (const net of networks) {
   const used = new Map();
   for (let i = 0; i < sel.length; i++) {
     const it = sel[i], dueAt = dues[i];
-    const im = await resolveImage(it, { used, repeated });
-    if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
-    const imageUrl = await imageUrlForNetwork(cfg.service, im.url);
-    if (!imageUrl) { console.log(`::warning::${net} : image inaccessible, trop lourde ou refusée par la plateforme, article sauté : ${im.url} (${it.id})`); continue; }
-    const gate = await gateArticleImage(it, imageUrl, { credit: im.credit });
+    // Threads : aucune image jointe (la carte d'aperçu de la fiche porte la photo).
+    const withImage = cfg.image !== false;
+    const im = withImage ? await resolveImage(it, { used, repeated }) : null;
+    if (withImage && !im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
+    const imageUrl = withImage ? await imageUrlForNetwork(cfg.service, im.url) : null;
+    if (withImage && !imageUrl) { console.log(`::warning::${net} : image inaccessible, trop lourde ou refusée par la plateforme, article sauté : ${im.url} (${it.id})`); continue; }
+    const gate = withImage ? await gateArticleImage(it, imageUrl, { credit: im.credit }) : { reject: false, alt: '' };
     if (gate.reject) continue;
     await withHook(it);
-    const text = buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
+    const text = cfg.service === 'threads' ? buildThreadsText(it, cfg) : buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
     if (privacyGuard.containsForbiddenName(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
     console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}`);
+    if (cfg.service === 'threads') console.log(`Sujet : ${postMetadata('threads', it).threads.topic} · ${threadsLen(text)}/500`);
     if (dry) continue;
     try {
-      const post = await ch.add({ text, image: imageUrl, alt: gate.alt, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service) });
+      const post = await ch.add({ text, image: imageUrl, alt: gate.alt, dueAt, now: !!shareUrl, metadata: postMetadata(cfg.service, it) });
       sent[it.id] = { at: new Date().toISOString(), source: it.source, k: titleKey(it), postId: post.id, dueAt: post.dueAt || dueAt, image: imageUrl, ...(shareUrl ? { shareNow: true, link: post.externalLink || null } : {}) };
       save();
       console.log(`→ Buffer ${net} : ${post.id} (${post.dueAt || dueAt})`);
@@ -122,4 +134,4 @@ for (const net of networks) {
 }
 save();
 if (problems.length && issueFile) fs.writeFileSync(issueFile, `Dernier passage : ${new Date().toISOString()}\n\n${problems.join('\n')}\n\nSi Meta bloque les liens, régler \`link\` sur \`le-radar\` (ou retirer le lien) dans data/social/buffer-pages.json.\n`);
-console.log(`\n${dry ? 'ESSAI' : 'RÉEL'} terminé${problems.length ? ` · ${problems.length} problème(s)` : ''}.`);
+console.log(`\n${anyReal ? 'RÉEL' : 'ESSAI'} terminé${problems.length ? ` · ${problems.length} problème(s)` : ''}.`);

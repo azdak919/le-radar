@@ -5,7 +5,7 @@
 import { createRequire } from 'node:module';
 import { buildTagged, selectItems, siteLink, photoRank } from './lib.mjs';
 import { volumeFor } from './policy.mjs';
-import { tagLine } from './hashtags.mjs';
+import { tagLine, subjectInstitutionTag } from './hashtags.mjs';
 import { weightAt, rampAt, TZ } from './schedule.mjs';
 import { titleKey } from './rate-limit.mjs';
 const require = createRequire(import.meta.url);
@@ -23,6 +23,37 @@ export function pageLink(it, mode = 'le-radar') {
 /** Titre, extrait, « 📰 Média · Auteur », lien, « 📸 crédit », hashtags (LinkedIn seulement : policy.json). Jamais de @ (noms en clair). */
 export function buildPageText(it, cfg = {}, { credit = '', photo = true, ai = true } = {}) {
   const text = buildTagged(it, [], cfg.limit || 1500, { credit, photo, len: s => [...s].length, link: true, url: pageLink(it, cfg.link), ai }, cfg.service ? tagLine(it, cfg.service) : '');
+  return text.replace(/(^|[\s(])@(?=\w)/g, '$1');
+}
+
+/**
+ * Threads (Meta) : 500 caractères ; un émoji compte pour ses octets UTF-8 (documentation Threads),
+ * le reste pour un caractère. Compte prudent, valable aussi pour Buffer (unités UTF-16).
+ */
+export const THREADS_LIMIT = 500;
+const EMOJI = /\p{Extended_Pictographic}|\u{FE0F}|\u{200D}/u;
+export function threadsLen(s) {
+  let n = 0;
+  for (const ch of String(s || '')) n += EMOJI.test(ch) ? Buffer.byteLength(ch, 'utf8') : 1;
+  return n;
+}
+
+/** Un seul sujet par publication (1 à 50 caractères, sans « . » ni « & ») : l'établissement sujet, sinon « Vie étudiante ». */
+export const THREADS_DEFAULT_TOPIC = 'Vie étudiante';
+export function threadsTopic(it) {
+  const t = String(subjectInstitutionTag(it) || '').replace(/^#/, '').replace(/[.&]/g, '').trim();
+  return t && t.length <= 50 ? t : THREADS_DEFAULT_TOPIC;
+}
+
+/**
+ * Texte Threads : titre, extrait, « 📰 Média · Auteur », lien vers la fiche le-radar.ca (le premier lien
+ * devient la carte d'aperçu, avec la photo de la fiche). Ni hashtag (le sujet passe par les métadonnées),
+ * ni ligne de crédit photo (aucune image jointe : Buffer n'accepte pas lien attaché et images ensemble),
+ * ni @.
+ */
+export function buildThreadsText(it, cfg = {}, { ai = true } = {}) {
+  const limit = Math.min(cfg.limit || THREADS_LIMIT, THREADS_LIMIT);
+  const text = buildTagged(it, [], limit, { photo: false, len: threadsLen, link: true, url: pageLink(it, cfg.link), ai }, '');
   return text.replace(/(^|[\s(])@(?=\w)/g, '$1');
 }
 
@@ -84,4 +115,6 @@ export function selectForPage(items, { sent = {}, queuedSources = [], queuedText
 export const isRejection = msg => /news|blocked|block|restrict|not allowed|policy|reject|refus|spam|invalid (link|url)|unavailable in your country|canada/i.test(msg || '');
 
 /** Métadonnées Buffer par réseau (Facebook exige un type : post, story ou reel). */
-export const postMetadata = service => service === 'facebook' ? { facebook: { type: 'post' } } : undefined;
+export const postMetadata = (service, it) => service === 'facebook' ? { facebook: { type: 'post' } }
+  : service === 'threads' ? { threads: { type: 'post', topic: it ? threadsTopic(it) : THREADS_DEFAULT_TOPIC } }
+  : undefined;
