@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T06:07:18.894Z",
+  "updatedAt": "2026-11-26T07:07:14.787Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T06:06:29.422Z"
+      "checkedAt": "2026-11-26T07:06:19.446Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Les Charlottes",
         "source": "schedule",
         "start": "02:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/les-charlottes"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "06:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Les Charlottes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T06:06:42.449Z"
+      "checkedAt": "2026-11-26T07:06:32.482Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Freeform Air",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "William Shatner's Whiskey Tears",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "Off The Hook",
+      "showTitle": "Freeform Air",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T06:06:44.632Z"
+      "checkedAt": "2026-11-26T07:06:39.695Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T06:06:58.055Z"
+      "checkedAt": "2026-11-26T07:06:53.117Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T06:06:59.097Z"
+      "checkedAt": "2026-11-26T07:06:53.931Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Chat Pile — Family Funeral",
+      "track": "VERDUN — He Who Killed the Devil",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T06:07:18.543Z"
+      "checkedAt": "2026-11-26T07:07:14.437Z"
     }
   }
 }
