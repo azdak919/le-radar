@@ -67,14 +67,16 @@ for (const kind of ['matin', 'soir']) {
         expect(out.empty, 'pas de colonne vide').toBe(0);
         if (info.sports) {
           const two = out.colTitles.length === 2;
-          expect(out.cols).toBe(two ? '2' : '1');
+          // Deux colonnes très inégales : empilées (« stack ») sur toute la largeur.
+          expect(two ? ['2', 'stack'] : ['1']).toContain(out.cols);
           if (name === 'sans résultats') expect(out.colTitles).toEqual(['Prochains matchs']);
           if (name === 'sans prochains matchs') expect(out.colTitles).toEqual(['Résultats']);
         }
         if (name === 'sans sport') expect(info.sports).toBe(0);
         if (name === 'sans radio') expect(info.radio).toBe(0);
         if (name === 'complet' && format !== 'paysage') expect(info.sports).toBeGreaterThanOrEqual(4);
-        if (name === 'complet' && format === 'portrait') expect(info.radio).toBe(4);
+        // Remplissage automatique : au moins 4 émissions, davantage si la place le permet (jamais de débordement, testé plus haut).
+        if (name === 'complet' && format === 'portrait') expect(info.radio).toBeGreaterThanOrEqual(4);
         if (name === 'complet' && format === 'story') expect(info.radio).toBeGreaterThanOrEqual(3);
         if (name === 'complet') expect(await page.locator('.lead .hook').count(), 'résumé de la une présent').toBe(1);
         if (name === 'complet') {
