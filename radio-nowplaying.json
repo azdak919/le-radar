@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-26T01:36:53.922Z",
+  "updatedAt": "2026-11-26T02:37:32.596Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Funk Connection",
-        "source": "api-live",
-        "start": "19:30",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/funk-connection/"
-      },
-      "next": {
         "title": "Blasphème",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "21:30",
         "end": "22:30",
         "url": "https://chyz.ca/emission/blaspheme/"
       },
+      "next": {
+        "title": "Nocturne",
+        "source": "schedule-live",
+        "start": "22:30",
+        "end": "00:00",
+        "url": "https://chyz.ca/emission/nocturne/"
+      },
       "track": "",
-      "showTitle": "Funk Connection",
+      "showTitle": "Blasphème",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T01:36:15.038Z"
+      "checkedAt": "2026-11-26T02:36:51.380Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "21:00",
         "end": "23:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "La carte cadeau (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
       "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T01:36:28.107Z"
+      "checkedAt": "2026-11-26T02:37:04.653Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,35 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T01:36:30.614Z"
+      "checkedAt": "2026-11-26T02:37:08.240Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
-      },
-      "next": {
         "title": "There's a Synth in the House",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
+      "next": {
+        "title": "Sippin' On Sound",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/sippin-on-sound"
+      },
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "There's a Synth in the House",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T01:36:44.083Z"
+      "checkedAt": "2026-11-26T02:37:22.229Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T01:36:45.011Z"
+      "checkedAt": "2026-11-26T02:37:23.115Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +142,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Kamilou — Paranormal",
+      "track": "Lydia Képinski — Harfang",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T01:36:53.571Z"
+      "checkedAt": "2026-11-26T02:37:32.245Z"
     }
   }
 }
