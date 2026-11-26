@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-25T21:54:55.713Z",
+  "updatedAt": "2026-11-26T02:37:32.596Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "Blasphème",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "21:30",
+        "end": "22:30",
+        "url": "https://chyz.ca/emission/blaspheme/"
       },
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Nocturne",
         "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "22:30",
+        "end": "00:00",
+        "url": "https://chyz.ca/emission/nocturne/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Blasphème",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T21:54:14.378Z"
+      "checkedAt": "2026-11-26T02:36:51.380Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Feu | Metal | Chaos",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/feu-metal-chaos"
+        "start": "21:00",
+        "end": "23:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "next": {
-        "title": "Effets sonores (reprise)",
+        "title": "La carte cadeau (reprise)",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "Feu | Metal | Chaos",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T21:54:27.719Z"
+      "checkedAt": "2026-11-26T02:37:04.653Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Da Way Live",
+        "title": "Jazz Euphorium",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Off the Hour/Sounds of Resistance",
+        "title": "Meanwhile",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "All Da Way Live",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,74 +81,68 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T21:54:31.218Z"
+      "checkedAt": "2026-11-26T02:37:08.240Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Borderline",
+        "title": "There's a Synth in the House",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/borderline"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
       "next": {
-        "title": "Advice By The Fireplace",
+        "title": "Sippin' On Sound",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/sippin-on-sound"
       },
       "track": "",
-      "showTitle": "Borderline",
+      "showTitle": "There's a Synth in the House",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T21:54:45.320Z"
+      "checkedAt": "2026-11-26T02:37:22.229Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
-        "title": "Le SEIZE",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:59",
-        "url": "https://www.cfak.ca/balados/le-seize"
-      },
+      "current": null,
       "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
       "track": "",
-      "showTitle": "Le SEIZE",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T21:54:46.662Z"
+      "checkedAt": "2026-11-26T02:37:23.115Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Effet Philo",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "17:00",
-        "end": "17:45",
-        "slug": "effet-philo"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "Mike Shabb — Mr.Triggerman! (Introduction)",
+      "track": "Lydia Képinski — Harfang",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -156,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-25T21:54:55.363Z"
+      "checkedAt": "2026-11-26T02:37:32.245Z"
     }
   }
 }

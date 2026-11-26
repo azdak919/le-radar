@@ -1353,3 +1353,151 @@ html[data-wide-preview="e"] .masthead-weather__city.has-room .masthead-weather__
   filter: none;
   text-shadow: none;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   DOODLE VICE CITY — 21–30 novembre 2026
+   Activé par html.doodle-on (décision dans seo-page-theme.js,
+   avant le premier paint). Aucun effet hors de cette classe.
+   ═══════════════════════════════════════════════════════════ */
+html.doodle-on[data-doodle-city="montreal"] #bg-photo-layer {
+  background-image: url("assets/doodle/montreal-skyline-stefan-fussan.jpg");
+  background-size: cover;
+  background-position: center 48%;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+html.doodle-on[data-doodle-city="quebec"] #bg-photo-layer {
+  background-image: url("assets/doodle/quebec-skyline-martin-st-amant.jpg");
+  background-size: cover;
+  background-position: center 50%;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+/* Le bouton shuffle reste visible (même rangée que sur le mât habituel).
+   Le clic est un no-op tant que le doodle est actif, pour garder la photo. */
+
+/* Titre Pricedown (SVG, pas de police) à la place du lettrage serif.
+   Le texte LE-RADAR.ca reste dans le DOM pour les lecteurs d’écran.
+   On annule text-shadow / stroke hérités du mât photo : sinon le serif
+   transparent se dessine en fantôme (doublage, barre horizontale).
+   ViewBox du SVG : titre-seul (contour 102, marge pour ne pas rogner). */
+html.doodle-on .wordmark-brand {
+  display: inline-block;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+  overflow: visible;
+  vertical-align: middle;
+  background: url("assets/doodle/le-radar-pricedown.svg") no-repeat center / contain;
+  width: 5.7em;
+  height: auto;
+  aspect-ratio: 5079 / 821;
+  max-width: 72vw;
+}
+html.doodle-on .wordmark-logo {
+  width: 0.92em;
+  height: 0.92em;
+  margin-right: 0.16em;
+  vertical-align: middle;
+  filter:
+    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.16));
+}
+
+/* Mobile : le logo Radar reste à gauche du titre Pricedown,
+   comme sur le mât habituel. */
+html.doodle-on .wordmark-logo,
+html.doodle-on .wordmark-brand {
+  flex: 0 0 auto;
+}
+@media (max-width: 599.98px) {
+  html.doodle-on .wordmark-brand {
+    width: min(6.35em, 72vw);
+    height: auto;
+    aspect-ratio: 5079 / 821;
+  }
+}
+
+/* Nom de la ville en Kaushan Script (SIL OFL), selon data-doodle-city. */
+@font-face {
+  font-family: "Kaushan Script";
+  src: url("assets/doodle/kaushan-script/KaushanScript-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+html.doodle-on .wordmark-mark {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  column-gap: 0.16em;
+  row-gap: 0.42rem;
+  /* Annule le halo serif du mât photo ; le ::after a son propre glow. */
+  text-shadow: none;
+}
+html.doodle-on[data-doodle-city="montreal"] .wordmark-mark::after {
+  content: "Ville de Montréal, QC";
+}
+html.doodle-on[data-doodle-city="quebec"] .wordmark-mark::after {
+  content: "Ville de Québec, QC";
+}
+html.doodle-on .wordmark-mark::after {
+  flex: 0 0 100%;
+  display: block;
+  position: static;
+  box-sizing: border-box;
+  width: min(24rem, 94vw);
+  margin: 0 auto 0.2rem;
+  padding: 0.05em 0.35em 0.12em;
+  font-family: "Kaushan Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(1.2rem, 1.05rem + 1.15vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  word-spacing: 0.28em;
+  text-align: center;
+  color: #ff6ab0;
+  text-shadow:
+    -1px 0 0 rgba(12, 6, 10, 0.82),
+    1px 0 0 rgba(12, 6, 10, 0.82),
+    0 -1px 0 rgba(12, 6, 10, 0.82),
+    0 1px 0 rgba(12, 6, 10, 0.82),
+    -1px -1px 0 rgba(12, 6, 10, 0.70),
+    1px -1px 0 rgba(12, 6, 10, 0.70),
+    -1px 1px 0 rgba(12, 6, 10, 0.70),
+    1px 1px 0 rgba(12, 6, 10, 0.70),
+    0 2px 3px rgba(8, 2, 6, 0.70),
+    0 0 2px rgba(255, 70, 160, 0.50),
+    0 0 8px rgba(255, 50, 150, 0.28);
+  pointer-events: none;
+}
+/* Air entre la ligne de ville et la pastille-devise (bureau). */
+@media (min-width: 600px) {
+  html.doodle-on .wordmark {
+    gap: 14px;
+  }
+}
+/* Téléphone : ligne lisible, pas recouverte par la barre des réseaux. */
+@media (max-width: 599.98px) {
+  html.doodle-on .wordmark-mark {
+    row-gap: 0.32rem;
+  }
+  html.doodle-on .wordmark-mark::after {
+    width: min(22rem, 96vw);
+    margin: 0 auto 0.28rem;
+    font-size: 1.2rem;
+    line-height: 1.2;
+  }
+  html.doodle-on .masthead-brand:has(.masthead-social) {
+    gap: 12px;
+  }
+  html.doodle-on .masthead-social--under-tagline {
+    margin-top: 6px;
+  }
+}
