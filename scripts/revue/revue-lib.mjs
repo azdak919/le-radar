@@ -14,6 +14,7 @@
 import { createRequire } from 'node:module';
 import { pickSports, frDay, frShort, frHour, institutionLabel, institutionSigle, siteImage, isStockOnlyImage, sportEmoji } from '../social/une-lib.mjs';
 import { detectLang } from '../social/lib.mjs';
+import { chapoExtract, cutAtLastSentence, extraFacts, resumeCoversFact, sentenceCount, sourceHasName, sourceHasNumber, titleSimilarity, TITLE_SIMILARITY_MAX, RESUME_MIN_CHARS, RESUME_MAX_CHARS } from './revue-quality.mjs';
 
 const require = createRequire(import.meta.url);
 const front = require('../magazine-front-page-lib.js');
@@ -219,7 +220,9 @@ export function selectArticles(news, period, { coveredIds = new Set(), max = 40 
     const item = {
       id: c.id, title: clean(it.title), link: String(it.link).trim(), source: clean(it.source), authors: front.authorNames(it),
       date: new Date(t).toISOString(), lang, institution: institutionDisplay(it.institution), sport: sportEmoji(it),
-      excerpt: shortExcerpt(it.leadExcerpt || it.excerpt, 200), image: siteImage(it, { allowStock: true }), imageStock: isStockOnlyImage(it), credit: front.photoCredit(it) || '',
+      excerpt: shortExcerpt(it.leadExcerpt || it.excerpt, 200),
+      body: clean(it.leadExcerpt || it.excerpt || '').slice(0, 1200),
+      image: siteImage(it, { allowStock: true }), imageStock: isStockOnlyImage(it), credit: front.photoCredit(it) || '',
       pageUrl: c.pageUrl,
     };
     item.theme = themeOf(item);
@@ -359,13 +362,16 @@ export function textReject(text, source, { min = 40, max = 220 } = {}) {
   if (/[«»"“”#@<>]|https?:|www\./i.test(h)) return 'guillemet, balise, hashtag ou lien';
   if (RELATIVE.test(h)) return 'date relative ou « week-end »';
   const src = words(source);
-  for (const n of h.match(/\d+/g) || []) if (!src.has(n)) return `chiffre absent (${n})`;
+  // Un chiffre du résumé doit être dans la source. « 11 » est le même fait que « 11e » ou « 11th ».
+  for (const n of h.match(/\d+/g) || []) if (!sourceHasNumber(source, n)) return `chiffre absent (${n})`;
   // Nombres en lettres : présents dans la source en lettres (français ou anglais) ou en chiffres.
   for (const w of words(h)) { const n = NUMBER_WORDS[w]; if (n && !n.some(v => src.has(v))) return `nombre absent (${w})`; }
-  // Mots capitalisés hors début de phrase : doivent venir de la source (noms propres, sigles).
+  // Mots capitalisés hors début de phrase : doivent venir de la source (casse, accents, flexion, traduction listée).
   for (const m of h.matchAll(/(?<![.!?:]\s|^)(?<=\s|[(’'-])(\p{Lu}[\p{L}’'-]*)/gu)) {
     const w = m[1].toLowerCase(), base = w.replace(/[’'].*$/, '').replace(/-.*$/, '');
-    if (!src.has(w) && !src.has(base) && !ALLOW_CAPS.has(w) && !ALLOW_CAPS.has(base) && !w.split(/[’'-]/).every(p => !p || src.has(p) || ALLOW_CAPS.has(p))) return `nom absent (${m[1]})`;
+    if (sourceHasName(source, m[1]) || ALLOW_CAPS.has(w) || ALLOW_CAPS.has(base)) continue;
+    if (w.split(/[’'-]/).every(p => !p || sourceHasName(source, p) || ALLOW_CAPS.has(p))) continue;
+    return `nom absent (${m[1]})`;
   }
   if (detectLang({ title: h }) === 'en') return 'pas en français';
   return null;
@@ -382,23 +388,39 @@ export function titleNames(title, lang = 'fr') {
   }
   return out;
 }
+const FILLER = /cherche(?:nt|r)? à comprendre|mieux comprendre|souhaite(?:nt)? ainsi|vise(?:nt)? à (?:recueillir|comprendre)|tient(?:nent)? le plus à cœur|quel(?:le)?s?\s+(?:est|sont|était|étaient)|on peut se demander|force est de|il (?:est|serait) (?:important|essentiel|intéressant)|cela (?:montre|illustre|rappelle)\b/i;
+
 /**
- * Garde-fou d'un résumé d'article : textReject + fidélité au titre. Un titre interrogatif se résume par une question (le
- * résumé n'affirme pas ce que le titre demande) ; les noms propres de plusieurs mots du titre restent dans le résumé (pas de
- * confusion de personnes : « Mark Carney dévoile… » ne devient pas « Le ministre des Finances dévoile… »).
+ * Garde-fou d'un résumé d'article. Phrases finies, faits du chapô absents du titre, pas de question
+ * ni de commentaire. Les noms propres de plusieurs mots du titre restent (pas de confusion de personnes).
  */
 export function itemReject(resume, x) {
-  const why = textReject(resume, itemSource(x));
+  const h = String(resume || '').replace(/\s+/g, ' ').trim();
+  if (!h) return 'aucun résumé';
+  if (!/[.!?…]$/.test(h)) return 'sans point final';
+  if (/\?/.test(h) || FILLER.test(h)) return /\?/.test(h) ? 'question' : 'remplissage';
+  const why = textReject(h, itemSource(x), { min: RESUME_MIN_CHARS, max: RESUME_MAX_CHARS });
   if (why) return why;
-  const h = String(resume).trim(), low = norm(h);
+  const low = norm(h);
+  const n = sentenceCount(h);
+  if (n < 2) return 'trop court';
+  if (n > 3) return 'trop de phrases';
+  const sim = titleSimilarity(h, x.title);
+  if (sim >= TITLE_SIMILARITY_MAX) return `trop proche du titre (${sim.toFixed(2)})`;
   const bare = t => norm(t).replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
   if (bare(h) === bare(x.title)) return 'répète le titre';
-  if (/\?\s*$/.test(String(x.title || '')) && !/\?\s*$/.test(h)) return 'titre interrogatif affirmé';
-  for (const n of titleNames(x.title, x.lang)) if (!low.includes(norm(n))) return `nom du titre absent (${n})`;
+  const extra = extraFacts(x.body || x.excerpt || '', x.title);
+  if (extra.length && !extra.some(f => resumeCoversFact(h, f))) return 'aucun fait hors titre';
+  for (const name of titleNames(x.title, x.lang)) if (!low.includes(norm(name))) return `nom du titre absent (${name})`;
   return null;
 }
+/** Chapô fidèle (français) quand le modèle est refusé ou absent. Vide si la source n’est pas en français. */
+export function chapoFallback(x) {
+  if (x?.lang === 'en') return '';
+  return chapoExtract(x?.body || x?.excerpt || '', x?.title || '');
+}
 /** Texte source d'un article pour le garde-fou (titre, extrait, média, établissement, auteurs). */
-export const itemSource = x => `${x.title} ${x.excerpt || ''} ${x.source} ${x.institution || ''} ${(x.authors || []).join(' ')}`;
+export const itemSource = x => `${x.title} ${x.body || ''} ${x.excerpt || ''} ${x.source} ${x.institution || ''} ${(x.authors || []).join(' ')}`;
 
 // ── Textes déterministes (repli sans IA) ─────────────────────────────────────
 const plural = (n, one, many = one + 's') => `${n} ${n > 1 ? many : one}`;
@@ -501,7 +523,20 @@ export function descriptionOf(model) {
 export function buildModel({ edition, period, items, sports, radio, now, ai = null, published = null, previous = null }) {
   const its = items.map(x => {
     const a = ai?.items?.[x.id];
-    return { ...x, theme: a?.theme && THEMES.includes(a.theme) ? a.theme : x.theme, resume: a?.resume || '', resumeBy: a?.resume ? 'ia' : '' };
+    const theme = a?.theme && THEMES.includes(a.theme) ? a.theme : x.theme;
+    let resume = a?.resume || '';
+    let resumeBy = a?.resumeBy || (resume ? 'ia' : '');
+    if (resume && resumeBy !== 'chapo' && itemReject(resume, x)) { resume = ''; resumeBy = ''; }
+    let excerpt = x.excerpt;
+    if (!resume) {
+      const c = chapoFallback(x);
+      if (c) { resume = c; resumeBy = 'chapo'; }
+      else {
+        const q = chapoExtract(x.body || x.excerpt, x.title);
+        if (q) excerpt = q;
+      }
+    }
+    return { ...x, theme, excerpt, resume, resumeBy };
   });
   const lead = its.find(x => x.image && !x.imageStock) || null;
   const m = {
@@ -510,7 +545,7 @@ export function buildModel({ edition, period, items, sports, radio, now, ai = nu
     period: { start: period.start, end: period.end },
     datePublished: published || new Date(now).toISOString(), dateModified: new Date(now).toISOString(),
     items: its, sports, radio, image: lead ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title, stock: !!lead.imageStock } : null,
-    chapeau: ai?.chapeau || '', generator: ai && (ai.chapeau || Object.keys(ai.items || {}).length) ? `ia:${ai.model || 'workers-ai'}` : 'gabarit', previous,
+    chapeau: ai?.chapeau || '', generator: ai && (ai.chapeau || Object.values(ai.items || {}).some(v => v?.resumeBy === 'ia')) ? `ia:${ai.model || 'workers-ai'}` : 'gabarit', previous,
   };
   m.headline = headlineOf(m); m.description = descriptionOf(m); m.intro = ledeOf(m);
   m.articleIds = its.map(x => x.id); m.sportKeys = sports.results.map(r => r.key);
@@ -532,7 +567,11 @@ export function validateReview(model, data) {
     if (clean(it.source) !== x.source) p.push(`média modifié : ${x.source}`);
     const want = front.authorNames(it);
     if (JSON.stringify(want) !== JSON.stringify(x.authors)) p.push(`auteurs différents des données pour « ${x.title} » : ${JSON.stringify(x.authors)} ≠ ${JSON.stringify(want)}`);
-    if (x.resume) { const why = itemReject(x.resume, x); if (why) p.push(`résumé refusé (${why}) : ${x.title}`); }
+    if (x.resume && x.resumeBy === 'chapo') {
+      const src = clean(`${it.leadExcerpt || ''} ${it.excerpt || ''} ${x.body || ''}`);
+      const needle = clean(x.resume).replace(/…$/u, '').trim();
+      if (needle && !src.includes(needle)) p.push(`extrait absent de la source : ${x.title}`);
+    } else if (x.resume) { const why = itemReject(x.resume, x); if (why) p.push(`résumé refusé (${why}) : ${x.title}`); }
     if (x.excerpt && !clean(`${it.leadExcerpt || ''} ${it.excerpt || ''}`).includes(x.excerpt.replace(/…$/, '').trim())) p.push(`extrait absent de la source : ${x.title}`);
   }
   if (model.chapeau) { const why = ledeReject(model.chapeau, model.items || []); if (why) p.push(`chapeau refusé (${why})`); }

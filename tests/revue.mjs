@@ -248,12 +248,13 @@ const carney = { title: 'Mark Carney dévoile ses ambitions économiques', lang:
 assert.deepEqual(L.titleNames(carney.title), ['Mark Carney']);
 assert.deepEqual(L.titleNames('Le Vert & Or triomphe sous les yeux des anciens'), []);
 assert.deepEqual(L.titleNames('Le Québec s’unit afin de prévenir les violences conjugales'), []);
-assert.match(L.itemReject('Le ministre des Finances du Canada dévoile ses ambitions économiques pour le budget.', carney), /nom du titre absent \(Mark Carney\)/);
-assert.match(L.itemReject('Mark Carney dévoile ses ambitions économiques.', { ...carney, excerpt: carney.excerpt + ' Mark Carney dévoile ses ambitions économiques.' }), /répète le titre|longueur/);
-assert.equal(L.itemReject('Mark Carney dévoile les ambitions économiques du gouvernement canadien dans le budget.', carney), null);
+assert.match(L.itemReject('Le ministre des Finances du Canada dévoile ses ambitions économiques pour le budget. Il les présente dans le budget déposé par François-Philippe Champagne.', carney), /nom du titre absent \(Mark Carney\)/);
+assert.match(L.itemReject('Mark Carney dévoile ses ambitions économiques.', { ...carney, excerpt: carney.excerpt + ' Mark Carney dévoile ses ambitions économiques.' }), /répète le titre|longueur|trop court/);
+assert.match(L.itemReject('Mark Carney dévoile les ambitions économiques du gouvernement canadien dans le budget.', carney), /trop court|trop proche/);
+assert.equal(L.itemReject('Mark Carney dévoile les ambitions économiques du gouvernement canadien dans le budget. François-Philippe Champagne, ministre des Finances du Canada, a déposé ce budget.', carney), null);
 const ganesha = { title: 'Can Ganesha Help You Pass Your Midterms?', lang: 'en', source: 'The Link', authors: [], excerpt: 'The colour of the day at the Hindu Mission of Canada’s Montreal temple is a bright, almost neon orange.' };
-assert.match(L.itemReject('La couleur orange peut aider les étudiants à passer leurs examens de mi-session.', ganesha), /interrogatif/);
-assert.equal(L.itemReject('Ganesha peut-il aider les étudiants de Montreal à réussir leurs examens de mi-session?', ganesha), null);
+assert.equal(L.itemReject('La couleur orange peut aider les étudiants à passer leurs examens de mi-session. Le temple de la Hindu Mission of Canada à Montreal est presque néon.', ganesha), null, 'faits du chapô, sans question');
+assert.match(L.itemReject('La couleur du jour au temple de la Hindu Mission of Canada à Montreal est orange. Ganesha peut-il aider les étudiants à réussir leurs examens de mi-session?', ganesha), /question/);
 
 // ── IA simulée : réponse valide, hallucination, panne, IA absente ──
 const env = { CLOUDFLARE_AI_TOKEN: 'jeton-factice', CLOUDFLARE_ACCOUNT_ID: 'compte-factice' };
@@ -265,21 +266,25 @@ const good = async (url, opts) => {
   const body = JSON.parse(opts.body).messages[0].content;
   if (body.includes('chapeau')) return reply({ chapeau: 'Le Collectif suit le budget du conseil municipal de Sherbrooke, tandis que The Link raconte la victoire des Stingers sur les Martlets au basketball.' })();
   return reply({ items: [
-    { n: 1, resume: 'Disques vinyles, journaux papier et cassettes reviennent à la mode chez les jeunes.', theme: 'Culture' },
-    { n: 2, resume: 'Les Stingers de Concordia battent de justesse les Martlets de McGill en basketball.', theme: 'Sport' },
-    { n: 3, resume: 'Le maire Tremblay annonce 300 nouveaux logements pour les étudiants de Sherbrooke.', theme: 'Politique' },
+    { n: 1, resume: 'Disques vinyles, journaux papier et cassettes reviennent à la mode chez les jeunes. On les ressort des placards.', theme: 'Culture' },
+    { n: 2, resume: 'Les Stingers de Concordia l’emportent sur les Martlets de McGill au basketball. Le pointage final est de 55 à 54.', theme: 'Sport' },
+    { n: 3, resume: 'Le maire Tremblay annonce 300 nouveaux logements pour les étudiants de Sherbrooke. La ville promet de les livrer vite.', theme: 'Politique' },
   ] })();
 };
 const ai = await aiReview(items, { env, fetchImpl: good });
+assert.equal(ai.items[items[0].id].resumeBy, 'ia');
 assert.equal(ai.items[items[0].id].resume.startsWith('Disques'), true);
 assert.equal(ai.items[items[0].id].theme, 'Culture');
 assert.equal(ai.items[items[1].id].resume.includes('Stingers'), true, 'résumé français d’un article anglais accepté (noms présents dans la source)');
-assert.equal(ai.items[coll.id].resume, '', 'hallucination (maire Tremblay, 300) refusée : repli sur l’extrait');
+assert.equal(ai.items[coll.id].resumeBy, 'chapo', 'hallucination refusée : repli sur le chapô, pas sur le vide');
+assert.match(ai.items[coll.id].resume, /budget/);
 assert.ok(ai.chapeau.startsWith('Le Collectif suit'));
 assert.ok(ai.log.some(l => /repli \(extrait\)/.test(l)));
 assert.ok(!JSON.stringify(ai.log).includes('jeton-factice'), 'aucun secret dans le journal');
 const down = await aiReview(items, { env, fetchImpl: async () => ({ ok: false, status: 429 }) });
-assert.deepEqual(Object.values(down.items).filter(x => x.resume), []); assert.equal(down.chapeau, '');
+assert.ok(Object.values(down.items).every(x => x.resumeBy !== 'ia'), 'quota : aucun résumé du modèle');
+assert.ok(Object.values(down.items).some(x => x.resumeBy === 'chapo'), 'quota : chapô fidèle');
+assert.equal(down.chapeau, '');
 assert.ok(down.log.some(l => /quota/.test(l)));
 const thrown = await aiReview(items, { env, fetchImpl: async () => { throw new Error('réseau'); } });
 assert.equal(thrown.chapeau, '');
@@ -307,12 +312,13 @@ const r1 = await generate('matin', tM, io);
 assert.equal(r1.status, 'publiée', JSON.stringify(r1.problems || r1.why));
 const m = r1.model;
 assert.equal(m.id, '2026-11-17-matin'); assert.equal(m.items.length, 3); assert.ok(m.generator.startsWith('ia:'));
-assert.equal(m.items.find(x => x.id === coll.id).resume, '', 'résumé halluciné jamais publié');
+assert.equal(m.items.find(x => x.id === coll.id).resumeBy, 'chapo', 'résumé halluciné remplacé par le chapô');
 assert.equal(m.image.url, 'https://le-radar.ca/assets/news-images/abc.jpg'); assert.equal(m.image.credit, 'Photo : Jane Roy');
 assert.deepEqual(L.validateReview(m, { news, masthead, schedules }), []);
 const noAi = await generate('matin', tM, { ...io, env: {} });
 assert.equal(noAi.status, 'publiée'); assert.equal(noAi.model.generator, 'gabarit'); assert.equal(noAi.model.chapeau, '');
-assert.ok(noAi.model.items.every(x => !x.resume && x.excerpt), 'gabarit : extraits d’origine');
+assert.ok(noAi.model.items.filter(x => x.lang !== 'en').every(x => x.resumeBy === 'chapo' && x.resume), 'sans IA : chapô français fidèle');
+assert.ok(noAi.model.items.filter(x => x.lang === 'en').every(x => !x.resume && x.excerpt), 'sans IA : un article anglais reste une citation, pas une traduction inventée');
 // Amorce déterministe : phrases de rédaction, aucun décompte ni parenthèse de comptage.
 assert.equal(noAi.model.intro, 'Pour ouvrir la journée, Le Collectif publie «\u00a0Le conseil municipal de Sherbrooke adopte son budget\u00a0», sous la plume d’Aurélie Souka et Caroline Lizin. À lire aussi : «\u00a0La génération Z et le retour des médias physiques\u00a0» dans Quartier Libre, et «\u00a0Stingers 55, Martlets 54: Concordia takes it at the final buzzer\u00a0» dans The Link. Sur les terrains, en basketball (F) : Stingers (Concordia) 55, Martlets (McGill) 54.');
 assert.doesNotMatch(noAi.model.intro, /« | »/, 'guillemets tenus par des espaces insécables');

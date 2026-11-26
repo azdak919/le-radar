@@ -11,7 +11,7 @@
  "maxArticles": 40,
  "radio": { "maxPerStation": 4, "windows": { "matin": ["07:00", "17:00"], "soir": ["19:15", "24:00"] } },
  "sports": { "upcomingDays": 3, "upcomingFallbackDays": 7 },
- "ai": { "enabled": true, "maxCallsPerRun": 6, "batchSize": 8 },
+ "ai": { "enabled": true, "maxCallsPerRun": 12, "batchSize": 4, "_neurons": "llama-3.3-70b, plafond 1800 neurones par passage, forfait gratuit 10000/jour" },
  "newsSitemapHours": 48,
  "feedItems": 10
 }

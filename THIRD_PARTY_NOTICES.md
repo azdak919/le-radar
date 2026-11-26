@@ -27,6 +27,10 @@ Fichiers dans `assets/social-icons/` (copie mobile : `mobile/app/assets/social-i
 - Bootstrap Icons v1.13.2, **MIT** : LinkedIn (retiré de Simple Icons à la demande de la marque).
 
 Les marques restent à leurs titulaires. Affichage monochrome, formes non altérées. Détail : `assets/social-icons/LICENSE.md`.
+## Similarité des résumés
+
+`scripts/vendor/dice-coefficient.js` — coefficient de Sørensen–Dice, d’après dice-coefficient 2.1.1, Titus Wormer, **MIT**. Le copyright est en tête du fichier. Compatible AGPL-3.0-or-later. Voir aussi [`THIRD_PARTY.md`](THIRD_PARTY.md).
+
 ## Réessai des sources externes
 
 `scripts/vendor/retry/` — bibliothèque **retry 0.13.1**, copyright 2011 Tim Koschützki et Felix Geisendörfer, **MIT** (`scripts/vendor/retry/LICENSE`). `scripts/external-source-lib.js` s’en sert pour le délai croissant des récoltes (RSEQ, radios, liens, rétro-crawl, fil). Le cache de la dernière réponse valide et le signalement par une seule issue sont du code du dépôt (AGPL-3.0-or-later). Aucun paquet Apache-2.0 n’est ajouté aux dépendances distribuées.

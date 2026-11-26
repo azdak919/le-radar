@@ -11,6 +11,10 @@ Le code du projet est sous GNU AGPLv3 (`AGPL-3.0-or-later`). Ce fichier crédite
 
 Les autres icônes du pied (X, Bluesky, Facebook, Tumblr, Mastodon, RSS, Buy Me a Coffee) viennent de la même version de Simple Icons (CC0). LinkedIn vient de Bootstrap Icons v1.13.2 (MIT). Détail : `assets/social-icons/LICENSE.md`.
 
+## Similarité des résumés
+
+`scripts/vendor/dice-coefficient.js` — coefficient de Sørensen–Dice sur les bigrammes, d’après **dice-coefficient 2.1.1**, Titus Wormer, licence **MIT** (compatible AGPL-3.0-or-later). Le copyright et le texte MIT sont en tête du fichier. Sert à refuser un résumé de revue trop proche du titre (`scripts/revue/revue-quality.mjs`).
+
 ## Photos du doodle de fin novembre 2026 (mât)
 
 Les deux photographies sont des adaptations CC BY-SA 3.0 (redimensionnement, recadrage et **couleurs modifiées** : même étalonnage inspiré d’un coucher de soleil GTA VI, cuit dans les JPEG, sans grain ni vignette ajoutés). Elles restent sous CC BY-SA 3.0 (share-alike) et ne sont pas relicenciées en GPL. Le code du projet reste GPL-2.0-only. Aucune dépendance Apache-2.0. Licences confirmées sur les pages Wikimedia. https://creativecommons.org/licenses/by-sa/3.0/
