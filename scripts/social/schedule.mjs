@@ -1,7 +1,9 @@
 // Ordonnanceur pondéré par l'heure (America/Toronto) : fenêtres de data/social/posting-windows.json,
 // rodage des nouveaux comptes, anti-rafale et espacement aléatoire. Logique pure, testée.
 import fs from 'node:fs';
-const WIN = JSON.parse(fs.readFileSync(new URL('../../data/social/posting-windows.json', import.meta.url), 'utf8'));
+import { moduleWindows } from './networks/index.mjs';
+// Bluesky, Mastodon, Tumblr : posting-windows.json ; X, Facebook, LinkedIn, Threads : leur module (scripts/social/networks/).
+const WIN = { ...JSON.parse(fs.readFileSync(new URL('../../data/social/posting-windows.json', import.meta.url), 'utf8')), ...moduleWindows() };
 export const TZ = 'America/Toronto';
 
 export function localParts(now, tz = TZ) {

@@ -6,12 +6,13 @@
 // Usage : node scripts/social/buffer-pages-post.mjs [--dry-run] [--feed fichier.xml]   (PAGES=facebook,linkedin)
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, QUEUE_MAX, freePlaces, blockedMessage, refreshPhotoLine, stripUtm } from './lib.mjs';
+import { parseFeed, markImages, QUEUE_MAX, freePlaces, blockedMessage, reconcileSent, refreshPhotoLine, stripUtm } from './lib.mjs';
 import { createRequire } from 'node:module';
 import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
+import { pageConfig } from './networks/index.mjs';
 import { planDues, selectForPage, buildPageText, buildThreadsText, threadsLen, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
@@ -60,7 +61,7 @@ const shareUrl = (process.env.SHARE_NOW === 'true' && process.env.SHARE_URL || '
 const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 
 for (const net of networks) {
-  const cfg = CFG[net]; const sent = (state[net] ||= {});
+  const cfg = pageConfig(net, CFG); const sent = (state[net] ||= {}); // règles du module + opérationnel du JSON
   const key = keyFor(cfg);
   dry = dryAll || !key || cfg.enabled === false;
   if (!dry) anyReal = true;
@@ -93,6 +94,7 @@ for (const net of networks) {
     if (!dry) { await ch.editText(p.id, r); p.text = r; }
   }
   const now = Date.now();
+  if (ch) { const gone = reconcileSent(sent, queued.map(p => p.id), now); if (gone.length) console.log(`${net} : ${gone.length} publication(s) à venir absentes de Buffer (supprimées) oubliées de l'état : ${gone.join(', ')}`); }
   const taken = [...queued.map(p => p.dueAt), ...Object.values(sent).map(s => s.dueAt || s.at)].filter(Boolean);
   const free = freePlaces(queued.length, errored.length);
   const blocked = blockedMessage(net, queued.length, errored.length);

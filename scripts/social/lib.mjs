@@ -11,6 +11,22 @@ export const QUEUE_MAX = 10;     // forfait gratuit Buffer : 10 posts planifiés
  * le script ne voyait que les 7 programmées.
  */
 export const freePlaces = (queuedCount = 0, erroredCount = 0, max = QUEUE_MAX) => Math.max(0, max - queuedCount - erroredCount);
+/**
+ * Réconcilie l'état local avec la file Buffer réelle : une publication encore à venir (dueAt futur)
+ * dont l'id n'est plus en file a été supprimée dans Buffer (ex. files vidées le 25 nov. 2026).
+ * On l'oublie : sinon elle compte dans le plafond du jour et son article n'est jamais repris.
+ * Ne touche qu'aux entrées futures (> 10 min) : une publication partie n'est plus en file, c'est normal.
+ * Retourne les ids d'articles retirés. Modifie `sent` sur place.
+ */
+export function reconcileSent(sent = {}, queuedPostIds = [], now = Date.now()) {
+  const live = new Set(queuedPostIds), gone = [];
+  for (const [id, s] of Object.entries(sent)) {
+    if (!s?.postId || live.has(s.postId)) continue;
+    const due = Date.parse(s.dueAt || '');
+    if (Number.isFinite(due) && due > now + 10 * 60e3) { delete sent[id]; gone.push(id); }
+  }
+  return gone;
+}
 /** Avertissement quand les échecs prennent des places : à supprimer (ou relancer) dans Buffer. */
 export function blockedMessage(net, queuedCount, erroredCount, max = QUEUE_MAX) {
   if (!erroredCount) return '';
@@ -27,6 +43,7 @@ const dec = s => stripCdata(ent(stripCdata(s || ''))).trim();
 const tag = (b, t) => { const m = b.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`)); return m ? dec(m[1]) : ''; };
 const plain = h => stripCdata(ent(ent(stripCdata(h || '').replace(/<[^>]*>/g, ' ')))).replace(/\s+/g, ' ').trim();
 export const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+import X_NETWORK from './networks/x.mjs';
 import { createRequire } from 'node:module';
 import { tagLine } from './hashtags.mjs';
 import privacyGuard from '../privacy-guard.js';
@@ -372,7 +389,7 @@ export function slotsToday(times, { tz = 'America/Toronto', now = Date.now(), da
 
 // ── Sélection nocturne (≈ 3 h, America/Toronto) ──────────────────────────────
 // Créneaux X alignés sur les pointes Sprout Social 2026 (mar.-jeu. 12-18 h, heure locale) : 1 le matin, 7 de 11 h 30 à 17 h 30, 2 en soirée.
-export const DAILY_SLOTS = ['08:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:30', '17:30', '19:00', '21:00'];
+export const DAILY_SLOTS = X_NETWORK.dailySlots; // module scripts/social/networks/x.mjs (5 par jour)
 export const MIN_EXCERPT = 80;
 const dayOf = (t, tz = 'America/Toronto') => new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(t);
 

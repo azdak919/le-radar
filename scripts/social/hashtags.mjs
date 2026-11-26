@@ -9,6 +9,7 @@
 // à Facebook, LinkedIn, Bluesky et Mastodon ; le reste du format de ces réseaux ne change pas.
 // Accents conservés (Mastodon et Bluesky les gèrent ; X, Facebook et LinkedIn aussi).
 import { POLICY } from './policy.mjs';
+import { moduleHashtags } from './networks/index.mjs';
 
 const wordRe = src => new RegExp(`(?<![\\p{L}\\p{N}_])(?:${src})(?![\\p{L}\\p{N}_])`, 'iu');
 const TOPICS = [
@@ -102,7 +103,8 @@ export function articleTags(it, max = 3) {
   }
   return out.slice(0, max);
 }
-export const maxTags = network => POLICY.hashtags?.maxByNetwork?.[network] ?? 0;
+// X, Facebook, LinkedIn, Threads : plafond de leur module ; autres réseaux : policy.json.
+export const maxTags = network => moduleHashtags()[network] ?? POLICY.hashtags?.maxByNetwork?.[network] ?? 0;
 
 // ── Mots-clics thématiques X seulement (liste fixe, 21–22 nov. 2026) ────────
 // Appariement déterministe sur le titre et le résumé, sans IA. Les autres réseaux

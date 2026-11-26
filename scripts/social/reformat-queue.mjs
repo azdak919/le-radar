@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import { buildXText, formatOk, parseFeed, stripUtm, xlen, LIMITS, hasCdata } from './lib.mjs';
 import { bankCredit } from './image-resolve.mjs';
 import { buildPageText, postMetadata } from './buffer-pages.mjs';
+import { pageConfig } from './networks/index.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 
 /** Texte attendu pour un post en file (pur, testable). */
@@ -36,7 +37,7 @@ async function main() {
     const state = isX ? rd('data/buffer-sent.json').sent || {} : pagesState[net] || {};
     const ch = isX ? createXBuffer({ key, fallbackId: process.env.BUFFER_CHANNEL_ID || undefined })
       : createXBuffer({ key, service: CFG[net].service, channelName: CFG[net].name, fallbackId: null });
-    const build = (it, credit, img, old) => isX ? reformatText(it, ACCOUNTS, { credit, img, old }) : buildPageText(it, CFG[net], { credit, photo: !!img });
+    const build = (it, credit, img, old) => isX ? reformatText(it, ACCOUNTS, { credit, img, old }) : buildPageText(it, pageConfig(net, CFG), { credit, photo: !!img });
     await runChannel({ ch, state, build, dry, isX, metadata: isX ? undefined : postMetadata(CFG[net].service) });
   }
 }
