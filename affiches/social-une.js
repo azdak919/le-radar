@@ -411,7 +411,7 @@
       const th = photo(it, 'thumb'); thumbs.push(th.ready); th.append(el('span', 'num', String(i + 2)));
       row.append(th, tx); list.append(row);
     });
-    const side = el('aside', 'side glass'); const sbody = el('div', 'sbody'); sbody.append(list); side.append(el('h2', '', 'Aussi à la une'), sbody);
+    const side = el('aside', 'side glass'); const sbody = el('div', 'sbody'); sbody.append(list); if (others.length) side.append(el('h2', '', 'Aussi à la une')); side.append(sbody);
     // Sport : « Résultats » à gauche, « Prochains matchs » à droite ; une colonne vide laisse l'autre prendre toute la largeur.
     const sp = el('section', 'sports glass'); const grid = el('div', 'grid');
     const colR = el('div', 'scol res'), colN = el('div', 'scol nxt');

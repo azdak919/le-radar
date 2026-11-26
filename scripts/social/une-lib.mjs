@@ -602,3 +602,23 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
   }
   return out;
 }
+
+// ── Une sans article (aperçu) ────────────────────────────────────────────────
+/**
+ * Pseudo-« une » d'un créneau sans nouvel article mais avec du sport ou de la radio : photo libre de campus en tête,
+ * titre qui dit ce que le créneau met de l'avant, résumé honnête (aucun article). `cover` : { url, credit, title }
+ * (campusCover de scripts/revue/revue-lib.mjs ; vignette Commons 1280 px d'abord, miroir 500 px du site en repli). Retourne null s'il n'y a ni sport ni radio : le créneau est sauté.
+ */
+export function quietLead(slot, { sports = {}, radio = [], cover = null } = {}) {
+  const res = (sports.results || []).length, nxt = (sports.next || []).length, rad = (radio || []).length;
+  if (!res && !nxt && !rad) return null;
+  const moment = slot.id === 'soir' ? 'Ce soir' : 'Ce matin';
+  const title = res ? `${moment}, place aux résultats du sport étudiant`
+    : nxt ? `${moment}, place aux prochains matchs du sport étudiant`
+    : `${moment}, à l’écoute des radios étudiantes`;
+  // Sans décompte : l'image n'affiche qu'une partie des matchs et des émissions.
+  const parts = [res && 'les derniers résultats', nxt && 'les prochains matchs', rad && 'les émissions des radios étudiantes'].filter(Boolean);
+  const hook = `Aucun nouvel article des médias étudiants depuis la dernière une. Au programme : ${parts.length > 1 ? parts.slice(0, -1).join(', ') + ' et ' + parts.at(-1) : parts[0]}.`;
+  const credit = cover ? String(cover.credit || '').replace(/^Photo\s*:\s*/i, '') : '';
+  return { id: '', title, byline: '', source: '', place: '', placeColor: '', sport: '', hook, credit, images: [...new Set([cover?.commons, cover?.url].filter(Boolean))], quiet: true };
+}

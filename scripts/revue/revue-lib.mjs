@@ -569,7 +569,9 @@ export function campusCover(edition, { sports = {}, radio = [] } = {}, photos = 
   if (!p) return null;
   return {
     // Miroir du Radar d'abord (même politique d'images que le site), sinon vignette Commons.
-    url: (local => (local ? `${SITE}/${local}` : commonsThumb(p.url, p.width)))(stockLocal()[String(p.url).split('?')[0]]), credit: `Photo : ${p.credit || 'auteur inconnu'} / ${p.license || 'licence libre'} · Wikimedia Commons`,
+    // `commons` : vignette 1280 px, plus nette pour les images 1080 px des réseaux (le miroir fait 500 px).
+    url: (local => (local ? `${SITE}/${local}` : commonsThumb(p.url, p.width)))(stockLocal()[String(p.url).split('?')[0]]),
+    commons: commonsThumb(p.url, p.width), credit: `Photo : ${p.credit || 'auteur inconnu'} / ${p.license || 'licence libre'} · Wikimedia Commons`,
     source: '', title: p.title || 'Campus', link: p.link || '', stock: false, campus: true,
   };
 }

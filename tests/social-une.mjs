@@ -406,3 +406,18 @@ assert.match(wf, /cron: '\d+ 23 \* \* \*'/); assert.match(wf, /cron: '[\d,]+ 0 \
 assert.match(wf, /group: data-writers-social\n\s*cancel-in-progress: false\n\s*queue: max/);
 assert.doesNotMatch(wf, /secrets\.[A-Z_]+ *}}[^\n]*echo|echo[^\n]*secrets\./, 'aucun secret affiché');
 console.log('social-une ok');
+
+// Une sans article (aperçu) : titre selon ce qui reste, aucun décompte, null sans sport ni radio.
+{
+  const { quietLead } = await import('../scripts/social/une-lib.mjs');
+  const m = { id: 'matin' }, s = { id: 'soir' };
+  const cover = { url: 'https://le-radar.ca/assets/stock-images/a.jpg', commons: 'https://upload.wikimedia.org/x/1280px-a.jpg', credit: 'Photo : X / CC BY 2.0 · Wikimedia Commons' };
+  assert.equal(quietLead(m, { sports: { results: [{}], next: [{}] }, radio: [{}], cover }).title, 'Ce matin, place aux résultats du sport étudiant');
+  assert.equal(quietLead(s, { sports: { results: [], next: [{}] }, radio: [], cover }).title, 'Ce soir, place aux prochains matchs du sport étudiant');
+  const r = quietLead(m, { sports: {}, radio: [{}], cover });
+  assert.equal(r.title, 'Ce matin, à l’écoute des radios étudiantes');
+  assert.doesNotMatch(r.hook, /\d/);
+  assert.deepEqual(r.images, [cover.commons, cover.url], 'Commons 1280 px d’abord, miroir en repli');
+  assert.equal(r.credit, 'X / CC BY 2.0 · Wikimedia Commons');
+  assert.equal(quietLead(m, { sports: {}, radio: [] }), null);
+}
