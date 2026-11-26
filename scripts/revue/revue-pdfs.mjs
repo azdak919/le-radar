@@ -19,6 +19,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import { listEditionDirs, resolveEditionId } from './revue-pdf-id.mjs';
+import { socialModel } from './revue-social-pick.mjs';
 import { createRequire } from 'node:module';
 const { syncEditionPdfLinks } = createRequire(import.meta.url)('./revue-render.js');
 const { renderLinkedInCarousel, carouselAlts, W: LI_W, H: LI_H } = createRequire(import.meta.url)('./revue-linkedin.js');
@@ -92,7 +93,8 @@ async function printEdition(browser, id) {
 async function printLinkedIn(browser, id) {
   const file = join(root, 'data/revue/reviews', `${id}.json`);
   if (!existsSync(file)) { console.log(`   (carrousel LinkedIn sauté : ${file} absent)`); return; }
-  const model = JSON.parse(readFileSync(file, 'utf8'));
+  // Réseaux seulement : les meilleurs articles (note sociale). La page et les PDF d'impression restent complets.
+  const model = socialModel(JSON.parse(readFileSync(file, 'utf8')), { root });
   const html = renderLinkedInCarousel(model);
   const page = await browser.newPage({ viewport: { width: LI_W, height: LI_H } });
   // Servi depuis la même origine que le site local : sinon (about:blank) les polices du site sont refusées.

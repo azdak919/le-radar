@@ -9,7 +9,8 @@
  */
 'use strict';
 
-const MAX_ARTICLES = 5;
+// Choix et ordre des articles : scripts/revue/revue-social-pick.mjs (note sociale), avant ce rendu.
+const MAX_ARTICLES = 8;
 const W = 1080, H = 1350;
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -64,7 +65,7 @@ function renderLinkedInCarousel(model = {}) {
     <p class="li-edition">${esc(model.edition?.emoji || '')} ${esc(model.edition?.label || 'La revue')}</p>
     <p class="li-date">${esc(frDate(model.edition?.day))}</p>
     ${lead.title ? `<p class="li-lead-k">À la une · ${esc(lead.source || '')}</p><h1 class="li-lead">${esc(clip(lead.title, 120))}</h1>` : ''}
-    <p class="li-swipe">${total} article${total > 1 ? 's' : ''} des médias étudiants du Québec · glissez →</p>
+    <p class="li-swipe">${model.totalItems > total ? `${total} articles choisis parmi les ${model.totalItems} de la revue` : `${total} article${total > 1 ? 's' : ''} des médias étudiants du Québec`} · glissez →</p>
   </div>
   ${model.image?.credit ? `<span class="li-credit li-credit--cover">${esc(model.image.credit)}</span>` : ''}
   ${creditsLine('li-credits--cover')}

@@ -93,4 +93,24 @@ assert.match(noimg, /li-article--noimg/);
   assert.equal(sent.assets.length, 10, '10 images au plus');
   assert.deepEqual(sent.assets[0], { image: { url: 'https://x/0.jpg', metadata: { altText: 'p0' } } });
 }
+// Réseaux : les meilleurs articles selon la note sociale, au plus 8 (10 pages avec couverture et fin).
+{
+  const { pickSocialItems, socialModel, SOCIAL_MAX } = await import('../scripts/revue/revue-social-pick.mjs');
+  assert.equal(SOCIAL_MAX, 8); assert.equal(MAX_ARTICLES, 8);
+  const now = Date.parse('2026-11-26T00:00:00Z');
+  const art = (id, o = {}) => ({ id, title: `T${id}`, link: `https://m.ca/${id}`, source: 'M', date: '2026-11-25T20:00:00Z', excerpt: '', image: '', credit: '', ...o });
+  const long = 'x'.repeat(200);
+  const items = [art('a'), art('b', { image: 'https://i/b.jpg', credit: 'Photo : Jeanne Tremblay', excerpt: long }), art('c', { image: 'https://i/c.jpg', imageStock: true }), art('d', { excerpt: long })];
+  assert.deepEqual(pickSocialItems(items, { now }).map((x) => x.id), ['b', 'd', 'a', 'c'], 'vraie photo et extrait d’abord ; photo de banque sans bonus ; égalité : ordre de la revue');
+  assert.equal(pickSocialItems(Array.from({ length: 20 }, (_, i) => art(String(i))), { now }).length, 8);
+  const { articleKey } = await import('../scripts/social/selection.mjs');
+  const ranks = new Map([[articleKey(items[0]), 0]]);
+  assert.equal(pickSocialItems(items, { now, ranks })[0].id, 'a', 'en tête de l’accueil : premier');
+  const sm = socialModel(model, { root: process.cwd() });
+  assert.equal(sm.items.length, Math.min(8, model.items.length));
+  assert.equal(model.items.length, 14, 'le modèle de la revue (site, impression) reste complet');
+  assert.equal(sm.image.url, sm.items[0].image, 'couverture : photo de l’article en tête du carrousel');
+  assert.match(renderLinkedInCarousel(sm), /8 articles choisis parmi les 14 de la revue/);
+  assert.equal((renderLinkedInCarousel(sm).match(/<section class="li-page/g) || []).length, sm.items.length + 2, 'au plus 10 pages');
+}
 console.log('revue-linkedin : OK');
