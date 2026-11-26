@@ -161,7 +161,7 @@ for (const file of htmlFiles) {
     'index.html : lien Accueil avec data-home-nav (scroll + refresh soft)',
   );
   assert(navBlock.includes('>Accueil</a>'), 'index.html : libellé Accueil dans le menu de sections');
-  assert(navBlock.includes('>Revue</a>'), 'index.html : libellé Revue dans le menu de sections');
+  assert(navBlock.includes('>Revues</a>'), 'index.html : libellé Revues dans le menu de sections');
 
   const footBlock = home.slice(
     home.indexOf('<!-- RADAR:FOOTER:START -->'),

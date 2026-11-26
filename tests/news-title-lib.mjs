@@ -100,5 +100,8 @@ console.log('news-title-lib: ok');
   eq(cleanTitle('Mon voile ne change pas »'), '« Mon voile ne change pas »');
   eq(cleanTitle('“Quote” here'), '“Quote” here');
   eq(cleanTitle('— Titre simple'), 'Titre simple');
-  console.log('cleanTitle : guillemets équilibrés ✓');
+  // Suffixe SEO du McGill Daily (« Titre - The McGill Daily ») retiré, comme Le Délit ou Quartier Libre.
+assert.equal(sanitizeTitle('Museum or Mausoleum? - The McGill Daily'), 'Museum or Mausoleum?');
+assert.equal(sanitizeTitle('The McGill Daily turns 115'), 'The McGill Daily turns 115', 'nom du journal au début : intact');
+console.log('cleanTitle : guillemets équilibrés ✓');
 }
