@@ -23,6 +23,12 @@ assert.doesNotMatch(html, /undefined|NaN|\[object/);
 // Marque : logo + nom en serif sur chaque page (couverture en grand, pages intérieures en petit), jamais en texte simple.
 assert.equal((html.match(/class="li-brand(-sm)?"><img src="\/assets\/icon-512\.png"/g) || []).length, pages.length, 'logo sur chaque page');
 assert.doesNotMatch(html, /<span class="li-brand-sm">LE-RADAR/, 'pas de marque en texte simple');
+// Radios : « FM » après la fréquence, comme La une ; AM inchangé.
+assert.match(html, /<b>CHYZ 94,3 FM<\/b>/); assert.match(html, /<b>CKUT 90,3 FM<\/b>/); assert.match(html, /<b>CJLO 1690AM<\/b>/);
+{
+  const { fmLabel } = await import('../scripts/social/une-lib.mjs');
+  for (const n of ['CHYZ 94,3', 'CJLO 1690AM', 'CISM 89,3', 'Radio X']) assert.ok(html.includes(fmLabel(n)) || !html.includes(n), `même règle que La une : ${n}`);
+}
 // Échappement : un titre avec < et & ne casse pas le HTML.
 const evil = renderLinkedInCarousel({ ...model, items: [{ ...model.items[0], title: 'A <b>gras</b> & co' }] });
 assert.ok(evil.includes('A &lt;b&gt;gras&lt;/b&gt; &amp; co'));

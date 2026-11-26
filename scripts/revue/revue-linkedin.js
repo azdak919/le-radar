@@ -26,6 +26,8 @@ const CREDITS = `Articles et photos crédités à leurs auteurs et à leurs méd
 const creditsLine = (cls = '') => `<p class="li-credits${cls ? ' ' + cls : ''}">${CREDITS}</p>`;
 // Marque des pages intérieures : même logo et même nom en serif que la couverture, en plus petit (jamais en texte simple).
 const BRAND_SM = '<span class="li-brand-sm"><img src="/assets/icon-512.png" alt="" /><span>LE\u2011RADAR.ca</span></span>';
+// « CHYZ 94,3 » → « CHYZ 94,3 FM » ; « CJLO 1690AM » inchangé. Même règle que La une (scripts/social/une-lib.mjs → fmLabel).
+const fmLabel = (name) => { const n = String(name || '').trim(); return /\d{2,3},\d$/.test(n) ? `${n} FM` : n; };
 const REVUES_URL = 'https://le-radar.ca/revues/';
 const clip = (s, n) => { const t = String(s || '').trim(); return t.length <= n ? t : t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…'; };
 
@@ -76,7 +78,7 @@ function renderLinkedInCarousel(model = {}) {
     `<section class="li-page li-end">
   <header class="li-top">${BRAND_SM}<span class="li-count">Et aussi</span></header>
   ${sports.length ? `<h2 class="li-h">🏟️ Sport étudiant</h2><ul class="li-list">${sports.map((g) => `<li>${esc(sportLine(g))}</li>`).join('')}</ul>` : ''}
-  ${shows.length ? `<h2 class="li-h">📻 Radios étudiantes</h2><ul class="li-list">${shows.map((s) => `<li><b>${esc(s.station)}</b> · ${esc(s.title)} · ${esc(s.when || '')}</li>`).join('')}</ul>` : ''}
+  ${shows.length ? `<h2 class="li-h">📻 Radios étudiantes</h2><ul class="li-list">${shows.map((s) => `<li><b>${esc(fmLabel(s.station))}</b> · ${esc(s.title)} · ${esc(s.when || '')}</li>`).join('')}</ul>` : ''}
   <div class="li-cta"><p>Toutes les revues, avec les liens vers chaque média :</p><p class="li-url">${esc(REVUES_URL.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</p></div>
   <footer class="li-foot"><p>Journaux, radios et sports étudiants du Québec, réunis au même endroit</p>${creditsLine()}</footer>
 </section>`,
