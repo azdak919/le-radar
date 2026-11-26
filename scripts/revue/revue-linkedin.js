@@ -24,6 +24,8 @@ const authorsOf = (it) => (Array.isArray(it.authors) ? it.authors : [it.authors]
 const COPYLEFT = '<span class="li-cl" aria-label="copyleft">©</span>';
 const CREDITS = `Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Projet indépendant, sans affiliation. Mise en page ${COPYLEFT}\u00A0Azdak CC BY 4.0.`;
 const creditsLine = (cls = '') => `<p class="li-credits${cls ? ' ' + cls : ''}">${CREDITS}</p>`;
+// Marque des pages intérieures : même logo et même nom en serif que la couverture, en plus petit (jamais en texte simple).
+const BRAND_SM = '<span class="li-brand-sm"><img src="/assets/icon-512.png" alt="" /><span>LE\u2011RADAR.ca</span></span>';
 const REVUES_URL = 'https://le-radar.ca/revues/';
 const clip = (s, n) => { const t = String(s || '').trim(); return t.length <= n ? t : t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…'; };
 
@@ -32,7 +34,7 @@ function articlePage(it, i, total, model) {
   const kicker = [it.theme, it.source, it.institution].filter(Boolean).map(esc).join(' · ');
   const text = it.resume || it.excerpt || '';
   return `<section class="li-page li-article${img ? '' : ' li-article--noimg'}">
-  <header class="li-top"><span class="li-brand-sm">LE-RADAR.ca</span><span class="li-count">${i + 1} / ${total}</span></header>
+  <header class="li-top">${BRAND_SM}<span class="li-count">${i + 1} / ${total}</span></header>
   ${img}
   <div class="li-body">
     <p class="li-kicker">${kicker}</p>
@@ -61,7 +63,7 @@ function renderLinkedInCarousel(model = {}) {
   ${cover ? `<img class="li-cover__img" src="${esc(cover)}" alt="" />` : ''}
   <div class="li-cover__shade"></div>
   <div class="li-cover__content">
-    <div class="li-brand"><img src="/assets/icon-512.png" alt="" /><span>LE-RADAR.ca</span></div>
+    <div class="li-brand"><img src="/assets/icon-512.png" alt="" /><span>LE\u2011RADAR.ca</span></div>
     <p class="li-edition">${esc(model.edition?.emoji || '')} ${esc(model.edition?.label || 'La revue')}</p>
     <p class="li-date">${esc(frDate(model.edition?.day))}</p>
     ${lead.title ? `<p class="li-lead-k">À la une · ${esc(lead.source || '')}</p><h1 class="li-lead">${esc(clip(lead.title, 120))}</h1>` : ''}
@@ -72,7 +74,7 @@ function renderLinkedInCarousel(model = {}) {
 </section>`,
     ...items.map((it, i) => articlePage(it, i, total, model)),
     `<section class="li-page li-end">
-  <header class="li-top"><span class="li-brand-sm">LE-RADAR.ca</span><span class="li-count">Et aussi</span></header>
+  <header class="li-top">${BRAND_SM}<span class="li-count">Et aussi</span></header>
   ${sports.length ? `<h2 class="li-h">🏟️ Sport étudiant</h2><ul class="li-list">${sports.map((g) => `<li>${esc(sportLine(g))}</li>`).join('')}</ul>` : ''}
   ${shows.length ? `<h2 class="li-h">📻 Radios étudiantes</h2><ul class="li-list">${shows.map((s) => `<li><b>${esc(s.station)}</b> · ${esc(s.title)} · ${esc(s.when || '')}</li>`).join('')}</ul>` : ''}
   <div class="li-cta"><p>Toutes les revues, avec les liens vers chaque média :</p><p class="li-url">${esc(REVUES_URL.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</p></div>
@@ -93,7 +95,9 @@ html, body { background: #111; }
 :root { --serif: 'Source Serif 4', Georgia, serif; --sans: 'Inter', system-ui, sans-serif; --accent: #b3478f; --ink: #111; --paper: #faf8f4; }
 .li-page { width: ${W}px; height: ${H}px; position: relative; overflow: hidden; break-after: page; background: var(--paper); color: var(--ink); font-family: var(--sans); }
 .li-page:last-child { break-after: auto; }
-.li-top { position: absolute; top: 44px; left: 64px; right: 64px; display: flex; justify-content: space-between; font: 700 26px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: #555; z-index: 2; }
+.li-top { position: absolute; top: 44px; left: 64px; right: 64px; display: flex; align-items: center; justify-content: space-between; font: 700 26px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: #555; z-index: 2; }
+.li-brand-sm { display: flex; align-items: center; gap: 12px; font: 700 34px/1 var(--serif); letter-spacing: -0.02em; text-transform: none; color: var(--ink); }
+.li-brand-sm img { width: 44px; height: 44px; border-radius: 10px; }
 .li-foot { position: absolute; left: 64px; right: 64px; bottom: 36px; font: 600 24px/1.3 var(--sans); color: #666; border-top: 3px solid var(--ink); padding-top: 16px; }
 .li-credits { margin-top: 8px; font: 400 17px/1.35 var(--sans); color: #777; }
 .li-credits--cover { position: absolute; left: 64px; right: 300px; bottom: 26px; margin: 0; color: rgba(255,255,255,.75); z-index: 2; }

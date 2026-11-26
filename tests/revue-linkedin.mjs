@@ -20,6 +20,9 @@ assert.match(html, /Mise en page <span class="li-cl"[^>]*>©<\/span>\u00A0Azdak 
 assert.doesNotMatch(html, /🄯/);
 for (const it of model.items.slice(0, MAX_ARTICLES)) assert.ok(html.includes(it.source), `média ${it.source}`);
 assert.doesNotMatch(html, /undefined|NaN|\[object/);
+// Marque : logo + nom en serif sur chaque page (couverture en grand, pages intérieures en petit), jamais en texte simple.
+assert.equal((html.match(/class="li-brand(-sm)?"><img src="\/assets\/icon-512\.png"/g) || []).length, pages.length, 'logo sur chaque page');
+assert.doesNotMatch(html, /<span class="li-brand-sm">LE-RADAR/, 'pas de marque en texte simple');
 // Échappement : un titre avec < et & ne casse pas le HTML.
 const evil = renderLinkedInCarousel({ ...model, items: [{ ...model.items[0], title: 'A <b>gras</b> & co' }] });
 assert.ok(evil.includes('A &lt;b&gt;gras&lt;/b&gt; &amp; co'));
