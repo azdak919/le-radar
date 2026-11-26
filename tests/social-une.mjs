@@ -487,3 +487,13 @@ console.log('social-une ok');
   if (sent) assert.deepEqual(sent.variables.i.metadata, INSTAGRAM_STORY_METADATA, 'métadonnées story');
   else assert.ok(r instanceof Error, 'le client a refusé avant l’appel (contexte de test)');
 }
+// Édition « Jour de match » (manuelle) : le match du jour en vedette ; rien sans match ce jour-là.
+{
+  const slot = { id: 'matin', day: '2026-11-26' };
+  const a = { name: 'Martlets', inst: 'McGill', color: '#ED1B2F' }, b = { name: 'Stingers', inst: 'Concordia', color: '#912338' };
+  const res = { kind: 'resultat', sport: 'Volleyball (F)', date: '2026-11-24', teams: [{ name: 'Nomades', score: 2 }, { name: 'Aigles', score: 0 }] };
+  const today = { kind: 'avenir', uni: true, emoji: '🏀', sport: 'Basketball (F)', date: '2026-11-26', time: '18:00', verb: 'reçoit', teams: [a, b] };
+  const q = U.quietLead(slot, { sports: { results: [res], next: [today] }, radio: [], prefer: 'match' });
+  assert.equal(q.art.a.name, 'Martlets', 'le match du jour, pas le résultat'); assert.equal(q.art.label, 'Jour de match'); assert.ok(q.line);
+  assert.equal(U.quietLead(slot, { sports: { results: [res], next: [{ ...today, date: '2026-11-27' }] }, radio: [], prefer: 'match' }), null);
+}

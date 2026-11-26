@@ -33,6 +33,11 @@ on:
         description: 'Simuler cet instant (ISO, ex. 2026-11-13T12:45:00Z) ; vide = maintenant'
         type: string
         default: ''
+      edition:
+        description: 'Édition : normale, ou jourdematch (publication ponctuelle « Jour de match », match du jour en vedette ; choisir un créneau)'
+        type: choice
+        options: [normale, jourdematch]
+        default: normale
 
 permissions:
   contents: write
@@ -101,6 +106,7 @@ jobs:
           UNE_SLOT: ${{ inputs.slot || 'auto' }}
           DRY_RUN: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
           NOW_OVERRIDE: ${{ inputs.now || '' }}
+          UNE_EDITION: ${{ inputs.edition || 'normale' }}
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}

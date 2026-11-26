@@ -198,7 +198,16 @@ async function main() {
     return;
   }
   const out = path.resolve(arg('out', 'une-preview')); fs.mkdirSync(out, { recursive: true });
-  const slot = forced && forced !== 'auto' ? slotFor(forced, now, CFG.slots) : slotAt(now, CFG.slots);
+  // Édition « Jour de match » (workflow_dispatch, edition = jourdematch) : publication ponctuelle, état et en-tête distincts
+  // (« 🏟️ Jour de match du Radar »), sans toucher aux créneaux du matin et du soir.
+  const jdm = (process.env.UNE_EDITION || arg('edition')) === 'jourdematch';
+  let slot = forced && forced !== 'auto' ? slotFor(forced, now, CFG.slots) : slotAt(now, CFG.slots);
+  if (jdm) {
+    const b = slotFor('matin', now, CFG.slots);
+    const hhmm = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(now));
+    // target = l'heure réelle : la grille radio ne reprend pas les émissions déjà passées.
+    slot = { ...b, label: 'Jour de match', emoji: '🏟️', key: `${b.day}:jourdematch`, target: hhmm, from: '00:00', to: '23:59' };
+  }
   if (!slot) { console.log(`Hors des fenêtres d'envoi (${tz(now)}) : rien à faire.`); return; }
   const nets = (CFG.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()) && (n !== 'threads' || threadsEnabled()));
   if (!tumblrEnabled() && (CFG.networks || []).includes('tumblr')) console.log(PAUSED_MSG);
@@ -209,7 +218,8 @@ async function main() {
     reason = 'reprise du créneau figé (réessai des réseaux en échec).'; sel = { doubts: [] };
   } else {
     // Toute la fenêtre d'abord : la traduction peut écarter des titres, les sièges se comptent ensuite.
-    sel = selectUne(rd(arg('news', 'news.json')), slot, { now, state, max: Infinity, maxNewsAgeH: CFG.maxNewsAgeH ?? 6 });
+    // Édition « Jour de match » : aucun article (pas de sélection ni de traduction), le sport est le contenu.
+    sel = jdm ? { items: [], ids: [], doubts: [], skip: true, why: 'édition Jour de match' } : selectUne(rd(arg('news', 'news.json')), slot, { now, state, max: Infinity, maxNewsAgeH: CFG.maxNewsAgeH ?? 6 });
     // Français seulement : titres et résumés anglais traduits par translate.js ; en cas d'échec, l'article est exclu.
     if (sel.items.some(x => x.lang === 'en')) {
       const { createTranslator } = await import('./une-render.mjs');
@@ -235,7 +245,15 @@ async function main() {
     // Aucun article, mais du sport ou de la radio : une de remplacement (affiche de match ou logos des radios), sauf si
     // formats.une.quiet vaut false. Jamais sur un doute de données.
     let quiet = false;
-    if (sel.skip && !sel.items.length && !sel.doubts.length && CFG.quiet !== false) {
+    if (jdm) {
+      // Matchs à venir seulement, ceux du jour d'abord (universitaire avant collégial), puis les jours suivants.
+      const today = (sports.next || []).filter(r => r.date === slot.day).sort((a, b) => (b.uni - a.uni) || String(a.time).localeCompare(String(b.time)));
+      sports = { results: [], next: [...today, ...(sports.next || []).filter(r => r.date !== slot.day)] };
+      const q = quietLead(slot, { sports, radio, prefer: 'match' });
+      if (!q) { console.log(`${slot.key} : aucun match étudiant aujourd’hui, édition Jour de match sautée.`); return; }
+      quiet = true; sel = { ...sel, skip: false, items: [q], ids: [], lead: q, doubts: [] };
+      console.log(`${slot.key} : édition Jour de match (${q.art?.a?.name} – ${q.art?.b?.name}).`);
+    } else if (sel.skip && !sel.items.length && !sel.doubts.length && CFG.quiet !== false) {
       const q = quietLead(slot, { sports, radio });
       if (q) { quiet = true; sel = { ...sel, skip: false, items: [q], ids: [], lead: q }; console.log(`${slot.key} : aucun article (${sel.why}) → une sans article : « ${q.title} ».`); }
     }

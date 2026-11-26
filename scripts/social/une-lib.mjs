@@ -544,7 +544,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     let body;
     if (model.quiet) {
       // Une sans article : le titre, une phrase honnête, puis le sport et la radio (sur tous les réseaux), puis le lien.
-      body = `${T(items[0])}\n${QUIET_LINE}`;
+      body = `${T(items[0])}\n${items[0].line || QUIET_LINE}`;
     } else if (spec.style === 'lead') {
       // Article principal, puis les autres en une ligne (Threads) ou leur nombre (X), puis le lien vers la une.
       const [first, ...rest] = items, more = model.items.length - 1;
@@ -575,7 +575,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     return [lead, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
   const withExtras = SPORTS_NETS.has(net) || !!model.quiet; // sans article, le sport et la radio sont le contenu : partout
-  let items = [...model.items], hash = [...tags], cut = 0, sports = withExtras ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = withExtras ? (model.radio || []).filter(x => !x.extra).slice(0, 5) : []; // réserve de l'image (extra) hors texte
+  let items = [...model.items], hash = [...tags], cut = 0, sports = withExtras ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, model.quiet ? 5 : 2)] : [], radio = withExtras ? (model.radio || []).filter(x => !x.extra).slice(0, 5) : []; // réserve de l'image (extra) hors texte
   let withRevue = true;
   for (;;) {
     const revueLine = withRevue ? revueEditionLine(model.slot, revueOpts) : '';
@@ -641,11 +641,20 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
  * titre qui dit ce que le créneau met de l'avant, résumé honnête (aucun article). `cover` : { url, credit, title }
  * (photo libre de campus fournie par l'appelant, seulement si aucune affiche graphique n'est possible). Retourne null s'il n'y a ni sport ni radio : le créneau est sauté.
  */
-export function quietLead(slot, { sports = {}, radio = [], cover = null } = {}) {
+export function quietLead(slot, { sports = {}, radio = [], cover = null, prefer = '' } = {}) {
   const res = (sports.results || []).length, nxt = (sports.next || []).length, rad = (radio || []).length;
   if (!res && !nxt && !rad) return null;
   // Titres courts façon « Game Day » / « Today's Lineup » (affiches sportives et radios universitaires).
   const today = (sports.next || []).some(r => r.date === slot.day);
+  // Édition « Jour de match » (déclenchement manuel) : le match du jour en vedette, même s'il y a des articles.
+  if (prefer === 'match') {
+    if (!today) return null;
+    const art = quietArt(slot, { sports, radio, prefer });
+    return { id: '', title: 'Les matchs du sport étudiant aujourd’hui', byline: '', source: '', place: '', placeColor: '', sport: '', credit: '', images: [], quiet: true, art,
+      hook: 'Les matchs du sport étudiant aujourd’hui et dans les prochains jours, et les émissions des radios étudiantes.',
+      line: 'Aujourd’hui sur les terrains du sport étudiant, et à l’écoute des radios étudiantes.',
+      stations: stationLogos().map(({ name, logo }) => ({ name, logo })) };
+  }
   const title = res ? 'Les résultats du sport étudiant'
     : nxt ? (today ? 'Jour de match' : 'Les prochains matchs')
     : (slot.id === 'soir' ? 'Ce soir à l’antenne' : 'Aujourd’hui à l’antenne');
@@ -674,8 +683,10 @@ export function stationLogos(root = path.resolve(path.dirname(new URL(import.met
  * couleurs des deux établissements (brand-colors.json). Radio seule : les logos officiels de toutes les stations,
  * celles à l'antenne dans ce créneau en premier.
  */
-export function quietArt(slot, { sports = {}, radio = [] } = {}) {
-  const r = (sports.results || []).find(x => x.kind === 'resultat' && x.teams?.length === 2) || (sports.next || []).find(x => x.teams?.length === 2);
+export function quietArt(slot, { sports = {}, radio = [], prefer = '' } = {}) {
+  const todays = (sports.next || []).filter(x => x.date === slot.day && x.teams?.length === 2);
+  const r = (prefer === 'match' && (todays.find(x => x.uni) || todays[0]))
+    || (sports.results || []).find(x => x.kind === 'resultat' && x.teams?.length === 2) || (sports.next || []).find(x => x.teams?.length === 2);
   if (r) {
     const t = x => ({ name: x.name, inst: x.inst || '', color: x.color || '' });
     const res = r.kind === 'resultat';
