@@ -494,6 +494,8 @@
     // Pied : mêmes crédits que les autres visuels sociaux (nom complet + mention), en petit ; source des données sportives.
     const foot = el('footer', 'ms-foot');
     if (m.total > 1) foot.append(el('span', 'ms-count', `${m.index + 1} de ${m.total}`));
+    // Petite marque centrée juste au-dessus des crédits (icône + « LE‑RADAR.ca »), comme le pied des autres visuels.
+    const fm = el('p', 'ms-fmark'); const fi = el('img'); fi.src = '../assets/icon.svg'; fi.alt = ''; fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca')); foot.append(fm);
     foot.append(el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources'));
     // Crédits complets (match-story-lib.mjs → storyCredits) : données, titulaires des logos affichés, autorisations ; puis polices,
     // mise en page et indépendance.
