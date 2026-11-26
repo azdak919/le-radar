@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T08:06:56.252Z",
+  "updatedAt": "2026-11-26T09:07:08.479Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T08:06:04.221Z"
+      "checkedAt": "2026-11-26T09:06:06.310Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Charlottes",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/les-charlottes"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "04:00",
         "end": "06:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "La lecture pis toi",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+      },
       "track": "",
-      "showTitle": "Les Charlottes",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T08:06:17.382Z"
+      "checkedAt": "2026-11-26T09:06:19.389Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "Freeform Air",
+      "next": {
+        "title": "Total €clipse of The ☾harts",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "07:00"
+      },
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T08:06:20.266Z"
+      "checkedAt": "2026-11-26T09:06:21.541Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Daydream Nation",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T08:06:34.524Z"
+      "checkedAt": "2026-11-26T09:06:45.434Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T08:06:35.799Z"
+      "checkedAt": "2026-11-26T09:06:46.598Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Seum — Always On My Mind",
+      "track": "Chaude Chaleur — Ni homme ni femme",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T08:06:55.902Z"
+      "checkedAt": "2026-11-26T09:07:08.128Z"
     }
   }
 }
