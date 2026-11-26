@@ -1,0 +1,74 @@
+name: Social — La revue (carrousel)
+
+# « La revue » sur les réseaux, publication DISTINCTE de La une (scripts/social/revue-post.mjs, data/social/policy.json formats.revue) :
+# carrousel de la revue du créneau — PDF document sur LinkedIn (matin seulement), pages 4:5 en plusieurs photos sur Facebook,
+# carrousel à glisser sur Instagram (à partir du 29 nov. 2026). Fenêtres, heure de Montréal : matin 9 h – 11 h 30 (≈ 9 h 15),
+# soir 20 h 30 – 22 h 30 (≈ 20 h 45), loin de La une (7 h 45, 19 h 30). Les crons GitHub sont en UTC et partent souvent en
+# retard : on en pose pour l'heure d'été (HAE) ET l'heure d'hiver (HNE), plus des secours ; hors fenêtre, la porte ne fait rien.
+# data/social/revue-state.json garantit une seule publication par réseau et par revue (3 essais au plus).
+on:
+  schedule:
+    - cron: '13 13,14 * * *'   # matin : 9 h 13 HAE / 9 h 13 HNE (l'autre heure : hors fenêtre ou secours)
+    - cron: '43 14,15 * * *'   # matin, secours : 10 h 43 HAE / 9 h 43-10 h 43 HNE
+    - cron: '47 0,1 * * *'     # soir : 20 h 47 HAE / 20 h 47 HNE
+    - cron: '17 2 * * *'       # soir, secours : 21 h 17 HNE / 22 h 17 HAE
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: 'Créneau (auto = selon l’heure de Montréal)'
+        type: choice
+        options: [auto, matin, soir]
+        default: auto
+      dry_run:
+        description: 'Essai : textes et décisions seulement, rien n’est publié (décoché = publication réelle si la revue est due)'
+        type: boolean
+        default: true
+      now:
+        description: 'Simuler cet instant (ISO, ex. 2026-11-26T14:15:00Z) ; vide = maintenant'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  revue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: data-writers-social
+      cancel-in-progress: false
+      queue: max
+    env:
+      REVUE_SLOT: ${{ inputs.slot || 'auto' }}
+      DRY_RUN: ${{ (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
+      NOW_OVERRIDE: ${{ inputs.now || '' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - id: g
+        name: Porte (rien hors fenêtre ni si la revue est déjà publiée)
+        run: node scripts/social/revue-post.mjs --gate --slot "$REVUE_SLOT" ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"}
+      - name: Textes, contrôles et publication éventuelle
+        if: steps.g.outputs.due == 'true'
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
+          BUFFER_LINKEDIN_CHANNEL_ID: ${{ vars.BUFFER_LINKEDIN_CHANNEL_ID }}
+          BUFFER_INSTAGRAM_API_KEY: ${{ secrets.BUFFER_INSTAGRAM_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/social/revue-post.mjs --slot "$REVUE_SLOT" ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"}
+      - name: Commit de l'état (data/social/revue-state.json)
+        if: always() && steps.g.outputs.due == 'true'
+        run: |
+          git diff --quiet -- data/social/revue-state.json data/social/instagram-state.json && { echo "État inchangé."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git add data/social/revue-state.json data/social/instagram-state.json
+          git commit -s -m "bot(social): état des publications de La revue"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"data/social/revue-state.json\")); JSON.parse(require(\"fs\").readFileSync(\"data/social/instagram-state.json\"))'"

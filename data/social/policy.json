@@ -128,6 +128,15 @@
    "maxPerWave": 4,
    "_waves": "Deux vagues (scripts/social/match-story-lib.mjs → WAVES) : matin 9 h – 15 h (matchs avant 15 h, régates, résultats de voile de la veille) et fin d'après-midi 15 h – 19 h 30 (matchs de soirée, 2 à 3 h avant). Chaque story ramène le compte en tête de la barre des stories : deux vagues courtes > une rafale. Au plus maxPerWave stories par vague, la plus forte d'abord (universitaire, voile, collégial ; un sport différent avant de répéter) ; au-delà, la dernière devient « Aussi aujourd'hui ». Aucun match : aucune story (jamais de remplissage)."
   },
+  "revue": {
+   "_doc": "« La revue » sur les réseaux (scripts/social/revue-post.mjs, workflow social-revue.yml), publication DISTINCTE de La une (décision de Charles, 26 nov. 2026) : carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser sur Instagram ; 8 meilleurs articles (note sociale), sport et radio par popularité, voile toujours montrée. Heures de Montréal choisies dans les fenêtres d'engagement de notre public (Facebook 9-13 h et 18-21 h, LinkedIn 8-10 h, Instagram en soirée) et loin de La une (7 h 45, 19 h 30). LinkedIn le matin seulement (soirée nulle pour une Page). Minimum, comme La une : une revue publiée (articles, ou sport et radio sans nouvel article) ; rien si la revue est sautée ou refusée, rien sans carrousel en ligne. Instagram à partir du jour 8 de sa montée (29 nov.), pour respecter le rodage du compte.",
+   "publish": true,
+   "slots": {
+    "matin": { "id": "matin", "target": "09:15", "from": "09:00", "to": "11:30", "networks": ["linkedin", "facebook", "instagram"] },
+    "soir": { "id": "soir", "target": "20:45", "from": "20:30", "to": "22:30", "networks": ["facebook", "instagram"] }
+   },
+   "instagram": { "from": "2026-11-29" }
+  },
   "une": {
    "_doc": "« La une du matin » et « La une du soir » (scripts/social/une-run.mjs, workflow social-une.yml). Décision de Charles le 12 nov. 2026 : deux rendez-vous par jour, EN PLUS des publications existantes (hors plafonds de volume), publication réelle dès la fusion. Fenêtres en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées) : une seule publication par réseau et par créneau. Le soir ne reprend aucun article du matin et saute s'il n'y a rien de nouveau. Aucune mention @.",
    "publish": true,

@@ -16,13 +16,21 @@ const asSocial = (it) => ({
   desc: it.excerpt || it.resume || '',
 });
 
+/** « Titre - The McGill Daily » → « Titre » quand le média est déjà nommé à côté (réseaux seulement). */
+export const cleanTitle = (title, source) => {
+  const t = String(title || '').trim(), s = String(source || '').trim();
+  if (!s) return t;
+  const esc = s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return t.replace(new RegExp(`\\s+[-–—|:]\\s+${esc}\\s*$`, 'i'), '').trim() || t;
+};
+
 /** Les `max` meilleurs articles, du plus fort au plus faible ; à note égale, l'ordre de la revue. */
 export function pickSocialItems(items = [], { ranks = new Map(), now = Date.now(), max = SOCIAL_MAX } = {}) {
   return items
     .map((it, i) => ({ it, i, s: scoreItem(asSocial(it), { ranks, now }) }))
     .sort((a, b) => b.s - a.s || a.i - b.i)
     .slice(0, max)
-    .map((x) => x.it);
+    .map((x) => ({ ...x.it, title: cleanTitle(x.it.title, x.it.source) }));
 }
 
 /** Modèle de la revue pour le carrousel : mêmes données, articles choisis (rangs de l'accueil lus dans news.json). */
