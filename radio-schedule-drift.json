@@ -1,11 +1,14 @@
 {
-  "checkedAt": "2026-11-25T05:24:13.741Z",
+  "checkedAt": "2026-11-26T04:58:36.863Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 4,
+    "drift": [
+      "cism",
+      "choq"
+    ],
     "overhaul": [],
     "unreachable": []
   },
@@ -23,12 +26,18 @@
     {
       "id": "cism",
       "published": 110,
-      "fresh": 110,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 108,
+      "added": [
+        "dim 15:00–19:00 Le 21e GAMIQ en direct sur les ondes!"
+      ],
+      "removed": [
+        "dim 15:00–16:00 La Grapevine",
+        "dim 16:00–17:00 Le grand repos",
+        "dim 17:00–19:00 Symbiose"
+      ],
+      "changed": 4,
+      "ratio": 0.036,
+      "status": "drift"
     },
     {
       "id": "ckut",
@@ -42,8 +51,8 @@
     },
     {
       "id": "cjlo",
-      "published": 123,
-      "fresh": 123,
+      "published": 121,
+      "fresh": 121,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -63,12 +72,14 @@
     {
       "id": "choq",
       "published": 26,
-      "fresh": 26,
+      "fresh": 25,
       "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "removed": [
+        "dim 14:00–16:00 Pôle hip-hop"
+      ],
+      "changed": 1,
+      "ratio": 0.038,
+      "status": "drift"
     }
   ]
 }
