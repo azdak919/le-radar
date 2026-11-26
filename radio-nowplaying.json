@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-26T16:07:04.305Z",
+  "updatedAt": "2026-11-26T17:07:19.032Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Sons de Cloches",
+        "title": "Conduite Antisportive",
         "source": "api-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/sons-de-cloches/"
+        "start": "11:30",
+        "end": "12:30",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
       "next": {
         "title": "Chéri.e, j’arrive!",
@@ -20,16 +20,15 @@
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Sons de Cloches",
+      "showTitle": "Conduite Antisportive",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:15.061Z"
+      "checkedAt": "2026-11-26T17:06:41.538Z"
     },
     "cism": {
       "id": "cism",
@@ -56,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:16.047Z"
+      "checkedAt": "2026-11-26T17:06:42.879Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Under The Olive Tree",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Venus Radio",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Under The Olive Tree",
+      "next": {
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,61 +81,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:18.271Z"
+      "checkedAt": "2026-11-26T17:06:45.246Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Chi and Ri",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/chi-and-ri"
-      },
-      "next": {
         "title": "The Power Hour",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/the-power-hour"
       },
-      "track": "",
-      "showTitle": "Chi and Ri",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:42.092Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "À nous le futur",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "11:59",
-        "url": "https://www.cfak.ca/balados/a-nous-le-futur"
-      },
       "next": {
-        "title": "Le DOUZE",
+        "title": "What's Happening in NDG",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "12:59",
-        "url": "https://www.cfak.ca/balados/le-douze"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
       },
       "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "The Power Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:06:43.238Z"
+      "checkedAt": "2026-11-26T17:06:58.738Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Le DOUZE",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "12:59",
+        "url": "https://www.cfak.ca/balados/le-douze"
+      },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:59",
+        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
+      },
+      "track": "",
+      "showTitle": "Le DOUZE",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-26T17:06:59.758Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +148,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Isla Den — Closer",
+      "track": "Cherry Lena — De l'avoir connue sans toi",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T16:07:03.954Z"
+      "checkedAt": "2026-11-26T17:07:18.681Z"
     }
   }
 }
