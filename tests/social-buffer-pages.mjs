@@ -80,4 +80,14 @@ assert(isRejection('People in Canada can’t see news content') && isRejection('
 assert.equal(localParts(T('2026-11-01T17:00:00Z')).weekend, true);
 assert.deepEqual(postMetadata('facebook'), { facebook: { type: 'post' } }, 'Facebook : type post exigé par Buffer');
 assert.equal(postMetadata('linkedin'), undefined);
+// Places de la file : les publications en échec comptent dans la limite gratuite (cas du 25 nov. 2026 : 7 + 41 → 0).
+{
+  const { freePlaces, blockedMessage } = await import('../scripts/social/lib.mjs');
+  assert.equal(freePlaces(7, 0), 3);
+  assert.equal(freePlaces(7, 41), 0, 'Facebook bloqué par 41 échecs');
+  assert.equal(freePlaces(4, 3), 3, 'LinkedIn : 3 échecs prennent 3 places');
+  assert.equal(blockedMessage('facebook', 7, 0), '');
+  assert.match(blockedMessage('facebook', 7, 41), /FILE BLOQUÉE/);
+  assert.doesNotMatch(blockedMessage('linkedin', 4, 3), /BLOQUÉE/);
+}
 console.log('social-buffer-pages : OK');
