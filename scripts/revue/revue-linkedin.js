@@ -22,8 +22,8 @@ const authorsOf = (it) => (Array.isArray(it.authors) ? it.authors : [it.authors]
 // Pied de crédits, comme les images des réseaux sociaux (affiches/social-une.js → layoutCredit) : contenus crédités,
 // indépendance, licence de la mise en page. Copyleft dessiné par un « © » retourné (🄯 absent des polices du rendu sans tête).
 const COPYLEFT = '<span class="li-cl" aria-label="copyleft">©</span>';
-// « Mise en page … » sur sa propre ligne, insécable : jamais coupée en fin de ligne (demande de Charles).
-const CREDITS = `Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Projet indépendant, sans affiliation.<br /><span class="li-nowrap">Mise en page ${COPYLEFT}\u00A0Azdak CC\u00A0BY\u00A04.0.</span>`;
+// Deux lignes insécables, jamais coupées (demande de Charles) : crédits des contenus, puis indépendance et mise en page.
+const CREDITS = `<span class="li-nowrap">Articles et photos crédités à leurs auteurs et à leurs médias d’origine.</span><br /><span class="li-nowrap">Projet indépendant, sans affiliation · Mise en page ${COPYLEFT}\u00A0Azdak CC\u00A0BY\u00A04.0.</span>`;
 const creditsLine = (cls = '') => `<p class="li-credits${cls ? ' ' + cls : ''}">${CREDITS}</p>`;
 // Marque des pages intérieures : même logo et même nom en serif que la couverture, en plus petit (jamais en texte simple).
 const BRAND_SM = '<span class="li-brand-sm"><img src="/assets/icon-512.png" alt="" /><span>LE\u2011RADAR.ca</span></span>';

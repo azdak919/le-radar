@@ -16,7 +16,7 @@ assert.doesNotMatch(html, /li-url">[^<]*2026-11-25/, 'pas le lien de l’éditio
 // Crédits en pied sur chaque page, comme les images des réseaux (copyleft = « © » retourné, jamais 🄯).
 assert.equal((html.match(/class="li-credits/g) || []).length, pages.length, 'crédits sur chaque page');
 assert.match(html, /Articles et photos crédités à leurs auteurs et à leurs médias d’origine\./);
-assert.match(html, /affiliation\.<br \/><span class="li-nowrap">Mise en page <span class="li-cl"[^>]*>©<\/span>\u00A0Azdak CC\u00A0BY\u00A04\.0\.<\/span>/, '« Mise en page » sur sa ligne, insécable');
+assert.match(html, /<span class="li-nowrap">Articles et photos crédités à leurs auteurs et à leurs médias d’origine\.<\/span><br \/><span class="li-nowrap">Projet indépendant, sans affiliation · Mise en page <span class="li-cl"[^>]*>©<\/span>\u00A0Azdak CC\u00A0BY\u00A04\.0\.<\/span>/, 'deux lignes insécables');
 assert.doesNotMatch(html, /🄯/);
 for (const it of model.items.slice(0, MAX_ARTICLES)) assert.ok(html.includes(it.source), `média ${it.source}`);
 assert.doesNotMatch(html, /undefined|NaN|\[object/);
