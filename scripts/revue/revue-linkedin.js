@@ -22,7 +22,8 @@ const authorsOf = (it) => (Array.isArray(it.authors) ? it.authors : [it.authors]
 // Pied de crédits, comme les images des réseaux sociaux (affiches/social-une.js → layoutCredit) : contenus crédités,
 // indépendance, licence de la mise en page. Copyleft dessiné par un « © » retourné (🄯 absent des polices du rendu sans tête).
 const COPYLEFT = '<span class="li-cl" aria-label="copyleft">©</span>';
-const CREDITS = `Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Projet indépendant, sans affiliation. Mise en page ${COPYLEFT}\u00A0Azdak CC BY 4.0.`;
+// « Mise en page … » sur sa propre ligne, insécable : jamais coupée en fin de ligne (demande de Charles).
+const CREDITS = `Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Projet indépendant, sans affiliation.<br /><span class="li-nowrap">Mise en page ${COPYLEFT}\u00A0Azdak CC\u00A0BY\u00A04.0.</span>`;
 const creditsLine = (cls = '') => `<p class="li-credits${cls ? ' ' + cls : ''}">${CREDITS}</p>`;
 // Marque des pages intérieures : même logo et même nom en serif que la couverture, en plus petit (jamais en texte simple).
 const BRAND_SM = '<span class="li-brand-sm"><img src="/assets/icon-512.png" alt="" /><span>LE\u2011RADAR.ca</span></span>';
@@ -115,6 +116,7 @@ html, body { background: #111; }
 .li-credits, .li-datasrc { margin-top: 8px; font: 400 17px/1.35 var(--sans); color: #777; }
 .li-credits--cover { position: absolute; left: 64px; right: 300px; bottom: 26px; margin: 0; color: rgba(255,255,255,.75); z-index: 2; }
 .li-cl { display: inline-block; transform: scaleX(-1); }
+.li-nowrap { white-space: nowrap; }
 .li-credit { position: absolute; right: 16px; bottom: 12px; font: 400 18px/1.2 var(--sans); color: #fff; background: rgba(0,0,0,.55); padding: 4px 10px; border-radius: 6px; }
 /* Couverture */
 .li-cover { background: #111; color: #fff; }
