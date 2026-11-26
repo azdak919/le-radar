@@ -26,9 +26,9 @@ assert.ok(evil.includes('A &lt;b&gt;gras&lt;/b&gt; &amp; co'));
 // Sans image : la page article passe en mise en page sans photo.
 const noimg = renderLinkedInCarousel({ ...model, image: null, items: [{ ...model.items[0], image: '' }] });
 assert.match(noimg, /li-article--noimg/);
-// Une LinkedIn : carrousel du créneau s'il est en ligne, sinon rien (image habituelle).
+// Carrousel LinkedIn : PDF de l’édition s’il est en ligne, sinon rien.
 {
-  const { linkedinCarousel } = await import('../scripts/social/une-run.mjs');
+  const { linkedinCarousel } = await import('../scripts/social/revue-carousel.mjs');
   const ok = async () => ({ ok: true }), ko = async () => ({ ok: false });
   const d = await linkedinCarousel('2026-11-25:soir', { fetchImpl: ok });
   assert.equal(d.url, 'https://le-radar.ca/revues/2026-11-25-soir/le-radar-revue-2026-11-25-soir-linkedin.pdf');
@@ -62,9 +62,9 @@ assert.match(noimg, /li-article--noimg/);
   assert.match(alts.at(-1), /le-radar\.ca\/revues\.$/);
   for (const a of alts) assert.doesNotMatch(a, /undefined|NaN|\s{2}/);
 }
-// Carrousel Facebook / Instagram : carrousel.json + images en ligne, sinon rien (image habituelle).
+// Carrousel Facebook / Instagram : carrousel.json + images en ligne, sinon rien.
 {
-  const { revueCarousel } = await import('../scripts/social/une-run.mjs');
+  const { revueCarousel } = await import('../scripts/social/revue-carousel.mjs');
   const manifest = { pages: [{ file: 'carrousel-1.jpg', alt: 'Couverture' }, { file: 'carrousel-2.jpg', alt: 'Article 1' }, { file: '../x.jpg', alt: 'piège' }] };
   const net = (missing = '') => async (u, o = {}) => (u.endsWith('carrousel.json') ? { ok: !missing.includes('json'), json: async () => manifest } : { ok: !(missing && u.endsWith(missing)) });
   const c = await revueCarousel('2026-11-25:soir', { fetchImpl: net() });

@@ -82,43 +82,6 @@ export async function hostImages(images, key, repo = process.env.GITHUB_REPOSITO
   } finally { try { git(['worktree', 'remove', '--force', dir]); } catch {} fs.rmSync(dir, { recursive: true, force: true }); }
 }
 
-/** Carrousel LinkedIn de la revue du créneau (« 2026-11-25:soir » → revues/2026-11-25-soir/), s'il est en ligne. */
-export async function linkedinCarousel(slotKey, { fetchImpl = fetch } = {}) {
-  const id = String(slotKey || '').replace(':', '-');
-  if (!/^\d{4}-\d{2}-\d{2}-(matin|soir)$/.test(id)) return null;
-  const base = `https://le-radar.ca/revues/${id}/`;
-  const url = `${base}le-radar-revue-${id}-linkedin.pdf`, thumbnailUrl = `${base}linkedin-cover.jpg`;
-  try {
-    const [a, b] = await Promise.all([url, thumbnailUrl].map((u) => fetchImpl(u, { method: 'HEAD', signal: AbortSignal.timeout(15000) })));
-    if (!a.ok || !b.ok) return null;
-  } catch { return null; }
-  const [day, ed] = [id.slice(0, 10), id.slice(11)];
-  const d = new Date(`${day}T12:00:00Z`);
-  const date = new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }).format(d);
-  return { url, thumbnailUrl, title: `${ed === 'soir' ? 'La revue du soir' : 'La revue du matin'} du Radar · ${date}` };
-}
-
-/**
- * Carrousel Facebook / Instagram : les pages du carrousel LinkedIn de la revue du créneau, en images 4:5
- * (revues/<id>/carrousel-<n>.jpg, liste et textes alternatifs dans carrousel.json). null s'il n'est pas en ligne :
- * le réseau garde alors son image habituelle. Interrupteur : formats.une.carousel.<réseau> (policy.json).
- */
-export async function revueCarousel(slotKey, { fetchImpl = fetch } = {}) {
-  const id = String(slotKey || '').replace(':', '-');
-  if (!/^\d{4}-\d{2}-\d{2}-(matin|soir)$/.test(id)) return null;
-  const base = `https://le-radar.ca/revues/${id}/`;
-  try {
-    const r = await fetchImpl(`${base}carrousel.json`, { signal: AbortSignal.timeout(15000) });
-    if (!r.ok) return null;
-    const pages = ((await r.json())?.pages || []).filter((p) => /^carrousel-\d+\.jpg$/.test(p?.file || '')).slice(0, 10);
-    if (pages.length < 2) return null;
-    const heads = await Promise.all(pages.map((p) => fetchImpl(base + p.file, { method: 'HEAD', signal: AbortSignal.timeout(15000) })));
-    if (heads.some((h) => !h.ok)) return null;
-    return pages.map((p) => ({ url: base + p.file, alt: String(p.alt || '') }));
-  } catch { return null; }
-}
-const carouselOn = (net) => (CFG.carousel || {})[net] === true;
-
 // ── Publication ──────────────────────────────────────────────────────────────
 async function publishOne(net, entry, env) {
   const text = entry.texts[net], img = entry.images[IMAGE_FOR[net]], size = IMAGE_SIZES[IMAGE_FOR[net]], head = text.split('\n')[0];
@@ -151,25 +114,6 @@ async function publishOne(net, entry, env) {
     const th = createXBuffer({ key: env[pages.threads?.secret || 'BUFFER_INSTAGRAM_API_KEY'], service: 'threads', channelName: pages.threads?.name || 'le.radar.ca', fallbackId: env.BUFFER_THREADS_CHANNEL_ID || null });
     const post = await th.add({ text, now: true, metadata: { threads: { type: 'post', topic: UNE_THREADS_TOPIC } } });
     return { id: post.id, status: post.status || '' };
-  }
-  // LinkedIn : la une part avec le carrousel PDF de la revue du même créneau (revues/<jour>-<matin|soir>/linkedin.pdf),
-  // le format le plus engageant d'une Page. PDF pas encore en ligne : image habituelle.
-  if (net === 'linkedin') {
-    const doc = await linkedinCarousel(entry.key);
-    if (doc) {
-      const lch = createXBuffer({ key, service: pages.linkedin.service, channelName: pages.linkedin.name, fallbackId: env.BUFFER_LINKEDIN_CHANNEL_ID || null });
-      const post = await lch.add({ text, now: true, document: doc, metadata: postMetadata(net) });
-      return { id: post.id, status: post.status || '', document: doc.url };
-    }
-  }
-  // Facebook : les pages de la revue du créneau en plusieurs photos (Facebook n'accepte pas de PDF). Sinon : image habituelle.
-  if (net === 'facebook' && carouselOn('facebook')) {
-    const images = await revueCarousel(entry.key);
-    if (images) {
-      const fch = createXBuffer({ key, service: pages.facebook.service, channelName: pages.facebook.name, fallbackId: env.BUFFER_FACEBOOK_CHANNEL_ID || null });
-      const post = await fch.add({ text, now: true, images, metadata: postMetadata(net) });
-      return { id: post.id, status: post.status || '', carousel: images.length };
-    }
   }
   const ch = net === 'x' ? createXBuffer({ key, fallbackId: env.BUFFER_CHANNEL_ID || undefined })
     : createXBuffer({ key, service: pages[net].service, channelName: pages[net].name, fallbackId: (net === 'facebook' ? env.BUFFER_FACEBOOK_CHANNEL_ID : env.BUFFER_LINKEDIN_CHANNEL_ID) || null });
@@ -223,11 +167,8 @@ async function instagramPass({ now, slot, text, problems = [], images, dry, alt 
     return report;
   }
   if (d.action !== 'send') { console.log(`Instagram : ${d.reason}`); return ''; }
-  // Carrousel à glisser : les pages de la revue du créneau, si elles sont en ligne ; sinon l'image 3:4 habituelle.
-  const carousel = carouselOn('instagram') ? await revueCarousel(slot.key) : null;
-  if (carousel) console.log(`Instagram : carrousel de ${carousel.length} pages`);
   const result = await deliverInstagram({
-    env: process.env, text, imageUrl: imageUrl(d.image?.ref), images: carousel || undefined, alt, state: state0,
+    env: process.env, text, imageUrl: imageUrl(d.image?.ref), alt, state: state0,
     now: new Date(now).toISOString(), slotId: slot.id, format: 'une', dedupKey: `une:${slot.key}`,
     fileIssue: openInstagramIssue,
   });
