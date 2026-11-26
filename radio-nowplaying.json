@@ -1,78 +1,72 @@
 {
-  "updatedAt": "2026-11-26T03:56:28.075Z",
+  "updatedAt": "2026-11-26T05:07:18.389Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Nocturne",
-        "source": "schedule-live",
-        "start": "22:30",
-        "end": "00:00",
-        "url": "https://chyz.ca/emission/nocturne/"
-      },
+      "current": null,
       "next": {
         "title": "Jeudi Révolte",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Nocturne",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-26T03:55:47.198Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
-        "title": "La carte cadeau (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T03:56:00.460Z"
+      "checkedAt": "2026-11-26T05:06:25.244Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La carte cadeau (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "La carte cadeau (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-26T05:06:38.560Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Meanwhile",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Off The Hook",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Freeform Air",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Meanwhile",
+      "showTitle": "Off The Hook",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,68 +74,74 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T03:56:03.382Z"
+      "checkedAt": "2026-11-26T05:06:42.143Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sippin' On Sound",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/sippin-on-sound"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Daydream Nation",
         "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
       },
       "track": "",
-      "showTitle": "Sippin' On Sound",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T03:56:18.033Z"
+      "checkedAt": "2026-11-26T05:06:56.048Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T03:56:19.448Z"
+      "checkedAt": "2026-11-26T05:06:57.018Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Empress Of — Machete",
+      "track": "Kaatayra — Remanso de Maria",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T03:56:27.725Z"
+      "checkedAt": "2026-11-26T05:07:18.039Z"
     }
   }
 }
