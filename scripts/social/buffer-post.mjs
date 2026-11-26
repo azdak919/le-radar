@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Bot social du Radar : feed.xml → file Buffer (X). Sans BUFFER_API_KEY : mode essai, sortie 0.
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
+import { loadFrontRanks, scorer, recentUneKeys, articleKey, bestFirst, bestSlotsFirst } from './selection.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, freePlaces, blockedMessage, reconcileSent, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
@@ -16,6 +17,9 @@ import { volumeFor, torontoDay, mentionLedger, accountsForPost, mentionedIn, not
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-sent.json');
+// Sélection commune (selection.mjs) : note par article et pas de doublon avec La une sur X depuis 24 h.
+const SCORE = scorer({ ranks: loadFrontRanks(path.join(ROOT, 'news.json')) });
+const IN_UNE = (() => { try { return recentUneKeys(JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/une-state.json'), 'utf8')), 'x'); } catch { return new Set(); } })();
 const ACCOUNTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/x-accounts.json'), 'utf8')).accounts;
 const args = process.argv.slice(2);
 const key = process.env.BUFFER_API_KEY || '';
@@ -86,6 +90,9 @@ const sentIds = new Set(Object.keys(state.sent));
 const shareNow = process.env.SHARE_NOW === 'true';
 const shareUrl = (process.env.SHARE_URL || '').trim();
 const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
+// Articles parus dans La une sur X depuis 24 h : identifiants du flux à écarter (pas de doublon le même jour).
+const uneIds = items.filter(i => IN_UNE.has(articleKey(i))).map(i => i.id);
+if (uneIds.length) console.log(`X : ${uneIds.length} article(s) parus dans La une depuis 24 h, écartés`);
 const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
   const qs = new Set(queuedSources), qt = queued.map(p => p.text || '');
   const pool = items.filter(i => !sentIds.has(i.id) && Date.now() - i.date <= maxAgeH * 3600e3 && !qt.some(t => inText(t, i)));
@@ -93,7 +100,7 @@ const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
     .map(f => pool.filter(f)).find(l => l.length) || [];
   return best.length ? [best[Math.floor(Math.random() * best.length)]] : [];
 })() : daily ? (() => {
-  const base = { sentIds, queuedSources, accounts: ACCOUNTS, maxAgeH, evening };
+  const base = { sentIds: new Set([...sentIds, ...uneIds]), queuedSources, accounts: ACCOUNTS, maxAgeH, evening, score: SCORE };
   if (!reduced) return selectDaily(items, { ...base, slots: want });
   // Les plus solides d'abord : photo du flux, une seule par source ; on complète (≥ minPerDay) avec les moins solides seulement si besoin.
   const strong = selectDaily(items, { ...base, slots: want, perSource: reduced.perSource, minPhoto: 1 });
@@ -102,7 +109,9 @@ const sel = shareNow && shareUrl ? [pickUrl()] : shareNow ? (() => {
   const used = new Set([...sentIds, ...strong.map(i => i.id)]);
   return [...strong, ...selectDaily(items, { ...base, sentIds: used, slots: need, perSource: reduced.perSource, queuedSources: [...queuedSources, ...strong.map(i => i.source)] })];
 })()
-  : selectItems(items, { sentIds, queuedSources, slots: want, maxAgeH });
+  : selectItems(items, { sentIds: new Set([...sentIds, ...uneIds]), queuedSources, slots: want, maxAgeH, score: SCORE });
+// Meilleur article → meilleure heure parmi les créneaux libres (mêmes heures, attribution par la note).
+if (dues && !shareNow) { sel.splice(0, sel.length, ...bestFirst(sel, SCORE)); dues.splice(0, dues.length, ...bestSlotsFirst(dues, 'x')); }
 if (dues) console.log(`Créneaux libres aujourd'hui : ${dues.length} · mode ${daily ? 'nocturne (veille)' : 'manuel'}`);
 
 const used = new Map(); let n = 0;
