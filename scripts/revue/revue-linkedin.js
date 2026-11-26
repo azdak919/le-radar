@@ -135,4 +135,19 @@ ${pages.join('\n')}
 </body></html>`;
 }
 
-module.exports = { renderLinkedInCarousel, MAX_ARTICLES, W, H };
+/**
+ * Textes alternatifs des pages, dans l'ordre du carrousel (couverture, articles, page finale). Servent aux images
+ * du carrousel Facebook et Instagram (revue/<id>/carrousel-<n>.jpg), qui reprennent ces mêmes pages.
+ */
+function carouselAlts(model = {}) {
+  const items = (model.items || []).slice(0, MAX_ARTICLES);
+  const ed = `${model.edition?.label || 'La revue'} du Radar, ${frDate(model.edition?.day)}`;
+  const lead = items[0];
+  return [
+    `Couverture : ${ed}.${lead?.title ? ` À la une : ${lead.title} (${lead.source || ''}).` : ''} ${items.length} article${items.length > 1 ? 's' : ''} des médias étudiants du Québec.`,
+    ...items.map((it, i) => `Article ${i + 1} sur ${items.length} : ${it.title}. ${authorsOf(it) ? `Par ${authorsOf(it)}, ` : ''}${it.source || ''}.${it.resume || it.excerpt ? ' ' + clip(it.resume || it.excerpt, 230) : ''}`),
+    `Et aussi : sport étudiant et radios étudiantes. Toutes les revues sur ${REVUES_URL.replace(/^https?:\/\//, '').replace(/\/$/, '')}.`,
+  ].map((s) => s.replace(/\s+/g, ' ').trim());
+}
+
+module.exports = { renderLinkedInCarousel, carouselAlts, MAX_ARTICLES, W, H, REVUES_URL };

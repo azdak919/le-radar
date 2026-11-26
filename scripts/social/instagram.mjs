@@ -88,7 +88,7 @@ export function createInstagramBuffer(env = {}, { fetchImpl } = {}) {
     if (type !== 'post') throw new Error('Instagram : seul le type post est permis (ni story ni reel)');
     if (input.firstComment || input.metadata?.instagram?.firstComment) throw new Error('Instagram : premier commentaire interdit');
     if (input.channelId && input.channelId !== INSTAGRAM_CHANNEL_ID) throw new Error('Instagram : canal inattendu');
-    return add({ text: input.text, image: input.image, alt: input.alt, dueAt: input.dueAt, now: input.now !== false, metadata: instagramMetadataOrThrow(INSTAGRAM_METADATA) });
+    return add({ text: input.text, image: input.image, images: input.images, alt: input.alt, dueAt: input.dueAt, now: input.now !== false, metadata: instagramMetadataOrThrow(INSTAGRAM_METADATA) });
   };
   return ch;
 }
@@ -256,7 +256,7 @@ export function alreadyPosted(texts, text) {
 }
 
 /** Un seul envoi. Toute erreur ou tout avertissement Buffer arrête le canal et ouvre une issue. */
-export async function deliverInstagram({ env = {}, text, imageUrl, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
+export async function deliverInstagram({ env = {}, text, imageUrl, images, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
   const ch = createInstagramBuffer(env, { fetchImpl });
   if (!ch) return { action: 'skip', reason: instagramKey(env).reason, state };
   try {
@@ -266,7 +266,8 @@ export async function deliverInstagram({ env = {}, text, imageUrl, alt = '', sta
       const sent = { ...(state.sent || {}), [dedupKey || 'dedup']: { at: now, day, slotId, format, id: 'deja-present', dedup: true } };
       return { action: 'sent', id: 'deja-present', dedup: true, state: { ...state, halted: false, sent } };
     }
-    const post = await ch.add({ text, image: imageUrl, alt, now: true, metadata: INSTAGRAM_METADATA });
+    // images : carrousel (pages de la revue du créneau) ; sinon l'image unique habituelle.
+    const post = await ch.add({ text, ...(Array.isArray(images) && images.length > 1 ? { images } : { image: imageUrl }), alt, now: true, metadata: INSTAGRAM_METADATA });
     const when = Date.parse(now);
     const day = torontoDay(Number.isFinite(when) ? when : Date.now());
     const id = post?.id;

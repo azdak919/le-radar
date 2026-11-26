@@ -14,14 +14,14 @@
  * fait échouer la publication du 18 nov. 2026 avant le commit.
  */
 import { spawn, execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import { listEditionDirs, resolveEditionId } from './revue-pdf-id.mjs';
 import { createRequire } from 'node:module';
 const { syncEditionPdfLinks } = createRequire(import.meta.url)('./revue-render.js');
-const { renderLinkedInCarousel, W: LI_W, H: LI_H } = createRequire(import.meta.url)('./revue-linkedin.js');
+const { renderLinkedInCarousel, carouselAlts, W: LI_W, H: LI_H } = createRequire(import.meta.url)('./revue-linkedin.js');
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const PORT = Number(process.env.PW_PORT || 4193);
@@ -122,6 +122,17 @@ async function printLinkedIn(browser, id) {
   await page.pdf({ path: dest, width: `${LI_W}px`, height: `${LI_H}px`, printBackground: true, preferCSSPageSize: true });
   copyFileSync(dest, join(outDir, `le-radar-revue-${id}-linkedin.pdf`));
   console.log('   linkedin.pdf', `le-radar-revue-${id}-linkedin.pdf`, 'linkedin-cover.jpg');
+  // Mêmes pages en images 4:5 (carrousel Facebook et Instagram, qui n'acceptent pas de PDF) + carrousel.json
+  // (fichiers et textes alternatifs), lu par scripts/social/une-run.mjs → revueCarousel.
+  for (const f of readdirSync(outDir)) if (/^carrousel-\d+\.jpg$/.test(f)) rmSync(join(outDir, f));
+  const alts = carouselAlts(model), shots = page.locator('.li-page'), n = await shots.count(), files = [];
+  for (let i = 0; i < n; i++) {
+    const f = `carrousel-${i + 1}.jpg`;
+    await shots.nth(i).screenshot({ path: join(outDir, f), type: 'jpeg', quality: 85 });
+    files.push({ file: f, alt: alts[i] || '' });
+  }
+  writeFileSync(join(outDir, 'carrousel.json'), JSON.stringify({ id, width: LI_W, height: LI_H, pages: files }, null, 1) + '\n');
+  console.log(`   carrousel-1..${n}.jpg carrousel.json`);
   await page.close();
 }
 

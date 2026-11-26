@@ -52,4 +52,45 @@ assert.match(noimg, /li-article--noimg/);
   await ch.add({ text: 't', now: true, image: 'https://img.jpg', document: { url: 'https://d.pdf', title: 'Titre', thumbnailUrl: 'https://t.jpg' } });
   assert.deepEqual(sent.assets, [{ document: { url: 'https://d.pdf', title: 'Titre', thumbnailUrl: 'https://t.jpg' } }], 'document seul, jamais avec l’image');
 }
+// Textes alternatifs : un par page, dans l'ordre (images du carrousel Facebook et Instagram).
+{
+  const { carouselAlts } = createRequire(import.meta.url)('../scripts/revue/revue-linkedin.js');
+  const alts = carouselAlts(model);
+  assert.equal(alts.length, pages.length, 'un texte alternatif par page');
+  assert.match(alts[0], /^Couverture : La revue du soir du Radar, mercredi 25 novembre 2026\./);
+  assert.ok(alts[1].includes(model.items[0].title));
+  assert.match(alts.at(-1), /le-radar\.ca\/revue\.$/);
+  for (const a of alts) assert.doesNotMatch(a, /undefined|NaN|\s{2}/);
+}
+// Carrousel Facebook / Instagram : carrousel.json + images en ligne, sinon rien (image habituelle).
+{
+  const { revueCarousel } = await import('../scripts/social/une-run.mjs');
+  const manifest = { pages: [{ file: 'carrousel-1.jpg', alt: 'Couverture' }, { file: 'carrousel-2.jpg', alt: 'Article 1' }, { file: '../x.jpg', alt: 'piège' }] };
+  const net = (missing = '') => async (u, o = {}) => (u.endsWith('carrousel.json') ? { ok: !missing.includes('json'), json: async () => manifest } : { ok: !(missing && u.endsWith(missing)) });
+  const c = await revueCarousel('2026-11-25:soir', { fetchImpl: net() });
+  assert.deepEqual(c, [
+    { url: 'https://le-radar.ca/revue/2026-11-25-soir/carrousel-1.jpg', alt: 'Couverture' },
+    { url: 'https://le-radar.ca/revue/2026-11-25-soir/carrousel-2.jpg', alt: 'Article 1' },
+  ], 'fichiers hors gabarit ignorés');
+  assert.equal(await revueCarousel('2026-11-25:soir', { fetchImpl: net('json') }), null, 'carrousel.json absent');
+  assert.equal(await revueCarousel('2026-11-25:soir', { fetchImpl: net('carrousel-2.jpg') }), null, 'une image manquante');
+  assert.equal(await revueCarousel('2026-11-25:jourdematch', { fetchImpl: net() }), null, 'Jour de match : pas de revue');
+}
+// Buffer : plusieurs images → une asset image par page, avec texte alternatif.
+{
+  const { createXBuffer } = await import('../scripts/social/channels/x-buffer.mjs');
+  let sent = null;
+  const fetchImpl = async (_u, o) => {
+    const b = JSON.parse(o.body);
+    if (/createPost/.test(b.query)) { sent = b.variables.i; return { ok: true, status: 200, json: async () => ({ data: { createPost: { post: { id: 'p2', dueAt: null, status: 'sent' } } } }) }; }
+    if (/organizations/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o1', name: 'LE-RADAR' }] } } }) };
+    if (/channels/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { channels: [{ id: 'fb', name: 'LE-RADAR.ca', service: 'facebook' }] } }) };
+    return { ok: true, status: 200, json: async () => ({ data: {} }) };
+  };
+  const ch = createXBuffer({ key: 'k', fetchImpl, service: 'facebook', channelName: 'LE-RADAR.ca', fallbackId: 'fb' });
+  const imgs = Array.from({ length: 12 }, (_, i) => ({ url: `https://x/${i}.jpg`, alt: `p${i}` }));
+  await ch.add({ text: 't', now: true, images: imgs });
+  assert.equal(sent.assets.length, 10, '10 images au plus');
+  assert.deepEqual(sent.assets[0], { image: { url: 'https://x/0.jpg', metadata: { altText: 'p0' } } });
+}
 console.log('revue-linkedin : OK');

@@ -117,11 +117,13 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       return r.post;
     },
     // document : { url, title, thumbnailUrl } — PDF joint (LinkedIn l'affiche en carrousel ; DocumentAssetInput de Buffer).
-    async add({ text, image, alt, dueAt, now = false, metadata, document }) {
+    // images : [{ url, alt }] — plusieurs photos dans une publication (carrousel Instagram, mosaïque Facebook ; 10 au plus).
+    async add({ text, image, alt, dueAt, now = false, metadata, document, images }) {
       const { channelId } = await context();
       const input = { text, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
       if (dueAt) input.dueAt = dueAt;
       if (document?.url) input.assets = [{ document: { url: document.url, title: String(document.title || 'Document').slice(0, 200), thumbnailUrl: document.thumbnailUrl } }];
+      else if (Array.isArray(images) && images.length) input.assets = images.slice(0, 10).map((im) => ({ image: { url: im.url, ...(im.alt ? { metadata: { altText: String(im.alt).slice(0, 1000) } } : {}) } }));
       else if (image) input.assets = [{ image: { url: image, ...(alt ? { metadata: { altText: String(alt).slice(0, 1000) } } : {}) } }];
       if (metadata) input.metadata = metadata;
       const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
