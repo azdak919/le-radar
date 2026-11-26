@@ -166,10 +166,10 @@
     "caption": { "limit": 2200, "maxHashtags": 5, "credit": "📸" },
     "ramp": {
      "start": "2026-11-22",
-     "_doc": "Jour civil America/Toronto. Jours 1-3 : au plus 1 publication, La une du soir. Jours 4-7 : La une du soir. Jours 8-14 : matin et soir. Dès le jour 15 : résultats sportifs en après-midi (12 h–16 h, lundi et mardi), écartés des créneaux de La une.",
+     "_doc": "Jour civil America/Toronto. Jours 1-3 : au plus 1 publication, La une du soir. Dès le jour 4 (25 novembre 2026, décision de Charles après quatre soirs sans erreur) : La une du matin et La une du soir. Jours 8-14 : matin et soir. Dès le jour 15 : résultats sportifs en après-midi (12 h–16 h, lundi et mardi), écartés des créneaux de La une.",
      "phases": [
       { "fromDay": 1, "toDay": 3, "maxPerDay": 1, "slots": ["soir"], "formats": ["une"] },
-      { "fromDay": 4, "toDay": 7, "maxPerDay": 1, "slots": ["soir"], "formats": ["une"] },
+      { "fromDay": 4, "toDay": 7, "maxPerDay": 2, "slots": ["matin", "soir"], "formats": ["une"] },
       { "fromDay": 8, "toDay": 14, "maxPerDay": 2, "slots": ["matin", "soir"], "formats": ["une"] },
       { "fromDay": 15, "maxPerDay": 3, "slots": ["matin", "soir"], "formats": ["une", "weekend_results"], "sports": { "hourFrom": 12, "hourTo": 16, "eligibleWeekdays": [1, 2], "maxPerWeekend": 1 } }
      ]
