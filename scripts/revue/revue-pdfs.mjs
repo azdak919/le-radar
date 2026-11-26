@@ -56,6 +56,23 @@ async function printEdition(browser, id) {
   await page.evaluate(() => {
     document.querySelectorAll('details').forEach((d) => { d.open = true; });
   });
+  // Images en loading="lazy" : sans défilement, celles du bas ne se chargeaient jamais à l'impression.
+  // On les charge toutes, puis on retire les figures dont l'image a échoué : sinon la figure tombe à
+  // largeur nulle et son crédit s'imprime une lettre par ligne (revue du soir du 25 nov. 2026, p. 2).
+  const dropped = await page.evaluate(async () => {
+    const imgs = [...document.images];
+    imgs.forEach((i) => { i.loading = 'eager'; });
+    await Promise.all(imgs.map((i) => (i.complete && i.naturalWidth) ? null : new Promise((r) => {
+      i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); setTimeout(r, 15000);
+    })));
+    let n = 0;
+    for (const f of document.querySelectorAll('figure')) {
+      const im = f.querySelector('img');
+      if (im && !im.naturalWidth) { f.remove(); n++; }
+    }
+    return n;
+  });
+  if (dropped) console.log(`   ${dropped} figure(s) sans image retirée(s) de l'impression`);
   await page.emulateMedia({ media: 'print' });
   for (const fmt of FORMATS) {
     const dest = join(outDir, fmt.file);
