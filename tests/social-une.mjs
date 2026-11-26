@@ -275,7 +275,7 @@ const rs = { stations: {
 } };
 const soirSlot = { id: 'soir', day: '2026-11-12', target: '19:30' }, matinSlot = { id: 'matin', day: '2026-11-12', target: '07:45' };
 const rr = U.pickRadio(rs, soirSlot, { max: 3 });
-assert.deepEqual(rr.map(U.radioLine), ['📻 Soirée en ondes · CKUT 90,3 · jeu. 12 nov. · 18 h', '📻 Jeudi soir · CHYZ 94,3 · jeu. 12 nov. · 20 h', '📻 Le Séismix · CISM 89,3 · jeu. 12 nov. · 21 h'], 'soir : soirée du jour même (17 h – minuit), en ondes ou à venir, sans reprise ni nuit');
+assert.deepEqual(rr.map(U.radioLine), ['📻 Soirée en ondes · CKUT 90,3 FM · jeu. 12 nov. · 18 h', '📻 Jeudi soir · CHYZ 94,3 FM · jeu. 12 nov. · 20 h', '📻 Le Séismix · CISM 89,3 FM · jeu. 12 nov. · 21 h'], 'soir : soirée du jour même (17 h – minuit), en ondes ou à venir, sans reprise ni nuit');
 assert.deepEqual(U.pickRadio(rs, soirSlot, { max: 3 }), rr, 'reproductible');
 assert.equal(new Set(rr.map(x => x.station)).size, rr.length, 'une station par émission');
 const rm = U.pickRadio(rs, matinSlot, { max: 3 });
@@ -302,7 +302,9 @@ assert.deepEqual(U.IMAGE_SIZES.grille, { width: 1080, height: 1440 });
 assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formatsFor(['instagram']), ['grille'], 'Instagram : 3:4, jamais de story');
 assert.deepEqual(U.formatsFor(['instagram'], false, { story: true }), ['grille']); assert.deepEqual(U.formatsFor(U.NETS, true), ['portrait', 'story', 'paysage'], 'aperçu des autres réseaux');
 { const pol = JSON.parse(fs.readFileSync(new URL('../data/social/policy.json', import.meta.url), 'utf8'));
-  assert.equal(U.storyEnabled(pol.formats.une), false, 'publication Story désactivée tant que Charles ne l’a pas validée'); assert.equal(U.storyEnabled({}), false); assert.equal(U.storyEnabled({ story: { publish: true } }), true); }
+  assert.equal(U.storyEnabled(pol.formats.une), true, 'story validée par Charles le 26 nov. 2026');
+  assert.deepEqual(U.storyNets(pol.formats.une), ['facebook', 'instagram']); assert.equal(pol.formats.une.quiet, true);
+  assert.deepEqual(U.formatsFor(['facebook', 'x'], false, { story: true }), ['portrait', 'story'], 'story rendue pour Facebook'); assert.equal(U.storyEnabled({}), false); assert.equal(U.storyEnabled({ story: { publish: true } }), true); }
 assert.ok(!U.NETS.includes('instagram'), 'Instagram hors des réseaux publiés');
 const igModel = { slot: sSlot, items: m.items, sports: sp };
 const ig = U.buildUneAll(igModel).instagram;
@@ -406,3 +408,92 @@ assert.match(wf, /cron: '\d+ 23 \* \* \*'/); assert.match(wf, /cron: '[\d,]+ 0 \
 assert.match(wf, /group: data-writers-social\n\s*cancel-in-progress: false\n\s*queue: max/);
 assert.doesNotMatch(wf, /secrets\.[A-Z_]+ *}}[^\n]*echo|echo[^\n]*secrets\./, 'aucun secret affiché');
 console.log('social-une ok');
+
+// Une sans article (aperçu) : titre selon ce qui reste, aucun décompte, null sans sport ni radio.
+{
+  const { quietLead } = await import('../scripts/social/une-lib.mjs');
+  const m = { id: 'matin' }, s = { id: 'soir' };
+  const cover = { url: 'https://le-radar.ca/assets/stock-images/a.jpg', commons: 'https://upload.wikimedia.org/x/1280px-a.jpg', credit: 'Photo : X / CC BY 2.0 · Wikimedia Commons' };
+  assert.equal(quietLead(m, { sports: { results: [{}], next: [{}] }, radio: [{}], cover }).title, 'Les résultats du sport étudiant');
+  assert.equal(quietLead({ id: 'soir', day: '2026-11-26' }, { sports: { results: [], next: [{ date: '2026-11-27' }] }, radio: [], cover }).title, 'Les prochains matchs');
+  assert.equal(quietLead({ id: 'matin', day: '2026-11-26' }, { sports: { results: [], next: [{ date: '2026-11-26' }] }, radio: [], cover }).title, 'Jour de match');
+  assert.equal(quietLead(s, { sports: {}, radio: [{}], cover }).title, 'Ce soir à l’antenne');
+  const r = quietLead(m, { sports: {}, radio: [{}], cover });
+  assert.equal(r.title, 'Aujourd’hui à l’antenne');
+  assert.doesNotMatch(r.hook, /\d/);
+  assert.equal(r.art?.kind, 'radio', 'affiche graphique (logos des radios), pas de photo');
+  assert.deepEqual(r.images, []); assert.equal(r.credit, '');
+  assert.equal(quietLead(m, { sports: {}, radio: [] }), null);
+}
+
+// Affiche graphique de la une sans article : match aux couleurs des établissements, sinon logos officiels des radios.
+{
+  const { quietArt, stationLogos } = await import('../scripts/social/une-lib.mjs');
+  const slot = { id: 'matin', day: '2026-11-26' };
+  const a = { name: 'Martlets', inst: 'McGill', color: '#ED1B2F' }, b = { name: 'Stingers', inst: 'Concordia', color: '#912338' };
+  const next = quietArt(slot, { sports: { results: [], next: [{ kind: 'avenir', emoji: '🏀', sport: 'Basketball (F)', date: '2026-11-26', time: '18:00', verb: 'reçoit', teams: [a, b] }] } });
+  assert.equal(next.kind, 'match'); assert.equal(next.label, 'Jour de match'); assert.equal(next.when, 'jeu. 26 nov. · 18 h'); assert.equal(next.score, null);
+  assert.equal(next.a.color, '#ED1B2F');
+  const res = quietArt(slot, { sports: { results: [{ kind: 'resultat', emoji: '🏐', sport: 'Volleyball (F)', date: '2026-11-25', teams: [{ ...a, score: 3 }, { ...b, score: 1 }] }], next: [] } });
+  assert.deepEqual(res.score, [3, 1]); assert.equal(res.label, 'Résultat');
+  const logos = stationLogos();
+  assert.ok(logos.length >= 6, 'logos officiels des radios présents');
+  const radio = quietArt(slot, { sports: {}, radio: [{ station: logos[3].name }] });
+  assert.equal(radio.kind, 'radio'); assert.equal(radio.stations.length, logos.length, 'toutes les stations');
+  assert.equal(radio.stations[0].name, logos[3].name, 'la station à l’antenne en premier'); assert.ok(radio.stations[0].on);
+  assert.equal(quietArt(slot, { sports: {}, radio: [] }), null);
+}
+{
+  const { fmLabel } = await import('../scripts/social/une-lib.mjs');
+  assert.equal(fmLabel('CHYZ 94,3'), 'CHYZ 94,3 FM'); assert.equal(fmLabel('CJLO 1690AM'), 'CJLO 1690AM'); assert.equal(fmLabel('CHOQ.ca'), 'CHOQ.ca');
+}
+{
+  const { moreRadio } = await import('../scripts/social/une-lib.mjs');
+  const sch = { stations: { a: { name: 'CHYZ 94,3', grid: [{ day: 4, start: '09:00', title: 'Matinale' }, { day: 4, start: '11:00', title: 'Midi campus' }, { day: 4, start: '06:00', end: '07:00', title: 'Passée' }] }, b: { name: 'CISM 89,3', grid: [{ day: 4, start: '10:00', title: 'Le Midi' }] } } };
+  const slot = { id: 'matin', day: '2026-11-12', target: '07:45' };
+  const more = moreRadio(sch, slot, [{ station: 'CHYZ 94,3 FM', title: 'Matinale' }]);
+  assert.deepEqual(more.map(x => `${x.start} ${x.station} ${x.title}`), ['10:00 CISM 89,3 FM Le Midi', '11:00 CHYZ 94,3 FM Midi campus'], 'suite de la grille, sans reprise ni émission passée');
+  assert.ok(more.every(x => x.extra));
+}
+
+// Une sans article : textes de chaque réseau (titre, phrase honnête, sport et radio, lien ; Instagram sans lien).
+{
+  const slot = { id: 'matin', label: 'La une du matin', emoji: '☀️', day: '2026-11-26', key: '2026-11-26:matin' };
+  const a = { name: 'Martlets', inst: 'McGill', color: '#ED1B2F' }, b = { name: 'Stingers', inst: 'Concordia', color: '#912338' };
+  const sports = { results: [], next: [{ kind: 'avenir', emoji: '🏀', sport: 'Basketball (F)', date: '2026-11-26', time: '18:00', when: 'jeu. 26 nov. · 18 h', verb: 'reçoit', teams: [a, b] }] };
+  const radio = [{ emoji: '📻', title: 'Palmarès CFAK', station: 'CFAK 88,3 FM', date: '2026-11-26', start: '08:00', when: 'jeu. 26 nov. · 8 h' }];
+  const q = U.quietLead(slot, { sports, radio });
+  const all = U.buildUneAll({ slot, items: [q], sports, radio, quiet: true });
+  for (const n of [...U.NETS, 'instagram']) {
+    assert.ok(all[n].text, `${n} : texte`); assert.deepEqual(all[n].problems, [], `${n} : ${all[n].problems.join(', ')}`);
+    assert.match(all[n].text, /Jour de match/); assert.match(all[n].text, /Pas de nouvel article/);
+  }
+  assert.match(all.facebook.text, /Martlets/); assert.match(all.facebook.text, /Palmarès CFAK/);
+  assert.match(all.bluesky.text, /https:\/\/le-radar\.ca\//);
+}
+// Instagram : story seulement sur demande explicite (story: true), jamais un reel.
+{
+  const { createInstagramBuffer, INSTAGRAM_STORY_METADATA } = await import('../scripts/social/instagram.mjs');
+  assert.deepEqual(INSTAGRAM_STORY_METADATA, { instagram: { type: 'story', shouldShareToFeed: false } });
+  const calls = [];
+  const fetchImpl = async (url, init) => { const body = JSON.parse(init.body); calls.push(body);
+    if (/channels|account/i.test(body.query) && !/createPost/.test(body.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] }, channels: [{ id: '6b012936ece6dfde5f3f554d', name: 'le.radar.ca', service: 'instagram' }] } }) };
+    return { ok: true, status: 200, json: async () => ({ data: { createPost: { post: { id: 'p1', status: 'sent' } } } }) }; };
+  const ig = createInstagramBuffer({ BUFFER_INSTAGRAM_API_KEY: 'k', BUFFER_API_KEY: 'autre' }, { fetchImpl });
+  assert.throws(() => ig.add({ type: 'reel', image: 'x' }), /seul le type post/);
+  assert.throws(() => ig.add({ type: 'story', image: 'x' }), /seul le type post/, 'story sans demande explicite refusée');
+  const r = await ig.add({ story: true, type: 'story', image: 'https://exemple.test/s.jpg' }).catch(e => e);
+  const sent = calls.find(c => /createPost/.test(c.query));
+  if (sent) assert.deepEqual(sent.variables.i.metadata, INSTAGRAM_STORY_METADATA, 'métadonnées story');
+  else assert.ok(r instanceof Error, 'le client a refusé avant l’appel (contexte de test)');
+}
+// Édition « Jour de match » (manuelle) : le match du jour en vedette ; rien sans match ce jour-là.
+{
+  const slot = { id: 'matin', day: '2026-11-26' };
+  const a = { name: 'Martlets', inst: 'McGill', color: '#ED1B2F' }, b = { name: 'Stingers', inst: 'Concordia', color: '#912338' };
+  const res = { kind: 'resultat', sport: 'Volleyball (F)', date: '2026-11-24', teams: [{ name: 'Nomades', score: 2 }, { name: 'Aigles', score: 0 }] };
+  const today = { kind: 'avenir', uni: true, emoji: '🏀', sport: 'Basketball (F)', date: '2026-11-26', time: '18:00', verb: 'reçoit', teams: [a, b] };
+  const q = U.quietLead(slot, { sports: { results: [res], next: [today] }, radio: [], prefer: 'match' });
+  assert.equal(q.art.a.name, 'Martlets', 'le match du jour, pas le résultat'); assert.equal(q.art.label, 'Jour de match'); assert.ok(q.line);
+  assert.equal(U.quietLead(slot, { sports: { results: [res], next: [{ ...today, date: '2026-11-27' }] }, radio: [], prefer: 'match' }), null);
+}

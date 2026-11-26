@@ -45,7 +45,10 @@ export const PREPARED_NETS = ['instagram'];
  * Le paysage 16:9 reste rendu en aperçu (repli), sans réseau attitré.
  */
 export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'grille' };
-export const STORY_FOR = {};
+// Story 9:16 : Facebook par le canal Buffer de la page ; Instagram par son propre canal (passe dédiée de une-run.mjs).
+export const STORY_FOR = { facebook: 'story' };
+/** Réseaux où la story de La une part (formats.une.story.networks ; défaut : Facebook et Instagram). */
+export const storyNets = (cfg) => (Array.isArray(cfg?.story?.networks) ? cfg.story.networks : ['facebook', 'instagram']).filter(n => n === 'facebook' || n === 'instagram');
 export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, article: { width: 1080, height: 1440 }, 'article-portrait': { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
 /** Post d’un seul article (modèle v6) sur tous les réseaux. Les unes matin/soir automatiques : IMAGE_FOR (portrait 4:5 / grille Instagram 3:4 modèle B). */
 export const ARTICLE_IMAGE_FOR = { instagram: 'article', facebook: 'article-portrait', tumblr: 'article-portrait', x: 'article-portrait', bluesky: 'article-portrait', mastodon: 'article-portrait', linkedin: 'article-portrait' };
@@ -319,6 +322,29 @@ const NOT_A_SHOW = g => /\breprise\b|\brediffusion\b|^(les nuits|late night|.*\b
  * Repli documenté (`fallback: true`) si l'édition compte moins de `max` stations : pour les stations restantes, l'émission
  * à venir la plus proche de la fenêtre (même jour, puis lendemain avant midi). Sans reprise ni bouche-trou ; rien sans grille.
  */
+/** « CHYZ 94,3 » → « CHYZ 94,3 FM » (bande FM) ; « CJLO 1690AM » et « CHOQ.ca » inchangés. */
+export const fmLabel = name => { const n = String(name || '').trim(); return /\d{2,3},\d$/.test(n) ? `${n} FM` : n; };
+/**
+ * Réserve pour remplir l'image : les autres émissions de la journée (toutes les stations, à venir ou en ondes, dans la
+ * fenêtre du créneau), par ordre d'heure, sans reprendre celles de `taken` ni deux fois le même titre d'une station.
+ */
+export function moreRadio(schedules, slot, taken = [], { max = 16 } = {}) {
+  const day = slot.day, ed = slot.id === 'soir' ? 'soir' : 'matin', [w0, w1] = RADIO_WINDOWS[ed];
+  const now = hm(slot.target || (ed === 'soir' ? '19:30' : '07:45'));
+  const [y, m, d] = day.split('-').map(Number), dow = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
+  const seen = new Set(taken.map(x => `${x.station}|${String(x.title).trim().toLowerCase()}`)), out = [];
+  for (const st of Object.values(schedules?.stations || {})) {
+    if (!st.name) continue;
+    for (const g of st.grid || []) {
+      if (!g.title || NOT_A_SHOW(g) || g.day !== dow || hm(g.start) < w0 || hm(g.start) >= w1) continue;
+      if (!(hm(g.start) >= now || (g.end && hm(g.end) > now))) continue;
+      const station = fmLabel(st.name), k = `${station}|${g.title.trim().toLowerCase()}`;
+      if (seen.has(k)) continue; seen.add(k);
+      out.push({ emoji: '📻', title: g.title.trim(), station, date: day, start: g.start, when: `${frShort(day)} · ${frHour(g.start)}`, extra: true });
+    }
+  }
+  return out.sort((a, b) => hm(a.start) - hm(b.start) || a.station.localeCompare(b.station)).slice(0, max);
+}
 export function pickRadio(schedules, slot, { max = 3 } = {}) {
   const day = slot.day, ed = slot.id === 'soir' ? 'soir' : 'matin', [w0, w1] = RADIO_WINDOWS[ed];
   const now = hm(slot.target || (ed === 'soir' ? '19:30' : '07:45'));
@@ -339,7 +365,7 @@ export function pickRadio(schedules, slot, { max = 3 } = {}) {
   const chosen = main.sort((a, b) => a.r - b.r).slice(0, max);
   chosen.push(...spare.sort((a, b) => a.dist - b.dist).slice(0, Math.max(0, max - chosen.length)));
   const key = x => (x.d === day ? 0 : 1440) + hm(x.pick.start);
-  return chosen.sort((a, b) => key(a) - key(b)).map(x => ({ emoji: '📻', title: x.pick.title.trim(), station: schedules.stations && Object.values(schedules.stations).find(st => (st.grid || []).includes(x.pick)).name, date: x.d, start: x.pick.start, when: `${frShort(x.d)} · ${frHour(x.pick.start)}`, ...(x.fallback ? { fallback: true } : {}) }));
+  return chosen.sort((a, b) => key(a) - key(b)).map(x => ({ emoji: '📻', title: x.pick.title.trim(), station: fmLabel(schedules.stations && Object.values(schedules.stations).find(st => (st.grid || []).includes(x.pick)).name), date: x.d, start: x.pick.start, when: `${frShort(x.d)} · ${frHour(x.pick.start)}`, ...(x.fallback ? { fallback: true } : {}) }));
 }
 /** « 📻 Punk-o-rama · CHYZ 94,3 · ven. 13 nov. · 11 h ». */
 export const radioLine = x => `${x.emoji} ${x.title} · ${x.station} · ${x.when}`;
@@ -417,6 +443,7 @@ export function frDayYear(ymd) {
 
 // ── Textes ───────────────────────────────────────────────────────────────────
 export const HOME = `${SITE}/`;
+export const QUIET_LINE = 'Pas de nouvel article depuis la dernière une : place au sport et à la radio étudiante.';
 const BASE_TAGS = ['#MédiasÉtudiants', '#Québec'];
 /**
  * Hashtags X d'une une : mêmes règles thématiques que les articles (titres + résumés),
@@ -515,7 +542,10 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
   const compose = (items, hash, cut, sports, radio, revueLine) => {
     const T = x => cut ? clip(x.title, cut) : x.title;
     let body;
-    if (spec.style === 'lead') {
+    if (model.quiet) {
+      // Une sans article : le titre, une phrase honnête, puis le sport et la radio (sur tous les réseaux), puis le lien.
+      body = `${T(items[0])}\n${items[0].line || QUIET_LINE}`;
+    } else if (spec.style === 'lead') {
       // Article principal, puis les autres en une ligne (Threads) ou leur nombre (X), puis le lien vers la une.
       const [first, ...rest] = items, more = model.items.length - 1;
       const others = spec.others && rest.length ? `Aussi à la une : ${rest.map(T).join(' · ')}` : more > 0 ? `+ ${more} autre${more > 1 ? 's' : ''} à la une` : '';
@@ -535,6 +565,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
       const lines = radio.map(x => spec.nolink ? igRadioLine(x, model.slot.day) : `${x.title} · ${x.station} · ${x.when}`);
       body += spec.nolink ? '\n\n📻 À l’écoute (radio étudiante) :\n\n' + lines.join('\n') : '\n\n📻 À l’écoute (radio étudiante) :\n' + lines.join('\n');
     }
+    if (model.quiet && !spec.nolink && !long) body += `\n\n${HOME}`;
     if (spec.nolink) {
       body += revueLine ? '\n\nToute la une : le-radar.ca' : '\n\nToute la une : lien en bio (le-radar.ca)';
       const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');
@@ -543,7 +574,8 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     const lead = [head, revueLine, spec.intro].filter(Boolean).join('\n');
     return [lead, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
-  let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = SPORTS_NETS.has(net) ? [...(model.radio || [])] : [];
+  const withExtras = SPORTS_NETS.has(net) || !!model.quiet; // sans article, le sport et la radio sont le contenu : partout
+  let items = [...model.items], hash = [...tags], cut = 0, sports = withExtras ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, model.quiet ? 5 : 2)] : [], radio = withExtras ? (model.radio || []).filter(x => !x.extra).slice(0, 5) : []; // réserve de l'image (extra) hors texte
   let withRevue = true;
   for (;;) {
     const revueLine = withRevue ? revueEditionLine(model.slot, revueOpts) : '';
@@ -601,4 +633,69 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
     out[n] = { text, tags: n === 'tumblr' ? uneTumblrTags(model.items) : tags, len: text ? spec.len(text) : 0, limit: spec.limit, image: IMAGE_FOR[n] || '', problems: checkUneText(text, n, model, spec) };
   }
   return out;
+}
+
+// ── Une sans article (aperçu) ────────────────────────────────────────────────
+/**
+ * Pseudo-« une » d'un créneau sans nouvel article mais avec du sport ou de la radio : photo libre de campus en tête,
+ * titre qui dit ce que le créneau met de l'avant, résumé honnête (aucun article). `cover` : { url, credit, title }
+ * (photo libre de campus fournie par l'appelant, seulement si aucune affiche graphique n'est possible). Retourne null s'il n'y a ni sport ni radio : le créneau est sauté.
+ */
+export function quietLead(slot, { sports = {}, radio = [], cover = null, prefer = '' } = {}) {
+  const res = (sports.results || []).length, nxt = (sports.next || []).length, rad = (radio || []).length;
+  if (!res && !nxt && !rad) return null;
+  // Titres courts façon « Game Day » / « Today's Lineup » (affiches sportives et radios universitaires).
+  const today = (sports.next || []).some(r => r.date === slot.day);
+  // Édition « Jour de match » (déclenchement manuel) : le match du jour en vedette, même s'il y a des articles.
+  if (prefer === 'match') {
+    if (!today) return null;
+    const art = quietArt(slot, { sports, radio, prefer });
+    return { id: '', title: 'Les matchs du sport étudiant aujourd’hui', byline: '', source: '', place: '', placeColor: '', sport: '', credit: '', images: [], quiet: true, art,
+      hook: 'Les matchs du sport étudiant aujourd’hui et dans les prochains jours, et les émissions des radios étudiantes.',
+      line: 'Aujourd’hui sur les terrains du sport étudiant, et à l’écoute des radios étudiantes.',
+      stations: stationLogos().map(({ name, logo }) => ({ name, logo })) };
+  }
+  const title = res ? 'Les résultats du sport étudiant'
+    : nxt ? (today ? 'Jour de match' : 'Les prochains matchs')
+    : (slot.id === 'soir' ? 'Ce soir à l’antenne' : 'Aujourd’hui à l’antenne');
+  // Sans décompte : l'image n'affiche qu'une partie des matchs et des émissions.
+  const parts = [res && 'les derniers résultats', nxt && 'les prochains matchs', rad && 'les émissions des radios étudiantes'].filter(Boolean);
+  const hook = `Aucun nouvel article des médias étudiants depuis la dernière une. Au programme : ${parts.length > 1 ? parts.slice(0, -1).join(', ') + ' et ' + parts.at(-1) : parts[0]}.`;
+  // Couverture graphique (pas de photo) : affiche de match aux couleurs des établissements, ou logos officiels des radios.
+  const art = quietArt(slot, { sports, radio });
+  const credit = !art && cover ? String(cover.credit || '').replace(/^Photo\s*:\s*/i, '') : '';
+  return { id: '', title, byline: '', source: '', place: '', placeColor: '', sport: '', hook, credit, images: art ? [] : [...new Set([cover?.commons, cover?.url].filter(Boolean))], quiet: true, art, stations: stationLogos().map(({ name, logo }) => ({ name, logo })) };
+}
+let RADIOS = null;
+/** Stations de radios.json qui ont un logo officiel (assets/logos/stations/<id>-512.png). */
+export function stationLogos(root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..')) {
+  if (RADIOS) return RADIOS;
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(root, 'radios.json'), 'utf8'));
+    const list = Array.isArray(raw) ? raw : (raw.stations || Object.values(raw));
+    RADIOS = list.filter(r => r && r.id && r.name && fs.existsSync(path.join(root, `assets/logos/stations/${r.id}-512.png`)))
+      .map(r => ({ id: r.id, name: fmLabel(r.name), freq: r.frequency || '', city: r.city || '', logo: `../assets/logos/stations/${r.id}-512.png` }));
+  } catch { RADIOS = []; }
+  return RADIOS;
+}
+/**
+ * Visuel d'une une sans article. Sport : la rencontre en vedette (premier résultat, sinon premier match à venir), aux
+ * couleurs des deux établissements (brand-colors.json). Radio seule : les logos officiels de toutes les stations,
+ * celles à l'antenne dans ce créneau en premier.
+ */
+export function quietArt(slot, { sports = {}, radio = [], prefer = '' } = {}) {
+  const todays = (sports.next || []).filter(x => x.date === slot.day && x.teams?.length === 2);
+  const r = (prefer === 'match' && (todays.find(x => x.uni) || todays[0]))
+    || (sports.results || []).find(x => x.kind === 'resultat' && x.teams?.length === 2) || (sports.next || []).find(x => x.teams?.length === 2);
+  if (r) {
+    const t = x => ({ name: x.name, inst: x.inst || '', color: x.color || '' });
+    const res = r.kind === 'resultat';
+    return { kind: 'match', emoji: r.emoji || '', sport: r.sport, label: res ? 'Résultat' : (r.date === slot.day ? 'Jour de match' : 'Prochain match'),
+      when: res ? `Final · ${frShort(r.date)}` : [frShort(r.date), frHour(r.time)].filter(Boolean).join(' · '),
+      a: t(r.teams[0]), b: t(r.teams[1]), score: res ? [r.teams[0].score, r.teams[1].score] : null, verb: res ? '' : (r.verb || 'contre') };
+  }
+  const all = stationLogos();
+  if (!(radio || []).length || !all.length) return null;
+  const on = new Set(radio.map(x => x.station));
+  return { kind: 'radio', stations: [...all.filter(s => on.has(s.name)), ...all.filter(s => !on.has(s.name))].map(s => ({ ...s, on: on.has(s.name) })) };
 }

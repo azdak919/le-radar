@@ -146,6 +146,9 @@
    },
    "maxItems": 4,
    "maxNewsAgeH": 6,
+   "quiet": true,
+   "_quiet": "Une sans article (26 nov. 2026, décision de Charles) : sans nouvel article mais avec du sport ou de la radio, le créneau publie une une de remplacement (affiche de match aux couleurs des établissements, ou logos officiels des radios ; textes « Pas de nouvel article… »). false = ancien comportement (créneau sauté). Jamais sur un doute de données.",
+   "story": { "publish": true, "networks": ["facebook", "instagram"], "_doc": "Story 9:16 de La une (refonte validée par Charles le 26 nov. 2026) : Facebook (page, Buffer type story) et Instagram (canal dédié, type story, hors fil). Les autres réseaux n’ont pas de story publiable par API." },
   "prepared": {
    "_doc": "Réseaux préparés mais DÉSACTIVÉS : aucun envoi tant que enabled n’est pas true. Instagram : compte Buffer distinct (secret BUFFER_INSTAGRAM_API_KEY), fil seulement (type post), image 3:4 1080×1440 dessinée pour Instagram, légende sans lien cliquable. La présentation du 21 novembre 2026 est déjà publiée à la main : ne pas la republier. La montée part le 22 novembre (jour 1).",
    "instagram": {

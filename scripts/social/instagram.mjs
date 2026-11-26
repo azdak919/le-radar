@@ -26,6 +26,8 @@ export const INSTAGRAM_CHANNEL_ID = '6b012936ece6dfde5f3f554d';
 export const INSTAGRAM_CHANNEL_NAME = 'le.radar.ca';
 export const INSTAGRAM_SECRET = 'BUFFER_INSTAGRAM_API_KEY';
 export const INSTAGRAM_METADATA = { instagram: { type: 'post', shouldShareToFeed: true } };
+/** Story de La une (9:16), seulement par la passe story de une-run.mjs (formats.une.story.publish), jamais dans le fil. */
+export const INSTAGRAM_STORY_METADATA = { instagram: { type: 'story', shouldShareToFeed: false } };
 
 /** Forme exigée par Buffer (InstagramPostMetadataInput) : `type` et `shouldShareToFeed` sont requis. */
 export function instagramMetadataOrThrow(meta = INSTAGRAM_METADATA) {
@@ -78,6 +80,11 @@ export function createInstagramBuffer(env = {}, { fetchImpl } = {}) {
   const add = ch.add.bind(ch);
   ch.add = (input = {}) => {
     const type = input.metadata?.instagram?.type || input.type || 'post';
+    // Story : seulement sur demande explicite (story: true) de la passe story de La une. Jamais de reel.
+    if (input.story === true && type === 'story') {
+      if (input.channelId && input.channelId !== INSTAGRAM_CHANNEL_ID) throw new Error('Instagram : canal inattendu');
+      return add({ text: input.text || '', image: input.image, alt: input.alt, now: true, metadata: INSTAGRAM_STORY_METADATA });
+    }
     if (type !== 'post') throw new Error('Instagram : seul le type post est permis (ni story ni reel)');
     if (input.firstComment || input.metadata?.instagram?.firstComment) throw new Error('Instagram : premier commentaire interdit');
     if (input.channelId && input.channelId !== INSTAGRAM_CHANNEL_ID) throw new Error('Instagram : canal inattendu');

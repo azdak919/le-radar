@@ -119,7 +119,7 @@
 })();
 
 /* Doodle Vice City, novembre 2026. Même décision que doodle-boot-lib.js
-   (fin 30 nov. 23 h 59 heure de Montréal, tirage 1/5, ?doodle=on|off,
+   (fin 25 nov. 23 h 59 heure de Montréal, désactivé le 26, tirage 1/5, ?doodle=on|off,
    ville Montréal/Québec à parts égales, gardée pour la session,
    ?doodle-city=montreal|quebec). Ce fichier est déjà chargé dans le
    <head> avant style-masthead.css, donc data-doodle-city est posé
@@ -128,7 +128,7 @@
   "use strict";
   var STORAGE_KEY = "radar-doodle-2026-11";
   var CITY_STORAGE_KEY = "radar-doodle-2026-11-city";
-  var END_MS = Date.parse("2026-12-01T04:59:59.999Z");
+  var END_MS = Date.parse("2026-11-26T04:59:59.999Z");
   var state = "off";
   var city = "";
   try {

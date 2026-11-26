@@ -153,7 +153,6 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D17 | **Contrat du lecteur natif sur toutes les routes publiques** | Le lecteur est maintenant natif sur les fiches SEO et le RSS, mais l’intégration mêle génération HTML, scripts dynamiques et shell de continuité ; une route peut afficher le bandeau sans initialiser le lecteur, ou inversement | Matrice testée accueil/RSS/SEO/annuaire/maintenance/Pomo/Solitaire, en navigation avec lecture ; zéro iframe hors exceptions explicites et zéro erreur console | M | resolved |
 | D18 | **Régression visuelle du chrome partagé** (footer, thème, grilles) | Les tests structurels ont laissé passer des écarts visibles : footer non conforme, note collée à une carte, slogan mal placé. Le rendu partagé a besoin d’une preuve visuelle, pas seulement de présence HTML | Captures de référence clair/sombre pour accueil, RSS, fiche radio, fiche journal et maintenance ; test visuel ciblé ou revue humaine consignée avant toute propagation globale | M | resolved |
 | D19 | **Mesure de l’échantillon SEO historique** | Le catalogue `/archives/` est public mais expérimental : augmenter son volume sans impressions, clics et anomalies de canonique créerait des pages de faible valeur | 4–6 semaines de Search Console/Bing : couverture, canonicals, impressions/clics et absence de pages exclues inattendues ; revue humaine avant tout passage à `full` | S | ready (avancée 2026-08-26 : baseline 15 URLs indexables, conservation `noindex`, GSC/Bing absents — **D11** ; filet sitemap ↔ robots. Pas de passage à `full`) |
-| D20 | **Rétro-crawl historique à mesurer avant élargissement** | La collecte est désormais bornée (3 sources × 4 pages, fenêtre de 3 ans), sans corps ni images, mais les API publiques et la valeur réelle des archives varient selon les médias | Après 4–6 semaines : taux de liens vérifiés, erreurs API, indexation 0–12 mois, clics et absence de réintégration au fil ; seulement alors augmenter les plafonds ou activer de nouvelles stratégies de liste | S | ready |
 | D21 | **Solitaire hors ligne** : intercept `SHARED_PATHS` des assets racine déjà précachés | `solitaire/sw.js` met en cache `photo-bank-data.js`, fonds QC, `install-chrome.css`, `fullscreen-wallpaper-qc.js`, mais le `fetch` n’écoute que `/solitaire/` + le menu de langue — hors ligne ces URLs vont au réseau (même trou que Pomo avant le correctif catalogue météo) | Copier le `SHARED_PATHS` de `pomo/sw.js` ; test d’intégrité ; bump `solitaire-shell-vN` | S | ready |
 | D22 | **Module de traduction** : plus rapide, moins d’hallucinations chrome | `translate.js` = gtx sans clé + MyMemory ; un nœud isolé « match » (pastille CTA en 2 lignes) devient « correspondre » ; ouvrir CONCURRENCY / MAX_CHUNK sans mesure casse l’ordre et les langues autochtones | Glossaire + `notranslate` ciblé sur le chrome sport/radio (cas collé : **PROCHAIN CORRESPONDRE**) ; fixtures de libellés UI ; mesurer cache/temps avant de toucher les quotas ; pas de nouveau moteur sans bake-off | M | resolved |
 
@@ -475,16 +474,16 @@ variantes de noms :
 
 > Généré par `npm run agents:harvest -- --write`. **Pas des D# ouvertes.**
 > L’humain (ou l’agent avec OK) promeut une ligne en §3 si pertinent.
-> Dernière récolte : 2026-11-25T08:30:05.894Z · intensité **heavy** (score 3090) · fenêtre `36h`
+> Dernière récolte : 2026-11-26T13:35:22.599Z · intensité **heavy** (score 3184.4) · fenêtre `36h`
 
 | Zone | Chaleur | Effort | Suggestion | Fichiers chauds |
 |------|---------|--------|------------|-----------------|
-| bots-ci | 715.2 | M | Bots / CI / scripts de maintenance | `scripts/social/channels/tumblr.mjs`, `scripts/social/tumblr-post.mjs`, `scripts/social/tumblr.mjs`, `tests/social-tumblr.mjs`, `.github/workflows/bluesky-delete-post.yml`, `.github/workflows/pages-deploy.yml` |
-| pomo | 61.5 | S | Isolation / qualité mini-app Pomo | `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png`, `pomo/apple-touch-icon-180x180.png`, `pomo/apple-touch-icon.png` |
-| banks-photo | 44 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds-rejected.json`, `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json` |
-| pwa-sw | 32 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `engage-prompt.js`, `manifest.json`, `offline.html`, `pomo/sw.js`, `solitaire/sw.js` |
-| radio-mobile | 25 | M | Radio mobile / Media Session / reprise | `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js`, `player-sync.js`, `scripts/fetch-radio-nowplaying.js`, `scripts/radio-nowplaying-lib.js` |
-| monolith-app | 9 | L | Découper / modulariser app.js (tranche) | `app.js`, `mobile/app/js/app.js`, `pomo/js/app.js` |
+| bots-ci | 2722.8 | M | Bots / CI / scripts de maintenance | `scripts/social/buffer-pages-post.mjs`, `scripts/social/lib.mjs`, `scripts/social/buffer-post.mjs`, `tests/social-buffer-pages.mjs`, `scripts/revue/revue-render.js`, `scripts/social/une-run.mjs` |
+| pomo | 246 | S | Isolation / qualité mini-app Pomo | `pomo/LICENSE`, `pomo/README.md`, `pomo/apple-touch-icon-120x120.png`, `pomo/apple-touch-icon-152x152.png`, `pomo/apple-touch-icon-180x180.png`, `pomo/apple-touch-icon.png` |
+| banks-photo | 176 | M | Pipeline banques photo (QC / saisons / audit) | `data/quebec-backgrounds-rejected.json`, `data/quebec-backgrounds.json`, `data/quebec-favorites-backgrounds.json`, `data/quebec-nations-backgrounds.json`, `data/quebec-pomo-backgrounds.json`, `data/quebec-university-backgrounds.json` |
+| radio-mobile | 100 | M | Radio mobile / Media Session / reprise | `.github/workflows/update-radio-nowplaying.yml`, `cast.js`, `mobile-playback.js`, `player-sync.js`, `scripts/fetch-radio-nowplaying.js`, `scripts/radio-nowplaying-lib.js` |
+| pwa-sw | 98 | S | PWA / service worker / install | `assets/news-images/manifest.json`, `sports/sw.js`, `sw.js`, `offline.html`, `engage-prompt.js`, `manifest.json` |
+| monolith-app | 36 | L | Découper / modulariser app.js (tranche) | `app.js`, `mobile/app/js/app.js`, `pomo/js/app.js` |
 
 Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK humain.
 ## 4. Dettes résolues (historique)

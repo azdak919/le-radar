@@ -7,6 +7,8 @@
  },
  "refresh": { "_doc": "Mise à jour tardive de la revue du soir : seulement les résultats sportifs du jour même arrivés après la publication (dateModified avancé, aucun nouvel article).", "enabled": true, "from": "23:00", "to": "23:59" },
  "skipWithoutArticles": true,
+ "publishWithoutArticles": true,
+ "_publishWithoutArticles": "Sans nouvel article mais avec des matchs, des résultats ou des émissions : l’édition sort quand même (sport et radio en tête, photo campus en couverture). false = ancien comportement (édition sautée).",
  "maxLookbackHours": 48,
  "maxArticles": 40,
  "radio": { "maxPerStation": 4, "windows": { "matin": ["07:00", "17:00"], "soir": ["19:15", "24:00"] } },

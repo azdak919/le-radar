@@ -1,7 +1,7 @@
 /**
  * Doodle de fin novembre 2026 — décision avant le premier affichage.
  *
- * Fin : 30 novembre 2026, 23 h 59:59 (heure de Montréal, UTC−5).
+ * Fin : 25 novembre 2026, 23 h 59:59 (désactivé le 26) (heure de Montréal, UTC−5).
  * Tirage 1 sur 5, mémorisé pour toute la période. Quand le doodle est
  * allumé, la ville (Montréal ou Québec) est tirée à parts égales et
  * gardée pour la session (sessionStorage). ?doodle=on et ?doodle=off
@@ -15,7 +15,7 @@
 
   var STORAGE_KEY = "radar-doodle-2026-11";
   var CITY_STORAGE_KEY = "radar-doodle-2026-11-city";
-  var END_MS = Date.parse("2026-12-01T04:59:59.999Z");
+  var END_MS = Date.parse("2026-11-26T04:59:59.999Z");
   var CHANCE = 0.2;
   var CITY_CHANCE = 0.5;
   var CITIES = ["montreal", "quebec"];

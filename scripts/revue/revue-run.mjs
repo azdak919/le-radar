@@ -144,11 +144,14 @@ export async function generate(editionId, now, io) {
   const period = L.periodOf(edition, now, index, cfg, { nominal: !!io.nominal });
   const cov = L.covered(index, edition.key, reviews);
   const items = L.selectArticles(io.news, period, { coveredIds: cov.ids, max: cfg.maxArticles });
-  if (!items.length && cfg.skipWithoutArticles) return { status: 'sautée', why: `aucun nouvel article entre ${tz(period.start)} et ${tz(period.end)} : édition sautée` };
   // Sport de la date demandée : `edition.day` suit `now` (--day / --at), pas l’horloge réelle.
   const sports = L.periodSports(io.masthead, edition, { coveredKeys: cov.sports, cfg, at: atOf(reviews[edition.key]?.datePublished || now) });
   const radio = L.periodRadio(io.schedules, edition, cfg);
-  const ai = cfg.ai?.enabled === false ? null : await aiReview(items, { env, fetchImpl: io.fetchImpl || fetch, batchSize: cfg.ai?.batchSize, maxCalls: cfg.ai?.maxCallsPerRun, edition: edition.id });
+  // Aucun nouvel article : l'édition sort quand même avec le sport et la radio (photo campus en couverture),
+  // sauf si `publishWithoutArticles` est false ou qu'il n'y a ni match, ni résultat, ni émission.
+  const filler = sports.results.length || sports.next.length || radio.some(s => s.shows.length);
+  if (!items.length && cfg.skipWithoutArticles && !(cfg.publishWithoutArticles !== false && filler)) return { status: 'sautée', why: `aucun nouvel article entre ${tz(period.start)} et ${tz(period.end)} : édition sautée` };
+  const ai = !items.length || cfg.ai?.enabled === false ? null : await aiReview(items, { env, fetchImpl: io.fetchImpl || fetch, batchSize: cfg.ai?.batchSize, maxCalls: cfg.ai?.maxCallsPerRun, edition: edition.id });
   for (const l of ai?.log || []) console.log(l);
   const prevEntry = index.filter(r => r.id !== edition.key && Date.parse(r.datePublished) < now).sort((a, b) => Date.parse(b.datePublished) - Date.parse(a.datePublished))[0];
   let model = L.buildModel({ edition, period, items, sports, radio, now, ai, published: reviews[edition.key]?.datePublished || null, previous: prevEntry ? { id: prevEntry.id, path: prevEntry.path, headline: prevEntry.headline } : null });
@@ -170,7 +173,7 @@ export async function generate(editionId, now, io) {
   if (weather?.cities?.length) model = { ...model, weather };
   if (doubts.length) problems.push(...doubts.map(d => `DOUTE : ${d}`));
   if (problems.length) return { status: 'refusée', problems, model, why: 'garde-fou : rien ne sort' };
-  return { status: 'publiée', model, why: `${items.length} article(s), ${sports.results.length} résultat(s), ${sports.next.length} match(s) à venir, ${radio.length} station(s)` };
+  return { status: 'publiée', model, why: `${items.length ? '' : 'sans nouvel article (sport et radio) : '}${items.length} article(s), ${sports.results.length} résultat(s), ${sports.next.length} match(s) à venir, ${radio.length} station(s)` };
 }
 
 /** Écrit la revue et tout ce qui en dépend sous `root` (le dépôt en publication réelle, un dossier d'exemple sinon). */
