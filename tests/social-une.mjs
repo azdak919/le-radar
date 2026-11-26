@@ -302,7 +302,9 @@ assert.deepEqual(U.IMAGE_SIZES.grille, { width: 1080, height: 1440 });
 assert.deepEqual(U.formatsFor(U.NETS), ['portrait']); assert.deepEqual(U.formatsFor(['instagram']), ['grille'], 'Instagram : 3:4, jamais de story');
 assert.deepEqual(U.formatsFor(['instagram'], false, { story: true }), ['grille']); assert.deepEqual(U.formatsFor(U.NETS, true), ['portrait', 'story', 'paysage'], 'aperçu des autres réseaux');
 { const pol = JSON.parse(fs.readFileSync(new URL('../data/social/policy.json', import.meta.url), 'utf8'));
-  assert.equal(U.storyEnabled(pol.formats.une), false, 'publication Story désactivée tant que Charles ne l’a pas validée'); assert.equal(U.storyEnabled({}), false); assert.equal(U.storyEnabled({ story: { publish: true } }), true); }
+  assert.equal(U.storyEnabled(pol.formats.une), true, 'story validée par Charles le 26 nov. 2026');
+  assert.deepEqual(U.storyNets(pol.formats.une), ['facebook', 'instagram']); assert.equal(pol.formats.une.quiet, true);
+  assert.deepEqual(U.formatsFor(['facebook', 'x'], false, { story: true }), ['portrait', 'story'], 'story rendue pour Facebook'); assert.equal(U.storyEnabled({}), false); assert.equal(U.storyEnabled({ story: { publish: true } }), true); }
 assert.ok(!U.NETS.includes('instagram'), 'Instagram hors des réseaux publiés');
 const igModel = { slot: sSlot, items: m.items, sports: sp };
 const ig = U.buildUneAll(igModel).instagram;
@@ -452,4 +454,36 @@ console.log('social-une ok');
   const more = moreRadio(sch, slot, [{ station: 'CHYZ 94,3 FM', title: 'Matinale' }]);
   assert.deepEqual(more.map(x => `${x.start} ${x.station} ${x.title}`), ['10:00 CISM 89,3 FM Le Midi', '11:00 CHYZ 94,3 FM Midi campus'], 'suite de la grille, sans reprise ni émission passée');
   assert.ok(more.every(x => x.extra));
+}
+
+// Une sans article : textes de chaque réseau (titre, phrase honnête, sport et radio, lien ; Instagram sans lien).
+{
+  const slot = { id: 'matin', label: 'La une du matin', emoji: '☀️', day: '2026-11-26', key: '2026-11-26:matin' };
+  const a = { name: 'Martlets', inst: 'McGill', color: '#ED1B2F' }, b = { name: 'Stingers', inst: 'Concordia', color: '#912338' };
+  const sports = { results: [], next: [{ kind: 'avenir', emoji: '🏀', sport: 'Basketball (F)', date: '2026-11-26', time: '18:00', when: 'jeu. 26 nov. · 18 h', verb: 'reçoit', teams: [a, b] }] };
+  const radio = [{ emoji: '📻', title: 'Palmarès CFAK', station: 'CFAK 88,3 FM', date: '2026-11-26', start: '08:00', when: 'jeu. 26 nov. · 8 h' }];
+  const q = U.quietLead(slot, { sports, radio });
+  const all = U.buildUneAll({ slot, items: [q], sports, radio, quiet: true });
+  for (const n of [...U.NETS, 'instagram']) {
+    assert.ok(all[n].text, `${n} : texte`); assert.deepEqual(all[n].problems, [], `${n} : ${all[n].problems.join(', ')}`);
+    assert.match(all[n].text, /Jour de match/); assert.match(all[n].text, /Pas de nouvel article/);
+  }
+  assert.match(all.facebook.text, /Martlets/); assert.match(all.facebook.text, /Palmarès CFAK/);
+  assert.match(all.bluesky.text, /https:\/\/le-radar\.ca\//);
+}
+// Instagram : story seulement sur demande explicite (story: true), jamais un reel.
+{
+  const { createInstagramBuffer, INSTAGRAM_STORY_METADATA } = await import('../scripts/social/instagram.mjs');
+  assert.deepEqual(INSTAGRAM_STORY_METADATA, { instagram: { type: 'story', shouldShareToFeed: false } });
+  const calls = [];
+  const fetchImpl = async (url, init) => { const body = JSON.parse(init.body); calls.push(body);
+    if (/channels|account/i.test(body.query) && !/createPost/.test(body.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] }, channels: [{ id: '6b012936ece6dfde5f3f554d', name: 'le.radar.ca', service: 'instagram' }] } }) };
+    return { ok: true, status: 200, json: async () => ({ data: { createPost: { post: { id: 'p1', status: 'sent' } } } }) }; };
+  const ig = createInstagramBuffer({ BUFFER_INSTAGRAM_API_KEY: 'k', BUFFER_API_KEY: 'autre' }, { fetchImpl });
+  assert.throws(() => ig.add({ type: 'reel', image: 'x' }), /seul le type post/);
+  assert.throws(() => ig.add({ type: 'story', image: 'x' }), /seul le type post/, 'story sans demande explicite refusée');
+  const r = await ig.add({ story: true, type: 'story', image: 'https://exemple.test/s.jpg' }).catch(e => e);
+  const sent = calls.find(c => /createPost/.test(c.query));
+  if (sent) assert.deepEqual(sent.variables.i.metadata, INSTAGRAM_STORY_METADATA, 'métadonnées story');
+  else assert.ok(r instanceof Error, 'le client a refusé avant l’appel (contexte de test)');
 }

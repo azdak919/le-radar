@@ -45,7 +45,10 @@ export const PREPARED_NETS = ['instagram'];
  * Le paysage 16:9 reste rendu en aperçu (repli), sans réseau attitré.
  */
 export const IMAGE_FOR = { facebook: 'portrait', tumblr: 'portrait', x: 'portrait', bluesky: 'portrait', mastodon: 'portrait', linkedin: 'portrait', instagram: 'grille' };
-export const STORY_FOR = {};
+// Story 9:16 : Facebook par le canal Buffer de la page ; Instagram par son propre canal (passe dédiée de une-run.mjs).
+export const STORY_FOR = { facebook: 'story' };
+/** Réseaux où la story de La une part (formats.une.story.networks ; défaut : Facebook et Instagram). */
+export const storyNets = (cfg) => (Array.isArray(cfg?.story?.networks) ? cfg.story.networks : ['facebook', 'instagram']).filter(n => n === 'facebook' || n === 'instagram');
 export const IMAGE_SIZES = { portrait: { width: 1080, height: 1350 }, grille: { width: 1080, height: 1440 }, article: { width: 1080, height: 1440 }, 'article-portrait': { width: 1080, height: 1350 }, paysage: { width: 1200, height: 675 }, story: { width: 1080, height: 1920 } };
 /** Post d’un seul article (modèle v6) sur tous les réseaux. Les unes matin/soir automatiques : IMAGE_FOR (portrait 4:5 / grille Instagram 3:4 modèle B). */
 export const ARTICLE_IMAGE_FOR = { instagram: 'article', facebook: 'article-portrait', tumblr: 'article-portrait', x: 'article-portrait', bluesky: 'article-portrait', mastodon: 'article-portrait', linkedin: 'article-portrait' };
@@ -440,6 +443,7 @@ export function frDayYear(ymd) {
 
 // ── Textes ───────────────────────────────────────────────────────────────────
 export const HOME = `${SITE}/`;
+export const QUIET_LINE = 'Pas de nouvel article depuis la dernière une : place au sport et à la radio étudiante.';
 const BASE_TAGS = ['#MédiasÉtudiants', '#Québec'];
 /**
  * Hashtags X d'une une : mêmes règles thématiques que les articles (titres + résumés),
@@ -538,7 +542,10 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
   const compose = (items, hash, cut, sports, radio, revueLine) => {
     const T = x => cut ? clip(x.title, cut) : x.title;
     let body;
-    if (spec.style === 'lead') {
+    if (model.quiet) {
+      // Une sans article : le titre, une phrase honnête, puis le sport et la radio (sur tous les réseaux), puis le lien.
+      body = `${T(items[0])}\n${QUIET_LINE}`;
+    } else if (spec.style === 'lead') {
       // Article principal, puis les autres en une ligne (Threads) ou leur nombre (X), puis le lien vers la une.
       const [first, ...rest] = items, more = model.items.length - 1;
       const others = spec.others && rest.length ? `Aussi à la une : ${rest.map(T).join(' · ')}` : more > 0 ? `+ ${more} autre${more > 1 ? 's' : ''} à la une` : '';
@@ -558,6 +565,7 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
       const lines = radio.map(x => spec.nolink ? igRadioLine(x, model.slot.day) : `${x.title} · ${x.station} · ${x.when}`);
       body += spec.nolink ? '\n\n📻 À l’écoute (radio étudiante) :\n\n' + lines.join('\n') : '\n\n📻 À l’écoute (radio étudiante) :\n' + lines.join('\n');
     }
+    if (model.quiet && !spec.nolink && !long) body += `\n\n${HOME}`;
     if (spec.nolink) {
       body += revueLine ? '\n\nToute la une : le-radar.ca' : '\n\nToute la une : lien en bio (le-radar.ca)';
       const credit = igCreditLine(model.credit || model.items?.[0]?.credit || '');
@@ -566,7 +574,8 @@ export function buildUneText(model, net, spec = net === 'instagram' ? IG_SPEC : 
     const lead = [head, revueLine, spec.intro].filter(Boolean).join('\n');
     return [lead, body, hash.join(' ')].filter(Boolean).join('\n\n');
   };
-  let items = [...model.items], hash = [...tags], cut = 0, sports = SPORTS_NETS.has(net) ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = SPORTS_NETS.has(net) ? (model.radio || []).filter(x => !x.extra).slice(0, 5) : []; // réserve de l'image (extra) hors texte
+  const withExtras = SPORTS_NETS.has(net) || !!model.quiet; // sans article, le sport et la radio sont le contenu : partout
+  let items = [...model.items], hash = [...tags], cut = 0, sports = withExtras ? [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 2)] : [], radio = withExtras ? (model.radio || []).filter(x => !x.extra).slice(0, 5) : []; // réserve de l'image (extra) hors texte
   let withRevue = true;
   for (;;) {
     const revueLine = withRevue ? revueEditionLine(model.slot, revueOpts) : '';

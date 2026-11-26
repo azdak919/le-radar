@@ -12,7 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
-import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, moreRadio, slotAt, slotFor, slotDone, selectUne, seatBySource, buildUneAll, altText, frenchOnly } from './une-lib.mjs';
+import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, moreRadio, quietLead, storyNets, slotAt, slotFor, slotDone, selectUne, seatBySource, buildUneAll, altText, frenchOnly } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { createMastodon, idemKey } from './channels/mastodon.mjs';
@@ -20,7 +20,7 @@ import { tumblrFromEnv, npfFromText, tumblrEnabled, PAUSED_MSG } from './tumblr.
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
 import { moduleHashtags } from './networks/index.mjs';
-import { decideInstagram, deliverInstagram, dryRunReport, imageUrl, openInstagramIssue } from './instagram.mjs';
+import { decideInstagram, deliverInstagram, dryRunReport, imageUrl, openInstagramIssue, createInstagramBuffer } from './instagram.mjs';
 import { reviewSocialImage } from './ai-image.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -121,6 +121,25 @@ async function publishOne(net, entry, env) {
   return { id: post.id, status: post.status || '' };
 }
 
+/** Story 9:16 d'un créneau : l'image story hébergée, sans texte (le texte d'une story n'est pas affiché). */
+async function publishStory(net, entry, env) {
+  const img = entry.images?.story; if (!img) return null;
+  if (net === 'facebook') {
+    const pages = env.pages || {};
+    if (!env.BUFFER_API_KEY || !pages.facebook) return null;
+    const ch = createXBuffer({ key: env.BUFFER_API_KEY, service: pages.facebook.service, channelName: pages.facebook.name, fallbackId: env.BUFFER_FACEBOOK_CHANNEL_ID || null });
+    const post = await ch.add({ text: '', image: img, alt: entry.alt, now: true, metadata: { facebook: { type: 'story' } } });
+    return { id: post.id, status: post.status || '' };
+  }
+  if (net === 'instagram') {
+    if ((CFG.prepared?.instagram || {}).enabled !== true || readIgState().halted) return null;
+    const ig = createInstagramBuffer(env); if (!ig) return null;
+    const post = await ig.add({ story: true, type: 'story', text: '', image: img, alt: entry.alt, now: true });
+    return { id: post.id, status: post.status || '' };
+  }
+  return null;
+}
+
 function readIgState() {
   try { return JSON.parse(fs.readFileSync(IG_STATE, 'utf8')); } catch { return { halted: false, sent: {} }; }
 }
@@ -205,17 +224,23 @@ async function main() {
     sel.items = seatBySource(sel.items, CFG.maxItems || 4); sel.ids = sel.items.map(x => x.id); sel.lead = sel.items[0] || null;
     if (!sel.items.length && !sel.skip) { sel.skip = true; sel.why = 'aucun article publiable en français : publication sautée'; }
     console.log(`Sélection ${slot.key} : ${sel.items.length} article(s)${sel.doubts.length ? ' ; doutes : ' + sel.doubts.join(' ; ') : ''}`);
-    if (sel.skip) { reason = sel.why; fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), previewMarkdown(slot, sel, null, null, { dry, reason })); console.log(reason); if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${slot.label} : ${reason}\n`); return; }
     // Sport étudiant : résultats récents du site (sports-masthead.json) pour l'image et les textes longs ; rien si aucune donnée récente.
     let sports = { results: [], next: [] };
     try { sports = pickSports(rd(arg('sports', 'sports-masthead.json')), slot.day, { max: 16, days: 2, afterToday: slot.id === 'soir' }); } catch (e) { console.log(`::warning::résultats sportifs illisibles (${String(e.message).slice(0, 120)}) : image sans bloc sport.`); }
     console.log(`Sport étudiant : ${sports.results.length} résultat(s), ${sports.next.length} prochain(s) match(s)`);
-    // Radio étudiante : émissions à venir (matin : du jour ; soir : du lendemain), tirage reproductible par date ; rien si aucune grille.
+    // Radio étudiante : une émission par station d'abord (diversité), puis la suite de la grille du jour : le gabarit en ajoute tant qu'il y a de la place.
     let radio = [];
-    // Une émission par station d'abord (diversité), puis la suite de la grille du jour : le gabarit en ajoute tant qu'il y a de la place.
     try { const sch = rd(arg('radio', 'radio-schedules.json')); radio = pickRadio(sch, slot, { max: 8 }); radio = [...radio, ...moreRadio(sch, slot, radio)]; } catch (e) { console.log(`::warning::grilles radio illisibles (${String(e.message).slice(0, 120)}) : image sans bloc radio.`); }
     console.log(`Radio étudiante (${slot.id}) : ${radio.length} émission(s)${radio.some(x => x.fallback) ? `, dont ${radio.filter(x => x.fallback).length} en repli (fenêtre trop peu fournie)` : ""}`);
-    const model = { slot, items: sel.items, sports, radio };
+    // Aucun article, mais du sport ou de la radio : une de remplacement (affiche de match ou logos des radios), sauf si
+    // formats.une.quiet vaut false. Jamais sur un doute de données.
+    let quiet = false;
+    if (sel.skip && !sel.items.length && !sel.doubts.length && CFG.quiet !== false) {
+      const q = quietLead(slot, { sports, radio });
+      if (q) { quiet = true; sel = { ...sel, skip: false, items: [q], ids: [], lead: q }; console.log(`${slot.key} : aucun article (${sel.why}) → une sans article : « ${q.title} ».`); }
+    }
+    if (sel.skip) { reason = sel.why; fs.writeFileSync(path.join(out, `apercu-${slot.id}.md`), previewMarkdown(slot, sel, null, null, { dry, reason })); console.log(reason); if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${slot.label} : ${reason}\n`); return; }
+    const model = { slot, items: sel.items, sports, radio, quiet };
     texts = buildUneAll(model, { ...(POLICY.hashtags?.maxByNetwork || {}), ...moduleHashtags() });
     const { renderImages } = await import('./une-render.mjs');
     const igCfg = CFG.prepared?.instagram || {};
@@ -250,7 +275,7 @@ async function main() {
     try { urls = await hostImages(images, slot.key); }
     catch (e) {
       console.log(`::warning::hébergement des images impossible (${String(e.message).slice(0, 200)}) : repli sur la photo de la une.`);
-      const lead = sel.items[0].siteImage || 'https://le-radar.ca/assets/og-cover.png'; urls = { portrait: lead };
+      const lead = sel.items[0]?.siteImage || 'https://le-radar.ca/assets/og-cover.png'; urls = { portrait: lead };
       poster = altText(model);
     }
     entry = state[slot.key] = { key: slot.key, at: new Date().toISOString(), ids: sel.ids, texts: Object.fromEntries(Object.entries(texts).map(([n, v]) => [n, v.text])),
@@ -277,6 +302,23 @@ async function main() {
     fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
   }
   if (entry.texts?.instagram) await instagramPass({ now, slot, text: entry.texts.instagram, problems: [], images: entry.images || {}, dry: false, alt: entry.alt || '' });
+  // Stories 9:16 (formats.une.story.publish) : Facebook (page) et Instagram (canal dédié), une fois par créneau, 3 essais au plus.
+  if (storyEnabled(CFG) && entry.images?.story) {
+    for (const n of storyNets(CFG)) {
+      const k = `${n}-story`, d = entry.nets[k];
+      if (d?.at && !d.failed) { console.log(`${k} : déjà publiée pour ${slot.key}.`); continue; }
+      if ((d?.attempts || 0) >= 3) { console.log(`::warning::${k} : 3 échecs pour ${slot.key}, abandon.`); continue; }
+      try {
+        const r = await publishStory(n, entry, env);
+        if (!r) { console.log(`${k} : canal non configuré, sautée.`); continue; }
+        entry.nets[k] = { at: new Date().toISOString(), ...r }; console.log(`→ ${k} : ${r.id}`);
+      } catch (e) {
+        entry.nets[k] = { failed: true, attempts: (d?.attempts || 0) + 1, error: String(e.message).slice(0, 200), lastTry: new Date().toISOString() };
+        console.log(`::warning::${k} : échec (${String(e.message).slice(0, 200)}), réessai au prochain passage (3 au plus).`);
+      }
+      fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
+    }
+  }
   console.log(`\nRÉEL terminé : ${published} publication(s) pour ${slot.key}.`);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname) await main();
