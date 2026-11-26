@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T09:07:08.479Z",
+  "updatedAt": "2026-11-26T11:06:52.722Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T09:06:06.310Z"
+      "checkedAt": "2026-11-26T11:06:12.087Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "06:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "La lecture pis toi",
         "source": "schedule",
         "start": "06:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
       },
+      "next": {
+        "title": "Jimmy et Neutron",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "La lecture pis toi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T09:06:19.389Z"
+      "checkedAt": "2026-11-26T11:06:13.428Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Total €clipse of The ☾harts",
         "source": "api-live",
         "start": "06:00",
         "end": "07:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "next": {
+        "title": "OFC Podcast Radio",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "",
+      "showTitle": "Total €clipse of The ☾harts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T09:06:21.541Z"
+      "checkedAt": "2026-11-26T11:06:16.136Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Everything Everywhere",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
+        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T09:06:45.434Z"
+      "checkedAt": "2026-11-26T11:06:30.448Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +129,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T09:06:46.598Z"
+      "checkedAt": "2026-11-26T11:06:31.440Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +142,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Chaude Chaleur — Ni homme ni femme",
+      "track": "Lights058 — Brocoli",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +150,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T09:07:08.128Z"
+      "checkedAt": "2026-11-26T11:06:52.371Z"
     }
   }
 }
