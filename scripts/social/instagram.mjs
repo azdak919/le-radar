@@ -104,7 +104,7 @@ export function postsOnDay(state, day) {
 
 /**
  * La montée autorise-t-elle ce format maintenant ?
- * Jours 1-3 et 4-7 : au plus une une du soir. Jours 8-14 : matin et soir.
+ * Jours 1-3 : au plus une une du soir. Dès le jour 4 : La une du matin et La une du soir (2 par jour).
  * Dès le jour 15 : résultats sportifs en après-midi (écartés de La une), au plus un par fin de semaine.
  */
 export function instagramSlotAllowed({ now = Date.now(), slotId = '', format = 'une', cfg = {}, posted = 0, dedupKey = '', state = {} } = {}) {
