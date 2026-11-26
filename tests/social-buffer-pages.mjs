@@ -90,4 +90,18 @@ assert.equal(postMetadata('linkedin'), undefined);
   assert.match(blockedMessage('facebook', 7, 41), /FILE BLOQUÉE/);
   assert.doesNotMatch(blockedMessage('linkedin', 4, 3), /BLOQUÉE/);
 }
+// Réconciliation : publications à venir supprimées dans Buffer (files vidées le 25 nov. 2026) → oubliées.
+{
+  const { reconcileSent } = await import('../scripts/social/lib.mjs');
+  const now = T('2026-11-26T04:00:00Z');
+  const sent = {
+    a: { postId: 'p1', dueAt: '2026-11-26T14:39:00Z' }, // à venir, supprimée → oubliée
+    b: { postId: 'p2', dueAt: '2026-11-26T16:28:00Z' }, // à venir, encore en file → gardée
+    c: { postId: 'p3', dueAt: '2026-11-25T14:00:00Z' }, // déjà partie → gardée
+    d: { postId: 'p4', dueAt: '2026-11-26T04:05:00Z' }, // dans 5 min → gardée (peut être en cours d'envoi)
+    e: { at: '2026-11-25T10:00:00Z' },                    // sans postId → gardée
+  };
+  assert.deepEqual(reconcileSent(sent, ['p2'], now), ['a']);
+  assert.deepEqual(Object.keys(sent).sort(), ['b', 'c', 'd', 'e']);
+}
 console.log('social-buffer-pages : OK');

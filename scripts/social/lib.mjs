@@ -11,6 +11,22 @@ export const QUEUE_MAX = 10;     // forfait gratuit Buffer : 10 posts planifiés
  * le script ne voyait que les 7 programmées.
  */
 export const freePlaces = (queuedCount = 0, erroredCount = 0, max = QUEUE_MAX) => Math.max(0, max - queuedCount - erroredCount);
+/**
+ * Réconcilie l'état local avec la file Buffer réelle : une publication encore à venir (dueAt futur)
+ * dont l'id n'est plus en file a été supprimée dans Buffer (ex. files vidées le 25 nov. 2026).
+ * On l'oublie : sinon elle compte dans le plafond du jour et son article n'est jamais repris.
+ * Ne touche qu'aux entrées futures (> 10 min) : une publication partie n'est plus en file, c'est normal.
+ * Retourne les ids d'articles retirés. Modifie `sent` sur place.
+ */
+export function reconcileSent(sent = {}, queuedPostIds = [], now = Date.now()) {
+  const live = new Set(queuedPostIds), gone = [];
+  for (const [id, s] of Object.entries(sent)) {
+    if (!s?.postId || live.has(s.postId)) continue;
+    const due = Date.parse(s.dueAt || '');
+    if (Number.isFinite(due) && due > now + 10 * 60e3) { delete sent[id]; gone.push(id); }
+  }
+  return gone;
+}
 /** Avertissement quand les échecs prennent des places : à supprimer (ou relancer) dans Buffer. */
 export function blockedMessage(net, queuedCount, erroredCount, max = QUEUE_MAX) {
   if (!erroredCount) return '';

@@ -3,7 +3,7 @@
 // Usage : node scripts/social/buffer-post.mjs [--dry-run] [--feed fichier.xml]
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, freePlaces, blockedMessage, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
+import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, freePlaces, blockedMessage, reconcileSent, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
 const inText = (t, i) => !!t && (t.includes(i.link) || t.includes(siteLink(i)));
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createRequire as _cr } from 'node:module';
@@ -55,6 +55,7 @@ if (channel && process.env.REFRESH_CREDITS !== 'false') {
     if (!dry) { await channel.editText(p.id, r); p.text = r; const s = Object.values(state.sent).find(v => v.postId === p.id); if (s) s.credit = it.credit; }
   }
 }
+if (channel) { const gone = reconcileSent(state.sent, queued.map(p => p.id)); if (gone.length) console.log(`X : ${gone.length} publication(s) à venir absentes de Buffer (supprimées) oubliées de l'état : ${gone.join(', ')}`); }
 const byPost = new Map(Object.values(state.sent).filter(s => s.postId).map(s => [s.postId, s.source]));
 const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => inText(p.text, i))?.source).filter(Boolean);
 const maxNew = parseInt(process.env.MAX_NEW || '', 10);
