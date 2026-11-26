@@ -24,6 +24,22 @@ assert.doesNotMatch(html, /undefined|NaN|\[object/);
 assert.equal((html.match(/class="li-brand(-sm)?"><img src="\/assets\/icon-512\.png"/g) || []).length, pages.length, 'logo sur chaque page');
 assert.doesNotMatch(html, /<span class="li-brand-sm">LE-RADAR/, 'pas de marque en texte simple');
 // Radios : « FM » après la fréquence, comme La une ; AM inchangé.
+// Sport : sport et équipes, puis date, heure et lieu sur une 2e ligne ; sans salle connue : « Chez les … » (équipe locale).
+{
+  const g = { emoji: '🏀', sport: 'Basketball (F)', kind: 'avenir', verb: 'visite', when: 'jeu. 26 nov. · 18 h', teams: [{ name: 'Citadins', inst: 'UQAM' }, { name: 'Gaiters', inst: 'Bishop’s' }] };
+  const h1 = renderLinkedInCarousel({ ...model, sports: { results: [], next: [g] } });
+  assert.match(h1, /<span class="li-l1">🏀 Basketball \(F\) · Citadins \(UQAM\) c\. Gaiters \(Bishop’s\)<\/span><span class="li-l2">jeu\. 26 nov\. · 18 h · Chez les Gaiters · Bishop’s<\/span>/);
+  assert.match(h1, /Calendrier : RSEQ\./);
+  const h2 = renderLinkedInCarousel({ ...model, sports: { results: [], next: [{ ...g, venue: 'Centre sportif Bishop’s' }] } });
+  assert.match(h2, /<span class="li-l2">jeu\. 26 nov\. · 18 h · Centre sportif Bishop’s<\/span>/);
+  assert.match(h2, /Calendrier et salles : RSEQ\./);
+  const { withVenues } = await import('../scripts/revue/revue-social-pick.mjs');
+  const id = '91669338-645a-4ef0-8c47-d678db17ce23';
+  const v = await withVenues({ sports: { results: [], next: [{ ...g, gameId: id }, { ...g }] } }, { fetchImpl: async (u) => ({ ok: true, json: async () => ({ SportFacilityDescription: u.includes(id) ? 'Gymnase  Bishop’s' : '' }) }) });
+  assert.deepEqual(v.sports.next.map((x) => x.venue), ['Gymnase Bishop’s', undefined], 'salle RSEQ ; sans identifiant : pas d’appel');
+  const off = await withVenues({ sports: { next: [{ ...g, gameId: id }] } }, { fetchImpl: async () => { throw new Error('hors ligne'); } });
+  assert.equal(off.sports.next[0].venue, '', 'RSEQ injoignable : rien');
+}
 assert.match(html, /<b>CHYZ 94,3 FM<\/b>/); assert.match(html, /<b>CKUT 90,3 FM<\/b>/); assert.match(html, /<b>CJLO 1690AM<\/b>/);
 {
   const { fmLabel } = await import('../scripts/social/une-lib.mjs');

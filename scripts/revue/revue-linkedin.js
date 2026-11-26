@@ -52,12 +52,15 @@ function renderLinkedInCarousel(model = {}) {
   const items = (model.items || []).slice(0, MAX_ARTICLES);
   const lead = items[0] || {};
   const cover = model.image?.url || lead.image || '';
-  const sports = [...(model.sports?.results || []).slice(0, 3), ...(model.sports?.next || []).slice(0, 4)];
+  const sports = [...(model.sports?.results || []).slice(0, 2), ...(model.sports?.next || [])].slice(0, 5);
   const shows = (model.radio || []).flatMap((r) => (r.shows || []).slice(0, 1).map((s) => ({ station: r.station, ...s }))).slice(0, 4);
+  // Deux lignes : sport et équipes, puis date, heure et lieu (salle RSEQ, sinon « Chez les … » comme la story Jour de match).
   const sportLine = (g) => {
     const t = g.teams || [];
-    const vs = t.length === 2 ? `${t[0].name}${t[0].inst ? ` (${t[0].inst})` : ''} ${g.kind === 'avenir' ? 'c.' : '–'} ${t[1].name}${t[1].inst ? ` (${t[1].inst})` : ''}` : (g.title || '');
-    return `${g.emoji || ''} ${g.sport || ''} · ${vs}${g.when ? ` · ${g.when}` : ''}`;
+    const vs = t.length === 2 ? `${t[0].name}${t[0].inst ? ` (${t[0].inst})` : ''} ${g.kind === 'avenir' ? 'c.' : '–'} ${t[1].name}${t[1].inst ? ` (${t[1].inst})` : ''}` : (g.title || g.text || '');
+    const home = t.length === 2 ? (g.verb === 'visite' ? t[1] : t[0]) : null;
+    const where = g.venue || (home ? `Chez les ${home.name}${home.inst ? ` · ${home.inst}` : ''}` : '');
+    return `<span class="li-l1">${esc(`${g.emoji || ''} ${g.sport || ''} · ${vs}`.trim())}</span><span class="li-l2">${esc([g.when, where].filter(Boolean).join(' · '))}</span>`;
   };
   const total = items.length;
   const pages = [
@@ -77,10 +80,12 @@ function renderLinkedInCarousel(model = {}) {
     ...items.map((it, i) => articlePage(it, i, total, model)),
     `<section class="li-page li-end">
   <header class="li-top">${BRAND_SM}<span class="li-count">Et aussi</span></header>
-  ${sports.length ? `<h2 class="li-h">🏟️ Sport étudiant</h2><ul class="li-list">${sports.map((g) => `<li>${esc(sportLine(g))}</li>`).join('')}</ul>` : ''}
+  <div class="li-end__body">
+  ${sports.length ? `<h2 class="li-h">🏟️ Sport étudiant</h2><ul class="li-list li-list--2l">${sports.map((g) => `<li>${sportLine(g)}</li>`).join('')}</ul>` : ''}
   ${shows.length ? `<h2 class="li-h">📻 Radios étudiantes</h2><ul class="li-list">${shows.map((s) => `<li><b>${esc(fmLabel(s.station))}</b> · ${esc(s.title)} · ${esc(s.when || '')}</li>`).join('')}</ul>` : ''}
+  </div>
   <div class="li-cta"><p>Toutes les revues, avec les liens vers chaque média :</p><p class="li-url">${esc(REVUES_URL.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</p></div>
-  <footer class="li-foot"><p>Journaux, radios et sports étudiants du Québec, réunis au même endroit</p>${creditsLine()}</footer>
+  <footer class="li-foot"><p>Journaux, radios et sports étudiants du Québec, réunis au même endroit</p>${sports.length ? `<p class="li-datasrc">${sports.some((g) => g.venue) ? 'Calendrier et salles' : 'Calendrier'} : RSEQ. Horaires : stations de radio étudiantes.</p>` : ''}${creditsLine()}</footer>
 </section>`,
   ];
   return `<!doctype html>
@@ -101,7 +106,7 @@ html, body { background: #111; }
 .li-brand-sm { display: flex; align-items: center; gap: 12px; font: 700 34px/1 var(--serif); letter-spacing: -0.02em; text-transform: none; color: var(--ink); }
 .li-brand-sm img { width: 44px; height: 44px; border-radius: 10px; }
 .li-foot { position: absolute; left: 64px; right: 64px; bottom: 36px; font: 600 24px/1.3 var(--sans); color: #666; border-top: 3px solid var(--ink); padding-top: 16px; }
-.li-credits { margin-top: 8px; font: 400 17px/1.35 var(--sans); color: #777; }
+.li-credits, .li-datasrc { margin-top: 8px; font: 400 17px/1.35 var(--sans); color: #777; }
 .li-credits--cover { position: absolute; left: 64px; right: 300px; bottom: 26px; margin: 0; color: rgba(255,255,255,.75); z-index: 2; }
 .li-cl { display: inline-block; transform: scaleX(-1); }
 .li-credit { position: absolute; right: 16px; bottom: 12px; font: 400 18px/1.2 var(--sans); color: #fff; background: rgba(0,0,0,.55); padding: 4px 10px; border-radius: 6px; }
@@ -129,11 +134,16 @@ html, body { background: #111; }
 .li-byline { margin-top: 16px; font: 600 26px/1.3 var(--sans); color: #444; }
 .li-text { margin-top: 18px; font: 400 30px/1.4 var(--sans); color: #222; }
 /* Page finale */
-.li-end .li-h { margin: 150px 64px 0; font: 700 46px/1.1 var(--serif); }
-.li-end .li-h + .li-list + .li-h { margin-top: 48px; }
+.li-end__body { position: absolute; top: 118px; left: 0; right: 0; bottom: 400px; overflow: hidden; }
+.li-end .li-h { margin: 30px 64px 0; font: 700 46px/1.1 var(--serif); }
+.li-end .li-h + .li-list + .li-h { margin-top: 40px; }
 .li-list { list-style: none; margin: 20px 64px 0; }
 .li-list li { font: 400 28px/1.35 var(--sans); padding: 12px 0; border-bottom: 2px dotted #bbb; }
-.li-cta { position: absolute; left: 64px; right: 64px; bottom: 180px; background: var(--ink); color: #fff; border-radius: 18px; padding: 34px 38px; }
+.li-list--2l li { padding: 10px 0; }
+.li-l1, .li-l2 { display: block; }
+.li-l1 { font: 600 28px/1.3 var(--sans); }
+.li-l2 { margin-top: 2px; font: 400 24px/1.3 var(--sans); color: #555; }
+.li-cta { position: absolute; left: 64px; right: 64px; bottom: 190px; background: var(--ink); color: #fff; border-radius: 18px; padding: 34px 38px; }
 .li-cta p { font: 600 30px/1.35 var(--sans); }
 .li-cta .li-url { margin-top: 10px; font: 700 46px/1.1 var(--serif); color: #f3c1e3; }
 </style></head>

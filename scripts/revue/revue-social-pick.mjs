@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { frontRanks, scoreItem } from '../social/selection.mjs';
+import { rseqVenue } from '../social/match-story-lib.mjs';
 
 /** Couverture + 8 articles + page finale = 10 pages, le maximum d'un carrousel Instagram ou Facebook. */
 export const SOCIAL_MAX = 8;
@@ -34,4 +35,11 @@ export function socialModel(model, { root = process.cwd(), max = SOCIAL_MAX } = 
   const lead = items.find((it) => it.image && !it.imageStock);
   const image = items[0] && lead === items[0] ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title } : model.image;
   return { ...model, items, image, totalItems: (model.items || []).length };
+}
+
+/** Salle de chaque match du carrousel (API publique du RSEQ, comme la story Jour de match) ; inconnue : rien. */
+export async function withVenues(model, { fetchImpl = fetch } = {}) {
+  const add = async (list = []) => Promise.all(list.map(async (g) => (g.venue || !g.gameId ? g : { ...g, venue: await rseqVenue(g.gameId, { fetchImpl }) || '' })));
+  const sp = model.sports || {};
+  return { ...model, sports: { ...sp, results: await add((sp.results || []).slice(0, 2)), next: await add((sp.next || []).slice(0, 5)) } };
 }

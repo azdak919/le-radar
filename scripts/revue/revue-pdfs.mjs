@@ -19,7 +19,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import { listEditionDirs, resolveEditionId } from './revue-pdf-id.mjs';
-import { socialModel } from './revue-social-pick.mjs';
+import { socialModel, withVenues } from './revue-social-pick.mjs';
 import { createRequire } from 'node:module';
 const { syncEditionPdfLinks } = createRequire(import.meta.url)('./revue-render.js');
 const { renderLinkedInCarousel, carouselAlts, W: LI_W, H: LI_H } = createRequire(import.meta.url)('./revue-linkedin.js');
@@ -94,7 +94,7 @@ async function printLinkedIn(browser, id) {
   const file = join(root, 'data/revue/reviews', `${id}.json`);
   if (!existsSync(file)) { console.log(`   (carrousel LinkedIn sauté : ${file} absent)`); return; }
   // Réseaux seulement : les meilleurs articles (note sociale). La page et les PDF d'impression restent complets.
-  const model = socialModel(JSON.parse(readFileSync(file, 'utf8')), { root });
+  const model = await withVenues(socialModel(JSON.parse(readFileSync(file, 'utf8')), { root }));
   const html = renderLinkedInCarousel(model);
   const page = await browser.newPage({ viewport: { width: LI_W, height: LI_H } });
   // Servi depuis la même origine que le site local : sinon (about:blank) les polices du site sont refusées.
@@ -117,6 +117,15 @@ async function printLinkedIn(browser, id) {
     // Image d'article introuvable : la page passe en mise en page sans photo plutôt qu'un cadre vide.
     for (const im of document.querySelectorAll('.li-photo img')) if (!im.naturalWidth) { const p = im.closest('.li-page'); im.closest('.li-photo').remove(); p.classList.add('li-article--noimg'); }
     for (const im of document.querySelectorAll('.li-cover__img')) if (!im.naturalWidth) im.remove();
+    // Page finale : tant que sport et radio débordent au-dessus de l'encadré du lien, retirer la dernière ligne de la
+    // liste la plus longue (jamais sous une ligne par liste) ; une liste vidée emporte son titre.
+    for (const body of document.querySelectorAll('.li-end__body')) {
+      for (let guard = 0; body.scrollHeight > body.clientHeight + 1 && guard < 30; guard++) {
+        const lists = [...body.querySelectorAll('.li-list')].sort((a, b) => b.children.length - a.children.length);
+        const l = lists.find((x) => x.children.length > 1);
+        if (l) l.lastElementChild.remove(); else { const last = lists.at(-1); last?.previousElementSibling?.remove(); last?.remove(); }
+      }
+    }
   });
   const outDir = join(root, 'revues', id);
   await page.screenshot({ path: join(outDir, 'linkedin-cover.jpg'), type: 'jpeg', quality: 82, clip: { x: 0, y: 0, width: LI_W, height: LI_H } });
