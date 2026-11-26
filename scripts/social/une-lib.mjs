@@ -245,7 +245,7 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
     if (!t || !t.sport) continue;
     const me = teamLabel(t.nickname, t.institutionLabel || t.fullName || t.name);
     const label = `${t.sportLabel || t.sport}${SEX[t.sex] ? ` (${SEX[t.sex]})` : ''}`;
-    const base = { emoji: sportCodeEmoji(t.sport), sport: label, sportKey: sportKeyOf(t), league: t.leagueLabel || '', uni: t.sector === 'universitaire' };
+    const base = { emoji: sportCodeEmoji(t.sport), sport: label, sportKey: sportKeyOf(t), league: t.leagueLabel || '', division: t.division || '', uni: t.sector === 'universitaire' };
     for (const g of t.results || []) {
       const id = g.gameId || `${t.id}:${g.date}`;
       if (seen.has(id) || g.priorSeason || !g.date || g.date < from || g.date > day) continue;

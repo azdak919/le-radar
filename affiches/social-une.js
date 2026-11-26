@@ -441,6 +441,7 @@
   async function renderMatchStory(card, model) {
     const m = model.match; card.className = 'card match-story';
     const list0 = m.clubs || m.rows || [];
+    if (m.kind === 'more') { list0.push({ color: '#6c2163' }, { color: '#1f2a44' }); }
     const ca = m.away ? m.away.color : (list0[0] || {}).color, cb = m.home ? m.home.color : (list0[1] || {}).color;
     card.style.setProperty('--ca', ca || '#6c2163'); card.style.setProperty('--cb', cb || '#1f2a44');
     card.append(el('div', 'ms-bg'));
@@ -453,6 +454,18 @@
       const c = el('p', 'ms-circuit');
       if (m.circuitLogo) { const im = el('img'); im.alt = ''; im.src = m.circuitLogo; c.append(im); imgs.push(im); }
       c.append(el('span', '', m.circuitText || m.circuit)); card.append(c);
+    }
+    if (m.kind === 'more') {
+      // « Aussi aujourd'hui » : jours chargés, le reste de la vague en une liste (heure, sport, rencontre), sans logos.
+      card.classList.add('ms-regatta', 'ms-more'); top.lastChild.textContent = 'Aussi aujourd’hui';
+      card.append(el('h1', 'ms-event', `${m.count}${NB}autre${m.count > 1 ? 's' : ''} match${m.count > 1 ? 's' : ''}`), el('p', 'ms-format', 'Sport étudiant · horaire du jour'));
+      const list = el('div', 'ms-clubs');
+      m.items.forEach((x) => {
+        const row = el('div', 'ms-club ms-line'); const tm = el('div', 'ms-place'); tm.append(el('b', '', x.when || '—')); row.append(tm);
+        const nm = el('div', 'ms-nm'); nm.append(el('b', '', x.text), el('small', '', `${x.emoji ? x.emoji + ' ' : ''}${x.sport}`)); row.append(nm); list.append(row);
+      });
+      if (m.extra) list.append(el('div', 'ms-club more', `et ${m.extra} autre${m.extra > 1 ? 's' : ''} sur le‑radar.ca`));
+      card.append(list);
     }
     if (m.kind === 'regatta-results') {
       // Résultats de régate : classement final des clubs québécois, place en gros (podium doré, argent, bronze), effectif à côté.
@@ -488,8 +501,8 @@
       d.append(el('b', 'ms-name', t.name)); if (t.inst) d.append(el('span', 'ms-inst', t.inst));
       return d;
     };
-    if (!String(m.kind).startsWith('regatta')) card.append(side(m.away, 'away'), el('b', 'ms-vs', 'VS'), side(m.home, 'home'));
-    const when = el('div', 'ms-when'); when.append(el('b', 'ms-hour' + (m.hour ? '' : ' long'), m.kind === 'regatta-results' ? 'Final' : m.hour || (m.kind === 'regatta' ? 'Toute la journée' : m.dayShort)), el('span', 'ms-day', m.range || m.day)); if (m.where) when.append(el('span', 'ms-where', m.where)); if (m.venue) when.append(el('span', 'ms-venue', m.venue));
+    if (m.kind === 'match') card.append(side(m.away, 'away'), el('b', 'ms-vs', 'VS'), side(m.home, 'home'));
+    const when = el('div', 'ms-when'); if (m.kind === 'more') when.append(el('span', 'ms-day', m.day)); else when.append(el('b', 'ms-hour' + (m.hour ? '' : ' long'), m.kind === 'regatta-results' ? 'Final' : m.hour || (m.kind === 'regatta' ? 'Toute la journée' : m.dayShort)), el('span', 'ms-day', m.range || m.day)); if (m.where) when.append(el('span', 'ms-where', m.where)); if (m.venue) when.append(el('span', 'ms-venue', m.venue));
     card.append(when);
     // Pied : mêmes crédits que les autres visuels sociaux (nom complet + mention), en petit ; source des données sportives.
     const foot = el('footer', 'ms-foot');
@@ -497,12 +510,12 @@
     // Petite marque centrée juste au-dessus des crédits (icône + « LE‑RADAR.ca »), comme le pied des autres visuels.
     const fm = el('p', 'ms-fmark'); const fi = el('img'); fi.src = '../assets/icon.svg'; fi.alt = ''; fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca')); foot.append(fm);
     foot.append(el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources'));
-    // Crédits complets (match-story-lib.mjs → storyCredits) : données, titulaires des logos affichés, autorisations ; puis polices,
-    // mise en page et indépendance.
+    // Crédits complets (match-story-lib.mjs → storyCredits) : données, titulaires des logos affichés, autorisations ; puis
+    // indépendance et mise en page (pas de crédit de police, choix de Charles).
     const cr = m.credits || { data: `Calendrier : ${String(m.kind).startsWith('regatta') ? 'CICSA' : 'RSEQ'}`, logos: [], notes: [] };
     const l1 = el('p', 'ind'), l2 = el('p', 'ind');
     l1.textContent = [cr.data + '.', cr.logos.length ? `Logos : ${cr.logos.join(', ')}, propriété de leurs titulaires.` : '', ...cr.notes].filter(Boolean).join(' ');
-    l2.textContent = 'Projet indépendant, sans affiliation. Polices Inter et Source Serif\u00A04 (OFL), émojis Noto. Mise en page 🄯\u00A0Azdak CC BY 4.0.';
+    l2.textContent = 'Projet indépendant, sans affiliation. Mise en page 🄯\u00A0Azdak CC BY 4.0.';
     foot.append(l1, l2);
     card.append(foot);
     await Promise.all(imgs.map((im) => new Promise((r) => { if (im.complete) r(); else { im.onload = r; im.onerror = () => { (im.parentNode.classList.contains('ms-logo') ? im.parentNode : im).remove(); r(); }; } })));

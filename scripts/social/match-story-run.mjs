@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { POLICY } from './policy.mjs';
 import { createRequire } from 'node:module';
-import { todaysStories, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, storyWindow, pruneMatchState } from './match-story-lib.mjs';
+import { todaysStories, planWave, waveOf, waveAt, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
 import { torontoMinutes } from './une-lib.mjs';
 import { createXBuffer } from './channels/x-buffer.mjs';
 import { createInstagramBuffer } from './instagram.mjs';
@@ -24,7 +24,7 @@ const rd = (f) => JSON.parse(fs.readFileSync(path.isAbsolute(f) ? f : path.join(
 export const CFG = POLICY.formats?.matchStory || { publish: false, networks: [], max: 6 };
 export const NETS = ['facebook', 'instagram'];
 /** « Martlets reçoit Stingers » ou « Régate : épreuve (clubs) ». */
-export const label = (m) => m.kind === 'regatta-results' ? `Résultats : ${m.event} (${m.rows.map((r) => `${r.place}e ${r.name}`).join(', ')})` : m.kind === 'regatta' ? `Régate : ${m.event} (${m.clubs.map((c) => c.name).join(', ')})` : `${m.teams[0].name} ${m.verb} ${m.teams[1].name}`;
+export const label = (m) => m.kind === 'more' ? `Aussi aujourd’hui : ${m.items.map(label).join(', ')}` : m.kind === 'regatta-results' ? `Résultats : ${m.event} (${m.rows.map((r) => `${r.place}e ${r.name}`).join(', ')})` : m.kind === 'regatta' ? `Régate : ${m.event} (${m.clubs.map((c) => c.name).join(', ')})` : `${m.teams[0].name} ${m.verb} ${m.teams[1].name}`;
 
 /** Réseaux restant à faire pour un match (déjà publié ou 3 échecs = fait). */
 export function pendingNets(entry, nets = NETS) {
@@ -54,8 +54,7 @@ async function main() {
   const dry = process.env.DRY_RUN !== 'false', force = process.argv.includes('--force') || process.env.MATCH_STORY_FORCE === 'true';
   const out = path.resolve(arg('out', 'match-story-preview')); fs.mkdirSync(out, { recursive: true });
   const day = montrealDay(now);
-  const win = storyWindow(now, CFG.window || {});
-  if (!win.due && !force && !dry) { console.log(`Story match du jour : ${win.why}, rien à faire.`); return; }
+  if (!waveAt(torontoMinutes(now), CFG.waves || WAVES) && !force && !dry) { console.log('Story match du jour : hors des vagues de publication (heure de Montréal), rien à faire.'); return; }
   const nets = (CFG.networks || []).filter((n) => NETS.includes(n));
   let state = {}; try { state = rd(STATE); } catch {}
   // Un match déjà commencé (régates : toute la journée) n'a plus d'intérêt en story « Jour de match » (essai : tous les matchs du jour).
@@ -63,22 +62,28 @@ async function main() {
   let sailing = {};
   try { const { unpackSportsPayload } = createRequire(import.meta.url)('../sports-payload-lib.js'); sailing = sailingTeams(unpackSportsPayload(rd(arg('sailing', 'sports.json')))); }
   catch (e) { console.log(`::warning::voile illisible (${String(e.message).slice(0, 120)}) : pas de régate.`); }
-  const matches = todaysStories(rd(arg('sports', 'sports-masthead.json')), day, { max: CFG.max || 6, notBefore: dry ? -1 : torontoMinutes(now), sailing });
-  console.log(`Story match du jour ${day} : ${matches.length} match(s)${matches.length ? ' — ' + matches.map(label).join(', ') : ''}.`);
+  // Vagues (match-story-lib.mjs → WAVES) : la vague en cours, plus ce qu'une vague précédente n'a pas pu publier si le match
+  // n'a pas commencé. Essai : toutes les vagues du jour, pour voir le plan complet.
+  const t = torontoMinutes(now), cur = waveAt(t, CFG.waves || WAVES);
+  const all = todaysStories(rd(arg('sports', 'sports-masthead.json')), day, { max: 200, notBefore: dry ? -1 : t, sailing });
+  const waves = (CFG.waves || WAVES).filter((w) => dry || force || (cur && WAVES.indexOf(w) <= WAVES.indexOf(cur)));
+  const plan = waves.flatMap((w) => { const p = planWave(all.filter((m) => waveOf(m, CFG.waves || WAVES) === w.id), { maxPerWave: CFG.maxPerWave || 4 }); return p.map((m, i) => ({ m, i, total: p.length, wave: w.id })); });
+  const matches = plan.map((x) => x.m);
+  console.log(`Story match du jour ${day} : ${all.length} rencontre(s), ${plan.length} story(s) planifiée(s) — ${plan.map((x) => `[${x.wave}] ${x.m.kind === 'more' ? `Aussi aujourd’hui (${x.m.items.length})` : label(x.m)}`).join(', ')}.`);
   if (!matches.length) return;
-  const todo = matches.map((m, i) => ({ m, i, key: matchKey(m) })).filter((x) => dry || pendingNets(state[x.key], nets).length);
+  const todo = plan.map((x) => ({ ...x, key: matchKey(x.m) })).filter((x) => dry || pendingNets(state[x.key], nets).length);
   if (!todo.length) { console.log('Toutes les stories du jour sont déjà publiées.'); return; }
   const { renderImages } = await import('./une-render.mjs');
   const { hostImages } = await import('./une-run.mjs');
   const env = { ...process.env, pages: rd('data/social/buffer-pages.json') };
   const summary = [`## Story match du jour — ${day} (${dry ? 'essai DRY_RUN, rien n’est publié' : 'passage réel'})`, ''];
-  for (const { m, i, key } of todo) {
-    const short = String(m.gameId || key.slice(11)).slice(0, 24) || `m${i}`;
-    if (m.kind !== 'regatta' && !m.venue) m.venue = await rseqVenue(m.gameId);
-    const model = matchStoryModel(m, { index: i, total: matches.length });
+  for (const { m, i, total, wave, key } of todo) {
+    const short = `${wave}-${i + 1}-` + (String(m.gameId || key.slice(11)).slice(0, 18) || 'm');
+    if (m.kind === 'avenir' && !m.venue) m.venue = await rseqVenue(m.gameId);
+    const model = matchStoryModel(m, { index: i, total });
     const imgs = await renderImages(model, { outDir: out, prefix: `match-${short}`, formats: ['match-story'] });
     const img = imgs['match-story'], alt = matchStoryAlt(m);
-    summary.push(`- ${m.sport} · ${label(m)} · ${m.when} → ${path.basename(img.file)} (${Math.round(img.bytes / 1024)} Ko${img.logos ? `, ${img.logos} logo(s)` : ''}${img.overflow ? ', DÉBORDEMENT' : ''})`);
+    summary.push(`- [${wave} ${i + 1}/${total}] ${m.kind === 'more' ? `Aussi aujourd’hui : ${m.items.length} rencontre(s)` : `${m.sport} · ${label(m)} · ${m.when}`} → ${path.basename(img.file)} (${Math.round(img.bytes / 1024)} Ko${img.logos ? `, ${img.logos} logo(s)` : ''}${img.overflow ? ', DÉBORDEMENT' : ''})`);
     console.log(`Image ${key} : ${path.basename(img.file)} ; alt : ${alt}`);
     if (dry) continue;
     if (!CFG.publish) { console.log('Publication désactivée (formats.matchStory.publish = false).'); continue; }

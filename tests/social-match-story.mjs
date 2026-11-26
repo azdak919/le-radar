@@ -94,7 +94,7 @@ assert.equal(L.matchStoryModel(all[2]).match.credits.data, 'Calendrier : RSEQ');
 const cr = L.matchStoryModel(L.todaysRegattas({ teams: { s: sail('ulaval', 'Université Laval') } }, '2026-11-26')[0]).match.credits;
 assert.equal(cr.data, 'Calendrier et lieu : CICSA');
 assert.deepEqual(cr.logos, ['CICSA', 'ULaVoile']);
-assert.match(cr.notes.join(' '), /autorisation du club/);
+assert.deepEqual(cr.notes, [], 'pas de mention du fanion : « propriété de leurs titulaires » suffit');
 assert.deepEqual(L.matchStoryModel(all[0], { root: os.tmpdir() }).match.credits.logos, [], 'aucun logo affiché : aucun titulaire cité');
 
 // Résultats de régate : une story par épreuve terminée la veille ou le jour même, clubs classés, lieu en clair, rien d'inventé.
@@ -112,6 +112,36 @@ assert.equal(L.matchKey(rr[0]), '2026-10-11:resultats-championnat-regional-du-qu
 assert.match(L.matchStoryAlt(rr[0]), /2e Concordia Sailing, 9e ULaVoile/);
 assert.equal(L.venueLabel('wvyc'), 'West Vancouver Yacht Club'); assert.equal(L.venueLabel('Yale'), 'Yale');
 assert.ok(L.todaysStories({ teams: {} }, '2026-10-12', { sailing: { a: res('ulaval', 'ULaVoile', 9, 12) } }).some((x) => x.kind === 'regatta-results'));
+
+// Vagues : matin (avant 15 h, voile) et fin d'après-midi (soirée) ; plafond par vague ; « Aussi aujourd'hui » au-delà.
+assert.equal(L.waveOf({ time: '13:00' }), 'matin'); assert.equal(L.waveOf({ time: '18:00' }), 'soir'); assert.equal(L.waveOf({ kind: 'regatta' }), 'matin');
+assert.equal(L.waveAt(9 * 60 + 41).id, 'matin'); assert.equal(L.waveAt(15 * 60 + 23).id, 'soir'); assert.equal(L.waveAt(22 * 60), null);
+const g = (i, uni, sport, time) => ({ kind: 'avenir', gameId: 'g' + i, date: '2026-11-28', uni, sport, sportKey: sport, time, verb: 'reçoit', emoji: '', teams: [{ name: 'A' + i }, { name: 'B' + i }] });
+assert.deepEqual(L.planWave([]), [], 'aucun match : aucune story');
+assert.equal(L.planWave([g(1, true, 'basketball', '18:00')]).length, 1, 'un match : une story, rien ajouté');
+const five = [g(1, false, 'volleyball', '18:00'), g(2, true, 'basketball', '20:00'), g(3, true, 'basketball', '18:00'), g(4, true, 'hockey', '19:00'), g(5, false, 'volleyball', '19:00')];
+assert.equal(L.planWave(five).length, 5, 'reste de 1 ou 2 : chacun son affiche');
+assert.ok(L.planWave(five).every((m) => m.kind !== 'more'));
+const many = Array.from({ length: 30 }, (_, i) => g(i, i < 3, ['volleyball', 'basketball', 'soccer'][i % 3], `${18 + (i % 3)}:00`));
+const pw = L.planWave(many);
+assert.equal(pw.length, 4); assert.equal(pw.at(-1).kind, 'more'); assert.equal(pw.at(-1).items.length, 27);
+assert.ok(pw.slice(0, 3).every((m) => m.uni), 'universitaire d’abord');
+assert.equal(new Set(pw.slice(0, 3).map((m) => m.sport)).size, 3, 'un sport différent avant de répéter');
+const more = L.matchStoryModel(pw.at(-1)).match;
+assert.equal(more.kind, 'more'); assert.equal(more.count, 27); assert.equal(more.items.length, 9); assert.equal(more.extra, 18);
+assert.equal(L.matchKey(pw.at(-1)), '2026-11-28:aussi-soir');
+assert.match(L.matchStoryAlt(pw.at(-1)), /Aussi aujourd’hui/);
+
+// Popularité estimée : niveau, sport, derby, grande écoute ; voile toujours publiée, hors plafond.
+const derby = { ...g(9, true, 'basketball', '18:00'), teams: [{ name: 'Martlets', reg: 'mcgill' }, { name: 'Stingers', reg: 'concordia' }] };
+assert.equal(L.popularity(derby), 60 + 20 + 15 + 5);
+assert.ok(L.popularity({ ...g(1, false, 'volleyball', '13:00'), division: 'D1' }) > L.popularity({ ...g(2, false, 'volleyball', '13:00'), division: 'D3' }));
+assert.ok(L.popularity(derby) > L.popularity(g(3, true, 'basketball', '13:00')));
+const sailStory = L.todaysRegattas(withSail, '2026-11-26')[0];
+const busy = L.planWave([...many, sailStory]);
+assert.ok(busy.some((m) => m.kind === 'regatta'), 'voile incluse même un jour chargé');
+assert.equal(busy.filter((m) => m.kind !== 'more' && m.kind !== 'regatta').length, 3, 'la voile ne prend pas la place d’un match');
+assert.ok(!busy.at(-1).items.some((m) => m.kind === 'regatta'), 'jamais reléguée dans « Aussi aujourd’hui »');
 
 // Config et rendu.
 assert.deepEqual(CFG.networks, ['facebook', 'instagram']);

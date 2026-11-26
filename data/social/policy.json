@@ -119,17 +119,14 @@
    "image": "https://le-radar.ca/assets/og-cover.png"
   },
   "matchStory": {
-   "_doc": "« Story match du jour » (scripts/social/match-story-run.mjs, workflow social-match-story.yml) : une story 9:16 plein cadre par match étudiant du jour (affiche seule, sans liste ni radio), sur Facebook (page, Buffer type story) et Instagram (canal dédié, type story). Demande de Charles le 26 nov. 2026. Universitaire d'abord puis par heure, au plus `max` par jour ; un match déjà commencé n'est pas publié ; une seule story par match et par réseau (data/social/match-story-state.json). Logos d'équipes seulement s'ils sont déposés à la main dans assets/logos/teams/. publish = false : aperçus seulement.",
+   "_doc": "« Story match du jour » (scripts/social/match-story-run.mjs, workflow social-match-story.yml) : une story 9:16 plein cadre par match étudiant du jour (affiche seule, sans liste ni radio), sur Facebook (page, Buffer type story) et Instagram (canal dédié, type story). Demande de Charles le 26 nov. 2026. Deux vagues par jour, au plus `maxPerWave` stories chacune (voir _waves) ; un match déjà commencé n'est pas publié ; une seule story par match et par réseau (data/social/match-story-state.json). Logos d'équipes seulement s'ils sont déposés à la main dans assets/logos/teams/. publish = false : aperçus seulement.",
    "publish": true,
    "networks": [
     "facebook",
     "instagram"
    ],
-   "max": 6,
-   "window": {
-    "from": "09:00",
-    "to": "17:00"
-   }
+   "maxPerWave": 4,
+   "_waves": "Deux vagues (scripts/social/match-story-lib.mjs → WAVES) : matin 9 h – 15 h (matchs avant 15 h, régates, résultats de voile de la veille) et fin d'après-midi 15 h – 19 h 30 (matchs de soirée, 2 à 3 h avant). Chaque story ramène le compte en tête de la barre des stories : deux vagues courtes > une rafale. Au plus maxPerWave stories par vague, la plus forte d'abord (universitaire, voile, collégial ; un sport différent avant de répéter) ; au-delà, la dernière devient « Aussi aujourd'hui ». Aucun match : aucune story (jamais de remplissage)."
   },
   "une": {
    "_doc": "« La une du matin » et « La une du soir » (scripts/social/une-run.mjs, workflow social-une.yml). Décision de Charles le 12 nov. 2026 : deux rendez-vous par jour, EN PLUS des publications existantes (hors plafonds de volume), publication réelle dès la fusion. Fenêtres en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées) : une seule publication par réseau et par créneau. Le soir ne reprend aucun article du matin et saute s'il n'y a rien de nouveau. Aucune mention @.",

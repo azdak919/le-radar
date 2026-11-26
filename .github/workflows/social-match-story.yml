@@ -2,13 +2,16 @@ name: Social — Story match du jour
 
 # Une story 9:16 plein cadre par match étudiant du jour (affiche seule, sans liste ni radio) sur Facebook (page) et Instagram (canal dédié).
 # Script : scripts/social/match-story-run.mjs ; réglages : data/social/policy.json → formats.matchStory ; état : data/social/match-story-state.json
-# (une seule story par match et par réseau, 3 essais au plus). Fenêtre 9 h – 17 h heure de Montréal ; un match déjà commencé n'est pas publié.
+# (une seule story par match et par réseau, 3 essais au plus). Deux vagues (matin, fin d'après-midi) ; un match déjà commencé n'est pas publié.
 # Les crons GitHub sont en UTC et partent souvent en retard : un passage pour l'heure d'été (HAE), un pour l'heure d'hiver (HNE), un secours.
 on:
   schedule:
-    - cron: '37 14 * * *'   # 10 h 37 HAE / 9 h 37 HNE
-    - cron: '37 15 * * *'   # 10 h 37 HNE / 11 h 37 HAE
-    - cron: '37 17 * * *'   # secours : 12 h 37 HNE / 13 h 37 HAE
+    # Vague du matin (9 h – 15 h, heure de Montréal)
+    - cron: '41 13,14 * * *'  # 9 h 41 HAE / 9 h 41 HNE (l'autre heure tombe hors vague ou ne trouve rien de neuf)
+    - cron: '41 16 * * *'     # secours : 11 h 41 HNE / 12 h 41 HAE
+    # Vague de fin d'après-midi (15 h – 19 h 30) : 2 à 3 h avant les matchs de soirée
+    - cron: '23 19,20 * * *'  # 15 h 23 HAE / 15 h 23 HNE
+    - cron: '23 21 * * *'     # secours : 16 h 23 HNE / 17 h 23 HAE
   workflow_dispatch:
     inputs:
       dry_run:
@@ -20,7 +23,7 @@ on:
         type: string
         default: ''
       force:
-        description: 'Ignorer la fenêtre 9 h – 17 h (déclenchement manuel)'
+        description: 'Ignorer les vagues horaires (déclenchement manuel : toutes les vagues jusqu’ici)'
         type: boolean
         default: false
 

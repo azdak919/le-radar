@@ -429,3 +429,13 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .ms-fmark img { width: 34px; height: 34px; }
 .ms-fmark .wm { font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; font-size: 30px; letter-spacing: -.02em; color: #fff; }
 .ms-foot { height: 260px; gap: 4px; }
+/* « Aussi aujourd'hui » : liste compacte (heure, rencontre, sport), jusqu'à 9 lignes. */
+.ms-more .ms-clubs { top: 575px; height: 850px; gap: 10px; }
+.ms-more .ms-event { top: 390px; }
+.ms-more .ms-format { top: 515px; }
+.ms-line { padding: 8px 20px 8px 12px; border-left-color: rgba(255,255,255,.5); }
+.ms-line .ms-place { width: 132px; height: 64px; }
+.ms-line .ms-place b { font-size: 38px; }
+.ms-line .ms-nm b { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 32px; text-transform: none; white-space: nowrap; }
+.ms-line .ms-nm small { font-size: 18px; margin-top: 2px; }
+.ms-more .ms-when { top: 1440px; }
