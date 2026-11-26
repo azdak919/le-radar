@@ -82,6 +82,22 @@ export async function hostImages(images, key, repo = process.env.GITHUB_REPOSITO
   } finally { try { git(['worktree', 'remove', '--force', dir]); } catch {} fs.rmSync(dir, { recursive: true, force: true }); }
 }
 
+/** Carrousel LinkedIn de la revue du créneau (« 2026-11-25:soir » → revue/2026-11-25-soir/), s'il est en ligne. */
+export async function linkedinCarousel(slotKey, { fetchImpl = fetch } = {}) {
+  const id = String(slotKey || '').replace(':', '-');
+  if (!/^\d{4}-\d{2}-\d{2}-(matin|soir)$/.test(id)) return null;
+  const base = `https://le-radar.ca/revue/${id}/`;
+  const url = `${base}le-radar-revue-${id}-linkedin.pdf`, thumbnailUrl = `${base}linkedin-cover.jpg`;
+  try {
+    const [a, b] = await Promise.all([url, thumbnailUrl].map((u) => fetchImpl(u, { method: 'HEAD', signal: AbortSignal.timeout(15000) })));
+    if (!a.ok || !b.ok) return null;
+  } catch { return null; }
+  const [day, ed] = [id.slice(0, 10), id.slice(11)];
+  const d = new Date(`${day}T12:00:00Z`);
+  const date = new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }).format(d);
+  return { url, thumbnailUrl, title: `${ed === 'soir' ? 'La revue du soir' : 'La revue du matin'} du Radar · ${date}` };
+}
+
 // ── Publication ──────────────────────────────────────────────────────────────
 async function publishOne(net, entry, env) {
   const text = entry.texts[net], img = entry.images[IMAGE_FOR[net]], size = IMAGE_SIZES[IMAGE_FOR[net]], head = text.split('\n')[0];
@@ -114,6 +130,16 @@ async function publishOne(net, entry, env) {
     const th = createXBuffer({ key: env[pages.threads?.secret || 'BUFFER_INSTAGRAM_API_KEY'], service: 'threads', channelName: pages.threads?.name || 'le.radar.ca', fallbackId: env.BUFFER_THREADS_CHANNEL_ID || null });
     const post = await th.add({ text, now: true, metadata: { threads: { type: 'post', topic: UNE_THREADS_TOPIC } } });
     return { id: post.id, status: post.status || '' };
+  }
+  // LinkedIn : la une part avec le carrousel PDF de la revue du même créneau (revue/<jour>-<matin|soir>/linkedin.pdf),
+  // le format le plus engageant d'une Page. PDF pas encore en ligne : image habituelle.
+  if (net === 'linkedin') {
+    const doc = await linkedinCarousel(entry.key);
+    if (doc) {
+      const lch = createXBuffer({ key, service: pages.linkedin.service, channelName: pages.linkedin.name, fallbackId: env.BUFFER_LINKEDIN_CHANNEL_ID || null });
+      const post = await lch.add({ text, now: true, document: doc, metadata: postMetadata(net) });
+      return { id: post.id, status: post.status || '', document: doc.url };
+    }
   }
   const ch = net === 'x' ? createXBuffer({ key, fallbackId: env.BUFFER_CHANNEL_ID || undefined })
     : createXBuffer({ key, service: pages[net].service, channelName: pages[net].name, fallbackId: (net === 'facebook' ? env.BUFFER_FACEBOOK_CHANNEL_ID : env.BUFFER_LINKEDIN_CHANNEL_ID) || null });
