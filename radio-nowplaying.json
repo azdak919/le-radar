@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-11-26T12:07:01.219Z",
+  "updatedAt": "2026-11-26T13:07:06.363Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Jeudi Révolte",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
+      "next": {
+        "title": "Sons de Cloches",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/sons-de-cloches/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Jeudi Révolte",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T12:06:12.065Z"
+      "checkedAt": "2026-11-26T13:06:25.017Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jimmy et Neutron",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "Une fenêtre sur le monde",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
+      },
       "track": "",
-      "showTitle": "Jimmy et Neutron",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T12:06:13.135Z"
+      "checkedAt": "2026-11-26T13:06:26.334Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,61 +81,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T12:06:15.560Z"
+      "checkedAt": "2026-11-26T13:06:29.907Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
-      },
-      "next": {
         "title": "Free City Radio",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/free-city-radio"
       },
-      "track": "",
-      "showTitle": "Daydream Nation",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-26T12:06:39.756Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "07:59",
-        "url": "https://www.cfak.ca/balados/Folkswagen"
-      },
       "next": {
-        "title": "Palmarès CFAK",
+        "title": "Everything Everywhere",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "08:59",
-        "url": "https://www.cfak.ca/balados/palmares-cfak"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T12:06:40.829Z"
+      "checkedAt": "2026-11-26T13:06:43.951Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "08:59",
+        "url": "https://www.cfak.ca/balados/palmares-cfak"
+      },
+      "next": {
+        "title": "Le NEUF",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:59",
+        "url": "https://www.cfak.ca/balados/le-neuf"
+      },
+      "track": "",
+      "showTitle": "Palmarès CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-26T13:06:44.856Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +148,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "cherry pick — asleep with the fishes",
+      "track": "The War On Drugs — Who's That",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T12:07:00.869Z"
+      "checkedAt": "2026-11-26T13:07:06.012Z"
     }
   }
 }
