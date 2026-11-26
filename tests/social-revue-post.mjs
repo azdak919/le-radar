@@ -6,16 +6,26 @@ import * as R from '../scripts/social/revue-post.mjs';
 const model = JSON.parse(fs.readFileSync(new URL('../data/revue/reviews/2026-11-25-soir.json', import.meta.url), 'utf8'));
 const at = (iso) => Date.parse(iso);
 
-// Créneaux (heure de Montréal ; 26 nov. 2026 = heure normale, UTC−5) : matin 9 h – 11 h 30, soir 20 h 30 – 22 h 30, loin de La une.
-assert.equal(R.slotAt(at('2026-11-26T14:15:00Z'))?.id, 'matin', '9 h 15');
-assert.equal(R.slotAt(at('2026-11-26T12:45:00Z')), null, '7 h 45 (La une) : rien');
-assert.equal(R.slotAt(at('2026-11-27T00:30:00Z')), null, '19 h 30 (La une) : rien');
+// Créneaux (heure de Montréal ; 26 nov. 2026 = heure normale, UTC−5) : matin 7 h – 13 h 30, soir 19 h – 22 h 30.
+assert.equal(R.slotAt(at('2026-11-26T12:30:00Z'))?.id, 'matin', '7 h 30 : le matin peut déjà programmer');
+assert.equal(R.slotAt(at('2026-11-26T18:45:00Z')), null, '13 h 45 : fenêtre fermée');
 assert.equal(R.slotAt(at('2026-11-27T01:45:00Z'))?.revueId, '2026-11-26-soir', '20 h 45 → revue du soir du jour');
-assert.deepEqual(R.slotAt(at('2026-11-26T14:15:00Z')).networks, ['linkedin', 'facebook', 'instagram']);
-assert.ok(!R.CFG.slots.soir.networks.includes('linkedin'), 'LinkedIn : le matin seulement');
-// Instagram à partir du 29 nov. (rodage du compte).
-assert.deepEqual(R.netsFor({ ...R.CFG.slots.matin, day: '2026-11-28' }), ['linkedin', 'facebook']);
-assert.deepEqual(R.netsFor({ ...R.CFG.slots.matin, day: '2026-11-29' }), ['linkedin', 'facebook', 'instagram']);
+assert.equal(R.slotAt(at('2026-11-27T03:45:00Z')), null, '22 h 45 : fenêtre fermée');
+// Une heure par réseau, dans l'ordre ; LinkedIn en semaine seulement ; Instagram à partir du 29 nov. (rodage).
+const matin = (day) => ({ ...R.CFG.slots.matin, day, revueId: `${day}-matin` });
+const soir = (day) => ({ ...R.CFG.slots.soir, day, revueId: `${day}-soir` });
+assert.deepEqual(R.netsFor(matin('2026-11-27')), ['facebook', 'linkedin'], 'vendredi, avant Instagram');
+assert.deepEqual(R.netsFor(matin('2026-11-30')), ['facebook', 'instagram', 'linkedin'], 'lundi : 11 h, 12 h, 12 h 15');
+assert.deepEqual(R.netsFor(matin('2026-11-29')), ['facebook', 'instagram'], 'dimanche : pas de LinkedIn');
+assert.deepEqual(R.netsFor(soir('2026-11-30')), ['facebook', 'instagram'], 'soir : jamais LinkedIn');
+// Heure exacte : heure de Montréal → UTC, heure normale et heure avancée.
+assert.equal(new Date(R.dueFor(matin('2026-11-30'), 'facebook')).toISOString(), '2026-11-30T16:00:00.000Z', '11 h HNE');
+assert.equal(new Date(R.dueFor(soir('2026-11-30'), 'instagram')).toISOString(), '2026-12-01T02:15:00.000Z', '21 h 15 HNE');
+assert.equal(new Date(R.dueFor({ ...R.CFG.slots.matin, day: '2027-06-01' }, 'linkedin')).toISOString(), '2027-06-01T16:15:00.000Z', '12 h 15 HAE');
+// Passage tôt : programmé dans Buffer à l'heure du réseau ; passage tardif : tout de suite.
+assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T12:40:00Z')), { dueAt: '2026-11-30T16:00:00.000Z' });
+assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T16:20:00Z')), { now: true });
+assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T15:59:00Z')), { now: true }, 'moins de 2 min : tout de suite');
 
 // Minimum (comme La une) : revue publiée → oui ; sautée ou absente → non ; vide → non.
 const slot = { id: 'soir', day: '2026-11-25', revueId: '2026-11-25-soir' };
@@ -48,6 +58,24 @@ assert.ok(short.len <= 700 && short.problems.length === 0 && /revues\/2026-11-25
 // État : un réseau publié ou abandonné après 3 essais compte comme fait.
 assert.equal(R.slotDone({ nets: { facebook: { at: 'x' }, instagram: { attempts: 3, failed: true } } }, ['facebook', 'instagram']), true);
 assert.equal(R.slotDone({ nets: { facebook: { at: 'x' } } }, ['facebook', 'instagram']), false);
-assert.equal(R.gate({ now: at('2026-11-26T16:00:00Z'), state: {} }).due, true, '11 h : matin dû');
-assert.equal(R.gate({ now: at('2026-11-26T18:00:00Z'), state: {} }).due, false, '13 h : hors fenêtre');
+assert.equal(R.gate({ now: at('2026-11-26T12:40:00Z'), state: {} }).due, true, '7 h 40 : matin dû (programmation)');
+assert.equal(R.gate({ now: at('2026-11-26T19:00:00Z'), state: {} }).due, false, '14 h : hors fenêtre');
+// Buffer : programmée (customScheduled + dueAt) pour Instagram en carrousel ; sinon tout de suite (shareNow).
+{
+  const { deliverInstagram } = await import('../scripts/social/instagram.mjs');
+  const run = async (dueAt) => {
+    let sent;
+    const fetchImpl = async (_u, o) => { const b = JSON.parse(o.body);
+      if (/createPost/.test(b.query)) { sent = b.variables.i; return { ok: true, status: 200, json: async () => ({ data: { createPost: { post: { id: 'p9', status: 'scheduled' } } } }) }; }
+      if (/organizations/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] } } }) };
+      if (/channels/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { channels: [{ id: '6b012936ece6dfde5f3f554d', name: 'le.radar.ca', service: 'instagram' }] } }) };
+      return { ok: true, status: 200, json: async () => ({ data: { posts: { edges: [] } } }) }; };
+    const r = await deliverInstagram({ env: { BUFFER_INSTAGRAM_API_KEY: 'x' }, text: 'Légende', imageUrl: 'https://a/1.jpg', dueAt, images: [{ url: 'https://a/1.jpg', alt: 'a' }, { url: 'https://a/2.jpg', alt: 'b' }], fetchImpl });
+    assert.equal(r.action, 'sent', r.reason);
+    return sent;
+  };
+  const later = await run('2026-11-30T17:00:00.000Z');
+  assert.equal(later.mode, 'customScheduled'); assert.equal(later.dueAt, '2026-11-30T17:00:00.000Z'); assert.equal(later.assets.length, 2);
+  assert.equal((await run(undefined)).mode, 'shareNow');
+}
 console.log('social-revue-post : OK');
