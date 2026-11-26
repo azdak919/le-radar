@@ -419,7 +419,25 @@ console.log('social-une ok');
   const r = quietLead(m, { sports: {}, radio: [{}], cover });
   assert.equal(r.title, 'Aujourd’hui à l’antenne');
   assert.doesNotMatch(r.hook, /\d/);
-  assert.deepEqual(r.images, [cover.commons, cover.url], 'Commons 1280 px d’abord, miroir en repli');
-  assert.equal(r.credit, 'X / CC BY 2.0 · Wikimedia Commons');
+  assert.equal(r.art?.kind, 'radio', 'affiche graphique (logos des radios), pas de photo');
+  assert.deepEqual(r.images, []); assert.equal(r.credit, '');
   assert.equal(quietLead(m, { sports: {}, radio: [] }), null);
+}
+
+// Affiche graphique de la une sans article : match aux couleurs des établissements, sinon logos officiels des radios.
+{
+  const { quietArt, stationLogos } = await import('../scripts/social/une-lib.mjs');
+  const slot = { id: 'matin', day: '2026-11-26' };
+  const a = { name: 'Martlets', inst: 'McGill', color: '#ED1B2F' }, b = { name: 'Stingers', inst: 'Concordia', color: '#912338' };
+  const next = quietArt(slot, { sports: { results: [], next: [{ kind: 'avenir', emoji: '🏀', sport: 'Basketball (F)', date: '2026-11-26', time: '18:00', verb: 'reçoit', teams: [a, b] }] } });
+  assert.equal(next.kind, 'match'); assert.equal(next.label, 'Jour de match'); assert.equal(next.when, 'jeu. 26 nov. · 18 h'); assert.equal(next.score, null);
+  assert.equal(next.a.color, '#ED1B2F');
+  const res = quietArt(slot, { sports: { results: [{ kind: 'resultat', emoji: '🏐', sport: 'Volleyball (F)', date: '2026-11-25', teams: [{ ...a, score: 3 }, { ...b, score: 1 }] }], next: [] } });
+  assert.deepEqual(res.score, [3, 1]); assert.equal(res.label, 'Résultat');
+  const logos = stationLogos();
+  assert.ok(logos.length >= 6, 'logos officiels des radios présents');
+  const radio = quietArt(slot, { sports: {}, radio: [{ station: logos[3].name }] });
+  assert.equal(radio.kind, 'radio'); assert.equal(radio.stations.length, logos.length, 'toutes les stations');
+  assert.equal(radio.stations[0].name, logos[3].name, 'la station à l’antenne en premier'); assert.ok(radio.stations[0].on);
+  assert.equal(quietArt(slot, { sports: {}, radio: [] }), null);
 }

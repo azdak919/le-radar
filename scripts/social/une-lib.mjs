@@ -607,7 +607,7 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
 /**
  * Pseudo-« une » d'un créneau sans nouvel article mais avec du sport ou de la radio : photo libre de campus en tête,
  * titre qui dit ce que le créneau met de l'avant, résumé honnête (aucun article). `cover` : { url, credit, title }
- * (campusCover de scripts/revue/revue-lib.mjs ; vignette Commons 1280 px d'abord, miroir 500 px du site en repli). Retourne null s'il n'y a ni sport ni radio : le créneau est sauté.
+ * (photo libre de campus fournie par l'appelant, seulement si aucune affiche graphique n'est possible). Retourne null s'il n'y a ni sport ni radio : le créneau est sauté.
  */
 export function quietLead(slot, { sports = {}, radio = [], cover = null } = {}) {
   const res = (sports.results || []).length, nxt = (sports.next || []).length, rad = (radio || []).length;
@@ -620,6 +620,39 @@ export function quietLead(slot, { sports = {}, radio = [], cover = null } = {}) 
   // Sans décompte : l'image n'affiche qu'une partie des matchs et des émissions.
   const parts = [res && 'les derniers résultats', nxt && 'les prochains matchs', rad && 'les émissions des radios étudiantes'].filter(Boolean);
   const hook = `Aucun nouvel article des médias étudiants depuis la dernière une. Au programme : ${parts.length > 1 ? parts.slice(0, -1).join(', ') + ' et ' + parts.at(-1) : parts[0]}.`;
-  const credit = cover ? String(cover.credit || '').replace(/^Photo\s*:\s*/i, '') : '';
-  return { id: '', title, byline: '', source: '', place: '', placeColor: '', sport: '', hook, credit, images: [...new Set([cover?.commons, cover?.url].filter(Boolean))], quiet: true };
+  // Couverture graphique (pas de photo) : affiche de match aux couleurs des établissements, ou logos officiels des radios.
+  const art = quietArt(slot, { sports, radio });
+  const credit = !art && cover ? String(cover.credit || '').replace(/^Photo\s*:\s*/i, '') : '';
+  return { id: '', title, byline: '', source: '', place: '', placeColor: '', sport: '', hook, credit, images: art ? [] : [...new Set([cover?.commons, cover?.url].filter(Boolean))], quiet: true, art };
+}
+let RADIOS = null;
+/** Stations de radios.json qui ont un logo officiel (assets/logos/stations/<id>-512.png). */
+export function stationLogos(root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..')) {
+  if (RADIOS) return RADIOS;
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(root, 'radios.json'), 'utf8'));
+    const list = Array.isArray(raw) ? raw : (raw.stations || Object.values(raw));
+    RADIOS = list.filter(r => r && r.id && r.name && fs.existsSync(path.join(root, `assets/logos/stations/${r.id}-512.png`)))
+      .map(r => ({ id: r.id, name: r.name, freq: r.frequency || '', city: r.city || '', logo: `../assets/logos/stations/${r.id}-512.png` }));
+  } catch { RADIOS = []; }
+  return RADIOS;
+}
+/**
+ * Visuel d'une une sans article. Sport : la rencontre en vedette (premier résultat, sinon premier match à venir), aux
+ * couleurs des deux établissements (brand-colors.json). Radio seule : les logos officiels de toutes les stations,
+ * celles à l'antenne dans ce créneau en premier.
+ */
+export function quietArt(slot, { sports = {}, radio = [] } = {}) {
+  const r = (sports.results || []).find(x => x.kind === 'resultat' && x.teams?.length === 2) || (sports.next || []).find(x => x.teams?.length === 2);
+  if (r) {
+    const t = x => ({ name: x.name, inst: x.inst || '', color: x.color || '' });
+    const res = r.kind === 'resultat';
+    return { kind: 'match', emoji: r.emoji || '', sport: r.sport, label: res ? 'Résultat' : (r.date === slot.day ? 'Jour de match' : 'Prochain match'),
+      when: res ? `Final · ${frShort(r.date)}` : [frShort(r.date), frHour(r.time)].filter(Boolean).join(' · '),
+      a: t(r.teams[0]), b: t(r.teams[1]), score: res ? [r.teams[0].score, r.teams[1].score] : null, verb: res ? '' : (r.verb || 'contre') };
+  }
+  const all = stationLogos();
+  if (!(radio || []).length || !all.length) return null;
+  const on = new Set(radio.map(x => x.station));
+  return { kind: 'radio', stations: [...all.filter(s => on.has(s.name)), ...all.filter(s => !on.has(s.name))].map(s => ({ ...s, on: on.has(s.name) })) };
 }

@@ -320,7 +320,7 @@ assert.equal(noAi.status, 'publiée'); assert.equal(noAi.model.generator, 'gabar
 assert.ok(noAi.model.items.filter(x => x.lang !== 'en').every(x => x.resumeBy === 'chapo' && x.resume), 'sans IA : chapô français fidèle');
 assert.ok(noAi.model.items.filter(x => x.lang === 'en').every(x => !x.resume && x.excerpt), 'sans IA : un article anglais reste une citation, pas une traduction inventée');
 // Amorce déterministe : phrases de rédaction, aucun décompte ni parenthèse de comptage.
-assert.equal(noAi.model.intro, 'Pour ouvrir la journée, Le Collectif publie «\u00a0Le conseil municipal de Sherbrooke adopte son budget\u00a0», sous la plume d’Aurélie Souka et Caroline Lizin. À lire aussi : «\u00a0La génération Z et le retour des médias physiques\u00a0» dans Quartier Libre, et «\u00a0Stingers 55, Martlets 54: Concordia takes it at the final buzzer\u00a0» dans The Link. Sur les terrains, en basketball (F) : Stingers (Concordia) 55, Martlets (McGill) 54.');
+assert.equal(noAi.model.intro, 'Pour ouvrir la journée, Le Collectif publie «\u00a0Le conseil municipal de Sherbrooke adopte son budget\u00a0», sous la plume d’Aurélie Souka et Caroline Lizin. À lire aussi : «\u00a0La génération Z et le retour des médias physiques\u00a0» dans Quartier Libre, et «\u00a0Stingers 55, Martlets 54: Concordia takes it at the final buzzer\u00a0» dans The Link. Sur les terrains, en basketball féminin : Stingers (Concordia) 55, Martlets (McGill) 54.');
 assert.doesNotMatch(noAi.model.intro, /« | »/, 'guillemets tenus par des espaces insécables');
 assert.doesNotMatch(noAi.model.intro + noAi.model.description, /\(\d+\)|\d+ articles?|\d+ médias?|réunit|Au sommaire/, 'aucun décompte mécanique');
 assert.match(noAi.model.description, /^La revue du matin du mardi 17 novembre 2026\. Pour ouvrir la journée, Le Collectif publie/);
@@ -329,6 +329,14 @@ assert.equal(L.ledeSport({ sports: { results: [], next: [] }, radio: [{ station:
 { const it = (title, source, o = {}) => ({ title, source, authors: [], lang: 'fr', ...o });
   const t = L.ledeNews({ edition: { id: 'matin' }, items: [it('Le revenu viable', 'La Pige', { image: 'x' }), it('Le Vert & Or triomphe', 'Le Collectif'), it('« Soutenons le journalisme » : Sherbrooke accueille la FPJQ', 'Le Collectif')] });
   assert.equal(t, 'Pour ouvrir la journée, La Pige publie «\u00a0Le revenu viable\u00a0». À lire aussi : «\u00a0Le Vert & Or triomphe\u00a0» et «\u00a0“Soutenons le journalisme” : Sherbrooke accueille la FPJQ\u00a0» dans Le Collectif.', 'même média regroupé ; guillemets internes de second niveau'); }
+// Texte suivi : « féminin / masculin » au lieu de (F) / (H) ; la section sport garde (F) / (H).
+assert.equal(L.sportInText('Basketball (F)'), 'Basketball féminin');
+assert.equal(L.sportInText('Hockey (H)'), 'Hockey masculin');
+assert.equal(L.sportInText('Natation (F)'), 'Natation féminine');
+assert.equal(L.sportInText('Badminton (mixte)'), 'Badminton mixte');
+assert.equal(L.sportInText('Soccer'), 'Soccer');
+assert.equal(L.ledeSport({ sports: { results: [], next: [{ sport: 'Basketball (F)', date: '2026-11-26', time: '18:00', text: 'Martlets (McGill) reçoit Stingers (Concordia)' }] }, radio: [] }), 'Côté sport étudiant, prochain rendez-vous en basketball féminin le jeudi 26 novembre à 18 h : Martlets (McGill) reçoit Stingers (Concordia).');
+assert.match(L.ledeSport({ sports: { results: [{ sport: 'Volleyball (H)', teams: [{ name: 'A', score: 3 }, { name: 'B', score: 1 }] }], next: [] }, radio: [] }), /en volleyball masculin :/);
 // Toute donnée modifiée est refusée.
 const tamper = (f) => { const c = structuredClone(m); f(c); return L.validateReview(c, { news, masthead, schedules }); };
 assert.ok(tamper(c => { c.items[0].link = 'https://exemple.com/invente'; }).some(p => /lien absent/.test(p)));
@@ -476,7 +484,7 @@ assert.match(html, /<meta property="article:published_time" content="2026-11-17T
 assert.match(html, /<p class="revue-disclosure">Revue préparée automatiquement par Le Radar à partir des sources citées ; chaque texte, titre et photo appartient à son média et à ses auteurs\.<\/p>\s*<\/article>/, 'transparence : une phrase discrète en pied d’article');
 assert.doesNotMatch(R.articleBody(m), /revue-note|🤖/, 'plus d’encadré « générée automatiquement » en ouverture');
 assert.doesNotMatch(html, /revue-count|\(\d+\)<\/h[234]>/, 'aucun décompte entre parenthèses dans les intertitres');
-assert.match(html, /<p class="seo-lead revue-lede">Le Collectif suit le budget[^<]*Martlets au basketball\. Sur les terrains, en basketball \(F\) : Stingers \(Concordia\) 55, Martlets \(McGill\) 54\.<\/p>/, 'amorce : IA vérifiée puis phrase sportive');
+assert.match(html, /<p class="seo-lead revue-lede">Le Collectif suit le budget[^<]*Martlets au basketball\. Sur les terrains, en basketball féminin : Stingers \(Concordia\) 55, Martlets \(McGill\) 54\.<\/p>/, 'amorce : IA vérifiée puis phrase sportive');
 assert.match(html, /<link rel="stylesheet" href="\.\.\/\.\.\/revue\.css" \/>/);
 assert.match(html, /<script src="\.\.\/\.\.\/seo-page-theme\.js"><\/script>/, 'modes clair et sombre du site');
 for (const x of m.items) {

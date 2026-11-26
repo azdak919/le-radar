@@ -87,7 +87,37 @@
     const fy = clamp01(it && it.focalY, defaultY);
     return `${Math.round(fx * 100)}% ${Math.round(fy * 100)}%`;
   }
+  // Une sans article : affiche graphique à la place de la photo (vectorielle, nette à toutes les tailles).
+  // Match : diagonale aux couleurs des deux établissements, équipes en grand, heure ou pointage. Radio : logos officiels.
+  function artNode(art) {
+    const a = el('div', 'art art-' + art.kind);
+    if (art.kind === 'match') {
+      a.style.setProperty('--ca', art.a.color || '#6c2163'); a.style.setProperty('--cb', art.b.color || '#1f2a44');
+      a.append(el('div', 'art-bg'));
+      const top = el('p', 'art-kick'); top.append(el('span', 'art-emo', art.emoji), el('span', '', art.sport)); a.append(top);
+      const row = el('div', 'art-row');
+      const side = (t) => { const d = el('div', 'art-team'); d.append(el('b', '', t.name)); if (t.inst) d.append(el('span', '', t.inst)); return d; };
+      const mid = el('div', 'art-mid');
+      if (art.score) mid.append(el('b', 'art-score', `${art.score[0]}${NB}–${NB}${art.score[1]}`)); else mid.append(el('b', 'art-vs', 'VS'));
+      row.append(side(art.a), mid, side(art.b)); a.append(row);
+      const foot = el('p', 'art-when'); foot.append(el('span', 'art-label', art.label), el('span', '', art.when)); a.append(foot);
+    } else {
+      a.append(el('div', 'art-bg'));
+      const head = el('p', 'art-kick'); head.append(el('span', 'art-onair', 'À l’antenne'), el('span', '', 'Radios étudiantes du Québec')); a.append(head);
+      const grid = el('div', 'art-logos');
+      (art.stations || []).forEach((st) => { const c = el('div', 'art-logo' + (st.on ? ' on' : '')); const im = el('img'); im.alt = st.name; im.src = st.logo; c.append(im, el('span', '', st.name)); grid.append(c); });
+      a.append(grid);
+    }
+    a.ready = Promise.all([...a.querySelectorAll('img')].map((im) => new Promise((r) => { if (im.complete) r(); else { im.onload = r; im.onerror = r; } })));
+    return a;
+  }
   function photo(it, cls, badge, format) {
+    if (it.art) {
+      const box = el('div', cls + ' has-art'); const art = artNode(it.art); box.append(art);
+      if (badge) box.append(el('span', 'badge', it.art.kind === 'radio' ? 'Radio étudiante' : 'Sport étudiant'));
+      box.ready = art.ready.then(() => '');
+      return box;
+    }
     const box = el('div', cls); const img = el('img'); img.alt = ''; box.append(img);
     if (badge) box.append(el('span', 'badge', badge));
     const credit = String(it.credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
@@ -329,13 +359,16 @@
       });
       bottom.append(also);
     }
+    let artReady = null;
+    if (lead.art) { card.classList.add('quiet-art'); const art = artNode(lead.art); full.textContent = ''; full.append(art); well.remove(); artReady = art.ready; }
     root.append(full, well, el('div', 'ig-veil-top'), el('div', 'ig-veil-bot'), top, bottom);
     card.append(root);
-    const sources = (lead.images && lead.images.length) ? lead.images : [];
+    if (artReady) await artReady;
+    const sources = lead.art ? [] : (lead.images && lead.images.length) ? lead.images : [];
     const ok = await (sources.length
       ? Promise.all([loadFirst(imgFull, sources), loadFirst(imgWell, sources)]).then((r) => r[0])
       : Promise.resolve(false));
-    if (!ok) { imgFull.remove(); imgWell.remove(); full.classList.add('empty'); well.classList.add('empty'); }
+    if (!ok && !lead.art) { imgFull.remove(); imgWell.remove(); full.classList.add('empty'); well.classList.add('empty'); }
     await Promise.all([document.fonts.ready, brand.ready, ...thumbs]);
     fitTitle(title, 44);
     const overflow = card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2;

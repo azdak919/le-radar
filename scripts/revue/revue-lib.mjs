@@ -457,16 +457,25 @@ export function ledeNews(model) {
   else if (b) parts.push(`À lire aussi : ${quoteTitle(b.title)} dans ${b.source}${c ? `, et ${quoteTitle(c.title)} dans ${c.source}` : ''}.`);
   return parts.join(' ');
 }
+// Texte suivi (amorce, description, flux) : « basketball féminin » plutôt que « basketball (F) » ; la section sport garde (F)/(H).
+const FEM_SPORT = /^(natation|nage|voile|lutte|escrime|course|gymnastique|crosse|ringuette|boxe|plongée|escalade)\b/i;
+export function sportInText(label) {
+  const m = String(label || '').match(/^(.*?)\s*\((F|H|mixte)\)\s*$/);
+  if (!m) return String(label || '');
+  const fem = FEM_SPORT.test(m[1].trim());
+  const g = m[2] === 'F' ? (fem ? 'féminine' : 'féminin') : m[2] === 'H' ? (fem ? 'masculine' : 'masculin') : 'mixte';
+  return `${m[1].trim()} ${g}`;
+}
 /** Une phrase sur le sport étudiant (résultat marquant, sinon prochain match) ou, à défaut, la radio étudiante. */
 export function ledeSport(model) {
   const r = (model.sports?.results || []).find(x => x.teams?.length === 2);
   if (r) {
     const [x, y] = r.teams;
-    return r.tie ? `Sur les terrains, match nul en ${lcFirst(r.sport)} entre ${teamTxt(x)} et ${teamTxt(y)}, ${x.score} à ${y.score}.`
-      : `Sur les terrains, en ${lcFirst(r.sport)} : ${teamTxt(x)} ${x.score}, ${teamTxt(y)} ${y.score}.`;
+    return r.tie ? `Sur les terrains, match nul en ${lcFirst(sportInText(r.sport))} entre ${teamTxt(x)} et ${teamTxt(y)}, ${x.score} à ${y.score}.`
+      : `Sur les terrains, en ${lcFirst(sportInText(r.sport))} : ${teamTxt(x)} ${x.score}, ${teamTxt(y)} ${y.score}.`;
   }
   const n = (model.sports?.next || [])[0];
-  if (n) return `Côté sport étudiant, prochain rendez-vous le ${frDay(n.date)}${n.time ? ` à ${frHour(n.time)}` : ''} : ${n.text}.`;
+  if (n) return `Côté sport étudiant, prochain rendez-vous${n.sport ? ` en ${lcFirst(sportInText(n.sport))}` : ''} le ${frDay(n.date)}${n.time ? ` à ${frHour(n.time)}` : ''} : ${n.text}.`;
   const st = (model.radio || []).find(s => s.shows?.length);
   if (st) return `À l’antenne, ${st.station} propose ${quoteTitle(st.shows[0].title)}, de ${st.shows[0].when}.`;
   return '';
