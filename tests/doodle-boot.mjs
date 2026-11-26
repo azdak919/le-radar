@@ -23,11 +23,11 @@ const {
   applyDoodleClass,
 } = require("../doodle-boot-lib.js");
 
-const END = Date.parse("2026-12-01T04:59:59.999Z");
+const END = Date.parse("2026-11-26T04:59:59.999Z");
 const BEFORE = Date.parse("2026-11-21T20:00:00-05:00");
-const AFTER = Date.parse("2026-12-01T05:00:00Z");
+const AFTER = Date.parse("2026-11-26T05:00:00Z");
 
-assert.equal(END_MS, END, "la fin doit être le 30 nov. 2026 à 23 h 59:59, heure de Montréal");
+assert.equal(END_MS, END, "la fin doit être le 25 nov. 2026 à 23 h 59:59, heure de Montréal");
 assert.equal(CHANCE, 0.2, "tirage 1 sur 5");
 assert.equal(CITY_CHANCE, 0.5, "villes à parts égales");
 assert.deepEqual(CITIES, ["montreal", "quebec"]);
@@ -147,7 +147,7 @@ assert.equal(formatCityCredit("quebec"), "Martin St-Amant — Québec");
 const bootSrc = readFileSync(join(__dirname, "..", "seo-page-theme.js"), "utf8");
 assert.match(bootSrc, /radar-doodle-2026-11/);
 assert.match(bootSrc, /radar-doodle-2026-11-city/);
-assert.match(bootSrc, /2026-12-01T04:59:59\.999Z/);
+assert.match(bootSrc, /2026-11-26T04:59:59\.999Z/);
 assert.match(bootSrc, /Math\.random\(\) < 0\.2/);
 assert.match(bootSrc, /Math\.random\(\) < 0\.5/);
 assert.match(bootSrc, /sessionStorage/);
