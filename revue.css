@@ -174,6 +174,14 @@
 
 /* Index des archives */
 .revue-archive { list-style: none; margin: 0; padding: 0; }
+/* Revues du jour : en évidence au-dessus des archives, la plus récente d'abord. */
+.revue-latest { margin-top: 18px; padding-top: 0; border-top: 0; }
+.revue-latest h2 { font-family: var(--serif); }
+.revue-latest__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.revue-latest__item { padding: 12px 14px; border: 1px solid var(--rule); border-radius: 10px; font-family: var(--sans); }
+.revue-latest__link { font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+.revue-latest__time { font-size: 13px; color: var(--muted, inherit); opacity: .8; }
+.revue-latest__lead { margin: 4px 0 0; font-size: 14.5px; }
 .revue-archive__day { padding: 10px 0; border-bottom: 1px solid var(--rule); }
 .revue-archive__day h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 6px; color: var(--ink); }
 .revue-archive__day ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--sans); font-size: 14.5px; }
