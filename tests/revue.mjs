@@ -338,10 +338,52 @@ assert.ok(tamper(c => { c.items[0].excerpt = 'Phrase inventée.'; }).some(p => /
 assert.ok(tamper(c => { c.items[0].resume = 'Le ministre Dupont annonce 12 millions pour les jeunes du campus.'; }).some(p => /résumé refusé/.test(p)));
 assert.ok(tamper(c => { c.sports.results[0].teams[0].score = 99; }).some(p => /résultat absent/.test(p)));
 assert.ok(tamper(c => { c.radio[0].shows[0].title = 'Émission inventée'; }).some(p => /émission absente/.test(p)));
-assert.ok(tamper(c => { c.items = []; }).some(p => /vide/.test(p)), 'revue vide refusée');
-// Rien de neuf : édition sautée (comme La une du soir).
-const skip = await generate('soir', Date.parse('2026-11-18T00:16:00Z'), { ...io, index: [{ id: m.id, periodEnd: new Date(m.period.end).toISOString(), datePublished: m.datePublished, articleIds: m.articleIds, sportKeys: m.sportKeys }] });
+assert.ok(tamper(c => { c.items = []; c.sports = { results: [], next: [] }; c.radio = []; }).some(p => /vide/.test(p)), 'revue vide refusée');
+assert.ok(!tamper(c => { c.items = []; }).some(p => /vide/.test(p)), 'sans article mais avec sport ou radio : pas vide');
+// Rien de neuf : sans sport ni radio non plus, édition sautée (comme La une du soir).
+const prevIdx = [{ id: m.id, periodEnd: new Date(m.period.end).toISOString(), datePublished: m.datePublished, articleIds: m.articleIds, sportKeys: m.sportKeys }];
+const skip = await generate('soir', Date.parse('2026-11-18T00:16:00Z'), { ...io, index: prevIdx, masthead: { teams: {} }, schedules: { stations: {} } });
 assert.equal(skip.status, 'sautée'); assert.match(skip.why, /aucun nouvel article/);
+// publishWithoutArticles: false : ancien comportement, sautée même avec du sport ou de la radio.
+const skipOld = await generate('soir', Date.parse('2026-11-18T00:16:00Z'), { ...io, cfg: { ...on, publishWithoutArticles: false }, index: prevIdx });
+assert.equal(skipOld.status, 'sautée');
+// Aucun article, mais du sport ou de la radio : l'édition sort (sport et radio en tête, photo campus en couverture).
+{
+  const quiet = await generate('soir', Date.parse('2026-11-18T00:16:00Z'), { ...io, index: prevIdx, news: { ...news, updated: T('2026-11-18T00:10:00Z') } });
+  assert.equal(quiet.status, 'publiée', JSON.stringify(quiet.problems || quiet.why));
+  assert.equal(quiet.model.items.length, 0);
+  assert.match(quiet.why, /sans nouvel article/);
+  assert.match(quiet.model.intro, /^Aucun nouvel article des médias étudiants depuis la dernière revue/);
+  assert.ok(quiet.model.image?.campus, 'photo campus en couverture');
+  assert.match(quiet.model.image.url, /^https:\/\/upload\.wikimedia\.org\//);
+  assert.match(quiet.model.image.credit, /Wikimedia Commons/);
+  const R2 = R;
+  const html = R2.renderReviewPage(quiet.model);
+  assert.doesNotMatch(html, /id="presse"/, 'pas de section presse vide');
+  const iSport = html.indexOf('id="sport"'), iRadio = html.indexOf('id="radio"');
+  assert.ok(iSport > 0 && (iRadio < 0 || iSport < iRadio), 'sport en tête');
+  assert.deepEqual(L.foreignLinks(R2.articleBody(quiet.model), quiet.model), []);
+}
+// Section sport : prochains matchs en haut, puis les résultats.
+{
+  const R2 = R;
+  const body = R2.articleBody(m);
+  const sport = body.slice(body.indexOf('id="sport"'));
+  assert.ok(sport.indexOf('Prochains matchs') < sport.indexOf('>Résultats<'), 'prochains matchs avant les résultats');
+}
+// Photo campus : stable, paysage, sans visage, vignette 1280 px.
+{
+  const photos = [
+    { url: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Laval_hiver.jpg', title: 'Laval hiver', credit: 'X', license: 'CC BY-SA 4.0', width: 4000, height: 3000, season: 'hiver' },
+    { url: 'https://upload.wikimedia.org/wikipedia/commons/c/cd/Laval_automne.jpg', title: 'Laval automne', credit: 'Y', license: 'CC BY 2.0', width: 4000, height: 3000, season: 'automne' },
+    { url: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Visage.jpg', title: 'Visage', credit: 'Z', license: 'CC0', width: 4000, height: 3000, season: 'automne', faces: 2 },
+  ];
+  const c = L.campusCover({ key: '2026-11-26-matin', day: '2026-11-26' }, {}, photos);
+  assert.equal(c.title, 'Laval automne');
+  assert.equal(c.url, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Laval_automne.jpg/1280px-Laval_automne.jpg');
+  assert.equal(L.commonsThumb('https://upload.wikimedia.org/wikipedia/commons/c/cd/P.jpg', 800), 'https://upload.wikimedia.org/wikipedia/commons/c/cd/P.jpg');
+  assert.equal(L.campusCover({ key: 'k', day: '2026-11-26' }, {}, []), null);
+}
 // news.json périmé : doute, rien ne sort.
 const stale = await generate('matin', tM, { ...io, news: { ...news, updated: T('2026-11-16T12:00:00Z') } });
 assert.equal(stale.status, 'refusée'); assert.ok(stale.problems.some(p => /DOUTE/.test(p)));

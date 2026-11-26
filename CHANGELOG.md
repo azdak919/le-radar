@@ -12,6 +12,9 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Revue du matin et du soir : sans nouvel article des médias étudiants, l’édition n’est plus sautée si elle a des matchs à venir, des résultats ou des émissions de radio. Elle sort avec le sport puis la radio en tête (pas de section presse vide) et une photo libre de campus en couverture (Wikimedia Commons, établissement du premier match universitaire). Dans la section sport, « Prochains matchs » passe en haut, avant « Résultats ». Interrupteur : `publishWithoutArticles` dans `data/revue/config.json`.
+- Dette D20 (rétro-crawl historique à mesurer) retirée : simple attente de mesures, bloquée par D11, sans action à faire.
+
 - Licence : le code passe de la GPL-2.0-only à la GNU AGPLv3 (`AGPL-3.0-or-later`), ce qui règle l’incompatibilité avec AndroidX Media3 (Apache-2.0) et couvre l’usage en réseau des Workers. `LICENSE-EXCEPTIONS.md` autorise la distribution par l’App Store et Google Play. Kit-média et affiches : CC BY 4.0 avec réserve de marque (`kit-media/LICENSE`, `affiches/LICENSE`), au lieu de CC BY-SA 4.0. Annuaires factuels : CC0 1.0 (`LICENSE-DATA.md`). Scripts d’intégration (`embed.*`, `radio-barre.*`) : MIT. Pied de page FR/EN, pages Pomo et Solitaire, colophon de la Revue, phrase « Code libre AGPL 3.0 » du générateur et affiches du kit régénérées. Cache `radar-shell-v1068`.
 
 ### Ajouté

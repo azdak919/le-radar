@@ -18,6 +18,7 @@ import { chapoExtract, cutAtLastSentence, extraFacts, resumeCoversFact, sentence
 
 const require = createRequire(import.meta.url);
 const front = require('../magazine-front-page-lib.js');
+const campusLib = require('../campus-fallback-lib.js');
 
 export const SITE = 'https://le-radar.ca';
 export const PUBLISHER = 'Le Radar';
@@ -26,7 +27,7 @@ export const EDITIONS = {
   soir: { id: 'soir', label: 'La revue du soir', emoji: '🌙', target: '19:15', from: '19:00', to: '22:30', periodStart: '07:00', periodStartDayOffset: 0 },
 };
 export const DEFAULT_CONFIG = {
-  publish: false, editions: EDITIONS, refresh: { enabled: true, from: '23:00', to: '23:59' }, skipWithoutArticles: true,
+  publish: false, editions: EDITIONS, refresh: { enabled: true, from: '23:00', to: '23:59' }, skipWithoutArticles: true, publishWithoutArticles: true,
   maxLookbackHours: 48, maxArticles: 40, radio: { maxPerStation: 4, windows: { matin: ['07:00', '17:00'], soir: ['19:15', '24:00'] } },
   sports: { upcomingDays: 3, upcomingFallbackDays: 7 }, ai: { enabled: true, maxCallsPerRun: 6, batchSize: 8 }, newsSitemapHours: 48, feedItems: 10,
 };
@@ -471,7 +472,15 @@ export function ledeSport(model) {
   return '';
 }
 /** Amorce complète : deux phrases sur l'actualité (IA vérifiée ou repli), puis une sur le sport ou la radio. */
-export function ledeOf(model) { return [model.chapeau || ledeNews(model), ledeSport(model)].filter(Boolean).join(' '); }
+export function ledeOf(model) { return [model.chapeau || ledeNews(model) || ledeQuiet(model), ledeSport(model)].filter(Boolean).join(' '); }
+/** Édition sans nouvel article : une phrase qui le dit, puis le sport et la radio prennent le relais. */
+export function ledeQuiet(model) {
+  if ((model.items || []).length) return '';
+  const sport = (model.sports?.results || []).length || (model.sports?.next || []).length;
+  const radio = (model.radio || []).some(s => s.shows?.length);
+  const what = sport && radio ? 'le sport et la radio étudiante' : sport ? 'le sport étudiant' : 'la radio étudiante';
+  return `Aucun nouvel article des médias étudiants depuis la dernière revue : cette édition met de l’avant ${what}.`;
+}
 /** Formules creuses refusées dans une amorce d'IA : on veut des articles précis, pas un survol. */
 const GENERIC = /sujets? vari|divers sujets|vari[ée]t[ée] de sujets|abordent|met(tent)? en lumi|au c(œ|oe)ur de|plusieurs articles|les médias étudiants (québécois )?(abordent|traitent|parlent)|cette revue (réunit|rassemble)|\bnous\b|\bvous\b|vers le succès/i;
 // Mots pleins (5 lettres et plus, sans accents) pour vérifier qu'un sujet est attribué au bon média.
@@ -510,9 +519,48 @@ export function ledeReject(text, items = []) {
 /** Titre (headline ≤ 110 caractères) et description (≤ 200) : déterministes, à partir des données. */
 export function headlineOf(model) { return `${model.edition.label} du ${frDayYear(model.edition.day)}`; }
 export function descriptionOf(model) {
-  const first = ledeNews(model).split(/(?<=[.!?»])\s+(?=\p{Lu}|À)/u)[0] || '';
+  const first = (ledeNews(model) || ledeQuiet(model)).split(/(?<=[.!?»])\s+(?=\p{Lu}|À)/u)[0] || '';
   const d = `${headlineOf(model)}. ${first}`.trim();
   return d.length > 200 ? d.slice(0, 197).replace(/\s+\S*$/, '') + '…' : d;
+}
+
+// ── Photo campus (édition sans article) ─────────────────────────────────────
+const SEASON_OF_MONTH = ['hiver', 'hiver', 'hiver', 'printemps', 'printemps', 'printemps', 'ete', 'ete', 'ete', 'automne', 'automne', 'automne'];
+let CAMPUS_BANK = null;
+function campusBank() {
+  if (CAMPUS_BANK) return CAMPUS_BANK;
+  try { CAMPUS_BANK = require('../../data/quebec-university-backgrounds.json').photos || []; } catch { CAMPUS_BANK = []; }
+  return CAMPUS_BANK;
+}
+/** Vignette Commons 1280 px (l'original fait souvent 4000 px et plus). */
+export function commonsThumb(url, width = 0, px = 1280) {
+  const m = String(url || '').match(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/([0-9a-f])\/([0-9a-f]{2})\/([^/?#]+)$/);
+  if (!m || (width && width <= px)) return String(url || '');
+  return `https://upload.wikimedia.org/wikipedia/commons/thumb/${m[1]}/${m[2]}/${m[3]}/${px}px-${m[3]}`;
+}
+/**
+ * Couverture d'une édition sans photo d'article : photo libre d'un campus (banque du mât, Wikimedia Commons).
+ * L'établissement du premier match ou résultat universitaire de l'édition, sinon toute la banque ; saison du jour
+ * de préférence, paysage seulement, aucun visage. Choix stable pour une édition donnée.
+ */
+export function campusCover(edition, { sports = {}, radio = [] } = {}, photos = campusBank()) {
+  const ok = p => p && /^https:\/\//.test(p.url || '') && !(p.faces > 0) && (!p.width || !p.height || p.width >= p.height) && !campusLib.isRejectedCampusPhoto?.(p);
+  const season = SEASON_OF_MONTH[Number(String(edition.day).slice(5, 7)) - 1];
+  const pickFrom = list => {
+    const good = list.filter(ok);
+    const inSeason = good.filter(p => p.season === season);
+    const pool = inSeason.length ? inSeason : good.filter(p => !p.season);
+    return pool.length ? pool[campusLib.hashIndex(edition.key || edition.day, pool.length)] : null;
+  };
+  const all = [...(sports.next || []), ...(sports.results || [])];
+  const team = (all.find(r => r.uni) || all[0])?.teams?.[0];
+  const inst = team?.inst || team?.name || '';
+  const p = (inst && pickFrom(campusLib.filterUniversityPhotos(photos, inst))) || pickFrom(photos);
+  if (!p) return null;
+  return {
+    url: commonsThumb(p.url, p.width), credit: `Photo : ${p.credit || 'auteur inconnu'} / ${p.license || 'licence libre'} · Wikimedia Commons`,
+    source: '', title: p.title || 'Campus', link: p.link || '', stock: false, campus: true,
+  };
 }
 
 // ── Modèle complet et validation ─────────────────────────────────────────────
@@ -539,12 +587,14 @@ export function buildModel({ edition, period, items, sports, radio, now, ai = nu
     return { ...x, theme, excerpt, resume, resumeBy };
   });
   const lead = its.find(x => x.image && !x.imageStock) || null;
+  const cover = lead ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title, stock: !!lead.imageStock }
+    : (!its.length ? campusCover(edition, { sports, radio }) : null);
   const m = {
     version: 1, id: edition.key, edition: { id: edition.id, label: edition.label, emoji: edition.emoji, day: edition.day },
     path: reviewPath(edition.day, edition.id), url: reviewUrl(edition.day, edition.id),
     period: { start: period.start, end: period.end },
     datePublished: published || new Date(now).toISOString(), dateModified: new Date(now).toISOString(),
-    items: its, sports, radio, image: lead ? { url: lead.image, credit: lead.credit, source: lead.source, title: lead.title, stock: !!lead.imageStock } : null,
+    items: its, sports, radio, image: cover,
     chapeau: ai?.chapeau || '', generator: ai && (ai.chapeau || Object.values(ai.items || {}).some(v => v?.resumeBy === 'ia')) ? `ia:${ai.model || 'workers-ai'}` : 'gabarit', previous,
   };
   m.headline = headlineOf(m); m.description = descriptionOf(m); m.intro = ledeOf(m);
@@ -558,7 +608,9 @@ export function buildModel({ edition, period, items, sports, radio, now, ai = nu
  */
 export function validateReview(model, data) {
   const p = [];
-  if (!model?.items?.length) p.push('revue vide : aucun article');
+  // Sans article, la revue ne sort que si le sport ou la radio la remplissent (édition « sport et radio »).
+  const filler = (model?.sports?.results || []).length || (model?.sports?.next || []).length || (model?.radio || []).some(s => s.shows?.length);
+  if (!model?.items?.length && !filler) p.push('revue vide : aucun article, aucun match, aucune émission');
   const byLink = new Map((Array.isArray(data.news) ? data.news : data.news?.items || []).map(it => [String(it.link).trim(), it]));
   for (const x of model.items || []) {
     const it = byLink.get(x.link);
