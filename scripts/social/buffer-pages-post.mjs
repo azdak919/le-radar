@@ -13,6 +13,7 @@ const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.j
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { pageConfig } from './networks/index.mjs';
+import { loadFrontRanks, scorer, recentUneKeys, articleKey, bestFirst, bestSlotsFirst } from './selection.mjs';
 import { planDues, selectForPage, buildPageText, buildThreadsText, threadsLen, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
@@ -22,6 +23,9 @@ const { jpegNeedsFacebookSanitize, facebookRelayUrl, wikimediaThumbUrl } = creat
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/buffer-pages-sent.json');
 const CFG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/buffer-pages.json'), 'utf8'));
+// Sélection commune (selection.mjs) : note par article (rang de la page d'accueil, photo, extrait, fraîcheur).
+const SCORE = scorer({ ranks: loadFrontRanks(path.join(ROOT, 'news.json')) });
+const UNE = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/une-state.json'), 'utf8')); } catch { return {}; } })();
 const args = process.argv.slice(2);
 const dryAll = args.includes('--dry-run') || process.env.DRY_RUN === 'true';
 // Clé par réseau : Threads vit sur le compte Buffer d'Instagram (cfg.secret), les Pages sur le compte principal.
@@ -101,7 +105,12 @@ for (const net of networks) {
   if (blocked) { console.log(`::warning::${blocked}`); problems.push(`- **${net}** : ${blocked}`); }
   const dues = shareUrl ? [undefined] : planDues({ network: net, cfg, now, taken, free });
   const bySource = new Map(Object.values(sent).filter(s => s.postId).map(s => [s.postId, s.source]));
-  const sel = shareUrl ? [pickUrl()] : selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now, network: net });
+  const inUne = recentUneKeys(UNE, cfg.service, { now });
+  const picked = shareUrl ? [pickUrl()] : selectForPage(items, { sent, queuedSources: queued.map(p => bySource.get(p.id)).filter(Boolean), queuedTexts: queued.map(p => p.text || ''), slots: dues.length, now, network: net, score: SCORE, excluded: it => inUne.has(articleKey(it)) });
+  // Meilleur article → meilleure heure (les heures retenues restent les mêmes, seule l'attribution change).
+  const sel = shareUrl ? picked : bestFirst(picked, SCORE);
+  if (!shareUrl) dues.splice(0, dues.length, ...bestSlotsFirst(dues, net));
+  if (inUne.size) console.log(`${net} : ${inUne.size} article(s) parus dans La une depuis 24 h, écartés pour ce réseau`);
   console.log(`File : ${queued.length}/${QUEUE_MAX} (+${errored.length} en échec) · places libres : ${free} · créneaux de pointe retenus : ${dues.length} · articles : ${sel.length}`);
   const used = new Map();
   for (let i = 0; i < sel.length; i++) {
@@ -117,7 +126,7 @@ for (const net of networks) {
     await withHook(it);
     const text = cfg.service === 'threads' ? buildThreadsText(it, cfg) : buildPageText(it, cfg, { credit: im?.credit, photo: !!im });
     if (privacyGuard.containsForbiddenName(text)) { console.log('Texte refusé (nom interdit) : sauté.'); continue; }
-    console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}`);
+    console.log(`\n--- ${net} ${i + 1}. ${dueAt ? new Date(dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' }) + ' (HNE)' : 'MAINTENANT'} [${it.source}] · note ${SCORE(it)} · image ${im ? im.origin + ' ' + imageUrl : 'AUCUNE'}\n${text}`);
     if (cfg.service === 'threads') console.log(`Sujet : ${postMetadata('threads', it).threads.topic} · ${threadsLen(text)}/500`);
     if (dry) continue;
     try {

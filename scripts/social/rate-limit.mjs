@@ -43,9 +43,10 @@ export function freshCandidates(items, sent = {}, { liveSince, now = Date.now(),
 }
 
 /** Classement « comme X » : variété (≤ perSource par source sur 24 h, tourniquet), puis qualité, puis récence. */
-export function rankLikeX(pool, { recentSources = [], perSource = PER_SOURCE_MAX, accounts = [] } = {}) {
+export function rankLikeX(pool, { recentSources = [], perSource = PER_SOURCE_MAX, accounts = [], score = null } = {}) {
   const count = new Map(); for (const s of recentSources) count.set(s, (count.get(s) || 0) + 1);
-  const cmp = (a, b) => quality(b, accounts) - quality(a, accounts) || b.date - a.date;
+  // Note commune (scripts/social/selection.mjs) si fournie, sinon l'ancienne note de qualité.
+  const cmp = score ? (a, b) => score(b) - score(a) || b.date - a.date : (a, b) => quality(b, accounts) - quality(a, accounts) || b.date - a.date;
   const by = new Map(); for (const it of pool) { if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it); }
   for (const q of by.values()) q.sort(cmp);
   const out = [];
@@ -66,24 +67,25 @@ export const titleKey = it => norm(it.bare || it.title || '').slice(0, 80);
  * s'ils ont encore < 24 h, sinon ils expirent sans rattrapage), `skip` = sauté définitivement
  * (variété ≤ 2/source, quasi-doublon, ou au-delà de la capacité restante sur 24 h).
  */
-export function plan(items, sent, { network, liveSince, accounts = [], now = Date.now(), schedule = true } = {}) {
+export function plan(items, sent, { network, liveSince, accounts = [], now = Date.now(), schedule = true, score = null, excluded = null } = {}) {
   const base = NETWORKS[network]; if (!base) throw new Error(`réseau inconnu : ${network}`);
   const limits = schedule ? effectiveLimits(base, { network, liveSince, now }) : base;
   const r = remaining(sent, limits, { now });
   const recent = Object.values(sent).filter(s => now - Date.parse(s?.at) < 864e5);
   const seenKeys = new Set(recent.map(s => s.k).filter(Boolean)), poolKeys = new Set();
-  const all = freshCandidates(items, sent, { liveSince, now });
+  // excluded : articles parus dans La une sur ce réseau depuis 24 h — ni publiés, ni écartés pour de bon.
+  const all = freshCandidates(items, sent, { liveSince, now }).filter(it => !excluded || !excluded(it));
   const dup = [], pool = [];
   for (const it of all) { const k = titleKey(it); if (k && (seenKeys.has(k) || poolKeys.has(k))) dup.push(it); else { poolKeys.add(k); pool.push(it); } }
   const recentSources = recent.filter(s => s?.source && !s.skipped && !s.dedup).map(s => s.source);
   const vol = schedule ? volumeFor(network, now) : null;
-  if (vol && base.spread) return planReduced({ pool, dup, limits, r, sent, network, now, vol, accounts });
+  if (vol && base.spread) return planReduced({ pool, dup, limits, r, sent, network, now, vol, accounts, score });
   if (base.spread) {
-    const ranked = rankLikeX(pool, { recentSources, accounts, perSource: Infinity });
+    const ranked = rankLikeX(pool, { recentSources, accounts, perSource: Infinity, score });
     const { go, hold } = paceSpread(ranked, { network, now, limits, status: r, maxH: MAX_FRESH_H });
     return { limits, status: r, now: go, hold, skip: dup };
   }
-  const ranked = rankLikeX(pool, { recentSources, accounts });
+  const ranked = rankLikeX(pool, { recentSources, accounts, score });
   const keep = ranked.slice(0, r.dayLeft), go = keep.slice(0, Math.min(limits.perRun, r.hourLeft));
   const keepIds = new Set(keep.map(i => i.id));
   return { limits, status: r, now: go, hold: keep.slice(go.length), skip: [...pool.filter(i => !keepIds.has(i.id)), ...dup] };
@@ -94,11 +96,11 @@ export function plan(items, sent, { network, liveSince, accounts = [], now = Dat
  * poids horaires du réseau, une seule par source et par jour, les plus solides d'abord (photo du flux, extrait, @ confirmé).
  * Un article sans photo du flux ne part qu'après `fillAfterHour` h et seulement pour atteindre le minimum du jour.
  */
-export function planReduced({ pool, dup, limits, r, sent, network, now, vol, accounts = [], windows }) {
+export function planReduced({ pool, dup, limits, r, sent, network, now, vol, accounts = [], windows, score = null }) {
   const today = postedToday(sent, now), done = today.length;
   const afterFill = torontoHour(now) >= vol.fillAfterHour && done < vol.minPerDay;
   const eligible = pool.filter(it => photoRank(it) >= 1 || afterFill);
-  const ranked = rankLikeX(eligible, { recentSources: today.map(s => s.source).filter(Boolean), accounts, perSource: vol.perSource });
+  const ranked = rankLikeX(eligible, { recentSources: today.map(s => s.source).filter(Boolean), accounts, perSource: vol.perSource, score });
   const hourLeft = Math.max(0, Math.min(limits.perHour, vol.perHour) - r.hour);
   const allowed = Math.max(0, allowedByNow(network, vol.perDay, now, windows) - done);
   const take = Math.max(0, Math.min(allowed, hourLeft, limits.perRun, vol.perDay - done));

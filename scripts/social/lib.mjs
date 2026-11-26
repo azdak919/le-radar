@@ -343,7 +343,7 @@ export function buildXText(it, accounts = [], opts = {}) {
  * Choix des items : non envoyés, ≤ maxAgeH, round-robin par source (plus récente d'abord),
  * max perSource par source EN COMPTANT ceux déjà en file (queuedSources).
  */
-export function selectItems(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, maxAgeH = MAX_AGE_H, now = Date.now() } = {}) {
+export function selectItems(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, maxAgeH = MAX_AGE_H, now = Date.now(), score = null } = {}) {
   const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
   const by = new Map();
   for (const it of items) {
@@ -352,7 +352,9 @@ export function selectItems(items, { sentIds = new Set(), queuedSources = [], sl
   }
   // variété d'abord, puis récence (jour civil), et à jour égal la vraie photo créditée à une personne.
   // Les articles sans photo propre (repli banque campus) restent publiés, simplement après à égalité.
-  const cmpP = (a, b) => (dayOf(a.date) !== dayOf(b.date) ? b.date - a.date : photoRank(b) - photoRank(a) || b.date - a.date);
+  // Note commune (selection.mjs) si fournie : la meilleure d'abord ; sinon récence (jour civil) puis photo.
+  const cmpP = score ? (a, b) => score(b) - score(a) || b.date - a.date
+    : (a, b) => (dayOf(a.date) !== dayOf(b.date) ? b.date - a.date : photoRank(b) - photoRank(a) || b.date - a.date);
   const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmpP) }))
     .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmpP(a.q[0], b.q[0]));
   const sel = [];
@@ -415,7 +417,7 @@ export function quality(it, accounts = []) {
  * de `slots` candidats, élargit à 72 h. Variété d'abord (≤ perSource par source, file comprise,
  * round-robin), puis qualité (photo réelle, extrait, @ confirmé), puis récence.
  */
-export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H, evening = false, minPhoto = 0 } = {}) {
+export function selectDaily(items, { sentIds = new Set(), queuedSources = [], slots = QUEUE_MAX, perSource = PER_SOURCE_MAX, accounts = [], now = Date.now(), tz = 'America/Toronto', maxAgeH = MAX_AGE_H, evening = false, minPhoto = 0, score = null } = {}) {
   // veille = jour civil précédent (midi UTC du jour − 24 h : robuste au changement d'heure).
   // Passe du soir : les créneaux sont ceux de demain, la « veille » est donc aujourd'hui.
   const prev = evening ? dayOf(now, tz) : dayOf(Date.parse(dayOf(now, tz) + 'T12:00:00Z') - 864e5, 'UTC');
@@ -424,7 +426,7 @@ export function selectDaily(items, { sentIds = new Set(), queuedSources = [], sl
   if (pool.length < slots) pool = fresh;
   const count = new Map(); for (const s of queuedSources) count.set(s, (count.get(s) || 0) + 1);
   const by = new Map();
-  for (const it of pool) { it._q = quality(it, accounts); if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it); }
+  for (const it of pool) { it._q = score ? score(it) : quality(it, accounts); if (!by.has(it.source)) by.set(it.source, []); by.get(it.source).push(it); }
   const cmp = (a, b) => b._q - a._q || b.date - a.date;
   const queues = [...by.entries()].map(([s, q]) => ({ s, q: q.sort(cmp) }))
     .sort((a, b) => (count.get(a.s) || 0) - (count.get(b.s) || 0) || cmp(a.q[0], b.q[0]));

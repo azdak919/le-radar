@@ -94,21 +94,22 @@ export function planDues({ network, cfg, now = Date.now(), taken = [], free = 10
 }
 
 /** Articles à programmer : non envoyés sur ce réseau, ≤ 48 h, variété (≤ 2/source file comprise), sans quasi-doublon. */
-export function selectForPage(items, { sent = {}, queuedSources = [], queuedTexts = [], slots = 0, now = Date.now(), maxAgeH = PAGE_MAX_AGE_H, network = null } = {}) {
+export function selectForPage(items, { sent = {}, queuedSources = [], queuedTexts = [], slots = 0, now = Date.now(), maxAgeH = PAGE_MAX_AGE_H, network = null, score = null, excluded = null } = {}) {
   const keys = new Set(Object.values(sent).map(s => s?.k).filter(Boolean));
   const pool = [];
   for (const it of items) {
     const k = titleKey(it);
+    if (excluded && excluded(it)) continue; // parue dans La une sur ce réseau depuis 24 h
     if (sent[it.id] || (k && keys.has(k)) || queuedTexts.some(t => t.includes(it.link) || t.includes(articleId(it.link)))) continue;
     if (k) keys.add(k); pool.push(it);
   }
   const vol = volumeFor(network, now);
-  if (!vol) return selectItems(pool, { sentIds: new Set(), queuedSources, slots, maxAgeH, now });
+  if (!vol) return selectItems(pool, { sentIds: new Set(), queuedSources, slots, maxAgeH, now, score });
   // Volume réduit : les plus solides d'abord (photo du flux), une seule par source ; les autres seulement pour compléter.
-  const strong = selectItems(pool.filter(it => photoRank(it) >= 1), { sentIds: new Set(), queuedSources, slots, maxAgeH, now, perSource: vol.perSource });
+  const strong = selectItems(pool.filter(it => photoRank(it) >= 1), { sentIds: new Set(), queuedSources, slots, maxAgeH, now, score, perSource: vol.perSource });
   if (strong.length >= slots) return strong;
   const ids = new Set(strong.map(i => i.id));
-  return [...strong, ...selectItems(pool.filter(it => !ids.has(it.id)), { sentIds: new Set(), queuedSources: [...queuedSources, ...strong.map(i => i.source)], slots: slots - strong.length, maxAgeH, now, perSource: vol.perSource })];
+  return [...strong, ...selectItems(pool.filter(it => !ids.has(it.id)), { sentIds: new Set(), queuedSources: [...queuedSources, ...strong.map(i => i.source)], slots: slots - strong.length, maxAgeH, now, score, perSource: vol.perSource })];
 }
 
 /** Erreur Buffer/réseau qui signale un refus du lien ou du post (blocage des nouvelles de Meta, etc.). */

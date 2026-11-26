@@ -7,6 +7,7 @@
 // État (data/tumblr-sent.json) noté seulement après « 201 Created » : un raté est retenté plus tard.
 // TUMBLR_ENABLED=false : pause totale (aucun appel à l'API Tumblr), p. ex. pendant un appel de compte.
 // DRY_RUN=true : vérifie l'authentification (/v2/user/info) sans publier. Sans clés : essai.
+import { loadFrontRanks, scorer, recentUneKeys, articleKey } from './selection.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseFeed, markImages, stripUtm, siteLink } from './lib.mjs';
@@ -53,7 +54,11 @@ if (!state.liveSince) { state.liveSince = new Date().toISOString(); console.log(
 const xml = await (await fetch(process.env.FEED_URL || 'https://le-radar.ca/feed.xml', { signal: AbortSignal.timeout(30000) })).text();
 const items = parseFeed(xml); if (!items.length) throw new Error('feed.xml vide');
 const repeated = markImages(items);
-const pl = plan(items, state.sent, { network: 'tumblr', liveSince: state.liveSince, accounts: ACCOUNTS });
+// Sélection commune (selection.mjs) : note par article ; rien de ce qui vient de paraître dans La une sur tumblr (24 h).
+const SEL_ROOT = new URL('../../', import.meta.url);
+const SCORE = scorer({ ranks: loadFrontRanks(new URL('news.json', SEL_ROOT)) });
+const IN_UNE = (() => { try { return recentUneKeys(JSON.parse(fs.readFileSync(new URL('data/social/une-state.json', SEL_ROOT), 'utf8')), 'tumblr'); } catch { return new Set(); } })();
+const pl = plan(items, state.sent, { network: 'tumblr', liveSince: state.liveSince, accounts: ACCOUNTS, score: SCORE, excluded: it => IN_UNE.has(articleKey(it)) });
 const { limits, status } = pl;
 console.log(`Tumblr ${blog} : ${status.hour}/${limits.perHour} cette heure, ${status.day}/${limits.perDay} sur 24 h (poids horaire ${limits.weight}, rodage ×${limits.ramp}) · ${pl.now.length} maintenant, ${pl.hold.length} au prochain passage, ${pl.skip.length} sauté(s).`);
 for (const it of pl.skip) { console.log(`Sauté (quasi-doublon) : [${it.source}] ${it.id}`); if (!dry) state.sent[it.id] = { at: new Date().toISOString(), skipped: 'dup', source: it.source }; }
