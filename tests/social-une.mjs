@@ -294,7 +294,7 @@ assert.doesNotMatch(txt0, /Sport étudiant|radio/i, 'sans sport ni radio : aucun
 assert.equal(U.frTypo("Les jeunes cyniques ? Plutôt idéalistes ! L'écho"), 'Les jeunes cyniques\u202F? Plutôt idéalistes\u202F! L’écho');
 assert.equal(U.frTypo('Il a dit "oui"'), 'Il a dit «\u202Foui\u202F»');
 // ── Formats par réseau : portrait 4:5 partout ; Instagram préparé (story 9:16), sans lien cliquable, désactivé ──
-for (const n of U.NETS) assert.equal(U.IMAGE_FOR[n], 'portrait', n);
+for (const n of U.NETS) assert.equal(U.IMAGE_FOR[n], n === 'threads' ? undefined : 'portrait', n); // Threads : texte seul (carte d’aperçu du lien)
 assert.equal(U.IMAGE_FOR.instagram, 'grille');
 assert.equal(chooseInstagramImage({ portrait: 'portrait.jpg' }), null, 'Instagram ne reprend pas le portrait des autres réseaux');
 assert.equal(chooseInstagramImage({ grille: 'grille.jpg', portrait: 'portrait.jpg' }).ref, 'grille.jpg');

@@ -256,12 +256,15 @@ export function listenTags(model, max, teamAcc = {}) {
 
 /** Réseaux : limite, longueur, mentions natives. Facebook/LinkedIn/Tumblr : texte en clair, sans @. */
 export const NET_SPEC = {
-  x: { limit: 280, len: xlen, x: true, subheaders: false },
+  // La une sur X : l'article principal, « + N autres », le lien (4 titres coupés à 280 caractères se lisaient mal).
+  x: { limit: 280, len: xlen, x: true, subheaders: false, style: 'lead' },
   bluesky: { limit: 300, len: s => [...new Intl.Segmenter('fr', { granularity: 'grapheme' }).segment(s)].length, bluesky: true, subheaders: false },
   mastodon: { limit: 500, len: s => [...String(s).replace(/https?:\/\/\S+/g, 'x'.repeat(23))].length, subheaders: true },
   tumblr: { limit: 1000, len: s => [...s].length, subheaders: true },
   facebook: { limit: 1500, len: s => [...s].length, subheaders: true },
-  linkedin: { limit: 2000, len: s => [...s].length, subheaders: true },
+  linkedin: { limit: 2000, len: s => [...s].length, subheaders: true, intro: 'Les nouvelles des médias étudiants du Québec, réunies par le Radar.' },
+  // Threads : texte d'abord, sans image ni hashtag (un seul sujet en métadonnée), émojis comptés en octets UTF-8.
+  threads: { limit: 500, len: s => { let n = 0; for (const ch of String(s)) n += /\p{Extended_Pictographic}|\u{FE0F}|\u{200D}/u.test(ch) ? Buffer.byteLength(ch, 'utf8') : 1; return n; }, subheaders: false, style: 'lead', others: true },
 };
 
 /** Contrôles d'un texte avant toute publication : limite, doublons de lignes, pas de @ dans les résultats (ailleurs : @ vérifiés seulement), scores conformes au modèle. */
