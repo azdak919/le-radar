@@ -13,7 +13,7 @@
  * passer l'identifiant complet AAAA-MM-JJ-matin|soir : un --id matin seul a
  * fait échouer la publication du 18 nov. 2026 avant le commit.
  */
-import { spawn } from 'node:child_process';
+import { spawn, execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +21,7 @@ import { chromium } from '@playwright/test';
 import { listEditionDirs, resolveEditionId } from './revue-pdf-id.mjs';
 import { createRequire } from 'node:module';
 const { syncEditionPdfLinks } = createRequire(import.meta.url)('./revue-render.js');
+const { renderLinkedInCarousel, W: LI_W, H: LI_H } = createRequire(import.meta.url)('./revue-linkedin.js');
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const PORT = Number(process.env.PW_PORT || 4193);
@@ -84,6 +85,46 @@ async function printEdition(browser, id) {
   await page.close();
 }
 
+/**
+ * Carrousel LinkedIn (revue/<id>/linkedin.pdf, pages 1080 × 1350) et sa vignette (linkedin-cover.jpg,
+ * exigée par Buffer pour un document). Données : data/revue/reviews/<id>.json.
+ */
+async function printLinkedIn(browser, id) {
+  const file = join(root, 'data/revue/reviews', `${id}.json`);
+  if (!existsSync(file)) { console.log(`   (carrousel LinkedIn sauté : ${file} absent)`); return; }
+  const model = JSON.parse(readFileSync(file, 'utf8'));
+  const html = renderLinkedInCarousel(model);
+  const page = await browser.newPage({ viewport: { width: LI_W, height: LI_H } });
+  // Servi depuis la même origine que le site local : sinon (about:blank) les polices du site sont refusées.
+  const at = `http://127.0.0.1:${PORT}/revue/${id}/__linkedin.html`;
+  await page.route(at, (route) => route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: html }));
+  // Photos réduites à la taille d'affichage (JPEG q80) : sans ça, Chrome intègre les originaux (44 Mo).
+  await page.route(/\.(jpe?g|png|webp|avif)(\?.*)?$/i, async (route) => {
+    try {
+      const res = await route.fetch();
+      const buf = await res.body();
+      let out = buf;
+      try { out = execFileSync('convert', ['-', '-auto-orient', '-resize', `${LI_W}x${LI_H}>`, '-strip', '-quality', '80', 'jpg:-'], { input: buf, maxBuffer: 64 << 20 }); } catch { /* ImageMagick absent : original */ }
+      await route.fulfill({ status: res.status(), contentType: 'image/jpeg', body: out });
+    } catch { await route.continue(); }
+  });
+  await page.goto(at, { waitUntil: 'load', timeout: 60_000 });
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; setTimeout(r, 15000); }))));
+    // Image d'article introuvable : la page passe en mise en page sans photo plutôt qu'un cadre vide.
+    for (const im of document.querySelectorAll('.li-photo img')) if (!im.naturalWidth) { const p = im.closest('.li-page'); im.closest('.li-photo').remove(); p.classList.add('li-article--noimg'); }
+    for (const im of document.querySelectorAll('.li-cover__img')) if (!im.naturalWidth) im.remove();
+  });
+  const outDir = join(root, 'revue', id);
+  await page.screenshot({ path: join(outDir, 'linkedin-cover.jpg'), type: 'jpeg', quality: 82, clip: { x: 0, y: 0, width: LI_W, height: LI_H } });
+  const dest = join(outDir, 'linkedin.pdf');
+  await page.pdf({ path: dest, width: `${LI_W}px`, height: `${LI_H}px`, printBackground: true, preferCSSPageSize: true });
+  copyFileSync(dest, join(outDir, `le-radar-revue-${id}-linkedin.pdf`));
+  console.log('   linkedin.pdf', `le-radar-revue-${id}-linkedin.pdf`, 'linkedin-cover.jpg');
+  await page.close();
+}
+
 function requestedIds(argv = process.argv, base = root) {
   if (argv.includes('--all')) return listEditionDirs(base);
   const raw = argv.find((a) => a.startsWith('--id='))?.slice(5) || (argv.includes('--id') ? argv[argv.indexOf('--id') + 1] : '');
@@ -115,6 +156,7 @@ async function main() {
       }
       console.log(id);
       await printEdition(browser, id);
+      await printLinkedIn(browser, id);
     }
     await browser.close();
   } finally {
