@@ -4,9 +4,7 @@
 
 Doc courte pour agents et humains pressés. **Point d’entrée technique** avant de rouvrir les monolithes.
 
-**Avant tout vibe-code :** lire aussi [`AGENTS.md`](../AGENTS.md) à la racine — dettes volontaires, rythme « un bloc à la fois », économie de tokens long terme. Ne pas ignorer le ledger.
-
-**Fin de session (ticket OK) :** `npm run agents:propose` → afficher la proposition à l’humain → **attendre OK** avant de solder une dette → mettre à jour le ledger si besoin.
+**Avant de coder :** lire aussi [`AGENTS.md`](../AGENTS.md) à la racine — règles dures (branche et tests, interdits, non-casse).
 
 Pour la maintenance bots/CI longue : [`maintenance.md`](maintenance.md).  
 Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).  
@@ -186,10 +184,10 @@ Pipeline banques QC : sync JSON, blacklist durable, playbook agent
 
 ---
 
-## Dettes assumées (ne pas ouvrir sans besoin)
+## Choix assumés (ne pas rouvrir sans besoin)
 
 - Pas de CI obligatoire sur `audit-quebec-backgrounds.py` (lourd réseau/images)
-- Découpe `app.js` / `style.css` — **faite** (D2, 2026-08-25) : scripts `radar-*` + feuilles par surface, pas de bundler
+- Découpe `app.js` / `style.css` — **faite** (2026-08-25) : scripts `radar-*` + feuilles par surface, pas de bundler
 - Skills Grok externes hors repo — ce playbook **est** le skill unique du dépôt
 - Re-seed bulk Commons — volontairement hors pipeline quotidien
 

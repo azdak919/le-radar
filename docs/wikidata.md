@@ -70,8 +70,8 @@ fiche de chaque média étudiant s'il en possède une.
 
 Un seul de ces QID (`Q3010022`) figure aujourd'hui dans `institutions.json` :
 les entrées curées manuellement n'en ont pas, contrairement à celles importées
-de Wikidata. Les reporter dans le registre serait un gain net — et relève de la
-dette **D10** (faire de `institutions.json` la source de vérité).
+de Wikidata. Les reporter dans le registre serait un gain net (piste : faire de
+`institutions.json` la source de vérité).
 
 ## 4. Après création
 

@@ -834,7 +834,7 @@ function renderInstallMenu({ lang = 'fr', up = './', panelId = 'install-menu-pan
  * depuis cette liste — un Accueil nav-only disparaissait à chaque agrégat.
  *
  * `archives` est marquée `footerOnly` : le catalogue historique reste
- * expérimental (dette D19) et n'a pas sa place dans la navigation principale.
+ * expérimental et n'a pas sa place dans la navigation principale.
  */
 const SECTIONS = [
   // Accueil en tête : data-home-nav → app.js scroll + refresh soft du fil

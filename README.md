@@ -21,7 +21,7 @@ accompagnement bénévole.
 
 Version courante du dépôt : **1.0.0** — voir le [journal des modifications](CHANGELOG.md).
 
-**Agents IA / vibe-code :** lire d’abord [`AGENTS.md`](AGENTS.md) (dettes & rythme) puis [`docs/agent-playbook.md`](docs/agent-playbook.md). En fin de session : `npm run agents:propose` (proposition de dette à confirmer — pas d’auto-exécution).
+**Agents IA :** lire d’abord [`AGENTS.md`](AGENTS.md) (règles dures) puis [`docs/agent-playbook.md`](docs/agent-playbook.md).
 
 **→ [Essayer LE-RADAR maintenant](https://le-radar.ca/)**
 
@@ -100,7 +100,7 @@ Détail : [`docs/mobile/README.md`](docs/mobile/README.md).
 
 ```
 le-radar/
-├── AGENTS.md               # Agents : dettes volontaires, rythme, tokens long terme
+├── AGENTS.md               # Agents : règles dures (branche et tests, interdits, non-casse)
 ├── index.html              # Page principale (fil + syntoniseur)
 ├── feeds.html              # Page des flux RSS LE-RADAR
 ├── style.css               # Fondations (jetons, reset) ; surfaces dans style-*.css
