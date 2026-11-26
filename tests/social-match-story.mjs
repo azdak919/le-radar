@@ -143,6 +143,10 @@ assert.ok(busy.some((m) => m.kind === 'regatta'), 'voile incluse même un jour c
 assert.equal(busy.filter((m) => m.kind !== 'more' && m.kind !== 'regatta').length, 3, 'la voile ne prend pas la place d’un match');
 assert.ok(!busy.at(-1).items.some((m) => m.kind === 'regatta'), 'jamais reléguée dans « Aussi aujourd’hui »');
 
+// « 🄯 » (U+1F12F) est absent des polices du rendu sans tête : rectangle vide dans les images publiées le 26 nov. 2026.
+const tpl = fs.readFileSync('affiches/social-une.js', 'utf8').split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n');
+assert.ok(!tpl.includes('\u{1F12F}'), 'copyleft dessiné en CSS (« © » retourné), jamais le caractère 🄯');
+
 // Config et rendu.
 assert.deepEqual(CFG.networks, ['facebook', 'instagram']);
 assert.deepEqual(IMAGE_SIZES['match-story'], { width: 1080, height: 1920 });

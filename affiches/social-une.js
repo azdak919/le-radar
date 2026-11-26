@@ -8,6 +8,10 @@
   'use strict';
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const NB = '\u00A0';
+  // « 🄯 » (copyleft, U+1F12F) n'existe dans aucune police du rendu sans tête (rectangle vide dans les images publiées) :
+  // un « © » retourné horizontalement, présent partout, le dessine à l'identique.
+  const copyleft = () => { const s = el('span', 'cl', '©'); s.setAttribute('aria-label', 'copyleft'); return s; };
+  const layoutCredit = (lead) => { const p = el('p', 'ind'); p.append(lead + 'Mise en page ', copyleft(), NB + 'Azdak CC BY 4.0.'); return p; };
   // Ligne d'auteur comme sur le site (style-feed.css .article-byline) : « Par » pâle (--muted, 500), auteur foncé (--ink, 600), média pâle.
   function byline(it) {
     const p = el('p', 'by'); const [who, src] = String(it.byline || '').split(' · ');
@@ -513,10 +517,9 @@
     // Crédits complets (match-story-lib.mjs → storyCredits) : données, titulaires des logos affichés, autorisations ; puis
     // indépendance et mise en page (pas de crédit de police, choix de Charles).
     const cr = m.credits || { data: `Calendrier : ${String(m.kind).startsWith('regatta') ? 'CICSA' : 'RSEQ'}`, logos: [], notes: [] };
-    const l1 = el('p', 'ind'), l2 = el('p', 'ind');
+    const l1 = el('p', 'ind');
     l1.textContent = [cr.data + '.', cr.logos.length ? `Logos : ${cr.logos.join(', ')}, propriété de leurs titulaires.` : '', ...cr.notes].filter(Boolean).join(' ');
-    l2.textContent = 'Projet indépendant, sans affiliation. Mise en page 🄯\u00A0Azdak CC BY 4.0.';
-    foot.append(l1, l2);
+    foot.append(l1, layoutCredit('Projet indépendant, sans affiliation. '));
     card.append(foot);
     await Promise.all(imgs.map((im) => new Promise((r) => { if (im.complete) r(); else { im.onload = r; im.onerror = () => { (im.parentNode.classList.contains('ms-logo') ? im.parentNode : im).remove(); r(); }; } })));
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
@@ -615,7 +618,7 @@
     const full = el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources');
     foot.append(fm, full);
     // Même mention que le pied du site (contenus agrégés crédités) + licence des gabarits (affiches/LICENSE).
-    foot.append(el('p', 'ind', 'Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Mise en page 🄯 Azdak CC BY 4.0.'));
+    foot.append(layoutCredit('Articles et photos crédités à leurs auteurs et à leurs médias d’origine. '));
     // Story : la bande du bas (sous l'interface d'Instagram et de Facebook) annonce la prochaine édition ; rien d'essentiel n'y est.
     if (format === 'story') { const nx = el('p', 'nextEd'); nx.append(el('span', 'lbl', model.slot.next ? 'Prochaine édition' : 'Toute l’actualité étudiante'), el('b', '', model.slot.next || 'Deux unes par jour, matin et soir'), el('span', 'url', 'le\u2011radar.ca')); foot.append(nx); }
     const main = el('div', 'main'); const colA = el('div', 'col a'); const colB = el('div', 'col b');
