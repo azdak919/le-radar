@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-26T02:08:11.995Z",
+  "updated": "2026-11-26T02:56:51.294Z",
   "total": 1181,
-  "withPhoto": 1049,
-  "withStock": 121,
-  "withCampusBank": 104,
+  "withPhoto": 1052,
+  "withStock": 118,
+  "withCampusBank": 102,
   "fullyCovered": 1143,
   "leadReadyPhotos": 1123,
-  "pageScraped": 12,
-  "photosRecovered": 12,
+  "pageScraped": 11,
+  "photosRecovered": 11,
   "imagesCleared": 1,
-  "stockSearches": 7,
-  "stockFound": 18,
-  "campusBankFound": 14,
+  "stockSearches": 4,
+  "stockFound": 16,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -21,16 +21,10 @@
       "image": null
     },
     {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30",
+      "title": "Belonging is not something we have to earn",
+      "link": "https://thetribune.ca/opinion/op-off-the-board/belonging-is-not-something-we-have-to-earn-08092026/",
       "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Il faut le voir pour le croire",
-      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire",
-      "reason": "no-stock-match",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/BanalisationViolence2-scaled.jpg"
+      "image": "https://thetribune.ca/wp-content/uploads/2026/09/CAMILA_SIERRA_ORDONEZ_2_EK-scaled.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -43,12 +37,6 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
-    },
-    {
-      "title": "Bulletin 12h La Pige radio",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30",
-      "reason": "no-stock-match",
-      "image": null
     }
   ]
 }
