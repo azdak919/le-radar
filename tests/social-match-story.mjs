@@ -97,6 +97,22 @@ assert.deepEqual(cr.logos, ['CICSA', 'ULaVoile']);
 assert.match(cr.notes.join(' '), /autorisation du club/);
 assert.deepEqual(L.matchStoryModel(all[0], { root: os.tmpdir() }).match.credits.logos, [], 'aucun logo affiché : aucun titulaire cité');
 
+// Résultats de régate : une story par épreuve terminée la veille ou le jour même, clubs classés, lieu en clair, rien d'inventé.
+const res = (reg, inst, place, field, crew = '') => ({ id: reg, sport: 'sailing', sector: 'universitaire', name: inst, registryId: reg, nextGames: [],
+  results: [{ date: '2026-10-11', eventStart: '2026-10-10', opponent: `Championnat régional du Québec${crew ? ` · équipage ${crew}` : ''}`, opponentEn: 'Quebec Regionals', opponentFullName: 'Quebec Regionals · PCYC', scoreKind: 'place', scoreFor: place, scoreAgainst: field }] });
+const rr = L.regattaResults({ a: res('ulaval', 'ULaVoile', 9, 12), b: res('concordia', 'Concordia Sailing', 2, 12), c: { ...res('mcgill', 'McGill Sailing', null, 12) } }, '2026-10-12');
+assert.equal(rr.length, 1); assert.equal(rr[0].venue, 'Pointe-Claire Yacht Club');
+assert.deepEqual(rr[0].rows.map((r) => [r.reg, r.place]), [['concordia', 2], ['ulaval', 9]], 'place inconnue : pas de ligne');
+assert.equal(L.regattaResults({ a: res('ulaval', 'ULaVoile', 9, 12) }, '2026-10-14').length, 0, 'trop ancien : pas de story');
+const rmod = L.matchStoryModel(rr[0]).match;
+assert.equal(rmod.rows[0].placeLabel, '2e'); assert.equal(rmod.rows[0].name, 'Concordia Sailing'); assert.equal(rmod.rows[0].podium, true);
+assert.equal(rmod.rows[1].name, 'ULaVoile'); assert.equal(rmod.circuit, 'CICSA');
+assert.equal(rmod.credits.data, 'Résultats et lieu : CICSA');
+assert.equal(L.matchKey(rr[0]), '2026-10-11:resultats-championnat-regional-du-quebec');
+assert.match(L.matchStoryAlt(rr[0]), /2e Concordia Sailing, 9e ULaVoile/);
+assert.equal(L.venueLabel('wvyc'), 'West Vancouver Yacht Club'); assert.equal(L.venueLabel('Yale'), 'Yale');
+assert.ok(L.todaysStories({ teams: {} }, '2026-10-12', { sailing: { a: res('ulaval', 'ULaVoile', 9, 12) } }).some((x) => x.kind === 'regatta-results'));
+
 // Config et rendu.
 assert.deepEqual(CFG.networks, ['facebook', 'instagram']);
 assert.deepEqual(IMAGE_SIZES['match-story'], { width: 1080, height: 1920 });

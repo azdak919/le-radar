@@ -440,7 +440,8 @@
   // dans assets/logos/teams/. Rien d'essentiel dans les 150 px du haut ni les 250 px du bas (interface d'Instagram et de Facebook).
   async function renderMatchStory(card, model) {
     const m = model.match; card.className = 'card match-story';
-    const ca = m.kind === 'regatta' ? (m.clubs[0] || {}).color : m.away.color, cb = m.kind === 'regatta' ? (m.clubs[1] || {}).color : m.home.color;
+    const list0 = m.clubs || m.rows || [];
+    const ca = m.away ? m.away.color : (list0[0] || {}).color, cb = m.home ? m.home.color : (list0[1] || {}).color;
     card.style.setProperty('--ca', ca || '#6c2163'); card.style.setProperty('--cb', cb || '#1f2a44');
     card.append(el('div', 'ms-bg'));
     const top = el('header', 'ms-top'); const li = el('img', 'logo'); li.src = '../assets/icon.svg'; li.alt = '';
@@ -452,6 +453,21 @@
       const c = el('p', 'ms-circuit');
       if (m.circuitLogo) { const im = el('img'); im.alt = ''; im.src = m.circuitLogo; c.append(im); imgs.push(im); }
       c.append(el('span', '', m.circuitText || m.circuit)); card.append(c);
+    }
+    if (m.kind === 'regatta-results') {
+      // Résultats de régate : classement final des clubs québécois, place en gros (podium doré, argent, bronze), effectif à côté.
+      card.classList.add('ms-regatta', 'ms-results'); top.lastChild.textContent = 'Résultats';
+      card.append(el('h1', 'ms-event', m.event), el('p', 'ms-format', `Classement final · ${m.field} équipes`));
+      const list = el('div', 'ms-clubs');
+      m.rows.forEach((c) => {
+        const row = el('div', 'ms-club ms-rank' + (c.podium ? ' p' + c.place : '')); if (c.color) row.style.setProperty('--cc', c.color);
+        const pl = el('div', 'ms-place'); pl.append(el('b', '', c.placeLabel), el('small', '', '/' + c.field)); row.append(pl);
+        if (c.logo) { const im = el('img'); im.alt = ''; im.src = c.logo; row.append(im); imgs.push(im); }
+        const nm = el('div', 'ms-nm'); nm.append(el('b', '', c.name)); if (c.crew) nm.append(el('small', '', c.crew)); row.append(nm);
+        if (c.inst) row.append(el('span', '', c.inst)); list.append(row);
+      });
+      if (m.more) list.append(el('div', 'ms-club more', `et ${m.more} autre${m.more > 1 ? 's' : ''} équipage${m.more > 1 ? 's' : ''} du Québec`));
+      card.append(list);
     }
     if (m.kind === 'regatta') {
       card.classList.add('ms-regatta'); top.lastChild.textContent = 'Jour de régate';
@@ -472,8 +488,8 @@
       d.append(el('b', 'ms-name', t.name)); if (t.inst) d.append(el('span', 'ms-inst', t.inst));
       return d;
     };
-    if (m.kind !== 'regatta') card.append(side(m.away, 'away'), el('b', 'ms-vs', 'VS'), side(m.home, 'home'));
-    const when = el('div', 'ms-when'); when.append(el('b', 'ms-hour' + (m.hour ? '' : ' long'), m.hour || (m.kind === 'regatta' ? 'Toute la journée' : m.dayShort)), el('span', 'ms-day', m.day)); if (m.where) when.append(el('span', 'ms-where', m.where)); if (m.venue) when.append(el('span', 'ms-venue', m.venue));
+    if (!String(m.kind).startsWith('regatta')) card.append(side(m.away, 'away'), el('b', 'ms-vs', 'VS'), side(m.home, 'home'));
+    const when = el('div', 'ms-when'); when.append(el('b', 'ms-hour' + (m.hour ? '' : ' long'), m.kind === 'regatta-results' ? 'Final' : m.hour || (m.kind === 'regatta' ? 'Toute la journée' : m.dayShort)), el('span', 'ms-day', m.range || m.day)); if (m.where) when.append(el('span', 'ms-where', m.where)); if (m.venue) when.append(el('span', 'ms-venue', m.venue));
     card.append(when);
     // Pied : mêmes crédits que les autres visuels sociaux (nom complet + mention), en petit ; source des données sportives.
     const foot = el('footer', 'ms-foot');
@@ -481,7 +497,7 @@
     foot.append(el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources'));
     // Crédits complets (match-story-lib.mjs → storyCredits) : données, titulaires des logos affichés, autorisations ; puis polices,
     // mise en page et indépendance.
-    const cr = m.credits || { data: `Calendrier : ${m.kind === 'regatta' ? 'CICSA' : 'RSEQ'}`, logos: [], notes: [] };
+    const cr = m.credits || { data: `Calendrier : ${String(m.kind).startsWith('regatta') ? 'CICSA' : 'RSEQ'}`, logos: [], notes: [] };
     const l1 = el('p', 'ind'), l2 = el('p', 'ind');
     l1.textContent = [cr.data + '.', cr.logos.length ? `Logos : ${cr.logos.join(', ')}, propriété de leurs titulaires.` : '', ...cr.notes].filter(Boolean).join(' ');
     l2.textContent = 'Projet indépendant, sans affiliation. Polices Inter et Source Serif\u00A04 (OFL), émojis Noto. Mise en page 🄯\u00A0Azdak CC BY 4.0.';
@@ -492,7 +508,7 @@
     // Noms longs : la police rétrécit jusqu'à tenir sur deux lignes au plus (jamais d'ellipse).
     const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > 715) { f -= 4; ev.style.fontSize = f + 'px'; } }
     // Clubs de voile : un nom par ligne, la police rétrécit pour tenir (jamais coupé).
-    card.querySelectorAll('.ms-club b').forEach((b) => { let f = 52; while (f > 30 && b.scrollWidth > b.clientWidth + 1) { f -= 2; b.style.fontSize = f + 'px'; } });
+    card.querySelectorAll('.ms-club > b, .ms-nm b').forEach((b) => { let f = 52; while (f > 30 && b.scrollWidth > b.clientWidth + 1) { f -= 2; b.style.fontSize = f + 'px'; } });
     card.querySelectorAll('.ms-name').forEach((n) => { let f = parseFloat(getComputedStyle(n).fontSize); const lh = () => parseFloat(getComputedStyle(n).lineHeight) || f; while (f > 56 && (n.scrollWidth > n.clientWidth + 1 || n.clientHeight > lh() * 2 + 2)) { f -= 4; n.style.fontSize = f + 'px'; } });
     const overflow = [...card.children].some((c) => c.getBoundingClientRect().bottom > 1920 || c.scrollWidth > c.clientWidth + 2);
     return { overflow, shown: 0, sports: 1, sportsDetail: m.kind === 'regatta' ? m.event : m.sport, radio: 0, photo: false, logos: imgs.filter((i) => i.isConnected).length };

@@ -10,7 +10,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { POLICY } from './policy.mjs';
-import { todaysStories, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, storyWindow, pruneMatchState } from './match-story-lib.mjs';
+import { createRequire } from 'node:module';
+import { todaysStories, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, storyWindow, pruneMatchState } from './match-story-lib.mjs';
 import { torontoMinutes } from './une-lib.mjs';
 import { createXBuffer } from './channels/x-buffer.mjs';
 import { createInstagramBuffer } from './instagram.mjs';
@@ -23,7 +24,7 @@ const rd = (f) => JSON.parse(fs.readFileSync(path.isAbsolute(f) ? f : path.join(
 export const CFG = POLICY.formats?.matchStory || { publish: false, networks: [], max: 6 };
 export const NETS = ['facebook', 'instagram'];
 /** « Martlets reçoit Stingers » ou « Régate : épreuve (clubs) ». */
-export const label = (m) => m.kind === 'regatta' ? `Régate : ${m.event} (${m.clubs.map((c) => c.name).join(', ')})` : `${m.teams[0].name} ${m.verb} ${m.teams[1].name}`;
+export const label = (m) => m.kind === 'regatta-results' ? `Résultats : ${m.event} (${m.rows.map((r) => `${r.place}e ${r.name}`).join(', ')})` : m.kind === 'regatta' ? `Régate : ${m.event} (${m.clubs.map((c) => c.name).join(', ')})` : `${m.teams[0].name} ${m.verb} ${m.teams[1].name}`;
 
 /** Réseaux restant à faire pour un match (déjà publié ou 3 échecs = fait). */
 export function pendingNets(entry, nets = NETS) {
@@ -58,7 +59,11 @@ async function main() {
   const nets = (CFG.networks || []).filter((n) => NETS.includes(n));
   let state = {}; try { state = rd(STATE); } catch {}
   // Un match déjà commencé (régates : toute la journée) n'a plus d'intérêt en story « Jour de match » (essai : tous les matchs du jour).
-  const matches = todaysStories(rd(arg('sports', 'sports-masthead.json')), day, { max: CFG.max || 6, notBefore: dry ? -1 : torontoMinutes(now) });
+  // Voile : seules sources des régates (à venir et résultats) = équipes CICSA de sports.json (format compact, dépaqueté ici).
+  let sailing = {};
+  try { const { unpackSportsPayload } = createRequire(import.meta.url)('../sports-payload-lib.js'); sailing = sailingTeams(unpackSportsPayload(rd(arg('sailing', 'sports.json')))); }
+  catch (e) { console.log(`::warning::voile illisible (${String(e.message).slice(0, 120)}) : pas de régate.`); }
+  const matches = todaysStories(rd(arg('sports', 'sports-masthead.json')), day, { max: CFG.max || 6, notBefore: dry ? -1 : torontoMinutes(now), sailing });
   console.log(`Story match du jour ${day} : ${matches.length} match(s)${matches.length ? ' — ' + matches.map(label).join(', ') : ''}.`);
   if (!matches.length) return;
   const todo = matches.map((m, i) => ({ m, i, key: matchKey(m) })).filter((x) => dry || pendingNets(state[x.key], nets).length);
