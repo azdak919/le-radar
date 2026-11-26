@@ -448,6 +448,11 @@
     top.append(brand, el('span', 'ms-pill', 'Jour de match')); card.append(top);
     const kick = el('p', 'ms-kick'); kick.append(el('span', 'art-emo', m.emoji), el('span', '', m.sport)); card.append(kick);
     const imgs = [];
+    if (m.circuit) {
+      const c = el('p', 'ms-circuit');
+      if (m.circuitLogo) { const im = el('img'); im.alt = ''; im.src = m.circuitLogo; c.append(im); imgs.push(im); }
+      c.append(el('span', '', m.circuitText || m.circuit)); card.append(c);
+    }
     if (m.kind === 'regatta') {
       card.classList.add('ms-regatta'); top.lastChild.textContent = 'Jour de régate';
       card.append(el('h1', 'ms-event', m.event), el('p', 'ms-format', 'Régate · classement par place'));
@@ -468,19 +473,26 @@
       return d;
     };
     if (m.kind !== 'regatta') card.append(side(m.away, 'away'), el('b', 'ms-vs', 'VS'), side(m.home, 'home'));
-    const when = el('div', 'ms-when'); when.append(el('b', 'ms-hour' + (m.hour ? '' : ' long'), m.hour || (m.kind === 'regatta' ? 'Toute la journée' : m.dayShort)), el('span', 'ms-day', m.day)); if (m.where) when.append(el('span', 'ms-where', m.where));
+    const when = el('div', 'ms-when'); when.append(el('b', 'ms-hour' + (m.hour ? '' : ' long'), m.hour || (m.kind === 'regatta' ? 'Toute la journée' : m.dayShort)), el('span', 'ms-day', m.day)); if (m.where) when.append(el('span', 'ms-where', m.where)); if (m.venue) when.append(el('span', 'ms-venue', m.venue));
     card.append(when);
     // Pied : mêmes crédits que les autres visuels sociaux (nom complet + mention), en petit ; source des données sportives.
     const foot = el('footer', 'ms-foot');
     if (m.total > 1) foot.append(el('span', 'ms-count', `${m.index + 1} de ${m.total}`));
     foot.append(el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources'));
-    const logos = imgs.length ? ' Logos propriété de leurs établissements ; projet indépendant, sans affiliation.' : '';
-    foot.append(el('p', 'ind', `Calendrier : ${m.kind === 'regatta' ? 'CICSA' : 'RSEQ'}.${logos} Mise en page 🄯\u00A0Azdak CC BY 4.0.`));
+    // Crédits complets (match-story-lib.mjs → storyCredits) : données, titulaires des logos affichés, autorisations ; puis polices,
+    // mise en page et indépendance.
+    const cr = m.credits || { data: `Calendrier : ${m.kind === 'regatta' ? 'CICSA' : 'RSEQ'}`, logos: [], notes: [] };
+    const l1 = el('p', 'ind'), l2 = el('p', 'ind');
+    l1.textContent = [cr.data + '.', cr.logos.length ? `Logos : ${cr.logos.join(', ')}, propriété de leurs titulaires.` : '', ...cr.notes].filter(Boolean).join(' ');
+    l2.textContent = 'Projet indépendant, sans affiliation. Polices Inter et Source Serif\u00A04 (OFL), émojis Noto. Mise en page 🄯\u00A0Azdak CC BY 4.0.';
+    foot.append(l1, l2);
     card.append(foot);
     await Promise.all(imgs.map((im) => new Promise((r) => { if (im.complete) r(); else { im.onload = r; im.onerror = () => { (im.parentNode.classList.contains('ms-logo') ? im.parentNode : im).remove(); r(); }; } })));
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
     // Noms longs : la police rétrécit jusqu'à tenir sur deux lignes au plus (jamais d'ellipse).
-    const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > 780) { f -= 4; ev.style.fontSize = f + 'px'; } }
+    const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > 715) { f -= 4; ev.style.fontSize = f + 'px'; } }
+    // Clubs de voile : un nom par ligne, la police rétrécit pour tenir (jamais coupé).
+    card.querySelectorAll('.ms-club b').forEach((b) => { let f = 52; while (f > 30 && b.scrollWidth > b.clientWidth + 1) { f -= 2; b.style.fontSize = f + 'px'; } });
     card.querySelectorAll('.ms-name').forEach((n) => { let f = parseFloat(getComputedStyle(n).fontSize); const lh = () => parseFloat(getComputedStyle(n).lineHeight) || f; while (f > 56 && (n.scrollWidth > n.clientWidth + 1 || n.clientHeight > lh() * 2 + 2)) { f -= 4; n.style.fontSize = f + 'px'; } });
     const overflow = [...card.children].some((c) => c.getBoundingClientRect().bottom > 1920 || c.scrollWidth > c.clientWidth + 2);
     return { overflow, shown: 0, sports: 1, sportsDetail: m.kind === 'regatta' ? m.event : m.sport, radio: 0, photo: false, logos: imgs.filter((i) => i.isConnected).length };

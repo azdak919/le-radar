@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { POLICY } from './policy.mjs';
-import { todaysStories, matchStoryModel, matchStoryAlt, matchKey, montrealDay, storyWindow, pruneMatchState } from './match-story-lib.mjs';
+import { todaysStories, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, storyWindow, pruneMatchState } from './match-story-lib.mjs';
 import { torontoMinutes } from './une-lib.mjs';
 import { createXBuffer } from './channels/x-buffer.mjs';
 import { createInstagramBuffer } from './instagram.mjs';
@@ -69,6 +69,7 @@ async function main() {
   const summary = [`## Story match du jour — ${day} (${dry ? 'essai DRY_RUN, rien n’est publié' : 'passage réel'})`, ''];
   for (const { m, i, key } of todo) {
     const short = String(m.gameId || key.slice(11)).slice(0, 24) || `m${i}`;
+    if (m.kind !== 'regatta' && !m.venue) m.venue = await rseqVenue(m.gameId);
     const model = matchStoryModel(m, { index: i, total: matches.length });
     const imgs = await renderImages(model, { outDir: out, prefix: `match-${short}`, formats: ['match-story'] });
     const img = imgs['match-story'], alt = matchStoryAlt(m);

@@ -212,6 +212,11 @@ function placeText(g) {
   if (!Number.isFinite(n) || n < 1 || !Number.isFinite(field) || field < 1) return '';
   return `${n === 1 ? '1er' : `${n}e`}/${field}`;
 }
+/** Lieu d’une épreuve (feuille CICSA : « Épreuve · lieu » dans opponentFullName) ; vide si absent. */
+function venueOf(g) {
+  const parts = String(g?.opponentFullName || '').split(/\s+·\s+/).map((x) => x.trim()).filter(Boolean);
+  return parts.length > 1 ? parts.at(-1) : '';
+}
 /** Nom d’épreuve en français (déjà traduit dans le payload CICSA) ; jamais le sigle de lieu anglais. */
 function eventLabel(g) {
   const fr = String(g?.opponent || '').trim();
@@ -268,7 +273,7 @@ export function pickSports(masthead, day, { max = 6, days = 2, nextDays = 3, aft
       if (isEventGame(t, g)) {
         const event = eventLabel(g);
         if (!me.name || !event) continue;
-        next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [{ ...me, reg: t.registryId || t.institutionId || '' }], verb: '', event, time: g.time || '' });
+        next.push({ ...base, kind: 'avenir', gameId: g.gameId || '', date: g.date, when, teams: [{ ...me, reg: t.registryId || t.institutionId || '' }], verb: '', event, time: g.time || '', venue: venueOf(g) });
         continue;
       }
       const op = { ...teamLabel(g.opponentNickname, g.opponentFullName || g.opponent), reg: g.opponentRegistryId || '' };

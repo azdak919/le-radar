@@ -50,3 +50,7 @@ Le titre Pricedown du doodle (`assets/doodle/le-radar-pricedown.svg`) est une im
 - Usage : lettrage du nom de la ville affichée (« Ville de Montréal, QC » ou « Ville de Québec, QC ») sur le mât et les publications, en écriture script inclinée, rose à léger halo. Ce n’est pas la police propriétaire de Grand Theft Auto, et elle n’en est pas une copie. Yellowtail avait été envisagée pour la lisibilité du Q, mais elle est publiée sous Apache 2.0 (incompatible avec la règle du dépôt : aucune dépendance Apache-2.0) ; Kaushan Script, déjà sur la liste des polices OFL candidates, a un Q lisible.
 - Source : [Google Fonts / Kaushan Script](https://fonts.google.com/specimen/Kaushan+Script).
 
+
+## Logos d’équipes (stories « Jour de match »)
+
+Marques de leurs titulaires (établissements, clubs, U SPORTS). Provenance et licence fichier par fichier : `assets/logos/teams/sources.json`.

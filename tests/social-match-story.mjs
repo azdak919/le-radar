@@ -59,7 +59,7 @@ assert.equal(a.sport, 'Basketball féminin');
 
 // Voile : une story par régate (classement par place), tous les clubs québécois inscrits, jamais de « VS ».
 const sail = (id, inst) => ({ id, sport: 'sailing', sportLabel: 'Voile', sector: 'universitaire', leagueLabel: 'CICSA', name: inst, institutionLabel: inst, registryId: id, results: [],
-  nextGames: [{ gameId: 'r-' + id, date: '2026-11-26', time: '', home: null, scoreKind: 'place', opponent: 'Championnat canadien de course en flotte', opponentEn: 'Fleet Race Nationals' }] });
+  nextGames: [{ gameId: 'r-' + id, date: '2026-11-26', time: '', home: null, scoreKind: 'place', opponent: 'Championnat canadien de course en flotte', opponentEn: 'Fleet Race Nationals', opponentFullName: 'Fleet Race Nationals · Royal St. Lawrence YC' }] });
 const withSail = { teams: { ...mh.teams, s1: sail('mcgill', 'Université McGill'), s2: sail('concordia', 'Université Concordia') } };
 const reg = L.todaysRegattas(withSail, '2026-11-26');
 assert.equal(reg.length, 1, 'une seule story pour la régate');
@@ -70,7 +70,32 @@ const stories = L.todaysStories(withSail, '2026-11-26', { notBefore: 14 * 60 });
 assert.ok(stories.some((m) => m.kind === 'regatta'), 'régate : toute la journée, jamais écartée par l’heure');
 const rm = L.matchStoryModel(reg[0], { root: os.tmpdir() }).match;
 assert.equal(rm.kind, 'regatta'); assert.equal(rm.sport, 'Voile mixte'); assert.equal(rm.away, undefined);
+// Nom du club de voile (sports-sailing.json), pas l'équipe d'excellence ; lieu de la feuille CICSA ; logo propre au club (<id>-voile).
+assert.deepEqual(L.matchStoryModel(reg[0]).match.clubs.map((c) => c.name), ['McGill Sailing', 'Concordia Sailing']);
+assert.equal(L.matchStoryModel(reg[0]).match.where, 'Lieu : Royal St. Lawrence YC');
+assert.equal(rm.circuit, 'CICSA');
+fs.copyFileSync('sports-sailing.json', path.join(root, 'sports-sailing.json'));
+assert.equal(L.matchStoryModel(reg[0], { root }).match.clubs[0].logo, '', 'le logo des Redbirds ne sert pas au club de voile');
+// U SPORTS pour l'universitaire, RSEQ collégial sinon ; salle RSEQ si connue.
+assert.equal(a.circuit, 'U SPORTS');
+assert.equal(L.matchStoryModel(all[2], { root: os.tmpdir() }).match.circuit, 'RSEQ collégial');
+const withVenue = L.matchStoryModel({ ...all[0], venue: 'Love Competition Hall' }, { root: os.tmpdir() }).match;
+assert.equal(withVenue.where, 'Chez les Martlets · McGill'); assert.equal(withVenue.venue, 'Love Competition Hall');
+assert.equal(await L.rseqVenue('pas-un-uuid'), '');
+assert.equal(await L.rseqVenue('91669338-645a-4ef0-8c47-d678db17ce23', { fetchImpl: async () => ({ ok: true, json: async () => ({ SportFacilityDescription: ' Love  Competition Hall ' }) }) }), 'Love Competition Hall');
+assert.equal(await L.rseqVenue('91669338-645a-4ef0-8c47-d678db17ce23', { fetchImpl: async () => { throw new Error('réseau'); } }), '');
 assert.match(L.matchStoryAlt(reg[0]), /classement par place/);
+
+// Crédits : source des données (+ salle / lieu), titulaires des logos réellement affichés, autorisations.
+const cm = L.matchStoryModel({ ...all[0], venue: 'Love Competition Hall' }).match;
+assert.equal(cm.credits.data, 'Calendrier et salle : RSEQ');
+assert.deepEqual(cm.credits.logos, ['U SPORTS', 'Concordia', 'McGill']);
+assert.equal(L.matchStoryModel(all[2]).match.credits.data, 'Calendrier : RSEQ');
+const cr = L.matchStoryModel(L.todaysRegattas({ teams: { s: sail('ulaval', 'Université Laval') } }, '2026-11-26')[0]).match.credits;
+assert.equal(cr.data, 'Calendrier et lieu : CICSA');
+assert.deepEqual(cr.logos, ['CICSA', 'ULaVoile']);
+assert.match(cr.notes.join(' '), /autorisation du club/);
+assert.deepEqual(L.matchStoryModel(all[0], { root: os.tmpdir() }).match.credits.logos, [], 'aucun logo affiché : aucun titulaire cité');
 
 // Config et rendu.
 assert.deepEqual(CFG.networks, ['facebook', 'instagram']);
