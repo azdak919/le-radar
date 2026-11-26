@@ -612,10 +612,11 @@ export function buildUneAll(model, maxByNetwork = {}, opts = {}) {
 export function quietLead(slot, { sports = {}, radio = [], cover = null } = {}) {
   const res = (sports.results || []).length, nxt = (sports.next || []).length, rad = (radio || []).length;
   if (!res && !nxt && !rad) return null;
-  const moment = slot.id === 'soir' ? 'Ce soir' : 'Ce matin';
-  const title = res ? `${moment}, place aux résultats du sport étudiant`
-    : nxt ? `${moment}, place aux prochains matchs du sport étudiant`
-    : `${moment}, à l’écoute des radios étudiantes`;
+  // Titres courts façon « Game Day » / « Today's Lineup » (affiches sportives et radios universitaires).
+  const today = (sports.next || []).some(r => r.date === slot.day);
+  const title = res ? 'Les résultats du sport étudiant'
+    : nxt ? (today ? 'Jour de match' : 'Les prochains matchs')
+    : (slot.id === 'soir' ? 'Ce soir à l’antenne' : 'Aujourd’hui à l’antenne');
   // Sans décompte : l'image n'affiche qu'une partie des matchs et des émissions.
   const parts = [res && 'les derniers résultats', nxt && 'les prochains matchs', rad && 'les émissions des radios étudiantes'].filter(Boolean);
   const hook = `Aucun nouvel article des médias étudiants depuis la dernière une. Au programme : ${parts.length > 1 ? parts.slice(0, -1).join(', ') + ' et ' + parts.at(-1) : parts[0]}.`;

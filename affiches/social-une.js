@@ -297,6 +297,22 @@
     if (credit) bottom.append(el('p', 'ig-credit', '📸 ' + credit));
     const extra = items.slice(1, 3);
     const thumbs = [];
+    // Une sans article : sous la photo, le contenu réel du créneau (matchs, sinon émissions de radio), 4 lignes au plus.
+    if (lead.quiet) {
+      const S = model.sports || {}; const sp = [...(S.results || []), ...(S.next || [])];
+      // L'heure en grand à gauche (« 18 h »), comme sur les affiches « Game Day » ; « Final » pour un résultat.
+      const hourOf = (t) => { const m = String(t || '').match(/^(\d{1,2}):(\d{2})/); return m ? `${Number(m[1])}${NB}h${m[2] !== '00' ? NB + m[2] : ''}` : ''; };
+      const tn = (t) => t ? t.name + (t.inst ? NB + '(' + t.inst + ')' : '') : '';
+      const rows = sp.length
+        ? sp.slice(0, 4).map((r) => ({ emo: r.kind === 'resultat' ? 'Final' : hourOf(r.time) || r.emoji, h: r.kind === 'resultat' ? `${tn(r.teams[0])} ${r.teams[0].score}–${r.teams[1].score} ${tn(r.teams[1])}` : r.event ? `${tn(r.teams[0])} · ${r.event}` : `${tn(r.teams[0])} ${r.verb || 'contre'} ${tn(r.teams[1])}`, sub: `${r.emoji ? r.emoji + ' ' : ''}${r.sport} · ${String(r.when || '').split(' · ')[0].replace(/^Final · /, '')}` }))
+        : (model.radio || []).slice(0, 4).map((x) => ({ emo: (String(x.when || '').split(' · ').pop()) || '📻', h: x.title, sub: x.station }));
+      if (rows.length) {
+        const also = el('div', 'ig-also quiet');
+        also.append(el('h2', '', sp.length ? ((S.results || []).length ? 'Sport étudiant' : 'Prochains matchs') : 'À l’écoute · radio étudiante'));
+        rows.forEach((x) => { const row = el('div', 'ig-also-item'); row.append(el('span', 'num', x.emo)); const meta = el('div', 'meta'); meta.append(el('h3', '', x.h), el('p', 'oby', x.sub)); row.append(meta); also.append(row); });
+        bottom.append(also);
+      }
+    }
     if (extra.length) {
       const also = el('div', 'ig-also'); also.append(el('h2', '', 'Aussi à la une'));
       extra.forEach((it, i) => {
@@ -323,7 +339,11 @@
     await Promise.all([document.fonts.ready, brand.ready, ...thumbs]);
     fitTitle(title, 44);
     const overflow = card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2;
-    return { shown: 1 + extra.length, photo: ok, sports: 0, radio: 0, overflow };
+    // Une sans article : on retire des lignes plutôt que de déborder.
+    const qa = bottom.querySelector('.ig-also.quiet');
+    while (qa && qa.querySelectorAll('.ig-also-item').length > 2 && (card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2)) qa.lastChild.remove();
+    const overflowQ = card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2;
+    return { shown: 1 + extra.length, photo: ok, sports: 0, radio: 0, overflow: qa ? overflowQ : overflow };
   }
   // Poster sport Instagram 3:4 : ancienne grille à barres (inchangée).
   async function renderGrille(card, model) {
@@ -420,7 +440,8 @@
     grid.dataset.cols = String(grid.children.length);
     sp.append(el('h2', '', 'Sport étudiant'), grid);
     // Radio étudiante (radio-schedules.json) : à droite de « Aussi à la une » (4:5, story), sous la liste en paysage.
-    const radio = (model.radio || []).slice(0, format === 'paysage' ? 3 : 4); const rb = el('div', 'radio'); if (radio.length) { rb.append(el('h3', '', 'À l’écoute · radio étudiante')); radio.forEach((x) => rb.append(radioRow(x))); }
+    // Radio seule (aucun autre article) : la grille s'étale sur deux colonnes, jusqu'à 8 émissions (5 en paysage).
+    const radio = (model.radio || []).slice(0, others.length ? (format === 'paysage' ? 3 : 4) : (format === 'paysage' ? 5 : 8)); const rb = el('div', 'radio'); if (radio.length) { rb.append(el('h3', '', 'À l’écoute · radio étudiante')); radio.forEach((x) => rb.append(radioRow(x))); }
     // Pied conforme aux affiches : icône + marque « LE‑RADAR.ca » (serif), nom complet (serif) centré, puis la ligne d'indépendance centrée.
     const foot = el('footer', 'foot'); const fm = el('p', 'fmark'); const fi = el('img', 'ficon'); fi.src = '../assets/icon.svg'; fi.alt = '';
     fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca'));
@@ -434,7 +455,7 @@
     colA.append(leadBox);
     if (radio.length) sbody.append(rb);
     if (others.length || radio.length) colB.append(side);
-    if (!others.length) list.remove();
+    if (!others.length) { list.remove(); sbody.classList.add('radio-wide'); }
     if (sports.length) colB.append(sp);
     main.append(colA); if (colB.childNodes.length) main.append(colB);
     card.append(bg, mast, main, foot);
