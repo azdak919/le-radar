@@ -10,7 +10,8 @@ const CFG = JSON.parse(fs.readFileSync(new URL('../data/social/buffer-pages.json
 const th = CFG.threads;
 
 // Interrupteur : éteint, sur le compte Buffer d'Instagram, sans image, sans plafond de volume partagé.
-assert.equal(th.enabled, false, 'Threads reste éteint tant que Charles n’a pas dit oui');
+assert.equal(th.enabled, true, 'Threads allumé (25 novembre 2026)');
+assert.match(th.liveSince, /^2026-11-26T/, 'rodage depuis l’activation');
 assert.equal(th.secret, 'BUFFER_INSTAGRAM_API_KEY');
 assert.equal(th.service, 'threads');
 assert.equal(th.image, false);
@@ -62,5 +63,6 @@ const T = s => Date.parse(s);
 assert.equal(weightAt('threads', T('2026-11-26T08:00:00Z')), 0, 'jeudi 3 h : calme');
 assert.equal(weightAt('threads', T('2026-11-27T00:30:00Z')), 1, 'jeudi 19 h 30 : pointe');
 assert.ok(dayCap(th, 'threads', T('2026-11-26T22:00:00Z')) <= 1, 'premiers jours : au plus 1 par jour');
+assert.equal(dayCap(th, 'threads', T('2026-12-05T22:00:00Z')), 2, 'après le rodage : 2 par jour');
 
 console.log('social-threads : OK');
