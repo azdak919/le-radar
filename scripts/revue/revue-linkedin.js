@@ -18,6 +18,12 @@ const frDate = (day) => {
   return Number.isFinite(d.getTime()) ? new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d) : '';
 };
 const authorsOf = (it) => (Array.isArray(it.authors) ? it.authors : [it.authors]).filter(Boolean).join(', ');
+// Pied de crédits, comme les images des réseaux sociaux (affiches/social-une.js → layoutCredit) : contenus crédités,
+// indépendance, licence de la mise en page. Copyleft dessiné par un « © » retourné (🄯 absent des polices du rendu sans tête).
+const COPYLEFT = '<span class="li-cl" aria-label="copyleft">©</span>';
+const CREDITS = `Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Projet indépendant, sans affiliation. Mise en page ${COPYLEFT}\u00A0Azdak CC BY 4.0.`;
+const creditsLine = (cls = '') => `<p class="li-credits${cls ? ' ' + cls : ''}">${CREDITS}</p>`;
+const REVUES_URL = 'https://le-radar.ca/revue/';
 const clip = (s, n) => { const t = String(s || '').trim(); return t.length <= n ? t : t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…'; };
 
 function articlePage(it, i, total, model) {
@@ -33,7 +39,7 @@ function articlePage(it, i, total, model) {
     <p class="li-byline">${authorsOf(it) ? `Par ${esc(authorsOf(it))} · ` : ''}${esc(it.source || '')}</p>
     ${text ? `<p class="li-text">${esc(clip(text, 230))}</p>` : ''}
   </div>
-  <footer class="li-foot">${esc(model.edition?.label || 'La revue')} · ${esc(frDate(model.edition?.day))}</footer>
+  <footer class="li-foot"><p>${esc(model.edition?.label || 'La revue')} · ${esc(frDate(model.edition?.day))}</p>${creditsLine()}</footer>
 </section>`;
 }
 
@@ -49,7 +55,6 @@ function renderLinkedInCarousel(model = {}) {
     return `${g.emoji || ''} ${g.sport || ''} · ${vs}${g.when ? ` · ${g.when}` : ''}`;
   };
   const total = items.length;
-  const url = model.url || `https://le-radar.ca/${model.path || 'revue/'}`;
   const pages = [
     `<section class="li-page li-cover">
   ${cover ? `<img class="li-cover__img" src="${esc(cover)}" alt="" />` : ''}
@@ -62,14 +67,15 @@ function renderLinkedInCarousel(model = {}) {
     <p class="li-swipe">${total} article${total > 1 ? 's' : ''} des médias étudiants du Québec · glissez →</p>
   </div>
   ${model.image?.credit ? `<span class="li-credit li-credit--cover">${esc(model.image.credit)}</span>` : ''}
+  ${creditsLine('li-credits--cover')}
 </section>`,
     ...items.map((it, i) => articlePage(it, i, total, model)),
     `<section class="li-page li-end">
   <header class="li-top"><span class="li-brand-sm">LE-RADAR.ca</span><span class="li-count">Et aussi</span></header>
   ${sports.length ? `<h2 class="li-h">🏟️ Sport étudiant</h2><ul class="li-list">${sports.map((g) => `<li>${esc(sportLine(g))}</li>`).join('')}</ul>` : ''}
   ${shows.length ? `<h2 class="li-h">📻 Radios étudiantes</h2><ul class="li-list">${shows.map((s) => `<li><b>${esc(s.station)}</b> · ${esc(s.title)} · ${esc(s.when || '')}</li>`).join('')}</ul>` : ''}
-  <div class="li-cta"><p>Toute la revue, avec les liens vers chaque média :</p><p class="li-url">${esc(url.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</p></div>
-  <footer class="li-foot">Journaux, radios et sports étudiants du Québec, réunis au même endroit</footer>
+  <div class="li-cta"><p>Toutes les revues, avec les liens vers chaque média :</p><p class="li-url">${esc(REVUES_URL.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</p></div>
+  <footer class="li-foot"><p>Journaux, radios et sports étudiants du Québec, réunis au même endroit</p>${creditsLine()}</footer>
 </section>`,
   ];
   return `<!doctype html>
@@ -87,13 +93,16 @@ html, body { background: #111; }
 .li-page { width: ${W}px; height: ${H}px; position: relative; overflow: hidden; break-after: page; background: var(--paper); color: var(--ink); font-family: var(--sans); }
 .li-page:last-child { break-after: auto; }
 .li-top { position: absolute; top: 44px; left: 64px; right: 64px; display: flex; justify-content: space-between; font: 700 26px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: #555; z-index: 2; }
-.li-foot { position: absolute; left: 64px; right: 64px; bottom: 44px; font: 600 24px/1.3 var(--sans); color: #666; border-top: 3px solid var(--ink); padding-top: 18px; }
+.li-foot { position: absolute; left: 64px; right: 64px; bottom: 36px; font: 600 24px/1.3 var(--sans); color: #666; border-top: 3px solid var(--ink); padding-top: 16px; }
+.li-credits { margin-top: 8px; font: 400 17px/1.35 var(--sans); color: #777; }
+.li-credits--cover { position: absolute; left: 64px; right: 300px; bottom: 26px; margin: 0; color: rgba(255,255,255,.75); z-index: 2; }
+.li-cl { display: inline-block; transform: scaleX(-1); }
 .li-credit { position: absolute; right: 16px; bottom: 12px; font: 400 18px/1.2 var(--sans); color: #fff; background: rgba(0,0,0,.55); padding: 4px 10px; border-radius: 6px; }
 /* Couverture */
 .li-cover { background: #111; color: #fff; }
 .li-cover__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .li-cover__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.1) 35%, rgba(0,0,0,.85) 72%); }
-.li-cover__content { position: absolute; inset: 64px 64px 96px; display: flex; flex-direction: column; }
+.li-cover__content { position: absolute; inset: 64px 64px 120px; display: flex; flex-direction: column; }
 .li-brand { display: flex; align-items: center; gap: 22px; font: 700 66px/1 var(--serif); }
 .li-brand img { width: 92px; height: 92px; border-radius: 20px; }
 .li-edition { margin-top: 40px; font: 700 58px/1.1 var(--serif); }
@@ -105,7 +114,7 @@ html, body { background: #111; }
 /* Articles */
 .li-photo { position: absolute; top: 100px; left: 64px; right: 64px; height: 640px; border-radius: 18px; overflow: hidden; background: #ddd; }
 .li-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.li-body { position: absolute; top: 776px; left: 64px; right: 64px; bottom: 120px; display: flex; flex-direction: column; }
+.li-body { position: absolute; top: 776px; left: 64px; right: 64px; bottom: 150px; display: flex; flex-direction: column; }
 .li-article--noimg .li-body { top: 150px; }
 .li-kicker { font: 700 26px/1.2 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
 .li-title { margin-top: 14px; font: 700 50px/1.1 var(--serif); }
@@ -117,7 +126,7 @@ html, body { background: #111; }
 .li-end .li-h + .li-list + .li-h { margin-top: 48px; }
 .li-list { list-style: none; margin: 20px 64px 0; }
 .li-list li { font: 400 28px/1.35 var(--sans); padding: 12px 0; border-bottom: 2px dotted #bbb; }
-.li-cta { position: absolute; left: 64px; right: 64px; bottom: 150px; background: var(--ink); color: #fff; border-radius: 18px; padding: 34px 38px; }
+.li-cta { position: absolute; left: 64px; right: 64px; bottom: 180px; background: var(--ink); color: #fff; border-radius: 18px; padding: 34px 38px; }
 .li-cta p { font: 600 30px/1.35 var(--sans); }
 .li-cta .li-url { margin-top: 10px; font: 700 46px/1.1 var(--serif); color: #f3c1e3; }
 </style></head>

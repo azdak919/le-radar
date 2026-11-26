@@ -11,7 +11,13 @@ assert.equal(pages.length, 1 + Math.min(MAX_ARTICLES, model.items.length) + 1, '
 assert.match(html, new RegExp(`size: ${W}px ${H}px`), 'pages 4:5 1080 × 1350');
 assert.equal(W / H, 0.8);
 assert.match(html, /La revue du soir/); assert.match(html, /mercredi 25 novembre 2026/);
-assert.match(html, /le-radar\.ca\/revue\/2026-11-25-soir/, 'lien vers la revue en page finale');
+assert.match(html, /<p class="li-url">le-radar\.ca\/revue<\/p>/, 'page finale : lien vers la page des revues');
+assert.doesNotMatch(html, /li-url">[^<]*2026-11-25/, 'pas le lien de l’édition');
+// Crédits en pied sur chaque page, comme les images des réseaux (copyleft = « © » retourné, jamais 🄯).
+assert.equal((html.match(/class="li-credits/g) || []).length, pages.length, 'crédits sur chaque page');
+assert.match(html, /Articles et photos crédités à leurs auteurs et à leurs médias d’origine\./);
+assert.match(html, /Mise en page <span class="li-cl"[^>]*>©<\/span>\u00A0Azdak CC BY 4\.0\./);
+assert.doesNotMatch(html, /🄯/);
 for (const it of model.items.slice(0, MAX_ARTICLES)) assert.ok(html.includes(it.source), `média ${it.source}`);
 assert.doesNotMatch(html, /undefined|NaN|\[object/);
 // Échappement : un titre avec < et & ne casse pas le HTML.
