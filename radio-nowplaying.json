@@ -1,34 +1,33 @@
 {
-  "updatedAt": "2026-11-26T02:37:32.596Z",
+  "updatedAt": "2026-11-26T03:36:56.108Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Blasphème",
-        "source": "api-live",
-        "start": "21:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/blaspheme/"
-      },
-      "next": {
         "title": "Nocturne",
         "source": "schedule-live",
         "start": "22:30",
         "end": "00:00",
         "url": "https://chyz.ca/emission/nocturne/"
       },
+      "next": {
+        "title": "Jeudi Révolte",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
+      },
       "track": "",
-      "showTitle": "Blasphème",
+      "showTitle": "Nocturne",
       "host": "",
-      "source": "api-live",
+      "source": "schedule-live",
       "sources": [
-        "api-live",
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T02:36:51.380Z"
+      "checkedAt": "2026-11-26T03:36:18.129Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +54,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T02:37:04.653Z"
+      "checkedAt": "2026-11-26T03:36:31.225Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Meanwhile",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Off The Hook",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Meanwhile",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T02:37:08.240Z"
+      "checkedAt": "2026-11-26T03:36:33.673Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "There's a Synth in the House",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
-      },
-      "next": {
         "title": "Sippin' On Sound",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/sippin-on-sound"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "There's a Synth in the House",
+      "showTitle": "Sippin' On Sound",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T02:37:22.229Z"
+      "checkedAt": "2026-11-26T03:36:47.162Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T02:37:23.115Z"
+      "checkedAt": "2026-11-26T03:36:48.041Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +141,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Lydia Képinski — Harfang",
+      "track": "Victoria Monét — Maybe (feat. Lucky Daye)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T02:37:32.245Z"
+      "checkedAt": "2026-11-26T03:36:55.757Z"
     }
   }
 }
