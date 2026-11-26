@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v1083",
+    "cache": "radar-shell-v1084",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -19,7 +19,7 @@
       "photo-bank-data.js": "de26216a6243ab2c",
       "player-sync.js": "36e84f1afaff7fcb",
       "quebec-backgrounds-data.js": "317300eca65ff7e5",
-      "quebec-backgrounds.js": "07c1b733f2318ec2",
+      "quebec-backgrounds.js": "01952a3aedf70202",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "88571ba7993b82c0",
       "quebec-university-backgrounds-data.js": "2b9d0e9085902ac0",
@@ -40,12 +40,12 @@
       "scripts/season-lib.js": "ff74cb33a15dc7ae",
       "scripts/session-freshness-lib.js": "4d3fe468e07044f0",
       "scripts/sports-freshness-lib.js": "1007c490837a7393",
-      "seo-page-theme.js": "1519a322762987f8",
+      "seo-page-theme.js": "af64289800da6852",
       "sports-load.js": "fd460c8142051d62",
       "style-chrome.css": "71e39a3822e1b633",
       "style-feed.css": "3b9d20df97481755",
       "style-masthead-chrome.css": "2fa8b30e8f5278db",
-      "style-masthead.css": "74b30989cdb9461d",
+      "style-masthead.css": "827a6efdce5d5c6b",
       "style-sports-strip.css": "4291837507d684a4",
       "style-translate-overlay.css": "51298bec3a3a6654",
       "style-tuner.css": "cc317ac09f022c3a",
@@ -104,7 +104,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v455",
+    "cache": "sports-shell-v456",
     "assets": {
       "app-sw-register.js": "5e30ff1ae069d10f",
       "app.js": "0e0df2c60f5900e3",
@@ -132,14 +132,14 @@
       "scripts/media-follow-ui.js": "dd5acb6d8596c6e6",
       "scripts/sports-date-lib.js": "8a371128d204543d",
       "scripts/sports-document-refresh.js": "673f6ebe6f1a75c6",
-      "seo-page-theme.js": "1519a322762987f8",
+      "seo-page-theme.js": "af64289800da6852",
       "seo-pages.css": "1bb9a0325ca84923",
       "sports-board.js": "13bb9f4ec94325eb",
       "sports-load.js": "fd460c8142051d62",
       "style-chrome.css": "71e39a3822e1b633",
       "style-feed.css": "3b9d20df97481755",
       "style-masthead-chrome.css": "2fa8b30e8f5278db",
-      "style-masthead.css": "74b30989cdb9461d",
+      "style-masthead.css": "827a6efdce5d5c6b",
       "style-sports-strip.css": "4291837507d684a4",
       "style-translate-overlay.css": "51298bec3a3a6654",
       "style-tuner.css": "cc317ac09f022c3a",
