@@ -67,7 +67,7 @@ export const frDayYear = ymd => `${frDay(ymd)} ${ymd.slice(0, 4)}`;
 
 // ── Éditions ─────────────────────────────────────────────────────────────────
 export const reviewId = (day, ed) => `${day}-${ed}`;
-export const reviewPath = (day, ed) => `revue/${reviewId(day, ed)}/`;
+export const reviewPath = (day, ed) => `revues/${reviewId(day, ed)}/`;
 export const reviewUrl = (day, ed) => `${SITE}/${reviewPath(day, ed)}`;
 /** Fin connue d'une revue déjà dans l'index (periodEnd, sinon l'heure cible du créneau). */
 function publishedEnd(r) {

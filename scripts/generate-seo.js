@@ -643,7 +643,7 @@ function main() {
 
   // ── llms.txt ──
   let llms = buildLlmsTxt(sources, radios, items, newsUpdated, model, archive.sample.records.length);
-  if (revue.enabled && revue.index.length) llms = llms.replace('\n## Pages de référence\n\n', `\n## Pages de référence\n\n- ${SITE_BASE}/revue/ : La revue du matin et La revue du soir, revues de presse étudiante générées automatiquement à partir des sources citées (articles, radio étudiante, sport étudiant)\n`);
+  if (revue.enabled && revue.index.length) llms = llms.replace('\n## Pages de référence\n\n', `\n## Pages de référence\n\n- ${SITE_BASE}/revues/ : La revue du matin et La revue du soir, revues de presse étudiante générées automatiquement à partir des sources citées (articles, radio étudiante, sport étudiant)\n`);
   if (doUpdate) fs.writeFileSync(LLMS_PATH, llms, 'utf8');
   written.push({ file: 'llms.txt', note: `${sources.length} journaux, ${radios.length} radios` });
 

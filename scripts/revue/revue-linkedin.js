@@ -23,7 +23,7 @@ const authorsOf = (it) => (Array.isArray(it.authors) ? it.authors : [it.authors]
 const COPYLEFT = '<span class="li-cl" aria-label="copyleft">©</span>';
 const CREDITS = `Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Projet indépendant, sans affiliation. Mise en page ${COPYLEFT}\u00A0Azdak CC BY 4.0.`;
 const creditsLine = (cls = '') => `<p class="li-credits${cls ? ' ' + cls : ''}">${CREDITS}</p>`;
-const REVUES_URL = 'https://le-radar.ca/revue/';
+const REVUES_URL = 'https://le-radar.ca/revues/';
 const clip = (s, n) => { const t = String(s || '').trim(); return t.length <= n ? t : t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…'; };
 
 function articlePage(it, i, total, model) {

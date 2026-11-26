@@ -1,7 +1,7 @@
 name: Revue — matin et soir
 
 # « La revue du matin » (≈ 7 h) et « La revue du soir » (≈ 19 h 15), heure de Montréal : articles originaux du Radar
-# (revue de presse étudiante, radio étudiante, sport étudiant), pages /revue/AAAA-MM-JJ-matin|soir/, flux RSS, sitemaps.
+# (revue de presse étudiante, radio étudiante, sport étudiant), pages /revues/AAAA-MM-JJ-matin|soir/, flux RSS, sitemaps.
 # INTERRUPTEUR : data/revue/config.json `publish`. Tant qu'il vaut false (défaut), la porte ne laisse RIEN passer : aucune page,
 # aucun commit, rien dans sitemap.xml, sitemap-news.xml, robots.txt ni feed.xml. Seul l'exemple manuel (sample) tourne, en artefact.
 # Fenêtres (config.json) : matin 6 h 45-10 h 30, soir 19 h-22 h 30, mise à jour tardive des résultats du soir 23 h-23 h 59.
@@ -188,7 +188,7 @@ jobs:
           REVUE_ID: ${{ needs.gate.outputs.id }}
           REVUE_MODE: ${{ needs.gate.outputs.mode }}
         run: |
-          git add revue data/revue sitemap-news.xml robots.txt feed.xml
+          git add revues revue data/revue sitemap-news.xml robots.txt feed.xml
           if [ "$REVUE_MODE" = "publier" ]; then
             git diff --cached --quiet && { echo "::error::Édition due, rien à publier."; exit 1; }
           else

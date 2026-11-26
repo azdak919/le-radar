@@ -32,15 +32,15 @@ const revueIndex = JSON.parse(fs.readFileSync('data/revue/index.json', 'utf8'));
 const latestMatin = revueIndex.find((e) => e.edition === 'matin');
 const latestSoir = revueIndex.find((e) => e.edition === 'soir');
 assert.ok(latestMatin && latestSoir, 'index des revues : au moins une édition du matin et une du soir');
-assert.ok(feedRevues.some((e) => e.xml.includes(`revue/${latestMatin.id}`)), `feed.xml : la dernière revue du matin (${latestMatin.id}) est dans les 3 dernières`);
-assert.ok(feedRevues.some((e) => e.xml.includes(`revue/${latestSoir.id}`)), `feed.xml : la dernière revue du soir (${latestSoir.id}) est dans les 3 dernières`);
+assert.ok(feedRevues.some((e) => e.xml.includes(`revues/${latestMatin.id}`)), `feed.xml : la dernière revue du matin (${latestMatin.id}) est dans les 3 dernières`);
+assert.ok(feedRevues.some((e) => e.xml.includes(`revues/${latestSoir.id}`)), `feed.xml : la dernière revue du soir (${latestSoir.id}) est dans les 3 dernières`);
 assert.ok(fs.readFileSync('robots.txt', 'utf8').includes('sitemap-news.xml'), 'robots.txt : sitemap Google News une fois publiée');
-assert.ok(fs.existsSync('sitemap-news.xml') && fs.existsSync('revue/index.html'), 'pages et sitemap de revue commités une fois publiée');
-assert.ok(fs.existsSync('revue/2026-11-17-matin/index.html'), 'édition du matin du 17 nov. 2026 présente');
-assert.ok(fs.existsSync('revue/2026-11-17-soir/index.html'), 'édition du soir du 17 nov. 2026 présente');
-assert.ok(fs.existsSync('revue/2026-11-18-matin/index.html'), 'édition du matin du 18 nov. 2026 présente');
-assert.ok(fs.existsSync('revue/2026-11-18-soir/index.html'), 'édition du soir du 18 nov. 2026 présente');
-assert.match(fs.readFileSync('revue/index.html', 'utf8'), /href="\.\/2026-11-18-matin\/"/, 'index des archives : lien relatif vers l’édition, pas vers la racine');
+assert.ok(fs.existsSync('sitemap-news.xml') && fs.existsSync('revues/index.html'), 'pages et sitemap de revue commités une fois publiée');
+assert.ok(fs.existsSync('revues/2026-11-17-matin/index.html'), 'édition du matin du 17 nov. 2026 présente');
+assert.ok(fs.existsSync('revues/2026-11-17-soir/index.html'), 'édition du soir du 17 nov. 2026 présente');
+assert.ok(fs.existsSync('revues/2026-11-18-matin/index.html'), 'édition du matin du 18 nov. 2026 présente');
+assert.ok(fs.existsSync('revues/2026-11-18-soir/index.html'), 'édition du soir du 18 nov. 2026 présente');
+assert.match(fs.readFileSync('revues/index.html', 'utf8'), /href="\.\/2026-11-18-matin\/"/, 'index des archives : lien relatif vers l’édition, pas vers la racine');
 
 
 // ── Éditions : 7 h et 19 h 15 heure de Montréal, été comme hiver (docs/revue.md, « Heures de publication ») ──
@@ -59,7 +59,7 @@ assert.equal(L.mtlInstant('2026-07-17', '07:30'), Date.parse('2026-07-17T11:30:0
 assert.equal(L.mtlInstant('2026-03-08', '07:30'), Date.parse('2026-03-08T11:30:00Z'), 'passage à l’heure d’été');
 assert.equal(R.isoMtl(Date.parse('2026-11-17T00:15:00Z')), '2026-11-16T19:15:00-05:00');
 assert.equal(R.isoMtl(Date.parse('2026-07-16T23:15:00Z')), '2026-07-16T19:15:00-04:00');
-assert.equal(L.reviewPath('2026-11-17', 'matin'), 'revue/2026-11-17-matin/');
+assert.equal(L.reviewPath('2026-11-17', 'matin'), 'revues/2026-11-17-matin/');
 
 // Crons de revue.yml alignés sur les fenêtres, été comme hiver : matin dans les 5 min. après 7 h ;
 // soir peu après l'ouverture (19 h), assez tôt pour précéder le cron de La une (19 h 23) ; plus la mise à jour tardive.
@@ -455,8 +455,8 @@ assert.equal((await generate('matin', tM, { ...io, index: [{ id: m.id }] })).sta
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'revue-ordre-'));
   fs.writeFileSync(path.join(dir, 'robots.txt'), 'User-agent: *\nAllow: /\n');
   const order = [
-    { id: '2026-11-21-matin', datePublished: '2026-11-21T12:00:00.000Z', periodEnd: '2026-11-21T12:00:00.000Z', edition: 'matin', day: '2026-11-21', path: 'revue/2026-11-21-matin/', url: 'https://le-radar.ca/revue/2026-11-21-matin/', headline: 'plus tard', articleIds: [], sportKeys: [] },
-    { id: '2026-11-19-soir', datePublished: '2026-11-20T00:15:00.000Z', periodEnd: '2026-11-20T00:15:00.000Z', edition: 'soir', day: '2026-11-19', path: 'revue/2026-11-19-soir/', url: 'https://le-radar.ca/revue/2026-11-19-soir/', headline: 'plus tôt', articleIds: [], sportKeys: [] },
+    { id: '2026-11-21-matin', datePublished: '2026-11-21T12:00:00.000Z', periodEnd: '2026-11-21T12:00:00.000Z', edition: 'matin', day: '2026-11-21', path: 'revues/2026-11-21-matin/', url: 'https://le-radar.ca/revues/2026-11-21-matin/', headline: 'plus tard', articleIds: [], sportKeys: [] },
+    { id: '2026-11-19-soir', datePublished: '2026-11-20T00:15:00.000Z', periodEnd: '2026-11-20T00:15:00.000Z', edition: 'soir', day: '2026-11-19', path: 'revues/2026-11-19-soir/', url: 'https://le-radar.ca/revues/2026-11-19-soir/', headline: 'plus tôt', articleIds: [], sportKeys: [] },
   ];
   writeOutputs(dir, { model: am.model, index: order, reviews: {}, publish: false, now: matinAt, cfg: on });
   writeOutputs(dir, { model: pm.model, index: order, reviews: {}, publish: false, now: soirAt, cfg: on });
@@ -475,7 +475,7 @@ assert.equal((await generate('soir', Date.parse('2026-11-17T03:50:00Z'), { ...io
 
 // ── Rendu de la page ──
 const html = R.renderReviewPage(m);
-assert.match(html, /<link rel="canonical" href="https:\/\/le-radar\.ca\/revue\/2026-11-17-matin\/" \/>/);
+assert.match(html, /<link rel="canonical" href="https:\/\/le-radar\.ca\/revues\/2026-11-17-matin\/" \/>/);
 assert.match(html, /<meta property="og:type" content="article" \/>/);
 assert.match(html, /<meta property="og:image" content="https:\/\/le-radar\.ca\/assets\/news-images\/abc\.jpg" \/>/);
 assert.match(html, /<meta name="twitter:card" content="summary_large_image" \/>/);
@@ -501,12 +501,12 @@ assert.match(html, /revue-flag__ears">[\s\S]*Revue de presse <em class="revue-fl
   const colo = (html.match(/<aside class="revue-colophon"[\s\S]*?<\/aside>/) || [''])[0];
   assert.ok(colo, 'colophon imprimé en fin d’édition');
   assert.equal((html.match(/class="revue-colophon"/g) || []).length, 1, 'colophon une seule fois, pas répété');
-  for (const t of ['Le Réseau Académique de Découverte et d’Agrégation de Ressources', 'indépendant et non officiel', 'azdak-qc@proton.me', 'GNU AGPLv3', 'le-radar.ca/revue', 'Conçu avec ♡ par Azdak en 2026', 'Revue préparée automatiquement'])
+  for (const t of ['Le Réseau Académique de Découverte et d’Agrégation de Ressources', 'indépendant et non officiel', 'azdak-qc@proton.me', 'GNU AGPLv3', 'le-radar.ca/revues', 'Conçu avec ♡ par Azdak en 2026', 'Revue préparée automatiquement'])
     assert.ok(colo.replace(/'/g, '’').includes(t.replace(/'/g, '’')), `colophon : ${t}`);
   assert.match(html, /<a class="revue-top__qr" href="[^"]+" tabindex="-1"><svg[^>]*class="revue-top__qrcode"[\s\S]*?<path fill="#000" d="M[\s\S]*?<span>Lire en ligne<\/span><\/a>/, 'code QR à droite, sous le folio, au-dessus de « Dans cette édition »');
   assert.doesNotMatch(html, /revue-flag__qr/, 'plus de code QR dans le coin gauche du mât');
   assert.doesNotMatch(colo, /Installer|Android|revue-nav/i, 'colophon sans navigation ni campagne');
-  assert.deepEqual([...colo.matchAll(/<a href="([^"]+)"/g)].map(x => x[1]), [m.url, 'https://le-radar.ca/revue/'], 'liens cliquables du colophon : l’édition et le-radar.ca/revue');
+  assert.deepEqual([...colo.matchAll(/<a href="([^"]+)"/g)].map(x => x[1]), [m.url, 'https://le-radar.ca/revues/'], 'liens cliquables du colophon : l’édition et le-radar.ca/revue');
 }
 {
   const many = { ...m, items: [m.items[0], ...m.items.map((x, i) => ({ ...x, id: `ph${i}`, link: `${x.link}?p=${i}`, image: `assets/news-images/p${i}.jpg`, credit: 'Photo : Jane Roy' }))] };
@@ -587,16 +587,16 @@ assert.ok(!/<\/script/i.test(R.jsonForScript({ x: '</script><b>' })));
 
 // ── Sitemap Google News (48 h), sitemap principal, RSS ──
 const entry = { id: m.id, path: m.path, url: m.url, headline: m.headline, datePublished: m.datePublished, dateModified: m.dateModified, edition: 'matin', day: '2026-11-17', counts: { articles: 3, results: 1 } };
-const old = { ...entry, id: '2026-11-14-matin', url: 'https://le-radar.ca/revue/2026-11-14-matin/', path: 'revue/2026-11-14-matin/', datePublished: T('2026-11-14T12:30:00Z'), day: '2026-11-14' };
+const old = { ...entry, id: '2026-11-14-matin', url: 'https://le-radar.ca/revues/2026-11-14-matin/', path: 'revues/2026-11-14-matin/', datePublished: T('2026-11-14T12:30:00Z'), day: '2026-11-14' };
 const ns = R.newsSitemap([entry, old], { now: tM + 3600e3 });
 assert.match(ns, /xmlns:news="http:\/\/www\.google\.com\/schemas\/sitemap-news\/0\.9"/);
 assert.match(ns, /<news:name>Le Radar<\/news:name><news:language>fr<\/news:language>/);
 assert.match(ns, /<news:publication_date>2026-11-17T07:3\d:00-05:00<\/news:publication_date>/);
 assert.ok(ns.includes(m.url) && !ns.includes('2026-11-14-matin'), 'seulement les 48 dernières heures');
 assert.equal((ns.match(/<url>/g) || []).length, 1);
-assert.deepEqual(R.sitemapEntries([entry]).map(e => e.loc), ['/revue/', '/revue/2026-11-17-matin/']);
+assert.deepEqual(R.sitemapEntries([entry]).map(e => e.loc), ['/revues/', '/revues/2026-11-17-matin/']);
 const item = R.feedItemXml({ ...m, image: { ...m.image, length: 12345 } });
-assert.match(item, /<guid isPermaLink="true">https:\/\/le-radar\.ca\/revue\/2026-11-17-matin\/<\/guid>/);
+assert.match(item, /<guid isPermaLink="true">https:\/\/le-radar\.ca\/revues\/2026-11-17-matin\/<\/guid>/);
 assert.match(item, /<pubDate>Tue, 17 Nov 2026 12:3\d:00 \+0000<\/pubDate>/);
 assert.match(item, /<enclosure url="https:\/\/le-radar\.ca\/assets\/news-images\/abc\.jpg" length="12345" type="image\/jpeg" \/>/);
 assert.match(item, /<category>Revue de presse<\/category>/); assert.match(item, /<category>Sport étudiant<\/category>/);
@@ -616,9 +616,9 @@ const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'revue-'));
 fs.writeFileSync(path.join(tmp, 'robots.txt'), 'User-agent: *\nAllow: /\n');
 const index = [];
 writeOutputs(tmp, { model: m, index, reviews: {}, publish: false, now: tM, cfg: on });
-for (const f of ['revue/2026-11-17-matin/index.html', 'revue/index.html', 'revue/feed.xml', 'sitemap-news.xml', 'data/revue/index.json', 'data/revue/reviews/2026-11-17-matin.json']) assert.ok(fs.existsSync(path.join(tmp, f)), f);
+for (const f of ['revues/2026-11-17-matin/index.html', 'revues/index.html', 'revues/feed.xml', 'sitemap-news.xml', 'data/revue/index.json', 'data/revue/reviews/2026-11-17-matin.json']) assert.ok(fs.existsSync(path.join(tmp, f)), f);
 assert.equal(fs.readFileSync(path.join(tmp, 'robots.txt'), 'utf8'), 'User-agent: *\nAllow: /\n', 'exemple : robots.txt intact');
-assert.match(fs.readFileSync(path.join(tmp, 'revue/index.html'), 'utf8'), /href="\.\/2026-11-17-matin\/"/);
+assert.match(fs.readFileSync(path.join(tmp, 'revues/index.html'), 'utf8'), /href="\.\/2026-11-17-matin\/"/);
 writeOutputs(tmp, { model: m, index, reviews: {}, publish: true, now: tM, cfg: on });
 assert.match(fs.readFileSync(path.join(tmp, 'robots.txt'), 'utf8'), /Sitemap: https:\/\/le-radar\.ca\/sitemap-news\.xml/);
 assert.equal(JSON.parse(fs.readFileSync(path.join(tmp, 'data/revue/index.json'), 'utf8')).length, 1, 'idempotent : une entrée par revue');
@@ -736,8 +736,8 @@ console.log('revue : OK');
   const tmpPdf = fs.mkdtempSync(path.join(os.tmpdir(), 'revue-pdf-id-'));
   fs.mkdirSync(path.join(tmpPdf, 'data/revue'), { recursive: true });
   for (const id of ['2026-11-18-matin', '2026-11-17-matin', '2026-11-17-soir']) {
-    fs.mkdirSync(path.join(tmpPdf, 'revue', id), { recursive: true });
-    fs.writeFileSync(path.join(tmpPdf, 'revue', id, 'index.html'), '<html></html>');
+    fs.mkdirSync(path.join(tmpPdf, 'revues', id), { recursive: true });
+    fs.writeFileSync(path.join(tmpPdf, 'revues', id, 'index.html'), '<html></html>');
   }
   fs.writeFileSync(path.join(tmpPdf, 'data/revue/index.json'), JSON.stringify([
     { id: '2026-11-18-matin', edition: 'matin' },

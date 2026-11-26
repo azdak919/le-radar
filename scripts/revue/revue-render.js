@@ -244,7 +244,7 @@ function sourcesHtml(model) {
       ? `        <p>Médias cités : <span class="notranslate" translate="no">${esc(media.join(', '))}</span>. Chaque article appartient à son média et à ses auteurs ; les titres sont ceux des articles originaux, dans leur langue.</p>`
       : `        <p>Aucun nouvel article des médias étudiants pour cette période : cette édition reprend les grilles des radios étudiantes et le calendrier du sport étudiant. La photo de couverture est une photo libre de campus (Wikimedia Commons).</p>`,
     !media.length ? '' : `        <p>${ai ? `Les résumés d’une phrase sont rédigés par une IA ouverte (${esc(String(model.generator).slice(3))}, Cloudflare Workers AI) à partir du titre et de l’extrait de chaque article, puis vérifiés automatiquement : un résumé qui contient un chiffre, un nom ou une date absents de la source est remplacé par un court extrait de l’article.` : 'Cette édition reprend un court extrait de chaque article, sans résumé rédigé par IA.'} Les liens, les auteurs, les grilles de radio et les résultats sportifs viennent directement des données du Radar et sont contrôlés avant publication.</p>`,
-    `        <p class="revue-nav">${model.previous ? `<a href="${esc(SITE + '/' + model.previous.path)}" rel="prev">← ${esc(model.previous.headline)}</a> · ` : ''}<a href="${SITE}/revue/">Toutes les revues</a> · <a href="${SITE}/revue/feed.xml">Flux RSS des revues</a></p>`,
+    `        <p class="revue-nav">${model.previous ? `<a href="${esc(SITE + '/' + model.previous.path)}" rel="prev">← ${esc(model.previous.headline)}</a> · ` : ''}<a href="${SITE}/revues/">Toutes les revues</a> · <a href="${SITE}/revues/feed.xml">Flux RSS des revues</a></p>`,
     '      </section>',
   ].filter(Boolean).join('\n');
 }
@@ -445,7 +445,7 @@ function colophonHtml(model) {
     `          <p class="revue-colophon__text">${esc(SITE_T.fr.unofficial)}</p>`,
     `          <p class="revue-colophon__line"><b>Nous joindre</b> ${esc(CONTACT_MAIL)}</p>`,
     `          <p class="revue-colophon__line"><b>Code libre</b> licence GNU AGPLv3 · ${REPO}</p>`,
-    url ? `          <div class="revue-colophon__online"><p><b>Cette édition en ligne</b><br /><a href="${esc(url)}" tabindex="-1">${esc(shortUrl)}</a><br />Toutes les revues : <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p></div>` : `          <p class="revue-colophon__line"><b>En ligne</b> <a href="${SITE}/revue/" tabindex="-1">le-radar.ca/revue</a></p>`,
+    url ? `          <div class="revue-colophon__online"><p><b>Cette édition en ligne</b><br /><a href="${esc(url)}" tabindex="-1">${esc(shortUrl)}</a><br />Toutes les revues : <a href="${SITE}/revues/" tabindex="-1">le-radar.ca/revues</a></p></div>` : `          <p class="revue-colophon__line"><b>En ligne</b> <a href="${SITE}/revues/" tabindex="-1">le-radar.ca/revues</a></p>`,
     `          <p class="revue-colophon__ia">${DISCLOSURE}</p>`,
     '          <p class="revue-colophon__credit">Conçu avec ♡ par Azdak en 2026</p>',
     '        </aside>',
@@ -581,7 +581,7 @@ function renderReviewPage(model, { robots = 'index,follow,max-image-preview:larg
     `    <meta name="twitter:title" content="${esc(model.headline)}" />`,
     `    <meta name="twitter:description" content="${esc(model.description)}" />`,
     `    <meta name="author" content="${PUBLISHER}" />`,
-    `    <link rel="alternate" type="application/rss+xml" title="Les revues du Radar" href="${SITE}/revue/feed.xml" />`,
+    `    <link rel="alternate" type="application/rss+xml" title="Les revues du Radar" href="${SITE}/revues/feed.xml" />`,
     '',
   ].join('\n');
   return renderPage({
@@ -597,6 +597,20 @@ const byPublishedDesc = (a, b) => (Date.parse(b.datePublished || 0) - Date.parse
 const editionLabel = (r) => `${r.edition === 'soir' ? '🌙' : '☀️'} ${r.edition === 'soir' ? 'La revue du soir' : 'La revue du matin'}`;
 const leadText = (r) => String(r.lead || '').replace(/[.]+$/, '');
 const torontoTime = (iso) => { const d = new Date(iso); if (!Number.isFinite(d.getTime())) return ''; const p = Object.fromEntries(new Intl.DateTimeFormat('fr-CA', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(d).map((x) => [x.type, x.value])); return `${Number(p.hour)} h ${p.minute}`; };
+/** Page de redirection d'une ancienne adresse /revue/… vers /revues/… (canonique + refresh + JS, non indexée). */
+function legacyRedirectPage(url) {
+  const u = esc(url);
+  return `<!doctype html>
+<html lang="fr-CA"><head><meta charset="utf-8" />
+<title>Les revues du Radar</title>
+<meta name="robots" content="noindex" />
+<link rel="canonical" href="${u}" />
+<meta http-equiv="refresh" content="0; url=${u}" />
+<script>location.replace(${JSON.stringify(url)} + location.hash);</script>
+</head><body><p>Les revues ont déménagé : <a href="${u}">${u}</a></p></body></html>
+`;
+}
+
 function renderIndexPage(index = []) {
   const byDay = new Map();
   for (const r of index) { if (!byDay.has(r.day)) byDay.set(r.day, []); byDay.get(r.day).push(r); }
@@ -607,16 +621,16 @@ function renderIndexPage(index = []) {
   const featured = latest.length ? [
     `      <section class="seo-section revue-section revue-latest" aria-labelledby="revue-latest-h"><h2 id="revue-latest-h">Les revues du jour · ${esc(frDayYear(latestDay))}</h2>`,
     '        <ul class="revue-latest__list">',
-    ...latest.map((r) => `          <li class="revue-latest__item"><a class="revue-latest__link" href="./${esc(r.path.replace(/^revue\//, ''))}">${editionLabel(r)}</a>${torontoTime(r.datePublished) ? ` <span class="revue-latest__time">publiée à ${esc(torontoTime(r.datePublished))}</span>` : ''}${r.lead ? `<p class="revue-latest__lead">En tête : « ${esc(leadText(r))} »</p>` : ''}</li>`),
+    ...latest.map((r) => `          <li class="revue-latest__item"><a class="revue-latest__link" href="./${esc(r.path.replace(/^revues?\//, ''))}">${editionLabel(r)}</a>${torontoTime(r.datePublished) ? ` <span class="revue-latest__time">publiée à ${esc(torontoTime(r.datePublished))}</span>` : ''}${r.lead ? `<p class="revue-latest__lead">En tête : « ${esc(leadText(r))} »</p>` : ''}</li>`),
     '        </ul>',
     '      </section>',
   ].join('\n') : '';
   const rows = days.slice(1).map((day) => [
     `        <li class="revue-archive__day"><h3>${esc(cap(frDayYear(day)))}</h3><ul>`,
-    ...[...byDay.get(day)].sort(byPublishedDesc).map((r) => `          <li><a href="./${esc(r.path.replace(/^revue\//, ''))}">${editionLabel(r)}</a> ${r.lead ? `<span class="revue-archive__meta">En tête : « ${esc(leadText(r))} »</span>` : ''}</li>`),
+    ...[...byDay.get(day)].sort(byPublishedDesc).map((r) => `          <li><a href="./${esc(r.path.replace(/^revues?\//, ''))}">${editionLabel(r)}</a> ${r.lead ? `<span class="revue-archive__meta">En tête : « ${esc(leadText(r))} »</span>` : ''}</li>`),
     '        </ul></li>',
   ].join('\n'));
-  const path_ = 'revue/';
+  const path_ = 'revues/';
   const title = 'Les revues de presse étudiante du Radar | LE-RADAR.ca';
   const description = 'La revue du matin et la revue du soir : revue de presse des médias étudiants du Québec, radio étudiante et résultats du sport étudiant, avec liens vers les articles originaux.';
   const ld = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Les revues du Radar', url: `${SITE}/${path_}`, inLanguage: 'fr-CA', publisher: publisherLd(),
@@ -627,13 +641,13 @@ function renderIndexPage(index = []) {
     bodyHtml: [
       '      <p class="seo-lead">Deux fois par jour, La revue du matin et La revue du soir rassemblent les articles des médias étudiants du Québec, les émissions des radios étudiantes et les résultats du sport étudiant.</p>',
       featured,
-      `      <p class="revue-more"><a href="${SITE}/revue/feed.xml">Flux RSS des revues</a></p>`,
+      `      <p class="revue-more"><a href="${SITE}/revues/feed.xml">Flux RSS des revues</a></p>`,
       rows.length ? `      <section class="seo-section revue-section"><h2>Archives</h2>\n      <ul class="revue-archive">\n${rows.join('\n')}\n      </ul>\n      </section>` : '',
       index.length ? '' : '      <p class="revue-empty">Aucune revue publiée pour le moment.</p>',
       '      <p class="revue-disclosure">Revues préparées automatiquement par Le Radar à partir des sources citées ; chaque article renvoie à son média d’origine et nomme tous ses auteurs.</p>',
     ].filter(Boolean).join('\n'),
     jsonLd: jsonForScript(ld), siteBase: SITE, updated: index[0] ? stamp(index[0].dateModified || index[0].datePublished) : null, alternate: false,
-    extraHead: `    <link rel="alternate" type="application/rss+xml" title="Les revues du Radar" href="${SITE}/revue/feed.xml" />\n`, extraStyles: ['revue.css'], wireClass: 'revue-wire',
+    extraHead: `    <link rel="alternate" type="application/rss+xml" title="Les revues du Radar" href="${SITE}/revues/feed.xml" />\n`, extraStyles: ['revue.css'], wireClass: 'revue-wire',
   });
 }
 
@@ -663,7 +677,7 @@ function newsSitemap(index = [], { now = Date.now(), hours = 48 } = {}) {
 function sitemapEntries(index = []) {
   if (!index.length) return [];
   return [
-    { loc: '/revue/', changefreq: 'daily', priority: '0.6', lastmod: String(index[0].dateModified || index[0].datePublished).slice(0, 10) },
+    { loc: '/revues/', changefreq: 'daily', priority: '0.6', lastmod: String(index[0].dateModified || index[0].datePublished).slice(0, 10) },
     ...index.map((r) => ({ loc: `/${r.path}`, changefreq: 'weekly', priority: '0.5', lastmod: String(r.dateModified || r.datePublished).slice(0, 10) })),
   ];
 }
@@ -714,19 +728,19 @@ function feedItemXml(model, { attachments = true } = {}) {
     '    </item>',
   ].filter(Boolean).join('\n');
 }
-/** Flux dédié /revue/feed.xml. */
+/** Flux dédié /revues/feed.xml (copie à l'ancienne adresse /revue/feed.xml). */
 function revueFeedXml(models = [], { now = Date.now() } = {}) {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/">',
     '  <channel>',
     '    <title>Les revues du Radar</title>',
-    `    <link>${SITE}/revue/</link>`,
+    `    <link>${SITE}/revues/</link>`,
     '    <description>La revue du matin et La revue du soir : revue de presse des médias étudiants du Québec, radio étudiante et sport étudiant. Générées automatiquement à partir des sources citées.</description>',
     '    <language>fr-CA</language>',
     `    <lastBuildDate>${rfc822(models[0]?.dateModified || now)}</lastBuildDate>`,
-    `    <atom:link href="${SITE}/revue/feed.xml" rel="self" type="application/rss+xml" />`,
-    `    <image><url>${SITE}/assets/icon-192.png</url><title>Les revues du Radar</title><link>${SITE}/revue/</link></image>`,
+    `    <atom:link href="${SITE}/revues/feed.xml" rel="self" type="application/rss+xml" />`,
+    `    <image><url>${SITE}/assets/icon-192.png</url><title>Les revues du Radar</title><link>${SITE}/revues/</link></image>`,
     ...models.map(feedItemXml),
     '  </channel>',
     '</rss>',
@@ -755,7 +769,7 @@ function robotsWithNewsSitemap(text, enabled) {
 module.exports = {
   SITE, PUBLISHER, NEWS_SITEMAP, CONFIG_PATH, INDEX_PATH, REVIEWS_DIR,
   frDayYear, frShort, frClock, isoMtl, rfc822, groupByTheme,
-  articleBody, reviewJsonLd, renderReviewPage, renderIndexPage, newsSitemap, sitemapEntries,
+  articleBody, reviewJsonLd, renderReviewPage, renderIndexPage, legacyRedirectPage, SITE, newsSitemap, sitemapEntries,
   pdfDownloadName, pdfBarHtml, syncEditionPdfLinks, qrLinkHtml, sportHtml,
   feedContentHtml, feedItemXml, revueFeedXml, loadConfig, loadPublished, robotsWithNewsSitemap, jsonForScript,
 };

@@ -489,11 +489,11 @@ export function uneTumblrTags(items) {
 const clip = (s, n) => { const a = [...s]; return a.length <= n ? s : a.slice(0, n - 1).join('').replace(/[\s,;:.–—-]+$/, '') + '…'; };
 
 
-/** Chemin public d'une édition (ex. « revue/2026-11-17-soir/ »), ou '' si le créneau n'est ni matin ni soir. */
+/** Chemin public d'une édition (ex. « revues/2026-11-17-soir/ »), ou '' si le créneau n'est ni matin ni soir. */
 export function revueEditionHref(slot) {
   const id = slot?.id, day = slot?.day;
   if ((id !== 'matin' && id !== 'soir') || !/^\d{4}-\d{2}-\d{2}$/.test(String(day || ''))) return '';
-  return `revue/${day}-${id}/`;
+  return `revues/${day}-${id}/`;
 }
 
 /** Vrai seulement si la page publique de l'édition est vraiment là (index.html dans le dépôt). */

@@ -48,8 +48,8 @@ function startServer() {
 }
 
 async function printEdition(browser, id) {
-  const pageUrl = `http://127.0.0.1:${PORT}/revue/${id}/`;
-  const outDir = join(root, 'revue', id);
+  const pageUrl = `http://127.0.0.1:${PORT}/revues/${id}/`;
+  const outDir = join(root, 'revues', id);
   mkdirSync(outDir, { recursive: true });
   const page = await browser.newPage();
   await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: 60_000 });
@@ -86,7 +86,7 @@ async function printEdition(browser, id) {
 }
 
 /**
- * Carrousel LinkedIn (revue/<id>/linkedin.pdf, pages 1080 × 1350) et sa vignette (linkedin-cover.jpg,
+ * Carrousel LinkedIn (revues/<id>/linkedin.pdf, pages 1080 × 1350) et sa vignette (linkedin-cover.jpg,
  * exigée par Buffer pour un document). Données : data/revue/reviews/<id>.json.
  */
 async function printLinkedIn(browser, id) {
@@ -96,7 +96,7 @@ async function printLinkedIn(browser, id) {
   const html = renderLinkedInCarousel(model);
   const page = await browser.newPage({ viewport: { width: LI_W, height: LI_H } });
   // Servi depuis la même origine que le site local : sinon (about:blank) les polices du site sont refusées.
-  const at = `http://127.0.0.1:${PORT}/revue/${id}/__linkedin.html`;
+  const at = `http://127.0.0.1:${PORT}/revues/${id}/__linkedin.html`;
   await page.route(at, (route) => route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: html }));
   // Photos réduites à la taille d'affichage (JPEG q80) : sans ça, Chrome intègre les originaux (44 Mo).
   await page.route(/\.(jpe?g|png|webp|avif)(\?.*)?$/i, async (route) => {
@@ -116,7 +116,7 @@ async function printLinkedIn(browser, id) {
     for (const im of document.querySelectorAll('.li-photo img')) if (!im.naturalWidth) { const p = im.closest('.li-page'); im.closest('.li-photo').remove(); p.classList.add('li-article--noimg'); }
     for (const im of document.querySelectorAll('.li-cover__img')) if (!im.naturalWidth) im.remove();
   });
-  const outDir = join(root, 'revue', id);
+  const outDir = join(root, 'revues', id);
   await page.screenshot({ path: join(outDir, 'linkedin-cover.jpg'), type: 'jpeg', quality: 82, clip: { x: 0, y: 0, width: LI_W, height: LI_H } });
   const dest = join(outDir, 'linkedin.pdf');
   await page.pdf({ path: dest, width: `${LI_W}px`, height: `${LI_H}px`, printBackground: true, preferCSSPageSize: true });
@@ -143,7 +143,7 @@ function requestedIds(argv = process.argv, base = root) {
 }
 
 function syncIds(ids) {
-  for (const id of ids) syncEditionPdfLinks(join(root, 'revue', id));
+  for (const id of ids) syncEditionPdfLinks(join(root, 'revues', id));
 }
 
 async function main() {
@@ -161,7 +161,7 @@ async function main() {
   try {
     const browser = await chromium.launch({ headless: true });
     for (const id of ids) {
-      if (!existsSync(join(root, 'revue', id, 'index.html'))) {
+      if (!existsSync(join(root, 'revues', id, 'index.html'))) {
         console.error('édition introuvable :', id);
         process.exit(1);
       }

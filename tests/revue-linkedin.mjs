@@ -11,7 +11,7 @@ assert.equal(pages.length, 1 + Math.min(MAX_ARTICLES, model.items.length) + 1, '
 assert.match(html, new RegExp(`size: ${W}px ${H}px`), 'pages 4:5 1080 × 1350');
 assert.equal(W / H, 0.8);
 assert.match(html, /La revue du soir/); assert.match(html, /mercredi 25 novembre 2026/);
-assert.match(html, /<p class="li-url">le-radar\.ca\/revue<\/p>/, 'page finale : lien vers la page des revues');
+assert.match(html, /<p class="li-url">le-radar\.ca\/revues<\/p>/, 'page finale : lien vers la page des revues');
 assert.doesNotMatch(html, /li-url">[^<]*2026-11-25/, 'pas le lien de l’édition');
 // Crédits en pied sur chaque page, comme les images des réseaux (copyleft = « © » retourné, jamais 🄯).
 assert.equal((html.match(/class="li-credits/g) || []).length, pages.length, 'crédits sur chaque page');
@@ -31,8 +31,8 @@ assert.match(noimg, /li-article--noimg/);
   const { linkedinCarousel } = await import('../scripts/social/une-run.mjs');
   const ok = async () => ({ ok: true }), ko = async () => ({ ok: false });
   const d = await linkedinCarousel('2026-11-25:soir', { fetchImpl: ok });
-  assert.equal(d.url, 'https://le-radar.ca/revue/2026-11-25-soir/le-radar-revue-2026-11-25-soir-linkedin.pdf');
-  assert.equal(d.thumbnailUrl, 'https://le-radar.ca/revue/2026-11-25-soir/linkedin-cover.jpg');
+  assert.equal(d.url, 'https://le-radar.ca/revues/2026-11-25-soir/le-radar-revue-2026-11-25-soir-linkedin.pdf');
+  assert.equal(d.thumbnailUrl, 'https://le-radar.ca/revues/2026-11-25-soir/linkedin-cover.jpg');
   assert.match(d.title, /La revue du soir du Radar · mercredi 25 novembre/);
   assert.equal(await linkedinCarousel('2026-11-25:soir', { fetchImpl: ko }), null, 'PDF pas encore en ligne');
   assert.equal(await linkedinCarousel('n’importe quoi', { fetchImpl: ok }), null);
@@ -59,7 +59,7 @@ assert.match(noimg, /li-article--noimg/);
   assert.equal(alts.length, pages.length, 'un texte alternatif par page');
   assert.match(alts[0], /^Couverture : La revue du soir du Radar, mercredi 25 novembre 2026\./);
   assert.ok(alts[1].includes(model.items[0].title));
-  assert.match(alts.at(-1), /le-radar\.ca\/revue\.$/);
+  assert.match(alts.at(-1), /le-radar\.ca\/revues\.$/);
   for (const a of alts) assert.doesNotMatch(a, /undefined|NaN|\s{2}/);
 }
 // Carrousel Facebook / Instagram : carrousel.json + images en ligne, sinon rien (image habituelle).
@@ -69,8 +69,8 @@ assert.match(noimg, /li-article--noimg/);
   const net = (missing = '') => async (u, o = {}) => (u.endsWith('carrousel.json') ? { ok: !missing.includes('json'), json: async () => manifest } : { ok: !(missing && u.endsWith(missing)) });
   const c = await revueCarousel('2026-11-25:soir', { fetchImpl: net() });
   assert.deepEqual(c, [
-    { url: 'https://le-radar.ca/revue/2026-11-25-soir/carrousel-1.jpg', alt: 'Couverture' },
-    { url: 'https://le-radar.ca/revue/2026-11-25-soir/carrousel-2.jpg', alt: 'Article 1' },
+    { url: 'https://le-radar.ca/revues/2026-11-25-soir/carrousel-1.jpg', alt: 'Couverture' },
+    { url: 'https://le-radar.ca/revues/2026-11-25-soir/carrousel-2.jpg', alt: 'Article 1' },
   ], 'fichiers hors gabarit ignorés');
   assert.equal(await revueCarousel('2026-11-25:soir', { fetchImpl: net('json') }), null, 'carrousel.json absent');
   assert.equal(await revueCarousel('2026-11-25:soir', { fetchImpl: net('carrousel-2.jpg') }), null, 'une image manquante');

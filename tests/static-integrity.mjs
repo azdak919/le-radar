@@ -153,7 +153,7 @@ for (const file of htmlFiles) {
   const navHrefs = hrefsIn(navBlock);
   assert.deepEqual(
     navHrefs,
-    ['./', 'revue/', 'medias/', 'medias/#journaux', 'horaires/', 'sports/'],
+    ['./', 'revues/', 'medias/', 'medias/#journaux', 'horaires/', 'sports/'],
     'index.html : sections = Accueil, Revue, Médias, Journaux, Radios, Sports (sans Archives)',
   );
   assert(

@@ -7,7 +7,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 export function listEditionDirs(base) {
-  const dir = join(base, 'revue');
+  const dir = join(base, 'revues');
   if (!existsSync(dir)) return [];
   return readdirSync(dir).filter((name) => {
     if (!/^\d{4}-\d{2}-\d{2}-(matin|soir)$/.test(name)) return false;
@@ -24,7 +24,7 @@ export function resolveEditionId(raw, base) {
       try {
         const index = JSON.parse(readFileSync(indexPath, 'utf8'));
         const hit = (Array.isArray(index) ? index : []).find(
-          (r) => r && r.edition === id && existsSync(join(base, 'revue', r.id, 'index.html')),
+          (r) => r && r.edition === id && existsSync(join(base, 'revues', r.id, 'index.html')),
         );
         if (hit?.id) return hit.id;
       } catch { /* index illisible : repli sur les dossiers */ }

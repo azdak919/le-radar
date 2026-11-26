@@ -38,7 +38,7 @@ const POSTER = 'https://le-radar.ca/assets/kit/affiche-11x17.jpg'; // image trè
 const LONG = 'Patriotes de l’Université du Québec à Trois-Rivières';
 const item = (n, o = {}) => ({ id: `id${n}`, title: `Titre d’article étudiant numéro ${n} : une enquête au long cours sur la vie de campus et ses enjeux`, link: `https://journal.example/a${n}`, source: ['Le Collectif', 'Quartier Libre', 'The Link', 'La Pige'][n % 4], authors: ['Aurélie Souka', 'Caroline Lizin'], date: '2026-11-17T20:00:00.000Z', lang: n % 4 === 2 ? 'en' : 'fr', institution: 'Université de Sherbrooke (UdeS)', sport: '', excerpt: 'Un court extrait de l’article, coupé à la phrase, qui montre le ton du texte original sans le réécrire.', resume: n % 2 ? 'Un résumé d’une phrase rédigé en français à partir du titre et de l’extrait de l’article.' : '', theme: ['Culture', 'Politique', 'Éducation', 'Société'][n % 4], image: '', credit: '', ...o });
 const revueModel = () => ({
-  id: '2026-11-17-soir', edition: { id: 'soir', label: 'La revue du soir', emoji: '🌙', day: '2026-11-17' }, path: 'revue/2026-11-17-soir/', url: 'https://le-radar.ca/revue/2026-11-17-soir/', period: { start: 0, end: 0 },
+  id: '2026-11-17-soir', edition: { id: 'soir', label: 'La revue du soir', emoji: '🌙', day: '2026-11-17' }, path: 'revues/2026-11-17-soir/', url: 'https://le-radar.ca/revues/2026-11-17-soir/', period: { start: 0, end: 0 },
   datePublished: '2026-11-18T01:00:00.000Z', dateModified: '2026-11-18T01:00:00.000Z', headline: 'La revue du soir du mardi 17 novembre 2026', description: 'd',
   intro: 'En tête de cette revue du soir, Le Collectif publie « Le conseil municipal adopte son budget », sous la plume d’Aurélie Souka et Caroline Lizin. À lire aussi : « La génération Z et le retour des médias physiques » dans Quartier Libre. Sur les terrains, en basketball (F) : Stingers (Concordia) 55, Martlets (McGill) 54.',
   chapeau: '', generator: 'gabarit', previous: null, categories: ['Revue de presse'],
@@ -56,7 +56,7 @@ const PAGES = {
   accueil: { url: '/', margins: SITE_MARGINS, ready: '#news-list[data-ready]' },
   'fiche statique': { url: '/article/print-fixture/', margins: SITE_MARGINS, html: () => AP.renderPage(AP.loadTemplate(), articleRecord), onePageFrom: 'Letter' },
   'fiche /article/?id=': { url: '/article/', margins: FICHE_MARGINS, fiche: true },
-  revue: { url: '/revue/2026-11-17-soir/', margins: SITE_MARGINS, html: () => R.renderReviewPage(revueModel()), titles: revueModel().items.map(x => x.title) },
+  revue: { url: '/revues/2026-11-17-soir/', margins: SITE_MARGINS, html: () => R.renderReviewPage(revueModel()), titles: revueModel().items.map(x => x.title) },
 };
 
 const hasPdftotext = (() => { try { execFileSync('pdftotext', ['-v'], { stdio: 'ignore' }); return true; } catch { return false; } })();

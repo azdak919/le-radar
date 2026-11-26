@@ -176,6 +176,9 @@ export async function generate(editionId, now, io) {
   return { status: 'publiée', model, why: `${items.length ? '' : 'sans nouvel article (sport et radio) : '}${items.length} article(s), ${sports.results.length} résultat(s), ${sports.next.length} match(s) à venir, ${radio.length} station(s)` };
 }
 
+/** Éditions publiées sous /revue/ (avant le renommage en /revues/ du 26 nov. 2026) : elles gardent une redirection. */
+const LEGACY_UNTIL = '2026-11-27';
+
 /** Écrit la revue et tout ce qui en dépend sous `root` (le dépôt en publication réelle, un dossier d'exemple sinon). */
 export function writeOutputs(root, { model, index, reviews, publish, now = Date.now(), cfg }) {
   const w = (rel, s) => { const f = path.join(root, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, s); };
@@ -192,9 +195,15 @@ export function writeOutputs(root, { model, index, reviews, publish, now = Date.
   // Plus récent d’abord, y compris un rattrapage daté de son heure d’édition (pas de l’horloge du rattrapage).
   index.sort((a, b) => Date.parse(b.datePublished) - Date.parse(a.datePublished));
   w('data/revue/index.json', JSON.stringify(index, null, 1) + '\n');
-  w('revue/index.html', R.renderIndexPage(index));
+  w('revues/index.html', R.renderIndexPage(index));
   const models = index.slice(0, cfg.feedItems || 10).map(r => reviews[r.id] || rd(path.join(root, `data/revue/reviews/${r.id}.json`), null)).filter(Boolean);
-  w('revue/feed.xml', R.revueFeedXml(models, { now }));
+  const feed = R.revueFeedXml(models, { now });
+  w('revues/feed.xml', feed);
+  // Anciennes adresses /revue/… (avant le 26 nov. 2026, renommées /revues/) : le flux y reste à jour pour les abonnés,
+  // et chaque page y redirige vers sa nouvelle adresse (GitHub Pages n'a pas de redirection serveur).
+  w('revue/feed.xml', feed);
+  w('revue/index.html', R.legacyRedirectPage(`${R.SITE}/revues/`));
+  for (const r of index) if (r?.id && r.id < LEGACY_UNTIL) w(`revue/${r.id}/index.html`, R.legacyRedirectPage(`${R.SITE}/revues/${r.id}/`));
   w(R.NEWS_SITEMAP, R.newsSitemap(index, { now, hours: cfg.newsSitemapHours || 48 }));
   if (publish) {
     const robots = path.join(root, 'robots.txt');

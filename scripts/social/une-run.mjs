@@ -82,11 +82,11 @@ export async function hostImages(images, key, repo = process.env.GITHUB_REPOSITO
   } finally { try { git(['worktree', 'remove', '--force', dir]); } catch {} fs.rmSync(dir, { recursive: true, force: true }); }
 }
 
-/** Carrousel LinkedIn de la revue du créneau (« 2026-11-25:soir » → revue/2026-11-25-soir/), s'il est en ligne. */
+/** Carrousel LinkedIn de la revue du créneau (« 2026-11-25:soir » → revues/2026-11-25-soir/), s'il est en ligne. */
 export async function linkedinCarousel(slotKey, { fetchImpl = fetch } = {}) {
   const id = String(slotKey || '').replace(':', '-');
   if (!/^\d{4}-\d{2}-\d{2}-(matin|soir)$/.test(id)) return null;
-  const base = `https://le-radar.ca/revue/${id}/`;
+  const base = `https://le-radar.ca/revues/${id}/`;
   const url = `${base}le-radar-revue-${id}-linkedin.pdf`, thumbnailUrl = `${base}linkedin-cover.jpg`;
   try {
     const [a, b] = await Promise.all([url, thumbnailUrl].map((u) => fetchImpl(u, { method: 'HEAD', signal: AbortSignal.timeout(15000) })));
@@ -100,13 +100,13 @@ export async function linkedinCarousel(slotKey, { fetchImpl = fetch } = {}) {
 
 /**
  * Carrousel Facebook / Instagram : les pages du carrousel LinkedIn de la revue du créneau, en images 4:5
- * (revue/<id>/carrousel-<n>.jpg, liste et textes alternatifs dans carrousel.json). null s'il n'est pas en ligne :
+ * (revues/<id>/carrousel-<n>.jpg, liste et textes alternatifs dans carrousel.json). null s'il n'est pas en ligne :
  * le réseau garde alors son image habituelle. Interrupteur : formats.une.carousel.<réseau> (policy.json).
  */
 export async function revueCarousel(slotKey, { fetchImpl = fetch } = {}) {
   const id = String(slotKey || '').replace(':', '-');
   if (!/^\d{4}-\d{2}-\d{2}-(matin|soir)$/.test(id)) return null;
-  const base = `https://le-radar.ca/revue/${id}/`;
+  const base = `https://le-radar.ca/revues/${id}/`;
   try {
     const r = await fetchImpl(`${base}carrousel.json`, { signal: AbortSignal.timeout(15000) });
     if (!r.ok) return null;
@@ -152,7 +152,7 @@ async function publishOne(net, entry, env) {
     const post = await th.add({ text, now: true, metadata: { threads: { type: 'post', topic: UNE_THREADS_TOPIC } } });
     return { id: post.id, status: post.status || '' };
   }
-  // LinkedIn : la une part avec le carrousel PDF de la revue du même créneau (revue/<jour>-<matin|soir>/linkedin.pdf),
+  // LinkedIn : la une part avec le carrousel PDF de la revue du même créneau (revues/<jour>-<matin|soir>/linkedin.pdf),
   // le format le plus engageant d'une Page. PDF pas encore en ligne : image habituelle.
   if (net === 'linkedin') {
     const doc = await linkedinCarousel(entry.key);

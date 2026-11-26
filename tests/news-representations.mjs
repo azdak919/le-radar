@@ -53,7 +53,7 @@ const htmlTitles = [...htmlBlock[1].matchAll(/<h3 class="article-title">([\s\S]*
 const rss = read('feed.xml');
 const rssTitles = [...rss.matchAll(/<item>([\s\S]*?)<\/item>/g)]
   .map((match) => match[1])
-  .filter((it) => !/le-radar\.ca\/revue\//.test(it))
+  .filter((it) => !/le-radar\.ca\/revues?\//.test(it))
   .slice(0, TOP_ITEMS)
   .map((it) => normalize((it.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || ''));
 
