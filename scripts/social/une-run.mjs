@@ -19,6 +19,7 @@ import { createMastodon, idemKey } from './channels/mastodon.mjs';
 import { tumblrFromEnv, npfFromText, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
+import { moduleHashtags } from './networks/index.mjs';
 import { decideInstagram, deliverInstagram, dryRunReport, imageUrl, openInstagramIssue } from './instagram.mjs';
 import { reviewSocialImage } from './ai-image.mjs';
 
@@ -204,7 +205,7 @@ async function main() {
     try { radio = pickRadio(rd(arg('radio', 'radio-schedules.json')), slot, { max: 5 }); } catch (e) { console.log(`::warning::grilles radio illisibles (${String(e.message).slice(0, 120)}) : image sans bloc radio.`); }
     console.log(`Radio étudiante (${slot.id}) : ${radio.length} émission(s)${radio.some(x => x.fallback) ? `, dont ${radio.filter(x => x.fallback).length} en repli (fenêtre trop peu fournie)` : ""}`);
     const model = { slot, items: sel.items, sports, radio };
-    texts = buildUneAll(model, POLICY.hashtags?.maxByNetwork || {});
+    texts = buildUneAll(model, { ...(POLICY.hashtags?.maxByNetwork || {}), ...moduleHashtags() });
     const { renderImages } = await import('./une-render.mjs');
     const igCfg = CFG.prepared?.instagram || {};
     const formats = formatsFor(nets, dry, { story: storyEnabled(CFG) });

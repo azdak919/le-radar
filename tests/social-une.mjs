@@ -1,4 +1,5 @@
 // « La une du matin / du soir » : créneaux (heure d'été et d'hiver), porte idempotente, sélection et anti-doublon, signatures, textes.
+import { moduleHashtags } from '../scripts/social/networks/index.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import * as U from '../scripts/social/une-lib.mjs';
@@ -97,7 +98,8 @@ assert.equal(wide.items.at(-1).source, 'The Link', 'un média hors des 9 plus r�
 const real = JSON.parse(fs.readFileSync(new URL('../news.json', import.meta.url)));
 const items = m.items.map((x, i) => ({ ...x, title: i === 0 ? 'Un titre très long '.repeat(12).trim() : x.title }));
 for (const model of [{ slot: sSlot, items: m.items }, { slot: sSlot, items }, { slot: U.slotFor('matin', T0), items: m.items.slice(0, 1) }]) {
-  const all = U.buildUneAll(model, POLICY.hashtags.maxByNetwork);
+  const CAPS = { ...POLICY.hashtags.maxByNetwork, ...moduleHashtags() };
+  const all = U.buildUneAll(model, CAPS);
   for (const n of U.NETS) {
     const v = all[n];
     assert.ok(v.text, `${n} : texte`); assert.deepEqual(v.problems, [], `${n} : ${v.problems}`);
@@ -105,7 +107,7 @@ for (const model of [{ slot: sSlot, items: m.items }, { slot: sSlot, items }, { 
     assert.match(v.text, /https:\/\/le-radar\.ca\//); assert.doesNotMatch(v.text, /(^|\s)@\w/); assert.doesNotMatch(v.text, /week-?end/i);
     assert.match(v.text, /Tremblay/, `${n} : auteur`);
     assert.match(v.text, /^(☀️|🌙) La une du (matin|soir) du Radar · /);
-    if (n !== 'tumblr') assert.ok(v.tags.length <= POLICY.hashtags.maxByNetwork[n]);
+    if (n !== 'tumblr') assert.ok(v.tags.length <= CAPS[n], `${n} : ${v.tags.length} hashtags`);
   }
   assert.equal(all.facebook.image, 'portrait'); assert.equal(all.x.image, 'portrait'); assert.equal(all.instagram.image, 'grille');
   assert.match(all.mastodon.text, /https:\/\/le-radar\.ca\/article\/[0-9a-f]{16}\//, 'Mastodon : lien de la fiche');
@@ -120,7 +122,7 @@ assert.deepEqual(U.uneTags([{ tag: '#UdeM' }, { tag: '#McGill' }], 4), ['#Média
 assert.ok(U.uneTumblrTags(m.items).length <= 15);
 // Le vrai fil passe aussi les contrôles (pas de régression sur des données réelles).
 const live = U.selectUne(real, U.slotFor('soir', Date.parse(real.updated)), { now: Date.parse(real.updated) });
-if (!live.skip) for (const [n, v] of Object.entries(U.buildUneAll({ slot: U.slotFor('soir', Date.parse(real.updated)), items: live.items }, POLICY.hashtags.maxByNetwork))) assert.deepEqual(v.problems, [], `réel ${n}`);
+if (!live.skip) for (const [n, v] of Object.entries(U.buildUneAll({ slot: U.slotFor('soir', Date.parse(real.updated)), items: live.items }, { ...POLICY.hashtags.maxByNetwork, ...moduleHashtags() }))) assert.deepEqual(v.problems, [], `réel ${n}`);
 
 
 // ── Français seulement : traduction par translate.js (injectée), exclusion si échec ──
@@ -364,8 +366,8 @@ assert.equal(
 assert.doesNotMatch(U.revueEditionLine(matin17, { nolink: true }), /https?:\/\//);
 
 const modelRevue = { slot: soir17, items: m.items, sports: { results: [], next: [] }, radio: [] };
-const sans = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => false });
-const avec = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => true });
+const sans = U.buildUneAll(modelRevue, { ...POLICY.hashtags.maxByNetwork, ...moduleHashtags() }, { revueExists: () => false });
+const avec = U.buildUneAll(modelRevue, { ...POLICY.hashtags.maxByNetwork, ...moduleHashtags() }, { revueExists: () => true });
 const ligneSoir = 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : https://le-radar.ca/revue/2026-11-17-soir/';
 for (const n of U.NETS) {
   const a = String(avec[n].text || ''), b = String(sans[n].text || '');
@@ -379,7 +381,7 @@ for (const n of U.NETS) {
   }
   assert.doesNotMatch(a, /(^|\s)@\w/);
 }
-const igRevue = U.buildUneAll(modelRevue, POLICY.hashtags.maxByNetwork, { revueExists: () => true }).instagram;
+const igRevue = U.buildUneAll(modelRevue, { ...POLICY.hashtags.maxByNetwork, ...moduleHashtags() }, { revueExists: () => true }).instagram;
 assert.doesNotMatch(igRevue.text, /https?:\/\//, 'Instagram : jamais d’URL, même si l’édition existe');
 assert.equal(igRevue.text.split('\n')[1], 'Consultez notre revue du soir, à imprimer avec sudoku et mots cachés : lien en bio');
 assert.match(igRevue.text, /Toute la une : le-radar\.ca/);

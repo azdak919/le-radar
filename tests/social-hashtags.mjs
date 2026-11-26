@@ -15,8 +15,8 @@ assert.deepEqual(articleTags({ source: 'Impact Campus', title: 'Les Carabins gag
 assert.deepEqual(articleTags({ source: 'The Link', title: 'Stingers women’s hockey' }, 2), ['#Concordia', '#Hockey'], 'X : 2 hashtags, les plus spécifiques');
 assert.deepEqual(articleTags({ source: 'The Link', title: 'x' }, 0), [], 'max 0 : aucun');
 assert.equal(tagLine(it, 'facebook'), '#CégepDeJonquière');
-assert.equal(tagLine(it, 'x'), '#polqc #CégepDeJonquière #Saguenay');
-assert.equal(tagLine(it, 'linkedin').split(' ').length, 3);
+assert.equal(tagLine(it, 'x'), '#polqc #CégepDeJonquière', 'X : 2 hashtags (module)');
+assert.equal(tagLine(it, 'linkedin').split(' ').length, 1, 'LinkedIn : 1 hashtag (module)');
 assert.equal(tagLine(it, 'mastodon'), '#CégepDeJonquière #Saguenay #Politique');
 assert.equal(tagLine(it, 'bluesky').split(' ').length, 2);
 for (const s of Object.keys(PLACES)) for (const n of ['bluesky', 'mastodon', 'x', 'linkedin']) {
@@ -61,7 +61,7 @@ assert.ok(tt.every(x => x === x.toLowerCase()) && new Set(tt).size === tt.length
 assert.ok(tt.every(x => !/[#,]/.test(x)));
 // buildText seul : aucun hashtag ; X, LinkedIn et Facebook : ligne ajoutée par buildXText / buildPageText (cfg.service)
 const x = buildText(it, [], 280, { credit: '' }); assert.ok(!/#\p{L}/u.test(x) && x.trim().endsWith('le-radar.ca/' + x.trim().split('le-radar.ca/')[1]));
-const xt = buildXText(it, [], { credit: '' }); assert.ok(xt.endsWith('\n#polqc #CégepDeJonquière #Saguenay') && xlen(xt) <= 280, xt);
+const xt = buildXText(it, [], { credit: '' }); assert.ok(xt.endsWith('\n#polqc #CégepDeJonquière') && xlen(xt) <= 280, xt);
 const p = buildPageText(it, {}, { credit: 'Jeanne Tremblay' }); assert.ok(!/#\p{L}/u.test(p) && /https:\/\/le-radar\.ca\/\S+\n📸 Jeanne Tremblay$/.test(p), p);
 // X : créneaux espacés d'au moins 60 min
 const mins = DAILY_SLOTS.map(s => +s.slice(0, 2) * 60 + +s.slice(3)); for (let i = 1; i < mins.length; i++) assert.ok(mins[i] - mins[i - 1] >= 60);
@@ -82,7 +82,7 @@ console.log('social-hashtags : OK');
 const carney = { source: 'Le Collectif', title: 'Rencontre Carney-PSPP au Cambodge',
   desc: 'Québec, Montréal ou Ottawa ? C’est finalement au Cambodge que le premier ministre canadien et le premier ministre québécois se sont rencontrés.' };
 assert.deepEqual(xArticleTags(carney), ['#polcan', '#UdeS', '#polqc']);
-assert.equal(tagLine(carney, 'linkedin'), '#UdeS #Sherbrooke #Politique', 'LinkedIn inchangé');
+assert.equal(tagLine(carney, 'linkedin'), '#UdeS', 'LinkedIn : 1 hashtag, l’établissement (module)');
 assert.equal(tagLine(carney, 'facebook'), '#UdeS', 'Facebook inchangé');
 assert.deepEqual(bskyTags(carney), ['#UdeS', '#Sherbrooke'], 'Bluesky inchangé');
 assert.ok(!xArticleTags(carney).includes('#PaysQc'));
@@ -136,7 +136,7 @@ assert.ok(institutionTagsFromText(vert).includes('#Concordia'), 'l’adversaire 
 assert.deepEqual(articleTags(vert, 3), ['#UdeS', '#Football']);
 assert.ok(!articleTags(vert, 3).includes('#Concordia'), 'Facebook, LinkedIn, Bluesky : pas l’adversaire');
 assert.equal(tagLine(vert, 'facebook'), '#UdeS');
-assert.equal(tagLine(vert, 'linkedin'), '#UdeS #Football');
+assert.equal(tagLine(vert, 'linkedin'), '#UdeS');
 assert.deepEqual(bskyTags(vert), ['#UdeS', '#Football']);
 assert.equal(xInstitutionTag({ source: 'The Campus', title: 'Gaiters Women’s Soccer: A Season to Remember', desc: 'Sunday, Oct. 25, 2026 saw the Gaiters win.' }), '#BishopsU');
 assert.equal(xInstitutionTag({ source: 'The Link', title: 'Carabins 4, Stingers 0: Stingers lose in their home opener', desc: 'The Concordia University Stingers lost.' }), '#Concordia', 'plusieurs équipes au titre : l’école du média si elle y figure');
@@ -145,7 +145,7 @@ const stingInst = { source: 'The Concordian', title: 'Stingers clinch final play
 assert.equal(institutionTag(stingInst), '#Concordia');
 assert.ok(!articleTags(stingInst, 3).includes('#BishopsU'), 'adversaire (Bishop’s) dans l’extrait : pas de tag sur les autres réseaux');
 assert.deepEqual(articleTags(stingInst, 3), ['#Concordia', '#Football', '#Montréal']);
-assert.equal(tagLine(stingInst, 'linkedin'), '#Concordia #Football #Montréal');
+assert.equal(tagLine(stingInst, 'linkedin'), '#Concordia');
 assert.deepEqual(bskyTags(stingInst), ['#Concordia', '#Football']);
 
 // 5. Abréviations : ne pas couper l'extrait X sur « Oct. »

@@ -12,6 +12,7 @@ import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
+import { pageConfig } from './networks/index.mjs';
 import { planDues, selectForPage, buildPageText, buildThreadsText, threadsLen, isRejection, postMetadata } from './buffer-pages.mjs';
 import { titleKey } from './rate-limit.mjs';
 import { withHook } from './ai-hook.mjs';
@@ -60,7 +61,7 @@ const shareUrl = (process.env.SHARE_NOW === 'true' && process.env.SHARE_URL || '
 const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 
 for (const net of networks) {
-  const cfg = CFG[net]; const sent = (state[net] ||= {});
+  const cfg = pageConfig(net, CFG); const sent = (state[net] ||= {}); // règles du module + opérationnel du JSON
   const key = keyFor(cfg);
   dry = dryAll || !key || cfg.enabled === false;
   if (!dry) anyReal = true;

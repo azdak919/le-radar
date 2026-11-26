@@ -7,25 +7,30 @@ import fs from 'node:fs';
 import { planDues, dayCap, buildPageText, pageLink, selectForPage, isRejection, postMetadata } from '../scripts/social/buffer-pages.mjs';
 import { weightAt, localParts } from '../scripts/social/schedule.mjs';
 import { matchChannel } from '../scripts/social/channels/x-buffer.mjs';
-const CFG = JSON.parse(fs.readFileSync(new URL('../data/social/buffer-pages.json', import.meta.url)));
+import { pageConfig, NETWORKS } from '../scripts/social/networks/index.mjs';
+const JSONCFG = JSON.parse(fs.readFileSync(new URL('../data/social/buffer-pages.json', import.meta.url)));
+// Règles du module (scripts/social/networks/) + opérationnel du JSON.
+const CFG = Object.fromEntries(['facebook', 'linkedin', 'threads'].map(n => [n, pageConfig(n, JSONCFG)]));
+for (const n of ['facebook', 'linkedin']) for (const k of ['perDay', 'minGapMin', 'limit']) assert.equal(JSONCFG[n][k], undefined, `${n}.${k} vit dans le module, pas dans le JSON`);
 const T = s => Date.parse(s);
 // 2026-11-01 = dimanche ; Toronto = UTC-5
 assert.equal(weightAt('facebook', T('2026-11-03T15:00:00Z')), 1, 'mardi 10 h : pointe Facebook');
 assert.equal(weightAt('facebook', T('2026-11-04T00:30:00Z')), 0.9, 'mardi 19 h 30 : soirée Facebook');
 assert.equal(weightAt('linkedin', T('2026-11-03T14:00:00Z')), 1, 'mardi 9 h : pointe LinkedIn');
 assert.equal(weightAt('linkedin', T('2026-11-03T23:00:00Z')), 0, 'mardi 18 h : rien sur LinkedIn');
+assert.equal(weightAt('linkedin', T('2026-11-03T21:30:00Z')), 1, 'mardi 16 h 30 : pointe de fin de journée LinkedIn');
 for (const n of ['facebook', 'linkedin']) for (const h of [0, 3, 6.5]) assert.equal(weightAt(n, T('2026-11-03T05:00:00Z') + h * 3600e3), 0, `${n} ${h} h calme`);
 assert.equal(weightAt('facebook', T('2026-11-07T12:30:00Z')), 0, 'samedi 7 h 30 calme');
-// plafonds : pleine vitesse FB 6 en semaine, LinkedIn 3 en semaine, 1 la fin de semaine ; rodage ×0,4 / ×0,7
+// plafonds (modules du 25 nov. 2026) : FB 3 par jour, LinkedIn 2 en semaine, 1 la fin de semaine ; rodage ×0,4 / ×0,7
 const full = c => ({ ...c, liveSince: '2026-01-01T00:00:00Z' });
-assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-10T16:00:00Z')), 5, 'volume réduit (policy.json, 9-23 nov.) : 5/jour au lieu de 6');
-assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-24T16:00:00Z')), 6, 'après la période : plafond de base');
-assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-10T16:00:00Z')), 3);
+assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-10T16:00:00Z')), 3, 'volume réduit (5/jour) au-dessus du plafond du module : 3');
+assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-24T16:00:00Z')), 3, 'plafond du module');
+assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-10T16:00:00Z')), 2);
 assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-14T16:00:00Z')), 1);
-assert.equal(dayCap(CFG.facebook, 'facebook', T('2026-11-02T16:00:00Z')), 2, 'FB rodage jour 1');
-assert.equal(dayCap(CFG.facebook, 'facebook', T('2026-11-05T16:00:00Z')), 4, 'FB rodage jour 4');
-assert.equal(dayCap(CFG.linkedin, 'linkedin', T('2026-11-02T16:00:00Z')), 1, 'LinkedIn rodage jour 1');
-assert(CFG.facebook.perDay <= 6 && CFG.linkedin.perDay <= 3);
+assert.equal(dayCap({ ...CFG.facebook, liveSince: '2026-11-01T04:00:00Z' }, 'facebook', T('2026-11-02T16:00:00Z')), 1, 'FB rodage jour 1');
+assert.equal(dayCap({ ...CFG.facebook, liveSince: '2026-11-01T04:00:00Z' }, 'facebook', T('2026-11-05T16:00:00Z')), 2, 'FB rodage jour 4');
+assert.equal(dayCap({ ...CFG.linkedin, liveSince: '2026-11-01T04:00:00Z' }, 'linkedin', T('2026-11-02T16:00:00Z')), 1, 'LinkedIn rodage jour 1');
+assert(CFG.facebook.perDay <= 3 && CFG.linkedin.perDay <= 2 && NETWORKS.x.dailySlots.length <= 5, 'moins mais mieux (bilan du 23 nov.)');
 // créneaux : dans les pointes, écart minimal, jamais au-delà des places libres, du plafond ou dans le passé
 let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
 for (const [net, now] of [['facebook', T('2026-11-10T08:00:00Z')], ['linkedin', T('2026-11-10T08:00:00Z')], ['facebook', T('2026-11-07T08:00:00Z')]]) {
@@ -53,7 +58,7 @@ assert.equal(fb, 'Grève au campus\n\nLes associations étudiantes votent une gr
 assert.match(pageLink(it, 'le-radar'), /^https:\/\/le-radar\.ca\/article\/[0-9a-f]{16}\/$/);
 for (const n of ['facebook', 'linkedin']) assert.equal(CFG[n].link, 'le-radar', `${n} : lien vers la fiche le-radar.ca`);
 const ln = buildPageText(it, CFG.linkedin, {});
-assert(ln.endsWith('\n📰 Le Délit · Jeanne Roy\n' + pageLink(it) + '\n#McGill #Montréal #Politique'), 'sans crédit : pas de ligne 📸 ; LinkedIn : 2-3 hashtags en dernier');
+assert(ln.endsWith('\n📰 Le Délit · Jeanne Roy\n' + pageLink(it) + '\n#McGill'), 'sans crédit : pas de ligne 📸 ; LinkedIn : 1 hashtag en dernier (module)');
 assert(fb.endsWith('\n#McGill'), 'Facebook : un hashtag spécifique en dernier');
 const at = buildPageText({ ...it, source: 'The Link', author: '@sana' }, CFG.facebook);
 assert(!/(^|\s)@\w/.test(at), 'aucun @');

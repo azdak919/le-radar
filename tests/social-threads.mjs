@@ -7,7 +7,8 @@ import { weightAt } from '../scripts/social/schedule.mjs';
 import { matchChannel } from '../scripts/social/channels/x-buffer.mjs';
 
 const CFG = JSON.parse(fs.readFileSync(new URL('../data/social/buffer-pages.json', import.meta.url)));
-const th = CFG.threads;
+import { pageConfig } from '../scripts/social/networks/index.mjs';
+const th = pageConfig('threads', CFG);
 
 // Interrupteur : éteint, sur le compte Buffer d'Instagram, sans image, sans plafond de volume partagé.
 assert.equal(th.enabled, true, 'Threads allumé (25 novembre 2026)');
