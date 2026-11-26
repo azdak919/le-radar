@@ -15,6 +15,7 @@ import { createBluesky } from './channels/bluesky.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
 import { withHook } from './ai-hook.mjs';
+import { withEnAccroche } from './accroche-en.mjs';
 import { gateArticleImage } from './ai-image.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -62,6 +63,7 @@ for (const t of todo) {
   if (!im) { console.log(`::warning::Sans image du site, non publié : ${it.id}`); continue; }
   const gate = await gateArticleImage(it, im.url, { credit: im.credit });
   if (gate.reject) continue;
+  await withEnAccroche(it, 'bluesky'); // articles anglophones, interrupteur policy.json (éteint par défaut)
   await withHook(it);
   const text = buildBskyText(it, ACCOUNTS, { credit: im?.credit, photo: !!im }), lang = detectLang(it);
   if (!text) { console.log(`Texte refusé (nom interdit) : ${it.id}`); continue; }

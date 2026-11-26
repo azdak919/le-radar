@@ -255,11 +255,52 @@ export function buildText(it, accounts = [], limit = X_LIMIT, { credit = '', pho
   return privacyGuard.containsForbiddenName(text) || hasCdata(text) ? '' : text;
 }
 
-/** buildText + ligne de hashtags en dernier (sa longueur est réservée avant l'extrait). `sep` = séparateur avant la ligne. */
+/** buildText + ligne de hashtags en dernier (sa longueur est réservée avant l'extrait). `sep` = séparateur avant la ligne.
+ *  Article anglophone avec accroche validée (it.enAccroche, accroche-en.mjs) : modèle citation + phrase s'il tient,
+ *  sinon format actuel. */
 export function buildTagged(it, accounts, limit, opts, tags, sep = '\n') {
   const len = opts?.len || xlen, room = tags ? limit - len(tags) - len(sep) : limit;
+  if (opts?.ai && it?.enAccroche?.phrase) {
+    // Ordre : citation d'abord (sans hashtags ni établissement s'il le faut), puis sans citation.
+    for (const quote of [true, false]) for (const inst of [true, false]) for (const tagged of tags ? [true, false] : [false]) {
+      const t = enAccrocheText(it, accounts, tagged ? room : limit, { ...opts, quote, inst });
+      if (t) return tagged ? `${t}${sep}${tags}` : t;
+    }
+  }
   const text = buildText(it, accounts, room, opts);
   return text && tags ? `${text}${sep}${tags}` : text;
+}
+
+export const EN_MARK = '(En anglais)';
+/** « Média (@média), média étudiant de l’Université X, sous la plume de Auteur (@auteur), » : métadonnées seulement. */
+export function enLead(it, accounts = [], inst = '') {
+  const src = accounts.find(a => a.type === 'source' && a.cle_flux && a.cle_flux === it.source);
+  const au = it.author && accounts.find(a => a.type === 'auteur' && a.cle_flux && a.cle_flux === it.author);
+  const media = String(it.source || '').trim(); if (!media) return '';
+  const name = String(it.author || '').trim();
+  const parts = [src ? `${media} (${src.handle})` : media];
+  if (inst) parts.push(`média étudiant ${inst}`);
+  const generic = /\b(editorial|team|staff|board|desk|editors?|rédaction|équipe)\b/i.test(name); // « The editorial team » : pas une plume
+  if (name && !generic && norm(name) !== norm(media)) parts.push(`sous la plume ${/^[AEIOUYÀÂÉÈÊÎÔÛ]/i.test(name) ? 'd’' : 'de '}${au ? `${name} (${au.handle})` : name}`); // « d’Olivia », « de Nicolas »
+  return parts.join(', ');
+}
+/**
+ * Accroche anglophone (modèle Teinturier) ou '' si elle ne tient pas / ne respecte pas formatOk :
+ *   « citation exacte »
+ *   (ligne vide) Média, média étudiant de l’Établissement, sous la plume de Auteur, phrase.
+ *   (En anglais)
+ *   https://le-radar.ca/article/<id>/
+ *   📸 Crédit
+ */
+export function enAccrocheText(it, accounts = [], limit = X_LIMIT, { credit = '', photo = true, len = xlen, url = siteLink(it), quote = true, inst = true } = {}) {
+  const a = it?.enAccroche; if (!a?.phrase) return '';
+  const lead = enLead(it, accounts, inst ? a.institutionFr || '' : '');
+  if (!lead) return '';
+  const pl = photo ? photoLine(credit) : '';
+  const body = `${lead}, ${a.phrase}`;
+  const text = stripCdata([quote && a.quote ? `« ${a.quote} »` : '', [body, EN_MARK, url, pl].filter(Boolean).join('\n')].filter(Boolean).join('\n\n'));
+  if (len(text) > limit || privacyGuard.containsForbiddenName(text) || hasCdata(text) || url !== siteLink(it)) return '';
+  return formatOk(text, it, pl ? credit : '') ? text : '';
 }
 /** Texte X : format commun, 280 (xlen), 3 hashtags au plus (policy.json, mots-clics thématiques).
  *  Extrait : pas de coupe sur une abréviation ; parenthèses de crédit/source triviales retirées. */
