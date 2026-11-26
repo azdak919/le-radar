@@ -426,7 +426,8 @@
     fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca'));
     const full = el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources');
     foot.append(fm, full);
-    foot.append(el('p', 'ind', 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.'));
+    // Même mention que le pied du site (contenus agrégés crédités) + licence des gabarits (affiches/LICENSE).
+    foot.append(el('p', 'ind', 'Articles et photos crédités à leurs auteurs et à leurs médias d’origine. Mise en page © Azdak CC BY 4.0.'));
     // Story : la bande du bas (sous l'interface d'Instagram et de Facebook) annonce la prochaine édition ; rien d'essentiel n'y est.
     if (format === 'story') { const nx = el('p', 'nextEd'); nx.append(el('span', 'lbl', model.slot.next ? 'Prochaine édition' : 'Toute l’actualité étudiante'), el('b', '', model.slot.next || 'Deux unes par jour, matin et soir'), el('span', 'url', 'le\u2011radar.ca')); foot.append(nx); }
     const main = el('div', 'main'); const colA = el('div', 'col a'); const colB = el('div', 'col b');

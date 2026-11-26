@@ -218,8 +218,6 @@ function sportHtml(model) {
     '      <section class="seo-section revue-section" id="sport" aria-labelledby="sport-titre">',
     `        <h2 id="sport-titre">${emo('🏟️')}Sport étudiant</h2>`,
   ];
-  // Prochains matchs en haut de la section, puis les résultats.
-  out.push(...nextBlock());
   out.push('        <h3 class="revue-sub">Résultats</h3>');
   if (!results.length) out.push(`        <p class="revue-empty">Aucun nouveau résultat sportif étudiant pour cette période.${refreshed}</p>`);
   else {
@@ -230,6 +228,7 @@ function sportHtml(model) {
       out.push('        </ul>');
     }
   }
+  out.push(...nextBlock());
   out.push(rest
     ? `        <p class="revue-more">${rest} autres matchs au calendrier : <a href="${SITE}/sports/">le-radar.ca/sports</a></p>`
     : `        <p class="revue-more"><a href="${SITE}/sports/">Tableau complet du sport étudiant</a></p>`, '      </section>');
@@ -501,6 +500,8 @@ function articleBody(model) {
   const img = model.image;
   const lead = leadOf(model);
   const quiet = !(model.items || []).length;
+  // Sans article : le sport ouvre l'édition s'il a des résultats ou des matchs, sinon la radio.
+  const quietSportFirst = !!((model.sports?.results || []).length || (model.sports?.next || []).length);
   // Les enveloppes .revue-top, .revue-top__main, .revue-top__side et .revue-cols sont transparentes à l'écran
   // (display: contents) : elles ne servent qu'à la mise en page du journal imprimé (revue.css, @media print).
   return [
@@ -521,11 +522,11 @@ function articleBody(model) {
     '      </div>',
     '      </div>',
     quiet
-      ? '      <nav class="revue-toc" aria-label="Sommaire"><a href="#sport">🏟️ Sport étudiant</a><a href="#radio">📻 Radio étudiante</a><a href="#meteo">☀️ Météo</a><a href="#jeux">🧩 Jeux</a><a href="#sources">Sources</a></nav>'
+      ? `      <nav class="revue-toc" aria-label="Sommaire">${quietSportFirst ? '<a href="#sport">🏟️ Sport étudiant</a><a href="#radio">📻 Radio étudiante</a>' : '<a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a>'}<a href="#meteo">☀️ Météo</a><a href="#jeux">🧩 Jeux</a><a href="#sources">Sources</a></nav>`
       : '      <nav class="revue-toc" aria-label="Sommaire"><a href="#presse">📰 Revue de presse</a><a href="#radio">📻 Radio étudiante</a><a href="#sport">🏟️ Sport étudiant</a><a href="#meteo">☀️ Météo</a><a href="#jeux">🧩 Jeux</a><a href="#sources">Sources</a></nav>',
     '      <div class="revue-cols">',
     // Sans article : pas de section presse vide ; le sport (matchs à venir d'abord) puis la radio ouvrent l'édition.
-    ...(quiet ? [sportHtml(model), radioHtml(model)] : [presseHtml(model), radioHtml(model), sportHtml(model)]), sourcesHtml(model), meteoHtml(model), games.jeux, games.solutions, colophonHtml(model),
+    ...(quiet ? (quietSportFirst ? [sportHtml(model), radioHtml(model)] : [radioHtml(model), sportHtml(model)]) : [presseHtml(model), radioHtml(model), sportHtml(model)]), sourcesHtml(model), meteoHtml(model), games.jeux, games.solutions, colophonHtml(model),
     '      </div>',
     `      <p class="revue-disclosure">${DISCLOSURE}</p>`,
     '      </article>',

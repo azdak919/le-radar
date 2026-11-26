@@ -532,6 +532,16 @@ function campusBank() {
   try { CAMPUS_BANK = require('../../data/quebec-university-backgrounds.json').photos || []; } catch { CAMPUS_BANK = []; }
   return CAMPUS_BANK;
 }
+let STOCK_LOCAL = null;
+/** Miroir local des photos Commons (stock-images-map.js : URL d'origine → assets/stock-images/…). */
+function stockLocal() {
+  if (STOCK_LOCAL) return STOCK_LOCAL;
+  try {
+    const src = require('node:fs').readFileSync(new URL('../../stock-images-map.js', import.meta.url), 'utf8');
+    STOCK_LOCAL = JSON.parse(src.slice(src.indexOf('{'), src.indexOf('}') + 1));
+  } catch { STOCK_LOCAL = {}; }
+  return STOCK_LOCAL;
+}
 /** Vignette Commons 1280 px (l'original fait souvent 4000 px et plus). */
 export function commonsThumb(url, width = 0, px = 1280) {
   const m = String(url || '').match(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/([0-9a-f])\/([0-9a-f]{2})\/([^/?#]+)$/);
@@ -558,7 +568,8 @@ export function campusCover(edition, { sports = {}, radio = [] } = {}, photos = 
   const p = (inst && pickFrom(campusLib.filterUniversityPhotos(photos, inst))) || pickFrom(photos);
   if (!p) return null;
   return {
-    url: commonsThumb(p.url, p.width), credit: `Photo : ${p.credit || 'auteur inconnu'} / ${p.license || 'licence libre'} · Wikimedia Commons`,
+    // Miroir du Radar d'abord (même politique d'images que le site), sinon vignette Commons.
+    url: (local => (local ? `${SITE}/${local}` : commonsThumb(p.url, p.width)))(stockLocal()[String(p.url).split('?')[0]]), credit: `Photo : ${p.credit || 'auteur inconnu'} / ${p.license || 'licence libre'} · Wikimedia Commons`,
     source: '', title: p.title || 'Campus', link: p.link || '', stock: false, campus: true,
   };
 }

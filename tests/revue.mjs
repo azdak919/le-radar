@@ -355,7 +355,7 @@ assert.equal(skipOld.status, 'sautée');
   assert.match(quiet.why, /sans nouvel article/);
   assert.match(quiet.model.intro, /^Aucun nouvel article des médias étudiants depuis la dernière revue/);
   assert.ok(quiet.model.image?.campus, 'photo campus en couverture');
-  assert.match(quiet.model.image.url, /^https:\/\/upload\.wikimedia\.org\//);
+  assert.match(quiet.model.image.url, /^https:\/\/(le-radar\.ca\/assets\/stock-images\/|upload\.wikimedia\.org\/)/);
   assert.match(quiet.model.image.credit, /Wikimedia Commons/);
   const R2 = R;
   const html = R2.renderReviewPage(quiet.model);
@@ -363,13 +363,8 @@ assert.equal(skipOld.status, 'sautée');
   const iSport = html.indexOf('id="sport"'), iRadio = html.indexOf('id="radio"');
   assert.ok(iSport > 0 && (iRadio < 0 || iSport < iRadio), 'sport en tête');
   assert.deepEqual(L.foreignLinks(R2.articleBody(quiet.model), quiet.model), []);
-}
-// Section sport : prochains matchs en haut, puis les résultats.
-{
-  const R2 = R;
-  const body = R2.articleBody(m);
-  const sport = body.slice(body.indexOf('id="sport"'));
-  assert.ok(sport.indexOf('Prochains matchs') < sport.indexOf('>Résultats<'), 'prochains matchs avant les résultats');
+  const radioOnly = R2.articleBody({ ...quiet.model, sports: { results: [], next: [] } });
+  assert.ok(radioOnly.indexOf('id="radio"') < radioOnly.indexOf('id="sport"'), 'sans sport : la radio en tête');
 }
 // Photo campus : stable, paysage, sans visage, vignette 1280 px.
 {

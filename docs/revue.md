@@ -47,11 +47,11 @@ auteurs crédités. Sport étudiant et médias étudiants seulement, jamais de s
   échouer le job après la génération des pages (18 nov. 2026) et rien n’était commité ; un échec PDF ne bloque plus la publication des pages.
 - **Sans nouvel article, sport et radio** (26 nov. 2026) : sans nouvel article dans la période mais avec des matchs à
   venir, des résultats ou des émissions de radio, l’édition sort quand même (`publishWithoutArticles`, vrai par défaut) :
-  pas de section presse, le sport (prochains matchs d’abord) puis la radio en tête, une phrase d’amorce qui le dit, et une
-  photo libre de campus en couverture (banque du mât, Wikimedia Commons, vignette 1280 px ; l’établissement du premier
-  match universitaire, saison du jour, aucun visage). Rien du tout (ni article, ni sport, ni radio) : l’édition est
-  sautée et notée dans `data/revue/state.json` (`skipWithoutArticles`).
-- **Section sport** : « Prochains matchs » en haut, puis « Résultats ». `news.json` vieux de plus de 6 h : refus.
+  pas de section presse, le sport puis la radio en tête (la radio d’abord s’il n’y a ni résultat ni match), une phrase
+  d’amorce qui le dit, et une photo libre de campus en couverture (banque du mât, Wikimedia Commons, miroir du site
+  `assets/stock-images/` sinon vignette Commons 1280 px ; l’établissement du premier match universitaire, saison du
+  jour, aucun visage). Rien du tout (ni article, ni sport, ni radio) : l’édition est
+  sautée et notée dans `data/revue/state.json` (`skipWithoutArticles`). `news.json` vieux de plus de 6 h : refus.
 - **Rattrapage** : lancement manuel avec une date `AAAA-MM-JJ` et l’édition `matin` ou `soir` (exemple décoché).
   L’horloge est celle de l’édition, 7 h ou 19 h 15 (heure de Montréal), même hors de la fenêtre du jour.
   Les articles sont ceux de cette fenêtre (le soir commence à 7 h, il ne reprend pas la nuit du matin).
