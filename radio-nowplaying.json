@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T11:06:52.722Z",
+  "updatedAt": "2026-11-26T12:07:01.219Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T11:06:12.087Z"
+      "checkedAt": "2026-11-26T12:06:12.065Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La lecture pis toi",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
-      },
-      "next": {
         "title": "Jimmy et Neutron",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/jimmy-et-neutron"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "La lecture pis toi",
+      "showTitle": "Jimmy et Neutron",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T11:06:13.428Z"
+      "checkedAt": "2026-11-26T12:06:13.135Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Total €clipse of The ☾harts",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "OFC Podcast Radio",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Folk Directions",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Total €clipse of The ☾harts",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,62 +74,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T11:06:16.136Z"
+      "checkedAt": "2026-11-26T12:06:15.560Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Daydream Nation",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
       "next": {
-        "title": "Everything Everywhere",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
+        "title": "Free City Radio",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/free-city-radio"
       },
       "track": "",
       "showTitle": "Daydream Nation",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T11:06:30.448Z"
+      "checkedAt": "2026-11-26T12:06:39.756Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:59",
-        "url": "https://www.cfak.ca/balados/les-nuits-cfak"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "07:59",
         "url": "https://www.cfak.ca/balados/Folkswagen"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "08:59",
+        "url": "https://www.cfak.ca/balados/palmares-cfak"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T11:06:31.440Z"
+      "checkedAt": "2026-11-26T12:06:40.829Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +141,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Lights058 — Brocoli",
+      "track": "cherry pick — asleep with the fishes",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-26T11:06:52.371Z"
+      "checkedAt": "2026-11-26T12:07:00.869Z"
     }
   }
 }
