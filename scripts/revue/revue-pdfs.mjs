@@ -122,8 +122,10 @@ async function printLinkedIn(browser, id) {
     for (const body of document.querySelectorAll('.li-end__body')) {
       for (let guard = 0; body.scrollHeight > body.clientHeight + 1 && guard < 30; guard++) {
         const lists = [...body.querySelectorAll('.li-list')].sort((a, b) => b.children.length - a.children.length);
-        const l = lists.find((x) => x.children.length > 1);
-        if (l) l.lastElementChild.remove(); else { const last = lists.at(-1); last?.previousElementSibling?.remove(); last?.remove(); }
+        // Voile (data-keep) : jamais retirée.
+        const drop = (x) => [...x.children].reverse().find((li) => !li.dataset.keep);
+        const l = lists.find((x) => x.children.length > 1 && drop(x));
+        if (l) drop(l).remove(); else { const last = lists.find((x) => drop(x)); if (!last) break; last.previousElementSibling?.remove(); last.remove(); }
       }
     }
   });

@@ -52,14 +52,20 @@ function renderLinkedInCarousel(model = {}) {
   const items = (model.items || []).slice(0, MAX_ARTICLES);
   const lead = items[0] || {};
   const cover = model.image?.url || lead.image || '';
-  const sports = [...(model.sports?.results || []).slice(0, 2), ...(model.sports?.next || [])].slice(0, 5);
+  // Ordre déjà décidé par scripts/revue/revue-social-pick.mjs (popularité). Voile : toujours montrée, hors plafond.
+  const isSail = (g) => g?.sportKey === 'sailing' || /^voile\b/i.test(String(g?.sport || '')) || String(g?.kind || '').startsWith('regatta');
+  const allSports = [...(model.sports?.results || []).slice(0, 2), ...(model.sports?.next || [])];
+  const sports = [...allSports.filter(isSail), ...allSports.filter((g) => !isSail(g)).slice(0, 5)];
   const shows = (model.radio || []).flatMap((r) => (r.shows || []).slice(0, 1).map((s) => ({ station: r.station, ...s }))).slice(0, 4);
   // Deux lignes : sport et équipes, puis date, heure et lieu (salle RSEQ, sinon « Chez les … » comme la story Jour de match).
   const sportLine = (g) => {
     const t = g.teams || [];
-    const vs = t.length === 2 ? `${t[0].name}${t[0].inst ? ` (${t[0].inst})` : ''} ${g.kind === 'avenir' ? 'c.' : '–'} ${t[1].name}${t[1].inst ? ` (${t[1].inst})` : ''}` : (g.title || g.text || '');
+    const who = (x) => `${x.name}${x.inst ? ` (${x.inst})` : ''}`;
+    const scored = t.length === 2 && t[0].score != null && t[1].score != null;
+    const vs = t.length === 2 ? (scored ? `${who(t[0])} ${t[0].score}-${t[1].score} ${who(t[1])}` : `${who(t[0])} vs ${who(t[1])}`) : (g.title || g.text || '');
+    // « A reçoit B » : A à domicile ; « A visite B » : B à domicile. Toujours « Chez les … », puis la salle si connue.
     const home = t.length === 2 ? (g.verb === 'visite' ? t[1] : t[0]) : null;
-    const where = g.venue || (home ? `Chez les ${home.name}${home.inst ? ` · ${home.inst}` : ''}` : '');
+    const where = [home ? `Chez les ${home.name}` : '', g.venue || ''].filter(Boolean).join(' · ');
     return `<span class="li-l1">${esc(`${g.emoji || ''} ${g.sport || ''} · ${vs}`.trim())}</span><span class="li-l2">${esc([g.when, where].filter(Boolean).join(' · '))}</span>`;
   };
   const total = items.length;
@@ -81,7 +87,7 @@ function renderLinkedInCarousel(model = {}) {
     `<section class="li-page li-end">
   <header class="li-top">${BRAND_SM}<span class="li-count">Et aussi</span></header>
   <div class="li-end__body">
-  ${sports.length ? `<h2 class="li-h">🏟️ Sport étudiant</h2><ul class="li-list li-list--2l">${sports.map((g) => `<li>${sportLine(g)}</li>`).join('')}</ul>` : ''}
+  ${sports.length ? `<h2 class="li-h">🏟️ Sport étudiant</h2><ul class="li-list li-list--2l">${sports.map((g) => `<li${isSail(g) ? ' data-keep="1"' : ''}>${sportLine(g)}</li>`).join('')}</ul>` : ''}
   ${shows.length ? `<h2 class="li-h">📻 Radios étudiantes</h2><ul class="li-list">${shows.map((s) => `<li><b>${esc(fmLabel(s.station))}</b> · ${esc(s.title)} · ${esc(s.when || '')}</li>`).join('')}</ul>` : ''}
   </div>
   <div class="li-cta"><p>Toutes les revues, avec les liens vers chaque média :</p><p class="li-url">${esc(REVUES_URL.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</p></div>

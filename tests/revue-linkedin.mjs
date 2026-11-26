@@ -28,10 +28,10 @@ assert.doesNotMatch(html, /<span class="li-brand-sm">LE-RADAR/, 'pas de marque e
 {
   const g = { emoji: '🏀', sport: 'Basketball (F)', kind: 'avenir', verb: 'visite', when: 'jeu. 26 nov. · 18 h', teams: [{ name: 'Citadins', inst: 'UQAM' }, { name: 'Gaiters', inst: 'Bishop’s' }] };
   const h1 = renderLinkedInCarousel({ ...model, sports: { results: [], next: [g] } });
-  assert.match(h1, /<span class="li-l1">🏀 Basketball \(F\) · Citadins \(UQAM\) c\. Gaiters \(Bishop’s\)<\/span><span class="li-l2">jeu\. 26 nov\. · 18 h · Chez les Gaiters · Bishop’s<\/span>/);
+  assert.match(h1, /<span class="li-l1">🏀 Basketball \(F\) · Citadins \(UQAM\) vs Gaiters \(Bishop’s\)<\/span><span class="li-l2">jeu\. 26 nov\. · 18 h · Chez les Gaiters<\/span>/);
   assert.match(h1, /Calendrier : RSEQ\./);
   const h2 = renderLinkedInCarousel({ ...model, sports: { results: [], next: [{ ...g, venue: 'Centre sportif Bishop’s' }] } });
-  assert.match(h2, /<span class="li-l2">jeu\. 26 nov\. · 18 h · Centre sportif Bishop’s<\/span>/);
+  assert.match(h2, /<span class="li-l2">jeu\. 26 nov\. · 18 h · Chez les Gaiters · Centre sportif Bishop’s<\/span>/);
   assert.match(h2, /Calendrier et salles : RSEQ\./);
   const { withVenues } = await import('../scripts/revue/revue-social-pick.mjs');
   const id = '91669338-645a-4ef0-8c47-d678db17ce23';
@@ -137,5 +137,34 @@ assert.match(noimg, /li-article--noimg/);
   assert.equal(sm.image.url, sm.items[0].image, 'couverture : photo de l’article en tête du carrousel');
   assert.match(renderLinkedInCarousel(sm), /8 articles choisis parmi les 14 de la revue/);
   assert.equal((renderLinkedInCarousel(sm).match(/<section class="li-page/g) || []).length, sm.items.length + 2, 'au plus 10 pages');
+}
+// Dernière page : sport et radio par popularité ; voile toujours montrée, en tête, hors plafond.
+{
+  const P = await import('../scripts/revue/revue-social-pick.mjs');
+  const g = (o) => ({ emoji: '🏀', sport: 'Basketball (F)', sportKey: 'basketball', kind: 'avenir', verb: 'reçoit', date: '2026-11-26', time: '18:00', uni: false, league: 'Basketball collégial féminin D2', teams: [{ name: 'A', inst: 'X' }, { name: 'B', inst: 'Y' }], ...o });
+  const coll = g({ text: 'coll' }), uni = g({ text: 'uni', uni: true, league: 'Basketball universitaire féminin' });
+  const derby = g({ text: 'derby', uni: true, league: 'Basketball universitaire féminin', teams: [{ name: 'Martlets', inst: 'McGill' }, { name: 'Stingers', inst: 'Concordia' }] });
+  const later = g({ text: 'later', uni: true, league: 'Basketball universitaire féminin', date: '2026-11-29', teams: [{ name: 'Martlets', inst: 'McGill' }, { name: 'Stingers', inst: 'Concordia' }] });
+  const hockey = g({ text: 'hockey', sport: 'Hockey (F)', sportKey: 'hockey', uni: true, league: 'Hockey universitaire féminin D1' });
+  assert.ok(P.sportScore(derby) > P.sportScore(uni), 'derby (même ville) au-dessus');
+  assert.ok(P.sportScore(later, '2026-11-26') < P.sportScore(derby, '2026-11-26'), 'plus loin dans le temps : plus bas');
+  assert.deepEqual(P.rankSports([coll, uni, derby, hockey]).map((x) => x.text), ['derby', 'hockey', 'uni', 'coll'], 'popularité, puis variété des sports');
+  const sail = { emoji: '⛵', sport: 'Voile', sportKey: 'sailing', kind: 'avenir', date: '2026-11-28', event: 'Régate', text: 'voile', teams: [{ name: 'Rouge et Or', inst: 'ULaval' }] };
+  const picked = P.pickSports({ sports: { results: [], next: [coll, uni, derby, hockey, sail] } });
+  assert.equal(picked.next[0].text, 'voile', 'voile en tête malgré une note plus basse');
+  const many = Array.from({ length: 8 }, (_, i) => g({ text: `m${i}` }));
+  const html = renderLinkedInCarousel({ ...model, sports: { results: [], next: P.pickSports({ sports: { next: [...many, sail] } }).next } });
+  assert.equal((html.match(/<span class="li-l1">/g) || []).length, 6, 'voile + 5 matchs (hors plafond)');
+  assert.match(html, /<li data-keep="1"><span class="li-l1">⛵ Voile/, 'voile protégée de l’ajustement de la page');
+  // Radio : FM > AM > web ; en ondes ou bientôt ; grande écoute ; une émission par station, stations par note.
+  const at = (h) => h * 60;
+  assert.ok(P.showScore('CHYZ 94,3', { start: '19:30', end: '21:30' }, at(19.5)) > P.showScore('CJLO 1690AM', { start: '19:30', end: '21:30' }, at(19.5)), 'FM avant AM');
+  assert.ok(P.showScore('CJLO 1690AM', { start: '19:30', end: '21:30' }, at(19.5)) > P.showScore('CHOQ.ca', { start: '19:30', end: '21:30' }, at(19.5)), 'AM avant web');
+  assert.ok(P.showScore('CKUT 90,3', { start: '20:00' }, at(19.75)) > P.showScore('CKUT 90,3', { start: '23:00' }, at(19.75)), 'bientôt avant plus tard');
+  const radio = P.pickRadio({ datePublished: '2026-11-26T00:10:00Z', radio: [
+    { station: 'CJLO 1690AM', shows: [{ title: 'Tard', start: '23:00', end: '00:00' }] },
+    { station: 'CKUT 90,3', shows: [{ title: 'Tard', start: '23:00', end: '00:00' }, { title: 'Bientôt', start: '19:30', end: '21:00' }] },
+  ] });
+  assert.deepEqual(radio.map((r) => `${r.station}:${r.shows[0].title}`), ['CKUT 90,3:Bientôt', 'CJLO 1690AM:Tard']);
 }
 console.log('revue-linkedin : OK');
