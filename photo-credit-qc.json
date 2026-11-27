@@ -1,44 +1,58 @@
 {
-  "updated": "2026-11-27T00:56:57.251Z",
-  "total": 1200,
-  "withImage": 1032,
-  "withCredit": 1032,
-  "cited": 744,
-  "pending": 177,
+  "updated": "2026-11-27T01:11:51.153Z",
+  "total": 1201,
+  "withImage": 1056,
+  "withCredit": 1056,
+  "cited": 762,
+  "pending": 187,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 6,
-  "citedNew": 9,
-  "fallbackNew": 51,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 54,
   "samples": [
     {
-      "title": "Just Visiting — For the Next Four Years",
-      "source": "The McGill Daily",
-      "credit": "Photo: The McGill Daily",
+      "title": "Face aux écrans, une génération en quête d’équilibre",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
       "cited": false,
       "method": null
     },
     {
-      "title": "Un nouveau défi commence : le PSG fait match nul face à la Roma",
-      "source": "Le Club-École",
-      "credit": "Photo : Le Club-École",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Cinema Politica screens documentary on Jocelyne Saab",
-      "source": "The Link",
-      "credit": "Photo: James Bossinakis",
+      "title": "La coupe ou rien : les coulisses d’une conquête inoubliable",
+      "source": "La Pige",
+      "credit": "Photo : Olivier Dubois",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "body-line"
     },
     {
-      "title": "Off-road engineering",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
+      "title": "Médias : après la crise du papier, la crise d’Internet ?",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "S’unir pour contrer l’insécurité alimentaire",
+      "source": "Le Collectif",
+      "credit": "Photo : Émy Robert",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Les dessous de la grève du 10 novembre",
+      "source": "Le Collectif",
+      "credit": "Photo : NicolasHamel",
+      "cited": true,
+      "method": "filename-credit"
     },
     {
       "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
@@ -46,13 +60,6 @@
       "credit": "Photo: Courtesy of Felix Sobolewski",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
-      "source": "The Plant",
-      "credit": "Image via Pinterest",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }

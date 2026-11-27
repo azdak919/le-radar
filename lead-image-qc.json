@@ -1,88 +1,82 @@
 {
-  "updated": "2026-11-27T00:55:20.047Z",
-  "total": 1200,
-  "withPhoto": 1032,
-  "withStock": 139,
-  "withCampusBank": 118,
-  "fullyCovered": 1143,
-  "leadReadyPhotos": 1103,
-  "pageScraped": 1,
-  "photosRecovered": 1,
-  "imagesCleared": 18,
-  "stockSearches": 26,
-  "stockFound": 28,
-  "campusBankFound": 23,
+  "updated": "2026-11-27T01:09:55.779Z",
+  "total": 1201,
+  "withPhoto": 1059,
+  "withStock": 129,
+  "withCampusBank": 112,
+  "fullyCovered": 1160,
+  "leadReadyPhotos": 1118,
+  "pageScraped": 27,
+  "photosRecovered": 27,
+  "imagesCleared": 1,
+  "stockSearches": 12,
+  "stockFound": 33,
+  "campusBankFound": 28,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "The Right to Distrurb",
-      "link": "https://www.mcgilldaily.com/2026/11/the-right-to-distrurb/",
+      "title": "La vache arrive au cinéma chinois",
+      "link": "https://www.delitfrancais.com/2026/11/25/la-vache-arrive-au-cinema-chinois/",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "La coupe ou rien : les coulisses d’une conquête inoubliable",
-      "link": "https://lapige.atmjonquiere.com/2026/11/23/la-coupe-ou-rien-les-coulisses-dune-conquete-inoubliable/?utm_source=rss&utm_medium=rss&utm_campaign=la-coupe-ou-rien-les-coulisses-dune-conquete-inoubliable",
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Médias : après la crise du papier, la crise d’Internet ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
+      "title": "Brésil : Lula réélu, Flavio Bolsonaro battu",
+      "link": "https://www.delitfrancais.com/2026/11/04/bresil-lula-reelu-flavio-bolsonaro-battu",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+    },
+    {
+      "title": "Queer Language is Queer Resistance",
+      "link": "https://www.mcgilldaily.com/2026/10/queer-language-is-queer-resistance",
+      "reason": "campus-bank",
+      "image": null
+    },
+    {
+      "title": "Plus de 130 jours de manifestation en Albanie",
+      "link": "https://www.delitfrancais.com/2026/10/28/plus-de-130-jours-de-manifestation-en-albanie",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Peut-on encore posséder de la culture ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/17/peut-on-encore-posseder-de-la-culture/?utm_source=rss&utm_medium=rss&utm_campaign=peut-on-encore-posseder-de-la-culture",
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "« Soutenons le journalisme » : Sherbrooke accueille le Congrès annuel de la FPJQ",
-      "link": "https://lecollectif.ca/societe/soutenons-le-journalisme-sherbrooke-accueille-le-congres-annuel-de-la-fpjq/",
-      "reason": "no-stock-match",
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
       "image": null
     },
     {
-      "title": "70 years of ‘Giovanni’s Room’",
-      "link": "https://thetribune.ca/a-e/70-years-of-giovannis-room-03112026",
+      "title": "25 ans de cinéma… et de souvenirs!",
+      "link": "https://montrealcampus.ca/2026/11/05/25-ans-de-cinema-et-de-souvenirs/",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://montrealcampus.ca/wp-content/uploads/2026/09/Uber-One-for-Students-RIDES-WEB-728x80-CA-FR.jpg"
     },
     {
-      "title": "Galaxy evolution: The expansion of our universe",
-      "link": "https://thetribune.ca/sci-tech/galaxy-evolution-the-expansion-of-our-universe",
-      "reason": "no-stock-match",
-      "image": null
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     },
     {
-      "title": "S’unir pour contrer l’insécurité alimentaire",
-      "link": "https://lecollectif.ca/societe/sunir-pour-contrer-linsecurite-alimentaire/",
+      "title": "Reportages La Pige radio 2 novembre",
+      "link": "https://lapige.atmjonquiere.com/2026/11/03/reportages-la-pige-radio-2-novembre",
       "reason": "no-stock-match",
-      "image": null
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Entr%C3%A9e_du_pavillon_G%C3%A9rard-Arguin_du_C%C3%A9gep_de_Jonqui%C3%A8re02.JPG"
     },
     {
-      "title": "Proches aidants : une semaine pour reconnaître ceux qu’on ne voit pas",
-      "link": "https://lapige.atmjonquiere.com/2026/11/06/proches-aidants-une-semaine-pour-reconnaitre-ceux-quon-ne-voit-pas",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Lessons from a singing mouse",
-      "link": "https://thetribune.ca/sci-tech/lessons-from-a-singing-mouse",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Redbirds rally past UQTR to reach RSEQ final",
-      "link": "https://thetribune.ca/sports/redbirds-rally-past-uqtr-to-reach-rseq-final",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Take The Tribune’s Science & Technology midterm review quiz",
-      "link": "https://thetribune.ca/sci-tech/take-the-tribunes-science-technology-midterm-review-quiz",
+      "title": "Pour Halloween, ce sont les pesticides qui font peur",
+      "link": "https://lapige.atmjonquiere.com/2026/11/02/pour-halloween-ce-sont-les-pesticides-qui-font-peur",
       "reason": "no-stock-match",
       "image": null
     }
