@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-27T21:07:13.476Z",
-  "total": 1208,
-  "withAuthor": 1208,
-  "mismatches": 60,
+  "updated": "2026-11-27T21:52:19.332Z",
+  "total": 1196,
+  "withAuthor": 1196,
+  "mismatches": 59,
   "ok": true,
   "samples": [
     {
@@ -134,14 +134,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "70 years of ‘Giovanni’s Room’",
-      "link": "https://thetribune.ca/a-e/70-years-of-giovannis-room-03112026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy",
       "source": "The Concordian",
@@ -164,7 +156,15 @@
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Why is it important to vote?",
+      "link": "https://theplantnews.com/2026/11/03/quebec-2026-election-guide",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 60
+  "fixed": 59
 }
