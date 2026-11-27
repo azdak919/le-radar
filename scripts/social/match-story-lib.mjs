@@ -63,13 +63,32 @@ export const matchKey = (m) => m.kind === 'more' ? `${m.date}:aussi-${m.wave}` :
 const mins = (t) => { const m = String(t || '').match(/^(\d{1,2}):(\d{2})/); return m ? Number(m[1]) * 60 + Number(m[2]) : 24 * 60; };
 
 /**
+ * Une rencontre = une seule entrée (27 nov. 2026 : le même match de hockey sortait en 7 stories). Chaque équipe a son
+ * calendrier : le match y figure deux fois (« reçoit » et « visite », gameId différents), parfois en double et parfois
+ * sans heure. Clé : jour, sport, établissements triés, heure ; une entrée sans heure tombe si la rencontre a une heure
+ * ailleurs. Garde l'entrée de l'hôte (« reçoit »).
+ */
+export function dedupeMatches(list) {
+  const base = (r) => [r.date, String(r.sportKey || '').toLowerCase(), r.sport || '', ...(r.teams || []).map((t) => t.reg || t.name).sort()].join('|');
+  const timed = new Set(list.filter((r) => r.time).map(base));
+  const seen = new Map();
+  for (const r of list) {
+    if (!r.time && timed.has(base(r))) continue;
+    const k = base(r) + '|' + (r.time || '');
+    const prev = seen.get(k);
+    if (!prev || (prev.verb !== 'reçoit' && r.verb === 'reçoit')) seen.set(k, r);
+  }
+  return list.filter((r) => [...seen.values()].includes(r));
+}
+
+/**
  * Matchs du jour (`day`) à deux équipes, universitaire d'abord puis par heure. Les épreuves (voile) sont dans todaysRegattas.
  * `notBefore` (minutes depuis minuit, Montréal) : écarte les matchs déjà commencés. `max` : plafond de stories par jour.
  */
 export function todaysMatches(masthead, day, { max = 6, notBefore = -1 } = {}) {
   const { next } = pickSports(masthead, day, { max: 200, days: 0, nextDays: 0 });
-  return next
-    .filter((r) => r.date === day && r.teams?.length === 2 && !r.event && r.verb && mins(r.time) >= notBefore)
+  return dedupeMatches(next.filter((r) => r.date === day && r.teams?.length === 2 && !r.event && r.verb))
+    .filter((r) => mins(r.time) >= notBefore)
     .sort((a, b) => (b.uni - a.uni) || String(a.time).localeCompare(String(b.time)))
     .slice(0, max);
 }

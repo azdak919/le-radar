@@ -152,3 +152,18 @@ assert.deepEqual(CFG.networks, ['facebook', 'instagram']);
 assert.deepEqual(IMAGE_SIZES['match-story'], { width: 1080, height: 1920 });
 assert.deepEqual(Object.keys(pageModel(L.matchStoryModel(all[0]))), ['match', 'slot']);
 console.log('social-match-story : OK');
+
+// Une rencontre = une story (27 nov. 2026 : Stingers–Carabins en 7 stories, vue de chaque équipe, avec et sans heure).
+{
+  const g = (a, b, verb, time, gameId = '') => ({ date: '2026-11-27', sportKey: 'hockey', sport: 'Hockey (F)', uni: true, kind: 'game', gameId, verb, time,
+    teams: [{ name: a, reg: a.toLowerCase() }, { name: b, reg: b.toLowerCase() }] });
+  const list = [g('Stingers', 'Carabins', 'visite', '19:00', 'x1'), g('Carabins', 'Stingers', 'reçoit', '19:00', 'x2'), g('Stingers', 'Carabins', 'visite', '19:00'),
+    g('Carabins', 'Stingers', 'reçoit', ''), g('Stingers', 'Carabins', 'visite', ''), g('Martlets', 'Rouge', 'reçoit', '19:00'), g('Rouge', 'Martlets', 'visite', '19:00')];
+  const out = L.dedupeMatches(list);
+  assert.equal(out.length, 2, 'une entrée par rencontre');
+  assert.ok(out.every((r) => r.verb === 'reçoit' && r.time === '19:00'), 'l’hôte, avec l’heure');
+  assert.equal(L.dedupeMatches([g('A', 'B', 'reçoit', ''), g('B', 'A', 'visite', '')]).length, 1, 'sans heure nulle part : une seule');
+  assert.equal(L.dedupeMatches([g('A', 'B', 'reçoit', '13:00'), g('A', 'B', 'reçoit', '19:00')]).length, 2, 'programme double : deux matchs');
+  assert.equal(L.dedupeMatches([g('A', 'B', 'reçoit', '19:00'), { ...g('A', 'B', 'reçoit', '19:00'), sport: 'Hockey (M)' }]).length, 2, 'féminin et masculin distincts');
+}
+console.log('match-story dédoublonnage : ok');
