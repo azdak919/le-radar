@@ -117,4 +117,36 @@ assert.equal(R.gate({ now: at('2026-11-26T19:00:00Z'), state: {} }).due, false, 
   assert.equal(later.mode, 'customScheduled'); assert.equal(later.dueAt, '2026-11-30T17:00:00.000Z'); assert.equal(later.assets.length, 2);
   assert.equal((await run(undefined)).mode, 'shareNow');
 }
+// Forme par réseau (27 nov. : la légende TikTok, longue liste aplatie, était illisible).
+{
+  const t = R.revueTexts(['tiktok', 'instagram', 'facebook', 'threads'], model);
+  assert.ok(t.tiktok.len <= 320, `TikTok : accroche courte (${t.tiktok.len})`);
+  assert.equal(t.tiktok.text.split('\n').length, 4, 'TikTok : 3 phrases + mots-clics');
+  for (const l of t.tiktok.text.split('\n').slice(0, 3)) assert.match(l, /[.➡️]\s*$/u, 'TikTok : chaque ligne se lit seule, même aplatie');
+  assert.doesNotMatch(t.tiktok.text, /^• /m, 'TikTok : pas de liste');
+  assert.equal((t.instagram.text.match(/^• /gm) || []).length, 3, 'Instagram : 3 titres');
+  assert.match(t.instagram.text, /… et 5 autres dans le carrousel\./);
+  assert.match(t.instagram.text, /📸 Couverture : /, 'crédit : celui de la couverture, dit comme tel');
+  assert.equal((t.facebook.text.match(/^• /gm) || []).length, 5, 'Facebook : 5 titres');
+  assert.match(t.threads.text, /https:\/\/le-radar\.ca\/revues\//);
+}
+// Publication par notification (TikTok, Instagram) : le son se choisit dans l'appli ; refusée → repli automatique.
+{
+  assert.ok(R.notifyFor('tiktok') && R.notifyFor('instagram') && !R.notifyFor('facebook'));
+  const { createXBuffer } = await import('../scripts/social/channels/x-buffer.mjs');
+  const run = async (refuse) => {
+    const sent = [];
+    const fetchImpl = async (_u, o) => { const b = JSON.parse(o.body);
+      if (/createPost/.test(b.query)) { sent.push(b.variables.i.schedulingType);
+        if (refuse && b.variables.i.schedulingType === 'notification') return { ok: true, status: 200, json: async () => ({ data: { createPost: { message: 'Invalid schedulingType' } } }) };
+        return { ok: true, status: 200, json: async () => ({ data: { createPost: { post: { id: 'p', status: 'scheduled' } } } }) }; }
+      if (/organizations/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] } } }) };
+      return { ok: true, status: 200, json: async () => ({ data: { channels: [{ id: 't', name: 'leradar.ca', service: 'tiktok' }] } }) }; };
+    const ch = createXBuffer({ key: 'k', fetchImpl, service: 'tiktok', channelName: '*' });
+    await ch.add({ text: 't', images: [{ url: 'https://a/1.jpg' }, { url: 'https://a/2.jpg' }], dueAt: '2026-11-30T01:30:00Z', notify: true });
+    return sent;
+  };
+  assert.deepEqual(await run(false), ['notification']);
+  assert.deepEqual(await run(true), ['notification', 'automatic'], 'refusée : repli automatique');
+}
 console.log('social-revue-post : OK');

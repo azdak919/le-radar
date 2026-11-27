@@ -167,4 +167,5 @@ assert.match(noimg, /li-article--noimg/);
   ] });
   assert.deepEqual(radio.map((r) => `${r.station}:${r.shows[0].title}`), ['CKUT 90,3:Bientôt', 'CJLO 1690AM:Tard']);
 }
+assert.doesNotMatch(html, /class="li-count">\d+ \/ \d+/, 'pas de compteur « 1 / 7 » : chaque réseau affiche sa position dans le carrousel');
 console.log('revue-linkedin : OK');

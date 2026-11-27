@@ -37,7 +37,7 @@ function articlePage(it, i, total, model) {
   const kicker = [it.theme, it.source, it.institution].filter(Boolean).map(esc).join(' · ');
   const text = it.resume || it.excerpt || '';
   return `<section class="li-page li-article${img ? '' : ' li-article--noimg'}">
-  <header class="li-top">${BRAND_SM}<span class="li-count">${i + 1} / ${total}</span></header>
+  <header class="li-top">${BRAND_SM}</header>
   ${img}
   <div class="li-body">
     <p class="li-kicker">${kicker}</p>
