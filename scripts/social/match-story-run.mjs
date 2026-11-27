@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { POLICY } from './policy.mjs';
 import { createRequire } from 'node:module';
-import { todaysStories, planWave, waveOf, waveAt, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
+import { todaysStories, quietDayLists, planWave, waveOf, waveAt, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
 import { torontoMinutes, bufferWhen, montrealInstant } from './une-lib.mjs';
 import { createXBuffer } from './channels/x-buffer.mjs';
 import { createInstagramBuffer } from './instagram.mjs';
@@ -24,7 +24,7 @@ const rd = (f) => JSON.parse(fs.readFileSync(path.isAbsolute(f) ? f : path.join(
 export const CFG = POLICY.formats?.matchStory || { publish: false, networks: [], max: 6 };
 export const NETS = ['facebook', 'instagram'];
 /** « Martlets reçoit Stingers » ou « Régate : épreuve (clubs) ». */
-export const label = (m) => m.kind === 'more' ? `Aussi aujourd’hui : ${m.items.map(label).join(', ')}` : m.kind === 'regatta-results' ? `Résultats : ${m.event} (${m.rows.map((r) => `${r.place}e ${r.name}`).join(', ')})` : m.kind === 'regatta' ? `Régate : ${m.event} (${m.clubs.map((c) => c.name).join(', ')})` : `${m.teams[0].name} ${m.verb} ${m.teams[1].name}`;
+export const label = (m) => m.kind === 'more' ? `${m.title || 'Aussi aujourd’hui'} : ${m.items.map((x) => (x.kind === 'resultat' ? `${x.teams[0].name} ${x.teams[0].score}-${x.teams[1].score} ${x.teams[1].name}` : x.kind === 'classement' ? `${x.teams[0].name} (${x.event})` : label(x))).join(', ')}` : m.kind === 'regatta-results' ? `Résultats : ${m.event} (${m.rows.map((r) => `${r.place}e ${r.name}`).join(', ')})` : m.kind === 'regatta' ? `Régate : ${m.event} (${m.clubs.map((c) => c.name).join(', ')})` : `${m.teams[0].name} ${m.verb} ${m.teams[1].name}`;
 
 /** Réseaux restant à faire pour un match (déjà publié ou 3 échecs = fait). */
 export function pendingNets(entry, nets = NETS) {
@@ -64,6 +64,12 @@ export function tiktokEntries(state, day, max = TIKTOK.max) {
 const frDay = (day) => new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(`${day}T12:00:00Z`));
 /** Légende courte, lisible même aplatie (comme la revue sur TikTok). */
 export function tiktokCaption(day, entries, total = entries.length) {
+  // Jour sans match : les listes « Résultats récents » et « À venir ».
+  if (entries.length && entries.every((e) => e.list)) {
+    const has = (l) => entries.some((e) => e.list === l);
+    const what = has('resultats') && has('avenir') ? 'les derniers résultats et les prochains matchs' : has('resultats') ? 'les derniers résultats' : 'les prochains matchs';
+    return [`🏟️ Sport étudiant · ${frDay(day)} : ${what} à faire défiler ➡️`, 'Tous les matchs : lien en bio.', '#SportÉtudiant #RSEQ #VieÉtudiante #Québec'].join('\n');
+  }
   const n = Math.max(total, entries.filter((e) => !/^Aussi aujourd/.test(e.what || '')).length);
   const star = entries.find((e) => e.what && !/^Aussi aujourd/.test(e.what));
   return [
@@ -113,7 +119,13 @@ async function main() {
   const t = torontoMinutes(now), cur = waveAt(t, CFG.waves || WAVES);
   const all = todaysStories(rd(arg('sports', 'sports-masthead.json')), day, { max: 200, notBefore: dry ? -1 : t, sailing });
   const waves = (CFG.waves || WAVES).filter((w) => dry || force || (cur && WAVES.indexOf(w) <= WAVES.indexOf(cur)));
-  const plan = waves.flatMap((w) => { const p = planWave(all.filter((m) => waveOf(m, CFG.waves || WAVES) === w.id), { maxPerWave: CFG.maxPerWave || 4 }); return p.map((m, i) => ({ m, i, total: p.length, wave: w.id })); });
+  let plan = waves.flatMap((w) => { const p = planWave(all.filter((m) => waveOf(m, CFG.waves || WAVES) === w.id), { maxPerWave: CFG.maxPerWave || 4 }); return p.map((m, i) => ({ m, i, total: p.length, wave: w.id })); });
+  // Jour sans match : derniers résultats et prochains matchs, en affiches de liste, dès la première vague (stories et TikTok).
+  if (!all.length) {
+    const lists = quietDayLists(rd(arg('sports', 'sports-masthead.json')), day, CFG.quiet || {});
+    plan = lists.map((m, i) => ({ m, i, total: lists.length, wave: 'matin' }));
+    if (lists.length) console.log(`Aucun match aujourd’hui : ${lists.map((m) => `${m.title} (${m.items.length})`).join(', ')}.`);
+  }
   const matches = plan.map((x) => x.m);
   console.log(`Story match du jour ${day} : ${all.length} rencontre(s), ${plan.length} story(s) planifiée(s) — ${plan.map((x) => `[${x.wave}] ${x.m.kind === 'more' ? `Aussi aujourd’hui (${x.m.items.length})` : label(x.m)}`).join(', ')}.`);
   const tiktokEnv = { ...process.env };
@@ -140,7 +152,7 @@ async function main() {
       let urls;
       try { urls = await hostImages({ 'match-story': img }, `${day}:match-${short}`); }
       catch (e) { console.log(`::warning::${key} : hébergement impossible (${String(e.message).slice(0, 200)}), réessai au prochain passage.`); continue; }
-      entry = state[key] = { key, at: new Date().toISOString(), what: label(m), image: urls['match-story'], alt, nets: {} };
+      entry = state[key] = { key, at: new Date().toISOString(), what: label(m), ...(m.list ? { list: m.list } : {}), image: urls['match-story'], alt, nets: {} };
       fs.writeFileSync(STATE, JSON.stringify(pruneMatchState(state, now), null, 1) + '\n');
     }
     for (const n of pendingNets(entry, nets)) {

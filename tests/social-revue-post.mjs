@@ -149,4 +149,22 @@ assert.equal(R.gate({ now: at('2026-11-26T19:00:00Z'), state: {} }).due, false, 
   assert.doesNotMatch(cap, /https?:\/\//, 'aucun lien');
   assert.ok(cap.length <= 300);
 }
+// Jour sans match : derniers résultats et prochains matchs en affiches de liste (données fabriquées, jamais celles du jour).
+{
+  const L = await import('../scripts/social/match-story-lib.mjs');
+  const M = await import('../scripts/social/match-story-run.mjs');
+  const team = (o) => ({ sport: 'basketball', sex: 'F', sector: 'universitaire', sportLabel: 'Basketball', results: [], nextGames: [], ...o });
+  const masthead = { teams: {
+    a: team({ id: 'a', nickname: 'Martlets', institutionLabel: 'McGill', results: [{ gameId: 'r1', date: '2026-11-27', scoreFor: 61, scoreAgainst: 50, opponentNickname: 'Stingers', opponentFullName: 'Concordia' }], nextGames: [{ gameId: 'n1', date: '2026-12-02', time: '18:00', opponentNickname: 'Carabins', opponentFullName: 'UdeM', home: true }] }),
+  } };
+  const lists = L.quietDayLists(masthead, '2026-11-29');
+  assert.deepEqual(lists.map((x) => x.title), ['Résultats récents', 'À venir']);
+  const r = L.matchStoryModel(lists[0]).match, n = L.matchStoryModel(lists[1]).match;
+  assert.equal(r.title, 'Résultats récents'); assert.match(r.items[0].text, /^Martlets 61-50 Stingers$/); assert.match(r.credits.data, /^Résultats : RSEQ/);
+  assert.equal(n.title, 'À venir'); assert.match(n.items[0].when, /2 déc\..*18 h/);
+  assert.deepEqual(L.quietDayLists(masthead, '2027-01-15'), [], 'rien de récent ni d’annoncé : rien');
+  assert.match(L.matchStoryAlt(lists[0]), /^Affiche Résultats récents du Radar/);
+  const cap = M.tiktokCaption('2026-11-29', [{ list: 'resultats', image: 'x' }, { list: 'avenir', image: 'y' }]);
+  assert.match(cap, /^🏟️ Sport étudiant · dimanche 29 novembre : les derniers résultats et les prochains matchs à faire défiler ➡️\nTous les matchs : lien en bio\./);
+}
 console.log('social-revue-post : OK');

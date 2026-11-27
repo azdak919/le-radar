@@ -75,6 +75,23 @@ export function todaysMatches(masthead, day, { max = 6, notBefore = -1 } = {}) {
 }
 
 /**
+ * Jour sans match (27 nov. 2026, Charles) : on se rabat sur les derniers résultats (`resultDays` jours) et les prochains
+ * matchs (`nextDays` jours), chacun en une affiche de liste (même gabarit que « Aussi aujourd'hui »), les plus populaires
+ * d'abord (popularity, la voile en tête comme partout). Rien de récent ni d'annoncé : rien (jamais de remplissage).
+ */
+export function quietDayLists(masthead, day, { resultDays = 3, nextDays = 7, max = 9 } = {}) {
+  const { results, next } = pickSports(masthead, day, { max: 1000, days: resultDays, nextDays });
+  const sail = (r) => r.sportKey === 'sailing' || /^voile\b/i.test(String(r.sport || ''));
+  const rank = (list) => [...list].sort((a, b) => (sail(b) - sail(a)) || (popularity(b) - popularity(a)) || String(a.date + (a.time || '')).localeCompare(String(b.date + (b.time || ''))));
+  const res = rank(results.filter((r) => r.date < day || r.date === day)).slice(0, max);
+  const up = rank(next.filter((r) => r.date > day && r.teams?.length)).slice(0, max);
+  const out = [];
+  if (res.length) out.push({ kind: 'more', list: 'resultats', title: 'Résultats récents', date: day, wave: 'resultats', uni: false, time: '', items: res });
+  if (up.length) out.push({ kind: 'more', list: 'avenir', title: 'À venir', date: day, wave: 'avenir', uni: false, time: '', items: up });
+  return out;
+}
+
+/**
  * Régates du jour (voile, classement par place) : une story par épreuve, avec tous les clubs québécois inscrits.
  * Pas d'heure de départ connue : jamais écartée par `notBefore` (une régate dure la journée).
  */
@@ -227,11 +244,15 @@ export function matchStoryModel(m, { index = 0, total = 1, root = ROOT } = {}) {
   if (m.kind === 'more') {
     const line = (x) => x.kind === 'regatta' ? { emoji: '⛵', when: 'Journée', text: `Régate : ${x.event}`, sport: 'Voile' }
       : x.kind === 'regatta-results' ? { emoji: '⛵', when: 'Final', text: `Résultats : ${x.event}`, sport: 'Voile' }
+      // Jour sans match : résultats (date, pointage) et matchs à venir (date et heure).
+      : x.kind === 'resultat' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${x.teams[0].name} ${x.teams[0].score}-${x.teams[1].score} ${x.teams[1].name}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : x.kind === 'classement' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${x.teams[0].name} : ${String(x.place).replace('/', ' sur ')}, ${x.event}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : m.list === 'avenir' ? { emoji: x.emoji || '', when: [frShort(x.date), frHour(x.time)].filter(Boolean).join(' · '), text: x.verb && x.teams?.length === 2 ? `${x.teams[0].name} ${x.verb} ${x.teams[1].name}` : `${x.teams?.[0]?.name || ''} · ${x.event || ''}`, sport: sportLabelFr(x.sport, x.sportKey) }
       : { emoji: x.emoji || '', when: frHour(x.time) || '', text: `${x.teams[0].name} ${x.verb} ${x.teams[1].name}`, sport: sportLabelFr(x.sport, x.sportKey) };
     const items = m.items.map(line);
-    return { match: { kind: 'more', emoji: '🏟️', sport: 'Sport étudiant', circuit: '', circuitLogo: '', count: items.length, items: items.slice(0, 9), extra: Math.max(0, items.length - 9),
+    return { match: { kind: 'more', title: m.title || '', emoji: '🏟️', sport: 'Sport étudiant', circuit: '', circuitLogo: '', count: items.length, items: items.slice(0, 9), extra: Math.max(0, items.length - 9),
       hour: '', day: frDay(m.date).replace(/^./, (c) => c.toUpperCase()), dayShort: frShort(m.date), index, total,
-      credits: { data: `Calendrier : ${m.items.some((x) => String(x.kind).startsWith('regatta')) ? 'RSEQ et CICSA' : 'RSEQ'}`, logos: [], notes: [] } } };
+      credits: { data: `${m.list === 'resultats' ? 'Résultats' : 'Calendrier'} : ${m.items.some((x) => String(x.kind).startsWith('regatta') || x.sportKey === 'sailing') ? 'RSEQ et CICSA' : 'RSEQ'}`, logos: [], notes: [] } } };
   }
   if (m.kind === 'regatta-results') {
     const rows = m.rows.slice(0, 6).map((r) => { const c = club({ reg: r.reg, name: r.name }); return { ...c, place: r.place, placeLabel: ordinal(r.place), field: r.field, crew: r.crew ? `Équipage ${r.crew}` : '', podium: r.place <= 3 }; });
@@ -262,7 +283,7 @@ export async function rseqVenue(gameId, { fetchImpl = fetch, timeoutMs = 8000 } 
 export function matchStoryAlt(m) {
   const { match: s } = matchStoryModel(m);
   const who = (z) => `${z.name}${z.inst ? ` (${z.inst})` : ''}`;
-  if (s.kind === 'more') return `Affiche Aussi aujourd’hui du Radar, ${s.day} : ${s.items.map((x) => `${x.when ? x.when + ', ' : ''}${x.sport}, ${x.text}`).join(' ; ')}${s.extra ? ` ; et ${s.extra} autres` : ''}. le-radar.ca`;
+  if (s.kind === 'more') return `Affiche ${s.title || 'Aussi aujourd’hui'} du Radar, ${s.day} : ${s.items.map((x) => `${x.when ? x.when + ', ' : ''}${x.sport}, ${x.text}`).join(' ; ')}${s.extra ? ` ; et ${s.extra} autres` : ''}. le-radar.ca`;
   if (s.kind === 'regatta-results') return `Affiche Résultats de régate du Radar : ${s.event}, ${s.range || s.day}${s.where ? `, ${s.where.replace(/^Lieu/, 'lieu')}` : ''}, classement final sur ${s.field} équipes : ${s.rows.map((r) => `${r.placeLabel} ${r.name}${r.crew ? ` (${r.crew.toLowerCase()})` : ''}`).join(', ')}. le-radar.ca`;
   if (s.kind === 'regatta') return `Affiche Jour de régate du Radar : ${s.sport}, ${s.event}, ${s.day}${s.hour ? ` à ${s.hour}` : ''}, classement par place${s.where ? `, ${s.where.replace(/^Lieu/, 'lieu')}` : ''} ; clubs du Québec inscrits : ${s.clubs.map(who).join(', ')}. le-radar.ca`;
   return `Affiche Jour de match du Radar : ${s.sport}, ${who(s.away)} contre ${who(s.home)}, ${s.day}${s.hour ? ` à ${s.hour}` : ''}, ${s.where.replace(/^Chez/, 'chez')}${s.venue ? `, ${s.venue}` : ''}. le-radar.ca`;
