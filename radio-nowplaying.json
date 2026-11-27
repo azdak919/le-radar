@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T09:06:58.783Z",
+  "updatedAt": "2026-11-27T10:07:01.050Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T09:06:06.569Z"
+      "checkedAt": "2026-11-27T10:06:21.048Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T09:06:19.820Z"
+      "checkedAt": "2026-11-27T10:06:34.109Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T09:06:23.654Z"
+      "checkedAt": "2026-11-27T10:06:38.889Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "02:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Wake up Folks!",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T09:06:35.833Z"
+      "checkedAt": "2026-11-27T10:06:40.283Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T09:06:36.886Z"
+      "checkedAt": "2026-11-27T10:06:41.126Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "+250 — Umutagara",
+      "track": "Ezra Collective — Well Organised (feat. Lila Iké)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T09:06:58.432Z"
+      "checkedAt": "2026-11-27T10:07:00.700Z"
     }
   }
 }
