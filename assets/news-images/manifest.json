@@ -671,16 +671,6 @@
       "via": "resize-proxy",
       "nameKey": "sports_ventecfmontreal_sourcecfmontreal.png"
     },
-    "510ce09d8142e4b4": {
-      "local": "assets/news-images/510ce09d8142e4b4.jpg",
-      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/Capture-decran-le-2026-11-16-a-08.06.31.png",
-      "host": "lecollectif.ca",
-      "bytes": 130125,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-20T17:57:28.900Z",
-      "via": "resize-proxy",
-      "nameKey": "capture-decran-le-2026-11-16-a-08.06.31.png"
-    },
     "3aff5d4a194a6bc4": {
       "local": "assets/news-images/3aff5d4a194a6bc4.jpg",
       "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/SSA26_1112_MBB__9332_900_600_90.jpg",
@@ -1341,16 +1331,6 @@
       "via": "disk",
       "nameKey": "hannahnobile_011126_suprasemis_vol44-3.jpg"
     },
-    "be611451563af4ef": {
-      "local": "assets/news-images/be611451563af4ef.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Media.png",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 112622,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-20T17:57:12.700Z",
-      "via": "resize-proxy",
-      "nameKey": "media.png"
-    },
     "426e8bffe1cefa87": {
       "local": "assets/news-images/426e8bffe1cefa87.jpg",
       "remote": "https://montrealcampus.ca/wp-content/uploads/2026/10/IMG_0876.jpeg",
@@ -1697,16 +1677,6 @@
       "updatedAt": "2026-11-20T17:57:03.889Z",
       "via": "origin",
       "nameKey": "societe_deuilparsuicide_source-hope-cope.jpg"
-    },
-    "e768404c07133423": {
-      "local": "assets/news-images/e768404c07133423.jpg",
-      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/shared-image-1-768x1024.jpg",
-      "host": "lecollectif.ca",
-      "bytes": 118399,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-20T17:57:03.983Z",
-      "via": "origin",
-      "nameKey": "shared-image-1.jpg"
     },
     "f9237cadac1b922a": {
       "local": "assets/news-images/f9237cadac1b922a.jpg",
@@ -2061,16 +2031,6 @@
       "updatedAt": "2026-11-23T16:12:43.963Z",
       "via": "origin",
       "nameKey": "photo-du-gala-honoris-leonis-couture_2026-11-08-29.jpg"
-    },
-    "cc5b0cfb4f61d39f": {
-      "local": "assets/news-images/cc5b0cfb4f61d39f.jpg",
-      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/20261120_011146889_iOS.jpg",
-      "host": "lapige.atmjonquiere.com",
-      "bytes": 161740,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-23T16:12:47.223Z",
-      "via": "resize-proxy",
-      "nameKey": "20261120_011146889_ios.jpg"
     },
     "4f9d5b09785da1ba": {
       "local": "assets/news-images/4f9d5b09785da1ba.jpg",
@@ -3012,9 +2972,45 @@
       "updatedAt": "2026-11-26T17:09:01.203Z",
       "via": "resize-proxy",
       "nameKey": "culture_adisq_angine_de_poitrine_credit-paul-hudson-wikimedia-commons.jpg"
+    },
+    "e22ef03115105fed": {
+      "local": "assets/news-images/e22ef03115105fed.jpg",
+      "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Untitled_Artwork.jpeg",
+      "host": "www.mcgilldaily.com",
+      "bytes": 79149,
+      "updatedAt": "2026-11-27T00:55:44.684Z",
+      "via": "disk",
+      "nameKey": "untitled_artwork.jpeg"
+    },
+    "ab0e44458685d0e8": {
+      "local": "assets/news-images/ab0e44458685d0e8.jpg",
+      "remote": "https://leclubecole.com/wp-content/uploads/2026/11/image-36.png",
+      "host": "leclubecole.com",
+      "bytes": 128366,
+      "updatedAt": "2026-11-27T00:55:44.685Z",
+      "via": "disk",
+      "nameKey": "image-36.png"
+    },
+    "fda24fd36af984c8": {
+      "local": "assets/news-images/fda24fd36af984c8.jpg",
+      "remote": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_7135_900_720_90.jpeg",
+      "host": "thelinknewspaper.ca",
+      "bytes": 128274,
+      "updatedAt": "2026-11-27T00:55:44.685Z",
+      "via": "disk",
+      "nameKey": "img_7135.jpeg"
+    },
+    "108ee859316cad14": {
+      "local": "assets/news-images/108ee859316cad14.jpg",
+      "remote": "https://thetribune.ca/wp-content/uploads/2026/11/SciTech-2-_Manon-Keller-_-The-Tribune_-scaled.jpeg",
+      "host": "thetribune.ca",
+      "bytes": 208040,
+      "updatedAt": "2026-11-27T00:55:44.915Z",
+      "via": "disk",
+      "nameKey": "scitech-2-_manon-keller-_-the-tribune_.jpeg"
     }
   },
-  "updatedAt": "2026-11-26T17:18:07.859Z",
+  "updatedAt": "2026-11-27T00:55:45.256Z",
   "count": 308,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5036,7 +5032,7 @@
     },
     "a32c9befae8ae981": {
       "reason": "failed",
-      "at": "2026-11-26T00:09:54.439Z"
+      "at": "2026-11-27T00:55:44.913Z"
     },
     "5ae54d001340acaf": {
       "reason": "budget",
@@ -5048,7 +5044,7 @@
     },
     "43b86bec94169bb9": {
       "reason": "failed",
-      "at": "2026-11-26T00:09:53.910Z"
+      "at": "2026-11-27T00:55:45.165Z"
     },
     "9a20e27119031429": {
       "reason": "budget",
@@ -5176,7 +5172,7 @@
     },
     "ab74741c6af119ea": {
       "reason": "failed",
-      "at": "2026-11-25T21:11:41.075Z"
+      "at": "2026-11-27T00:55:44.920Z"
     },
     "1db0110786007144": {
       "reason": "budget",
@@ -5352,7 +5348,7 @@
     },
     "734b502fa8d3538a": {
       "reason": "failed",
-      "at": "2026-11-25T20:12:22.157Z"
+      "at": "2026-11-27T00:55:45.048Z"
     },
     "f1b0d6918d908d88": {
       "reason": "budget",
@@ -5421,10 +5417,6 @@
     "f7ce6dd976b923ae": {
       "reason": "budget",
       "at": "2026-11-22T04:12:12.548Z"
-    },
-    "ea6cda724eb8cda8": {
-      "reason": "failed",
-      "at": "2026-11-25T17:48:40.136Z"
     },
     "b3268cb0c963ea0b": {
       "reason": "budget",
@@ -5624,11 +5616,11 @@
     },
     "eb59bcfd3fbdc886": {
       "reason": "failed",
-      "at": "2026-11-26T00:09:53.634Z"
+      "at": "2026-11-27T00:55:45.249Z"
     },
     "6b5378ae44760ce5": {
       "reason": "failed",
-      "at": "2026-11-26T00:09:53.601Z"
+      "at": "2026-11-27T00:55:45.076Z"
     },
     "f638ea5dfc2e189d": {
       "reason": "budget",

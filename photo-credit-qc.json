@@ -1,23 +1,58 @@
 {
-  "updated": "2026-11-26T17:19:04.788Z",
-  "total": 1184,
-  "withImage": 1033,
-  "withCredit": 1033,
-  "cited": 747,
-  "pending": 180,
+  "updated": "2026-11-27T00:56:57.251Z",
+  "total": 1200,
+  "withImage": 1032,
+  "withCredit": 1032,
+  "cited": 744,
+  "pending": 177,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 59,
+  "updatedCount": 6,
+  "citedNew": 9,
+  "fallbackNew": 51,
   "samples": [
+    {
+      "title": "Just Visiting — For the Next Four Years",
+      "source": "The McGill Daily",
+      "credit": "Photo: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Un nouveau défi commence : le PSG fait match nul face à la Roma",
+      "source": "Le Club-École",
+      "credit": "Photo : Le Club-École",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Cinema Politica screens documentary on Jocelyne Saab",
+      "source": "The Link",
+      "credit": "Photo: James Bossinakis",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Off-road engineering",
+      "source": "The Tribune",
+      "credit": "Photo: The Tribune",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
       "source": "The Concordian",
       "credit": "Photo: Courtesy of Felix Sobolewski",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "“Men’s Clothing I’ll Wear On”: Gender Roles and Expression in the British Ballad",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
