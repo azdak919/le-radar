@@ -130,4 +130,23 @@ assert.equal(R.gate({ now: at('2026-11-26T19:00:00Z'), state: {} }).due, false, 
   assert.equal((t.facebook.text.match(/^• /gm) || []).length, 5, 'Facebook : 5 titres');
   assert.match(t.threads.text, /https:\/\/le-radar\.ca\/revues\//);
 }
+// Publication par notification (TikTok, Instagram) : le son se choisit dans l'appli ; refusée → repli automatique.
+{
+  assert.ok(R.notifyFor('tiktok') && R.notifyFor('instagram') && !R.notifyFor('facebook'));
+  const { createXBuffer } = await import('../scripts/social/channels/x-buffer.mjs');
+  const run = async (refuse) => {
+    const sent = [];
+    const fetchImpl = async (_u, o) => { const b = JSON.parse(o.body);
+      if (/createPost/.test(b.query)) { sent.push(b.variables.i.schedulingType);
+        if (refuse && b.variables.i.schedulingType === 'notification') return { ok: true, status: 200, json: async () => ({ data: { createPost: { message: 'Invalid schedulingType' } } }) };
+        return { ok: true, status: 200, json: async () => ({ data: { createPost: { post: { id: 'p', status: 'scheduled' } } } }) }; }
+      if (/organizations/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] } } }) };
+      return { ok: true, status: 200, json: async () => ({ data: { channels: [{ id: 't', name: 'leradar.ca', service: 'tiktok' }] } }) }; };
+    const ch = createXBuffer({ key: 'k', fetchImpl, service: 'tiktok', channelName: '*' });
+    await ch.add({ text: 't', images: [{ url: 'https://a/1.jpg' }, { url: 'https://a/2.jpg' }], dueAt: '2026-11-30T01:30:00Z', notify: true });
+    return sent;
+  };
+  assert.deepEqual(await run(false), ['notification']);
+  assert.deepEqual(await run(true), ['notification', 'automatic'], 'refusée : repli automatique');
+}
 console.log('social-revue-post : OK');

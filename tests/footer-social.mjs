@@ -12,12 +12,13 @@ const links = vm.runInNewContext(m[1]);
 const expected = {
   buymeacoffee: 'https://www.buymeacoffee.com/azdak',
   instagram: 'https://www.instagram.com/le.radar.ca/',
+  tiktok: 'https://www.tiktok.com/@leradar.ca',
   facebook: 'https://www.facebook.com/profile.php?id=61596092762097',
+  threads: 'https://www.threads.com/@le.radar.ca',
   linkedin: 'https://www.linkedin.com/company/le-radar-ca/',
   x: 'https://x.com/le_radar_ca',
   bluesky: 'https://bsky.app/profile/le-radar.ca',
   mastodon: 'https://piaille.fr/@leradar',
-  threads: 'https://www.threads.com/@le.radar.ca',
   rss: 'https://le-radar.ca/feed.xml',
 };
 const on = links.filter((l) => l.enabled);
@@ -31,6 +32,8 @@ assert.match(src, /a\.rel = s\.rel \|\| 'me noopener'/);
 const ig = on.find((l) => l.id === 'instagram');
 const svg = fs.readFileSync(new URL('../assets/social-icons/instagram.svg', import.meta.url), 'utf8');
 assert.ok(svg.includes(ig.path.slice(0, 40)), 'le SVG Instagram est le tracé du pied');
+const tt = on.find((l) => l.id === 'tiktok');
+assert.ok(fs.readFileSync(new URL('../assets/social-icons/tiktok.svg', import.meta.url), 'utf8').includes(tt.path.slice(0, 40)), 'le SVG TikTok est le tracé du pied');
 const bmc = on.find((l) => l.id === 'buymeacoffee');
 const bmcSvg = fs.readFileSync(new URL('../assets/social-icons/buymeacoffee.svg', import.meta.url), 'utf8');
 assert.ok(bmcSvg.includes(bmc.path.slice(0, 40)), 'le SVG Buy Me a Coffee est le tracé du pied');
@@ -38,12 +41,13 @@ assert.equal(bmc.rel, 'noopener noreferrer');
 assert.match(src, /www\.buymeacoffee\.com\/azdak/);
 const sameAsOrder = [
   'https://www.instagram.com/le.radar.ca/',
+  'https://www.tiktok.com/@leradar.ca',
   'https://www.facebook.com/profile.php?id=61596092762097',
+  'https://www.threads.com/@le.radar.ca',
   'https://www.linkedin.com/company/le-radar-ca/',
   'https://x.com/le_radar_ca',
   'https://bsky.app/profile/le-radar.ca',
   'https://piaille.fr/@leradar',
-  'https://www.threads.com/@le.radar.ca',
   'https://le-radar.ca/feed.xml',
 ];
 const indexHtml = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
