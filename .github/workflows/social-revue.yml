@@ -1,17 +1,19 @@
 name: Social — La revue (carrousel)
 
 # « La revue » sur les réseaux, publication DISTINCTE de La une (scripts/social/revue-post.mjs, data/social/policy.json formats.revue) :
-# carrousel de la revue du créneau — PDF document sur LinkedIn (matin seulement), pages 4:5 en plusieurs photos sur Facebook,
-# carrousel à glisser sur Instagram (à partir du 29 nov. 2026). Fenêtres, heure de Montréal : matin 9 h – 11 h 30 (≈ 9 h 15),
-# soir 20 h 30 – 22 h 30 (≈ 20 h 45), loin de La une (7 h 45, 19 h 30). Les crons GitHub sont en UTC et partent souvent en
-# retard : on en pose pour l'heure d'été (HAE) ET l'heure d'hiver (HNE), plus des secours ; hors fenêtre, la porte ne fait rien.
+# carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser
+# sur Instagram (à partir du 29 nov. 2026). Une heure par réseau, heure de Montréal : matin Facebook 11 h, Instagram 12 h,
+# LinkedIn 12 h 15 (semaine) ; soir Facebook 20 h 45, Instagram 21 h 15.
+# Les crons GitHub partent souvent en retard : le script passe TÔT (dès qu'une revue sort, puis toutes les 30 min dans la
+# fenêtre) et PROGRAMME chaque publication dans Buffer à l'heure exacte du réseau. Passage tardif (heure dépassée) : tout de suite.
 # data/social/revue-state.json garantit une seule publication par réseau et par revue (3 essais au plus).
 on:
+  workflow_run:
+    workflows: ['Revue — matin et soir']
+    types: [completed]
   schedule:
-    - cron: '13 13,14 * * *'   # matin : 9 h 13 HAE / 9 h 13 HNE (l'autre heure : hors fenêtre ou secours)
-    - cron: '43 14,15 * * *'   # matin, secours : 10 h 43 HAE / 9 h 43-10 h 43 HNE
-    - cron: '47 0,1 * * *'     # soir : 20 h 47 HAE / 20 h 47 HNE
-    - cron: '17 2 * * *'       # soir, secours : 21 h 17 HNE / 22 h 17 HAE
+    - cron: '7,37 11-18 * * *'      # matin, fenêtre 7 h – 13 h 30 (HAE et HNE) ; hors fenêtre la porte ne fait rien
+    - cron: '7,37 23,0,1,2,3 * * *' # soir, fenêtre 19 h – 22 h 30 (HAE et HNE)
   workflow_dispatch:
     inputs:
       slot:
@@ -42,7 +44,7 @@ jobs:
       queue: max
     env:
       REVUE_SLOT: ${{ inputs.slot || 'auto' }}
-      DRY_RUN: ${{ (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
+      DRY_RUN: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
       NOW_OVERRIDE: ${{ inputs.now || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

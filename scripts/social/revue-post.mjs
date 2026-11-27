@@ -3,9 +3,12 @@
 //  - Contenu : le carrousel de la revue du créneau (scripts/revue/revue-pdfs.mjs) — PDF « document » sur LinkedIn, pages 4:5
 //    en plusieurs photos sur Facebook, carrousel à glisser sur Instagram. Les 8 meilleurs articles (note sociale), sport et
 //    radio par popularité, voile toujours montrée (scripts/revue/revue-social-pick.mjs).
-//  - Heures (Montréal) : matin ≈ 9 h 15, soir ≈ 20 h 45 — au cœur des fenêtres d'engagement déjà retenues pour notre public
-//    (Facebook 9-13 h et 18-21 h, LinkedIn 8-10 h, Instagram en soirée), à distance de La une (≈ 7 h 45 et 19 h 30) pour ne
-//    jamais publier deux fois coup sur coup. LinkedIn : le matin seulement (fenêtre de soirée nulle pour une Page).
+//  - Heures (Montréal), une par réseau (formats.revue.slots.<créneau>.networks) : matin Facebook 11 h, Instagram 12 h,
+//    LinkedIn 12 h 15 en semaine ; soir Facebook 20 h 45, Instagram 21 h 15. Au cœur des fenêtres d'engagement du dépôt
+//    (scripts/social/networks/*.mjs) et à l'écart minimal de La une sur chaque réseau (Facebook 3 h, LinkedIn 4 h).
+//  - Heure exacte malgré les retards de GitHub : le script passe tôt (dès que la revue est en ligne) et confie chaque
+//    publication à Buffer, programmée à l'heure du réseau ; un passage tardif (heure dépassée, fenêtre encore ouverte)
+//    publie tout de suite.
 //  - Minimum (mêmes principes que La une) : publiée s'il y a une revue du créneau — articles, ou sport et radio sans nouvel
 //    article ; rien si la revue est sautée (rien de nouveau) ou refusée par son garde-fou (doute sur les données) ;
 //    rien tant que le carrousel n'est pas en ligne (jamais d'image de remplacement).
@@ -31,8 +34,8 @@ const rd = (f, d) => { try { return JSON.parse(fs.readFileSync(path.isAbsolute(f
 export const DEFAULTS = {
   publish: false,
   slots: {
-    matin: { id: 'matin', target: '09:15', from: '09:00', to: '11:30', networks: ['linkedin', 'facebook', 'instagram'] },
-    soir: { id: 'soir', target: '20:45', from: '20:30', to: '22:30', networks: ['facebook', 'instagram'] },
+    matin: { id: 'matin', from: '07:00', to: '13:30', networks: { facebook: '11:00', instagram: '12:00', linkedin: '12:15' }, weekdaysOnly: ['linkedin'] },
+    soir: { id: 'soir', from: '19:00', to: '22:30', networks: { facebook: '20:45', instagram: '21:15' } },
   },
   instagram: { from: '' },
 };
@@ -44,17 +47,34 @@ const hm = (s) => { const [h, m] = String(s).split(':').map(Number); return h * 
 /** Créneau dont la fenêtre contient `now` (heure de Montréal), sinon null. */
 export function slotAt(now = Date.now(), slots = CFG.slots) {
   const m = torontoMinutes(now), day = torontoDay(now);
-  for (const s of Object.values(slots)) if (m >= hm(s.from) && m < hm(s.to)) return { ...s, day, id: s.id, revueId: `${day}-${s.id}` };
+  for (const s of Object.values(slots)) if (s?.from && m >= hm(s.from) && m < hm(s.to)) return { ...s, day, id: s.id, revueId: `${day}-${s.id}` };
   return null;
 }
 export function slotFor(id, now = Date.now(), slots = CFG.slots) {
   const s = slots[id]; if (!s) throw new Error(`créneau inconnu : ${id}`);
   const day = torontoDay(now); return { ...s, day, revueId: `${day}-${id}` };
 }
-/** Réseaux du créneau ; Instagram seulement à partir de `instagram.from` (jour civil de Montréal). */
+const weekday = (ymd) => new Date(`${ymd}T12:00:00Z`).getUTCDay();
+/**
+ * Réseaux du créneau, dans l'ordre de leur heure ; Instagram seulement à partir de `instagram.from` (jour civil de Montréal) ;
+ * `weekdaysOnly` : pas le samedi ni le dimanche (LinkedIn : une Page n'a presque aucune portée la fin de semaine).
+ */
 export function netsFor(slot, { cfg = CFG } = {}) {
-  return (slot.networks || []).filter((n) => NETS.includes(n) && (n !== 'instagram' || !cfg.instagram?.from || slot.day >= cfg.instagram.from));
+  const we = [0, 6].includes(weekday(slot.day));
+  return Object.entries(slot.networks || {})
+    .filter(([n]) => NETS.includes(n) && (n !== 'instagram' || !cfg.instagram?.from || slot.day >= cfg.instagram.from) && !(we && (slot.weekdaysOnly || []).includes(n)))
+    .sort((a, b) => hm(a[1]) - hm(b[1]))
+    .map(([n]) => n);
 }
+/** Instant visé pour un réseau (heure de Montréal du jour du créneau). */
+export function dueFor(slot, net) {
+  const [y, m, d] = slot.day.split('-').map(Number), [h, mi] = String(slot.networks[net]).split(':').map(Number);
+  // Heure de Montréal → UTC : on essaie les deux décalages (HNE −5, HAE −4) et on garde celui qui retombe sur la bonne heure locale.
+  for (const off of [5, 4]) { const t = Date.UTC(y, m - 1, d, h + off, mi); if (torontoMinutes(t) === h * 60 + mi && torontoDay(t) === slot.day) return t; }
+  return Date.UTC(y, m - 1, d, h + 5, mi);
+}
+/** Programmer dans Buffer (heure encore à venir) ou publier tout de suite (passage tardif). */
+export const whenFor = (slot, net, now = Date.now()) => { const due = dueFor(slot, net); return due - now > 2 * 60e3 ? { dueAt: new Date(due).toISOString() } : { now: true }; };
 export const netDone = (e) => !!(e && ((e.at && !e.failed) || (e.attempts || 0) >= MAX_ATTEMPTS));
 export const slotDone = (entry, nets) => !!entry && (entry.skipped || nets.every((n) => netDone(entry.nets?.[n])));
 
@@ -123,24 +143,24 @@ export function revueTexts(nets, model) {
 }
 
 // ── Exécution ──────────────────────────────────────────────────────────────────
-async function sendOne(net, { text, doc, images, model, env, igState, slot }) {
+async function sendOne(net, { text, doc, images, model, env, igState, slot, when }) {
   const { createXBuffer } = await import('./channels/x-buffer.mjs');
   const { postMetadata } = await import('./buffer-pages.mjs');
   const pages = rd('data/social/buffer-pages.json', {});
   if (net === 'linkedin') {
     const ch = createXBuffer({ key: env.BUFFER_API_KEY, service: pages.linkedin.service, channelName: pages.linkedin.name, fallbackId: env.BUFFER_LINKEDIN_CHANNEL_ID || null });
-    const post = await ch.add({ text, now: true, document: doc, metadata: postMetadata('linkedin') });
+    const post = await ch.add({ text, ...when, document: doc, metadata: postMetadata('linkedin') });
     return { id: post.id, status: post.status || '' };
   }
   if (net === 'facebook') {
     const ch = createXBuffer({ key: env.BUFFER_API_KEY, service: pages.facebook.service, channelName: pages.facebook.name, fallbackId: env.BUFFER_FACEBOOK_CHANNEL_ID || null });
-    const post = await ch.add({ text, now: true, images, metadata: postMetadata('facebook') });
+    const post = await ch.add({ text, ...when, images, metadata: postMetadata('facebook') });
     return { id: post.id, status: post.status || '' };
   }
   // Instagram : arrêt au premier avertissement ou à la première erreur Buffer (état partagé avec La une), sans réessai.
   const { deliverInstagram, openInstagramIssue } = await import('./instagram.mjs');
   if (igState.halted) return { skip: 'Instagram arrêté après un avertissement ou une erreur Buffer. Aucun réessai.' };
-  const r = await deliverInstagram({ env, text, imageUrl: images[0].url, images, alt: images[0].alt, state: igState, now: new Date().toISOString(),
+  const r = await deliverInstagram({ env, text, imageUrl: images[0].url, images, alt: images[0].alt, state: igState, now: new Date().toISOString(), dueAt: when.dueAt,
     slotId: slot.id, format: 'revue', dedupKey: `revue:${slot.revueId}`, fileIssue: openInstagramIssue });
   Object.assign(igState, r.state || {});
   if (r.action !== 'sent') throw Object.assign(new Error(r.reason || 'Instagram non publié'), { final: true });
@@ -191,10 +211,11 @@ async function main() {
     if (t.problems.length) { console.log(`::warning::${n} : texte refusé (${t.problems.join(', ')})`); e.attempts = MAX_ATTEMPTS; e.failed = true; e.error = t.problems.join(', '); continue; }
     if (n === 'linkedin' ? !doc : !images) { console.log(`${n} : carrousel pas encore en ligne, nouvel essai au prochain passage.`); continue; }
     try {
-      const r = await sendOne(n, { text: t.text, doc, images, model: rv.model, env, igState, slot });
+      const when = whenFor(slot, n, Date.now());
+      const r = await sendOne(n, { text: t.text, doc, images, model: rv.model, env, igState, slot, when });
       if (r.skip) { console.log(`${n} : ${r.skip}`); e.attempts = MAX_ATTEMPTS; e.failed = true; e.error = r.skip; continue; }
-      Object.assign(e, { at: new Date().toISOString(), id: r.id, failed: false });
-      console.log(`→ ${n} : ${r.id}`);
+      Object.assign(e, { at: new Date().toISOString(), id: r.id, failed: false, ...(when.dueAt ? { dueAt: when.dueAt } : {}) });
+      console.log(`→ ${n} : ${r.id}${when.dueAt ? ` (programmée pour ${new Date(when.dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })})` : ' (publiée tout de suite)'}`);
     } catch (err) {
       e.attempts = err.final ? MAX_ATTEMPTS : (e.attempts || 0) + 1; e.failed = true; e.error = String(err.message || err).slice(0, 300);
       console.log(`::warning::${n} : ${e.error}`);

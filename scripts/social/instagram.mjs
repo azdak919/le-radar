@@ -256,7 +256,7 @@ export function alreadyPosted(texts, text) {
 }
 
 /** Un seul envoi. Toute erreur ou tout avertissement Buffer arrête le canal et ouvre une issue. */
-export async function deliverInstagram({ env = {}, text, imageUrl, images, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
+export async function deliverInstagram({ env = {}, text, imageUrl, images, dueAt, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
   const ch = createInstagramBuffer(env, { fetchImpl });
   if (!ch) return { action: 'skip', reason: instagramKey(env).reason, state };
   try {
@@ -267,7 +267,8 @@ export async function deliverInstagram({ env = {}, text, imageUrl, images, alt =
       return { action: 'sent', id: 'deja-present', dedup: true, state: { ...state, halted: false, sent } };
     }
     // images : carrousel (pages de la revue du créneau) ; sinon l'image unique habituelle.
-    const post = await ch.add({ text, ...(Array.isArray(images) && images.length > 1 ? { images } : { image: imageUrl }), alt, now: true, metadata: INSTAGRAM_METADATA });
+    // dueAt : publication programmée dans Buffer (heure exacte) ; sinon tout de suite.
+    const post = await ch.add({ text, ...(Array.isArray(images) && images.length > 1 ? { images } : { image: imageUrl }), alt, ...(dueAt ? { dueAt, now: false } : { now: true }), metadata: INSTAGRAM_METADATA });
     const when = Date.parse(now);
     const day = torontoDay(Number.isFinite(when) ? when : Date.now());
     const id = post?.id;
