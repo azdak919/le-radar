@@ -261,13 +261,16 @@ export function matchStoryModel(m, { index = 0, total = 1, root = ROOT } = {}) {
   const club = (z) => { const c = sailingClub(z.reg, { root }); return { name: c?.clubName || z.name, inst: c ? (z.inst || institutionSigle(c.name) || c.shortName || z.name) : z.inst || '', color: z.color || institutionColor(c?.name || '') || '', logo: teamLogo(z.reg ? `${z.reg}-voile` : '', { root }) }; };
   const withCredits = (x) => ({ match: { ...x, credits: storyCredits(x, { root }) } });
   if (m.kind === 'more') {
+    // Équipe et sigle de l'établissement entre parenthèses : « Carabins (UdeM) » (27 nov. 2026, Charles).
+    // Trait d'union insécable : « (Saint‑Jean‑sur‑Richelieu) » passe à la ligne d'un bloc, jamais coupé au tiret.
+    const nm = (z) => z?.inst && z.inst !== z.name ? `${z.name} (${z.inst.replace(/-/g, '\u2011')})` : z?.name || '';
     const line = (x) => x.kind === 'regatta' ? { emoji: '⛵', when: 'Journée', text: `Régate : ${x.event}`, sport: 'Voile' }
       : x.kind === 'regatta-results' ? { emoji: '⛵', when: 'Final', text: `Résultats : ${x.event}`, sport: 'Voile' }
       // Jour sans match : résultats (date, pointage) et matchs à venir (date et heure).
-      : x.kind === 'resultat' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${x.teams[0].name} ${x.teams[0].score}-${x.teams[1].score} ${x.teams[1].name}`, sport: sportLabelFr(x.sport, x.sportKey) }
-      : x.kind === 'classement' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${x.teams[0].name} : ${String(x.place).replace('/', ' sur ')}, ${x.event}`, sport: sportLabelFr(x.sport, x.sportKey) }
-      : m.list === 'avenir' ? { emoji: x.emoji || '', when: [frShort(x.date), frHour(x.time)].filter(Boolean).join(' · '), text: x.verb && x.teams?.length === 2 ? `${x.teams[0].name} ${x.verb} ${x.teams[1].name}` : `${x.teams?.[0]?.name || ''} · ${x.event || ''}`, sport: sportLabelFr(x.sport, x.sportKey) }
-      : { emoji: x.emoji || '', when: frHour(x.time) || '', text: `${x.teams[0].name} ${x.verb} ${x.teams[1].name}`, sport: sportLabelFr(x.sport, x.sportKey) };
+      : x.kind === 'resultat' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${nm(x.teams[0])} ${x.teams[0].score}-${x.teams[1].score} ${nm(x.teams[1])}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : x.kind === 'classement' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${nm(x.teams[0])} : ${String(x.place).replace('/', ' sur ')}, ${x.event}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : m.list === 'avenir' ? { emoji: x.emoji || '', when: [frShort(x.date), frHour(x.time)].filter(Boolean).join(' · '), text: x.verb && x.teams?.length === 2 ? `${nm(x.teams[0])} ${x.verb} ${nm(x.teams[1])}` : `${nm(x.teams?.[0])} · ${x.event || ''}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : { emoji: x.emoji || '', when: frHour(x.time) || '', text: `${nm(x.teams[0])} ${x.verb} ${nm(x.teams[1])}`, sport: sportLabelFr(x.sport, x.sportKey) };
     const items = m.items.map(line);
     return { match: { kind: 'more', title: m.title || '', emoji: '🏟️', sport: 'Sport étudiant', circuit: '', circuitLogo: '', count: items.length, items: items.slice(0, 9), extra: Math.max(0, items.length - 9),
       hour: '', day: frDay(m.date).replace(/^./, (c) => c.toUpperCase()), dayShort: frShort(m.date), index, total,
@@ -302,7 +305,7 @@ export async function rseqVenue(gameId, { fetchImpl = fetch, timeoutMs = 8000 } 
 export function matchStoryAlt(m) {
   const { match: s } = matchStoryModel(m);
   const who = (z) => `${z.name}${z.inst ? ` (${z.inst})` : ''}`;
-  if (s.kind === 'more') return `Affiche ${s.title || 'Aussi aujourd’hui'} du Radar, ${s.day} : ${s.items.map((x) => `${x.when ? x.when + ', ' : ''}${x.sport}, ${x.text}`).join(' ; ')}${s.extra ? ` ; et ${s.extra} autres` : ''}. le-radar.ca`;
+  if (s.kind === 'more') return `Affiche ${s.title || 'Aussi aujourd’hui'} du Radar, ${s.day} : ${s.items.map((x) => `${x.when ? x.when + ', ' : ''}${x.sport}, ${x.text.replace(/\u2011/g, '-')}`).join(' ; ')}${s.extra ? ` ; et ${s.extra} autres sur le-radar.ca/sports` : ''}. le-radar.ca`;
   if (s.kind === 'regatta-results') return `Affiche Résultats de régate du Radar : ${s.event}, ${s.range || s.day}${s.where ? `, ${s.where.replace(/^Lieu/, 'lieu')}` : ''}, classement final sur ${s.field} équipes : ${s.rows.map((r) => `${r.placeLabel} ${r.name}${r.crew ? ` (${r.crew.toLowerCase()})` : ''}`).join(', ')}. le-radar.ca`;
   if (s.kind === 'regatta') return `Affiche Jour de régate du Radar : ${s.sport}, ${s.event}, ${s.day}${s.hour ? ` à ${s.hour}` : ''}, classement par place${s.where ? `, ${s.where.replace(/^Lieu/, 'lieu')}` : ''} ; clubs du Québec inscrits : ${s.clubs.map(who).join(', ')}. le-radar.ca`;
   return `Affiche Jour de match du Radar : ${s.sport}, ${who(s.away)} contre ${who(s.home)}, ${s.day}${s.hour ? ` à ${s.hour}` : ''}, ${s.where.replace(/^Chez/, 'chez')}${s.venue ? `, ${s.venue}` : ''}. le-radar.ca`;
