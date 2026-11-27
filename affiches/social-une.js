@@ -461,7 +461,7 @@
     }
     if (m.kind === 'more') {
       // « Aussi aujourd'hui » : jours chargés, le reste de la vague en une liste (heure, sport, rencontre), sans logos.
-      card.classList.add('ms-regatta', 'ms-more'); top.lastChild.textContent = 'Aussi aujourd’hui';
+      card.classList.add('ms-regatta', 'ms-more'); top.lastChild.textContent = m.title || 'Aussi aujourd’hui';
       card.append(el('h1', 'ms-event', `${m.count}${NB}autre${m.count > 1 ? 's' : ''} match${m.count > 1 ? 's' : ''}`), el('p', 'ms-format', 'Sport étudiant · horaire du jour'));
       const list = el('div', 'ms-clubs');
       m.items.forEach((x) => {
