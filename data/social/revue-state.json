@@ -2,8 +2,16 @@
  "2026-11-26-soir": {
   "at": "2026-11-27T01:04:42.103Z",
   "nets": {
-   "facebook": {},
-   "instagram": {}
+   "facebook": {
+    "at": "2026-11-27T01:16:41.792Z",
+    "id": "6b08d9ef548b6e180d4c317b",
+    "failed": false
+   },
+   "instagram": {
+    "attempts": 3,
+    "failed": true,
+    "error": "Instagram : format revue hors de cette phase"
+   }
   }
  }
 }
