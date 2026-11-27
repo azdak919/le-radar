@@ -1,18 +1,10 @@
 {
-  "updated": "2026-11-27T01:08:24.260Z",
+  "updated": "2026-11-27T01:38:58.114Z",
   "total": 1201,
   "withAuthor": 1201,
   "mismatches": 61,
   "ok": true,
   "samples": [
-    {
-      "title": "Face aux écrans, une génération en quête d’équilibre",
-      "link": "https://quartierlibre.ca/ecrans-une-generation-en-quete-dequilibre/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Julie Bertille",
-      "reason": "page-byline"
-    },
     {
       "title": "Embracing Uncertainty",
       "link": "https://www.mcgilldaily.com/2026/11/embracing-uncertainty/",
@@ -163,6 +155,14 @@
       "source": "The Plant",
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "On avance quand même",
+      "link": "https://quartierlibre.ca/on-avance-quand-meme-la-peur",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "La rédaction",
       "reason": "no-author-source"
     }
   ],
