@@ -44,7 +44,11 @@
     "failed": true,
     "error": "Buffer createPost refusé : Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
    },
-   "mastodon": {},
+   "mastodon": {
+    "at": "2026-11-27T17:15:27.134Z",
+    "id": "117689530909240596",
+    "failed": false
+   },
    "linkedin": {
     "at": "2026-11-27T12:16:06.098Z",
     "id": "6b0974861fd46e62e741164f",
