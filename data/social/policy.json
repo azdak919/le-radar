@@ -129,14 +129,13 @@
    "_waves": "Deux vagues (scripts/social/match-story-lib.mjs → WAVES) : matin 9 h – 15 h (matchs avant 15 h, régates, résultats de voile de la veille) et fin d'après-midi 15 h – 19 h 30 (matchs de soirée, 2 à 3 h avant). Chaque story ramène le compte en tête de la barre des stories : deux vagues courtes > une rafale. Au plus maxPerWave stories par vague, la plus forte d'abord (universitaire, voile, collégial ; un sport différent avant de répéter) ; au-delà, la dernière devient « Aussi aujourd'hui ». Aucun match : aucune story (jamais de remplissage)."
   },
   "revue": {
-   "_doc": "« La revue » sur les réseaux (scripts/social/revue-post.mjs, workflow social-revue.yml), publication DISTINCTE de La une (décision de Charles, 26 nov. 2026) : carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser sur Instagram ; 8 meilleurs articles (note sociale), sport et radio par popularité, voile toujours montrée. Une heure par réseau (voir slots._doc), programmée dans Buffer. LinkedIn le matin en semaine seulement. Minimum, comme La une : une revue publiée (articles, ou sport et radio sans nouvel article) ; rien si la revue est sautée ou refusée, rien sans carrousel en ligne. Instagram à partir du jour 8 de sa montée (29 nov.), pour respecter le rodage du compte.",
+   "_doc": "« La revue » sur les réseaux (scripts/social/revue-post.mjs, workflow social-revue.yml), publication DISTINCTE de La une (décision de Charles, 26 nov. 2026) : carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser sur Instagram ; 8 meilleurs articles (note sociale), sport et radio par popularité, voile toujours montrée. Une heure par réseau (voir slots._doc), programmée dans Buffer. LinkedIn le matin en semaine seulement. Minimum, comme La une : une revue publiée (articles, ou sport et radio sans nouvel article) ; rien si la revue est sautée ou refusée, rien sans carrousel en ligne. Instagram selon la montée du compte : format « revue » à partir du jour 15 (6 déc.), plafond de 3 par jour, sans jamais prendre la place de La une.",
    "publish": true,
    "slots": {
-    "_doc": "Heure de Montréal visée PAR RÉSEAU (networks), programmée dans Buffer pour tomber à l'heure malgré les retards de GitHub ; from/to = fenêtre où le script peut programmer (dès que la revue est en ligne) ou, si l'heure est passée, publier tout de suite. Matin : Facebook 11 h (pic 9-13 h, 3 h après La une), Instagram 12 h (midi étudiant), LinkedIn 12 h 15 en semaine seulement (pic de midi, 4 h après La une ; fin de semaine sans portée). Soir : Facebook 20 h 45 (pic 18-21 h), Instagram 21 h 15 (soirée étudiante).",
-    "matin": { "id": "matin", "from": "07:00", "to": "13:30", "networks": { "facebook": "11:00", "instagram": "12:00", "linkedin": "12:15" }, "weekdaysOnly": ["linkedin"] },
-    "soir": { "id": "soir", "from": "19:00", "to": "22:30", "networks": { "facebook": "20:45", "instagram": "21:15" } }
-   },
-   "instagram": { "from": "2026-11-29" }
+    "_doc": "Heure de Montréal visée PAR RÉSEAU (networks), programmée dans Buffer pour tomber à l'heure malgré les retards de GitHub ; from/to = fenêtre où le script peut programmer (dès que la revue est en ligne) ou, si l'heure est passée, publier tout de suite. Plan du 26 nov. 2026 (Charles : « ok go ») : matin Facebook 12 h (pic 9-13 h, 3 h après la une de 9 h), LinkedIn 12 h 30 en semaine (pic de midi, 4 h après la une de 8 h 30) ; soir Facebook 20 h (seule publication du soir dans le fil Facebook : la revue remplace la une), Instagram 21 h 15 selon la montée du compte (format « revue » dès le jour 15).",
+    "matin": { "id": "matin", "from": "07:00", "to": "13:30", "networks": { "facebook": "12:00", "linkedin": "12:30" }, "weekdaysOnly": ["linkedin"] },
+    "soir": { "id": "soir", "from": "19:00", "to": "22:30", "networks": { "facebook": "20:00", "instagram": "21:15" } }
+   }
   },
   "une": {
    "_doc": "« La une du matin » et « La une du soir » (scripts/social/une-run.mjs, workflow social-une.yml). Décision de Charles le 12 nov. 2026 : deux rendez-vous par jour, EN PLUS des publications existantes (hors plafonds de volume), publication réelle dès la fusion. Fenêtres en heure de Montréal (America/Toronto, heure d'été et d'hiver gérées) : une seule publication par réseau et par créneau. Le soir ne reprend aucun article du matin et saute s'il n'y a rien de nouveau. Aucune mention @.",
@@ -164,6 +163,12 @@
      "to": "22:30"
     }
    },
+   "netTimes": {
+    "_doc": "Heure de Montréal PROPRE à chaque réseau Buffer (programmée dans Buffer, à l'heure malgré les retards de GitHub) ; null = pas de une ce créneau sur ce réseau ; absent = à l'heure du créneau (Bluesky, Mastodon, Tumblr, X, Instagram). Plan du 26 nov. 2026 (Charles : « ok go ») : LinkedIn 8 h 30 (pic 8-10 h ; soirée et fin de semaine sans portée), Facebook 9 h (pic 9-13 h ; le soir, la revue de 20 h remplace la une dans le fil, la story reste), Threads 11 h 30 (pic 11-14 h ; rien avant 8 h).",
+    "matin": { "linkedin": "08:30", "facebook": "09:00", "threads": "11:30" },
+    "soir": { "linkedin": null, "facebook": null }
+   },
+   "weekdaysOnly": ["linkedin"],
    "maxItems": 4,
    "maxNewsAgeH": 6,
    "quiet": true,
@@ -192,7 +197,7 @@
       { "fromDay": 1, "toDay": 3, "maxPerDay": 1, "slots": ["soir"], "formats": ["une"] },
       { "fromDay": 4, "toDay": 7, "maxPerDay": 2, "slots": ["matin", "soir"], "formats": ["une"] },
       { "fromDay": 8, "toDay": 14, "maxPerDay": 2, "slots": ["matin", "soir"], "formats": ["une"] },
-      { "fromDay": 15, "maxPerDay": 3, "slots": ["matin", "soir"], "formats": ["une", "weekend_results"], "sports": { "hourFrom": 12, "hourTo": 16, "eligibleWeekdays": [1, 2], "maxPerWeekend": 1 } }
+      { "fromDay": 15, "maxPerDay": 3, "slots": ["matin", "soir"], "formats": ["une", "weekend_results", "revue"], "sports": { "hourFrom": 12, "hourTo": 16, "eligibleWeekdays": [1, 2], "maxPerWeekend": 1 } }
      ]
     }
    }

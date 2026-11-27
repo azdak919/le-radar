@@ -11,21 +11,42 @@ assert.equal(R.slotAt(at('2026-11-26T12:30:00Z'))?.id, 'matin', '7 h 30 : le mat
 assert.equal(R.slotAt(at('2026-11-26T18:45:00Z')), null, '13 h 45 : fenêtre fermée');
 assert.equal(R.slotAt(at('2026-11-27T01:45:00Z'))?.revueId, '2026-11-26-soir', '20 h 45 → revue du soir du jour');
 assert.equal(R.slotAt(at('2026-11-27T03:45:00Z')), null, '22 h 45 : fenêtre fermée');
-// Une heure par réseau, dans l'ordre ; LinkedIn en semaine seulement ; Instagram à partir du 29 nov. (rodage).
-const matin = (day) => ({ ...R.CFG.slots.matin, day, revueId: `${day}-matin` });
-const soir = (day) => ({ ...R.CFG.slots.soir, day, revueId: `${day}-soir` });
-assert.deepEqual(R.netsFor(matin('2026-11-27')), ['facebook', 'linkedin'], 'vendredi, avant Instagram');
-assert.deepEqual(R.netsFor(matin('2026-11-30')), ['facebook', 'instagram', 'linkedin'], 'lundi : 11 h, 12 h, 12 h 15');
-assert.deepEqual(R.netsFor(matin('2026-11-29')), ['facebook', 'instagram'], 'dimanche : pas de LinkedIn');
-assert.deepEqual(R.netsFor(soir('2026-11-30')), ['facebook', 'instagram'], 'soir : jamais LinkedIn');
-// Heure exacte : heure de Montréal → UTC, heure normale et heure avancée.
-assert.equal(new Date(R.dueFor(matin('2026-11-30'), 'facebook')).toISOString(), '2026-11-30T16:00:00.000Z', '11 h HNE');
+// Une heure par réseau (plan du 26 nov.) : matin Facebook 12 h, LinkedIn 12 h 30 (semaine) ; soir Facebook 20 h, Instagram 21 h 15.
+const matin = (day) => ({ ...R.CFG.slots.matin, id: 'matin', day, revueId: `${day}-matin` });
+const soir = (day) => ({ ...R.CFG.slots.soir, id: 'soir', day, revueId: `${day}-soir` });
+assert.deepEqual(R.netsFor(matin('2026-11-30')), ['facebook', 'linkedin'], 'lundi matin : 12 h, 12 h 30');
+assert.deepEqual(R.netsFor(matin('2026-11-29')), ['facebook'], 'dimanche : pas de LinkedIn');
+assert.deepEqual(R.netsFor(soir('2026-11-30')), ['facebook', 'instagram'], 'soir : Facebook 20 h, Instagram 21 h 15');
+assert.equal(new Date(R.dueFor(matin('2026-11-30'), 'facebook')).toISOString(), '2026-11-30T17:00:00.000Z', '12 h HNE');
 assert.equal(new Date(R.dueFor(soir('2026-11-30'), 'instagram')).toISOString(), '2026-12-01T02:15:00.000Z', '21 h 15 HNE');
-assert.equal(new Date(R.dueFor({ ...R.CFG.slots.matin, day: '2027-06-01' }, 'linkedin')).toISOString(), '2027-06-01T16:15:00.000Z', '12 h 15 HAE');
-// Passage tôt : programmé dans Buffer à l'heure du réseau ; passage tardif : tout de suite.
-assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T12:40:00Z')), { dueAt: '2026-11-30T16:00:00.000Z' });
-assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T16:20:00Z')), { now: true });
-assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T15:59:00Z')), { now: true }, 'moins de 2 min : tout de suite');
+assert.equal(new Date(R.dueFor({ ...R.CFG.slots.matin, day: '2027-06-01' }, 'linkedin')).toISOString(), '2027-06-01T16:30:00.000Z', '12 h 30 HAE');
+assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T12:40:00Z')), { dueAt: '2026-11-30T17:00:00.000Z' }, 'tôt : programmée');
+assert.deepEqual(R.whenFor(matin('2026-11-30'), 'facebook', at('2026-11-30T17:20:00Z')), { now: true }, 'en retard : tout de suite');
+// Instagram suit la montée : pas de revue avant le jour 15 (6 déc.) ; ensuite plafond de 3, la une du soir garde sa place.
+const sent = (day, keys) => ({ sent: Object.fromEntries(keys.map((k) => [k, { day, id: 'x' }])) });
+assert.equal(R.instagramRevueAllowed({ slot: soir('2026-11-30'), igState: sent('2026-11-30', ['une:2026-11-30:matin']) }).ok, false, 'jour 9 : format revue hors phase');
+assert.equal(R.instagramRevueAllowed({ slot: soir('2026-12-07'), igState: sent('2026-12-07', ['une:2026-12-07:matin']) }).ok, true, 'jour 16 : une du matin + revue + une du soir = 3');
+assert.equal(R.instagramRevueAllowed({ slot: soir('2026-12-07'), igState: sent('2026-12-07', ['une:2026-12-07:matin', 'results:2026-12-07']) }).ok, false, 'avec les résultats du lundi : la une du soir garde sa place');
+assert.equal(R.instagramRevueAllowed({ slot: soir('2026-12-07'), igState: sent('2026-12-07', ['une:2026-12-07:matin', 'revue:2026-12-07-soir']) }).ok, false, 'déjà publiée');
+
+// La une : une heure par réseau Buffer (programmée), null = pas de une, LinkedIn en semaine seulement.
+{
+  const U = await import('../scripts/social/une-lib.mjs');
+  const { CFG: UCFG } = await import('../scripts/social/une-run.mjs');
+  const base = ['bluesky', 'mastodon', 'x', 'facebook', 'linkedin', 'threads'];
+  const sl = (id, day) => ({ id, day, key: `${day}:${id}` });
+  assert.deepEqual(U.uneNets(sl('matin', '2026-11-30'), base, UCFG), base, 'lundi matin : tous');
+  assert.deepEqual(U.uneNets(sl('matin', '2026-11-29'), base, UCFG), base.filter((n) => n !== 'linkedin'), 'dimanche : pas de LinkedIn');
+  assert.deepEqual(U.uneNets(sl('soir', '2026-11-30'), base, UCFG), ['bluesky', 'mastodon', 'x', 'threads'], 'soir : ni Facebook (la revue) ni LinkedIn');
+  assert.deepEqual(U.uneNets({ id: 'matin', day: '2026-11-29', key: '2026-11-29:jourdematch' }, base, UCFG), base, 'Jour de match : tous');
+  assert.equal(U.uneNetTime(sl('matin', '2026-11-30'), 'linkedin', UCFG), '08:30');
+  assert.equal(U.uneNetTime(sl('matin', '2026-11-30'), 'facebook', UCFG), '09:00');
+  assert.equal(U.uneNetTime(sl('matin', '2026-11-30'), 'threads', UCFG), '11:30');
+  assert.equal(U.uneNetTime(sl('matin', '2026-11-30'), 'x', UCFG), '', 'X : à l’heure du créneau');
+  assert.deepEqual(U.bufferWhen('2026-11-30', '08:30', at('2026-11-30T12:45:00Z')), { dueAt: '2026-11-30T13:30:00.000Z' }, 'une de 7 h 45 : LinkedIn programmée 8 h 30');
+  assert.deepEqual(U.bufferWhen('2026-11-30', '', at('2026-11-30T12:45:00Z')), { now: true });
+  assert.equal(new Date(U.montrealInstant('2027-07-01', '09:00')).toISOString(), '2027-07-01T13:00:00.000Z', 'heure avancée');
+}
 
 // Minimum (comme La une) : revue publiée → oui ; sautée ou absente → non ; vide → non.
 const slot = { id: 'soir', day: '2026-11-25', revueId: '2026-11-25-soir' };

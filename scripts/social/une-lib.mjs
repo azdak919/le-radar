@@ -69,6 +69,31 @@ export function torontoMinutes(now) {
   return +p.hour * 60 + +p.minute;
 }
 export const slotKey = (day, slot) => `${day}:${slot}`;
+/** Instant (ms) d'une heure de Montréal « HH:MM » le jour « AAAA-MM-JJ » (heure normale ou avancée). */
+export function montrealInstant(day, hhmm) {
+  const [y, m, d] = String(day).split('-').map(Number), [h, mi] = String(hhmm).split(':').map(Number);
+  for (const off of [5, 4]) { const t = Date.UTC(y, m - 1, d, h + off, mi); if (torontoMinutes(t) === h * 60 + mi && torontoDay(t) === day) return t; }
+  return Date.UTC(y, m - 1, d, h + 5, mi);
+}
+/** Programmer dans Buffer à `hhmm` (heure encore à venir de plus de 2 min) ou publier tout de suite. */
+export function bufferWhen(day, hhmm, now = Date.now()) {
+  if (!hhmm) return { now: true };
+  const due = montrealInstant(day, hhmm);
+  return due - now > 2 * 60e3 ? { dueAt: new Date(due).toISOString() } : { now: true };
+}
+const isWeekend = (day) => [0, 6].includes(new Date(`${day}T12:00:00Z`).getUTCDay());
+/**
+ * Réseaux de La une pour un créneau. `netTimes[créneau][réseau]` : heure de Montréal propre au réseau (programmée dans
+ * Buffer), `null` = pas de une ce créneau sur ce réseau (ex. Facebook le soir : la revue la remplace) ; absent = à l'heure
+ * du créneau. `weekdaysOnly` : rien le samedi ni le dimanche. L'édition « Jour de match » (ponctuelle) garde tous les réseaux.
+ */
+export function uneNets(slot, base = [], cfg = {}) {
+  if (!slot || String(slot.key || '').endsWith(':jourdematch')) return base;
+  const times = cfg.netTimes?.[slot.id] || {};
+  return base.filter((n) => times[n] !== null && !(isWeekend(slot.day) && (cfg.weekdaysOnly || []).includes(n)));
+}
+/** Heure propre d'un réseau pour ce créneau (ou '' = heure du créneau). */
+export const uneNetTime = (slot, net, cfg = {}) => (String(slot?.key || '').endsWith(':jourdematch') ? '' : (cfg.netTimes?.[slot?.id] || {})[net] || '');
 const addDays = (ymd, n) => new Date(Date.parse(ymd + 'T12:00:00Z') + n * 864e5).toISOString().slice(0, 10);
 
 /** Créneau dont la fenêtre d'envoi contient `now` (heure de Montréal), sinon null. `slots` : réglages de policy.json. */

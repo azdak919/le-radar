@@ -11,7 +11,7 @@ export default {
   limit: 2000,
   hashtags: 1,
   image: true,
-  perDay: 2,
+  perDay: 0, // 26 nov. 2026 (Charles) : plus d’articles un à un sur LinkedIn — la une (8 h 30) et la revue (12 h 30) les remplacent.
   minGapMin: 240,
   metadata: () => undefined,
   windows: {

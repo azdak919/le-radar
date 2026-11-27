@@ -20,11 +20,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { POLICY, torontoDay } from './policy.mjs';
-import { torontoMinutes, instagramHashtags, igCreditLine, fmLabel } from './une-lib.mjs';
+import { torontoMinutes, instagramHashtags, igCreditLine, fmLabel, montrealInstant } from './une-lib.mjs';
 import { institutionTag } from './hashtags.mjs';
 import { linkedinCarousel, revueCarousel } from './revue-carousel.mjs';
 import { socialModel } from '../revue/revue-social-pick.mjs';
 import { NETWORKS } from './networks/index.mjs';
+import { instagramSlotAllowed } from './instagram.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const STATE = path.join(ROOT, 'data/social/revue-state.json');
@@ -66,13 +67,8 @@ export function netsFor(slot, { cfg = CFG } = {}) {
     .sort((a, b) => hm(a[1]) - hm(b[1]))
     .map(([n]) => n);
 }
-/** Instant visé pour un réseau (heure de Montréal du jour du créneau). */
-export function dueFor(slot, net) {
-  const [y, m, d] = slot.day.split('-').map(Number), [h, mi] = String(slot.networks[net]).split(':').map(Number);
-  // Heure de Montréal → UTC : on essaie les deux décalages (HNE −5, HAE −4) et on garde celui qui retombe sur la bonne heure locale.
-  for (const off of [5, 4]) { const t = Date.UTC(y, m - 1, d, h + off, mi); if (torontoMinutes(t) === h * 60 + mi && torontoDay(t) === slot.day) return t; }
-  return Date.UTC(y, m - 1, d, h + 5, mi);
-}
+/** Instant visé pour un réseau (heure de Montréal du jour du créneau, heure normale ou avancée). */
+export const dueFor = (slot, net) => montrealInstant(slot.day, slot.networks[net]);
 /** Programmer dans Buffer (heure encore à venir) ou publier tout de suite (passage tardif). */
 export const whenFor = (slot, net, now = Date.now()) => { const due = dueFor(slot, net); return due - now > 2 * 60e3 ? { dueAt: new Date(due).toISOString() } : { now: true }; };
 export const netDone = (e) => !!(e && ((e.at && !e.failed) || (e.attempts || 0) >= MAX_ATTEMPTS));
@@ -160,11 +156,25 @@ async function sendOne(net, { text, doc, images, model, env, igState, slot, when
   // Instagram : arrêt au premier avertissement ou à la première erreur Buffer (état partagé avec La une), sans réessai.
   const { deliverInstagram, openInstagramIssue } = await import('./instagram.mjs');
   if (igState.halted) return { skip: 'Instagram arrêté après un avertissement ou une erreur Buffer. Aucun réessai.' };
+  const allowed = instagramRevueAllowed({ slot, igState });
+  if (!allowed.ok) return { skip: `Instagram : ${allowed.why}` };
   const r = await deliverInstagram({ env, text, imageUrl: images[0].url, images, alt: images[0].alt, state: igState, now: new Date().toISOString(), dueAt: when.dueAt,
     slotId: slot.id, format: 'revue', dedupKey: `revue:${slot.revueId}`, fileIssue: openInstagramIssue });
   Object.assign(igState, r.state || {});
   if (r.action !== 'sent') throw Object.assign(new Error(r.reason || 'Instagram non publié'), { final: true });
   return { id: r.id, dedup: !!r.dedup };
+}
+
+/**
+ * Instagram suit la montée du compte (formats.une.prepared.instagram.ramp) : le format « revue » doit figurer dans la
+ * phase du jour, et la revue ne prend jamais la place de La une — la une du soir encore à venir garde sa place dans le
+ * plafond du jour (la revue du soir est programmée vers 19 h 15, avant la une de 19 h 30).
+ */
+export function instagramRevueAllowed({ slot, igState = {}, now = montrealInstant(slot.day, slot.networks.instagram || '12:00'), cfg = POLICY.formats?.une?.prepared?.instagram || {} }) {
+  const sent = igState.sent || {};
+  const posted = Object.values(sent).filter((s) => s && s.day === slot.day && !s.failed && s.id).length;
+  const uneSoirPending = slot.id === 'soir' && !sent[`une:${slot.day}:soir`]?.id ? 1 : 0;
+  return instagramSlotAllowed({ now, slotId: slot.id, format: 'revue', cfg, posted: posted + uneSoirPending, dedupKey: `revue:${slot.revueId}`, state: igState });
 }
 
 export function gate({ now = Date.now(), state = rd(STATE, {}), forced = '', dry = false } = {}) {
