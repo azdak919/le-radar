@@ -1,52 +1,40 @@
 {
-  "updated": "2026-11-27T01:40:15.535Z",
-  "total": 1201,
-  "withPhoto": 1022,
-  "withStock": 141,
-  "withCampusBank": 118,
-  "fullyCovered": 1135,
-  "leadReadyPhotos": 1100,
-  "pageScraped": 1,
-  "photosRecovered": 1,
-  "imagesCleared": 35,
-  "stockSearches": 41,
-  "stockFound": 35,
-  "campusBankFound": 27,
+  "updated": "2026-11-27T02:40:53.824Z",
+  "total": 1202,
+  "withPhoto": 1047,
+  "withStock": 128,
+  "withCampusBank": 112,
+  "fullyCovered": 1147,
+  "leadReadyPhotos": 1112,
+  "pageScraped": 26,
+  "photosRecovered": 26,
+  "imagesCleared": 1,
+  "stockSearches": 6,
+  "stockFound": 26,
+  "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Wicker: More Than Meets The Eye",
-      "link": "https://www.mcgilldaily.com/2026/11/wicker-more-than-meets-the-eye/",
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Peut-on encore posséder de la culture ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/17/peut-on-encore-posseder-de-la-culture/?utm_source=rss&utm_medium=rss&utm_campaign=peut-on-encore-posseder-de-la-culture",
+      "title": "Cancer du sein : la sensibilisation au-delà d’Octobre rose",
+      "link": "https://lapige.atmjonquiere.com/2026/10/26/cancer-du-sein-la-sensibilisation-au-dela-doctobre-rose",
       "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/AdobeStock_1580462282.jpeg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
       "image": null
     },
     {
-      "title": "Grammys 2027 : vent de folie québécois et triomphe féminin",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin/?utm_source=rss&utm_medium=rss&utm_campaign=grammys-2027-vent-de-folie-quebecois-et-triomphe-feminin",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Une chercheuse du Saguenay récompensée pour son excellence en médecine familiale",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/une-chercheuse-du-saguenay-recompensee-pour-son-excellence-en-medecine-familiale/?utm_source=rss&utm_medium=rss&utm_campaign=une-chercheuse-du-saguenay-recompensee-pour-son-excellence-en-medecine-familiale",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Bulletins La Pige radio 16 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/bulletins-la-pige-radio-16-novembre/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-la-pige-radio-16-novembre",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Le revenu viable, un défi au Saguenay-Lac-Saint-Jean",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/le-revenu-viable-un-defi-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=le-revenu-viable-un-defi-au-saguenay-lac-saint-jean",
+      "title": "Redbirds rally past UQTR to reach RSEQ final",
+      "link": "https://thetribune.ca/sports/redbirds-rally-past-uqtr-to-reach-rseq-final",
       "reason": "no-stock-match",
       "image": null
     },
@@ -57,34 +45,10 @@
       "image": null
     },
     {
-      "title": "Campagne de sensibilisation : Aiguise tes réflexes en soirée",
-      "link": "https://lapige.atmjonquiere.com/2026/11/16/campagne-de-sensibilisation-aiguise-tes-reflexes-en-soiree/?utm_source=rss&utm_medium=rss&utm_campaign=campagne-de-sensibilisation-aiguise-tes-reflexes-en-soiree",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Virage improvisé : La Traversée fait vibrer Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/11/14/virage-improvise-la-traversee-fait-vibrer-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=virage-improvise-la-traversee-fait-vibrer-jonquiere",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Mal à l’épaule, mal au dos : et si c’était votre travail ?",
-      "link": "https://lapige.atmjonquiere.com/2026/11/13/mal-a-lepaule-mal-au-dos-et-si-cetait-votre-travail",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "La peur de vieillir de plus en plus répandue",
-      "link": "https://quartierlibre.ca/peur-de-vieillir/",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "True Crime : jusqu’où aller pour raconter un crime ?",
-      "link": "https://quartierlibre.ca/raconter-un-crime/",
-      "reason": "no-stock-match",
-      "image": null
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     }
   ]
 }
