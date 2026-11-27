@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T17:07:18.353Z",
+  "updatedAt": "2026-11-27T18:06:39.853Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T17:06:52.146Z"
+      "checkedAt": "2026-11-27T18:06:25.593Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
+      "next": {
+        "title": "Salsa et Bembê",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
+      },
       "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T17:06:53.504Z"
+      "checkedAt": "2026-11-27T18:06:26.700Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T17:07:05.289Z"
+      "checkedAt": "2026-11-27T18:06:29.040Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Charts & Crafts",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
-      },
-      "next": {
         "title": "the castle",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-castle"
       },
+      "next": {
+        "title": "Spiral Bound",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
+      },
       "track": "",
-      "showTitle": "Charts & Crafts",
+      "showTitle": "the castle",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T17:07:07.457Z"
+      "checkedAt": "2026-11-27T18:06:30.702Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,27 +128,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T17:07:08.384Z"
+      "checkedAt": "2026-11-27T18:06:31.748Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Opération beurre de cinoche",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
       "next": {
-        "title": "Montréal au courant",
+        "title": "Les fleurs du tapis",
         "source": "api-live",
-        "start": "12:45",
-        "end": "12:55",
-        "slug": "montreal-au-courant"
+        "start": "14:00",
+        "end": "14:30",
+        "slug": "les-fleurs-du-tapis"
       },
       "track": "- ID Alix Fernz.mp3",
-      "showTitle": "Opération beurre de cinoche",
+      "showTitle": "Onde de CHOQ",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -158,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-27T17:07:18.002Z"
+      "checkedAt": "2026-11-27T18:06:39.503Z"
     }
   }
 }
