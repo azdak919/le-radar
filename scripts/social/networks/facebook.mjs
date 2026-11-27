@@ -12,7 +12,7 @@ export default {
   limit: 1500,
   hashtags: 1,
   image: true,
-  perDay: 1, // 26 nov. 2026 (Charles) : un seul article un à un — la une (9 h) et les revues (12 h, 20 h) prennent le relais.
+  perDay: 0, // 27 nov. 2026 (Charles) : plus d’articles un à un — la une (9 h) et les revues (12 h, 20 h) les remplacent.
   minGapMin: 180,
   metadata: () => ({ facebook: { type: 'post' } }), // Buffer exige un type (post, story, reel)
   windows: {

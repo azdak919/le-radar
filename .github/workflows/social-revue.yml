@@ -1,9 +1,9 @@
 name: Social — La revue (carrousel)
 
 # « La revue » sur les réseaux, publication DISTINCTE de La une (scripts/social/revue-post.mjs, data/social/policy.json formats.revue) :
-# carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser
-# sur Instagram (à partir du 29 nov. 2026). Une heure par réseau, heure de Montréal : matin Facebook 11 h, Instagram 12 h,
-# LinkedIn 12 h 15 (semaine) ; soir Facebook 20 h 45, Instagram 21 h 15.
+# carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en photos ailleurs. Une heure par réseau (Montréal),
+# dans data/social/policy.json formats.revue.slots : matin Facebook 12 h, X 12 h, Mastodon 12 h, LinkedIn 12 h 30 (semaine) ;
+# soir Facebook 20 h, TikTok 20 h 30 (éteint), Bluesky 21 h, Instagram 21 h 15 (montée du compte), Threads 21 h 30.
 # Les crons GitHub partent souvent en retard : le script passe TÔT (dès qu'une revue sort, puis toutes les 30 min dans la
 # fenêtre) et PROGRAMME chaque publication dans Buffer à l'heure exacte du réseau. Passage tardif (heure dépassée) : tout de suite.
 # data/social/revue-state.json garantit une seule publication par réseau et par revue (3 essais au plus).
@@ -63,6 +63,12 @@ jobs:
           BUFFER_FACEBOOK_CHANNEL_ID: ${{ vars.BUFFER_FACEBOOK_CHANNEL_ID }}
           BUFFER_LINKEDIN_CHANNEL_ID: ${{ vars.BUFFER_LINKEDIN_CHANNEL_ID }}
           BUFFER_INSTAGRAM_API_KEY: ${{ secrets.BUFFER_INSTAGRAM_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          BUFFER_TIKTOK_CHANNEL_ID: ${{ vars.BUFFER_TIKTOK_CHANNEL_ID }}
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
           GH_TOKEN: ${{ github.token }}
         run: node scripts/social/revue-post.mjs --slot "$REVUE_SLOT" ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"}
       - name: Commit de l'état (data/social/revue-state.json)

@@ -10,7 +10,7 @@ export default {
   limit: 500,
   hashtags: 0,
   image: false,
-  perDay: 2,
+  perDay: 0, // 27 nov. 2026 (Charles) : plus d’articles un à un — la une (11 h 30, 19 h 30) et la revue (21 h 30) les remplacent.
   minGapMin: 240,
   windows: {
     weekday: [[0, 8, 0], [8, 11, 0.3], [11, 14, 0.8], [14, 17, 0.4], [17, 22, 1], [22, 24, 0.3]],

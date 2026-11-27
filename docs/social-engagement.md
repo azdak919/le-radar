@@ -2,6 +2,28 @@
 
 Tout vit dans le dépôt (aucune routine externe). La source de vérité est `data/social/policy.json`.
 
+## Stratégie par réseau (27 nov. 2026)
+
+Décision de Charles : on ne publie plus article par article là où ça n'aide pas ; **les formats** (la une, la revue, les
+matchs du jour, les résultats) les remplacent. Chaque publication part à **l'heure de son réseau** (heure de Montréal),
+programmée dans Buffer pour ne pas dépendre des retards de GitHub. Bluesky et Mastodon (API directes) partent au premier
+passage après leur heure.
+
+| Réseau | La une | La revue (carrousel) | Articles un à un |
+|---|---|---|---|
+| Facebook | 9 h (le soir : story seulement) | 12 h · 20 h | arrêtés |
+| LinkedIn (semaine) | 8 h 30 | 12 h 30 (PDF) | arrêtés |
+| Instagram | 7 h 45 · 19 h 30 | 21 h 15 dès le 6 déc. (montée du compte) | jamais |
+| Threads | 11 h 30 · 19 h 30 | 21 h 30 | arrêtés |
+| X | 7 h 45 · 19 h 30 | 12 h (4 pages) | 2 / jour (14 h 30, 17 h 30) |
+| Bluesky | 7 h 45 · 19 h 30 | 21 h (4 pages) | 3 / jour, les mieux notés |
+| Mastodon | 7 h 45 · 19 h 30 | 12 h (4 pages) | 3 / jour, les mieux notés |
+| TikTok | — | 20 h 30, carrousel photo (préparé, éteint : connecter TikTok dans Buffer, puis `formats.revue.tiktok.enabled`) | — |
+
+Stories (Facebook, Instagram, hors fil) : une du matin et du soir, matchs du jour vers 9 h 40 et 15 h 20.
+Réglages : `formats.une.netTimes`, `formats.revue.slots`, `volume` (articles), plafonds `perDay` des modules
+`scripts/social/networks/`. À mesurer dans Buffer vers le 10 déc. 2026 : portée de la une, de la revue et des articles par réseau.
+
 ## Politique (`data/social/policy.json`)
 
 - **Volume réduit** : 3 à 5 publications par jour et par réseau (LinkedIn 3), jusqu’au `volume.until` (2026-11-23, inclus). Passé cette date, les limites de base reprennent d’elles-mêmes. Pour prolonger ou modifier : changer `until` ou `perDay`.

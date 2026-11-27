@@ -47,8 +47,10 @@ export function createMastodon({ instance, token, acct = 'leradar', fetchImpl = 
     },
     async listStatuses(limit = 40) { const a = await this.lookup(); return (await call('GET', `/api/v1/accounts/${a.id}/statuses?limit=${limit}`, { auth: false })).j; },
     deleteStatus: id => call('DELETE', `/api/v1/statuses/${id}`),
-    async post({ status, mediaId, lang, key }) {
-      const { j } = await call('POST', '/api/v1/statuses', { headers: { 'Idempotency-Key': key }, body: { status, media_ids: [mediaId], language: lang, visibility: 'public' } });
+    // mediaIds : plusieurs images (4 au plus, carrousel de la revue) ; mediaId : une seule (articles, une).
+    async post({ status, mediaId, mediaIds, lang, key }) {
+      const ids = (Array.isArray(mediaIds) && mediaIds.length ? mediaIds : [mediaId]).filter(Boolean).slice(0, 4);
+      const { j } = await call('POST', '/api/v1/statuses', { headers: { 'Idempotency-Key': key }, body: { status, media_ids: ids, language: lang, visibility: 'public' } });
       return { id: j.id, url: j.url };
     },
   };

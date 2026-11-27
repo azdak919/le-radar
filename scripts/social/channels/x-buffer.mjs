@@ -22,9 +22,10 @@ export function assertBufferPostOk(post, action = 'createPost') {
 }
 
 /** Canal Buffer d'un service (x, facebook, linkedin…) nommé `channelName` (sans @, insensible à la casse). */
+// channelName « * » : n'importe quel canal de ce service (ex. le seul canal TikTok du compte Buffer d'Instagram).
 export const matchChannel = (x, service, channelName) => {
   const re = service === 'x' ? /twitter|^x$/i : new RegExp(`^${service}`, 'i');
-  return re.test(x?.service || '') && (x.name || '').replace(/^@/, '').trim().toLowerCase() === channelName.toLowerCase();
+  return re.test(x?.service || '') && (channelName === '*' || (x.name || '').replace(/^@/, '').trim().toLowerCase() === channelName.toLowerCase());
 };
 
 export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_ca', fallbackId = FALLBACK_CHANNEL_ID, service = 'x', allowedChannelId = '', strictWarnings = false } = {}) {
