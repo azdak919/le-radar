@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T04:46:35.181Z",
+  "updatedAt": "2026-11-27T06:06:53.316Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T04:45:56.298Z"
+      "checkedAt": "2026-11-27T06:06:14.471Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "01:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T04:46:10.416Z"
+      "checkedAt": "2026-11-27T06:06:27.665Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "You Need A Heart To Live 2",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor's Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "You Need A Heart To Live 2",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,55 +74,61 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T04:46:12.685Z"
+      "checkedAt": "2026-11-27T06:06:29.893Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Death of the Midrange",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
-      },
-      "next": {
         "title": "Finally Midnight",
         "source": "schedule-live",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/finally-midnight"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "Death of the Midrange",
+      "showTitle": "Finally Midnight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T04:46:14.318Z"
+      "checkedAt": "2026-11-27T06:06:31.877Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "07:59",
+        "url": "https://www.cfak.ca/balados/Folkswagen"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T04:46:15.199Z"
+      "checkedAt": "2026-11-27T06:06:33.437Z"
     },
     "choq": {
       "id": "choq",
@@ -130,21 +136,20 @@
       "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:30",
         "end": "12:30",
-        "url": "https://www.choq.ca/balados/box-sophisme"
+        "slug": "box-sophisme"
       },
-      "track": "P'tit Belliveau — Mi-temps de juillet",
+      "track": "Genital Shame — Gratitude Meditation",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T04:46:34.830Z"
+      "checkedAt": "2026-11-27T06:06:52.965Z"
     }
   }
 }
