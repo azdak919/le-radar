@@ -1,0 +1,75 @@
+name: Social — Logo d'équipe depuis Commons
+
+# Manuel seulement. UN logo à la fois pour la story « Jour de match » (assets/logos/teams/, provenance dans sources.json).
+# Sans « Fichier Commons » : liste les candidats dans le résumé du job, rien n'est écrit.
+# Avec le fichier et « Essai » décoché : télécharge le rendu PNG (600 px), note licence et auteur, commit sur main.
+# Les serveurs de GitHub passent là où Wikimedia limite le débit d'autres réseaux (27 nov. 2026).
+on:
+  workflow_dispatch:
+    inputs:
+      team_id:
+        description: 'Identifiant (registryId de sports-masthead.json : udem, ets… ; club de voile : udem-voile)'
+        required: true
+        type: string
+      commons_file:
+        description: 'Fichier Commons (File:… ou lien) ; vide = lister les candidats'
+        required: false
+        type: string
+      query:
+        description: 'Recherche Commons si pas de fichier (ex. « Carabins Université de Montréal logo »)'
+        required: false
+        type: string
+      owner:
+        description: 'Titulaire de la marque (ex. UdeM)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Essai seulement (aperçu en artefact, rien écrit)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-writers-social
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  logo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - name: Logo
+        env:
+          TEAM_ID: ${{ inputs.team_id }}
+          COMMONS_FILE: ${{ inputs.commons_file }}
+          QUERY: ${{ inputs.query }}
+          OWNER: ${{ inputs.owner }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          PREVIEW_DIR: logo-preview
+        run: node scripts/social/team-logo-fetch.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: apercu-logo
+          path: logo-preview/
+          if-no-files-found: ignore
+      - name: Commit (assets/logos/teams/)
+        if: ${{ !inputs.dry_run }}
+        env:
+          TEAM_ID: ${{ inputs.team_id }}
+        run: |
+          git add -A assets/logos/teams/
+          git diff --cached --quiet && { echo "Rien de nouveau."; exit 0; }
+          git config user.name "Azdak"
+          git config user.email "azdak-qc@proton.me"
+          git commit -s -m "bot(social): logo d'équipe ${TEAM_ID} (Commons)"
+          GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"assets/logos/teams/sources.json\"))'"
