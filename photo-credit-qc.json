@@ -1,23 +1,44 @@
 {
-  "updated": "2026-11-27T15:41:28.962Z",
-  "total": 1204,
-  "withImage": 909,
-  "withCredit": 909,
-  "cited": 640,
-  "pending": 159,
+  "updated": "2026-11-27T17:10:03.737Z",
+  "total": 1205,
+  "withImage": 921,
+  "withCredit": 921,
+  "cited": 650,
+  "pending": 163,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 2,
-  "citedNew": 4,
-  "fallbackNew": 56,
+  "updatedCount": 5,
+  "citedNew": 3,
+  "fallbackNew": 57,
   "samples": [
     {
-      "title": "Children are missing their sparkle",
+      "title": "SPVM arrests a third former officer",
       "source": "The Link",
-      "credit": "Illustration: Isobel Budding",
+      "credit": "Photo: Nicolas Tremblay",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Face aux écrans, une génération en quête d’équilibre",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Les dessous de la grève du 10 novembre",
+      "source": "Le Collectif",
+      "credit": "Photo : NicolasHamel",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Trois facultés de l’UdeS en grève",
+      "source": "Le Collectif",
+      "credit": "Photo : Le Collectif",
+      "cited": false,
+      "method": null
     },
     {
       "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",

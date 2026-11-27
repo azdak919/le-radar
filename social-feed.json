@@ -1,7 +1,36 @@
 {
-  "updated": "2026-11-27T15:42:42.211Z",
-  "count": 20,
+  "updated": "2026-11-27T17:11:15.134Z",
+  "count": 24,
   "items": [
+    {
+      "name": "Quartier Libre",
+      "institution": "Université de Montréal",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/quartierlibre.ca/",
+          "handle": "@quartierlibre.ca",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/QuartierLibre.ca",
+          "handle": "QuartierLibre.ca",
+          "stats": "Quartier Libre, Montreal. 6,551 followers · 1 talking about this. Magazine indépendant des étudiant(e)s de l'UdeM, émission tous les vendredis à 12 h sur CISM",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/quartierlibre",
+          "handle": "@quartierlibre",
+          "stats": "",
+          "label": "X"
+        }
+      ]
+    },
     {
       "name": "Montréal Campus",
       "institution": "UQAM",
@@ -112,6 +141,28 @@
       ]
     },
     {
+      "name": "Zone Campus",
+      "institution": "Université du Québec à Trois-Rivières",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/zonecampus/",
+          "handle": "@zonecampus",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/zonecampus",
+          "handle": "zonecampus",
+          "stats": "",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "L'Exemplaire",
       "institution": "Université Laval",
       "type": "universite",
@@ -121,7 +172,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/lexemplaire",
           "handle": "lexemplaire",
-          "stats": "L'Exemplaire. 848 followers. Le média-école des étudiants en journalisme de l'Université Laval.",
+          "stats": "",
           "label": "Facebook"
         },
         {
@@ -130,6 +181,28 @@
           "handle": "@lexemplaire",
           "stats": "",
           "label": "X"
+        }
+      ]
+    },
+    {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
         }
       ]
     },
@@ -150,8 +223,30 @@
           "type": "facebook",
           "url": "https://www.facebook.com/WordPresscom",
           "handle": "WordPresscom",
-          "stats": "WordPress.com. 746,552 followers · 236 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
+          "stats": "",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "La Pige",
+      "institution": "Cégep de Jonquière (ATM – journalisme)",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/2008",
+          "handle": "2008",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/@atmlapige",
+          "handle": "@atmlapige",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
@@ -172,7 +267,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/p/Polyscope-61550693026725",
           "handle": "p",
-          "stats": "Polyscope. 99 followers. Média étudiant de Polytechnique depuis 1967!\nJournalisme, Reportages, Couverture d'événements, ",
+          "stats": "",
           "label": "Facebook"
         },
         {
@@ -449,7 +544,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/cjlo1690am",
           "handle": "cjlo1690am",
-          "stats": "",
+          "stats": "CJLO - 1690AM, Montreal. 7,010 followers · 6 talking about this. Your friendly neighbourhood campus-community radio station at Concordia University.",
           "label": "Facebook"
         },
         {
