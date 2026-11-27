@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T13:18:01.905Z",
+  "updated": "2026-11-27T23:43:45.850Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -7186,10 +7186,10 @@
   "stats": {
     "total": 1258,
     "lastRun": {
-      "saved": 5,
-      "skipped": 6,
-      "failed": 9,
-      "stoppedEarly": false
+      "saved": 0,
+      "skipped": 0,
+      "failed": 3,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -7251,8 +7251,7 @@
     "The Campus": {
       "host": "thebucampus.ca",
       "pages": 4,
-      "checkedAt": "2026-11-19T22:45:12.310Z",
-      "stale": true
+      "checkedAt": "2026-11-27T23:43:07.778Z"
     },
     "Le Délit": {
       "host": "www.delitfrancais.com",
@@ -7267,7 +7266,7 @@
     "Impact Campus": {
       "host": "impactcampus.ca",
       "pages": 42,
-      "checkedAt": "2026-11-20T22:20:20.276Z"
+      "checkedAt": "2026-11-27T23:43:10.973Z"
     },
     "The Concordian": {
       "host": "theconcordian.com",
