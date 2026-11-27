@@ -180,3 +180,19 @@ console.log('match-story dédoublonnage : ok');
   assert.match(alt, /et 3 autres sur le-radar\.ca\/sports/);
 }
 console.log('match-story aussi aujourd’hui : ok');
+
+// Logo d'équipe depuis Commons (scripts/social/team-logo-fetch.mjs) : identifiant et titre de fichier normalisés, image vérifiée.
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.equal(T.teamId(' UdeM '), 'udem');
+  assert.equal(T.teamId('udem-voile'), 'udem-voile');
+  assert.equal(T.fileTitle('Carabins logo.svg'), 'File:Carabins logo.svg');
+  assert.equal(T.fileTitle('https://commons.wikimedia.org/wiki/File:Carabins_logo.svg'), 'File:Carabins logo.svg');
+  assert.equal(T.fileTitle('Fichier:Carabins.png'), 'File:Carabins.png');
+  assert.equal(T.fileTitle(''), '');
+  assert.ok(T.isImage(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0])));
+  assert.ok(!T.isImage(Buffer.from('<!DOCTYPE html><html>')));
+  const wf = fs.readFileSync(new URL('../.github/workflows/social-team-logo.yml', import.meta.url), 'utf8');
+  assert.ok(!/run:[^\n]*\$\{\{ inputs\./.test(wf) && !/git commit[^\n]*\$\{\{/.test(wf), 'pas d’entrée injectée dans un script');
+}
+console.log('logo d’équipe Commons : ok');
