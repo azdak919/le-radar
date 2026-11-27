@@ -1,32 +1,14 @@
 {
-  "updated": "2026-11-27T20:40:34.222Z",
-  "total": 1206,
+  "updated": "2026-11-27T21:07:53.571Z",
+  "total": 1208,
   "pool": 61,
-  "incomplete": 26,
-  "withLeadExcerpt": 301,
-  "candidates": 26,
-  "enriched": 0,
-  "failed": 4,
+  "incomplete": 27,
+  "withLeadExcerpt": 304,
+  "candidates": 27,
+  "enriched": 3,
+  "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Les professeurs en grève",
-      "link": "https://www.delitfrancais.com/2026/11/25/les-professeurs-en-greve/",
-      "ok": true,
-      "score": 96,
-      "chars": 291,
-      "sample": "Cette décision était attendue depuis le mois dernier, lorsque les membres de la Faculté des arts, de",
-      "changed": false
-    },
-    {
-      "title": "Étudier, sans savoir de quoi demain sera fait",
-      "link": "https://www.delitfrancais.com/2026/11/25/etudier-sans-savoir-de-quoi-demain-sera-fait/",
-      "ok": true,
-      "score": 100,
-      "chars": 474,
-      "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
-      "changed": false
-    },
     {
       "title": "Deux mois de Parti québécois",
       "link": "https://www.delitfrancais.com/2026/11/25/deux-mois-de-parti-quebecois/",
@@ -43,6 +25,24 @@
       "score": 100,
       "chars": 424,
       "sample": "Que ce soient les salles d’évasion qui ont pris une ampleur considérable lors des dernières années o",
+      "changed": false
+    },
+    {
+      "title": "Les professeurs en grève",
+      "link": "https://www.delitfrancais.com/2026/11/25/les-professeurs-en-greve/",
+      "ok": true,
+      "score": 96,
+      "chars": 291,
+      "sample": "Cette décision était attendue depuis le mois dernier, lorsque les membres de la Faculté des arts, de",
+      "changed": false
+    },
+    {
+      "title": "Étudier, sans savoir de quoi demain sera fait",
+      "link": "https://www.delitfrancais.com/2026/11/25/etudier-sans-savoir-de-quoi-demain-sera-fait/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
       "changed": false
     },
     {
