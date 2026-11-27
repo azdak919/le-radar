@@ -9,17 +9,20 @@ import { plan, NETWORKS } from '../scripts/social/rate-limit.mjs';
 import { buildXText, selectDaily, xlen } from '../scripts/social/lib.mjs';
 const T = iso => Date.parse(iso);
 
-// ── fenêtre : 9 au 23 nov. 2026 inclus (jours civils Toronto), config lisible
-assert.equal(POLICY.volume.until, '2026-11-23'); assert.equal(POLICY.volume.from, '2026-11-09');
-assert.equal(volumeActive(T('2026-11-09T05:30:00Z')), true, '9 nov. 0 h 30 heure de Montréal : début');
-assert.equal(volumeActive(T('2026-11-09T04:30:00Z')), false, '8 nov. 23 h 30 : pas encore');
-assert.equal(volumeActive(T('2026-11-24T04:30:00Z')), true, '23 nov. 23 h 30 : dernier jour inclus');
-assert.equal(volumeActive(T('2026-11-24T05:30:00Z')), false, '24 nov. 0 h 30 : retour au volume de base');
-assert.equal(volumeActive(T('2026-11-15T17:00:00Z'), { volume: { ...POLICY.volume, active: false } }), false, 'active:false coupe tout');
-for (const n of ['bluesky', 'mastodon', 'tumblr', 'x', 'facebook']) assert.equal(volumeFor(n, T('2026-11-12T17:00:00Z')).perDay, 5, n);
-assert.equal(volumeFor('linkedin', T('2026-11-12T17:00:00Z')).perDay, 3);
-assert.equal(volumeFor('bluesky', T('2026-12-01T17:00:00Z')), null); assert.equal(volumeFor('inconnu', T('2026-11-12T17:00:00Z')), null);
-assert.ok(POLICY.volume.minPerDay === 3 && Object.values(POLICY.volume.perDay).every(v => v >= 3 && v <= 5), '3 à 5 par jour et par réseau');
+// ── volume des articles un à un, permanent depuis le 27 nov. 2026 (Charles) : Bluesky 3, Mastodon 3, Tumblr 3, X 2 ;
+// Facebook, LinkedIn et Threads arrêtés dans leur module (plafond 0), donc absents d'ici.
+const OLD = { volume: { ...POLICY.volume, from: '2026-11-09', until: '2026-11-23' } };
+assert.equal(POLICY.volume.from, '2026-11-27'); assert.equal(POLICY.volume.until, '2099-12-31');
+assert.equal(volumeActive(T('2026-11-27T05:30:00Z')), true, '27 nov. 0 h 30 heure de Montréal : début');
+assert.equal(volumeActive(T('2027-06-01T16:00:00Z')), true, 'permanent');
+assert.equal(volumeActive(T('2026-11-24T04:30:00Z'), OLD), true, 'mécanisme : dernier jour inclus');
+assert.equal(volumeActive(T('2026-11-24T05:30:00Z'), OLD), false, 'mécanisme : lendemain hors fenêtre');
+assert.equal(volumeActive(T('2026-12-15T17:00:00Z'), { volume: { ...POLICY.volume, active: false } }), false, 'active:false coupe tout');
+for (const n of ['bluesky', 'mastodon', 'tumblr']) assert.equal(volumeFor(n, T('2026-12-02T17:00:00Z')).perDay, 3, n);
+assert.equal(volumeFor('x', T('2026-12-02T17:00:00Z')).perDay, 2);
+for (const n of ['facebook', 'linkedin', 'threads', 'inconnu']) assert.equal(volumeFor(n, T('2026-12-02T17:00:00Z')), null, `${n} : hors volume (arrêté dans son module)`);
+assert.deepEqual(POLICY.volume.xSlots, ['14:30', '17:30'], 'X : entre la revue de 12 h et la une de 19 h 30');
+assert.ok(POLICY.volume.minPerDay === 2 && Object.values(POLICY.volume.perDay).every(v => v >= 2 && v <= 3), '2 à 3 par jour et par réseau');
 
 // ── pacing : 0 la nuit, croissant, perDay en fin de journée
 assert.equal(allowedByNow('bluesky', 5, T('2026-11-10T08:00:00Z')), 0, '3 h : rien');
@@ -27,30 +30,30 @@ let last = 0; for (let h = 0; h < 24; h++) { const a = allowedByNow('bluesky', 5
 assert.equal(last, 5, 'tout le budget est permis en fin de journée'); assert.ok(allowedByNow('bluesky', 5, T('2026-11-10T16:00:00Z')) <= 2, '11 h : au plus 2');
 
 // ── plan réduit
-const now = T('2026-11-11T02:00:00Z'); // mardi 10 nov. 21 h (heure de Montréal)
+const now = T('2026-12-02T02:00:00Z'); // mardi 1er déc. 21 h (heure de Montréal)
 const ago = m => new Date(now - m * 60e3);
 const it = (id, source, min, img = 'https://img.ex/' + id + '.jpg', credit = 'Marie Tremblay') => ({ id, source, date: ago(min), img, credit, title: id + ' titre', bare: id + ' titre', desc: 'Un extrait substantiel qui dépasse largement le seuil de quatre-vingts caractères pour compter. '.repeat(2) });
 const day = Array.from({ length: 9 }, (_, i) => it('s' + i, 'Src' + i, 20 + i * 30));
 const liveSince = ago(60 * 24 * 30).toISOString();
 const p0 = plan(day, {}, { network: 'bluesky', liveSince, now });
-assert.equal(p0.limits.reduced, true); assert.equal(p0.limits.perDay, 5);
+assert.equal(p0.limits.reduced, true); assert.equal(p0.limits.perDay, 3);
 assert.ok(p0.now.length >= 1 && p0.now.length <= NETWORKS.bluesky.perRun, 'pas de rafale');
 assert.equal(new Set(p0.now.map(i => i.source)).size, p0.now.length, 'une publication par source');
-const sentToday = n => Object.fromEntries(Array.from({ length: n }, (_, i) => [`d${i}`, { at: new Date(T('2026-11-10T15:00:00Z') + i * 3600e3).toISOString(), uri: 'at://x/' + i, source: 'Autre' + i }]));
+const sentToday = n => Object.fromEntries(Array.from({ length: n }, (_, i) => [`d${i}`, { at: new Date(T('2026-12-01T15:00:00Z') + i * 3600e3).toISOString(), uri: 'at://x/' + i, source: 'Autre' + i }]));
 assert.equal(postedToday(sentToday(4), now).length, 4);
-assert.equal(plan(day, sentToday(5), { network: 'bluesky', liveSince, now }).now.length, 0, '5 déjà publiés aujourd’hui : plafond du jour');
-assert.equal(plan(day, sentToday(5), { network: 'bluesky', liveSince, now }).status.dayLeft, 0);
+assert.equal(plan(day, sentToday(3), { network: 'bluesky', liveSince, now }).now.length, 0, '3 déjà publiés aujourd’hui : plafond du jour');
+assert.equal(plan(day, sentToday(3), { network: 'bluesky', liveSince, now }).status.dayLeft, 0);
 const sameSrc = [it('a1', 'Src0', 20), it('a2', 'Src0', 40), it('b1', 'Src1', 50)];
 assert.ok(plan(sameSrc, {}, { network: 'bluesky', liveSince, now }).now.filter(i => i.source === 'Src0').length <= 1, '≤ 1 par source et par jour');
-assert.equal(plan(sameSrc, { x: { at: new Date(T('2026-11-10T16:00:00Z')).toISOString(), uri: 'u', source: 'Src0' } }, { network: 'bluesky', liveSince, now }).now.filter(i => i.source === 'Src0').length, 0, 'source déjà publiée aujourd’hui');
-// sans photo du flux : seulement après 17 h et tant que le minimum du jour (3) n'est pas atteint
+assert.equal(plan(sameSrc, { x: { at: new Date(T('2026-12-01T16:00:00Z')).toISOString(), uri: 'u', source: 'Src0' } }, { network: 'bluesky', liveSince, now }).now.filter(i => i.source === 'Src0').length, 0, 'source déjà publiée aujourd’hui');
+// sans photo du flux : seulement après 17 h et tant que le minimum du jour (2) n'est pas atteint
 const weak = [it('w1', 'W1', 20, ''), it('w2', 'W2', 30, '')];
-assert.equal(plan(weak, {}, { network: 'bluesky', liveSince, now: T('2026-11-10T17:00:00Z') }).now.length, 0, '12 h : article sans photo du flux : attend');
+assert.equal(plan(weak, {}, { network: 'bluesky', liveSince, now: T('2026-12-01T17:00:00Z') }).now.length, 0, '12 h : article sans photo du flux : attend');
 assert.ok(plan(weak, {}, { network: 'bluesky', liveSince, now }).now.length >= 1, '21 h, sous le minimum du jour : on complète');
-assert.equal(plan(weak, sentToday(3), { network: 'bluesky', liveSince, now }).now.length, 0, 'minimum atteint : jamais de sans-photo');
-// après la période : comportement de base inchangé
-const later = T('2026-11-25T17:00:00Z');
-assert.equal(plan(day.map(x => ({ ...x, date: new Date(later - 3600e3) })), {}, { network: 'bluesky', liveSince, now: later }).limits.reduced, undefined, 'après le 23 nov. : plafonds de base');
+assert.equal(plan(weak, sentToday(2), { network: 'bluesky', liveSince, now }).now.length, 0, 'minimum atteint : jamais de sans-photo');
+// volume permanent : toujours réduit, longtemps après (plus de retour au volume de base)
+const later = T('2027-03-16T17:00:00Z');
+assert.equal(plan(day.map(x => ({ ...x, date: new Date(later - 3600e3) })), {}, { network: 'bluesky', liveSince, now: later }).limits.reduced, true, 'mars 2027 : toujours 3 par jour');
 assert.equal(plan(day, {}, { network: 'bluesky', liveSince, now, schedule: false }).limits.reduced, undefined, 'schedule:false (tests) : base');
 
 // ── hashtags : plafonds par réseau, X = 2 et Facebook = 1 (modules), jamais #PresseÉtudiante

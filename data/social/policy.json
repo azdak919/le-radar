@@ -1,31 +1,15 @@
 {
  "_doc": "Politique sociale du Radar (lue par scripts/social/policy.mjs, testée dans tests/social-policy.mjs). Décision de Charles le 9 nov. 2026 : volume réduit 14 jours pour gagner en qualité, au plus une mention de média par jour sur X, aucun abonnement automatique sur X. Dates en jours civils America/Toronto, `until` inclus : après cette date, les plafonds de base (rate-limit.mjs, buffer-pages.json, DAILY_SLOTS) reprennent d'eux-mêmes.",
  "volume": {
+  "_doc": "Volume des publications d'articles UN À UN, permanent (27 nov. 2026, Charles : la une, les revues, les matchs et les résultats les remplacent). Arrêtées sur Facebook, LinkedIn et Threads (plafond 0 dans leur module scripts/social/networks/). Gardées, réduites aux mieux notées, là où le public suit des liens et où chaque publication crédite le média étudiant : Bluesky 3, Mastodon 3, Tumblr 3 (en pause), X 2 (14 h 30 et 17 h 30, entre la revue de 12 h et la une de 19 h 30).",
   "active": true,
-  "from": "2026-11-09",
-  "until": "2026-11-23",
-  "minPerDay": 3,
-  "perDay": {
-   "bluesky": 5,
-   "mastodon": 5,
-   "tumblr": 5,
-   "x": 5,
-   "facebook": 5,
-   "linkedin": 3
-  },
-  "perHour": {
-   "bluesky": 2,
-   "mastodon": 2,
-   "tumblr": 2
-  },
+  "from": "2026-11-27",
+  "until": "2099-12-31",
+  "minPerDay": 2,
+  "perDay": { "bluesky": 3, "mastodon": 3, "tumblr": 3, "x": 2 },
+  "perHour": { "bluesky": 1, "mastodon": 1, "tumblr": 1 },
   "perSourcePerDay": 1,
-  "xSlots": [
-   "08:30",
-   "11:30",
-   "14:30",
-   "17:30",
-   "21:00"
-  ],
+  "xSlots": ["14:30", "17:30"],
   "fillAfterHour": 17
  },
  "mentions": {
@@ -131,10 +115,11 @@
   "revue": {
    "_doc": "« La revue » sur les réseaux (scripts/social/revue-post.mjs, workflow social-revue.yml), publication DISTINCTE de La une (décision de Charles, 26 nov. 2026) : carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser sur Instagram ; 8 meilleurs articles (note sociale), sport et radio par popularité, voile toujours montrée. Une heure par réseau (voir slots._doc), programmée dans Buffer. LinkedIn le matin en semaine seulement. Minimum, comme La une : une revue publiée (articles, ou sport et radio sans nouvel article) ; rien si la revue est sautée ou refusée, rien sans carrousel en ligne. Instagram selon la montée du compte : format « revue » à partir du jour 15 (6 déc.), plafond de 3 par jour, sans jamais prendre la place de La une.",
    "publish": true,
+   "tiktok": { "enabled": false, "channelName": "le.radar.ca", "_doc": "Carrousel photo TikTok de la revue du soir (20 h 30, pic étudiant), compte Buffer d'Instagram (3e canal gratuit, secret BUFFER_INSTAGRAM_API_KEY). Éteint tant que TikTok n'est pas connecté dans Buffer : connecter le compte, mettre channelName au nom du canal, puis enabled à true. Première publication réelle à surveiller (Buffer n'a pas de mode essai)." },
    "slots": {
-    "_doc": "Heure de Montréal visée PAR RÉSEAU (networks), programmée dans Buffer pour tomber à l'heure malgré les retards de GitHub ; from/to = fenêtre où le script peut programmer (dès que la revue est en ligne) ou, si l'heure est passée, publier tout de suite. Plan du 26 nov. 2026 (Charles : « ok go ») : matin Facebook 12 h (pic 9-13 h, 3 h après la une de 9 h), LinkedIn 12 h 30 en semaine (pic de midi, 4 h après la une de 8 h 30) ; soir Facebook 20 h (seule publication du soir dans le fil Facebook : la revue remplace la une), Instagram 21 h 15 selon la montée du compte (format « revue » dès le jour 15).",
-    "matin": { "id": "matin", "from": "07:00", "to": "13:30", "networks": { "facebook": "12:00", "linkedin": "12:30" }, "weekdaysOnly": ["linkedin"] },
-    "soir": { "id": "soir", "from": "19:00", "to": "22:30", "networks": { "facebook": "20:00", "instagram": "21:15" } }
+    "_doc": "Heure de Montréal visée PAR RÉSEAU (networks), programmée dans Buffer pour tomber à l'heure malgré les retards de GitHub ; from/to = fenêtre où le script peut programmer (dès que la revue est en ligne) ou, si l'heure est passée, publier tout de suite. Plan du 26 nov. 2026 (Charles : « ok go ») : matin Facebook 12 h (pic 9-13 h, 3 h après la une de 9 h), LinkedIn 12 h 30 en semaine (pic de midi, 4 h après la une de 8 h 30) ; soir Facebook 20 h (seule publication du soir dans le fil Facebook : la revue remplace la une), Instagram 21 h 15 selon la montée du compte (format « revue » dès le jour 15). Ajout du 27 nov. (Charles : « make it happen ») : une revue par jour sur X (12 h) et Mastodon (12 h), pic 11-18 h, avec 4 pages et le lien ; Bluesky 21 h (pic 18-22 h) ; Threads 21 h 30 (pic 17-22 h, 2 h après la une) ; TikTok 20 h 30 (préparé, éteint). Bluesky et Mastodon ne se programment pas : ils partent au premier passage après leur heure (toutes les 30 min).",
+    "matin": { "id": "matin", "from": "07:00", "to": "13:30", "networks": { "facebook": "12:00", "linkedin": "12:30", "x": "12:00", "mastodon": "12:00" }, "weekdaysOnly": ["linkedin"] },
+    "soir": { "id": "soir", "from": "19:00", "to": "22:30", "networks": { "facebook": "20:00", "instagram": "21:15", "tiktok": "20:30", "bluesky": "21:00", "threads": "21:30" } }
    }
   },
   "une": {

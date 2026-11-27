@@ -24,8 +24,9 @@ assert.equal(weightAt('facebook', T('2026-11-07T12:30:00Z')), 0, 'samedi 7 h 30 
 // plafonds (modules du 25 nov. 2026) : FB 3 par jour, LinkedIn 2 en semaine, 1 la fin de semaine ; rodage ×0,4 / ×0,7
 const full = c => ({ ...c, liveSince: '2026-01-01T00:00:00Z' });
 // Mécanisme vérifié sur les plafonds du 25 nov. (FB 3, LinkedIn 2) ; plafonds en vigueur (26 nov., Charles) :
-// Facebook 1 article un à un par jour, LinkedIn 0 — la une et la revue les remplacent.
-assert.equal(CFG.facebook.perDay, 1, 'Facebook : un seul article un à un par jour');
+// plus d'articles un à un sur Facebook ni LinkedIn (27 nov.) — la une et la revue les remplacent.
+assert.equal(CFG.facebook.perDay, 0, 'Facebook : plus d’articles un à un');
+assert.equal(NETWORKS.threads.perDay, 0, 'Threads : plus d’articles un à un');
 assert.equal(CFG.linkedin.perDay, 0, 'LinkedIn : plus d’articles un à un');
 assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-10T16:00:00Z')), 0, 'LinkedIn : aucune place');
 const M = { facebook: { ...CFG.facebook, perDay: 3 }, linkedin: { ...CFG.linkedin, perDay: 2 } };

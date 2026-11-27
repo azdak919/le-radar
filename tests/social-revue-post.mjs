@@ -14,9 +14,21 @@ assert.equal(R.slotAt(at('2026-11-27T03:45:00Z')), null, '22 h 45 : fenêtre fer
 // Une heure par réseau (plan du 26 nov.) : matin Facebook 12 h, LinkedIn 12 h 30 (semaine) ; soir Facebook 20 h, Instagram 21 h 15.
 const matin = (day) => ({ ...R.CFG.slots.matin, id: 'matin', day, revueId: `${day}-matin` });
 const soir = (day) => ({ ...R.CFG.slots.soir, id: 'soir', day, revueId: `${day}-soir` });
-assert.deepEqual(R.netsFor(matin('2026-11-30')), ['facebook', 'linkedin'], 'lundi matin : 12 h, 12 h 30');
-assert.deepEqual(R.netsFor(matin('2026-11-29')), ['facebook'], 'dimanche : pas de LinkedIn');
-assert.deepEqual(R.netsFor(soir('2026-11-30')), ['facebook', 'instagram'], 'soir : Facebook 20 h, Instagram 21 h 15');
+assert.deepEqual(R.netsFor(matin('2026-11-30')), ['facebook', 'x', 'mastodon', 'linkedin'], 'lundi matin : 12 h ×3, 12 h 30');
+assert.deepEqual(R.netsFor(matin('2026-11-29')), ['facebook', 'x', 'mastodon'], 'dimanche : pas de LinkedIn');
+assert.deepEqual(R.netsFor(soir('2026-11-30')), ['facebook', 'bluesky', 'instagram', 'threads'], 'soir : 20 h, 21 h, 21 h 15, 21 h 30 ; TikTok éteint');
+assert.ok(!R.tiktokEnabled(), 'TikTok : éteint tant que le compte n’est pas connecté dans Buffer');
+assert.deepEqual(R.netsFor(soir('2026-11-30'), { cfg: { ...R.CFG, tiktok: { enabled: true } } }), ['facebook', 'tiktok', 'bluesky', 'instagram', 'threads'], 'TikTok allumé : 20 h 30');
+assert.ok(R.BUFFER_NETS.has('x') && R.BUFFER_NETS.has('threads') && !R.BUFFER_NETS.has('bluesky') && !R.BUFFER_NETS.has('mastodon'), 'Bluesky et Mastodon : API directes, pas de programmation');
+// Textes courts : X ≤ 280, Bluesky ≤ 300 (marge), lien et mot-clic toujours là ; Threads sans mot-clic ; TikTok sans lien.
+{
+  const t = R.revueTexts(['x', 'bluesky', 'mastodon', 'threads', 'tiktok'], model);
+  for (const [n, v] of Object.entries(t)) assert.deepEqual(v.problems, [], `${n} : ${v.problems}`);
+  assert.ok(t.x.len <= 280 && /le-radar\.ca\/revues\/2026-11-25-soir\//.test(t.x.text) && /#MédiasÉtudiants/.test(t.x.text));
+  assert.ok(t.bluesky.len <= 290 && /le-radar\.ca\/revues\//.test(t.bluesky.text));
+  assert.ok(t.mastodon.len <= 500); assert.ok(t.threads.len <= 500 && !/#/.test(t.threads.text), 'Threads : sans mot-clic');
+  assert.doesNotMatch(t.tiktok.text, /https?:\/\//, 'TikTok : aucun lien'); assert.match(t.tiktok.text, /lien en bio/);
+}
 assert.equal(new Date(R.dueFor(matin('2026-11-30'), 'facebook')).toISOString(), '2026-11-30T17:00:00.000Z', '12 h HNE');
 assert.equal(new Date(R.dueFor(soir('2026-11-30'), 'instagram')).toISOString(), '2026-12-01T02:15:00.000Z', '21 h 15 HNE');
 assert.equal(new Date(R.dueFor({ ...R.CFG.slots.matin, day: '2027-06-01' }, 'linkedin')).toISOString(), '2027-06-01T16:30:00.000Z', '12 h 30 HAE');

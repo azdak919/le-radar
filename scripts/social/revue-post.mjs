@@ -41,7 +41,13 @@ export const DEFAULTS = {
   instagram: { from: '' },
 };
 export const CFG = { ...DEFAULTS, ...(POLICY.formats?.revue || {}) };
-export const NETS = ['linkedin', 'facebook', 'instagram'];
+export const NETS = ['linkedin', 'facebook', 'instagram', 'x', 'threads', 'bluesky', 'mastodon', 'tiktok'];
+/** Programmés dans Buffer à leur heure ; Bluesky et Mastodon (API directes) partent au premier passage après leur heure. */
+export const BUFFER_NETS = new Set(['linkedin', 'facebook', 'instagram', 'x', 'threads', 'tiktok']);
+/** Images par réseau : X, Bluesky et Mastodon 4 au plus ; les autres, tout le carrousel. */
+const MAX_IMAGES = { x: 4, bluesky: 4, mastodon: 4 };
+/** TikTok : préparé, éteint tant que le compte n'est pas connecté dans Buffer (formats.revue.tiktok.enabled). */
+export const tiktokEnabled = (cfg = CFG) => cfg.tiktok?.enabled === true;
 const MAX_ATTEMPTS = 3;
 const hm = (s) => { const [h, m] = String(s).split(':').map(Number); return h * 60 + m; };
 
@@ -63,7 +69,7 @@ const weekday = (ymd) => new Date(`${ymd}T12:00:00Z`).getUTCDay();
 export function netsFor(slot, { cfg = CFG } = {}) {
   const we = [0, 6].includes(weekday(slot.day));
   return Object.entries(slot.networks || {})
-    .filter(([n]) => NETS.includes(n) && (n !== 'instagram' || !cfg.instagram?.from || slot.day >= cfg.instagram.from) && !(we && (slot.weekdaysOnly || []).includes(n)))
+    .filter(([n]) => NETS.includes(n) && (n !== 'instagram' || !cfg.instagram?.from || slot.day >= cfg.instagram.from) && (n !== 'tiktok' || tiktokEnabled(cfg)) && !(we && (slot.weekdaysOnly || []).includes(n)))
     .sort((a, b) => hm(a[1]) - hm(b[1]))
     .map(([n]) => n);
 }
@@ -112,16 +118,22 @@ export function revueText(net, model, { limit = 2000, hashtags = 1 } = {}) {
   const sport = [...(sm.sports?.results || []).slice(0, 1), ...(sm.sports?.next || [])][0];
   const show = (sm.radio || [])[0];
   const extra = [sport ? sportText(sport) : '', show ? `📻 À l’écoute : ${fmLabel(show.station)} · ${show.shows[0].title}${show.shows[0].when ? ` · ${show.shows[0].when}` : ''}` : ''].filter(Boolean);
-  const ig = net === 'instagram';
+  // Instagram et TikTok : aucun lien cliquable dans la légende → « lien en bio », crédit 📸, 3 à 5 mots-clics.
+  const ig = net === 'instagram' || net === 'tiktok';
   const url = model.url || `https://le-radar.ca/${model.path}`;
   const cta = ig ? 'La revue complète, à lire ou à imprimer avec sudoku et mots cachés : lien en bio (le-radar.ca/revues).' : `La revue complète, à lire ou à imprimer avec sudoku et mots cachés : ${url}`;
   const credit = ig ? igCreditLine(sm.image?.credit || items[0]?.credit || '') : '';
   const tags = ig
     ? instagramHashtags(items.map((it) => ({ ...it, tag: institutionTag({ source: it.source, title: it.title, desc: it.excerpt || '' }) })), hashtags)
     : hashtags > 0 ? ['#MédiasÉtudiants'] : [];
-  const build = (n) => [head, intro + (n ? '\n' + lines.slice(0, n).join('\n') : ''), extra.join('\n'), cta, credit, tags.join(' ')].filter(Boolean).join('\n\n');
+  // Réseaux courts (X 280, Bluesky 300) : on retire d'abord des lignes d'articles, puis le sport et la radio, puis on
+  // raccourcit l'appel ; le titre de l'édition, le lien et le mot-clic restent toujours.
+  const shortIntro = items.length ? `${items.length} article${items.length > 1 ? 's' : ''} des médias étudiants du Québec à faire défiler 👇` : 'Sport et radios étudiantes 👇';
+  const shortCta = ig ? 'Lien en bio : le-radar.ca/revues' : url;
+  const build = (n, full = true) => [head, (full ? intro : shortIntro) + (n ? '\n' + lines.slice(0, n).join('\n') : ''), full ? extra.join('\n') : '', full ? cta : shortCta, credit, tags.join(' ')].filter(Boolean).join('\n\n');
   let n = lines.length, text = build(n);
   while (len(text) > limit && n > 1) text = build(--n);
+  if (len(text) > limit) { n = lines.length; text = build(n, false); while (len(text) > limit && n > 0) text = build(--n, false); }
   const problems = [];
   if (len(text) > limit) problems.push(`trop long (${len(text)}/${limit})`);
   if (/(^|\s)@\w/.test(text)) problems.push('mention @');
@@ -133,8 +145,14 @@ export function revueText(net, model, { limit = 2000, hashtags = 1 } = {}) {
 /** Textes des réseaux du créneau, avec les limites et mots-clics de leurs modules. */
 export function revueTexts(nets, model) {
   const sm = socialModel(model);
-  const conf = { instagram: { limit: 2200, hashtags: (POLICY.hashtags?.maxByNetwork || {}).instagram || 5 } };
-  for (const n of ['linkedin', 'facebook']) conf[n] = { limit: NETWORKS[n]?.limit || 1500, hashtags: NETWORKS[n]?.hashtags ?? 1 };
+  const max = POLICY.hashtags?.maxByNetwork || {};
+  const conf = {
+    instagram: { limit: 2200, hashtags: max.instagram || 5 },
+    tiktok: { limit: 2000, hashtags: 5 },
+    bluesky: { limit: 290, hashtags: Math.min(1, max.bluesky ?? 1) }, // 300 graphèmes, marge pour les émojis
+    mastodon: { limit: 500, hashtags: Math.min(2, max.mastodon ?? 2) },
+  };
+  for (const n of ['linkedin', 'facebook', 'x', 'threads']) conf[n] = { limit: NETWORKS[n]?.limit || 1500, hashtags: Math.min(1, NETWORKS[n]?.hashtags ?? 1) };
   return Object.fromEntries(nets.map((n) => [n, revueText(n, { ...model, ...sm, items: sm.items, totalItems: sm.totalItems }, conf[n])]));
 }
 
@@ -152,6 +170,46 @@ async function sendOne(net, { text, doc, images, model, env, igState, slot, when
     const ch = createXBuffer({ key: env.BUFFER_API_KEY, service: pages.facebook.service, channelName: pages.facebook.name, fallbackId: env.BUFFER_FACEBOOK_CHANNEL_ID || null });
     const post = await ch.add({ text, ...when, images, metadata: postMetadata('facebook') });
     return { id: post.id, status: post.status || '' };
+  }
+  const imgs = images.slice(0, MAX_IMAGES[net] || images.length);
+  if (net === 'x') {
+    const ch = createXBuffer({ key: env.BUFFER_API_KEY, fallbackId: env.BUFFER_CHANNEL_ID || undefined });
+    const post = await ch.add({ text, ...when, images: imgs });
+    return { id: post.id, status: post.status || '' };
+  }
+  if (net === 'threads') {
+    // Compte Buffer d'Instagram ; un seul sujet, sans mot-clic (module networks/threads.mjs).
+    const ch = createXBuffer({ key: env[pages.threads?.secret || 'BUFFER_INSTAGRAM_API_KEY'], service: 'threads', channelName: pages.threads?.name || 'le.radar.ca', fallbackId: env.BUFFER_THREADS_CHANNEL_ID || null });
+    const post = await ch.add({ text, ...when, images: imgs, metadata: { threads: { type: 'post', topic: 'Médias étudiants' } } });
+    return { id: post.id, status: post.status || '' };
+  }
+  if (net === 'tiktok') {
+    // Carrousel photo TikTok, compte Buffer d'Instagram (3e canal gratuit). À vérifier à la première publication réelle.
+    const ch = createXBuffer({ key: env.BUFFER_INSTAGRAM_API_KEY, service: 'tiktok', channelName: CFG.tiktok?.channelName || 'le.radar.ca', fallbackId: env.BUFFER_TIKTOK_CHANNEL_ID || null });
+    const post = await ch.add({ text, ...when, images: imgs });
+    return { id: post.id, status: post.status || '' };
+  }
+  if (net === 'bluesky') {
+    const { createBluesky } = await import('./channels/bluesky.mjs');
+    const { facets } = await import('./bluesky.mjs');
+    const bs = createBluesky({ handle: env.BLUESKY_HANDLE || 'le-radar.ca', password: env.BLUESKY_APP_PASSWORD });
+    await bs.login();
+    const head = text.split('\n')[0];
+    if ((await bs.listPosts(30)).some((p) => p.text.startsWith(head))) return { id: 'deja-present', dedup: true };
+    const blobs = [];
+    for (const im of imgs) { const b = await bs.uploadImage(im.url); if (!b) throw new Error('image Bluesky refusée'); blobs.push({ image: b, alt: String(im.alt || '').slice(0, 2000), aspectRatio: { width: 1080, height: 1350 } }); }
+    const p = await bs.post({ $type: 'app.bsky.feed.post', text, createdAt: new Date().toISOString(), langs: ['fr'], facets: facets(text), embed: { $type: 'app.bsky.embed.images', images: blobs } });
+    return { id: p.uri, url: p.url };
+  }
+  if (net === 'mastodon') {
+    const { createMastodon, idemKey } = await import('./channels/mastodon.mjs');
+    const md = createMastodon({ instance: env.MASTODON_INSTANCE || 'https://piaille.fr', token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
+    const head = text.split('\n')[0];
+    if ((await md.listStatuses(30)).some((s) => String(s.content || '').includes(head.slice(3, 40)))) return { id: 'deja-present', dedup: true };
+    const ids = [];
+    for (const im of imgs) { const id = await md.uploadImage(im.url, im.alt); if (!id) throw new Error('image Mastodon refusée'); ids.push(id); }
+    const p = await md.post({ status: text, mediaIds: ids, lang: 'fr', key: idemKey(`revue:${slot.revueId}:mastodon`) });
+    return { id: p.id, url: p.url };
   }
   // Instagram : arrêt au premier avertissement ou à la première erreur Buffer (état partagé avec La une), sans réessai.
   const { deliverInstagram, openInstagramIssue } = await import('./instagram.mjs');
@@ -220,8 +278,10 @@ async function main() {
     const t = texts[n];
     if (t.problems.length) { console.log(`::warning::${n} : texte refusé (${t.problems.join(', ')})`); e.attempts = MAX_ATTEMPTS; e.failed = true; e.error = t.problems.join(', '); continue; }
     if (n === 'linkedin' ? !doc : !images) { console.log(`${n} : carrousel pas encore en ligne, nouvel essai au prochain passage.`); continue; }
+    // Bluesky et Mastodon ne se programment pas : on attend leur heure (passage suivant, toutes les 30 min).
+    if (!BUFFER_NETS.has(n) && Date.now() < dueFor(slot, n) - 2 * 60e3) { console.log(`${n} : à ${slot.networks[n]}, publication au premier passage après cette heure.`); continue; }
     try {
-      const when = whenFor(slot, n, Date.now());
+      const when = BUFFER_NETS.has(n) ? whenFor(slot, n, Date.now()) : { now: true };
       const r = await sendOne(n, { text: t.text, doc, images, model: rv.model, env, igState, slot, when });
       if (r.skip) { console.log(`${n} : ${r.skip}`); e.attempts = MAX_ATTEMPTS; e.failed = true; e.error = r.skip; continue; }
       Object.assign(e, { at: new Date().toISOString(), id: r.id, failed: false, ...(when.dueAt ? { dueAt: when.dueAt } : {}) });
