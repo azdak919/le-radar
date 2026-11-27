@@ -12,6 +12,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import { POLICY } from './policy.mjs';
+import { uneNets, uneNetTime, bufferWhen } from './une-lib.mjs';
 import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, moreRadio, quietLead, storyNets, slotAt, slotFor, slotDone, selectUne, seatBySource, buildUneAll, altText, frenchOnly } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
@@ -48,7 +49,7 @@ export function gate({ now = Date.now(), state = {}, forced = '', cfg = CFG, dry
   if (forced && forced !== 'auto') return { due: true, slot: forced, why: 'créneau forcé (déclenchement manuel)' };
   const s = slotAt(now, cfg.slots || SLOTS);
   if (!s) return { due: false, slot: '', why: `hors des fenêtres d'envoi : ${tz(now)}` };
-  const nets = (cfg.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()) && (n !== 'threads' || threadsEnabled()));
+  const nets = uneNets(s, (cfg.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()) && (n !== 'threads' || threadsEnabled())), cfg);
   if (slotDone(state[s.key], nets)) return { due: false, slot: s.id, why: `${s.key} déjà traité` };
   return { due: true, slot: s.id, why: `${s.key} dû` };
 }
@@ -83,7 +84,8 @@ export async function hostImages(images, key, repo = process.env.GITHUB_REPOSITO
 }
 
 // ── Publication ──────────────────────────────────────────────────────────────
-async function publishOne(net, entry, env) {
+// `when` : { dueAt } = programmée dans Buffer à l'heure propre du réseau (formats.une.netTimes) ; sinon { now: true }.
+async function publishOne(net, entry, env, when = { now: true }) {
   const text = entry.texts[net], img = entry.images[IMAGE_FOR[net]], size = IMAGE_SIZES[IMAGE_FOR[net]], head = text.split('\n')[0];
   if (net === 'bluesky') {
     const bs = createBluesky({ handle: env.BLUESKY_HANDLE || 'le-radar.ca', password: env.BLUESKY_APP_PASSWORD });
@@ -112,12 +114,12 @@ async function publishOne(net, entry, env) {
   if (net === 'threads') {
     // Compte Buffer d'Instagram ; texte seul (le lien de la une devient la carte d'aperçu), un sujet.
     const th = createXBuffer({ key: env[pages.threads?.secret || 'BUFFER_INSTAGRAM_API_KEY'], service: 'threads', channelName: pages.threads?.name || 'le.radar.ca', fallbackId: env.BUFFER_THREADS_CHANNEL_ID || null });
-    const post = await th.add({ text, now: true, metadata: { threads: { type: 'post', topic: UNE_THREADS_TOPIC } } });
+    const post = await th.add({ text, ...when, metadata: { threads: { type: 'post', topic: UNE_THREADS_TOPIC } } });
     return { id: post.id, status: post.status || '' };
   }
   const ch = net === 'x' ? createXBuffer({ key, fallbackId: env.BUFFER_CHANNEL_ID || undefined })
     : createXBuffer({ key, service: pages[net].service, channelName: pages[net].name, fallbackId: (net === 'facebook' ? env.BUFFER_FACEBOOK_CHANNEL_ID : env.BUFFER_LINKEDIN_CHANNEL_ID) || null });
-  const post = await ch.add({ text, image: img, alt: entry.alt, now: true, metadata: postMetadata(net) });
+  const post = await ch.add({ text, image: img, alt: entry.alt, ...when, metadata: postMetadata(net) });
   return { id: post.id, status: post.status || '' };
 }
 
@@ -209,7 +211,7 @@ async function main() {
     slot = { ...b, label: 'Jour de match', emoji: '🏟️', key: `${b.day}:jourdematch`, target: hhmm, from: '00:00', to: '23:59' };
   }
   if (!slot) { console.log(`Hors des fenêtres d'envoi (${tz(now)}) : rien à faire.`); return; }
-  const nets = (CFG.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()) && (n !== 'threads' || threadsEnabled()));
+  const nets = uneNets(slot, (CFG.networks || []).filter(n => NETS.includes(n) && (n !== 'tumblr' || tumblrEnabled()) && (n !== 'threads' || threadsEnabled())), CFG);
   if (!tumblrEnabled() && (CFG.networks || []).includes('tumblr')) console.log(PAUSED_MSG);
   let entry = state[slot.key];
   if (!dry && slotDone(entry, nets)) { console.log(`${slot.key} : déjà traité.`); return; }
@@ -309,9 +311,11 @@ async function main() {
     if (d?.at && !d.failed) { console.log(`${n} : déjà publié pour ${slot.key}.`); continue; }
     if ((d?.attempts || 0) >= 3) { console.log(`::warning::${n} : 3 échecs pour ${slot.key}, abandon.`); continue; }
     try {
-      const r = await publishOne(n, entry, env);
-      entry.nets[n] = { at: new Date().toISOString(), ...r }; published++;
-      console.log(`→ ${n} : ${r.dedup ? 'déjà présent dans le compte, noté' : r.url || r.id}`);
+      // Bluesky, Mastodon et Tumblr publient tout de suite ; les réseaux Buffer suivent leur heure propre (programmée).
+      const when = ['x', 'facebook', 'linkedin', 'threads'].includes(n) ? bufferWhen(slot.day, uneNetTime(slot, n, CFG), Date.now()) : { now: true };
+      const r = await publishOne(n, entry, env, when);
+      entry.nets[n] = { at: new Date().toISOString(), ...r, ...(when.dueAt ? { dueAt: when.dueAt } : {}) }; published++;
+      console.log(`→ ${n} : ${r.dedup ? 'déjà présent dans le compte, noté' : r.url || r.id}${when.dueAt ? ` (programmée pour ${new Date(when.dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })})` : ''}`);
     } catch (e) {
       if (e instanceof AuthError) console.log(`::warning::${n} : authentification refusée.`);
       entry.nets[n] = { failed: true, attempts: (d?.attempts || 0) + 1, error: String(e.message).slice(0, 200), lastTry: new Date().toISOString() };

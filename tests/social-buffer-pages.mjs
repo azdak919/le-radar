@@ -23,18 +23,24 @@ for (const n of ['facebook', 'linkedin']) for (const h of [0, 3, 6.5]) assert.eq
 assert.equal(weightAt('facebook', T('2026-11-07T12:30:00Z')), 0, 'samedi 7 h 30 calme');
 // plafonds (modules du 25 nov. 2026) : FB 3 par jour, LinkedIn 2 en semaine, 1 la fin de semaine ; rodage ×0,4 / ×0,7
 const full = c => ({ ...c, liveSince: '2026-01-01T00:00:00Z' });
-assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-10T16:00:00Z')), 3, 'volume réduit (5/jour) au-dessus du plafond du module : 3');
-assert.equal(dayCap(full(CFG.facebook), 'facebook', T('2026-11-24T16:00:00Z')), 3, 'plafond du module');
-assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-10T16:00:00Z')), 2);
-assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-14T16:00:00Z')), 1);
-assert.equal(dayCap({ ...CFG.facebook, liveSince: '2026-11-01T04:00:00Z' }, 'facebook', T('2026-11-02T16:00:00Z')), 1, 'FB rodage jour 1');
-assert.equal(dayCap({ ...CFG.facebook, liveSince: '2026-11-01T04:00:00Z' }, 'facebook', T('2026-11-05T16:00:00Z')), 2, 'FB rodage jour 4');
-assert.equal(dayCap({ ...CFG.linkedin, liveSince: '2026-11-01T04:00:00Z' }, 'linkedin', T('2026-11-02T16:00:00Z')), 1, 'LinkedIn rodage jour 1');
+// Mécanisme vérifié sur les plafonds du 25 nov. (FB 3, LinkedIn 2) ; plafonds en vigueur (26 nov., Charles) :
+// Facebook 1 article un à un par jour, LinkedIn 0 — la une et la revue les remplacent.
+assert.equal(CFG.facebook.perDay, 1, 'Facebook : un seul article un à un par jour');
+assert.equal(CFG.linkedin.perDay, 0, 'LinkedIn : plus d’articles un à un');
+assert.equal(dayCap(full(CFG.linkedin), 'linkedin', T('2026-11-10T16:00:00Z')), 0, 'LinkedIn : aucune place');
+const M = { facebook: { ...CFG.facebook, perDay: 3 }, linkedin: { ...CFG.linkedin, perDay: 2 } };
+assert.equal(dayCap(full(M.facebook), 'facebook', T('2026-11-10T16:00:00Z')), 3, 'volume réduit (5/jour) au-dessus du plafond du module : 3');
+assert.equal(dayCap(full(M.facebook), 'facebook', T('2026-11-24T16:00:00Z')), 3, 'plafond du module');
+assert.equal(dayCap(full(M.linkedin), 'linkedin', T('2026-11-10T16:00:00Z')), 2);
+assert.equal(dayCap(full(M.linkedin), 'linkedin', T('2026-11-14T16:00:00Z')), 1);
+assert.equal(dayCap({ ...M.facebook, liveSince: '2026-11-01T04:00:00Z' }, 'facebook', T('2026-11-02T16:00:00Z')), 1, 'FB rodage jour 1');
+assert.equal(dayCap({ ...M.facebook, liveSince: '2026-11-01T04:00:00Z' }, 'facebook', T('2026-11-05T16:00:00Z')), 2, 'FB rodage jour 4');
+assert.equal(dayCap({ ...M.linkedin, liveSince: '2026-11-01T04:00:00Z' }, 'linkedin', T('2026-11-02T16:00:00Z')), 1, 'LinkedIn rodage jour 1');
 assert(CFG.facebook.perDay <= 3 && CFG.linkedin.perDay <= 2 && NETWORKS.x.dailySlots.length <= 5, 'moins mais mieux (bilan du 23 nov.)');
 // créneaux : dans les pointes, écart minimal, jamais au-delà des places libres, du plafond ou dans le passé
 let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
 for (const [net, now] of [['facebook', T('2026-11-10T08:00:00Z')], ['linkedin', T('2026-11-10T08:00:00Z')], ['facebook', T('2026-11-07T08:00:00Z')]]) {
-  const cfg = full(CFG[net]);
+  const cfg = full(M[net]);
   const d = planDues({ network: net, cfg, now, free: 10, rnd }).map(Date.parse);
   assert(d.length > 0 && d.length <= 10, net);
   for (let i = 0; i < d.length; i++) {
