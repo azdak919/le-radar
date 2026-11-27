@@ -16,9 +16,15 @@ const matin = (day) => ({ ...R.CFG.slots.matin, id: 'matin', day, revueId: `${da
 const soir = (day) => ({ ...R.CFG.slots.soir, id: 'soir', day, revueId: `${day}-soir` });
 assert.deepEqual(R.netsFor(matin('2026-11-30')), ['facebook', 'x', 'mastodon', 'linkedin'], 'lundi matin : 12 h ×3, 12 h 30');
 assert.deepEqual(R.netsFor(matin('2026-11-29')), ['facebook', 'x', 'mastodon'], 'dimanche : pas de LinkedIn');
-assert.deepEqual(R.netsFor(soir('2026-11-30')), ['facebook', 'bluesky', 'instagram', 'threads'], 'soir : 20 h, 21 h, 21 h 15, 21 h 30 ; TikTok éteint');
-assert.ok(!R.tiktokEnabled(), 'TikTok : éteint tant que le compte n’est pas connecté dans Buffer');
-assert.deepEqual(R.netsFor(soir('2026-11-30'), { cfg: { ...R.CFG, tiktok: { enabled: true } } }), ['facebook', 'tiktok', 'bluesky', 'instagram', 'threads'], 'TikTok allumé : 20 h 30');
+assert.ok(R.tiktokEnabled(), 'TikTok connecté dans Buffer (27 nov.)');
+assert.deepEqual(R.netsFor(soir('2026-11-30')), ['facebook', 'tiktok', 'bluesky', 'instagram', 'threads'], 'soir : 20 h, 20 h 30, 21 h, 21 h 15, 21 h 30');
+assert.deepEqual(R.netsFor(soir('2026-11-30'), { cfg: { ...R.CFG, tiktok: { enabled: false } } }), ['facebook', 'bluesky', 'instagram', 'threads'], 'TikTok coupé');
+{
+  const { matchChannel } = await import('../scripts/social/channels/x-buffer.mjs');
+  assert.ok(matchChannel({ service: 'tiktok', name: 'leradar.qc' }, 'tiktok', '*'), '« * » : le seul canal TikTok, quel que soit son nom');
+  assert.ok(!matchChannel({ service: 'instagram', name: 'le.radar.ca' }, 'tiktok', '*'), '« * » : jamais un autre service');
+  assert.ok(!matchChannel({ service: 'facebook', name: 'LE-RADAR.ca' }, 'facebook', 'autre'), 'nom exact sinon');
+}
 assert.ok(R.BUFFER_NETS.has('x') && R.BUFFER_NETS.has('threads') && !R.BUFFER_NETS.has('bluesky') && !R.BUFFER_NETS.has('mastodon'), 'Bluesky et Mastodon : API directes, pas de programmation');
 // Textes courts : X ≤ 280, Bluesky ≤ 300 (marge), lien et mot-clic toujours là ; Threads sans mot-clic ; TikTok sans lien.
 {
