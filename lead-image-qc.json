@@ -1,19 +1,25 @@
 {
-  "updated": "2026-11-27T17:08:23.217Z",
+  "updated": "2026-11-27T17:17:33.449Z",
   "total": 1205,
-  "withPhoto": 924,
-  "withStock": 140,
+  "withPhoto": 934,
+  "withStock": 139,
   "withCampusBank": 113,
-  "fullyCovered": 1028,
-  "leadReadyPhotos": 934,
-  "pageScraped": 18,
-  "photosRecovered": 18,
+  "fullyCovered": 1037,
+  "leadReadyPhotos": 942,
+  "pageScraped": 15,
+  "photosRecovered": 15,
   "imagesCleared": 1,
-  "stockSearches": 5,
-  "stockFound": 29,
+  "stockSearches": 4,
+  "stockFound": 27,
   "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization",
+      "reason": "no-stock-match",
+      "image": null
+    },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
@@ -24,12 +30,6 @@
       "title": "Blackface at McGill",
       "link": "https://thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
-      "image": null
-    },
-    {
-      "title": "Bulletins La Pige radio 9 novembre",
-      "link": "https://lapige.atmjonquiere.com/2026/11/09/bulletins-la-pige-radio-9-novembre",
-      "reason": "no-stock-match",
       "image": null
     },
     {
