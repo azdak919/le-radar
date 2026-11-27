@@ -167,3 +167,16 @@ console.log('social-match-story : OK');
   assert.equal(L.dedupeMatches([g('A', 'B', 'reçoit', '19:00'), { ...g('A', 'B', 'reçoit', '19:00'), sport: 'Hockey (M)' }]).length, 2, 'féminin et masculin distincts');
 }
 console.log('match-story dédoublonnage : ok');
+
+// « Aussi aujourd'hui » : sigle de l'établissement entre parenthèses, renvoi vers le-radar.ca/sports (27 nov. 2026).
+{
+  const t = (name, inst) => ({ name, inst, reg: name.toLowerCase() });
+  const items = Array.from({ length: 12 }, (_, i) => ({ date: '2026-11-27', kind: 'game', sport: 'Hockey (F)', sportKey: 'hockey', verb: 'reçoit', time: '19:00', teams: [t('Carabins', 'UdeM'), t('Géants' + i, 'Saint-Jean-sur-Richelieu')] }));
+  const { match } = L.matchStoryModel({ kind: 'more', date: '2026-11-27', items }, { index: 0, total: 1 });
+  assert.match(match.items[0].text, /^Carabins \(UdeM\) reçoit Géants0 \(Saint‑Jean‑sur‑Richelieu\)$/);
+  assert.equal(match.extra, 3);
+  const alt = L.matchStoryAlt({ kind: 'more', date: '2026-11-27', items });
+  assert.match(alt, /\(Saint-Jean-sur-Richelieu\)/, 'alt : tirets ordinaires');
+  assert.match(alt, /et 3 autres sur le-radar\.ca\/sports/);
+}
+console.log('match-story aussi aujourd’hui : ok');

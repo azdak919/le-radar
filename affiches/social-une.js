@@ -468,7 +468,7 @@
         const row = el('div', 'ms-club ms-line'); const tm = el('div', 'ms-place'); tm.append(el('b', '', x.when || '—')); row.append(tm);
         const nm = el('div', 'ms-nm'); nm.append(el('b', '', x.text), el('small', '', `${x.emoji ? x.emoji + ' ' : ''}${x.sport}`)); row.append(nm); list.append(row);
       });
-      if (m.extra) list.append(el('div', 'ms-club more', `et ${m.extra} autre${m.extra > 1 ? 's' : ''} sur le‑radar.ca`));
+      if (m.extra) list.append(el('div', 'ms-club more', `et ${m.extra} autre${m.extra > 1 ? 's' : ''} sur le‑radar.ca/sports`));
       card.append(list);
     }
     if (m.kind === 'regatta-results') {
@@ -526,7 +526,24 @@
     // Noms longs : la police rétrécit jusqu'à tenir sur deux lignes au plus (jamais d'ellipse).
     const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > 715) { f -= 4; ev.style.fontSize = f + 'px'; } }
     // Clubs de voile : un nom par ligne, la police rétrécit pour tenir (jamais coupé).
-    card.querySelectorAll('.ms-club > b, .ms-nm b').forEach((b) => { let f = 52; while (f > 30 && b.scrollWidth > b.clientWidth + 1) { f -= 2; b.style.fontSize = f + 'px'; } });
+    // Liste « Aussi aujourd'hui » : équipes avec sigle (« Cougars (Champlain Lennoxville) ») ; la police rétrécit, puis passe à deux lignes.
+    // Une ligne si ça tient à 28 px au moins ; sinon deux lignes coupées après le verbe (« Cheetahs (Vanier) reçoit » / « Géants (Saint‑Jean‑sur‑Richelieu) »),
+    // chaque équipe entière sur sa ligne, police rétrécie au besoin pour la plus longue. Jamais de coupure au milieu d'un nom.
+    card.querySelectorAll('.ms-line .ms-nm b').forEach((b) => {
+      const over = () => b.scrollWidth > b.clientWidth + 1;
+      const f0 = parseFloat(getComputedStyle(b).fontSize); let f = f0;
+      while (f > 28 && over()) { f -= 1; b.style.fontSize = f + 'px'; }
+      if (!over()) return;
+      const parts = b.textContent.match(/^(.*? (?:reçoit|visite)) (.*)$/);
+      if (!parts) { b.style.whiteSpace = 'normal'; b.style.lineHeight = '1.1'; return; }
+      b.textContent = ''; b.append(parts[1], document.createElement('br'), parts[2]); b.style.lineHeight = '1.12';
+      f = f0; b.style.fontSize = f + 'px';
+      while (f > 22 && over()) { f -= 1; b.style.fontSize = f + 'px'; }
+    });
+    // La date suit la liste (lignes sur deux lignes : la liste s'allonge), jamais par-dessus.
+    { const ls = card.querySelector('.ms-more .ms-clubs'), wh = card.querySelector('.ms-more .ms-when'); const last = ls && ls.lastElementChild;
+      if (last && wh) { const cb = card.getBoundingClientRect().top, bottom = last.getBoundingClientRect().bottom - cb; if (bottom + 20 > parseFloat(getComputedStyle(wh).top)) wh.style.top = Math.ceil(bottom + 20) + 'px'; } }
+    card.querySelectorAll('.ms-club:not(.ms-line) > b, .ms-club:not(.ms-line) .ms-nm b').forEach((b) => { let f = 52; while (f > 30 && b.scrollWidth > b.clientWidth + 1) { f -= 2; b.style.fontSize = f + 'px'; } });
     card.querySelectorAll('.ms-name').forEach((n) => { let f = parseFloat(getComputedStyle(n).fontSize); const lh = () => parseFloat(getComputedStyle(n).lineHeight) || f; while (f > 56 && (n.scrollWidth > n.clientWidth + 1 || n.clientHeight > lh() * 2 + 2)) { f -= 4; n.style.fontSize = f + 'px'; } });
     const overflow = [...card.children].some((c) => c.getBoundingClientRect().bottom > 1920 || c.scrollWidth > c.clientWidth + 2);
     return { overflow, shown: 0, sports: 1, sportsDetail: m.kind === 'regatta' ? m.event : m.sport, radio: 0, photo: false, logos: imgs.filter((i) => i.isConnected).length };
