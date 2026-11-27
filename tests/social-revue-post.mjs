@@ -148,5 +148,20 @@ assert.equal(R.gate({ now: at('2026-11-26T19:00:00Z'), state: {} }).due, false, 
   };
   assert.deepEqual(await run(false), ['notification']);
   assert.deepEqual(await run(true), ['notification', 'automatic'], 'refusée : repli automatique');
+  // Acceptée mais sans téléphone relié au compte Buffer (27 nov.) : repli automatique.
+  {
+    const sent = [];
+    const fetchImpl = async (_u, o) => { const b = JSON.parse(o.body);
+      if (/createPost/.test(b.query)) { sent.push(b.variables.i.schedulingType);
+        const post = b.variables.i.schedulingType === 'notification'
+          ? { id: 'n', status: 'error', error: { message: 'Whoops! We are having trouble sending notifications to your mobile device. Please try linking a mobile device to your account!' } }
+          : { id: 'a', status: 'scheduled' };
+        return { ok: true, status: 200, json: async () => ({ data: { createPost: { post } } }) }; }
+      if (/organizations/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] } } }) };
+      return { ok: true, status: 200, json: async () => ({ data: { channels: [{ id: 't', name: 'leradar.ca', service: 'tiktok' }] } }) }; };
+    const ch = createXBuffer({ key: 'k', fetchImpl, service: 'tiktok', channelName: '*' });
+    const post = await ch.add({ text: 't', images: [{ url: 'https://a/1.jpg' }], now: true, notify: true });
+    assert.equal(post.id, 'a'); assert.deepEqual(sent, ['notification', 'automatic'], 'sans téléphone : repli automatique');
+  }
 }
 console.log('social-revue-post : OK');

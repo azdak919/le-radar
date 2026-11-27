@@ -143,6 +143,14 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
         r = (await send({ ...input, schedulingType: 'automatic' }))?.createPost;
       }
       if (!r?.post?.id) throw new Error(`Buffer createPost refusé : ${r?.message || JSON.stringify(r)}`);
+      // Notification impossible (aucun téléphone relié au compte Buffer) : on ne perd pas la publication, elle part en
+      // automatique, sans son (27 nov. 2026 : premier essai TikTok).
+      if (notify && r.post.status === 'error' && /mobile device|notification/i.test(r.post.error?.message || '')) {
+        console.log(`::warning::Buffer : notification impossible (${r.post.error.message}) — repli automatique, sans son. Relier un téléphone au compte Buffer (appli Buffer) pour choisir le son.`);
+        const again = (await send({ ...input, schedulingType: 'automatic' }))?.createPost;
+        if (!again?.post?.id) throw new Error(`Buffer createPost refusé : ${again?.message || JSON.stringify(again)}`);
+        return assertBufferPostOk(again.post);
+      }
       return assertBufferPostOk(r.post);
     },
   };
