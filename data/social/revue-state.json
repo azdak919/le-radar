@@ -33,10 +33,24 @@
  "2026-11-27-matin": {
   "at": "2026-11-27T12:08:27.961Z",
   "nets": {
-   "facebook": {},
-   "x": {},
+   "facebook": {
+    "at": "2026-11-27T12:16:05.539Z",
+    "id": "6b097485776ce21276160db9",
+    "failed": false,
+    "dueAt": "2026-11-27T17:00:00.000Z"
+   },
+   "x": {
+    "attempts": 1,
+    "failed": true,
+    "error": "Buffer createPost refusé : Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+   },
    "mastodon": {},
-   "linkedin": {}
+   "linkedin": {
+    "at": "2026-11-27T12:16:06.098Z",
+    "id": "6b0974861fd46e62e741164f",
+    "failed": false,
+    "dueAt": "2026-11-27T17:30:00.000Z"
+   }
   }
  }
 }
