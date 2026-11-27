@@ -106,38 +106,60 @@ function sportText(g) {
  * Texte d'un réseau. `link` : lien cliquable (LinkedIn, Facebook) ; Instagram : aucun lien, « lien en bio », crédit 📸,
  * 3 à 5 mots-clics. Les lignes d'articles sont retirées par la fin si le texte dépasse la limite du réseau.
  */
+/**
+ * Forme du texte selon l'affichage de chaque réseau (27 nov. 2026 : la légende TikTok, longue liste aplatie en un bloc,
+ * était illisible) :
+ *  - accroche (TikTok) : 3 phrases qui se lisent même sans retours à la ligne, puis les mots-clics ;
+ *  - moyenne (Instagram, Threads, Mastodon) : les 3 meilleurs titres, « et N autres dans le carrousel » ;
+ *  - longue (Facebook, LinkedIn) : 5 titres, le match et l'émission du moment, le lien ;
+ *  - courte (X, Bluesky) : titre de l'édition, un titre, le lien.
+ */
+export const STYLE = { tiktok: 'accroche', instagram: 'moyenne', threads: 'moyenne', mastodon: 'moyenne', facebook: 'longue', linkedin: 'longue', x: 'courte', bluesky: 'courte' };
+const frShort = (day) => new Intl.DateTimeFormat('fr-CA', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(`${day}T12:00:00Z`));
+
 export function revueText(net, model, { limit = 2000, hashtags = 1 } = {}) {
   const sm = model.items && model.totalItems != null ? model : socialModel(model);
   const ed = model.edition || {};
+  const style = STYLE[net] || 'longue';
   const items = sm.items || [], total = sm.totalItems ?? items.length;
-  const head = `${ed.emoji ? ed.emoji + ' ' : ''}${ed.label || 'La revue'} · ${frDate(ed.day)}`;
+  const emoji = ed.emoji ? ed.emoji + ' ' : '';
+  const head = `${emoji}${ed.label || 'La revue'} · ${frDate(ed.day)}`;
+  const nArt = `${items.length} article${items.length > 1 ? 's' : ''} des médias étudiants du Québec`;
   const intro = items.length
-    ? (total > items.length ? `${items.length} articles des médias étudiants du Québec, choisis parmi les ${total} de la revue. Faites défiler :` : `${items.length} article${items.length > 1 ? 's' : ''} des médias étudiants du Québec. Faites défiler :`)
-    : 'Pas de nouvel article des médias étudiants depuis la dernière revue : place au sport et aux radios étudiantes.';
-  const lines = items.map((it, i) => `${i + 1}. ${it.title}${it.source ? ` — ${it.source}` : ''}`);
+    ? (total > items.length ? `${nArt}, choisis parmi les ${total} de la revue. Faites défiler ➡️` : `${nArt}. Faites défiler ➡️`)
+    : 'Pas de nouvel article des médias étudiants depuis la dernière revue : place au sport et aux radios étudiantes ➡️';
+  const line = (it) => `• ${it.title}${it.source ? ` — ${it.source}` : ''}`;
   const sport = [...(sm.sports?.results || []).slice(0, 1), ...(sm.sports?.next || [])][0];
   const show = (sm.radio || [])[0];
   const extra = [sport ? sportText(sport) : '', show ? `📻 À l’écoute : ${fmLabel(show.station)} · ${show.shows[0].title}${show.shows[0].when ? ` · ${show.shows[0].when}` : ''}` : ''].filter(Boolean);
   // Instagram et TikTok : aucun lien cliquable dans la légende → « lien en bio », crédit 📸, 3 à 5 mots-clics.
   const ig = net === 'instagram' || net === 'tiktok';
   const url = model.url || `https://le-radar.ca/${model.path}`;
-  const cta = ig ? 'La revue complète, à lire ou à imprimer avec sudoku et mots cachés : lien en bio (le-radar.ca/revues).' : `La revue complète, à lire ou à imprimer avec sudoku et mots cachés : ${url}`;
-  const credit = ig ? igCreditLine(sm.image?.credit || items[0]?.credit || '') : '';
+  const cta = ig ? '📖 La revue complète, à lire ou à imprimer : lien en bio.' : `📖 La revue complète, à lire ou à imprimer : ${url}`;
+  const coverCredit = String(sm.image?.credit || items[0]?.credit || '').replace(/^Photo\s*:\s*/i, '').trim();
+  const credit = ig && coverCredit ? `📸 Couverture : ${coverCredit}` : '';
   const tags = ig
     ? instagramHashtags(items.map((it) => ({ ...it, tag: institutionTag({ source: it.source, title: it.title, desc: it.excerpt || '' }) })), hashtags)
     : hashtags > 0 ? ['#MédiasÉtudiants'] : [];
-  // Réseaux courts (X 280, Bluesky 300) : on retire d'abord des lignes d'articles, puis le sport et la radio, puis on
-  // raccourcit l'appel ; le titre de l'édition, le lien et le mot-clic restent toujours.
-  const shortIntro = items.length ? `${items.length} article${items.length > 1 ? 's' : ''} des médias étudiants du Québec à faire défiler 👇` : 'Sport et radios étudiantes 👇';
-  const shortCta = ig ? 'Lien en bio : le-radar.ca/revues' : url;
-  const build = (n, full = true) => [head, (full ? intro : shortIntro) + (n ? '\n' + lines.slice(0, n).join('\n') : ''), full ? extra.join('\n') : '', full ? cta : shortCta, credit, tags.join(' ')].filter(Boolean).join('\n\n');
-  let n = lines.length, text = build(n);
-  while (len(text) > limit && n > 1) text = build(--n);
-  if (len(text) > limit) { n = lines.length; text = build(n, false); while (len(text) > limit && n > 0) text = build(--n, false); }
+  const more = (shown) => (items.length > shown ? `… et ${items.length - shown} autre${items.length - shown > 1 ? 's' : ''} dans le carrousel.` : '');
+  const build = (n, withExtra = true) => {
+    if (style === 'accroche') {
+      const lead = items[0] ? `À la une : ${items[0].title} (${items[0].source}).` : (sport ? `${sportText(sport)}.` : '');
+      return [`${emoji}${ed.label || 'La revue'} du ${frShort(ed.day)} : ${items.length ? `${nArt} à faire défiler ➡️` : 'sport et radios étudiantes à faire défiler ➡️'}`, lead, 'La revue complète : lien en bio.', tags.join(' ')].filter(Boolean).join('\n');
+    }
+    if (style === 'courte') {
+      return [head, `${items.length ? `${nArt} à faire défiler 👇` : 'Sport et radios étudiantes 👇'}${n ? '\n' + items.slice(0, n).map(line).join('\n') : ''}`, url, tags.join(' ')].filter(Boolean).join('\n\n');
+    }
+    const list = items.slice(0, n).map(line).concat(more(n) ? [more(n)] : []).join('\n');
+    return [head, intro + (list ? '\n' + list : ''), style === 'longue' && withExtra ? extra.join('\n') : '', cta, credit, tags.join(' ')].filter(Boolean).join('\n\n');
+  };
+  let n = Math.min(items.length, style === 'longue' ? 5 : style === 'courte' ? 1 : 3), text = build(n);
+  while (len(text) > limit && n > 0) text = build(--n);
+  if (len(text) > limit) text = build(0, false);
   const problems = [];
   if (len(text) > limit) problems.push(`trop long (${len(text)}/${limit})`);
   if (/(^|\s)@\w/.test(text)) problems.push('mention @');
-  if (ig && /https?:\/\//.test(text)) problems.push('lien cliquable sur Instagram');
+  if (ig && /https?:\/\//.test(text)) problems.push('lien cliquable sur Instagram ou TikTok');
   if (ig && (text.match(/#[\p{L}\p{N}_]+/gu) || []).length > 5) problems.push('plus de 5 mots-clics');
   return { text, len: len(text), limit, problems };
 }
