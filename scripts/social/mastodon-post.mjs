@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// Bot Mastodon du Radar (@leradar@piaille.fr) : mêmes règles que Bluesky. Tous les articles FRAIS
+// Bot Mastodon du Radar (@leradar@qlub.social, auparavant piaille.fr) : mêmes règles que Bluesky. Tous les articles FRAIS
 // du flux (≤ 24 h, après state.liveSince), une seule fois, sans limite par source : une même
 // source est étalée (spread), jamais sautée ; rien la nuit (posting-windows.json) ; rodage et
-// plafond mastodon de rate-limit.mjs (règles de piaille.fr). Image = celle du site
+// plafond mastodon de rate-limit.mjs (règles de piaille.fr, gardées sur Qlub tant que les siennes ne sont pas confirmées). Image = celle du site
 // (image-resolve.mjs) ; sans image, l'article attend le passage suivant (jamais publié sans).
 // Idempotent : data/mastodon-sent.json + derniers statuts publics + Idempotency-Key.
 // Sans MASTODON_TOKEN : essai. SHARE_NOW=true : un article frais, tout de suite.
@@ -12,13 +12,13 @@ import path from 'node:path';
 import { parseFeed, markImages, stripUtm, siteLink, buildTagged, LIMITS, detectLang } from './lib.mjs';
 import { tagLine } from './hashtags.mjs';
 import { resolveImage } from './image-resolve.mjs';
-import { createMastodon, idemKey } from './channels/mastodon.mjs';
+import { createMastodon, idemKey, mastodonInstance } from './channels/mastodon.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/mastodon-sent.json');
-const instance = process.env.MASTODON_INSTANCE || 'https://piaille.fr', token = process.env.MASTODON_TOKEN || '';
+const instance = mastodonInstance(), token = process.env.MASTODON_TOKEN || '';
 const acct = process.env.MASTODON_ACCT || 'leradar';
 let dry = process.env.DRY_RUN === 'true' || process.argv.includes('--dry-run');
 if (!token) { console.log('MASTODON_TOKEN absent : mode essai.'); dry = true; }
@@ -28,7 +28,7 @@ const len = s => [...String(s).replace(/https?:\/\/\S+/g, 'x'.repeat(23))].lengt
 export const camelTag = s => { const w = String(s || '').replace(/[’'`-]/g, ' ').split(/[^\p{L}\p{N}]+/u).filter(Boolean); return w.length ? '#' + w.map(x => x[0].toUpperCase() + x.slice(1)).join('') : ''; };
 /** Hashtags CamelCase : lieu (#Québec ou #Montréal) + sujet ou institution, 3 au plus (policy.json). */
 export const mastoTags = it => tagLine(it, 'mastodon');
-export const buildMastoText = (it, accounts = [], { credit = '', photo = true } = {}) => buildTagged(it, accounts, LIMITS.mastodon, { credit, photo, len, link: true, ai: false /* jamais d'IA : règles de piaille.fr */ }, mastoTags(it), '\n\n');
+export const buildMastoText = (it, accounts = [], { credit = '', photo = true } = {}) => buildTagged(it, accounts, LIMITS.mastodon, { credit, photo, len, link: true, ai: false /* jamais d'IA sur Mastodon (règle de piaille.fr, gardée sur Qlub) */ }, mastoTags(it), '\n\n');
 
 // @ Mastodon vérifiés à la main (data/social/mastodon-accounts.json) : vide tant qu'aucun compte n'est confirmé.
 const ACCOUNTS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/social/mastodon-accounts.json'), 'utf8')).accounts;

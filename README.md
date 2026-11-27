@@ -211,7 +211,7 @@ Instagram (`policy.json`, `formats.une.prepared.instagram`) : une une du soir la
 
 Les workflows `social-delete-post`, `social-purge`, `social-repost` et `social-replace-weekend-results` sont des outils de maintenance lancés à la main. Ils ne font pas partie du cycle quotidien.
 
-Les services appelés, en plus de GitHub et de Buffer : Bluesky, Mastodon (piaille.fr), Tumblr, et, pour traduire un titre anglais de La une, les moteurs déjà utilisés par le site. Le Worker `le-radar-news-trigger` peut avancer la collecte et quelques workflows ; les crons ci-dessus suffisent s’il est arrêté.
+Les services appelés, en plus de GitHub et de Buffer : Bluesky, Mastodon (qlub.social, auparavant piaille.fr), Tumblr, et, pour traduire un titre anglais de La une, les moteurs déjà utilisés par le site. Le Worker `le-radar-news-trigger` peut avancer la collecte et quelques workflows ; les crons ci-dessus suffisent s’il est arrêté.
 
 ---
 

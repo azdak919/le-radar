@@ -1,4 +1,4 @@
-name: Social — Mastodon (@leradar@piaille.fr)
+name: Social — Mastodon (@leradar@qlub.social)
 
 # Articles frais du flux (≤ 24 h, après la mise en service), plafond de base 5/h et 50/24 h, modulé par data/social/posting-windows.json et le rodage
 # (scripts/social/rate-limit.mjs), sélection comme X au-delà. Coût : 0 $.
@@ -50,7 +50,7 @@ jobs:
       - name: Publier les articles frais
         env:
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
-          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://qlub.social' }}
           DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) || steps.live.outputs.live != 'true' && 'true' || 'false' }}
           SHARE_NOW: ${{ inputs.share_now && 'true' || 'false' }}
           SHARE_URL: ${{ inputs.share_url }}

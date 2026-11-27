@@ -541,7 +541,7 @@ const publisherLd = () => ({
     'https://www.instagram.com/le.radar.ca/', 'https://www.tiktok.com/@leradar.ca',
     'https://www.facebook.com/profile.php?id=61596092762097', 'https://www.threads.com/@le.radar.ca',
     'https://www.linkedin.com/company/le-radar-ca/', 'https://x.com/le_radar_ca',
-    'https://bsky.app/profile/le-radar.ca', 'https://piaille.fr/@leradar', `${SITE}/feed.xml`,
+    'https://bsky.app/profile/le-radar.ca', 'https://qlub.social/@leradar', `${SITE}/feed.xml`,
   ],
 });
 function reviewJsonLd(model) {

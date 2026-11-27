@@ -68,7 +68,7 @@ jobs:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
-          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://qlub.social' }}
           GH_TOKEN: ${{ github.token }}
         run: node scripts/social/revue-post.mjs --slot "$REVUE_SLOT" ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"}
       - name: Commit de l'état (data/social/revue-state.json)

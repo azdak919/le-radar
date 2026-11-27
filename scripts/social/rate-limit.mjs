@@ -5,7 +5,8 @@ import { quality, photoRank, PER_SOURCE_MAX, norm } from './lib.mjs';
 import { volumeFor, allowedByNow, postedToday, torontoDay, torontoHour } from './policy.mjs';
 import { effectiveLimits, weightAt } from './schedule.mjs';
 
-// mastodon : règles de piaille.fr (robots de liens de presse : 5/h, 50/jour).
+// mastodon : règles de piaille.fr (robots de liens de presse : 5/h, 50/jour), gardées sur qlub.social
+// tant que celles de Qlub ne sont pas confirmées (le plafond réel est déjà 3/jour, policy.json).
 // bluesky : plafond anti-pourriel interne, très en deçà de l'API (5 000 points/h, 35 000/jour,
 // une création = 3 points) — voir docs.bsky.app/docs/advanced-guides/rate-limits.
 // tumblr : API officielle = 250 publications/jour/utilisateur, 1 000 appels/h et 5 000/jour par
@@ -17,7 +18,7 @@ export const NETWORKS = {
   // spread : aucune exclusion « variété » ; une même source est étalée (tourniquet), l'excédent attend
   // (hold) au lieu d'être sauté, et le volume suit les poids horaires (pointes) avant l'échéance de 24 h.
   // Volume réel du flux ≈ 40-50/jour.
-  mastodon: { perHour: 5, perDay: 50, perRun: 2, gapSec: 90, spread: true, ramp: false }, // piaille.fr : robots ≤ 5/h, 50/jour ; API 300 req/5 min, 30 médias/30 min
+  mastodon: { perHour: 5, perDay: 50, perRun: 2, gapSec: 90, spread: true, ramp: false }, // piaille.fr (gardé sur Qlub) : robots ≤ 5/h, 50/jour ; API 300 req/5 min, 30 médias/30 min
   tumblr: { perHour: 8, perDay: 120, perRun: 3, gapSec: 120, spread: true, ramp: false }, // < 250/jour (limite officielle)
   bluesky: { perHour: 12, perDay: 150, perRun: 4, gapSec: 90, spread: true },
 };
