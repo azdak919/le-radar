@@ -1,17 +1,24 @@
 {
-  "updated": "2026-11-27T12:10:45.984Z",
-  "total": 1202,
-  "withImage": 896,
-  "withCredit": 896,
-  "cited": 627,
+  "updated": "2026-11-27T13:15:24.070Z",
+  "total": 1203,
+  "withImage": 907,
+  "withCredit": 907,
+  "cited": 638,
   "pending": 162,
   "missingHero": 0,
   "ok": false,
-  "checked": 60,
-  "updatedCount": 23,
-  "citedNew": 15,
-  "fallbackNew": 45,
+  "checked": 24,
+  "updatedCount": 3,
+  "citedNew": 2,
+  "fallbackNew": 22,
   "samples": [
+    {
+      "title": "AUS Legislative Council Discusses Quebec Independence Group Recognition",
+      "source": "The McGill Daily",
+      "credit": "Photo: Courtesy of Adair Nelson",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "Face aux écrans, une génération en quête d’équilibre",
       "source": "Quartier Libre",
@@ -20,81 +27,11 @@
       "method": null
     },
     {
-      "title": "Le mont Apica dans la mire de l’éolien régional",
-      "source": "La Pige",
-      "credit": "Photo : Charline Lachance",
+      "title": "“Are they seriously considering shooting tear gas in a school?” Armed riot police enter campus",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of Felix Sobolewski",
       "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Illustration : Mathilde Ségar",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Les artisans réclament davantage de vérifications sur les marchés de Noël",
-      "source": "La Pige",
-      "credit": "Photo : Juliette Pain",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Des étudiants du Cégep de Jonquière à « la COP qui chie »",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "En France, la colère lycéenne gagne tout le pays",
-      "source": "Quartier Libre",
-      "credit": "Photo : Clément Souchet",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Parkour – L’art de repousser ses limites",
-      "source": "Quartier Libre",
-      "credit": "Photo : Joséphine Dao-Devenyns",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "McGill Wellness Hub reinstates GAC for trans American students under the age of 19",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Reading the static and exploring long COVID’s impact on the brain’s electrical rhythm",
-      "source": "The Tribune",
-      "credit": "Photo : Lilly Guilbeault",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
-      "title": "Tricky transitions: How Mc Gillians are adjusting to a new semester",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
-      "source": "The Tribune",
-      "credit": "Photo : Gwen Heffernan",
-      "cited": true,
-      "method": "figcaption-attribution"
-    },
-    {
-      "title": "AMNAS challenges McGill at the Tribunal administratif du travail",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
-      "cited": false,
-      "method": null
+      "method": "figcaption-trailing"
     }
   ]
 }
