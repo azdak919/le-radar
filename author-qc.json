@@ -1,10 +1,26 @@
 {
-  "updated": "2026-11-27T14:38:12.454Z",
-  "total": 1203,
-  "withAuthor": 1203,
-  "mismatches": 59,
+  "updated": "2026-11-27T15:38:17.763Z",
+  "total": 1204,
+  "withAuthor": 1204,
+  "mismatches": 61,
   "ok": true,
   "samples": [
+    {
+      "title": "Children are missing their sparkle",
+      "link": "https://thelinknewspaper.ca/article/16587",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Katya Pacheco",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Embracing Uncertainty",
+      "link": "https://www.mcgilldaily.com/2026/11/embracing-uncertainty/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "LE MAG | Insouciance | Automne 2026",
       "link": "https://impactcampus.ca/le-mag/le-mag-insouciance-automne-2026/",
@@ -148,23 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "On avance quand même",
-      "link": "https://quartierlibre.ca/on-avance-quand-meme-la-peur",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Why is it important to vote?",
-      "link": "https://theplantnews.com/2026/11/03/quebec-2026-election-guide",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 59
+  "fixed": 61
 }
