@@ -12,8 +12,16 @@
     "failed": true,
     "error": "Instagram : format revue hors de cette phase"
    },
-   "tiktok": {},
-   "bluesky": {},
+   "tiktok": {
+    "attempts": 1,
+    "failed": true,
+    "error": "Buffer createPost en erreur : Whoops! We are having trouble sending notifications to your mobile device. Please try linking a mobile device to your account!"
+   },
+   "bluesky": {
+    "at": "2026-11-27T01:58:16.614Z",
+    "id": "at://did:plc:uxuxieev7fbkiji3xyyhzgae/app.bsky.feed.post/3n3b3mfb7ry22",
+    "failed": false
+   },
    "threads": {
     "at": "2026-11-27T01:40:14.539Z",
     "id": "6b08df7e70e2a88e2ce91cc7",
