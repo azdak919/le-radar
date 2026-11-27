@@ -12,7 +12,7 @@ import path from 'node:path';
 import { POLICY } from './policy.mjs';
 import { createRequire } from 'node:module';
 import { todaysStories, planWave, waveOf, waveAt, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
-import { torontoMinutes } from './une-lib.mjs';
+import { torontoMinutes, bufferWhen, montrealInstant } from './une-lib.mjs';
 import { createXBuffer } from './channels/x-buffer.mjs';
 import { createInstagramBuffer } from './instagram.mjs';
 
@@ -49,6 +49,52 @@ async function publishStory(net, image, alt, env) {
   return null;
 }
 
+// ── TikTok : carrousel « Matchs du jour » (27 nov. 2026, Charles) ─────────────────────────────────────────────────
+// Les stories TikTok ne se publient pas par Buffer, et une publication par match ferait trop pour le fil : une seule
+// publication par jour, en carrousel photo, avec les affiches 9:16 des stories du jour (déjà hébergées, dans l'ordre des
+// vagues : la plus populaire d'abord, voile comprise). Programmée dans Buffer pour 16 h (après les cours, 2 à 3 h avant
+// les matchs du soir) au passage de la 2e vague ; passage tardif : tout de suite, jusqu'à formats.matchStory.tiktok.until.
+// Aucun match : rien. Entièrement automatique (sans notification).
+export const TIKTOK = { enabled: false, at: '16:00', until: '18:30', max: 10, channelName: '*', ...(CFG.tiktok || {}) };
+const hmMin = (s) => { const [h, m] = String(s).split(':').map(Number); return h * 60 + (m || 0); };
+/** Affiches du jour déjà hébergées, dans l'ordre de publication des stories. */
+export function tiktokEntries(state, day, max = TIKTOK.max) {
+  return Object.values(state || {}).filter((e) => e && String(e.key || '').startsWith(`${day}:`) && !String(e.key).endsWith(':tiktok') && e.image).slice(0, max);
+}
+const frDay = (day) => new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(`${day}T12:00:00Z`));
+/** Légende courte, lisible même aplatie (comme la revue sur TikTok). */
+export function tiktokCaption(day, entries, total = entries.length) {
+  const n = Math.max(total, entries.filter((e) => !/^Aussi aujourd/.test(e.what || '')).length);
+  const star = entries.find((e) => e.what && !/^Aussi aujourd/.test(e.what));
+  return [
+    `🏟️ Les matchs du jour · ${frDay(day)} : ${n} rencontre${n > 1 ? 's' : ''} du sport étudiant à faire défiler ➡️`,
+    star ? `À ne pas manquer : ${star.what}.` : '',
+    'Tous les matchs : lien en bio.',
+    '#SportÉtudiant #RSEQ #VieÉtudiante #Québec',
+  ].filter(Boolean).join('\n');
+}
+async function tiktokPass({ now, day, state, total, env }) {
+  if (!TIKTOK.enabled || !CFG.publish) return;
+  const t = torontoMinutes(now);
+  if (t < hmMin('15:00') || t > hmMin(TIKTOK.until)) return; // 2e vague seulement : les affiches du jour sont toutes là
+  const key = `${day}:tiktok`, d = state[key];
+  if ((d?.at && !d.failed) || (d?.attempts || 0) >= 3) return;
+  const entries = tiktokEntries(state, day);
+  if (!entries.length) { console.log('TikTok : aucun match aujourd’hui, rien à publier.'); return; }
+  if (!env.BUFFER_INSTAGRAM_API_KEY) { console.log('TikTok : BUFFER_INSTAGRAM_API_KEY absent, sauté.'); return; }
+  const when = bufferWhen(day, TIKTOK.at, Date.now());
+  try {
+    const ch = createXBuffer({ key: env.BUFFER_INSTAGRAM_API_KEY, service: 'tiktok', channelName: TIKTOK.channelName, fallbackId: env.BUFFER_TIKTOK_CHANNEL_ID || null });
+    const post = await ch.add({ text: tiktokCaption(day, entries, total), ...when, images: entries.map((e) => ({ url: e.image, alt: e.alt })) });
+    state[key] = { key, at: new Date().toISOString(), id: post.id, images: entries.length, ...(when.dueAt ? { dueAt: when.dueAt } : {}) };
+    console.log(`→ tiktok « Matchs du jour » : ${post.id} (${entries.length} affiche(s)${when.dueAt ? `, programmée pour ${new Date(when.dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })}` : ''})`);
+  } catch (e) {
+    state[key] = { key, failed: true, attempts: (d?.attempts || 0) + 1, error: String(e.message).slice(0, 200), lastTry: new Date().toISOString() };
+    console.log(`::warning::tiktok « Matchs du jour » : échec (${String(e.message).slice(0, 200)}), réessai au prochain passage (3 au plus).`);
+  }
+  fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
+}
+
 async function main() {
   const now = arg('now') ? Date.parse(arg('now')) : Date.now();
   const dry = process.env.DRY_RUN !== 'false', force = process.argv.includes('--force') || process.env.MATCH_STORY_FORCE === 'true';
@@ -70,9 +116,10 @@ async function main() {
   const plan = waves.flatMap((w) => { const p = planWave(all.filter((m) => waveOf(m, CFG.waves || WAVES) === w.id), { maxPerWave: CFG.maxPerWave || 4 }); return p.map((m, i) => ({ m, i, total: p.length, wave: w.id })); });
   const matches = plan.map((x) => x.m);
   console.log(`Story match du jour ${day} : ${all.length} rencontre(s), ${plan.length} story(s) planifiée(s) — ${plan.map((x) => `[${x.wave}] ${x.m.kind === 'more' ? `Aussi aujourd’hui (${x.m.items.length})` : label(x.m)}`).join(', ')}.`);
+  const tiktokEnv = { ...process.env };
   if (!matches.length) return;
   const todo = plan.map((x) => ({ ...x, key: matchKey(x.m) })).filter((x) => dry || pendingNets(state[x.key], nets).length);
-  if (!todo.length) { console.log('Toutes les stories du jour sont déjà publiées.'); return; }
+  if (!todo.length) { console.log('Toutes les stories du jour sont déjà publiées.'); if (!dry) await tiktokPass({ now, day, state, total: all.length, env: tiktokEnv }); return; }
   const { renderImages } = await import('./une-render.mjs');
   const { hostImages } = await import('./une-run.mjs');
   const env = { ...process.env, pages: rd('data/social/buffer-pages.json') };
@@ -109,6 +156,8 @@ async function main() {
       fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
     }
   }
+  if (!dry) await tiktokPass({ now, day, state, total: all.length, env: tiktokEnv });
+  else { const e = tiktokEntries(state, day); summary.push('', `TikTok « Matchs du jour » (${TIKTOK.enabled ? `${TIKTOK.at}` : 'éteint'}) :`, '```text', tiktokCaption(day, e.length ? e : plan.map((x) => ({ what: x.m.kind === 'more' ? 'Aussi aujourd’hui' : label(x.m) })), all.length), '```'); }
   fs.writeFileSync(path.join(out, 'apercu-match-story.md'), summary.join('\n') + '\n');
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary.join('\n') + '\n');
 }
