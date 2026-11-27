@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-11-27T02:37:17.644Z",
+  "updatedAt": "2026-11-27T04:07:02.952Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Crooch Control",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/crooch-control/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Crooch Control",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-11-27T02:36:20.957Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
-        "title": "La grande ludothèque (reprise)",
-        "source": "schedule",
-        "start": "23:00",
-        "end": "01:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T02:36:40.093Z"
+      "checkedAt": "2026-11-27T04:06:22.496Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La grande ludothèque (reprise)",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "01:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "01:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "La grande ludothèque (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-11-27T04:06:35.837Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Chaud Pour/Francis",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "You Need A Heart To Live 2",
         "source": "api-live",
         "start": "23:00",
         "end": "01:00"
       },
+      "next": {
+        "title": "Listen! You Smell Something?",
+        "source": "api-live",
+        "start": "01:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Chaud Pour/Francis",
+      "showTitle": "You Need A Heart To Live 2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T02:36:43.294Z"
+      "checkedAt": "2026-11-27T04:06:39.245Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The 514",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-514"
+        "title": "Death of the Midrange",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
       },
       "next": {
-        "title": "How Did We Get Here?",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/how-did-we-get-here"
+        "title": "Finally Midnight",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "track": "",
-      "showTitle": "The 514",
+      "showTitle": "Death of the Midrange",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T02:36:55.680Z"
+      "checkedAt": "2026-11-27T04:06:41.254Z"
     },
     "cfak": {
       "id": "cfak",
@@ -129,18 +122,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T02:36:56.635Z"
+      "checkedAt": "2026-11-27T04:06:42.222Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le grand maître des jeux",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "schedule",
@@ -148,16 +135,16 @@
         "end": "12:30",
         "url": "https://www.choq.ca/balados/box-sophisme"
       },
-      "track": "sequence — 484",
-      "showTitle": "Le grand maître des jeux",
+      "track": "Empress Of — Blue Light (feat. Blood Orange)",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T02:37:17.293Z"
+      "checkedAt": "2026-11-27T04:07:02.601Z"
     }
   }
 }
