@@ -1,23 +1,14 @@
 {
-  "updated": "2026-11-27T11:15:12.116Z",
+  "updated": "2026-11-27T12:08:22.882Z",
   "total": 1202,
   "pool": 61,
   "incomplete": 27,
-  "withLeadExcerpt": 296,
+  "withLeadExcerpt": 299,
   "candidates": 27,
-  "enriched": 0,
-  "failed": 5,
+  "enriched": 3,
+  "failed": 2,
   "ok": true,
   "samples": [
-    {
-      "title": "Étudier, sans savoir de quoi demain sera fait",
-      "link": "https://www.delitfrancais.com/2026/11/25/etudier-sans-savoir-de-quoi-demain-sera-fait/",
-      "ok": true,
-      "score": 100,
-      "chars": 474,
-      "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
-      "changed": false
-    },
     {
       "title": "Deux mois de Parti québécois",
       "link": "https://www.delitfrancais.com/2026/11/25/deux-mois-de-parti-quebecois/",
@@ -43,6 +34,15 @@
       "score": 96,
       "chars": 291,
       "sample": "Cette décision était attendue depuis le mois dernier, lorsque les membres de la Faculté des arts, de",
+      "changed": false
+    },
+    {
+      "title": "Étudier, sans savoir de quoi demain sera fait",
+      "link": "https://www.delitfrancais.com/2026/11/25/etudier-sans-savoir-de-quoi-demain-sera-fait/",
+      "ok": true,
+      "score": 100,
+      "chars": 474,
+      "sample": "Une semaine de cours suspendus, plusieurs dizaines de milliers de personnes dans la rue, et un aveni",
       "changed": false
     },
     {

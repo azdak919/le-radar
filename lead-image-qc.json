@@ -1,90 +1,48 @@
 {
-  "updated": "2026-11-27T11:15:24.067Z",
+  "updated": "2026-11-27T12:08:50.215Z",
   "total": 1202,
-  "withPhoto": 858,
-  "withStock": 150,
-  "withCampusBank": 122,
-  "fullyCovered": 975,
-  "leadReadyPhotos": 901,
-  "pageScraped": 2,
-  "photosRecovered": 2,
-  "imagesCleared": 12,
-  "stockSearches": 15,
-  "stockFound": 29,
-  "campusBankFound": 27,
+  "withPhoto": 897,
+  "withStock": 145,
+  "withCampusBank": 119,
+  "fullyCovered": 1009,
+  "leadReadyPhotos": 934,
+  "pageScraped": 42,
+  "photosRecovered": 42,
+  "imagesCleared": 1,
+  "stockSearches": 5,
+  "stockFound": 27,
+  "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Cinq nouvelles de la semaine",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-14",
+      "title": "Concordia University could be complicit in human rights violations if its research is used to “crack down on human rights,” Human Rights Watch Asia director says",
+      "link": "https://theconcordian.com/2026/11/concordia-complicit-in-human-rights-violations-watchdog-says/",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Un débat des chef·fe·s pour la jeunesse",
-      "link": "https://quartierlibre.ca/elections-debat-des-cheffes-jeunesse",
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Parti québécois : un cadre financier « prudent », mais encore flou ?",
-      "link": "https://quartierlibre.ca/parti-quebecois-cadre-financier",
-      "reason": "no-stock-match",
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
       "image": null
     },
     {
-      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
-      "link": "https://thetribune.ca/opinion/commentary/clear-bags-a-simple-remedy-for-montreals-lacklustre-composting-habits-08092026/",
-      "reason": "no-stock-match",
-      "image": null
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     },
     {
-      "title": "Meta’s $18 billion USD settlement is just loose change",
-      "link": "https://thetribune.ca/opinion/metas-18-billion-usd-settlement-is-just-loose-change08092026/",
+      "title": "What we liked this summer break",
+      "link": "https://thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
       "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "HIV care informed by social determinants of health",
-      "link": "https://thetribune.ca/sci-tech/hiv-care-informed-by-social-determinants-of-health-08092026/",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Your McGill program, your next cafe",
-      "link": "https://www.thetribune.ca/student-life/your-mcgill-program-your-next-cafe-08092026",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Une 6e coopérative en vue à Jonquière : Loge m’entraide demande l’appui des candidats",
-      "link": "https://lapige.atmjonquiere.com/2026/09/04/une-6e-cooperative-en-vue-a-jonquiere-loge-mentraide-demande-lappui-des-candidats",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Et si on parlait de travail autrement : une soirée pour réinventer le travail, ensemble",
-      "link": "https://lapige.atmjonquiere.com/2026/09/04/et-si-on-parlait-de-travail-autrement-une-soiree-pour-reinventer-le-travail-ensemble",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "Kimi Antonelli sacré plus jeune champion du monde de Formule 1",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/kimi-antonelli-sacre-plus-jeune-champion-du-monde-de-formule-1/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORTS_KimiAntonelli_CreditKuyper.jpg"
-    },
-    {
-      "title": "Cycling world championships return to Montreal after 50 years",
-      "link": "https://thetribune.ca/sports/cycling-world-championships-return-to-montreal-after-50-years-08092026/",
-      "reason": "no-stock-match",
-      "image": null
-    },
-    {
-      "title": "‘The Tribune’ Explains: How to vote in Quebec’s 2026 general election",
-      "link": "https://thetribune.ca/news/the-tribune-explains/the-tribune-explains-how-to-vote-in-quebecs-2026-general-election-08092026/",
-      "reason": "no-stock-match",
-      "image": null
+      "image": "https://thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg"
     }
   ]
 }
