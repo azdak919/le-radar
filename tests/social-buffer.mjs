@@ -3,7 +3,7 @@
 process.env.FORBIDDEN_NAMES = 'dupont'; // fictif : indépendant du secret CI
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { parseFeed, markImages, buildText, selectItems, xlen, mentionHead, unknownAccounts, stripUtm, slotsToday, selectDaily, freeSlots, quality, DAILY_SLOTS } from '../scripts/social/lib.mjs';
+import { parseFeed, markImages, buildText, selectItems, xlen, mentionHead, unknownAccounts, stripUtm, slotsToday, selectDaily, freeSlots, quality, DAILY_SLOTS, articlePlaces, X_RESERVE } from '../scripts/social/lib.mjs';
 import { isAuthFailure } from '../scripts/social/channels/x-buffer.mjs';
 import { BAD } from '../scripts/social/image-resolve.mjs';
 
@@ -220,3 +220,18 @@ console.log('social-buffer: ok');
   assert.deepEqual(d.map(i => i.source), ['Jour'], 'soir : articles du jour');
   console.log('social-buffer (passe du soir): OK');
 }
+
+// File X : X_RESERVE places toujours libres pour La une, La revue et les formats (27 nov. 2026, file 10/10).
+assert.equal(X_RESERVE, 2);
+assert.equal(articlePlaces(0, 0), 8);
+assert.equal(articlePlaces(8, 0), 0, '8 en file : plus aucun article un à un');
+assert.equal(articlePlaces(7, 0), 1);
+assert.equal(articlePlaces(6, 1), 1, 'les échecs occupent aussi des places');
+assert.equal(articlePlaces(10, 0), 0, 'jamais négatif');
+assert.equal(articlePlaces(3, 0, { reserve: 0 }), 7);
+{
+  const src = fs.readFileSync(new URL('../scripts/social/buffer-post.mjs', import.meta.url), 'utf8');
+  assert.match(src, /reduced = !process\.env\.SLOT_TIMES && !shareNow \? volumeFor/, 'plafond X aussi en lancement manuel');
+  assert.match(src, /articlePlaces\(queued\.length, errored\.length\)/, 'réserve de la file X appliquée');
+}
+console.log('réserve de la file X : ok');

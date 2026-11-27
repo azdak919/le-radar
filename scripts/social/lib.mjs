@@ -11,6 +11,11 @@ export const QUEUE_MAX = 10;     // forfait gratuit Buffer : 10 posts planifiés
  * le script ne voyait que les 7 programmées.
  */
 export const freePlaces = (queuedCount = 0, erroredCount = 0, max = QUEUE_MAX) => Math.max(0, max - queuedCount - erroredCount);
+// Places de la file X gardées pour La une, La revue et les formats natifs (27 nov. 2026 : la file remplie
+// d'articles un à un, 10/10, a fait refuser la revue du matin). Les articles un à un n'y entrent jamais.
+export const X_RESERVE = 2;
+export const articlePlaces = (queuedCount = 0, erroredCount = 0, { reserve = X_RESERVE, max = QUEUE_MAX } = {}) =>
+  Math.max(0, freePlaces(queuedCount, erroredCount, max) - reserve);
 /**
  * Réconcilie l'état local avec la file Buffer réelle : une publication encore à venir (dueAt futur)
  * dont l'id n'est plus en file a été supprimée dans Buffer (ex. files vidées le 25 nov. 2026).
