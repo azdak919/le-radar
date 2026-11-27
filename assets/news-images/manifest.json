@@ -21,16 +21,6 @@
       "via": "origin",
       "nameKey": "images-copie.jpg"
     },
-    "72a7534c65b78c07": {
-      "local": "assets/news-images/72a7534c65b78c07.jpg",
-      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FportraitGenieMath.png?alt=media&token=3113ab51-1f59-4142-8d92-a62179e5bbe3",
-      "host": "firebasestorage.googleapis.com",
-      "bytes": 306223,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-11-12T16:08:55.549Z",
-      "via": "resize-proxy",
-      "nameKey": "portraitgeniemath.png"
-    },
     "00c8f23dfa23b7b7": {
       "local": "assets/news-images/00c8f23dfa23b7b7.jpg",
       "remote": "https://www.mcgilldaily.com/wp-content/uploads/2026/11/Google-Keep-Google-Chrome-08-Nov-26-11_19_04-PM.png",
@@ -3125,10 +3115,57 @@
       "updatedAt": "2026-11-27T21:08:33.390Z",
       "via": "resize-proxy",
       "nameKey": "img_0549-3.jpg"
+    },
+    "27e9d51a4b666e1a": {
+      "local": "assets/news-images/27e9d51a4b666e1a.jpg",
+      "remote": "https://lecollectif.ca/wp-content/uploads/2026/11/CULTURE_Adisq_Angine_de_Poitrine_Credit-Paul-Hudson-Wikimedia-Commons.jpg",
+      "host": "lecollectif.ca",
+      "bytes": 97822,
+      "updatedAt": "2026-11-27T23:08:47.317Z",
+      "via": "disk",
+      "nameKey": "culture_adisq_angine_de_poitrine_credit-paul-hudson-wikimedia-commons.jpg"
+    },
+    "fdc9e1923de14731": {
+      "local": "assets/news-images/fdc9e1923de14731.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/image2.jpg",
+      "host": "quartierlibre.ca",
+      "bytes": 82687,
+      "updatedAt": "2026-11-27T23:08:47.336Z",
+      "via": "disk",
+      "nameKey": "image2.jpg"
+    },
+    "2bf3bfaf723c2921": {
+      "local": "assets/news-images/2bf3bfaf723c2921.jpg",
+      "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Image-1-1.jpg",
+      "host": "lapige.atmjonquiere.com",
+      "bytes": 123598,
+      "updatedAt": "2026-11-27T23:08:47.337Z",
+      "via": "disk",
+      "nameKey": "image-1-1.jpg"
+    },
+    "42cdc92d906c225b": {
+      "local": "assets/news-images/42cdc92d906c225b.jpg",
+      "remote": "https://quartierlibre.ca/wp-content/uploads/2026/11/MedecinsImage.png",
+      "host": "quartierlibre.ca",
+      "bytes": 58601,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-27T23:08:48.431Z",
+      "via": "resize-proxy",
+      "nameKey": "medecinsimage.png"
+    },
+    "34bf3fba5e9f3b1f": {
+      "local": "assets/news-images/34bf3fba5e9f3b1f.jpg",
+      "remote": "https://leclubecole.com/wp-content/uploads/2026/11/image-39.png",
+      "host": "leclubecole.com",
+      "bytes": 60996,
+      "contentType": "image/jpeg",
+      "updatedAt": "2026-11-27T23:08:48.495Z",
+      "via": "resize-proxy",
+      "nameKey": "image-39.png"
     }
   },
-  "updatedAt": "2026-11-27T22:08:40.930Z",
-  "count": 322,
+  "updatedAt": "2026-11-27T23:08:48.527Z",
+  "count": 326,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
@@ -5542,6 +5579,30 @@
     "6652aa068d12dd9c": {
       "reason": "budget",
       "at": "2026-11-27T21:08:33.413Z"
+    },
+    "ceffda555dece407": {
+      "reason": "budget",
+      "at": "2026-11-27T23:08:48.504Z"
+    },
+    "57a3b905ae46486e": {
+      "reason": "budget",
+      "at": "2026-11-27T23:08:48.509Z"
+    },
+    "e5a40697558babc3": {
+      "reason": "budget",
+      "at": "2026-11-27T23:08:48.513Z"
+    },
+    "d08b31cb1192ff72": {
+      "reason": "budget",
+      "at": "2026-11-27T23:08:48.516Z"
+    },
+    "e8fabd6c27ec8909": {
+      "reason": "budget",
+      "at": "2026-11-27T23:08:48.520Z"
+    },
+    "72a7534c65b78c07": {
+      "reason": "budget",
+      "at": "2026-11-27T23:08:48.525Z"
     }
   }
 }
