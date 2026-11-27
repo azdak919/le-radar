@@ -5,13 +5,14 @@ name: Social — Story match du jour
 # (une seule story par match et par réseau, 3 essais au plus). Deux vagues (matin, fin d'après-midi) ; un match déjà commencé n'est pas publié.
 # Les crons GitHub sont en UTC et partent souvent en retard : un passage pour l'heure d'été (HAE), un pour l'heure d'hiver (HNE), un secours.
 on:
+  # Dès 7 h (heure de Montréal), toutes les stories du jour sont préparées puis programmées dans Buffer à l'heure de leur
+  # vague (9 h, 15 h) : les crons peuvent partir en retard ou pas du tout (27 nov. 2026), on passe donc souvent et tôt.
+  # La porte (--gate, sans navigateur) ne fait rien s'il ne reste ni story ni TikTok à faire.
   schedule:
-    # Vague du matin (9 h – 15 h, heure de Montréal)
-    - cron: '41 13,14 * * *'  # 9 h 41 HAE / 9 h 41 HNE (l'autre heure tombe hors vague ou ne trouve rien de neuf)
-    - cron: '41 16 * * *'     # secours : 11 h 41 HNE / 12 h 41 HAE
-    # Vague de fin d'après-midi (15 h – 19 h 30) : 2 à 3 h avant les matchs de soirée
-    - cron: '23 19,20 * * *'  # 15 h 23 HAE / 15 h 23 HNE
-    - cron: '23 21 * * *'     # secours : 16 h 23 HNE / 17 h 23 HAE
+    - cron: '7,37 11-23 * * *'   # toutes les 30 min, 7 h – 19 h 30 (heure d'été et d'hiver) ; hors fenêtre : rien
+  workflow_run:
+    workflows: ['Update Student News']
+    types: [completed]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -47,21 +48,32 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci --no-audit --no-fund
+      - id: g
+        name: Porte (reste-t-il une story ou le TikTok du jour ?)
+        env:
+          DRY_RUN: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
+          NOW_OVERRIDE: ${{ inputs.now || '' }}
+          MATCH_STORY_FORCE: ${{ inputs.force && 'true' || 'false' }}
+        run: node scripts/social/match-story-run.mjs --gate ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"}
+      - if: steps.g.outputs.due == 'true'
+        run: npm ci --no-audit --no-fund
       - name: Cache Playwright Chromium
+        if: steps.g.outputs.due == 'true'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - name: Install Chromium
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        if: steps.g.outputs.due == 'true' && steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
       - name: Police émoji (émoji du sport sur l'affiche)
+        if: steps.g.outputs.due == 'true'
         run: sudo apt-get install -y -qq fonts-noto-color-emoji >/dev/null || echo "::warning::police émoji indisponible"
       - name: Affiches et publication éventuelle
+        if: steps.g.outputs.due == 'true'
         env:
-          DRY_RUN: ${{ (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
+          DRY_RUN: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)) && 'false' || 'true' }}
           NOW_OVERRIDE: ${{ inputs.now || '' }}
           MATCH_STORY_FORCE: ${{ inputs.force && 'true' || 'false' }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
@@ -69,13 +81,13 @@ jobs:
           BUFFER_INSTAGRAM_API_KEY: ${{ secrets.BUFFER_INSTAGRAM_API_KEY }}
         run: node scripts/social/match-story-run.mjs ${NOW_OVERRIDE:+--now "$NOW_OVERRIDE"} --out match-story-preview
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
+        if: always() && steps.g.outputs.due == 'true'
         with:
           name: apercu-story-match
           path: match-story-preview/
           if-no-files-found: ignore
       - name: Commit de l'état (data/social/match-story-state.json)
-        if: always()
+        if: always() && steps.g.outputs.due == 'true'
         run: |
           git diff --quiet -- data/social/match-story-state.json && { echo "État inchangé."; exit 0; }
           git config user.name "Azdak"

@@ -39,7 +39,17 @@ fs.mkdirSync(path.join(root, L.TEAM_LOGO_DIR), { recursive: true });
 fs.writeFileSync(path.join(root, L.TEAM_LOGO_DIR, 'mcgill.svg'), '<svg/>');
 assert.equal(L.teamLogo('mcgill', { root }), '../assets/logos/teams/mcgill.svg');
 assert.equal(L.teamLogo('../etc', { root }), '');
-assert.equal(L.matchStoryModel(all[0], { root }).match.home.logo, '../assets/logos/teams/mcgill.svg');
+// Les deux ou aucun (27 nov. 2026) : un seul logo déposé → aucun des deux.
+assert.equal(L.matchStoryModel(all[0], { root }).match.home.logo, '', 'un seul logo : aucun');
+assert.equal(L.matchStoryModel(all[0], { root }).match.away.logo, '');
+{
+  const regs = all[0].teams.map((t) => t.reg).filter(Boolean);
+  for (const r of regs) fs.writeFileSync(path.join(root, L.TEAM_LOGO_DIR, `${r}.svg`), '<svg/>');
+  const both = L.matchStoryModel(all[0], { root }).match;
+  if (regs.length === 2) { assert.ok(both.home.logo && both.away.logo, 'deux logos déposés : les deux'); }
+}
+// Vagues : heure de publication programmée dans Buffer (9 h, 15 h).
+assert.deepEqual(L.WAVES.map((w) => w.post), ['09:00', '15:00']);
 
 // Fenêtre d'envoi (heure de Montréal) et état.
 assert.equal(L.storyWindow(Date.parse('2026-11-26T15:30:00Z')).due, true);   // 10 h 30 HNE
