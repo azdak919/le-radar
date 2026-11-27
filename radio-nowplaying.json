@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-27T21:06:34.951Z",
+  "updatedAt": "2026-11-27T22:37:03.153Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Remparts de Québec",
+        "source": "schedule-live",
+        "start": "18:45",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T21:06:18.171Z"
+      "checkedAt": "2026-11-27T22:36:45.574Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T21:06:19.450Z"
+      "checkedAt": "2026-11-27T22:36:46.925Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Café",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,85 +81,88 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T21:06:22.206Z"
+      "checkedAt": "2026-11-27T22:36:50.475Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Tapeworms",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
-      },
-      "next": {
         "title": "The Groove Master's Hour",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
+      "next": {
+        "title": "The Go-Go Radio Magic Show",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+      },
       "track": "",
-      "showTitle": "Tapeworms",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T21:06:24.530Z"
+      "checkedAt": "2026-11-27T22:36:52.770Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Remix ta console",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:30",
         "end": "17:59",
         "url": "https://www.cfak.ca/balados/remix-ta-console"
       },
+      "next": {
+        "title": "La Récréation",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "18:59",
+        "url": "https://www.cfak.ca/balados/la-recreation"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Remix ta console",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T21:06:25.531Z"
+      "checkedAt": "2026-11-27T22:36:54.217Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Histoire de passer le temps",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
-      },
-      "next": {
         "title": "La Niche",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "la-niche"
       },
+      "next": {
+        "title": "OPUS",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "opus"
+      },
       "track": "- ID Alix Fernz.mp3",
-      "showTitle": "Histoire de passer le temps",
+      "showTitle": "La Niche",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-11-27T21:06:34.601Z"
+      "clientPoll": null,
+      "checkedAt": "2026-11-27T22:37:02.802Z"
     }
   }
 }
