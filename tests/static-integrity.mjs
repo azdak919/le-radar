@@ -1443,11 +1443,14 @@ if (existsSync(archiveHub)) {
   // L’annuaire suit la fraîcheur éditoriale, pas l’ordre alphabétique.
   const pubBlock = archiveHtml.match(/<ul class="seo-archive-sources">([\s\S]*?)<\/ul>/);
   assert(pubBlock, 'archives : liste des publications requise');
-  if (pubBlock[1].includes('>Exil</a>') && pubBlock[1].includes('>The Tribune</a>')) {
-    assert(
-      pubBlock[1].indexOf('>The Tribune</a>') < pubBlock[1].indexOf('>Exil</a>'),
-      'archives : The Tribune (plus récent) avant Exil requis',
-    );
+  // Règle, pas des noms fixes : les publications vont de la plus récente à la plus ancienne (date du dernier
+  // article). L'ancien test « The Tribune avant Exil » cassait dès qu'Exil publiait — et bloquait tout le fil (26 nov. 2026).
+  {
+    const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    const dates = [...pubBlock[1].matchAll(/Dernier article : (\d{1,2})(?:er)? ([a-zéû]+) (\d{4})/g)]
+      .map(([, d, m, y]) => Date.UTC(Number(y), MOIS.indexOf(m), Number(d)));
+    assert(dates.length >= 2 && dates.every(Number.isFinite), 'archives : dates du dernier article lisibles');
+    assert(dates.every((t, i) => i === 0 || t <= dates[i - 1]), 'archives : publications de la plus récente à la plus ancienne');
   }
   const laGifleArchive = join(root, 'archives/la-gifle/index.html');
   if (existsSync(laGifleArchive)) {
