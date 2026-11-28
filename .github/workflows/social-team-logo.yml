@@ -1,6 +1,6 @@
 name: Social — Logo d'équipe depuis Commons
 
-# Manuel seulement. UN logo à la fois pour la story « Jour de match » (assets/logos/teams/, provenance dans sources.json).
+# Manuel seulement. UN logo à la fois (Commons, ou site officiel de l'équipe : page_url puis image_url) pour la story « Jour de match » (assets/logos/teams/, provenance dans sources.json).
 # Sans « Fichier Commons » : liste les candidats dans le résumé du job, rien n'est écrit.
 # Avec le fichier et « Essai » décoché : télécharge le rendu PNG (600 px), note licence et auteur, commit sur main.
 # Les serveurs de GitHub passent là où Wikimedia limite le débit d'autres réseaux (27 nov. 2026).
@@ -13,6 +13,14 @@ on:
         type: string
       commons_file:
         description: 'Fichier Commons (File:… ou lien) ; vide = lister les candidats'
+        required: false
+        type: string
+      page_url:
+        description: 'OU page du site officiel (ex. carabins.umontreal.ca/…) : liste les logos trouvés'
+        required: false
+        type: string
+      image_url:
+        description: 'Image choisie sur le site officiel (https, png/webp/svg)'
         required: false
         type: string
       query:
@@ -52,6 +60,8 @@ jobs:
           TEAM_ID: ${{ inputs.team_id }}
           COMMONS_FILE: ${{ inputs.commons_file }}
           QUERY: ${{ inputs.query }}
+          PAGE_URL: ${{ inputs.page_url }}
+          IMAGE_URL: ${{ inputs.image_url }}
           OWNER: ${{ inputs.owner }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           PREVIEW_DIR: logo-preview

@@ -211,3 +211,18 @@ console.log('logo d’équipe Commons : ok');
   assert.equal(T.author('<span>Unknown author</span>Unknown author'), '');
   assert.equal(T.author('<a href="x">Jane Doe</a>'), 'Jane Doe');
 }
+
+// Logo depuis le site officiel (28 nov. 2026) : candidats d'une page, types d'image acceptés.
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  const html = `<header><img class="site-logo" src="/img/udem.svg" alt="UdeM"></header>
+    <div class="team-header"><img src="https://cdn.ex.org/carabins-logo.png" srcset="https://cdn.ex.org/carabins-logo@2x.png 2x" alt="Carabins"></div>
+    <img src="/photos/joueur.jpg" alt="Un joueur"><meta property="og:image" content="https://ex.org/og.jpg">`;
+  const urls = T.logoCandidates(html, 'https://carabins.umontreal.ca/football/').map((c) => c.url);
+  assert.deepEqual(urls, ['https://carabins.umontreal.ca/img/udem.svg', 'https://cdn.ex.org/carabins-logo.png', 'https://cdn.ex.org/carabins-logo@2x.png', 'https://ex.org/og.jpg']);
+  assert.equal(T.imageExt(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0])), 'png');
+  assert.equal(T.imageExt(Buffer.from('<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0"/></svg>')), 'svg');
+  assert.equal(T.imageExt(Buffer.from('<svg onload="alert(1)"></svg>')), '', 'SVG avec script refusé');
+  assert.equal(T.imageExt(Buffer.from('<html>non</html>')), '');
+}
+console.log('logo d’équipe site officiel : ok');
