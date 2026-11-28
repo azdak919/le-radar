@@ -32,6 +32,16 @@ export function reconcileSent(sent = {}, queuedPostIds = [], now = Date.now()) {
   }
   return gone;
 }
+/**
+ * Plafond ramené à 0 (ex. Facebook, LinkedIn, Threads le 27 nov. 2026) : les articles un à un déjà
+ * programmés dans Buffer partaient quand même à leur heure. Retourne les publications en file à retirer :
+ * seulement celles que CE robot a programmées (postId dans `sent` : jamais la une, la revue ni un post
+ * ajouté à la main), encore à venir (> 10 min, pour ne pas courir après un envoi en cours).
+ */
+export function purgeablePosts(sent = {}, queued = [], now = Date.now()) {
+  const mine = new Map(Object.entries(sent).filter(([, s]) => s?.postId).map(([id, s]) => [s.postId, id]));
+  return queued.filter(p => mine.has(p.id) && Date.parse(p.dueAt || '') > now + 10 * 60e3).map(p => ({ postId: p.id, articleId: mine.get(p.id), dueAt: p.dueAt }));
+}
 /** Avertissement quand les échecs prennent des places : à supprimer (ou relancer) dans Buffer. */
 export function blockedMessage(net, queuedCount, erroredCount, max = QUEUE_MAX) {
   if (!erroredCount) return '';

@@ -117,6 +117,14 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
       if (!r?.post?.id) throw new Error(`Buffer editPost refusé : ${r?.message || JSON.stringify(r)}`);
       return r.post;
     },
+    // Retire une publication EN FILE (l'API ne retire pas ce qui est déjà publié).
+    async remove(id) {
+      const d = await gql(`mutation($i: DeletePostInput!) { deletePost(input: $i) {
+        ... on DeletePostSuccess { id } ... on VoidMutationError { message } } }`, { i: { id } });
+      const r = d?.deletePost;
+      if (!r?.id) throw new Error(`Buffer deletePost refusé : ${r?.message || JSON.stringify(r)}`);
+      return r.id;
+    },
     // document : { url, title, thumbnailUrl } — PDF joint (LinkedIn l'affiche en carrousel ; DocumentAssetInput de Buffer).
     // images : [{ url, alt }] — plusieurs photos dans une publication (carrousel Instagram, mosaïque Facebook ; 10 au plus).
     async add({ text, image, alt, dueAt, now = false, metadata, document, images }) {

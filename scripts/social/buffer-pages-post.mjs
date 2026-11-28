@@ -6,7 +6,7 @@
 // Usage : node scripts/social/buffer-pages-post.mjs [--dry-run] [--feed fichier.xml]   (PAGES=facebook,linkedin)
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, QUEUE_MAX, freePlaces, blockedMessage, reconcileSent, refreshPhotoLine, stripUtm } from './lib.mjs';
+import { parseFeed, markImages, QUEUE_MAX, freePlaces, blockedMessage, reconcileSent, purgeablePosts, refreshPhotoLine, stripUtm } from './lib.mjs';
 import { createRequire } from 'node:module';
 import privacyGuard from '../privacy-guard.js';
 const { articleId } = createRequire(import.meta.url)('../../mobile/app/js/core.js');
@@ -98,6 +98,17 @@ for (const net of networks) {
     if (!dry) { await ch.editText(p.id, r); p.text = r; }
   }
   const now = Date.now();
+  // Plafond à 0 : les articles un à un encore programmés par ce robot sont retirés de la file Buffer.
+  if (ch && !shareUrl && Number(cfg.perDay) === 0) {
+    const purge = purgeablePosts(sent, queued, now);
+    if (purge.length) console.log(`${net} : plafond à 0 — ${purge.length} article(s) un à un encore en file${dry ? ' (essai : rien retiré)' : ', retirés de Buffer'} : ${purge.map(x => `${x.postId} (${x.dueAt})`).join(', ')}`);
+    if (!dry) for (const x of purge) {
+      try { await ch.remove(x.postId); delete sent[x.articleId]; queued = queued.filter(p => p.id !== x.postId); console.log(`→ retiré de Buffer ${net} : ${x.postId}`); }
+      catch (e) { if (e instanceof AuthError) { console.error(`::error::${e.message}`); process.exit(1); }
+        console.log(`::warning::${net} : retrait de ${x.postId} refusé (${e.message.slice(0, 200)})`); problems.push(`- **${net}** : article un à un ${x.postId} encore en file, retrait refusé — ${e.message.slice(0, 200)}`); }
+    }
+    if (purge.length && !dry) save();
+  }
   if (ch) { const gone = reconcileSent(sent, queued.map(p => p.id), now); if (gone.length) console.log(`${net} : ${gone.length} publication(s) à venir absentes de Buffer (supprimées) oubliées de l'état : ${gone.join(', ')}`); }
   const taken = [...queued.map(p => p.dueAt), ...Object.values(sent).map(s => s.dueAt || s.at)].filter(Boolean);
   const free = freePlaces(queued.length, errored.length);
