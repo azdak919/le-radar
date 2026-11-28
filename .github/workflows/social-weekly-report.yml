@@ -40,7 +40,7 @@ jobs:
       - name: Bilan
         env:
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
-          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://qlub.social' }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
           TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
           DAYS: ${{ inputs.days || '7' }}
         run: node scripts/social/weekly-report.mjs --days "$DAYS"

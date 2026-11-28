@@ -10,7 +10,7 @@
 //
 // DÉSACTIVÉE par défaut : data/social/policy.json → automation.ai_en_accroche (false), ou
 // SOCIAL_AI_EN_ACCROCHE=on|off (essai). Workers AI, forfait GRATUIT seulement (mêmes secrets que
-// ai-hook.mjs). Jamais sur Mastodon (piaille.fr interdisait le texte généré par IA ; règle gardée sur Qlub), jamais en français.
+// ai-hook.mjs). Jamais sur Mastodon (piaille.fr interdit le texte généré par IA), jamais en français.
 //
 // Partage des rôles, pour ne rien inventer :
 // - média, établissement et auteur viennent des MÉTADONNÉES (flux, news.json), jamais de l'IA ;
@@ -30,7 +30,7 @@ const require = createRequire(import.meta.url);
 
 /** Modèle : Gemma 4 26B A4B (MoE, 4 B actifs), bon en français et peu coûteux en neurones. */
 export const EN_MODEL = process.env.SOCIAL_AI_EN_MODEL || '@cf/google/gemma-4-26b-a4b-it';
-/** Réseaux couverts. Mastodon exclu exprès (règle de piaille.fr, gardée sur Qlub), Tumblr et Pages non concernés. */
+/** Réseaux couverts. Mastodon exclu exprès (règles de piaille.fr), Tumblr et Pages non concernés. */
 export const EN_NETWORKS = new Set(['x', 'bluesky']);
 // Budget : ~1 500 jetons d'entrée + ~150 de sortie ≈ 20 neurones par appel avec Gemma 4 26B
 // (9 091 / M en entrée, 27 273 / M en sortie). Plafond par exécution : 4 appels.

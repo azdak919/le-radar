@@ -18,7 +18,7 @@ jobs:
       - name: Envoyer les images
         env:
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
-          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://qlub.social' }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
         run: |
           set -euo pipefail
           code=$(curl -s -o /tmp/r.json -w '%{http_code}' -X PATCH "$MASTODON_INSTANCE/api/v1/accounts/update_credentials" \

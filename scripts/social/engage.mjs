@@ -92,7 +92,7 @@ async function mastodon() {
       const id = 'masto:' + r.uri; if (seen(state, id)) continue;
       if (budget(state, 'mastodon', now) < 1) return report.mastodon = { posts, acts, note: 'plafond quotidien' };
       const text = String(r.content || '').replace(/<[^>]+>/g, ' ');
-      // Aucune IA sur Mastodon (règle de piaille.fr, gardée sur Qlub) : filtre déterministe seulement, et seulement le clairement positif.
+      // Aucune IA sur piaille.fr : filtre déterministe seulement, et seulement le clairement positif.
       const okA = okAccount({ followers: r.account.followers_count, createdAt: r.account.created_at, posts: r.account.statuses_count, name: r.account.display_name }, now) && !r.account.bot;
       const d = okA ? await decide(text, { noAi: true }) : null;
       log(`Mastodon ${r.url} → ${d ? 'favori' : 'ignoré'}`);
@@ -152,7 +152,7 @@ async function sourcesMastodon() {
   const base = mastodonInstance(), token = process.env.MASTODON_TOKEN; if (!token) return;
   let n = 0;
   for (const src of SRC) for (const url of src.mastodon || []) {
-    // Résolution par l'instance du compte (recherche publique, sans jeton de lecture).
+    // Résolution par l'instance du compte (piaille.fr) (recherche publique, sans jeton de lecture).
     const u = new URL(url), acct = u.pathname.replace(/^\/@/, '') + '@' + u.hostname;
     const a = await fetch(`${base}/api/v1/accounts/lookup?acct=${encodeURIComponent(acct)}`, { signal: AbortSignal.timeout(30000) }).then(r => r.ok ? r.json() : null);
     if (!a) continue;

@@ -3,11 +3,11 @@
 // les lectures passent par l'API publique (lookup, statuts). Le jeton n'est jamais journalisé.
 import crypto from 'node:crypto';
 
-// Instance du compte du Radar : qlub.social (réseau québécois sur Mastodon), après piaille.fr.
-// Seul défaut du dépôt ; la variable de dépôt MASTODON_INSTANCE l'emporte (retour à piaille possible).
-export const MASTODON_HOME = 'https://qlub.social';
+// Instance du compte du Radar : seul défaut du dépôt (piaille.fr). La variable de dépôt
+// MASTODON_INSTANCE l'emporte. Déménagement prévu vers Mastodon Québec : docs/migration-mastodon.md.
+export const MASTODON_HOME = 'https://piaille.fr';
 export const mastodonInstance = (env = process.env) => String(env.MASTODON_INSTANCE || MASTODON_HOME).replace(/\/+$/, '');
-export const MAX_MEDIA = 8 * 1024 * 1024; // Mastodon 4 : images ≤ 8 Mo (limite de Qlub à confirmer)
+export const MAX_MEDIA = 8 * 1024 * 1024; // Mastodon 4 : images ≤ 8 Mo
 export const idemKey = id => crypto.createHash('sha256').update('le-radar:' + id).digest('hex').slice(0, 40);
 const UA = 'LE-RADAR-Mastodon/1.0 (+https://le-radar.ca/)';
 

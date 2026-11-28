@@ -43,7 +43,7 @@ jobs:
           POST_ID: ${{ inputs.post_id }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
-          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://qlub.social' }}
+          MASTODON_INSTANCE: ${{ vars.MASTODON_INSTANCE || 'https://piaille.fr' }}
           TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
           TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
           TUMBLR_TOKEN: ${{ secrets.TUMBLR_TOKEN }}

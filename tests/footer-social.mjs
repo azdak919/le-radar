@@ -18,7 +18,7 @@ const expected = {
   linkedin: 'https://www.linkedin.com/company/le-radar-ca/',
   x: 'https://x.com/le_radar_ca',
   bluesky: 'https://bsky.app/profile/le-radar.ca',
-  mastodon: 'https://qlub.social/@leradar',
+  mastodon: 'https://piaille.fr/@leradar',
   rss: 'https://le-radar.ca/feed.xml',
 };
 const on = links.filter((l) => l.enabled);
@@ -47,7 +47,7 @@ const sameAsOrder = [
   'https://www.linkedin.com/company/le-radar-ca/',
   'https://x.com/le_radar_ca',
   'https://bsky.app/profile/le-radar.ca',
-  'https://qlub.social/@leradar',
+  'https://piaille.fr/@leradar',
   'https://le-radar.ca/feed.xml',
 ];
 const indexHtml = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
