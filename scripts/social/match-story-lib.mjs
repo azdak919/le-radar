@@ -236,6 +236,21 @@ export function popularity(m) {
  *  - voile (régate, résultats) : TOUJOURS publiée, en affiche, hors plafond (décision de Charles, 26 nov. 2026).
  * Retourne les stories dans l'ordre de publication (la plus forte en premier : l'attention baisse à chaque story).
  */
+/**
+ * Plan d'une vague qui tient en `size` stories au plus (places libres de la file Buffer) : les plus populaires en
+ * grandes affiches, le reste dans « Aussi aujourd'hui » — jamais un match perdu. size 1 : une seule liste.
+ */
+export function fitWave(stories, size) {
+  if (!(size > 0) || !stories.length) return [];
+  const p = planWave(stories, { maxPerWave: size });
+  if (p.length <= size) return p;
+  // Trop long d'une ou plusieurs places : les size − 1 premières en grandes affiches, tout le reste en une liste.
+  const keep = p.slice(0, size - 1);
+  const items = p.slice(size - 1).flatMap((x) => (x.kind === 'more' ? x.items : [x]))
+    .sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99')));
+  return [...keep, { kind: 'more', date: items[0].date, wave: waveOf(items[0]), uni: false, time: '', items }];
+}
+
 export function planWave(stories, { maxPerWave = 4 } = {}) {
   const sail = stories.filter((m) => String(m.kind).startsWith('regatta'));
   const pool = stories.filter((m) => !String(m.kind).startsWith('regatta'));

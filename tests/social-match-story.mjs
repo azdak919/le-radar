@@ -237,6 +237,30 @@ console.log('logo d’équipe site officiel : ok');
   assert.equal(L.teamLogo('alma-2', { root: tmp }), '../assets/logos/teams/alma.png');
   assert.equal(L.teamLogo('jonquiere-2', { root: tmp }), '');
 }
+// File Buffer (10 par canal, forfait gratuit) : une vague ne se programme qu'au plus 2 h avant son heure, et sa taille
+// suit les places libres ; jamais un match perdu (le surplus passe dans « Aussi aujourd'hui »).
+{
+  const R = await import('../scripts/social/match-story-run.mjs');
+  const [matin, soir] = L.WAVES, day = '2026-11-28', at = (iso) => Date.parse(iso);
+  assert.equal(R.waveDue(matin, day, at('2026-11-28T12:05:00Z')), true, '7 h 05 : vague de 9 h');
+  assert.equal(R.waveDue(soir, day, at('2026-11-28T12:05:00Z')), false, '7 h 05 : pas encore celle de 15 h');
+  assert.equal(R.waveDue(soir, day, at('2026-11-28T18:05:00Z')), true, '13 h 05 : vague de 15 h');
+  assert.equal(R.waveSize(6, 3), 3); assert.equal(R.waveSize(6, Infinity), 6); assert.equal(R.waveSize(6, 0), 0);
+  const mk = (i) => ({ kind: 'avenir', date: day, time: '19:00', sport: 'Basketball', sportKey: 'basketball', uni: i < 2, teams: [{ name: 'A' + i }, { name: 'B' + i }], verb: 'reçoit', gameId: 'g' + i });
+  const seven = [0, 1, 2, 3, 4, 5, 6].map(mk);
+  for (const n of [7, 6, 4, 2, 1]) {
+    const p = L.fitWave(seven, n);
+    assert.ok(p.length <= n, `${n} place(s)`);
+    const shown = p.flatMap((x) => (x.kind === 'more' ? x.items : [x])).map((x) => x.gameId).sort();
+    assert.deepEqual(shown, seven.map((x) => x.gameId).sort(), `${n} place(s) : aucun match perdu`);
+  }
+  assert.deepEqual(L.fitWave(seven, 6).map((x) => x.kind === 'more' ? `liste ${x.items.length}` : x.gameId), ['g0', 'g1', 'g2', 'g3', 'g4', 'liste 2']);
+  assert.deepEqual(L.fitWave(seven, 0), []);
+  // Capacité : places libres du canal le plus plein, moins la réserve de 2 pour La une et La revue.
+  const ch = (q, e) => ({ queued: async () => Array(q).fill({}), errored: async () => Array(e).fill({}) });
+  assert.equal(await R.storyCapacity(['facebook', 'instagram'], {}, { make: { facebook: ch(3, 1), instagram: ch(5, 0) } }), 3, '10 − 5 − 2');
+  assert.equal(await R.storyCapacity(['facebook'], {}, { make: { facebook: ch(9, 1) } }), 0, 'file pleine');
+}
 console.log('logos en lot et alias : ok');
 {
   const T = await import('../scripts/social/team-logo-fetch.mjs');
