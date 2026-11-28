@@ -82,7 +82,9 @@ const evening = daily && process.env.EVENING === 'true';
 // jamais l'horaire Buffer (27 nov. 2026 : un lancement manuel avait rempli la file X). SLOT_TIMES et SHARE_NOW restent libres.
 const targetT = Date.now() + (evening ? 864e5 : 0), reduced = !process.env.SLOT_TIMES && !shareNow ? volumeFor('x', targetT) : null;
 const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : reduced ? POLICY.volume.xSlots : daily ? DAILY_SLOTS : null;
-const dues = times ? freeSlots(slotsToday(times, { dayOffset: evening ? 1 : 0 }), queued.map(p => p.dueAt)) : null;
+// Fraîcheur : avec le volume réduit, rien n'est programmé plus de `horizonH` heures à l'avance (choix fait près de l'heure).
+const horizon = reduced && POLICY.volume?.horizonH ? Date.now() + POLICY.volume.horizonH * 3600e3 : Infinity;
+const dues = times ? freeSlots(slotsToday(times, { dayOffset: evening ? 1 : 0 }), queued.map(p => p.dueAt)).filter(d => Date.parse(d) <= horizon) : null;
 const onTargetDay = reduced ? queued.filter(p => torontoDay(Date.parse(p.dueAt)) === torontoDay(targetT)).length : 0;
 const dayLeft = reduced ? Math.max(0, reduced.perDay - onTargetDay) : Infinity;
 const want = dues ? Math.min(slots, dues.length, dayLeft) : slots;

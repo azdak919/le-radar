@@ -10,7 +10,9 @@
   "perHour": { "bluesky": 1, "mastodon": 1, "tumblr": 1 },
   "perSourcePerDay": 1,
   "xSlots": ["14:30", "17:30"],
-  "fillAfterHour": 17
+  "fillAfterHour": 17,
+  "horizonH": 3,
+  "_horizon": "Fraîcheur (28 nov. 2026, Charles) : un article un à un n'est choisi et programmé dans Buffer qu'au plus horizonH heures avant son créneau (passes de 12 h 41 et 14 h 41 HNE), jamais la veille."
  },
  "mentions": {
   "x": {
