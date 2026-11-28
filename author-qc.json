@@ -1,10 +1,18 @@
 {
-  "updated": "2026-11-28T00:49:45.956Z",
+  "updated": "2026-11-28T02:09:03.619Z",
   "total": 1198,
   "withAuthor": 1198,
-  "mismatches": 59,
+  "mismatches": 56,
   "ok": true,
   "samples": [
+    {
+      "title": "The Association of McGill Professors of the Faculty of Arts (AMPFA) Confirms a Strike",
+      "link": "https://www.mcgilldaily.com/2026/11/the-association-of-mcgill-professors-of-the-faculty-of-arts-ampfa-confirms-a-strike/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "Sonia Berman et Justin Friedberg",
+      "canonicalAuthor": "Sonia Berman and Justin Friedberg",
+      "reason": "page-byline-overrides-rss"
+    },
     {
       "title": "Embracing Uncertainty",
       "link": "https://www.mcgilldaily.com/2026/11/embracing-uncertainty/",
@@ -156,15 +164,7 @@
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Why is it important to vote?",
-      "link": "https://theplantnews.com/2026/11/03/quebec-2026-election-guide",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 59
+  "fixed": 56
 }

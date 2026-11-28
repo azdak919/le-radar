@@ -1,24 +1,84 @@
 {
-  "updated": "2026-11-28T00:50:19.199Z",
+  "updated": "2026-11-28T02:10:26.087Z",
   "total": 1198,
-  "withPhoto": 929,
-  "withStock": 134,
-  "withCampusBank": 107,
-  "fullyCovered": 1027,
-  "leadReadyPhotos": 929,
+  "withPhoto": 924,
+  "withStock": 136,
+  "withCampusBank": 109,
+  "fullyCovered": 1024,
+  "leadReadyPhotos": 922,
   "pageScraped": 2,
   "photosRecovered": 2,
-  "imagesCleared": 1,
-  "stockSearches": 1,
-  "stockFound": 16,
-  "campusBankFound": 15,
+  "imagesCleared": 7,
+  "stockSearches": 13,
+  "stockFound": 21,
+  "campusBankFound": 19,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "La coupe ou rien : les coulisses d’une conquête inoubliable",
+      "link": "https://lapige.atmjonquiere.com/2026/11/23/la-coupe-ou-rien-les-coulisses-dune-conquete-inoubliable/?utm_source=rss&utm_medium=rss&utm_campaign=la-coupe-ou-rien-les-coulisses-dune-conquete-inoubliable",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Médias : après la crise du papier, la crise d’Internet ?",
+      "link": "https://lapige.atmjonquiere.com/2026/11/22/medias-apres-la-crise-du-papier-la-crise-dinternet/?utm_source=rss&utm_medium=rss&utm_campaign=medias-apres-la-crise-du-papier-la-crise-dinternet",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "La génération Z et le retour des médias physiques",
+      "link": "https://quartierlibre.ca/la-generation-z-le-retour-des-medias-physiques/",
+      "reason": "no-stock-match",
+      "image": null
+    },
+    {
+      "title": "Analyse : la communication politique du Parti québécois",
+      "link": "https://lecollectif.ca/societe/analyse-la-communication-politique-du-parti-quebecois/",
+      "reason": "stock-too-small",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_CommunicationPolitiquePQ_SourcePageFacebookDePaulSt-PierrePlamondon.jpg"
+    },
+    {
+      "title": "Retour sur le conseil municipal de Sherbrooke",
+      "link": "https://lecollectif.ca/edition-papier/retour-sur-le-conseil-municipal-de-sherbrooke/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_ConseilMunicipalMarie-ClaudeBibeau_SourceFacebookDeMarie-ClaudeBibeau.jpg"
+    },
+    {
+      "title": "Neuf Félix plus tard, Angine de Poitrine fait rayonner le Saguenay–Lac Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/11/09/neuf-felix-plus-tard-angine-de-poitrine-fait-rayonner-le-saguenay-lac-saint-jean",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/Angine_de_Poitrine_in_May_2026_at_the_Great_Escape_50.jpg"
+    },
+    {
+      "title": "Karmina, des vampires québécois !",
+      "link": "https://quartierlibre.ca/karmina-vampires-quebecois/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/11/16_critique-cine.jpeg"
+    },
+    {
+      "title": "Alphonse Bisaillon remporte le Prix collégial de la chanson de l’année",
+      "link": "https://lecollectif.ca/culture/alphonse-bisaillon-remporte-le-prix-collegial-de-la-chanson-de-lannee",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/CULTURE_AlphonseBisaillon_CreditMelanieJouet.jpg"
+    },
+    {
+      "title": "Lourde défaite pour le Parti républicain",
+      "link": "https://lecollectif.ca/societe/lourde-defaite-pour-le-parti-republicain",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SOCIETE_Lourde-defaite-pour-le-Parti-republicain_SourcePixabay.jpg"
+    },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
+    },
+    {
+      "title": "Le Vert & Or triomphe sous les yeux des anciens",
+      "link": "https://lecollectif.ca/edition-papier/le-vert-or-triomphe-sous-les-yeux-des-anciens/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/11/SPORT-Le_Vert__Or_triomphe_sous_les_yeux_des_anciens-Credit_Maxime_Picard.jpg"
     }
   ]
 }

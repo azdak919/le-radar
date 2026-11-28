@@ -1,6 +1,9 @@
 {
-  "at": "2026-11-28T00:50:44.020Z",
-  "targets": 927,
-  "failed": 0,
-  "failReasons": {}
+  "at": "2026-11-28T02:10:52.856Z",
+  "targets": 922,
+  "failed": 3,
+  "failReasons": {
+    "HTTP 415": 1,
+    "too large": 2
+  }
 }
