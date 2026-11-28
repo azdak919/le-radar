@@ -2571,15 +2571,6 @@
       "via": "photon-resize",
       "nameKey": "brendanschwartz_211126_stingersvbishops_vol44-32.jpg"
     },
-    "95f62153a4593a82": {
-      "local": "assets/news-images/95f62153a4593a82.jpg",
-      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/10-1.jpg",
-      "host": "theconcordian.com",
-      "bytes": 158629,
-      "updatedAt": "2026-11-27T09:08:48.335Z",
-      "via": "disk",
-      "nameKey": "10-1.jpg"
-    },
     "f0b210a9416e5b23": {
       "local": "assets/news-images/f0b210a9416e5b23.jpg",
       "remote": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/11/DSC03815-1.jpg",
@@ -3077,9 +3068,19 @@
       "updatedAt": "2026-11-27T23:08:48.495Z",
       "via": "resize-proxy",
       "nameKey": "image-39.png"
+    },
+    "223aaf7f7cd6b5b4": {
+      "local": "assets/news-images/223aaf7f7cd6b5b4.webp",
+      "remote": "https://theconcordian.com/wp-content/uploads/2026/11/HannahNobile_311026_PaulEddySaint-Vilien_Vol44.jpg",
+      "host": "theconcordian.com",
+      "bytes": 77578,
+      "contentType": "image/webp",
+      "updatedAt": "2026-11-28T08:12:29.932Z",
+      "via": "photon-resize",
+      "nameKey": "hannahnobile_311026_pauleddysaint-vilien_vol44.jpg"
     }
   },
-  "updatedAt": "2026-11-28T06:08:17.922Z",
+  "updatedAt": "2026-11-28T08:12:29.937Z",
   "count": 317,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
@@ -5414,6 +5415,10 @@
     "72a7534c65b78c07": {
       "reason": "budget",
       "at": "2026-11-27T23:08:48.525Z"
+    },
+    "0367d44a3e6d26b4": {
+      "reason": "failed",
+      "at": "2026-11-28T08:12:27.153Z"
     }
   }
 }
