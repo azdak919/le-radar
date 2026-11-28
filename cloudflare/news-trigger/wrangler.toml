@@ -1,6 +1,7 @@
 # Déclencheur de secours (GitHub saute des crons). Aucune route publique.
 # Deux crons déjà en place : le forfait Workers gratuit en autorise 5 par compte.
-# Ne pas en ajouter. La une, la revue et Buffer sont rattrapés par ces mêmes passages.
+# Ne pas en ajouter. La une, la revue, Buffer, les stories sport et la revue sur les réseaux sont rattrapés
+# par ces mêmes passages (src/index.js → BACKUP). Au plus 50 sous-requêtes par passage (forfait gratuit) : 43 au pire.
 # Secret requis (jamais dans le dépôt) : GH_TOKEN = jeton GitHub à droits
 # minimaux (Actions: write sur azdak919/le-radar seulement), posé avec
 #   npx wrangler secret put GH_TOKEN
