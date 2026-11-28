@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-28T02:50:21.902Z",
+  "updated": "2026-11-28T03:38:00.485Z",
   "total": 1198,
   "withAuthor": 1198,
-  "mismatches": 59,
+  "mismatches": 57,
   "ok": true,
   "samples": [
     {
@@ -126,14 +126,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
-      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy",
       "source": "The Concordian",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Streaming service Fatigue & the Resurrection of Physical Media",
+      "link": "https://theplantnews.com/2026/11/03/the-resurrection-of-physical-media",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 59
+  "fixed": 57
 }
