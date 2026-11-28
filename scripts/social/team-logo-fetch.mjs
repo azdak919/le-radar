@@ -19,6 +19,8 @@ const MAX_W = 600;
 
 export const teamId = (s) => String(s || '').trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
 export const fileTitle = (s) => { const t = String(s || '').trim().replace(/^https?:\/\/[^/]+\/wiki\//, '').replace(/_/g, ' '); return t ? (/^(File|Fichier):/i.test(t) ? t.replace(/^Fichier:/i, 'File:') : `File:${t}`) : ''; };
+// Auteur Commons : « Unknown author » (souvent répété par le gabarit) = pas d'auteur noté.
+export const author = (h) => { const t = String(h || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(); return /^(unknown author|auteur inconnu)/i.test(t) ? '' : t; };
 const strip = (h) => String(h || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
 async function get(params, tries = 4) {
@@ -35,7 +37,7 @@ async function get(params, tries = 4) {
 
 const info = (p) => { const ii = p.imageinfo?.[0] || {}, m = ii.extmetadata || {};
   return { title: p.title, url: ii.descriptionurl, thumb: ii.thumburl || ii.url, mime: ii.mime, width: ii.width, height: ii.height,
-    license: strip(m.LicenseShortName?.value), artist: strip(m.Artist?.value), credit: strip(m.Credit?.value) }; };
+    license: strip(m.LicenseShortName?.value), artist: author(m.Artist?.value), credit: strip(m.Credit?.value) }; };
 const iiParams = { prop: 'imageinfo', iiprop: 'url|size|mime|extmetadata', iiurlwidth: String(MAX_W), iiextmetadatafilter: 'LicenseShortName|Artist|Credit' };
 
 export async function search(query, limit = 10) {

@@ -12,6 +12,10 @@ on:
     # GitHub retarde parfois le cron nocturne de plusieurs heures (1er nov. 2026 : 3 h 07 → 10 h 00 HNE).
     - cron: '23 10 * * *'   # ≈ 5 h 23 HNE
     - cron: '47 11 * * *'   # ≈ 6 h 47 HNE, avant le 1er créneau (8 h 30)
+    # Fraîcheur (28 nov. 2026) : X n'est programmé qu'au plus 3 h avant le créneau (policy.json volume.horizonH) ;
+    # ces deux passes choisissent les articles de 14 h 30 et de 17 h 30, heure de Montréal (HNE ; HAE : 13 h 41 et 15 h 41).
+    - cron: '41 17 * * *'   # ≈ 12 h 41 HNE → créneau de 14 h 30
+    - cron: '41 19 * * *'   # ≈ 14 h 41 HNE → créneau de 17 h 30
     - cron: '41 13 * * 1'   # rapport hebdo des comptes (lundi)
   workflow_dispatch:
     inputs:

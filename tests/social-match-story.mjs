@@ -196,3 +196,8 @@ console.log('match-story aussi aujourd’hui : ok');
   assert.ok(!/run:[^\n]*\$\{\{ inputs\./.test(wf) && !/git commit[^\n]*\$\{\{/.test(wf), 'pas d’entrée injectée dans un script');
 }
 console.log('logo d’équipe Commons : ok');
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.equal(T.author('<span>Unknown author</span>Unknown author'), '');
+  assert.equal(T.author('<a href="x">Jane Doe</a>'), 'Jane Doe');
+}

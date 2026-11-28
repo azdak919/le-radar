@@ -235,3 +235,14 @@ assert.equal(articlePlaces(3, 0, { reserve: 0 }), 7);
   assert.match(src, /articlePlaces\(queued\.length, errored\.length\)/, 'réserve de la file X appliquée');
 }
 console.log('réserve de la file X : ok');
+
+// Fraîcheur (28 nov. 2026) : X choisi et programmé au plus horizonH heures avant le créneau, jamais la veille.
+{
+  const pol = JSON.parse(fs.readFileSync(new URL('../data/social/policy.json', import.meta.url), 'utf8'));
+  assert.equal(pol.volume.horizonH, 3);
+  const src = fs.readFileSync(new URL('../scripts/social/buffer-post.mjs', import.meta.url), 'utf8');
+  assert.match(src, /\.filter\(d => Date\.parse\(d\) <= horizon\)/, 'créneaux au-delà de l’horizon écartés');
+  const wf = fs.readFileSync(new URL('../.github/workflows/social-buffer.yml', import.meta.url), 'utf8');
+  assert.match(wf, /cron: '41 17 \* \* \*'/); assert.match(wf, /cron: '41 19 \* \* \*'/);
+}
+console.log('fraîcheur X (horizon) : ok');
