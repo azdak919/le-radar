@@ -10,7 +10,9 @@
   "perHour": { "bluesky": 1, "mastodon": 1, "tumblr": 1 },
   "perSourcePerDay": 1,
   "xSlots": ["14:30", "17:30"],
-  "fillAfterHour": 17
+  "fillAfterHour": 17,
+  "horizonH": 3,
+  "_horizon": "Fraîcheur (28 nov. 2026, Charles) : un article un à un n'est choisi et programmé dans Buffer qu'au plus horizonH heures avant son créneau (passes de 12 h 41 et 14 h 41 HNE), jamais la veille."
  },
  "mentions": {
   "x": {
@@ -109,14 +111,13 @@
     "facebook",
     "instagram"
    ],
-   "maxPerWave": 4,
+   "maxPerWave": 6,
+   "tiktok": { "enabled": true, "at": "16:00", "until": "18:30", "max": 10, "channelName": "*", "_doc": "TikTok « Matchs du jour » (27 nov. 2026, Charles) : une publication par jour en carrousel photo avec les affiches 9:16 des stories du jour (déjà hébergées), programmée dans Buffer pour 16 h au passage de la 2e vague ; passage tardif : tout de suite jusqu'à until. Aucun match : rien. Automatique, sans notification. Compte Buffer d'Instagram (BUFFER_INSTAGRAM_API_KEY), seul canal TikTok (« * »)." },
    "_waves": "Deux vagues (scripts/social/match-story-lib.mjs → WAVES) : matin 9 h – 15 h (matchs avant 15 h, régates, résultats de voile de la veille) et fin d'après-midi 15 h – 19 h 30 (matchs de soirée, 2 à 3 h avant). Chaque story ramène le compte en tête de la barre des stories : deux vagues courtes > une rafale. Au plus maxPerWave stories par vague, la plus forte d'abord (universitaire, voile, collégial ; un sport différent avant de répéter) ; au-delà, la dernière devient « Aussi aujourd'hui ». Aucun match : aucune story (jamais de remplissage)."
   },
   "revue": {
-   "_doc": "« La revue » sur les réseaux (scripts/social/revue-post.mjs, workflow social-revue.yml), publication DISTINCTE de La une (décision de Charles, 26 nov. 2026) : carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser sur Instagram ; 8 meilleurs articles (note sociale), sport et radio par popularité, voile toujours montrée. Une heure par réseau (voir slots._doc), programmée dans Buffer. LinkedIn le matin en semaine seulement. Minimum, comme La une : une revue publiée (articles, ou sport et radio sans nouvel article) ; rien si la revue est sautée ou refusée, rien sans carrousel en ligne. Instagram selon la montée du compte : format « revue » à partir du jour 15 (6 déc.), plafond de 3 par jour, sans jamais prendre la place de La une.",
+   "_doc": "« La revue » sur les réseaux (scripts/social/revue-post.mjs, workflow social-revue.yml), publication DISTINCTE de La une (décision de Charles, 26 nov. 2026) : carrousel de la revue du créneau — PDF document sur LinkedIn, pages 4:5 en plusieurs photos sur Facebook, carrousel à glisser sur Instagram ; 8 meilleurs articles (note sociale), sport et radio par popularité, voile toujours montrée. Une heure par réseau (voir slots._doc), programmée dans Buffer. LinkedIn le matin en semaine seulement. Minimum, comme La une : une revue publiée (articles, ou sport et radio sans nouvel article) ; rien si la revue est sautée ou refusée, rien sans carrousel en ligne. Instagram selon la montée du compte : format « revue » à partir du jour 15 (6 déc.), plafond de 3 par jour, sans jamais prendre la place de La une. Mise à jour du 27 nov. 2026 (Charles) : 6 stories au plus par vague (5 grandes affiches, la plus populaire d'abord, puis « Aussi aujourd'hui ») ; toutes les stories du jour sont préparées dès 7 h et programmées dans Buffer pour 9 h (matchs de la journée) et 15 h (matchs du soir) ; logos d'équipes : les deux ou aucun ; jour sans match : « Résultats récents » et « À venir ».",
    "publish": true,
-   "notify": ["tiktok", "instagram"],
-   "_notify": "Publication « par notification » de Buffer (27 nov. 2026, Charles) : à l'heure dite, Buffer prévient le téléphone ; on choisit un son tendance dans l'appli TikTok ou Instagram (différent d'un réseau à l'autre si on veut), puis on publie. Aucune API (Buffer, TikTok, Meta) ne choisit la musique la plus populaire. Refusée par l'API : repli automatique, sans son. La une Instagram reste automatique.",
    "tiktok": { "enabled": true, "channelName": "*", "_doc": "Carrousel photo TikTok de la revue du soir (20 h 30, pic étudiant), compte Buffer d'Instagram (3e canal gratuit, secret BUFFER_INSTAGRAM_API_KEY). Connecté par Charles le 27 nov. 2026 ; channelName « * » = le seul canal TikTok de ce compte. Première publication réelle à surveiller (Buffer n'a pas de mode essai) ; enabled à false pour couper." },
    "slots": {
     "_doc": "Heure de Montréal visée PAR RÉSEAU (networks), programmée dans Buffer pour tomber à l'heure malgré les retards de GitHub ; from/to = fenêtre où le script peut programmer (dès que la revue est en ligne) ou, si l'heure est passée, publier tout de suite. Plan du 26 nov. 2026 (Charles : « ok go ») : matin Facebook 12 h (pic 9-13 h, 3 h après la une de 9 h), LinkedIn 12 h 30 en semaine (pic de midi, 4 h après la une de 8 h 30) ; soir Facebook 20 h (seule publication du soir dans le fil Facebook : la revue remplace la une), Instagram 21 h 15 selon la montée du compte (format « revue » dès le jour 15). Ajout du 27 nov. (Charles : « make it happen ») : une revue par jour sur X (12 h) et Mastodon (12 h), pic 11-18 h, avec 4 pages et le lien ; Bluesky 21 h (pic 18-22 h) ; Threads 21 h 30 (pic 17-22 h, 2 h après la une) ; TikTok 20 h 30 (préparé, éteint). Bluesky et Mastodon ne se programment pas : ils partent au premier passage après leur heure (toutes les 30 min).",

@@ -39,7 +39,17 @@ fs.mkdirSync(path.join(root, L.TEAM_LOGO_DIR), { recursive: true });
 fs.writeFileSync(path.join(root, L.TEAM_LOGO_DIR, 'mcgill.svg'), '<svg/>');
 assert.equal(L.teamLogo('mcgill', { root }), '../assets/logos/teams/mcgill.svg');
 assert.equal(L.teamLogo('../etc', { root }), '');
-assert.equal(L.matchStoryModel(all[0], { root }).match.home.logo, '../assets/logos/teams/mcgill.svg');
+// Les deux ou aucun (27 nov. 2026) : un seul logo déposé → aucun des deux.
+assert.equal(L.matchStoryModel(all[0], { root }).match.home.logo, '', 'un seul logo : aucun');
+assert.equal(L.matchStoryModel(all[0], { root }).match.away.logo, '');
+{
+  const regs = all[0].teams.map((t) => t.reg).filter(Boolean);
+  for (const r of regs) fs.writeFileSync(path.join(root, L.TEAM_LOGO_DIR, `${r}.svg`), '<svg/>');
+  const both = L.matchStoryModel(all[0], { root }).match;
+  if (regs.length === 2) { assert.ok(both.home.logo && both.away.logo, 'deux logos déposés : les deux'); }
+}
+// Vagues : heure de publication programmée dans Buffer (9 h, 15 h).
+assert.deepEqual(L.WAVES.map((w) => w.post), ['09:00', '15:00']);
 
 // Fenêtre d'envoi (heure de Montréal) et état.
 assert.equal(L.storyWindow(Date.parse('2026-11-26T15:30:00Z')).due, true);   // 10 h 30 HNE
@@ -152,3 +162,52 @@ assert.deepEqual(CFG.networks, ['facebook', 'instagram']);
 assert.deepEqual(IMAGE_SIZES['match-story'], { width: 1080, height: 1920 });
 assert.deepEqual(Object.keys(pageModel(L.matchStoryModel(all[0]))), ['match', 'slot']);
 console.log('social-match-story : OK');
+
+// Une rencontre = une story (27 nov. 2026 : Stingers–Carabins en 7 stories, vue de chaque équipe, avec et sans heure).
+{
+  const g = (a, b, verb, time, gameId = '') => ({ date: '2026-11-27', sportKey: 'hockey', sport: 'Hockey (F)', uni: true, kind: 'game', gameId, verb, time,
+    teams: [{ name: a, reg: a.toLowerCase() }, { name: b, reg: b.toLowerCase() }] });
+  const list = [g('Stingers', 'Carabins', 'visite', '19:00', 'x1'), g('Carabins', 'Stingers', 'reçoit', '19:00', 'x2'), g('Stingers', 'Carabins', 'visite', '19:00'),
+    g('Carabins', 'Stingers', 'reçoit', ''), g('Stingers', 'Carabins', 'visite', ''), g('Martlets', 'Rouge', 'reçoit', '19:00'), g('Rouge', 'Martlets', 'visite', '19:00')];
+  const out = L.dedupeMatches(list);
+  assert.equal(out.length, 2, 'une entrée par rencontre');
+  assert.ok(out.every((r) => r.verb === 'reçoit' && r.time === '19:00'), 'l’hôte, avec l’heure');
+  assert.equal(L.dedupeMatches([g('A', 'B', 'reçoit', ''), g('B', 'A', 'visite', '')]).length, 1, 'sans heure nulle part : une seule');
+  assert.equal(L.dedupeMatches([g('A', 'B', 'reçoit', '13:00'), g('A', 'B', 'reçoit', '19:00')]).length, 2, 'programme double : deux matchs');
+  assert.equal(L.dedupeMatches([g('A', 'B', 'reçoit', '19:00'), { ...g('A', 'B', 'reçoit', '19:00'), sport: 'Hockey (M)' }]).length, 2, 'féminin et masculin distincts');
+}
+console.log('match-story dédoublonnage : ok');
+
+// « Aussi aujourd'hui » : sigle de l'établissement entre parenthèses, renvoi vers le-radar.ca/sports (27 nov. 2026).
+{
+  const t = (name, inst) => ({ name, inst, reg: name.toLowerCase() });
+  const items = Array.from({ length: 12 }, (_, i) => ({ date: '2026-11-27', kind: 'game', sport: 'Hockey (F)', sportKey: 'hockey', verb: 'reçoit', time: '19:00', teams: [t('Carabins', 'UdeM'), t('Géants' + i, 'Saint-Jean-sur-Richelieu')] }));
+  const { match } = L.matchStoryModel({ kind: 'more', date: '2026-11-27', items }, { index: 0, total: 1 });
+  assert.match(match.items[0].text, /^Carabins \(UdeM\) reçoit Géants0 \(Saint‑Jean‑sur‑Richelieu\)$/);
+  assert.equal(match.extra, 3);
+  const alt = L.matchStoryAlt({ kind: 'more', date: '2026-11-27', items });
+  assert.match(alt, /\(Saint-Jean-sur-Richelieu\)/, 'alt : tirets ordinaires');
+  assert.match(alt, /et 3 autres sur le-radar\.ca\/sports/);
+}
+console.log('match-story aussi aujourd’hui : ok');
+
+// Logo d'équipe depuis Commons (scripts/social/team-logo-fetch.mjs) : identifiant et titre de fichier normalisés, image vérifiée.
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.equal(T.teamId(' UdeM '), 'udem');
+  assert.equal(T.teamId('udem-voile'), 'udem-voile');
+  assert.equal(T.fileTitle('Carabins logo.svg'), 'File:Carabins logo.svg');
+  assert.equal(T.fileTitle('https://commons.wikimedia.org/wiki/File:Carabins_logo.svg'), 'File:Carabins logo.svg');
+  assert.equal(T.fileTitle('Fichier:Carabins.png'), 'File:Carabins.png');
+  assert.equal(T.fileTitle(''), '');
+  assert.ok(T.isImage(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0])));
+  assert.ok(!T.isImage(Buffer.from('<!DOCTYPE html><html>')));
+  const wf = fs.readFileSync(new URL('../.github/workflows/social-team-logo.yml', import.meta.url), 'utf8');
+  assert.ok(!/run:[^\n]*\$\{\{ inputs\./.test(wf) && !/git commit[^\n]*\$\{\{/.test(wf), 'pas d’entrée injectée dans un script');
+}
+console.log('logo d’équipe Commons : ok');
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.equal(T.author('<span>Unknown author</span>Unknown author'), '');
+  assert.equal(T.author('<a href="x">Jane Doe</a>'), 'Jane Doe');
+}

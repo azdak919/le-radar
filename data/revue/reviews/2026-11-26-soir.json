@@ -14,7 +14,7 @@
   "end": 1795741417057
  },
  "datePublished": "2026-11-27T01:03:37.057Z",
- "dateModified": "2026-11-27T01:03:37.057Z",
+ "dateModified": "2026-11-27T04:08:38.062Z",
  "items": [
   {
    "id": "d034b5575c8d2796",
@@ -230,6 +230,64 @@
     "tie": false,
     "key": "2026-11-26|Basketball (F)|Citadins (UQAM):66|Gaiters (Bishop’s):78",
     "text": "Gaiters (Bishop’s) 78-66 Citadins (UQAM)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire masculin",
+    "division": "",
+    "uni": true,
+    "kind": "resultat",
+    "gameId": "24ca88dc-52d3-4fde-bffb-9bc326cc658e",
+    "date": "2026-11-26",
+    "when": "Final · jeu. 26 nov.",
+    "teams": [
+     {
+      "name": "Gaiters",
+      "inst": "Bishop’s",
+      "color": "#582C83",
+      "score": 76
+     },
+     {
+      "name": "Citadins",
+      "inst": "UQAM",
+      "color": "#0079BE",
+      "score": 74
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-26|Basketball (H)|Citadins (UQAM):74|Gaiters (Bishop’s):76",
+    "text": "Gaiters (Bishop’s) 76-74 Citadins (UQAM)"
+   },
+   {
+    "emoji": "🏀",
+    "sport": "Basketball (H)",
+    "sportKey": "basketball",
+    "league": "Basketball universitaire masculin",
+    "division": "",
+    "uni": true,
+    "kind": "resultat",
+    "gameId": "ccc74162-f360-4727-81cc-9552e09da722",
+    "date": "2026-11-26",
+    "when": "Final · jeu. 26 nov.",
+    "teams": [
+     {
+      "name": "Stingers",
+      "inst": "Concordia",
+      "color": "#912338",
+      "score": 80
+     },
+     {
+      "name": "Redbirds",
+      "inst": "McGill",
+      "color": "#ED1B2F",
+      "score": 46
+     }
+    ],
+    "tie": false,
+    "key": "2026-11-26|Basketball (H)|Redbirds (McGill):46|Stingers (Concordia):80",
+    "text": "Stingers (Concordia) 80-46 Redbirds (McGill)"
    }
   ],
   "next": [
@@ -1552,6 +1610,66 @@
     "time": "8:30",
     "key": "2026-11-28|8:30|Badminton (mixte)||Diablos (Trois-Rivières)|Volontaires (Sherbrooke)",
     "text": "Diablos (Trois-Rivières) reçoit Volontaires (Sherbrooke)"
+   },
+   {
+    "emoji": "🏸",
+    "sport": "Badminton (mixte)",
+    "sportKey": "badminton",
+    "league": "Badminton collégial mixte D2",
+    "division": "D2",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "4a5a03df-ff7a-4d72-91c9-140825fe0ba5",
+    "date": "2026-11-28",
+    "when": "sam. 28 nov. · 8 h 30",
+    "teams": [
+     {
+      "name": "L’Indigo",
+      "inst": "Granby",
+      "color": "",
+      "reg": "granby"
+     },
+     {
+      "name": "Vulkins",
+      "inst": "Victoriaville",
+      "color": "",
+      "reg": "victoriaville"
+     }
+    ],
+    "verb": "reçoit",
+    "time": "8:30",
+    "key": "2026-11-28|8:30|Badminton (mixte)||L’Indigo (Granby)|Vulkins (Victoriaville)",
+    "text": "L’Indigo (Granby) reçoit Vulkins (Victoriaville)"
+   },
+   {
+    "emoji": "🏐",
+    "sport": "Volleyball (F)",
+    "sportKey": "volleyball",
+    "league": "Volleyball collégial féminin D3",
+    "division": "D3",
+    "uni": false,
+    "kind": "avenir",
+    "gameId": "651f34c7-571e-4768-8663-bb48ecd97f40",
+    "date": "2026-11-28",
+    "when": "sam. 28 nov. · 9 h",
+    "teams": [
+     {
+      "name": "Le Notre-Dame",
+      "inst": "Campus Notre-Dame-de-Foy",
+      "color": "",
+      "reg": "notre-dame-foy"
+     },
+     {
+      "name": "Titans",
+      "inst": "Limoilou, équipe Noir",
+      "color": "",
+      "reg": "limoilou"
+     }
+    ],
+    "verb": "visite",
+    "time": "9:00",
+    "key": "2026-11-28|9:00|Volleyball (F)||Le Notre-Dame (Campus Notre-Dame-de-Foy)|Titans (Limoilou, équipe Noir)",
+    "text": "Le Notre-Dame (Campus Notre-Dame-de-Foy) visite Titans (Limoilou, équipe Noir)"
    }
   ]
  },
@@ -1677,7 +1795,9 @@
  ],
  "sportKeys": [
   "2026-11-26|Basketball (F)|Martlets (McGill):61|Stingers (Concordia):50",
-  "2026-11-26|Basketball (F)|Citadins (UQAM):66|Gaiters (Bishop’s):78"
+  "2026-11-26|Basketball (F)|Citadins (UQAM):66|Gaiters (Bishop’s):78",
+  "2026-11-26|Basketball (H)|Citadins (UQAM):74|Gaiters (Bishop’s):76",
+  "2026-11-26|Basketball (H)|Redbirds (McGill):46|Stingers (Concordia):80"
  ],
  "categories": [
   "Revue de presse",
@@ -2247,5 +2367,6 @@
     ]
    }
   ]
- }
+ },
+ "refreshedAt": "2026-11-27T04:08:38.062Z"
 }

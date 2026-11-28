@@ -1,13 +1,12 @@
 {
-  "checkedAt": "2026-11-26T04:58:36.863Z",
+  "checkedAt": "2026-11-27T04:57:41.060Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 5,
     "drift": [
-      "cism",
-      "choq"
+      "cism"
     ],
     "overhaul": [],
     "unreachable": []
@@ -25,18 +24,18 @@
     },
     {
       "id": "cism",
-      "published": 110,
-      "fresh": 108,
+      "published": 108,
+      "fresh": 110,
       "added": [
-        "dim 15:00–19:00 Le 21e GAMIQ en direct sur les ondes!"
-      ],
-      "removed": [
         "dim 15:00–16:00 La Grapevine",
         "dim 16:00–17:00 Le grand repos",
         "dim 17:00–19:00 Symbiose"
       ],
+      "removed": [
+        "dim 15:00–19:00 Le 21e GAMIQ en direct sur les ondes!"
+      ],
       "changed": 4,
-      "ratio": 0.036,
+      "ratio": 0.037,
       "status": "drift"
     },
     {
@@ -71,15 +70,13 @@
     },
     {
       "id": "choq",
-      "published": 26,
+      "published": 25,
       "fresh": 25,
       "added": [],
-      "removed": [
-        "dim 14:00–16:00 Pôle hip-hop"
-      ],
-      "changed": 1,
-      "ratio": 0.038,
-      "status": "drift"
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }

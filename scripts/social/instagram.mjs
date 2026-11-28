@@ -83,12 +83,13 @@ export function createInstagramBuffer(env = {}, { fetchImpl } = {}) {
     // Story : seulement sur demande explicite (story: true) de la passe story de La une. Jamais de reel.
     if (input.story === true && type === 'story') {
       if (input.channelId && input.channelId !== INSTAGRAM_CHANNEL_ID) throw new Error('Instagram : canal inattendu');
-      return add({ text: input.text || '', image: input.image, alt: input.alt, now: true, metadata: INSTAGRAM_STORY_METADATA });
+      // dueAt : story programmée dans Buffer (heure exacte de la vague) ; sinon tout de suite.
+      return add({ text: input.text || '', image: input.image, alt: input.alt, ...(input.dueAt ? { dueAt: input.dueAt, now: false } : { now: true }), metadata: INSTAGRAM_STORY_METADATA });
     }
     if (type !== 'post') throw new Error('Instagram : seul le type post est permis (ni story ni reel)');
     if (input.firstComment || input.metadata?.instagram?.firstComment) throw new Error('Instagram : premier commentaire interdit');
     if (input.channelId && input.channelId !== INSTAGRAM_CHANNEL_ID) throw new Error('Instagram : canal inattendu');
-    return add({ text: input.text, image: input.image, images: input.images, alt: input.alt, dueAt: input.dueAt, now: input.now !== false, notify: input.notify === true, metadata: instagramMetadataOrThrow(INSTAGRAM_METADATA) });
+    return add({ text: input.text, image: input.image, images: input.images, alt: input.alt, dueAt: input.dueAt, now: input.now !== false, metadata: instagramMetadataOrThrow(INSTAGRAM_METADATA) });
   };
   return ch;
 }
@@ -256,7 +257,7 @@ export function alreadyPosted(texts, text) {
 }
 
 /** Un seul envoi. Toute erreur ou tout avertissement Buffer arrête le canal et ouvre une issue. */
-export async function deliverInstagram({ env = {}, text, imageUrl, images, dueAt, notify = false, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
+export async function deliverInstagram({ env = {}, text, imageUrl, images, dueAt, alt = '', state = {}, fetchImpl, fileIssue, now = new Date().toISOString(), slotId = '', format = 'une', dedupKey = '' } = {}) {
   const ch = createInstagramBuffer(env, { fetchImpl });
   if (!ch) return { action: 'skip', reason: instagramKey(env).reason, state };
   try {
@@ -268,7 +269,7 @@ export async function deliverInstagram({ env = {}, text, imageUrl, images, dueAt
     }
     // images : carrousel (pages de la revue du créneau) ; sinon l'image unique habituelle.
     // dueAt : publication programmée dans Buffer (heure exacte) ; sinon tout de suite.
-    const post = await ch.add({ text, ...(Array.isArray(images) && images.length > 1 ? { images } : { image: imageUrl }), alt, ...(dueAt ? { dueAt, now: false } : { now: true }), notify, metadata: INSTAGRAM_METADATA });
+    const post = await ch.add({ text, ...(Array.isArray(images) && images.length > 1 ? { images } : { image: imageUrl }), alt, ...(dueAt ? { dueAt, now: false } : { now: true }), metadata: INSTAGRAM_METADATA });
     const when = Date.parse(now);
     const day = torontoDay(Number.isFinite(when) ? when : Date.now());
     const id = post?.id;

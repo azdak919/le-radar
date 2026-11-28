@@ -130,38 +130,41 @@ assert.equal(R.gate({ now: at('2026-11-26T19:00:00Z'), state: {} }).due, false, 
   assert.equal((t.facebook.text.match(/^• /gm) || []).length, 5, 'Facebook : 5 titres');
   assert.match(t.threads.text, /https:\/\/le-radar\.ca\/revues\//);
 }
-// Publication par notification (TikTok, Instagram) : le son se choisit dans l'appli ; refusée → repli automatique.
+// TikTok « Matchs du jour » : affiches du jour dans l'ordre, légende courte, 16 h, jamais sans match.
 {
-  assert.ok(R.notifyFor('tiktok') && R.notifyFor('instagram') && !R.notifyFor('facebook'));
-  const { createXBuffer } = await import('../scripts/social/channels/x-buffer.mjs');
-  const run = async (refuse) => {
-    const sent = [];
-    const fetchImpl = async (_u, o) => { const b = JSON.parse(o.body);
-      if (/createPost/.test(b.query)) { sent.push(b.variables.i.schedulingType);
-        if (refuse && b.variables.i.schedulingType === 'notification') return { ok: true, status: 200, json: async () => ({ data: { createPost: { message: 'Invalid schedulingType' } } }) };
-        return { ok: true, status: 200, json: async () => ({ data: { createPost: { post: { id: 'p', status: 'scheduled' } } } }) }; }
-      if (/organizations/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] } } }) };
-      return { ok: true, status: 200, json: async () => ({ data: { channels: [{ id: 't', name: 'leradar.ca', service: 'tiktok' }] } }) }; };
-    const ch = createXBuffer({ key: 'k', fetchImpl, service: 'tiktok', channelName: '*' });
-    await ch.add({ text: 't', images: [{ url: 'https://a/1.jpg' }, { url: 'https://a/2.jpg' }], dueAt: '2026-11-30T01:30:00Z', notify: true });
-    return sent;
+  const M = await import('../scripts/social/match-story-run.mjs');
+  assert.equal(M.TIKTOK.enabled, true); assert.equal(M.TIKTOK.at, '16:00');
+  const st = {
+    '2026-11-26:a': { key: '2026-11-26:a', image: 'https://i/a.jpg', what: 'Martlets reçoit Stingers', alt: 'A' },
+    '2026-11-26:b': { key: '2026-11-26:b', image: 'https://i/b.jpg', what: 'Citadins visite Gaiters', alt: 'B' },
+    '2026-11-26:aussi-soir': { key: '2026-11-26:aussi-soir', image: 'https://i/c.jpg', what: 'Aussi aujourd’hui : x, y', alt: 'C' },
+    '2026-11-26:sans-image': { key: '2026-11-26:sans-image', what: 'x' },
+    '2026-11-25:a': { key: '2026-11-25:a', image: 'https://i/z.jpg', what: 'hier' },
+    '2026-11-26:tiktok': { key: '2026-11-26:tiktok', at: 'x', id: 'p' },
   };
-  assert.deepEqual(await run(false), ['notification']);
-  assert.deepEqual(await run(true), ['notification', 'automatic'], 'refusée : repli automatique');
-  // Acceptée mais sans téléphone relié au compte Buffer (27 nov.) : repli automatique.
-  {
-    const sent = [];
-    const fetchImpl = async (_u, o) => { const b = JSON.parse(o.body);
-      if (/createPost/.test(b.query)) { sent.push(b.variables.i.schedulingType);
-        const post = b.variables.i.schedulingType === 'notification'
-          ? { id: 'n', status: 'error', error: { message: 'Whoops! We are having trouble sending notifications to your mobile device. Please try linking a mobile device to your account!' } }
-          : { id: 'a', status: 'scheduled' };
-        return { ok: true, status: 200, json: async () => ({ data: { createPost: { post } } }) }; }
-      if (/organizations/.test(b.query)) return { ok: true, status: 200, json: async () => ({ data: { account: { organizations: [{ id: 'o' }] } } }) };
-      return { ok: true, status: 200, json: async () => ({ data: { channels: [{ id: 't', name: 'leradar.ca', service: 'tiktok' }] } }) }; };
-    const ch = createXBuffer({ key: 'k', fetchImpl, service: 'tiktok', channelName: '*' });
-    const post = await ch.add({ text: 't', images: [{ url: 'https://a/1.jpg' }], now: true, notify: true });
-    assert.equal(post.id, 'a'); assert.deepEqual(sent, ['notification', 'automatic'], 'sans téléphone : repli automatique');
-  }
+  assert.deepEqual(M.tiktokEntries(st, '2026-11-26').map((e) => e.image), ['https://i/a.jpg', 'https://i/b.jpg', 'https://i/c.jpg'], 'du jour, avec image, sans l’état TikTok');
+  assert.deepEqual(M.tiktokEntries({}, '2026-11-26'), [], 'aucun match : rien');
+  const cap = M.tiktokCaption('2026-11-26', M.tiktokEntries(st, '2026-11-26'), 8);
+  assert.match(cap, /^🏟️ Les matchs du jour · jeudi 26 novembre : 8 rencontres du sport étudiant à faire défiler ➡️\nÀ ne pas manquer : Martlets reçoit Stingers\.\nTous les matchs : lien en bio\.\n#SportÉtudiant/);
+  assert.doesNotMatch(cap, /https?:\/\//, 'aucun lien');
+  assert.ok(cap.length <= 300);
+}
+// Jour sans match : derniers résultats et prochains matchs en affiches de liste (données fabriquées, jamais celles du jour).
+{
+  const L = await import('../scripts/social/match-story-lib.mjs');
+  const M = await import('../scripts/social/match-story-run.mjs');
+  const team = (o) => ({ sport: 'basketball', sex: 'F', sector: 'universitaire', sportLabel: 'Basketball', results: [], nextGames: [], ...o });
+  const masthead = { teams: {
+    a: team({ id: 'a', nickname: 'Martlets', institutionLabel: 'McGill', results: [{ gameId: 'r1', date: '2026-11-27', scoreFor: 61, scoreAgainst: 50, opponentNickname: 'Stingers', opponentFullName: 'Concordia' }], nextGames: [{ gameId: 'n1', date: '2026-12-02', time: '18:00', opponentNickname: 'Carabins', opponentFullName: 'UdeM', home: true }] }),
+  } };
+  const lists = L.quietDayLists(masthead, '2026-11-29');
+  assert.deepEqual(lists.map((x) => x.title), ['Résultats récents', 'À venir']);
+  const r = L.matchStoryModel(lists[0]).match, n = L.matchStoryModel(lists[1]).match;
+  assert.equal(r.title, 'Résultats récents'); assert.match(r.items[0].text, /^Martlets 61-50 Stingers$/); assert.match(r.credits.data, /^Résultats : RSEQ/);
+  assert.equal(n.title, 'À venir'); assert.match(n.items[0].when, /2 déc\..*18 h/);
+  assert.deepEqual(L.quietDayLists(masthead, '2027-01-15'), [], 'rien de récent ni d’annoncé : rien');
+  assert.match(L.matchStoryAlt(lists[0]), /^Affiche Résultats récents du Radar/);
+  const cap = M.tiktokCaption('2026-11-29', [{ list: 'resultats', image: 'x' }, { list: 'avenir', image: 'y' }]);
+  assert.match(cap, /^🏟️ Sport étudiant · dimanche 29 novembre : les derniers résultats et les prochains matchs à faire défiler ➡️\nTous les matchs : lien en bio\./);
 }
 console.log('social-revue-post : OK');

@@ -430,7 +430,8 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .ms-fmark .wm { font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; font-size: 30px; letter-spacing: -.02em; color: #fff; }
 .ms-foot { height: 260px; gap: 4px; }
 /* « Aussi aujourd'hui » : liste compacte (heure, rencontre, sport), jusqu'à 9 lignes. */
-.ms-more .ms-clubs { top: 575px; height: 850px; gap: 10px; }
+.ms-more .ms-clubs { top: 575px; height: 850px; gap: 8px; justify-content: flex-start; }
+.ms-more .ms-line { padding-top: 4px; padding-bottom: 4px; }
 .ms-more .ms-event { top: 390px; }
 .ms-more .ms-format { top: 515px; }
 .ms-line { padding: 8px 20px 8px 12px; border-left-color: rgba(255,255,255,.5); }

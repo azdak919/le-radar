@@ -119,38 +119,18 @@ export function createXBuffer({ key, fetchImpl = fetch, channelName = 'le_radar_
     },
     // document : { url, title, thumbnailUrl } — PDF joint (LinkedIn l'affiche en carrousel ; DocumentAssetInput de Buffer).
     // images : [{ url, alt }] — plusieurs photos dans une publication (carrousel Instagram, mosaïque Facebook ; 10 au plus).
-    // notify : publication « par notification » (Buffer prévient le téléphone à l'heure dite ; on choisit le son dans
-    // l'appli TikTok ou Instagram, puis on publie). Refusée par l'API : repli en publication automatique (sans son).
-    async add({ text, image, alt, dueAt, now = false, metadata, document, images, notify = false }) {
+    async add({ text, image, alt, dueAt, now = false, metadata, document, images }) {
       const { channelId } = await context();
-      const input = { text, channelId, schedulingType: notify ? 'notification' : 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
+      const input = { text, channelId, schedulingType: 'automatic', mode: now ? 'shareNow' : dueAt ? 'customScheduled' : 'addToQueue' };
       if (dueAt) input.dueAt = dueAt;
       if (document?.url) input.assets = [{ document: { url: document.url, title: String(document.title || 'Document').slice(0, 200), thumbnailUrl: document.thumbnailUrl } }];
       else if (Array.isArray(images) && images.length) input.assets = images.slice(0, 10).map((im) => ({ image: { url: im.url, ...(im.alt ? { metadata: { altText: String(im.alt).slice(0, 1000) } } : {}) } }));
       else if (image) input.assets = [{ image: { url: image, ...(alt ? { metadata: { altText: String(alt).slice(0, 1000) } } : {}) } }];
       if (metadata) input.metadata = metadata;
-      const send = (i) => gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
-        ... on PostActionSuccess { post { id dueAt status error { message } } } ... on MutationError { message } } }`, { i });
-      let d;
-      try { d = await send(input); } catch (e) {
-        if (!notify || e instanceof AuthError) throw e;
-        console.log(`::warning::Buffer : publication par notification refusée (${String(e.message).slice(0, 160)}) — repli automatique, sans son.`);
-        d = await send({ ...input, schedulingType: 'automatic' });
-      }
-      let r = d?.createPost;
-      if (!r?.post?.id && notify && /schedul|notification/i.test(r?.message || '')) {
-        console.log(`::warning::Buffer : publication par notification refusée (${r.message}) — repli automatique, sans son.`);
-        r = (await send({ ...input, schedulingType: 'automatic' }))?.createPost;
-      }
+      const d = await gql(`mutation($i: CreatePostInput!) { createPost(input: $i) {
+        ... on PostActionSuccess { post { id dueAt status error { message } } } ... on MutationError { message } } }`, { i: input });
+      const r = d?.createPost;
       if (!r?.post?.id) throw new Error(`Buffer createPost refusé : ${r?.message || JSON.stringify(r)}`);
-      // Notification impossible (aucun téléphone relié au compte Buffer) : on ne perd pas la publication, elle part en
-      // automatique, sans son (27 nov. 2026 : premier essai TikTok).
-      if (notify && r.post.status === 'error' && /mobile device|notification/i.test(r.post.error?.message || '')) {
-        console.log(`::warning::Buffer : notification impossible (${r.post.error.message}) — repli automatique, sans son. Relier un téléphone au compte Buffer (appli Buffer) pour choisir le son.`);
-        const again = (await send({ ...input, schedulingType: 'automatic' }))?.createPost;
-        if (!again?.post?.id) throw new Error(`Buffer createPost refusé : ${again?.message || JSON.stringify(again)}`);
-        return assertBufferPostOk(again.post);
-      }
       return assertBufferPostOk(r.post);
     },
   };

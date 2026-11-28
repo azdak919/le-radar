@@ -29,5 +29,65 @@
     "dueAt": "2026-11-27T02:30:00.000Z"
    }
   }
+ },
+ "2026-11-27-matin": {
+  "at": "2026-11-27T12:08:27.961Z",
+  "nets": {
+   "facebook": {
+    "at": "2026-11-27T12:16:05.539Z",
+    "id": "6b097485776ce21276160db9",
+    "failed": false,
+    "dueAt": "2026-11-27T17:00:00.000Z"
+   },
+   "x": {
+    "attempts": 3,
+    "failed": true,
+    "error": "Buffer createPost refusé : Scheduled posts limit reached. You have 10 scheduled posts out of 10 allowed."
+   },
+   "mastodon": {
+    "at": "2026-11-27T17:15:27.134Z",
+    "id": "117689530909240596",
+    "failed": false
+   },
+   "linkedin": {
+    "at": "2026-11-27T12:16:06.098Z",
+    "id": "6b0974861fd46e62e741164f",
+    "failed": false,
+    "dueAt": "2026-11-27T17:30:00.000Z"
+   }
+  }
+ },
+ "2026-11-27-soir": {
+  "at": "2026-11-28T00:06:57.805Z",
+  "nets": {
+   "facebook": {
+    "at": "2026-11-28T00:49:13.925Z",
+    "id": "6b0a250970e80ae8f1bcd7d7",
+    "failed": false,
+    "dueAt": "2026-11-28T01:00:00.000Z"
+   },
+   "tiktok": {
+    "at": "2026-11-28T00:49:15.915Z",
+    "id": "6b0a250beada83daa6b140aa",
+    "failed": false,
+    "dueAt": "2026-11-28T01:30:00.000Z"
+   },
+   "bluesky": {
+    "at": "2026-11-28T02:00:46.081Z",
+    "id": "at://did:plc:uxuxieev7fbkiji3xyyhzgae/app.bsky.feed.post/3n3dm7qlmvh2i",
+    "failed": false
+   },
+   "instagram": {
+    "attempts": 3,
+    "failed": true,
+    "error": "Instagram : format revue hors de cette phase"
+   },
+   "threads": {
+    "at": "2026-11-28T00:49:16.645Z",
+    "id": "6b0a250ceada83daa6b140d7",
+    "failed": false,
+    "dueAt": "2026-11-28T02:30:00.000Z"
+   }
+  }
  }
 }

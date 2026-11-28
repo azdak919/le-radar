@@ -63,15 +63,51 @@ export const matchKey = (m) => m.kind === 'more' ? `${m.date}:aussi-${m.wave}` :
 const mins = (t) => { const m = String(t || '').match(/^(\d{1,2}):(\d{2})/); return m ? Number(m[1]) * 60 + Number(m[2]) : 24 * 60; };
 
 /**
+ * Une rencontre = une seule entrée (27 nov. 2026 : le même match de hockey sortait en 7 stories). Chaque équipe a son
+ * calendrier : le match y figure deux fois (« reçoit » et « visite », gameId différents), parfois en double et parfois
+ * sans heure. Clé : jour, sport, établissements triés, heure ; une entrée sans heure tombe si la rencontre a une heure
+ * ailleurs. Garde l'entrée de l'hôte (« reçoit »).
+ */
+export function dedupeMatches(list) {
+  const base = (r) => [r.date, String(r.sportKey || '').toLowerCase(), r.sport || '', ...(r.teams || []).map((t) => t.reg || t.name).sort()].join('|');
+  const timed = new Set(list.filter((r) => r.time).map(base));
+  const seen = new Map();
+  for (const r of list) {
+    if (!r.time && timed.has(base(r))) continue;
+    const k = base(r) + '|' + (r.time || '');
+    const prev = seen.get(k);
+    if (!prev || (prev.verb !== 'reçoit' && r.verb === 'reçoit')) seen.set(k, r);
+  }
+  return list.filter((r) => [...seen.values()].includes(r));
+}
+
+/**
  * Matchs du jour (`day`) à deux équipes, universitaire d'abord puis par heure. Les épreuves (voile) sont dans todaysRegattas.
  * `notBefore` (minutes depuis minuit, Montréal) : écarte les matchs déjà commencés. `max` : plafond de stories par jour.
  */
 export function todaysMatches(masthead, day, { max = 6, notBefore = -1 } = {}) {
   const { next } = pickSports(masthead, day, { max: 200, days: 0, nextDays: 0 });
-  return next
-    .filter((r) => r.date === day && r.teams?.length === 2 && !r.event && r.verb && mins(r.time) >= notBefore)
+  return dedupeMatches(next.filter((r) => r.date === day && r.teams?.length === 2 && !r.event && r.verb))
+    .filter((r) => mins(r.time) >= notBefore)
     .sort((a, b) => (b.uni - a.uni) || String(a.time).localeCompare(String(b.time)))
     .slice(0, max);
+}
+
+/**
+ * Jour sans match (27 nov. 2026, Charles) : on se rabat sur les derniers résultats (`resultDays` jours) et les prochains
+ * matchs (`nextDays` jours), chacun en une affiche de liste (même gabarit que « Aussi aujourd'hui »), les plus populaires
+ * d'abord (popularity, la voile en tête comme partout). Rien de récent ni d'annoncé : rien (jamais de remplissage).
+ */
+export function quietDayLists(masthead, day, { resultDays = 3, nextDays = 7, max = 9 } = {}) {
+  const { results, next } = pickSports(masthead, day, { max: 1000, days: resultDays, nextDays });
+  const sail = (r) => r.sportKey === 'sailing' || /^voile\b/i.test(String(r.sport || ''));
+  const rank = (list) => [...list].sort((a, b) => (sail(b) - sail(a)) || (popularity(b) - popularity(a)) || String(a.date + (a.time || '')).localeCompare(String(b.date + (b.time || ''))));
+  const res = rank(results.filter((r) => r.date < day || r.date === day)).slice(0, max);
+  const up = rank(next.filter((r) => r.date > day && r.teams?.length)).slice(0, max);
+  const out = [];
+  if (res.length) out.push({ kind: 'more', list: 'resultats', title: 'Résultats récents', date: day, wave: 'resultats', uni: false, time: '', items: res });
+  if (up.length) out.push({ kind: 'more', list: 'avenir', title: 'À venir', date: day, wave: 'avenir', uni: false, time: '', items: up });
+  return out;
 }
 
 /**
@@ -144,9 +180,11 @@ export function todaysStories(masthead, day, { max = 6, notBefore = -1, sailing 
  * et Facebook) : deux vagues courtes rapportent plus qu'une rafale. Matin : matchs de la journée (coup d'envoi avant 15 h),
  * régates et résultats de la veille. Fin d'après-midi : matchs de soirée, 2 à 3 h avant le coup d'envoi (après les cours).
  */
+// post : heure de Montréal à laquelle Buffer publie les stories de la vague (programmées dès le premier passage du jour,
+// 27 nov. 2026 : les crons de 9 h 41 et 15 h 23 n'étaient pas partis, les stories du soir étaient sorties à 17 h 20).
 export const WAVES = [
-  { id: 'matin', from: '09:00', to: '14:59', games: [0, 15 * 60] },
-  { id: 'soir', from: '15:00', to: '19:30', games: [15 * 60, 24 * 60] },
+  { id: 'matin', from: '09:00', to: '14:59', post: '09:00', games: [0, 15 * 60] },
+  { id: 'soir', from: '15:00', to: '19:30', post: '15:00', games: [15 * 60, 24 * 60] },
 ];
 const hmMin = (s) => { const [h, m] = String(s).split(':').map(Number); return h * 60 + (m || 0); };
 /** Vague d'une story : matchs selon l'heure du coup d'envoi ; voile (toute la journée, résultats) le matin. */
@@ -225,13 +263,20 @@ export function matchStoryModel(m, { index = 0, total = 1, root = ROOT } = {}) {
   const club = (z) => { const c = sailingClub(z.reg, { root }); return { name: c?.clubName || z.name, inst: c ? (z.inst || institutionSigle(c.name) || c.shortName || z.name) : z.inst || '', color: z.color || institutionColor(c?.name || '') || '', logo: teamLogo(z.reg ? `${z.reg}-voile` : '', { root }) }; };
   const withCredits = (x) => ({ match: { ...x, credits: storyCredits(x, { root }) } });
   if (m.kind === 'more') {
+    // Équipe et sigle de l'établissement entre parenthèses : « Carabins (UdeM) » (27 nov. 2026, Charles).
+    // Trait d'union insécable : « (Saint‑Jean‑sur‑Richelieu) » passe à la ligne d'un bloc, jamais coupé au tiret.
+    const nm = (z) => z?.inst && z.inst !== z.name ? `${z.name} (${z.inst.replace(/-/g, '\u2011')})` : z?.name || '';
     const line = (x) => x.kind === 'regatta' ? { emoji: '⛵', when: 'Journée', text: `Régate : ${x.event}`, sport: 'Voile' }
       : x.kind === 'regatta-results' ? { emoji: '⛵', when: 'Final', text: `Résultats : ${x.event}`, sport: 'Voile' }
-      : { emoji: x.emoji || '', when: frHour(x.time) || '', text: `${x.teams[0].name} ${x.verb} ${x.teams[1].name}`, sport: sportLabelFr(x.sport, x.sportKey) };
+      // Jour sans match : résultats (date, pointage) et matchs à venir (date et heure).
+      : x.kind === 'resultat' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${nm(x.teams[0])} ${x.teams[0].score}-${x.teams[1].score} ${nm(x.teams[1])}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : x.kind === 'classement' ? { emoji: x.emoji || '', when: frShort(x.date), text: `${nm(x.teams[0])} : ${String(x.place).replace('/', ' sur ')}, ${x.event}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : m.list === 'avenir' ? { emoji: x.emoji || '', when: [frShort(x.date), frHour(x.time)].filter(Boolean).join(' · '), text: x.verb && x.teams?.length === 2 ? `${nm(x.teams[0])} ${x.verb} ${nm(x.teams[1])}` : `${nm(x.teams?.[0])} · ${x.event || ''}`, sport: sportLabelFr(x.sport, x.sportKey) }
+      : { emoji: x.emoji || '', when: frHour(x.time) || '', text: `${nm(x.teams[0])} ${x.verb} ${nm(x.teams[1])}`, sport: sportLabelFr(x.sport, x.sportKey) };
     const items = m.items.map(line);
-    return { match: { kind: 'more', emoji: '🏟️', sport: 'Sport étudiant', circuit: '', circuitLogo: '', count: items.length, items: items.slice(0, 9), extra: Math.max(0, items.length - 9),
+    return { match: { kind: 'more', title: m.title || '', emoji: '🏟️', sport: 'Sport étudiant', circuit: '', circuitLogo: '', count: items.length, items: items.slice(0, 9), extra: Math.max(0, items.length - 9),
       hour: '', day: frDay(m.date).replace(/^./, (c) => c.toUpperCase()), dayShort: frShort(m.date), index, total,
-      credits: { data: `Calendrier : ${m.items.some((x) => String(x.kind).startsWith('regatta')) ? 'RSEQ et CICSA' : 'RSEQ'}`, logos: [], notes: [] } } };
+      credits: { data: `${m.list === 'resultats' ? 'Résultats' : 'Calendrier'} : ${m.items.some((x) => String(x.kind).startsWith('regatta') || x.sportKey === 'sailing') ? 'RSEQ et CICSA' : 'RSEQ'}`, logos: [], notes: [] } } };
   }
   if (m.kind === 'regatta-results') {
     const rows = m.rows.slice(0, 6).map((r) => { const c = club({ reg: r.reg, name: r.name }); return { ...c, place: r.place, placeLabel: ordinal(r.place), field: r.field, crew: r.crew ? `Équipage ${r.crew}` : '', podium: r.place <= 3 }; });
@@ -242,7 +287,10 @@ export function matchStoryModel(m, { index = 0, total = 1, root = ROOT } = {}) {
   // « A reçoit B » : A est à domicile ; « A visite B » : B est à domicile. L'équipe à domicile va en bas (convention « visiteur @ hôte »).
   const [x, y] = m.teams;
   const home = m.verb === 'reçoit' ? x : y, away = m.verb === 'reçoit' ? y : x;
-  return withCredits({ ...common, kind: 'match', league: m.league || '', away: t(away), home: t(home),
+  // Logos : les deux ou aucun (27 nov. 2026, Charles : un seul logo, l'autre absent, déséquilibrait l'affiche).
+  const A = t(away), H = t(home);
+  if (!(A.logo && H.logo)) { A.logo = ''; H.logo = ''; }
+  return withCredits({ ...common, kind: 'match', league: m.league || '', away: A, home: H,
     // « Chez les … » puis la salle (API RSEQ) sur la ligne du dessous.
     where: home.inst ? `Chez les ${home.name} · ${home.inst}` : `Chez les ${home.name}`, venue: m.venue || '' });
 }
@@ -262,7 +310,7 @@ export async function rseqVenue(gameId, { fetchImpl = fetch, timeoutMs = 8000 } 
 export function matchStoryAlt(m) {
   const { match: s } = matchStoryModel(m);
   const who = (z) => `${z.name}${z.inst ? ` (${z.inst})` : ''}`;
-  if (s.kind === 'more') return `Affiche Aussi aujourd’hui du Radar, ${s.day} : ${s.items.map((x) => `${x.when ? x.when + ', ' : ''}${x.sport}, ${x.text}`).join(' ; ')}${s.extra ? ` ; et ${s.extra} autres` : ''}. le-radar.ca`;
+  if (s.kind === 'more') return `Affiche ${s.title || 'Aussi aujourd’hui'} du Radar, ${s.day} : ${s.items.map((x) => `${x.when ? x.when + ', ' : ''}${x.sport}, ${x.text.replace(/\u2011/g, '-')}`).join(' ; ')}${s.extra ? ` ; et ${s.extra} autres sur le-radar.ca/sports` : ''}. le-radar.ca`;
   if (s.kind === 'regatta-results') return `Affiche Résultats de régate du Radar : ${s.event}, ${s.range || s.day}${s.where ? `, ${s.where.replace(/^Lieu/, 'lieu')}` : ''}, classement final sur ${s.field} équipes : ${s.rows.map((r) => `${r.placeLabel} ${r.name}${r.crew ? ` (${r.crew.toLowerCase()})` : ''}`).join(', ')}. le-radar.ca`;
   if (s.kind === 'regatta') return `Affiche Jour de régate du Radar : ${s.sport}, ${s.event}, ${s.day}${s.hour ? ` à ${s.hour}` : ''}, classement par place${s.where ? `, ${s.where.replace(/^Lieu/, 'lieu')}` : ''} ; clubs du Québec inscrits : ${s.clubs.map(who).join(', ')}. le-radar.ca`;
   return `Affiche Jour de match du Radar : ${s.sport}, ${who(s.away)} contre ${who(s.home)}, ${s.day}${s.hour ? ` à ${s.hour}` : ''}, ${s.where.replace(/^Chez/, 'chez')}${s.venue ? `, ${s.venue}` : ''}. le-radar.ca`;

@@ -48,8 +48,6 @@ export const BUFFER_NETS = new Set(['linkedin', 'facebook', 'instagram', 'x', 't
 const MAX_IMAGES = { x: 4, bluesky: 4, mastodon: 4 };
 /** TikTok : préparé, éteint tant que le compte n'est pas connecté dans Buffer (formats.revue.tiktok.enabled). */
 export const tiktokEnabled = (cfg = CFG) => cfg.tiktok?.enabled === true;
-/** Publication « par notification » (formats.revue.notify) : on choisit un son tendance dans l'appli avant de publier. */
-export const notifyFor = (net, cfg = CFG) => (cfg.notify || []).includes(net);
 const MAX_ATTEMPTS = 3;
 const hm = (s) => { const [h, m] = String(s).split(':').map(Number); return h * 60 + m; };
 
@@ -210,7 +208,7 @@ async function sendOne(net, { text, doc, images, model, env, igState, slot, when
   if (net === 'tiktok') {
     // Carrousel photo TikTok, compte Buffer d'Instagram (3e canal gratuit). À vérifier à la première publication réelle.
     const ch = createXBuffer({ key: env.BUFFER_INSTAGRAM_API_KEY, service: 'tiktok', channelName: CFG.tiktok?.channelName || 'le.radar.ca', fallbackId: env.BUFFER_TIKTOK_CHANNEL_ID || null });
-    const post = await ch.add({ text, ...when, images: imgs, notify: notifyFor('tiktok') });
+    const post = await ch.add({ text, ...when, images: imgs });
     return { id: post.id, status: post.status || '' };
   }
   if (net === 'bluesky') {
@@ -240,7 +238,7 @@ async function sendOne(net, { text, doc, images, model, env, igState, slot, when
   if (igState.halted) return { skip: 'Instagram arrêté après un avertissement ou une erreur Buffer. Aucun réessai.' };
   const allowed = instagramRevueAllowed({ slot, igState });
   if (!allowed.ok) return { skip: `Instagram : ${allowed.why}` };
-  const r = await deliverInstagram({ env, text, imageUrl: images[0].url, images, alt: images[0].alt, state: igState, now: new Date().toISOString(), dueAt: when.dueAt, notify: notifyFor('instagram'),
+  const r = await deliverInstagram({ env, text, imageUrl: images[0].url, images, alt: images[0].alt, state: igState, now: new Date().toISOString(), dueAt: when.dueAt,
     slotId: slot.id, format: 'revue', dedupKey: `revue:${slot.revueId}`, fileIssue: openInstagramIssue });
   Object.assign(igState, r.state || {});
   if (r.action !== 'sent') throw Object.assign(new Error(r.reason || 'Instagram non publié'), { final: true });

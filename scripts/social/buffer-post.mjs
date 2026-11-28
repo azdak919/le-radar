@@ -4,7 +4,7 @@
 import { loadFrontRanks, scorer, recentUneKeys, articleKey, bestFirst, bestSlotsFirst } from './selection.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, freePlaces, blockedMessage, reconcileSent, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
+import { parseFeed, markImages, buildText, buildXText, selectItems, selectDaily, freeSlots, DAILY_SLOTS, xlen, slotsToday, refreshPhotoLine, QUEUE_MAX, articlePlaces, blockedMessage, reconcileSent, MAX_AGE_H, stripUtm, siteLink } from './lib.mjs';
 const inText = (t, i) => !!t && (t.includes(i.link) || t.includes(siteLink(i)));
 import { resolveImage, mediaForNetwork, isMediaRefusal } from './image-resolve.mjs';
 import { createRequire as _cr } from 'node:module';
@@ -63,7 +63,9 @@ if (channel) { const gone = reconcileSent(state.sent, queued.map(p => p.id)); if
 const byPost = new Map(Object.values(state.sent).filter(s => s.postId).map(s => [s.postId, s.source]));
 const queuedSources = queued.map(p => byPost.get(p.id) || items.find(i => inText(p.text, i))?.source).filter(Boolean);
 const maxNew = parseInt(process.env.MAX_NEW || '', 10);
-const slots = Math.min(freePlaces(queued.length, errored.length), maxNew > 0 ? maxNew : QUEUE_MAX);
+const shareNow = process.env.SHARE_NOW === 'true';
+// Publication immédiate : n'occupe pas la file. Sinon, X_RESERVE places restent pour La une, La revue et les formats.
+const slots = Math.min(shareNow ? QUEUE_MAX : articlePlaces(queued.length, errored.length), maxNew > 0 ? maxNew : QUEUE_MAX);
 const blocked = blockedMessage('x', queued.length, errored.length);
 if (blocked) console.log(`::warning::${blocked}`);
 console.log(`Flux : ${items.length} items · file actuelle : ${queued.length} (+${errored.length} en échec) · places : ${slots}`);
@@ -76,9 +78,13 @@ const daily = process.env.DAILY === 'true';
 const evening = daily && process.env.EVENING === 'true';
 // Volume réduit (policy.json, 14 jours) : 5 créneaux/jour au lieu de 10, et jamais plus de `perDay` programmés pour le jour visé
 // (file existante comprise). Fin de la période : retour automatique aux 10 créneaux de base.
-const targetT = Date.now() + (evening ? 864e5 : 0), reduced = daily && !process.env.SLOT_TIMES ? volumeFor('x', targetT) : null;
-const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : daily ? (reduced ? POLICY.volume.xSlots : DAILY_SLOTS) : null;
-const dues = times ? freeSlots(slotsToday(times, { dayOffset: evening ? 1 : 0 }), queued.map(p => p.dueAt)) : null;
+// Lancement manuel (sans DAILY) compris : même plafond et mêmes heures (xSlots) que la passe nocturne,
+// jamais l'horaire Buffer (27 nov. 2026 : un lancement manuel avait rempli la file X). SLOT_TIMES et SHARE_NOW restent libres.
+const targetT = Date.now() + (evening ? 864e5 : 0), reduced = !process.env.SLOT_TIMES && !shareNow ? volumeFor('x', targetT) : null;
+const times = process.env.SLOT_TIMES ? process.env.SLOT_TIMES.split(',').map(x => x.trim()).filter(Boolean) : reduced ? POLICY.volume.xSlots : daily ? DAILY_SLOTS : null;
+// Fraîcheur : avec le volume réduit, rien n'est programmé plus de `horizonH` heures à l'avance (choix fait près de l'heure).
+const horizon = reduced && POLICY.volume?.horizonH ? Date.now() + POLICY.volume.horizonH * 3600e3 : Infinity;
+const dues = times ? freeSlots(slotsToday(times, { dayOffset: evening ? 1 : 0 }), queued.map(p => p.dueAt)).filter(d => Date.parse(d) <= horizon) : null;
 const onTargetDay = reduced ? queued.filter(p => torontoDay(Date.parse(p.dueAt)) === torontoDay(targetT)).length : 0;
 const dayLeft = reduced ? Math.max(0, reduced.perDay - onTargetDay) : Infinity;
 const want = dues ? Math.min(slots, dues.length, dayLeft) : slots;
@@ -87,7 +93,6 @@ const ledger = mentionLedger({ sent: state.sent, queued, accounts: ACCOUNTS }); 
 const sentIds = new Set(Object.keys(state.sent));
 // SHARE_NOW=true : UN article au hasard (récent, ni envoyé ni en file, photo réelle et source hors file si possible), publié tout de suite.
 // SHARE_URL : cet article précis (même article sur tous les réseaux), avec SHARE_NOW.
-const shareNow = process.env.SHARE_NOW === 'true';
 const shareUrl = (process.env.SHARE_URL || '').trim();
 const pickUrl = () => { const it = items.find(i => (i.link || '').replace(/\/+$/, '') === stripUtm(shareUrl).replace(/\/+$/, '') || i.id === shareUrl); if (!it) throw new Error(`SHARE_URL absent du flux : ${shareUrl}`); return it; };
 // Articles parus dans La une sur X depuis 24 h : identifiants du flux à écarter (pas de doublon le même jour).

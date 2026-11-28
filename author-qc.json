@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-27T01:38:58.114Z",
-  "total": 1201,
-  "withAuthor": 1201,
-  "mismatches": 61,
+  "updated": "2026-11-28T03:38:00.485Z",
+  "total": 1198,
+  "withAuthor": 1198,
+  "mismatches": 57,
   "ok": true,
   "samples": [
     {
@@ -126,22 +126,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Artificial Intelligence in Journalism: The Daily’s Stance",
-      "link": "https://www.mcgilldaily.com/2026/11/artificial-intelligence-in-journalism-the-dailys-stance/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "70 years of ‘Giovanni’s Room’",
-      "link": "https://thetribune.ca/a-e/70-years-of-giovannis-room-03112026",
-      "source": "The Tribune",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
       "title": "Vote YES for The Concordian’s fee levy increase",
       "link": "https://theconcordian.com/2026/11/vote-yes-the-concordian-fee-levy",
       "source": "The Concordian",
@@ -164,7 +148,23 @@
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Why is it important to vote?",
+      "link": "https://theplantnews.com/2026/11/03/quebec-2026-election-guide",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Streaming service Fatigue & the Resurrection of Physical Media",
+      "link": "https://theplantnews.com/2026/11/03/the-resurrection-of-physical-media",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 61
+  "fixed": 57
 }

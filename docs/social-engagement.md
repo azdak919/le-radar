@@ -18,9 +18,9 @@ passage après leur heure.
 | X | 7 h 45 · 19 h 30 | 12 h (4 pages) | 2 / jour (14 h 30, 17 h 30) |
 | Bluesky | 7 h 45 · 19 h 30 | 21 h (4 pages) | 3 / jour, les mieux notés |
 | Mastodon | 7 h 45 · 19 h 30 | 12 h (4 pages) | 3 / jour, les mieux notés |
-| TikTok | — | 20 h 30, carrousel photo (préparé, éteint : connecter TikTok dans Buffer, puis `formats.revue.tiktok.enabled`) | — |
+| TikTok | — (matchs du jour : carrousel des affiches à 16 h) | 20 h 30, carrousel photo | — |
 
-Stories (Facebook, Instagram, hors fil) : une du matin et du soir, matchs du jour vers 9 h 40 et 15 h 20.
+Stories (Facebook, Instagram, hors fil) : une du matin et du soir, matchs du jour vers 9 h 40 et 15 h 20. TikTok n'a pas de stories par Buffer : les affiches du jour y partent en un seul carrousel à 16 h. Tout est automatique (aucune notification au téléphone).
 Réglages : `formats.une.netTimes`, `formats.revue.slots`, `volume` (articles), plafonds `perDay` des modules
 `scripts/social/networks/`. À mesurer dans Buffer vers le 10 déc. 2026 : portée de la une, de la revue et des articles par réseau.
 

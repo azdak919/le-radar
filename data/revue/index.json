@@ -1,5 +1,62 @@
 [
  {
+  "id": "2026-11-27-soir",
+  "edition": "soir",
+  "day": "2026-11-27",
+  "path": "revues/2026-11-27-soir/",
+  "url": "https://le-radar.ca/revues/2026-11-27-soir/",
+  "headline": "La revue du soir du vendredi 27 novembre 2026",
+  "description": "La revue du soir du vendredi 27 novembre 2026. En tête de cette revue du soir, Le Club-École publie « Est ce la fin pour Aaron Rodgers ? », sous la plume d’Emerik Mathieu.",
+  "datePublished": "2026-11-28T00:05:49.295Z",
+  "dateModified": "2026-11-28T00:05:49.295Z",
+  "periodEnd": "2026-11-28T00:05:49.295Z",
+  "articleIds": [
+   "8df81121f8eeda56",
+   "c8e743afc97da658",
+   "1f9c7ccdc9c091e7",
+   "ce4b767b6b066d4e",
+   "ab1f22b36385a58b",
+   "fcf8756ff3d300ba",
+   "04771e6ff7bd52a7",
+   "3028204756f07a99"
+  ],
+  "sportKeys": [],
+  "counts": {
+   "articles": 8,
+   "results": 0,
+   "next": 103,
+   "radio": 7
+  },
+  "image": "https://le-radar.ca/assets/news-images/34bf3fba5e9f3b1f.jpg",
+  "generator": "ia:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  "lead": "Est ce la fin pour Aaron Rodgers ?"
+ },
+ {
+  "id": "2026-11-27-matin",
+  "edition": "matin",
+  "day": "2026-11-27",
+  "path": "revues/2026-11-27-matin/",
+  "url": "https://le-radar.ca/revues/2026-11-27-matin/",
+  "headline": "La revue du matin du vendredi 27 novembre 2026",
+  "description": "La revue du matin du vendredi 27 novembre 2026. Pour ouvrir la journée, The Concordian publie « Courtney Rice and the Stingers defeat the Gaiters », sous la plume de Brendan Schwartz.",
+  "datePublished": "2026-11-27T12:07:45.434Z",
+  "dateModified": "2026-11-27T12:07:45.434Z",
+  "periodEnd": "2026-11-27T12:07:45.434Z",
+  "articleIds": [
+   "02b7b390204c9a76"
+  ],
+  "sportKeys": [],
+  "counts": {
+   "articles": 1,
+   "results": 0,
+   "next": 47,
+   "radio": 24
+  },
+  "image": "https://le-radar.ca/assets/news-images/e59689c2c2c96d41.webp",
+  "generator": "ia:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  "lead": "Courtney Rice and the Stingers defeat the Gaiters"
+ },
+ {
   "id": "2026-11-26-soir",
   "edition": "soir",
   "day": "2026-11-26",
@@ -8,7 +65,7 @@
   "headline": "La revue du soir du jeudi 26 novembre 2026",
   "description": "La revue du soir du jeudi 26 novembre 2026. En tête de cette revue du soir, The McGill Daily publie « Just Visiting — For the Next Four Years », sous la plume de Lorin Kamaci.",
   "datePublished": "2026-11-27T01:03:37.057Z",
-  "dateModified": "2026-11-27T01:03:37.057Z",
+  "dateModified": "2026-11-27T04:08:38.062Z",
   "periodEnd": "2026-11-27T01:03:37.057Z",
   "articleIds": [
    "d034b5575c8d2796",
@@ -21,12 +78,14 @@
   ],
   "sportKeys": [
    "2026-11-26|Basketball (F)|Martlets (McGill):61|Stingers (Concordia):50",
-   "2026-11-26|Basketball (F)|Citadins (UQAM):66|Gaiters (Bishop’s):78"
+   "2026-11-26|Basketball (F)|Citadins (UQAM):66|Gaiters (Bishop’s):78",
+   "2026-11-26|Basketball (H)|Citadins (UQAM):74|Gaiters (Bishop’s):76",
+   "2026-11-26|Basketball (H)|Redbirds (McGill):46|Stingers (Concordia):80"
   ],
   "counts": {
    "articles": 7,
-   "results": 2,
-   "next": 44,
+   "results": 4,
+   "next": 46,
    "radio": 9
   },
   "image": "https://le-radar.ca/assets/news-images/e22ef03115105fed.jpg",
