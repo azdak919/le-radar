@@ -31,6 +31,11 @@ on:
         description: 'Lot, téléchargement : « id|File:…|titulaire;… »'
         required: false
         type: string
+      batch_source:
+        description: 'Source des lots : commons (« id|recherche » / « id|File:…|titulaire ») ou site (« id|page » / « id|image|titulaire|page »)'
+        type: choice
+        options: [commons, site]
+        default: commons
       query:
         description: 'Recherche Commons si pas de fichier (ex. « Carabins Université de Montréal logo »)'
         required: false
@@ -70,8 +75,10 @@ jobs:
           QUERY: ${{ inputs.query }}
           PAGE_URL: ${{ inputs.page_url }}
           IMAGE_URL: ${{ inputs.image_url }}
-          BATCH_LIST: ${{ inputs.batch_list }}
-          BATCH_FETCH: ${{ inputs.batch_fetch }}
+          BATCH_LIST: ${{ inputs.batch_source != 'site' && inputs.batch_list || '' }}
+          BATCH_FETCH: ${{ inputs.batch_source != 'site' && inputs.batch_fetch || '' }}
+          BATCH_PAGES: ${{ inputs.batch_source == 'site' && inputs.batch_list || '' }}
+          BATCH_SITE_FETCH: ${{ inputs.batch_source == 'site' && inputs.batch_fetch || '' }}
           OWNER: ${{ inputs.owner }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           PREVIEW_DIR: logo-preview
@@ -91,5 +98,5 @@ jobs:
           git diff --cached --quiet && { echo "Rien de nouveau."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git commit -s -m "bot(social): logo d'équipe ${TEAM_ID} (Commons)"
+          git commit -s -m "bot(social): logo d'équipe ${TEAM_ID}"
           GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"assets/logos/teams/sources.json\"))'"

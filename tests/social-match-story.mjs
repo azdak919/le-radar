@@ -245,3 +245,9 @@ console.log('logos en lot et alias : ok');
   fs.mkdirSync(path.join(tmp, 'assets/logos/teams'), { recursive: true }); fs.writeFileSync(path.join(tmp, 'assets/logos/teams/dawson.jpg'), '');
   assert.equal(L.teamLogo('dawson', { root: tmp }), '../assets/logos/teams/dawson.jpg');
 }
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.deepEqual(T.parseBatch('granby|https://ex.org/logo.svg|Cégep de Granby|https://cegepgranby.ca/'), [{ id: 'granby', v: 'https://ex.org/logo.svg', owner: 'Cégep de Granby', page: 'https://cegepgranby.ca/' }]);
+  const wf = fs.readFileSync(new URL('../.github/workflows/social-team-logo.yml', import.meta.url), 'utf8');
+  assert.equal((wf.match(/^      [a-z_]+:\n        description:/gm) || []).length <= 10, true, 'GitHub : 10 entrées au plus');
+}
