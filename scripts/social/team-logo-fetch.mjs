@@ -91,7 +91,7 @@ function save({ id, buf, ext, entry, dry, out, label }) {
 }
 
 /** Site officiel (28 nov. 2026, Charles : logo des Carabins sur carabins.umontreal.ca) : page → candidats, ou image choisie. */
-async function fromSite({ id, page, image, dry, out }) {
+async function fromSite({ id, page, image, dry, out, owner = process.env.OWNER || id }) {
   const H = { 'User-Agent': UA };
   if (!image) {
     const r = await fetch(page, { headers: H, redirect: 'follow' });
@@ -110,7 +110,7 @@ async function fromSite({ id, page, image, dry, out }) {
   if (!ext) throw new Error(`Ni PNG, ni WebP, ni SVG sûr : ${image}`);
   const host = new URL(page || image).hostname;
   save({ id, buf, ext, dry, out, label: image,
-    entry: { file: '', source: page || image, image, license: `Logo officiel publié sur ${host} (marque de son titulaire)`, owner: process.env.OWNER || id } });
+    entry: { file: '', source: page || image, image, license: `Logo officiel publié sur ${host} (marque de son titulaire)`, owner } });
 }
 
 async function fromCommons({ id, file, owner, dry, out }) {
@@ -128,7 +128,7 @@ async function fromCommons({ id, file, owner, dry, out }) {
 }
 
 /** Lot (28 nov. 2026, Charles : logos ÉTS et cégeps) : « id|valeur;id|valeur;… », une requête Commons à la fois, 1,5 s d'écart. */
-export const parseBatch = (s) => String(s || '').split(/[;\n]/).map((l) => l.split('|').map((x) => x.trim())).filter((p) => teamId(p[0]) && p[1]).map(([id, v, owner]) => ({ id: teamId(id), v, owner: owner || '' }));
+export const parseBatch = (s) => String(s || '').split(/[;\n]/).map((l) => l.split('|').map((x) => x.trim())).filter((p) => teamId(p[0]) && p[1]).map(([id, v, owner, page]) => ({ id: teamId(id), v, owner: owner || '', ...(page ? { page } : {}) }));
 const pause = () => new Promise((r) => setTimeout(r, 1500));
 async function batchList(items, out) {
   out('### Candidats Commons (lot)\n\n| Équipe | Recherche | Fichier | Licence | Taille |\n|---|---|---|---|---|');
@@ -139,6 +139,30 @@ async function batchList(items, out) {
     if (!list.length) out(`| ${id} | ${v} | — | | |`);
     await pause();
   }
+}
+/** Lot de sites officiels : « id|page;… » → logos trouvés sur chaque page (8 au plus par site). */
+async function batchPages(items, out) {
+  out('### Logos des sites officiels (lot)\n\n| Équipe | Page | Image | Texte alternatif |\n|---|---|---|---|');
+  for (const { id, v } of items) {
+    try {
+      const r = await fetch(v, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const list = logoCandidates(await r.text(), r.url || v).filter((c) => !/og:image/.test(c.alt)).slice(0, 8);
+      console.log(`\n${id} · ${v} : ${list.length ? '' : '(aucun)'}`);
+      for (const c of list) { console.log(`  - ${c.url}${c.alt ? ' · ' + c.alt : ''}`); out(`| ${id} | ${v} | ${c.url} | ${c.alt || ''} |`); }
+    } catch (e) { console.log(`\n${id} · ${v} : échec (${e.message})`); out(`| ${id} | ${v} | échec : ${e.message} | |`); }
+    await pause();
+  }
+}
+/** Lot d'images de sites officiels : « id|image|titulaire|page;… ». */
+async function batchSiteFetch(items, dry, out) {
+  let ok = 0; const failed = [];
+  for (const { id, v, owner, page } of items) {
+    try { await fromSite({ id, page: page || '', image: v, dry, out, owner }); ok++; } catch (e) { failed.push(id); console.log(`::warning::${id} : ${e.message}`); }
+    await pause();
+  }
+  console.log(`\nLot : ${ok} logo(s)${dry ? ' vérifiés (essai)' : ' ajoutés'}${failed.length ? ` ; échecs : ${failed.join(', ')}` : ''}.`);
+  if (!ok && failed.length) throw new Error('aucun logo du lot');
 }
 async function batchFetch(items, dry, out) {
   let ok = 0; const failed = [];
@@ -155,6 +179,8 @@ async function main() {
   const out = process.env.GITHUB_STEP_SUMMARY ? (s) => fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, s + '\n') : () => {};
   if (process.env.BATCH_LIST) return batchList(parseBatch(process.env.BATCH_LIST), out);
   if (process.env.BATCH_FETCH) return batchFetch(parseBatch(process.env.BATCH_FETCH), dry, out);
+  if (process.env.BATCH_PAGES) return batchPages(parseBatch(process.env.BATCH_PAGES), out);
+  if (process.env.BATCH_SITE_FETCH) return batchSiteFetch(parseBatch(process.env.BATCH_SITE_FETCH), dry, out);
   if (!id) throw new Error('TEAM_ID requis (registryId de sports-masthead.json, ex. udem, ets ; club de voile : udem-voile)');
   const page = (process.env.PAGE_URL || '').trim(), image = (process.env.IMAGE_URL || '').trim();
   if (page || image) return fromSite({ id, page, image, dry, out });
