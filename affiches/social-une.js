@@ -442,8 +442,10 @@
   // Story « Jour de match » (scripts/social/match-story-run.mjs) : une affiche 9:16 plein cadre par match, sans liste ni radio.
   // Diagonale aux couleurs des deux établissements (visiteur en haut, hôte en bas), logos d'équipes seulement s'ils sont déposés
   // dans assets/logos/teams/. Rien d'essentiel dans les 150 px du haut ni les 250 px du bas (interface d'Instagram et de Facebook).
-  async function renderMatchStory(card, model) {
-    const m = model.match; card.className = 'card match-story';
+  // Variante TikTok (format « match-tiktok », carrousel « Matchs du jour », 28 nov. 2026, Charles) : mêmes contenus, placés hors
+  // de l'interface de TikTok (barre de recherche en haut, compte et légende en bas, colonne d'actions à droite), sans « 1 de N ».
+  async function renderMatchStory(card, model, tiktok = false) {
+    const m = model.match; card.className = 'card match-story' + (tiktok ? ' ms-tiktok' : '');
     const list0 = m.clubs || m.rows || [];
     if (m.kind === 'more') { list0.push({ color: '#6c2163' }, { color: '#1f2a44' }); }
     const ca = m.away ? m.away.color : (list0[0] || {}).color, cb = m.home ? m.home.color : (list0[1] || {}).color;
@@ -510,7 +512,7 @@
     card.append(when);
     // Pied : mêmes crédits que les autres visuels sociaux (nom complet + mention), en petit ; source des données sportives.
     const foot = el('footer', 'ms-foot');
-    if (m.total > 1) foot.append(el('span', 'ms-count', `${m.index + 1} de ${m.total}`));
+    if (m.total > 1 && !tiktok) foot.append(el('span', 'ms-count', `${m.index + 1} de ${m.total}`));
     // Petite marque centrée juste au-dessus des crédits (icône + « LE‑RADAR.ca »), comme le pied des autres visuels.
     const fm = el('p', 'ms-fmark'); const fi = el('img'); fi.src = '../assets/icon.svg'; fi.alt = ''; fm.append(fi, el('span', 'wm', 'LE\u2011RADAR.ca')); foot.append(fm);
     foot.append(el('span', 'full', 'Le Réseau Académique de Découverte et d’Agrégation de Ressources'));
@@ -528,7 +530,7 @@
     if (m.kind === 'match' && teamLogos.length === 1) teamLogos[0].remove();
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
     // Noms longs : la police rétrécit jusqu'à tenir sur deux lignes au plus (jamais d'ellipse).
-    const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > 715) { f -= 4; ev.style.fontSize = f + 'px'; } }
+    const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > (tiktok ? 700 : 715)) { f -= 4; ev.style.fontSize = f + 'px'; } }
     // Clubs de voile : un nom par ligne, la police rétrécit pour tenir (jamais coupé).
     // Liste « Aussi aujourd'hui » : équipes avec sigle (« Cougars (Champlain Lennoxville) ») ; la police rétrécit, puis passe à deux lignes.
     // Une ligne si ça tient à 28 px au moins ; sinon deux lignes coupées après le verbe (« Cheetahs (Vanier) reçoit » / « Géants (Saint‑Jean‑sur‑Richelieu) »),
@@ -545,16 +547,21 @@
       while (f > 22 && over()) { f -= 1; b.style.fontSize = f + 'px'; }
     });
     // La date suit la liste (lignes sur deux lignes : la liste s'allonge), jamais par-dessus.
-    { const ls = card.querySelector('.ms-more .ms-clubs'), wh = card.querySelector('.ms-more .ms-when'); const last = ls && ls.lastElementChild;
+    // TikTok : vaut aussi pour les régates (liste calée en haut).
+    { const sel = tiktok ? '.ms-regatta' : '.ms-more'; const ls = card.querySelector(sel + ' .ms-clubs'), wh = card.querySelector(sel + ' .ms-when'); const last = ls && ls.lastElementChild;
       if (last && wh) { const cb = card.getBoundingClientRect().top, bottom = last.getBoundingClientRect().bottom - cb; if (bottom + 20 > parseFloat(getComputedStyle(wh).top)) wh.style.top = Math.ceil(bottom + 20) + 'px'; } }
     card.querySelectorAll('.ms-club:not(.ms-line) > b, .ms-club:not(.ms-line) .ms-nm b').forEach((b) => { let f = 52; while (f > 30 && b.scrollWidth > b.clientWidth + 1) { f -= 2; b.style.fontSize = f + 'px'; } });
     card.querySelectorAll('.ms-name').forEach((n) => { let f = parseFloat(getComputedStyle(n).fontSize); const lh = () => parseFloat(getComputedStyle(n).lineHeight) || f; while (f > 56 && (n.scrollWidth > n.clientWidth + 1 || n.clientHeight > lh() * 2 + 2)) { f -= 4; n.style.fontSize = f + 'px'; } });
+    // TikTok : le pied (marque puis crédits) suit le bloc date et lieu, jamais par-dessus.
+    if (tiktok) { const wh = card.querySelector('.ms-when'), ft = card.querySelector('.ms-foot'); const cb = card.getBoundingClientRect().top;
+      const bottom = wh.getBoundingClientRect().bottom - cb; if (bottom + 12 > parseFloat(getComputedStyle(ft).top)) ft.style.top = Math.ceil(bottom + 12) + 'px'; }
     const overflow = [...card.children].some((c) => c.getBoundingClientRect().bottom > 1920 || c.scrollWidth > c.clientWidth + 2);
     return { overflow, shown: 0, sports: 1, sportsDetail: m.kind === 'regatta' ? m.event : m.sport, radio: 0, photo: false, logos: imgs.filter((i) => i.isConnected).length };
   }
   window.renderUne = async function renderUne({ model, format }) {
     const card = document.getElementById('card'); card.textContent = '';
     if (format === 'match-story') return renderMatchStory(card, model);
+    if (format === 'match-tiktok') return renderMatchStory(card, model, true);
     if (format === 'grille') return renderGrille(card, model);
     if (format === 'article' || format === 'article-portrait') return renderArticle(card, model, format);
 
