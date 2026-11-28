@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// UN logo d'équipe depuis Wikimedia Commons → assets/logos/teams/<id>.png (story « Jour de match »).
+// UN logo d'équipe depuis Wikimedia Commons ou le site officiel de l'équipe → assets/logos/teams/<id>.png|svg (story « Jour de match »).
+//   PAGE_URL=https://… (site officiel) → liste les images qui ressemblent à un logo ; + IMAGE_URL=https://… → télécharge celle-là.
 // Lancé à la main (workflow « Social — Logo d'équipe depuis Commons ») : jamais en lot, jamais automatique.
 //
 //   TEAM_ID=udem QUERY="Carabins logo" node scripts/social/team-logo-fetch.mjs          → liste les candidats (rien n'est écrit)
@@ -50,10 +51,72 @@ export function isImage(buf) {
     || (buf.subarray(0, 4).toString() === 'RIFF' && buf.subarray(8, 12).toString() === 'WEBP'));
 }
 
+/** Type d'image accepté : png, webp ou svg sans script ni gestionnaire d'événement ; sinon ''. */
+export function imageExt(buf) {
+  if (isImage(buf)) return buf[0] === 0x89 ? 'png' : 'webp';
+  const t = buf.subarray(0, 4096).toString('utf8');
+  if (/<svg[\s>]/i.test(t) && !/<script|\son\w+\s*=|javascript:/i.test(buf.toString('utf8'))) return 'svg';
+  return '';
+}
+
+/** Images d'une page web qui ressemblent à un logo (src, srcset, alt, class ou id contenant logo, crest, team, écusson…). */
+export function logoCandidates(html, base) {
+  const out = new Map();
+  const abs = (u) => { const v = String(u || '').trim().split(/\s+/)[0]; if (!v) return ''; try { return new URL(v, base).href; } catch { return ''; } };
+  for (const m of String(html).matchAll(/<img\b[^>]*>/gi)) {
+    const tag = m[0], attr = (n) => (tag.match(new RegExp(`\\s${n}\\s*=\\s*["']([^"']*)["']`, 'i')) || [])[1] || '';
+    const srcs = [attr('src'), attr('data-src'), ...attr('srcset').split(',')].map(abs).filter((u) => /^https:/.test(u));
+    const hint = `${attr('alt')} ${attr('class')} ${attr('id')} ${srcs.join(' ')}`;
+    if (!/logo|crest|ecusson|écusson|team|equipe|équipe|emblem/i.test(hint)) continue;
+    for (const u of srcs) if (!out.has(u)) out.set(u, attr('alt'));
+  }
+  for (const m of String(html).matchAll(/<meta\b[^>]*property=["']og:image["'][^>]*>/gi)) { const u = abs((m[0].match(/content=["']([^"']+)/i) || [])[1] || ''); if (u && !out.has(u)) out.set(u, 'og:image'); }
+  return [...out].map(([url, alt]) => ({ url, alt }));
+}
+
+function save({ id, buf, ext, entry, dry, out, label }) {
+  const name = `${id}.${ext}`; entry.file = name;
+  console.log(`${label} → ${name} (${buf.length} octets) · ${entry.license}${entry.author ? ' · ' + entry.author : ''}`);
+  out(`### ${name}\n\n${label} · ${entry.license}${entry.author ? ' · ' + entry.author : ''} · ${buf.length} octets${dry ? ' · **essai, rien écrit**' : ''}`);
+  if (buf.length > 1.5e6) throw new Error(`Image trop lourde (${buf.length} octets) : en choisir une plus petite`);
+  if (process.env.PREVIEW_DIR) { fs.mkdirSync(process.env.PREVIEW_DIR, { recursive: true }); fs.writeFileSync(path.join(process.env.PREVIEW_DIR, name), buf); }
+  if (dry) { console.log('Essai (DRY_RUN) : rien écrit dans le dépôt.'); return; }
+  for (const e of ['png', 'svg', 'webp']) { const p = path.join(DIR, `${id}.${e}`); if (e !== ext && fs.existsSync(p)) fs.rmSync(p); }
+  fs.writeFileSync(path.join(DIR, name), buf);
+  const srcPath = path.join(DIR, 'sources.json'), sources = JSON.parse(fs.readFileSync(srcPath, 'utf8'));
+  sources[id] = entry;
+  fs.writeFileSync(srcPath, JSON.stringify(sources, null, 1));
+}
+
+/** Site officiel (28 nov. 2026, Charles : logo des Carabins sur carabins.umontreal.ca) : page → candidats, ou image choisie. */
+async function fromSite({ id, page, image, dry, out }) {
+  const H = { 'User-Agent': UA };
+  if (!image) {
+    const r = await fetch(page, { headers: H, redirect: 'follow' });
+    if (!r.ok) throw new Error(`Page ${r.status} : ${page}`);
+    const list = logoCandidates(await r.text(), r.url || page);
+    console.log(`Logos trouvés sur ${page} (relancer avec IMAGE_URL) :`);
+    out(`### Logos trouvés sur ${page}\n\n| Image | Texte alternatif |\n|---|---|`);
+    for (const c of list) { console.log(`- ${c.url}${c.alt ? ' · ' + c.alt : ''}`); out(`| ${c.url} | ${c.alt || ''} |`); }
+    if (!list.length) console.log('(aucun)');
+    return;
+  }
+  if (!/^https:\/\//i.test(image)) throw new Error(`IMAGE_URL doit être en https : ${image}`);
+  const r = await fetch(image, { headers: H, redirect: 'follow' });
+  if (!r.ok) throw new Error(`Téléchargement ${r.status} : ${image}`);
+  const buf = Buffer.from(await r.arrayBuffer()), ext = imageExt(buf);
+  if (!ext) throw new Error(`Ni PNG, ni WebP, ni SVG sûr : ${image}`);
+  const host = new URL(page || image).hostname;
+  save({ id, buf, ext, dry, out, label: image,
+    entry: { file: '', source: page || image, image, license: `Logo officiel publié sur ${host} (marque de son titulaire)`, owner: process.env.OWNER || id } });
+}
+
 async function main() {
   const id = teamId(process.env.TEAM_ID), file = fileTitle(process.env.COMMONS_FILE), dry = process.env.DRY_RUN !== 'false';
   const out = process.env.GITHUB_STEP_SUMMARY ? (s) => fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, s + '\n') : () => {};
   if (!id) throw new Error('TEAM_ID requis (registryId de sports-masthead.json, ex. udem, ets ; club de voile : udem-voile)');
+  const page = (process.env.PAGE_URL || '').trim(), image = (process.env.IMAGE_URL || '').trim();
+  if (page || image) return fromSite({ id, page, image, dry, out });
   if (!file) {
     const q = process.env.QUERY || `${id} logo`;
     const list = await search(q);
@@ -64,25 +127,16 @@ async function main() {
     return;
   }
   const j = await get({ action: 'query', titles: file, ...iiParams });
-  const page = j.query?.pages?.[0];
-  if (!page || page.missing || !page.imageinfo) throw new Error(`Fichier introuvable sur Commons : ${file}`);
-  const c = info(page);
+  const pg = j.query?.pages?.[0];
+  if (!pg || pg.missing || !pg.imageinfo) throw new Error(`Fichier introuvable sur Commons : ${file}`);
+  const c = info(pg);
   if (!c.license) throw new Error(`Licence absente de la fiche Commons : ${c.url}`);
   const r = await fetch(c.thumb, { headers: { 'User-Agent': UA } });
   if (!r.ok) throw new Error(`Téléchargement ${r.status} : ${c.thumb}`);
   const buf = Buffer.from(await r.arrayBuffer());
   if (!isImage(buf)) throw new Error(`Rendu Commons ni PNG ni WebP (${c.mime}) : ${c.thumb}`);
-  const ext = buf[0] === 0x89 ? 'png' : 'webp', name = `${id}.${ext}`;
-  const entry = { file: name, source: c.url, license: c.license, ...(c.artist ? { author: c.artist } : {}), owner: process.env.OWNER || id };
-  console.log(`${c.title} → ${name} (${buf.length} octets) · ${c.license}${c.artist ? ' · ' + c.artist : ''}`);
-  out(`### ${name}\n\n[${c.title}](${c.url}) · ${c.license}${c.artist ? ' · ' + c.artist : ''} · ${buf.length} octets${dry ? ' · **essai, rien écrit**' : ''}`);
-  if (process.env.PREVIEW_DIR) { fs.mkdirSync(process.env.PREVIEW_DIR, { recursive: true }); fs.writeFileSync(path.join(process.env.PREVIEW_DIR, name), buf); }
-  if (dry) { console.log('Essai (DRY_RUN) : rien écrit dans le dépôt.'); return; }
-  for (const e of ['png', 'svg', 'webp']) { const p = path.join(DIR, `${id}.${e}`); if (e !== ext && fs.existsSync(p)) fs.rmSync(p); }
-  fs.writeFileSync(path.join(DIR, name), buf);
-  const srcPath = path.join(DIR, 'sources.json'), sources = JSON.parse(fs.readFileSync(srcPath, 'utf8'));
-  sources[id] = entry;
-  fs.writeFileSync(srcPath, JSON.stringify(sources, null, 1));
+  save({ id, buf, ext: buf[0] === 0x89 ? 'png' : 'webp', dry, out, label: `[${c.title}](${c.url})`,
+    entry: { file: '', source: c.url, license: c.license, ...(c.artist ? { author: c.artist } : {}), owner: process.env.OWNER || id } });
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((e) => { console.error(`::error::${e.message}`); process.exit(1); });
