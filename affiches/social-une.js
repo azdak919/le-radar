@@ -547,14 +547,15 @@
       while (f > 22 && over()) { f -= 1; b.style.fontSize = f + 'px'; }
     });
     // La date suit la liste (lignes sur deux lignes : la liste s'allonge), jamais par-dessus.
-    // TikTok : vaut aussi pour les régates (liste calée en haut).
-    { const sel = tiktok ? '.ms-regatta' : '.ms-more'; const ls = card.querySelector(sel + ' .ms-clubs'), wh = card.querySelector(sel + ' .ms-when'); const last = ls && ls.lastElementChild;
+    // Vaut aussi pour les régates (28 nov. 2026 : « et 1 autre club » passait sous « Toute la journée »).
+    { const sel = '.ms-regatta'; const ls = card.querySelector(sel + ' .ms-clubs'), wh = card.querySelector(sel + ' .ms-when'); const last = ls && ls.lastElementChild;
       if (last && wh) { const cb = card.getBoundingClientRect().top, bottom = last.getBoundingClientRect().bottom - cb; if (bottom + 20 > parseFloat(getComputedStyle(wh).top)) wh.style.top = Math.ceil(bottom + 20) + 'px'; } }
     card.querySelectorAll('.ms-club:not(.ms-line) > b, .ms-club:not(.ms-line) .ms-nm b').forEach((b) => { let f = 52; while (f > 30 && b.scrollWidth > b.clientWidth + 1) { f -= 2; b.style.fontSize = f + 'px'; } });
     card.querySelectorAll('.ms-name').forEach((n) => { let f = parseFloat(getComputedStyle(n).fontSize); const lh = () => parseFloat(getComputedStyle(n).lineHeight) || f; while (f > 56 && (n.scrollWidth > n.clientWidth + 1 || n.clientHeight > lh() * 2 + 2)) { f -= 4; n.style.fontSize = f + 'px'; } });
-    // TikTok : le pied (marque puis crédits) suit le bloc date et lieu, jamais par-dessus.
-    if (tiktok) { const wh = card.querySelector('.ms-when'), ft = card.querySelector('.ms-foot'); const cb = card.getBoundingClientRect().top;
-      const bottom = wh.getBoundingClientRect().bottom - cb; if (bottom + 12 > parseFloat(getComputedStyle(ft).top)) ft.style.top = Math.ceil(bottom + 12) + 'px'; }
+    // Le pied (marque puis crédits) suit le bloc date et lieu, jamais par-dessus.
+    { const wh = card.querySelector('.ms-when'), ft = card.querySelector('.ms-foot'), cb = card.getBoundingClientRect().top;
+      const bottom = wh.getBoundingClientRect().bottom - cb, first = ft.firstElementChild.getBoundingClientRect().top - cb;
+      if (bottom + 12 > first) { ft.style.top = Math.ceil(bottom + 12) + 'px'; ft.style.bottom = 'auto'; ft.style.height = 'auto'; ft.style.justifyContent = 'flex-start'; } }
     const overflow = [...card.children].some((c) => c.getBoundingClientRect().bottom > 1920 || c.scrollWidth > c.clientWidth + 2);
     return { overflow, shown: 0, sports: 1, sportsDetail: m.kind === 'regatta' ? m.event : m.sport, radio: 0, photo: false, logos: imgs.filter((i) => i.isConnected).length };
   }
