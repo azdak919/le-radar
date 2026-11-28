@@ -11,8 +11,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { POLICY } from './policy.mjs';
 import { createRequire } from 'node:module';
-import { todaysStories, quietDayLists, planWave, waveOf, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
+import { todaysStories, quietDayLists, planWave, fitWave, waveOf, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
 import { torontoMinutes, bufferWhen, montrealInstant } from './une-lib.mjs';
+import { freePlaces } from './lib.mjs';
 import { createXBuffer } from './channels/x-buffer.mjs';
 import { createInstagramBuffer } from './instagram.mjs';
 
@@ -81,8 +82,9 @@ export function tiktokCaption(day, entries, total = entries.length) {
 }
 async function tiktokPass({ now, day, state, total, env }) {
   if (!TIKTOK.enabled || !CFG.publish) return;
-  // Après le traitement de toutes les vagues du jour (affiches hébergées dès le premier passage) : programmée pour 16 h.
-  if (torontoMinutes(now) > hmMin(TIKTOK.until)) return;
+  // Après la vague du soir (programmée à partir de 13 h) : toutes les affiches du jour sont hébergées. Programmée pour 16 h.
+  const tmin = torontoMinutes(now);
+  if (tmin > hmMin(TIKTOK.until) || tmin < hmMin(TIKTOK.at) - LEAD_MIN) return;
   const key = `${day}:tiktok`, d = state[key];
   if ((d?.at && !d.failed) || (d?.attempts || 0) >= 3) return;
   const entries = tiktokEntries(state, day);
@@ -100,6 +102,31 @@ async function tiktokPass({ now, day, state, total, env }) {
   }
   fs.writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');
 }
+
+// ── File Buffer (forfait gratuit : 10 publications en attente par canal) ─────────────────────────────────────────
+/** Une vague ne se programme qu'au plus LEAD_MIN avant son heure : jamais plus d'une vague en file, et le calendrier
+ *  du soir est relu vers 13 h plutôt que figé à 7 h (match annulé ou déplacé). */
+export const LEAD_MIN = Number(CFG.leadMin ?? 120);
+export const waveDue = (wave, day, now = Date.now(), lead = LEAD_MIN) => !wave?.post || now >= montrealInstant(day, wave.post) - lead * 60e3;
+/** Places gardées dans chaque file pour La une et La revue. */
+export const QUEUE_RESERVE = Number(CFG.queueReserve ?? 2);
+/** Stories qu'une vague peut programmer : places libres du canal le plus plein, moins la réserve (Infinity si inconnu). */
+export async function storyCapacity(nets, env, { make = { facebook: null, instagram: null } } = {}) {
+  let cap = Infinity;
+  for (const n of nets) {
+    try {
+      let ch = make[n];
+      if (!ch && n === 'facebook') { const fb = (env.pages || {}).facebook; if (env.BUFFER_API_KEY && fb) ch = createXBuffer({ key: env.BUFFER_API_KEY, service: fb.service, channelName: fb.name, fallbackId: env.BUFFER_FACEBOOK_CHANNEL_ID || null }); }
+      if (!ch && n === 'instagram') ch = createInstagramBuffer(env);
+      if (!ch) continue;
+      const [q, e] = await Promise.all([ch.queued(), ch.errored()]);
+      cap = Math.min(cap, freePlaces(q.length, e.length) - QUEUE_RESERVE);
+    } catch (err) { console.log(`::warning::${n} : file Buffer illisible (${String(err.message).slice(0, 120)}), capacité inconnue.`); }
+  }
+  return Math.max(0, cap);
+}
+/** Nombre d'affiches d'une vague selon la place : au moins une (la liste « Aussi aujourd'hui » si une seule place). */
+export const waveSize = (max, capacity) => Math.max(0, Math.min(max, capacity));
 
 async function main() {
   // --gate : porte légère du workflow (sans navigateur) — reste-t-il une story ou le TikTok du jour à faire ?
@@ -125,12 +152,20 @@ async function main() {
   // n'a pas commencé. Essai : toutes les vagues du jour, pour voir le plan complet.
   const t = torontoMinutes(now);
   const all = todaysStories(rd(arg('sports', 'sports-masthead.json')), day, { max: 200, notBefore: dry ? -1 : t, sailing });
-  const waves = CFG.waves || WAVES; // toutes les vagues du jour : chaque story est programmée à l'heure de la sienne
-  let plan = waves.flatMap((w) => { const p = planWave(all.filter((m) => waveOf(m, CFG.waves || WAVES) === w.id), { maxPerWave: CFG.maxPerWave || 4 }); return p.map((m, i) => ({ m, i, total: p.length, wave: w.id })); });
+  // Vagues dues : au plus LEAD_MIN avant leur heure (essai : toutes). Taille : selon la place dans les files Buffer.
+  const waves = (CFG.waves || WAVES).filter((w) => dry || force || waveDue(w, day, now));
+  const capacity = dry || gateOnly ? Infinity : await storyCapacity((CFG.networks || []).filter((n) => NETS.includes(n)), { ...process.env, pages: rd('data/social/buffer-pages.json') });
+  if (Number.isFinite(capacity)) console.log(`Files Buffer : ${capacity} place(s) pour les stories (réserve de ${QUEUE_RESERVE} pour La une et La revue).`);
+  let plan = waves.flatMap((w) => {
+    const size = waveSize(CFG.maxPerWave || 4, capacity);
+    if (!size) { console.log(`::warning::Vague ${w.id} : file Buffer pleine, nouvel essai au prochain passage.`); return []; }
+    const p = fitWave(all.filter((m) => waveOf(m, CFG.waves || WAVES) === w.id), size);
+    return p.map((m, i) => ({ m, i, total: p.length, wave: w.id }));
+  });
   // Jour sans match : derniers résultats et prochains matchs, en affiches de liste, dès la première vague (stories et TikTok).
   if (!all.length) {
     const lists = quietDayLists(rd(arg('sports', 'sports-masthead.json')), day, CFG.quiet || {});
-    plan = lists.map((m, i) => ({ m, i, total: lists.length, wave: 'matin' }));
+    plan = waveDue((CFG.waves || WAVES)[0], day, now) || dry || force ? lists.slice(0, waveSize(lists.length, capacity)).map((m, i) => ({ m, i, total: lists.length, wave: 'matin' })) : [];
     if (lists.length) console.log(`Aucun match aujourd’hui : ${lists.map((m) => `${m.title} (${m.items.length})`).join(', ')}.`);
   }
   const matches = plan.map((x) => x.m);
@@ -140,7 +175,7 @@ async function main() {
   const todo = plan.map((x) => ({ ...x, key: matchKey(x.m) })).filter((x) => dry || pendingNets(state[x.key], nets).length);
   if (gateOnly) {
     const tk = state[`${day}:tiktok`];
-    const tiktokDue = TIKTOK.enabled && CFG.publish && !(tk?.at && !tk.failed) && (tk?.attempts || 0) < 3 && tm <= hmMin(TIKTOK.until);
+    const tiktokDue = TIKTOK.enabled && CFG.publish && !(tk?.at && !tk.failed) && (tk?.attempts || 0) < 3 && tm >= hmMin(TIKTOK.at) - LEAD_MIN && tm <= hmMin(TIKTOK.until);
     return gateOut(todo.length > 0 || tiktokDue, `${todo.length} story(s) à faire${tiktokDue ? ', TikTok du jour à faire' : ''}`);
   }
   if (!todo.length) { console.log('Toutes les stories du jour sont déjà publiées.'); if (!dry) await tiktokPass({ now, day, state, total: all.length, env: tiktokEnv }); return; }
