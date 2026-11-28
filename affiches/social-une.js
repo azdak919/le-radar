@@ -522,6 +522,10 @@
     foot.append(l1, layoutCredit('Projet indépendant, sans affiliation. '));
     card.append(foot);
     await Promise.all(imgs.map((im) => new Promise((r) => { if (im.complete) r(); else { im.onload = r; im.onerror = () => { (im.parentNode.classList.contains('ms-logo') ? im.parentNode : im).remove(); r(); }; } })));
+    // Logos d'équipes : les deux ou aucun. Un logo introuvable au chargement retire aussi l'autre.
+    for (const w of card.querySelectorAll('.ms-logo')) if (!w.querySelector('img')?.naturalWidth) w.remove(); // image déjà en échec
+    const teamLogos = [...card.querySelectorAll('.ms-logo')];
+    if (m.kind === 'match' && teamLogos.length === 1) teamLogos[0].remove();
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
     // Noms longs : la police rétrécit jusqu'à tenir sur deux lignes au plus (jamais d'ellipse).
     const ev = card.querySelector('.ms-event'); if (ev) { let f = 104; while (f > 56 && ev.getBoundingClientRect().bottom > 715) { f -= 4; ev.style.fontSize = f + 'px'; } }

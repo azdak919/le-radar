@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { POLICY } from './policy.mjs';
 import { createRequire } from 'node:module';
-import { todaysStories, quietDayLists, planWave, waveOf, waveAt, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
+import { todaysStories, quietDayLists, planWave, waveOf, WAVES, sailingTeams, rseqVenue, matchStoryModel, matchStoryAlt, matchKey, montrealDay, pruneMatchState } from './match-story-lib.mjs';
 import { torontoMinutes, bufferWhen, montrealInstant } from './une-lib.mjs';
 import { createXBuffer } from './channels/x-buffer.mjs';
 import { createInstagramBuffer } from './instagram.mjs';
@@ -31,19 +31,19 @@ export function pendingNets(entry, nets = NETS) {
   return nets.filter((n) => { const d = entry?.nets?.[n]; return !(d?.at && !d.failed) && (d?.attempts || 0) < 3; });
 }
 
-async function publishStory(net, image, alt, env) {
+async function publishStory(net, image, alt, env, when = { now: true }) {
   if (net === 'facebook') {
     const fb = (env.pages || {}).facebook;
     if (!env.BUFFER_API_KEY || !fb) return null;
     const ch = createXBuffer({ key: env.BUFFER_API_KEY, service: fb.service, channelName: fb.name, fallbackId: env.BUFFER_FACEBOOK_CHANNEL_ID || null });
-    const post = await ch.add({ text: '', image, alt, now: true, metadata: { facebook: { type: 'story' } } });
+    const post = await ch.add({ text: '', image, alt, ...when, metadata: { facebook: { type: 'story' } } });
     return { id: post.id, status: post.status || '' };
   }
   if (net === 'instagram') {
     let halted = false; try { halted = !!rd(IG_STATE).halted; } catch {}
     if ((POLICY.formats?.une?.prepared?.instagram || {}).enabled !== true || halted) return null;
     const ig = createInstagramBuffer(env); if (!ig) return null;
-    const post = await ig.add({ story: true, type: 'story', text: '', image, alt, now: true });
+    const post = await ig.add({ story: true, type: 'story', text: '', image, alt, ...when });
     return { id: post.id, status: post.status || '' };
   }
   return null;
@@ -81,8 +81,8 @@ export function tiktokCaption(day, entries, total = entries.length) {
 }
 async function tiktokPass({ now, day, state, total, env }) {
   if (!TIKTOK.enabled || !CFG.publish) return;
-  const t = torontoMinutes(now);
-  if (t < hmMin('15:00') || t > hmMin(TIKTOK.until)) return; // 2e vague seulement : les affiches du jour sont toutes là
+  // Après le traitement de toutes les vagues du jour (affiches hébergées dès le premier passage) : programmée pour 16 h.
+  if (torontoMinutes(now) > hmMin(TIKTOK.until)) return;
   const key = `${day}:tiktok`, d = state[key];
   if ((d?.at && !d.failed) || (d?.attempts || 0) >= 3) return;
   const entries = tiktokEntries(state, day);
@@ -102,11 +102,18 @@ async function tiktokPass({ now, day, state, total, env }) {
 }
 
 async function main() {
+  // --gate : porte légère du workflow (sans navigateur) — reste-t-il une story ou le TikTok du jour à faire ?
+  const gateOnly = process.argv.includes('--gate');
+  const gateOut = (due, why) => { console.log(`${due ? 'dû' : 'rien à faire'} : ${why}`); if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `due=${due}\n`); };
   const now = arg('now') ? Date.parse(arg('now')) : Date.now();
   const dry = process.env.DRY_RUN !== 'false', force = process.argv.includes('--force') || process.env.MATCH_STORY_FORCE === 'true';
   const out = path.resolve(arg('out', 'match-story-preview')); fs.mkdirSync(out, { recursive: true });
   const day = montrealDay(now);
-  if (!waveAt(torontoMinutes(now), CFG.waves || WAVES) && !force && !dry) { console.log('Story match du jour : hors des vagues de publication (heure de Montréal), rien à faire.'); return; }
+  // Fenêtre de travail (heure de Montréal) : dès 7 h on prépare et programme toutes les stories du jour dans Buffer, à
+  // l'heure de leur vague ; les passages suivants (toutes les 30 min) rattrapent ce qui a échoué.
+  const win = { from: '07:00', to: '19:30', ...(CFG.window || {}) };
+  const tm = torontoMinutes(now);
+  if ((tm < hmMin(win.from) || tm > hmMin(win.to)) && !force && !dry) { if (gateOnly) return gateOut(false, 'hors de la fenêtre de travail'); console.log('Story match du jour : hors de la fenêtre de travail (heure de Montréal), rien à faire.'); return; }
   const nets = (CFG.networks || []).filter((n) => NETS.includes(n));
   let state = {}; try { state = rd(STATE); } catch {}
   // Un match déjà commencé (régates : toute la journée) n'a plus d'intérêt en story « Jour de match » (essai : tous les matchs du jour).
@@ -116,9 +123,9 @@ async function main() {
   catch (e) { console.log(`::warning::voile illisible (${String(e.message).slice(0, 120)}) : pas de régate.`); }
   // Vagues (match-story-lib.mjs → WAVES) : la vague en cours, plus ce qu'une vague précédente n'a pas pu publier si le match
   // n'a pas commencé. Essai : toutes les vagues du jour, pour voir le plan complet.
-  const t = torontoMinutes(now), cur = waveAt(t, CFG.waves || WAVES);
+  const t = torontoMinutes(now);
   const all = todaysStories(rd(arg('sports', 'sports-masthead.json')), day, { max: 200, notBefore: dry ? -1 : t, sailing });
-  const waves = (CFG.waves || WAVES).filter((w) => dry || force || (cur && WAVES.indexOf(w) <= WAVES.indexOf(cur)));
+  const waves = CFG.waves || WAVES; // toutes les vagues du jour : chaque story est programmée à l'heure de la sienne
   let plan = waves.flatMap((w) => { const p = planWave(all.filter((m) => waveOf(m, CFG.waves || WAVES) === w.id), { maxPerWave: CFG.maxPerWave || 4 }); return p.map((m, i) => ({ m, i, total: p.length, wave: w.id })); });
   // Jour sans match : derniers résultats et prochains matchs, en affiches de liste, dès la première vague (stories et TikTok).
   if (!all.length) {
@@ -129,8 +136,13 @@ async function main() {
   const matches = plan.map((x) => x.m);
   console.log(`Story match du jour ${day} : ${all.length} rencontre(s), ${plan.length} story(s) planifiée(s) — ${plan.map((x) => `[${x.wave}] ${x.m.kind === 'more' ? `Aussi aujourd’hui (${x.m.items.length})` : label(x.m)}`).join(', ')}.`);
   const tiktokEnv = { ...process.env };
-  if (!matches.length) return;
+  if (!matches.length) { if (gateOnly) gateOut(false, 'aucun match ni liste aujourd’hui'); return; }
   const todo = plan.map((x) => ({ ...x, key: matchKey(x.m) })).filter((x) => dry || pendingNets(state[x.key], nets).length);
+  if (gateOnly) {
+    const tk = state[`${day}:tiktok`];
+    const tiktokDue = TIKTOK.enabled && CFG.publish && !(tk?.at && !tk.failed) && (tk?.attempts || 0) < 3 && tm <= hmMin(TIKTOK.until);
+    return gateOut(todo.length > 0 || tiktokDue, `${todo.length} story(s) à faire${tiktokDue ? ', TikTok du jour à faire' : ''}`);
+  }
   if (!todo.length) { console.log('Toutes les stories du jour sont déjà publiées.'); if (!dry) await tiktokPass({ now, day, state, total: all.length, env: tiktokEnv }); return; }
   const { renderImages } = await import('./une-render.mjs');
   const { hostImages } = await import('./une-run.mjs');
@@ -155,12 +167,14 @@ async function main() {
       entry = state[key] = { key, at: new Date().toISOString(), what: label(m), ...(m.list ? { list: m.list } : {}), image: urls['match-story'], alt, nets: {} };
       fs.writeFileSync(STATE, JSON.stringify(pruneMatchState(state, now), null, 1) + '\n');
     }
+    const wv = (CFG.waves || WAVES).find((w) => w.id === wave) || {};
+    const when = bufferWhen(day, wv.post || '', Date.now());
     for (const n of pendingNets(entry, nets)) {
       const d = entry.nets[n];
       try {
-        const r = await publishStory(n, entry.image, entry.alt, env);
+        const r = await publishStory(n, entry.image, entry.alt, env, when);
         if (!r) { console.log(`${n} : canal non configuré, story sautée.`); continue; }
-        entry.nets[n] = { at: new Date().toISOString(), ...r }; console.log(`→ ${n}-story ${key} : ${r.id}`);
+        entry.nets[n] = { at: new Date().toISOString(), ...r, ...(when.dueAt ? { dueAt: when.dueAt } : {}) }; console.log(`→ ${n}-story ${key} : ${r.id}${when.dueAt ? ` (programmée pour ${new Date(when.dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })})` : ''}`);
       } catch (e) {
         entry.nets[n] = { failed: true, attempts: (d?.attempts || 0) + 1, error: String(e.message).slice(0, 200), lastTry: new Date().toISOString() };
         console.log(`::warning::${n}-story ${key} : échec (${String(e.message).slice(0, 200)}), réessai au prochain passage (3 au plus).`);

@@ -83,7 +83,8 @@ export function createInstagramBuffer(env = {}, { fetchImpl } = {}) {
     // Story : seulement sur demande explicite (story: true) de la passe story de La une. Jamais de reel.
     if (input.story === true && type === 'story') {
       if (input.channelId && input.channelId !== INSTAGRAM_CHANNEL_ID) throw new Error('Instagram : canal inattendu');
-      return add({ text: input.text || '', image: input.image, alt: input.alt, now: true, metadata: INSTAGRAM_STORY_METADATA });
+      // dueAt : story programmée dans Buffer (heure exacte de la vague) ; sinon tout de suite.
+      return add({ text: input.text || '', image: input.image, alt: input.alt, ...(input.dueAt ? { dueAt: input.dueAt, now: false } : { now: true }), metadata: INSTAGRAM_STORY_METADATA });
     }
     if (type !== 'post') throw new Error('Instagram : seul le type post est permis (ni story ni reel)');
     if (input.firstComment || input.metadata?.instagram?.firstComment) throw new Error('Instagram : premier commentaire interdit');

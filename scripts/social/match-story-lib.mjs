@@ -180,9 +180,11 @@ export function todaysStories(masthead, day, { max = 6, notBefore = -1, sailing 
  * et Facebook) : deux vagues courtes rapportent plus qu'une rafale. Matin : matchs de la journée (coup d'envoi avant 15 h),
  * régates et résultats de la veille. Fin d'après-midi : matchs de soirée, 2 à 3 h avant le coup d'envoi (après les cours).
  */
+// post : heure de Montréal à laquelle Buffer publie les stories de la vague (programmées dès le premier passage du jour,
+// 27 nov. 2026 : les crons de 9 h 41 et 15 h 23 n'étaient pas partis, les stories du soir étaient sorties à 17 h 20).
 export const WAVES = [
-  { id: 'matin', from: '09:00', to: '14:59', games: [0, 15 * 60] },
-  { id: 'soir', from: '15:00', to: '19:30', games: [15 * 60, 24 * 60] },
+  { id: 'matin', from: '09:00', to: '14:59', post: '09:00', games: [0, 15 * 60] },
+  { id: 'soir', from: '15:00', to: '19:30', post: '15:00', games: [15 * 60, 24 * 60] },
 ];
 const hmMin = (s) => { const [h, m] = String(s).split(':').map(Number); return h * 60 + (m || 0); };
 /** Vague d'une story : matchs selon l'heure du coup d'envoi ; voile (toute la journée, résultats) le matin. */
@@ -285,7 +287,10 @@ export function matchStoryModel(m, { index = 0, total = 1, root = ROOT } = {}) {
   // « A reçoit B » : A est à domicile ; « A visite B » : B est à domicile. L'équipe à domicile va en bas (convention « visiteur @ hôte »).
   const [x, y] = m.teams;
   const home = m.verb === 'reçoit' ? x : y, away = m.verb === 'reçoit' ? y : x;
-  return withCredits({ ...common, kind: 'match', league: m.league || '', away: t(away), home: t(home),
+  // Logos : les deux ou aucun (27 nov. 2026, Charles : un seul logo, l'autre absent, déséquilibrait l'affiche).
+  const A = t(away), H = t(home);
+  if (!(A.logo && H.logo)) { A.logo = ''; H.logo = ''; }
+  return withCredits({ ...common, kind: 'match', league: m.league || '', away: A, home: H,
     // « Chez les … » puis la salle (API RSEQ) sur la ligne du dessous.
     where: home.inst ? `Chez les ${home.name} · ${home.inst}` : `Chez les ${home.name}`, venue: m.venue || '' });
 }
