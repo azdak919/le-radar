@@ -1,98 +1,28 @@
 {
-  "updated": "2026-11-28T08:42:22.943Z",
+  "updated": "2026-11-28T10:11:30.471Z",
   "total": 1211,
-  "withImage": 935,
-  "withCredit": 935,
-  "cited": 645,
-  "pending": 181,
+  "withImage": 962,
+  "withCredit": 962,
+  "cited": 669,
+  "pending": 183,
   "missingHero": 0,
   "ok": false,
   "checked": 60,
-  "updatedCount": 21,
-  "citedNew": 5,
-  "fallbackNew": 55,
+  "updatedCount": 2,
+  "citedNew": 1,
+  "fallbackNew": 59,
   "samples": [
     {
-      "title": "Le Projet Sapin des Fêtes de retour à l’UdeS",
+      "title": "Les dessous de la grève du 10 novembre",
       "source": "Le Collectif",
-      "credit": "Photo : Émy Robert",
+      "credit": "Photo : NicolasHamel",
       "cited": true,
-      "method": "body-line"
+      "method": "filename-credit"
     },
     {
-      "title": "Vendre sa personnalité pour payer un stage ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "La coupe ou rien : les coulisses d’une conquête inoubliable",
-      "source": "La Pige",
-      "credit": "Photo : Olivier Dubois",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Médias : après la crise du papier, la crise d’Internet ?",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "La vie lors d’une régate d’aviron",
-      "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "S’unir pour contrer l’insécurité alimentaire",
+      "title": "Trois facultés de l’UdeS en grève",
       "source": "Le Collectif",
-      "credit": "Photo : Émy Robert",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "La génération Z et le retour des médias physiques",
-      "source": "Quartier Libre",
-      "credit": "Photo : Alex Salcedo et Linus Bossardt",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "70 years of ‘Giovanni’s Room’",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Proches aidants : une semaine pour reconnaître ceux qu’on ne voit pas",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Redbirds rally past UQTR to reach RSEQ final",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Galaxy evolution: The expansion of our universe",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Harry Kane’s Ballon d’Or deserves a closer look at who awarded it",
-      "source": "The Tribune",
-      "credit": "Photo: The Tribune",
+      "credit": "Photo : Le Collectif",
       "cited": false,
       "method": null
     }
