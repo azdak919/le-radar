@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-11-27T23:12:10.391Z",
+  "updatedAt": "2026-11-28T00:36:49.665Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Remparts de Québec",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "18:45",
         "end": "21:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
+      "next": {
+        "title": "Au delà du geste",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/au-dela-du-geste/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Remparts de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,59 +28,60 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T23:11:52.384Z"
+      "checkedAt": "2026-11-28T00:36:31.680Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix électro",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/mix-electro"
-      },
-      "next": {
         "title": "Rave de nuit",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/rave-de-nuit"
       },
+      "next": {
+        "title": "Le 120e parallèle (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
+      },
       "track": "",
-      "showTitle": "Mix électro",
+      "showTitle": "Rave de nuit",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T23:11:53.727Z"
+      "checkedAt": "2026-11-28T00:36:33.041Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Listening to Latin America: Blanca-Victoria",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Macondo",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "Listening to Latin America: Blanca-Victoria",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T23:11:56.963Z"
+      "checkedAt": "2026-11-28T00:36:36.527Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -107,34 +108,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T23:11:59.684Z"
+      "checkedAt": "2026-11-28T00:36:38.636Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La Récréation",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "18:59",
-        "url": "https://www.cfak.ca/balados/la-recreation"
-      },
-      "next": {
         "title": "Enfin vendredi",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:59",
         "url": "https://www.cfak.ca/balados/enfin-vendredi"
       },
+      "next": {
+        "title": "Mangue, Goyave et Reggae",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "21:59",
+        "url": "https://www.cfak.ca/balados/mangue-goyave-et-reggae"
+      },
       "track": "",
-      "showTitle": "La Récréation",
+      "showTitle": "Enfin vendredi",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T23:12:00.674Z"
+      "checkedAt": "2026-11-28T00:36:39.544Z"
     },
     "choq": {
       "id": "choq",
@@ -155,7 +156,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-27T23:12:10.041Z"
+      "checkedAt": "2026-11-28T00:36:49.314Z"
     }
   }
 }
