@@ -12,13 +12,13 @@ import path from 'node:path';
 import { parseFeed, markImages, stripUtm, siteLink, buildTagged, LIMITS, detectLang } from './lib.mjs';
 import { tagLine } from './hashtags.mjs';
 import { resolveImage } from './image-resolve.mjs';
-import { createMastodon, idemKey } from './channels/mastodon.mjs';
+import { createMastodon, idemKey, mastodonInstance } from './channels/mastodon.mjs';
 import { plan, freshCandidates, titleKey } from './rate-limit.mjs';
 import { jitterMs } from './schedule.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const STATE = path.join(ROOT, 'data/mastodon-sent.json');
-const instance = process.env.MASTODON_INSTANCE || 'https://piaille.fr', token = process.env.MASTODON_TOKEN || '';
+const instance = mastodonInstance(), token = process.env.MASTODON_TOKEN || '';
 const acct = process.env.MASTODON_ACCT || 'leradar';
 let dry = process.env.DRY_RUN === 'true' || process.argv.includes('--dry-run');
 if (!token) { console.log('MASTODON_TOKEN absent : mode essai.'); dry = true; }

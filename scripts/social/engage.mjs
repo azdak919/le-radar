@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Interactions automatiques (Bluesky, Tumblr, Mastodon) : voir engage-lib.mjs. DRY_RUN=true par défaut.
 import fs from 'node:fs';
+import { mastodonInstance } from './channels/mastodon.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
 import { tumblrFromEnv, tumblrEnabled, tumblrBlog, PAUSED_MSG } from './tumblr.mjs';
 import { decideSourceLike, sourceDone, markSource, sourceBudget, emptyState, budget, spend, seen, mark, okAccount, decide, MAX_PER_POST, MAX_AGE_H } from './engage-lib.mjs';
@@ -77,7 +78,7 @@ async function tumblr() {
 }
 
 async function mastodon() {
-  const base = (process.env.MASTODON_INSTANCE || 'https://piaille.fr').replace(/\/+$/, ''), token = process.env.MASTODON_TOKEN;
+  const base = mastodonInstance(), token = process.env.MASTODON_TOKEN;
   if (!token) return log('Mastodon : jeton absent, sauté.');
   const g = async p => { const r = await fetch(base + p, { signal: AbortSignal.timeout(30000) }); if (!r.ok) throw new Error(`Mastodon ${p} ${r.status}`); return r.json(); };
   const me = await g('/api/v1/accounts/lookup?acct=leradar');
@@ -148,10 +149,10 @@ async function sourcesTumblr() {
   report.sourcesTumblr = n;
 }
 async function sourcesMastodon() {
-  const base = (process.env.MASTODON_INSTANCE || 'https://piaille.fr').replace(/\/+$/, ''), token = process.env.MASTODON_TOKEN; if (!token) return;
+  const base = mastodonInstance(), token = process.env.MASTODON_TOKEN; if (!token) return;
   let n = 0;
   for (const src of SRC) for (const url of src.mastodon || []) {
-    // Résolution par l'instance de piaille.fr (recherche publique, sans jeton de lecture).
+    // Résolution par l'instance du compte (piaille.fr) (recherche publique, sans jeton de lecture).
     const u = new URL(url), acct = u.pathname.replace(/^\/@/, '') + '@' + u.hostname;
     const a = await fetch(`${base}/api/v1/accounts/lookup?acct=${encodeURIComponent(acct)}`, { signal: AbortSignal.timeout(30000) }).then(r => r.ok ? r.json() : null);
     if (!a) continue;

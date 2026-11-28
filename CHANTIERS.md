@@ -4,6 +4,7 @@ Fichier de passation entre IA (Claude Code, Codex, Cursor, OpenCode…). Détail
 
 ## Index
 - [Mastodon @leradar@piaille.fr : activation après approbation](https://github.com/azdak919/le-radar/issues/301)
+- Mastodon : déménagement vers Mastodon Québec — compte en attente d'approbation ([`docs/migration-mastodon.md`](docs/migration-mastodon.md))
 - [Abonnements lents X, Facebook, Bluesky et LinkedIn](https://github.com/azdak919/le-radar/issues/302)
 - [Radio Android 1.2.4 : doublon, notification, Android Auto](https://github.com/azdak919/le-radar/issues/303)
 - [Audit d'autonomie complète du Radar](https://github.com/azdak919/le-radar/issues/304)

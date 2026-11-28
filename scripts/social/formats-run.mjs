@@ -11,7 +11,7 @@ import { POLICY, torontoDay, torontoHour, torontoWeekday, mentionLedger } from '
 import { weekendModel, publishedModel, buildResultsText, resultsTags, resultsTumblrTags, listenModel, buildListenText, listenTags, checkText, NET_SPEC } from './formats.mjs';
 import { postRecord, facets, graphemes } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
-import { createMastodon, idemKey } from './channels/mastodon.mjs';
+import { createMastodon, idemKey, mastodonInstance } from './channels/mastodon.mjs';
 import { tumblrFromEnv, npfFromText, tumblrEnabled } from './tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
@@ -82,7 +82,7 @@ async function publishOne(net, text, built, cfg, env) {
     return { url: p.url, uri: p.uri };
   }
   if (net === 'mastodon') {
-    const md = createMastodon({ instance: env.MASTODON_INSTANCE || 'https://piaille.fr', token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
+    const md = createMastodon({ instance: mastodonInstance(env), token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
     const recent = await md.listStatuses(40); if (recent.some(s => String(s.content || '').includes(header.replace(/^🏆 /, '').slice(0, 30)))) return { dedup: true };
     const mediaId = await md.uploadImage(cfg.image, title); if (!mediaId) throw new Error('image Mastodon refusée');
     const p = await md.post({ status: text, mediaId, lang: LANG, key: idemKey(`${built.format}:${built.window?.key || torontoDay(Date.now())}:mastodon:${text}`) });
