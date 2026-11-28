@@ -76,6 +76,28 @@ export function logoCandidates(html, base) {
   return [...out].map(([url, alt]) => ({ url, alt }));
 }
 
+/**
+ * Logos SVG écrits dans la page (28 nov. 2026 : beaucoup de cégeps n'ont pas d'<img> de logo). Retenus : un <svg> dont la balise,
+ * le <title>, ou l'élément juste avant (lien d'en-tête, « brand », « logo ») parle de logo ; sans <use> (sprite externe)
+ * ni script. Rendus autonomes (xmlns ajouté) pour s'afficher en <img>. Désignés « svg:N » (N = rang dans cette liste).
+ */
+export function inlineSvgs(html) {
+  const out = [], src = String(html);
+  for (const m of src.matchAll(/<svg\b[\s\S]*?<\/svg>/gi)) {
+    let svg = m[0];
+    const before = src.slice(Math.max(0, m.index - 400), m.index), open = svg.slice(0, svg.indexOf('>') + 1);
+    const title = (svg.match(/<title[^>]*>([^<]*)<\/title>/i) || [])[1] || (open.match(/aria-label=["']([^"']+)/i) || [])[1] || '';
+    const lastTag = (before.match(/<[a-z][^<>]*>[^<]*$/i) || [''])[0];
+    if (!/logo|brand|marque|embl/i.test(`${open} ${title} ${lastTag}`)) continue;
+    if (/<use\b|<script|\son\w+\s*=|javascript:|<foreignObject/i.test(svg) || svg.length < 200 || svg.length > 300000) continue;
+    if (!/\sxmlns=/.test(open)) svg = svg.replace(/^<svg\b/i, '<svg xmlns="http://www.w3.org/2000/svg"');
+    // Couleurs : un logo tout blanc (en-tête sombre) disparaîtrait sur le cercle blanc de l'affiche ; signalé à la liste.
+    const colors = [...new Set((svg.match(/(?:fill|stroke)\s*[=:]\s*["']?(#[0-9a-f]{3,8}|white|black|currentColor)/gi) || []).map((c) => c.replace(/^.*[=:]\s*["']?/, '').toLowerCase()))];
+    out.push({ svg, title: title.trim(), size: svg.length, colors, white: colors.length > 0 && colors.every((c) => /^(#fff(fff)?|white)$/.test(c)) });
+  }
+  return out;
+}
+
 function save({ id, buf, ext, entry, dry, out, label }) {
   const name = `${id}.${ext}`; entry.file = name;
   console.log(`${label} → ${name} (${buf.length} octets) · ${entry.license}${entry.author ? ' · ' + entry.author : ''}`);
@@ -103,14 +125,26 @@ async function fromSite({ id, page, image, dry, out, owner = process.env.OWNER |
     if (!list.length) console.log('(aucun)');
     return;
   }
-  if (!/^https:\/\//i.test(image)) throw new Error(`IMAGE_URL doit être en https : ${image}`);
-  const r = await fetch(image, { headers: H, redirect: 'follow' });
-  if (!r.ok) throw new Error(`Téléchargement ${r.status} : ${image}`);
-  const buf = Buffer.from(await r.arrayBuffer()), ext = imageExt(buf);
+  let buf;
+  const inl = String(image).match(/^svg:(\d+)$/);
+  if (inl) {
+    if (!page) throw new Error('svg:N demande la page');
+    const r = await fetch(page, { headers: H, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+    if (!r.ok) throw new Error(`Page ${r.status} : ${page}`);
+    const s = inlineSvgs(await r.text())[Number(inl[1])];
+    if (!s) throw new Error(`Pas de SVG n° ${inl[1]} sur ${page}`);
+    buf = Buffer.from(s.svg, 'utf8');
+  } else {
+    if (!/^https:\/\//i.test(image)) throw new Error(`IMAGE_URL doit être en https : ${image}`);
+    const r = await fetch(image, { headers: H, redirect: 'follow' });
+    if (!r.ok) throw new Error(`Téléchargement ${r.status} : ${image}`);
+    buf = Buffer.from(await r.arrayBuffer());
+  }
+  const ext = imageExt(buf);
   if (!ext) throw new Error(`Ni PNG, ni WebP, ni SVG sûr : ${image}`);
   const host = new URL(page || image).hostname;
   save({ id, buf, ext, dry, out, label: image,
-    entry: { file: '', source: page || image, image, license: `Logo officiel publié sur ${host} (marque de son titulaire)`, owner } });
+    entry: { file: '', source: page || image, image: inl ? `${page} (SVG intégré n° ${inl[1]})` : image, license: `Logo officiel publié sur ${host} (marque de son titulaire)`, owner } });
 }
 
 async function fromCommons({ id, file, owner, dry, out }) {
@@ -147,9 +181,12 @@ async function batchPages(items, out) {
     try {
       const r = await fetch(v, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const list = logoCandidates(await r.text(), r.url || v).filter((c) => !/og:image/.test(c.alt)).slice(0, 8);
-      console.log(`\n${id} · ${v} : ${list.length ? '' : '(aucun)'}`);
+      const html = await r.text();
+      const list = logoCandidates(html, r.url || v).filter((c) => !/og:image/.test(c.alt)).slice(0, 8);
+      const svgs = inlineSvgs(html).slice(0, 4);
+      console.log(`\n${id} · ${v} : ${list.length + svgs.length ? '' : '(aucun)'}`);
       for (const c of list) { console.log(`  - ${c.url}${c.alt ? ' · ' + c.alt : ''}`); out(`| ${id} | ${v} | ${c.url} | ${c.alt || ''} |`); }
+      svgs.forEach((x, n) => { console.log(`  - svg:${n} · SVG intégré ${x.size} car.${x.title ? ' · ' + x.title : ''} · couleurs ${x.colors.join(' ') || '(CSS)'}${x.white ? ' · TOUT BLANC' : ''}`); out(`| ${id} | ${v} | svg:${n} (${x.size} car.) | ${x.title} |`); });
     } catch (e) { console.log(`\n${id} · ${v} : échec (${e.message})`); out(`| ${id} | ${v} | échec : ${e.message} | |`); }
     await pause();
   }
