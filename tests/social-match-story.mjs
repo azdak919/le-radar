@@ -275,3 +275,22 @@ console.log('logos en lot et alias : ok');
   const wf = fs.readFileSync(new URL('../.github/workflows/social-team-logo.yml', import.meta.url), 'utf8');
   assert.equal((wf.match(/^      [a-z_]+:\n        description:/gm) || []).length <= 10, true, 'GitHub : 10 entrées au plus');
 }
+
+// SVG intégrés (28 nov. 2026) et logos « tous ou aucun » sur les affiches de voile.
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  const path_ = '<path d="' + 'M0 0L10 10'.repeat(30) + '" fill="#0055a4"/>';
+  const html = `<header><a class="site-logo" href="/"><svg viewBox="0 0 10 10"><title>Cégep X</title>${path_}</svg></a></header>
+    <button class="menu"><svg viewBox="0 0 10 10">${path_}</svg></button>
+    <div class="logo"><svg viewBox="0 0 1 1"><use href="#sprite-logo"/>${path_}</svg></div>
+    <span class="brand"><svg onload="x()" viewBox="0 0 1 1">${path_}</svg></span>
+    <a class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1">${path_.replace('#0055a4', '#fff')}</svg></a>`;
+  const s = T.inlineSvgs(html);
+  assert.equal(s.length, 2, 'logo d’en-tête et logo blanc ; pas le menu, ni <use>, ni script');
+  assert.match(s[0].svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/, 'rendu autonome');
+  assert.equal(s[0].title, 'Cégep X'); assert.equal(s[0].white, false); assert.equal(s[1].white, true);
+  assert.equal(T.imageExt(Buffer.from(s[0].svg)), 'svg');
+  assert.deepEqual(L.allOrNone([{ logo: 'a' }, { logo: '' }]).map((x) => x.logo), ['', '']);
+  assert.deepEqual(L.allOrNone([{ logo: 'a' }, { logo: 'b' }]).map((x) => x.logo), ['a', 'b']);
+}
+console.log('SVG intégrés et logos tous ou aucun : ok');

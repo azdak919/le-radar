@@ -29,7 +29,7 @@ export function logoSource(id, { root = ROOT } = {}) {
  */
 export function storyCredits(match, { root = ROOT } = {}) {
   const ids = [];
-  const idOf = (logo) => (String(logo || '').match(/teams\/([a-z0-9-]+)\.(?:svg|png|webp)$/) || [])[1];
+  const idOf = (logo) => (String(logo || '').match(/teams\/([a-z0-9-]+)\.(?:svg|png|webp|jpg)$/) || [])[1];
   [match.circuitLogo, match.away?.logo, match.home?.logo, ...(match.clubs || []).map((c) => c.logo), ...(match.rows || []).map((c) => c.logo)].forEach((l) => { const id = idOf(l); if (id && !ids.includes(id)) ids.push(id); });
   const src = ids.map((id) => logoSource(id, { root }) || { owner: id });
   const data = match.kind === 'regatta-results' ? `Résultats${match.where ? ' et lieu' : ''} : CICSA` : match.kind === 'regatta' ? `Calendrier${match.where ? ' et lieu' : ''} : CICSA` : `Calendrier${match.venue ? ' et salle' : ''} : RSEQ`;
@@ -268,6 +268,9 @@ export function planWave(stories, { maxPerWave = 4 } = {}) {
   return [...byPop([...keep, ...sail]), { kind: 'more', date: day, wave: waveOf(rest[0]), uni: false, time: '', items: rest.sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99'))) }];
 }
 
+/** Logos d'une affiche : tous ou aucun (28 nov. 2026, Charles : s'il en manque un, la publication n'a pas de logo). */
+export const allOrNone = (list) => (list.length && list.every((x) => x.logo) ? list : list.map((x) => ({ ...x, logo: '' })));
+
 /** Modèle de la page (affiches/social-une.html, format « match-story ») : seulement ce que l'affiche montre. */
 export function matchStoryModel(m, { index = 0, total = 1, root = ROOT } = {}) {
   const t = (z) => ({ name: z.name, inst: z.inst || '', color: z.color || '', logo: teamLogo(z.reg, { root }) });
@@ -297,11 +300,11 @@ export function matchStoryModel(m, { index = 0, total = 1, root = ROOT } = {}) {
       credits: { data: `${m.list === 'resultats' ? 'Résultats' : 'Calendrier'} : ${m.items.some((x) => String(x.kind).startsWith('regatta') || x.sportKey === 'sailing') ? 'RSEQ et CICSA' : 'RSEQ'}`, logos: [], notes: [] } } };
   }
   if (m.kind === 'regatta-results') {
-    const rows = m.rows.slice(0, 6).map((r) => { const c = club({ reg: r.reg, name: r.name }); return { ...c, place: r.place, placeLabel: ordinal(r.place), field: r.field, crew: r.crew ? `Équipage ${r.crew}` : '', podium: r.place <= 3 }; });
+    const rows = allOrNone(m.rows.slice(0, 6).map((r) => { const c = club({ reg: r.reg, name: r.name }); return { ...c, place: r.place, placeLabel: ordinal(r.place), field: r.field, crew: r.crew ? `Équipage ${r.crew}` : '', podium: r.place <= 3 }; }));
     return withCredits({ ...common, kind: 'regatta-results', event: m.event, field: m.field, where: m.venue ? `Lieu : ${m.venue}` : '', rows, more: Math.max(0, m.rows.length - 6),
       day: frDay(m.date).replace(/^./, (c) => c.toUpperCase()), range: m.start && m.start !== m.date ? `${frShort(m.start)} au ${frShort(m.date)}` : '' });
   }
-  if (m.kind === 'regatta') return withCredits({ ...common, kind: 'regatta', event: m.event, where: m.venue ? `Lieu : ${m.venue}` : '', clubs: m.clubs.slice(0, 6).map(club), more: Math.max(0, m.clubs.length - 6) });
+  if (m.kind === 'regatta') return withCredits({ ...common, kind: 'regatta', event: m.event, where: m.venue ? `Lieu : ${m.venue}` : '', clubs: allOrNone(m.clubs.slice(0, 6).map(club)), more: Math.max(0, m.clubs.length - 6) });
   // « A reçoit B » : A est à domicile ; « A visite B » : B est à domicile. L'équipe à domicile va en bas (convention « visiteur @ hôte »).
   const [x, y] = m.teams;
   const home = m.verb === 'reçoit' ? x : y, away = m.verb === 'reçoit' ? y : x;
