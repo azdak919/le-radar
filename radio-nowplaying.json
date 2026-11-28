@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-28T09:06:48.021Z",
+  "updatedAt": "2026-11-28T10:06:43.395Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T09:06:21.038Z"
+      "checkedAt": "2026-11-28T10:06:16.958Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T09:06:34.054Z"
+      "checkedAt": "2026-11-28T10:06:30.015Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T09:06:36.758Z"
+      "checkedAt": "2026-11-28T10:06:33.136Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,28 +101,28 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T09:06:38.179Z"
+      "checkedAt": "2026-11-28T10:06:34.562Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "04:59",
         "url": "https://www.cfak.ca/balados/les-nuits-cfak"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T09:06:39.123Z"
+      "checkedAt": "2026-11-28T10:06:35.577Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-28T09:06:47.670Z"
+      "checkedAt": "2026-11-28T10:06:43.045Z"
     }
   }
 }
