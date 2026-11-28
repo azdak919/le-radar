@@ -238,3 +238,10 @@ console.log('logo d’équipe site officiel : ok');
   assert.equal(L.teamLogo('jonquiere-2', { root: tmp }), '');
 }
 console.log('logos en lot et alias : ok');
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.equal(T.imageExt(Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 0x10, 0x4a, 0x46, 0x49])), 'jpg', 'JPEG accepté (logos Commons en JPEG)');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'logo-'));
+  fs.mkdirSync(path.join(tmp, 'assets/logos/teams'), { recursive: true }); fs.writeFileSync(path.join(tmp, 'assets/logos/teams/dawson.jpg'), '');
+  assert.equal(L.teamLogo('dawson', { root: tmp }), '../assets/logos/teams/dawson.jpg');
+}
