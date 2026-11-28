@@ -1,90 +1,60 @@
 {
-  "updated": "2026-11-28T08:12:08.546Z",
-  "total": 1199,
-  "withPhoto": 897,
-  "withStock": 141,
-  "withCampusBank": 111,
-  "fullyCovered": 999,
-  "leadReadyPhotos": 878,
-  "pageScraped": 1,
-  "photosRecovered": 1,
+  "updated": "2026-11-28T08:40:34.088Z",
+  "total": 1211,
+  "withPhoto": 941,
+  "withStock": 134,
+  "withCampusBank": 107,
+  "fullyCovered": 1037,
+  "leadReadyPhotos": 915,
+  "pageScraped": 30,
+  "photosRecovered": 30,
   "imagesCleared": 0,
-  "stockSearches": 22,
-  "stockFound": 17,
-  "campusBankFound": 16,
+  "stockSearches": 7,
+  "stockFound": 27,
+  "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Au tour de Jonquière d’être conquise par « La meilleure façon, c’est par accident »",
-      "link": "https://lapige.atmjonquiere.com/2026/11/02/au-tour-de-jonquiere-detre-conquise-par-la-meilleure-facon-cest-par-accident",
+      "title": "Huîtres, drogues et les tournants de la vie",
+      "link": "https://www.delitfrancais.com/2026/09/30/huitres-drogues-et-les-tournants-de-la-vie",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/10/06/malgre-quelques-sueurs-jimmy-bouchard-est-le-nouveau-depute-de-jonquiere",
+      "title": "CSU votes to conduct formal review of enuf Canada contract",
+      "link": "https://thelinknewspaper.ca/article/16391",
       "reason": "no-stock-match",
       "image": null
     },
     {
-      "title": "Les bienfaits du yoga : un ancrage pour le corps et l’esprit",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/les-bienfaits-du-yoga-un-ancrage-pour-le-corps-et-lesprit",
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORTS_les-bienfaits-du-yoga-studio-mouvance_Sophie-C.-Davignon.jpeg"
+      "image": null
     },
     {
-      "title": "Ouverture locale réussie pour le Phœnix",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/ouverture-locale-reussie-pour-le-phoenix",
+      "title": "Bulletins La Pige radio 28 septembre 12h, 14h, 16h et 18h",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/bulletin-la-pige-radio-28-septembre-12h",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORTS-Ouverture_locale_reussie_pour_le_Phoenix-Facebook_Phoenix_Sherbrooke-1.jpg"
+      "image": null
     },
     {
-      "title": "C’est l’heure des élections municipales à Toronto",
-      "link": "https://lecollectif.ca/societe/cest-lheure-des-elections-municipales-a-toronto",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Cest-lheure-des-elections-a-Toronto_Getty-Images.jpg"
+      "title": "Blackface at McGill",
+      "link": "https://thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": null
     },
     {
-      "title": "Hostilités à l’Assemblée générale de l’ONU",
-      "link": "https://lecollectif.ca/societe/hostilites-a-lassemblee-generale-de-lonu",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Hostilites-a-lAssemblee-generale-de-lONU_Getty-Images.jpg"
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/8195/8136627591_28573bdaa6_b.jpg"
     },
     {
-      "title": "Élections israéliennes : quel avenir pour le Moyen-Orient ?",
-      "link": "https://lecollectif.ca/societe/elections-israeliennes-quel-avenir-pour-le-moyen-orient",
+      "title": "La Corse résonne dans une église de Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/la-corse-resonne-dans-une-eglise-de-chicoutimi",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Elections-israeliennes-quel-avenir-pour-le-Moyen-Orient_Getty-Images.jpg"
-    },
-    {
-      "title": "Ces vedettes américaines qui boudent leur équipe",
-      "link": "https://lecollectif.ca/edition-papier/ces-vedettes-americaines-qui-boudent-leur-equipe",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORTS-Ces_vedettes_americaines_qui_boudent-Elsa_Getty_Images.png"
-    },
-    {
-      "title": "Attaques djihadistes au Mali",
-      "link": "https://lecollectif.ca/edition-papier/attaques-djihadistes-au-mali",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Attaques-djiadhistes-au-Mali_Getty-Images.jpg"
-    },
-    {
-      "title": "Élections sous tension en Russie",
-      "link": "https://lecollectif.ca/societe/elections-sous-tension-en-russie",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Elections-sous-tension-en-Russie_Getty-Images.jpg"
-    },
-    {
-      "title": "Dernier droit des élections : regard sur les circonscriptions avoisinantes",
-      "link": "https://lecollectif.ca/a-la-une/dernier-droit-des-elections-regard-sur-les-circonscriptions-avoisinantes",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Dernier-droit-des-elections-regard-sur-les-circonscriptions-avoisinantes_Getty-Images.jpg"
-    },
-    {
-      "title": "Salon du livre de l’Estrie, une édition qui promet",
-      "link": "https://lecollectif.ca/culture/salon-du-livre-de-lestrie-une-edition-qui-promet",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/CULTURE_Salon-du-livre-Estrie_IMAGE_Elizabeth-768x1024.jpg"
+      "image": null
     }
   ]
 }
