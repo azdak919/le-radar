@@ -3,7 +3,11 @@
 // les lectures passent par l'API publique (lookup, statuts). Le jeton n'est jamais journalisé.
 import crypto from 'node:crypto';
 
-export const MAX_MEDIA = 8 * 1024 * 1024; // piaille.fr / Mastodon 4 : images ≤ 8 Mo
+// Instance du compte du Radar : seul défaut du dépôt (piaille.fr). La variable de dépôt
+// MASTODON_INSTANCE l'emporte. Déménagement prévu vers Mastodon Québec : docs/migration-mastodon.md.
+export const MASTODON_HOME = 'https://piaille.fr';
+export const mastodonInstance = (env = process.env) => String(env.MASTODON_INSTANCE || MASTODON_HOME).replace(/\/+$/, '');
+export const MAX_MEDIA = 8 * 1024 * 1024; // Mastodon 4 : images ≤ 8 Mo
 export const idemKey = id => crypto.createHash('sha256').update('le-radar:' + id).digest('hex').slice(0, 40);
 const UA = 'LE-RADAR-Mastodon/1.0 (+https://le-radar.ca/)';
 

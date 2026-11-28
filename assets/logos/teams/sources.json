@@ -109,8 +109,196 @@
  },
  "udem": {
   "file": "udem.png",
-  "source": "https://commons.wikimedia.org/wiki/File:Montreal_carabins_monogram.png",
+  "source": "https://carabins.umontreal.ca/football/team/carabins-udem/carabins-2/",
+  "image": "https://carabins.umontreal.ca/football/wp-content/uploads/sites/5/2017/08/Carabins-375x375.png",
+  "license": "Logo officiel publié sur carabins.umontreal.ca (marque de son titulaire)",
+  "owner": "UdeM (Carabins)"
+ },
+ "ets": {
+  "file": "ets.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Ets_piranhas_wordmark.png",
   "license": "Public domain",
-  "owner": "UdeM"
+  "owner": "ÉTS"
+ },
+ "dawson": {
+  "file": "dawson.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:DawsonIcon.jpg",
+  "license": "CC BY-SA 3.0",
+  "author": "Dawson College Foundation",
+  "owner": "Dawson College"
+ },
+ "outaouais": {
+  "file": "outaouais.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_actuel_du_C%C3%A9gep.png",
+  "license": "Public domain",
+  "owner": "Cégep de l'Outaouais"
+ },
+ "vanier": {
+  "file": "vanier.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Vanier_Logo_(Red).png",
+  "license": "Public domain",
+  "author": "Vanier College",
+  "owner": "Vanier College"
+ },
+ "drummondville": {
+  "file": "drummondville.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_C%C3%A9gep_Drummond.png",
+  "license": "CC0",
+  "author": "Cégep de Drummondville",
+  "owner": "Cégep de Drummondville"
+ },
+ "sorel-tracy": {
+  "file": "sorel-tracy.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_du_C%C3%A9gep_de_Sorel-Tracy.jpg",
+  "license": "Public domain",
+  "author": "Cegep1234",
+  "owner": "Cégep de Sorel-Tracy"
+ },
+ "saint-jean-sur-richelieu": {
+  "file": "saint-jean-sur-richelieu.png",
+  "source": "https://commons.wikimedia.org/wiki/File:4Logo-cegep-st-jean-cmyk-01.png",
+  "license": "Public domain",
+  "author": "Cégep Saint-Jean-sur-Richelieu",
+  "owner": "Cégep Saint-Jean-sur-Richelieu"
+ },
+ "cegep-sherbrooke": {
+  "file": "cegep-sherbrooke.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_du_C%C3%A9gep_de_Sherbrooke.png",
+  "license": "CC BY-SA 4.0",
+  "author": "Cégep de Sherbrooke",
+  "owner": "Cégep de Sherbrooke"
+ },
+ "thetford": {
+  "file": "thetford.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_2015_C%C3%A9gep_de_Thetford_couleur_fond_transparent.png",
+  "license": "CC BY-SA 4.0",
+  "author": "Alexandra Arcand",
+  "owner": "Cégep de Thetford"
+ },
+ "shawinigan": {
+  "file": "shawinigan.png",
+  "source": "https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_Shawinigan.svg",
+  "license": "Public domain",
+  "author": "Cégep de Shawinigan",
+  "owner": "Cégep de Shawinigan"
+ },
+ "john-abbott": {
+  "file": "john-abbott.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:MASTER-Logo-JAC-Horiz-POS-C.jpg",
+  "license": "CC BY-SA 4.0",
+  "author": "John Abbott College",
+  "owner": "John Abbott College"
+ },
+ "limoilou": {
+  "file": "limoilou.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_C%C3%A9gep_Limoilou_(2024).svg",
+  "license": "Public domain",
+  "author": "Cégep Limoilou",
+  "owner": "Cégep Limoilou"
+ },
+ "sainte-foy": {
+  "file": "sainte-foy.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_C%C3%A9gep_de_Sainte-Foy.svg",
+  "license": "Public domain",
+  "author": "Cégep de Sainte-Foy",
+  "owner": "Cégep de Sainte-Foy"
+ },
+ "saint-laurent": {
+  "file": "saint-laurent.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:CegepSL_H_RGB_HR.jpg",
+  "license": "CC BY-SA 4.0",
+  "author": "Cégep de Saint Laurent",
+  "owner": "Cégep de Saint-Laurent"
+ },
+ "bois-de-boulogne": {
+  "file": "bois-de-boulogne.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:BdebLogo-2019-noirJauneRVB.jpg",
+  "license": "CC BY-SA 4.0",
+  "author": "Communications BdeB",
+  "owner": "Collège de Bois-de-Boulogne"
+ },
+ "rosemont": {
+  "file": "rosemont.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_cegep_de_rosemont_vertical_couleurs-RGB.jpg",
+  "license": "CC BY 4.0",
+  "author": "CdeRCOMM",
+  "owner": "Cégep de Rosemont"
+ },
+ "riviere-du-loup": {
+  "file": "riviere-du-loup.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_Rivi%C3%A8re-du-Loup_-_Logo.jpg",
+  "license": "Public domain",
+  "author": "Cégep de Rivière-du-Loup",
+  "owner": "Cégep de Rivière-du-Loup"
+ },
+ "beauce-appalaches": {
+  "file": "beauce-appalaches.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_Cegep_Beauce-Appalaches.svg",
+  "license": "Public domain",
+  "author": "Cégep Beauce-Appalaches",
+  "owner": "Cégep Beauce-Appalaches"
+ },
+ "garneau": {
+  "file": "garneau.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Cegep-Garneau-logo-RVB.png",
+  "license": "Public domain",
+  "author": "Cégep Garneau",
+  "owner": "Cégep Garneau"
+ },
+ "la-pocatiere": {
+  "file": "la-pocatiere.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_C%C3%A9gep_de_La_Pocati%C3%A8re_-_Nouveau.svg",
+  "license": "CC BY-SA 4.0",
+  "author": "Jérémy St-Pierre.pro",
+  "owner": "Cégep de La Pocatière"
+ },
+ "matapedien": {
+  "file": "matapedien.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Centre_matap%C3%A9dien_d%27%C3%A9tudes_coll%C3%A9giales_-_Logo_officiel.png",
+  "license": "CC BY-SA 4.0",
+  "author": "Centre matapédien d'études collégiales - CMEC",
+  "owner": "Centre matapédien d'études collégiales"
+ },
+ "marie-victorin": {
+  "file": "marie-victorin.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Logo_C%C3%A9gep_Marie-Victorin.png",
+  "license": "CC0",
+  "author": "CathDaviau",
+  "owner": "Cégep Marie-Victorin"
+ },
+ "marianopolis": {
+  "file": "marianopolis.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Marianopolis.png",
+  "license": "Public domain",
+  "author": "Spaceguy2020",
+  "owner": "Marianopolis College"
+ },
+ "levis": {
+  "file": "levis.png",
+  "source": "https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_L%C3%A9vis_logo.svg",
+  "license": "Public domain",
+  "author": "Cégep de Lévis",
+  "owner": "Cégep de Lévis"
+ },
+ "rimouski": {
+  "file": "rimouski.png",
+  "source": "https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_Rimouski_-_Logo_officiel.png",
+  "license": "CC BY-SA 4.0",
+  "author": "Cégep de Rimouski",
+  "owner": "Cégep de Rimouski"
+ },
+ "baie-comeau": {
+  "file": "baie-comeau.png",
+  "source": "https://commons.wikimedia.org/wiki/File:Cropped-CEGEPBC-logo-horizontal_v3.png",
+  "license": "CC BY-SA 4.0",
+  "author": "Cégep Baie-Comeau",
+  "owner": "Cégep de Baie-Comeau"
+ },
+ "heritage": {
+  "file": "heritage.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:CEGEPHeritageLogo.jpeg",
+  "license": "CC BY-SA 3.0",
+  "author": "Heritage College",
+  "owner": "Heritage College"
  }
 }

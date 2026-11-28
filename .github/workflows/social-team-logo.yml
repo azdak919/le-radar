@@ -1,6 +1,6 @@
 name: Social — Logo d'équipe depuis Commons
 
-# Manuel seulement. UN logo à la fois pour la story « Jour de match » (assets/logos/teams/, provenance dans sources.json).
+# Manuel seulement. UN logo à la fois (Commons, ou site officiel de l'équipe : page_url puis image_url) pour la story « Jour de match » (assets/logos/teams/, provenance dans sources.json).
 # Sans « Fichier Commons » : liste les candidats dans le résumé du job, rien n'est écrit.
 # Avec le fichier et « Essai » décoché : télécharge le rendu PNG (600 px), note licence et auteur, commit sur main.
 # Les serveurs de GitHub passent là où Wikimedia limite le débit d'autres réseaux (27 nov. 2026).
@@ -8,13 +8,34 @@ on:
   workflow_dispatch:
     inputs:
       team_id:
-        description: 'Identifiant (registryId de sports-masthead.json : udem, ets… ; club de voile : udem-voile)'
-        required: true
+        description: 'Identifiant (registryId de sports-masthead.json : udem, ets… ; club de voile : udem-voile) ; vide en mode lot'
+        required: false
         type: string
       commons_file:
         description: 'Fichier Commons (File:… ou lien) ; vide = lister les candidats'
         required: false
         type: string
+      page_url:
+        description: 'OU page du site officiel (ex. carabins.umontreal.ca/…) : liste les logos trouvés'
+        required: false
+        type: string
+      image_url:
+        description: 'Image choisie sur le site officiel (https, png/webp/svg)'
+        required: false
+        type: string
+      batch_list:
+        description: 'Lot, recherche Commons : « id|recherche;id|recherche;… »'
+        required: false
+        type: string
+      batch_fetch:
+        description: 'Lot, téléchargement : « id|File:…|titulaire;… »'
+        required: false
+        type: string
+      batch_source:
+        description: 'Source des lots : commons (« id|recherche » / « id|File:…|titulaire ») ou site (« id|page » / « id|image|titulaire|page »)'
+        type: choice
+        options: [commons, site]
+        default: commons
       query:
         description: 'Recherche Commons si pas de fichier (ex. « Carabins Université de Montréal logo »)'
         required: false
@@ -39,7 +60,7 @@ concurrency:
 jobs:
   logo:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -52,6 +73,12 @@ jobs:
           TEAM_ID: ${{ inputs.team_id }}
           COMMONS_FILE: ${{ inputs.commons_file }}
           QUERY: ${{ inputs.query }}
+          PAGE_URL: ${{ inputs.page_url }}
+          IMAGE_URL: ${{ inputs.image_url }}
+          BATCH_LIST: ${{ inputs.batch_source != 'site' && inputs.batch_list || '' }}
+          BATCH_FETCH: ${{ inputs.batch_source != 'site' && inputs.batch_fetch || '' }}
+          BATCH_PAGES: ${{ inputs.batch_source == 'site' && inputs.batch_list || '' }}
+          BATCH_SITE_FETCH: ${{ inputs.batch_source == 'site' && inputs.batch_fetch || '' }}
           OWNER: ${{ inputs.owner }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           PREVIEW_DIR: logo-preview
@@ -65,11 +92,11 @@ jobs:
       - name: Commit (assets/logos/teams/)
         if: ${{ !inputs.dry_run }}
         env:
-          TEAM_ID: ${{ inputs.team_id }}
+          TEAM_ID: ${{ inputs.team_id || 'lot' }}
         run: |
           git add -A assets/logos/teams/
           git diff --cached --quiet && { echo "Rien de nouveau."; exit 0; }
           git config user.name "Azdak"
           git config user.email "azdak-qc@proton.me"
-          git commit -s -m "bot(social): logo d'équipe ${TEAM_ID} (Commons)"
+          git commit -s -m "bot(social): logo d'équipe ${TEAM_ID}"
           GITHUB_REF_NAME=main bash scripts/bot-push.sh --verify "node -e 'JSON.parse(require(\"fs\").readFileSync(\"assets/logos/teams/sources.json\"))'"

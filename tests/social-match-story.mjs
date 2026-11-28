@@ -211,3 +211,43 @@ console.log('logo d’équipe Commons : ok');
   assert.equal(T.author('<span>Unknown author</span>Unknown author'), '');
   assert.equal(T.author('<a href="x">Jane Doe</a>'), 'Jane Doe');
 }
+
+// Logo depuis le site officiel (28 nov. 2026) : candidats d'une page, types d'image acceptés.
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  const html = `<header><img class="site-logo" src="/img/udem.svg" alt="UdeM"></header>
+    <div class="team-header"><img src="https://cdn.ex.org/carabins-logo.png" srcset="https://cdn.ex.org/carabins-logo@2x.png 2x" alt="Carabins"></div>
+    <img src="/photos/joueur.jpg" alt="Un joueur"><meta property="og:image" content="https://ex.org/og.jpg">`;
+  const urls = T.logoCandidates(html, 'https://carabins.umontreal.ca/football/').map((c) => c.url);
+  assert.deepEqual(urls, ['https://carabins.umontreal.ca/img/udem.svg', 'https://cdn.ex.org/carabins-logo.png', 'https://cdn.ex.org/carabins-logo@2x.png', 'https://ex.org/og.jpg']);
+  assert.equal(T.imageExt(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0])), 'png');
+  assert.equal(T.imageExt(Buffer.from('<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0"/></svg>')), 'svg');
+  assert.equal(T.imageExt(Buffer.from('<svg onload="alert(1)"></svg>')), '', 'SVG avec script refusé');
+  assert.equal(T.imageExt(Buffer.from('<html>non</html>')), '');
+}
+console.log('logo d’équipe site officiel : ok');
+
+// Lot de logos (ÉTS et cégeps, 28 nov. 2026) et alias des deuxièmes équipes.
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.deepEqual(T.parseBatch('ets|ÉTS Piranhas logo; Dawson | Dawson College logo ;vide|;|x'), [{ id: 'ets', v: 'ÉTS Piranhas logo', owner: '' }, { id: 'dawson', v: 'Dawson College logo', owner: '' }]);
+  assert.deepEqual(T.parseBatch('alma|File:Alma.png|Collège d’Alma'), [{ id: 'alma', v: 'File:Alma.png', owner: 'Collège d’Alma' }]);
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'logo-'));
+  fs.mkdirSync(path.join(tmp, 'assets/logos/teams'), { recursive: true }); fs.writeFileSync(path.join(tmp, 'assets/logos/teams/alma.png'), '');
+  assert.equal(L.teamLogo('alma-2', { root: tmp }), '../assets/logos/teams/alma.png');
+  assert.equal(L.teamLogo('jonquiere-2', { root: tmp }), '');
+}
+console.log('logos en lot et alias : ok');
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.equal(T.imageExt(Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 0x10, 0x4a, 0x46, 0x49])), 'jpg', 'JPEG accepté (logos Commons en JPEG)');
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'logo-'));
+  fs.mkdirSync(path.join(tmp, 'assets/logos/teams'), { recursive: true }); fs.writeFileSync(path.join(tmp, 'assets/logos/teams/dawson.jpg'), '');
+  assert.equal(L.teamLogo('dawson', { root: tmp }), '../assets/logos/teams/dawson.jpg');
+}
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.deepEqual(T.parseBatch('granby|https://ex.org/logo.svg|Cégep de Granby|https://cegepgranby.ca/'), [{ id: 'granby', v: 'https://ex.org/logo.svg', owner: 'Cégep de Granby', page: 'https://cegepgranby.ca/' }]);
+  const wf = fs.readFileSync(new URL('../.github/workflows/social-team-logo.yml', import.meta.url), 'utf8');
+  assert.equal((wf.match(/^      [a-z_]+:\n        description:/gm) || []).length <= 10, true, 'GitHub : 10 entrées au plus');
+}

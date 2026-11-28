@@ -44,3 +44,18 @@ assert.equal(bk['social-buffer.yml'], 'hors-fenetre');
 assert.deepEqual(JSON.parse(calls.find(c => c[0] === 'POST')[2]), { ref: 'main', inputs: { dry_run: 'false', slot: 'auto' } });
 globalThis.fetch = realFetch;
 console.log('news-trigger ok');
+// Secours des stories sport et de la revue sur les réseaux (28 nov. 2026).
+{
+  const { BACKUP } = await import('../cloudflare/news-trigger/src/index.js');
+  assert.ok(BACKUP.some((b) => b.file === 'social-match-story.yml' && b.inputs.dry_run === 'false'));
+  assert.ok(BACKUP.some((b) => b.file === 'social-revue.yml' && b.inputs.dry_run === 'false'));
+  const at = (iso) => Date.parse(iso);
+  assert.equal(backupDue(at('2026-11-28T12:05:00Z'), 'story'), true, '7 h 05 HNE : stories à préparer');
+  assert.equal(backupDue(at('2026-11-28T11:35:00Z'), 'story'), false, '6 h 35 : trop tôt');
+  assert.equal(backupDue(at('2026-11-28T17:05:00Z'), 'revue-social'), true, '12 h 05 : revue du matin');
+  assert.equal(backupDue(at('2026-11-28T20:05:00Z'), 'revue-social'), false, '15 h 05 : hors fenêtre');
+  assert.equal(backupDue(at('2026-11-29T00:35:00Z'), 'revue-social'), true, '19 h 35 : revue du soir');
+  const src = fs.readFileSync(new URL('../cloudflare/news-trigger/src/index.js', import.meta.url), 'utf8');
+  assert.match(src, /\.slice\(0, 20\)/, '20 flux au plus (50 sous-requêtes par passage, forfait gratuit)');
+  assert.equal((fs.readFileSync(new URL('../cloudflare/news-trigger/wrangler.toml', import.meta.url), 'utf8').match(/crons = \[([^\]]*)\]/)[1].match(/"/g) || []).length / 2, 2, 'toujours 2 crons Cloudflare (5 au plus par compte)');
+}

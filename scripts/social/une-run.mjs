@@ -16,7 +16,7 @@ import { uneNets, uneNetTime, bufferWhen } from './une-lib.mjs';
 import { NETS, SLOTS, IMAGE_FOR, IMAGE_SIZES, formatsFor, storyEnabled, pickSports, pickRadio, moreRadio, quietLead, storyNets, slotAt, slotFor, slotDone, selectUne, seatBySource, buildUneAll, altText, frenchOnly } from './une-lib.mjs';
 import { facets } from './bluesky.mjs';
 import { createBluesky } from './channels/bluesky.mjs';
-import { createMastodon, idemKey } from './channels/mastodon.mjs';
+import { createMastodon, idemKey, mastodonInstance } from './channels/mastodon.mjs';
 import { tumblrFromEnv, npfFromText, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 import { createXBuffer, AuthError } from './channels/x-buffer.mjs';
 import { postMetadata } from './buffer-pages.mjs';
@@ -97,7 +97,7 @@ async function publishOne(net, entry, env, when = { now: true }) {
     const p = await bs.post(rec); return { url: p.url, uri: p.uri };
   }
   if (net === 'mastodon') {
-    const md = createMastodon({ instance: env.MASTODON_INSTANCE || 'https://piaille.fr', token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
+    const md = createMastodon({ instance: mastodonInstance(env), token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
     if ((await md.listStatuses(30)).some(s => String(s.content || '').includes(head.slice(3, 40)))) return { dedup: true };
     const mediaId = await md.uploadImage(img, entry.alt); if (!mediaId) throw new Error('image Mastodon refusée');
     const p = await md.post({ status: text, mediaId, lang: 'fr', key: idemKey(`une:${entry.key}:mastodon`) });
