@@ -62,6 +62,8 @@ const hmMin = (s) => { const [h, m] = String(s).split(':').map(Number); return h
 export function tiktokEntries(state, day, max = TIKTOK.max) {
   return Object.values(state || {}).filter((e) => e && String(e.key || '').startsWith(`${day}:`) && !String(e.key).endsWith(':tiktok') && e.image).slice(0, max);
 }
+/** Image du carrousel : variante TikTok (format match-tiktok, hors de l'interface de TikTok), sinon l'affiche de la story. */
+export const tiktokImage = (e) => e.tiktokImage || e.image;
 const frDay = (day) => new Intl.DateTimeFormat('fr-CA', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(`${day}T12:00:00Z`));
 /** Légende courte, lisible même aplatie (comme la revue sur TikTok). */
 export function tiktokCaption(day, entries, total = entries.length) {
@@ -93,7 +95,7 @@ async function tiktokPass({ now, day, state, total, env }) {
   const when = bufferWhen(day, TIKTOK.at, Date.now());
   try {
     const ch = createXBuffer({ key: env.BUFFER_INSTAGRAM_API_KEY, service: 'tiktok', channelName: TIKTOK.channelName, fallbackId: env.BUFFER_TIKTOK_CHANNEL_ID || null });
-    const post = await ch.add({ text: tiktokCaption(day, entries, total), ...when, images: entries.map((e) => ({ url: e.image, alt: e.alt })) });
+    const post = await ch.add({ text: tiktokCaption(day, entries, total), ...when, images: entries.map((e) => ({ url: tiktokImage(e), alt: e.alt })) });
     state[key] = { key, at: new Date().toISOString(), id: post.id, images: entries.length, ...(when.dueAt ? { dueAt: when.dueAt } : {}) };
     console.log(`→ tiktok « Matchs du jour » : ${post.id} (${entries.length} affiche(s)${when.dueAt ? `, programmée pour ${new Date(when.dueAt).toLocaleString('fr-CA', { timeZone: 'America/Toronto' })}` : ''})`);
   } catch (e) {
@@ -187,8 +189,11 @@ async function main() {
     const short = `${wave}-${i + 1}-` + (String(m.gameId || key.slice(11)).slice(0, 18) || 'm');
     if (m.kind === 'avenir' && !m.venue) m.venue = await rseqVenue(m.gameId);
     const model = matchStoryModel(m, { index: i, total });
-    const imgs = await renderImages(model, { outDir: out, prefix: `match-${short}`, formats: ['match-story'] });
-    const img = imgs['match-story'], alt = matchStoryAlt(m);
+    // Variante TikTok rendue à côté (seul le carrousel TikTok l'utilise ; les stories gardent match-story).
+    const imgs = await renderImages(model, { outDir: out, prefix: `match-${short}`, formats: ['match-story', 'match-tiktok'] });
+    const img = imgs['match-story'], tk = imgs['match-tiktok'], alt = matchStoryAlt(m);
+    if (tk?.overflow) console.log(`::warning::${key} : débordement de la variante TikTok, le carrousel prendra l’affiche de la story.`);
+    const tkOk = tk && !tk.overflow;
     summary.push(`- [${wave} ${i + 1}/${total}] ${m.kind === 'more' ? `Aussi aujourd’hui : ${m.items.length} rencontre(s)` : `${m.sport} · ${label(m)} · ${m.when}`} → ${path.basename(img.file)} (${Math.round(img.bytes / 1024)} Ko${img.logos ? `, ${img.logos} logo(s)` : ''}${img.overflow ? ', DÉBORDEMENT' : ''})`);
     console.log(`Image ${key} : ${path.basename(img.file)} ; alt : ${alt}`);
     if (dry) continue;
@@ -197,9 +202,9 @@ async function main() {
     let entry = state[key];
     if (!entry?.image) {
       let urls;
-      try { urls = await hostImages({ 'match-story': img }, `${day}:match-${short}`); }
+      try { urls = await hostImages({ 'match-story': img, ...(tkOk ? { 'match-tiktok': tk } : {}) }, `${day}:match-${short}`); }
       catch (e) { console.log(`::warning::${key} : hébergement impossible (${String(e.message).slice(0, 200)}), réessai au prochain passage.`); continue; }
-      entry = state[key] = { key, at: new Date().toISOString(), what: label(m), ...(m.list ? { list: m.list } : {}), image: urls['match-story'], alt, nets: {} };
+      entry = state[key] = { key, at: new Date().toISOString(), what: label(m), ...(m.list ? { list: m.list } : {}), image: urls['match-story'], ...(urls['match-tiktok'] ? { tiktokImage: urls['match-tiktok'] } : {}), alt, nets: {} };
       fs.writeFileSync(STATE, JSON.stringify(pruneMatchState(state, now), null, 1) + '\n');
     }
     const wv = (CFG.waves || WAVES).find((w) => w.id === wave) || {};

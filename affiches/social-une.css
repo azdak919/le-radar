@@ -440,5 +440,24 @@ h2 { font-size: 15px; line-height: 1.2; letter-spacing: .1em; text-transform: up
 .ms-line .ms-nm b { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 32px; text-transform: none; white-space: nowrap; }
 .ms-line .ms-nm small { font-size: 18px; margin-top: 2px; }
 .ms-more .ms-when { top: 1440px; }
+/* Variante TikTok (format match-tiktok) : zones cachées par l'interface, mesurées sur un Pixel le 28 nov. 2026 —
+   haut 0–240 (barre d'état, recherche), bas dès 1736 (compte, légende), droite dès x 934 à partir de y 1104 (actions).
+   Bandeau sous la recherche, heure et lieu remontés, marque au-dessus de la légende, marge droite pour le bas. */
+.ms-tiktok .ms-top { top: 252px; }
+.ms-tiktok .ms-kick { top: 356px; }
+.ms-tiktok .ms-circuit { top: 428px; }
+.ms-tiktok .ms-team.away { top: 470px; height: 340px; }
+.ms-tiktok .ms-team.home { top: 975px; height: 350px; padding: 0 150px; }
+.ms-tiktok .ms-when { top: 1335px; padding: 0 150px; }
+.ms-tiktok .ms-foot { top: 1652px; bottom: auto; height: auto; justify-content: flex-start; }
+.ms-tiktok.ms-regatta .ms-event { top: 478px; }
+.ms-tiktok.ms-regatta .ms-format { top: 712px; }
+.ms-tiktok .ms-clubs { top: 766px; height: auto; justify-content: flex-start; gap: 8px; padding: 0 150px 0 100px; }
+.ms-tiktok .ms-club:not(.ms-line) { padding-top: 6px; padding-bottom: 6px; }
+.ms-tiktok .ms-club:not(.ms-line) img { width: 72px; height: 72px; }
+.ms-tiktok.ms-regatta .ms-when { top: 1335px; }
+.ms-tiktok.ms-more .ms-event { top: 440px; }
+.ms-tiktok.ms-more .ms-format { top: 562px; }
+.ms-tiktok.ms-more .ms-clubs { top: 614px; }
 /* Copyleft dessiné avec un « © » retourné (🄯 absent des polices du rendu sans tête). */
 .cl { display: inline-block; transform: scaleX(-1); }

@@ -160,6 +160,10 @@ assert.ok(!tpl.includes('\u{1F12F}'), 'copyleft dessiné en CSS (« © » retour
 // Config et rendu.
 assert.deepEqual(CFG.networks, ['facebook', 'instagram']);
 assert.deepEqual(IMAGE_SIZES['match-story'], { width: 1080, height: 1920 });
+assert.deepEqual(IMAGE_SIZES['match-tiktok'], { width: 1080, height: 1920 }, 'variante TikTok : même cadre 9:16');
+{ const { tiktokImage } = await import('../scripts/social/match-story-run.mjs');
+  assert.equal(tiktokImage({ image: 's.jpg', tiktokImage: 't.jpg' }), 't.jpg', 'carrousel TikTok : variante hors interface');
+  assert.equal(tiktokImage({ image: 's.jpg' }), 's.jpg', 'entrée hébergée avant la variante : affiche de la story'); }
 assert.deepEqual(Object.keys(pageModel(L.matchStoryModel(all[0]))), ['match', 'slot']);
 console.log('social-match-story : OK');
 
