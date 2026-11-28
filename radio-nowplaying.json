@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-28T11:06:46.849Z",
+  "updatedAt": "2026-11-28T12:06:49.024Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T11:06:16.969Z"
+      "checkedAt": "2026-11-28T12:06:12.425Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T11:06:30.097Z"
+      "checkedAt": "2026-11-28T12:06:25.413Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T11:06:34.498Z"
+      "checkedAt": "2026-11-28T12:06:27.981Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "World-Up'",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "next": {
         "title": "The Live Wire Show",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/the-live-wire-show"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "World-Up'",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T11:06:36.546Z"
+      "checkedAt": "2026-11-28T12:06:40.038Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,7 +122,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-11-28T11:06:37.999Z"
+      "checkedAt": "2026-11-28T12:06:40.897Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-11-28T11:06:46.498Z"
+      "checkedAt": "2026-11-28T12:06:48.675Z"
     }
   }
 }
