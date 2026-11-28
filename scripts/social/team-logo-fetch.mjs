@@ -48,12 +48,14 @@ export async function search(query, limit = 10) {
 
 export function isImage(buf) {
   return buf.length > 8 && (buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) // PNG
-    || (buf.subarray(0, 4).toString() === 'RIFF' && buf.subarray(8, 12).toString() === 'WEBP'));
+    || (buf.subarray(0, 4).toString() === 'RIFF' && buf.subarray(8, 12).toString() === 'WEBP')
+    || (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff)); // JPEG (logos publiés en JPEG sur Commons)
 }
+const rasterExt = (buf) => buf[0] === 0x89 ? 'png' : buf[0] === 0xff ? 'jpg' : 'webp';
 
 /** Type d'image accepté : png, webp ou svg sans script ni gestionnaire d'événement ; sinon ''. */
 export function imageExt(buf) {
-  if (isImage(buf)) return buf[0] === 0x89 ? 'png' : 'webp';
+  if (isImage(buf)) return rasterExt(buf);
   const t = buf.subarray(0, 4096).toString('utf8');
   if (/<svg[\s>]/i.test(t) && !/<script|\son\w+\s*=|javascript:/i.test(buf.toString('utf8'))) return 'svg';
   return '';
@@ -81,7 +83,7 @@ function save({ id, buf, ext, entry, dry, out, label }) {
   if (buf.length > 1.5e6) throw new Error(`Image trop lourde (${buf.length} octets) : en choisir une plus petite`);
   if (process.env.PREVIEW_DIR) { fs.mkdirSync(process.env.PREVIEW_DIR, { recursive: true }); fs.writeFileSync(path.join(process.env.PREVIEW_DIR, name), buf); }
   if (dry) { console.log('Essai (DRY_RUN) : rien écrit dans le dépôt.'); return; }
-  for (const e of ['png', 'svg', 'webp']) { const p = path.join(DIR, `${id}.${e}`); if (e !== ext && fs.existsSync(p)) fs.rmSync(p); }
+  for (const e of ['png', 'svg', 'webp', 'jpg']) { const p = path.join(DIR, `${id}.${e}`); if (e !== ext && fs.existsSync(p)) fs.rmSync(p); }
   fs.writeFileSync(path.join(DIR, name), buf);
   const srcPath = path.join(DIR, 'sources.json'), sources = JSON.parse(fs.readFileSync(srcPath, 'utf8'));
   sources[id] = entry;
@@ -120,8 +122,8 @@ async function fromCommons({ id, file, owner, dry, out }) {
   const r = await fetch(c.thumb, { headers: { 'User-Agent': UA } });
   if (!r.ok) throw new Error(`Téléchargement ${r.status} : ${c.thumb}`);
   const buf = Buffer.from(await r.arrayBuffer());
-  if (!isImage(buf)) throw new Error(`Rendu Commons ni PNG ni WebP (${c.mime}) : ${c.thumb}`);
-  save({ id, buf, ext: buf[0] === 0x89 ? 'png' : 'webp', dry, out, label: `[${c.title}](${c.url})`,
+  if (!isImage(buf)) throw new Error(`Rendu Commons ni PNG, ni JPEG, ni WebP (${c.mime}) : ${c.thumb}`);
+  save({ id, buf, ext: rasterExt(buf), dry, out, label: `[${c.title}](${c.url})`,
     entry: { file: '', source: c.url, license: c.license, ...(c.artist ? { author: c.artist } : {}), owner } });
 }
 

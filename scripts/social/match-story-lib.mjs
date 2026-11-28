@@ -41,7 +41,7 @@ export function teamLogo(reg, { root = ROOT } = {}) {
   const id0 = String(reg || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
   if (!id0) return '';
   for (const id of [id0, LOGO_ALIASES[id0]].filter(Boolean))
-    for (const ext of ['svg', 'png', 'webp']) if (fs.existsSync(path.join(root, TEAM_LOGO_DIR, `${id}.${ext}`))) return `../${TEAM_LOGO_DIR}/${id}.${ext}`;
+    for (const ext of ['svg', 'png', 'webp', 'jpg']) if (fs.existsSync(path.join(root, TEAM_LOGO_DIR, `${id}.${ext}`))) return `../${TEAM_LOGO_DIR}/${id}.${ext}`;
   return '';
 }
 
