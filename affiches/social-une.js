@@ -305,12 +305,14 @@
     return String(credit || '').replace(/^\s*(?:photo|photos|illustration|crédit|credit)s?\s*:\s*/i, '').replace(/^📸\s*/, '').trim();
   }
   // Une Instagram régulière 3:4 (modèle B) : couverture, pastille, date avec année, jusqu’à 2 autres titres.
-  async function renderGrilleUne(card, model) {
+  // Story 9:16 (format story) : même modèle B, jusqu’à 3 autres titres et la prochaine édition, hors des zones d’interface.
+  async function renderGrilleUne(card, model, format = 'grille') {
+    const story = format === 'story';
     const items = model.items || [];
     const lead = items[0] || { title: '', images: [] };
     const illustration = isIllustrationCredit(lead.credit);
     // lead-photo / lead-illustration : pas la classe .photo (marges négatives du portrait).
-    card.className = 'card grille une-b ' + (illustration ? 'lead-illustration' : 'lead-photo');
+    card.className = `card ${story ? 'story' : 'grille'} une-b ${model.slot.kind || ''} ` + (illustration ? 'lead-illustration' : 'lead-photo');
     const root = el('div', 'ig');
     const full = el('div', 'ig-photo-full'); const imgFull = el('img'); imgFull.alt = ''; full.append(imgFull);
     const well = el('div', 'ig-photo-well'); const imgWell = el('img'); imgWell.alt = ''; well.append(imgWell);
@@ -329,7 +331,7 @@
     if (lead.source) bottom.append(el('p', 'ig-media', lead.source));
     const credit = plainCredit(lead.credit);
     if (credit) bottom.append(el('p', 'ig-credit', '📸 ' + credit));
-    const extra = items.slice(1, 3);
+    const extra = items.slice(1, story ? 4 : 3);
     const thumbs = [];
     // Une sans article : sous la photo, le contenu réel du créneau (matchs, sinon émissions de radio), 4 lignes au plus.
     if (lead.quiet) {
@@ -363,6 +365,7 @@
       });
       bottom.append(also);
     }
+    if (story) { const nx = el('p', 'ig-next'); nx.append(el('span', 'lbl', model.slot.next ? 'Prochaine édition' : 'Toute l’actualité étudiante'), el('b', '', model.slot.next || 'Deux unes par jour, matin et soir'), el('span', 'url', 'le\u2011radar.ca')); bottom.append(nx); }
     let artReady = null;
     if (lead.art) { card.classList.add('quiet-art'); const art = artNode(lead.art); full.textContent = ''; full.append(art); well.remove(); artReady = art.ready; }
     root.append(full, well, el('div', 'ig-veil-top'), el('div', 'ig-veil-bot'), top, bottom);
@@ -375,12 +378,18 @@
     if (!ok && !lead.art) { imgFull.remove(); imgWell.remove(); full.classList.add('empty'); well.classList.add('empty'); }
     await Promise.all([document.fonts.ready, brand.ready, ...thumbs]);
     fitTitle(title, 44);
-    const overflow = card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2;
+    // Story : on retire le dernier « Aussi à la une » plutôt que de rogner (jamais moins d’un).
+    const alsoBox = story && bottom.querySelector('.ig-also:not(.quiet)');
+    const topBottom = () => bottom.getBoundingClientRect().top < top.getBoundingClientRect().bottom + 24;
+    while (alsoBox && alsoBox.querySelectorAll('.ig-also-item').length > 1 && topBottom()) alsoBox.lastChild.remove();
+    // Illustration (non recadrée) : le puits occupe la place libre entre la marque et le bloc du bas.
+    if (story && illustration && well.isConnected) { const h = Math.ceil(bottom.offsetHeight + 24); well.style.bottom = h + 'px'; card.querySelector('.ig-veil-bot').style.height = h + 'px'; }
+    const overflow = (story && topBottom()) || card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2;
     // Une sans article : on retire des lignes plutôt que de déborder.
     const qa = bottom.querySelector('.ig-also.quiet');
     while (qa && qa.querySelectorAll('.ig-also-item').length > 2 && (card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2)) qa.lastChild.remove();
     const overflowQ = card.scrollHeight > card.clientHeight + 2 || bottom.scrollHeight > bottom.clientHeight + 2;
-    return { shown: 1 + extra.length, photo: ok, sports: 0, radio: 0, overflow: qa ? overflowQ : overflow };
+    return { shown: 1 + (alsoBox ? alsoBox.querySelectorAll('.ig-also-item').length : extra.length), photo: ok, sports: 0, radio: 0, overflow: qa ? overflowQ : overflow };
   }
   // Poster sport Instagram 3:4 : ancienne grille à barres (inchangée).
   async function renderGrille(card, model) {
@@ -556,6 +565,7 @@
     const card = document.getElementById('card'); card.textContent = '';
     if (format === 'match-story') return renderMatchStory(card, model);
     if (format === 'grille') return renderGrille(card, model);
+    if (format === 'story') return renderGrilleUne(card, model, 'story');
     if (format === 'article' || format === 'article-portrait') return renderArticle(card, model, format);
 
     THEME = model.slot.kind === 'soir' ? 'sombre' : 'clair';

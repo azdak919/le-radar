@@ -3,7 +3,8 @@ import { test, expect } from '@playwright/test';
 // Une sociale (affiches/social-une.html) : cas limites rendus dans les 3 formats et les 2 thèmes.
 // Rien ne déborde, aucun nom coupé, sport en deux colonnes (ou une seule pleine largeur),
 // couleurs d'établissement lisibles (AA) avec repli sur l'accent, « Par » plus pâle que l'auteur.
-const SIZES = { portrait: [1080, 1350], story: [1080, 1920], paysage: [1200, 675] };
+// La story 9:16 suit le modèle B depuis le 27 nov. 2026 : testée plus bas avec la une Instagram.
+const SIZES = { portrait: [1080, 1350], paysage: [1200, 675] };
 const IMG = '/assets/kit/affiche-11x17.jpg';
 const item = (n, o = {}) => ({ title: `Article numéro ${n} pour la une`, byline: `Autrice ${n} · Le Journal`, source: 'Le Journal', place: 'Concordia', placeColor: '#912338', hook: 'Une accroche en français.', credit: 'Photo : Équipe', images: [IMG], ...o });
 const res = (n, o = {}) => ({ emoji: '🏀', sport: 'Basketball (H)', kind: 'resultat', when: 'Final · jeu. 12 nov.', teams: [{ name: `Stingers${n}`, inst: 'Concordia', color: '#912338', score: 68 }, { name: 'Redbirds', inst: 'McGill', color: '#ED1B2F', score: 44 }], tie: false, ...o });
@@ -483,4 +484,49 @@ for (const [kind, credit, leadClass] of [
     expect(box.className).toContain(leadClass);
     expectFullBleedEdges(await edgePixels(page));
   });
+}
+
+// Story 9:16 au style du modèle B (27 nov. 2026) : couverture plein cadre, rien d'écrit sous l'interface d'Instagram et de Facebook.
+for (const kind of ['matin', 'soir']) {
+  for (const [name, patch] of Object.entries({
+    complet: (m) => m,
+    'titres longs': (m) => { m.items.forEach((i) => { i.title = 'Un titre très long qui ne finit plus '.repeat(4); }); return m; },
+    illustration: (m) => { m.items[0].credit = 'Illustration : Équipe'; return m; },
+    'sans photo': (m) => { m.items[0].images = []; return m; },
+    'un seul article': (m) => { m.items = m.items.slice(0, 1); return m; },
+  })) {
+    test(`story 9:16 ${kind} : modèle B, ${name} @ci-critical`, async ({ page }) => {
+      await page.route((u) => !u.href.startsWith('http://127.0.0.1'), (r) => r.abort());
+      await page.setViewportSize({ width: 1080, height: 1920 });
+      await page.goto('/affiches/social-une.html', { waitUntil: 'load' });
+      const model = patch({
+        slot: { label: `La une du ${kind}`, kind, dayLabel: 'Vendredi 27 novembre', dayLabelYear: 'Vendredi 27 novembre 2026', next: 'La une du soir · ven. 27 nov. · 19 h 30' },
+        items: [item(1, { credit: 'Photo : Équipe' }), item(2), item(3), item(4), item(5)],
+        sports: { results: [res(1)], next: [nxt(1)] }, radio: [radio(1)],
+      });
+      const info = await page.evaluate((a) => window.renderUne(a), { model, format: 'story' });
+      expect(info.overflow).toBe(false);
+      const z = await page.evaluate(() => {
+        const card = document.getElementById('card'); const c = card.getBoundingClientRect();
+        const texts = [...card.querySelectorAll('.ig-brand, .ig-pill, .ig-title, .ig-by, .ig-media, .ig-credit, .ig-also-item, .ig-next')].map((e) => { const r = e.getBoundingClientRect(); return { cls: e.className, top: r.top - c.top, bottom: r.bottom - c.top }; });
+        return { w: c.width, h: c.height, className: card.className, texts, old: card.querySelectorAll('.mast, .foot, .glass, .sports').length,
+          also: card.querySelectorAll('.ig-also-item').length, next: card.querySelector('.ig-next')?.textContent || '' };
+      });
+      expect([z.w, z.h]).toEqual([1080, 1920]);
+      expect(z.className).toMatch(/(^| )story( |$)/);
+      expect(z.className).toMatch(/une-b/);
+      expect(z.old, 'plus de cartes de l’ancien gabarit').toBe(0);
+      for (const t of z.texts) {
+        expect(t.top, `${t.cls} : sous la zone d’interface du haut`).toBeGreaterThanOrEqual(140);
+        expect(t.bottom, `${t.cls} : au-dessus de la barre de réponse`).toBeLessThanOrEqual(1920 - 250);
+      }
+      const sorted = z.texts.filter((t) => t.cls !== 'ig-brand');
+      const brand = z.texts.find((t) => t.cls === 'ig-brand');
+      expect(Math.min(...sorted.map((t) => t.top)), 'bloc du bas sous la marque').toBeGreaterThan(brand.bottom);
+      expect(z.next).toMatch(/Prochaine édition/);
+      if (name === 'un seul article') expect(z.also).toBe(0);
+      else { expect(z.also).toBeGreaterThanOrEqual(1); expect(z.also).toBeLessThanOrEqual(3); }
+      if (name === 'complet') expect(z.also).toBe(3);
+    });
+  }
 }
