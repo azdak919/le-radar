@@ -46,6 +46,7 @@ export function torontoMinutes(now, tz = 'America/Toronto') {
  * Fenêtre où un cron GitHub sauté mérite un rattrapage.
  * une / revue : matin 7 h 30–10 h 30, soir 19 h–22 h 30 ; revue aussi 23 h–23 h 59.
  * buffer : soir 21 h–22 h 30 et nuit 3 h–7 h.
+ * story : 7 h–19 h 30 ; revue-social : 7 h–13 h 30 et 19 h–22 h 30.
  */
 export function backupDue(now, kind) {
   const m = torontoMinutes(now);
@@ -53,6 +54,9 @@ export function backupDue(now, kind) {
   if (kind === 'une') return inWin(7 * 60 + 30, 10 * 60 + 30) || inWin(19 * 60, 22 * 60 + 30);
   if (kind === 'revue') return inWin(6 * 60 + 45, 10 * 60 + 30) || inWin(19 * 60, 22 * 60 + 30) || inWin(23 * 60, 23 * 60 + 59);
   if (kind === 'buffer') return inWin(21 * 60, 22 * 60 + 30) || inWin(3 * 60, 7 * 60);
+  // Stories sport (préparées dès 7 h, programmées pour 9 h et 15 h ; TikTok 16 h) et revue sur les réseaux.
+  if (kind === 'story') return inWin(7 * 60, 19 * 60 + 30);
+  if (kind === 'revue-social') return inWin(7 * 60, 13 * 60 + 30) || inWin(19 * 60, 22 * 60 + 30);
   return false;
 }
 

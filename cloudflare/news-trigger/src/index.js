@@ -23,7 +23,9 @@ async function activeRuns(env) {
 
 async function feedDates(env) {
   const reg = await (await fetch(`${env.SITE}/news-sources.json`, { headers: { 'user-agent': UA } })).json();
-  const feeds = (reg.active || []).map((s) => s.url).filter((u) => /^https?:/.test(u || '')).slice(0, 25);
+  // 20 flux au plus : le forfait Workers gratuit plafonne à 50 sous-requêtes par passage (collecte 5 + flux 20 + garde 2
+  // + social 6 + secours 10 = 43 au pire).
+  const feeds = (reg.active || []).map((s) => s.url).filter((u) => /^https?:/.test(u || '')).slice(0, 20);
   const out = await Promise.all(feeds.map(async (u) => {
     try {
       const r = await fetch(u, { headers: { 'user-agent': UA }, signal: AbortSignal.timeout(8000) });
@@ -91,6 +93,10 @@ export const BACKUP = [
   { file: 'social-une.yml', kind: 'une', maxAgeMin: 45, inputs: { dry_run: 'false', slot: 'auto' } },
   { file: 'revue.yml', kind: 'revue', maxAgeMin: 45, inputs: { sample: 'false', edition: 'auto' } },
   { file: 'social-buffer.yml', kind: 'buffer', maxAgeMin: 12 * 60 },
+  // 28 nov. 2026 : GitHub a sauté les crons des stories de 9 h 41 et 15 h 23 (publiées à 17 h 20). Ces deux workflows
+  // préparent tôt et programment dans Buffer à l'heure exacte ; il suffit qu'un passage ait lieu dans leur fenêtre.
+  { file: 'social-match-story.yml', kind: 'story', maxAgeMin: 30, inputs: { dry_run: 'false' } },
+  { file: 'social-revue.yml', kind: 'revue-social', maxAgeMin: 30, inputs: { dry_run: 'false', slot: 'auto' } },
 ];
 
 export async function runBackup(env, now = Date.now(), specs = BACKUP) {
