@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
     inputs:
       team_id:
-        description: 'Identifiant (registryId de sports-masthead.json : udem, ets… ; club de voile : udem-voile)'
-        required: true
+        description: 'Identifiant (registryId de sports-masthead.json : udem, ets… ; club de voile : udem-voile) ; vide en mode lot'
+        required: false
         type: string
       commons_file:
         description: 'Fichier Commons (File:… ou lien) ; vide = lister les candidats'
@@ -21,6 +21,14 @@ on:
         type: string
       image_url:
         description: 'Image choisie sur le site officiel (https, png/webp/svg)'
+        required: false
+        type: string
+      batch_list:
+        description: 'Lot, recherche Commons : « id|recherche;id|recherche;… »'
+        required: false
+        type: string
+      batch_fetch:
+        description: 'Lot, téléchargement : « id|File:…|titulaire;… »'
         required: false
         type: string
       query:
@@ -47,7 +55,7 @@ concurrency:
 jobs:
   logo:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -62,6 +70,8 @@ jobs:
           QUERY: ${{ inputs.query }}
           PAGE_URL: ${{ inputs.page_url }}
           IMAGE_URL: ${{ inputs.image_url }}
+          BATCH_LIST: ${{ inputs.batch_list }}
+          BATCH_FETCH: ${{ inputs.batch_fetch }}
           OWNER: ${{ inputs.owner }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
           PREVIEW_DIR: logo-preview
@@ -75,7 +85,7 @@ jobs:
       - name: Commit (assets/logos/teams/)
         if: ${{ !inputs.dry_run }}
         env:
-          TEAM_ID: ${{ inputs.team_id }}
+          TEAM_ID: ${{ inputs.team_id || 'lot' }}
         run: |
           git add -A assets/logos/teams/
           git diff --cached --quiet && { echo "Rien de nouveau."; exit 0; }

@@ -226,3 +226,15 @@ console.log('logo d’équipe Commons : ok');
   assert.equal(T.imageExt(Buffer.from('<html>non</html>')), '');
 }
 console.log('logo d’équipe site officiel : ok');
+
+// Lot de logos (ÉTS et cégeps, 28 nov. 2026) et alias des deuxièmes équipes.
+{
+  const T = await import('../scripts/social/team-logo-fetch.mjs');
+  assert.deepEqual(T.parseBatch('ets|ÉTS Piranhas logo; Dawson | Dawson College logo ;vide|;|x'), [{ id: 'ets', v: 'ÉTS Piranhas logo', owner: '' }, { id: 'dawson', v: 'Dawson College logo', owner: '' }]);
+  assert.deepEqual(T.parseBatch('alma|File:Alma.png|Collège d’Alma'), [{ id: 'alma', v: 'File:Alma.png', owner: 'Collège d’Alma' }]);
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'logo-'));
+  fs.mkdirSync(path.join(tmp, 'assets/logos/teams'), { recursive: true }); fs.writeFileSync(path.join(tmp, 'assets/logos/teams/alma.png'), '');
+  assert.equal(L.teamLogo('alma-2', { root: tmp }), '../assets/logos/teams/alma.png');
+  assert.equal(L.teamLogo('jonquiere-2', { root: tmp }), '');
+}
+console.log('logos en lot et alias : ok');

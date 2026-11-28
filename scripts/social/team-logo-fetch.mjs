@@ -111,9 +111,48 @@ async function fromSite({ id, page, image, dry, out }) {
     entry: { file: '', source: page || image, image, license: `Logo officiel publié sur ${host} (marque de son titulaire)`, owner: process.env.OWNER || id } });
 }
 
+async function fromCommons({ id, file, owner, dry, out }) {
+  const j = await get({ action: 'query', titles: file, ...iiParams });
+  const pg = j.query?.pages?.[0];
+  if (!pg || pg.missing || !pg.imageinfo) throw new Error(`Fichier introuvable sur Commons : ${file}`);
+  const c = info(pg);
+  if (!c.license) throw new Error(`Licence absente de la fiche Commons : ${c.url}`);
+  const r = await fetch(c.thumb, { headers: { 'User-Agent': UA } });
+  if (!r.ok) throw new Error(`Téléchargement ${r.status} : ${c.thumb}`);
+  const buf = Buffer.from(await r.arrayBuffer());
+  if (!isImage(buf)) throw new Error(`Rendu Commons ni PNG ni WebP (${c.mime}) : ${c.thumb}`);
+  save({ id, buf, ext: buf[0] === 0x89 ? 'png' : 'webp', dry, out, label: `[${c.title}](${c.url})`,
+    entry: { file: '', source: c.url, license: c.license, ...(c.artist ? { author: c.artist } : {}), owner } });
+}
+
+/** Lot (28 nov. 2026, Charles : logos ÉTS et cégeps) : « id|valeur;id|valeur;… », une requête Commons à la fois, 1,5 s d'écart. */
+export const parseBatch = (s) => String(s || '').split(/[;\n]/).map((l) => l.split('|').map((x) => x.trim())).filter((p) => teamId(p[0]) && p[1]).map(([id, v, owner]) => ({ id: teamId(id), v, owner: owner || '' }));
+const pause = () => new Promise((r) => setTimeout(r, 1500));
+async function batchList(items, out) {
+  out('### Candidats Commons (lot)\n\n| Équipe | Recherche | Fichier | Licence | Taille |\n|---|---|---|---|---|');
+  for (const { id, v } of items) {
+    let list = []; try { list = await search(v, 5); } catch (e) { console.log(`${id} : ${e.message}`); }
+    console.log(`\n${id} · « ${v} » : ${list.length ? '' : '(aucun)'}`);
+    for (const c of list) { console.log(`  - ${c.title} · ${c.license || '?'} · ${c.width}×${c.height}`); out(`| ${id} | ${v} | [${c.title}](${c.url}) | ${c.license || '?'} | ${c.width}×${c.height} |`); }
+    if (!list.length) out(`| ${id} | ${v} | — | | |`);
+    await pause();
+  }
+}
+async function batchFetch(items, dry, out) {
+  let ok = 0; const failed = [];
+  for (const { id, v, owner } of items) {
+    try { await fromCommons({ id, file: fileTitle(v), owner: owner || id, dry, out }); ok++; } catch (e) { failed.push(id); console.log(`::warning::${id} : ${e.message}`); }
+    await pause();
+  }
+  console.log(`\nLot : ${ok} logo(s)${dry ? ' vérifiés (essai)' : ' ajoutés'}${failed.length ? ` ; échecs : ${failed.join(', ')}` : ''}.`);
+  if (!ok && failed.length) throw new Error('aucun logo du lot');
+}
+
 async function main() {
   const id = teamId(process.env.TEAM_ID), file = fileTitle(process.env.COMMONS_FILE), dry = process.env.DRY_RUN !== 'false';
   const out = process.env.GITHUB_STEP_SUMMARY ? (s) => fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, s + '\n') : () => {};
+  if (process.env.BATCH_LIST) return batchList(parseBatch(process.env.BATCH_LIST), out);
+  if (process.env.BATCH_FETCH) return batchFetch(parseBatch(process.env.BATCH_FETCH), dry, out);
   if (!id) throw new Error('TEAM_ID requis (registryId de sports-masthead.json, ex. udem, ets ; club de voile : udem-voile)');
   const page = (process.env.PAGE_URL || '').trim(), image = (process.env.IMAGE_URL || '').trim();
   if (page || image) return fromSite({ id, page, image, dry, out });
@@ -126,17 +165,7 @@ async function main() {
     if (!list.length) console.log('(aucun)');
     return;
   }
-  const j = await get({ action: 'query', titles: file, ...iiParams });
-  const pg = j.query?.pages?.[0];
-  if (!pg || pg.missing || !pg.imageinfo) throw new Error(`Fichier introuvable sur Commons : ${file}`);
-  const c = info(pg);
-  if (!c.license) throw new Error(`Licence absente de la fiche Commons : ${c.url}`);
-  const r = await fetch(c.thumb, { headers: { 'User-Agent': UA } });
-  if (!r.ok) throw new Error(`Téléchargement ${r.status} : ${c.thumb}`);
-  const buf = Buffer.from(await r.arrayBuffer());
-  if (!isImage(buf)) throw new Error(`Rendu Commons ni PNG ni WebP (${c.mime}) : ${c.thumb}`);
-  save({ id, buf, ext: buf[0] === 0x89 ? 'png' : 'webp', dry, out, label: `[${c.title}](${c.url})`,
-    entry: { file: '', source: c.url, license: c.license, ...(c.artist ? { author: c.artist } : {}), owner: process.env.OWNER || id } });
+  return fromCommons({ id, file, owner: process.env.OWNER || id, dry, out });
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((e) => { console.error(`::error::${e.message}`); process.exit(1); });

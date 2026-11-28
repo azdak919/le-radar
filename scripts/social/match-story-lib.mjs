@@ -35,10 +35,13 @@ export function storyCredits(match, { root = ROOT } = {}) {
   const data = match.kind === 'regatta-results' ? `Résultats${match.where ? ' et lieu' : ''} : CICSA` : match.kind === 'regatta' ? `Calendrier${match.where ? ' et lieu' : ''} : CICSA` : `Calendrier${match.venue ? ' et salle' : ''} : RSEQ`;
   return { data, logos: src.map((x) => x.owner), notes: [...new Set(src.map((x) => x.note).filter(Boolean))] };
 }
+// Deuxièmes équipes et campus d'un même établissement : même logo que l'équipe principale.
+export const LOGO_ALIASES = { 'alma-2': 'alma', 'jonquiere-2': 'jonquiere', 'chicoutimi-vert': 'chicoutimi', 'beauce-appalaches-sm': 'beauce-appalaches' };
 export function teamLogo(reg, { root = ROOT } = {}) {
-  const id = String(reg || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
-  if (!id) return '';
-  for (const ext of ['svg', 'png', 'webp']) if (fs.existsSync(path.join(root, TEAM_LOGO_DIR, `${id}.${ext}`))) return `../${TEAM_LOGO_DIR}/${id}.${ext}`;
+  const id0 = String(reg || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+  if (!id0) return '';
+  for (const id of [id0, LOGO_ALIASES[id0]].filter(Boolean))
+    for (const ext of ['svg', 'png', 'webp']) if (fs.existsSync(path.join(root, TEAM_LOGO_DIR, `${id}.${ext}`))) return `../${TEAM_LOGO_DIR}/${id}.${ext}`;
   return '';
 }
 
