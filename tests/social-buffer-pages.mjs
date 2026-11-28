@@ -111,4 +111,22 @@ assert.equal(postMetadata('linkedin'), undefined);
   assert.deepEqual(reconcileSent(sent, ['p2'], now), ['a']);
   assert.deepEqual(Object.keys(sent).sort(), ['b', 'c', 'd', 'e']);
 }
+// Plafond à 0 (27 nov. 2026) : un article un à un programmé avant le changement est parti quand même.
+// La purge ne vise que les publications de CE robot (postId dans l'état), encore à venir.
+{
+  const { purgeablePosts } = await import('../scripts/social/lib.mjs');
+  const now = T('2026-11-27T20:00:00Z');
+  const sent = { stage: { postId: 'p1', dueAt: '2026-11-28T01:36:00Z' }, bientot: { postId: 'p2', dueAt: '2026-11-27T20:05:00Z' }, vieux: { at: '2026-11-20T10:00:00Z' } };
+  const queued = [
+    { id: 'p1', dueAt: '2026-11-28T01:36:00Z' },   // article de ce robot, à venir → retiré
+    { id: 'p2', dueAt: '2026-11-27T20:05:00Z' },   // dans 5 min → laissé (envoi possiblement en cours)
+    { id: 'une', dueAt: '2026-11-28T14:00:00Z' },  // la une / la revue (autre état) → jamais touchée
+    { id: 'main', dueAt: '2026-11-28T15:00:00Z' }, // ajoutée à la main → jamais touchée
+  ];
+  assert.deepEqual(purgeablePosts(sent, queued, now), [{ postId: 'p1', articleId: 'stage', dueAt: '2026-11-28T01:36:00Z' }]);
+  assert.deepEqual(purgeablePosts({}, queued, now), [], 'état vide : rien');
+  const src = fs.readFileSync(new URL('../scripts/social/buffer-pages-post.mjs', import.meta.url), 'utf8');
+  assert.match(src, /Number\(cfg\.perDay\) === 0/, 'purge réservée aux réseaux à 0 par jour');
+  assert.match(src, /if \(!dry\) for \(const x of purge\)/, 'essai : rien retiré');
+}
 console.log('social-buffer-pages : OK');
