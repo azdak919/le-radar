@@ -224,8 +224,8 @@ async function sendOne(net, { text, doc, images, model, env, igState, slot, when
     return { id: p.uri, url: p.url };
   }
   if (net === 'mastodon') {
-    const { createMastodon, idemKey } = await import('./channels/mastodon.mjs');
-    const md = createMastodon({ instance: env.MASTODON_INSTANCE || 'https://piaille.fr', token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
+    const { createMastodon, idemKey, mastodonInstance } = await import('./channels/mastodon.mjs');
+    const md = createMastodon({ instance: mastodonInstance(env), token: env.MASTODON_TOKEN, acct: env.MASTODON_ACCT || 'leradar' });
     const head = text.split('\n')[0];
     if ((await md.listStatuses(30)).some((s) => String(s.content || '').includes(head.slice(3, 40)))) return { id: 'deja-present', dedup: true };
     const ids = [];

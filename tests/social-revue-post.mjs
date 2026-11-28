@@ -160,7 +160,7 @@ assert.equal(R.gate({ now: at('2026-11-26T19:00:00Z'), state: {} }).due, false, 
   const lists = L.quietDayLists(masthead, '2026-11-29');
   assert.deepEqual(lists.map((x) => x.title), ['Résultats récents', 'À venir']);
   const r = L.matchStoryModel(lists[0]).match, n = L.matchStoryModel(lists[1]).match;
-  assert.equal(r.title, 'Résultats récents'); assert.match(r.items[0].text, /^Martlets 61-50 Stingers$/); assert.match(r.credits.data, /^Résultats : RSEQ/);
+  assert.equal(r.title, 'Résultats récents'); assert.match(r.items[0].text, /^Martlets \(McGill\) 61-50 Stingers \(Concordia\)$/); // sigles entre parenthèses (#577) assert.match(r.credits.data, /^Résultats : RSEQ/);
   assert.equal(n.title, 'À venir'); assert.match(n.items[0].when, /2 déc\..*18 h/);
   assert.deepEqual(L.quietDayLists(masthead, '2027-01-15'), [], 'rien de récent ni d’annoncé : rien');
   assert.match(L.matchStoryAlt(lists[0]), /^Affiche Résultats récents du Radar/);

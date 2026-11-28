@@ -8,7 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createBluesky } from './channels/bluesky.mjs';
-import { createMastodon, idemKey } from './channels/mastodon.mjs';
+import { createMastodon, idemKey, mastodonInstance } from './channels/mastodon.mjs';
 import { tumblrFromEnv, hasTumblrKeys, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -58,7 +58,7 @@ async function deleteBluesky(rkey, uri) {
 }
 
 async function deleteMastodon(id) {
-  const instance = (process.env.MASTODON_INSTANCE || 'https://piaille.fr').replace(/\/+$/, '');
+  const instance = mastodonInstance();
   const token = process.env.MASTODON_TOKEN;
   if (!token) throw new Error('MASTODON_TOKEN absente');
   const md = createMastodon({ instance, token, acct: process.env.MASTODON_ACCT || 'leradar' });
@@ -140,7 +140,7 @@ async function main() {
     const bGone = await publicGone('Bluesky public', `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(bsky.uri || `at://did:plc:uxuxieev7fbkiji3xyyhzgae/app.bsky.feed.post/${rkey}`)}`, {
       okWhen: (r, body) => r.status === 404 || r.status === 400 || /not.found|NotFound|not found/i.test(body),
     });
-    const mGone = await publicGone('Mastodon public', `https://piaille.fr/api/v1/statuses/${mastoId}`);
+    const mGone = await publicGone('Mastodon public', `${mastodonInstance()}/api/v1/statuses/${mastoId}`);
     // Tumblr sert souvent un défi anti-bot en public : la confirmation passe par l'API dans deleteTumblr.
     if (!b.gone || !m.gone || !t.gone || !bGone || !mGone) throw new Error('un ancien post est encore en ligne, aucune republication.');
   }

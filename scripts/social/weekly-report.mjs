@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { torontoDay } from './policy.mjs';
 import privacyGuard from '../privacy-guard.js';
+import { mastodonInstance } from './channels/mastodon.mjs';
 import { tumblrFromEnv, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
@@ -62,7 +63,7 @@ async function bluesky({ since, internal }) {
   return { followers: prof.followersCount - intFollowers, followersRaw: prof.followersCount, internalFollowers: intFollowers, follows: prof.followsCount, posts: summarizePosts(posts) };
 }
 async function mastodon({ since, internal }) {
-  const base = (process.env.MASTODON_INSTANCE || 'https://piaille.fr').replace(/\/+$/, ''), acct = process.env.MASTODON_ACCT || 'leradar';
+  const base = mastodonInstance(), acct = process.env.MASTODON_ACCT || 'leradar';
   const a = await j(`${base}/api/v1/accounts/lookup?acct=${acct}`);
   const all = []; let maxId = '';
   for (let page = 0; page < 6; page++) {

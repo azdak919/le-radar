@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 // Bot Mastodon : clé d'idempotence stable, liens déjà publiés, plafond piaille.fr étalé.
 import assert from 'node:assert/strict';
-import { idemKey, linksInStatuses, createMastodon } from '../scripts/social/channels/mastodon.mjs';
+import { idemKey, linksInStatuses, createMastodon, mastodonInstance, MASTODON_HOME } from '../scripts/social/channels/mastodon.mjs';
 import { NETWORKS } from '../scripts/social/rate-limit.mjs';
+// Instance : piaille.fr par défaut, la variable de dépôt l'emporte (barre finale retirée).
+assert.equal(MASTODON_HOME, 'https://piaille.fr');
+assert.equal(mastodonInstance({}), 'https://piaille.fr');
+assert.equal(mastodonInstance({ MASTODON_INSTANCE: 'https://ex.social/' }), 'https://ex.social');
 assert.equal(idemKey('a'), idemKey('a')); assert.notEqual(idemKey('a'), idemKey('b'));
 assert.deepEqual([...linksInStatuses([{ card: { url: 'https://le-radar.ca/article/x/' }, content: '<a href="https://le-radar.ca/article/y/">y</a>' }])], ['https://le-radar.ca/article/x/', 'https://le-radar.ca/article/y/']);
 assert.ok(NETWORKS.mastodon.spread && NETWORKS.mastodon.perHour <= 5 && NETWORKS.mastodon.perDay <= 50);

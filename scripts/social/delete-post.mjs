@@ -4,7 +4,7 @@
 // Env : NETWORK=mastodon|tumblr|buffer, POST_ID, DRY_RUN (défaut true). Aucun secret journalisé.
 import { createRequire } from 'node:module';
 import fs from 'node:fs';
-import { createMastodon } from './channels/mastodon.mjs';
+import { createMastodon, mastodonInstance } from './channels/mastodon.mjs';
 import { tumblrFromEnv, hasTumblrKeys, tumblrEnabled, PAUSED_MSG } from './tumblr.mjs';
 import { createXBuffer, API, isAuthFailure, AUTH_MSG } from './channels/x-buffer.mjs';
 const { hasCdata } = createRequire(import.meta.url)('../cdata-lib.js');
@@ -19,7 +19,7 @@ const verdict = (where, text) => {
 };
 
 if (net === 'mastodon') {
-  const instance = process.env.MASTODON_INSTANCE || 'https://piaille.fr';
+  const instance = mastodonInstance();
   const md = createMastodon({ instance, token: process.env.MASTODON_TOKEN || '' });
   const acct = await md.lookup();
   const r = await fetch(`${instance.replace(/\/+$/, '')}/api/v1/statuses/${id}`, { signal: AbortSignal.timeout(30000) });
