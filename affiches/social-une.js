@@ -365,7 +365,9 @@
       });
       bottom.append(also);
     }
-    if (story) { const nx = el('p', 'ig-next'); nx.append(el('span', 'lbl', model.slot.next ? 'Prochaine édition' : 'Toute l’actualité étudiante'), el('b', '', model.slot.next || 'Deux unes par jour, matin et soir'), el('span', 'url', 'le\u2011radar.ca')); bottom.append(nx); }
+    if (story) { const nx = el('p', 'ig-next'); nx.append(el('span', 'lbl', model.slot.next ? 'Prochaine édition' : 'Toute l’actualité étudiante'), el('b', '', model.slot.next || 'Deux unes par jour, matin et soir'), el('span', 'url', 'le\u2011radar.ca')); bottom.append(nx);
+      // Crédits de base en petit (même mention que le pied du site et l’ancienne story), au-dessus de la barre de réponse.
+      const legal = layoutCredit('Articles et photos crédités à leurs auteurs et à leurs médias d’origine. '); legal.className = 'ig-legal'; bottom.append(legal); }
     let artReady = null;
     if (lead.art) { card.classList.add('quiet-art'); const art = artNode(lead.art); full.textContent = ''; full.append(art); well.remove(); artReady = art.ready; }
     root.append(full, well, el('div', 'ig-veil-top'), el('div', 'ig-veil-bot'), top, bottom);

@@ -508,9 +508,9 @@ for (const kind of ['matin', 'soir']) {
       expect(info.overflow).toBe(false);
       const z = await page.evaluate(() => {
         const card = document.getElementById('card'); const c = card.getBoundingClientRect();
-        const texts = [...card.querySelectorAll('.ig-brand, .ig-pill, .ig-title, .ig-by, .ig-media, .ig-credit, .ig-also-item, .ig-next')].map((e) => { const r = e.getBoundingClientRect(); return { cls: e.className, top: r.top - c.top, bottom: r.bottom - c.top }; });
+        const texts = [...card.querySelectorAll('.ig-brand, .ig-pill, .ig-title, .ig-by, .ig-media, .ig-credit, .ig-also-item, .ig-next, .ig-legal')].map((e) => { const r = e.getBoundingClientRect(); return { cls: e.className, top: r.top - c.top, bottom: r.bottom - c.top }; });
         return { w: c.width, h: c.height, className: card.className, texts, old: card.querySelectorAll('.mast, .foot, .glass, .sports').length,
-          also: card.querySelectorAll('.ig-also-item').length, next: card.querySelector('.ig-next')?.textContent || '' };
+          also: card.querySelectorAll('.ig-also-item').length, next: card.querySelector('.ig-next')?.textContent || '', legal: card.querySelector('.ig-legal')?.textContent || '' };
       });
       expect([z.w, z.h]).toEqual([1080, 1920]);
       expect(z.className).toMatch(/(^| )story( |$)/);
@@ -524,6 +524,7 @@ for (const kind of ['matin', 'soir']) {
       const brand = z.texts.find((t) => t.cls === 'ig-brand');
       expect(Math.min(...sorted.map((t) => t.top)), 'bloc du bas sous la marque').toBeGreaterThan(brand.bottom);
       expect(z.next).toMatch(/Prochaine édition/);
+      expect(z.legal, 'crédits de base en petit').toMatch(/crédités à leurs auteurs.*Azdak CC BY 4\.0/);
       if (name === 'un seul article') expect(z.also).toBe(0);
       else { expect(z.also).toBeGreaterThanOrEqual(1); expect(z.also).toBeLessThanOrEqual(3); }
       if (name === 'complet') expect(z.also).toBe(3);
